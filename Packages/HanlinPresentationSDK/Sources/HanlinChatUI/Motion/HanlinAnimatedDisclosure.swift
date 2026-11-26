@@ -94,6 +94,22 @@ public struct HanlinAnimatedDisclosure<Content: View>: View {
     }
 }
 
+/// Keep the retained subtree render-hidden at the fully collapsed endpoint.
+/// Interpolated progress preserves the preset's opacity for every visible frame;
+/// using the target state here would change the entire collapse's fade curve.
+private nonisolated struct ChatDisclosureContentVisibility: ViewModifier, Animatable {
+    var progress: CGFloat
+
+    var animatableData: CGFloat {
+        get { progress }
+        set { progress = newValue }
+    }
+
+    func body(content: Content) -> some View {
+        content.opacity(ChatDisclosureGeometry.fraction(Double(progress)) > 0 ? 1 : 0)
+    }
+}
+
 /// Keep native DisclosureGroup ownership/identity, sharing only its presentation.
 public struct HanlinMotionDisclosureStyle: DisclosureGroupStyle {
     public init() {}

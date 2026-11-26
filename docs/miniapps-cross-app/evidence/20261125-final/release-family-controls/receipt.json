@@ -1,0 +1,24 @@
+{
+  "source_parent": "9a7f7775253cab331f983738e4f591e0bb2415ad",
+  "utc": "2026-11-25T05:47:17.515504+00:00",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "-v",
+    "test_signed_product_bundles",
+    "test_signing_profiles.ProfileResolutionTests",
+    "test_signing_profiles.ProfileCacheTests"
+  ],
+  "exit": 0,
+  "scope": "Portable release-family/profile coverage regression; no Apple signing or application acceptance",
+  "source_sha256": {
+    "miniapps_extensions.py": "0eba99f4e452ac7b4cbb87e4825be0e06318897aa137018eb17e36f94e9bbf50",
+    "audit_release_resources.py": "7e32c559616e9525ab630ce2fde5924037323a679ec3e2c893f0274b3e2480da",
+    "prepare_signed_products.py": "f87dfdd59c5719578f6962efeac2d2304521c593106acfe80bbb0c5211c26127",
+    "resolve_signing_profiles.py": "a1a8f6c2e391ce7968a7cc68313b7f833fb46e93f2d63898201c27a285936693",
+    "signing_profile_preflight.py": "8baa671f7094c7058f04f64a99e076fc3cc6583b34d08d5e4b3ff560d6a6e8e5",
+    "test_signed_product_bundles.py": "a354047e9a541b24d94d19e01ef821ff9ac9d65144eae2192cda60b0685a22a9"
+  },
+  "log_sha256": "cc4d56f4cd19259723dcff7e0a2a049065a73113b3d9c33efad1829c811f123f"
+}

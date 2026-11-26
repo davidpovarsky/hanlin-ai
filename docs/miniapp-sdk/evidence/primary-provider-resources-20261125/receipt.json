@@ -1,0 +1,71 @@
+{
+  "schema": 1,
+  "sourceBase": "1d5e598614f2bc7c689f34f5d7b364f67e1d5ae1",
+  "productionChange": "Append the two original ios_system dictionary paths to the provider and shared-resource manifests, matching the actual generated MiniApps resource phase. Strict project graph/member equality remains unchanged.",
+  "sources": [
+    {
+      "path": "Scripts/CI/IntegrationValidation/miniapps_provider_sources.json",
+      "beforeSHA256": "56c217fd7bdda512e88bc90f64595336e9621ca0f29b202b31a2b175884d7952",
+      "afterSHA256": "818ea10dd85bd0b36449dfe93138fd52c438341d8c5864836ebab6a28a188078"
+    },
+    {
+      "path": "docs/product-split/target-membership.json",
+      "beforeSHA256": "20b6f6efecede2ee7ef476e7854cb5fedd7db07868a99e84930ee03eb9bbe699",
+      "afterSHA256": "799388c58d92d5edfbe4dcd5ff5d79d66ac6c297217dc0a93bcf4dc9583c761f"
+    }
+  ],
+  "actualFailure": {
+    "prefixChargedSeconds": 31.645607708996977,
+    "originalResolverAndManifestAndProjectGeneration": "PASS",
+    "verifyTargets": "FAILED resource manifest equality",
+    "full8VersionTestsAndNativePreparationAndApplicationCases": "NOT_RUN"
+  },
+  "focusedVerification": {
+    "environment": "Oracle Python source validation; no native compiler",
+    "originalFunction": "Scripts/CI/IntegrationValidation/project_graph.py:validate_graph",
+    "validatorSHA256": "fc46f1e5266f054794811a0756fa51677a291b0533f816f1342a5d42f9ba85b8",
+    "actualPreparedProjectSHA256": "a80e2947b4dedf0ce95b326cf44b0efac613b7b044058e3afc3fccb870cb0087",
+    "baseline": "EXPECTED_FAIL at original resource equality",
+    "candidate": "PASS",
+    "sharedResourceManifestEquality": "PASS"
+  },
+  "resumeBoundary": "Preserve completed original resolver and generation; rerun original verify_targets and remaining required prefix after exact source integration. Do not rerun completed native/app acceptance.",
+  "raw": [
+    {
+      "path": "raw/capture-receipt.json",
+      "bytes": 2226,
+      "sha256": "9279a6d48815977a5ed74dab6495438fc1dc9cc03838e524536c134c20b7b43d"
+    },
+    {
+      "path": "raw/membership-before.json",
+      "bytes": 8770,
+      "sha256": "20b6f6efecede2ee7ef476e7854cb5fedd7db07868a99e84930ee03eb9bbe699"
+    },
+    {
+      "path": "raw/prefix-failed-state.json",
+      "bytes": 4406,
+      "sha256": "03d3bad3d8306b42e539de5606001fc44cc1d3366bb80068a239dbe66c328d1b"
+    },
+    {
+      "path": "raw/prepared-project.pbxproj",
+      "bytes": 252023,
+      "sha256": "a80e2947b4dedf0ce95b326cf44b0efac613b7b044058e3afc3fccb870cb0087"
+    },
+    {
+      "path": "raw/provider-before.json",
+      "bytes": 9957,
+      "sha256": "56c217fd7bdda512e88bc90f64595336e9621ca0f29b202b31a2b175884d7952"
+    },
+    {
+      "path": "raw/strict-graph-red-green.json",
+      "bytes": 2640,
+      "sha256": "41d71bc51d1b7b733ecdfdede2b511a02bdc4c4abb88bba236ed568f0c37ca89"
+    },
+    {
+      "path": "raw/verify-targets-failure.log",
+      "bytes": 807,
+      "sha256": "e67a4b6f4cef0bb1043e4e3b9196b3368827b21cdb86083e1686b1d141b1d966"
+    }
+  ],
+  "recordedAt": "2026-11-25T08:57:50.487969+00:00"
+}

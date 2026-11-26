@@ -197,3 +197,28 @@ private func invocation(id: UUID = UUID(), text: String = "שלום 🙂") -> Mi
     #expect(throws: MiniAppBridgeError.unsupportedSchema) { try store.loadCatalog() }
     #expect(try String(contentsOf: file, encoding: .utf8).contains("\"schemaVersion\":2"))
 }
+
+@Test func originalIconsAndLocalizedSubtitlesSurviveColdCatalogRead() throws {
+    let (root, store) = try fixture()
+    defer { try? FileManager.default.removeItem(at: root) }
+    let png = try #require(Data(base64Encoded: "iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jX1sAAAAASUVORK5CYII="))
+    let item = MiniAppCatalogItem(id: "package.icon", title: "Original", subtitle: "Fallback",
+        localizedTitles: ["he": "מקור"], iconData: png,
+        localizedSubtitles: ["he": "תיאור מקורי", "en": "Original description"])
+    try store.publishCatalog([item])
+    let cold = try MiniAppBridgeStore(containerURL: root)
+    let decoded = try #require(cold.loadCatalog().first)
+    #expect(decoded.iconData == png)
+    #expect(decoded.subtitle(locale: Locale(identifier: "he_IL")) == "תיאור מקורי")
+    #expect(decoded.subtitle(locale: Locale(identifier: "en_US")) == "Original description")
+    #expect(decoded.subtitle(locale: Locale(identifier: "fr_FR")) == "Fallback")
+}
+
+@Test func preIconSchemaV1CatalogRemainsCompatible() throws {
+    let json = Data(#"{"id":"legacy","title":"Legacy","subtitle":"Old description","systemImage":"book","supportedContentTypes":[],"supportedOperations":["display"],"localizedTitles":{"he":"מקורי"}}"#.utf8)
+    let item = try JSONDecoder().decode(MiniAppCatalogItem.self, from: json)
+    #expect(item.iconData == nil)
+    #expect(item.localizedSubtitles == nil)
+    #expect(item.subtitle(locale: Locale(identifier: "he_IL")) == "Old description")
+    #expect(item.title(locale: Locale(identifier: "he_IL")) == "מקורי")
+}

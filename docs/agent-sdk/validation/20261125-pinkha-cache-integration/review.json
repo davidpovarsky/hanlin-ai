@@ -1,0 +1,37 @@
+{
+  "recordedAt": "2026-11-25T08:43:32.636425+00:00",
+  "parents": [
+    "656ab921f626dcd58cfdb76ee0ac07a8c1c84d5d",
+    "c72df9dfd20204abb04b9447c4a375d346cfa8c6"
+  ],
+  "canonicalFiles": 959,
+  "canonicalBytes": 39257443,
+  "canonicalDifferencesFromCacheProducer": [
+    "Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsBridge/MiniAppContracts.swift",
+    "Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsPicker/MiniAppPicker.swift",
+    "Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsPicker/Resources/en.lproj/Localizable.strings",
+    "Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsPicker/Resources/he.lproj/Localizable.strings",
+    "Packages/HanlinMiniAppsBridge/Tests/HanlinMiniAppsBridgeTests/MiniAppBridgeTests.swift",
+    "Packages/HanlinPlatform/Package.swift",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinIdentifiers.swift",
+    "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift"
+  ],
+  "agentAndChatCoreByteIdenticalToCacheProducer": true,
+  "swiftAISDKRevision": "abf0921c6e89e6521cc2b510ff11016b45a0ef08",
+  "actualChecks": {
+    "originalNativeScriptGenerator": "PASS",
+    "originalSDKManifestGenerator": "PASS",
+    "originalGraphTests": {
+      "methods": 9,
+      "passed": 9,
+      "failed": 0
+    }
+  },
+  "preservedFailures": [
+    "merged-sdk-graph.json records first source-preparation failure: omitted sparse scheme/AppIntents originals; exact originals restored, tests unchanged"
+  ],
+  "nativeAcceptance": "NOT_RUN on this merge. Existing source-bound producer evidence is retained and requires explicit impact qualification. Prior incomplete AI app attempt is not counted as acceptance.",
+  "consumerAcceptance": "NOT_RUN: Pinkha is currently compiling SDK44 before this next SDK integration.",
+  "strictMiniAppsRegistration": "Only equivalent appIntent bridges coalesced; all other duplicate declarations retained for validator refusal.",
+  "notificationForwarding": "Preserved exact original callback implementation already used in actual MiniApps producer4b."
+}

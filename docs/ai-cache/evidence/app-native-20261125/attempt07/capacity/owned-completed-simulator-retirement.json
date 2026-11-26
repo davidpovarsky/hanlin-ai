@@ -1,0 +1,36 @@
+{
+  "status": "REMOVED_OWNED_COMPLETED_SIMULATOR",
+  "recordedAtUTC": "2026-11-25T05:04:34.688963+00:00",
+  "deviceBefore": {
+    "dataPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/265D44E3-2573-44C1-8976-3E10A02B1DA7/data",
+    "dataPathSize": 4131618816,
+    "logPath": "/Users/m1/Library/Logs/CoreSimulator/265D44E3-2573-44C1-8976-3E10A02B1DA7",
+    "udid": "265D44E3-2573-44C1-8976-3E10A02B1DA7",
+    "lastUsedAt": "2026-11-25T04:59:20Z",
+    "isAvailable": true,
+    "logPathSize": 237568,
+    "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPhone-18-Pro",
+    "state": "Shutdown",
+    "name": "Hanlin-AI-Cache-300fe80b-cache-app-native-evidence-05-20261125"
+  },
+  "activeProcessReferences": [],
+  "command": [
+    "xcrun",
+    "simctl",
+    "delete",
+    "265D44E3-2573-44C1-8976-3E10A02B1DA7"
+  ],
+  "exitCode": 0,
+  "stdout": "",
+  "stderr": "",
+  "freeBytesBefore": 4346851328,
+  "freeBytesAfter": 4346814464,
+  "measurementScope": "Whole-volume measurements include concurrent owners and APFS sharing; not an exact exclusive allocation estimate.",
+  "retainedEvidence": {
+    "sourceSHA": "300fe80b0927f898740fba8a926e852906f52660",
+    "archive": "/mnt/development/projects/artifacts/hanlin-ai-cache-app-final-20261125/app05-test-complete.tar.gz",
+    "archiveSHA256": "2b5dbd32aea71b384d4383adf42f7c7ffe90a7a48d982c8a483244ebbb58fa2c",
+    "completeXcresultVerified": true
+  },
+  "scope": "Only owned completed App05 simulator; no current build products/source/other-owner devices touched."
+}

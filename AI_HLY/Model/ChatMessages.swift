@@ -9,6 +9,7 @@
 import Foundation
 import SwiftData
 import PhotosUI
+import HanlinPlatformContracts
 
 // 资源数据结构体
 public struct Resource: Codable, Sendable {
@@ -112,6 +113,20 @@ public struct KnowledgeCard: Identifiable, Codable, Hashable, Sendable {
 
 @Model
 class ChatMessages {
+    /// Optional additive storage keeps old conversations readable. Values are
+    /// copied at send time; a later draft cannot mutate a historical selection.
+    var capabilityAttachmentsData: Data? = nil
+
+    var capabilityAttachments: [HanlinCapabilityAttachment] {
+        (try? decodedCapabilityAttachments()) ?? []
+    }
+
+    func decodedCapabilityAttachments() throws -> [HanlinCapabilityAttachment] {
+        try capabilityAttachmentsData.map {
+            try JSONDecoder().decode([HanlinCapabilityAttachment].self, from: $0)
+        } ?? []
+    }
+
     /// Optional presentation state in the original message row; lightweight migration.
     var presentationSnapshotData: Data? = nil
     /// Optional for lightweight migration of existing conversations.

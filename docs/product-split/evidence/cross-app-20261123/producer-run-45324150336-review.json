@@ -1,0 +1,28 @@
+{
+  "run_id": 45324150336,
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45324150336",
+  "source_sha": "8d1b40d01ca68a3f44bde84a7405784cf56f969d",
+  "artifact": {
+    "id": 14889700306,
+    "name": "app-split-45324150336",
+    "bytes": 13022177,
+    "sha256": "dd0471482e24edb1dc7395c6c552d75994ee1f911d8730e8ff7ec50cca9009d8",
+    "archive_hash_and_size_verified": true
+  },
+  "status": "UI_SOURCE_TYPECHECK_FAILED",
+  "classification": "EARLY_VALIDATOR_XCTEST_SWIFT_OVERLAY_IMPORT_PATH_OMITTED",
+  "diagnostics": {
+    "cannot find 'XCTAssertTrue' in scope": 166,
+    "cannot find 'XCTAssertEqual' in scope": 2,
+    "cannot find 'XCTAssertFalse' in scope": 6
+  },
+  "ui_source_typecheck_log_sha256": "22201e1fb4df949d59f57f31a9e2cbacd8168f89bf95b162ffa1a5c68a0ef837",
+  "reused_original_pass_count": 8,
+  "fresh_native_cases_executed": 0,
+  "full_app_build": "NOT_RUN",
+  "owned_simulator_boot": "NOT_RUN",
+  "ui": "NOT_RUN",
+  "correction": "Preserve the actual Xcode UI SwiftDriver -Isystem <platform>/Developer/usr/lib path and XCTest-only Testing module alias. Preserve project ENABLE_TESTABILITY. No app source, UI assertion, or test selection changed.",
+  "source_of_command_flags": "Authenticated run45316423267 build.log, original HanlinMiniAppsUITests SwiftDriver command",
+  "commands_sha256": "2f47c836b16a33c636bc809b3dd829620d196c6fb9923ea398afb6fdad9e2b0d"
+}

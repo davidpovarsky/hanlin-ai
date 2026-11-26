@@ -28,6 +28,7 @@ enum ComposerGeneralSubroute: String, Hashable, Sendable {
     case parameters
     case imageSize
     case miniApps
+    case capabilities
 }
 
 enum ComposerToolsSubroute: String, Hashable, Sendable {

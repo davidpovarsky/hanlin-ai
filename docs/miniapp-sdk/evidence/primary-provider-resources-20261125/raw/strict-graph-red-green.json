@@ -1,0 +1,61 @@
+{
+  "source": "1d5e598614f2bc7c689f34f5d7b364f67e1d5ae1",
+  "actualPreparedProjectSHA256": "a80e2947b4dedf0ce95b326cf44b0efac613b7b044058e3afc3fccb870cb0087",
+  "originalValidatorSHA256": "fc46f1e5266f054794811a0756fa51677a291b0533f816f1342a5d42f9ba85b8",
+  "changedResources": [
+    "Packages/IOSSystemLite/Sources/IOSSystemLite/Resources/commandDictionary.plist",
+    "Packages/IOSSystemLite/Sources/IOSSystemLite/Resources/extraCommandsDictionary.plist"
+  ],
+  "executedAt": "2026-11-25T08:56:50.896665+00:00",
+  "baseline": {
+    "status": "EXPECTED_FAIL",
+    "exception": "AssertionError",
+    "traceback": "Traceback (most recent call last):\n  File \"/var/lib/sentinelx/uploads/.sentinelx_uploads/script_job_ff8cdb74816543c6b177715afd239211/script.py\", line 15, in <module>\n    try:validate_graph(project,old)\n        ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/Scripts/CI/IntegrationValidation/project_graph.py\", line 171, in validate_graph\n    assert {objects[objects[key][\"fileRef\"]][\"path\"] for key in resource_phase[\"files\"]} == set(provider_manifest[\"resources\"])\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+  },
+  "candidate": {
+    "status": "PASS",
+    "graph": {
+      "miniapps_products": [
+        "HanlinA2UI",
+        "HanlinAgentActivityCore",
+        "HanlinExpoNativeAPI",
+        "HanlinExpoRuntime",
+        "HanlinExpoWidgetsOriginal",
+        "HanlinExtensionContracts",
+        "HanlinLocalization",
+        "HanlinMiniAppCore",
+        "HanlinMiniAppsBridge",
+        "HanlinMiniAppsPicker",
+        "HanlinMiniAppsUI",
+        "HanlinNativeScriptRuntime",
+        "HanlinParityMiniApp",
+        "HanlinPlatformContracts",
+        "HanlinPresentationKit",
+        "HanlinProductSplit",
+        "HanlinScriptCompiler",
+        "HanlinScriptContracts",
+        "HanlinScriptDeviceServices",
+        "HanlinScriptExtensions",
+        "HanlinScriptStore",
+        "HanlinScriptUI",
+        "HanlinScriptingApplicationRuntime",
+        "HanlinScriptingSDK",
+        "HanlinSefariaMiniApp",
+        "HanlinTextStudioMiniApp",
+        "HanlinTranslationUI",
+        "HanlinWidgetUI",
+        "HanlinWikipediaMiniApp",
+        "IOSSystemLite",
+        "SWCompression",
+        "TorahLibraryKit",
+        "ZIPFoundation"
+      ],
+      "miniapps_source_groups": [
+        "HanlinMiniAppsApp"
+      ],
+      "deployment_target": "27.0",
+      "signed_or_install_proof": false
+    }
+  },
+  "productionMembershipSetEquality": "PASS"
+}

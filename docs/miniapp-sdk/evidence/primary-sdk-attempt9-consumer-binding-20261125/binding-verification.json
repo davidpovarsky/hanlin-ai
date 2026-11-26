@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-25T01:28:13.228323+00:00",
+  "status": "BOTH_ACTUAL_CONSUMER_PRODUCTS_BOUND_TO_SEALED_SDK9",
+  "executionSource": "1812bff50571c9907d15cd8b4bfbe4874be24756",
+  "attempt": 9,
+  "observationStartedAtUTC": "2026-11-25T01:25:41.261370+00:00",
+  "latestProductObservationAtUTC": "2026-11-25T01:25:42.074009+00:00",
+  "ownerReceiptSHA256": "988371ef49cb5f0d7ea474b245df4ade7a97f92c9660a752144631f4d2de6356",
+  "preparedSDKReceipt": {
+    "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/receipt.json",
+    "sha256": "a0e0c906735a77251bd403c1d8ce42013fc173e90caca727c8decac0cd14ba9d",
+    "sourceAuthorCommit": "82412123aa4854564d04a24c11fdc9502c6272fc"
+  },
+  "archiveBytes": 81813684,
+  "archiveSHA256": "3c94ebea1e314c280031ac475e2d42b63ebcf2dc2eb32d2c6e31905e3eda3240",
+  "moduleSHA256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9",
+  "sdkManifestSHA256": "6fbba77d588e292b291864f0cae9e5eb5d602a4e2f208379ce1c331dedf412c9",
+  "sdkInputSHA256": "4904d0a46e4c653587fa1503a059834e9b6f35eac821a286d5eb9e96b8a92011",
+  "builds": [
+    {
+      "product": "HanlinMiniApps.app",
+      "ownerObservedAtUTC": "2026-11-25T01:25:41.476346+00:00",
+      "command": {
+        "command_id": "f17df560a90246a19a061a1d9d527d9f",
+        "pid": 5279,
+        "started_at": 1795569252.877773,
+        "seconds": 257.9216524170042,
+        "exit": 0,
+        "status": "completed",
+        "observed_at": 1795569510.797291
+      },
+      "status": "EXECUTED_PASS"
+    },
+    {
+      "product": "AI_Hanlin.app",
+      "ownerObservedAtUTC": "2026-11-25T01:25:42.074009+00:00",
+      "command": {
+        "command_id": "f08f3feeed244cc29b75ae3fccf4c05f",
+        "pid": 9479,
+        "started_at": 1795569512.126563,
+        "seconds": 204.06147566599975,
+        "exit": 0,
+        "status": "completed",
+        "observed_at": 1795569716.1873221
+      },
+      "status": "EXECUTED_PASS"
+    }
+  ],
+  "resourceCopies": [
+    {
+      "product": "HanlinMiniApps.app",
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/RuntimeHostResources.zip",
+      "relativePath": "RuntimeHostResources.zip",
+      "bytes": 81813684,
+      "sha256": "3c94ebea1e314c280031ac475e2d42b63ebcf2dc2eb32d2c6e31905e3eda3240",
+      "moduleSHA256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9",
+      "sdkManifestSHA256": "6fbba77d588e292b291864f0cae9e5eb5d602a4e2f208379ce1c331dedf412c9",
+      "matchesSealedPreparedArchive": true,
+      "sdkInputSHA256BoundByIdenticalManifest": "4904d0a46e4c653587fa1503a059834e9b6f35eac821a286d5eb9e96b8a92011"
+    },
+    {
+      "product": "AI_Hanlin.app",
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/Frameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+      "relativePath": "Frameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+      "bytes": 81813684,
+      "sha256": "3c94ebea1e314c280031ac475e2d42b63ebcf2dc2eb32d2c6e31905e3eda3240",
+      "moduleSHA256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9",
+      "sdkManifestSHA256": "6fbba77d588e292b291864f0cae9e5eb5d602a4e2f208379ce1c331dedf412c9",
+      "matchesSealedPreparedArchive": true,
+      "sdkInputSHA256BoundByIdenticalManifest": "4904d0a46e4c653587fa1503a059834e9b6f35eac821a286d5eb9e96b8a92011"
+    },
+    {
+      "product": "AI_Hanlin.app",
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+      "relativePath": "HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+      "bytes": 81813684,
+      "sha256": "3c94ebea1e314c280031ac475e2d42b63ebcf2dc2eb32d2c6e31905e3eda3240",
+      "moduleSHA256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9",
+      "sdkManifestSHA256": "6fbba77d588e292b291864f0cae9e5eb5d602a4e2f208379ce1c331dedf412c9",
+      "matchesSealedPreparedArchive": true,
+      "sdkInputSHA256BoundByIdenticalManifest": "4904d0a46e4c653587fa1503a059834e9b6f35eac821a286d5eb9e96b8a92011"
+    },
+    {
+      "product": "AI_Hanlin.app",
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/Frameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+      "relativePath": "PlugIns/AI_HLYTests.xctest/Frameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+      "bytes": 81813684,
+      "sha256": "3c94ebea1e314c280031ac475e2d42b63ebcf2dc2eb32d2c6e31905e3eda3240",
+      "moduleSHA256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9",
+      "sdkManifestSHA256": "6fbba77d588e292b291864f0cae9e5eb5d602a4e2f208379ce1c331dedf412c9",
+      "matchesSealedPreparedArchive": true,
+      "sdkInputSHA256BoundByIdenticalManifest": "4904d0a46e4c653587fa1503a059834e9b6f35eac821a286d5eb9e96b8a92011"
+    },
+    {
+      "product": "AI_Hanlin.app",
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+      "relativePath": "PlugIns/AI_HLYTests.xctest/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+      "bytes": 81813684,
+      "sha256": "3c94ebea1e314c280031ac475e2d42b63ebcf2dc2eb32d2c6e31905e3eda3240",
+      "moduleSHA256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9",
+      "sdkManifestSHA256": "6fbba77d588e292b291864f0cae9e5eb5d602a4e2f208379ce1c331dedf412c9",
+      "matchesSealedPreparedArchive": true,
+      "sdkInputSHA256BoundByIdenticalManifest": "4904d0a46e4c653587fa1503a059834e9b6f35eac821a286d5eb9e96b8a92011"
+    }
+  ],
+  "copyCount": 5,
+  "allIdentitiesMatch": true,
+  "original52AtOwnerCapture": "NOT_RUN",
+  "applicationAcceptance": "NOT_ESTABLISHED_BY_RESOURCE_BINDING",
+  "method": "Verify exact retained owner-observed completed Mac build/resource receipt, then compare every copy to sealed SDK9 identities. Full archive/manifest/source audit already passed and was not repeated.",
+  "nativeQueries": 0,
+  "archiveCopiesOrRepack": 0,
+  "compilerOrTestExecutions": 0,
+  "boundary": "A completed build and five matching resource copies do not establish five runtime passes, selected52 acceptance, physical outcomes or screenshots. This dated observation supplements the immutable earlier prepared snapshot."
+}

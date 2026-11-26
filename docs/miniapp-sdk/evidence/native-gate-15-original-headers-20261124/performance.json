@@ -1,0 +1,86 @@
+{
+  "timestamp": "2026-11-24T15:07:10.684474+00:00",
+  "run_id": "45412939674",
+  "commit_sha": "e2227ccdfe0c3111d1c17ef2b4bb1653ac24bb9c",
+  "comparison_base": "unknown",
+  "event_name": "workflow_dispatch",
+  "is_full_validation": false,
+  "required_build_type": "Unknown",
+  "report_status": "COMPLETE",
+  "is_complete": true,
+  "component_cache_summary": {
+    "SourcePackages": {
+      "restore": "NOT_MEASURED",
+      "save": "NOT_MEASURED"
+    },
+    "DerivedData": {
+      "restore": "NOT_MEASURED",
+      "save": "NOT_MEASURED"
+    }
+  },
+  "core_timings": {
+    "build": {
+      "status": "NOT_MEASURED",
+      "duration_seconds": 0
+    },
+    "headers": {
+      "status": "NOT_MEASURED",
+      "duration_seconds": 0
+    },
+    "restore": {
+      "status": "NOT_MEASURED",
+      "duration_seconds": 0,
+      "states": {}
+    },
+    "save": {
+      "status": "NOT_MEASURED",
+      "duration_seconds": 0,
+      "states": {}
+    },
+    "simulator": {
+      "status": "NOT_MEASURED",
+      "duration_seconds": 0
+    },
+    "tests": {
+      "status": "NOT_MEASURED",
+      "duration_seconds": 0
+    }
+  },
+  "cache_metrics": {
+    "exact_hits": 0,
+    "fallback_compatible_restores": 0,
+    "misses": 0,
+    "saves_skipped": 0,
+    "saves_created": 0,
+    "states": {},
+    "save_states": {},
+    "metadata": {}
+  },
+  "step_durations_seconds": {
+    "app-split-evidence/native-dependencies": 1007,
+    "app-split-evidence/package-lifecycle": 15,
+    "app-split-evidence/preflight": 22
+  },
+  "step_statuses": {
+    "app-split-evidence/native-dependencies": "MEASURED",
+    "app-split-evidence/package-lifecycle": "MEASURED",
+    "app-split-evidence/preflight": "MEASURED"
+  },
+  "skipped_steps": {},
+  "total_active_seconds": 1044,
+  "test_metrics": {
+    "reused_verified_count": 0,
+    "reused_tests": [],
+    "executed_count": 0,
+    "skipped_groups_count": 0,
+    "skipped_groups": {}
+  },
+  "time_savings": {
+    "is_estimated": true,
+    "estimated_saved_minutes": 165,
+    "estimated_duration_minutes": 15,
+    "baseline_full_run_minutes": 180,
+    "actual_measured_time_human": "17m 24s (1044s)",
+    "notes": "Estimated savings compare against a full cold baseline unless an authenticated comparison report is provided."
+  }
+}

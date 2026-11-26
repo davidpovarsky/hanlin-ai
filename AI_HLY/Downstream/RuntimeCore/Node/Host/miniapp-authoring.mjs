@@ -4,6 +4,7 @@ import path from 'node:path';
 import { createHash, randomUUID } from 'node:crypto';
 import { createRequire } from 'node:module';
 import { pathToFileURL } from 'node:url';
+import {assistantToolSourceEntries, assistantToolWrapper} from './miniapp-assistant-tools.mjs';
 
 const engines = new Set(['expo', 'nativescript', 'scriptwidget']);
 const ignoredDirectories = new Set(['node_modules', '.git', '.hanlin-build', '.hanlin-authoring']);
@@ -94,6 +95,7 @@ export async function readMiniAppSDK(sdkRoot, request = {}) {
       template: {schemaVersion: 1, engine: request.engine ?? 'expo', entry: 'index.tsx', tsconfig: 'tsconfig.json'},
       instructions: [
         'Use the selected engine packageVersions and original declarations in toolingRoot.',
+        'For chat tools, declare assistantTool metadata and map each entrypoint ID to a dedicated source in hanlin.authoring.json assistantTools. Import @hanlin/assistant-tools with import type.',
         'Use write_miniapp to create script.json, package.json, tsconfig.json, an entry source, and hanlin.authoring.json; it returns a writable sourceRoot.',
         'Run validate_miniapp; repair every error using the reported file and one-based line/column.',
         'Run build_miniapp, then import_miniapp with archive_path from the successful build report.',
@@ -125,7 +127,20 @@ async function projectInput(request) {
   if (!entry) throw new Error('hanlin.authoring.json must declare the source entry (for example index.tsx).');
   const entryFile = child(sourceRoot, entry);
   if (!(await fs.stat(entryFile)).isFile()) throw new Error('Authoring entry must be a source file.');
-  return {project, sourceRoot, author, packagedAuthor, script, pkg, engine, entry, entryFile};
+  const assistant = assistantToolSourceEntries(script, {...author, entry}, engine);
+  const assistantTools = [];
+  for (const tool of assistant.entries) {
+    const sourceFile = child(sourceRoot, tool.source);
+    if (!(await fs.stat(sourceFile).then(info => info.isFile(), () => false))) {
+      assistant.diagnostics.push(finding('MINIAPP_ASSISTANT_SOURCE_MISSING',
+        'The dedicated assistant source does not exist: ' + tool.source, 'hanlin.authoring.json'));
+      continue;
+    }
+    if (!inside(sourceRoot, await fs.realpath(sourceFile))) throw new Error('Assistant source leaves its project.');
+    assistantTools.push({...tool, sourceFile});
+  }
+  return {project, sourceRoot, author, packagedAuthor, script, pkg, engine, entry, entryFile,
+    assistantTools, assistantDiagnostics: assistant.diagnostics};
 }
 
 async function fileHashes(root, exclude = new Set()) {
@@ -266,7 +281,7 @@ async function parseProject(ts, input, sdkRoot, sdkEngine, fallbackConfig, usePr
         ? {primary: false, resolvedFileName: module.resolvedFileName, packageId: module.packageId, isExternalLibraryImport: true}
         : undefined;
     });
-  const rootNames = [...new Set([...parsed.fileNames, input.entryFile,
+  const rootNames = [...new Set([...parsed.fileNames, input.entryFile, ...input.assistantTools.map(tool => tool.sourceFile),
     ...(base.fileNames ?? []).filter(file => file.endsWith('.d.ts'))])];
   const program = ts.createProgram({rootNames, options, host: compilerHost, projectReferences: parsed.projectReferences});
   const diagnostics = [...base.errors, ...(sourceConfig.error ? [sourceConfig.error] : []),
@@ -337,7 +352,7 @@ async function validateNativePresentations(input, sdk, compiler) {
       }
       directory = path.dirname(directory);
     }
-    const nativeInput = {...input, sourceRoot: nativeRoot, entryFile,
+    const nativeInput = {...input, sourceRoot: nativeRoot, entryFile, assistantTools: [],
       entry: slash(path.relative(nativeRoot, entryFile)),
       author: {engine: presentation.engine, tsconfig: 'tsconfig.json'}};
     const ts = compiler ?? (await import(pathToFileURL(child(sdk.sdkRoot, descriptor.typescriptPath)).href)).default;
@@ -627,6 +642,15 @@ async function buildNativeScript(ts, input, parsed, stage, sdkEngine) {
       plugins: {...input.pkg.hanlinNativeScript?.plugins, ...dependencies.nativePlugins}},
   });
   await copyResources(input, modules);
+  for (const tool of input.assistantTools) {
+    const toolRoot = path.dirname(child(stage, tool.sourcePath));
+    if (inside(app, toolRoot) || inside(toolRoot, app)) throw new Error('Assistant program must have a separate prepared folder.');
+    await fs.cp(app, toolRoot, {recursive: true});
+    const toolOutput = sourceOutputs.get(path.resolve(tool.sourceFile));
+    if (!toolOutput) throw new Error('The compiler did not emit the dedicated NativeScript assistant module: ' + tool.id);
+    const toolEntry = slash(path.relative(modules, toolOutput));
+    await fs.writeFile(path.join(toolRoot, 'bundle.mjs'), assistantToolWrapper(tool, './modules/' + toolEntry, 'nativescript'));
+  }
   await writeJSON(path.join(stage, 'script.json'), {...input.script,
     entry: 'nativescript/app/bundle.mjs', runInApp: true, hanlinRuntime: 'hanlin-nativescript'});
   return emitted.diagnostics.map(item => normalizedDiagnostic(ts, item, input.sourceRoot));
@@ -659,7 +683,7 @@ async function buildExpo(input, parsed, stage, sdkEngine) {
   const originalResolveRequest = original.resolver?.resolveRequest;
   const config = mergeConfig(original, {
     projectRoot: parsed.toolingRoot,
-    watchFolders: [input.sourceRoot, parsed.toolingRoot],
+    watchFolders: [input.sourceRoot, parsed.toolingRoot, stage],
     maxWorkers: 1,
     resolver: {useWatchman: false,
       nodeModulesPaths: [path.join(input.sourceRoot, 'node_modules'), path.join(parsed.toolingRoot, 'node_modules')],
@@ -685,19 +709,31 @@ async function buildExpo(input, parsed, stage, sdkEngine) {
   // maxWorkers=1 also keeps both compiler worker pools inside the existing Node process.
   config.resolver.unstable_enablePackageExports = true;
   await fs.mkdir(config.fileMapCacheDirectory, {recursive: true});
-  const result = await metro.runBuild(config, {
-    entry: input.entryFile, platform: 'ios', dev: false, minify: false,
-    sourceMap: true, sourceMapUrl: 'bundle.js.map', assets: true
-  });
-  if (typeof result?.code !== 'string' || !result.map) throw new Error('Original Metro produced no complete bundle and source map.');
-  await fs.writeFile(path.join(stage, 'bundle.js'), result.code);
-  await fs.writeFile(path.join(stage, 'bundle.js.map'), typeof result.map === 'string' ? result.map : JSON.stringify(result.map));
-  if (result.assets?.length) {
-    const pluginRoot = path.dirname(requireSDK.resolve('@react-native/community-cli-plugin/package.json'));
-    const saveAssets = requireSDK(path.join(pluginRoot, 'dist/commands/bundle/saveAssets.js')).default;
-    await saveAssets(result.assets, 'ios', stage);
+  const bundle = async (entryFile, output) => {
+    await fs.mkdir(output, {recursive: true});
+    const result = await metro.runBuild(config, {
+      entry: entryFile, platform: 'ios', dev: false, minify: false,
+      sourceMap: true, sourceMapUrl: 'bundle.js.map', assets: true
+    });
+    if (typeof result?.code !== 'string' || !result.map) throw new Error('Original Metro produced no complete bundle and source map.');
+    await fs.writeFile(path.join(output, 'bundle.js'), result.code);
+    await fs.writeFile(path.join(output, 'bundle.js.map'), typeof result.map === 'string' ? result.map : JSON.stringify(result.map));
+    if (result.assets?.length) {
+      const pluginRoot = path.dirname(requireSDK.resolve('@react-native/community-cli-plugin/package.json'));
+      const saveAssets = requireSDK(path.join(pluginRoot, 'dist/commands/bundle/saveAssets.js')).default;
+      await saveAssets(result.assets, 'ios', output);
+    }
+  };
+  await bundle(input.entryFile, stage);
+  const wrappers = path.join(stage, '.assistant-tool-sources');
+  for (const [index, tool] of input.assistantTools.entries()) {
+    await fs.mkdir(wrappers, {recursive: true});
+    const wrapper = path.join(wrappers, index + '.js');
+    await fs.writeFile(wrapper, assistantToolWrapper(tool, slash(tool.sourceFile), 'expo'));
+    await bundle(wrapper, path.dirname(child(stage, tool.sourcePath)));
   }
   await fs.rm(path.join(stage, '.metro-cache'), {recursive: true, force: true});
+  await fs.rm(wrappers, {recursive: true, force: true});
   await copyResources(input, stage);
   await writeJSON(path.join(stage, 'script.json'), {...input.script, entry: 'bundle.js', runInApp: true, hanlinRuntime: 'hanlin-expo'});
   const contract = sdkEngine.hostContract;
@@ -711,6 +747,9 @@ async function buildExpo(input, parsed, stage, sdkEngine) {
   } : input.pkg.hanlinExpo;
   await writeJSON(path.join(stage, 'package.json'), {...input.pkg, dependencies,
     main: 'bundle.js', hanlinRuntime: 'hanlin-expo', ...(preparedContract ? {hanlinExpo: preparedContract} : {})});
+  const preparedPackage = await json(path.join(stage, 'package.json'));
+  for (const tool of input.assistantTools)
+    await writeJSON(path.join(path.dirname(child(stage, tool.sourcePath)), 'package.json'), preparedPackage);
 }
 
 async function validateOriginalScriptWidgetManifest(input, sdk, ts) {
@@ -772,6 +811,8 @@ export async function runMiniAppOperation(request, {sdkRoot, compiler} = {}) {
     input = await projectInput(request);
     report.engine = input.engine;
     report.sourceRoot = input.sourceRoot;
+    report.diagnostics = input.assistantDiagnostics;
+    if (report.diagnostics.some(item => item.category === 'error')) return report;
     const sdk = await readMiniAppSDK(sdkRoot, {engine: input.engine});
     const descriptor = sdk.selectedEngine;
     const ts = compiler ?? (descriptor.typescriptPath
@@ -786,7 +827,22 @@ export async function runMiniAppOperation(request, {sdkRoot, compiler} = {}) {
     report.typecheck = {strict: parsed.options.strict === true, checkJs: parsed.options.checkJs === true, skipLibCheck: parsed.options.skipLibCheck === true,
       dependencyDeclarationsChecked: parsed.options.skipLibCheck !== true};
     const native = await validateNativePresentations(input, sdk, compiler);
-    report.diagnostics = [...originalManifest.diagnostics, ...parsed.diagnostics, ...native.diagnostics, ...await packageConsistency(input)];
+    const assistantDiagnostics = [];
+    const checker = parsed.program.getTypeChecker();
+    for (const tool of input.assistantTools) {
+      const source = parsed.program.getSourceFile(tool.sourceFile);
+      const symbol = source && checker.getSymbolAtLocation(source);
+      const exported = symbol ? checker.getExportsOfModule(symbol) : [];
+      for (const action of tool.assistantTool.actions) {
+        const name = action.exportedSymbol ?? action.id;
+        const value = exported.find(item => item.name === name);
+        if (!value || !checker.getTypeOfSymbolAtLocation(value, source).getCallSignatures().length)
+          assistantDiagnostics.push(finding('MINIAPP_ASSISTANT_EXPORT_MISSING',
+            'The dedicated assistant module must export a callable ' + name + '.', tool.source));
+      }
+    }
+    report.diagnostics = [...originalManifest.diagnostics, ...parsed.diagnostics, ...native.diagnostics,
+      ...assistantDiagnostics, ...await packageConsistency(input)];
     if (report.diagnostics.some(item => item.category === 'error')) return report;
     if (request.operation === 'validate') { report.succeeded = true; return report; }
     stage = request.outputDirectory ? path.resolve(request.outputDirectory)

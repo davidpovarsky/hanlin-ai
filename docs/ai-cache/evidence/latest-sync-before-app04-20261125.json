@@ -1,0 +1,167 @@
+{
+  "timeUTC": "2026-11-25T03:42:24.681531+00:00",
+  "integratedSource": "1710bc6119983799f7d22cb723659ac274fe96b1",
+  "heads": {
+    "composer": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+    "miniapps_sdk": "bff06a5998e9d584c9a5de2bd9aa187dc9cb4dd0",
+    "wave3": "c76371717ec3c0c6eb9dfd16d7ab6d4b11680b86"
+  },
+  "allHeadsAreAncestors": true,
+  "resolutions": [
+    "Retained SDK abf0921c, verified descendant of incoming07431 (ahead5/behind0); retained exact LRU1.3.0,OTel2.6.0,Atomics1.3.1.",
+    "Preserved integrated C6 source inventory/reachability/manifest provenance omitted by incoming MiniSDK.",
+    "Integrated original test-host scheme, binary metadata preflight and parity async bridge repairs. Prepared dependency manifests/locks and Expo receipt remain byte-identical.",
+    "App03 compile failure retained; fixture-only canPresentUI:false repair preserves all46methods/48invocations."
+  ],
+  "reusedSourceInputs": {
+    "Packages/HanlinExpoUI/src/miniapp-assistant.ts": {
+      "sha256": "2e0e25875906f15876b8035d0863482510163ae4a82865eb376b788ff95e3c2c",
+      "equalsOriginalReuseAssessment": true
+    },
+    "Packages/HanlinExpoUI/src/host-services.ts": {
+      "sha256": "7055a22e3aa4a685b970c1eaaf66f538eeb34f560bb2c345446c55305a045d21",
+      "equalsOriginalReuseAssessment": true
+    },
+    "Packages/HanlinExpoUI/tests/miniapp-assistant.test.mjs": {
+      "sha256": "fc1465119ea944d674b91e00ec6127092dbc3ef6e191a80eb3d6cfffaac969ba",
+      "equalsOriginalReuseAssessment": true
+    },
+    "Packages/HanlinExpoUI/tests/host-services-publication.test.mjs": {
+      "sha256": "6a3afe9ee3704d052d7337828763c80eea5c765d50bd217574836df5124b4a57",
+      "equalsOriginalReuseAssessment": true
+    },
+    "Scripts/NativeScript/Tests/assistant.test.mjs": {
+      "sha256": "0f39ba3362fcde8c9975c98a2eba5aebc510190f6c8e1fdb3cab4f55a1dcdcd5",
+      "equalsOriginalReuseAssessment": true
+    },
+    "Scripts/NativeScript/Tests/miniapps-sharing.test.mjs": {
+      "sha256": "f968bca7095d2b80e64a4ecde69316929e062e3754fc62d4362743dff7887ed3",
+      "equalsOriginalReuseAssessment": true
+    },
+    "Scripts/NativeScript/Tests/live-activities.test.mjs": {
+      "sha256": "c0e65560079b04441d94f8023a403d41a076e14d1b31437db9ee28410ad862f5",
+      "equalsOriginalReuseAssessment": true
+    },
+    "Scripts/Expo/Tests/host-services.test.mjs": {
+      "sha256": "625d69af766f88690bdb528d17b8aea46ffbed5edfd46fa9c1c471ca9b8339f1",
+      "equalsOriginalReuseAssessment": true
+    },
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.d.ts": {
+      "sha256": "4200223f5be97ee12ddd5ffc05479fa7be99748998a716b3e2eb6197c14bc8cc",
+      "equalsOriginalReuseAssessment": true
+    },
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/miniapp-assistant.d.ts": {
+      "sha256": "3e15fb2fada80ea4dd158b146cc36d66c6aa71e46e073f02eca23b98b55e73f2",
+      "equalsOriginalReuseAssessment": true
+    },
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/package.json": {
+      "sha256": "c42e3fe3eb38b7289ba3cf49ca0b56bcbd7ac2d27d68955f27e3d5e33e642a7e",
+      "equalsOriginalReuseAssessment": true
+    },
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/miniapp-assistant.mjs": {
+      "sha256": "8d429190e524ba8612462503e20f88eab8e1d029ca794c5821ad01b69623edfc",
+      "equalsOriginalReuseAssessment": true
+    },
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/system-surfaces.d.ts": {
+      "sha256": "e9e225da56c0fad5a6a827d457fbbcb988468d2232e1f876cbe60fcbb05f0686",
+      "equalsOriginalReuseAssessment": true
+    },
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.mjs": {
+      "sha256": "832169736b6d84a6caa983192ceb3d9e9947a8cbda029093eba269c065e8f033",
+      "equalsOriginalReuseAssessment": true
+    },
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/system-surfaces.mjs": {
+      "sha256": "72051d0da201b6e8f6cd7c5939267e083b8199ed62e56f631a198cdccf121669",
+      "equalsOriginalReuseAssessment": true
+    },
+    "AI_HLY/Services/ChatServices/WebSearchTool.swift": {
+      "sha256": "435a550ab05ef7785113fb8849a0e8019e32427338591a8fd53428a8c19a854b",
+      "equalsOriginalReuseAssessment": true
+    },
+    "AI_HLY/Downstream/AgentDiagnostics/AgentTokenUsage.swift": {
+      "sha256": "ea9473749962a6c078d36a6972abe2ce30ecf38cd23dffa92231a02b53b7c665",
+      "equalsOriginalReuseAssessment": true
+    },
+    "AI_HLY/Services/ChatServices/AutomaticSearch/AutomaticWebSearchCoordinator.swift": {
+      "sha256": "51196278174564c14b1568c21fcaf0b95adcb31bbcea07a57fe3c045075240fb",
+      "equalsOriginalReuseAssessment": true
+    },
+    "AI_HLY/Services/ChatServices/AutomaticSearch/KeenablePublicSearchAdapter.swift": {
+      "sha256": "96c88b7fcc0de48e6b30570850fbd80f82a679499eb339fcf53cd363d4de9c54",
+      "equalsOriginalReuseAssessment": true
+    },
+    "AI_HLY/Services/ChatServices/AutomaticSearch/TavilyKeylessSearchAdapter.swift": {
+      "sha256": "8143549a517e6717c85fb64e903a27958fd61cba875899ec38d7fb10a1154a68",
+      "equalsOriginalReuseAssessment": true
+    },
+    "AI_HLY/Services/ChatServices/AutomaticSearch/WebSearchProviderProtocol.swift": {
+      "sha256": "2cb061ddfdd1536a417d630c6f776cf3bb9ec95328452afbbf20dc08337ef537",
+      "equalsOriginalReuseAssessment": true
+    },
+    "AI_HLY/Services/ChatServices/AutomaticSearch/WebSearchRelevanceEvaluator.swift": {
+      "sha256": "2ec1352dcce9a19ede76148c540caf98a36dc076f7c2740015395656192a4158",
+      "equalsOriginalReuseAssessment": true
+    },
+    "AI_HLY/Services/ChatServices/AutomaticSearch/WebSearchResult.swift": {
+      "sha256": "d3b69274d06eb3403c44a2ec1d2a78399baef65bc875b8888bd8af1e3887e751",
+      "equalsOriginalReuseAssessment": true
+    },
+    "AI_HLY/Services/ChatServices/AutomaticSearch/YouKeylessSearchAdapter.swift": {
+      "sha256": "d07f829a5896928f43bbbf4b49fa16e10f98f4d76cd6a6862525cf4d02305520",
+      "equalsOriginalReuseAssessment": true
+    },
+    "AI_HLYTests/AutomaticWebSearchCacheTests.swift": {
+      "sha256": "faa0342db6fe61bac1eb65da32622e47284b00e669ca1ff1d3ebd276f105438c",
+      "equalsOriginalReuseAssessment": true
+    },
+    "AI_HLYTests/AgentTokenUsageCacheTests.swift": {
+      "sha256": "622fa32878079e11c3f3dcd502b216f270d22ad3a0c277e021b0aa77a3afa33f",
+      "equalsOriginalReuseAssessment": true
+    },
+    "Scripts/NativeScript/host-services.ts": {
+      "sha256": "e405a962b090e5786466ef0be2509cd629b16ba2d6d70f40f83dd92fb1e5f442",
+      "equalsOriginalReuseAssessment": true
+    },
+    "Scripts/NativeScript/build-host-services.mjs": {
+      "sha256": "1ca742df46a70d3ee838de98d4ac128eebeeea99d93c9cfa6475e388fee28cc3",
+      "equalsOriginalReuseAssessment": true
+    },
+    "Packages/HanlinExpoUI/src/system-surfaces.ts": {
+      "sha256": "3a2c4424ce074056ef76d62a4502fb16c389e10a46967fcde15835efde94543f",
+      "equalsOriginalReuseAssessment": true
+    },
+    "Scripts/NativeScript/Fixtures/HostServices/assistant.ts": {
+      "sha256": "0c0d2964715e4da0f8418c5925fad3171c6776c64ba310a7be4b54c662965198",
+      "equalsOriginalReuseAssessment": true
+    },
+    "Packages/HanlinExpoUI/src/miniapp-actions.ts": {
+      "sha256": "d5d38fc209d8d8dedb2832ffd037e53d4eabd8b8c92320bd79e791fdfef2c607",
+      "equalsOriginalReuseAssessment": true
+    },
+    "Packages/HanlinExpoUI/package.json": {
+      "sha256": "18dbddebb3c641742ca5f83d0492cec1cbbc7bb1affbefe641477b7481110568",
+      "equalsOriginalReuseAssessment": true
+    },
+    "Scripts/NativeScript/Fixtures/HostServices/valid.ts": {
+      "sha256": "c99e376b70dc4e0b1ce5442cb86bf3115b11f72cf6154f1e808240392c724466",
+      "equalsOriginalReuseAssessment": true
+    },
+    "Scripts/NativeScript/Fixtures/HostServices/invalid.ts": {
+      "sha256": "47f20182b5dfe1051d380453ad6b467adf3b439fd07e433500f4a87d5b7cfd8d",
+      "equalsOriginalReuseAssessment": true
+    },
+    "Scripts/NativeScript/Fixtures/HostServices/live-activities.ts": {
+      "sha256": "5d9427bad52584fa0f022658376f2496434e826b144c56e500ce4720bac42efb",
+      "equalsOriginalReuseAssessment": true
+    },
+    "Scripts/NativeScript/package.json": {
+      "sha256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b",
+      "equalsOriginalReuseAssessment": true
+    }
+  },
+  "reusedSourceInputCount": 36,
+  "consumedNPMLockEntriesUnchanged": true,
+  "hostProof": "native-preparation-20261125/retry3-native/receipt.json",
+  "hostArchiveSHA256": "9fb7998ee48fe913e98f865d5b962e8a46dce9c836ff2efd295598206741b2cd",
+  "actualAppTests": "NOT_RUN; app04 preparation in progress; app03 failed at test compilation."
+}

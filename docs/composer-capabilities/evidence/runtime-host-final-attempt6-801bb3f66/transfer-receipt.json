@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "transferredAtUTC": "2026-11-25T02:15:07.525022+00:00",
+  "transport": "Oracle pinned scaleway-mac SSH alias, BatchMode=yes, StrictHostKeyChecking=yes",
+  "sourceReadOnly": true,
+  "allSourceSHA256Verified": true,
+  "noBuildsTestsGeneratorsDevicesOrMacWrites": true,
+  "files": [
+    {
+      "path": "docs/composer-capabilities/evidence/runtime-host-final-attempt6-801bb3f66/runtime-host-final-attempt6.json",
+      "bytes": 913,
+      "sha256": "8c436edf026c8238253093870d5503997a434a4ae0f773f6433a6996afd06143",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/runtime-host-final-attempt6.json",
+      "sourceBytes": 913,
+      "sourceSHA256": "8c436edf026c8238253093870d5503997a434a4ae0f773f6433a6996afd06143",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/runtime-host-final-attempt6-801bb3f66/runtime-host-final-attempt6.log.gz",
+      "bytes": 7838,
+      "sha256": "c341ce38e58eb170db72563e046d236d94cf5cf96943ca3567dbff69905a08bb",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/runtime-host-final-attempt6.log",
+      "sourceBytes": 20055,
+      "sourceSHA256": "84dad869cb29f0bd357f2f857d2cc1a0f7b68fb847ebe709890fa775006baae0",
+      "compressedForRepository": true,
+      "uncompressedLogSHA256": "84dad869cb29f0bd357f2f857d2cc1a0f7b68fb847ebe709890fa775006baae0",
+      "uncompressedLogBytes": 20055
+    }
+  ],
+  "observedArchive": {
+    "path": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/runtime-host/RuntimeHostResources.zip",
+    "bytes": 81837524,
+    "sha256": "9d2390718e8cbd9161438392789a69a60bcfe537c8cd4ac5b8088323cb3339cc"
+  },
+  "archiveMatchesThisHostRun": true
+}

@@ -1,0 +1,132 @@
+{
+  "catalogSHA256": "c97c1b62bbcc2af159642b7c91b0984ef677a8752bf283009f51f71cae81dc2c",
+  "state": "prepared",
+  "sourceCommit": "340018ddc9ea2395ffabedbf179369b5bdb791af",
+  "contentSHA256": "5794c86fc0b78e78c3db6e4d8ffbd408727b89a7a039eedb3e6f047c53ae58c4",
+  "inputBindings": [
+    {
+      "path": "RuntimeDependencies.lock.json",
+      "sha256": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a"
+    },
+    {
+      "path": "Scripts/Expo/babel.config.cjs",
+      "sha256": "62581fd5caf7b97cb36290093b7bbf7103e1c1b1300e0e11a1b3eaaf96c998ba"
+    },
+    {
+      "path": "Scripts/Expo/build-original-expo-source.mjs",
+      "sha256": "5a446cd0e1701a91f4eed5d5a3c5d5ea41be05d15cec668ca36edca3a38b2488"
+    },
+    {
+      "path": "Scripts/Expo/build-original-widget-runtime.mjs",
+      "sha256": "5928bb12ed2fd2f6b2ecfeb6d8fc309d46e5837c58dcc4272d73af13434eb549"
+    },
+    {
+      "path": "Scripts/Expo/dependency-lock.json",
+      "sha256": "549d100eca28b6b5f59b0cc6bb55d64c27e7bb88f02fd58eb8f1b2f6097be64f"
+    },
+    {
+      "path": "Scripts/Expo/package-lock.json",
+      "sha256": "95d2a560d4eb01de64fcd0d43875a4ef2392e9747ed9fa79c2e0a0e58abececf"
+    },
+    {
+      "path": "Scripts/Expo/prepare-ios-dependencies.mjs",
+      "sha256": "81b44608fbc6c04dbbf315435b06c21cd62c43d7a75b511a3105ecb91f3fb44a"
+    },
+    {
+      "path": "Scripts/ExpoNativeAPI/dependency-lock.json",
+      "sha256": "08657d657c1f4efa36149075b632cfc75685fc1ca9af0397fc1168fe9253b768"
+    },
+    {
+      "path": "Scripts/ExpoNativeAPI/multiscene-patch.mjs",
+      "sha256": "cafa8348a764155789169c411eb59555c6c7a2d3ef363b870e36f8d6b52c7cbd"
+    },
+    {
+      "path": "Scripts/ExpoNativeAPI/prepare-ios-dependencies.mjs",
+      "sha256": "950a2eb6e8713bdd1a395eee6df1779d91f63864af95c33658efa6d090676f66"
+    },
+    {
+      "path": "Scripts/NativeScript/build-metadata-tool.py",
+      "sha256": "f4318f38b1c6a9c56ba54edb0d270a6374178fa5a8e024ebfddb9790f7ae3cf5"
+    },
+    {
+      "path": "Scripts/NativeScript/build-step-metadata-generator-wrapper.py",
+      "sha256": "0c053414f573ff2f88498099d7f1ae591d289ca3029390cd421dd938bf089ba3"
+    },
+    {
+      "path": "Scripts/NativeScript/dependency-lock.json",
+      "sha256": "8499976a4ea0a069ed654b09b597d8fabede4bbbfb62227451a68707b851e8e5"
+    },
+    {
+      "path": "Scripts/NativeScript/package-lock.json",
+      "sha256": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b"
+    },
+    {
+      "path": "Scripts/NativeScript/prepare-ios-dependencies.mjs",
+      "sha256": "b5114a3be1fc846e288128af08cef9f38b0cac8e34923780325c4edc2976ebd9"
+    },
+    {
+      "path": "Scripts/Runtime/prepare-runtime-core.sh",
+      "sha256": "1ff99fabcbf8f40d515f3f1b944299286c1094a19520f9892a97f99cf8b64540"
+    }
+  ],
+  "requiredTargets": [
+    "ReactNativeHeaders",
+    "React",
+    "ReactNativeDependencies",
+    "hermesvm",
+    "ExpoModulesJSI",
+    "ExpoModulesCore",
+    "ExpoModulesWorklets",
+    "ExpoUI",
+    "ExpoBrownfield",
+    "Libffi",
+    "TNSWidgets",
+    "NSCWinterTC",
+    "NodeMobile",
+    "Python"
+  ],
+  "missingTargets": [],
+  "acceptance": {
+    "appleBuild": "reuse-producer-evidence; this exporter does not build or test runtimes",
+    "nativeSlices": "validated-existing-binaries",
+    "ordinaryVersionDependency": "requires original host acceptance; prepared Expo header paths and host build phases need integration"
+  },
+  "supportMetadata": [
+    {
+      "target": "HanlinExpoHeaderSupport",
+      "metadataTool": null
+    },
+    {
+      "target": "HanlinExpoWidgetRuntimeSupport",
+      "metadataTool": null
+    },
+    {
+      "target": "HanlinNativeScriptHostSupport",
+      "metadataTool": {
+        "architecture": "arm64",
+        "boundary": "Build tool only. No NativeScript/Node/Python engine or app rebuilt; no VM pass.",
+        "cmakeSHA256": {
+          "metadata-generator/CMakeLists.txt": "0d64383530493f13d1bce04d367984bb6081e665814d893693f4b065fd1bcf51",
+          "metadata-generator/src/CMakeLists.txt": "0f0a48c60391e75c62db3387639de62088cb688e2d004a7576db36e02f18788b"
+        },
+        "cmakeSourceCommit": "8856ee520a44641dfed313a71cfc01dd47e0352b",
+        "generatorSHA256": "e2bfd9ecd5f5b235dda04b05b6b1b838c799323a558dee7e6651c8d6a93f9e25",
+        "llvmArchiveSHA256": "4d2eade1e9fb7a5fae1a502d0e5d935d20190007477743a1379d81838d87b832",
+        "patchSourceSHA256": "f4318f38b1c6a9c56ba54edb0d270a6374178fa5a8e024ebfddb9790f7ae3cf5",
+        "schemaVersion": 1,
+        "sourceArchiveSHA256": "fad3c54f5d321148e39c46eae6d9cbc8e2891afb414064eb3a10f64ba25d3f8b",
+        "sourceCommit": "5d4569c197810cdd4c1e02e7c16d42a01a77d5c0",
+        "xcode": "Xcode 27.0\nBuild version 27A266a"
+      }
+    },
+    {
+      "target": "HanlinNodeHostSupport",
+      "metadataTool": null
+    },
+    {
+      "target": "HanlinPythonHostSupport",
+      "metadataTool": null
+    }
+  ],
+  "boundary": "Retained actual exporter catalog and bound input hashes only. Native archive binaries were not transferred or independently rehashed by this inspection; app compilation later failed."
+}

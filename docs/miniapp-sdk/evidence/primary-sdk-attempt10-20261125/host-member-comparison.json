@@ -1,0 +1,12 @@
+{
+  "beforeArchiveSHA256": "3c94ebea1e314c280031ac475e2d42b63ebcf2dc2eb32d2c6e31905e3eda3240",
+  "afterArchiveSHA256": "86733eba5d80156edf52da87f0f371c208122d6e60f618f182990330514984c3",
+  "scope": "Every actual outside-SDK Host member compared byte-for-byte in place.",
+  "members": 3102,
+  "changed": [],
+  "unchanged": 3102,
+  "canonicalMembersSHA256": "ee60f10349a15749ebfeb650b6c2d01fdf41a58cd3767e22c088894d830f08f8",
+  "canonicalAlgorithm": "SHA256 of compact UTF-8 JSON, sorted path; each row keys path,bytes,sha256",
+  "moduleSHA256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9",
+  "moduleBytes": 50327
+}

@@ -1,0 +1,97 @@
+[
+  {
+    "file": "Staging/1_Test/Diagnostics/HanlinMiniAppsUITests-F1EE4E2D-9C78-4434-A9E7-9A4289471187-Configuration-Test Scheme Action-Iteration-1/HanlinMiniAppsUITests-0F8E58DD-F435-4D9A-9DAE-F3DBF8C4C79A/StandardOutputAndStandardError-com.itorah.hanlinminiapps.txt",
+    "line": 138,
+    "text": "2026-11-25 02:42:29.891840+0100 HanlinMiniApps[27608:2828299] HANLIN_EXPO_APP_DEFINES_LOADED"
+  },
+  {
+    "file": "Staging/1_Test/Diagnostics/HanlinMiniAppsUITests-F1EE4E2D-9C78-4434-A9E7-9A4289471187-Configuration-Test Scheme Action-Iteration-1/HanlinMiniAppsUITests-0F8E58DD-F435-4D9A-9DAE-F3DBF8C4C79A/StandardOutputAndStandardError-com.itorah.hanlinminiapps.txt",
+    "line": 31474,
+    "text": "HANLIN_IMPORT_PACKAGE_TAPPED url=ModularTextSearch.hanlinExpo"
+  },
+  {
+    "file": "Staging/1_Test/Diagnostics/HanlinMiniAppsUITests-F1EE4E2D-9C78-4434-A9E7-9A4289471187-Configuration-Test Scheme Action-Iteration-1/HanlinMiniAppsUITests-0F8E58DD-F435-4D9A-9DAE-F3DBF8C4C79A/StandardOutputAndStandardError-com.itorah.hanlinminiapps.txt",
+    "line": 31475,
+    "text": "HANLIN_IMPORT_PACKAGE_STARTED: url=/Users/m1/Library/Developer/CoreSimulator/Devices/80E29B83-02CF-4481-B1AF-80A85CDE0247/data/Containers/Data/Application/9400B7E5-EBEA-4359-9B22-19FD5C47A996/Documents/ModularTextSearch.hanlinExpo"
+  },
+  {
+    "file": "Staging/1_Test/Diagnostics/HanlinMiniAppsUITests-F1EE4E2D-9C78-4434-A9E7-9A4289471187-Configuration-Test Scheme Action-Iteration-1/HanlinMiniAppsUITests-0F8E58DD-F435-4D9A-9DAE-F3DBF8C4C79A/StandardOutputAndStandardError-com.itorah.hanlinminiapps.txt",
+    "line": 382599,
+    "text": "HANLIN_IMPORT_PACKAGE_PREVIEW: canInstall=true entrypoints=4"
+  },
+  {
+    "file": "Staging/1_Test/Diagnostics/HanlinMiniAppsUITests-F1EE4E2D-9C78-4434-A9E7-9A4289471187-Configuration-Test Scheme Action-Iteration-1/HanlinMiniAppsUITests-0F8E58DD-F435-4D9A-9DAE-F3DBF8C4C79A/StandardOutputAndStandardError-com.itorah.hanlinminiapps.txt",
+    "line": 458772,
+    "text": "2026-11-25 02:44:03.904361+0100 HanlinMiniApps[27608:2828299] [HANLIN_EXPO_NATIVEAPI_GATE] Registered session context session=a38dcb8e-4bb4-42fb-9ab8-20a80bcdd3ce package=script-470d111992ef6fd2dfdc24b6 gen=0 granted=1"
+  },
+  {
+    "file": "Staging/1_Test/Diagnostics/HanlinMiniAppsUITests-F1EE4E2D-9C78-4434-A9E7-9A4289471187-Configuration-Test Scheme Action-Iteration-1/HanlinMiniAppsUITests-0F8E58DD-F435-4D9A-9DAE-F3DBF8C4C79A/StandardOutputAndStandardError-com.itorah.hanlinminiapps.txt",
+    "line": 458774,
+    "text": "2026-11-25 02:44:03.928527+0100 HanlinMiniApps[27608:2828299] HANLIN_EXPO_APPCONTEXT_CREATED"
+  },
+  {
+    "file": "Staging/1_Test/Diagnostics/HanlinMiniAppsUITests-F1EE4E2D-9C78-4434-A9E7-9A4289471187-Configuration-Test Scheme Action-Iteration-1/HanlinMiniAppsUITests-0F8E58DD-F435-4D9A-9DAE-F3DBF8C4C79A/StandardOutputAndStandardError-com.itorah.hanlinminiapps.txt",
+    "line": 458775,
+    "text": "2026-11-25 02:44:03.928597+0100 HanlinMiniApps[27608:2828299] HANLIN_EXPO_HOSTSERVICES_BOUND"
+  },
+  {
+    "file": "Staging/1_Test/Diagnostics/HanlinMiniAppsUITests-F1EE4E2D-9C78-4434-A9E7-9A4289471187-Configuration-Test Scheme Action-Iteration-1/HanlinMiniAppsUITests-0F8E58DD-F435-4D9A-9DAE-F3DBF8C4C79A/StandardOutputAndStandardError-com.itorah.hanlinminiapps.txt",
+    "line": 458788,
+    "text": "2026-11-25 02:44:04.092471+0100 HanlinMiniApps[27608:2828299] HANLIN_EXPO_MODULES_REGISTERED"
+  },
+  {
+    "file": "Staging/1_Test/Diagnostics/HanlinMiniAppsUITests-F1EE4E2D-9C78-4434-A9E7-9A4289471187-Configuration-Test Scheme Action-Iteration-1/HanlinMiniAppsUITests-0F8E58DD-F435-4D9A-9DAE-F3DBF8C4C79A/StandardOutputAndStandardError-com.itorah.hanlinminiapps.txt",
+    "line": 458790,
+    "text": "2026-11-25 02:44:04.094038+0100 HanlinMiniApps[27608:2828299] HANLIN_EXPO_REACT_FACTORY_CREATED"
+  },
+  {
+    "file": "Staging/1_Test/Diagnostics/HanlinMiniAppsUITests-F1EE4E2D-9C78-4434-A9E7-9A4289471187-Configuration-Test Scheme Action-Iteration-1/HanlinMiniAppsUITests-0F8E58DD-F435-4D9A-9DAE-F3DBF8C4C79A/StandardOutputAndStandardError-com.itorah.hanlinminiapps.txt",
+    "line": 458791,
+    "text": "2026-11-25 02:44:04.128356+0100 HanlinMiniApps[27608:2828299] HANLIN_EXPO_ROOTVIEW_CREATED"
+  },
+  {
+    "file": "Staging/1_Test/Diagnostics/HanlinMiniAppsUITests-F1EE4E2D-9C78-4434-A9E7-9A4289471187-Configuration-Test Scheme Action-Iteration-1/HanlinMiniAppsUITests-0F8E58DD-F435-4D9A-9DAE-F3DBF8C4C79A/StandardOutputAndStandardError-com.itorah.hanlinminiapps.txt",
+    "line": 458792,
+    "text": "2026-11-25 02:44:04.128384+0100 HanlinMiniApps[27608:2835721] HANLIN_EXPO_HOST_DID_INITIALIZE_RUNTIME runtime=0x0000000126721600"
+  },
+  {
+    "file": "Staging/1_Test/Diagnostics/HanlinMiniAppsUITests-F1EE4E2D-9C78-4434-A9E7-9A4289471187-Configuration-Test Scheme Action-Iteration-1/HanlinMiniAppsUITests-0F8E58DD-F435-4D9A-9DAE-F3DBF8C4C79A/StandardOutputAndStandardError-com.itorah.hanlinminiapps.txt",
+    "line": 458793,
+    "text": "2026-11-25 02:44:04.128502+0100 HanlinMiniApps[27608:2835721] HANLIN_EXPO_HOST_DID_INITIALIZE_RUNTIME runtime=0x0000000126721600"
+  },
+  {
+    "file": "Staging/1_Test/Diagnostics/HanlinMiniAppsUITests-F1EE4E2D-9C78-4434-A9E7-9A4289471187-Configuration-Test Scheme Action-Iteration-1/HanlinMiniAppsUITests-0F8E58DD-F435-4D9A-9DAE-F3DBF8C4C79A/StandardOutputAndStandardError-com.itorah.hanlinminiapps.txt",
+    "line": 458794,
+    "text": "2026-11-25 02:44:04.128664+0100 HanlinMiniApps[27608:2828299] HANLIN_EXPO_INITIALIZED_EXTERNAL_ROOT path=/Users/m1/Library/Developer/CoreSimulator/Devices/80E29B83-02CF-4481-B1AF-80A85CDE0247/data/Containers/Data/Application/9400B7E5-EBEA-4359-9B22-19FD5C47A996/Library/Application Support/Hanlin/ScriptingPlatform/Installed/packages/install-script-470d111992ef6fd2dfdc24b6/generations/1/source/ bundle=bundle.js"
+  },
+  {
+    "file": "Staging/1_Test/Diagnostics/HanlinMiniAppsUITests-F1EE4E2D-9C78-4434-A9E7-9A4289471187-Configuration-Test Scheme Action-Iteration-1/HanlinMiniAppsUITests-0F8E58DD-F435-4D9A-9DAE-F3DBF8C4C79A/StandardOutputAndStandardError-com.itorah.hanlinminiapps.txt",
+    "line": 458795,
+    "text": "2026-11-25 02:44:04.136435+0100 HanlinMiniApps[27608:2835721] HANLIN_EXPO_SET_RUNTIME_DONE"
+  },
+  {
+    "file": "Staging/1_Test/Diagnostics/HanlinMiniAppsUITests-F1EE4E2D-9C78-4434-A9E7-9A4289471187-Configuration-Test Scheme Action-Iteration-1/HanlinMiniAppsUITests-0F8E58DD-F435-4D9A-9DAE-F3DBF8C4C79A/StandardOutputAndStandardError-com.itorah.hanlinminiapps.txt",
+    "line": 458796,
+    "text": "2026-11-25 02:44:04.136559+0100 HanlinMiniApps[27608:2835721] HANLIN_EXPO_REGISTERED_MODULES=ExpoUI, ExpoAsset, ExpoBrownfieldStateModule, ExpoWidgets, HanlinExpoUI, ExpoModulesCoreJSLogger, HanlinGeneratedExpoUI, HanlinHostServices, ExpoBrownfieldModule"
+  },
+  {
+    "file": "Staging/1_Test/Diagnostics/HanlinMiniAppsUITests-F1EE4E2D-9C78-4434-A9E7-9A4289471187-Configuration-Test Scheme Action-Iteration-1/HanlinMiniAppsUITests-0F8E58DD-F435-4D9A-9DAE-F3DBF8C4C79A/StandardOutputAndStandardError-com.itorah.hanlinminiapps.txt",
+    "line": 458827,
+    "text": "2026-11-25 02:44:04.448214+0100 HanlinMiniApps[27608:2829457] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=actions.register"
+  },
+  {
+    "file": "Staging/1_Test/Diagnostics/HanlinMiniAppsUITests-F1EE4E2D-9C78-4434-A9E7-9A4289471187-Configuration-Test Scheme Action-Iteration-1/HanlinMiniAppsUITests-0F8E58DD-F435-4D9A-9DAE-F3DBF8C4C79A/StandardOutputAndStandardError-com.itorah.hanlinminiapps.txt",
+    "line": 458828,
+    "text": "2026-11-25 02:44:04.452022+0100 HanlinMiniApps[27608:2829457] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=actions.next"
+  },
+  {
+    "file": "Staging/1_Test/Diagnostics/HanlinMiniAppsUITests-F1EE4E2D-9C78-4434-A9E7-9A4289471187-Configuration-Test Scheme Action-Iteration-1/HanlinMiniAppsUITests-0F8E58DD-F435-4D9A-9DAE-F3DBF8C4C79A/StandardOutputAndStandardError-com.itorah.hanlinminiapps.txt",
+    "line": 477377,
+    "text": "2026-11-25 02:44:11.704692+0100 HanlinMiniApps[27608:2828457] HANLIN_EXPO_HOSTSERVICES_INVOKE method=hasCapability capability=ios-native-api"
+  },
+  {
+    "file": "Staging/1_Test/Diagnostics/HanlinMiniAppsUITests-F1EE4E2D-9C78-4434-A9E7-9A4289471187-Configuration-Test Scheme Action-Iteration-1/HanlinMiniAppsUITests-0F8E58DD-F435-4D9A-9DAE-F3DBF8C4C79A/StandardOutputAndStandardError-com.itorah.hanlinminiapps.txt",
+    "line": 477378,
+    "text": "2026-11-25 02:44:11.723837+0100 HanlinMiniApps[27608:2828457] HANLIN_EXPO_HOSTSERVICES_INVOKE method=hasCapability capability=network"
+  }
+]

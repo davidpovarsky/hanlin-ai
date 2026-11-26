@@ -1,0 +1,11 @@
+{
+  "name": "canonical-sdk-manifest",
+  "command": [
+    "python3",
+    "Scripts/SDK/generate_manifest.py"
+  ],
+  "exit": 0,
+  "duration": 5.651752004399896,
+  "stdout_sha256": "b8b408e9dd69c24d28a610c03fe416e919f10137aa8a40ed33e0179b9ad34fe2",
+  "stderr_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

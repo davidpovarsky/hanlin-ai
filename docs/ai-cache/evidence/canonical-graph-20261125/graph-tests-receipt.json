@@ -1,0 +1,33 @@
+{
+  "source_sha": "c679fa3f285772f33decc914c0d7845feae9daff",
+  "records": [
+    {
+      "command": [
+        "/opt/homebrew/bin/python3.12",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "Scripts/SDK/tests",
+        "-v"
+      ],
+      "exit_code": 0,
+      "log": "/Users/m1/builds/hanlin-ai-cache-graph-evidence-20261125/5-graph-tests.log"
+    },
+    {
+      "command": [
+        "/opt/homebrew/bin/python3.12",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "Scripts/CI/IntegrationValidation",
+        "-p",
+        "test_project_graph.py",
+        "-v"
+      ],
+      "exit_code": 0,
+      "log": "/Users/m1/builds/hanlin-ai-cache-graph-evidence-20261125/6-graph-tests.log"
+    }
+  ]
+}

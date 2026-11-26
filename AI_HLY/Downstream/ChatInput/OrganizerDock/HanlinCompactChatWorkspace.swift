@@ -11,6 +11,7 @@ import HanlinLocalization
 //  chat destination (`.chat(UUID)`), while hiding the dock in `.allConversations`.
 //
 
+import HanlinChatUI
 import SwiftUI
 import SwiftData
 import UIKit
@@ -47,6 +48,7 @@ struct HanlinCompactChatWorkspace: View {
     @State private var dockHeight: CGFloat = 176
     @State private var workspaceSize: CGSize = .zero
     @State private var keyboardOwner = HanlinCompactKeyboardOwner()
+    @State private var isComposerPanelInputFocused = false
     @State private var matchedMessageIDByChat: [UUID: UUID] = [:]
     @FocusState private var isCompactComposerInputActive: Bool
 
@@ -168,6 +170,17 @@ struct HanlinCompactChatWorkspace: View {
                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 0, maxHeight: .infinity)
             if composerVisible {
                 anchoredComposer(availableSize: workspaceSize)
+                    .onPreferenceChange(HanlinComposerFieldFocusPreferenceKey.self) { focused in
+                        isComposerPanelInputFocused = focused
+                    }
+                    .background {
+                        HanlinCompactSearchFocusRegistration(
+                            owner: keyboardOwner, isFocused: isComposerPanelInputFocused
+                        )
+                        .accessibilityHidden(true)
+                        .allowsHitTesting(false)
+                    }
+                    .onDisappear { isComposerPanelInputFocused = false }
                     .compactWorkspaceGeometryProbe("composer")
                     .fixedSize(horizontal: false, vertical: true)
                     .transition(.move(edge: .bottom).combined(with: .opacity))
@@ -489,7 +502,9 @@ struct HanlinCompactChatWorkspace: View {
             readCurrentMessageState: {
                 if let endpoint { return endpoint.readCurrentMessageState?() }
                 return sessionBridge.homeDraft.snapshot
-            }
+            },
+            capabilityDraft: endpoint?.capabilityDraft ?? sessionBridge.homeDraft,
+            composerCapabilities: HanlinComposerCapabilities.catalog()
         )
         .onGeometryChange(for: CGFloat.self) { geo in
             geo.size.height

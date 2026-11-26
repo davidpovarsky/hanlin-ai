@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "python3",
+    "-m",
+    "unittest",
+    "Scripts.ProductSplit.test_run_paired_acceptance.PairedSwiftTestingSelectorTests",
+    "-v"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124",
+  "source": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+  "startedAt": "2026-11-25T10:26:24.530803+00:00",
+  "seconds": 0.18328531179577112,
+  "exitCode": 1,
+  "testSHA256": "3791b4178c5cc49b64c38ead6f913284f29fc990c7223953aa74f2075f3771f1",
+  "runnerSHA256": "014a10ca33badfc036a3713d4715423a361c6c9fea2e76c24411b5725ac2719f",
+  "logSHA256": "07be3372545a093c7f55a304e3977a3d3daa5dfe0e16881b01938ca586cff0df"
+}

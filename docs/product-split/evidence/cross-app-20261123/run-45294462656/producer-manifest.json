@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "producer_sha": "a774de24926ca13d563c45c42917d03b8c04296f",
+  "run_id": "45294462656",
+  "bundle_id": "com.itorah.hanlinminiapps",
+  "app_relative_path": "HanlinMiniApps.app",
+  "executable_name": "HanlinMiniApps",
+  "executable_sha256": "abcd4deb26fa35e4898a2e88ed1c415fc6db7a2505f46ac812457c10133e1026",
+  "archive_name": "HanlinMiniApps-simulator.zip",
+  "archive_sha256": "16c4440837527a08099c9386880713fba50a3886387a3bcbffcbe56b616d75a0",
+  "build_status": "EXECUTED_PASS",
+  "native_acceptance_status": "INFRA_ERROR",
+  "architecture": "arm64",
+  "sdk": "27.2",
+  "physical_signing_status": "NOT_VALIDATED_BY_SIMULATOR"
+}

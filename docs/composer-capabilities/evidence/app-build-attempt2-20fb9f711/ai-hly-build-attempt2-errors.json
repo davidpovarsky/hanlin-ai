@@ -1,0 +1,76 @@
+{
+  "sourceCommit": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
+  "exitCode": 65,
+  "capturedAtUTC": "2026-11-25T01:29:20.109307+00:00",
+  "errors": [
+    {
+      "_type": {
+        "_name": "IssueSummary"
+      },
+      "documentLocationInCreatingWorkspace": {
+        "_type": {
+          "_name": "DocumentLocation"
+        },
+        "concreteTypeName": {
+          "_type": {
+            "_name": "String"
+          },
+          "_value": "DVTTextDocumentLocation"
+        },
+        "url": {
+          "_type": {
+            "_name": "String"
+          },
+          "_value": "file:///Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactChatWorkspace.swift#EndingColumnNumber=20&EndingLineNumber=612&StartingColumnNumber=20&StartingLineNumber=612&Timestamp=817262615.63141"
+        }
+      },
+      "issueType": {
+        "_type": {
+          "_name": "String"
+        },
+        "_value": "Swift Compiler Error"
+      },
+      "message": {
+        "_type": {
+          "_name": "String"
+        },
+        "_value": "Overriding property must be as accessible as its enclosing type"
+      }
+    },
+    {
+      "_type": {
+        "_name": "IssueSummary"
+      },
+      "documentLocationInCreatingWorkspace": {
+        "_type": {
+          "_name": "DocumentLocation"
+        },
+        "concreteTypeName": {
+          "_type": {
+            "_name": "String"
+          },
+          "_value": "DVTTextDocumentLocation"
+        },
+        "url": {
+          "_type": {
+            "_name": "String"
+          },
+          "_value": "file:///Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/AI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactChatWorkspace.swift#EndingColumnNumber=20&EndingLineNumber=612&StartingColumnNumber=20&StartingLineNumber=612&Timestamp=817262615.63141"
+        }
+      },
+      "issueType": {
+        "_type": {
+          "_name": "String"
+        },
+        "_value": "Swift Compiler Error"
+      },
+      "message": {
+        "_type": {
+          "_name": "String"
+        },
+        "_value": "Cannot override with a stored property 'focused'"
+      }
+    }
+  ],
+  "logSHA256": "49e8df8a70597ca6f0f36f5974976ac0f51420ed5771f763cf90f5ffbc14b933"
+}

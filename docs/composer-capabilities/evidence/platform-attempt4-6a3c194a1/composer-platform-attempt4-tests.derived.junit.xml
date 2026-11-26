@@ -1,0 +1,11 @@
+<?xml version='1.0' encoding='utf-8'?>
+<testsuite name="Hanlin focused retry interrupted before test execution" tests="0" failures="0" errors="0" skipped="0" time="41.611">
+  <properties>
+    <property name="executionStatus" value="BLOCKED_CAPACITY" />
+    <property name="expectedButNotRun" value="6" />
+    <property name="evidenceFormat" value="derived from raw Swift Testing log and explicit capacity cancellation receipt" />
+    <property name="sourceCommit" value="6a3c194a1951aa8394c76efcb6e100e76ade56c2" />
+    <property name="rawLogSHA256" value="ceec8da6e6a670896dc4f2f8c0e99abec2e2098598f5239986bb53d879349d6f" />
+  </properties>
+  <system-out>No test case executed. Expected methods: expoAssetPluginRequiresItsActualEmbeddedVersion, expoSwiftUIContract, unavailableModernNativePluginsFailBeforeImport, preparedAssistantEntrypointsRemainDistinctInCatalog, assistantEntrypointResolutionRequiresExactHandler, duplicateAssistantHandlersRemainInvalid</system-out>
+</testsuite>

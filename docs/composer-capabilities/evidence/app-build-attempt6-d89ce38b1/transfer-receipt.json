@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "transferredAtUTC": "2026-11-25T03:43:36.784363+00:00",
+  "transport": "Oracle pinned scaleway-mac SSH alias, BatchMode=yes, StrictHostKeyChecking=yes",
+  "sourceReadOnly": true,
+  "allSourceSHA256Verified": true,
+  "noBuildsTestsGeneratorsDevicesCacheActionsOrMacWrites": true,
+  "files": [
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt6-d89ce38b1/ai-hly-build-attempt6.json",
+      "bytes": 1458,
+      "sha256": "aeb414df2dc399bb14b792f4482b6ffc2b8545c9dec745a7b6e3ef176aeff958",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/ai-hly-build-attempt6.json",
+      "sourceBytes": 1458,
+      "sourceSHA256": "aeb414df2dc399bb14b792f4482b6ffc2b8545c9dec745a7b6e3ef176aeff958",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt6-d89ce38b1/ai-hly-build-attempt6.log.gz",
+      "bytes": 22166,
+      "sha256": "60972f3731f45fce1b0bf6c7238866858517eeb41e1844a8c0258c605de4067b",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/ai-hly-build-attempt6.log",
+      "sourceBytes": 407900,
+      "sourceSHA256": "479775e23c60d7ccbf2ee82cf297de84acfc927d68f65320498de12070692bd8",
+      "compressedForRepository": true,
+      "uncompressedLogSHA256": "479775e23c60d7ccbf2ee82cf297de84acfc927d68f65320498de12070692bd8",
+      "uncompressedLogBytes": 407900
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt6-d89ce38b1/ai-hly-build-attempt6-process.json",
+      "bytes": 1096,
+      "sha256": "a9301601f07b6dea33c9533370625275e8f92e9240f42fabb5fb4ef9d790bfb7",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/ai-hly-build-attempt6-process.json",
+      "sourceBytes": 1096,
+      "sourceSHA256": "a9301601f07b6dea33c9533370625275e8f92e9240f42fabb5fb4ef9d790bfb7",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt6-d89ce38b1/app6-capacity-plan-refresh.json",
+      "bytes": 3072,
+      "sha256": "2542f16e1cb734a98ae630c6fd3910004a1e7f6955259bf918c559493d98ed94",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/app6-capacity-plan-refresh.json",
+      "sourceBytes": 3072,
+      "sourceSHA256": "2542f16e1cb734a98ae630c6fd3910004a1e7f6955259bf918c559493d98ed94",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt6-d89ce38b1/app6-incremental-capacity-plan.json",
+      "bytes": 899,
+      "sha256": "3d4bb6a4b5da2fb877bf27495de03c4c19ca6d0c00502860c465ca4d616c47c8",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/app6-incremental-capacity-plan.json",
+      "sourceBytes": 899,
+      "sourceSHA256": "3d4bb6a4b5da2fb877bf27495de03c4c19ca6d0c00502860c465ca4d616c47c8",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt6-d89ce38b1/app6-capacity-followup.json",
+      "bytes": 908,
+      "sha256": "4fa239f5f8f2ab5e6116a44639e84f80bbf97b14621a677981bf5c2e85dd1cea",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/app6-capacity-followup.json",
+      "sourceBytes": 908,
+      "sourceSHA256": "4fa239f5f8f2ab5e6116a44639e84f80bbf97b14621a677981bf5c2e85dd1cea",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt6-d89ce38b1/inactive-composer-sdk-cache-retirement-20261125.json",
+      "bytes": 3268,
+      "sha256": "78f9bac2cc47087125663044464143a4c2ae6b53f5e4d707174d30705685c9f6",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/inactive-composer-sdk-cache-retirement-20261125.json",
+      "sourceBytes": 3268,
+      "sourceSHA256": "78f9bac2cc47087125663044464143a4c2ae6b53f5e4d707174d30705685c9f6",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-build-attempt6-d89ce38b1/xcresult-sha256.json",
+      "bytes": 1972,
+      "sha256": "7717804e0a3734e024c4bd64a5c54f547dfe966548703cc414dedb7fcf60ebaa",
+      "sourcePath": "Read-only original Mac app6 result bundle hashes",
+      "compressedForRepository": false,
+      "derived": true
+    }
+  ]
+}

@@ -1,0 +1,2 @@
+{"observedAt": "2026-11-25T03:39:23.512744+00:00", "error": "Command '['xcrun', 'simctl', 'get_app_container', '4EC498EF-82B7-4FC1-B1CF-20AB8BD5CB25', 'com.itorah.hanlinminiapps', 'data']' timed out after 5 seconds"}
+{"observedAt": "2026-11-25T03:39:29.526426+00:00", "error": "Command '['xcrun', 'simctl', 'get_app_container', '4EC498EF-82B7-4FC1-B1CF-20AB8BD5CB25', 'com.itorah.hanlinminiapps', 'data']' timed out after 5 seconds"}

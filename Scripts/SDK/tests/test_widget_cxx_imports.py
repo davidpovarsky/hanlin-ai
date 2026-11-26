@@ -1,5 +1,6 @@
 import json
 import os
+import re
 from pathlib import Path
 import subprocess
 import sys
@@ -64,21 +65,38 @@ class WidgetCxxImportTests(unittest.TestCase):
         objects = parse_project(project_text)["objects"]
         expected_flags = ["$(inherited)"] + [
             flag.replace(str(ROOT), "$(SRCROOT)") for flag in expected[1]]
-        consumers = {"HanlinScriptingWidgets", "HanlinMiniAppsWidgets", "AI_HLYTests"}
-        configurations = set()
-        for value in objects.values():
-            if value.get("isa") != "PBXNativeTarget" or value.get("name") not in consumers:
-                continue
-            for key in objects[value["buildConfigurationList"]]["buildConfigurations"]:
+        consumers = {"HanlinApp", "HanlinMiniApps", "AI_HLYTests", "HanlinMiniAppsTests",
+                     "HanlinScriptingWidgets", "HanlinMiniAppsWidgets"}
+        hosts = {value["name"]: value for value in objects.values()
+                 if value.get("isa") == "PBXNativeTarget" and value.get("name") in consumers}
+        self.assertEqual(set(hosts), consumers)
+        for name, value in hosts.items():
+            configs = objects[value["buildConfigurationList"]]["buildConfigurations"]
+            self.assertEqual({objects[key]["name"] for key in configs}, {"Debug", "Release"})
+            for key in configs:
                 settings = objects[key]["buildSettings"]
-                configurations.add((value["name"], objects[key]["name"]))
-                with self.subTest(host=value["name"], config=objects[key]["name"]):
+                with self.subTest(host=name, config=objects[key]["name"]):
                     self.assertEqual(settings["SWIFT_OBJC_INTEROP_MODE"], "objcxx")
-                    self.assertEqual(settings.get("SWIFT_ENABLE_EXPLICIT_MODULES"), "YES",
-                                     "The consumer must preserve the producer's explicit module import context.")
-                    self.assertEqual(settings["OTHER_SWIFT_FLAGS"], expected_flags)
-        self.assertEqual(configurations, {(name, config) for name in consumers
-                                          for config in ("Debug", "Release")})
+                    self.assertEqual(settings["SWIFT_ENABLE_EXPLICIT_MODULES"], "YES")
+                    flags = settings["OTHER_SWIFT_FLAGS"]
+                    self.assertIn("$(inherited)", flags)
+                    for index in range(1, len(expected_flags), 2):
+                        pair = expected_flags[index:index + 2]
+                        self.assertTrue(any(flags[offset:offset + 2] == pair
+                                            for offset in range(len(flags) - 1)), pair)
+                    if name in {"HanlinScriptingWidgets", "HanlinMiniAppsWidgets"}:
+                        self.assertEqual(flags, expected_flags)
+        # Preserve an existing scalar flags setting, including app-specific
+        # definitions, without modifying any other project object or setting.
+        app_key = objects[hosts["HanlinApp"]["buildConfigurationList"]]["buildConfigurations"][0]
+        seeded = update_project.edit_object(project_text, app_key, lambda block: re.sub(
+            r'"?OTHER_SWIFT_FLAGS"? = [^;]+;',
+            'OTHER_SWIFT_FLAGS = "$(inherited) -D HANLIN_IMPORT_PARITY_PROBE";', block, count=1))
+        expected_project = parse_project(seeded)
+        expected_project["objects"][app_key]["buildSettings"]["OTHER_SWIFT_FLAGS"] = [
+            "$(inherited)", "-D", "HANLIN_IMPORT_PARITY_PROBE", *expected_flags[1:]]
+        self.assertEqual(parse_project(update_project.wire_widget_cxx_imports(seeded, unified)),
+                         expected_project)
         # Use the actual project producer, including the real MiniApps extension
         # cloning path. Neither this source contract nor dump-package runs Xcode.
         with tempfile.TemporaryDirectory(prefix="hanlin-widget-cxx-project-") as folder:

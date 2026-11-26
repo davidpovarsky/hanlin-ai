@@ -1,0 +1,252 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:hanlin:assistant-tool:1",
+  "title": "Hanlin assistantTool entrypoint",
+  "$ref": "#/$defs/assistantToolEntrypoint",
+  "$defs": {
+    "composerOption": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "children": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/composerOption"
+          }
+        }
+      }
+    },
+    "composerField": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "key",
+        "title",
+        "kind"
+      ],
+      "properties": {
+        "key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "enum": [
+            "text",
+            "toggle",
+            "number",
+            "choice",
+            "multiChoice",
+            "catalog",
+            "location"
+          ]
+        },
+        "required": {
+          "type": "boolean",
+          "default": false
+        },
+        "defaultValue": {},
+        "options": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/composerOption"
+          }
+        },
+        "minimum": {
+          "type": "number"
+        },
+        "maximum": {
+          "type": "number"
+        },
+        "placeholder": {
+          "type": "string"
+        }
+      }
+    },
+    "composerPanel": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "fields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/composerField"
+          }
+        },
+        "customViewID": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "anyOf": [
+        {
+          "required": [
+            "fields"
+          ],
+          "properties": {
+            "fields": {
+              "minItems": 1
+            }
+          }
+        },
+        {
+          "required": [
+            "customViewID"
+          ]
+        }
+      ]
+    },
+    "composerConfiguration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "panels"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "const": 1,
+          "default": 1
+        },
+        "panels": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/composerPanel"
+          }
+        }
+      }
+    },
+    "assistantToolAction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "title",
+        "summary",
+        "inputSchema"
+      ],
+      "properties": {
+        "id": {
+          "$ref": "#/$defs/actionIdentifier"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "inputSchema": {
+          "type": "object",
+          "required": [
+            "type"
+          ],
+          "properties": {
+            "type": {
+              "const": "object"
+            }
+          }
+        },
+        "outputSchema": {
+          "type": "object"
+        },
+        "exportedSymbol": {
+          "type": "string",
+          "minLength": 1
+        },
+        "embeddedResultID": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "assistantToolDeclaration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "title",
+        "summary",
+        "actions"
+      ],
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "summary": {
+          "type": "string",
+          "minLength": 1
+        },
+        "actions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/assistantToolAction"
+          }
+        },
+        "configuration": {
+          "$ref": "#/$defs/composerConfiguration"
+        }
+      }
+    },
+    "assistantToolEntrypoint": {
+      "type": "object",
+      "required": [
+        "id",
+        "kind",
+        "sourcePath",
+        "assistantTool"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "kind": {
+          "const": "assistantTool"
+        },
+        "sourcePath": {
+          "type": "string",
+          "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.?/)[^\\\\:]+/bundle\\.(?:js|mjs)$"
+        },
+        "assistantTool": {
+          "$ref": "#/$defs/assistantToolDeclaration"
+        }
+      }
+    },
+    "actionIdentifier": {
+      "description": "Case-sensitive action identity, including prepared JavaScript export names.",
+      "maxLength": 255,
+      "pattern": "^[A-Za-z0-9]+(?:[._-][A-Za-z0-9]+)*(?![\\s\\S])",
+      "type": "string"
+    }
+  }
+}

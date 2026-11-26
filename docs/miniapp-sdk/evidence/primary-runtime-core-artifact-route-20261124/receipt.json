@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-24T18:38:16.301660+00:00",
+  "inspectedSource": "5820709e563a89fd27791a1b5bde8f9362362094",
+  "actualPrimarySource": "36a044c3c147eda2baa4fbe99e0fe698dcd0c13e",
+  "status": "ORIGINAL_ARTIFACT_ROUTE_METADATA_VERIFIED",
+  "failure": "Primary attempt2's unchanged RuntimeCore preparation used an empty RUNTIME_CORE_ARTIFACT_RUN_ID and therefore the release fallback; that tag is absent (authenticated404). No native input incompatibility was reported.",
+  "correction": "Supply the existing authorized workflow input RUNTIME_CORE_ARTIFACT_RUN_ID=42926628418 to the primary controller. This is the same candidate input previously used by MAIN16/17. Original runtime_bundle_source.py and prepare-runtime-core.sh validations remain unchanged.",
+  "originalMetadataValidator": "validate_source(run, artifacts, same_repository, exact_artifact_name) PASS on these retained authenticated responses",
+  "runtimeBundle": {
+    "formatVersion": 1,
+    "releaseRepository": "davidpovarsky/hanlin-ai",
+    "releaseTagPrefix": "runtime-core-v1-",
+    "sha256": "196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f",
+    "verificationStatus": "verified",
+    "artifactDependencyHash": "2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194",
+    "nativeInputSHA256": "d1e91cbfbc838b9a74c1127fe52eee87c2fec7ca220f29c99eab96ad45c43fd5",
+    "sourceCommit": "4784dd99c3e5892ef726e7a3cce6587eb7847997"
+  },
+  "candidate": {
+    "runId": 42926628418,
+    "sourceCommit": "4784dd99c3e5892ef726e7a3cce6587eb7847997",
+    "repository": "davidpovarsky/hanlin-ai",
+    "status": "completed",
+    "conclusion": "success",
+    "artifact": {
+      "id": 13813704965,
+      "node_id": "MDg6QXJ0aWZhY3QxMzgxMzcwNDk2NQ==",
+      "name": "hanlin-runtime-bundle-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194",
+      "size_in_bytes": 86367710,
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/13813704965",
+      "archive_download_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/13813704965/zip",
+      "expired": false,
+      "digest": "sha256:f329036ba1ed870b9afb43ed164418f987505361d2a3276bfef1a89826cab850",
+      "created_at": "2026-11-11T00:02:24Z",
+      "updated_at": "2026-11-11T00:02:24Z",
+      "expires_at": "2026-11-25T00:02:19Z",
+      "workflow_run": {
+        "id": 42926628418,
+        "repository_id": 1295277723,
+        "head_repository_id": 1295277723,
+        "head_branch": "fix/hanlin-approved-plan-20261108",
+        "head_sha": "4784dd99c3e5892ef726e7a3cce6587eb7847997"
+      }
+    }
+  },
+  "sourceSHA256": {
+    "RuntimeDependencies.lock.json": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a",
+    "Scripts/Runtime/prepare-runtime-core.sh": "8765967fdba85cc77dcbf3c02936993c39bf186d7327560a3d84590222710a10",
+    "Scripts/Runtime/runtime_bundle_source.py": "059f37520387b3cf49d7d08fd22c81e5c9bd4050ca90cd76f2b5989aafcb7038",
+    "Scripts/Runtime/runtime_native_identity.py": "2b0430d2bfc8c1e362d3a5f764280459ad14551714613eecc47fae4d36409ff2",
+    ".github/workflows/validate-app-split.yml": "677ba19c3a2e281e850b182b3bef8bcde709ee167f58d601c1c3aa6ade665982"
+  },
+  "scope": "Read-only authenticated GitHub metadata and original metadata validator. Root did not download, install, compile, modify runtime binaries or bypass any archive/native-input/smoke check. Actual archive download/checksum/extraction/installation remains with the sole primary execution owner.",
+  "evidenceFiles": [
+    {
+      "path": "artifacts.json",
+      "bytes": 5613,
+      "sha256": "e99cdc89351ad46b45507040e44335f0a5c0dd72edda3a3d159fbf07eedf012f"
+    },
+    {
+      "path": "release-404.json",
+      "bytes": 366,
+      "sha256": "e5130820b853fa84f9c0f28a429624cbcff76b3396506eade2640010220d0c24"
+    },
+    {
+      "path": "run.json",
+      "bytes": 15543,
+      "sha256": "0dd39c9500e757172ded8b9c7254faa91e81c213fce68cc72946eaa9eba69f84"
+    }
+  ]
+}

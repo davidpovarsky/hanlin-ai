@@ -104,6 +104,8 @@ final class HanlinAppHostIntegration: HanlinHostIntegration, HanlinHostCapabilit
     func prepareStep(_ step: Int, session: HanlinHostSession) async throws -> HanlinHostStepPreparation {
         _ = try await context(for: session)
         guard let toolAdapter else { return .init(activeAliases: []) }
+        try await toolAdapter.session.prepareExplicitSelections(using: toolAdapter.preparedTools,
+            catalog: toolAdapter.catalog, store: toolAdapter.skillStore)
         let prepared = await toolAdapter.prepareStep(stepNumber: step)
         _ = try await context(for: session)
         return .init(activeAliases: prepared.activeToolAliases + (!supportsSplit || prepared.activeToolAliases.contains(Self.splitAlias) ? [] : [Self.splitAlias]), skillIDs: prepared.loadedSkillIDs,

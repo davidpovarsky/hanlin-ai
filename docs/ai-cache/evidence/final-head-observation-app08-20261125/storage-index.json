@@ -1,0 +1,22 @@
+{
+  "files": [
+    {
+      "original": "README.md",
+      "originalSHA256": "bcc9bda18748db1baf89d9fee5021fee8c390c8f4cfd484c705c08d4e30403ec",
+      "stored": "README.md",
+      "storedSHA256": "bcc9bda18748db1baf89d9fee5021fee8c390c8f4cfd484c705c08d4e30403ec"
+    },
+    {
+      "original": "index.json",
+      "originalSHA256": "bee71ada104e2da15e9a2d73ab37b82059c432897d6c7e24c16c336bd83a8305",
+      "stored": "index.json",
+      "storedSHA256": "bee71ada104e2da15e9a2d73ab37b82059c432897d6c7e24c16c336bd83a8305"
+    },
+    {
+      "original": "observation.json",
+      "originalSHA256": "5cdac66771abeb8e4b468a60dee99a72ed9bd31167599754e2fb097076d7364c",
+      "stored": "observation.json",
+      "storedSHA256": "5cdac66771abeb8e4b468a60dee99a72ed9bd31167599754e2fb097076d7364c"
+    }
+  ]
+}

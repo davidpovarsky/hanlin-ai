@@ -1,0 +1,22 @@
+{
+  "source_sha": "4b772b5a7f0eb826c9b9204122bba516af777592",
+  "actual_23_gate": "FAILED_CASES_PRESERVED; full xcresult finalization pending",
+  "raw_log_path": "/Users/m1/builds/hanlin-miniapps-final-native-20261125/build/native-final-evidence/attempt-4b772b5a-01/MiniApps.xcresult/Staging/1_Test/Diagnostics/HanlinMiniAppsUITests-B978F9F6-A552-4EC6-8394-4BA37799CB04-Configuration-Test Scheme Action-Iteration-1/HanlinMiniAppsUITests-326590DF-924F-4469-9F83-4648101F67C6/StandardOutputAndStandardError-com.itorah.hanlinminiapps.txt",
+  "raw_log_bytes": 57166402,
+  "raw_log_sha256": "e51cdcc9f08282a4b40725cee24c1ea5c23df974390d16bba8d1b9312fdc6492",
+  "observations": [
+    {
+      "expected": "gamma-edited",
+      "observed": "-editedgamma",
+      "exact_ax_line": "TextView, identifier: 'hanlin-ns-window-input', value: -editedgamma, Keyboard Focused",
+      "native_input_executed": true
+    },
+    {
+      "expected": "alpha-edited",
+      "observed": "-editedalpha",
+      "exact_ax_line": "TextView, identifier: 'hanlin-ns-window-input', value: -editedalpha, Keyboard Focused",
+      "native_input_executed": true
+    }
+  ],
+  "inference": "Tap placed native caret before original text; typeText inserted exact suffix at start. Other4 later UI failures occurred before catalog ready; new lifecycle test saw restored NativeScript runtime already active. No original assertion weakened."
+}

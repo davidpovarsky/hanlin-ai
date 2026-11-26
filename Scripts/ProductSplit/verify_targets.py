@@ -32,6 +32,49 @@ def validate_native_test_membership():
     return sorted(paths)
 
 
+
+def native_ui_typecheck_command(architecture, sdk_path, platform_path, sources):
+    """Typecheck the actual XCTest-only UI target before expensive app compilation."""
+    project = parse_project((ROOT / "AI_HLY.xcodeproj/project.pbxproj").read_text(encoding="utf-8"))
+    objects = project["objects"]
+    target = next(value for value in objects.values()
+                  if value.get("isa") == "PBXNativeTarget" and value.get("name") == "HanlinMiniAppsUITests")
+    scheme = ET.parse(ROOT / "AI_HLY.xcodeproj/xcshareddata/xcschemes/HanlinMiniApps.xcscheme")
+    configuration = scheme.getroot().find("TestAction").attrib["buildConfiguration"]
+    settings = {}
+    for owner in (objects[project["rootObject"]], target):
+        config = next(objects[key] for key in objects[owner["buildConfigurationList"]]["buildConfigurations"]
+                      if objects[key]["name"] == configuration)
+        settings.update(config["buildSettings"])
+    # Match the actual UI compiler command captured in run 45316423267.
+    # This target imports XCTest only; no app or third-party replacement module
+    # is used, and its full original Xcode build and execution remain required.
+    swift_version = str(settings["SWIFT_VERSION"]).split(".")[0]
+    deployment = settings["IPHONEOS_DEPLOYMENT_TARGET"]
+    command = ["xcrun", "--sdk", "iphonesimulator", "swiftc", "-typecheck",
+               "-module-name", "HanlinMiniAppsUITests", "-swift-version", swift_version,
+               "-target", f"{architecture}-apple-ios{deployment}-simulator", "-sdk", str(sdk_path),
+               # XCTest's Swift overlay is outside XCTest.framework. Preserve
+               # Xcode's system import path; framework-only imports expose the
+               # Objective-C assertion macros, which Swift cannot call.
+               "-Isystem", str(Path(platform_path) / "Developer/usr/lib"),
+               "-module-alias", "Testing=_Testing_Unavailable",
+               "-F", str(Path(platform_path) / "Developer/Library/Frameworks"),
+               "-F", str(Path(sdk_path) / "Developer/Library/Frameworks"),
+               "-enable-experimental-feature", "DebugDescriptionMacro"]
+    if settings.get("ENABLE_TESTABILITY") == "YES":
+        command.append("-enable-testing")
+    conditions = settings.get("SWIFT_ACTIVE_COMPILATION_CONDITIONS", "").split()
+    for condition in conditions:
+        if condition != "$(inherited)":
+            command += ["-D", condition]
+    if settings.get("SWIFT_DEFAULT_ACTOR_ISOLATION"):
+        command += ["-default-isolation", settings["SWIFT_DEFAULT_ACTOR_ISOLATION"]]
+    if settings.get("SWIFT_STRICT_CONCURRENCY"):
+        command += ["-strict-concurrency=" + settings["SWIFT_STRICT_CONCURRENCY"]]
+    return command + list(sources)
+
+
 def main():
     validate_native_test_membership()
     # The parser rejects duplicate IDs/keys and reads quoted and ordinary OpenStep alike.

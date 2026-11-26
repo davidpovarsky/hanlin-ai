@@ -90,7 +90,7 @@ final class HanlinMiniAppsUITests: XCTestCase {
         install.tap()
         let installed = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: install)
         XCTAssertEqual(XCTWaiter.wait(for: [installed], timeout: 60), .completed)
-        app.navigationBars["Script Package"].buttons["Done"].tap()
+        app.buttons["hanlin-package-import-done"].tap()
         let close = app.buttons["hanlin-apps-add-done"]
         XCTAssertTrue(close.waitForExistence(timeout: 15))
         close.tap()
@@ -231,7 +231,9 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         launchInstalledPackage(named: parityPackageName)
 
         // 1. Verify App Title
-        let titlePredicate = NSPredicate(format: "label CONTAINS 'HanlinScript Parity' OR identifier == 'hanlin-script-parity-title'")
+        // Only the original NativeScript root can satisfy this identifier.
+        // The catalog card with the same label is not execution evidence.
+        let titlePredicate = NSPredicate(format: "identifier == %@", "hanlin-script-parity-title")
         let titleCandidate = app.descendants(matching: .any).matching(titlePredicate).firstMatch
         XCTAssertTrue(titleCandidate.waitForExistence(timeout: 30), "HanlinScript Parity title did not render")
         capture(name: "Parity-App-Launched")
@@ -245,7 +247,9 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         // Node: [VERIFIED Node <version>] nonce=...
         let nodePredicate = NSPredicate(format: "label CONTAINS '[VERIFIED Node' AND label CONTAINS %@ AND NOT (label CONTAINS 'Err' OR label CONTAINS 'Error')", challengeNonce)
         let nodeLabel = app.descendants(matching: .any).matching(nodePredicate).firstMatch
-        XCTAssertTrue(nodeLabel.waitForExistence(timeout: 25), "Node execution did not return verified Node runtime output with nonce \(challengeNonce)")
+        // First use prepares the original embedded Host before executing Node.
+        // Preserve the actual nonce/result contract within the existing 420s case allowance.
+        XCTAssertTrue(nodeLabel.waitForExistence(timeout: 180), "Node execution did not return verified Node runtime output with nonce \(challengeNonce)")
 
         // Python: [VERIFIED CPython <version>] nonce=...
         let pyPredicate = NSPredicate(format: "label CONTAINS '[VERIFIED CPython' AND label CONTAINS %@ AND NOT (label CONTAINS 'Err' OR label CONTAINS 'Error')", challengeNonce)
@@ -752,23 +756,29 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         XCTAssertTrue(waitUntil(timeout: 10) { edit.label == "Done" },
                       "The generated SwiftUI EditButton must change the actual native edit mode.")
 
-        let row = app.cells.containing(.staticText, identifier: "Generated Alpha").firstMatch
+        // Native edit mode combines the removal action and row text in one label.
+        let row = app.cells.containing(NSPredicate(
+            format: "label == %@ OR label ENDSWITH %@", "Generated Alpha", ", Generated Alpha")).firstMatch
         XCTAssertTrue(row.waitForExistence(timeout: 10))
-        let delete = row.buttons.matching(NSPredicate(format: "label BEGINSWITH[c] 'Delete'")).firstMatch
-        XCTAssertTrue(delete.waitForExistence(timeout: 10),
-                      "The original List.ForEach onDelete must expose native editing controls.")
-        XCTAssertTrue(delete.isHittable)
-        delete.tap()
+        let remove = row.images["minus.circle.fill"].firstMatch
+        XCTAssertTrue(remove.waitForExistence(timeout: 10),
+                      "The original List.ForEach onDelete must expose its native removal control.")
+        XCTAssertTrue(remove.isHittable)
+        remove.tap()
         let event = sdkOnlyText("EDIT_DELETE_EVENTS:1")
-        let confirm = row.buttons.matching(NSPredicate(format: "label == 'Delete'")).firstMatch
+        // UIKit places the trailing delete confirmation beside the swiped cell.
+        let list = app.collectionViews.containing(
+            .staticText, identifier: "Original editable list").firstMatch
+        let confirm = list.buttons.matching(NSPredicate(format: "label == 'Delete'")).firstMatch
         XCTAssertTrue(waitUntil(timeout: 10) { event.exists || (confirm.exists && confirm.isHittable) })
         if !event.exists { confirm.tap() }
         expectAdapterText("EDIT_DELETE_EVENTS:1")
         expectAdapterText("EDIT_ROWS:beta")
-        XCTAssertFalse(sdkOnlyText("Generated Alpha").exists)
-        XCTAssertTrue(sdkOnlyText("Generated Beta").exists)
+        XCTAssertFalse(row.exists, "The deleted Alpha row must leave the native list.")
         edit.tap()
         XCTAssertTrue(waitUntil(timeout: 10) { edit.label == "Edit" })
+        XCTAssertFalse(sdkOnlyText("Generated Alpha").exists)
+        XCTAssertTrue(sdkOnlyText("Generated Beta").exists)
         capture(name: "generated-edit-button-original-delete-event")
         tapAdapterButton("Generated view menu")
         tapAdapterButton("Close generated views")
@@ -840,6 +850,11 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         openAdditionalExpoProbe("Open Generated Modifiers Probe")
         tapAdapterButton("Modifiers: Input")
         expectAdapterText("MODIFIER_NATIVE_CONTEXT:Input:appeared")
+        let affinityEditor = app.textViews["generated-modifier-affinity-editor"].firstMatch
+        XCTAssertTrue(affinityEditor.waitForExistence(timeout: 10),
+                      "The selection-affinity modifier must mount its actual native TextEditor context.")
+        XCTAssertTrue(affinityEditor.isHittable)
+        XCTAssertEqual(affinityEditor.value as? String, "Affinity example: hello مرحبا")
         expectAdapterText("MODIFIER_HIT_COUNTS:front=0;back=0")
         let back = app.buttons["Generated back target"].firstMatch
         XCTAssertTrue(back.waitForExistence(timeout: 10))
@@ -962,6 +977,49 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         expectAdapterText("HOST_SERVICES_FILES_PASS")
         tapAdapterButton("Run Host Services Runtime")
         expectAdapterText("HOST_SERVICES_RUNTIME_PASS")
+        tapAdapterButton("Run All Host Runtimes")
+        let allRuntimeStatus = app.descendants(matching: .any).matching(NSPredicate(
+            format: "label == %@ OR label BEGINSWITH %@",
+            "HOST_SERVICES_ALL_RUNTIMES_PASS", "HOST_SERVICES_FAILED:all-runtimes:"
+        )).firstMatch
+        // This additional five-backend check retains the original JSC assertion
+        // above and the original whole-case allowance. Cold Host preparation is
+        // followed by actual original Node, TS, Python, JSC and Shell execution.
+        XCTAssertTrue(allRuntimeStatus.waitForExistence(timeout: 120))
+        XCTAssertEqual(allRuntimeStatus.label, "HOST_SERVICES_ALL_RUNTIMES_PASS")
+        let receiptPrefix = "HOST_SERVICES_ALL_RUNTIMES_RECEIPTS:"
+        let receiptText = app.descendants(matching: .any).matching(
+            NSPredicate(format: "label BEGINSWITH %@", receiptPrefix)).firstMatch
+        XCTAssertTrue(receiptText.waitForExistence(timeout: 10))
+        let receiptData = Data(receiptText.label.dropFirst(receiptPrefix.count).utf8)
+        let evidence = try XCTUnwrap(try JSONSerialization.jsonObject(with: receiptData) as? [String: Any])
+        let nonce = try XCTUnwrap(evidence["nonce"] as? String)
+        XCTAssertFalse(nonce.isEmpty)
+        let rows = try XCTUnwrap(evidence["results"] as? [[String: Any]])
+        let kinds = ["node", "typeScript", "localPython", "javaScriptCore", "shell"]
+        XCTAssertEqual(rows.count, kinds.count)
+        var executionIDs = Set<String>()
+        for (expectedKind, row) in zip(kinds, rows) {
+            let kind = try XCTUnwrap(row["kind"] as? String)
+            XCTAssertEqual(kind, expectedKind)
+            let result = try XCTUnwrap(row["result"] as? [String: Any])
+            let executionID = try XCTUnwrap(result["executionID"] as? String)
+            XCTAssertNotNil(UUID(uuidString: executionID))
+            XCTAssertTrue(executionIDs.insert(executionID).inserted)
+            XCTAssertEqual(result["exitCode"] as? Int, 0)
+            XCTAssertEqual(result["didTimeOut"] as? Bool, false)
+            XCTAssertEqual(result["wasCancelled"] as? Bool, false)
+            XCTAssertEqual(result["outputWasTruncated"] as? Bool, false)
+            let duration = try XCTUnwrap(result["durationMilliseconds"] as? Double)
+            XCTAssertTrue(duration.isFinite && duration >= 0)
+            let stdout = try XCTUnwrap(result["stdout"] as? String)
+            XCTAssertEqual(stdout.trimmingCharacters(in: .whitespacesAndNewlines),
+                           nonce + ":" + kind + ":42")
+        }
+        let runtimeAttachment = XCTAttachment(data: receiptData, uniformTypeIdentifier: "public.json")
+        runtimeAttachment.name = "expo-original-five-runtime-receipts"
+        runtimeAttachment.lifetime = .keepAlways
+        add(runtimeAttachment)
         tapAdapterButton("Read Host Live Activity Status")
         let activityStatus = app.descendants(matching: .any).matching(NSPredicate(
             format: "label BEGINSWITH 'HOST_SERVICES_ACTIVITY_READS_PASS:enabled='"
@@ -1174,38 +1232,87 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
             format: "label == %@", "Open in Sefaria")).firstMatch
         XCTAssertTrue(sourceLink.waitForExistence(timeout: 15),
             "Opening the result must show its real source detail")
-        let detailList = try XCTUnwrap(
-            app.collectionViews.allElementsBoundByIndex.first(where: { $0.isHittable }) ??
-                app.tables.allElementsBoundByIndex.first(where: { $0.isHittable }),
-            "The result must render its native list")
-        let versionButtons = detailList.buttons.matching(NSPredicate(
-            format: "label != %@ AND NOT (identifier BEGINSWITH %@)", "Open in Sefaria", "hanlin-"))
+        // The original native list can expose interactive rows without an AX
+        // hit point on the collection itself. Require the actual detail's
+        // version control and verify its real expansion transition below.
+        let sourceVersionPrefix = "modular-source-version-"
+        let loadedVersionPrefix = "modular-loaded-version-"
+        let sourceVersionPredicate = NSPredicate(
+            format: "identifier BEGINSWITH %@", sourceVersionPrefix)
+        func nativeDetailList() -> XCUIElement? {
+            let lists = app.collectionViews.allElementsBoundByIndex + app.tables.allElementsBoundByIndex
+            return lists.first {
+                $0.descendants(matching: .any).matching(NSPredicate(
+                    format: "label == %@", "Open in Sefaria")).firstMatch.exists
+            }
+        }
+        let detailReady = waitUntil(timeout: 15) {
+            nativeDetailList()?.descendants(matching: .any).matching(sourceVersionPredicate)
+                .allElementsBoundByIndex.contains(where: { $0.isHittable }) == true
+        }
+        capture(name: "modular-search-native-detail")
+        XCTAssertTrue(detailReady, "Native detail must expose an interactive original version control")
+        let detailList = try XCTUnwrap(nativeDetailList(),
+            "The result must render its native list containing the actual source link")
+        // Native SwiftUI propagates an identifier on the whole disclosure to
+        // its content rows. The fixture marks only the original label Text, so
+        // the actual load button and returned body keep their own identifiers.
+        func disclosureHeader(labelIdentifier: String) -> XCUIElement {
+            let direct = detailList.buttons.matching(NSPredicate(
+                format: "identifier == %@", labelIdentifier)).firstMatch
+            if direct.exists { return direct }
+            return detailList.buttons.containing(.any, identifier: labelIdentifier).firstMatch
+        }
+        let versionLabels = detailList.descendants(matching: .any).matching(sourceVersionPredicate)
         for _ in 0..<5 {
-            if versionButtons.allElementsBoundByIndex.contains(where: { $0.isHittable }) { break }
+            if versionLabels.allElementsBoundByIndex.contains(where: { $0.isHittable }) { break }
             detailList.swipeUp()
         }
-        let sourceVersion = try XCTUnwrap(
-            versionButtons.allElementsBoundByIndex.first(where: { $0.isHittable }),
-            "The result must expose an original version disclosure")
-        sourceVersion.tap()
+        let sourceVersionLabel = try XCTUnwrap(
+            versionLabels.allElementsBoundByIndex.first(where: { $0.isHittable }),
+            "The result must expose an original version disclosure label")
+        let sourceVersion = disclosureHeader(labelIdentifier: sourceVersionLabel.identifier)
+        XCTAssertTrue(sourceVersion.isHittable)
+        let entryID = String(sourceVersionLabel.identifier.dropFirst(sourceVersionPrefix.count))
+        XCTAssertFalse(entryID.isEmpty)
+        let loadText = detailList.buttons.matching(NSPredicate(
+            format: "identifier == %@", "modular-full-text-load-" + entryID)).firstMatch
 
-        let loadText = detailList.buttons["Full text"].firstMatch
-        XCTAssertTrue(loadText.waitForExistence(timeout: 10))
+        func expandDisclosure(_ header: XCUIElement, content: XCUIElement, name: String) {
+            // Use the original native disclosure's actual state, then require
+            // the matching content transition. A missing locator cannot stand
+            // in for a collapsed group.
+            let expanded = header.images["expanded"].firstMatch
+            let collapsed = header.images["collapsed"].firstMatch
+            let initiallyExpanded = expanded.exists
+            XCTAssertNotEqual(initiallyExpanded, collapsed.exists,
+                "\(name) must expose exactly one native disclosure state")
+            XCTAssertEqual(content.exists, initiallyExpanded,
+                "\(name) must expose its own content in the native expanded state")
+            header.tap()
+            XCTAssertTrue(waitUntil(timeout: 10) {
+                expanded.exists != initiallyExpanded &&
+                collapsed.exists == initiallyExpanded &&
+                content.exists != initiallyExpanded
+            }, "\(name) must respond to the original disclosure control")
+            if initiallyExpanded { header.tap() }
+            XCTAssertTrue(waitUntil(timeout: 15) {
+                expanded.exists && !collapsed.exists && content.exists
+            }, "\(name) must expose its own content after expansion")
+        }
+        expandDisclosure(sourceVersion, content: loadText, name: "Source version")
         if !loadText.isHittable { detailList.swipeUp() }
         XCTAssertTrue(loadText.isHittable)
-        let buttonsBeforeLoad = Dictionary(
-            grouping: detailList.buttons.allElementsBoundByIndex.map { $0.label }, by: { $0 })
-            .mapValues { $0.count }
+        let loadedVersions = detailList.descendants(matching: .any).matching(NSPredicate(
+            format: "identifier BEGINSWITH %@", loadedVersionPrefix + entryID + ":"))
+        let versionsBeforeLoad = Set(loadedVersions.allElementsBoundByIndex.map { $0.identifier })
         loadText.tap()
 
-        // The second disclosure is created only from /api/v3/texts response
-        // versions. Count labels so identical search/text edition names still work.
+        // These identifiers are emitted only by versions returned from the
+        // live /api/v3/texts response, scoped to source entry plus version ID.
         func returnedVersion() -> XCUIElement? {
-            let buttons = detailList.buttons.allElementsBoundByIndex
-            let counts = Dictionary(grouping: buttons.map { $0.label }, by: { $0 }).mapValues { $0.count }
-            guard let loadIndex = buttons.firstIndex(where: { $0.label == "Full text" }) else { return nil }
-            return buttons.dropFirst(loadIndex + 1).first {
-                counts[$0.label, default: 0] > buttonsBeforeLoad[$0.label, default: 0]
+            loadedVersions.allElementsBoundByIndex.first {
+                !versionsBeforeLoad.contains($0.identifier)
             }
         }
         let noVersions = detailList.staticTexts["No text versions were returned for this source."].firstMatch
@@ -1216,12 +1323,14 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
             if returnedVersion()?.isHittable == true { break }
             detailList.swipeUp()
         }
-        let textVersion = try XCTUnwrap(returnedVersion(), "A returned full-text version is required")
+        let textVersionLabel = try XCTUnwrap(returnedVersion(), "A returned full-text version is required")
+        let textVersion = disclosureHeader(labelIdentifier: textVersionLabel.identifier)
         XCTAssertTrue(textVersion.isHittable)
-        let textsBeforeExpansion = Dictionary(
-            grouping: detailList.staticTexts.allElementsBoundByIndex.map { $0.label }, by: { $0 })
-            .mapValues { $0.count }
-        textVersion.tap()
+        let returnedVersionID = String(textVersionLabel.identifier.dropFirst(loadedVersionPrefix.count))
+        XCTAssertFalse(returnedVersionID.isEmpty)
+        let textBody = detailList.staticTexts.matching(NSPredicate(
+            format: "identifier == %@", "modular-full-text-body-" + returnedVersionID)).firstMatch
+        expandDisclosure(textVersion, content: textBody, name: "Returned text version")
 
         let language = detailList.staticTexts.matching(NSPredicate(
             format: "label == %@ OR label BEGINSWITH %@", "Language", "Language,")).firstMatch
@@ -1230,18 +1339,17 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         let noText = "No text is available for this version."
         XCTAssertFalse(detailList.staticTexts[noText].firstMatch.exists)
 
+        // A complete Hebrew verse can be shorter than 40 grapheme clusters.
+        // Its source-scoped API body, native disclosure and real word content
+        // establish a rendered response without an English-length assumption.
         func visibleFullText() -> XCUIElement? {
-            let texts = detailList.staticTexts.allElementsBoundByIndex
-            let counts = Dictionary(grouping: texts.map { $0.label }, by: { $0 }).mapValues { $0.count }
-            let headings = Set(detailList.buttons.allElementsBoundByIndex.map { $0.label })
-            return texts.first {
-                let label = $0.label.trimmingCharacters(in: .whitespacesAndNewlines)
-                return $0.isHittable && label.count >= 40 &&
-                    label.split(whereSeparator: { $0.isWhitespace }).count >= 6 &&
-                    label != noText && !label.hasPrefix("Language,") && !label.hasPrefix("License,") &&
-                    !headings.contains(label) &&
-                    counts[$0.label, default: 0] > textsBeforeExpansion[$0.label, default: 0]
+            guard textBody.exists && textBody.isHittable else { return nil }
+            let label = textBody.label.trimmingCharacters(in: .whitespacesAndNewlines)
+            guard label.split(whereSeparator: { $0.isWhitespace }).count >= 6 &&
+                label != noText && !label.hasPrefix("Language,") && !label.hasPrefix("License,") else {
+                return nil
             }
+            return textBody
         }
         for _ in 0..<5 {
             if visibleFullText() != nil { break }
@@ -1255,6 +1363,14 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         evidence.lifetime = .keepAlways
         add(evidence)
         capture(name: "modular-search-live-sefaria-full-text")
+        let back = app.navigationBars.buttons["BackButton"].firstMatch
+        XCTAssertTrue(back.waitForExistence(timeout: 10),
+                      "The native detail must expose its navigation back control.")
+        XCTAssertTrue(back.isHittable)
+        back.tap()
+        let rootClose = app.buttons["hanlin-script-app-close"].firstMatch
+        XCTAssertTrue(waitUntil(timeout: 10) { rootClose.exists && rootClose.isHittable },
+                      "Returning from the native detail must reveal the original miniapp close control.")
         closeExpoApp()
     }
 
@@ -1283,18 +1399,28 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         XCTAssertTrue(source.isHittable)
         source.tap()
         let install = app.buttons["hanlin-package-install"].firstMatch
-        XCTAssertTrue(install.waitForExistence(timeout: 30))
+        let importError = app.staticTexts["hanlin-import-error-message"].firstMatch
+        let diagnostics = app.descendants(matching: .any)["hanlin-import-diagnostics-sheet"].firstMatch
+        // The original strict compiler took 64.537s in the measured SDK9 import.
+        // Wait for the real import outcome within the existing 420s case budget.
+        // A compiler/import error ends this wait immediately instead of hiding it.
+        XCTAssertTrue(waitUntil(timeout: 240) {
+            install.exists || importError.exists || diagnostics.exists
+        }, "Original package validation must finish with an install preview or diagnostics")
+        XCTAssertFalse(importError.exists,
+                       "The original importer failed: \(importError.exists ? importError.label : "")")
+        XCTAssertFalse(diagnostics.exists, "The valid original package produced import diagnostics")
+        XCTAssertTrue(install.exists, "The original compiler must produce an installable preview")
         XCTAssertFalse(app.buttons["hanlin-approve-all-capabilities"].exists,
                        "Current original framework imports must not add an application capability approval step")
         if !install.isHittable { app.swipeDown() }
         XCTAssertTrue(waitUntil(timeout: 15) { install.isEnabled && install.isHittable })
         install.tap()
-        let importError = app.staticTexts["hanlin-import-error-message"].firstMatch
         XCTAssertTrue(waitUntil(timeout: 60) { !install.exists || importError.exists },
                       "The existing installer must complete in the companion's own namespace")
         XCTAssertFalse(importError.exists, "The original installer failed: \(importError.exists ? importError.label : "")")
         XCTAssertFalse(install.exists, "Successful installation must consume the original preview")
-        let done = app.navigationBars["Script Package"].buttons["Done"].firstMatch
+        let done = app.buttons["hanlin-package-import-done"].firstMatch
         XCTAssertTrue(done.waitForExistence(timeout: 10))
         done.tap()
         let close = app.buttons["hanlin-apps-add-done"].firstMatch
@@ -1346,5 +1472,156 @@ final class MiniAppsProductionRuntimeUITests: XCTestCase {
         tree.name = name + "-accessibility"
         tree.lifetime = .keepAlways
         add(tree)
+    }
+}
+
+
+/// Extra, separately selected OS-ingress check. The original paired selectors
+/// remain unchanged. The external controller may only submit real simulator
+/// pushes and read the product's durable receipts; it never writes that queue.
+/// Handshake files belong to this UI-test runner, outside either product store.
+extension MiniAppsProductionRuntimeUITests {
+    func testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines() throws {
+        executionTimeAllowance = 600
+        let runID = UUID().uuidString.lowercased()
+        let challenge = "notification-os-" + UUID().uuidString.lowercased()
+        let documents = try XCTUnwrap(FileManager.default.urls(
+            for: .documentDirectory, in: .userDomainMask).first)
+        let exchange = documents.appendingPathComponent("HanlinNotificationOSProbe", isDirectory: true)
+        let runDirectory = exchange.appendingPathComponent(runID, isDirectory: true)
+        try FileManager.default.createDirectory(at: runDirectory, withIntermediateDirectories: true)
+        try writeNotificationProbeJSON([
+            "version": 1, "runID": runID, "challenge": challenge
+        ], to: exchange.appendingPathComponent("active.json"))
+
+        // The unchanged original widget fixture exposes the original system
+        // access UI. Grant only the notification permission through Apple's UI.
+        importAndInstall(archive: "Hanlin-ScriptWidget-Actions")
+        // Widget-only packages are configured in the original Add Apps sheet.
+        app.buttons["hanlin-apps-add"].tap()
+        launchInstalledPackage(named: "ScriptWidget Actions")
+        let services = app.buttons.matching(NSPredicate(
+            format: "identifier BEGINSWITH %@", "hanlin-widget-services-")).firstMatch
+        revealNotificationControl(services)
+        services.tap()
+        let systemAccess = app.buttons["Contacts, Home, Files, Notifications and Alarms"].firstMatch
+        revealNotificationControl(systemAccess)
+        systemAccess.tap()
+        let authorize = app.buttons["Authorize Notifications"].firstMatch
+        revealNotificationControl(authorize)
+        capture(name: "notification-original-authorization-control")
+        authorize.tap()
+
+        let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+        let permissionAlert = springboard.alerts.firstMatch
+        if permissionAlert.waitForExistence(timeout: 10) {
+            XCTAssertTrue(permissionAlert.staticTexts.matching(NSPredicate(
+                format: "label CONTAINS[c] %@", "notification")).firstMatch.exists,
+                "Only the actual notification authorization alert may be accepted")
+            let permissionImage = XCTAttachment(screenshot: XCUIScreen.main.screenshot())
+            permissionImage.name = "notification-original-system-permission"
+            permissionImage.lifetime = .keepAlways
+            add(permissionImage)
+            let allow = permissionAlert.buttons["Allow"].firstMatch
+            XCTAssertTrue(allow.exists && allow.isHittable)
+            allow.tap()
+        }
+        let authorizationMessage = app.staticTexts["system-access-message"].firstMatch
+        revealNotificationControl(authorizationMessage, maximumSwipes: 14)
+        XCTAssertTrue(waitUntil(timeout: 15) {
+            authorizationMessage.label == "Notifications authorized."
+        }, "The original UNUserNotificationCenter request must actually grant notification authorization")
+        capture(name: "notification-original-authorization-result")
+        app.terminate()
+        app.launch()
+
+        openAdditionalExpoProbe("Open Host Services Probe")
+        XCTAssertTrue(app.buttons["Run Host Services Files"].firstMatch.waitForExistence(timeout: 20))
+        try exchangeNotificationProbe(
+            runtime: "expo", packageName: probeAPackageName,
+            runID: runID, challenge: challenge, directory: runDirectory)
+        capture(name: "notification-os-expo-terminal-receipts")
+        closeExpoApp()
+
+        importAndInstall(archive: "hanlin-script-parity")
+        launchInstalledPackage(named: parityPackageName)
+        XCTAssertTrue(app.descendants(matching: .any)["hanlin-script-parity-title"]
+            .firstMatch.waitForExistence(timeout: 30))
+        try exchangeNotificationProbe(
+            runtime: "nativescript", packageName: parityPackageName,
+            runID: runID, challenge: challenge, directory: runDirectory)
+        capture(name: "notification-os-nativescript-terminal-receipts")
+        closeNativeScriptApp()
+        try writeNotificationProbeJSON([
+            "version": 1, "runID": runID, "challenge": challenge, "status": "EXECUTED_PASS"
+        ], to: runDirectory.appendingPathComponent("ui-finished.json"))
+    }
+
+    private func revealNotificationControl(_ element: XCUIElement, maximumSwipes: Int = 10) {
+        for _ in 0..<maximumSwipes {
+            if element.exists && element.isHittable { return }
+            app.swipeUp()
+        }
+        XCTAssertTrue(element.waitForExistence(timeout: 10))
+        XCTAssertTrue(element.isHittable, "The original control must be visible in its native form")
+    }
+
+    private func writeNotificationProbeJSON(_ value: [String: Any], to url: URL) throws {
+        let data = try JSONSerialization.data(withJSONObject: value, options: [.sortedKeys])
+        try data.write(to: url, options: .atomic)
+    }
+
+    private func exchangeNotificationProbe(
+        runtime: String, packageName: String, runID: String, challenge: String, directory: URL
+    ) throws {
+        let requestURL = directory.appendingPathComponent(runtime + ".request.json")
+        let completionURL = directory.appendingPathComponent(runtime + ".complete.json")
+        XCTAssertFalse(FileManager.default.fileExists(atPath: requestURL.path))
+        XCTAssertFalse(FileManager.default.fileExists(atPath: completionURL.path))
+        try writeNotificationProbeJSON([
+            "version": 1, "runID": runID, "challenge": challenge,
+            "runtime": runtime, "packageName": packageName
+        ], to: requestURL)
+        XCTAssertTrue(waitUntil(timeout: 120) {
+            FileManager.default.fileExists(atPath: completionURL.path)
+        }, "The external simulator-push controller must return actual product receipts")
+        let data = try Data(contentsOf: completionURL)
+        let attachment = XCTAttachment(data: data, uniformTypeIdentifier: "public.json")
+        attachment.name = "notification-os-" + runtime + "-actual-receipts"
+        attachment.lifetime = .keepAlways
+        add(attachment)
+        let completion = try XCTUnwrap(JSONSerialization.jsonObject(with: data) as? [String: Any])
+        XCTAssertEqual(completion["version"] as? Int, 1)
+        XCTAssertEqual(completion["runID"] as? String, runID)
+        XCTAssertEqual(completion["challenge"] as? String, challenge)
+        XCTAssertEqual(completion["runtime"] as? String, runtime)
+        XCTAssertEqual(completion["transport"] as? String, "simctl_push")
+        XCTAssertEqual(completion["status"] as? String, "EXECUTED_PASS",
+                       completion["reason"] as? String ?? "No verified OS receipt result")
+        let observations = try XCTUnwrap(completion["observations"] as? [[String: Any]])
+        let expectedKinds = runtime == "expo" ? ["success", "duplicate", "failure"] : ["success", "duplicate"]
+        XCTAssertEqual(observations.compactMap { $0["kind"] as? String }, expectedKinds)
+        for observation in observations {
+            let record = try XCTUnwrap(observation["record"] as? [String: Any])
+            let receipt = try XCTUnwrap(record["receipt"] as? [String: Any])
+            let invocationID = try XCTUnwrap(receipt["invocationID"] as? String)
+            XCTAssertNotNil(UUID(uuidString: invocationID))
+            XCTAssertEqual(record["id"] as? String, invocationID)
+            XCTAssertEqual(receipt["attempt"] as? Int, 1)
+            XCTAssertFalse(receipt["cancellationRequested"] as? Bool ?? true)
+            XCTAssertEqual(observation["pushExitCode"] as? Int, 0)
+            if observation["kind"] as? String == "failure" {
+                XCTAssertEqual(receipt["status"] as? String, "failed")
+                XCTAssertEqual(receipt["failure"] as? String, "actionFailed")
+                XCTAssertNil(receipt["value"])
+            } else {
+                XCTAssertEqual(receipt["status"] as? String, "succeeded")
+                XCTAssertNil(receipt["failure"])
+                XCTAssertNotNil(receipt["value"])
+            }
+        }
+        let first = try XCTUnwrap(observations.first?["record"] as? NSDictionary)
+        let duplicate = try XCTUnwrap(observations.dropFirst().first?["record"] as? NSDictionary)
+        XCTAssertEqual(first, duplicate, "A second successful simctl submission must retain the identical completed record")
     }
 }

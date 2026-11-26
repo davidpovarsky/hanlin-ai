@@ -1,0 +1,143 @@
+{
+  "owner": "/root/native_execution",
+  "schema": 1,
+  "source": "1a611764779b0a57cc57d71b26d2cd6449895d8d",
+  "tree": "032432920c093a561a6b2cc6ff61c908d02705a6",
+  "startedAt": "2026-11-25T03:32:34.218838+00:00",
+  "pid": 15445,
+  "status": "DIAGNOSTIC_FAILED",
+  "phase": null,
+  "scope": "One original Modular selector on the exact published original Expo fixture and UI source; fresh container. Prior passing parity and SDK-only cases are not rerun.",
+  "original52": "NOT_RUN",
+  "original25": "NOT_RUN",
+  "original27": "NOT_RUN",
+  "original52RequiresIndependentRun": true,
+  "uiSource": {
+    "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+    "originalSHA256": "93db32b6af9af1eeba85070086c5d0eb6b9b80198dc161004d5729c7cc38d4d0",
+    "delta": "No source variant. Exact published child interaction, explicit Disclosure state, entry/version-scoped API text and original Host locale remount."
+  },
+  "originalRunner": {
+    "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+    "sha256": "6e3abbb16c9b55b048b69c2391784510d8c143c7ed00e760a73ecb903cdbb61d",
+    "unchanged": true
+  },
+  "errors": [
+    "ModularFocusedDiagnostic: Original runtime acceptance did not execute every selected case: ModularFocusedDiagnostic"
+  ],
+  "cases": {
+    "ModularFocusedDiagnostic": {
+      "status": "FAIL",
+      "startedAt": "2026-11-25T03:38:47.406146+00:00",
+      "selectors": [
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText"
+      ],
+      "originalUI": true,
+      "exitCode": 65,
+      "finishedAt": "2026-11-25T03:42:11.337019+00:00",
+      "resultFinalized": true,
+      "error": "Original runtime acceptance did not execute every selected case: ModularFocusedDiagnostic",
+      "log": {
+        "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/paired-prefix/ModularFocusedDiagnostic.log",
+        "bytes": 49364,
+        "sha256": "3f21d43bad9ed2869dd146669a92167379c1b8e2048f5d95b4b6e62f21b99e6b"
+      }
+    }
+  },
+  "sourceRestored": true,
+  "originalTestRebuild": "PASS",
+  "observedAt": "2026-11-25T03:42:15.635261+00:00",
+  "elapsedSeconds": 581.4175489170011,
+  "selectors": {
+    "modular": [
+      "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText"
+    ]
+  },
+  "hostArchiveSHA256": "86733eba5d80156edf52da87f0f371c208122d6e60f618f182990330514984c3",
+  "observerSHA256": "d36d818a02c5a9ddba660bf83e4827d96af75b38052f9eaa26bf3c7aab2a97e1",
+  "modularSource": {
+    "path": "Scripts/Expo/miniapps/modular-text-search/App.tsx",
+    "sha256": "4e8389eb6a232e6ed5db8273dd2686e45ab04edabd2e86bfea74cbdf862e5b7c",
+    "scope": "Actual original CLI build/import below uses preserved SDK10; runtime screenshots retain search orientation and detail/fulltext behavior."
+  },
+  "interceptedOriginal25Selectors": [
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualPresentationAdaptersAndDismissalEvents",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoNativeAPIUsesActualUIKitAndWorklets",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoWidgetsUsesOriginalTimelinesAndLiveActivities",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyExpoPackageImportsRendersAndHandlesEvents",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyNativeScriptPackageImportsRendersAndHandlesEvents",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testCancelAndDisplayDoneReturnNoDocumentMutation",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testReusingValueWindowKeepsItsInvocationBindingCurrent",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testActualIncomingRequestsCreateDistinctIPadScenes",
+    "HanlinMiniAppsTests/NativeScriptWindowOwnershipTests/testUnrelatedAndLateWindowCleanupPreservesNativeScriptOwner",
+    "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testInvalidationReleasesHandlersAndRejectsLateActions",
+    "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testBridgeInvalidationReleasesPendingCallbacksBeforeProviderCancellation",
+    "HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests/testExternalInvocationSurvivesNestedFullScreenModal",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEditButtonEditsOriginalList",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEmptyViewReportsNativeLayout",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierAccessibilityAndGeometry",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierNativeContainerContexts",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoHostServicesUseRealStorageRuntimeAndWidgetPublication",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testUnavailableCallbackRetainsResultForSourceRecovery"
+  ],
+  "dataContainer": "/Users/m1/Library/Developer/CoreSimulator/Devices/4EC498EF-82B7-4FC1-B1CF-20AB8BD5CB25/data/Containers/Data/Application/292E1AD6-7ABA-463B-A797-BA83BD34BFD5",
+  "simulator": "4EC498EF-82B7-4FC1-B1CF-20AB8BD5CB25",
+  "installedMetadataBinding": {
+    "path": "installed-metadata-binding.json",
+    "sha256": "0a010b551bc1fcb234357975d7c36c484b6f03e21953d3e6e7ba009190359a63",
+    "requiredNamesPresent": true
+  },
+  "testBinaries": {
+    "exactPublishedSource": [
+      {
+        "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app/PlugIns/HanlinMiniAppsUITests.xctest/HanlinMiniAppsUITests",
+        "bytes": 581008,
+        "sha256": "38ec8b35a1ab625c6798cd2edb904d514b3fe9981c6c4941e50219a4af97c2ed"
+      }
+    ]
+  },
+  "runtimeObserver": {
+    "pid": 23811,
+    "predicate": "process == \"HanlinMiniApps\" AND (eventMessage CONTAINS \"HANLIN_\" OR eventMessage CONTAINS \"NativeScript\" OR eventMessage CONTAINS \"runtime_paths\" OR eventMessage CONTAINS \"host_ready\")",
+    "startedAt": "2026-11-25T03:38:47.404415+00:00",
+    "sampleLimit": 1,
+    "sampleDurationSeconds": 3,
+    "persistentBeginBeforeSampleSeconds": 2,
+    "terminalMarkers": [
+      "HANLIN_NS_RUN_MAIN_OK",
+      "HANLIN_NS_RUN_MAIN_DONE",
+      "HANLIN_NS_SHUTDOWN"
+    ],
+    "exitCode": 137,
+    "reaped": true,
+    "finishedAt": "2026-11-25T03:42:15.203494+00:00",
+    "observerStopped": true,
+    "sampleTaken": false
+  },
+  "attachmentExports": [
+    {
+      "result": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/paired-prefix/ModularFocusedDiagnostic.xcresult",
+      "exit": 0
+    }
+  ],
+  "runtimeMarkers": {
+    "ModularFocusedDiagnostic": {
+      "count": 0,
+      "path": "ModularFocusedDiagnostic-runtime-markers.json"
+    }
+  },
+  "checkpointReached": true,
+  "ownedSimulatorCleanup": {
+    "simulator": "4EC498EF-82B7-4FC1-B1CF-20AB8BD5CB25",
+    "state": "Shutdown",
+    "remainingOwnedRunners": []
+  },
+  "finishedAt": "2026-11-25T03:42:15.635239+00:00"
+}

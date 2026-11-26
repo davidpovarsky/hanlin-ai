@@ -1,0 +1,210 @@
+{
+  "schemaVersion": 1,
+  "kind": "completed-owner-parity-intake-scope-review",
+  "observedAtUTC": "2026-11-25T03:13:07.142967+00:00",
+  "reviewer": "/root/sdk_boundary_review",
+  "canonicalRepository": "/mnt/development/projects/worktrees/hanlin-composer-capabilities-20261124",
+  "canonicalSource": "eefe96321c9d83cdb300fbf84fd1da3977f5362e",
+  "compiledSourceComparisonBaseline": "b739ada91aca115093e3511f9df58c15edcb5923",
+  "reviewedCommits": [
+    "318b251b11a4816eb9cc3c1337c7bfe287f4a890",
+    "97eb91550fd95ea5f808f04093c786f851f1aacd"
+  ],
+  "changedPaths": [
+    {
+      "status": "M",
+      "path": "DemoMiniApps/hanlin-script-parity.hanlinNativeScript",
+      "sha256At318b251b": "2e48509336edba2b301490422102dbf25cb7f1b894430d52994febdc1c33c199",
+      "sha256At97eb9155": "2e48509336edba2b301490422102dbf25cb7f1b894430d52994febdc1c33c199",
+      "identicalContent": true
+    },
+    {
+      "status": "M",
+      "path": "DemoMiniApps/hanlin-script-parity/nativescript/app/bundle.mjs",
+      "sha256At318b251b": "5f21796994e3880ba5d5c9f0e6d23b3fa12a667ff6082183f604d214a61284b1",
+      "sha256At97eb9155": "5f21796994e3880ba5d5c9f0e6d23b3fa12a667ff6082183f604d214a61284b1",
+      "identicalContent": true
+    },
+    {
+      "status": "M",
+      "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "sha256At318b251b": "995e98e35d5f4f464c3b83062b136b14f74c7445c040d2118baffd3bcaea9052",
+      "sha256At97eb9155": "995e98e35d5f4f464c3b83062b136b14f74c7445c040d2118baffd3bcaea9052",
+      "identicalContent": true
+    },
+    {
+      "status": "A",
+      "path": "Scripts/CI/Tests/nativescript_parity_async_startup.test.mjs",
+      "sha256At318b251b": "a7bd2ebc42afc8942ba43d7abecac80921469fde70e51bee896874deb14a18e9",
+      "sha256At97eb9155": "a7bd2ebc42afc8942ba43d7abecac80921469fde70e51bee896874deb14a18e9",
+      "identicalContent": true
+    },
+    {
+      "status": "M",
+      "path": "Scripts/CI/Tests/test_nativescript_parity_fixture.py",
+      "sha256At318b251b": "3332ba2adf3c9e180eaecdcaeac8f23c4545f5887adaafe70650ad6f4e39414e",
+      "sha256At97eb9155": "3332ba2adf3c9e180eaecdcaeac8f23c4545f5887adaafe70650ad6f4e39414e",
+      "identicalContent": true
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-parity-async-startup-20261125/README.md",
+      "sha256At318b251b": "b7bf348a8476317dffb80009c1ca417dd4d4399f09cc558aabf4f79e03144768",
+      "sha256At97eb9155": "b7bf348a8476317dffb80009c1ca417dd4d4399f09cc558aabf4f79e03144768",
+      "identicalContent": true
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-parity-async-startup-20261125/baseline-contract-tests.log",
+      "sha256At318b251b": "e4321077f08ff097016c8f56b6de446955bad62c2c4919d411943f23cf7f0c24",
+      "sha256At97eb9155": "e4321077f08ff097016c8f56b6de446955bad62c2c4919d411943f23cf7f0c24",
+      "identicalContent": true
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-parity-async-startup-20261125/candidate-contract-tests.log",
+      "sha256At318b251b": "79db4ba436031468513915cfc6dad5d4789bd519ca121e3308ff91c94b06a9c9",
+      "sha256At97eb9155": "79db4ba436031468513915cfc6dad5d4789bd519ca121e3308ff91c94b06a9c9",
+      "identicalContent": true
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-parity-async-startup-20261125/ci-fixture-test-discovery.log",
+      "sha256At318b251b": "173a3bc2a72b7de3f3dcb844913a3dff7d6feb050c28b66ba4475f4811d76264",
+      "sha256At97eb9155": "173a3bc2a72b7de3f3dcb844913a3dff7d6feb050c28b66ba4475f4811d76264",
+      "identicalContent": true
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-parity-async-startup-20261125/diff-check.log",
+      "sha256At318b251b": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sha256At97eb9155": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "identicalContent": true
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-parity-async-startup-20261125/existing-fixture-tests.log",
+      "sha256At318b251b": "56e03afda220e7ba78bbcecf9a2e53a0149cfc3e311fa10bbd01b25e8e5ba671",
+      "sha256At97eb9155": "56e03afda220e7ba78bbcecf9a2e53a0149cfc3e311fa10bbd01b25e8e5ba671",
+      "identicalContent": true
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-parity-async-startup-20261125/portable-verification.json",
+      "sha256At318b251b": "520e6fadf7bdb3ec243d1d39bcd5f1883760eec8a0f77ebac4158acd2b776ded",
+      "sha256At97eb9155": "520e6fadf7bdb3ec243d1d39bcd5f1883760eec8a0f77ebac4158acd2b776ded",
+      "identicalContent": true
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-parity-async-startup-20261125/receipt.json",
+      "sha256At318b251b": "4aab868913f2fe762365ff4671956abb8fbc12edf683f39a75e1908acd441406",
+      "sha256At97eb9155": "4aab868913f2fe762365ff4671956abb8fbc12edf683f39a75e1908acd441406",
+      "identicalContent": true
+    },
+    {
+      "status": "A",
+      "path": "docs/miniapp-sdk/evidence/primary-parity-async-startup-20261125/syntax-check.log",
+      "sha256At318b251b": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "sha256At97eb9155": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "identicalContent": true
+    }
+  ],
+  "identicalContentProof": {
+    "changedPathCount": 14,
+    "allFinalChangedPathBytesIdentical": true,
+    "method": "git show COMMIT:path bytes independently SHA256-hashed and byte-compared for each of the 14 changed paths"
+  },
+  "sharedProductionRuntimeBridgeOrSDKHelperChanged": false,
+  "localHelperChange": {
+    "path": "DemoMiniApps/hanlin-script-parity/nativescript/app/bundle.mjs",
+    "newHelper": "invokeAsyncBridge",
+    "changedCallers": [
+      "runJS",
+      "runNode",
+      "runPython",
+      "fetchHTTPS",
+      "sendInterApp"
+    ],
+    "scope": "Only the standalone parity demo module and regenerated archive; original native bridges, runtime providers, SDK authoring helpers, and selected assistant test sources are unchanged."
+  },
+  "selectedCases": [
+    {
+      "selector": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualNativeScriptAssistantUsesDedicatedSourceAndImmutableConfiguration()",
+      "sourceFile": "AI_HLYTests/HanlinMiniAppAssistantToolAcceptanceTests.swift",
+      "dependencyFinding": "exerciseActualAssistant(engine: nativescript) authors unique index.ts/echo.ts via MiniAppAuthoringTool, imports its resulting archive, invokes HanlinMiniAppAssistantToolExports and its embedded renderer; no parity package/helper import.",
+      "affectedByReviewedCommit": false
+    },
+    {
+      "selector": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualExpoAssistantUsesDedicatedSourceAndImmutableConfiguration()",
+      "sourceFile": "AI_HLYTests/HanlinMiniAppAssistantToolAcceptanceTests.swift",
+      "dependencyFinding": "exerciseActualAssistant(engine: expo) authors unique index.ts/echo.ts via MiniAppAuthoringTool, imports its resulting archive, invokes HanlinMiniAppAssistantToolExports and its embedded renderer; no parity package/helper import.",
+      "affectedByReviewedCommit": false
+    },
+    {
+      "selector": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptAssistantRepliesSettleOnceAndRejectMalformedJSON()",
+      "sourceFile": "AI_HLYTests/HanlinMiniAppAssistantToolTests.swift",
+      "dependencyFinding": "Instantiates NativeScriptHostServicesAdapter directly; registers native Swift reply handlers and calls invokeRegisteredAction. No parity package/helper load.",
+      "affectedByReviewedCommit": false
+    },
+    {
+      "selector": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptAssistantCancellationAndInvalidationReleaseWaiters()",
+      "sourceFile": "AI_HLYTests/HanlinMiniAppAssistantToolTests.swift",
+      "dependencyFinding": "Instantiates NativeScriptHostServicesAdapter directly; registers a pending native Swift handler and checks task cancellation/runtime invalidation. No parity package/helper load.",
+      "affectedByReviewedCommit": false
+    }
+  ],
+  "selectedTestSourceProof": [
+    {
+      "path": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests.swift",
+      "canonicalSHA256": "85efedee4ec94c5ecc4e727847401fda1ab72a66e7cf9ab2403f909f23a18210",
+      "compiledSourceSHA256": "85efedee4ec94c5ecc4e727847401fda1ab72a66e7cf9ab2403f909f23a18210",
+      "identicalToCompiledSource": true
+    },
+    {
+      "path": "AI_HLYTests/HanlinMiniAppAssistantToolAcceptanceTests.swift",
+      "canonicalSHA256": "28d210f043f2cda7e09951a7c2c8977f3ca5e1ae98a0c5c0e285de6611805fbc",
+      "compiledSourceSHA256": "28d210f043f2cda7e09951a7c2c8977f3ca5e1ae98a0c5c0e285de6611805fbc",
+      "identicalToCompiledSource": true
+    },
+    {
+      "path": "AI_HLYTests/HanlinMiniAppAssistantToolTests.swift",
+      "canonicalSHA256": "7cdd51b1ae123240c6e9cda58c837221ad8daec3385e79a8edf53dd010b74b25",
+      "compiledSourceSHA256": "7cdd51b1ae123240c6e9cda58c837221ad8daec3385e79a8edf53dd010b74b25",
+      "identicalToCompiledSource": true
+    }
+  ],
+  "affectedSeparateConsumer": {
+    "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch",
+    "fixtureCopy": "Scripts/NativeScript/prepare-production-package.mjs copies DemoMiniApps/hanlin-script-parity.hanlinNativeScript to build/NativeScriptE2E; this copy helper is unchanged.",
+    "nativeOwnerAcceptanceStatus": "Not assessed; source-only relevance review, not a native execution result."
+  },
+  "excludedActiveOwnerFiles": [
+    {
+      "pathPattern": "**/ModularApp.tsx",
+      "scope": "Explicitly excluded active-owner UI work; absent from the reviewed 14-path commit delta; no workspace content copied or changed."
+    },
+    {
+      "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "scope": "Only immutable 318b251b/97eb9155 parity-test diff reviewed; later/current owner UI changes excluded."
+    }
+  ],
+  "excludedLaterOwnerState": {
+    "worktree": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123",
+    "observedHEAD": "15647db0c5143836a4b31c51a8217b16228863d0",
+    "notReviewedOrImported": true
+  },
+  "recommendation": {
+    "intakeRequiredBeforeApp6ForSelectedComposerGates": false,
+    "reason": "The reviewed changes affect the standalone parity demo and its UI/portable validation only; none is a dependency of the four selected native-assistant cases or the requested composer capability implementation.",
+    "separateParityUIIntakeBoundary": "Relevant if the standalone parity UI case is later executed; coordinate with its owner."
+  },
+  "execution": {
+    "sourceReadsOnly": true,
+    "testsRun": false,
+    "buildsRun": false,
+    "macMutated": false,
+    "sourceFilesChanged": false,
+    "evidenceWriteOnly": true
+  }
+}

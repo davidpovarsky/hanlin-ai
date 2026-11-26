@@ -1,0 +1,39 @@
+{
+  "archiveSHA256": "3c94ebea1e314c280031ac475e2d42b63ebcf2dc2eb32d2c6e31905e3eda3240",
+  "archiveBytes": 81813684,
+  "moduleSHA256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9",
+  "metadata": {
+    "nodeVersion": "v24.5.0",
+    "archiveSha256": "3c94ebea1e314c280031ac475e2d42b63ebcf2dc2eb32d2c6e31905e3eda3240",
+    "sourceInputsHash": "224b846f2c966639d20861c63fed19da19528207cc2dee22fb06447411f9161d",
+    "jitlessArchiveSmoke": "passed",
+    "npmInstall": "npm ci --omit=dev --ignore-scripts --workspaces=false --no-audit --no-fund",
+    "tests": "passed"
+  },
+  "actualHostTestCounts": {
+    "tests": 170,
+    "pass": 169,
+    "fail": 0,
+    "skipped": 1
+  },
+  "existingSkippedTest": "﹣ actual Node job crosses 300 seconds with no hidden deadline (0.159875ms) # SKIP",
+  "changedHostSourcesSinceSDK7": [
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs",
+      "sha256": "41f4df51d49ebf48e8ecda9c205372281b2bce2b4e865f1b343474ca8f38b853",
+      "shippedAsHostMember": false
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-sdk-resolution.test.mjs",
+      "sha256": "5feff98ed62727330f2a64abedff0d4a3af9f71d5a8b1f7c8e39396c90e7d65f",
+      "shippedAsHostMember": false
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+      "sha256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9",
+      "shippedAsHostMember": true
+    }
+  ],
+  "testsNotShipped": true,
+  "boundary": "170actual Host tests:169passed,0failed,1existing opt-in long-duration test skipped. Counts are not the52application cases; regression sources affect producer fingerprint but are not shipped."
+}

@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-primary-sdk-preparation-20261124/docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/inspect_sdk.py", line 62, in <module>
+    priorMembers={x["path"]:x for x in json.loads(previousEvidenceReceipt)["members"]}
+                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^
+KeyError: 'members'

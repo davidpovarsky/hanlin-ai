@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "assessedAtUTC": "2026-11-25T03:04:38.309734+00:00",
+  "applicationBuild": {
+    "sourceCommit": "b739ada91aca115093e3511f9df58c15edcb5923",
+    "scheme": "AI_HLY",
+    "status": "EXECUTED_PASS",
+    "exitCode": 0,
+    "durationSeconds": 1040.388,
+    "startedAtUTC": "2026-11-25T02:40:52.964773+00:00",
+    "finishedAtUTC": "2026-11-25T02:58:13.349471+00:00",
+    "receipt": "ai-hly-build-attempt5.json",
+    "rawLogSHA256": "164cdd23b48d96255b7200b129b8b73a4e3ff001bf53c2ea7d4cda94846c0ecc",
+    "rawLogBytes": 7383108,
+    "testBuildSucceededMarkerVerified": true,
+    "resolvedLockUnchanged": true,
+    "trackedChangesEmpty": true,
+    "acceptanceTestsExecutedByBuildCommand": 0,
+    "companionBuild": "NOT_INFERRED"
+  },
+  "metadataCompleteness": {
+    "status": "EXECUTED_PASS",
+    "observedApplicationSourceCommit": "b739ada91aca115093e3511f9df58c15edcb5923",
+    "visibility": "metadata/visibility.json",
+    "visibilitySHA256": "ee2499dca17090de31c058652ca6e22e6df9fb87b0ff7e73c8d7c65910a3ee01",
+    "visibilityModifiedAtUTC": "2026-11-25T02:49:35.178945+00:00",
+    "visibilityMtimeInsideBuildInterval": true,
+    "requiredMetadataStringsPresent": {
+      "HanlinNativeServicesBridge": true,
+      "HanlinNativeServicesSessionBridge": true,
+      "HanlinNativeScriptCompatibility": true,
+      "UIView": true,
+      "NSObject": true,
+      "NativeScriptEmbedder": true,
+      "SwiftUIProvider": true,
+      "HanlinNativeScriptSwiftUIFixtureProvider": true,
+      "WKNavigationDelegate": true,
+      "WKWebView": true,
+      "TNSLabel": true,
+      "NSCCrypto": true
+    },
+    "requiredStringCount": 12,
+    "clangErrorCount": 0,
+    "scope": "HOST_BASELINE_ONLY",
+    "boundary": "Build-time completeness check; actual VM tests still required.",
+    "allDeclaredOutputHashesMatchedActualFiles": true,
+    "declaredOutputSHA256": {
+      "metadata-generation-stderr-arm64.txt": "9518b950dd8d66ddec4588cd2f52552330b306ad93de0578f135e1b493192220",
+      "umbrella-arm64.h": "4b2eeb938c104bfda51cccc496200a27dcd125c7e8fbe0cc35e8cc80ef22ca50",
+      "metadata-arm64.bin": "5a3385b02b9f1c626301a326d32068aadc5d6ef6ceb4fa5bae486a978321fbba"
+    },
+    "sourceFileHashes": "metadata/source-files-sha256.json",
+    "binaryCopied": false,
+    "metadataCompilerOrigin": {
+      "sourceCommit": "5d4569c197810cdd4c1e02e7c16d42a01a77d5c0",
+      "provenance": "metadata/provenance.json",
+      "generatorSHA256": "e2bfd9ecd5f5b235dda04b05b6b1b838c799323a558dee7e6651c8d6a93f9e25",
+      "boundary": "Build tool only. No NativeScript/Node/Python engine or app rebuilt; no VM pass.",
+      "qualification": "Original reused build-tool provenance, not the application source or a VM execution result."
+    },
+    "nativeVMAcceptance": "NOT_INFERRED"
+  },
+  "testManifestGuard": {
+    "sourceCommit": "b739ada91aca115093e3511f9df58c15edcb5923",
+    "status": "FRESH_BUILD_PASS_TEST_ENVIRONMENT_REQUIRES_CORRECTION",
+    "receipt": "built-products-preflight-attempt1.json",
+    "checkedAtUTC": "2026-11-25T03:00:05.269599+00:00",
+    "manifestSHA256": "b2cc79f4b3780daec837e119cc5e4a07d5ecccd618ab793b88bb0b80dbfa2062",
+    "manifestMtimeUTC": "2026-11-25T02:58:11.389953+00:00",
+    "affectedTargets": [
+      "AI_HLYTests",
+      "AI_HLYUITests"
+    ],
+    "missingVariable": "HANLIN_UNIT_TEST_HOST",
+    "bothEnvironmentMapsMissing": true,
+    "testsLaunched": false,
+    "classification": "TEST_PREREQUISITE_REQUIRES_CORRECTION_BUILD_PASS_PRESERVED"
+  },
+  "previousApplicationFailuresPreserved": true,
+  "noCompilersTestsPreparersDevicesOrMacWritesDuringPackaging": true
+}

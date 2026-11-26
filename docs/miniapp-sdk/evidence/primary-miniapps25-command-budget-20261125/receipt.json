@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "sourceBase": "67ef9b9fa78929933b30d0b0c7f2c8649e6e61dd",
+  "nativeExecution": "NOT_RUN_FOR_CANDIDATE",
+  "change": {
+    "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+    "beforeSHA256": "afb171016503d06840cd5407b50ab92bb261ad7be982396efe096466c5b92c31",
+    "afterSHA256": "014a10ca33badfc036a3713d4715423a361c6c9fea2e76c24411b5725ac2719f",
+    "scope": "miniapp_complete original25 only",
+    "commandSecondsBefore": 1200,
+    "commandSecondsAfter": 2400,
+    "otherRuntimeScopesSeconds": 1200,
+    "AICommandSeconds": 2100,
+    "perCaseLimitsUnchanged": [
+      300,
+      420,
+      600
+    ],
+    "selectorsAssertionsAndVerifierUnchanged": true
+  },
+  "actualPriorRun": {
+    "source": "cffe7f75436aa2e37ec5d82891937965c0407d2d",
+    "commandSeconds": 1187.659181790994,
+    "headroomUnderPreviousCommandCeilingSeconds": 12.340818209006102,
+    "completeTerminalCounts": {
+      "passed": 16,
+      "failed": 9,
+      "skipped": 0,
+      "total": 25
+    },
+    "pairedTotalSeconds": 1781.210410041007,
+    "measuredOtherPhaseSeconds": 593.5512282500131
+  },
+  "basis": "Nine actual assertion failures ended cases before their remaining required interactions. The old full25 command finished only12.341 seconds below1200. Retain every per-case deadline while allowing complete original selected paths and finalization to finish. This is a bounded external command allowance, not an application limit or retry.",
+  "validation": [
+    "Python AST PASS",
+    "Byte equality after reverting the single conditional timeout line PASS",
+    "Original 25 selectors, baseline17/SDK04-only9 commands, AI2100, case limits, assertions and verify_native_result untouched"
+  ],
+  "raw": [
+    {
+      "path": "raw/original-runtimes-command.json",
+      "bytes": 4148,
+      "sha256": "02f1aeadfca7039d6b3647591c2dc3ea4a3a8731aad4b8116d3c63435a872f29"
+    },
+    {
+      "path": "raw/original-runtimes-summary.json",
+      "bytes": 8853,
+      "sha256": "2f4439efadeb51fecb3844fa2b79bfa995cbf968565a980c7ff5bd5bc6374d3d"
+    },
+    {
+      "path": "raw/paired-v3-terminal-state.json",
+      "bytes": 3047,
+      "sha256": "f6bc0a4d6689e1bc08b40747e67c0ae0d7768f4c81f3821dafa3ab552408c75f"
+    }
+  ],
+  "recordedAt": "2026-11-25T08:37:59.044419+00:00"
+}

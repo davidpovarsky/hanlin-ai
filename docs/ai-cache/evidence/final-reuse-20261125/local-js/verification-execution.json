@@ -1,0 +1,10 @@
+{
+  "operation": "Oracle python3 -B stdin; saved verification script executed with exec(compile(script, saved_path, \"exec\"))",
+  "native_operations": false,
+  "tests_executed": false,
+  "repository_mutations": false,
+  "exit_code": 0,
+  "duration_seconds": 1.5,
+  "script_sha256": "f4153ddf75b571f501136481dc02fffa2b021cc534f3c468bc838330eb883ed7",
+  "stdout_sha256": "ce0a76b9554672e43f38336260977cc5a63bb85716395e32cf1096bb0afdb0c6"
+}

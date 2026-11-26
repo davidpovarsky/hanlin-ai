@@ -1,5 +1,10 @@
 #if canImport(SwiftUI)
 import SwiftUI
+#if canImport(UIKit)
+import UIKit
+#elseif canImport(AppKit)
+import AppKit
+#endif
 import HanlinMiniAppsBridge
 
 /// The same native chooser is embedded by every source app. It only writes the
@@ -60,9 +65,7 @@ public struct MiniAppPicker: View {
                                 ForEach(quickItems) { item in
                                     Button { launch(item) } label: {
                                         VStack(spacing: 8) {
-                                            Image(systemName: item.systemImage)
-                                                .font(.title2).frame(width: 52, height: 52)
-                                                .background(.quaternary, in: RoundedRectangle(cornerRadius: 12))
+                                            MiniAppPickerIcon(item: item, size: 52)
                                             Text(item.title(locale: locale)).font(.caption).lineLimit(2)
                                                 .multilineTextAlignment(.center).frame(maxWidth: 76)
                                         }
@@ -82,7 +85,7 @@ public struct MiniAppPicker: View {
             }
             .navigationTitle(MiniAppPickerText.string("MiniApps"))
             .navigationDestination(for: Route.self) { _ in
-                MiniAppPickerEditor(catalog: catalog, preferences: $preferences,
+                MiniAppPickerEditor(catalog: catalog.filter { $0.accepts(inputs) }, preferences: $preferences,
                     onLaunch: launch, onChange: change)
             }
             .toolbar {
@@ -142,7 +145,7 @@ public struct MiniAppPicker: View {
     }
 
     private func report(_ error: Error) {
-        errorMessage = error.localizedDescription
+        errorMessage = MiniAppPickerText.error(error)
         onError(error)
     }
 }
@@ -185,7 +188,7 @@ public struct MiniAppPreferencesView: View {
         do {
             let snapshot = try await storage.snapshot()
             catalog = snapshot.items; preferences = snapshot.preferences; loading = false
-        } catch { loading = false; errorMessage = error.localizedDescription }
+        } catch { loading = false; errorMessage = MiniAppPickerText.error(error) }
     }
 
     private func change(_ change: MiniAppPickerChange) async throws -> MiniAppPreferences {
@@ -205,6 +208,7 @@ private struct MiniAppPickerEditor: View {
     @State private var editing = false
     #endif
     @Binding var preferences: MiniAppPreferences
+    @State private var isSaving = false
     @State private var errorMessage: String?
     let catalog: [MiniAppCatalogItem]
     let onLaunch: ((MiniAppCatalogItem) -> Void)?
@@ -230,7 +234,7 @@ private struct MiniAppPickerEditor: View {
         List {
             Section(MiniAppPickerText.string("Favorites")) {
                 ForEach(favorites) { item in
-                    if let onLaunch {
+                    if let onLaunch, !isEditing {
                         Button { onLaunch(item) } label: { row(item) }.buttonStyle(.plain)
                             .accessibilityIdentifier("miniapps-launch-\(item.id)")
                     } else { row(item) }
@@ -259,7 +263,7 @@ private struct MiniAppPickerEditor: View {
                             .buttonStyle(.borderless)
                             .accessibilityLabel(MiniAppPickerText.string("Add to Favorites") + ": " + item.title(locale: locale))
                         }
-                        if let onLaunch {
+                        if let onLaunch, !isEditing {
                             Button { onLaunch(item) } label: { row(item) }.buttonStyle(.plain)
                             .accessibilityIdentifier("miniapps-launch-\(item.id)")
                         } else { row(item) }
@@ -282,6 +286,7 @@ private struct MiniAppPickerEditor: View {
                 Text(MiniAppPickerText.string("On devices with multiple windows. Other devices use the current window."))
             }
         }
+        .disabled(isSaving)
         .navigationTitle(MiniAppPickerText.string("Apps"))
         .toolbar {
             // Match Share > More > Apps: leading dismissal and trailing Edit
@@ -290,11 +295,12 @@ private struct MiniAppPickerEditor: View {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(MiniAppPickerText.string("Done")) { dismiss() }
                         .accessibilityIdentifier("miniapps-editor-dismiss")
+                        .disabled(isSaving)
                 }
             }
             ToolbarItem(placement: .confirmationAction) {
                 #if os(iOS)
-                EditButton().accessibilityIdentifier("miniapps-editor-edit")
+                EditButton().accessibilityIdentifier("miniapps-editor-edit").disabled(isSaving)
                 #else
                 Button(MiniAppPickerText.string(editing ? "Done" : "Edit")) { editing.toggle() }
                     .accessibilityIdentifier("miniapps-editor-edit")
@@ -325,16 +331,52 @@ private struct MiniAppPickerEditor: View {
         Label {
             VStack(alignment: .leading) {
                 Text(item.title(locale: locale))
-                if let subtitle = item.subtitle { Text(subtitle).font(.caption).foregroundStyle(.secondary) }
+                if let subtitle = item.subtitle(locale: locale) { Text(subtitle).font(.caption).foregroundStyle(.secondary) }
             }
-        } icon: { Image(systemName: item.systemImage) }
+        } icon: { MiniAppPickerIcon(item: item, size: 30) }
         .frame(maxWidth: .infinity, alignment: .leading)
     }
     private func update(_ change: MiniAppPickerChange) {
+        guard !isSaving else { return }
+        isSaving = true
         Task {
+            defer { isSaving = false }
             do { preferences = try await onChange(change) }
-            catch { errorMessage = error.localizedDescription }
+            catch { errorMessage = MiniAppPickerText.error(error) }
         }
+    }
+}
+
+/// Icons travel as data; consumers need no producer assets or package paths.
+@MainActor
+private struct MiniAppPickerIcon: View {
+    let item: MiniAppCatalogItem
+    let size: CGFloat
+
+    var body: some View {
+        Group {
+            if let image {
+                image.resizable().scaledToFit()
+            } else {
+                Image(systemName: item.systemImage).font(.system(size: size * 0.48))
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .background(.quaternary)
+            }
+        }
+        .frame(width: size, height: size)
+        .clipShape(RoundedRectangle(cornerRadius: size * 0.23))
+        .accessibilityHidden(true)
+    }
+
+    private var image: Image? {
+        guard let data = item.iconData else { return nil }
+        #if canImport(UIKit)
+        return UIImage(data: data).map { Image(uiImage: $0) }
+        #elseif canImport(AppKit)
+        return NSImage(data: data).map { Image(nsImage: $0) }
+        #else
+        return nil
+        #endif
     }
 }
 
@@ -366,6 +408,12 @@ private actor MiniAppPickerStorage {
 }
 
 private enum MiniAppPickerText {
+    static func error(_ error: Error) -> String {
+        guard let bridgeError = error as? MiniAppBridgeError,
+              let description = bridgeError.errorDescription else { return error.localizedDescription }
+        return string(description)
+    }
+
     static func string(_ key: String) -> String {
         NSLocalizedString(key, bundle: .module, comment: "")
     }

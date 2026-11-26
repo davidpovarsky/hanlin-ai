@@ -1,0 +1,78 @@
+{
+  "sourceMember": "app-split-evidence/paired-product/commands.jsonl",
+  "sourceBytes": 5721,
+  "sourceSHA256": "de5719b777fee69049a5fa99e477f2995f38967f7b7f3bdca6c3cca76c209931",
+  "matchingCommandIDs": [
+    "e580678e168540089c47940d9ddf2b73",
+    "eca9fe4e30094ca0bf1737fc8c29547c"
+  ],
+  "selectedRows": [
+    {
+      "line": 12,
+      "rawLine": "{\"argv\": [\"xcodebuild\", \"-project\", \"AI_HLY.xcodeproj\", \"-destination\", \"platform=iOS Simulator,id=F522200D-EAF6-4DA1-9B4B-B077D2894A0C\", \"-parallel-testing-enabled\", \"NO\", \"-derivedDataPath\", \"/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData\", \"-clonedSourcePackagesDirPath\", \"/Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages\", \"-skipPackagePluginValidation\", \"-skipMacroValidation\", \"CODE_SIGNING_ALLOWED=YES\", \"CODE_SIGNING_REQUIRED=YES\", \"CODE_SIGN_IDENTITY=-\", \"-scheme\", \"HanlinMiniApps\", \"build-for-testing\", \"-resultBundlePath\", \"/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/paired-product/MiniBuild.xcresult\"], \"exit\": 0, \"seconds\": 785.0861333329999, \"log\": \"mini-build.log\", \"sha256\": \"df41b19a856863c4dbf4e82ed960bf907f4727052ebc9f4c4e4be782fe490228\"}\n",
+      "record": {
+        "argv": [
+          "xcodebuild",
+          "-project",
+          "AI_HLY.xcodeproj",
+          "-destination",
+          "platform=iOS Simulator,id=F522200D-EAF6-4DA1-9B4B-B077D2894A0C",
+          "-parallel-testing-enabled",
+          "NO",
+          "-derivedDataPath",
+          "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData",
+          "-clonedSourcePackagesDirPath",
+          "/Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages",
+          "-skipPackagePluginValidation",
+          "-skipMacroValidation",
+          "CODE_SIGNING_ALLOWED=YES",
+          "CODE_SIGNING_REQUIRED=YES",
+          "CODE_SIGN_IDENTITY=-",
+          "-scheme",
+          "HanlinMiniApps",
+          "build-for-testing",
+          "-resultBundlePath",
+          "/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/paired-product/MiniBuild.xcresult"
+        ],
+        "exit": 0,
+        "seconds": 785.0861333329999,
+        "log": "mini-build.log",
+        "sha256": "df41b19a856863c4dbf4e82ed960bf907f4727052ebc9f4c4e4be782fe490228"
+      }
+    },
+    {
+      "line": 14,
+      "rawLine": "{\"argv\": [\"xcodebuild\", \"-project\", \"AI_HLY.xcodeproj\", \"-destination\", \"platform=iOS Simulator,id=F522200D-EAF6-4DA1-9B4B-B077D2894A0C\", \"-parallel-testing-enabled\", \"NO\", \"-derivedDataPath\", \"/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData\", \"-clonedSourcePackagesDirPath\", \"/Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages\", \"-skipPackagePluginValidation\", \"-skipMacroValidation\", \"CODE_SIGNING_ALLOWED=YES\", \"CODE_SIGNING_REQUIRED=YES\", \"CODE_SIGN_IDENTITY=-\", \"-scheme\", \"AI_HLY\", \"build-for-testing\", \"-resultBundlePath\", \"/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/paired-product/AIBuild.xcresult\"], \"exit\": 65, \"seconds\": 488.93014395800014, \"log\": \"ai-build.log\", \"sha256\": \"7cb76a022c9feca202ce48dbbbe2815a2d1ec6df5bc2ca6aefe80d6727685b96\"}\n",
+      "record": {
+        "argv": [
+          "xcodebuild",
+          "-project",
+          "AI_HLY.xcodeproj",
+          "-destination",
+          "platform=iOS Simulator,id=F522200D-EAF6-4DA1-9B4B-B077D2894A0C",
+          "-parallel-testing-enabled",
+          "NO",
+          "-derivedDataPath",
+          "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData",
+          "-clonedSourcePackagesDirPath",
+          "/Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages",
+          "-skipPackagePluginValidation",
+          "-skipMacroValidation",
+          "CODE_SIGNING_ALLOWED=YES",
+          "CODE_SIGNING_REQUIRED=YES",
+          "CODE_SIGN_IDENTITY=-",
+          "-scheme",
+          "AI_HLY",
+          "build-for-testing",
+          "-resultBundlePath",
+          "/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/paired-product/AIBuild.xcresult"
+        ],
+        "exit": 65,
+        "seconds": 488.93014395800014,
+        "log": "ai-build.log",
+        "sha256": "7cb76a022c9feca202ce48dbbbe2815a2d1ec6df5bc2ca6aefe80d6727685b96"
+      }
+    }
+  ],
+  "scope": "Only the two native build command receipts corresponding to acceptance.build_commands; no native logs or tests executed/read."
+}

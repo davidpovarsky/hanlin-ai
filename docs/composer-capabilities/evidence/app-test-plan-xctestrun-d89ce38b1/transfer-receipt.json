@@ -1,0 +1,50 @@
+{
+  "schemaVersion": 1,
+  "transferredAtUTC": "2026-11-25T04:03:14.472502+00:00",
+  "transport": "Oracle pinned scaleway-mac SSH alias, BatchMode=yes, StrictHostKeyChecking=yes",
+  "sourceReadOnly": true,
+  "allSourceSHA256Verified": true,
+  "noBuildsTestsGeneratorsDevicesCacheActionsOrMacWrites": true,
+  "files": [
+    {
+      "path": "docs/composer-capabilities/evidence/app-test-plan-xctestrun-d89ce38b1/app-test-plan.json",
+      "bytes": 35332,
+      "sha256": "f7dea489f9bbadcb7aec787be9e349de45117c092d3040971db2262a7d709005",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/app-test-plan/app-test-plan.json",
+      "sourceBytes": 35332,
+      "sourceSHA256": "f7dea489f9bbadcb7aec787be9e349de45117c092d3040971db2262a7d709005",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-test-plan-xctestrun-d89ce38b1/run_app_test_group.py",
+      "bytes": 17464,
+      "sha256": "d39c301f90753d692bb1d1d829ac6f35a4b26d9aaeaf46f8c82d147b6d74016a",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/app-test-plan/run_app_test_group.py",
+      "sourceBytes": 17464,
+      "sourceSHA256": "d39c301f90753d692bb1d1d829ac6f35a4b26d9aaeaf46f8c82d147b6d74016a",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-test-plan-xctestrun-d89ce38b1/preparation-receipt.json",
+      "bytes": 1623,
+      "sha256": "be06154dd583dfdd4a82d01b4dec7ead5e559472b4e1edb484eaaa514f865b6f",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/app-test-plan/preparation-receipt.json",
+      "sourceBytes": 1623,
+      "sourceSHA256": "be06154dd583dfdd4a82d01b4dec7ead5e559472b4e1edb484eaaa514f865b6f",
+      "compressedForRepository": false
+    },
+    {
+      "path": "docs/composer-capabilities/evidence/app-test-plan-xctestrun-d89ce38b1/xctestrun-migration-receipt.json",
+      "bytes": 2003,
+      "sha256": "616a4bdf6ffba62e21fb5ce0b3946561fed8c1218b368f418bccc865c0a664f5",
+      "sourceHost": "scaleway-mac",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/app-test-plan/xctestrun-migration-receipt.json",
+      "sourceBytes": 2003,
+      "sourceSHA256": "616a4bdf6ffba62e21fb5ce0b3946561fed8c1218b368f418bccc865c0a664f5",
+      "compressedForRepository": false
+    }
+  ]
+}

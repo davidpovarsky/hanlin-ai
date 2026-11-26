@@ -1,0 +1,14 @@
+test_duplicate_package_identity_and_unpinned_entries_are_rejected (Scripts.SDK.tests.test_application_external_packages.ApplicationExternalPackageTests.test_duplicate_package_identity_and_unpinned_entries_are_rejected) ... ok
+test_missing_optional_app_dependencies_preserve_old_graph (Scripts.SDK.tests.test_application_external_packages.ApplicationExternalPackageTests.test_missing_optional_app_dependencies_preserve_old_graph) ... ok
+test_original_lru_library_is_exactly_owned_by_application (Scripts.SDK.tests.test_application_external_packages.ApplicationExternalPackageTests.test_original_lru_library_is_exactly_owned_by_application) ... ok
+test_canonical_seed_rejects_missing_ambiguous_recursive_and_duplicate_dependencies (Scripts.SDK.tests.test_host_link_ownership.HostLinkOwnershipTests.test_canonical_seed_rejects_missing_ambiguous_recursive_and_duplicate_dependencies) ... ok
+test_checked_in_hosts_link_only_the_shared_application_image (Scripts.SDK.tests.test_host_link_ownership.HostLinkOwnershipTests.test_checked_in_hosts_link_only_the_shared_application_image) ... ok
+test_every_declared_host_product_remains_reachable_and_unknown_products_are_kept (Scripts.SDK.tests.test_host_link_ownership.HostLinkOwnershipTests.test_every_declared_host_product_remains_reachable_and_unknown_products_are_kept) ... ok
+test_generator_preserves_declared_source_closure_and_all_unrelated_objects (Scripts.SDK.tests.test_host_link_ownership.HostLinkOwnershipTests.test_generator_preserves_declared_source_closure_and_all_unrelated_objects) ... ok
+test_host_target_name_disambiguates_the_sdk_and_preserves_the_app_product (Scripts.SDK.tests.test_host_link_ownership.HostLinkOwnershipTests.test_host_target_name_disambiguates_the_sdk_and_preserves_the_app_product) ... ok
+test_unknown_independent_host_product_is_preserved_in_both_link_surfaces (Scripts.SDK.tests.test_host_link_ownership.HostLinkOwnershipTests.test_unknown_independent_host_product_is_preserved_in_both_link_surfaces) ... ok
+
+----------------------------------------------------------------------
+Ran 9 tests in 2.384s
+
+OK

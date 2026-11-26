@@ -1,0 +1,18 @@
+{
+  "kind": "SOURCE_REVIEW_ONLY",
+  "reviewed_hanlin_source": "133888e3455121351816aa82a7d9acb095db1d6b",
+  "sdk_revision": "abf0921c6e89e6521cc2b510ff11016b45a0ef08",
+  "sdk_tree": "f094f58f7956903e740a5188cf1e9d43c126248e",
+  "result": "Tool array order is deterministic through the actual original SDK boundary; no code change or new test required.",
+  "dictionary_boundary": "Sources/SwiftAISDK/Prompt/PrepareToolsAndToolChoice.swift: both V3 and V4 preparers explicitly sort aliases bykey after active-tool membership filtering.",
+  "forwarding": "StreamText and StreamTextActor pass the ordered V4array. V4-to-V3 adapters use array.map.",
+  "providers": {
+    "OpenAIResponses": "Ordered append; namespace dictionary only stores indexes, not output enumeration.",
+    "OpenAIChat": "Ordered append toJSONValue.array.",
+    "OpenAICompatible": "Ordered append toJSONValue.array.",
+    "Anthropic": "Arraymap/orderedappend; syntheticJSONtool appended deterministically.",
+    "Google": "Orderedappend forfunctionDeclarations/providerentries.",
+    "ChatGPTPlan": "Filter/namespace wrapper preserves relativearrayorder."
+  },
+  "limits": "Source proof for tool-array ordering; not a new execution receipt or live cache-hit claim."
+}

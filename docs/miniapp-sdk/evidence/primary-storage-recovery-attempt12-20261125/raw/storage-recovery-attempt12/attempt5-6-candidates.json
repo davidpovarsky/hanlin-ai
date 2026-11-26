@@ -1,0 +1,125 @@
+{
+  "observedAt": "2026-11-25T04:02:46.653481+00:00",
+  "scope": "Read-only concrete additional candidates; no deletion in this observation",
+  "freeBytes": 6161625088,
+  "df": "Filesystem   1024-blocks      Used Available Capacity iused    ifree %iused  Mounted on\n/dev/disk3s5   482797652 432895664   6017212    99% 5813620 60172120    9%   /System/Volumes/Data\n",
+  "candidates": [
+    {
+      "attempt": 5,
+      "source": "340018ddc9ea2395ffabedbf179369b5bdb791af",
+      "uid": "4D9924A2-66E1-429D-A61C-82836C6FA3AF",
+      "device": "/Users/m1/Library/Developer/CoreSimulator/Devices/4D9924A2-66E1-429D-A61C-82836C6FA3AF",
+      "actualState": "Shutdown",
+      "matchingProcesses": [],
+      "matchingOpenFiles": [],
+      "lsofReturncode": 0,
+      "originalAcceptanceStatus": "BUILD_FAILED",
+      "originalError": "xcodebuild exit 65; inspect mini-build.log",
+      "retainedCriticalFiles": [
+        {
+          "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired-product-attempt5/created-simulator.txt",
+          "bytes": 37,
+          "sha256": "087c852ba3bf8def6127a2a51aea7b35eb563839bfc31e3304c3459531e9b4d8"
+        },
+        {
+          "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired-product-attempt5/acceptance.json",
+          "bytes": 2633,
+          "sha256": "b11415e25f0e4ffd21088f159b8856bfe298189e624741b89cffb54cd2c990a0"
+        },
+        {
+          "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired-product-attempt5/commands.jsonl",
+          "bytes": 4442,
+          "sha256": "b4cf2860b0a1b927e2375b5391025cac36e745930a94e778e89a7452ccf3d755"
+        },
+        {
+          "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired-product-attempt5/mini-build.log",
+          "bytes": 5340384,
+          "sha256": "97914eff511dd01491868bfa0232ccae43d6a81632d45cf9ae0897b84e7de3e3"
+        },
+        {
+          "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt5/split-paired-acceptance.log",
+          "bytes": 5978,
+          "sha256": "20f25477745cd222966740bcc27001b4ce3d24d28233e320c917f5125b50d77a"
+        }
+      ],
+      "retainedFullResults": [
+        {
+          "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired-product-attempt5/MiniBuild.xcresult",
+          "duKiB": 504,
+          "InfoPlistExists": true,
+          "topLevel": [
+            "Data",
+            "Info.plist"
+          ]
+        }
+      ],
+      "candidateDUKiB": 2359472
+    },
+    {
+      "attempt": 6,
+      "source": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
+      "uid": "3797CDB6-6A26-41AF-8E80-11A011B62F80",
+      "device": "/Users/m1/Library/Developer/CoreSimulator/Devices/3797CDB6-6A26-41AF-8E80-11A011B62F80",
+      "actualState": "Shutdown",
+      "matchingProcesses": [],
+      "matchingOpenFiles": [],
+      "lsofReturncode": 0,
+      "originalAcceptanceStatus": "INFRA_ERROR",
+      "originalError": "node exit 1; inspect modular-search-build.log",
+      "retainedCriticalFiles": [
+        {
+          "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired-product-attempt6/created-simulator.txt",
+          "bytes": 37,
+          "sha256": "d93e4fc6e2cd25041e15be360c636f2175b88053f4d5e28b81e0f240c794afdb"
+        },
+        {
+          "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired-product-attempt6/acceptance.json",
+          "bytes": 11920,
+          "sha256": "289ec3e653b8236f7fa1acca4f79b35955a32a34df52508178ce60442594fdba"
+        },
+        {
+          "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired-product-attempt6/commands.jsonl",
+          "bytes": 10709,
+          "sha256": "12f38b63e95b0595299d998ee296d3dad3b13962cf94c37e7a77abd1b221046d"
+        },
+        {
+          "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired-product-attempt6/mini-build.log",
+          "bytes": 7079343,
+          "sha256": "12c73f8d83c369caef80bd0472c3b758548250e7f2b4d5adccfecf635b261ab1"
+        },
+        {
+          "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired-product-attempt6/modular-search-build.log",
+          "bytes": 8365,
+          "sha256": "75f8f38e12608c5f16947e965b1107befc71eee5a352592c9c5d091289575a50"
+        },
+        {
+          "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt6/split-paired-acceptance.log",
+          "bytes": 12913,
+          "sha256": "ad5834f439bad59678020192ce22dabd548f97cc0dc418f86a7e6cbc5acfbfa0"
+        }
+      ],
+      "retainedFullResults": [
+        {
+          "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired-product-attempt6/AIBuild.xcresult",
+          "duKiB": 852,
+          "InfoPlistExists": true,
+          "topLevel": [
+            "Data",
+            "Info.plist"
+          ]
+        },
+        {
+          "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired-product-attempt6/MiniBuild.xcresult",
+          "duKiB": 588,
+          "InfoPlistExists": true,
+          "topLevel": [
+            "Data",
+            "Info.plist"
+          ]
+        }
+      ],
+      "candidateDUKiB": 4790104
+    }
+  ],
+  "protected": "Passed11/current12, all result/control/evidence/source/SDK10/DerivedData and other owners"
+}

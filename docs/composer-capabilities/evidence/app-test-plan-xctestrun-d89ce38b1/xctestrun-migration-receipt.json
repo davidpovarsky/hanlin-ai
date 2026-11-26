@@ -1,0 +1,54 @@
+{
+  "atUTC": "2026-11-25T03:48:53.920188+00:00",
+  "sourceCommit": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+  "before": {
+    "planSHA256": "5deab5995c17edcf3b70da8d51b435d76094d452aa3dd28a7cc4b10c78ca3030",
+    "runnerSHA256": "04ace987d51870b3c88b1e05c32a652ba68d53154c70d7f151fe7cdfa7a131fa"
+  },
+  "after": {
+    "planSHA256": "f7dea489f9bbadcb7aec787be9e349de45117c092d3040971db2262a7d709005",
+    "runnerSHA256": "d39c301f90753d692bb1d1d829ac6f35a4b26d9aaeaf46f8c82d147b6d74016a"
+  },
+  "manifest": {
+    "path": "/Users/m1/caches/DerivedData/hanlin-composer-app-20261124/Build/Products/AI_HLY_iphonesimulator27.0-arm64.xctestrun",
+    "sha256": "7a298177b07b04a7554677049a6f557865f0aa9387e352107bec3ea2c60253e5",
+    "sourceCommit": "d89ce38b170bc9af4734cd11e30ca793b16698d0",
+    "buildReceiptSHA256": "aeb414df2dc399bb14b792f4482b6ffc2b8545c9dec745a7b6e3ef176aeff958",
+    "preflightReceipt": "built-products-preflight-attempt2.json"
+  },
+  "commandMode": "original xctestrun in Build/Products",
+  "allFiveSelectorListsUnchanged": true,
+  "groups": {
+    "app_scope": {
+      "methods": 13,
+      "invocations": 13,
+      "timeoutSeconds": 1200,
+      "destinationID": "F1D52257-55E0-4927-8029-E19D47B51AC0"
+    },
+    "native_editor": {
+      "methods": 4,
+      "invocations": 5,
+      "timeoutSeconds": 900,
+      "destinationID": "F1D52257-55E0-4927-8029-E19D47B51AC0"
+    },
+    "native_engines": {
+      "methods": 4,
+      "invocations": 4,
+      "timeoutSeconds": 1800,
+      "destinationID": "F1D52257-55E0-4927-8029-E19D47B51AC0"
+    },
+    "ui_phone": {
+      "methods": 4,
+      "invocations": 4,
+      "timeoutSeconds": 1200,
+      "destinationID": "F1D52257-55E0-4927-8029-E19D47B51AC0"
+    },
+    "ui_tablet": {
+      "methods": 3,
+      "invocations": 3,
+      "timeoutSeconds": 1200,
+      "destinationID": "096F698B-7016-4922-8F97-82B4A975A2B6"
+    }
+  },
+  "diagnostics": "Only verbose long-running failure diagnostics disabled; normal results and attachments retained"
+}

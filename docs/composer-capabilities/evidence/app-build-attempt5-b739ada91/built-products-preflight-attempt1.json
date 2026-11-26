@@ -1,0 +1,27 @@
+{
+  "sourceCommit": "b739ada91aca115093e3511f9df58c15edcb5923",
+  "checkedAtUTC": "2026-11-25T03:00:05.269599+00:00",
+  "buildReceiptSHA256": "df7b5a4dad356d88dbe735342423742c9e86377355e0e9926b7de5ac599053fc",
+  "buildPass": true,
+  "manifestPath": "/Users/m1/caches/DerivedData/hanlin-composer-app-20261124/Build/Products/AI_HLY_iphonesimulator27.0-arm64.xctestrun",
+  "manifestSHA256": "b2cc79f4b3780daec837e119cc5e4a07d5ecccd618ab793b88bb0b80dbfa2062",
+  "manifestMtimeUTC": "2026-11-25T02:58:11.389953+00:00",
+  "targets": [
+    {
+      "blueprint": "AI_HLYTests",
+      "testBundlePath": "__TESTHOST__/PlugIns/AI_HLYTests.xctest",
+      "testHostPath": "__TESTROOT__/Debug-iphonesimulator/AI_Hanlin.app",
+      "unitTestHostEnvironment": null,
+      "unitTestHostTestingEnvironment": null
+    },
+    {
+      "blueprint": "AI_HLYUITests",
+      "testBundlePath": "__TESTHOST__/PlugIns/AI_HLYUITests.xctest",
+      "testHostPath": "__TESTROOT__/Debug-iphonesimulator/AI_HLYUITests-Runner.app",
+      "unitTestHostEnvironment": null,
+      "unitTestHostTestingEnvironment": null
+    }
+  ],
+  "status": "FRESH_BUILD_PASS_TEST_ENVIRONMENT_REQUIRES_CORRECTION",
+  "boundary": "No app tests launched. Fresh manifest is missing explicit unit-host environment despite scheme test entry; source ownership/repair in progress."
+}

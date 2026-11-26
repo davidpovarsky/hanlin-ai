@@ -1,0 +1,183 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "1C405200-001E-4284-B486-2F1128A71CBC",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "modelName" : "iPad Pro 13-inch (M5)",
+        "osBuildNumber" : "24A434",
+        "osVersion" : "27.0",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 9,
+      "passedTests" : 16,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "HanlinMiniApps · Built with macOS 27.0",
+  "expectedFailures" : 0,
+  "failedTests" : 9,
+  "finishTime" : 1795593373.614,
+  "passedTests" : 16,
+  "result" : "Failed",
+  "runtimeWarnings" : [
+    {
+      "issueType" : "Runtime Warning",
+      "message" : "Update the Info.plist: Support for all orientations will soon be required."
+    },
+    {
+      "issueType" : "Runtime Warning",
+      "message" : "Update the Info.plist: Support for all orientations will soon be required."
+    },
+    {
+      "issueType" : "Runtime Warning",
+      "message" : "Update the Info.plist: Support for all orientations will soon be required."
+    },
+    {
+      "issueType" : "Runtime Warning",
+      "message" : "Update the Info.plist: Support for all orientations will soon be required."
+    },
+    {
+      "issueType" : "Runtime Warning",
+      "message" : "Update the Info.plist: Support for all orientations will soon be required."
+    },
+    {
+      "issueType" : "Runtime Warning",
+      "message" : "Update the Info.plist: Support for all orientations will soon be required."
+    },
+    {
+      "issueType" : "Runtime Warning",
+      "message" : "Update the Info.plist: Support for all orientations will soon be required."
+    },
+    {
+      "issueType" : "Runtime Warning",
+      "message" : "Update the Info.plist: Support for all orientations will soon be required."
+    },
+    {
+      "issueType" : "Runtime Warning",
+      "message" : "Update the Info.plist: Support for all orientations will soon be required."
+    },
+    {
+      "issueType" : "Runtime Warning",
+      "message" : "Update the Info.plist: Support for all orientations will soon be required."
+    },
+    {
+      "issueType" : "Runtime Warning",
+      "message" : "Update the Info.plist: Support for all orientations will soon be required."
+    },
+    {
+      "issueType" : "Runtime Warning",
+      "message" : "Update the Info.plist: Support for all orientations will soon be required."
+    },
+    {
+      "issueType" : "Runtime Warning",
+      "message" : "Update the Info.plist: Support for all orientations will soon be required."
+    },
+    {
+      "issueType" : "Runtime Warning",
+      "message" : "Update the Info.plist: Support for all orientations will soon be required."
+    },
+    {
+      "issueType" : "Runtime Warning",
+      "message" : "Update the Info.plist: Support for all orientations will soon be required."
+    },
+    {
+      "issueType" : "Runtime Warning",
+      "message" : "Update the Info.plist: Support for all orientations will soon be required."
+    },
+    {
+      "issueType" : "Runtime Warning",
+      "message" : "Update the Info.plist: Support for all orientations will soon be required."
+    }
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1795592220.328,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "XCTAssertTrue failed - The original compiler and installer must finish",
+      "targetName" : "HanlinMiniAppsUITests",
+      "testIdentifier" : 1,
+      "testIdentifierString" : "MiniAppsExternalModalLifetimeUITests/testExternalInvocationSurvivesNestedFullScreenModal()",
+      "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests/testExternalInvocationSurvivesNestedFullScreenModal",
+      "testName" : "testExternalInvocationSurvivesNestedFullScreenModal()"
+    },
+    {
+      "failureText" : "XCTAssertTrue failed",
+      "targetName" : "HanlinMiniAppsUITests",
+      "testIdentifier" : 2,
+      "testIdentifierString" : "MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEditButtonEditsOriginalList()",
+      "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEditButtonEditsOriginalList",
+      "testName" : "testStandaloneExpoGeneratedEditButtonEditsOriginalList()"
+    },
+    {
+      "failureText" : "XCTAssertTrue failed - Missing exact native adapter result: Generated group label 0",
+      "targetName" : "HanlinMiniAppsUITests",
+      "testIdentifier" : 4,
+      "testIdentifierString" : "MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata()",
+      "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata",
+      "testName" : "testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata()"
+    },
+    {
+      "failureText" : "XCTAssertTrue failed - Missing exact native adapter result: MODIFIER_NATIVE_CONTEXT:Input:appeared",
+      "targetName" : "HanlinMiniAppsUITests",
+      "testIdentifier" : 6,
+      "testIdentifierString" : "MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope()",
+      "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope",
+      "testName" : "testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope()"
+    },
+    {
+      "failureText" : "XCTAssertTrue failed - Missing exact native adapter result: MODIFIER_SEARCH_QUERY:Isaiah",
+      "targetName" : "HanlinMiniAppsUITests",
+      "testIdentifier" : 7,
+      "testIdentifierString" : "MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierNativeContainerContexts()",
+      "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierNativeContainerContexts",
+      "testName" : "testStandaloneExpoGeneratedModifierNativeContainerContexts()"
+    },
+    {
+      "failureText" : "XCTAssertEqual failed: (\"HOST_SERVICES_FAILED:all-runtimes:Error: Required ios_system resource commandDictionary.plist is missing from /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app.\") is not equal to (\"HOST_SERVICES_ALL_RUNTIMES_PASS\")",
+      "targetName" : "HanlinMiniAppsUITests",
+      "testIdentifier" : 8,
+      "testIdentifierString" : "MiniAppsProductionRuntimeUITests/testStandaloneExpoHostServicesUseRealStorageRuntimeAndWidgetPublication()",
+      "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoHostServicesUseRealStorageRuntimeAndWidgetPublication",
+      "testName" : "testStandaloneExpoHostServicesUseRealStorageRuntimeAndWidgetPublication()"
+    },
+    {
+      "failureText" : "XCTAssertTrue failed",
+      "targetName" : "HanlinMiniAppsUITests",
+      "testIdentifier" : 9,
+      "testIdentifierString" : "MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters()",
+      "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters",
+      "testName" : "testStandaloneExpoManualInputLayoutAndDataAdapters()"
+    },
+    {
+      "failureText" : "XCTAssertTrue failed - Missing exact native adapter result: Sheet_CHANGES:0",
+      "targetName" : "HanlinMiniAppsUITests",
+      "testIdentifier" : 10,
+      "testIdentifierString" : "MiniAppsProductionRuntimeUITests/testStandaloneExpoManualPresentationAdaptersAndDismissalEvents()",
+      "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualPresentationAdaptersAndDismissalEvents",
+      "testName" : "testStandaloneExpoManualPresentationAdaptersAndDismissalEvents()"
+    },
+    {
+      "failureText" : "XCTAssertTrue failed",
+      "targetName" : "HanlinMiniAppsUITests",
+      "testIdentifier" : 14,
+      "testIdentifierString" : "MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText()",
+      "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText",
+      "testName" : "testStandaloneModularSearchLoadsActualSefariaText()"
+    }
+  ],
+  "title" : "Test - HanlinMiniApps",
+  "topInsights" : [
+
+  ],
+  "totalTestCount" : 25
+}

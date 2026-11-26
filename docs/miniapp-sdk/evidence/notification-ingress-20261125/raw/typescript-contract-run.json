@@ -1,0 +1,25 @@
+{
+  "startedAt": "2026-11-25T04:57:14.143415+00:00",
+  "completedAt": "2026-11-25T04:57:16.986130+00:00",
+  "command": [
+    "/usr/local/bin/node",
+    "--test",
+    "Scripts/MiniApps/Tests/notification-events.test.mjs"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-primary-sdk-preparation-20261124",
+  "NODE_PATH": "/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules",
+  "exitCode": 0,
+  "elapsedSeconds": 2.8424918204545975,
+  "compiler": {
+    "node": "v24.22.0",
+    "wrapper": "/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules/typescript/lib/typescript.js",
+    "actual": "/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules/@typescript/old/lib/typescript.js",
+    "compilerVersion": "6.0.3",
+    "actualSha256": "569177652966bd528c319171c7dd22860dbf72bde116cbc4f644f1d02bb12e39"
+  },
+  "sourceSha256": "b4c7753bbcd8ebfc757a54b9c4783bc40280125f982c48fe12e953097e853d80",
+  "logSha256": "a73b4107feeddb5e701482b33cead920e6c7534ffde0ac9d23287b9432b79bd7",
+  "readOnlyDependencies": true,
+  "nativeExecution": false,
+  "generatorsRun": []
+}

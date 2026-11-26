@@ -1,0 +1,343 @@
+{
+  "allDiagnosticHeaders": [
+    {
+      "line": 3769,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/ExpoModulesCore.framework/Headers/BridgelessJSCallInvoker.h:7:10: error: 'ReactCommon/CallInvoker.h' file not found"
+    },
+    {
+      "line": 3815,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/RCTBridgeModule.h:14:9: error: 'RCTDeprecation/RCTDeprecation.h' file not found with <angled> include; use \"quotes\" instead"
+    },
+    {
+      "line": 3853,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/RCTConvert.h:19:9: error: 'yoga/Yoga.h' file not found with <angled> include; use \"quotes\" instead"
+    },
+    {
+      "line": 3892,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/yoga/Yoga.h:14:10: error: 'yoga/YGConfig.h' file not found"
+    },
+    {
+      "line": 3900,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/ExpoModulesCore.framework/Modules/ExpoModulesCore.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface:11:19: error: could not build Objective-C module 'ExpoModulesCore'"
+    },
+    {
+      "line": 3908,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/ExpoModulesCore.framework/Modules/ExpoModulesCore.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface:1:1: error: failed to build module 'ExpoModulesCore'; this SDK is not supported by the compiler (the SDK is built with 'Apple Swift version 6.3.1 (swiftlang-6.3.1.1.2 clang-2100.0.123.102)', while this compiler is 'Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)'). Please select a toolchain which matches the SDK."
+    },
+    {
+      "line": 3939,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/RCTConvert.h:19:9: error: 'yoga/Yoga.h' file not found with <angled> include; use \"quotes\" instead"
+    },
+    {
+      "line": 3961,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/ExpoModulesCore.framework/Headers/BridgelessJSCallInvoker.h:7:10: error: 'ReactCommon/CallInvoker.h' file not found"
+    },
+    {
+      "line": 4007,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/RCTBridgeModule.h:14:9: error: 'RCTDeprecation/RCTDeprecation.h' file not found with <angled> include; use \"quotes\" instead"
+    },
+    {
+      "line": 4045,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/RCTConvert.h:19:9: error: 'yoga/Yoga.h' file not found with <angled> include; use \"quotes\" instead"
+    },
+    {
+      "line": 4084,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/yoga/Yoga.h:14:10: error: 'yoga/YGConfig.h' file not found"
+    },
+    {
+      "line": 4092,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/ExpoModulesCore.framework/Modules/ExpoModulesCore.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface:11:19: error: could not build Objective-C module 'ExpoModulesCore'"
+    },
+    {
+      "line": 4119,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/RCTBridgeModule.h:14:9: error: 'RCTDeprecation/RCTDeprecation.h' file not found with <angled> include; use \"quotes\" instead"
+    },
+    {
+      "line": 4142,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/ExpoModulesCore.framework/Modules/ExpoModulesCore.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface:11:19: error: could not build Objective-C module 'ExpoModulesCore'"
+    },
+    {
+      "line": 4161,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/ExpoModulesCore.framework/Headers/BridgelessJSCallInvoker.h:7:10: error: 'ReactCommon/CallInvoker.h' file not found"
+    },
+    {
+      "line": 4207,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/RCTBridgeModule.h:14:9: error: 'RCTDeprecation/RCTDeprecation.h' file not found with <angled> include; use \"quotes\" instead"
+    },
+    {
+      "line": 4245,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/RCTConvert.h:19:9: error: 'yoga/Yoga.h' file not found with <angled> include; use \"quotes\" instead"
+    },
+    {
+      "line": 4284,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/yoga/Yoga.h:14:10: error: 'yoga/YGConfig.h' file not found"
+    },
+    {
+      "line": 4297,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/ExpoModulesCore.framework/Modules/ExpoModulesCore.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface:11:19: error: could not build Objective-C module 'ExpoModulesCore'"
+    },
+    {
+      "line": 4305,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/ExpoModulesCore.framework/Modules/ExpoModulesCore.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface:1:1: error: failed to build module 'ExpoModulesCore'; this SDK is not supported by the compiler (the SDK is built with 'Apple Swift version 6.3.1 (swiftlang-6.3.1.1.2 clang-2100.0.123.102)', while this compiler is 'Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)'). Please select a toolchain which matches the SDK."
+    },
+    {
+      "line": 4358,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/RCTConvert.h:19:9: error: 'yoga/Yoga.h' file not found with <angled> include; use \"quotes\" instead"
+    },
+    {
+      "line": 4380,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/ExpoModulesCore.framework/Headers/BridgelessJSCallInvoker.h:7:10: error: 'ReactCommon/CallInvoker.h' file not found"
+    },
+    {
+      "line": 4426,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/RCTBridgeModule.h:14:9: error: 'RCTDeprecation/RCTDeprecation.h' file not found with <angled> include; use \"quotes\" instead"
+    },
+    {
+      "line": 4464,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/RCTConvert.h:19:9: error: 'yoga/Yoga.h' file not found with <angled> include; use \"quotes\" instead"
+    },
+    {
+      "line": 4503,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/yoga/Yoga.h:14:10: error: 'yoga/YGConfig.h' file not found"
+    },
+    {
+      "line": 4511,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/ExpoModulesCore.framework/Modules/ExpoModulesCore.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface:11:19: error: could not build Objective-C module 'ExpoModulesCore'"
+    },
+    {
+      "line": 4519,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/ExpoModulesCore.framework/Modules/ExpoModulesCore.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface:1:1: error: failed to build module 'ExpoModulesCore'; this SDK is not supported by the compiler (the SDK is built with 'Apple Swift version 6.3.1 (swiftlang-6.3.1.1.2 clang-2100.0.123.102)', while this compiler is 'Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)'). Please select a toolchain which matches the SDK."
+    },
+    {
+      "line": 4578,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/ExpoModulesCore.framework/Headers/BridgelessJSCallInvoker.h:7:10: error: 'ReactCommon/CallInvoker.h' file not found"
+    },
+    {
+      "line": 4624,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/RCTBridgeModule.h:14:9: error: 'RCTDeprecation/RCTDeprecation.h' file not found with <angled> include; use \"quotes\" instead"
+    },
+    {
+      "line": 4662,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/RCTConvert.h:19:9: error: 'yoga/Yoga.h' file not found with <angled> include; use \"quotes\" instead"
+    },
+    {
+      "line": 4701,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/yoga/Yoga.h:14:10: error: 'yoga/YGConfig.h' file not found"
+    },
+    {
+      "line": 4709,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/ExpoModulesCore.framework/Modules/ExpoModulesCore.swiftmodule/arm64-apple-ios-simulator.private.swiftinterface:11:19: error: could not build Objective-C module 'ExpoModulesCore'"
+    }
+  ],
+  "distinctMissingOriginalHeaders": [
+    "RCTDeprecation/RCTDeprecation.h",
+    "ReactCommon/CallInvoker.h",
+    "yoga/YGConfig.h",
+    "yoga/Yoga.h"
+  ],
+  "firstMissingHeaderContexts": [
+    {
+      "headerLine": 3769,
+      "rows": [
+        {
+          "line": 3765,
+          "text": "    builtin-copyStrings --validate --outputencoding binary --outfilename HanlinAppIntents.strings --outdir /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/HanlinMiniAppsWidgets.appex/zh-Hans.lproj -- /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsWidgets.build/zh-Hans.lproj/HanlinAppIntents.strings"
+        },
+        {
+          "line": 3766,
+          "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsWidgets.build/zh-Hans.lproj/HanlinAppIntents.strings:1:1: note: detected encoding of input file as Unicode (UTF-8) (in target 'HanlinMiniAppsWidgets' from project 'AI_HLY')"
+        },
+        {
+          "line": 3767,
+          "text": ""
+        },
+        {
+          "line": 3768,
+          "text": "SwiftEmitModule normal arm64 Emitting\\ module\\ for\\ HanlinMiniAppsWidgetsHost (in target 'HanlinMiniAppsWidgets' from project 'AI_HLY')"
+        },
+        {
+          "line": 3769,
+          "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/ExpoModulesCore.framework/Headers/BridgelessJSCallInvoker.h:7:10: error: 'ReactCommon/CallInvoker.h' file not found"
+        },
+        {
+          "line": 3770,
+          "text": " 5 | #ifdef __cplusplus"
+        },
+        {
+          "line": 3771,
+          "text": " 6 | "
+        },
+        {
+          "line": 3772,
+          "text": " 7 | #include <ReactCommon/CallInvoker.h>"
+        },
+        {
+          "line": 3773,
+          "text": "   |          `- error: 'ReactCommon/CallInvoker.h' file not found"
+        }
+      ]
+    },
+    {
+      "headerLine": 3815,
+      "rows": [
+        {
+          "line": 3811,
+          "text": "    |         `- note: in file included from /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/RCTBridge.h:11:"
+        },
+        {
+          "line": 3812,
+          "text": " 12 | #import <React/RCTBridgeModuleDecorator.h>"
+        },
+        {
+          "line": 3813,
+          "text": " 13 | #import <React/RCTDefines.h>"
+        },
+        {
+          "line": 3814,
+          "text": ""
+        },
+        {
+          "line": 3815,
+          "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/RCTBridgeModule.h:14:9: error: 'RCTDeprecation/RCTDeprecation.h' file not found with <angled> include; use \"quotes\" instead"
+        },
+        {
+          "line": 3816,
+          "text": " 12 | #import <React/RCTJSThread.h>"
+        },
+        {
+          "line": 3817,
+          "text": " 13 | "
+        },
+        {
+          "line": 3818,
+          "text": " 14 | #import <RCTDeprecation/RCTDeprecation.h>"
+        },
+        {
+          "line": 3819,
+          "text": "    |         `- error: 'RCTDeprecation/RCTDeprecation.h' file not found with <angled> include; use \"quotes\" instead"
+        }
+      ]
+    },
+    {
+      "headerLine": 3853,
+      "rows": [
+        {
+          "line": 3849,
+          "text": "   |         `- note: in file included from /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/RCTAppearance.h:11:"
+        },
+        {
+          "line": 3850,
+          "text": "12 | #import <React/RCTEventEmitter.h>"
+        },
+        {
+          "line": 3851,
+          "text": "13 | "
+        },
+        {
+          "line": 3852,
+          "text": ""
+        },
+        {
+          "line": 3853,
+          "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/RCTConvert.h:19:9: error: 'yoga/Yoga.h' file not found with <angled> include; use \"quotes\" instead"
+        },
+        {
+          "line": 3854,
+          "text": " 17 | #import <React/RCTPointerEvents.h>"
+        },
+        {
+          "line": 3855,
+          "text": " 18 | #import <React/RCTTextDecorationLineType.h>"
+        },
+        {
+          "line": 3856,
+          "text": " 19 | #import <yoga/Yoga.h>"
+        },
+        {
+          "line": 3857,
+          "text": "    |         |- error: 'yoga/Yoga.h' file not found with <angled> include; use \"quotes\" instead"
+        }
+      ]
+    },
+    {
+      "headerLine": 3892,
+      "rows": [
+        {
+          "line": 3888,
+          "text": "   |         `- note: in file included from /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/RCTAppearance.h:11:"
+        },
+        {
+          "line": 3889,
+          "text": "12 | #import <React/RCTEventEmitter.h>"
+        },
+        {
+          "line": 3890,
+          "text": "13 | "
+        },
+        {
+          "line": 3891,
+          "text": ""
+        },
+        {
+          "line": 3892,
+          "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/React.framework/Headers/yoga/Yoga.h:14:10: error: 'yoga/YGConfig.h' file not found"
+        },
+        {
+          "line": 3893,
+          "text": "12 |  */"
+        },
+        {
+          "line": 3894,
+          "text": "13 | "
+        },
+        {
+          "line": 3895,
+          "text": "14 | #include <yoga/YGConfig.h> // IWYU pragma: export"
+        },
+        {
+          "line": 3896,
+          "text": "   |          `- error: 'yoga/YGConfig.h' file not found"
+        }
+      ]
+    }
+  ],
+  "failedFrontend": {
+    "line": 4751,
+    "text": "/Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend -frontend -c /Users/runner/work/hanlin-ai/hanlin-ai/HanlinMiniAppsExtensions/Widgets/HanlinMiniAppsWidgets.swift -primary-file /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsWidgets.build/DerivedSources/GeneratedStringSymbols_HanlinAppIntents.swift -emit-dependencies-path /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsWidgets.build/Objects-normal/arm64/GeneratedStringSymbols_HanlinAppIntents.d -emit-const-values-path /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsWidgets.build/Objects-normal/arm64/GeneratedStringSymbols_HanlinAppIntents.swiftconstvalues -emit-reference-dependencies-path /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsWidgets.build/Objects-normal/arm64/GeneratedStringSymbols_HanlinAppIntents.swiftdeps -serialize-diagnostics-path /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsWidgets.build/Objects-normal/arm64/GeneratedStringSymbols_HanlinAppIntents.dia -emit-localized-strings -emit-localized-strings-path /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsWidgets.build/Objects-normal/arm64 -target arm64-apple-ios27.0-simulator -Xllvm -aarch64-use-tbi -enable-objc-interop -cxx-interoperability-mode\\=default -sdk /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk -I /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator -F /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator -module-cache-path /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/ModuleCache.noindex -no-color-diagnostics -Xcc -fno-color-diagnostics -application-extension -enable-testing -g -debug-info-format\\=dwarf -dwarf-version\\=5 -swift-version 6 -Onone -D DEBUG -serialize-debugging-options -enable-upcoming-feature InferIsolatedConformances -enable-upcoming-feature NonisolatedNonsendingByDefault -enable-experimental-feature DebugDescriptionMacro -empty-abi-descriptor -validate-clang-modules-once -clang-build-session-file /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -working-directory -Xcc /Users/runner/work/hanlin-ai/hanlin-ai -enable-anonymous-context-mangled-names -file-compilation-dir /Users/runner/work/hanlin-ai/hanlin-ai -Xcc -std\\=gnu++20 -Xcc -DREACT_NATIVE_PRODUCTION\\=1 -Xcc -DRN_DEBUG_STRING_CONVERTIBLE\\=0 -Xcc -Wno-quoted-include-in-framework-header -Xcc -Wno-non-modular-include-in-framework-module -Xcc -I/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include -Xcc -I/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/bridge -Xcc -F/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks -Xcc -F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks -Xcc -FArtifacts/ModularFrameworks -Xcc -FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks -Xcc -I/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders -Xcc -I../Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders -Xcc -IArtifacts/ReactModularHeaders -Xcc -IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders -Xcc -I/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers -Xcc -I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers -Xcc -IArtifacts/ModularFrameworks/react.framework/Headers -Xcc -IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers -Xcc -I/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react -Xcc -I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react -Xcc -IArtifacts/ModularFrameworks/react.framework/Headers/react -Xcc -IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react -Xcc -I/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers -Xcc -I../Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers -Xcc -IArtifacts/ReactNativeDependencies.xcframework/Headers -Xcc -IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers -Xcc -std\\=gnu++20 -Xcc -D_LIBCPP_HARDENING_MODE\\=_LIBCPP_HARDENING_MODE_DEBUG -Xcc -ivfsstatcache -Xcc /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/SDKStatCaches.noindex/iphonesimulator27.2-24B8118-9aa026f88bf9ed31cff8761912ac5bd1414ec6ff3c837c3a1760e1fb4ff3fe25.sdkstatcache -Xcc -fmodules-prune-interval\\=86400 -Xcc -fmodules-prune-after\\=345600 -Xcc -iquote -Xcc /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsWidgets.build/HanlinMiniAppsWidgets-generated-files.hmap -Xcc -I/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsWidgets.build/HanlinMiniAppsWidgets-own-target-headers.hmap -Xcc -I/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsWidgets.build/HanlinMiniAppsWidgets-all-non-framework-target-headers.hmap -Xcc -ivfsoverlay -Xcc /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/AI_HLY-0ebe45c35adf982d0a4475faf5bad8c0-VFS-iphonesimulator/all-product-headers.yaml -Xcc -iquote -Xcc /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsWidgets.build/HanlinMiniAppsWidgets-project-headers.hmap -Xcc -I/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsWidgets.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsWidgets.build/DerivedSources/arm64 -Xcc -I/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsWidgets.build/DerivedSources -Xcc -DDEBUG\\=1 -no-auto-bridging-header-chaining -module-name HanlinMiniAppsWidgetsHost -const-gather-protocols-file /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsWidgets.build/Objects-normal/arm64/HanlinMiniAppsWidgets_const_extract_protocols.json -disable-clang-spi -target-sdk-version 27.2 -target-sdk-name iphonesimulator27.2 -external-plugin-path /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/lib/swift/host/plugins\\#/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server -external-plugin-path /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/local/lib/swift/host/plugins\\#/Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/usr/bin/swift-plugin-server -in-process-plugin-server-path /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/libSwiftInProcPluginServer.dylib -plugin-path /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins -plugin-path /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/local/lib/swift/host/plugins -o /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsWidgets.build/Objects-normal/arm64/GeneratedStringSymbols_HanlinAppIntents.o -index-unit-output-path /AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsWidgets.build/Objects-normal/arm64/GeneratedStringSymbols_HanlinAppIntents.o -index-store-path /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Index.noindex/DataStore -index-system-modules"
+  },
+  "failedCommands": [
+    {
+      "line": 4775,
+      "text": "** TEST BUILD FAILED **"
+    },
+    {
+      "line": 4776,
+      "text": ""
+    },
+    {
+      "line": 4777,
+      "text": ""
+    },
+    {
+      "line": 4778,
+      "text": "The following build commands failed:"
+    },
+    {
+      "line": 4779,
+      "text": "\tSwiftCompile normal arm64 Compiling\\ GeneratedStringSymbols_HanlinAppIntents.swift /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsWidgets.build/DerivedSources/GeneratedStringSymbols_HanlinAppIntents.swift (in target 'HanlinMiniAppsWidgets' from project 'AI_HLY')"
+    },
+    {
+      "line": 4780,
+      "text": "\tSwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsWidgets.build/DerivedSources/GeneratedStringSymbols_HanlinAppIntents.swift (in target 'HanlinMiniAppsWidgets' from project 'AI_HLY')"
+    },
+    {
+      "line": 4781,
+      "text": "\tBuilding project AI_HLY for testing with scheme HanlinMiniApps"
+    },
+    {
+      "line": 4782,
+      "text": "(3 failures)"
+    }
+  ],
+  "versionDiagnosticBoundary": "The Swift6.3.1 artifact versus6.4.2 compiler wording follows missing-header/Objective-C module import failures; not an independently proven toolchain incompatibility."
+}

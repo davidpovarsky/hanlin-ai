@@ -1,4 +1,5 @@
 import Foundation
+import HanlinLocalization
 import HanlinMiniAppsBridge
 import HanlinMiniAppCore
 import HanlinPlatformContracts
@@ -382,8 +383,40 @@ enum HanlinExternalMiniAppCatalog {
                 systemImage: symbol,
                 supportedOperations: item.id.rawValue == "nativeapp.textstudio"
                     ? [.display, .insert, .replaceSelection, .replaceDocument] : [.display, .custom],
-                localizedTitles: item.descriptor.name.values)
+                localizedTitles: item.descriptor.name.values,
+                iconData: iconData(for: item.descriptor),
+                localizedSubtitles: item.descriptor.summary.values)
         }
         try MiniAppBridgeStore().publishCatalog(projected)
+    }
+
+    private static func iconData(for descriptor: HanlinAppDescriptor) -> Data? {
+        let image: UIImage?
+        switch descriptor.icon {
+        case .systemSymbol:
+            return nil
+        case let .asset(name):
+            image = UIImage(named: name, in: HanlinLocalization.bundle, compatibleWith: nil)
+                ?? UIImage(named: name)
+        case let .packageResource(path):
+            let resource: URL?
+            switch descriptor.implementation {
+            case let .nativeScript(packageID), let .script(packageID), let .hybrid(_, packageID):
+                resource = HanlinScriptingPlatform.shared.resolveResourceURL(
+                    packageID: packageID, relativePath: path)
+            case .native:
+                resource = nil
+            }
+            image = resource.flatMap { UIImage(contentsOfFile: $0.path(percentEncoded: false)) }
+        }
+        guard let image, image.size.width > 0, image.size.height > 0 else { return nil }
+        // Keep original artwork while bounding catalog data for all source apps.
+        let ratio = min(1, 192 / max(image.size.width, image.size.height))
+        let size = CGSize(width: image.size.width * ratio, height: image.size.height * ratio)
+        let format = UIGraphicsImageRendererFormat()
+        format.scale = 1
+        return UIGraphicsImageRenderer(size: size, format: format).pngData { _ in
+            image.draw(in: CGRect(origin: .zero, size: size))
+        }
     }
 }

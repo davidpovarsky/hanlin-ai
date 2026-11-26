@@ -28,15 +28,24 @@ import WidgetKit
 /// Permission checks remain in the existing SDK and broker admission paths.
 @MainActor
 protocol HanlinScriptingApplicationServices: AnyObject {
+    var assistantServiceFactory: HanlinMiniAppAssistantServiceFactory? { get }
     func publishCompactAgentConfig() throws
     func loadAssistant(
         _ request: HanlinScriptingAssistantRequest
     ) async throws -> AsyncThrowingStream<HanlinScriptingAssistantChunk, Error>
 }
 
+extension HanlinScriptingApplicationServices {
+    var assistantServiceFactory: HanlinMiniAppAssistantServiceFactory? { nil }
+}
+
 @MainActor
 @Observable
 final class HanlinScriptingPlatform {
+    var assistantServiceFactory: HanlinMiniAppAssistantServiceFactory? {
+        applicationServices?.assistantServiceFactory
+    }
+
     /// Production defaults preserve bootstrap behavior; unit fixtures own their store and queue.
     @MainActor
     struct Initialization {
@@ -160,7 +169,11 @@ final class HanlinScriptingPlatform {
     }
     private var applicationSession: HanlinScriptingApplicationSession?
     private var nativeScriptSession: HanlinNativeScriptSession?
+    private var nativeScriptWindowSession: HanlinNativeScriptWindowSession?
     private var nativeScriptHostServices: NativeScriptHostServicesAdapter?
+    private var hasNativeScriptApplicationSession: Bool {
+        nativeScriptSession != nil || nativeScriptWindowSession != nil
+    }
     private var expoSession: HanlinExpoSession?
     private var expoHostServices: ExpoHostServicesAdapter?
     private(set) var isTransferringProductData = false
@@ -290,7 +303,7 @@ final class HanlinScriptingPlatform {
               !HanlinScriptingApplicationSession.hasPendingDisposals,
               !isLaunching, !isExecutingHeadlessNativeScriptAction, !isProcessingResumeCommands,
               queuedNativeScriptAdmissions.isEmpty, activeApplicationID == nil,
-              applicationSession == nil, nativeScriptSession == nil, expoSession == nil,
+              applicationSession == nil, !hasNativeScriptApplicationSession, expoSession == nil,
               systemUIContinuation == nil else { throw HanlinProductTransferError.busy }
         do {
             scriptingStorageCheckpoint = try HanlinScriptingApplicationSession.beginStorageCheckpoint(
@@ -412,9 +425,26 @@ final class HanlinScriptingPlatform {
         }
     }
 
+    /// Share the established store/transfer lifetime with request-owned tool sessions.
+    func withAssistantToolExecution(
+        _ operation: @MainActor () async throws -> HanlinValue
+    ) async throws -> HanlinValue {
+        guard !isTransferringProductData else { throw HanlinProductTransferError.busy }
+        activeStoreOperations += 1
+        defer { activeStoreOperations -= 1 }
+        return try await operation()
+    }
+
+    /// Read-only admission snapshot; unlike restore(), this never processes queued actions.
+    func assistantToolPackages() async throws -> [HanlinStoredPackageSnapshot] {
+        guard !isTransferringProductData else { throw HanlinProductTransferError.busy }
+        guard let store else { throw HanlinMiniAppRequestError.routeNotFound }
+        return try await store.snapshots()
+    }
+
     func activeArtifactURL(for package: HanlinStoredPackageSnapshot) -> URL? {
-        guard let installedRoot else { return nil }
-        return installedRoot
+        guard let storeRoot = store?.root else { return nil }
+        return storeRoot
             .appending(path: "packages/\(package.record.installedPackageID.rawValue)/generations/\(package.record.activeGeneration)", directoryHint: .isDirectory)
     }
 
@@ -996,13 +1026,41 @@ final class HanlinScriptingPlatform {
                     "HANLIN_MINIAPP_CACHE_DIR": cacheDirStr
                 ]
 
+                let applicationRoot = entrypointURL.deletingLastPathComponent()
+                if try HanlinNativeScriptWindowSession.supportsWindowFactory(applicationRoot: applicationRoot) {
+                    let capabilities = Set(package.grantedCapabilities.map(\.rawValue))
+                    let installedPackageID = package.record.installedPackageID
+                    let operation = externalMiniAppOperation
+                    var windowAdapter: NativeScriptHostServicesAdapter?
+                    let windowSession = try HanlinNativeScriptWindowSession.open(
+                        applicationRoot: applicationRoot,
+                        environment: env,
+                        makeWindowProvider: { windowID in
+                            let adapter = NativeScriptHostServicesAdapter(
+                                appID: appID, installedPackageID: installedPackageID,
+                                grantedCapabilities: capabilities, sessionID: windowID,
+                                isolatesWindowStorage: true,
+                                externalMiniAppOperation: operation)
+                            windowAdapter = adapter
+                            return adapter
+                        })
+                    nativeScriptWindowSession = windowSession
+                    nativeScriptHostServices = windowAdapter
+                    needsFreshProcessForTransfer = true
+                    activeApplicationID = id
+                    activeNativeScriptController = windowSession.containerController
+                    activity = .idle
+                    return
+                }
+
                 let sessionID = UUID().uuidString.lowercased()
                 let adapter = NativeScriptHostServicesAdapter(
                     appID: appID,
                     installedPackageID: package.record.installedPackageID,
                     grantedCapabilities: Set(package.grantedCapabilities.map(\.rawValue)),
                     sessionID: sessionID,
-                    externalMiniAppOperation: externalMiniAppOperation
+                    externalMiniAppOperation: externalMiniAppOperation,
+                    assistantServiceFactory: assistantServiceFactory
                 )
                 // The pinned NativeScript main VM is process-wide. Check before
                 // changing a legacy provider belonging to another scene.
@@ -1055,6 +1113,7 @@ final class HanlinScriptingPlatform {
                     grantedCapabilities: Set(package.grantedCapabilities.map(\.rawValue)),
                     sessionID: sessionID,
                     externalMiniAppOperation: externalMiniAppOperation,
+                    assistantServiceFactory: assistantServiceFactory,
                     preparedWidgetPublisher: { [weak self] entrypointID, variantID, props in
                         guard let self else { throw HanlinWidgetActionError.inactiveInstance }
                         return try await self.publishPreparedExpoWidget(
@@ -1182,6 +1241,13 @@ final class HanlinScriptingPlatform {
         cancelSystemUI()
         applicationSession?.dismiss()
         applicationSession = nil
+        if let windowSession = nativeScriptWindowSession {
+            // A single invocation releases only its own view/provider. The
+            // coordinator retains the shared VM until its last window closes.
+            windowSession.shutdown()
+            nativeScriptWindowSession = nil
+            NSLog("HANLIN_NS_WINDOW_RELEASE_OK")
+        }
         if nativeScriptSession != nil {
             NSLog("HANLIN_NS_PRODUCTION_SHUTDOWN_OK")
         }
@@ -1198,6 +1264,7 @@ final class HanlinScriptingPlatform {
         if expoSession != nil {
             NSLog("HANLIN_EXPO_PRODUCTION_SHUTDOWN_OK")
         }
+        expoHostServices?.invalidateAssistantRequests()
         expoSession?.shutdown()
         if let session = expoSession {
             HanlinExpoNativeAPIManager.revokeSession(sessionID: session.sessionID)
@@ -1260,7 +1327,7 @@ final class HanlinScriptingPlatform {
                 caller: caller.rawValue, parameters: payload)
         }
 
-        if nativeScriptSession != nil, activeApplicationID == package.record.installedPackageID {
+        if hasNativeScriptApplicationSession, activeApplicationID == package.record.installedPackageID {
             guard let nativeScriptHostServices else {
                 throw HanlinMiniAppRequestError.routeNotFound
             }
@@ -1272,7 +1339,7 @@ final class HanlinScriptingPlatform {
             )
         }
 
-        guard nativeScriptSession == nil, HanlinNativeScriptSession.activeSessionIdentifier == nil,
+        guard !hasNativeScriptApplicationSession, HanlinNativeScriptSession.activeSessionIdentifier == nil,
               !isExecutingHeadlessNativeScriptAction, !isLaunching else {
             // NativeScript iOS currently supports one runtime isolate per process.
             if let invocationID, queuedNativeScriptAdmissions.contains(invocationID) {
@@ -1339,7 +1406,8 @@ final class HanlinScriptingPlatform {
             installedPackageID: package.record.installedPackageID,
             grantedCapabilities: Set(package.grantedCapabilities.map(\.rawValue)),
             sessionID: session.sessionID,
-            canPresentUI: false
+            canPresentUI: false,
+            assistantServiceFactory: assistantServiceFactory
         )
 
         HanlinNativeServicesBridge.register(adapter, forSessionID: session.sessionID)
@@ -2021,8 +2089,8 @@ final class HanlinScriptingPlatform {
                        $0.record.installedPackageID == command.invocation.identity.installedPackageID
                    }), package.entrypoints.contains(where: {
                        $0.id == command.invocation.identity.entrypointID && $0.runtimeProfile == .hanlinNativeScript
-                   }), isExecutingHeadlessNativeScriptAction || (nativeScriptSession != nil
-                       && activeApplicationID != package.record.installedPackageID) {
+                   }), isExecutingHeadlessNativeScriptAction || (hasNativeScriptApplicationSession
+                       && (command.invocation.delivery?.source == .share || activeApplicationID != package.record.installedPackageID)) {
                     continue
                 }
                 do {
@@ -2119,11 +2187,14 @@ final class HanlinScriptingPlatform {
             // Preserve the one-isolate invariant. Queue policy must not start a
             // second NativeScript VM while another package owns the first.
             if entrypoint.runtimeProfile == .hanlinNativeScript {
-                guard nativeScriptSession == nil || activeApplicationID == identity.installedPackageID,
+                guard !hasNativeScriptApplicationSession || activeApplicationID == identity.installedPackageID,
                       !isExecutingHeadlessNativeScriptAction else {
                     throw HanlinInvocationNotStarted()
                 }
-                if command.invocation.continueInForeground, nativeScriptSession == nil,
+                if command.invocation.delivery?.source == .share, hasNativeScriptApplicationSession {
+                    throw HanlinInvocationNotStarted()
+                }
+                if command.invocation.continueInForeground, !hasNativeScriptApplicationSession,
                    let appEntry = package.entrypoints.first(where: {
                        $0.kind == .app && $0.runtimeProfile == .hanlinNativeScript
                    }), declaredAction.handler == appEntry.sourcePath {

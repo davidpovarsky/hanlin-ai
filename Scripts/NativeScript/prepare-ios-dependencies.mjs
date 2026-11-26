@@ -9,6 +9,7 @@ const repositoryRoot = resolve(scriptRoot, '..', '..');
 // Verify the checked-in JS and declarations with the pinned compiler before
 // the shared-runtime replacement can discard or stage any facade bytes.
 execFileSync(process.execPath, [resolve(scriptRoot, 'build-host-services.mjs'), '--check'], {stdio: 'inherit'});
+execFileSync(process.execPath, [resolve(scriptRoot, 'build-window-factory.mjs'), '--check'], {stdio: 'inherit'});
 const coreRoot = resolve(scriptRoot, 'node_modules', '@nativescript', 'core');
 const iosRuntimeRoot = resolve(scriptRoot, 'node_modules', '@nativescript', 'ios');
 const swiftUIRoot = resolve(scriptRoot, 'node_modules', '@nativescript', 'swift-ui');
@@ -213,6 +214,7 @@ async function stageSharedCoreRuntime(destinationRoot) {
   await mkdir(sharedStaging, { recursive: true });
   await mkdir(resolve(sharedStaging, '@hanlin'), {recursive: true});
   await cp(resolve(destinationRoot, '@hanlin', 'host-services'), resolve(sharedStaging, '@hanlin', 'host-services'), {recursive: true});
+  await cp(resolve(destinationRoot, '@hanlin', 'window-factory'), resolve(sharedStaging, '@hanlin', 'window-factory'), {recursive: true});
 
   const coreDest = resolve(sharedStaging, '@nativescript', 'core');
   await mkdir(coreDest, { recursive: true });

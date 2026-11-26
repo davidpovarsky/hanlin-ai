@@ -1,0 +1,13 @@
+{
+  "verifiedAt": "2026-11-25T02:48:31.827338+00:00",
+  "source": "fda6948ca6a1f541293a1a1dd20e97f75eb0a527",
+  "originalMembers": 46,
+  "originalBytes": 5082912,
+  "originalReceiptSHA256": "56cd644b34012d4e4f690621f7c734bc0d3b58143d3fa9e6605e822a8c91161f",
+  "storedObjects": 47,
+  "gzipObjects": 2,
+  "allStoredAndDecodedIdentities": "PASS",
+  "sourceFilesBound": 13,
+  "original52": "NOT_RUN",
+  "productExecutions": 0
+}

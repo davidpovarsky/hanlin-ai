@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "assessedAtUTC": "2026-11-25T01:04:48.116850+00:00",
+  "inspectionOnly": true,
+  "widgetGeneration": {
+    "commit": "47643864a8ac380f3d2e3a962ae7a8b144517a16",
+    "parent": "7b7f7e4460200d7e98162dd525d67f8ca1860911",
+    "changedFiles": [
+      "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/original-runtime-receipt.json"
+    ],
+    "changedFields": {
+      "inputSHA256": {
+        "before": "f284c49f3cd523b2578778a1041e289c23bf46ebec9254f1975a933aa6014e8b",
+        "after": "bf7e3505f89275d62fe5c1ade9bb28bf72556911ea572074137b03d7d02b38f9"
+      },
+      "packageLockSHA256": {
+        "before": "95d2a560d4eb01de64fcd0d43875a4ef2392e9747ed9fa79c2e0a0e58abececf",
+        "after": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8"
+      }
+    },
+    "unchangedOtherJSONFields": true,
+    "originalProducerReceipt": "evidence/native-preparation-7b7f7e446/expo-current-cached-preparation.json",
+    "patch": {
+      "path": "evidence/native-preparation-7b7f7e446/widget-generation-47643864.patch.gz",
+      "rawSHA256": "e1a69c02ad899c8316ce4036286c3334531dbe4da032078318a0c92ce2990c9e"
+    }
+  },
+  "sdkInventoryFreeze": {
+    "commit": "20fb9f71146aec19acd3a7f9802a1fbe9fe7fe91",
+    "parent": "cd795e378afed5c7556a71e26e5247da9ff22869",
+    "changedFiles": [
+      "docs/miniapp-sdk/extension-reachability.json",
+      "docs/miniapp-sdk/extension-reachability.md",
+      "docs/miniapp-sdk/source-inventory.json"
+    ],
+    "changes": "Exactly three generated sourceCommit/Base commit lines change from 37a788a4a to cd795e378; no application implementation changes in this commit.",
+    "patch": {
+      "path": "evidence/runtime-host-final-attempt4-cd795e378/sdk-inventory-freeze-20fb9f711.patch.gz",
+      "rawSHA256": "74403d121d96634e2241a2383455b9a8cec1e0ee7a1a8a39f24fdbcdabb8620b"
+    }
+  },
+  "noSourceEditsOrGeneratorsRunDuringPackaging": true
+}

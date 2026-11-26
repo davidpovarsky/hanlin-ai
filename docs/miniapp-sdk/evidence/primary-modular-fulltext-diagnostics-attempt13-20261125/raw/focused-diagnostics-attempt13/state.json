@@ -1,0 +1,143 @@
+{
+  "owner": "/root/native_execution",
+  "schema": 1,
+  "source": "42e34eff615a6d599ddfd01ea9382d920b5f9a5c",
+  "tree": "0d01ddaa4861c19b5376e5d726b992531b9e442f",
+  "startedAt": "2026-11-25T04:07:44.141797+00:00",
+  "pid": 45406,
+  "status": "DIAGNOSTIC_FAILED",
+  "phase": null,
+  "scope": "One original Modular selector on the exact published original Expo fixture and UI source; fresh container. Prior passing parity and SDK-only cases are not rerun.",
+  "original52": "NOT_RUN",
+  "original25": "NOT_RUN",
+  "original27": "NOT_RUN",
+  "original52RequiresIndependentRun": true,
+  "uiSource": {
+    "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+    "originalSHA256": "84ede1a7dbafac2415c88cb276d2b04c0c0bce0a139f704b7737bcd307dd4ad8",
+    "delta": "No source variant. Exact published original Label-slot child identifiers, observed native Disclosure state plus content transition, entry/version-scoped API text and original Host locale remount."
+  },
+  "originalRunner": {
+    "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+    "sha256": "6e3abbb16c9b55b048b69c2391784510d8c143c7ed00e760a73ecb903cdbb61d",
+    "unchanged": true
+  },
+  "errors": [
+    "ModularFocusedDiagnostic: Original runtime acceptance did not execute every selected case: ModularFocusedDiagnostic"
+  ],
+  "cases": {
+    "ModularFocusedDiagnostic": {
+      "status": "FAIL",
+      "startedAt": "2026-11-25T04:11:35.257350+00:00",
+      "selectors": [
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText"
+      ],
+      "originalUI": true,
+      "exitCode": 65,
+      "finishedAt": "2026-11-25T04:14:34.711686+00:00",
+      "resultFinalized": true,
+      "error": "Original runtime acceptance did not execute every selected case: ModularFocusedDiagnostic",
+      "log": {
+        "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt13/paired-prefix/ModularFocusedDiagnostic.log",
+        "bytes": 56335,
+        "sha256": "b096d034368f3643a214f8294219a01faa32c27a4042d130276effb2bab858ca"
+      }
+    }
+  },
+  "sourceRestored": true,
+  "originalTestRebuild": "PASS",
+  "observedAt": "2026-11-25T04:14:38.572074+00:00",
+  "elapsedSeconds": 414.43135008300305,
+  "selectors": {
+    "modular": [
+      "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText"
+    ]
+  },
+  "hostArchiveSHA256": "86733eba5d80156edf52da87f0f371c208122d6e60f618f182990330514984c3",
+  "observerSHA256": "d36d818a02c5a9ddba660bf83e4827d96af75b38052f9eaa26bf3c7aab2a97e1",
+  "modularSource": {
+    "path": "Scripts/Expo/miniapps/modular-text-search/App.tsx",
+    "sha256": "ac62c2f394dceedb422c0fbe05d4182afba07e1bf78fb15828d3f936d212ae8a",
+    "scope": "Actual original CLI build/import below uses preserved SDK10; runtime screenshots retain search orientation and detail/fulltext behavior."
+  },
+  "interceptedOriginal25Selectors": [
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualPresentationAdaptersAndDismissalEvents",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoNativeAPIUsesActualUIKitAndWorklets",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoWidgetsUsesOriginalTimelinesAndLiveActivities",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyExpoPackageImportsRendersAndHandlesEvents",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyNativeScriptPackageImportsRendersAndHandlesEvents",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testCancelAndDisplayDoneReturnNoDocumentMutation",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testReusingValueWindowKeepsItsInvocationBindingCurrent",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testActualIncomingRequestsCreateDistinctIPadScenes",
+    "HanlinMiniAppsTests/NativeScriptWindowOwnershipTests/testUnrelatedAndLateWindowCleanupPreservesNativeScriptOwner",
+    "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testInvalidationReleasesHandlersAndRejectsLateActions",
+    "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testBridgeInvalidationReleasesPendingCallbacksBeforeProviderCancellation",
+    "HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests/testExternalInvocationSurvivesNestedFullScreenModal",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEditButtonEditsOriginalList",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEmptyViewReportsNativeLayout",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierAccessibilityAndGeometry",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierNativeContainerContexts",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoHostServicesUseRealStorageRuntimeAndWidgetPublication",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testUnavailableCallbackRetainsResultForSourceRecovery"
+  ],
+  "dataContainer": "/Users/m1/Library/Developer/CoreSimulator/Devices/1F3AB83E-F409-4B71-BD56-4669DB61627A/data/Containers/Data/Application/FDDE3B82-5532-4A34-A364-969DF51413BD",
+  "simulator": "1F3AB83E-F409-4B71-BD56-4669DB61627A",
+  "installedMetadataBinding": {
+    "path": "installed-metadata-binding.json",
+    "sha256": "4499aca77ae2ad4b0fa3e26fe795f4ac248bc1648d4242d77c8ad1532e23877e",
+    "requiredNamesPresent": true
+  },
+  "testBinaries": {
+    "exactPublishedSource": [
+      {
+        "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app/PlugIns/HanlinMiniAppsUITests.xctest/HanlinMiniAppsUITests",
+        "bytes": 602016,
+        "sha256": "c6f314ae95fe70e06940b78795656919609a742ab7ab4d2be69cf52c95711327"
+      }
+    ]
+  },
+  "runtimeObserver": {
+    "pid": 49708,
+    "predicate": "process == \"HanlinMiniApps\" AND (eventMessage CONTAINS \"HANLIN_\" OR eventMessage CONTAINS \"NativeScript\" OR eventMessage CONTAINS \"runtime_paths\" OR eventMessage CONTAINS \"host_ready\")",
+    "startedAt": "2026-11-25T04:11:35.255554+00:00",
+    "sampleLimit": 1,
+    "sampleDurationSeconds": 3,
+    "persistentBeginBeforeSampleSeconds": 2,
+    "terminalMarkers": [
+      "HANLIN_NS_RUN_MAIN_OK",
+      "HANLIN_NS_RUN_MAIN_DONE",
+      "HANLIN_NS_SHUTDOWN"
+    ],
+    "exitCode": 137,
+    "reaped": true,
+    "finishedAt": "2026-11-25T04:14:38.367049+00:00",
+    "observerStopped": true,
+    "sampleTaken": false
+  },
+  "attachmentExports": [
+    {
+      "result": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt13/paired-prefix/ModularFocusedDiagnostic.xcresult",
+      "exit": 0
+    }
+  ],
+  "runtimeMarkers": {
+    "ModularFocusedDiagnostic": {
+      "count": 0,
+      "path": "ModularFocusedDiagnostic-runtime-markers.json"
+    }
+  },
+  "checkpointReached": true,
+  "ownedSimulatorCleanup": {
+    "simulator": "1F3AB83E-F409-4B71-BD56-4669DB61627A",
+    "state": "Shutdown",
+    "remainingOwnedRunners": []
+  },
+  "finishedAt": "2026-11-25T04:14:38.572061+00:00"
+}

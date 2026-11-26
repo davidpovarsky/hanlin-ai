@@ -1,0 +1,16 @@
+{
+  "target": "a2127598a677e0b8a67d41cdb422c4e19c8d1afc",
+  "before": "ba177763caca6bd36e33e4f39eefda330fe70cbd",
+  "returncode": 0,
+  "stdout": "",
+  "stderr": "Automatic merge went well; stopped before committing as requested\n",
+  "unmerged": [],
+  "commit": "98907b3414ccd2db99253e800e5ac57610047323",
+  "parents": [
+    "ba177763caca6bd36e33e4f39eefda330fe70cbd",
+    "a2127598a677e0b8a67d41cdb422c4e19c8d1afc"
+  ],
+  "changed_paths": 1,
+  "non_docs_paths": [],
+  "status": ""
+}

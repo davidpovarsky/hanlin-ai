@@ -352,4 +352,3 @@ final class HanlinSidebarNavigationUITests: XCTestCase {
         assertClosed()
     }
 }
-

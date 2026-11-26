@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-25T01:28:13.228323+00:00",
+  "status": "BOTH_ACTUAL_CONSUMER_PRODUCTS_BOUND_TO_SEALED_SDK9",
+  "executionSource": "1812bff50571c9907d15cd8b4bfbe4874be24756",
+  "preparedSDKReceipt": {
+    "path": "docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/receipt.json",
+    "sha256": "a0e0c906735a77251bd403c1d8ce42013fc173e90caca727c8decac0cd14ba9d",
+    "sourceAuthorCommit": "82412123aa4854564d04a24c11fdc9502c6272fc"
+  },
+  "ownerReceiptSHA256": "988371ef49cb5f0d7ea474b245df4ade7a97f92c9660a752144631f4d2de6356",
+  "archiveSHA256": "3c94ebea1e314c280031ac475e2d42b63ebcf2dc2eb32d2c6e31905e3eda3240",
+  "sdkManifestSHA256": "6fbba77d588e292b291864f0cae9e5eb5d602a4e2f208379ce1c331dedf412c9",
+  "sdkInputSHA256": "4904d0a46e4c653587fa1503a059834e9b6f35eac821a286d5eb9e96b8a92011",
+  "moduleSHA256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9",
+  "completedConsumers": 2,
+  "matchingResourceCopies": 5,
+  "applicationAcceptance": "NOT_ESTABLISHED_BY_THIS_BINDING",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 2058,
+      "sha256": "fd7c0c7999b33af02d9229cd4626a839b071467acba366628d7ac0ebfbdb7716"
+    },
+    {
+      "path": "binding-verification.json",
+      "bytes": 6843,
+      "sha256": "45e665aa8280fa3f5392cea22540e0edb86af5d349b276c41786a4039452dbbb"
+    },
+    {
+      "path": "raw/embedded-host-binding-attempt9.json",
+      "bytes": 4707,
+      "sha256": "988371ef49cb5f0d7ea474b245df4ade7a97f92c9660a752144631f4d2de6356"
+    }
+  ]
+}

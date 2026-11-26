@@ -1,6 +1,7 @@
 import Foundation
 import HanlinAgentCore
 import HanlinHostContracts
+import HanlinPlatformContracts
 import Observation
 import SwiftData
 import UIKit
@@ -12,6 +13,7 @@ public struct HanlinConversationRequest: Sendable {
     public var documents: [URL]
     public var urls: [URL]
     public var prompts: [PromptCard]
+    public var capabilityAttachments: [HanlinCapabilityAttachment]
     public var search: Bool
     public var knowledge: Bool
     public var tools: Bool
@@ -37,13 +39,15 @@ public struct HanlinConversationRequest: Sendable {
                 thinkingLength: Int = 0, temperature: Double? = nil, topP: Double? = nil,
                 maxTokens: Int? = nil, historyLimit: Int? = nil, systemMessage: String? = nil,
                 imageSize: String = "square", imageReversePrompt: String = "",
-                observation: Bool = false, interaction: HanlinHostInteractionRequest? = nil) {
+                observation: Bool = false, interaction: HanlinHostInteractionRequest? = nil,
+                capabilityAttachments: [HanlinCapabilityAttachment] = []) {
         self.text = text
         self.modelRecordID = modelRecordID
         self.images = images
         self.documents = documents
         self.urls = urls
         self.prompts = prompts
+        self.capabilityAttachments = capabilityAttachments
         self.search = search
         self.knowledge = knowledge
         self.tools = tools
@@ -289,6 +293,11 @@ public final class HanlinConversationController {
                 model = models[index]
             }
             guard let modelName = model.name else { throw HanlinConversationControllerError.unavailableModel }
+            try HanlinComposerCapabilities.validate(request.capabilityAttachments)
+            if !request.capabilityAttachments.isEmpty && !model.supportsToolUse {
+                throw HanlinComposerCapabilityError.toolsUnsupported
+            }
+            let capabilityData = request.capabilityAttachments.isEmpty ? nil : try JSONEncoder().encode(request.capabilityAttachments)
             let images = try request.images.map { data in
                 guard let image = UIImage(data: data) else { throw HanlinConversationControllerError.invalidImage }
                 return image
@@ -305,6 +314,7 @@ public final class HanlinConversationController {
                     modelName: model.name, modelDisplayName: model.displayName,
                     timestamp: Date(), record: record)
                 user.promptUse = request.prompts.isEmpty ? nil : request.prompts
+                user.capabilityAttachmentsData = capabilityData
                 context.insert(user)
                 rows.append(user)
             }
@@ -332,7 +342,8 @@ public final class HanlinConversationController {
                 conversation: record, conversationID: conversationID, sceneID: sceneID,
                 rowID: assistant.id, uiRunID: coordinator.runID, temporary: false,
                 interaction: request.interaction)
-            let toolScope = await MCPRuntimeProvider.shared.requestScope(chatID: conversationID, temporary: false)
+            let originalToolScope = await MCPRuntimeProvider.shared.requestScope(chatID: conversationID, temporary: false)
+            let toolScope = try HanlinComposerCapabilities.scope(originalToolScope, attachments: request.capabilityAttachments)
             try requireCurrent(token)
             state = .streaming
             continuation.yield(.state(.streaming))
@@ -341,7 +352,7 @@ public final class HanlinConversationController {
                 modelRecordID: model.id, groupID: groupID, runID: coordinator.runID,
                 ifSearch: model.supportsSearch && request.search,
                 ifKnowledge: model.supportsSearch && request.knowledge,
-                ifToolUse: model.supportsToolUse && request.tools, assistantToolScope: toolScope,
+                ifToolUse: model.supportsToolUse && (request.tools || !request.capabilityAttachments.isEmpty), assistantToolScope: toolScope,
                 ifThink: model.supportsReasoning && request.reasoning,
                 ifAudio: model.supportsVoiceGen && request.audio,
                 ifPlanning: !model.supportsReasoning && request.planning,

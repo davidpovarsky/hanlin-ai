@@ -1,0 +1,349 @@
+{
+  "schema": "hanlin-focused-terminal-packet-v1",
+  "capturedAt": "2026-11-25T03:49:24.500755+00:00",
+  "source": "1a611764779b0a57cc57d71b26d2cd6449895d8d",
+  "scope": "Original Modular selector only, original52 NOT_RUN",
+  "result": {
+    "passed": 0,
+    "failed": 1,
+    "skipped": 0,
+    "finalized": true,
+    "failureLine": 1220
+  },
+  "members": [
+    {
+      "path": "actual-import-job/30f75bb6-e894-48ed-97cf-ee567f9e4619/job.json",
+      "bytes": 3825,
+      "sha256": "34d24cb3a06e7072c728b5d7ce9f1f2a81fabd2b3841486b47ded7b73b6626a4"
+    },
+    {
+      "path": "actual-import-job/30f75bb6-e894-48ed-97cf-ee567f9e4619/main.mjs",
+      "bytes": 1315,
+      "sha256": "8a7951a41f9cdb166105c233d75a535aea741fd8bc0a1641206abf5dac5f05ce"
+    },
+    {
+      "path": "actual-import-job/30f75bb6-e894-48ed-97cf-ee567f9e4619/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "actual-import-job/30f75bb6-e894-48ed-97cf-ee567f9e4619/stdout.log",
+      "bytes": 1267,
+      "sha256": "4b259e0b5337ad34a0fa4b84ef60f0951e10efbcec0f68e3b49854b45d1db746"
+    },
+    {
+      "path": "diagnostic-observer-attempt12.py",
+      "bytes": 9924,
+      "sha256": "d36d818a02c5a9ddba660bf83e4827d96af75b38052f9eaa26bf3c7aab2a97e1"
+    },
+    {
+      "path": "first-packet-receipt.json",
+      "bytes": 7189,
+      "sha256": "64d0a53c3e23baa09158ad8dfd6b0275342143b7b59799264cc020a3a0d9095b"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/ModularFocusedDiagnostic-attachments/17C342EC-0C4B-4E0C-987B-9B965080DE1F.png",
+      "bytes": 1154983,
+      "sha256": "88f5cd6133315045d5e10b3284f2878fa8c07db8d88a228155453ac59d5d70ec"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/ModularFocusedDiagnostic-attachments/1AD14F22-EA19-4398-B5AE-E7861B41DCBE.png",
+      "bytes": 350311,
+      "sha256": "252e06341b30dd71d464ea6d7fb1a9582af280da48a961bd2b935b43b409059c"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/ModularFocusedDiagnostic-attachments/337F5944-3C60-45BB-96B1-9051AF562CC6.txt",
+      "bytes": 32995,
+      "sha256": "7453050d31b8b0c6781cdce64753126250062627497a946685665541593e002b"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/ModularFocusedDiagnostic-attachments/33BAC638-FEF4-4CB2-9BFE-D0F13FBDE8A1.png",
+      "bytes": 274223,
+      "sha256": "5577e8e8109170638c7d1d031e60e5ca904bf7fbb938e4999f202d895d471ac7"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/ModularFocusedDiagnostic-attachments/4A415529-833F-4AE9-9E5D-0CD83C749C68.txt",
+      "bytes": 32974,
+      "sha256": "205a6783b15120dd8e29d526e80cc52a65238866c1c96fc16cd40b66a1967f64"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/ModularFocusedDiagnostic-attachments/9CE2F418-2B14-4076-877E-A114EF54345F.txt",
+      "bytes": 8755,
+      "sha256": "31d788b774cff30e3a1c504d7d063b409e77fd2eb99a4ca6484817e441dbef96"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/ModularFocusedDiagnostic-attachments/CD45B46D-B622-4F39-9035-C52C645CD694.png",
+      "bytes": 274932,
+      "sha256": "7b9de14ebc4e60c1af1ad43ea22efe8433b51ed77b388a1cfd2fe81c765deaa0"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/ModularFocusedDiagnostic-attachments/E8A96EA4-FB4C-48C1-A29C-CAC6F56F94FA.txt",
+      "bytes": 30756,
+      "sha256": "f9df43d603886b21bb4c45168156953a675924d4f34dcb932e1073eaedff9634"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/ModularFocusedDiagnostic-attachments/manifest.json",
+      "bytes": 14099,
+      "sha256": "cfc8757cf717c2f998200ba5dfbed11bc9774381b32fd7e296b9ad2f103704db"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/container-observations.jsonl",
+      "bytes": 483,
+      "sha256": "05f6c916a4e578e97812587c4fb35b1a57bb929bbd9cc99f2bcca2d908ded69d"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/host-ready-observations.jsonl",
+      "bytes": 3005,
+      "sha256": "d94ae3609453bef4168266e89cfa174c4d544863188e280eb4429b3ed8dae66e"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/inputs/HanlinMiniAppsUITests.original.swift",
+      "bytes": 76913,
+      "sha256": "93db32b6af9af1eeba85070086c5d0eb6b9b80198dc161004d5729c7cc38d4d0"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/installed-metadata-binding.json",
+      "bytes": 3018,
+      "sha256": "0a010b551bc1fcb234357975d7c36c484b6f03e21953d3e6e7ba009190359a63"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/intercepted-original-command.json",
+      "bytes": 4290,
+      "sha256": "1edd40368d4a3f6711075d5e1d69d523263b364e24f5f997081d92c7449af4a6"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/job-observation-errors.jsonl",
+      "bytes": 434,
+      "sha256": "923dfa940b834f51ab47b2d85e4c0859b851930ef4156cc7878e5ec88e935338"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/node-job-observations.jsonl",
+      "bytes": 5404,
+      "sha256": "66cd128cf04e0b1b3c21c405ced291be1fcbcc527911e3a0db657c2664089c67"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/paired-prefix/ModularFocusedDiagnostic-attachments-export.log",
+      "bytes": 4066,
+      "sha256": "dae7ac28d24a35fe24705a7e1e217a47a6c6c4d36a4bc7041e7c0a7b1913f501"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/paired-prefix/ModularFocusedDiagnostic-nodes.json",
+      "bytes": 2545,
+      "sha256": "753a3bd0be54edd31119426a5dd28d3b3b70dd9e0a8789003a52b931bd9a501e"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/paired-prefix/ModularFocusedDiagnostic-selected-tests.log",
+      "bytes": 57,
+      "sha256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/paired-prefix/ModularFocusedDiagnostic-summary.json",
+      "bytes": 1741,
+      "sha256": "70c45c3463e90788c357e869560da21efdd90dfc40963315ac7ff6d834f06373"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/paired-prefix/ModularFocusedDiagnostic.log",
+      "bytes": 49364,
+      "sha256": "3f21d43bad9ed2869dd146669a92167379c1b8e2048f5d95b4b6e62f21b99e6b"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/paired-prefix/ModularTextSearch.hanlinExpo",
+      "bytes": 2203330,
+      "sha256": "3f4dc26706ded3590674eceaa4314554e1564e4bf4ab7a46d57bb1bf2e50b33e"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/paired-prefix/active-command.json",
+      "bytes": 754,
+      "sha256": "b485f4ffeccdb4616e8ca911d1a4afd64af3d94ffa4fbd2171c577d85530fb4c"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/paired-prefix/ai-build.log.gz",
+      "bytes": 49558,
+      "sha256": "0cd227e1e05753d586a0872d5f08124a2c210ec777d7338b7f6307810105dfa3"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/paired-prefix/authoring-fixture-provenance.json",
+      "bytes": 4147,
+      "sha256": "a27a8b1c14cee74af66b79ca6bffd43aac73271dd485b9539ccd8ab1b12b97b3"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/paired-prefix/command-events.jsonl",
+      "bytes": 79411,
+      "sha256": "e9d50814381a6222b047bba90a3f78949a1a09728d76255f658811c5b744991f"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/paired-prefix/commands.jsonl",
+      "bytes": 15108,
+      "sha256": "b5ba42722839abb4c909d9188855ca7380c645c785c3b75df903020368dd856d"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/paired-prefix/created-simulator.txt",
+      "bytes": 37,
+      "sha256": "1a6f08ec6fe82e98cf693aa5efeeeafd8c28908de49c620705f278ba9a7be680"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/paired-prefix/mini-build.log.gz",
+      "bytes": 66989,
+      "sha256": "14f06bccc86add1a55a86cf0df977eaed9a720ce12e1d0bcf2b2f895c2cec349"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/paired-prefix/modular-search-build.json",
+      "bytes": 1615,
+      "sha256": "4cc6726b8349cbdd3586244a8b0a6eb62e5fa905813ceacc7b120f6a4028cde0"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/paired-prefix/modular-search-build.log",
+      "bytes": 1615,
+      "sha256": "4cc6726b8349cbdd3586244a8b0a6eb62e5fa905813ceacc7b120f6a4028cde0"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/paired-prefix/original-prefix-state.json",
+      "bytes": 19196,
+      "sha256": "837eb596b1f39575799672a5b068722d5bc5c627f4df8fc0d41fda1e21e0387c"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/paired-prefix/sample-package-hashes.json",
+      "bytes": 443,
+      "sha256": "171dd618ebc9f79126ca1a0998f6e352a52f56022b7da14183e5706abe0049a9"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/paired-prefix/sdk-only-package-provenance.json",
+      "bytes": 2573,
+      "sha256": "83337b844e1ff4bb79e9d2e2bc531a937f3f2f6ceebcf8a7a8e2d260a21cf118"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/paired-prefix/source-sha.txt",
+      "bytes": 41,
+      "sha256": "2171f24c3946e20b0251d815a86c1b3be38de8950cc7782cce25c1cca21f3cc0"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/runtime-logstream.jsonl.gz",
+      "bytes": 804356,
+      "sha256": "b8e340f5536a10b8583af46967e27b3c44f689b4fe4272e0894c76b2097df011"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/runtime-logstream.stderr",
+      "bytes": 91,
+      "sha256": "94fd1a5b55265199a9a6a67d888250b037e52f5788dd490d3721204d6132d8d0"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/state.json",
+      "bytes": 8026,
+      "sha256": "6a4c11e60a7e8aff1130d274774f1ea12885937ffbe4c6019884de7b340836a3"
+    },
+    {
+      "path": "focused-diagnostics-attempt12.py",
+      "bytes": 12562,
+      "sha256": "b8122500556429a554a1a63286e19e5af119c0f6b60d6b8c5f1ace64d54d3e8a"
+    },
+    {
+      "path": "focused-launch-attempt12-continuation.json",
+      "bytes": 2608,
+      "sha256": "c471e47e61c928a20ef2c407978238b8d19ef303ab56994e3d815f3346822fdd"
+    },
+    {
+      "path": "focused-launch-attempt12.json",
+      "bytes": 1139,
+      "sha256": "8d615b9f36e076d8132ab386bedae8147ff49c22511fe1bc5f70e91c4657796a"
+    },
+    {
+      "path": "plan.json",
+      "bytes": 12757,
+      "sha256": "2a606014a86355e8a834bc7d8175969c8d19ce01fcc5b5ee859df514c32c524d"
+    },
+    {
+      "path": "run-focused-diagnostics-attempt12-continuation.py",
+      "bytes": 6565,
+      "sha256": "e49edb2a130e95a72f31dbda134826223bb374f36756af150bc6e2ac251acf45"
+    },
+    {
+      "path": "run-focused-diagnostics-attempt12.py",
+      "bytes": 5543,
+      "sha256": "a534cb83aa824f5f1de7fc1e876e8023dbdeed70302bb35c4e694389c317a3a0"
+    },
+    {
+      "path": "state.json",
+      "bytes": 53160,
+      "sha256": "4d312ebcda3f559ad6a31a5b6cc23cbeedc3354692596c6c018487836505358c"
+    },
+    {
+      "path": "storage-recovery-attempt12/attempt9-candidate.json",
+      "bytes": 5461,
+      "sha256": "f15da146c89397a417f9b292423fbb52d40fa075e69e9e097ce1df8c93bb3b99"
+    },
+    {
+      "path": "storage-recovery-attempt12/attempt9-retirement.json",
+      "bytes": 1239,
+      "sha256": "547657935d800931528c18c3e5f940f73c3a3ff1af3b591ac64fe3bb905fd6c9"
+    },
+    {
+      "path": "storage-recovery-attempt12/phase-space.jsonl",
+      "bytes": 332,
+      "sha256": "b82f9c960b4831ea4627796044f4668cc1978fbd54aad0d3e30f9f11913dfa08"
+    },
+    {
+      "path": "supplement-observation.json",
+      "bytes": 17486,
+      "sha256": "af829a586de6bfae1ff6fbd7e465edc582919c8b25fa4684f118e0585308af9d"
+    }
+  ],
+  "budget": {
+    "accrued": 9411.875027748993,
+    "maximum": 12600,
+    "remaining": 3188.1249722510074
+  },
+  "sourceBindings": [
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/App.tsx",
+      "bytes": 25786,
+      "sha256": "4e8389eb6a232e6ed5db8273dd2686e45ab04edabd2e86bfea74cbdf862e5b7c"
+    },
+    {
+      "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "bytes": 76913,
+      "sha256": "93db32b6af9af1eeba85070086c5d0eb6b9b80198dc161004d5729c7cc38d4d0"
+    },
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "bytes": 47460,
+      "sha256": "6e3abbb16c9b55b048b69c2391784510d8c143c7ed00e760a73ecb903cdbb61d"
+    },
+    {
+      "path": "DemoMiniApps/hanlin-script-parity.hanlinNativeScript",
+      "bytes": 7512,
+      "sha256": "2e48509336edba2b301490422102dbf25cb7f1b894430d52994febdc1c33c199"
+    },
+    {
+      "path": "AI_HLY/RuntimeHostResources.zip",
+      "bytes": 81813686,
+      "sha256": "86733eba5d80156edf52da87f0f371c208122d6e60f618f182990330514984c3"
+    }
+  ],
+  "compressed": [
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/runtime-logstream.jsonl",
+      "path": "focused-diagnostics-attempt12/runtime-logstream.jsonl.gz",
+      "rawBytes": 7581366,
+      "rawSHA256": "89382dccef8997e875a15ad22c5423c92fa6a2d5c13b223ae96fd975b5fe610a",
+      "bytes": 804356,
+      "sha256": "b8e340f5536a10b8583af46967e27b3c44f689b4fe4272e0894c76b2097df011"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/paired-prefix/mini-build.log",
+      "path": "focused-diagnostics-attempt12/paired-prefix/mini-build.log.gz",
+      "rawBytes": 979669,
+      "rawSHA256": "4dd6ebaf2fc23dc431cdb3fa81b77fc1d849eb45bdba6bbfa7c0eea2f57c0429",
+      "bytes": 66989,
+      "sha256": "14f06bccc86add1a55a86cf0df977eaed9a720ce12e1d0bcf2b2f895c2cec349"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/paired-prefix/ai-build.log",
+      "path": "focused-diagnostics-attempt12/paired-prefix/ai-build.log.gz",
+      "rawBytes": 949110,
+      "rawSHA256": "ccd11eb826ba72c2d35b20e838829f3c0daf6605cdc1ea32c97cb5db8ba639e8",
+      "bytes": 49558,
+      "sha256": "0cd227e1e05753d586a0872d5f08124a2c210ec777d7338b7f6307810105dfa3"
+    }
+  ],
+  "firstPacketReceiptSHA256": "64d0a53c3e23baa09158ad8dfd6b0275342143b7b59799264cc020a3a0d9095b"
+}

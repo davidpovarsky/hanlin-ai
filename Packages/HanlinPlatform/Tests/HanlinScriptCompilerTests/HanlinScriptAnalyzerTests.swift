@@ -6,6 +6,101 @@ import Testing
 
 @Suite("Static Scripting analyzer")
 struct HanlinScriptAnalyzerTests {
+    @Test("Dedicated prepared assistant tools survive analysis and installed entrypoint mapping")
+    func preparedAssistantToolMetadataSurvivesInstallation() throws {
+        let analyzer = HanlinScriptAnalyzer(inventory: .init(baselineID: "fixture", baselineDigest: String(repeating: "a", count: 64), symbols: []))
+        for (runtime, bundle) in [("hanlin-expo", "bundle.js"), ("hanlin-nativescript", "bundle.mjs")] {
+            let declaration: [String: Any] = [
+                "title": "Search", "summary": "Search selected books",
+                "actions": [["id": "search", "title": "Search", "summary": "Find text",
+                             "inputSchema": ["type": "object", "properties": ["query": ["type": "string"]]],
+                             "outputSchema": ["type": "object", "properties": ["found": ["type": "boolean"]]]]],
+                "configuration": ["panels": [["id": "search", "title": "Search", "fields": [[
+                    "key": "books", "title": "Books", "kind": "catalog", "defaultValue": ["tanakh"],
+                    "options": [["id": "tanakh", "title": "Tanakh"]]
+                ]]]]]
+            ]
+            let manifest: [String: Any] = [
+                "name": "Dedicated assistant", "version": "1.0.0",
+                "entry": "app/\(bundle)", "hanlinRuntime": runtime,
+                "entrypoints": [["id": "search-tool", "kind": "assistantTool",
+                                 "sourcePath": "tool/\(bundle)", "assistantTool": declaration]]
+            ]
+            let prepared = String(decoding: try JSONSerialization.data(withJSONObject: ["name": "fixture", "main": bundle, "hanlinRuntime": runtime]), as: UTF8.self)
+            let fixture = try package(files: [
+                "script.json": String(decoding: try JSONSerialization.data(withJSONObject: manifest), as: UTF8.self),
+                "app/\(bundle)": "console.log('app')", "app/package.json": prepared,
+                "tool/\(bundle)": "console.log('dedicated tool')", "tool/package.json": prepared])
+            defer { try? FileManager.default.removeItem(at: fixture.stagingRoot) }
+            let preview = try analyzer.analyze(fixture)
+            #expect(preview.canInstall, "Prepared assistant \(runtime): \(preview.findings)")
+            let entry = try #require(preview.entrypoints.first { $0.kind == .assistantTool })
+            #expect(entry.id == "search-tool")
+            #expect(entry.sourcePath == "tool/\(bundle)")
+            #expect(entry.assistantTool?.actions.first?.id == "search")
+            let installed = HanlinWidgetPackagePreparation.installedEntrypoints(preview: preview, artifactDigest: String(repeating: "b", count: 64))
+            let stored = try #require(installed.first { $0.kind == .assistantTool })
+            #expect(stored.sourcePath == "source/tool/\(bundle)")
+            #expect(stored.assistantTool == entry.assistantTool)
+            #expect(stored.assistantTool?.configuration?.defaultValues == .object(["books": .array([.string("tanakh")])]))
+            #expect(stored.assistantTool?.actions[0].outputSchema != nil)
+            let restored = try JSONDecoder().decode(type(of: stored), from: JSONEncoder().encode(stored))
+            #expect(restored.assistantTool == stored.assistantTool)
+        }
+    }
+
+    @Test("Assistant selection cannot fall back to the foreground app or malformed metadata")
+    func invalidAssistantEntrypointsCannotInstall() throws {
+        let analyzer = HanlinScriptAnalyzer(inventory: .init(baselineID: "fixture", baselineDigest: String(repeating: "a", count: 64), symbols: []))
+        let metadata: [String: Any] = [
+            "title": "Search", "summary": "Search",
+            "actions": [["id": "search", "title": "Search", "summary": "Search", "inputSchema": ["type": "object"]]]
+        ]
+        for problem in ["foreground", "missingMetadata", "missingPackage", "missingRenderer", "emptyActions"] {
+            var tool = metadata
+            if problem == "emptyActions" { tool["actions"] = [] }
+            if problem == "missingRenderer" {
+                tool["actions"] = [["id": "search", "title": "Search", "summary": "Search",
+                                   "inputSchema": ["type": "object"], "embeddedResultID": "missing"]]
+            }
+            var declaration: [String: Any] = [
+                "id": "search-tool", "kind": "assistantTool",
+                "sourcePath": problem == "foreground" ? "app/bundle.js" : "tool/bundle.js"
+            ]
+            if problem != "missingMetadata" { declaration["assistantTool"] = tool }
+            let manifest: [String: Any] = [
+                "name": "Invalid assistant", "version": "1.0.0", "entry": "app/bundle.js",
+                "hanlinRuntime": "hanlin-expo", "entrypoints": [declaration]
+            ]
+            let prepared = #"{"name":"fixture","main":"bundle.js","hanlinRuntime":"hanlin-expo"}"#
+            var files = [
+                "script.json": String(decoding: try JSONSerialization.data(withJSONObject: manifest), as: UTF8.self),
+                "app/bundle.js": "console.log('app')", "app/package.json": prepared,
+                "tool/bundle.js": "console.log('tool')"
+            ]
+            if problem != "missingPackage" { files["tool/package.json"] = prepared }
+            let fixture = try package(files: files)
+            defer { try? FileManager.default.removeItem(at: fixture.stagingRoot) }
+            let preview = try analyzer.analyze(fixture)
+            #expect(!preview.canInstall, "Invalid assistant case: \(problem)")
+            #expect(preview.findings.contains { $0.code == "MINIAPP_ASSISTANT_TOOL_INVALID" })
+        }
+    }
+
+    @Test("Modern filename convention does not create an undeclared assistant capability")
+    func modernAssistantNeedsExplicitManifestMetadata() throws {
+        let analyzer = HanlinScriptAnalyzer(inventory: .init(baselineID: "fixture", baselineDigest: String(repeating: "a", count: 64), symbols: []))
+        let fixture = try package(files: [
+            "script.json": #"{"name":"Ordinary app","version":"1.0.0","entry":"bundle.js","hanlinRuntime":"hanlin-expo"}"#,
+            "bundle.js": "console.log('app')",
+            "assistant_tool.ts": "export function search() { return null; }",
+            "package.json": #"{"name":"fixture","main":"bundle.js","hanlinRuntime":"hanlin-expo"}"#])
+        defer { try? FileManager.default.removeItem(at: fixture.stagingRoot) }
+        let preview = try analyzer.analyze(fixture)
+        #expect(preview.canInstall)
+        #expect(!preview.entrypoints.contains { $0.kind == .assistantTool })
+    }
+
     @Test("Expo import main matches the manifest entry and cannot redirect launch elsewhere")
     func expoMainMustMatchTheInspectedForegroundEntrypoint() throws {
         let analyzer = HanlinScriptAnalyzer(inventory: .init(baselineID: "fixture", baselineDigest: String(repeating: "a", count: 64), symbols: []))
@@ -48,8 +143,15 @@ struct HanlinScriptAnalyzerTests {
             #expect(preview.canInstall == expected, "Expo required version \(version)")
             if !expected { #expect(preview.findings.contains { $0.code == "MINIAPP_EXPO_VERSION_MISMATCH" }) }
         }
-        for (version, expected) in ["9.1.0": true, "^9.0.0": true, "9.10.0": false, "^9.999.0": false,
-                                    "9.1.invalid": false, "9.1.1": false, "*": false, "latest": false] {
+        let installedCore = HanlinMiniAppHostVersions.nativeScriptCoreVersion
+        let coreParts = installedCore.split(separator: ".")
+        try #require(coreParts.count == 3)
+        let patch = try #require(Int(coreParts[2]))
+        var coreCases = ["9.1.0": true, "^9.0.0": true, "9.10.0": false, "^9.999.0": false,
+                         "9.1.invalid": false, "9.1.1": true, "*": false, "latest": false]
+        coreCases[installedCore] = true
+        coreCases["\(coreParts[0]).\(coreParts[1]).\(patch + 1)"] = false
+        for (version, expected) in coreCases {
             let prepared = try JSONSerialization.data(withJSONObject: ["name": "fixture", "main": "bundle.mjs", "hanlinRuntime": "hanlin-nativescript",
                 "dependencies": ["@nativescript/core": version]])
             let fixture = try package(files: [
@@ -547,7 +649,7 @@ struct HanlinScriptAnalyzerTests {
             ])
             defer { try? FileManager.default.removeItem(at: fixture.stagingRoot) }
             let preview = try analyzer.analyze(fixture)
-            #expect(preview.canInstall)
+            #expect(preview.canInstall, "Root prepared bundle \(runtime): \(preview.findings)")
             #expect(Set(preview.entrypoints.map(\.id)) == ["app", "appIntents", "intent", "share", "translation", "chat"])
             #expect(preview.entrypoints.filter { $0.kind == .appIntent }.count == 2)
             #expect(preview.entrypoints.first { $0.kind == .translationUI }?.exportedSymbol == "search")

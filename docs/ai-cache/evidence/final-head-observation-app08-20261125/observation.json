@@ -1,0 +1,262 @@
+{
+  "schemaVersion": 1,
+  "purpose": "Read-only completed-head synchronization observation while parent validates frozen App08 source",
+  "frozenSource": "1ae93941a34cf555f8a7293106efeff80978ebfa",
+  "observedWindowUTC": {
+    "initialRequestsStartedAtUTC": "2026-11-25T05:35:34.123Z",
+    "lastRecordedLocalObservationAtUTC": "2026-11-25T05:36:13.936313+00:00",
+    "sdkFollowupRequestsStartedAtUTC": "2026-11-25T05:36:09.213Z",
+    "receiptSealedAtUTC": "2026-11-25T05:37:44.005390+00:00"
+  },
+  "publishedRefs": [
+    {
+      "id": "composer",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/git/ref/heads/codex/hanlin-composer-capabilities-20261124",
+      "startedAtUTC": "2026-11-25T05:35:34.123Z",
+      "finishedAtUTC": "2026-11-25T05:35:40.375Z",
+      "ref": "refs/heads/codex/hanlin-composer-capabilities-20261124",
+      "sha": "f39142d3d14ae1bbbb81febceeef61fdc605f2a0",
+      "accepted": "f39142d3d14ae1bbbb81febceeef61fdc605f2a0",
+      "unchanged": true
+    },
+    {
+      "id": "minisdk",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/git/ref/heads/codex/hanlin-miniapps-sdk-completion-20261123",
+      "startedAtUTC": "2026-11-25T05:35:34.124Z",
+      "finishedAtUTC": "2026-11-25T05:35:34.552Z",
+      "ref": "refs/heads/codex/hanlin-miniapps-sdk-completion-20261123",
+      "sha": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
+      "accepted": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
+      "unchanged": true
+    },
+    {
+      "id": "wave3",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/git/ref/heads/codex/hanlin-three-waves-wave3-20261124",
+      "startedAtUTC": "2026-11-25T05:35:34.124Z",
+      "finishedAtUTC": "2026-11-25T05:35:34.541Z",
+      "ref": "refs/heads/codex/hanlin-three-waves-wave3-20261124",
+      "sha": "f3a0a97e63cc38acd58c0673447efe8d61b556da",
+      "accepted": "f3a0a97e63cc38acd58c0673447efe8d61b556da",
+      "unchanged": true
+    },
+    {
+      "id": "sdk_head",
+      "url": "https://api.github.com/repos/davidpovarsky/swift-ai-sdk/git/ref/heads/codex/swift-ai-sdk-cache-controls-20261125",
+      "startedAtUTC": "2026-11-25T05:35:34.124Z",
+      "finishedAtUTC": "2026-11-25T05:35:40.480Z",
+      "ref": "refs/heads/codex/swift-ai-sdk-cache-controls-20261125",
+      "sha": "abf0921c6e89e6521cc2b510ff11016b45a0ef08",
+      "accepted": "abf0921c6e89e6521cc2b510ff11016b45a0ef08",
+      "unchanged": true
+    },
+    {
+      "id": "sdk_base",
+      "url": "https://api.github.com/repos/davidpovarsky/swift-ai-sdk/git/ref/heads/codex/otzaria-tool-result-continuation-20261123",
+      "startedAtUTC": "2026-11-25T05:35:34.124Z",
+      "finishedAtUTC": "2026-11-25T05:35:34.722Z",
+      "ref": "refs/heads/codex/otzaria-tool-result-continuation-20261123",
+      "sha": "3f38f1302764635c9991d0d00fd7b12471a5373c",
+      "accepted": "3f38f1302764635c9991d0d00fd7b12471a5373c",
+      "unchanged": true
+    }
+  ],
+  "localHanlinObservations": {
+    "composer": {
+      "worktree": "/mnt/development/projects/worktrees/hanlin-composer-capabilities-20261124",
+      "observedAtUTC": "2026-11-25T05:35:37.925381+00:00",
+      "head": "f39142d3d14ae1bbbb81febceeef61fdc605f2a0",
+      "accepted": "f39142d3d14ae1bbbb81febceeef61fdc605f2a0",
+      "branch": "codex/hanlin-composer-capabilities-20261124",
+      "acceptedIsAncestor": true,
+      "commits": [],
+      "changedPaths": [],
+      "dirtyPaths": []
+    },
+    "minisdk": {
+      "worktree": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123",
+      "observedAtUTC": "2026-11-25T05:35:38.836286+00:00",
+      "head": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
+      "accepted": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
+      "branch": "codex/hanlin-miniapps-sdk-completion-20261123",
+      "acceptedIsAncestor": true,
+      "commits": [],
+      "changedPaths": [],
+      "dirtyPaths": [
+        " M AGENTS.md",
+        "?? Scripts/Expo/node_modules",
+        "?? Scripts/NativeScript/node_modules"
+      ]
+    },
+    "wave3": {
+      "worktree": "/mnt/development/projects/worktrees/hanlin-three-waves-wave3-20261124",
+      "observedAtUTC": "2026-11-25T05:35:39.266668+00:00",
+      "head": "f3a0a97e63cc38acd58c0673447efe8d61b556da",
+      "accepted": "f3a0a97e63cc38acd58c0673447efe8d61b556da",
+      "branch": "codex/hanlin-three-waves-wave3-20261124",
+      "acceptedIsAncestor": true,
+      "commits": [],
+      "changedPaths": [],
+      "dirtyPaths": []
+    },
+    "sdk": {
+      "worktree": "/mnt/development/projects/worktrees/swift-ai-sdk-cache-controls-20261125",
+      "observedAtUTC": "2026-11-25T05:35:39.340866+00:00",
+      "head": "06cd98dc874a12e56ba8864a2baa20c22363d6c0",
+      "tree": "f094f58f7956903e740a5188cf1e9d43c126248e",
+      "branch": "codex/swift-ai-sdk-cache-controls-20261125",
+      "dirtyPaths": [],
+      "baseRef": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+      "worktrees": "worktree /mnt/development/projects/worktrees/swift-ai-sdk-otzaria-continuation-20261123\nHEAD 07431abccbfb151ca2dab67bca6cf86fcb2bd3b8\nbranch refs/heads/codex/otzaria-tool-result-continuation-20261123\n\nworktree /mnt/development/projects/worktrees/swift-ai-sdk-cache-controls-20261125\nHEAD 06cd98dc874a12e56ba8864a2baa20c22363d6c0\nbranch refs/heads/codex/swift-ai-sdk-cache-controls-20261125\n\nworktree /mnt/development/projects/worktrees/swift-ai-sdk-otzaria-thought-signature-20261123\nHEAD 3f38f1302764635c9991d0d00fd7b12471a5373c\nbranch refs/heads/codex/otzaria-thought-signature-test-expectation-20261123\n\n"
+    },
+    "frozenIntegration": {
+      "commit": "1ae93941a34cf555f8a7293106efeff80978ebfa",
+      "present": true,
+      "acceptedAncestries": {
+        "composer": true,
+        "minisdk": true,
+        "wave3": true
+      }
+    }
+  },
+  "sdkRelation": {
+    "local": {
+      "producer": {
+        "worktree": "/mnt/development/projects/worktrees/swift-ai-sdk-cache-controls-20261125",
+        "observedAtUTC": "2026-11-25T05:36:13.779308+00:00",
+        "head": "06cd98dc874a12e56ba8864a2baa20c22363d6c0",
+        "tree": "f094f58f7956903e740a5188cf1e9d43c126248e",
+        "branch": "codex/swift-ai-sdk-cache-controls-20261125",
+        "dirtyPaths": [],
+        "tip": "06cd98dc874a12e56ba8864a2baa20c22363d6c0\t2026-11-25T00:36:56+00:00\t2026-11-25T00:36:56+00:00\ttest(telemetry): await root span finalization before usage assertions"
+      },
+      "localContinuation": {
+        "worktree": "/mnt/development/projects/worktrees/swift-ai-sdk-otzaria-continuation-20261123",
+        "observedAtUTC": "2026-11-25T05:36:13.819362+00:00",
+        "head": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+        "tree": "41ba21b11386c697a8c8023530fdea9e0babb7ec",
+        "branch": "codex/otzaria-tool-result-continuation-20261123",
+        "dirtyPaths": [],
+        "tip": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8\t2026-11-23T21:14:55+02:00\t2026-11-23T21:14:55+02:00\tci: qualify complete package after deterministic abort fixture repair"
+      },
+      "thoughtSignatureBase": {
+        "worktree": "/mnt/development/projects/worktrees/swift-ai-sdk-otzaria-thought-signature-20261123",
+        "observedAtUTC": "2026-11-25T05:36:13.936313+00:00",
+        "head": "3f38f1302764635c9991d0d00fd7b12471a5373c",
+        "tree": "3d5f5039aeff2b862b4531131b45771ee1e44a69",
+        "branch": "codex/otzaria-thought-signature-test-expectation-20261123",
+        "dirtyPaths": [],
+        "tip": "3f38f1302764635c9991d0d00fd7b12471a5373c\t2026-11-24T00:39:59+02:00\t2026-11-24T00:39:59+02:00\ttest: correct signed continuation text result expectations"
+      },
+      "ancestries": [
+        {
+          "ancestor": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+          "descendant": "3f38f1302764635c9991d0d00fd7b12471a5373c",
+          "isAncestor": true,
+          "countsLeftRight": "0\t2"
+        },
+        {
+          "ancestor": "3f38f1302764635c9991d0d00fd7b12471a5373c",
+          "descendant": "06cd98dc874a12e56ba8864a2baa20c22363d6c0",
+          "isAncestor": true,
+          "countsLeftRight": "0\t3"
+        }
+      ],
+      "publishedObjectPresentLocally": false
+    },
+    "publishedCommit": {
+      "sha": "abf0921c6e89e6521cc2b510ff11016b45a0ef08",
+      "tree": "f094f58f7956903e740a5188cf1e9d43c126248e",
+      "parents": [
+        "95b14823d3a19529f4704ad98698d44fb345814a"
+      ]
+    },
+    "publishedBaseComparison": {
+      "repository_full_name": "davidpovarsky/swift-ai-sdk",
+      "base": "3f38f1302764635c9991d0d00fd7b12471a5373c",
+      "head": "abf0921c6e89e6521cc2b510ff11016b45a0ef08",
+      "status": "ahead",
+      "ahead_by": 3,
+      "behind_by": 0,
+      "total_commits": 3,
+      "too_large": null,
+      "base_commit": {
+        "sha": "3f38f1302764635c9991d0d00fd7b12471a5373c",
+        "url": "https://api.github.com/repos/davidpovarsky/swift-ai-sdk/commits/3f38f1302764635c9991d0d00fd7b12471a5373c",
+        "html_url": "https://github.com/davidpovarsky/swift-ai-sdk/commit/3f38f1302764635c9991d0d00fd7b12471a5373c"
+      },
+      "merge_base_commit": {
+        "sha": "3f38f1302764635c9991d0d00fd7b12471a5373c",
+        "url": "https://api.github.com/repos/davidpovarsky/swift-ai-sdk/commits/3f38f1302764635c9991d0d00fd7b12471a5373c",
+        "html_url": "https://github.com/davidpovarsky/swift-ai-sdk/commit/3f38f1302764635c9991d0d00fd7b12471a5373c"
+      },
+      "files": [
+        {
+          "filename": "Sources/OpenAIProvider/OpenAIPromptCache.swift",
+          "status": "modified",
+          "additions": 38,
+          "deletions": 3,
+          "changes": 41,
+          "previous_filename": null
+        },
+        {
+          "filename": "Sources/OpenAIProvider/OpenAIResponsesOptions.swift",
+          "status": "modified",
+          "additions": 1,
+          "deletions": 1,
+          "changes": 2,
+          "previous_filename": null
+        },
+        {
+          "filename": "Sources/SwiftAISDK/GenerateText/StreamText.swift",
+          "status": "modified",
+          "additions": 7,
+          "deletions": 1,
+          "changes": 8,
+          "previous_filename": null
+        },
+        {
+          "filename": "Tests/SwiftAISDKTests/OpenAI/OpenAIPromptCacheControlTests.swift",
+          "status": "added",
+          "additions": 135,
+          "deletions": 0,
+          "changes": 135,
+          "previous_filename": null
+        },
+        {
+          "filename": "Tests/SwiftAISDKTests/TestSupport/MockTracer.swift",
+          "status": "modified",
+          "additions": 17,
+          "deletions": 4,
+          "changes": 21,
+          "previous_filename": null
+        },
+        {
+          "filename": "plan/design-decisions.md",
+          "status": "modified",
+          "additions": 18,
+          "deletions": 0,
+          "changes": 18,
+          "previous_filename": null
+        },
+        {
+          "filename": "upstream/providers/openai.md",
+          "status": "modified",
+          "additions": 12,
+          "deletions": 0,
+          "changes": 12,
+          "previous_filename": null
+        }
+      ]
+    },
+    "treeEquivalent": true
+  },
+  "assessment": {
+    "newCompletedCommits": 0,
+    "newMaterialConsumerOrPreparationOrHostOrCacheDeltas": [],
+    "newDocsOrEvidenceDeltas": [],
+    "integrationRequired": false,
+    "dirtyOwnerWorkExcluded": true,
+    "scope": "Named active composer, MiniSDK, wave3 and SwiftSDK owned/base branches only; point-in-time observation, no future-stability claim.",
+    "executions": "Read-only API and local Git inspection only. No fetch, merge, tests, native or Mac operations."
+  }
+}

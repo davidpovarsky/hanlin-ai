@@ -49,7 +49,10 @@ final class MiniAppsExternalModalLifetimeUITests: XCTestCase {
         XCTAssertTrue(install.waitForExistence(timeout: 30))
         XCTAssertTrue(install.isEnabled)
         install.tap()
-        XCTAssertTrue(install.waitForNonExistence(timeout: 60), "The original compiler and installer must finish")
+        // The measured first Host/SDK extraction took 60.76 seconds before Node
+        // started; the old 60-second wait terminated the app as compilation began.
+        // Keep the original 300-second case allowance and every lifecycle check.
+        XCTAssertTrue(install.waitForNonExistence(timeout: 180), "The original compiler and installer must finish")
         let previewDone = app.buttons["hanlin-package-import-done"]
         XCTAssertTrue(previewDone.waitForExistence(timeout: 15))
         previewDone.tap()

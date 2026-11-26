@@ -1,7 +1,9 @@
 import React, {useState} from 'react';
 import {View} from 'react-native';
 import {Button, Host, Text, VStack, hostServices, type MiniAppActionInvocation,
-  type MiniAppJSONValue, type ExpoWidgetPublicationReceipt} from '@hanlin/expo-ui';
+  type MiniAppJSONValue, type ExpoWidgetPublicationReceipt,
+  type HanlinRuntimeKind, type RuntimeExecutionResult} from '@hanlin/expo-ui';
+import {lineLimit} from '@hanlin/expo-ui/modifiers';
 
 // Register the complete declared action table once when the real bundle loads.
 // A native caller supplies the UUID/caller/payload; no button invokes these itself.
@@ -42,6 +44,8 @@ void hostServices.actions.register(handlers).catch(error => {
 export function HostServicesProbe({close}: {close: () => void}) {
   const [files, setFiles] = useState('HOST_SERVICES_FILES_NOT_RUN');
   const [runtime, setRuntime] = useState('HOST_SERVICES_RUNTIME_NOT_RUN');
+  const [allRuntimes, setAllRuntimes] = useState('HOST_SERVICES_ALL_RUNTIMES_NOT_RUN');
+  const [runtimeReceipts, setRuntimeReceipts] = useState('');
   const [activities, setActivities] = useState('HOST_SERVICES_ACTIVITY_READS_NOT_RUN');
   const [widget, setWidget] = useState('HOST_SERVICES_WIDGET_STATE_NOT_RUN');
   const [receipt, setReceipt] = useState<ExpoWidgetPublicationReceipt>();
@@ -78,6 +82,36 @@ export function HostServicesProbe({close}: {close: () => void}) {
       setRuntime('HOST_SERVICES_RUNTIME_PASS');
     } catch (error) { fail('runtime', setRuntime, error); }
   };
+  const runAllRuntimes = async () => {
+    const nonce = 'expo-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2);
+    const cases: Array<{kind: HanlinRuntimeKind; source: string}> = [
+      {kind: 'node', source: 'console.log(' + JSON.stringify(nonce + ':node:') + ' + (19 + 23));'},
+      {kind: 'typeScript', source: 'const answer: number = 19 + 23; console.log(' +
+        JSON.stringify(nonce + ':typeScript:') + ' + answer);'},
+      {kind: 'localPython', source: 'print(' + JSON.stringify(nonce + ':localPython:') + ' + str(19 + 23))'},
+      {kind: 'javaScriptCore', source: 'console.log(' + JSON.stringify(nonce + ':javaScriptCore:') + ' + (19 + 23));'},
+      {kind: 'shell', source: "echo '" + nonce + ":shell:42'"},
+    ];
+    const results: Array<{kind: HanlinRuntimeKind; result: RuntimeExecutionResult}> = [];
+    const executionIDs = new Set<string>();
+    setAllRuntimes('HOST_SERVICES_ALL_RUNTIMES_RUNNING');
+    setRuntimeReceipts('');
+    try {
+      for (const item of cases) {
+        const result = await hostServices.executeRuntime(item.kind, item.source);
+        results.push({kind: item.kind, result});
+        setRuntimeReceipts(JSON.stringify({nonce, results}));
+        if (!result.executionID || executionIDs.has(result.executionID) ||
+            result.exitCode !== 0 || result.didTimeOut || result.wasCancelled || result.outputWasTruncated ||
+            !Number.isFinite(result.durationMilliseconds) || result.durationMilliseconds < 0 ||
+            result.stdout.trim() !== nonce + ':' + item.kind + ':42') {
+          throw new Error('Actual ' + item.kind + ' receipt did not match its executed challenge');
+        }
+        executionIDs.add(result.executionID);
+      }
+      setAllRuntimes('HOST_SERVICES_ALL_RUNTIMES_PASS');
+    } catch (error) { fail('all-runtimes', setAllRuntimes, error); }
+  };
   const readActivities = async () => {
     try {
       const enabled = await hostServices.liveActivities.areEnabled();
@@ -109,6 +143,11 @@ export function HostServicesProbe({close}: {close: () => void}) {
     <Text>{files}</Text>
     <Button label="Run Host Services Runtime" onPress={() => {void runRuntime();}} />
     <Text>{runtime}</Text>
+    <Button label="Run All Host Runtimes" onPress={() => {void runAllRuntimes();}} />
+    <Text>{allRuntimes}</Text>
+    {runtimeReceipts && <Text modifiers={[lineLimit(1)]}>
+      {'HOST_SERVICES_ALL_RUNTIMES_RECEIPTS:' + runtimeReceipts}
+    </Text>}
     <Button label="Read Host Live Activity Status" onPress={() => {void readActivities();}} />
     <Text>{activities}</Text>
     <Button label="Publish Prepared Expo Widget" onPress={() => {void publish();}} />

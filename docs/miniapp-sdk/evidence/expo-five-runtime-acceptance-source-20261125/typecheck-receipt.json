@@ -1,0 +1,21 @@
+{
+  "createdAtUTC": "2026-11-25T04:30:02.222222+00:00",
+  "argv": [
+    "node",
+    "/mnt/development/projects/worktrees/hanlin-ns-original-core-metadata-20261125/Scripts/Expo/node_modules/.bin/tsc6",
+    "--noEmit",
+    "-p",
+    "Fixtures/ExpoSwiftUIProbe/tsconfig.json"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-ns-original-core-metadata-20261125",
+  "exitCode": 0,
+  "seconds": 5.966331847012043,
+  "compilerVersionOutput": "Version 6.0.3",
+  "originalConfigSHA256": "1b682272df710c0d8b97b3fcde9c795204e28e287e6e7ba9b1850112e92854f4",
+  "strict": true,
+  "skipLibCheck": false,
+  "dependencySource": "/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules",
+  "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "logBytes": 0,
+  "scope": "Original existing fixture TypeScript compiler/config, on Oracle, no native runtime/build claim."
+}

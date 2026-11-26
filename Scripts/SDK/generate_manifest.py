@@ -140,6 +140,25 @@ def application_dependencies(local_products, dependencies):
     return result
 
 
+def application_external_packages():
+    """App-owned library pins live beside the canonical application products."""
+    definition = json.loads(APPLICATION_PRODUCTS.read_text())
+    result = []
+    seen = set()
+    for item in definition.get("externalPackages", []):
+        if not isinstance(item, dict) or set(item) != {"url", "exact"}:
+            raise ValueError("Malformed canonical application package")
+        url, version = item["url"], item["exact"]
+        if not isinstance(url, str) or not url.startswith("https://") or not isinstance(version, str) or not version:
+            raise ValueError("Application package requires HTTPS URL and exact version")
+        identity = url.rstrip("/").removesuffix(".git").split("/")[-1].lower()
+        if not identity or identity in seen:
+            raise ValueError("Duplicate canonical application package: " + identity)
+        seen.add(identity)
+        result.append((identity, url, "exact: " + quoted(version)))
+    return result
+
+
 def generate(selected_products=None):
     manifests=get_manifests()
     products={};local_products={};targets=[];deps={};product_targets={};target_edges={};target_remote={}
@@ -158,6 +177,11 @@ def generate(selected_products=None):
                 existing=deps.get(identity)
                 if existing and existing[1]!=rule: raise ValueError("Conflicting dependency requirements: "+identity)
                 deps[identity]=(url,rule)
+    for identity, url, rule in application_external_packages():
+        existing = deps.get(identity)
+        if existing and existing != (url, rule):
+            raise ValueError("Conflicting application dependency: " + identity)
+        deps[identity] = (url, rule)
     project=parse_project((ROOT/"AI_HLY.xcodeproj/project.pbxproj").read_text())
     objects=project["objects"]
     # Keep the actual pinned app dependencies, including frameworks used only

@@ -1,0 +1,77 @@
+{
+  "actual_focused_method": {
+    "classname": "SwiftAISDKTests.StreamTextThoughtSignatureContinuationTests",
+    "name": "signedSequentialContinuation()",
+    "time": "0.06109082"
+  },
+  "archive_crc_verified": true,
+  "archive_members": 31,
+  "artifact_bytes": 2728267,
+  "artifact_id": 14869369511,
+  "artifact_sha256": "5862195ce9de4fafac90cfe85dcbff3e4fd72c81c9286b7f8b37ce1597b8b2ae",
+  "captured_at": "2026-11-23T23:08:00.585030+00:00",
+  "compiler": {
+    "bytes": 357109680,
+    "path": "/Applications/Xcode_26.6.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend",
+    "sha256": "8a63cc031d970b57f03741ae83becbfb26f2b913565ac212b81b80bdcb35600f"
+  },
+  "controller_lock_released": true,
+  "current_source_inputs_unchanged_from_prior": 1397,
+  "github_conclusion": "success",
+  "indexed_files_verified": 30,
+  "live_called": false,
+  "native_app_acceptance": false,
+  "previous_aggregate_failure_preserved": true,
+  "previous_artifact_exactly_retained": true,
+  "previous_binary_hash_not_invented": true,
+  "qualification": {
+    "actual_focused_methods": 1,
+    "app_native_acceptance_claimed": false,
+    "errors": 0,
+    "failed_methods": 0,
+    "live_provider_called": false,
+    "new_logical_methods_qualified": 9,
+    "new_scenarios_qualified": 18,
+    "not_run_obligations": 0,
+    "previous_aggregate_conclusion": "failure",
+    "previous_failure_preserved": true,
+    "previous_run": 45275019854,
+    "qualified_logical_methods": 4194,
+    "retained_actual_passing_methods": 4193,
+    "retained_tests_replayed": 0,
+    "skipped_methods": 0,
+    "source": "3f38f1302764635c9991d0d00fd7b12471a5373c",
+    "source_and_compiler_unchanged": true,
+    "source_binding": {
+      "changed_inputs": [
+        ".github/workflows/otzaria-stream-continuation.yml",
+        "Tests/SwiftAISDKTests/GenerateText/StreamTextThoughtSignatureContinuationTests.swift",
+        "plan/otzaria-thought-signature-inputs.json",
+        "scripts/otzaria-thought-signature-evidence.py"
+      ],
+      "only_three_expected_text_literals_changed": true,
+      "product_and_all_retained_tests_unchanged": true,
+      "same_input_paths": 1401,
+      "unchanged_inputs": 1397
+    },
+    "status": "ACTUAL_APPLE_PACKAGE_QUALIFIED_WITH_RETAINED_PASSES",
+    "test_binary_sha256": "31ac0de618cf34dedd61a0c1d0d443d6ede4dcf5d3070969a62275b981c68f09",
+    "tree": "3d5f5039aeff2b862b4531131b45771ee1e44a69",
+    "xml_sha256": "79c5377aef943cc1b19e0ad9cf59d3ad682f286240aaead0c55edc2048308b26"
+  },
+  "qualified_method_union": 4194,
+  "retained_passing_methods": 4193,
+  "run_attempt": 1,
+  "run_id": 45281860828,
+  "same_apple_compiler_environment_as_prior": true,
+  "schema": "otzaria.thought-signature-focused-authenticated-intake/1",
+  "source": "3f38f1302764635c9991d0d00fd7b12471a5373c",
+  "source_before_after_equal": true,
+  "source_rows_git_verified": 1401,
+  "test_binary": {
+    "bytes": 178013816,
+    "path": ".build/x86_64-apple-macosx/debug/SwiftAISDKPackageTests.xctest/Contents/MacOS/SwiftAISDKPackageTests",
+    "sha256": "31ac0de618cf34dedd61a0c1d0d443d6ede4dcf5d3070969a62275b981c68f09"
+  },
+  "tree": "3d5f5039aeff2b862b4531131b45771ee1e44a69"
+}

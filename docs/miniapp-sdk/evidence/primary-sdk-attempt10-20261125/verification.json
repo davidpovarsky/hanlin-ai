@@ -1,0 +1,148 @@
+{
+  "schema": 1,
+  "verifiedAt": "2026-11-25T02:39:18.173790+00:00",
+  "source": "fda6948ca6a1f541293a1a1dd20e97f75eb0a527",
+  "rawMembers": 33,
+  "losslessGzipMembers": 1,
+  "rawChecks": [
+    {
+      "path": "raw/snapshot-receipt.json",
+      "storedAndDecodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/tracked-delta.json",
+      "storedAndDecodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/miniapp-sdk.json.gz",
+      "storedAndDecodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/expo-asset-produced-bindings.json",
+      "storedAndDecodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/RuntimeDependencies.lock.json",
+      "storedAndDecodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/Scripts/Expo/package-lock.json",
+      "storedAndDecodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/Scripts/Expo/package.json",
+      "storedAndDecodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/Scripts/Expo/dependency-lock.json",
+      "storedAndDecodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/Scripts/MiniApps/upstream-resolution.json",
+      "storedAndDecodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/Scripts/NativeScript/package-lock.json",
+      "storedAndDecodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/Scripts/NativeScript/package.json",
+      "storedAndDecodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/build/runtime-host/host-metadata.json",
+      "storedAndDecodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/build/app-split-evidence/miniapp-documentation-snippets.json",
+      "storedAndDecodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/build/app-split-evidence/prepared-native/native-artifacts.json",
+      "storedAndDecodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/build/primary-control/logs-attempt10/split-native-preparation.log",
+      "storedAndDecodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/build/primary-control/logs-attempt10/split-native-artifacts.log",
+      "storedAndDecodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/build/primary-control/plan.json",
+      "storedAndDecodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/build/primary-control/source-advance-fda6948c/receipt.json",
+      "storedAndDecodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/build/primary-control/admission-attempt10.json",
+      "storedAndDecodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/build/acceptance/expo-type-declarations/corrections.json",
+      "storedAndDecodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/.source-build-receipt.json",
+      "storedAndDecodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/.artifact-manifest.json",
+      "storedAndDecodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/Info.plist",
+      "storedAndDecodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/build/miniapp-upstreams/expo-native-source/ios/Podfile.lock",
+      "storedAndDecodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "storedAndDecodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/original-runtime-receipt.json",
+      "storedAndDecodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "storedAndDecodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/docs/miniapp-sdk/extension-reachability.json",
+      "storedAndDecodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/docs/miniapp-sdk/extension-reachability.md",
+      "storedAndDecodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/docs/miniapp-sdk/source-inventory.json",
+      "storedAndDecodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/controller-state-at-capture.json",
+      "storedAndDecodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/embedded-host-binding-attempt10.json",
+      "storedAndDecodedIdentity": "PASS"
+    },
+    {
+      "path": "raw/installed-metadata-binding-attempt10.json",
+      "storedAndDecodedIdentity": "PASS"
+    }
+  ],
+  "sdkInspection": "PASS",
+  "consumerBinding": "PASS",
+  "preparedRows": 9,
+  "materialized": false,
+  "postInspectionClarification": "Zero-library support archives have no per-library binary equality claim; their actual changed size/checksum metadata remains separately recorded.",
+  "productExecutions": 0,
+  "installedMetadataReceiptAndSections": "PASS"
+}

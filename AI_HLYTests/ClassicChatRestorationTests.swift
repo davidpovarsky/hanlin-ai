@@ -1239,10 +1239,13 @@ struct ClassicChatRestorationTests {
         ]
 
         let converted = APIManager.convertFormattedMessagesToSDKMessages(formattedMessages)
-        #expect(converted.baseSystemPrompt == "Developer system instructions")
-        #expect(converted.messages.count == 2)
+        #expect(converted.baseSystemPrompt == nil)
+        #expect(converted.messages.count == 3)
+        #expect(converted.messages[0].role == .system)
+        #expect(converted.messages[0].parts == [.text("Developer system instructions")])
+        #expect(converted.messages[0].cacheBreakpoint)
 
-        let userMsg = converted.messages[0]
+        let userMsg = converted.messages[1]
         #expect(userMsg.role == .user)
         #expect(userMsg.parts.count == 3)
 
@@ -1574,7 +1577,7 @@ struct ClassicChatRestorationTests {
     // MARK: - 25. build84701P0ToolContentSeparationAndPerCallProjection
 
     @MainActor
-    @Test("25. Build 84701 P0 fix: load_skill keeps ### Instructions in modelText only, and ClassicChatAgentProjection separates per-call tool outputs without mislabeling load_skill under manage_mcp_servers")
+    @Test("25. Original tool projection preserves per-call skill and MCP audit while keeping internal skill activity out of the visible domain result")
     func build84701P0ToolContentSeparationAndPerCallProjection() async throws {
         let session = AssistantCapabilitySession(chatID: UUID().uuidString, isTemporaryChat: false)
 
@@ -1593,7 +1596,9 @@ struct ClassicChatRestorationTests {
         #expect(!userSummary.contains("### Instructions"))
         #expect(userSummary.contains("mcp_servers") || userSummary.localizedCaseInsensitiveContains("mcp"))
 
-        // 2. Consecutive load_skill -> manage_mcp_servers in the same run
+        // 2. Drive the original event/persistence path. Internal skill activity
+        // stays in the canonical audit; the Nov22 visibility policy excludes it
+        // from the user-facing activity tree and legacy tool badge/content.
         let runID = UUID()
         let groupID = UUID()
         let assistantMessage = ChatMessages(
@@ -1605,37 +1610,81 @@ struct ClassicChatRestorationTests {
             groupID: groupID,
             timestamp: Date()
         )
-
-        let entry1 = ClassicProjectedToolCallEntry(
-            id: "\(runID.uuidString):step:call_skill_1",
-            runID: runID,
-            callID: "call_skill_1",
-            toolName: "load_skill",
-            summary: nil,
-            output: userSummary,
-            isMetaSkillOrDiscoveryTool: true
+        let skillCall = AgentToolCall.parse(
+            id: "call_skill_1", name: "load_skill",
+            argumentsJSON: #"{"skill_id":"mcp_servers"}"#
         )
-        let entry2 = ClassicProjectedToolCallEntry(
-            id: "\(runID.uuidString):step:call_mcp_2",
-            runID: runID,
-            callID: "call_mcp_2",
-            toolName: "manage_mcp_servers",
-            summary: nil,
-            output: "MCP Server Status: 1 installed, 1 running.",
-            isMetaSkillOrDiscoveryTool: false
+        let mcpCall = AgentToolCall.parse(
+            id: "call_mcp_2", name: "manage_mcp_servers",
+            argumentsJSON: #"{"action":"status"}"#
+        )
+        let domainOutput = "MCP Server Status: 1 installed, 1 running."
+        var accumulator = AgentEventAccumulator(run: AgentRun(id: runID, groupID: groupID))
+        for (call, modelText, userText) in [
+            (skillCall, modelOutput, userSummary),
+            (mcpCall, domainOutput, domainOutput)
+        ] {
+            accumulator.apply(.toolCallStarted(call))
+            accumulator.apply(.toolCallCompleted(call))
+            accumulator.apply(.toolExecutionStarted(AgentToolExecution(
+                id: call.id + ":execution", callID: call.id, name: call.name, startedAt: .now
+            )))
+            accumulator.apply(.toolExecutionCompleted(
+                id: call.id + ":execution",
+                result: AgentToolResult(
+                    modelText: modelText, userText: userText,
+                    richResultBlocks: [], hasLegacyPresentationPayload: false,
+                    isError: false, semanticOutcome: .succeeded, duration: 0.01
+                )
+            ))
+        }
+        accumulator.apply(.runCompleted)
+
+        var seenKeys = Set<String>()
+        ClassicChatAgentProjection.syncAgentRunProjection(
+            accumulator.run, into: assistantMessage, seenToolCallKeys: &seenKeys
         )
 
-        ClassicChatAgentProjection.applyFormattedToolProjection(
-            entries: [entry1, entry2],
-            fallbackToolName: "tools",
-            to: assistantMessage
-        )
+        // Both calls retain their own identity, output and explicit audit label.
+        let entries = ClassicChatAgentProjection.projectToolEntries(from: assistantMessage.agentRun)
+        #expect(entries.map(\.callID) == [skillCall.id, mcpCall.id])
+        #expect(entries.map(\.toolName) == ["load_skill", "manage_mcp_servers"])
+        #expect(entries.map(\.output) == [userSummary, domainOutput])
+        #expect(entries.map(\.status) == [.completed, .completed])
+        let auditBlocks = entries.map { $0.formattedBlock(includeHeader: true) }.joined(separator: "\n\n")
+        #expect(auditBlocks.contains("[load_skill]"))
+        #expect(auditBlocks.contains("[manage_mcp_servers]"))
+        #expect(!auditBlocks.contains("### Instructions"))
 
-        let expectedBadge = String(format: String(localized: "Tool activity (%lld)"), 2)
-        #expect(assistantMessage.toolName == expectedBadge)
-        #expect(assistantMessage.toolContent?.contains("[load_skill]") == true)
-        #expect(assistantMessage.toolContent?.contains("[manage_mcp_servers]") == true)
+        // The actual renderer composition contains only the eligible domain call.
+        let visible = AgentActivityComposer.compose(accumulator.run).activities
+        #expect(visible.map(\.id) == [mcpCall.id])
+        #expect(visible.first?.outputPreview == domainOutput)
+        #expect(assistantMessage.toolName == mcpCall.name)
+        #expect(assistantMessage.toolContent?.hasSuffix(domainOutput) == true)
+        #expect(assistantMessage.toolContent?.contains(userSummary) == false)
+        #expect(assistantMessage.toolContent?.contains("[load_skill]") == false)
         #expect(assistantMessage.toolContent?.contains("### Instructions") == false)
+
+        // Reopen from the original serialized checkpoint, then rebuild the same
+        // projections. Hiding internal UI must never erase the stored call audit.
+        let storedRun = try #require(assistantMessage.agentRunJSON)
+        let restoredMessage = ChatMessages(
+            role: "assistant", text: "", agentRunJSON: storedRun, groupID: groupID
+        )
+        let restoredRun = try #require(restoredMessage.agentRun)
+        var restoredKeys = Set<String>()
+        ClassicChatAgentProjection.syncAgentRunProjection(
+            restoredRun, into: restoredMessage, seenToolCallKeys: &restoredKeys
+        )
+        let restoredEntries = ClassicChatAgentProjection.projectToolEntries(from: restoredRun)
+        #expect(restoredEntries.map(\.id) == entries.map(\.id))
+        #expect(restoredEntries.map(\.toolName) == entries.map(\.toolName))
+        #expect(restoredEntries.map(\.output) == [userSummary, domainOutput])
+        #expect(AgentActivityComposer.compose(restoredRun).activities.map(\.id) == [mcpCall.id])
+        #expect(restoredMessage.toolName == mcpCall.name)
+        #expect(restoredMessage.toolContent == assistantMessage.toolContent)
+        #expect(restoredMessage.toolContent?.hasSuffix(domainOutput) == true)
     }
 
     // MARK: - 26. nativeMultilineTextEditorEffectiveMeasurementWidth

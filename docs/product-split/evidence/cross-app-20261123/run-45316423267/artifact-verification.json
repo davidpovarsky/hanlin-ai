@@ -1,0 +1,70 @@
+{
+  "artifact_id": 14886859568,
+  "run_id": 45316423267,
+  "source_sha": "df3cb6d5ac27fdef24e3a45c6b3b2558f4563274",
+  "archive_bytes": 17786420,
+  "archive_sha256": "0f43f5ed1dce7b13dba9b39da95ba85e8f37ccdd9ff79d898663fd1741714a95",
+  "verification": "Complete downloaded ZIP hash verified in job_0a0845747e6b; members now selected by their exact archive paths.",
+  "members": [
+    {
+      "member": "app-split-evidence/acceptance.json",
+      "path": "acceptance.json",
+      "bytes": 155702,
+      "sha256": "41a58b430b7a39537766bfb2ee7b50fedea4efdadb45b0deddcd49d79c443639"
+    },
+    {
+      "member": "app-split-evidence/commands.jsonl",
+      "path": "commands.jsonl",
+      "bytes": 4341,
+      "sha256": "82fb7ac44e7884ee6287a5b35afe0a82b91af3cd9fa4a759943cf4e110c9ac8a"
+    },
+    {
+      "member": "app-split-evidence/previous-native-proof.json",
+      "path": "previous-native-proof.json",
+      "bytes": 129101,
+      "sha256": "d9033e170e39aca12747317403c553080078cab1bc7a47f6304ab0db908da68a"
+    },
+    {
+      "member": "app-split-evidence/build.log",
+      "path": "build.log",
+      "bytes": 8894987,
+      "sha256": "169764e99682db55407aec1e048cc2b73fd523aa0d8ce96c6c925f6c469019c2"
+    },
+    {
+      "member": "app-split-evidence/bootstatus.log",
+      "path": "bootstatus.log",
+      "bytes": 130,
+      "sha256": "0030ce100e012baee3c7c5998b0d4342109c16728cd651a7f09b47373b5fdfa0"
+    },
+    {
+      "member": "app-split-evidence/preflight.log",
+      "path": "preflight.log",
+      "bytes": 128111,
+      "sha256": "ffe29725e2e1f93dba677a2b0476bd1fa1da720c68747701ce3095ec40d5450c"
+    },
+    {
+      "member": "app-split-evidence/failure-memory.txt",
+      "path": "failure-memory.txt",
+      "bytes": 1247,
+      "sha256": "764b501f0f38fdedcfd21521bdab23ea9891973b6e524910d9a4d33de454d847"
+    },
+    {
+      "member": "app-split-evidence/failure-processes.txt",
+      "path": "failure-processes.txt",
+      "bytes": 157324,
+      "sha256": "9ad7b09a235985ff4aa8ef61d9fb7a5403f4e0ea97bd1613072a89d38b4321c2"
+    },
+    {
+      "member": "app-split-evidence/before-boot-host-resources.txt",
+      "path": "before-boot-host-resources.txt",
+      "bytes": 34,
+      "sha256": "8f1c8925647f04af1a1be4971bf5da70ce32f357a192f0373e4d2580881772fb"
+    },
+    {
+      "member": "app-split-evidence/before-boot-memory.txt",
+      "path": "before-boot-memory.txt",
+      "bytes": 1247,
+      "sha256": "f7b10c902e2ce29a78eb51df30c22756646ea6f89c98dbf73ceb50aa594b05d8"
+    }
+  ]
+}

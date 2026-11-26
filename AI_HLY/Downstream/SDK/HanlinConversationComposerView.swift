@@ -1,6 +1,7 @@
 import Foundation
 import Observation
 import SwiftUI
+import HanlinPlatformContracts
 
 enum HanlinConversationSurface: Equatable { case full, composer }
 
@@ -27,6 +28,15 @@ public final class HanlinConversationPresentation {
     public var draft: String {
         get { bridge.activeEndpoint?.currentMessage ?? "" }
         set { bridge.activeEndpoint?.message.wrappedValue = newValue }
+    }
+
+    public var capabilityAttachments: [HanlinCapabilityAttachment] {
+        get { bridge.activeEndpoint?.capabilityDraft?.capabilitySnapshot ?? [] }
+        set { bridge.activeEndpoint?.capabilityDraft?.capabilityAttachments = newValue }
+    }
+
+    public var availableCapabilities: [HanlinComposerCapabilityDescriptor] {
+        HanlinComposerCapabilities.catalog()
     }
 
     @discardableResult

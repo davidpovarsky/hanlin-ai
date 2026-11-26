@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "copiedAtUTC": "2026-11-25T00:19:37.208384+00:00",
+  "sourceHost": "scaleway-mac",
+  "sourceDirectory": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/",
+  "sourceCommit": "f54aebbb35169ea63eca146a1ba3ef4e8bf4f84d",
+  "destinationDirectory": "/mnt/development/projects/evidence-staging/hanlin-composer-capabilities-20261124/platform-attempt5-f54aebbb3",
+  "verifiedExactSHA256": {
+    "composer-platform-attempt5-tests.log": "cd4f7f085fc4142f2a411c5733e2e95f3fdd2757b47204015580c491a4524b69",
+    "composer-platform-attempt5-tests.json": "6a0d0f67a8c49394346e9b49c0747eeb7ae25928b126ab0add5b757764dcce6c",
+    "composer-platform-attempt5-inputs.json": "f225046debbb0d5d3aaf365b85369bf86b681c322bff6f3aeb3f8f774d238505",
+    "composer-platform-attempt5-tests.derived.junit.xml": "703b50990b1d8c1900f3a72eed0b19f67eee4d0726c13617f05bb0a6e2fe09e4",
+    "composer-platform-attempt5-resources.jsonl": "18f05bb9e1c8d4ce5c04af47464960602fa206b3ecec6a7d4c83e3d4aef7d295"
+  },
+  "jobID": "job_12ff629949b6",
+  "executionStatus": "PASSED",
+  "actualExecutedPassCount": 6,
+  "actualFailedCount": 0,
+  "actualSkippedCount": 0,
+  "nativeXMLProduced": false,
+  "xmlEvidence": "Explicitly log-derived JUnit; raw actual Swift Testing results retained."
+}

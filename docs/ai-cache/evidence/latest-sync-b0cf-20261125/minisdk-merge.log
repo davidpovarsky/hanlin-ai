@@ -1,0 +1,7 @@
+Auto-merging AI_HLY/Downstream/SDK/HanlinApplicationLifecycle.swift
+Auto-merging AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift
+Auto-merging Scripts/CI/IntegrationValidation/miniapps_provider_sources.json
+Auto-merging Scripts/MiniApps/stage-sdk.mjs
+CONFLICT (content): Merge conflict in Scripts/MiniApps/stage-sdk.mjs
+Auto-merging docs/product-split/target-membership.json
+Automatic merge failed; fix conflicts and then commit the result.

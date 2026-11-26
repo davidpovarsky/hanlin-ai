@@ -15,6 +15,7 @@ import SwiftData
 import Observation
 import HanlinPlatformContracts
 import HanlinPresentationKit
+import HanlinChatUI
 #if canImport(UIKit)
 import UIKit
 #endif
@@ -55,6 +56,10 @@ struct HanlinComposerGeneralActionsView: View {
     let onOpenDocumentPicker: () -> Void
     let onOpenShareInbox: () -> Void
     var miniAppsSession: NativeAppsLaunchSession? = nil
+    var capabilityDraft: HanlinComposerDraft? = nil
+    var composerCapabilities: [HanlinComposerCapabilityDescriptor] = []
+    var editingCapabilityID: Binding<UUID?> = .constant(nil)
+    var onAttachCapability: ((HanlinComposerCapabilityDescriptor, String?) -> Void)? = nil
 
     // Mode toggles
     @Binding var ifSearch: Bool
@@ -118,7 +123,17 @@ struct HanlinComposerGeneralActionsView: View {
                         case .imageSize:
                             imageSizeSubpage
                         case .miniApps:
-                            if let miniAppsSession { NativeAppsComposerPage(session: miniAppsSession) }
+                            if let miniAppsSession {
+                                NativeAppsComposerPage(session: miniAppsSession,
+                                    capabilities: composerCapabilities.filter { $0.reference.kind == .miniApp },
+                                    attachments: capabilityDraft?.capabilityAttachments ?? [],
+                                    onAttach: { onAttachCapability?($0, $1) })
+                            }
+                        case .capabilities:
+                            HanlinComposerCapabilityPage(draft: capabilityDraft,
+                                capabilities: composerCapabilities,
+                                editingAttachmentID: editingCapabilityID,
+                                onAttach: { onAttachCapability?($0, $1) })
                         }
                     }
                     .onAppear {
@@ -158,7 +173,17 @@ struct HanlinComposerGeneralActionsView: View {
                             case .imageSize:
                                 imageSizeSubpage
                             case .miniApps:
-                                if let miniAppsSession { NativeAppsComposerPage(session: miniAppsSession) }
+                                if let miniAppsSession {
+                                    NativeAppsComposerPage(session: miniAppsSession,
+                                        capabilities: composerCapabilities.filter { $0.reference.kind == .miniApp },
+                                        attachments: capabilityDraft?.capabilityAttachments ?? [],
+                                        onAttach: { onAttachCapability?($0, $1) })
+                                }
+                            case .capabilities:
+                                HanlinComposerCapabilityPage(draft: capabilityDraft,
+                                    capabilities: composerCapabilities,
+                                    editingAttachmentID: editingCapabilityID,
+                                    onAttach: { onAttachCapability?($0, $1) })
                             }
                         }
                         .onAppear {
@@ -192,6 +217,18 @@ struct HanlinComposerGeneralActionsView: View {
     /// prompt gallery, duplicated toggles and inner padding are not this page.
     private var morphHomePage: some View {
         VStack(alignment: .leading, spacing: HanlinMorphStyle.panelContentSpacing) {
+            if capabilityDraft != nil {
+                Button {
+                    editingCapabilityID.wrappedValue = nil
+                    coordinator.pushGeneralSubroute(.capabilities, reduceMotion: reduceMotion)
+                } label: {
+                    Label(String(localized: "hanlin.composer.capabilities.attach", bundle: HanlinLocalization.bundle),
+                          systemImage: "at.badge.plus")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .buttonStyle(.bordered)
+                .accessibilityIdentifier("hanlin-composer-open-capabilities")
+            }
             Text(String(localized: "Add Content", bundle: HanlinLocalization.bundle))
                 .font(HanlinTypography.caption.weight(.semibold))
                 .foregroundStyle(.secondary)
@@ -1232,6 +1269,9 @@ struct HanlinComposerToolsRootView: View {
     var embeddedInDrawer: Bool = true
     var embeddedInMorph: Bool = false
     var enabledCapabilities: [HanlinDetachedCapability] = []
+    var capabilityDraft: HanlinComposerDraft? = nil
+    var composerCapabilities: [HanlinComposerCapabilityDescriptor] = []
+    var onAttachCapability: ((HanlinComposerCapabilityDescriptor, String?) -> Void)? = nil
 
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Namespace private var zoomNamespace
@@ -1508,6 +1548,21 @@ struct HanlinComposerToolsRootView: View {
         .toolbar(.hidden, for: .navigationBar)
     }
 
+    @ViewBuilder
+    private func explicitAttachmentPicker(_ kind: HanlinCapabilityKind) -> some View {
+        if let capabilityDraft {
+            Text("hanlin.composer.capabilities.attachToMessage", bundle: HanlinLocalization.bundle)
+                .font(.headline)
+            HanlinCapabilityPicker(
+                capabilities: composerCapabilities.filter { $0.reference.kind == kind },
+                attachments: capabilityDraft.capabilityAttachments,
+                onSelect: { onAttachCapability?($0, $1) })
+            Divider().padding(.vertical, 6)
+            Text("hanlin.composer.capabilities.catalogAvailability", bundle: HanlinLocalization.bundle)
+                .font(.subheadline.weight(.semibold))
+        }
+    }
+
     // MARK: - Subpage 1: Native Tools Catalog
 
     private var toolsCatalogSubpage: some View {
@@ -1516,6 +1571,7 @@ struct HanlinComposerToolsRootView: View {
 
             HanlinComposerPageScroll(intrinsic: embeddedInMorph, showsIndicators: true) {
                 VStack(alignment: .leading, spacing: 8) {
+                    explicitAttachmentPicker(.tool)
                     ForEach(toolGroups) { group in
                         let groupOn = NativeToolCatalog.shared.isGroupEnabled(group)
                         VStack(alignment: .leading, spacing: 6) {
@@ -1601,6 +1657,7 @@ struct HanlinComposerToolsRootView: View {
 
             HanlinComposerPageScroll(intrinsic: embeddedInMorph, showsIndicators: true) {
                 VStack(alignment: .leading, spacing: 6) {
+                    explicitAttachmentPicker(.skill)
                     ForEach(filteredSkills) { skill in
                         let isEnabled = !disabledSkillIDs.contains(skill.id.rawValue)
                         Toggle(isOn: Binding(
@@ -1671,6 +1728,7 @@ struct HanlinComposerToolsRootView: View {
 
             HanlinComposerPageScroll(intrinsic: embeddedInMorph, showsIndicators: true) {
                 VStack(alignment: .leading, spacing: 8) {
+                    explicitAttachmentPicker(.mcp)
                     // Master MCP switch
                     Toggle(isOn: Binding(
                         get: { mcpProvider.configuration.isEnabled },

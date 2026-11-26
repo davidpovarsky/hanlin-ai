@@ -1,0 +1,17 @@
+{
+  "sourceCommit": "bcd44d23a0d2fc2804fa34f3cc5407e51b0adc2f",
+  "startedAtUTC": "2026-11-25T02:35:42.067032+00:00",
+  "finishedAtUTC": "2026-11-25T02:37:47.226713+00:00",
+  "exitCode": 0,
+  "durationSeconds": 125.16,
+  "command": [
+    "bash",
+    "Scripts/Runtime/prepare-runtime-host.sh"
+  ],
+  "logSHA256": "0c87e20007d3a248b4ef781e1c3eb2ce6fb4fc9038a3a8774807e37ad752bd9f",
+  "reason": "Repeat original unchanged suite at normal scheduler priority after three readiness/child timeouts at nice10; no assertion or timing budget changes",
+  "runnerTemp": "/Users/m1/builds/hanlin-ai-e1ee0480d-composer-20261124/build/composer-evidence/host8-temp",
+  "archiveSHA256": "8b05742603572e8b3309a647fc04880fa59d891beb13f4623fbd79a0cb9c49a1",
+  "archiveBytes": 81837544,
+  "trackedChanges": " M docs/miniapp-sdk/extension-reachability.json\n M docs/miniapp-sdk/extension-reachability.md\n M docs/miniapp-sdk/source-inventory.json\n"
+}

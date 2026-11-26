@@ -1,0 +1,71 @@
+{
+  "sourceSHA": "1710bc6119983799f7d22cb723659ac274fe96b1",
+  "status": "EXECUTED_PASS",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 1690,
+      "sha256": "b05f82aebf13a8dc4dcde0c90a0fcf035fd788769678d704f4ca9d3063a24300"
+    },
+    {
+      "path": "observe_original_parity.py",
+      "bytes": 1687,
+      "sha256": "680b106dcf353450c380a8cfe125c19fe7a96fd029f2faff37ec3fa3a843e789"
+    },
+    {
+      "path": "parity-nested-1.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "parity-nested-1.stdout.log",
+      "bytes": 3550,
+      "sha256": "d3063f3f9c123979b093b43c67864f024e4073e9eaaceafdb4e8d1d99193c851"
+    },
+    {
+      "path": "parity-nested-observations.json",
+      "bytes": 442,
+      "sha256": "83fad6ed7a1888972d9a0d8b44c5c2fe37bcb3ccdfbbef748cf5337532219c7f"
+    },
+    {
+      "path": "parity-receipt.json",
+      "bytes": 836,
+      "sha256": "4ce4a1106984ae72692f4a41089c0055b2ebba459c7b4b601330ed2dda5f85d4"
+    },
+    {
+      "path": "parity.stderr.log",
+      "bytes": 1015,
+      "sha256": "8425c43ec2f3fe120a7623a019cba057b52327d3db38907b58b179c895a16b11"
+    },
+    {
+      "path": "parity.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "plan.json",
+      "bytes": 5967,
+      "sha256": "2994aa6073f830e4e8baa6a10d804c257961d1df078ab8c76802f587d0334107"
+    },
+    {
+      "path": "preflight-receipt.json",
+      "bytes": 894,
+      "sha256": "6640671401475a58ca8306d3026467372d3b130c5495721dea8a459588696829"
+    },
+    {
+      "path": "preflight.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "preflight.stdout.log",
+      "bytes": 1904,
+      "sha256": "1f84cdfe62e4942ee3b6de719f9829ad97ccd80db34a4512598564be0d03cf0e"
+    },
+    {
+      "path": "receipt.json",
+      "bytes": 12529,
+      "sha256": "cc41ed3b5f6c552b38f3a3cf09c5d3aa3ba9bf94349658e9636730e75672ca68"
+    }
+  ]
+}

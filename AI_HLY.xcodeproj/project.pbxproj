@@ -814,13 +814,10 @@
 			isa = PBXBuildFile;
 			fileRef = AC1900000000000000000130;
 		};
-		AC1900000000000000000140 = {
+		0C3FDCCD259FF6F6E9905865 = {isa = PBXBuildFile; fileRef = 8DB406D08DA41E642ACB7F6F; };
+		2055B00D12EEBAA26EE85766 = {
 			isa = PBXBuildFile;
-			fileRef = A10000000000000000000062;
-		};
-		AC1900000000000000000141 = {
-			isa = PBXBuildFile;
-			fileRef = A10000000000000000000063;
+			fileRef = 0F0C0D4423D193171AB03815;
 		};
 		AC190000000000000000011F = {
 			isa = PBXBuildFile;
@@ -842,6 +839,14 @@
 					"RemoveHeadersOnCopy",
 				);
 			};
+		};
+		AC1900000000000000000140 = {
+			isa = PBXBuildFile;
+			fileRef = A10000000000000000000062;
+		};
+		AC1900000000000000000141 = {
+			isa = PBXBuildFile;
+			fileRef = A10000000000000000000063;
 		};
 /* End PBXBuildFile section */
 
@@ -1635,6 +1640,15 @@
 			path = HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests.swift;
 			sourceTree = SOURCE_ROOT;
 		};
+		8DB406D08DA41E642ACB7F6F = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HanlinMiniAppsUITests/MiniAppsNativeScriptWindowUITests.swift; sourceTree = SOURCE_ROOT; };
+		A1B493CA26A1406FA702F001 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HanlinMiniAppsUITests/MiniAppsNativeScriptPackageWindowUITests.swift; sourceTree = SOURCE_ROOT; };
+		A1B493CA26A1406FA702F002 = {isa = PBXBuildFile; fileRef = A1B493CA26A1406FA702F001; };
+		0F0C0D4423D193171AB03815 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/Downstream/HostServices/Core/HanlinMiniAppAssistantService.swift";
+			sourceTree = SOURCE_ROOT;
+		};
 		AC190000000000000000011E = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.swift;
@@ -1742,6 +1756,7 @@
 				"Downstream/AgentDiagnostics/AgentTokenUsage.swift" ,
 				"Downstream/AgentSkills/Analysis/BashSkillSyntaxAnalyzer.swift" ,
 				"Downstream/AgentSkills/Analysis/SkillSyntaxFindings.swift" ,
+				"Downstream/AgentSkills/AssistantCapabilitySession+Selections.swift" ,
 				"Downstream/AgentSkills/AssistantCapabilitySession.swift" ,
 				"Downstream/AgentSkills/AssistantToolExposurePlanner.swift" ,
 				"Downstream/AgentSkills/HanlinAISDKToolAdapter.swift" ,
@@ -1789,10 +1804,14 @@
 				"Downstream/ChatCore/HanlinConversationStreamProjection.swift" ,
 				"Downstream/ChatCore/HanlinDefaultChatPolicy.swift" ,
 				"Downstream/ChatCore/HanlinInlineToolError.swift" ,
+				"Downstream/ChatCore/HanlinModelPromptCachePreferences.swift" ,
 				"Downstream/ChatCore/HanlinNativeA2UIAcceptanceProvider.swift" ,
+				"Downstream/ChatCore/HanlinSystemPromptSections.swift" ,
 				"Downstream/ChatCore/HanlinToolApprovalScopeFactory.swift" ,
 				"Downstream/ChatCore/HanlinToolApprovalStore.swift" ,
 				"Downstream/ChatInput/HanlinComposerActionBridge.swift" ,
+				"Downstream/ChatInput/HanlinComposerCapabilities.swift" ,
+				"Downstream/ChatInput/HanlinComposerCapabilityPage.swift" ,
 				"Downstream/ChatInput/HanlinComposerPopupCoordinator.swift" ,
 				"Downstream/ChatInput/HanlinComposerPopupView.swift" ,
 				"Downstream/ChatInput/HanlinDetachedCapabilityChips.swift" ,
@@ -1879,6 +1898,7 @@
 				"Downstream/HostServices/Core/HanlinHostCallContext.swift" ,
 				"Downstream/HostServices/Core/HanlinHostServiceError.swift" ,
 				"Downstream/HostServices/Core/HanlinHostServicesBroker.swift" ,
+				"Downstream/HostServices/Core/HanlinMiniAppAssistantService.swift" ,
 				"Downstream/HostServices/Data/HanlinFileService.swift" ,
 				"Downstream/HostServices/Data/HanlinSQLiteHostAdapter.swift" ,
 				"Downstream/HostServices/Runtime/HanlinRuntimeBroker.swift" ,
@@ -2133,6 +2153,8 @@
 				"Downstream/Scripting/HanlinWorkerScriptingSessions.swift" ,
 				"Downstream/Scripting/README.md" ,
 				"Downstream/ScriptingPlatform/HanlinAppleDeviceSnapshotProvider.swift" ,
+				"Downstream/ScriptingPlatform/HanlinMiniAppAssistantAIService.swift" ,
+				"Downstream/ScriptingPlatform/HanlinMiniAppAssistantToolRuntime.swift" ,
 				"Downstream/ScriptingPlatform/HanlinNodeMobileScriptingCompiler.swift" ,
 				"Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift" ,
 				"Downstream/ScriptingPlatform/HanlinScriptingApplicationRuntimeBridge.swift" ,
@@ -2185,6 +2207,7 @@
 				"NativeAgentExtensions/ToolCatalog/NativeToolCatalogEntry.swift" ,
 				"NativeAgentExtensions/ToolRuntime/NativeTool.swift" ,
 				"NativeAgentExtensions/ToolRuntime/NativeToolResult.swift" ,
+				"NativeAgentExtensions/Tools/HanlinMiniAppAssistantToolExports.swift" ,
 				"NativeAgentExtensions/Tools/QuickCalculateTool.swift" ,
 				"NativeAgentExtensions/UI/NativeAssistantToolGroupSettingsView.swift" ,
 				"NativeAgentExtensions/UI/NativeUIBlock.swift" ,
@@ -2682,6 +2705,7 @@
 				"F9061B29280C18C55699611D" ,
 				"F906889EE8DD5D2169D6158F" ,
 				"F93D6670699B3C28444E241B" ,
+				"0F0C0D4423D193171AB03815" ,
 				"F917CA751184E20BD6524A38" ,
 				"F989DEF1DBD097C985F528CE" ,
 				"F9243749B55B2307F654AFD9" ,
@@ -3527,6 +3551,7 @@
 				"F93B6615FF3AA28B4EE9FB52" ,
 				"F91A2CD0E4C773FACD1057CC" ,
 				"F93292CE6C9A8178EBCFF431" ,
+				"2055B00D12EEBAA26EE85766" ,
 				"F978CD6315961BA5F213AA17" ,
 				"F937D1B81E0F6C9BDBC18F54" ,
 				"F9549CA14D22D01A0091E9F0" ,
@@ -3605,6 +3630,8 @@
 			"isa" = "PBXSourcesBuildPhase";
 			"buildActionMask" = "2147483647";
 			files = (
+				"0C3FDCCD259FF6F6E9905865",
+				"A1B493CA26A1406FA702F002",
 				"FD2B21070BBD04C64242ADD1" ,
 				"F927041F0B429D7A68AD6E86" ,
 				"AC4F02D6D50561F3F8BF1799" ,

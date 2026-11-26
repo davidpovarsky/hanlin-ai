@@ -1,0 +1,38 @@
+{
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "Scripts.SDK.tests.test_application_external_packages",
+    "Scripts.SDK.tests.test_host_link_ownership",
+    "-v"
+  ],
+  "exit": 0,
+  "duration": 2.511847734451294,
+  "stdout_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderr_sha256": "4822518052a71e1f64faab6b80e8d8747ef3dc160b0b4c1386aaab4c40df8c1f",
+  "restored_original_sparse_inputs": [
+    {
+      "path": "AI_HLY.xcodeproj/xcshareddata/xcschemes/AI_HLY.xcscheme",
+      "sha256": "1a37dc5e015ee2e29e873f3e6d6035d6e933ec4eb27848c1263e51c9958af480",
+      "bytes": 5513
+    },
+    {
+      "path": "AI_HLY.xcodeproj/xcshareddata/xcschemes/HanlinMiniApps.xcscheme",
+      "sha256": "45badd3c80274ccba347b3a511b3a1f889b6a0e9e2adfa53198870cc79eaaad7",
+      "bytes": 3843
+    },
+    {
+      "path": "AI_HLY.xcodeproj/xcshareddata/xcschemes/HanlinSimulatorAcceptance.xcscheme",
+      "sha256": "7ce50ebfb37adddadcb81348241eb840c8a70e54074d9a37d7c11a9b91ab1801",
+      "bytes": 3500
+    },
+    {
+      "path": "Packages/HanlinWidgetSDK/HostResources/HanlinAppIntents.xcstrings",
+      "sha256": "fa3c2ab48fdf7a4af6c4865c0502128a59b6415eb65a8506a59a6c281ca9a4ee",
+      "bytes": 10353
+    }
+  ],
+  "previous_failure": "missing original host AppIntents projection and three scheme inputs in isolated sparse checkout; no tests changed",
+  "scope": "Original source graph and package ownership tests on resolved SDK merge; not native Apple runtime acceptance."
+}

@@ -1,0 +1,195 @@
+{
+  "schema": 1,
+  "createdAt": "2026-11-25T02:19:49.214286+00:00",
+  "source": "1812bff50571c9907d15cd8b4bfbe4874be24756",
+  "evidenceParent": "ad697b63c6ccbe800f849cad3f6e7ae34cffe0cf",
+  "scope": "Immutable attempt9 focused and terminal failure evidence; original52 remains NOT_RUN.",
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 6907,
+      "sha256": "c6cc95b264c9c0627b1e9eb2b9bb9aa95070d5702e16e8dc4ac724dab4e28d6b"
+    },
+    {
+      "path": "assessment.json",
+      "bytes": 14500,
+      "sha256": "12a4e5c235e3a4eaa63310588bf1a1a3283ba5d5b002c1dd6a0453bdb90d0773"
+    },
+    {
+      "path": "raw/focused-terminal-attempt9/FocusedOriginal-attachments/0DB3555F-E488-4281-BDCA-0AF7EED9B90C.txt",
+      "bytes": 12975,
+      "sha256": "8797186c53eefb1e20d889e606ebc467f234549a37c84ebc11d6371aebe0ec9f"
+    },
+    {
+      "path": "raw/focused-terminal-attempt9/FocusedOriginal-attachments/5C4A2BC8-C5E4-4207-A156-145DC5487AC8.txt",
+      "bytes": 29182,
+      "sha256": "b8e65b99f597251e8fd254a802fc1c27322c349437cee0c0b90bef3ffdaf1a7c"
+    },
+    {
+      "path": "raw/focused-terminal-attempt9/FocusedOriginal-attachments/8B33B950-A758-4695-92C8-159CD2B1287E.txt",
+      "bytes": 17701,
+      "sha256": "13ba8eddee75bedb10692d199cdc053580ddb52c7fbf9887d871872dc86caa24"
+    },
+    {
+      "path": "raw/focused-terminal-attempt9/FocusedOriginal-attachments/BE4030DB-BED7-4109-AF2B-352F03E87E47.png",
+      "bytes": 1837355,
+      "sha256": "7dee645df313254d171437953c51945aa2962115fb0fcb18e47337430e884dd1"
+    },
+    {
+      "path": "raw/focused-terminal-attempt9/FocusedOriginal-attachments/manifest.json",
+      "bytes": 77084,
+      "sha256": "35f55c2b27a219609a8cadfb70d5b30f349a745dd8f3c9b3cad3df4127681e48"
+    },
+    {
+      "path": "raw/focused-terminal-attempt9/ModularDiagnostic-runtime-markers.json",
+      "bytes": 8559,
+      "sha256": "97be0d7b2b527cc82204bf76138b5b2afeae7c617b37ef069ba2dc61d378a998"
+    },
+    {
+      "path": "raw/focused-terminal-attempt9/container-observations.jsonl",
+      "bytes": 882,
+      "sha256": "fc5db8933288bf44a81ea3aa0e95c920fb3023a4dc462e0158f49a54afedb053"
+    },
+    {
+      "path": "raw/focused-terminal-attempt9/node-job-observations.jsonl",
+      "bytes": 23948,
+      "sha256": "a06acb6c4fb532eb347f01532f460b67ccd08956e49163b41113dd220cf67c4d"
+    },
+    {
+      "path": "raw/focused-terminal-attempt9/paired-prefix/ModularDiagnostic-summary.json",
+      "bytes": 420,
+      "sha256": "7e81723efed18b44322577a71a1ff1d7113b726b7a24d444781d5db1e226f310"
+    },
+    {
+      "path": "raw/focused-terminal-attempt9/paired-prefix/ModularDiagnostic.log",
+      "bytes": 37604,
+      "sha256": "86d7290f113656efc36c1ff442e19425123b0ba34f0eb3077a42b285c4d64692"
+    },
+    {
+      "path": "raw/focused-terminal-attempt9/receipt.json",
+      "bytes": 2766,
+      "sha256": "d9432fedfa6489c86c4933a8b03d38117d5cae794092f9339176a1c6d1d670a6"
+    },
+    {
+      "path": "raw/focused-terminal-attempt9/state.json",
+      "bytes": 9813,
+      "sha256": "da6143e29aad6a1347415a464c0df4b85fa248f6f4a3705b064d2dcdd265eb2b"
+    },
+    {
+      "path": "raw/focused-terminal-attempt9/triage/host-ready-observation-terminal.json",
+      "bytes": 723,
+      "sha256": "45156e0183058cf9b87f13127b2a4ce04a90495e8ab2859be3132e195f95c23a"
+    },
+    {
+      "path": "raw/focused-terminal-attempt9/triage/modular-final-stdout-tail.txt.gz",
+      "bytes": 31809,
+      "sha256": "352cf75d749aa2b00622d1946157dd79d701196157c4fcd9c718f3c8f40108b6"
+    },
+    {
+      "path": "raw/focused-terminal-attempt9/triage/nativescript-core-metadata-baseline.json",
+      "bytes": 1051,
+      "sha256": "aa9095321f4fe2c20e16b6950ba60d30e0b77a6a192d23ccaaa16117147555bc"
+    },
+    {
+      "path": "raw/focused-triage-attempt9/container-observations.jsonl",
+      "bytes": 441,
+      "sha256": "c628e6702599df617e0249c8aa232fc19d158e0b5de078752c564bf76a99b83a"
+    },
+    {
+      "path": "raw/focused-triage-attempt9/node-job-observations.jsonl",
+      "bytes": 10095,
+      "sha256": "0d88188b98748a947889332edb822b77a84235083bd5fe48764e698107c28981"
+    },
+    {
+      "path": "raw/focused-triage-attempt9/paired-prefix/FocusedOriginal-summary.json",
+      "bytes": 3689,
+      "sha256": "f9061fe38021648d490b42a14913541a97e7ca3a995ca3ceec2c4fedbf9a1a37"
+    },
+    {
+      "path": "raw/focused-triage-attempt9/paired-prefix/FocusedOriginal.log.gz",
+      "bytes": 11837,
+      "sha256": "3ba78ee38b0765f6da13526267df113e9d69a12b04b048eeb48f83bfdb51cdb4"
+    },
+    {
+      "path": "raw/focused-triage-attempt9/receipt.json",
+      "bytes": 2850,
+      "sha256": "caa56205a34c4d450275da7bc45143f2cff07c122bc7b0de98ea9c1e477bc0c5"
+    },
+    {
+      "path": "raw/focused-triage-attempt9/triage/bridge-binary-initial-binding.json",
+      "bytes": 2375,
+      "sha256": "d47304671e230eacb86842df3d9592b4d23b85b819338f62cccb3051effaf3f4"
+    },
+    {
+      "path": "raw/focused-triage-attempt9/triage/focused-application-markers.json",
+      "bytes": 7564,
+      "sha256": "2d03974170335aeaf7a5d945e512e7035c003b1c4949b4c0f94eeffc596e4ed8"
+    },
+    {
+      "path": "raw/focused-triage-attempt9/triage/focused-process-tree-0132.txt",
+      "bytes": 2124,
+      "sha256": "97cf46739f0e02e74b9c08a130e70fcb73ca4d4ee0e3593caee118015caa494d"
+    },
+    {
+      "path": "raw/focused-triage-attempt9/triage/focused-xcode14268-sample-0132.txt.gz",
+      "bytes": 76948,
+      "sha256": "759bfb6d07b2eaf115214aef055f2915a6053d378cde085915e4da221298ccf7"
+    },
+    {
+      "path": "raw/focused-triage-attempt9/triage/installed-bridge-cf-stubs.txt",
+      "bytes": 278,
+      "sha256": "fcf6f01a06ef009e044274eb02f5036e12ac3e0e90de5b013c404597cfc015bf"
+    },
+    {
+      "path": "raw/focused-triage-attempt9/triage/installed-bridge-delivery-disassembly.txt",
+      "bytes": 9135,
+      "sha256": "397c39d5c12c3b0539f1054f3326cdb99a0682dd85406561042c6387423952f2"
+    },
+    {
+      "path": "raw/focused-triage-attempt9/triage/installed-bridge-delivery-observation.json",
+      "bytes": 10185,
+      "sha256": "2b19d09762ac00f743b46b9bffb9450064131227cc8788e463c905645e8b40cb"
+    },
+    {
+      "path": "raw/focused-triage-attempt9/triage/node-runtime-current.log",
+      "bytes": 2288,
+      "sha256": "0a1e185b413a88432813067a0fc3f5115a5112897959ac6c3371b99dfd3e2866"
+    },
+    {
+      "path": "raw/focused-triage-attempt9/triage/object-disassembly.txt.gz",
+      "bytes": 43756,
+      "sha256": "3cd0641d5239320601a51bcc796b4340cb44fba96ec21352ca9a219e6bb8b4d0"
+    },
+    {
+      "path": "raw/focused-triage-attempt9/triage/object-symbols.txt",
+      "bytes": 48738,
+      "sha256": "3e468c237b2a2de4f9583e13a1f277d9e06775e57f1594b21e93b655adfa80e0"
+    },
+    {
+      "path": "raw/focused-triage-attempt9/triage/xcodebuild-diagnostics-help.txt",
+      "bytes": 297,
+      "sha256": "38b43f277c7dc68a0e1601cdc1700b65a1518d0859cb477b9dc9a6a429420624"
+    },
+    {
+      "path": "raw-bindings.json",
+      "bytes": 17062,
+      "sha256": "9e4e6b50d42f272ffc4fe70dc92ecf60aa9d600ea567cb342506cf51c8acb737"
+    },
+    {
+      "path": "source-review.json",
+      "bytes": 4561,
+      "sha256": "f1aa273d12bfe02874f9a587e762d9f09b9259918dc565e51dd5ca46f0652fc7"
+    },
+    {
+      "path": "verification.json",
+      "bytes": 5527,
+      "sha256": "140e9c3c607398e664e67f4579444c5445e79ae4d2d7c408bd86ff2f28d3476b"
+    }
+  ],
+  "memberCount": 36,
+  "memberBytes": 2373029,
+  "originalReceipts": {
+    "focused-triage-attempt9": "caa56205a34c4d450275da7bc45143f2cff07c122bc7b0de98ea9c1e477bc0c5",
+    "focused-terminal-attempt9": "d9432fedfa6489c86c4933a8b03d38117d5cae794092f9339176a1c6d1d670a6"
+  }
+}

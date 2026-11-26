@@ -30,6 +30,7 @@ extension HanlinApplicationContext {
             dataManager.preloadDataIfNeeded()
             HanlinNativeScriptProductionBootstrap.prepareEmbeddedProviders()
             HanlinScriptingPlatform.shared.configure(modelContext: modelContainer.mainContext)
+            // Optional system setup must not gate the local stores or runtimes.
             applicationLifecycle.systemIntegrationTask = Task { @MainActor in
                 await ChavrusaSystemIntegrationBootstrap.configure()
             }

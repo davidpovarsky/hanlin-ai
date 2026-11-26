@@ -1,0 +1,88 @@
+{
+  "source_sha": "5aaa4471924aec0fbf086e68feb08fa10d9f01c8",
+  "team_id": "NA6HPWARQ2",
+  "parent_bundle_id": "com.itorah.hanlinminiapps",
+  "source_recipe_sha256": "09d86c238e3f315268b1e849fc82c6c689a2428c4ef682d86cf889c599eb9242",
+  "scope": "Only missing original MiniApps extension bundle IDs and public capability enablement; no App Group/container assignment claimed, no certificates/profiles changed",
+  "extensions": [
+    {
+      "target": "HanlinMiniAppsWidgets",
+      "bundle_id": "com.itorah.hanlinminiapps.widgets",
+      "name": "Hanlin MiniApps Widgets",
+      "entitlements_path": "HanlinMiniAppsExtensions/Widgets/HanlinMiniAppsWidgets.entitlements",
+      "entitlements_sha256": "0da89872d45b5e9b990de71c4f9c0855f1117f81cb1867a07aa3bfb8b6106254",
+      "required_entitlements": {
+        "com.apple.security.application-groups": [
+          "group.com.itorah.chavrusachat",
+          "group.com.itorah.shared"
+        ],
+        "com.apple.developer.homekit": true,
+        "com.apple.developer.healthkit": true,
+        "com.apple.developer.icloud-container-identifiers": [
+          "iCloud.com.itorah.chavrusachat"
+        ],
+        "com.apple.developer.icloud-services": [
+          "CloudKit",
+          "CloudDocuments"
+        ],
+        "keychain-access-groups": [
+          "$(AppIdentifierPrefix)com.itorah.hanlinminiapps.scriptwidget.services"
+        ]
+      },
+      "public_capabilities": [
+        "APP_GROUPS",
+        "HEALTHKIT",
+        "HOMEKIT",
+        "ICLOUD"
+      ]
+    },
+    {
+      "target": "HanlinMiniAppsShare",
+      "bundle_id": "com.itorah.hanlinminiapps.share",
+      "name": "Hanlin MiniApps Share",
+      "entitlements_path": "HanlinMiniAppsExtensions/Share/HanlinMiniAppsShare.entitlements",
+      "entitlements_sha256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc",
+      "required_entitlements": {
+        "com.apple.security.application-groups": [
+          "group.com.itorah.chavrusachat",
+          "group.com.itorah.shared"
+        ]
+      },
+      "public_capabilities": [
+        "APP_GROUPS"
+      ]
+    },
+    {
+      "target": "HanlinMiniAppsTranslationProvider",
+      "bundle_id": "com.itorah.hanlinminiapps.translation-provider",
+      "name": "Hanlin MiniApps Translation",
+      "entitlements_path": "HanlinMiniAppsExtensions/Translation/HanlinMiniAppsTranslationProvider.entitlements",
+      "entitlements_sha256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc",
+      "required_entitlements": {
+        "com.apple.security.application-groups": [
+          "group.com.itorah.chavrusachat",
+          "group.com.itorah.shared"
+        ]
+      },
+      "public_capabilities": [
+        "APP_GROUPS"
+      ]
+    },
+    {
+      "target": "HanlinMiniAppsNotificationService",
+      "bundle_id": "com.itorah.hanlinminiapps.notification-service",
+      "name": "Hanlin MiniApps Notification",
+      "entitlements_path": "HanlinMiniAppsExtensions/Notification/HanlinMiniAppsNotificationService.entitlements",
+      "entitlements_sha256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc",
+      "required_entitlements": {
+        "com.apple.security.application-groups": [
+          "group.com.itorah.chavrusachat",
+          "group.com.itorah.shared"
+        ]
+      },
+      "public_capabilities": [
+        "APP_GROUPS"
+      ]
+    }
+  ]
+}

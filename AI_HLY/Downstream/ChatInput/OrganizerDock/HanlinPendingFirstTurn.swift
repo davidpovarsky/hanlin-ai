@@ -10,6 +10,7 @@
 //
 
 import Foundation
+import HanlinPlatformContracts
 import SwiftUI
 #if canImport(UIKit)
 import UIKit
@@ -48,6 +49,7 @@ struct HanlinPendingFirstTurn: Identifiable, Sendable {
     let maxMessagesNum: Int
 
     var status: Status
+    var capabilityAttachments: [HanlinCapabilityAttachment] = []
     var acceptedUserMessageID: UUID? = nil
     var restoresHomeDraft = true
     var preservesConversationSettings = false

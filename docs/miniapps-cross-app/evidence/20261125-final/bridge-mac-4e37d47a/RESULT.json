@@ -1,0 +1,25 @@
+{
+  "source": "4e37d47a5",
+  "package_source": "7b8cbba34943ee069b00ad4f9d5beff60cf32e4c",
+  "scope": "13 Foundation bridge tests and native SwiftUI picker compilation; not application acceptance",
+  "command": [
+    "swift",
+    "test",
+    "--package-path",
+    "/Users/m1/builds/hanlin-miniapps-bridge-4e37d47a-20261125/Packages/HanlinMiniAppsBridge",
+    "--scratch-path",
+    "/Users/m1/caches/DerivedData/hanlin-miniapps-bridge-4e37d47a-macos",
+    "-j",
+    "4",
+    "--parallel",
+    "--num-workers",
+    "4"
+  ],
+  "started_at": "2026-11-25T05:09:31.666551+00:00",
+  "free_before": 7963250688,
+  "estimated_incremental_bytes": 700000000,
+  "exit_code": 0,
+  "duration_seconds": 11.970405333999999,
+  "finished_at": "2026-11-25T05:09:43.637255+00:00",
+  "free_after": 7840129024
+}

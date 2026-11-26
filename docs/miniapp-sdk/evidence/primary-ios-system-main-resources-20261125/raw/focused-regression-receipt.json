@@ -1,0 +1,49 @@
+{
+  "schema": 1,
+  "sourceBase": "cffe7f75436aa2e37ec5d82891937965c0407d2d",
+  "observedAt": "2026-11-25T08:09:12.242292+00:00",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "Scripts.Runtime.Tests.test_ios_system_project_resources",
+    "Scripts.Runtime.Tests.test_validate_ios_system_resources",
+    "-v"
+  ],
+  "exit": 0,
+  "seconds": 0.8789032762870193,
+  "logSHA256": "17a99c44af715a3744026984f5b2a3a844a4fc74813e90ba7e29308562410037",
+  "retainedInitialCandidateFailure": {
+    "path": "initial-regression-failed.log",
+    "sha256": "edb55aebd90b37edb23d6d8d91844b6d05827bb1717493ce1dfd7b1700c4e17a"
+  },
+  "baseline": {
+    "status": "EXPECTED_FAILURE",
+    "error": "Xcode Copy Bundle Resources must contain exactly one commandDictionary.plist in HanlinMiniApps"
+  },
+  "candidate": {
+    "status": "PASS",
+    "idempotent": true,
+    "beforeProjectSHA256": "24206ae0f0f66d3669cae5ccd4ffcff25ae582ec4620359a2becca7ad8e16780",
+    "afterProjectSHA256": "0d94f6b2ba6fdc6cd8466309d911c5e79a3ea08a0d4c525ce7565a38d9e09c73"
+  },
+  "sources": [
+    {
+      "path": "Scripts/SDK/update_project.py",
+      "sha256": "7977cbf986ff1cc41d1014c92de44faf0f4aa413bada4d1ff7f710ef35bb7166"
+    },
+    {
+      "path": "Scripts/Runtime/validate_ios_system_resources.py",
+      "sha256": "8474f676aa8d071bf91f2028d636e7b14653d133ecbeb5804898cb48bb4c0cf5"
+    },
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "sha256": "afb171016503d06840cd5407b50ab92bb261ad7be982396efe096466c5b92c31"
+    },
+    {
+      "path": "Scripts/Runtime/Tests/test_ios_system_project_resources.py",
+      "sha256": "13b7dd82643476739fe523ab2ebfd894b2b89020b2862bd4228669fdc84b2f53"
+    }
+  ],
+  "nativeBuild": "NOT_RUN"
+}

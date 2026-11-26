@@ -28,6 +28,8 @@ struct ChatView: View {
     @Environment(\.scenePhase) private var chatScenePhase
     // 输入与会话状态相关
     @State private var composerDraft = HanlinComposerDraft()
+    @State private var capabilitySendError = ""
+    @State private var showsCapabilitySendError = false
 
     // One owner for native edits, restored drafts and send clears. Keeping the
     // value behind the original ChatView's stable reference lets the external
@@ -250,6 +252,9 @@ struct ChatView: View {
         
         // 同步参数设置
         message = chatRecord.input ?? ""
+        composerDraft.capabilityAttachments = chatRecord.capabilityDraftData.flatMap {
+            try? JSONDecoder().decode([HanlinCapabilityAttachment].self, from: $0)
+        } ?? []
         temperature = chatRecord.temperature
         topP = chatRecord.topP
         maxTokens = chatRecord.maxTokens
@@ -393,7 +398,8 @@ struct ChatView: View {
             validateSendAcceptance: { [self] in
                 isResponding || chatTemps.contains(where: { $0.role == "user" })
             },
-            readCurrentMessageState: { [composerDraft] in composerDraft.snapshot }
+            readCurrentMessageState: { [composerDraft] in composerDraft.snapshot },
+            capabilityDraft: composerDraft
         )
     }
 
@@ -594,6 +600,9 @@ struct ChatView: View {
         agentConnectedWorkspace
         .toolbar((horizontalSizeClass == .compact || isExternalCompactComposerHost) ? .hidden : .visible, for: .tabBar)
         .background(Color(.systemBackground))
+        .alert(String(localized: "Attached capability", bundle: HanlinLocalization.bundle), isPresented: $showsCapabilitySendError) {
+            Button(String(localized: "OK", bundle: HanlinLocalization.bundle), role: .cancel) { }
+        } message: { Text(capabilitySendError) }
         .background {
             // Observe typing below the transcript. Neither the workspace nor
             // its SwiftData conversation changes for every native keystroke.
@@ -1317,7 +1326,8 @@ struct ChatView: View {
 
     @MainActor
     private func performRichAction(_ action: PresentationAction) async throws -> PresentationValue {
-        guard action.identity.appID == "hanlin", action.identity.conversationID == effectiveChatSessionID,
+        let appID = HanlinApplicationContextRegistry.configuration(for: context.container).appIdentifier
+        guard action.identity.appID == appID, action.identity.conversationID == effectiveChatSessionID,
               let source = chatTemps.first(where: { $0.id == action.identity.messageID && $0.role == "assistant" }),
               !isResponding else { throw HanlinHostError.staleContext }
         if action.name == "tool" {
@@ -1500,6 +1510,9 @@ struct ChatView: View {
 
         // 1. 构造基础气泡
         let bubble = VStack(alignment: .leading, spacing: 8) {
+        if msg.role == "user", !msg.capabilityAttachments.isEmpty {
+            HanlinCapabilityAttachmentSummary(attachments: msg.capabilityAttachments)
+        }
         ChatBubbleView(
             temporaryRecord: TemporaryRecord,
             containerWidth: chatContainerWidth,
@@ -1758,6 +1771,28 @@ struct ChatView: View {
         #endif
         if nativeInteraction != nil { isRetry = false; isObserving = false; retryMessagesOverride = nil }
 
+        let capabilityAttachments: [HanlinCapabilityAttachment]
+        let capabilityData: Data?
+        do {
+            if nativeInteraction != nil || ifObservingMode || continuationText != nil {
+                capabilityAttachments = []
+            } else if isRetry {
+                capabilityAttachments = try (retryMessagesOverride ?? chatTemps)
+                    .last(where: { $0.role == "user" })?.decodedCapabilityAttachments() ?? []
+            } else {
+                capabilityAttachments = composerDraft.capabilitySnapshot
+            }
+            try HanlinComposerCapabilities.validate(capabilityAttachments)
+            if !capabilityAttachments.isEmpty && !requestCapabilities.tools {
+                throw HanlinComposerCapabilityError.toolsUnsupported
+            }
+            capabilityData = capabilityAttachments.isEmpty ? nil : try JSONEncoder().encode(capabilityAttachments)
+        } catch {
+            capabilitySendError = error.localizedDescription
+            showsCapabilitySendError = true
+            return
+        }
+
         let turnLease: HanlinConversationRunLease
         do {
             turnLease = try .acquire(container: context.container, conversationID: effectiveChatSessionID)
@@ -1788,6 +1823,7 @@ struct ChatView: View {
                     let promptCards = selectedPrompts.map { PromptCard(name: $0.name ?? "无名称", content: $0.content ?? "无内容") }
                     userMessage?.promptUse = promptCards
                 }
+                userMessage?.capabilityAttachmentsData = capabilityData
                 // 写入用户发送的信息
                 if let userMessage = userMessage, !isObserving, !isRetry {
                     chatTemps.append(userMessage)
@@ -1795,6 +1831,10 @@ struct ChatView: View {
                 }
                 if continuationText == nil {
                     message = ""
+                    if nativeInteraction == nil {
+                        composerDraft.clearCapabilities()
+                        chatRecord.capabilityDraftData = nil
+                    }
                     selectedImages.removeAll()
                     selectedDocumentURLs = []
                     isInputActive = false
@@ -1878,10 +1918,11 @@ struct ChatView: View {
         Task {
             defer { turnLease.release() }
             do {
-                let assistantToolScope = await MCPRuntimeProvider.shared.requestScope(
+                let originalToolScope = await MCPRuntimeProvider.shared.requestScope(
                     chatID: effectiveChatSessionID,
                     temporary: TemporaryRecord
                 )
+                let assistantToolScope = try HanlinComposerCapabilities.scope(originalToolScope, attachments: capabilityAttachments)
                 guard activeAgentCoordinator === agentCoordinator, !Task.isCancelled else { return }
                 #if HANLIN_A2UI_POC
                 if let originalAction, a2uiPresentation?.isCurrent(originalAction) != true {
@@ -1896,7 +1937,7 @@ struct ChatView: View {
                     runID: agentCoordinator.runID,
                     ifSearch: requestCapabilities.search && ifSearch,
                     ifKnowledge: requestCapabilities.search && ifKnowledge,
-                    ifToolUse: requestCapabilities.tools && ifToolUse,
+                    ifToolUse: requestCapabilities.tools && (ifToolUse || !capabilityAttachments.isEmpty),
                     assistantToolScope: assistantToolScope,
                     ifThink: requestCapabilities.reasoning && ifThink,
                     ifAudio: requestCapabilities.voice && ifAudio,

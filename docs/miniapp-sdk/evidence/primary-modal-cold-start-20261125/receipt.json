@@ -1,0 +1,107 @@
+{
+  "schema": 1,
+  "sourceBeforeFix": "cffe7f75436aa2e37ec5d82891937965c0407d2d",
+  "actualResult": "FAILED_WAIT_BEFORE_COMPILER_FINISHED",
+  "scope": "Only the test install wait changes; the production compiler, declarations and frozen legacy engine remain unchanged.",
+  "observed": {
+    "testStartUTC": "2026-11-25T07:37:10.982Z",
+    "waitStartedAtTestSeconds": 28.64,
+    "originalWaitSeconds": 60,
+    "workspaceConfigurationMtimeNs": 1795592259198252385,
+    "hostReadyMarkerMtimeNs": 1795592319961695767,
+    "hostReadyUTC": "2026-11-25T07:38:41.492Z",
+    "compilerJobStartedAtUnixMilliseconds": 1795592321630,
+    "terminateAtTestSeconds": 92.46
+  },
+  "inference": {
+    "coldPreparationSeconds": 60.763443382,
+    "waitDeadlineUTC": "2026-11-25T07:38:39.622Z",
+    "compilerJobStartedAfterWaitDeadlineSeconds": 2.008,
+    "terminationApproxUTC": "2026-11-25T07:38:43.442Z",
+    "compilerTimeAvailableBeforeTerminationSeconds": 1.812,
+    "qualification": "Wall times derived from the test-suite start plus logged relative seconds are approximate; raw inputs are retained."
+  },
+  "testChange": {
+    "path": "HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests.swift",
+    "beforeSHA256": "762f3c7c10aa4ce6e7d2bd661265fb022ff9cc255d6438c3b96b27fe85a08189",
+    "afterSHA256": "76bd2441ee618b5d0cc6db88902f5985408a7b77842b6724fa991cee4c24ef83",
+    "waitSeconds": 180,
+    "unchangedCaseAllowanceSeconds": 300
+  },
+  "portableCheck": {
+    "scope": "Exact nine retained native source/declaration/configuration files; Node24.22.0 jitless and original TypeScript6.0.3 Program API on Oracle, not an embedded runtime proof",
+    "diagnostics": 0,
+    "emittedFiles": [
+      "dist/index.js.map",
+      "dist/index.js",
+      "dist/script.json"
+    ],
+    "elapsedSeconds": 2.6985061569999997
+  },
+  "nativeValidationAfterChange": "NOT_RUN",
+  "members": [
+    {
+      "path": "actual-workspace-receipt.json",
+      "bytes": 4088,
+      "sha256": "ff87133df997599b0be4288e2bc6e1f3506b824f704d366738df3c7a1067ae3c",
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/modal-workspace-attempt17/receipt.json"
+    },
+    {
+      "path": "actual-node-receipt.json",
+      "bytes": 27341,
+      "sha256": "d029c7eb9f4e7b9dd5e6e99443b50a1eeb96ecf92efa4162044d4f9d4e6f8651",
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/terminal-diagnostics-attempt17/receipt.json"
+    },
+    {
+      "path": "actual-node-runtime.log",
+      "bytes": 8008,
+      "sha256": "284e9d31dfecd7d0001bc4b3cddb2ce5a19d623816a72022ffcdd8dc0ce57e68",
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/terminal-diagnostics-attempt17/runtime/node-runtime.log"
+    },
+    {
+      "path": "actual-compiler-job.json",
+      "bytes": 297,
+      "sha256": "f0867eda1da3ac6627b5f6aa874d0fe48447a1bf3f76c47d7b36d2a5cd474e83",
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/terminal-diagnostics-attempt17/runtime/jobs/470d9f8c-6bc5-4d36-9c43-894c380a3dcc/job.json"
+    },
+    {
+      "path": "portable-compiler-receipt.json",
+      "bytes": 878,
+      "sha256": "d69e475de78c1b4640f7882fcf046c91f361522f99c2f2cb83fb0f3997b954e3",
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/modal-compiler-portable-proof/receipt.json"
+    },
+    {
+      "path": "portable-compiler-result.json",
+      "bytes": 214,
+      "sha256": "42fc9354dbe1e397aed92dda542b2f6f9093d62f77f4ae639a37cb3922dd32f4",
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/modal-compiler-portable-proof/stdout.json"
+    },
+    {
+      "path": "portable-compiler-probe.mjs",
+      "bytes": 1372,
+      "sha256": "7c8daf551895c13086ff6d95e26509a9b0b29feea3631c77f42cc9a5fa206fec",
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/modal-compiler-portable-proof/probe.mjs"
+    },
+    {
+      "path": "actual-test-log-excerpt.txt",
+      "bytes": 3721,
+      "sha256": "bfa7767ceae3b71c29dc0df3b6ce901d53d66dbdb70ddb645ca19b689712cad5",
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/terminal-packet-attempt17/raw/original-runtimes.log",
+      "sourceSHA256": "5210ee759a3c9a6ef81c8062ae24e6c3a197aa01a84c2f67619547c6c3ac17ab",
+      "sourceLineRangesOneBasedInclusive": [
+        [
+          64,
+          69
+        ],
+        [
+          121,
+          134
+        ],
+        [
+          437,
+          458
+        ]
+      ]
+    }
+  ]
+}

@@ -74,7 +74,7 @@ for (const fixture of fixtureDefinitions) {
     main: 'bundle.mjs',
     hanlinRuntime: 'hanlin-nativescript',
     ...(plugins ? {
-      hanlinNativeScript: { runtimeVersion: '9.1.0', plugins }
+      hanlinNativeScript: { runtimeVersion: dependencyLock.nativeScript.iosRuntimeVersion, plugins }
     } : {})
   };
   await writeFile(resolve(destination, 'package.json'), `${JSON.stringify(packageJSON, null, 2)}\n`);
@@ -93,8 +93,8 @@ for (const fixture of fixtureDefinitions) {
 const corePackage = JSON.parse(
   await readFile(resolve(scriptRoot, 'node_modules/@nativescript/core/package.json'), 'utf8')
 );
-if (corePackage.version !== '9.1.0') {
-  throw new Error(`Unexpected @nativescript/core version: ${corePackage.version}`);
+if (corePackage.version !== dependencyLock.nativeScript.coreVersion) {
+  throw new Error(`Unexpected @nativescript/core version: ${corePackage.version}; expected ${dependencyLock.nativeScript.coreVersion}`);
 }
 const swiftUIPackage = JSON.parse(
   await readFile(resolve(scriptRoot, 'node_modules/@nativescript/swift-ui/package.json'), 'utf8')

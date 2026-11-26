@@ -1,0 +1,159 @@
+Attributes: Application, 0x114d4c140, pid: 63974, label: 'Hanlin MiniApps'
+Element subtree:
+ →Application, 0x114d4c140, pid: 63974, label: 'Hanlin MiniApps'
+    Window (Main), 0x114d4c280, {{0.0, 0.0}, {1032.0, 1376.0}}
+      Other, 0x114d4c3c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+        Other, 0x114d4c500, {{0.0, 0.0}, {1032.0, 1376.0}}
+          Other, 0x114d4c640, {{0.0, 0.0}, {1032.0, 1376.0}}
+            Other, 0x114d4c780, {{0.0, 0.0}, {1032.0, 1376.0}}
+              Other, 0x114d4c8c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+                NavigationBar, 0x114d4ca00, {{0.0, 32.0}, {1032.0, 106.0}}, identifier: 'Apps'
+                  Other, 0x114d4cb40, {{14.0, 36.0}, {43.5, 36.0}}
+                    Other, 0x114d4cc80, {{14.0, 36.0}, {43.5, 36.0}}
+                      Button, 0x114d4cdc0, {{14.0, 36.0}, {43.5, 36.0}}, label: 'Edit'
+                  Button, 0x114d4e300, {{73.5, 36.0}, {40.0, 36.0}}, identifier: 'hanlin-apps-torah-capture', label: 'לימוד מצילום'
+                  Button, 0x114d4e440, {{618.5, 36.0}, {37.0, 36.0}}, identifier: 'hanlin-apps-add', label: 'hanlin-apps-add'
+                  Other, 0x114d4e580, {{671.5, 36.0}, {41.0, 36.0}}
+                    Other, 0x114d4e6c0, {{671.5, 36.0}, {41.0, 36.0}}
+                      Button, 0x114d4e800, {{671.5, 36.0}, {41.0, 36.0}}, identifier: 'miniapps-preferences', label: 'Edit MiniApps and windows'
+                  Button, 0x114d4e940, {{728.5, 36.0}, {37.5, 36.0}}, identifier: 'hanlin-miniapps-transfer', label: 'Transfer from Hanlin'
+                  SearchField, 0x114d4ea80, {{782.0, 32.0}, {240.0, 44.0}}, label: 'Search Apps', placeholderValue: 'Search Apps'
+                    Image, 0x114d4ebc0, {{794.0, 43.5}, {20.5, 20.0}}, identifier: 'magnifyingglass', label: 'Search'
+                  StaticText, 0x114d4ed00, {{20.0, 89.5}, {83.0, 41.0}}, label: 'Apps'
+                Other, 0x114d4ee40, {{0.0, 0.0}, {1032.0, 1376.0}}
+                  Other, 0x114d4ef80, {{0.0, 0.0}, {1032.0, 1376.0}}
+                    Other, 0x114d4f0c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+                      Other, 0x114d4f200, {{0.0, 0.0}, {1032.0, 1376.0}}
+                        ScrollView, 0x114d4f340, {{0.0, 0.0}, {1032.0, 1376.0}}, identifier: 'hanlin-apps-catalog'
+                          Other, 0x114d4f480, {{0.0, 0.0}, {1032.0, 1376.0}}
+                            Other, 0x114d4f5c0, {{0.0, 0.0}, {1032.0, 126.0}}
+                          Other, 0x114d4f700, {{0.0, 0.0}, {1032.0, 1376.0}}
+                          Other, 0x114d4f840, {{0.0, 138.0}, {1032.0, 760.0}}
+                            Other, 0x114d4f980, {{23.5, 156.0}, {985.0, 724.0}}
+                              StaticText, 0x114d4fac0, {{24.0, 156.0}, {54.0, 26.5}}, identifier: 'hanlin-miniapps-section-swift', label: 'Swift'
+                              Other, 0x114d4fc00, {{23.5, 210.0}, {985.0, 169.0}}
+                                Button, 0x114d4fd40, {{23.5, 210.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Swift Parity', label: 'Swift Parity'
+                                  Image, 0x114d4fe80, {{204.0, 231.0}, {30.5, 27.0}}, identifier: 'swift', label: 'Swift Programming Language Bird Logo'
+                                  StaticText, 0x114d84280, {{42.0, 318.0}, {105.5, 24.0}}, label: 'Swift Parity'
+                                  StaticText, 0x114d843c0, {{42.0, 346.0}, {139.0, 14.5}}, label: 'Native SwiftPM Mini App'
+                                Button, 0x114d84140, {{36.0, 222.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-hanlin.demo.swift-parity', label: 'App Actions'
+                                  Button, 0x114d85b80, {{36.0, 222.5}, {38.0, 38.0}}
+                                    Image, 0x114d85cc0, {{47.0, 239.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                                Button, 0x114d85180, {{274.5, 210.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Sefaria', label: 'Sefaria'
+                                  Image, 0x114d84c80, {{451.0, 231.0}, {34.0, 30.0}}, identifier: 'books.vertical.fill', label: 'Bookshelf'
+                                  StaticText, 0x114d857c0, {{293.0, 302.0}, {64.5, 24.0}}, label: 'Sefaria'
+                                  StaticText, 0x114d85900, {{293.0, 330.0}, {132.0, 30.5}}, label: 'Search, read, save and revisit sources'
+                                Button, 0x114d85e00, {{287.0, 222.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-nativeapp.sefaria', label: 'App Actions'
+                                  Button, 0x114d85a40, {{287.0, 222.5}, {38.0, 38.0}}
+                                    Image, 0x114d861c0, {{298.0, 239.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                                Button, 0x114d86300, {{525.5, 210.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Text Studio', label: 'Text Studio'
+                                  Image, 0x114d86080, {{702.5, 231.0}, {33.0, 20.5}}, identifier: 'textformat.alt', label: 'Text Formatting'
+                                  StaticText, 0x114d85f40, {{544.0, 302.0}, {103.0, 24.0}}, label: 'Text Studio'
+                                  StaticText, 0x114d84f00, {{544.0, 330.0}, {168.5, 30.5}}, label: 'Write, inspect, transform and keep history'
+                                Button, 0x114d84500, {{538.0, 222.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-nativeapp.textstudio', label: 'App Actions'
+                                  Button, 0x114d84000, {{538.0, 222.5}, {38.0, 38.0}}
+                                    Image, 0x114d86440, {{549.0, 239.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                                Button, 0x114d5be80, {{776.5, 210.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Wikipedia', label: 'Wikipedia'
+                                  Image, 0x114d552c0, {{960.0, 231.0}, {27.5, 27.5}}, identifier: 'globe.americas.fill', label: 'Globe Showing The Americas, Filled'
+                                  StaticText, 0x114d55400, {{795.0, 302.0}, {90.5, 24.0}}, label: 'Wikipedia'
+                                  StaticText, 0x114d55040, {{795.0, 330.0}, {103.0, 30.5}}, label: 'Explore, save and revisit knowledge'
+                                Button, 0x114d55180, {{789.0, 222.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-nativeapp.wikipedia', label: 'App Actions'
+                                  Button, 0x114d54dc0, {{789.0, 222.5}, {38.0, 38.0}}
+                                    Image, 0x114d54f00, {{800.0, 239.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                              StaticText, 0x114d54a00, {{24.0, 406.5}, {127.5, 26.5}}, identifier: 'hanlin-miniapps-section-nativeScript', label: 'NativeScript'
+                              Other, 0x114d54b40, {{23.5, 460.5}, {483.0, 169.0}}
+                                Button, 0x114d54c80, {{23.5, 460.5}, {232.0, 169.0}}, identifier: 'hanlin-package-card-HanlinScript Parity', label: 'HanlinScript Parity'
+                                  StaticText, 0x114d54500, {{49.0, 483.0}, {29.5, 13.5}}, label: 'BETA'
+                                  Image, 0x114d548c0, {{202.0, 481.5}, {31.5, 25.0}}, identifier: 'terminal.fill', label: 'Terminal Command Prompt, Filled'
+                                  StaticText, 0x114d54780, {{42.0, 552.5}, {171.0, 24.0}}, label: 'HanlinScript Parity'
+                                  StaticText, 0x114d54640, {{42.0, 580.5}, {194.5, 30.5}}, label: 'Real HanlinScript parity MiniApp with deterministic Node, Python, JavaScript, and HTTPS execution.'
+                                Button, 0x114d54140, {{36.0, 473.0}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-hanlin.demo.script-parity', label: 'App Actions'
+                                  Button, 0x114d54280, {{36.0, 473.0}, {38.0, 38.0}}
+                                    Image, 0x114d543c0, {{47.0, 490.0}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                                Button, 0x114d54000, {{274.5, 460.5}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Table Share', label: 'Table Share'
+                                  Image, 0x114d56300, {{433.5, 481.5}, {51.0, 27.0}}, identifier: 'person.3', label: 'Three People'
+                                  StaticText, 0x114d55f40, {{293.0, 552.5}, {107.5, 24.0}}, label: 'Table Share'
+                                  StaticText, 0x114d56080, {{293.0, 580.5}, {193.5, 30.5}}, label: 'Split a restaurant bill exactly, with tax, tip and optional whole-dollar contributions.'
+                                Button, 0x114d561c0, {{287.0, 473.0}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-script-f742f5767a7a47f8f8d51efd', label: 'App Actions'
+                                  Button, 0x1130b1900, {{287.0, 473.0}, {38.0, 38.0}}
+                                    Image, 0x1130b08c0, {{298.0, 490.0}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                              StaticText, 0x1130b0c80, {{24.0, 657.0}, {51.0, 26.5}}, identifier: 'hanlin-miniapps-section-expo', label: 'Expo'
+                              Other, 0x1130b1540, {{23.5, 711.0}, {483.0, 169.0}}
+                                Button, 0x1130b2d00, {{23.5, 711.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-חיפוש טקסטים מודולרי — Expo', label: 'חיפוש טקסטים מודולרי — Expo'
+                                  Image, 0x1130b17c0, {{207.5, 732.0}, {26.5, 26.5}}, identifier: 'magnifyingglass', label: 'Search'
+                                  StaticText, 0x1130b1680, {{42.0, 803.0}, {195.0, 24.0}}, label: 'חיפוש טקסטים מודולרי — Expo'
+                                  StaticText, 0x1130b3480, {{42.0, 831.0}, {194.5, 30.5}}, label: 'Original native Expo search app, Share, interactive native Shortcuts snippets and editable Translation UI with original ScriptWidget services.'
+                                Button, 0x1130b35c0, {{36.0, 723.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-script-470d111992ef6fd2dfdc24b6', label: 'App Actions'
+                                  Button, 0x1130b3700, {{36.0, 723.5}, {38.0, 38.0}}
+                                    Image, 0x1130b12c0, {{47.0, 740.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                                Button, 0x113587340, {{274.5, 711.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Departure Budget', label: 'Departure Budget'
+                                  Image, 0x113587d40, {{458.0, 732.0}, {27.5, 27.5}}, identifier: 'clock', label: 'Clock'
+                                  StaticText, 0x113586f80, {{293.0, 803.0}, {164.5, 24.0}}, label: 'Departure Budget'
+                                  StaticText, 0x113586e40, {{293.0, 831.0}, {195.0, 30.5}}, label: 'Plan preparation, travel and arrival buffer with native SwiftUI controls.'
+                                Button, 0x113587e80, {{287.0, 723.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-script-a19fcce1a9ef912a9ef0721c', label: 'App Actions'
+                                  Button, 0x1135870c0, {{287.0, 723.5}, {38.0, 38.0}}
+                                    Image, 0x113587700, {{298.0, 740.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                          Other, 0x1135875c0, {{999.0, 86.0}, {30.0, 1260.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                            Other, 0x113587980, {{1026.0, 547.0}, {3.0, 796.0}}
+                          Other, 0x113587c00, {{999.0, 86.0}, {30.0, 1260.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                            Other, 0x113587840, {{1026.0, 547.0}, {3.0, 796.0}}
+                Toolbar, 0x113587480, {{0.0, 0.0}, {1032.0, 1376.0}}, identifier: 'Toolbar', label: 'Toolbar'
+                  Other, 0x113587200, {{0.0, 0.0}, {1032.0, 1376.0}}
+      Other, 0x114d6c000, {{0.0, 0.0}, {1032.0, 1376.0}}
+        Other, 0x114d6c140, {{0.0, 0.0}, {1032.0, 1376.0}}
+          Other, 0x114d6c280, {{0.0, 0.0}, {1032.0, 1376.0}}
+            Other, 0x114d6c3c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+              NavigationBar, 0x114d6c500, {{0.0, 32.0}, {1032.0, 54.0}}, identifier: '_TtGC7SwiftUI32NavigationStackHosting'
+                Other, 0x114d6c640, {{951.0, 36.0}, {67.0, 36.0}}
+                  Other, 0x114d6c780, {{951.0, 36.0}, {67.0, 36.0}}
+                    Button, 0x114d6c8c0, {{951.0, 36.0}, {67.0, 36.0}}, identifier: 'hanlin-script-app-close', label: 'Close'
+              Other, 0x114d6ca00, {{0.0, 0.0}, {1032.0, 1376.0}}
+                Other, 0x114d6cb40, {{0.0, 0.0}, {1032.0, 1376.0}}
+                  Other, 0x114d6cc80, {{0.0, 0.0}, {1032.0, 1376.0}}
+                    Other, 0x114d6cdc0, {{0.0, 0.0}, {1032.0, 1376.0}}
+                      Other, 0x114d6cf00, {{0.0, 86.0}, {1032.0, 1270.0}}
+                        Other, 0x114d6d040, {{0.0, 86.0}, {1032.0, 1270.0}}
+                          ScrollView, 0x114d6d180, {{0.0, 86.0}, {1032.0, 1270.0}}
+                            Other, 0x114d6d2c0, {{0.0, 86.0}, {1032.0, 1270.0}}
+                              StaticText, 0x114d6d400, {{24.0, 110.0}, {984.0, 36.0}}, label: 'Table Share'
+                              StaticText, 0x114d6d540, {{24.0, 156.0}, {984.0, 19.5}}, label: 'Split a bill in USD. Tax and tip are calculated on the subtotal.'
+                              StaticText, 0x114d6d680, {{24.0, 185.5}, {984.0, 19.5}}, label: 'Subtotal · USD'
+                              TextField, 0x114d6d7c0, {{24.0, 215.0}, {984.0, 49.5}}, placeholderValue: 'Subtotal · USD', value: 84.00
+                              StaticText, 0x114d6d900, {{24.0, 282.5}, {984.0, 19.5}}, label: 'Tax · %'
+                              TextField, 0x114d6da40, {{24.0, 312.0}, {984.0, 49.5}}, placeholderValue: 'Tax · %', value: 8.5
+                              StaticText, 0x114d6db80, {{24.0, 379.5}, {984.0, 19.5}}, label: 'Tip · %'
+                              TextField, 0x114d6dcc0, {{24.0, 409.0}, {984.0, 49.5}}, placeholderValue: 'Tip · %', value: 18
+                              StaticText, 0x114d6de00, {{24.0, 476.5}, {984.0, 19.5}}, label: 'People at the table'
+                              Other, 0x114d6df40, {{24.0, 506.0}, {984.0, 30.0}}
+                                Button, 0x114d6e080, {{24.0, 506.0}, {64.0, 30.0}}, label: '−'
+                                  StaticText, 0x114d6e1c0, {{51.0, 512.0}, {10.0, 18.0}}, label: '−'
+                                StaticText, 0x114d6e300, {{88.0, 506.5}, {92.0, 29.0}}, label: '4'
+                                Button, 0x114d6e440, {{180.0, 506.0}, {64.0, 30.0}}, label: '+'
+                                  StaticText, 0x114d6e580, {{207.0, 512.0}, {10.0, 18.0}}, label: '+'
+                              StaticText, 0x114d6e6c0, {{24.0, 554.0}, {984.0, 19.5}}, label: 'Round each contribution up to a whole dollar'
+                              Switch, 0x114d6e800, {{24.0, 583.5}, {63.0, 28.0}}, value: 1
+                              StaticText, 0x114d6e940, {{24.0, 629.5}, {984.0, 31.5}}, label: '$106.26 total'
+                              StaticText, 0x114d6ea80, {{24.0, 671.0}, {984.0, 19.5}}, label: '4 people pay $27.00 each.'
+                              StaticText, 0x114d6ebc0, {{24.0, 700.5}, {984.0, 57.5}}, label: 'Subtotal $84.00
+Tax $7.14
+Tip $15.12'
+                              StaticText, 0x114d6ed00, {{24.0, 768.0}, {984.0, 17.0}}, label: 'Whole-dollar rounding collects $1.74 extra. Decide together where that goes.'
+                              Button, 0x114d6ee40, {{24.0, 809.0}, {984.0, 30.0}}, label: 'Reset to example bill'
+                                StaticText, 0x114d6ef80, {{445.0, 815.0}, {142.0, 18.0}}, label: 'Reset to example bill'
+                            Other, 0x114d6f0c0, {{999.0, 86.0}, {30.0, 1260.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                              Other, 0x114d6f200, {{1026.0, 89.0}, {3.0, 1340.0}}
+                            Other, 0x114d6f340, {{10.0, 1323.0}, {1012.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                              Other, 0x114d6f480, {{33.0, 1350.0}, {966.0, 3.0}}
+                            Other, 0x114d6f5c0, {{999.0, 86.0}, {30.0, 1260.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                              Other, 0x114d6f700, {{1026.0, 89.0}, {3.0, 1340.0}}
+                            Other, 0x114d6f840, {{10.0, 1323.0}, {1012.0, 30.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                              Other, 0x114d6f980, {{33.0, 1350.0}, {966.0, 3.0}}
+              Toolbar, 0x114d6fac0, {{0.0, 0.0}, {1032.0, 1376.0}}, identifier: 'Toolbar', label: 'Toolbar'
+                Other, 0x114d6fc00, {{0.0, 0.0}, {1032.0, 1376.0}}
+Path to element:
+ →Application, 0x114d4c140, pid: 63974, label: 'Hanlin MiniApps'
+Query chain:
+ →Find: Target Application 'com.itorah.hanlinminiapps'
+  Output: {
+    Application, 0x114d6fd40, pid: 63974, label: 'Hanlin MiniApps'
+  }
