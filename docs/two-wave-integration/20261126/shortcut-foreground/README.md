@@ -46,9 +46,9 @@ These sources establish API semantics; they do not substitute for current app me
 ## Exact checks and retained failures
 
 - `swift-syntax.json`: Linux Swift 6.4.3 syntax checks for 12 affected Swift files, with exact per-file hashes. Prior passes were reused only for byte-identical sources; terminal-settlement and native test qualification changes have their own current hashes. This does not typecheck Apple imports or prove native execution.
-- `original-localization-install-tests-r2.log`: the original `Scripts.SDK.tests.test_app_intents_install.AppIntentsHostResourceInstallTests` passed 2/2 using the correct chatgpt-agent environment.
-- `original-localization-install-tests.log`: the initial attempt is retained separately. Its uid-only execution inherited root HOME and failed to write the Swift/Clang cache; no product assertion was weakened.
-- `localization-generator-check.log`: canonical `generate_app_intents_resources.py --check` passed with 60 keys.
+- `original-localization-install-tests-r2.log.json`: the original `Scripts.SDK.tests.test_app_intents_install.AppIntentsHostResourceInstallTests` passed 2/2 using the correct chatgpt-agent environment.
+- `original-localization-install-tests.log.json`: the initial attempt is retained separately. Its uid-only execution inherited root HOME and failed to write the Swift/Clang cache; no product assertion was weakened.
+- `localization-generator-check.log.json`: canonical `generate_app_intents_resources.py --check` passed with 60 keys.
 - `source-preservation.json`: all legacy intent source bytes and original catalog entries preserved; `git diff --check` passed.
 - The original native981 package build failed before tests with a missing import in `HanlinWidgetLastSuccessfulRender.swift`. The error type really exists in HanlinScriptContracts, already a target dependency. Separate ce835 adds only that import. The original failure remains at `/Users/m1/builds/hanlin-two-wave-root-20261126/platform-native-build-9819697c-r1.json`; no native pass is inferred from the correction. The ce835 retry compiled past that production error, then failed in the parameterized render test macro on unqualified HanlinWidgetEngine. The canonical nominal type and an exported same-named alias are both imported. Separate f6b qualifies all three occurrences with HanlinPlatformContracts, preserving both engine cases and every assertion; the native owner retains the second failure in validation/platform-ce83512d/build-r2/original-package-build-for-testing.log.
 
