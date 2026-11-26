@@ -7,8 +7,8 @@ import Testing
 
 @Suite("Prepared widget last successful render", .serialized)
 struct HanlinWidgetLastSuccessfulRenderTests {
-    @Test(arguments: [HanlinWidgetEngine.expo, .scriptwidget])
-    func failedRefreshRetainsVerifiedRenderAndDoesNotCommitStagedState(engine: HanlinWidgetEngine) throws {
+    @Test(arguments: [HanlinPlatformContracts.HanlinWidgetEngine.expo, .scriptwidget])
+    func failedRefreshRetainsVerifiedRenderAndDoesNotCommitStagedState(engine: HanlinPlatformContracts.HanlinWidgetEngine) throws {
         let fixture = try RenderFixture(engine: engine)
         defer { fixture.remove() }
         let first = fixture.prepare()
@@ -94,7 +94,7 @@ private struct RenderFixture {
         HanlinWidgetInstance(identity: widget.identity, engine: widget.engine, displayName: "Default").entityID
     }
 
-    init(engine: HanlinWidgetEngine) throws {
+    init(engine: HanlinPlatformContracts.HanlinWidgetEngine) throws {
         let root = FileManager.default.temporaryDirectory.appending(path: "Hanlin-LKG-\(UUID().uuidString)")
         try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
         store = .init(root: root)
