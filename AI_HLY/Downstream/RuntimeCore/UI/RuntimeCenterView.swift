@@ -73,8 +73,13 @@ final class RuntimeCenterModel {
     }
 }
 
-struct RuntimeCenterView: View {
+struct RuntimeCenterView<ToolSettings: View>: View {
     @State private var model = RuntimeCenterModel()
+    private let toolSettings: ToolSettings
+
+    init(@ViewBuilder toolSettings: () -> ToolSettings) {
+        self.toolSettings = toolSettings()
+    }
 
     private let localRuntimes: [(RuntimeKind, String, String)] = [
         (.node, "Node.js", "point.3.connected.trianglepath.dotted"),
@@ -124,7 +129,7 @@ struct RuntimeCenterView: View {
                     .disabled(model.isBusy)
             }
 
-            Section(RuntimeL10n.string("Runtime tools")) { RuntimeToolsSettingsView() }
+            Section(RuntimeL10n.string("Runtime tools")) { toolSettings }
         }
         .navigationTitle(RuntimeL10n.string("Runtime diagnostics"))
         .task {
@@ -231,33 +236,6 @@ private struct ExternalRuntimeRow: View {
     }
 }
 
-private struct RuntimeToolsSettingsView: View {
-    @State private var entries: [NativeToolCatalogEntry] = NativeToolCatalog.shared.allEntries().filter {
-        ["execute_local_python_code", "execute_javascript_code", "execute_typescript_code", "execute_shell_command"].contains($0.name)
-    }
-
-    var body: some View {
-        ForEach(entries) { entry in
-            Toggle(isOn: Binding(
-                get: { NativeToolCatalog.shared.isEnabled(entry) },
-                set: { NativeToolCatalog.shared.setEnabled($0, for: entry) }
-            )) {
-                Label {
-                    VStack(alignment: .leading) {
-                        Text(entry.title)
-                        Text(entry.summary).font(HanlinTypography.caption).foregroundStyle(.secondary)
-                        if entry.isSensitive { Text(RuntimeL10n.string("Sensitive capability — review every command")) .font(HanlinTypography.caption2).foregroundStyle(.orange) }
-                    }
-                } icon: { Image(systemName: entry.systemImage) }
-            }
-            .accessibilityIdentifier("hanlin-tool-permission-\(entry.name)")
-        }
-        .task {
-            let names = Set(["execute_local_python_code", "execute_javascript_code", "execute_typescript_code", "execute_shell_command"])
-            entries = NativeToolCatalog.shared.allEntries().filter { names.contains($0.name) }
-        }
-    }
-}
 
 private extension RuntimeOperationalState {
     var localizationKey: String {

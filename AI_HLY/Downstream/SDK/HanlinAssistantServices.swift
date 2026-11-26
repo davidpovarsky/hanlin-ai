@@ -43,12 +43,23 @@ public struct HanlinAssistantSettingsView: View {
             } label: {
                 Label(SkillL10n.string("Skills"), systemImage: "sparkles")
             }
-            NavigationLink {
-                RuntimeCenterView()
-            } label: {
-                Label(RuntimeL10n.string("Runtime Center"), systemImage: "terminal")
-            }
         }
         .navigationTitle(Text("Assistant", bundle: HanlinLocalization.bundle))
+    }
+}
+
+
+/// The host supplies its actual action controls; a component never substitutes
+/// the full application's unrelated permissions or an empty tool catalogue.
+@MainActor
+public struct HanlinRuntimeSettingsView<Actions: View>: View {
+    private let actions: Actions
+
+    public init(@ViewBuilder actions: () -> Actions) {
+        self.actions = actions()
+    }
+
+    public var body: some View {
+        RuntimeCenterView { actions }
     }
 }

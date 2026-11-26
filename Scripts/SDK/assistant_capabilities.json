@@ -17,7 +17,8 @@
     "Downstream/AgentSkills/AssistantCapabilitySession+Selections.swift",
     "Downstream/MCP/Runtime/MCPRuntimeAcceptance.swift",
     "Downstream/MCP/Runtime/MCPServerPathResolverAcceptance.swift",
-    "Downstream/MCP/ToolIntegration/AssistantToolBridge.swift"
+    "Downstream/MCP/ToolIntegration/AssistantToolBridge.swift",
+    "Downstream/RuntimeCore/UI/RuntimeToolsSettingsView.swift"
   ],
   "additionalSources": [
     "Downstream/SDK/HanlinApplicationResources.swift",
@@ -30,7 +31,9 @@
     "Downstream/AgentActivity/ToolPresentation/ToolPresentationProfile.swift",
     "Downstream/HostServices/Runtime/RuntimeAvailabilityStore.swift",
     "Downstream/ChatPresentation/HanlinTypographyBridge.swift",
-    "Downstream/SDK/HanlinAssistantServices.swift"
+    "Downstream/SDK/HanlinAssistantServices.swift",
+    "NativeAgentExtensions/Diagnostics/NativeToolTraceLogger.swift",
+    "Downstream/AgentDiagnostics/AgentDiagnosticsRedactor.swift"
   ],
   "products": [
     "HanlinSkillFormat",
