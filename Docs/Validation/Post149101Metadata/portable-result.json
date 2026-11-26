@@ -12,5 +12,6 @@
   },
   "rawLogSHA256": "e0f4480d34aba06d699b9e626e2cc53990657bbd6d20e0e025987a463f9b55c3",
   "nativeCreationPersistenceAndUI": "NEEDS_TEST",
-  "providerRouting": "UNDER_REVIEW"
+  "providerRouting": "UNDER_REVIEW",
+  "rawLog": "portable-metadata.stdout.txt"
 }

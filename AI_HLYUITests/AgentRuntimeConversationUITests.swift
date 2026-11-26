@@ -761,6 +761,44 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         attachScreenshot("user-bubble-native-lift-restored", in: app)
     }
 
+
+    /// Uses the original native menu and actual shared localization bundle in RTL.
+    /// The runner executes this in light and dark mode on iPad.
+    func testHebrewNewChatAndNativeMessageActions() throws {
+        continueAfterFailure = false
+        let app = launchAcceptanceApp(language: "he", locale: "he_IL", isolatedStore: true)
+        defer { app.terminate() }
+        openChat(in: app)
+        sendPrompt("PROMPT_UI02_CLASSIC_BUBBLES", in: app)
+        let final = app.descendants(matching: .any).matching(
+            NSPredicate(format: "label CONTAINS 'UI02_CLASSIC_COMPLETE'")).firstMatch
+        XCTAssertTrue(final.waitForExistence(timeout: 30))
+        let bubble = app.descendants(matching: .any)["hanlin-user-bubble"].firstMatch
+        XCTAssertTrue(bubble.waitForExistence(timeout: 5))
+        bubble.press(forDuration: 1.2)
+        let copy = app.buttons["העתקת תוכן"].firstMatch
+        let select = app.buttons["בחירת טקסט"].firstMatch
+        XCTAssertTrue(copy.waitForExistence(timeout: 10))
+        XCTAssertTrue(select.exists)
+        XCTAssertFalse(app.buttons["Copy Content"].exists)
+        XCTAssertFalse(app.buttons["Select Text"].exists)
+        attachScreenshot("post149101-Hebrew-native-message-menu", in: app)
+        tapElement(select)
+        let done = app.buttons["hanlin-text-selection-done"].firstMatch
+        XCTAssertTrue(done.waitForExistence(timeout: 10))
+        tapElement(done)
+        XCTAssertTrue(done.waitForNonExistence(timeout: 10))
+        let newChat = chatListToolbarButton("hanlin-new-chat-button", in: app)
+        tapElement(newChat)
+        let input = chatInputElement(in: app)
+        XCTAssertTrue(input.waitForExistence(timeout: 10))
+        XCTAssertEqual(input.value as? String ?? "", "")
+        XCTAssertFalse(app.descendants(matching: .any)["hanlin-info-bubble"].firstMatch.exists)
+        XCTAssertTrue(app.staticTexts["צ׳אט חדש"].firstMatch.waitForExistence(timeout: 10))
+        XCTAssertFalse(app.staticTexts["New Group Chat"].exists)
+        attachScreenshot("post149101-Hebrew-empty-chat-and-sidebar", in: app)
+    }
+
     func testUI03SearchMessageAndDeduplicatedCitations() throws {
         try exerciseUI03SearchMessageAndDeduplicatedCitations(hebrew: false)
     }
