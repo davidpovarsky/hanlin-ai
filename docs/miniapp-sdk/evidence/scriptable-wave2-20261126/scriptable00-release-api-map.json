@@ -1,0 +1,341 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-26T17:31:51.567979+00:00",
+  "sourceRevision": "b80f897a5b890fb2ade8e272ffefbb25ec601844",
+  "mappingStatus": "ALL_28_RELEASE_ITEMS_CLASSIFIED",
+  "featureAcceptance": "OPEN",
+  "officialSources": {
+    "releaseNotes": "https://apps.apple.com/us/app/scriptable/id1405459188",
+    "releaseCorroboration": "https://apps.apple.com/bo/app/scriptable/id1405459188?platform=mac",
+    "apiRoot": "https://scriptable.app/docs/",
+    "ListWidget": "https://scriptable.app/docs/reference/listwidget/",
+    "config": "https://scriptable.app/docs/reference/config/",
+    "args": "https://scriptable.app/docs/reference/args/",
+    "DrawContext": "https://scriptable.app/docs/reference/drawcontext/",
+    "FileManager": "https://scriptable.app/docs/reference/filemanager/",
+    "Font": "https://scriptable.app/docs/reference/font/"
+  },
+  "observedLatestVersion": "1.8.3",
+  "observedDateUTC": "2026-11-26",
+  "releaseItems": [
+    {
+      "id": "v18-01",
+      "version": "1.8",
+      "feature": "Duo layout adaptation",
+      "groups": [
+        "S07"
+      ],
+      "api": "MiniAppsLibrary and Developer Studio use native NavigationStack/List and the existing per-window app roots.",
+      "status": "PROBE_UNKNOWN",
+      "gate": "No source-qualified Duo device/layout acceptance was found. Responsive native controls alone do not prove the vendor-specific layout criterion."
+    },
+    {
+      "id": "v18-02",
+      "version": "1.8",
+      "feature": "Folders, symbols, colors, cloud sync",
+      "groups": [
+        "S07"
+      ],
+      "api": "MiniAppsDeveloperWorkspace.FolderStyle stores symbol/color metadata in .miniapps-folder.json; Studio can select local or the existing iCloud Documents/MiniAppsStudio root.",
+      "status": "VERIFY_REGRESSION",
+      "gate": "Folder operations have portable Foundation coverage. Native coordination, remote updates, conflicts, offline behavior and iCloud entitlement acceptance remain open."
+    },
+    {
+      "id": "v18-03",
+      "version": "1.8",
+      "feature": "Editable gallery imports",
+      "groups": [
+        "S07",
+        "S08"
+      ],
+      "api": "Studio copies canonical SDK gallery examples into an independent workspace and uses MiniAppAuthoringService validation/build; five real example projects include drawing.",
+      "status": "VERIFY_REGRESSION",
+      "gate": "Five original validate/build pairs passed at 4d76 and qualified through 08ed. b80 changes authoring/SDK inputs; refresh the original gallery checks and then install/run accepted projects."
+    },
+    {
+      "id": "v18-04",
+      "version": "1.8",
+      "feature": "Widget buttons and switches",
+      "groups": [
+        "S03"
+      ],
+      "api": "Original @expo/ui Button/Toggle props, WidgetToggleHandler, refresh-button props and HanlinExpoWidgetsViewRenderer.toggleIntent feed actual AppIntents; ScriptWidget retains its original button/toggle elements.",
+      "status": "VERIFY_REGRESSION",
+      "gate": "Exercise persistent state, explicit requested Boolean, action identity, reload and disabled/removed packages on actual WidgetKit surfaces. Preview/decoder success is insufficient."
+    },
+    {
+      "id": "v18-05",
+      "version": "1.8",
+      "feature": "Progress bars and rings",
+      "groups": [
+        "S03"
+      ],
+      "api": "Original Expo SwiftUI views and ScriptWidget Gauge/Chart renderers remain canonical; typed manifests describe the authored widget tree.",
+      "status": "VERIFY_REGRESSION",
+      "gate": "Verify actual rendered progress values and edge cases in applicable widget families. No drop-in ListWidget.addProgress global is claimed."
+    },
+    {
+      "id": "v18-06",
+      "version": "1.8",
+      "feature": "Wallpaper transparency",
+      "groups": [
+        "S04"
+      ],
+      "api": "Widget containers permit system background removal; ScriptWidget supports authored background colors/materials and accessibility fallbacks. Its material implementation explicitly blurs widget content, not wallpaper.",
+      "status": "PROBE_UNKNOWN",
+      "gate": "An iOS/iPadOS 27.2 real Home Screen check must establish wallpaper behavior and tinted/reduced-transparency handling. Local material rendering is not equivalent proof."
+    },
+    {
+      "id": "v18-07",
+      "version": "1.8",
+      "feature": "Completion, signatures, reference links",
+      "groups": [
+        "S07",
+        "S08"
+      ],
+      "api": "UIKit caret geometry positions suggestions; the original TypeScript authoring service returns completion/signature/documentation results with request/version guards and an API-reference link.",
+      "status": "VERIFY_REGRESSION",
+      "gate": "Four original Node editor tests passed. Native keyboard, caret, selection, stale-response and accessibility execution remains required."
+    },
+    {
+      "id": "v18-08",
+      "version": "1.8",
+      "feature": "Editor refresh",
+      "groups": [
+        "S07"
+      ],
+      "api": "Native UITextView editor, explicit save/rename, draft recovery and guarded asynchronous validate/build live in the standalone Studio.",
+      "status": "VERIFY_REGRESSION",
+      "gate": "Execute MiniAppsStudioProjectTests plus native editor acceptance. Source review and Linux parsing do not prove UIKit isolation, file-provider coordination or edit preservation."
+    },
+    {
+      "id": "v18-09",
+      "version": "1.8",
+      "feature": "Library and creation navigation",
+      "groups": [
+        "S07"
+      ],
+      "api": "The standalone library exposes Developer Studio; Studio provides project creation, folder creation, import, gallery and refresh actions.",
+      "status": "PROBE_UNKNOWN",
+      "gate": "Functional routes exist. No literal tile design or bottom-plus parity is asserted; reconcile any exact UI requirement against the approved product plan."
+    },
+    {
+      "id": "v18-10",
+      "version": "1.8",
+      "feature": "SF Symbols icons",
+      "groups": [
+        "S07"
+      ],
+      "api": "Studio folder styling accepts a system symbol and color; native views render system images.",
+      "status": "PROBE_UNKNOWN",
+      "gate": "Folder symbols do not establish a complete per-script icon chooser or installed-item icon editing workflow. Verify the required scope explicitly."
+    },
+    {
+      "id": "v18-11",
+      "version": "1.8",
+      "feature": "Searchable live logs",
+      "groups": [
+        "S07"
+      ],
+      "api": "Studio searches and periodically refreshes the real RuntimeFileLayout logs; the displayed tail has an explicit 512 KB limit and full-file export.",
+      "status": "VERIFY_REGRESSION",
+      "gate": "Verify actual engine output, filtering, tail updates, export and truncation messaging in the standalone app; this is not a simulated console."
+    },
+    {
+      "id": "v18-12",
+      "version": "1.8",
+      "feature": "System and installed font selection",
+      "groups": [
+        "S07"
+      ],
+      "api": "UIFontPickerViewController supplies editor fonts, with persisted font name/size preferences.",
+      "status": "VERIFY_REGRESSION",
+      "gate": "Native installed-font enumeration, fallback, Dynamic Type/accessibility and document editing still need execution."
+    },
+    {
+      "id": "v18-13",
+      "version": "1.8",
+      "feature": "Theme controls and settings appearance",
+      "groups": [
+        "S07"
+      ],
+      "api": "Studio has persisted system/light/dark editor theme selection and applies preferredColorScheme to that editor.",
+      "status": "PROBE_UNKNOWN",
+      "gate": "Editor-local themes do not prove a global MiniApps Settings redesign or alternate application icon workflow. Those comparison items remain unmapped."
+    },
+    {
+      "id": "v18-14",
+      "version": "1.8",
+      "feature": "What's New presentation",
+      "groups": [
+        "S07"
+      ],
+      "api": "No standalone release-notes/What's New implementation was identified in the audited Studio/library source.",
+      "status": "IMPLEMENT_GAP",
+      "gate": "Record whether this comparison item is part of required product acceptance; do not mark it implemented or silently remove a required criterion."
+    },
+    {
+      "id": "v18-15",
+      "version": "1.8",
+      "feature": "Cloud placeholders and foreground refresh",
+      "groups": [
+        "S07"
+      ],
+      "api": "Studio enumerates its selected workspace and refreshes on scene activation and explicit refresh; the iCloud root is explicit.",
+      "status": "PROBE_UNKNOWN",
+      "gate": "No source-qualified proof of not-yet-downloaded placeholders was found. Test File Provider/iCloud visibility, download, foreground remote changes, conflicts and offline recovery on Apple platforms."
+    },
+    {
+      "id": "v18-16",
+      "version": "1.8",
+      "feature": "Refresh resilience and retained successful content",
+      "groups": [
+        "S05"
+      ],
+      "api": "HanlinWidgetLastSuccessfulRender validates installation, generation, engine, family, settings and program identity before fallback.",
+      "status": "VERIFY_REGRESSION",
+      "gate": "Eleven original native cases cover validity boundaries. Their Apple execution and real WidgetKit scheduling/recovery remain open; the OS controls refresh timing."
+    },
+    {
+      "id": "v18-17",
+      "version": "1.8",
+      "feature": "Large-image and preview fidelity",
+      "groups": [
+        "S09",
+        "S03"
+      ],
+      "api": "Original ScriptWidget image decoding/modifiers and original widget renderers are retained; preview and host family contracts remain explicit.",
+      "status": "VERIFY_REGRESSION",
+      "gate": "Nine image invocations need the UIKit branch on iOS. AppKit execution, preview construction or source parsing is not large-image iOS acceptance."
+    },
+    {
+      "id": "v18-18",
+      "version": "1.8",
+      "feature": "Rotation and invalid drawing dimensions",
+      "groups": [
+        "S09",
+        "S08"
+      ],
+      "api": "The NativeScript gallery drawing example uses actual UIKit drawing, explicit rotation and input checks; original ScriptWidget image rotation stays in the renderer.",
+      "status": "VERIFY_REGRESSION",
+      "gate": "Canonical TypeScript/gallery build proof exists on earlier qualified source. Native output, invalid dimensions, clipping, scale and rotated-image review remain required; no DrawContext drop-in is claimed."
+    },
+    {
+      "id": "v18-19",
+      "version": "1.8",
+      "feature": "Files tag-color retention",
+      "groups": [
+        "S07",
+        "S11"
+      ],
+      "api": "Workspace writes use coordinated compare-before-overwrite replacement intended to preserve existing file metadata. No corresponding public addTag/allTags/removeTag binding was identified.",
+      "status": "IMPLEMENT_GAP",
+      "gate": "A general Files tag API is absent from this mapping. Metadata preservation during editor save also needs Darwin/File Provider tests; it is a separate narrower behavior."
+    },
+    {
+      "id": "v181-01",
+      "version": "1.8.1",
+      "feature": "Optional extended Shortcut execution",
+      "groups": [
+        "S01",
+        "S02"
+      ],
+      "api": "HanlinRunMiniAppShortcutIntent is LongRunningIntent/CancellableIntent; allowLongRunning defaults false, while accepted work is enqueued before OS background/cancellation negotiation.",
+      "status": "VERIFY_REGRESSION",
+      "gate": "Run original opt-in >300-second acceptance and cancellation/results checks. The historical Host suite's one skip is not credit for this gate."
+    },
+    {
+      "id": "v181-02",
+      "version": "1.8.1",
+      "feature": "Background status and completion",
+      "groups": [
+        "S01"
+      ],
+      "api": "The standalone intent uses the actual AppIntents background task API; typed reportShortcutProgress routes miniapps.shortcutProgress to real Progress updates.",
+      "status": "VERIFY_REGRESSION",
+      "gate": "Check the OS indicator, progress, completion, cancellation and duplicate completion on supported iOS 27+; a portable continuation test cannot prove these surfaces."
+    },
+    {
+      "id": "v182-01",
+      "version": "1.8.2",
+      "feature": "Extra-large portrait widgets",
+      "groups": [
+        "S03"
+      ],
+      "api": "HanlinWidgetFamily and prepared widget manifests include systemExtraLargePortrait alongside all seven other families.",
+      "status": "VERIFY_REGRESSION",
+      "gate": "Decoder/source inclusion does not create OS support on every device. Test the applicable actual iPad/device dimensions and original family render/preview."
+    },
+    {
+      "id": "v182-02",
+      "version": "1.8.2",
+      "feature": "Dictionary and list JSON input",
+      "groups": [
+        "S01"
+      ],
+      "api": "HanlinShortcutValueCodec validates text, JSON and JSON-file intent input; structured output is delivered as a real IntentFile when appropriate.",
+      "status": "VERIFY_REGRESSION",
+      "gate": "Twelve portable codec cases passed. Native Shortcuts must exercise actual dictionary/list/file handoff and results without stringifying away types."
+    },
+    {
+      "id": "v182-03",
+      "version": "1.8.2",
+      "feature": "Open-when-run and inline scripts",
+      "groups": [
+        "S01",
+        "S02"
+      ],
+      "api": "The new standalone intent invokes an installed action in the background. The existing shared HanlinRunScriptActionIntent opens the app for an installed action; it is a different contract.",
+      "status": "IMPLEMENT_GAP",
+      "gate": "The new intent has no inline-JavaScript parameter and explicitly disables UI presentation. Do not claim full combined Open When Run plus saved/inline-script compatibility."
+    },
+    {
+      "id": "v182-04",
+      "version": "1.8.2",
+      "feature": "Home Screen Shortcut entry",
+      "groups": [
+        "S01",
+        "S07"
+      ],
+      "api": "Existing installed-action intents can be discovered by the system; no source-qualified MiniApps icon/setup guidance was identified.",
+      "status": "PROBE_UNKNOWN",
+      "gate": "Verify actual OS-created Home Screen shortcuts, routing and user guidance. Do not equate a legacy in-app launch flag with Shortcuts-origin execution."
+    },
+    {
+      "id": "v182-05",
+      "version": "1.8.2",
+      "feature": "Shortcut and foreground UI coexistence",
+      "groups": [
+        "S02"
+      ],
+      "api": "The production windowFactory path loads a cooperating window/session context in the original NativeScript VM without attaching a new UI; fresh store.restore guards generation/enabled admission.",
+      "status": "VERIFY_REGRESSION",
+      "gate": "Run both original NativeScriptShortcutConcurrencyTests methods and window-close lifecycle regression against the current source. No separate JavaScript isolate/process isolation is claimed."
+    },
+    {
+      "id": "v182-06",
+      "version": "1.8.2",
+      "feature": "Background execution context",
+      "groups": [
+        "S01",
+        "S02"
+      ],
+      "api": "Hanlin uses explicit shortcuts delivery and canPresentUI=false for the standalone background action, with foreground continuation separately controlled.",
+      "status": "PROBE_UNKNOWN",
+      "gate": "This is the local policy equivalent, not an exported Scriptable config.runsInApp global. Verify actual routing and any required compatibility contract."
+    },
+    {
+      "id": "v183-01",
+      "version": "1.8.3",
+      "feature": "Existing Shortcut compatibility repair",
+      "groups": [
+        "S01",
+        "S02",
+        "S03"
+      ],
+      "api": "Shared action entities use package/entrypoint/action identity and narrowly scoped legacy short-ID migration; preview and foreground/background paths remain separate.",
+      "status": "PROBE_UNKNOWN",
+      "gate": "Existing saved Shortcuts, widget previews and run-in-app migration need actual version-upgrade OS acceptance. Source identity logic does not prove vendor-equivalent compatibility."
+    }
+  ]
+}
