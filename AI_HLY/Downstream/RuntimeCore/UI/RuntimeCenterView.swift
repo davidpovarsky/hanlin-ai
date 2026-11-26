@@ -156,7 +156,13 @@ struct RuntimeCenterView<ToolSettings: View>: View {
     }
 }
 
-struct RuntimePackagesView: View {
+struct RuntimePackagesView<ToolSettings: View>: View {
+    private let toolSettings: ToolSettings
+
+    init(@ViewBuilder toolSettings: () -> ToolSettings) {
+        self.toolSettings = toolSettings()
+    }
+
     var body: some View {
         List {
             Section(RuntimeL10n.string("Installed packages")) {
@@ -167,7 +173,7 @@ struct RuntimePackagesView: View {
                 NavigationLink(RuntimeL10n.string("Environment variables")) { RuntimeEnvironmentView() }
             }
             Section(RuntimeL10n.string("Tool permissions")) {
-                RuntimeToolsSettingsView()
+                toolSettings
             }
         }
         .navigationTitle(RuntimeL10n.string("Packages & Tools"))

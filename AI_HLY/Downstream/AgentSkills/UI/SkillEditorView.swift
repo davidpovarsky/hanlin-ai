@@ -97,9 +97,8 @@ struct SkillEditorView: View {
         }
     }
 
-    private var availableCanonicalTools: [NativeToolCatalogEntry] {
-        NativeToolCatalog.shared.ensureBuiltinsRegistered()
-        return NativeToolCatalog.shared.allEntries().sorted(by: { $0.name < $1.name })
+    private var availableCanonicalTools: [HanlinSkillToolReference] {
+        HanlinSkillToolSource.provider().sorted(by: { $0.name < $1.name })
     }
 
     private var idValidationError: String? {
@@ -137,7 +136,9 @@ struct SkillEditorView: View {
 
     private var allAvailableToolNames: Set<String> {
         var names = Set(availableCanonicalTools.map(\.name))
+#if !HANLIN_ASSISTANT_CAPABILITIES_SDK
         names.formUnion(Self.knownSystemToolNames)
+#endif
         return names
     }
 

@@ -6,6 +6,10 @@ extension RuntimeCenterView where ToolSettings == RuntimeToolsSettingsView {
     init() { self.init { RuntimeToolsSettingsView() } }
 }
 
+extension RuntimePackagesView where ToolSettings == RuntimeToolsSettingsView {
+    init() { self.init { RuntimeToolsSettingsView() } }
+}
+
 struct RuntimeToolsSettingsView: View {
     @State private var entries: [NativeToolCatalogEntry] = NativeToolCatalog.shared.allEntries().filter {
         ["execute_local_python_code", "execute_javascript_code", "execute_typescript_code", "execute_shell_command"].contains($0.name)

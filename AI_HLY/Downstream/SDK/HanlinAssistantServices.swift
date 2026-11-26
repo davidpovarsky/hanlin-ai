@@ -12,9 +12,11 @@ public final class HanlinAssistantServices {
 
     public init(runtimeConfiguration: HanlinApplicationRuntimeConfiguration,
                 owner: AnyObject,
+                availableTools: @escaping @MainActor () -> [HanlinSkillToolReference],
                 validateConversation: @escaping @MainActor (UUID) throws -> Void) throws {
         try HanlinApplicationProcessRuntime.shared.install(runtimeConfiguration, modelContainer: owner)
         self.owner = owner
+        HanlinSkillToolSource.provider = availableTools
         self.mcp = HanlinApplicationMCP(validateConversation: validateConversation)
     }
 
