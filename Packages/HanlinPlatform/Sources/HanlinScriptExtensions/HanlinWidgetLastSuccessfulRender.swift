@@ -1,5 +1,6 @@
 import Foundation
 import HanlinPlatformContracts
+import HanlinScriptContracts
 
 /// A render is reusable only for the exact installed program, instance settings
 /// and family that produced it. Payload bytes use the existing verified artifact
