@@ -574,7 +574,8 @@ struct SkillStoreAndImportTests {
             HanlinArchiveEntryMetadata(path: "SKILL.md", kind: .file, compressedBytes: 10, uncompressedBytes: 20),
             HanlinArchiveEntryMetadata(path: "bomb.txt", kind: .file, compressedBytes: 1, uncompressedBytes: 1000)
         ]
-        let bombResult = policy.inspectSkillArchive(entries: bombEntries, centralDirectoryEntryCount: 2, archiveBytes: 100)
+        let ratioPolicy = HanlinArchivePolicy(limits: .init(maximumCompressionRatio: 100))
+        let bombResult = ratioPolicy.inspectSkillArchive(entries: bombEntries, centralDirectoryEntryCount: 2, archiveBytes: 100)
         #expect(!bombResult.isInstallable)
         #expect(bombResult.findings.contains { $0.code == .compressionRatioLimit })
 
