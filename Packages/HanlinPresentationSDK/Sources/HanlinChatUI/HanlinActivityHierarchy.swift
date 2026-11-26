@@ -11,23 +11,26 @@ public struct HanlinActivityHierarchyHeader: View {
     public let depth: Int
     public let isExpanded: Bool
     public let isActive: Bool
+    public let isHistory: Bool
 
     public init(title: String, symbol: String, depth: Int = 0,
-                isExpanded: Bool, isActive: Bool) {
+                isExpanded: Bool, isActive: Bool, isHistory: Bool = false) {
         self.title = title; self.symbol = symbol; self.depth = depth
-        self.isExpanded = isExpanded; self.isActive = isActive
+        self.isExpanded = isExpanded; self.isActive = isActive; self.isHistory = isHistory
     }
 
     public var body: some View {
         HStack(spacing: 9) {
             Image(systemName: symbol)
-                .font(HanlinTypography.body.weight(.medium))
-                .foregroundStyle(.gray)
+                .font(isHistory ? HanlinTypography.caption : HanlinTypography.body.weight(.medium))
+                .foregroundStyle(isHistory ? Color.secondary.opacity(0.8) : .gray)
                 .frame(width: 22, height: 22)
                 .accessibilityHidden(true)
             HanlinActivityTitle(title,
-                font: depth == 0 ? HanlinTypography.body.weight(.medium) : HanlinTypography.callout,
-                baseColor: Color.primary.opacity(depth == 0 ? 0.88 : 0.73),
+                font: isHistory ? HanlinTypography.caption
+                    : depth == 0 ? HanlinTypography.body.weight(.medium) : HanlinTypography.callout,
+                baseColor: isHistory ? Color.secondary.opacity(0.8)
+                    : Color.primary.opacity(depth == 0 ? 0.88 : 0.73),
                 isActive: isActive)
                 .fixedSize(horizontal: false, vertical: true)
                 .layoutPriority(1)

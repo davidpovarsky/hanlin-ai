@@ -620,6 +620,50 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         attachScreenshot("UI-02_ClassicUserAndAssistantBubbleWithDirectActionButtons", in: app)
     }
 
+    func testUserBubbleLongPressKeepsNativeActionsAndOriginalMessage() throws {
+        continueAfterFailure = false
+        let app = launchAcceptanceApp(isolatedStore: true)
+        defer { app.terminate() }
+        openChat(in: app)
+        let prompt = "PROMPT_UI02_CLASSIC_BUBBLES"
+        sendPrompt(prompt, in: app)
+        let final = app.descendants(matching: .any).matching(
+            NSPredicate(format: "label CONTAINS 'UI02_CLASSIC_COMPLETE'")).firstMatch
+        XCTAssertTrue(final.waitForExistence(timeout: 30))
+        let bubble = app.descendants(matching: .any)["hanlin-user-bubble"].firstMatch
+        XCTAssertTrue(bubble.waitForExistence(timeout: 5))
+        XCTAssertTrue(bubble.isHittable)
+        let originalFrame = bubble.frame
+        XCTAssertEqual(bubble.label, prompt)
+        attachScreenshot("user-bubble-before-native-lift", in: app)
+        // Retain a simulator screen recording around this actual gesture to
+        // inspect the lift's first frames as well as the settled screenshot.
+        // A screenshot after menu presentation alone cannot prove that interval.
+        print("HANLIN_USER_BUBBLE_LIFT_START uptime=\(ProcessInfo.processInfo.systemUptime)")
+        bubble.press(forDuration: 1.2)
+        let copy = app.buttons["Copy Content"].firstMatch
+        let select = app.buttons["Select Text"].firstMatch
+        XCTAssertTrue(copy.waitForExistence(timeout: 10), "The original user menu must remain native")
+        XCTAssertTrue(select.exists, "The shared shape correction must preserve host actions")
+        print("HANLIN_USER_BUBBLE_LIFT_PRESENTED uptime=\(ProcessInfo.processInfo.systemUptime)")
+        attachScreenshot("user-bubble-native-lift-presented", in: app)
+        tapElement(select)
+        let done = app.buttons["hanlin-text-selection-done"].firstMatch
+        XCTAssertTrue(done.waitForExistence(timeout: 10))
+        let selectedText = app.textViews.matching(
+            NSPredicate(format: "value == %@ OR label == %@", prompt, prompt)).firstMatch
+        XCTAssertTrue(selectedText.waitForExistence(timeout: 5),
+                      "The original message must reach the existing native selection sheet")
+        tapElement(done)
+        XCTAssertTrue(done.waitForNonExistence(timeout: 10))
+        XCTAssertTrue(bubble.isHittable)
+        XCTAssertEqual(bubble.label, prompt)
+        XCTAssertEqual(bubble.frame.width, originalFrame.width, accuracy: 1)
+        XCTAssertEqual(bubble.frame.height, originalFrame.height, accuracy: 1)
+        XCTAssertTrue(final.exists, "Menu dismissal must preserve the conversation")
+        attachScreenshot("user-bubble-native-lift-restored", in: app)
+    }
+
     func testUI03SearchMessageAndDeduplicatedCitations() throws {
         try exerciseUI03SearchMessageAndDeduplicatedCitations(hebrew: false)
     }
@@ -920,10 +964,17 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertGreaterThan(summary.label.count, 140, "Long displayable output stays visible")
         let toggle = app.descendants(matching: .any)["hanlin-reasoning-toggle"].firstMatch
         XCTAssertTrue(toggle.waitForExistence(timeout: 5))
+        XCTAssertTrue(toggle.label.contains("Thinking"), "Expanded work keeps Thinking at the root")
+        XCTAssertFalse(toggle.label.contains("Working"), "The generic Working root must not return")
+        XCTAssertFalse(app.descendants(matching: .any)["hanlin-reasoning-live-status"].exists,
+                       "Provider text must not add a second Thinking header below the root")
+        attachScreenshot("activity-thinking-root-expanded", in: app)
         XCTAssertFalse(app.staticTexts["Thinking & tools"].exists)
         XCTAssertFalse(toggle.label.contains("Activity history"))
         tapElement(toggle)
         XCTAssertTrue(summary.waitForNonExistence(timeout: 5))
+        XCTAssertTrue(toggle.label.contains("Thinking"), "Manual collapse keeps the same root title")
+        attachScreenshot("activity-thinking-root-collapsed", in: app)
         acknowledgeCheckpoint(1)
 
         let interim = app.descendants(matching: .any).matching(NSPredicate(
@@ -941,6 +992,8 @@ final class AgentRuntimeConversationUITests: XCTestCase {
             format: "identifier == %@ AND label CONTAINS %@", "hanlin-reasoning-expanded-text",
             "ACTIVITY_SECOND_CHECKPOINT")).firstMatch
         XCTAssertTrue(second.waitForExistence(timeout: 5))
+        XCTAssertTrue(toggle.label.contains("Thinking"), "New reasoning still uses the one root indicator")
+        XCTAssertFalse(app.descendants(matching: .any)["hanlin-reasoning-live-status"].exists)
         XCTAssertTrue(summary.exists, "The first completed summary is retained beside later work")
         acknowledgeCheckpoint(3)
 

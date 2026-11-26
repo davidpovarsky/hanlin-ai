@@ -19,6 +19,10 @@ public struct HanlinUserMessageBubble<Menu: View>: View {
         self.temporaryRecord = temporaryRecord; menu = contextMenu()
     }
 
+    private var bubbleShape: HanlinMessageCorners {
+        HanlinMessageCorners(topLeft: 20, topRight: 20, bottomLeft: 20, bottomRight: 5)
+    }
+
     public var body: some View {
         HStack {
             Text(text)
@@ -30,8 +34,11 @@ public struct HanlinUserMessageBubble<Menu: View>: View {
         .foregroundColor(temporaryRecord
             ? (appearance.temporaryMessageForeground ?? Color(.systemBackground))
             : (appearance.userMessageForeground ?? .white))
+        // The lifted snapshot must already have the bubble's contour on the
+        // first long-press frame, before UIKit presents the menu.
+        .clipShape(bubbleShape)
+        .contentShape(.contextMenuPreview, bubbleShape)
         .contextMenu { menu }
-        .clipShape(HanlinMessageCorners(topLeft: 20, topRight: 20, bottomLeft: 20, bottomRight: 5))
         .fixedSize(horizontal: false, vertical: true)
         .frame(maxWidth: containerWidth * 0.75, alignment: .trailing)
         .accessibilityElement(children: .combine)

@@ -1,4 +1,4 @@
-/// Run lifetime owns the header phase; real reasoning and tool lifetimes own motion.
+/// Run lifetime owns the root Thinking indicator; actual tools own their row motion.
 /// `hasAnswerText` means a confirmed final answer, never provisional commentary.
 /// A gap between model/tool events must not turn a still-active run into history.
 public enum AgentActivityHeaderPhase: Equatable, Sendable {
@@ -32,9 +32,10 @@ public enum AgentActivityHeaderPhase: Equatable, Sendable {
     }
 }
 
-/// One visible owner per active path. Tool details are payload, not another
-/// activity node; expanding them does not move the shimmer into raw output.
-/// Concurrent tools can each own a leaf, but an ancestor never duplicates it.
+/// The root remains the live Thinking status while real tools keep their own
+/// row indicators. Expanding details never replaces or duplicates Thinking.
+/// Callers pass only tool paths; provider reasoning is displayed below the root
+/// as its actual text, without a second synthetic Thinking header.
 public enum AgentActivityShimmerOwner: Hashable, Sendable {
     case root
     case round(String)
@@ -58,11 +59,11 @@ public enum AgentActivityShimmerOwner: Hashable, Sendable {
 
     public static func resolve(isWorking: Bool, isHierarchyExpanded: Bool,
                         activePaths: [Path]) -> Set<Self> {
-        guard isWorking, !activePaths.isEmpty else { return [] }
+        guard isWorking else { return [] }
         guard isHierarchyExpanded else { return [.root] }
         return Set(activePaths.map { path in
             if let roundID = path.roundID, !path.isRoundExpanded { return .round(roundID) }
             return .activity(path.activityID)
-        })
+        }).union([.root])
     }
 }

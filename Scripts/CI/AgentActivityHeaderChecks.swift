@@ -55,22 +55,22 @@ struct AgentActivityHeaderChecks {
         check(Owner.resolve(isWorking: true, isHierarchyExpanded: false,
             activePaths: [expandedPath]) == [.root], "Collapsed root owns active sweep")
         check(Owner.resolve(isWorking: true, isHierarchyExpanded: true,
-            activePaths: [collapsedPath]) == [.round("round-1")], "Nearest collapsed parent owns active sweep")
+            activePaths: [collapsedPath]) == [.root, .round("round-1")], "Thinking stays above the nearest visible tool ancestor")
         check(Owner.resolve(isWorking: true, isHierarchyExpanded: true,
-            activePaths: [expandedPath]) == [.activity("search")], "Expanded hierarchy animates only the leaf")
+            activePaths: [expandedPath]) == [.root, .activity("search")], "Expanded hierarchy retains Thinking beside actual tool motion")
         let parallel = [collapsedPath,
             Owner.Path(activityID: "read", roundID: "round-1", isRoundExpanded: false),
             Owner.Path(activityID: "python", roundID: "round-2", isRoundExpanded: true),
             Owner.Path(activityID: "legacy", roundID: nil, isRoundExpanded: false)]
         check(Owner.resolve(isWorking: true, isHierarchyExpanded: true,
-            activePaths: parallel) == [.round("round-1"), .activity("python"), .activity("legacy")],
+            activePaths: parallel) == [.root, .round("round-1"), .activity("python"), .activity("legacy")],
             "Parallel branches deduplicate ancestors and preserve unattributed calls")
         check(Owner.resolve(isWorking: false, isHierarchyExpanded: true,
             activePaths: parallel).isEmpty, "Terminal or approval wait has no animated owner")
         check(Owner.resolve(isWorking: true, isHierarchyExpanded: true,
-            activePaths: []).isEmpty, "No real invocation means no synthetic active ancestor")
+            activePaths: []) == [.root], "A live root needs no fabricated invocation or reasoning leaf")
         check(AgentActivityHeaderPhase.resolve(isRunActive: true, hasPendingApproval: false) == .working,
-            "A live gap remains active without fabricating an activity or shimmer owner")
+            "A live gap retains Thinking without fabricating activity")
         for name in ["load_skill", "read_skill_resource", "tool_search", "report_progress", "read_tool_result"] {
             for kind in ["toolCall", "toolExecution", "codeExecution"] {
                 check(!AgentActivityVisibilityPolicy.showsInvocation(kind: kind, toolName: name, hasIdentity: true),
@@ -99,14 +99,12 @@ struct AgentActivityHeaderChecks {
             "A reasoning-only response must have a live activity header")
         let reasonMotion = AgentActivityVisibilityPolicy.animatesActivity(kind: "reasoning",
             status: "running", isRunActive: true, hasAnswerText: false, isAwaitingApproval: false)
-        check(reasonMotion, "The active reasoning leaf keeps the canonical blue sweep")
-        let reasonPath = Owner.Path(activityID: "reasoning-1", roundID: "round-1", isRoundExpanded: true)
-        check(Owner.resolve(isWorking: reasonPhase.showsShimmer, isHierarchyExpanded: true,
-            activePaths: reasonMotion ? [reasonPath] : []) == [.activity("reasoning-1")],
-            "Reasoning-only expansion must not drop all animated owners")
-        check(Owner.resolve(isWorking: reasonPhase.showsShimmer, isHierarchyExpanded: false,
-            activePaths: reasonMotion ? [reasonPath] : []) == [.root],
-            "Collapsing real reasoning transfers its sweep to the visible root")
+        check(reasonMotion, "Actual reasoning remains live without a second Thinking label")
+        for expanded in [true, false] {
+            check(Owner.resolve(isWorking: reasonPhase.showsShimmer, isHierarchyExpanded: expanded,
+                activePaths: []) == [.root],
+                "Reasoning has one Thinking title at the root regardless of expansion")
+        }
         check(!AgentActivityVisibilityPolicy.animatesActivity(kind: "reasoning",
             status: "running", isRunActive: true, hasAnswerText: true, isAwaitingApproval: false),
             "First answer text suppresses a stale running reasoning row")
@@ -153,14 +151,12 @@ struct AgentActivityHeaderChecks {
         }
         let requestPhase = AgentActivityHeaderPhase.resolve(isRunActive: true,
             hasPendingApproval: false, hasPendingModelRequest: admittedRequest)
-        let requestPath = Owner.Path(activityID: "model-request:provider-step-1",
-            roundID: nil, isRoundExpanded: true)
         check(requestPhase == .working, "An admitted request owns live motion before output")
         check(Owner.resolve(isWorking: requestPhase.showsShimmer, isHierarchyExpanded: false,
-            activePaths: [requestPath]) == [.root], "Collapsed pending request has one visible owner")
+            activePaths: []) == [.root], "Collapsed pending request has one visible owner")
         check(Owner.resolve(isWorking: requestPhase.showsShimmer, isHierarchyExpanded: true,
-            activePaths: [requestPath]) == [.activity("model-request:provider-step-1")],
-            "Expanded pending request animates its semantic leaf, not the parent")
+            activePaths: []) == [.root],
+            "An admitted request animates the root without a synthetic semantic leaf")
         check(AgentActivityHeaderPhase.resolve(isRunActive: true, hasPendingApproval: false,
             hasAnswerText: true, hasPendingModelRequest: true) == .history,
             "First answer suppresses even a delayed request receipt")
@@ -180,7 +176,7 @@ struct AgentActivityHeaderChecks {
         check(ChatDisclosureGeometry.revealedHeight(naturalHeight: 280, spacing: 6, progress: 1) == 286,
             "Full reveal preserves natural height and spacing")
         check(ChatDisclosureGeometry.extent(280) == 280, "Child keeps full viewport while parent collapses")
-        check(ChatMotionConfiguration.forPreset(.relaxed).shimmerDuration == 1.95, "Canonical V17 default sweep")
+        check(ChatMotionConfiguration.forPreset(.relaxed).shimmerDuration == 2.0, "Original Hanlin two-second sweep")
         check(ChatMotionConfiguration.forPreset(.heightReveal).shimmerDuration == 2.2, "User-selected tempo preserved")
         check(ChatMotionConfiguration.forPreset(.quietFade).shimmerDuration == 2.6, "Quiet tempo preserved")
         check(!ChatMotionConfiguration.forPreset(.none).showsShimmer, "Motion-off stays off")

@@ -1,0 +1,13 @@
+{
+  "AI_HLYTests/AgentActivityHeaderPhaseTests.swift": "9c9d1c5da6c64927732a20b9b0fc27e973aecdf0217b1bb6167e958980a63106",
+  "AI_HLYUITests/AgentRuntimeConversationUITests.swift": "223a2c54fdb032a35dab3efb5f3abbfd5679040685574cee6c393440ee484afb",
+  "Docs/SDK/HanlinMessageBubblePreservation.json": "78f684a184423340149d321fa0ab4c7a4414b9a65283035568833fa1c5d2841d",
+  "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityHeaderPhase.swift": "927de1e1a27618d73253b34cc3597e02d3ff41af60983c9182dd911760fcec79",
+  "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityUI/HanlinAgentActivityView.swift": "369334f4b74494385da8cbc7d9967008e3b7b2081eb594858b1b8bce4ebe315a",
+  "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinActivityHierarchy.swift": "3b7ad77d4ac4cb1e05ff68dae5a41229defb8b2846186654c14c02b13ef9fd83",
+  "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageBubble.swift": "c8ca0b950b08a84e2a8feb73f638668a3e614a28e10fb1667395fb12572f4720",
+  "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatMotionConfiguration.swift": "f69f4e098e0820eac6100f0536538b7496e55304e2226cc7b9cd7e71399dcb43",
+  "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatShimmerEffect.swift": "1e50716abf0d81150b4c16b69000c90d34afa02ef94f48bd1a95f18ac69baa2e",
+  "Scripts/CI/AgentActivityHeaderChecks.swift": "a4a1d2e3592302ab6dc1d806dcbe4be25deafa2edd31ff9e8b60923c6a17412d",
+  "Scripts/CI/ChatRegressionValidation/Tests/ComposerGlassRenderingTests.swift": "6c7ffd588cd937df01afa2a5a7ad080765706914a7abd4d819e49aef2ce0b38a"
+}

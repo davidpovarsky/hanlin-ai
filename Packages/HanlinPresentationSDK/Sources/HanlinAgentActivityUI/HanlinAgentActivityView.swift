@@ -90,17 +90,10 @@ public nonisolated struct HanlinAgentActivityView: View, Equatable {
     }
 
     @MainActor
-    private func headerTitle(for phase: AgentActivityHeaderPhase,
-                             activeActivities: [AgentDisplayActivity]) -> String {
+    private func headerTitle(for phase: AgentActivityHeaderPhase) -> String {
         switch phase {
         case .working:
-            if hierarchyIsExpanded { return String(localized: "Working…", bundle: HanlinLocalization.bundle) }
-            let titles = activeActivities.filter { $0.kind != .reasoning }.map(\.title)
-            if !titles.isEmpty { return titles.joined(separator: " · ") }
-            if activeActivities.contains(where: { $0.kind == .reasoning }) {
-                return String(localized: "Thinking", bundle: HanlinLocalization.bundle)
-            }
-            return String(localized: "Working…", bundle: HanlinLocalization.bundle)
+            return String(localized: "Thinking", bundle: HanlinLocalization.bundle)
         case .awaitingApproval:
             return String(localized: "Waiting for your confirmation", bundle: HanlinLocalization.bundle)
         case .history:
@@ -200,7 +193,7 @@ public nonisolated struct HanlinAgentActivityView: View, Equatable {
             uniquingKeysWith: { _, latest in latest })
         let phase = headerPhase(for: activities, approvals: approvals)
         let activeActivities = liveActivities(in: activities, phase: phase, approvals: approvals)
-        let paths = activeActivities.map {
+        let paths = activeActivities.filter { $0.kind != .reasoning }.map {
             AgentActivityShimmerOwner.Path(activityID: $0.id, roundID: nil, isRoundExpanded: true)
         }
         let shimmerOwners = AgentActivityShimmerOwner.resolve(isWorking: phase.showsShimmer,
@@ -219,8 +212,7 @@ public nonisolated struct HanlinAgentActivityView: View, Equatable {
                         // are not user work, so never become empty generic nodes.
                         ForEach(activities) { activity in
                             if activity.kind == .reasoning {
-                                reasoningRow(activity, run: run,
-                                    isCurrent: shimmerOwners.contains(.activity(activity.id)))
+                                reasoningRow(activity, run: run)
                             } else {
                                 activityRow(activity, approval: approvals[activity.id],
                                     isCurrent: shimmerOwners.contains(.activity(activity.id)))
@@ -246,19 +238,20 @@ public nonisolated struct HanlinAgentActivityView: View, Equatable {
                         approvalView(pending)
                     }
                 } label: {
-                    HanlinActivityHierarchyHeader(title: headerTitle(for: phase, activeActivities: activeActivities),
+                    HanlinActivityHierarchyHeader(title: headerTitle(for: phase),
                         symbol: "sparkles", isExpanded: hierarchyIsExpanded,
-                        isActive: shimmerOwners.contains(.root))
+                        isActive: shimmerOwners.contains(.root), isHistory: phase == .history)
                         .accessibilityIdentifier("hanlin-reasoning-toggle")
                 }
                 .disclosureGroupStyle(HanlinActivityDisclosureStyle(depth: 0))
                 .accessibilityElement(children: .contain)
                 .accessibilityIdentifier("hanlin-agent-activity-toggle")
             } else if hasLiveModelRequest {
-                // Request latency is a temporary root status, never a stored or
-                // expandable activity node and never evidence of actual thinking.
-                HanlinActivityTitle(String(localized: "Working…", bundle: HanlinLocalization.bundle),
-                    font: HanlinTypography.footnote, baseColor: .secondary, isActive: false)
+                // The same root status covers the admitted model request before
+                // its first output. It adds no synthetic stored activity or row.
+                HanlinActivityHierarchyHeader(
+                    title: String(localized: "Thinking", bundle: HanlinLocalization.bundle),
+                    symbol: "sparkles", isExpanded: false, isActive: phase.showsShimmer)
                     .accessibilityIdentifier("hanlin-model-request-status")
             }
         }
@@ -268,17 +261,9 @@ public nonisolated struct HanlinAgentActivityView: View, Equatable {
     }
 
     @MainActor
-    private func reasoningRow(_ activity: AgentDisplayActivity, run: AgentRun,
-                              isCurrent: Bool) -> some View {
+    private func reasoningRow(_ activity: AgentDisplayActivity, run: AgentRun) -> some View {
         let summary = AgentActivityComposer.reasoningDisplayText(for: activity, in: run)
-        return VStack(alignment: .leading, spacing: 5) {
-            if isCurrent {
-                HanlinToolActivityHeader(
-                    title: String(localized: "Thinking", bundle: HanlinLocalization.bundle),
-                    status: "", symbol: "sparkles", isActive: true, showsShimmer: true,
-                    startedAt: activity.startedAt, completedAt: activity.completedAt)
-                    .accessibilityIdentifier("hanlin-reasoning-live-status")
-            }
+        return Group {
             if !summary.isEmpty {
                 ReasoningDisplayText(text: summary)
             }
