@@ -1,0 +1,21 @@
+{
+  "source": "5638d02a32d6169d0974c3519400b1d9aca35250",
+  "command": [
+    "runuser",
+    "-u",
+    "chatgpt-agent",
+    "--",
+    "python3",
+    "Scripts/CI/plan_affected_validation.py",
+    "--base-sha",
+    "c34dd6ae752b3ab3ebc001743fc62c72fc48a203",
+    "--head-sha",
+    "5638d02a32d6169d0974c3519400b1d9aca35250",
+    "--json-output",
+    "docs/two-wave-integration/20261126/affected-validation-from-pr19.json"
+  ],
+  "exit": 1,
+  "seconds": 46.31792378425598,
+  "timedOut": false,
+  "logSHA256": "0f4923c432073b62c4a23387db58685061d54b43907ab0feea6cb65af05dd454"
+}

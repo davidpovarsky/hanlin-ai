@@ -60,7 +60,7 @@
     "Packages/HanlinAgentSDK/Package.swift": "16becff5f9e626f171d21f0277684c249c773f3169334fc9a63a37876c44a36e",
     "Packages/HanlinAppExtensionsSDK/Package.swift": "23056fa7df2e2aca75c3195452085a42151aa113f54370aeceb5a07df269d9bc",
     "Packages/HanlinExpoNativeAPI/Package.swift": "c5fd18fa28a1842be0351053d978cc55b752546dc798c663f0dedabfdbefc28c",
-    "Packages/HanlinExpoRuntime/Package.swift": "d4157d16c1d505b408cf4b78f7ab59f53ff607ea94e0c4e51a4e2c088a691f37",
+    "Packages/HanlinExpoRuntime/Package.swift": "6a4169ffd1975358466068c3f7776d8ac88fab4b6c0b883005669522086cda0e",
     "Packages/HanlinExpoWidgetSubset/Package.swift": "ed50b8b4f6ee4532ff3ed2af82d7994c7718e958387495280f9a939218323a41",
     "Packages/HanlinMiniAppsBridge/Package.swift": "579cdb6febf974d7f463aee0cd6592cdf0cfd5a4c8e53840009ff170e52b6e2e",
     "Packages/HanlinNativeScriptRuntime/Package.swift": "88a4926e884e6804246a7d077efed3837271886a9825585b1e561b4ce1576120",

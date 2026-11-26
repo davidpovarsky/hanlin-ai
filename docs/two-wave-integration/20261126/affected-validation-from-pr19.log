@@ -1,0 +1,53 @@
+================================================================================
+ROUTING ERROR: Affected-test routing is incomplete.
+
+Unmapped changed paths:
+  - AI_HLYTests/AgentActivityHeaderPhaseTests.swift
+  - AI_HLYTests/AgentTokenUsageCacheTests.swift
+  - AI_HLYTests/AutomaticWebSearchCacheTests.swift
+  - AI_HLYTests/HanlinComposerCapabilityIntegrationTests.swift
+  - AI_HLYTests/HanlinConversationMetadataTests.swift
+  - AI_HLYTests/HanlinMiniAppAssistantIntegrationTests.swift
+  - AI_HLYTests/HanlinMiniAppAssistantToolAcceptanceTests.swift
+  - AI_HLYTests/HanlinMiniAppAssistantToolTests.swift
+  - AI_HLYTests/HanlinModelPromptCachePersistenceTests.swift
+  - AI_HLYTests/HanlinOpenUIBridgeTests.swift
+  - AI_HLYTests/HanlinPromptCachingIntegrationTests.swift
+  - AI_HLYTests/HanlinSidebarGestureTests.swift
+  - AI_HLYTests/NodeHostHealthRecoveryTests.swift
+  - AI_HLYUITests/HanlinComposerCapabilitiesUITests.swift
+  - AI_HLYUITests/HanlinSidebarNavigationUITests.swift
+  - Docs/SDK/Validation/post149101-activity-20261126/portable-checks.stdout.txt
+  - Docs/SDK/Validation/post149101-activity-20261126/portable-result.json
+  - Docs/SDK/Validation/post149101-activity-20261126/source-fingerprints.json
+  - Docs/SDK/Validation/post149101-activity-20261126/validation-plan.json
+  - Docs/SDK/Validation/post149101-metadata-review-20261126/finish-reason-validation.json
+  - Docs/SDK/Validation/post149101-metadata-review-20261126/syntax-validation.json
+  - Docs/Validation/Post149101Metadata/portable-metadata.stdout.txt
+  - Docs/Validation/Post149101Metadata/portable-result.json
+  - Docs/Validation/Post149101Metadata/validation-plan.json
+  - Docs/Validation/Post149101RuntimeRecovery.json
+  - Examples/HanlinLauncherLab/Sources/MyApp.swift
+  - Examples/HanlinLauncherLab/project.yml
+  - Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsBridge/MiniAppContracts.swift
+  - Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsPicker/MiniAppPicker.swift
+  - Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsPicker/Resources/en.lproj/Localizable.strings
+  - Packages/HanlinMiniAppsBridge/Sources/HanlinMiniAppsPicker/Resources/he.lproj/Localizable.strings
+  - Packages/HanlinMiniAppsBridge/Tests/HanlinMiniAppsBridgeTests/MiniAppBridgeTests.swift
+  - Scripts/MiniApps/AssistantExamples/index.json
+  - Scripts/MiniApps/AssistantExamples/map-places/hanlin.authoring.json
+  - Scripts/MiniApps/AssistantExamples/map-places/index.ts
+  - Scripts/MiniApps/AssistantExamples/map-places/package.json
+  - Scripts/MiniApps/AssistantExamples/map-places/places.ts
+  - Scripts/MiniApps/AssistantExamples/map-places/script.json
+  - Scripts/MiniApps/AssistantExamples/map-places/tsconfig.json
+  - Scripts/MiniApps/assistant-tools.d.ts
+  - Scripts/MiniApps/assistant-tools.schema.json
+  - Scripts/NativeScript/build_package_window_fixtures.py
+  - Scripts/NativeScript/window-factory.d.ts
+  - Scripts/Tests/run_private_store_tests.py
+  - Scripts/Tests/verify_chatgpt_plan_contract.swift
+
+Add an explicit routing rule in Scripts/CI/affected-validation-map.json before validation can continue.
+DO NOT RUN FULL VALIDATION AS A FALLBACK.
+================================================================================
