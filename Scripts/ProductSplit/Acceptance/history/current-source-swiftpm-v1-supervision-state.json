@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "id": "current-source-swiftpm-v1-supervision",
+  "source": "542714964a0f12a964651c2306d5f992ca13ae85",
+  "sourceTree": "baaced5849be2391036f1ec84fb42e3812535744",
+  "status": "FAILED",
+  "runner": {
+    "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-independent-swiftpm-controls-v1/run-current-swiftpm-v1.py",
+    "bytes": 15102,
+    "sha256": "edcca6408f8a2df57692b7c253b2c8f2ca2367fb443b420dc8b3f534dded10e3"
+  },
+  "decision": {
+    "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-final-native-controls-v1/current-native-v1-decision-v3.json",
+    "bytes": 59892,
+    "sha256": "b6caf28bf3d6aa88077e91edcd507e8d941287689c98b3fec96855ab8db94b97"
+  },
+  "argv": [
+    "/opt/homebrew/opt/python@3.12/bin/python3.12",
+    "-B",
+    "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-independent-swiftpm-controls-v1/run-current-swiftpm-v1.py",
+    "--decision",
+    "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-final-native-controls-v1/current-native-v1-decision-v3.json"
+  ],
+  "startedAt": "2026-11-26T20:07:50.034218+00:00",
+  "timeoutSeconds": 2700,
+  "signals": [],
+  "cleanupErrors": [],
+  "childStatus": "FAILED",
+  "childChargeCommitted": true,
+  "boundary": "One unchanged runner invocation. Exact owned process-group supervision is separate from its original command and test evidence.",
+  "pid": 14579,
+  "pgid": 14579,
+  "childExitCode": 1,
+  "ownedProcessGroupAbsent": true,
+  "childState": {
+    "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-swiftpm-v1/state.json",
+    "bytes": 4526,
+    "sha256": "262736a12db1ae311550e54770da20caaaa9c37310d90a78fa872bcaf4c839f9"
+  },
+  "childReportedActualElapsedSeconds": 173.54221920800046,
+  "childLedger": {
+    "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-swiftpm-v1/ledger.json",
+    "bytes": 1442,
+    "sha256": "432d40a40d7075d0be4110d6e59d643c9b8f4cb66e8c1b67b4cb2162bc72cd70"
+  },
+  "finishedAt": "2026-11-26T20:10:45.110791+00:00",
+  "actualElapsedSeconds": 175.076669416012,
+  "additionalObservedElapsedSeconds": 1.534450208011549,
+  "accountingBoundary": "The unchanged child ledger records its actual phase time. Additional observed supervision time is retained separately for one additive continuation row; no prior charge is reset."
+}

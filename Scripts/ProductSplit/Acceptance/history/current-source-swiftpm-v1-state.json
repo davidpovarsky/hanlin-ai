@@ -1,0 +1,99 @@
+{
+  "schema": 1,
+  "id": "current-source-swiftpm-v1",
+  "status": "FAILED",
+  "source": "542714964a0f12a964651c2306d5f992ca13ae85",
+  "sourceTree": "baaced5849be2391036f1ec84fb42e3812535744",
+  "decision": {
+    "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-final-native-controls-v1/current-native-v1-decision-v3.json",
+    "bytes": 59892,
+    "sha256": "b6caf28bf3d6aa88077e91edcd507e8d941287689c98b3fec96855ab8db94b97"
+  },
+  "helper": {
+    "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-independent-swiftpm-controls-v1/run-current-swiftpm-v1.py",
+    "bytes": 15102,
+    "sha256": "edcca6408f8a2df57692b7c253b2c8f2ca2367fb443b420dc8b3f534dded10e3"
+  },
+  "startedAt": "2026-11-26T20:07:51.554953+00:00",
+  "evidence": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-swiftpm-v1/original/paired-product",
+  "sourceBefore": {
+    "head": "542714964a0f12a964651c2306d5f992ca13ae85",
+    "tree": "baaced5849be2391036f1ec84fb42e3812535744",
+    "trackedDiff": "",
+    "sdkSourceInputsVerified": 368,
+    "requiredFilesVerified": 161,
+    "host": {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/AI_HLY/RuntimeHostResources.zip",
+      "bytes": 81917706,
+      "sha256": "548bf531a51935343b4790cbd1b3acfc35ac16ac2ec4a32cececf6a0f83c5de9"
+    },
+    "sdkManifest": {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-miniapp-sdk.json",
+      "bytes": 5260531,
+      "sha256": "c0cc7d9354c65991ce4bd26a6c249f6b37d3e68f9066fe95336f1447f69c2b5c"
+    }
+  },
+  "toolchainBefore": {
+    "developerDir": "/Applications/Xcode.app/Contents/Developer",
+    "xcode": "Xcode 27.0\nBuild version 27A266a",
+    "swift": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0",
+    "macOS": "27.0",
+    "architecture": "arm64"
+  },
+  "sourceErrors": [],
+  "groups": [
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-swiftpm-v1/original/paired-product/widget-host-action-queue-review.json",
+      "bytes": 9638,
+      "sha256": "9cf56cae85b20a3a82eeee4d79c8b8bc4785cdab1f90e5d9c1e3142942ad2f8b"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-swiftpm-v1/original/paired-product/affected-swiftpm-review.json",
+      "bytes": 2324,
+      "sha256": "2c0c117785f308864ef058e3bed5096d07d0933779943a9bbebd0f195b992e85"
+    }
+  ],
+  "chargedCurrentValidationBeforeSeconds": 531.9184874589846,
+  "validationScopeSeconds": 10800,
+  "scratch": "/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/swiftpm-widget-host-actions",
+  "scratchRetired": false,
+  "chargeCommitted": true,
+  "boundary": "Only the exact original independent queue and affected SwiftPM obligations execute; no app build, simulator, original52, hosted or signing result is implied.",
+  "error": {
+    "type": "AssertionError",
+    "message": "{'phase': 'affected-swiftpm', 'exitCode': 1}"
+  },
+  "sourceAfter": {
+    "head": "542714964a0f12a964651c2306d5f992ca13ae85",
+    "tree": "baaced5849be2391036f1ec84fb42e3812535744",
+    "trackedDiff": "",
+    "sdkSourceInputsVerified": 368,
+    "requiredFilesVerified": 161,
+    "host": {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/AI_HLY/RuntimeHostResources.zip",
+      "bytes": 81917706,
+      "sha256": "548bf531a51935343b4790cbd1b3acfc35ac16ac2ec4a32cececf6a0f83c5de9"
+    },
+    "sdkManifest": {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-miniapp-sdk.json",
+      "bytes": 5260531,
+      "sha256": "c0cc7d9354c65991ce4bd26a6c249f6b37d3e68f9066fe95336f1447f69c2b5c"
+    }
+  },
+  "toolchainAfter": {
+    "developerDir": "/Applications/Xcode.app/Contents/Developer",
+    "xcode": "Xcode 27.0\nBuild version 27A266a",
+    "swift": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0",
+    "macOS": "27.0",
+    "architecture": "arm64"
+  },
+  "finishedAt": "2026-11-26T20:10:45.096931+00:00",
+  "actualElapsedSeconds": 173.54221920800046,
+  "totalCurrentValidationChargedSeconds": 705.4607066669851,
+  "remainingCurrentValidationSeconds": 10094.539293333015,
+  "ledger": {
+    "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-swiftpm-v1/ledger.json",
+    "bytes": 1442,
+    "sha256": "432d40a40d7075d0be4110d6e59d643c9b8f4cb66e8c1b67b4cb2162bc72cd70"
+  }
+}

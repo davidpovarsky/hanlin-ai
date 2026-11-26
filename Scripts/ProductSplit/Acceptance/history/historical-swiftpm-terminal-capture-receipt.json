@@ -1,0 +1,122 @@
+{
+  "schema": 1,
+  "observedAt": "2026-11-26T20:12:43.113315+00:00",
+  "stateStatus": "FAILED",
+  "supervisionStatus": "FAILED",
+  "members": [
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-swiftpm-v1/state.json",
+      "path": "current-source-swiftpm-v1/state.json",
+      "bytes": 4526,
+      "sha256": "262736a12db1ae311550e54770da20caaaa9c37310d90a78fa872bcaf4c839f9",
+      "retainedPath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/current-independent-swiftpm-terminal-v1/raw/current-source-swiftpm-v1/state.json"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-swiftpm-v1/ledger.json",
+      "path": "current-source-swiftpm-v1/ledger.json",
+      "bytes": 1442,
+      "sha256": "432d40a40d7075d0be4110d6e59d643c9b8f4cb66e8c1b67b4cb2162bc72cd70",
+      "retainedPath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/current-independent-swiftpm-terminal-v1/raw/current-source-swiftpm-v1/ledger.json"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-swiftpm-v1-supervision/state.json",
+      "path": "current-source-swiftpm-v1-supervision/state.json",
+      "bytes": 2420,
+      "sha256": "d14ab36d110a229aa488e91950480745274ac2f509aec5136ff59782722a8435",
+      "retainedPath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/current-independent-swiftpm-terminal-v1/raw/current-source-swiftpm-v1-supervision/state.json"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-swiftpm-v1-supervision/runner.log",
+      "path": "current-source-swiftpm-v1-supervision/runner.log",
+      "bytes": 1753,
+      "sha256": "c72a38d4d7020211ab8562b83991d68d55e19d75a3a5bb6b53799719b54a6655",
+      "retainedPath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/current-independent-swiftpm-terminal-v1/raw/current-source-swiftpm-v1-supervision/runner.log"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-swiftpm-v1-supervisor.log",
+      "path": "current-source-swiftpm-v1-supervisor.log",
+      "bytes": 249,
+      "sha256": "90d9012d2098d0f965cf5dae4c314841f4f86b389c5d1a98e6b142454133cafa",
+      "retainedPath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/current-independent-swiftpm-terminal-v1/raw/current-source-swiftpm-v1-supervisor.log"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-swiftpm-v1-launch.json",
+      "path": "current-source-swiftpm-v1-launch.json",
+      "bytes": 2945,
+      "sha256": "52220446248c0db80154d6a2eb5d2a70455cfb27a322f85c83d906eeb756b954",
+      "retainedPath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/current-independent-swiftpm-terminal-v1/raw/current-source-swiftpm-v1-launch.json"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-swiftpm-v1-admission.json",
+      "path": "current-source-swiftpm-v1-admission.json",
+      "bytes": 442,
+      "sha256": "e2250677d87ddd31778c98f670e967893e939cdd17003e1d059a47d7002757b7",
+      "retainedPath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/current-independent-swiftpm-terminal-v1/raw/current-source-swiftpm-v1-admission.json"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-swiftpm-v1/original/paired-product/active-command.json",
+      "path": "current-source-swiftpm-v1/original/paired-product/active-command.json",
+      "bytes": 1579,
+      "sha256": "6fc1b806beaacac51c373a8ae28fd8528fdd24caf4529d2092746c9590681be5",
+      "retainedPath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/current-independent-swiftpm-terminal-v1/raw/current-source-swiftpm-v1/original/paired-product/active-command.json"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-swiftpm-v1/original/paired-product/affected-swiftpm-events.jsonl",
+      "path": "current-source-swiftpm-v1/original/paired-product/affected-swiftpm-events.jsonl",
+      "bytes": 1281632,
+      "sha256": "a6c0c35691cd40e87889fe4230165d12bdf2d6b410c42fcad437f3c12adc0eb5",
+      "retainedPath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/current-independent-swiftpm-terminal-v1/raw/current-source-swiftpm-v1/original/paired-product/affected-swiftpm-events.jsonl"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-swiftpm-v1/original/paired-product/affected-swiftpm-review.json",
+      "path": "current-source-swiftpm-v1/original/paired-product/affected-swiftpm-review.json",
+      "bytes": 2324,
+      "sha256": "2c0c117785f308864ef058e3bed5096d07d0933779943a9bbebd0f195b992e85",
+      "retainedPath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/current-independent-swiftpm-terminal-v1/raw/current-source-swiftpm-v1/original/paired-product/affected-swiftpm-review.json"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-swiftpm-v1/original/paired-product/affected-swiftpm-tests.log",
+      "path": "current-source-swiftpm-v1/original/paired-product/affected-swiftpm-tests.log",
+      "bytes": 448363,
+      "sha256": "a1c630c88e6eeff5bd0f36c1faa88981f5f8e7ded515ea665259896408c4428a",
+      "retainedPath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/current-independent-swiftpm-terminal-v1/raw/current-source-swiftpm-v1/original/paired-product/affected-swiftpm-tests.log"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-swiftpm-v1/original/paired-product/command-events.jsonl",
+      "path": "current-source-swiftpm-v1/original/paired-product/command-events.jsonl",
+      "bytes": 10105,
+      "sha256": "f64af577c695dc98e4af7713ee01032cfcb9aef2b59a726ea41eefbe1e7abf21",
+      "retainedPath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/current-independent-swiftpm-terminal-v1/raw/current-source-swiftpm-v1/original/paired-product/command-events.jsonl"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-swiftpm-v1/original/paired-product/commands.jsonl",
+      "path": "current-source-swiftpm-v1/original/paired-product/commands.jsonl",
+      "bytes": 1891,
+      "sha256": "91452e29635b082daa80d34218cd8ae67fb7dfce80949a815166493723ef4e13",
+      "retainedPath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/current-independent-swiftpm-terminal-v1/raw/current-source-swiftpm-v1/original/paired-product/commands.jsonl"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-swiftpm-v1/original/paired-product/resource-phase-observations.jsonl",
+      "path": "current-source-swiftpm-v1/original/paired-product/resource-phase-observations.jsonl",
+      "bytes": 7637,
+      "sha256": "95ae2488c5e321efc243773bc90996b997fa050834d8ddf1136a7bb0d40e0861",
+      "retainedPath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/current-independent-swiftpm-terminal-v1/raw/current-source-swiftpm-v1/original/paired-product/resource-phase-observations.jsonl"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-swiftpm-v1/original/paired-product/widget-host-action-queue-review.json",
+      "path": "current-source-swiftpm-v1/original/paired-product/widget-host-action-queue-review.json",
+      "bytes": 9638,
+      "sha256": "9cf56cae85b20a3a82eeee4d79c8b8bc4785cdab1f90e5d9c1e3142942ad2f8b",
+      "retainedPath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/current-independent-swiftpm-terminal-v1/raw/current-source-swiftpm-v1/original/paired-product/widget-host-action-queue-review.json"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-swiftpm-v1/original/paired-product/widget-host-action-queue-tests.log",
+      "path": "current-source-swiftpm-v1/original/paired-product/widget-host-action-queue-tests.log",
+      "bytes": 29719,
+      "sha256": "c607b35313eb6ab4334a30bf4741fb0aa7ca6a70cea40a71c5880923633bd2bd",
+      "retainedPath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/current-independent-swiftpm-terminal-v1/raw/current-source-swiftpm-v1/original/paired-product/widget-host-action-queue-tests.log"
+    }
+  ],
+  "copiedAt": "2026-11-26T20:12:44.042294+00:00",
+  "boundary": "Exact finalized child and owned-supervisor evidence; no test or source result synthesized."
+}

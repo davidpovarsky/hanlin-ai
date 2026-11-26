@@ -1,0 +1,113 @@
+{
+  "schema": 1,
+  "status": "HISTORICAL_ACCOUNTING_AUTHENTICATED",
+  "observedAt": "2026-11-26T21:41:41.038043+00:00",
+  "originalContinuation": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/current-source-swiftpm-portable-acceptance-v1/repository/Scripts/ProductSplit/Acceptance/history/original-failed-history-continuation.json",
+    "bytes": 2708,
+    "sha256": "efd43f7a6850801914fc33adb1a95c291a840c5a4beb28bc8f7268c7376d2389"
+  },
+  "acceptedCoordinator": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/current-source-swiftpm-portable-acceptance-v1/repository/Scripts/ProductSplit/Acceptance/history/accepted-failed-history-coordinator.py",
+    "bytes": 19403,
+    "sha256": "a922083c06f9369769e77dc8221904889911c82426881aa9e9a217a115ac9fe5"
+  },
+  "acceptedFunction": "validation_history",
+  "acceptedFunctionSourceSHA256": "f593d6f3cf7b25a4c93f8317d7abe2b57a5369e37be841119292e429ef3b517c",
+  "acceptedFunctionASTUnchanged": true,
+  "resolverBoundary": "Original locators are resolved only through the exact retained-byte map on Oracle. No Mac call or read from an original locator path occurs, and no historical source is asserted equal to the current source.",
+  "originalLocatorLookups": [
+    {
+      "originalAuthority": {
+        "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-builds-v1/state.json",
+        "bytes": 7157,
+        "sha256": "a3523c3f47c8fc4845fce453712023b5666f72410ad5ace7f88afc9c4558005d"
+      },
+      "retainedPath": "current-source-builds-v1-state.json"
+    },
+    {
+      "originalAuthority": {
+        "path": "/Users/m1/builds/hanlin-camera-conformance-probe-20261126-v1/state.json",
+        "bytes": 16498,
+        "sha256": "2ab21e2361388d3c0dd8d1996af11bf4db6e17adb8a6a243de0ee8c44e086bee"
+      },
+      "retainedPath": "camera-isolated-conformance-probe-v1-state.json"
+    },
+    {
+      "originalAuthority": {
+        "path": "/Users/m1/builds/hanlin-camera-conformance-probe-20261126-v2/state.json",
+        "bytes": 32839,
+        "sha256": "90c339722bf856629aaf44b0883e8580d3dfde01508efd3fc8f241369333ef25"
+      },
+      "retainedPath": "camera-isolated-conformance-probe-v2-state.json"
+    },
+    {
+      "originalAuthority": {
+        "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-swiftpm-v1/state.json",
+        "bytes": 4526,
+        "sha256": "262736a12db1ae311550e54770da20caaaa9c37310d90a78fa872bcaf4c839f9"
+      },
+      "retainedPath": "current-source-swiftpm-v1-state.json"
+    },
+    {
+      "originalAuthority": {
+        "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-swiftpm-v1-supervision/state.json",
+        "bytes": 2420,
+        "sha256": "d14ab36d110a229aa488e91950480745274ac2f509aec5136ff59782722a8435"
+      },
+      "retainedPath": "current-source-swiftpm-v1-supervision-state.json"
+    },
+    {
+      "originalAuthority": {
+        "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-swiftpm-v1/state.json",
+        "bytes": 4526,
+        "sha256": "262736a12db1ae311550e54770da20caaaa9c37310d90a78fa872bcaf4c839f9"
+      },
+      "retainedPath": "current-source-swiftpm-v1-state.json"
+    },
+    {
+      "originalAuthority": {
+        "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-swiftpm-v1-supervision/state.json",
+        "bytes": 2420,
+        "sha256": "d14ab36d110a229aa488e91950480745274ac2f509aec5136ff59782722a8435"
+      },
+      "retainedPath": "current-source-swiftpm-v1-supervision-state.json"
+    },
+    {
+      "originalAuthority": {
+        "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-final-native-controls-v1/current-native-v1-decision-v3.json",
+        "bytes": 59892,
+        "sha256": "b6caf28bf3d6aa88077e91edcd507e8d941287689c98b3fec96855ab8db94b97"
+      },
+      "retainedPath": "historical-current-native-v1-decision-v3.json"
+    },
+    {
+      "originalAuthority": {
+        "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-swiftpm-v1/ledger.json",
+        "bytes": 1442,
+        "sha256": "432d40a40d7075d0be4110d6e59d643c9b8f4cb66e8c1b67b4cb2162bc72cd70"
+      },
+      "retainedPath": "current-source-swiftpm-v1-ledger.json"
+    },
+    {
+      "originalAuthority": {
+        "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-independent-swiftpm-controls-v1/supervise-current-swiftpm-v1.py",
+        "bytes": 6396,
+        "sha256": "19c237580de1d42aeec0eb1443f34643d2dfdd6ad36d82e745461b575d680259"
+      },
+      "retainedPath": "supervise-current-swiftpm-v1.py"
+    }
+  ],
+  "allOriginalRowsUnchangedApartFromRetentionLocators": true,
+  "chargedSeconds": 706.9951568749966,
+  "validationScopeSeconds": 10800,
+  "remainingSeconds": 10093.004843125003,
+  "childSeconds": 173.54221920800046,
+  "supervisionTotalSecondsPreserved": 175.076669416012,
+  "supervisionAdditionalSecondsChargedOnce": 1.534450208011549,
+  "historicalChildAndSupervisorStatus": "FAILED",
+  "ownedProcessGroupAbsent": true,
+  "historicalQueueStatus": "EXECUTED_PASS",
+  "successfulReuse": false,
+  "nativeExecution": false
+}

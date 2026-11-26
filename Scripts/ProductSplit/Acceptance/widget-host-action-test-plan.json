@@ -1,0 +1,67 @@
+{
+  "status": "NOT_RUN",
+  "suite": "HanlinWidgetHostActionTests",
+  "target": "HanlinScriptExtensionsTests",
+  "functions": 10,
+  "parameterInstances": 16,
+  "tests": [
+    {
+      "name": "ordinaryJSONParametersKeepNullNumbersUnicodeAndOmission",
+      "instances": 1
+    },
+    {
+      "name": "currentOriginQueuesExactDeclaredTargetAndRetainsNull(engine:)",
+      "instances": 2,
+      "arguments": [
+        "expo",
+        "scriptwidget"
+      ]
+    },
+    {
+      "name": "liveActivityParametersOverrideDefaultsWithoutChangingSourceIdentity",
+      "instances": 1
+    },
+    {
+      "name": "nativeNodeLiveActivityRecordsItsRealRouteAndRetainsLegacyCompatibility",
+      "instances": 1
+    },
+    {
+      "name": "optionalPresentationKeepsRealHandlerButPanelOnlyCannotQueue",
+      "instances": 1
+    },
+    {
+      "name": "explicitNonceRetainsReceiptAndRejectsConflictingParameters",
+      "instances": 1
+    },
+    {
+      "name": "invalidCurrentOriginOrTargetDoesNotEnqueue(reason:)",
+      "instances": 6,
+      "arguments": [
+        "disabled",
+        "removedVariant",
+        "staleProgram",
+        "missingTarget",
+        "wrongProduct",
+        "duplicateTarget"
+      ]
+    },
+    {
+      "name": "queuedOriginIsRevalidatedAfterDisableAndCancellationDoesNotExecute",
+      "instances": 1
+    },
+    {
+      "name": "continuationUsesCanonicalStoreRootBeforeAndAfterCreation",
+      "instances": 1
+    },
+    {
+      "name": "activationBeforeEnqueueUsesExistingDrainAndMissingHostKeepsQueue",
+      "instances": 1
+    }
+  ],
+  "separateFrom": [
+    "original 25+27 acceptance",
+    "real handler regression",
+    "six real system-surface UI attempts",
+    "separate NativeScript five-runtime and OS notification gates"
+  ]
+}

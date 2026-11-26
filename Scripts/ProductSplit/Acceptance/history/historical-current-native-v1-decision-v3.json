@@ -1,0 +1,1142 @@
+{
+  "schema": 1,
+  "id": "current-source-native-v1",
+  "status": "SEALED",
+  "source": "542714964a0f12a964651c2306d5f992ca13ae85",
+  "sourceTree": "baaced5849be2391036f1ec84fb42e3812535744",
+  "root": "/Users/m1/builds/hanlin-current-entrypoints-20261126",
+  "output": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-native-v1",
+  "derivedData": "/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126",
+  "controller": {
+    "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-final-native-controls-v1/run-current-acceptance-v1.py",
+    "bytes": 16066,
+    "sha256": "60c907ccbf00e146745da3935e54db6f3615a9b530e2adefbd27f91dd7cbeecb"
+  },
+  "guard": {
+    "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-final-native-controls-v1/run-current-original-paired-v5.py",
+    "bytes": 51493,
+    "sha256": "e8e7d3460943771f722ae2bca9c24f08267426bc4de66f690d8041622afbb57e"
+  },
+  "originalRunner": {
+    "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/ProductSplit/run_paired_acceptance.py",
+    "bytes": 47871,
+    "sha256": "a99b6194f8dd20bc30998ff2ad9e86ec219415a00615b250c65670f7dfcdba7d"
+  },
+  "resourceAssessment": {
+    "authority": {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-final-native-controls-v1/current-phase-resource-assessment-v2.json",
+      "bytes": 12450,
+      "sha256": "4fd6189b7d4860ed875d9bb06f74d9f5fd63a52e65ec120384e4c392486161cc"
+    },
+    "minimumFreeBytes": 12193722112
+  },
+  "shippingInventory": {
+    "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-acceptance-controls-v1/shipping-bundles.json",
+    "bytes": 28645,
+    "sha256": "9b2c2525a8c67a2ca5938c3463f941bb80545b4137c3b58f0a24ad96d7609a5f"
+  },
+  "currentSDK": {
+    "producerSource": "13bfad937c9e61e0bea839fdf1f3b5b1e7652b69",
+    "currentConsumerSource": "542714964a0f12a964651c2306d5f992ca13ae85",
+    "manifest": {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-miniapp-sdk.json",
+      "bytes": 5260531,
+      "sha256": "c0cc7d9354c65991ce4bd26a6c249f6b37d3e68f9066fe95336f1447f69c2b5c"
+    },
+    "inputSHA256": "16848778f81c4037af816d24cd88f2938e47c9220d9fdf8d65876f5ce9e786c6",
+    "host": {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/AI_HLY/RuntimeHostResources.zip",
+      "bytes": 81917706,
+      "sha256": "548bf531a51935343b4790cbd1b3acfc35ac16ac2ec4a32cececf6a0f83c5de9"
+    },
+    "sourceInputs": 368,
+    "payloadFiles": 25697,
+    "producer": {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/root-four-entrypoints-sdk-producer-v7/state.json",
+      "bytes": 6146,
+      "sha256": "50aafa31c57ccc82bd87249be74d61295b4b6201fc61992ba7cbaca52ba2b769"
+    },
+    "root": "/Users/m1/builds/hanlin-current-entrypoints-20261126/build/current-sdk-host-v2/MiniAppSDK"
+  },
+  "validationScopeSeconds": 10800,
+  "chargedCurrentValidationBeforeSeconds": 531.9184874589846,
+  "historicalC34": {
+    "source": "c34dd6ae752b3ab3ebc001743fc62c72fc48a203",
+    "status": "INCOMPLETE_INFRASTRUCTURE_INTERRUPTED",
+    "actualChargedSeconds": 13369.258655683429,
+    "originalCeilingSeconds": 14400,
+    "authorizedAdditionalSeconds": 3600,
+    "combinedCeilingSeconds": 18000,
+    "productsObservation": {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/r4-v17-preflight-path-reconciliation-v1/state.json",
+      "bytes": 258168,
+      "sha256": "a59a83057631f753ab2abaa9395412f3b2d66f366df80b7b84199dbcdec5ab3d"
+    },
+    "boundary": "Old c34 source/results and all actual charges retained; its products disappeared, no c34 acceptance or charge reset is claimed."
+  },
+  "preparationHistory": {
+    "components": [
+      {
+        "id": "current-source-native-preparation-v1",
+        "authority": {
+          "path": "/Users/m1/builds/hanlin-current-entrypoints-preparation-20261126-v1/state.json",
+          "bytes": 50422,
+          "sha256": "b9d19036109d279ee8f385effae32829a2627e0cc0e5a806323f66c9355d52a8"
+        },
+        "status": "SOURCE_AND_NATIVE_INPUTS_PREPARED_SDK_PENDING",
+        "seconds": 26.08193487499375
+      },
+      {
+        "id": "current-source-package-resolution-v1",
+        "authority": {
+          "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/native-package-resolution-v1/state.json",
+          "bytes": 60505,
+          "sha256": "966db18cb4d9e670791bfadab7ef0ca763cdcc640e1cf8cbf7f2905c2a90516e"
+        },
+        "status": "RESOLVED_ORIGINAL_PINNED_GRAPH",
+        "seconds": 84.79754241599585
+      },
+      {
+        "id": "current-sdk-native-staging-v1",
+        "authority": {
+          "path": "/Users/m1/builds/hanlin-current-sdk-staging-20261126-v1/state.json",
+          "bytes": 11081,
+          "sha256": "edd9909a14a3319c87d82b3b54d3461cf6c71eac9b401366dbdef31d71eb5c85"
+        },
+        "status": "CURRENT_SOURCE_SDK_TOOLING_AND_HOSTED_FIXTURE_PREPARED",
+        "seconds": 135.16120637502172
+      },
+      {
+        "id": "current-upstream-native-preparation-v1",
+        "authority": {
+          "path": "/Users/m1/builds/hanlin-current-upstream-native-preparation-20261126-v1/state.json",
+          "bytes": 62898,
+          "sha256": "8811057a226e170137242525d6875f9e7a1092ed87567e1bb019c0e94a80bbde"
+        },
+        "status": "FAILED",
+        "seconds": 481.7081525839749
+      },
+      {
+        "id": "current-upstream-native-completion-v1",
+        "authority": {
+          "path": "/Users/m1/builds/hanlin-current-native-completion-20261126-v1/state.json",
+          "bytes": 58485,
+          "sha256": "061f8ebda10478ab6ecc5d14d10f4ad75b4c85257fa8f0d658b695d736f0d948"
+        },
+        "status": "PREPARED_ORIGINAL_NATIVE_INPUTS",
+        "seconds": 2.8569424170127604
+      },
+      {
+        "id": "current-final-sdk-staging-v2",
+        "authority": {
+          "path": "/Users/m1/builds/hanlin-current-final-sdk-staging-20261126-v2/state.json",
+          "bytes": 38240,
+          "sha256": "47791a864decb0ed0235097b3ae09de7d9da54e8988270ef96d25e3ee600e3fd"
+        },
+        "status": "CURRENT_SOURCE_FINAL_SDK_STAGED",
+        "seconds": 32.402945832989644
+      },
+      {
+        "id": "current-obsolete-sdk-staging-retirement-v1",
+        "authority": {
+          "path": "/Users/m1/builds/hanlin-current-obsolete-sdk-retirement-20261126-v1/state.json",
+          "bytes": 31471,
+          "sha256": "98309c80872e6279a1cc3696e3e32bfcdba8786139c8f5ab8cdeabfeafda6bef"
+        },
+        "status": "REMOVED_VERIFIED_REDUNDANT_SDK_EXTRACTION_AND_TRANSFERS",
+        "seconds": 29.814457000000402
+      },
+      {
+        "id": "current-obsolete-device-retirement-v1",
+        "authority": {
+          "path": "/Users/m1/builds/hanlin-current-obsolete-device-retirement-20261126-v1/state.json",
+          "bytes": 92535,
+          "sha256": "2c3c89171a52b9d44753a5e5d5b68508a94b5f7df91ebcd689156793100c761c"
+        },
+        "status": "REMOVED_EXACT_OBSOLETE_OWNED_SIMULATORS",
+        "seconds": 16.596994416991947
+      },
+      {
+        "id": "current-old-cache-recovery-v1",
+        "authority": {
+          "path": "/Users/m1/builds/hanlin-current-old-cache-recovery-20261126-v1/state.json",
+          "bytes": 92156,
+          "sha256": "c72a3da9341a013fce768b13f7460062053fcdeecb5dad996fb0f9d740acee14"
+        },
+        "status": "REMOVED_ELIGIBLE_OBSOLETE_TASK_CACHES",
+        "seconds": 30.555886957998155
+      }
+    ],
+    "actualElapsedSeconds": 839.9760628749791,
+    "boundary": "Actual isolated preparation, original native producer failure with all six original commands exit0, exact generated-output integration and final SDK staging remain separate immutable rows. Native inputs verified in clean completion; no original failure was relabeled. Exact obsolete device and inactive old npm-cache maintenance are separately retained with actual durations and shared-volume observations."
+  },
+  "scope": {
+    "mode": "ORIGINAL_FULL_PAIRED_WITH_SEPARATE_AFFECTED_GROUPS",
+    "originalMiniCases": 25,
+    "originalAICases": 27,
+    "handlerCases": 1,
+    "rendererCases": 1,
+    "queueDefinitions": 10,
+    "queueCases": 16,
+    "discoveryCaptureHostedCases": 4,
+    "assistantHostedCases": 7,
+    "affectedSwiftDefinitions": 118,
+    "affectedSwiftCases": 198,
+    "shippingBundles": 16,
+    "boundary": "All actual current builds and original52 plus separately affected groups; no historical PASS substitution. Separate NS/OS/surface/Release/physical obligations are not implied by this run."
+  },
+  "requiredFiles": [
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64/libReactNativeHeaders-ios.a",
+      "bytes": 512,
+      "sha256": "770c9bd74f4c398ba46c307536f26ca51ae5c50b668ab076c8f38077484df068"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64_x86_64-simulator/libReactNativeHeaders-ios-simulator.a",
+      "bytes": 960,
+      "sha256": "dacca1290ec6b34f1f9820068f2e3fa00dfe31e9d57408e970de742a77638920"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinExpoRuntime/Artifacts/React.xcframework/ios-arm64_x86_64-simulator/React.framework/React",
+      "bytes": 24340656,
+      "sha256": "b14f9d4a824d6919d13de0db204195f2caba856fde2f8a2ea4cddf9f3ceff27b"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinExpoRuntime/Artifacts/React.xcframework/ios-arm64/React.framework/React",
+      "bytes": 11987488,
+      "sha256": "553c55df62d1472bafa9483317f193469864c4953c5e2b3ce5f673fc2a6cd3e8"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/ios-arm64/ReactNativeDependencies.framework/ReactNativeDependencies",
+      "bytes": 1268688,
+      "sha256": "5c612c23ad6904b9b771ccbab0b4221a0b74cda384c151235c8cf91a43fe2b91"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/ios-arm64_x86_64-simulator/ReactNativeDependencies.framework/ReactNativeDependencies",
+      "bytes": 2521264,
+      "sha256": "41eb01ffcbcad6ddf93ce5cf4eac65b87e14f18257b1ee0f313f7eceb5843ac7"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinExpoRuntime/Artifacts/hermesvm.xcframework/ios-arm64_x86_64-simulator/hermesvm.framework/hermesvm",
+      "bytes": 12816832,
+      "sha256": "effde4b7c515ca4b95e8e1f7ee93983d12dbe675281362e147644eec657f947c"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinExpoRuntime/Artifacts/hermesvm.xcframework/ios-arm64/hermesvm.framework/hermesvm",
+      "bytes": 6410032,
+      "sha256": "b1476b4a43dabab8ed267283d279f3b67db5e72d1e5670b834bb3aedd662f136"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinExpoRuntime/Artifacts/ExpoModulesJSI.xcframework/ios-arm64/ExpoModulesJSI.framework/ExpoModulesJSI",
+      "bytes": 1231648,
+      "sha256": "eeae524347c58f4dad48bcd537b52eb1cc9d9245e0e561797a77e78003d4cae4"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinExpoRuntime/Artifacts/ExpoModulesJSI.xcframework/ios-arm64_x86_64-simulator/ExpoModulesJSI.framework/ExpoModulesJSI",
+      "bytes": 2394880,
+      "sha256": "106e4c0e44b39f692b788d48ee975236df6c13c7fcc061f4fc3e65c122b3f744"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinExpoRuntime/Artifacts/ExpoModulesCore.xcframework/ios-arm64_x86_64-simulator/ExpoModulesCore.framework/ExpoModulesCore",
+      "bytes": 8079536,
+      "sha256": "d7a83445a19f745b3a1bfca19612a11c7d2e0c8bcef2fd18d89307c08afe5b40"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinExpoRuntime/Artifacts/ExpoModulesCore.xcframework/ios-arm64/ExpoModulesCore.framework/ExpoModulesCore",
+      "bytes": 4079344,
+      "sha256": "6f0125dd4d08a5ad1883d3cc85971aa42d5883251b481ff33589dd0fe72c886a"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinExpoRuntime/Artifacts/ExpoModulesWorklets.xcframework/ios-arm64/ExpoModulesWorklets.framework/ExpoModulesWorklets",
+      "bytes": 161808,
+      "sha256": "f6e9c5e3829e41031e08ef466d3f6ec8199fa6aba03b4644f3cd937f5a1ffcf8"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinExpoRuntime/Artifacts/ExpoModulesWorklets.xcframework/ios-arm64_x86_64-simulator/ExpoModulesWorklets.framework/ExpoModulesWorklets",
+      "bytes": 293680,
+      "sha256": "a0fddc922b70655a68f4d99da9328c77f52f989c444980f87962cc4df55295e1"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinExpoRuntime/Artifacts/ExpoUI.xcframework/ios-arm64/ExpoUI.framework/ExpoUI",
+      "bytes": 25337104,
+      "sha256": "d7719ee31df07600a699635705c0f670f01383833ac72c31f5e0a1443fa2cb35"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinExpoRuntime/Artifacts/ExpoUI.xcframework/ios-arm64_x86_64-simulator/ExpoUI.framework/ExpoUI",
+      "bytes": 49210624,
+      "sha256": "0ec98c757901fcb19b02630caa6151299705a52b7772c4e8c527adaff931e1a1"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/ios-arm64_x86_64-simulator/ExpoAsset.framework/ExpoAsset",
+      "bytes": 208696,
+      "sha256": "1e0e1a216d6133dae2b494e902fe69048a2f93782a3fdd7a3e7fe0565ce3c95d"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/ios-arm64/ExpoAsset.framework/ExpoAsset",
+      "bytes": 106376,
+      "sha256": "bb231b297eac899d53d82459857abd4356938410e867f8c63644d86c844dfb14"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinExpoRuntime/Artifacts/ExpoBrownfield.xcframework/ios-arm64/ExpoBrownfield.framework/ExpoBrownfield",
+      "bytes": 195840,
+      "sha256": "fb08be09caafea6790641e3f5de1607834a0a5180f0cf56551a84053d40802ce"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinExpoRuntime/Artifacts/ExpoBrownfield.xcframework/ios-arm64_x86_64-simulator/ExpoBrownfield.framework/ExpoBrownfield",
+      "bytes": 360480,
+      "sha256": "77e6bbb2ce166391c590647655c813b0505e968352f993cf2a28a7034cf33076"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinExpoNativeAPI/Artifacts/Libffi.xcframework/ios-arm64_x86_64-simulator/libffi.a",
+      "bytes": 97760,
+      "sha256": "bc606b462e39d126c40accc8b87a7fb293b6ddf9e29b038d71c56b5a8df4edb1"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinExpoNativeAPI/Artifacts/Libffi.xcframework/ios-arm64/libffi.a",
+      "bytes": 55312,
+      "sha256": "b9af1e0fa8fef0ef42f2318909edf2d45a589388fb4927b48585bec99123d4ab"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinNativeScriptRuntime/Artifacts/TNSWidgets.xcframework/ios-arm64/TNSWidgets.framework/TNSWidgets",
+      "bytes": 71768,
+      "sha256": "1139ca728fd26962074bab0ef9be77cebfe267f57684228131a09b3b268e8c3d"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinNativeScriptRuntime/Artifacts/TNSWidgets.xcframework/ios-arm64_x86_64-maccatalyst/TNSWidgets.framework/Versions/A/TNSWidgets",
+      "bytes": 119352,
+      "sha256": "d9e634e975b9c5e0540a8e573eaebfb125f9dd44e6636d2891e3f803b88e1c3a"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinNativeScriptRuntime/Artifacts/TNSWidgets.xcframework/ios-arm64_x86_64-simulator/TNSWidgets.framework/TNSWidgets",
+      "bytes": 188992,
+      "sha256": "c9f33af5cd4389d62637e612e734ab3875eff71d0ae0aaaa31309015d69142e9"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinNativeScriptRuntime/Artifacts/TNSWidgets.xcframework/xros-arm64/TNSWidgets.framework/TNSWidgets",
+      "bytes": 86824,
+      "sha256": "20156193a0f68f91709bb0acd2cffb441bd6584d0c5aeaa343dd7a7187fdc3d6"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinNativeScriptRuntime/Artifacts/TNSWidgets.xcframework/xros-arm64_x86_64-simulator/TNSWidgets.framework/TNSWidgets",
+      "bytes": 171280,
+      "sha256": "330be5d2ae9304e2b5cfecf7b686fb9df42a1f8f2c99a6f7febcb009cd959624"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinNativeScriptRuntime/Artifacts/NSCWinterTC.xcframework/ios-arm64_x86_64-simulator/NSCWinterTC.framework/NSCWinterTC",
+      "bytes": 145792,
+      "sha256": "70a681e0a9df00a2dfbfe2758993adfab987c59002426b0685c8351ef358481d"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinNativeScriptRuntime/Artifacts/NSCWinterTC.xcframework/ios-arm64_x86_64-maccatalyst/NSCWinterTC.framework/Versions/A/NSCWinterTC",
+      "bytes": 111080,
+      "sha256": "fdfe3fe639cf603e283dfc9caf792abfb4d60ec4d7b99a07fc9f9f12a58add48"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinNativeScriptRuntime/Artifacts/NSCWinterTC.xcframework/xros-arm64_x86_64-simulator/NSCWinterTC.framework/NSCWinterTC",
+      "bytes": 163152,
+      "sha256": "016ebe799a5f063d08ca9900b3fd33ba4e342976c8dcf31cc60efc4147ae637e"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinNativeScriptRuntime/Artifacts/NSCWinterTC.xcframework/xros-arm64/NSCWinterTC.framework/NSCWinterTC",
+      "bytes": 78816,
+      "sha256": "96c2fd2401cae85993c4907cddb75ce1703e8d3e775c524a2097d18d88c6edb7"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinNativeScriptRuntime/Artifacts/NSCWinterTC.xcframework/ios-arm64/NSCWinterTC.framework/NSCWinterTC",
+      "bytes": 61528,
+      "sha256": "3eae0169d57e6606c550f6daa2f8a3bef59e6c9d7dee1c520ed82ed661104584"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Vendor/NodeMobile/NodeMobile.xcframework/ios-arm64-simulator/NodeMobile.framework/NodeMobile",
+      "bytes": 64311376,
+      "sha256": "a0daa0ebeb6a1f819726fff5228f2efadd58be9b8475ffe142edc992194bb8a0"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Vendor/NodeMobile/NodeMobile.xcframework/ios-arm64/NodeMobile.framework/NodeMobile",
+      "bytes": 63921656,
+      "sha256": "86492ee2e27c580f38747522a443094b5db02aa74b9460b3a593545f5bc2a23c"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Vendor/Python/Python.xcframework/ios-arm64/Python.framework/Python",
+      "bytes": 5891912,
+      "sha256": "bab15643505f43f9902515f48f8d198161e1a0207303c454860eed8337375df5"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Vendor/Python/Python.xcframework/ios-arm64_x86_64-simulator/Python.framework/Python",
+      "bytes": 11723832,
+      "sha256": "3503ecf5bbf78bfb9aed1918b5ac386ea837917967b9d32b53bf98340ac792bc"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Config.xcconfig",
+      "bytes": 2816,
+      "sha256": "69a6f30b1d6ed85b528b5bd5a3415d4a574b2a4c807e13e73222f04e9d419dd8"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/build/nativescript-metadata-tool/bin/objc-metadata-generator",
+      "bytes": 35685672,
+      "sha256": "e2bfd9ecd5f5b235dda04b05b6b1b838c799323a558dee7e6651c8d6a93f9e25"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/build/nativescript-metadata-tool/provenance.json",
+      "bytes": 935,
+      "sha256": "f83479c7a5cdf9014fb7b5f2bf8425ecf9809c4de9680666ca255706022b9696"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Tools/node-v24.5.0-darwin-arm64/bin/node",
+      "bytes": 116870064,
+      "sha256": "336b5b3ebc5deb86df842102b20b6e4761605b7a667823e68dda7761b91a161b"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "bytes": 9960,
+      "sha256": "610bcbb9a7f90c27e3bd3ecd3b1d139fe3ff72ed18086327d1d96c437de932f5"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinAgentSDK/Package.resolved",
+      "bytes": 1198,
+      "sha256": "b771042794841f2e759cffc68181ca37214794b4fc9c02981a1c86176a9bde83"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinParityMiniApp/Package.resolved",
+      "bytes": 1198,
+      "sha256": "c0024cb387495e6cf71d8531e3c4ab31a1a267c02c23ab0e5623fa12ff054033"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinPlatform/Package.resolved",
+      "bytes": 1198,
+      "sha256": "8f67ee59e5ba54c1d9bdd312efff89ddc946e00443fef8faddfeb4e7eb5387c8"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinSefariaMiniApp/Package.resolved",
+      "bytes": 1198,
+      "sha256": "8f3040315aeb3f9bb2ec5fcfa157b8a7690edad9c5a467ad045cd7decd1b1817"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinSkillFormat/Package.resolved",
+      "bytes": 374,
+      "sha256": "0ce944410a619261329435970fb8f81509687140af7dff3a134e8aa1efae6d9a"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinSwiftUIBridgeGenerator/Package.resolved",
+      "bytes": 396,
+      "sha256": "572f5b827187c0042186b44ee30fd3ec72e205fb202ea398882a64bc5bb74953"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinTextStudioMiniApp/Package.resolved",
+      "bytes": 1198,
+      "sha256": "a0ffa2ef3f7017786cb546187af1e47d0feeda8d58d47bc97d1fc10f78a71e13"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinWikipediaMiniApp/Package.resolved",
+      "bytes": 1198,
+      "sha256": "fdbd916f9477bec043a492da7572ad9e4ad858dadf1b42428a877ebe283c4cdb"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/CI/Tests/Fixtures/native-cancellation-07431/baseline/core-Package.resolved",
+      "bytes": 1198,
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/CI/Tests/Fixtures/native-cancellation-07431/bridge/core-Package.resolved",
+      "bytes": 1198,
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/CI/Tests/Fixtures/native-cancellation-07431/bridge/raw-locks/00-Package.resolved",
+      "bytes": 1198,
+      "sha256": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/CI/Tests/Fixtures/native-cancellation-07431/bridge/raw-locks/01-Package.resolved",
+      "bytes": 1198,
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/CI/Tests/Fixtures/native-cancellation-07431/bridge/sdk-Package.resolved",
+      "bytes": 1198,
+      "sha256": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/CI/Tests/Fixtures/native-cancellation-07431/c93/core-Package.resolved",
+      "bytes": 1198,
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/CI/Tests/Fixtures/native-cancellation-07431/c93/raw-locks/00-Package.resolved",
+      "bytes": 1198,
+      "sha256": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/CI/Tests/Fixtures/native-cancellation-07431/c93/raw-locks/01-Package.resolved",
+      "bytes": 1198,
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/CI/Tests/Fixtures/native-cancellation-07431/c93/sdk-Package.resolved",
+      "bytes": 1198,
+      "sha256": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/CI/Tests/Fixtures/native-cancellation-07431/delta/core-Package.resolved",
+      "bytes": 1198,
+      "sha256": "8f67ee59e5ba54c1d9bdd312efff89ddc946e00443fef8faddfeb4e7eb5387c8"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/CI/Tests/Fixtures/native-cancellation-07431/delta/raw-locks/00-Package.resolved",
+      "bytes": 1198,
+      "sha256": "b771042794841f2e759cffc68181ca37214794b4fc9c02981a1c86176a9bde83"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/CI/Tests/Fixtures/native-cancellation-07431/delta/raw-locks/01-Package.resolved",
+      "bytes": 1198,
+      "sha256": "8f67ee59e5ba54c1d9bdd312efff89ddc946e00443fef8faddfeb4e7eb5387c8"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/CI/Tests/Fixtures/native-cancellation-07431/delta/sdk-Package.resolved",
+      "bytes": 1198,
+      "sha256": "b771042794841f2e759cffc68181ca37214794b4fc9c02981a1c86176a9bde83"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/CI/Tests/Fixtures/native-cancellation-07431/header/core-Package.resolved",
+      "bytes": 1198,
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/CI/Tests/Fixtures/native-cancellation-07431/header/raw-locks/00-Package.resolved",
+      "bytes": 1198,
+      "sha256": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/CI/Tests/Fixtures/native-cancellation-07431/header/raw-locks/01-Package.resolved",
+      "bytes": 1198,
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/CI/Tests/Fixtures/native-cancellation-07431/header/sdk-Package.resolved",
+      "bytes": 1198,
+      "sha256": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/bridge/00-Package.resolved",
+      "bytes": 1198,
+      "sha256": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/bridge/04-Package.resolved",
+      "bytes": 1198,
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/c93/00-Package.resolved",
+      "bytes": 1198,
+      "sha256": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/c93/04-Package.resolved",
+      "bytes": 1198,
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/current/00-Package.resolved",
+      "bytes": 1198,
+      "sha256": "b771042794841f2e759cffc68181ca37214794b4fc9c02981a1c86176a9bde83"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/current/04-Package.resolved",
+      "bytes": 1198,
+      "sha256": "8f67ee59e5ba54c1d9bdd312efff89ddc946e00443fef8faddfeb4e7eb5387c8"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/delta/00-Package.resolved",
+      "bytes": 1198,
+      "sha256": "b771042794841f2e759cffc68181ca37214794b4fc9c02981a1c86176a9bde83"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/delta/04-Package.resolved",
+      "bytes": 1198,
+      "sha256": "8f67ee59e5ba54c1d9bdd312efff89ddc946e00443fef8faddfeb4e7eb5387c8"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/header/00-Package.resolved",
+      "bytes": 1198,
+      "sha256": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/CI/Tests/Fixtures/native-cancellation-07431/source-snapshots/header/04-Package.resolved",
+      "bytes": 1198,
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/CI/Tests/Fixtures/native-tool-bridge-45273580428/core-Package.resolved",
+      "bytes": 1198,
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/CI/Tests/Fixtures/native-tool-bridge-45273580428/sdk-Package.resolved",
+      "bytes": 1198,
+      "sha256": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/CI/Tests/Fixtures/native-tool-candidate-45240721804/baseline-proof/core-Package.resolved",
+      "bytes": 1198,
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/CI/Tests/Fixtures/native-tool-header-45259715158/core-Package.resolved",
+      "bytes": 1198,
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/CI/Tests/Fixtures/native-tool-header-45259715158/sdk-Package.resolved",
+      "bytes": 1198,
+      "sha256": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/CI/Tests/Fixtures/native-tool-header-compile-45268041311/core-Package.resolved",
+      "bytes": 1198,
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/CI/Tests/Fixtures/native-tool-header-compile-45268041311/raw-locks/00-Package.resolved",
+      "bytes": 1198,
+      "sha256": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/CI/Tests/Fixtures/native-tool-header-compile-45268041311/raw-locks/01-Package.resolved",
+      "bytes": 1198,
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/CI/Tests/Fixtures/native-tool-header-compile-45268041311/sdk-Package.resolved",
+      "bytes": 1198,
+      "sha256": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/docs/a2ui/evidence/native-run-43668852483/raw-locks/00-Package.resolved",
+      "bytes": 1183,
+      "sha256": "af74be77f91276268a10e0b32f13e04d538f4a01110ad93d8c9e484177dd9fae"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/docs/agent-sdk/evidence/appintents-metadata-lineage-45224582718/Resolved-Package.resolved",
+      "bytes": 10180,
+      "sha256": "6634fc599022b6cee5d3c1a5b6f6395f2aba9ab5cd565cde4b0f0712bdaf4b0e"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/docs/agent-sdk/evidence/application-image-ownership-45265065184/original/Resolved-Package.resolved",
+      "bytes": 10180,
+      "sha256": "91e4db47a139f8e9161df685bd51ee2d92ab680c227acc8489be71d1d2350352"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/docs/agent-sdk/evidence/foundation-models-tool-candidate-20261123/apple-45273580428/original/core-Package.resolved",
+      "bytes": 1198,
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/docs/agent-sdk/evidence/foundation-models-tool-candidate-20261123/apple-45273580428/original/raw-locks/00-Package.resolved",
+      "bytes": 1198,
+      "sha256": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/docs/agent-sdk/evidence/foundation-models-tool-candidate-20261123/apple-45273580428/original/raw-locks/01-Package.resolved",
+      "bytes": 1198,
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/docs/agent-sdk/evidence/foundation-models-tool-candidate-20261123/apple-45273580428/original/sdk-Package.resolved",
+      "bytes": 1198,
+      "sha256": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/docs/agent-sdk/evidence/foundation-models-tool-candidate-20261123/apple-45282347722/original/core-Package.resolved",
+      "bytes": 1198,
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/docs/agent-sdk/evidence/foundation-models-tool-candidate-20261123/apple-45282347722/original/raw-locks/00-Package.resolved",
+      "bytes": 1198,
+      "sha256": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/docs/agent-sdk/evidence/foundation-models-tool-candidate-20261123/apple-45282347722/original/raw-locks/01-Package.resolved",
+      "bytes": 1198,
+      "sha256": "7882ef847a4aaa1bfa2ee128122393cf718f393485d9658bb93f402f740f2c17"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/docs/agent-sdk/evidence/foundation-models-tool-candidate-20261123/apple-45282347722/original/sdk-Package.resolved",
+      "bytes": 1198,
+      "sha256": "9ed17ca6cd2647c50e17521ea6c69c326b551a1ee13f2e1f87c658f92e55d2ea"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/docs/agent-sdk/evidence/foundation-models-tool-candidate-20261123/apple-45292176348/original/core-Package.resolved",
+      "bytes": 1198,
+      "sha256": "8f67ee59e5ba54c1d9bdd312efff89ddc946e00443fef8faddfeb4e7eb5387c8"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/docs/agent-sdk/evidence/foundation-models-tool-candidate-20261123/apple-45292176348/original/raw-locks/00-Package.resolved",
+      "bytes": 1198,
+      "sha256": "ecddc1432961f62d5f8f883e2884fffb6dad193f41867324d9124223c0e44f72"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/docs/agent-sdk/evidence/foundation-models-tool-candidate-20261123/apple-45292176348/original/raw-locks/01-Package.resolved",
+      "bytes": 1198,
+      "sha256": "8f67ee59e5ba54c1d9bdd312efff89ddc946e00443fef8faddfeb4e7eb5387c8"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/docs/agent-sdk/evidence/foundation-models-tool-candidate-20261123/apple-45292176348/original/sdk-Package.resolved",
+      "bytes": 1198,
+      "sha256": "b771042794841f2e759cffc68181ca37214794b4fc9c02981a1c86176a9bde83"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/docs/agent-sdk/evidence/localization-bundle-scan-45256955142/original/Resolved-Package.resolved",
+      "bytes": 10180,
+      "sha256": "6634fc599022b6cee5d3c1a5b6f6395f2aba9ab5cd565cde4b0f0712bdaf4b0e"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/docs/agent-sdk/evidence/main37-product-admission-45292517683/original/simulator-logs/Resolved-Package.resolved",
+      "bytes": 10180,
+      "sha256": "91e4db47a139f8e9161df685bd51ee2d92ab680c227acc8489be71d1d2350352"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/docs/agent-sdk/evidence/motion-native-45127145735/motion-Package.resolved",
+      "bytes": 2222,
+      "sha256": "69996229493fcbd3538540c233fbe88b932c63459ae606f22bf3037be972881a"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/docs/agent-sdk/evidence/motion-native-45166004801/motion-Package.resolved",
+      "bytes": 2222,
+      "sha256": "52b9bb18e33e09cdb3a977502fb5f9005b16146192ded4bf39133f75e42af6a6"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/docs/agent-sdk/evidence/motion-native-45217195070/motion-Package.resolved",
+      "bytes": 2222,
+      "sha256": "e003edda13d16434b06b70414525f758b065f999a3cdfa6690db3559717bf185"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/docs/agent-sdk/evidence/motion-native-45248270552/native/motion-Package.resolved",
+      "bytes": 2222,
+      "sha256": "94118e53fd18dd0354fa7d8a7b8193357ca70b67724e007e47de21025efb490b"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/docs/agent-sdk/evidence/motion-native-45267860115/native/motion-Package.resolved",
+      "bytes": 2222,
+      "sha256": "1f00c82ba8f608e2ba321a4a995174d3901a60f846cdabe27ae957f32c079dd9"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/docs/agent-sdk/evidence/producer-stop-continuation-delta-20261123/apple-45273687114/original/core-Package.resolved",
+      "bytes": 1198,
+      "sha256": "8f67ee59e5ba54c1d9bdd312efff89ddc946e00443fef8faddfeb4e7eb5387c8"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/docs/agent-sdk/evidence/producer-stop-continuation-delta-20261123/apple-45273687114/original/raw-locks/00-Package.resolved",
+      "bytes": 1198,
+      "sha256": "b771042794841f2e759cffc68181ca37214794b4fc9c02981a1c86176a9bde83"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/docs/agent-sdk/evidence/producer-stop-continuation-delta-20261123/apple-45273687114/original/raw-locks/01-Package.resolved",
+      "bytes": 1198,
+      "sha256": "8f67ee59e5ba54c1d9bdd312efff89ddc946e00443fef8faddfeb4e7eb5387c8"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/docs/agent-sdk/evidence/producer-stop-continuation-delta-20261123/apple-45273687114/original/sdk-Package.resolved",
+      "bytes": 1198,
+      "sha256": "b771042794841f2e759cffc68181ca37214794b4fc9c02981a1c86176a9bde83"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/docs/continuation-20261117/acceptance/checkpoint-20261119-0312/skills-native25/raw/simulator-logs/Resolved-Package.resolved",
+      "bytes": 10451,
+      "sha256": "aabb429fa9f62273e681917748c5d4528fbac58596245216dec36f4bc27d224a"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/docs/continuation-20261117/acceptance/run-44380551059/raw/Resolved-Package.resolved",
+      "bytes": 10451,
+      "sha256": "aabb429fa9f62273e681917748c5d4528fbac58596245216dec36f4bc27d224a"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/docs/continuation-20261117/acceptance/run-44389672441/raw/Resolved-Package.resolved",
+      "bytes": 10451,
+      "sha256": "aabb429fa9f62273e681917748c5d4528fbac58596245216dec36f4bc27d224a"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/raw/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "bytes": 9960,
+      "sha256": "610bcbb9a7f90c27e3bd3ecd3b1d139fe3ff72ed18086327d1d96c437de932f5"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/docs/miniapp-sdk/evidence/primary-sdk-attempt9-20261125/raw/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "bytes": 9960,
+      "sha256": "610bcbb9a7f90c27e3bd3ecd3b1d139fe3ff72ed18086327d1d96c437de932f5"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-acceptance-controls-v1/run-current-builds-v2.py",
+      "bytes": 15017,
+      "sha256": "1ff1dbf8cf19133ada721851e1da2740a040e394fb7bead1358aac64ba8b727e"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-acceptance-controls-v1/run-current-original-paired-v3.py",
+      "bytes": 48072,
+      "sha256": "e87d647f3b61a589dc0723de5b4ad78d98436520ed12d3c6f40c9d1a605b6e6e"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/ProductSplit/run_paired_acceptance.py",
+      "bytes": 47871,
+      "sha256": "a99b6194f8dd20bc30998ff2ad9e86ec219415a00615b250c65670f7dfcdba7d"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-acceptance-controls-v1/current-build-prefix-proof.json",
+      "bytes": 2792,
+      "sha256": "6366897772e7138cbabcdb5881290d8de5950ec2dd99bf68d81b54ff9d7c0bbf"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-acceptance-controls-v1/current-phase-resource-assessment.json",
+      "bytes": 12036,
+      "sha256": "0662b1c7ead160480828212e837e905477e2e8086bf9d8d703bdb3cd521877ad"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-acceptance-controls-v1/shipping-bundles.json",
+      "bytes": 28645,
+      "sha256": "9b2c2525a8c67a2ca5938c3463f941bb80545b4137c3b58f0a24ad96d7609a5f"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-miniapp-sdk.json",
+      "bytes": 5260531,
+      "sha256": "c0cc7d9354c65991ce4bd26a6c249f6b37d3e68f9066fe95336f1447f69c2b5c"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/AI_HLY/RuntimeHostResources.zip",
+      "bytes": 81917706,
+      "sha256": "548bf531a51935343b4790cbd1b3acfc35ac16ac2ec4a32cececf6a0f83c5de9"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/AI_HLYTests/Fixtures/HostServicesProbe.bundle/ExpoSwiftUIProbeA.hanlinExpo",
+      "bytes": 325944,
+      "sha256": "758046fe4afd9ae11d00ba8baed9f8bdedb19a328feec679139b4c57b73dd837"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-preparation-20261126-v1/state.json",
+      "bytes": 50422,
+      "sha256": "b9d19036109d279ee8f385effae32829a2627e0cc0e5a806323f66c9355d52a8"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/native-package-resolution-v1/state.json",
+      "bytes": 60505,
+      "sha256": "966db18cb4d9e670791bfadab7ef0ca763cdcc640e1cf8cbf7f2905c2a90516e"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-sdk-staging-20261126-v1/state.json",
+      "bytes": 11081,
+      "sha256": "edd9909a14a3319c87d82b3b54d3461cf6c71eac9b401366dbdef31d71eb5c85"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/Expo/node_modules/.hanlin-miniapp-install.json",
+      "bytes": 3296898,
+      "sha256": "3c0313937a22466560b7099c55fcabb32b35c2d9cbef07fe8165dfd8c22562b8"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Scripts/NativeScript/node_modules/.hanlin-miniapp-install.json",
+      "bytes": 977670,
+      "sha256": "0b1cc6523234fc51b12834ccad5b1b2b96d9ae03600bf3933a1b27f05da33760"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-final-native-controls-v1/run-current-acceptance-v1.py",
+      "bytes": 16066,
+      "sha256": "60c907ccbf00e146745da3935e54db6f3615a9b530e2adefbd27f91dd7cbeecb"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-final-native-controls-v1/run-current-original-paired-v5.py",
+      "bytes": 51493,
+      "sha256": "e8e7d3460943771f722ae2bca9c24f08267426bc4de66f690d8041622afbb57e"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-final-native-controls-v1/current-phase-resource-assessment-v2.json",
+      "bytes": 12450,
+      "sha256": "4fd6189b7d4860ed875d9bb06f74d9f5fd63a52e65ec120384e4c392486161cc"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-final-native-controls-v1/affected-swiftpm-test-plan-v2.json",
+      "bytes": 97826,
+      "sha256": "cfd166d6427bae01f2c0a2d25a9ce6f9f0aaae72bf92c13e70307c5ebb13c900"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-final-native-controls-v1/verify-affected-swift-testing-v2.py",
+      "bytes": 16002,
+      "sha256": "876758f9c5b3fa84bcfbf2c9617805607cc666d36e35080d6df49d580e5eb1be"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinWidgetHostActionTests.swift",
+      "bytes": 21154,
+      "sha256": "da939924b4de4bfab3a34a17e97d271cc355c641c48c69b0b5816a3395ce8ff6"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-native-action-handler-fix-20261126/validation/widget-host-action-native-test-plan.json",
+      "bytes": 1745,
+      "sha256": "960a95dd9e04acc876a5e6c6a5d3377d789cbf48a9a064252f624d05be5aaa1d"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-builds-v1/state.json",
+      "bytes": 7157,
+      "sha256": "a3523c3f47c8fc4845fce453712023b5666f72410ad5ace7f88afc9c4558005d"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-acceptance-controls-v1/current-builds-v1-decision.json",
+      "bytes": 42512,
+      "sha256": "d6824c466113030c90c04334e1abc036f45e3cdeb345917d5398913099b2a80a"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-native-completion-20261126-v1/state.json",
+      "bytes": 58485,
+      "sha256": "061f8ebda10478ab6ecc5d14d10f4ad75b4c85257fa8f0d658b695d736f0d948"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-final-sdk-staging-20261126-v2/state.json",
+      "bytes": 38240,
+      "sha256": "47791a864decb0ed0235097b3ae09de7d9da54e8988270ef96d25e3ee600e3fd"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-camera-conformance-probe-20261126-v1/state.json",
+      "bytes": 16498,
+      "sha256": "2ab21e2361388d3c0dd8d1996af11bf4db6e17adb8a6a243de0ee8c44e086bee"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-camera-conformance-probe-20261126-v2/state.json",
+      "bytes": 32839,
+      "sha256": "90c339722bf856629aaf44b0883e8580d3dfde01508efd3fc8f241369333ef25"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-upstream-native-preparation-20261126-v1/state.json",
+      "bytes": 62898,
+      "sha256": "8811057a226e170137242525d6875f9e7a1092ed87567e1bb019c0e94a80bbde"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift",
+      "bytes": 54410,
+      "sha256": "3c4a74bbf389dba6e5dd21d362d5d0031e229c90605eef3fa3e740d84ad564df"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests.swift",
+      "bytes": 15489,
+      "sha256": "6100a9d5412b22cf5542abcd1872e56f5ac6d23e996380947e896d77a97b3d91"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinScriptExtensionStoreTests.swift",
+      "bytes": 10276,
+      "sha256": "4bf383b1311c688de6980bdb8485b49e17f46ad2c9fe3102cc8153bbddb0a32e"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+      "bytes": 79563,
+      "sha256": "f79bb40cbfff82eb8631275fd70f99e2f527c5ee497b4cbb168602b6fbf81658"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinNotificationInvocationTests.swift",
+      "bytes": 22137,
+      "sha256": "7ee626a9f4e53cfa5c74d9f123d367eb43f5d6de21dfb152047ab75e4cb0e066"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinOriginalScriptWidgetRenderingTests.swift",
+      "bytes": 17461,
+      "sha256": "dad830f5257f7394955c7e0f8e5375af343924e6d2ca828b63e03e3caad1cb01"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinPlatform/Tests/HanlinPlatformContractsTests/ExposureContractTests.swift",
+      "bytes": 7076,
+      "sha256": "92b5703caf860844d608f5ef38052a8c8273225ada2aee74b4ddd1bdcd6558d7"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinPlatform/Tests/HanlinPlatformContractsTests/ManifestAndWireTests.swift",
+      "bytes": 5440,
+      "sha256": "dce125fcbe279a944d163aa26fd858b06d7c47b7a70a4efebe72825cc80c9487"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinPlatform/Tests/HanlinPlatformContractsTests/ManifestSurfaceSchemaTests.swift",
+      "bytes": 1125,
+      "sha256": "2493e2df628c8cf4382df8e89e9775182807ad030bf2bfa92e7f02ac6d707d46"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinScriptMiniAppRegistrationTests.swift",
+      "bytes": 25594,
+      "sha256": "3af0118cdb58edfdc16e4a46db8a86e202f74fa5c7ed55571987c209f67c0fd7"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinPreparedAssistantToolProjectionTests.swift",
+      "bytes": 6381,
+      "sha256": "859925523b910a21c480fa50c6d1ac76b9fade116b22b672c89de0b9c0d543a1"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/AI_HLYTests/HanlinPreparedAssistantToolAdapterTests.swift",
+      "bytes": 9764,
+      "sha256": "ae34fc508fd8646f8cb90cba9c8595c60e5e07309a64e53b8c3e88758e3f98f7"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/AI_HLYTests/PreparedAssistantToolRuntimeTests.swift",
+      "bytes": 13837,
+      "sha256": "6bd0e6189a96e6478b6879215b882884c519fbc77378b089825389aeb590fa9e"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests.swift",
+      "bytes": 10281,
+      "sha256": "d1dc4a0a3869cda32748e332242e43ab231dd54c6dbfcdfe8f8270f463543047"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-obsolete-sdk-retirement-20261126-v1/state.json",
+      "bytes": 31471,
+      "sha256": "98309c80872e6279a1cc3696e3e32bfcdba8786139c8f5ab8cdeabfeafda6bef"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-obsolete-device-retirement-20261126-v1/state.json",
+      "bytes": 92535,
+      "sha256": "2c3c89171a52b9d44753a5e5d5b68508a94b5f7df91ebcd689156793100c761c"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-old-cache-recovery-20261126-v1/state.json",
+      "bytes": 92156,
+      "sha256": "c72a3da9341a013fce768b13f7460062053fcdeecb5dad996fb0f9d740acee14"
+    }
+  ],
+  "originalMainGuard": {
+    "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-final-native-controls-v1/run-current-original-paired-v5.py",
+    "bytes": 51493,
+    "sha256": "e8e7d3460943771f722ae2bca9c24f08267426bc4de66f690d8041622afbb57e"
+  },
+  "incrementalBuildInputs": {
+    "status": "REUSE_COMPILER_CACHE_EXECUTE_ALL_CURRENT_BUILDS",
+    "priorTerminal": {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-builds-v1/state.json",
+      "bytes": 7157,
+      "sha256": "a3523c3f47c8fc4845fce453712023b5666f72410ad5ace7f88afc9c4558005d"
+    },
+    "priorDecision": {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-acceptance-controls-v1/current-builds-v1-decision.json",
+      "bytes": 42512,
+      "sha256": "d6824c466113030c90c04334e1abc036f45e3cdeb345917d5398913099b2a80a"
+    },
+    "nativePreparation": {
+      "path": "/Users/m1/builds/hanlin-current-native-completion-20261126-v1/state.json",
+      "bytes": 58485,
+      "sha256": "061f8ebda10478ab6ecc5d14d10f4ad75b4c85257fa8f0d658b695d736f0d948"
+    },
+    "allocationObservation": {
+      "path": "/Users/m1/builds/hanlin-current-final-sdk-staging-20261126-v2/state.json",
+      "bytes": 38240,
+      "sha256": "47791a864decb0ed0235097b3ae09de7d9da54e8988270ef96d25e3ee600e3fd"
+    }
+  },
+  "currentValidationHistory": [
+    {
+      "id": "current-source-builds-v1",
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-builds-v1/state.json",
+        "bytes": 7157,
+        "sha256": "a3523c3f47c8fc4845fce453712023b5666f72410ad5ace7f88afc9c4558005d"
+      },
+      "status": "FAILED",
+      "seconds": 505.0227289169852
+    },
+    {
+      "id": "camera-isolated-conformance-probe-v1",
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-camera-conformance-probe-20261126-v1/state.json",
+        "bytes": 16498,
+        "sha256": "2ab21e2361388d3c0dd8d1996af11bf4db6e17adb8a6a243de0ee8c44e086bee"
+      },
+      "status": "FAILED",
+      "seconds": 1.6203245419892482
+    },
+    {
+      "id": "camera-isolated-conformance-probe-v2",
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-camera-conformance-probe-20261126-v2/state.json",
+        "bytes": 32839,
+        "sha256": "90c339722bf856629aaf44b0883e8580d3dfde01508efd3fc8f241369333ef25"
+      },
+      "status": "BASELINES_FAILED_CANDIDATES_PASSED",
+      "seconds": 25.275434000010137
+    }
+  ],
+  "handlerRegression": {
+    "id": "handler-registration",
+    "selectors": [
+      "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptActionDeclarationsPreserveRegisteredJavaScriptState()"
+    ],
+    "expectedCases": 1,
+    "commandCeilingSeconds": 600,
+    "maximumTestExecutionAllowanceSeconds": 600
+  },
+  "routeContractGroup": {
+    "id": "entrypoint-contracts",
+    "selectors": [
+      "AI_HLYTests/HanlinNativeWidgetRendererTests/testDeclaredWidgetHostActionsCompileAndKeepOriginalLocalActions"
+    ],
+    "expectedCases": 1,
+    "commandCeilingSeconds": 2100,
+    "maximumTestExecutionAllowanceSeconds": 600
+  },
+  "queueContractGroup": {
+    "id": "widget-host-action-queue",
+    "suite": "HanlinWidgetHostActionTests",
+    "target": "HanlinScriptExtensionsTests",
+    "expectedFunctions": 10,
+    "expectedParameterInstances": 16,
+    "commandCeilingSeconds": 1200,
+    "source": {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinWidgetHostActionTests.swift",
+      "bytes": 21154,
+      "sha256": "da939924b4de4bfab3a34a17e97d271cc355c641c48c69b0b5816a3395ce8ff6"
+    },
+    "testPlan": {
+      "path": "/Users/m1/builds/hanlin-native-action-handler-fix-20261126/validation/widget-host-action-native-test-plan.json",
+      "bytes": 1745,
+      "sha256": "960a95dd9e04acc876a5e6c6a5d3377d789cbf48a9a064252f624d05be5aaa1d"
+    }
+  },
+  "newHostedRegression": {
+    "id": "discovery-capture-hosted",
+    "selectors": [
+      "AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests/testInstalledCatalogDoesNotDependOnWidgetInstancesAndReconcilesIdentity",
+      "AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests/testCaptureCatalogRequiresAnActualUnambiguousPreparedAction",
+      "AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests/testCapturedBytesAreDurableBeforeSessionInvalidationAndRetryKeepsIdentity",
+      "AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests/testCaptureManifestRejectsForeignProductAndUnownedPath"
+    ],
+    "expectedCases": 4,
+    "commandCeilingSeconds": 1200,
+    "maximumTestExecutionAllowanceSeconds": 600
+  },
+  "assistantHostedRegression": {
+    "id": "assistant-hosted",
+    "selectors": [
+      "AI_HLYTests/HanlinPreparedAssistantToolAdapterTests/testBothPreparedEnginesReturnTheAwaitedTypedBrokerValue",
+      "AI_HLYTests/HanlinPreparedAssistantToolAdapterTests/testUpdatedDisabledAndRemovedInstallationsDoNotDispatchOldTools",
+      "AI_HLYTests/HanlinPreparedAssistantToolAdapterTests/testCaseCollidingActionNamesKeepDistinctRoutesAndOriginalDispatchSpelling",
+      "AI_HLYTests/HanlinPreparedAssistantToolAdapterTests/testHandlerErrorsAndMalformedArgumentsRemainFailures",
+      "AI_HLYTests/HanlinPreparedAssistantToolAdapterTests/testUnavailableMiniAppCatalogDoesNotThrowAwayOrdinarySources",
+      "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/installedExpoAssistantToolReturnsTheActualHermesHandlerResult()",
+      "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/installedNativeScriptAssistantToolReturnsTheActualJavaScriptHandlerResult()"
+    ],
+    "expectedCases": 7,
+    "commandCeilingSeconds": 1200,
+    "maximumTestExecutionAllowanceSeconds": 600
+  },
+  "affectedSwiftPM": {
+    "inventory": {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-final-native-controls-v1/affected-swiftpm-test-plan-v2.json",
+      "bytes": 97826,
+      "sha256": "cfd166d6427bae01f2c0a2d25a9ce6f9f0aaae72bf92c13e70307c5ebb13c900"
+    },
+    "verifier": {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-final-native-controls-v1/verify-affected-swift-testing-v2.py",
+      "bytes": 16002,
+      "sha256": "876758f9c5b3fa84bcfbf2c9617805607cc666d36e35080d6df49d580e5eb1be"
+    },
+    "expectedDefinitions": 118,
+    "expectedCases": 198,
+    "codeOriginSource": "462fe5c579e3fb3d6c394c8fd368faca8792bc6e",
+    "allSelectedSourceBytesVerifiedAtCurrentCarrier": true
+  },
+  "hostedFixture": {
+    "source": {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/AI_HLYTests/Fixtures/HostServicesProbe.bundle/ExpoSwiftUIProbeA.hanlinExpo",
+      "bytes": 325944,
+      "sha256": "758046fe4afd9ae11d00ba8baed9f8bdedb19a328feec679139b4c57b73dd837"
+    },
+    "producer": "Original current native preparation build-probe, preserved unchanged by final SDK staging."
+  }
+}
