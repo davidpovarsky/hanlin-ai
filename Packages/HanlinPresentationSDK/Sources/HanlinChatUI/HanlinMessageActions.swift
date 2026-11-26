@@ -95,7 +95,7 @@ public struct HanlinMessageActions {
                         enabled: Bool = true) -> HanlinMessageAction? {
         guard let perform else { return nil }
         return .init(id: id, title: String(localized: key, bundle: HanlinLocalization.bundle),
-                     symbol: symbol, role: role, isEnabled: enabled, perform: perform)
+                     symbol: symbol, role: role, isEnabled: enabled) { perform() }
     }
 }
 
