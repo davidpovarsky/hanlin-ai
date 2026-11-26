@@ -23,6 +23,9 @@ public enum ChatDisclosureGeometry {
 #if canImport(SwiftUI)
 import SwiftUI
 import HanlinPresentationKit
+#if canImport(UIKit)
+import UIKit
+#endif
 
 /// Original implementation informed by Fatbobman's height/spacing discussion:
 /// https://fatbobman.com/en/posts/taming-row-height-and-spacing-jumps/
@@ -40,19 +43,13 @@ public struct HanlinAnimatedDisclosure<Content: View>: View {
     @Environment(\.chatMotion) private var motion
     @State private var mounted = false
     @State private var progress: CGFloat = 0
+    @State private var nativeContentHidden = true
+    @State private var transitionGeneration: UInt = 0
 
     public var body: some View {
         ChatDisclosureLayout(progress: progress, spacing: spacing) {
             if mounted {
-                VStack(alignment: .leading, spacing: 6, content: content)
-                    // A zero-height clip alone leaves retained selectable text in AX.
-                    // Keep the existing measured subtree, hiding its render endpoint.
-                    .modifier(ChatDisclosureContentVisibility(progress: progress))
-                    // Suppress retained descendants at their own AX boundary.
-                    // Hiding the container alone leaves native-backed children exposed.
-                    .accessibilityElement(children: isExpanded ? .contain : .ignore)
-                    // Do not override a nested disclosure's hidden state on expand.
-                    .accessibilityHidden(true, isEnabled: !isExpanded)
+                retainedContent
                     .transition(.identity)
             }
         }
@@ -67,10 +64,34 @@ public struct HanlinAnimatedDisclosure<Content: View>: View {
         }
     }
 
+    private var disclosureContent: some View {
+        VStack(alignment: .leading, spacing: 6, content: content)
+            // A zero-height clip alone leaves retained selectable text in AX.
+            // Keep the existing measured subtree, hiding its render endpoint.
+            .modifier(ChatDisclosureContentVisibility(progress: progress))
+            // Suppress retained descendants at their own AX boundary.
+            // Hiding the container alone leaves native-backed children exposed.
+            .accessibilityElement(children: isExpanded ? .contain : .ignore)
+            // Do not override a nested disclosure's hidden state on expand.
+            .accessibilityHidden(true, isEnabled: !isExpanded)
+    }
+
+    @ViewBuilder
+    private var retainedContent: some View {
+        #if canImport(UIKit)
+        ChatDisclosureAccessibilityScope(isHidden: !isExpanded,
+            isPhysicallyHidden: nativeContentHidden, content: disclosureContent)
+        #else
+        disclosureContent
+        #endif
+    }
+
     private func settle() {
         var transaction = Transaction(animation: nil)
         transaction.disablesAnimations = true
         withTransaction(transaction) {
+            transitionGeneration &+= 1
+            nativeContentHidden = !isExpanded
             mounted = isExpanded
             progress = isExpanded ? 1 : 0
         }
@@ -86,13 +107,23 @@ public struct HanlinAnimatedDisclosure<Content: View>: View {
     private func animateToTarget() {
         guard motion.isAnimated else { settle(); return }
         let expanding = isExpanded
+        transitionGeneration &+= 1
+        let generation = transitionGeneration
+        // Restore the same native subtree before its opening animation begins.
+        if expanding { nativeContentHidden = false }
         // Reuse the measured content across animated collapse and reversal.
         // Recreating complex descendants here can delay the next visible frame
-        // past rapid input. The zero-height clip, AX and hit-testing guards still
-        // hide collapsed content; settle() resets it on reattachment or no motion.
-        withAnimation(motion.disclosureAnimation(expanding: expanding)) {
+        // past rapid input. The native visibility gate closes only after the
+        // original reveal animation finishes, without unmounting that content.
+        withAnimation(motion.disclosureAnimation(expanding: expanding), completionCriteria: .removed) {
             if expanding { mounted = true }
             progress = expanding ? 1 : 0
+        } completion: {
+            // A reversal or an immediate settle invalidates an older completion.
+            guard !expanding, transitionGeneration == generation else { return }
+            var transaction = Transaction(animation: nil)
+            transaction.disablesAnimations = true
+            withTransaction(transaction) { nativeContentHidden = true }
         }
     }
 }
@@ -112,6 +143,115 @@ private nonisolated struct ChatDisclosureContentVisibility: ViewModifier, Animat
         content.opacity(ChatDisclosureGeometry.fraction(Double(progress)) > 0 ? 1 : 0)
     }
 }
+
+#if canImport(UIKit)
+/// Own the native semantic boundary for the retained content. On iOS, the
+/// transparent SwiftUI clip can still expose native-backed accessibility nodes.
+/// This root is created once while mounted. Completed collapse detaches the
+/// owned child controller/view; reopening reattaches that same hosting graph.
+@MainActor
+private struct ChatDisclosureAccessibilityScope<Content: View>: UIViewControllerRepresentable {
+    let isHidden: Bool
+    let isPhysicallyHidden: Bool
+    let content: Content
+
+    struct Root: View {
+        let content: Content
+        let environment: EnvironmentValues
+        let isHidden: Bool
+
+        var body: some View {
+            // Forward the complete environment, including custom chat values.
+            // Virtual SwiftUI children belong to this hosting graph, so its
+            // semantic visibility must receive the same logical disclosure state.
+            content.environment(\.self, environment)
+                .accessibilityHidden(true, isEnabled: isHidden)
+        }
+    }
+
+    // Keep the same hosting graph alive while its native presentation leaves the
+    // container. isHidden alone leaves SwiftUI automation children discoverable.
+    final class ContainerController: UIViewController {
+        let hostingController: UIHostingController<Root>
+
+        init(rootView: Root) {
+            hostingController = UIHostingController(rootView: rootView)
+            super.init(nibName: nil, bundle: nil)
+            hostingController.safeAreaRegions = []
+            hostingController.sizingOptions = [.intrinsicContentSize]
+            hostingController.view.backgroundColor = .clear
+            hostingController.view.isAccessibilityElement = false
+            hostingController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        }
+
+        required init?(coder: NSCoder) { return nil }
+
+        override func loadView() {
+            let container = ContainerView(frame: .zero)
+            container.hostedView = hostingController.view
+            container.backgroundColor = .clear
+            container.isAccessibilityElement = false
+            view = container
+        }
+
+        func updateVisibility(isHidden: Bool, isPhysicallyHidden: Bool) {
+            hostingController.view.isHidden = isPhysicallyHidden
+            hostingController.view.accessibilityElementsHidden = isHidden
+            view.accessibilityElementsHidden = isHidden
+            if isPhysicallyHidden {
+                if hostingController.parent === self {
+                    hostingController.willMove(toParent: nil)
+                    hostingController.view.removeFromSuperview()
+                    hostingController.removeFromParent()
+                }
+            } else if hostingController.parent == nil {
+                addChild(hostingController)
+                hostingController.view.frame = view.bounds
+                view.addSubview(hostingController.view)
+                hostingController.didMove(toParent: self)
+            }
+            view.invalidateIntrinsicContentSize()
+        }
+    }
+
+    // Preserve the hosting view's intrinsic fallback for unspecified proposals,
+    // including while its view is detached but its measured content is retained.
+    private final class ContainerView: UIView {
+        weak var hostedView: UIView?
+
+        override var intrinsicContentSize: CGSize {
+            hostedView?.intrinsicContentSize ?? super.intrinsicContentSize
+        }
+
+        override func sizeThatFits(_ size: CGSize) -> CGSize {
+            hostedView?.sizeThatFits(size) ?? super.sizeThatFits(size)
+        }
+    }
+
+    func makeUIViewController(context: Context) -> ContainerController {
+        let controller = ContainerController(rootView: Root(content: content, environment: context.environment, isHidden: isHidden))
+        controller.updateVisibility(isHidden: isHidden, isPhysicallyHidden: isPhysicallyHidden)
+        return controller
+    }
+
+    func updateUIViewController(_ controller: ContainerController, context: Context) {
+        withTransaction(context.transaction) {
+            controller.hostingController.rootView = Root(content: content, environment: context.environment, isHidden: isHidden)
+        }
+        controller.updateVisibility(isHidden: isHidden, isPhysicallyHidden: isPhysicallyHidden)
+    }
+
+    func sizeThatFits(_ proposal: ProposedViewSize, uiViewController controller: ContainerController,
+                      context: Context) -> CGSize? {
+        // Unspecified width uses the hosting view's native intrinsic sizing.
+        // Height is always natural, never the collapsing viewport's height.
+        guard let width = proposal.width, width.isFinite else { return nil }
+        let natural = controller.hostingController.sizeThatFits(in: CGSize(width: max(0, width), height: .greatestFiniteMagnitude))
+        return CGSize(width: ChatDisclosureGeometry.extent(Double(natural.width)),
+            height: ChatDisclosureGeometry.extent(Double(natural.height)))
+    }
+}
+#endif
 
 /// Keep native DisclosureGroup ownership/identity, sharing only its presentation.
 public struct HanlinMotionDisclosureStyle: DisclosureGroupStyle {
