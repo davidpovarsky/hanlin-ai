@@ -1,0 +1,58 @@
+{
+  "app_archive_sha256": "732c24136209b2ac771bf845d66b25c550d56356c8866bd18c885a347dffc0b4",
+  "image_origin": {
+    "all_built_app_entries_unchanged": true,
+    "complete_observed_pids": [
+      56383,
+      56961,
+      59178,
+      59242,
+      60810,
+      61022,
+      67810
+    ],
+    "complete_observed_ui_pids": [
+      56383,
+      56961,
+      59178,
+      59242,
+      60810,
+      61022,
+      67810
+    ],
+    "errors": [],
+    "missing_referenced_ui_pids": [],
+    "nonempty_ui_pid_sets_required": true,
+    "observations": 36,
+    "referenced_ui_pids": [
+      56383,
+      56961,
+      59178,
+      59242,
+      60810,
+      61022,
+      67810
+    ],
+    "scope": "Authentic shipping bootstrap and actual original-app UI processes; native unit methods retain original Apple test instrumentation and are classified separately.",
+    "status": "PASS"
+  },
+  "original_bridge_verified": true,
+  "producer_manifest_sha256": "2fa60b21a153cbe7f1cb6e036d308c0d93ddb60306516989841fd98941ee47ea",
+  "selectors": [
+    "HanlinMiniAppsUITests/MiniAppsNativeScriptPackageWindowUITests/testDifferentPackagesKeepModulesResourcesAndCallbacksWhenCompletingInReverseOrder",
+    "HanlinMiniAppsUITests/MiniAppsNativeScriptPackageWindowUITests/testCancellingOnePackageKeepsOtherPackageAndItsPreparedCallbackAlive",
+    "HanlinMiniAppsUITests/MiniAppsNativeScriptPackageWindowUITests/testReturningToCatalogKeepsPendingRequestInExistingRootWindow"
+  ],
+  "simulator_udid": "AFCE42EE-B230-440E-A94E-98C34A878A34",
+  "source": "86a6dde354947be9329fe1e8f4d45a433fe488c4",
+  "status": "PASS",
+  "summary": {
+    "failedTests": 0,
+    "passedTests": 3,
+    "skippedTests": 0,
+    "testFailures": [],
+    "totalTestCount": 3
+  },
+  "tests": "PASS",
+  "xcodebuild_exit": 0
+}

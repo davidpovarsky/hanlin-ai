@@ -1,0 +1,163 @@
+{
+  "cancelled_request_scopes" : 1,
+  "distinct_package_ids" : [
+    "hanlin.nativescript.package-alpha",
+    "hanlin.nativescript.package-beta"
+  ],
+  "distinct_successful_window_session_ids" : [
+    "00b4780a-2a40-4ca5-8967-0785ef7c06c8",
+    "4d4e98d3-e477-438b-8333-0298186508b1",
+    "723057d6-43c1-43c4-a9b3-7f47bf3a3a90",
+    "9af2d073-3c15-4421-aab8-5e752f83ae20",
+    "e07f1315-c878-4b88-a7c1-155c1d281cfe"
+  ],
+  "existing_window_request_ids" : [
+    "1e23b005-6a2c-4c0f-b005-202611240015"
+  ],
+  "result_synthesized" : false,
+  "results" : [
+    {
+      "items" : [
+        {
+          "kind" : "text",
+          "text" : "alpha-edited"
+        }
+      ],
+      "metadata" : {
+        "asset" : "alpha:asset",
+        "counter" : "1",
+        "documentID" : "ns-package-alpha",
+        "dynamicModule" : "alpha:dynamic",
+        "packageID" : "hanlin.nativescript.package-alpha",
+        "privateModule" : "alpha:private",
+        "requestID" : "1E23B001-6A2C-4C0F-B001-202611240011",
+        "staticModule" : "alpha:relative",
+        "storedValue" : "alpha-edited",
+        "styleColor" : "255,59,48,255",
+        "windowSessionID" : "723057d6-43c1-43c4-a9b3-7f47bf3a3a90"
+      },
+      "operation" : "replaceSelection",
+      "requestID" : "1E23B001-6A2C-4C0F-B001-202611240011",
+      "status" : "success"
+    },
+    {
+      "items" : [
+        {
+          "kind" : "text",
+          "text" : "beta-edited"
+        }
+      ],
+      "metadata" : {
+        "asset" : "beta:asset",
+        "counter" : "2",
+        "documentID" : "ns-package-beta",
+        "dynamicModule" : "beta:dynamic",
+        "packageID" : "hanlin.nativescript.package-beta",
+        "privateModule" : "beta:private",
+        "requestID" : "1E23B002-6A2C-4C0F-B002-202611240012",
+        "staticModule" : "beta:relative",
+        "storedValue" : "beta-edited",
+        "styleColor" : "0,122,255,255",
+        "windowSessionID" : "e07f1315-c878-4b88-a7c1-155c1d281cfe"
+      },
+      "operation" : "replaceSelection",
+      "requestID" : "1E23B002-6A2C-4C0F-B002-202611240012",
+      "status" : "success"
+    },
+    {
+      "items" : [
+
+      ],
+      "metadata" : {
+
+      },
+      "operation" : "display",
+      "requestID" : "1E23B003-6A2C-4C0F-B003-202611240013",
+      "status" : "cancelled"
+    },
+    {
+      "items" : [
+        {
+          "kind" : "text",
+          "text" : "delta-edited"
+        }
+      ],
+      "metadata" : {
+        "asset" : "beta:asset",
+        "counter" : "1",
+        "documentID" : "ns-package-delta",
+        "dynamicModule" : "beta:dynamic",
+        "packageID" : "hanlin.nativescript.package-beta",
+        "privateModule" : "beta:private",
+        "requestID" : "1E23B004-6A2C-4C0F-B004-202611240014",
+        "staticModule" : "beta:relative",
+        "storedValue" : "delta-edited",
+        "styleColor" : "0,122,255,255",
+        "windowSessionID" : "00b4780a-2a40-4ca5-8967-0785ef7c06c8"
+      },
+      "operation" : "replaceSelection",
+      "requestID" : "1E23B004-6A2C-4C0F-B004-202611240014",
+      "status" : "success"
+    },
+    {
+      "items" : [
+        {
+          "kind" : "text",
+          "text" : "epsilon-edited"
+        }
+      ],
+      "metadata" : {
+        "asset" : "alpha:asset",
+        "counter" : "1",
+        "documentID" : "ns-package-epsilon",
+        "dynamicModule" : "alpha:dynamic",
+        "packageID" : "hanlin.nativescript.package-alpha",
+        "privateModule" : "alpha:private",
+        "requestID" : "1E23B005-6A2C-4C0F-B005-202611240015",
+        "staticModule" : "alpha:relative",
+        "storedValue" : "epsilon-edited",
+        "styleColor" : "255,59,48,255",
+        "windowSessionID" : "4d4e98d3-e477-438b-8333-0298186508b1"
+      },
+      "operation" : "replaceSelection",
+      "requestID" : "1E23B005-6A2C-4C0F-B005-202611240015",
+      "status" : "success"
+    },
+    {
+      "items" : [
+        {
+          "kind" : "text",
+          "text" : "zeta-edited"
+        }
+      ],
+      "metadata" : {
+        "asset" : "beta:asset",
+        "counter" : "1",
+        "documentID" : "ns-package-zeta",
+        "dynamicModule" : "beta:dynamic",
+        "packageID" : "hanlin.nativescript.package-beta",
+        "privateModule" : "beta:private",
+        "requestID" : "1E23B006-6A2C-4C0F-B006-202611240016",
+        "staticModule" : "beta:relative",
+        "storedValue" : "zeta-edited",
+        "styleColor" : "0,122,255,255",
+        "windowSessionID" : "9af2d073-3c15-4421-aab8-5e752f83ae20"
+      },
+      "operation" : "replaceSelection",
+      "requestID" : "1E23B006-6A2C-4C0F-B006-202611240016",
+      "status" : "success"
+    }
+  ],
+  "status" : "ACTUAL_DISTINCT_PACKAGE_WINDOW_RESULTS_VERIFIED",
+  "successful_request_scopes" : 5,
+  "verified_from_runtime_outputs" : [
+    "relative_static_import",
+    "colliding_private_bare_import",
+    "late_dynamic_import",
+    "package_asset_bytes",
+    "fresh_package_data_readback",
+    "computed_scoped_style",
+    "original_request_document",
+    "captured_callback_counter"
+  ]
+}

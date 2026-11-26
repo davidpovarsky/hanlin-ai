@@ -1,0 +1,7 @@
+# Native MiniApps window and image origin acceptance
+
+The original MiniApps app from `86a6dde354947be9329fe1e8f4d45a433fe488c4` and its matching XCTest bundle ran on an owned iPad Pro simulator on Scaleway Mac. The source build manifest SHA-256 was `2fa60b21a153cbe7f1cb6e036d308c0d93ddb60306516989841fd98941ee47ea`. The app archive SHA-256 was `732c24136209b2ac771bf845d66b25c550d56356c8866bd18c885a347dffc0b4`. Both attempts used the same application and the same three original selectors. The product and fixture bytes were verified before execution.
+
+The three window tests passed in both attempts, including reverse-order completion, return to the Catalog with a live request and independent cancellation. The original bridge verifier read the real callback records for the six requests. The first attempt had complete observed PID coverage and one terminal launchctl timeout. The retry preserved the first transport interruption and obtained a live snapshot of the same owned simulator on its second call. Its strict image-origin check passed with 36 observations, all referenced PIDs observed and zero verification errors. The built product inventory remained byte-identical.
+
+Raw result bundles, observer logs, fixture readback and the executed launcher remain under `/Users/m1/builds/otzaria-shared-agent1-20261126/miniapps-focused-86*`. The results here cover the three observed MiniApps window tests and their actual images on this binary. Complete MiniApps acceptance and original Otzaria consumer UI acceptance have separate scopes.
