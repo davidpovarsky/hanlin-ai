@@ -26,3 +26,42 @@ Keep the original matchedTransitionSource and its native ToolbarItem/overlay mou
 ## 1.0.3 — system horizontal size class
 
 Apple's inspector documentation explicitly describes a trailing column in regular horizontal size classes and an adaptive sheet in compact ones: https://developer.apple.com/documentation/swiftui/view/inspector(ispresented:content:) . Read the system trait from the presentation owner's @Environment(\\.horizontalSizeClass), not the sheet/inspector content or a pixel threshold. Only .regular permits Inspector; compact/unknown uses the existing Sheet and hides the switch. The same native dismissal handoff redirects an active or pending Inspector to Sheet. Restore the configured policy on regular width; keep an active Sheet for a dual-mode configuration, but restore Inspector for an inspector-only configuration. Session ownership, launcher source, native Zoom transition, sheet appearance and chat UI are unchanged. Physical iPad resize/appearance remains a device acceptance gate.
+
+
+## Shared message interactions and focused native validation
+
+The current host uses HanlinMessageActionBar, HanlinMessageActionMenu,
+HanlinMessagePreviewPresenter, HanlinMessageSelectionView and
+HanlinMessageMarkdownView from the same HanlinChatUI product used by Hanlin.
+Clipboard, text selection and deletion are real local host actions. Services
+not owned by this offline host have no menu entries. The production Hanlin
+adapter supplies its existing speech, translation, saved knowledge, personal
+save, retry and continuation services.
+
+The XcodeGen test target references the original SDK test source files in place;
+it does not copy source or substitute a second implementation. It contains the
+five new viewport/host-authority methods and the original launcher policy tests.
+Previously accepted unchanged policy evidence may be reused; filter to the two
+new suites when only the new interaction contract needs execution.
+
+For an isolated native validation copy, first use the original manifest
+generator's supported product selection. This narrows dependencies while keeping
+canonical implementation paths. Do not overwrite a working integration
+checkout's generated manifest merely to run this focused consumer.
+
+```sh
+python3 Scripts/SDK/generate_manifest.py --products HanlinChatPresentation HanlinPresentationKit HanlinChatUI
+xcodegen generate --spec Examples/HanlinLauncherLab/project.yml
+xcodebuild test \
+  -project Examples/HanlinLauncherLab/HanlinLauncherLab.xcodeproj \
+  -scheme HanlinLauncherLab \
+  -destination "${HANLIN_SIM_DESTINATION:?Select an available iOS simulator}" \
+  -derivedDataPath "${HANLIN_UI_DERIVED_DATA:?Use the assigned validation products directory}" \
+  -only-testing:HanlinLauncherLabTests/HanlinMessagePreviewMetricsTests \
+  -only-testing:HanlinLauncherLabTests/HanlinMessageActionTests \
+  CODE_SIGNING_ALLOWED=NO
+```
+
+The commands above are the validation route, not a recorded successful native
+run. Source checks, original evidence and remaining acceptance gates are in
+`docs/agent-sdk/evidence/shared-chat-interactions-20261126/`.
