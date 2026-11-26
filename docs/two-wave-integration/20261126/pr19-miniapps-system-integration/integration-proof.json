@@ -1,0 +1,289 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-26T17:23:49.812481+00:00",
+  "status": "SOURCE_AND_PORTABLE_CHECKS_PASSED_NATIVE_PENDING",
+  "baseCommit": "0bbd94866f10a5a64b8a1d401d14bcb06e7b4ddb",
+  "incomingPR19Commit": "1177dace25b823737ed4c4775bf2ac440f049d3e",
+  "approvedLifecycleCommits": [
+    "19cca5723115725bc3668a26ac5496e61e6dd299",
+    "0f3a39cce54a3eccefd0d0a3f61124f522a171a9"
+  ],
+  "finalSourceIdentity": "The containing Git commit plus sourceSHA256 below; no native acceptance is inferred from source review.",
+  "productBoundary": {
+    "shippingBundles": 13,
+    "hanlin": {
+      "application": 1,
+      "legacyExtensions": 4,
+      "newExtensions": 0
+    },
+    "miniapps": {
+      "application": 1,
+      "legacyExtensions": 4,
+      "newExtensions": 3
+    },
+    "newExtensionTargets": [
+      "HanlinMiniAppsKeyboard",
+      "HanlinMiniAppsNotificationContent",
+      "HanlinMiniAppsCameraCapture"
+    ],
+    "newPublicationOwner": "SplitAppStorageLayout.miniAppsBundleIdentifier",
+    "originalTenSigningTuplesPreserved": true,
+    "roles": [
+      [
+        "ai",
+        "com.itorah.chavrusachat",
+        "APPLE_MAIN_PROVISIONING_PROFILE_B64",
+        "AI_HLY/AI_HLY.entitlements"
+      ],
+      [
+        "miniapps",
+        "com.itorah.hanlinminiapps",
+        "APPLE_MINIAPPS_PROVISIONING_PROFILE_B64",
+        "HanlinMiniAppsApp/HanlinMiniApps.entitlements"
+      ],
+      [
+        "share",
+        "com.itorah.chavrusachat.share",
+        "APPLE_SHARE_PROVISIONING_PROFILE_B64",
+        "ChavrusaChatShare/ChavrusaChatShare.entitlements"
+      ],
+      [
+        "widgets",
+        "com.itorah.chavrusachat.widgets",
+        "APPLE_WIDGETS_PROVISIONING_PROFILE_B64",
+        "HanlinScriptingWidgets/HanlinScriptingWidgets.entitlements"
+      ],
+      [
+        "translation",
+        "com.itorah.chavrusachat.translation-provider",
+        "APPLE_TRANSLATION_PROVISIONING_PROFILE_B64",
+        "ChavrusaChatTranslationProvider/ChavrusaChatTranslationProvider.entitlements"
+      ],
+      [
+        "notification",
+        "com.itorah.chavrusachat.notification-service",
+        "APPLE_NOTIFICATION_SERVICE_PROVISIONING_PROFILE_B64",
+        "ChavrusaChatNotificationService/ChavrusaChatNotificationService.entitlements"
+      ],
+      [
+        "miniapps_widgets",
+        "com.itorah.hanlinminiapps.widgets",
+        "APPLE_MINIAPPS_WIDGETS_PROVISIONING_PROFILE_B64",
+        "HanlinMiniAppsExtensions/Widgets/HanlinMiniAppsWidgets.entitlements"
+      ],
+      [
+        "miniapps_share",
+        "com.itorah.hanlinminiapps.share",
+        "APPLE_MINIAPPS_SHARE_PROVISIONING_PROFILE_B64",
+        "HanlinMiniAppsExtensions/Share/HanlinMiniAppsShare.entitlements"
+      ],
+      [
+        "miniapps_translation_provider",
+        "com.itorah.hanlinminiapps.translation-provider",
+        "APPLE_MINIAPPS_TRANSLATION_PROVIDER_PROVISIONING_PROFILE_B64",
+        "HanlinMiniAppsExtensions/Translation/HanlinMiniAppsTranslationProvider.entitlements"
+      ],
+      [
+        "miniapps_notification_service",
+        "com.itorah.hanlinminiapps.notification-service",
+        "APPLE_MINIAPPS_NOTIFICATION_SERVICE_PROVISIONING_PROFILE_B64",
+        "HanlinMiniAppsExtensions/Notification/HanlinMiniAppsNotificationService.entitlements"
+      ],
+      [
+        "miniapps_keyboard",
+        "com.itorah.hanlinminiapps.keyboard",
+        "APPLE_MINIAPPS_KEYBOARD_PROVISIONING_PROFILE_B64",
+        "HanlinMiniAppsExtensions/Keyboard/HanlinMiniAppsKeyboard.entitlements"
+      ],
+      [
+        "miniapps_notification_content",
+        "com.itorah.hanlinminiapps.notification-content",
+        "APPLE_MINIAPPS_NOTIFICATION_CONTENT_PROVISIONING_PROFILE_B64",
+        "HanlinMiniAppsExtensions/NotificationContent/HanlinMiniAppsNotificationContent.entitlements"
+      ],
+      [
+        "miniapps_camera_capture",
+        "com.itorah.hanlinminiapps.camera-capture",
+        "APPLE_MINIAPPS_CAMERA_CAPTURE_PROVISIONING_PROFILE_B64",
+        "HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.entitlements"
+      ]
+    ],
+    "legacyHanlinEntryFilesIdenticalToBase": {
+      "AI_HLY/Downstream/SDK/HanlinApplicationScene.swift": "a94798aed7e96d6355c0e233da4babd9c8c6b1c26f0f0ce7921932432714d540",
+      "AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift": "29793c75803318c10d9abcd2b02945b16852f32ec3cebeabe1742a9a4746b702",
+      "HanlinScriptingWidgets/HanlinScriptingWidgets.swift": "255babd7c6c72d7dfbc6ed6526dd17eabe38a60eed5763613a6bea0ba641f25b"
+    },
+    "rootExecuteHeadlessActionIdenticalToBaseSHA256": "bed2c7edeb53f6c14509dcac09afaa1b69e4f2df879dfcec28fce7ff6b8a6934",
+    "legacyWidgetPublicationOutsideNewProductGuard": true,
+    "sharedContractsAndGenericCatalogRetained": true
+  },
+  "portableChecks": {
+    "uniquePythonMethods": 98,
+    "groups": {
+      "projectGraph": 19,
+      "systemExtensionTargetsFinal": 10,
+      "hostLinkOwnership": 6,
+      "widgetCxxImports": 1,
+      "signingProfiles": 33,
+      "signedBundles": 7,
+      "localMiniAppsProfiles": 6,
+      "localDistributionProfiles": 16
+    },
+    "evidenceScope": "portable-final covers 97 methods; final 10-method system-extension suite in boundary-final supersedes its earlier 9-method run. The unchanged other 88 methods retain their receipts.",
+    "nodeMethods": 7,
+    "nodeGroups": {
+      "manifestContracts": 1,
+      "nativePresentationEffects": 3,
+      "preparedSystemAuthoring": 3
+    },
+    "authoringBoundary": "Original authoring fixtures and actual existing NativeScript TypeScript 5.9.3; two original-engine validation inputs plus negative capture/presentation packaging contracts. Not a freshly staged complete SDK or Apple runtime result.",
+    "swiftParseFiles": 5,
+    "swiftParseBoundary": "Swift Linux syntax parsing only; no Apple module typecheck or execution."
+  },
+  "canonicalGeneration": {
+    "manifest": "PASS",
+    "appIntentResources": "PASS",
+    "xcodeProject": "PASS",
+    "verifyTargets": "SOURCE_VALIDATED",
+    "sdkInventorySources": 102,
+    "localPublicExports": 200,
+    "reachabilityCells": 100,
+    "sessionGap": "INT03-SESSION distinguishes cooperating-window contexts in the original shared engine from legacy single-owner admission; no separate JavaScript isolate or process isolation claim.",
+    "sourceReferences": "Generated inventory and reachability contain exact hashes and anchors, including standalone product publication."
+  },
+  "retainedFailures": [
+    {
+      "receipt": "portable-first/receipt.json",
+      "causes": [
+        "Camera template inherited GENERATE_INFOPLIST_FILE=NO; fixed generator, original graph assertions retained.",
+        "Incoming generic operation-label tests did not meet root full source SHA/build identity contract; adapted new tests, root production checks retained.",
+        "Old five-bundle expectations and last-item receipt assumption expanded to exact eight-bundle ownership and role-based receipt lookup."
+      ]
+    },
+    {
+      "receipt": "canonical-audits/receipt.json",
+      "cause": "Sparse checkout lacked six tracked audit inputs; materialized exact tracked sources without installing/copying dependencies."
+    },
+    {
+      "receipt": "canonical-final/receipt.json",
+      "cause": "New kind equality test omitted existing assistantTool; restored it to the full expected list. Final-checks records passing unchanged production manifest."
+    },
+    {
+      "job": "job_9b45650c3ec7",
+      "cause": "Runner asserted an unnecessary newline correction before executing checks. Source was already valid; corrected runner executes original checks in boundary-final."
+    }
+  ],
+  "nativeGates": {
+    "status": "NOT_RUN_FOR_THIS_INTEGRATION",
+    "hanlinDiscoveryCaptureSelectors": [
+      "AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests/testSystemEntrypointPublicationIsStandaloneMiniAppsOnly",
+      "AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests/testInstalledCatalogDoesNotDependOnWidgetInstancesAndReconcilesIdentity",
+      "AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests/testCaptureCatalogRequiresAnActualUnambiguousPreparedAction",
+      "AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests/testCapturedBytesAreDurableBeforeSessionInvalidationAndRetryKeepsIdentity",
+      "AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests/testCaptureManifestRejectsForeignProductAndUnownedPath",
+      "AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests/testSystemEntrypointsReloadAnotherStoreBeforeGenerationAndEnabledAdmission",
+      "AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests/testInactiveSystemWindowReleasesPresentationWithoutTakingTheNewOwner",
+      "AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests/testUnrelatedAndLateCameraDismissalsPreserveOwnedCaptureAndPhotos",
+      "AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests/testCameraContextLoadRemainsSingleAcrossWindowReleaseAndNewRequest"
+    ],
+    "additionalOriginalPackageScopes": [
+      "HanlinPlatformContractsTests/manifestSurfaceSchemaMatchesRuntimeContracts",
+      "HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests (9 methods)",
+      "HanlinScriptCompilerTests/HanlinScriptAnalyzerTests (4 added methods)"
+    ],
+    "required": [
+      "Fresh exact-source canonical SDK/Host because declared source inputs changed.",
+      "Original affected Hanlin and standalone MiniApps native gates; prior-source builds do not prove this candidate.",
+      "Original two-product/AppGroup paired fixture acceptance remains separate.",
+      "Fresh Apple identity/profile/entitlement readback for three new MiniApps bundles, preserving original ten roles.",
+      "Signed bundle export/install and actual OS keyboard, notification-content, Spotlight, capture and applicable physical-device acceptance."
+    ]
+  },
+  "sourceSHA256": {
+    "AI_HLY.xcodeproj/project.pbxproj": "52bd71e97d08c1982fe0547d2b0c80374c373533d9abcaf885591adab87dccdb",
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs": "755c3c2f372d9382bc18254dfdebcba1582d0e2490424069a1eb34d8a09c4d0e",
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs": "cea114769522eaaaceee804b89b26549c2335b3ebca16037a64f97724f2e92fc",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift": "40ace8e3c451e344576f2187bb961bac73ced97e8a504a8e85d7395db28eaab7",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppCaptureCoordinator.swift": "8a4772d47f4e62a654d32b39b1671e8c4d6826620a5d7b0fda9f05dcfa6eac88",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppCaptureInbox.swift": "d79d5b5c8762d4b9cb509a4eaabf25aa2563157b940c5c57bfc8a8a90e1e4e16",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSpotlightIndex.swift": "d3fd4f9fad95573332cc436d8704ae4f3651ba6c83f7d4d3cb8093bde15874ac",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSystemCatalog.swift": "2d98c0ad4f27a1da489a2a4ea295e42450e3c083b8e07bb5a617ed5d9da0290a",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSystemEntrypointsView.swift": "b88050215e0d4bef401f95741faf83f4b761a9a805ec9153e48ec69c919c8b69",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift": "38445d96c657661ddc2eb68018b25c8439a6a267cb7be86ac040e6e123329ecb",
+    "AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift": "fbf160fec68f9e2d7abeee56df5dbf9b4c1a20a8cb66cfecaafca4f6b2e4ff1d",
+    "AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests.swift": "1fab9f68f93dc039eac8056ece59c324c6be50b00cdd462a3f569e557707bec2",
+    "HanlinMiniAppsApp/HanlinMiniAppsApp.swift": "65792c17c4dd40c9893b441f746fd13bcd4c471c7c49dabdde1f7e5f7adf6e3b",
+    "HanlinMiniAppsApp/Info.plist": "c3889b212bf4eddcea4da3a5761782971d954e7dfc61a0276465088f5be1b46a",
+    "HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.entitlements": "97704a8960b4facceef54397a08fb5d0a456247c3627359215aa2a27df22656c",
+    "HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.swift": "ee8a54ba3150ca5cdabc99f55f245e64c5b68087d8e7559a149575fba65cf448",
+    "HanlinMiniAppsExtensions/CameraCapture/Info.plist": "00cd0f32a7c53877e49d41e713f9dfec85137dc0043ad5934d531ccfe6657de5",
+    "HanlinMiniAppsExtensions/Keyboard/HanlinMiniAppsKeyboard.entitlements": "6d7c2663c6e543380d18eccc7fc96cd1b0bfd3e1dae524aa59f9688abb49f8dd",
+    "HanlinMiniAppsExtensions/Keyboard/HanlinMiniAppsKeyboard.swift": "785a18d619de3f670797241ff1f6dc0eefcc758febf55e5756b65734bdd20d0f",
+    "HanlinMiniAppsExtensions/Keyboard/Info.plist": "6238b81f0e6593356d1461b8c9842b3cec6759b4fe559e664f73db811d3da01c",
+    "HanlinMiniAppsExtensions/NotificationContent/HanlinMiniAppsNotificationContent.entitlements": "6d7c2663c6e543380d18eccc7fc96cd1b0bfd3e1dae524aa59f9688abb49f8dd",
+    "HanlinMiniAppsExtensions/NotificationContent/HanlinMiniAppsNotificationContent.swift": "bf1dd8c97116fdbeda96d873c785a6b31bfc66be4de6828960e845882dbfecf5",
+    "HanlinMiniAppsExtensions/NotificationContent/Info.plist": "2f2277bb73d958bec242022227077ace6fa6b6ea2fd77c56a73d18e6b0222fbb",
+    "HanlinMiniAppsExtensions/Widgets/HanlinMiniAppsWidgets.swift": "ee16856a19d7b83de544eb1e05cb8a4049750739eb38b0b7bf77fedef6ba4854",
+    "Package.swift": "fb08c64bd016c1d5f2c3d4c6665f5911d4d888b5486ab73479f6e35940c591bc",
+    "Packages/HanlinAppExtensionsSDK/Package.swift": "55a32b484dfecced9c96546063ce5f207c186add846fbc47711b2fb93d77cd86",
+    "Packages/HanlinAppExtensionsSDK/Sources/HanlinCameraCaptureUI/HanlinCameraCaptureContracts.swift": "0de62f77431bc29a0b1aecfa74d6d5b3f51d4b4fb6bbed60c3dd9c31406a56f4",
+    "Packages/HanlinAppExtensionsSDK/Sources/HanlinCameraCaptureUI/HanlinCameraCaptureIntent.swift": "42ac215d241c6b93ebe970b94f5e838d75a23039d230cc71e0cc6d5ad2437807",
+    "Packages/HanlinAppExtensionsSDK/Sources/HanlinCameraCaptureUI/HanlinCameraCaptureView.swift": "2608463d056209a00e9968ef840bf020762f4c8e26a884a80d6c5a8cf1e4830e",
+    "Packages/HanlinAppExtensionsSDK/Sources/HanlinCameraCaptureUI/HanlinCameraPreviewSource.swift": "159ec974b4442c5a0722d92af51cdbe76f8391934ee7f556eabd9f2acade3c5e",
+    "Packages/HanlinAppExtensionsSDK/Sources/HanlinCameraCaptureUI/HanlinCameraService.swift": "e02e5dce12f16369a0a02aea81ce9e9c0e8e386b85c637505a0bc6def2bc1fed",
+    "Packages/HanlinAppExtensionsSDK/Sources/HanlinKeyboardUI/HanlinKeyboardInputViewController.swift": "06f183c4ae06064e310c8eec1947526651ff1f672b533448ff4e7db00aea9b7c",
+    "Packages/HanlinAppExtensionsSDK/Sources/HanlinNotificationContentUI/HanlinNotificationContentViewController.swift": "82c29170477e865e4ce610ecaa1381058e2e4f22bd4c8db2f501b238fd179a88",
+    "Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/HanlinNativePresentationView.swift": "27e9176daefc266973d251131eb2b02e419f6ce8de4f771d4633ff9ceaedf3ee",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinDescriptors.swift": "6ddfa1da79db8f84f26c5cd1894043c2f9a8b5626fabbe674ac8541c3456d2bb",
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json": "2fed91226c1e8ebe152bc7445d97306897f95c1bfb75ed125d50af7e7bb55aaf",
+    "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift": "7e3a1ff682abef2b319a4c428c9da6a4069989872cdbab777479e2eced0d1306",
+    "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinInstallContracts.swift": "b811c01bb354a8c8bf9e1dbe1a354bf2dd08cd822f82438661286cc5872b08e6",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNativePresentation.swift": "a9e87935202eb8e512e9f230c0381aaa217f1626e50ca48a461ca3f34f2f0b36",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationPresentation.swift": "13e1bc6edb1892c5935e4cb66743b3f31a24c7ed30f49d10cecf07e79c5ac35c",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionContracts.swift": "1298b4e420292a4e331cad7903f119861ae6df675a4fc90456fbde2bae24efd9",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionStore.swift": "24edbaf3728be1b88d09f0734b9208a9e56641117c45949e4042b3418176f8b0",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinWidgetInstance.swift": "55483e2e8500c1be80fd0d6c8a1c034be4cfab2014dfaf2160fe8f4fcaa4cd1c",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift": "fa62de1025c7ae06406794e9c397e3f64ed0e32a8fb0fc3584e43fa2e28bd066",
+    "Packages/HanlinPlatform/Tests/HanlinPlatformContractsTests/ManifestSurfaceSchemaTests.swift": "2493e2df628c8cf4382df8e89e9775182807ad030bf2bfa92e7f02ac6d707d46",
+    "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift": "686d302cc7a5cb3c365f884cadb4f41cec4ca7769ce9d089a55e4d5d3014ba58",
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests.swift": "6100a9d5412b22cf5542abcd1872e56f5ac6d23e996380947e896d77a97b3d91",
+    "Scripts/Audit/Tests/manifest-contracts.test.mjs": "6a2029345b9367b1cb209ae25a180e0403450cf8fbf44f7a48eab3a09358ad94",
+    "Scripts/Audit/audit-miniapp-sdk.mjs": "d896e6c51af5d499686343161e46291187f88dea747b20e0a01b0221e1c23f31",
+    "Scripts/Audit/audit_miniapp_reachability.py": "7a40825fc7a75926c3820bbfe54fb6b8e686b141e0d1007f17466654ddad0d43",
+    "Scripts/Audit/miniapp-manifest-contracts.mjs": "63a230ca13c7b7e1ae2c9c550dd575543439f41eed60807660e5311d8cd6cc6f",
+    "Scripts/CI/IntegrationValidation/miniapps_provider_sources.json": "4853bad7efc467430c3ba9a038eb746ec9a583c4218b0fe5127209b747426f22",
+    "Scripts/CI/IntegrationValidation/project_graph.py": "b55b15a969fb438d32f78db491e65ea51d755019d3f2d563e61e1cffe9f9afbd",
+    "Scripts/CI/IntegrationValidation/test_project_graph.py": "5392bc6c00ed7423425d407d09358990dfd247403a1103658c3910fb1203cebe",
+    "Scripts/MiniApps/Tests/native-presentation-effects.test.mjs": "aa7af1c777817ecc0b47ac1e1f26fd047b8ca9de8e7b2c6fbe67cc7332ae37db",
+    "Scripts/MiniApps/generate-scriptwidget-service-types.mjs": "b964f54c355f4ac37f45a4e9a96c5308b8677f451a3217e83be20925f95acf6d",
+    "Scripts/MiniApps/native-presentations.d.ts": "815624960e98b6f1c53754f5b5ebaebcdb9addf80a4162e4bfd42c6649917e82",
+    "Scripts/MiniApps/scriptwidget/native-api.json": "b059e9ac0e65627969a8e915935ba5c22ac3d8ed5af010af686b0483e4e39994",
+    "Scripts/MiniApps/scriptwidget/original-api.d.ts": "a934caa95793a2411f7504c38663b08ae3f92b6588c39dc97f95fdbbcb19a03d",
+    "Scripts/MiniApps/scriptwidget/service-types.d.ts": "3707e0789f902ca0f6d73a441bfc198a83860f6be8e2675ce7cb38eca2ec6c02",
+    "Scripts/MiniApps/stage-sdk.mjs": "a375457668c88aac01634b94b8529c63d4edc072a6f7af37af75ad7fb8bcdee2",
+    "Scripts/ProductSplit/audit_cross_app_identity.py": "6392281f625a834103239243d1a78521502544e255e356cffff97827905a06f8",
+    "Scripts/ProductSplit/audit_release_resources.py": "e503d4f38a928c43fbc944511190e9fb4cd346998f8bdf85cb5146d2579a5d5b",
+    "Scripts/ProductSplit/extension_inventory.py": "969011d17099fada7c7010528579ec8b3a256b8c7bb25fcfd609789e800068a8",
+    "Scripts/ProductSplit/miniapps_extensions.py": "c1221938e89b5a4d3ae944c2678046dcf022d24c5693c11ab5d39f2660004a9b",
+    "Scripts/ProductSplit/register_miniapps_bundle.py": "7bb770d5e0dd30e1db9e1744a217ff66873c5a199a856e77a24b12ec1271e45a",
+    "Scripts/ProductSplit/resolve_signing_profiles.py": "e1f9b06d9e6824b27526c39f8c87e7df089638d2dcaebc72bbe6e697145f7756",
+    "Scripts/ProductSplit/signing_profile_preflight.py": "121143283f479c5be9627a9e507a2bdfbc786d401f804ee6d0032eca70d3bbc2",
+    "Scripts/ProductSplit/test_local_miniapps_profiles.py": "665b390ef0f552d56f0d70c8bbbf2502dd992adcf9bcb89d4c4b2e109d23a20a",
+    "Scripts/ProductSplit/test_signed_product_bundles.py": "851fbfe72b1b787ccdd8f34b6f65cd895c315f66c3858132e613495fc7f0f0ee",
+    "Scripts/ProductSplit/test_signing_profiles.py": "c26547cdabdbc80347e968d74e456c086a84e0f97870c90527443f1923cf4e5b",
+    "Scripts/ProductSplit/verify_targets.py": "a87a7e45b2d9406a84468a941eda40620d37910436527fc314dcbf909735b0ed",
+    "Scripts/SDK/application_products.json": "75d508598ad67dbde717c31f88c96a0d53d9429796f4d2c5fe57321f322203ac",
+    "Scripts/SDK/tests/test_host_link_ownership.py": "641b98a99c2ae8eb2e42f6730b4b3bcdd02ae75fe7016aace60f1bed91f01068",
+    "Scripts/SDK/tests/test_system_extension_targets.py": "ea3a0405dd27ace649421d367e4134cd99e0f4eb85cdade1f75d1ec5d4044a80",
+    "Scripts/SDK/update_project.py": "b1df865c3e7f9a58822552902fa9cdfce4a0082069d7377bec7cbcfd986efcd6",
+    "docs/agent-sdk/unified-package-manifest.json": "ef15d0ec9814263275f029288d01e890f27714e52344f92bd275c337d7131124",
+    "docs/miniapp-sdk/MANIFEST_REFERENCE.md": "a7c304738af363e9b786ddf8d90d4d7124089e22ce04a468814f7ce3cf4502c1",
+    "docs/miniapp-sdk/SYSTEM_SURFACE_ACTIONS.md": "a4a4bfcbbf5b66d87c667c9d2f333f49262f02de5106999c4847e8f77cbdec02",
+    "docs/miniapp-sdk/evidence/scriptable-wave2-20261126/pr19-review-1177/camera-context-followup.json": "754715f883cf426792604a0c751db44d32a72af739def17f662511efba542cf0",
+    "docs/miniapp-sdk/evidence/scriptable-wave2-20261126/pr19-review-1177/source-review.json": "c6f0189c78cab9ad2a77c872da3eacf00df475668def94785d554e832e86dae6",
+    "docs/miniapp-sdk/extension-reachability.json": "8cb804745c9bfd65c21abc593b6729f3e6b2bfe3598b9130ee6023e51d9237ee",
+    "docs/miniapp-sdk/extension-reachability.md": "79e11d990178780f0ca9e5d9be0e12081ba6fb0a168300c6142d4b94d7fe2aa3",
+    "docs/miniapp-sdk/source-inventory.json": "d0b1b8ec66f070e17f0f003b470303d7690be376d287b5c29e121d53d74985d9",
+    "docs/product-split/target-membership.json": "e874e4ed95fa269ac1fad9c86d6b8ad2b9c47859da00a0f01339f8c254e40420"
+  }
+}

@@ -180,6 +180,7 @@ class HostLinkOwnershipTests(unittest.TestCase):
         self.assertIn("HanlinExpoWidgetNative", closure[0])
         self.assertIn("HanlinTranslationUI", closure[0])
         self.assertIn("HanlinExpoWidgetsOriginal", closure[0])
+        self.assertIn("HanlinCameraCaptureUI", closure[0])
         self.assertTrue({"HanlinMiniAppsBridge", "HanlinMiniAppsPicker"} <= target_names)
 
 

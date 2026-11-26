@@ -1,0 +1,130 @@
+[
+  {
+    "name": "project-graph",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "Scripts/CI/IntegrationValidation",
+      "-p",
+      "test_project_graph.py",
+      "-v"
+    ],
+    "exit": 0,
+    "stderr_tail": "nal_shared_sdk (test_project_graph.ProjectGraphTests.test_miniapps_extensions_link_original_shared_sdk) ... ok\ntest_native_surfaces_share_only_miniapps_namespace (test_project_graph.ProjectGraphTests.test_native_surfaces_share_only_miniapps_namespace) ... ok\ntest_registered_graph (test_project_graph.ProjectGraphTests.test_registered_graph) ... ok\ntest_reject_app_dependency (test_project_graph.ProjectGraphTests.test_reject_app_dependency) ... ok\ntest_reject_declared_but_unlinked_product (test_project_graph.ProjectGraphTests.test_reject_declared_but_unlinked_product) ... ok\ntest_reject_duplicate_project_key (test_project_graph.ProjectGraphTests.test_reject_duplicate_project_key) ... ok\ntest_reject_invalid_signing_or_lower_deployment (test_project_graph.ProjectGraphTests.test_reject_invalid_signing_or_lower_deployment) ... ok\ntest_reject_runtime_build_phase (test_project_graph.ProjectGraphTests.test_reject_runtime_build_phase) ... ok\ntest_reject_whole_app_source_membership (test_project_graph.ProjectGraphTests.test_reject_whole_app_source_membership) ... ok\ntest_result_verifier_requires_all_actual_passing_nodes (test_project_graph.ProjectGraphTests.test_result_verifier_requires_all_actual_passing_nodes) ... ok\ntest_shared_native_adapter_must_not_compile_again_in_executable (test_project_graph.ProjectGraphTests.test_shared_native_adapter_must_not_compile_again_in_executable) ... ok\n\n----------------------------------------------------------------------\nRan 19 tests in 0.729s\n\nOK\n"
+  },
+  {
+    "name": "system-extensions",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "Scripts/SDK/tests",
+      "-p",
+      "test_system_extension_targets.py",
+      "-v"
+    ],
+    "exit": 0,
+    "stderr_tail": "sTests.test_complete_actual_shipping_graph_and_source_metadata) ... ok\ntest_each_export_selects_exactly_its_five_or_eight_owned_bundles (test_system_extension_targets.SystemExtensionTargetsTests.test_each_export_selects_exactly_its_five_or_eight_owned_bundles) ... ok\ntest_generation_is_idempotent_and_preserves_native_shell_phases (test_system_extension_targets.SystemExtensionTargetsTests.test_generation_is_idempotent_and_preserves_native_shell_phases) ... ok\ntest_missing_target_or_capture_intent_link_is_rejected (test_system_extension_targets.SystemExtensionTargetsTests.test_missing_target_or_capture_intent_link_is_rejected) ... ok\ntest_new_system_surfaces_do_not_acquire_hanlin_shipping_or_registration (test_system_extension_targets.SystemExtensionTargetsTests.test_new_system_surfaces_do_not_acquire_hanlin_shipping_or_registration) ... ok\ntest_original_ten_signing_roles_and_profile_names_are_unchanged (test_system_extension_targets.SystemExtensionTargetsTests.test_original_ten_signing_roles_and_profile_names_are_unchanged) ... ok\ntest_registration_scope_and_capture_entitlements_are_exact (test_system_extension_targets.SystemExtensionTargetsTests.test_registration_scope_and_capture_entitlements_are_exact) ... ok\ntest_wrong_owner_or_duplicate_embedding_is_rejected (test_system_extension_targets.SystemExtensionTargetsTests.test_wrong_owner_or_duplicate_embedding_is_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 9 tests in 1.996s\n\nOK\n"
+  },
+  {
+    "name": "host-link-ownership",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "Scripts/SDK/tests",
+      "-p",
+      "test_host_link_ownership.py",
+      "-v"
+    ],
+    "exit": 0,
+    "stderr_tail": "test_canonical_seed_rejects_missing_ambiguous_recursive_and_duplicate_dependencies (test_host_link_ownership.HostLinkOwnershipTests.test_canonical_seed_rejects_missing_ambiguous_recursive_and_duplicate_dependencies) ... ok\ntest_checked_in_hosts_link_only_the_shared_application_image (test_host_link_ownership.HostLinkOwnershipTests.test_checked_in_hosts_link_only_the_shared_application_image) ... ok\ntest_every_declared_host_product_remains_reachable_and_unknown_products_are_kept (test_host_link_ownership.HostLinkOwnershipTests.test_every_declared_host_product_remains_reachable_and_unknown_products_are_kept) ... ok\ntest_generator_preserves_declared_source_closure_and_all_unrelated_objects (test_host_link_ownership.HostLinkOwnershipTests.test_generator_preserves_declared_source_closure_and_all_unrelated_objects) ... ok\ntest_host_target_name_disambiguates_the_sdk_and_preserves_the_app_product (test_host_link_ownership.HostLinkOwnershipTests.test_host_target_name_disambiguates_the_sdk_and_preserves_the_app_product) ... ok\ntest_unknown_independent_host_product_is_preserved_in_both_link_surfaces (test_host_link_ownership.HostLinkOwnershipTests.test_unknown_independent_host_product_is_preserved_in_both_link_surfaces) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 5.826s\n\nOK\n"
+  },
+  {
+    "name": "widget-cxx-imports",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "Scripts/SDK/tests",
+      "-p",
+      "test_widget_cxx_imports.py",
+      "-v"
+    ],
+    "exit": 0,
+    "stderr_tail": "test_real_widget_consumers_preserve_original_expo_cpp_import_contract (test_widget_cxx_imports.WidgetCxxImportTests.test_real_widget_consumers_preserve_original_expo_cpp_import_contract) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 2.651s\n\nOK\n"
+  },
+  {
+    "name": "profile-resolution",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "Scripts/ProductSplit",
+      "-p",
+      "test_signing_profiles.py",
+      "-v"
+    ],
+    "exit": 0,
+    "stderr_tail": "lid_signature_or_signer_never_becomes_valid) ... ok\ntest_diagnostic_for_different_profile_cannot_prove_selected_profile (test_signing_profiles.SigningAdmissionDiagnosticTests.test_diagnostic_for_different_profile_cannot_prove_selected_profile) ... ok\ntest_failed_native_archive_records_attempt_without_export_or_product_build (test_signing_profiles.SigningAdmissionDiagnosticTests.test_failed_native_archive_records_attempt_without_export_or_product_build) ... ok\ntest_native_cms_integer_boolean_output_is_classified_without_claiming_xcode_admission (test_signing_profiles.SigningAdmissionDiagnosticTests.test_native_cms_integer_boolean_output_is_classified_without_claiming_xcode_admission) ... ok\ntest_owned_log_scope_preserves_only_sanitized_signing_events (test_signing_profiles.SigningAdmissionDiagnosticTests.test_owned_log_scope_preserves_only_sanitized_signing_events) ... ok\ntest_owned_log_scope_rejects_other_process_and_retains_no_unowned_data (test_signing_profiles.SigningAdmissionDiagnosticTests.test_owned_log_scope_rejects_other_process_and_retains_no_unowned_data) ... ok\ntest_owned_process_records_actual_exit_and_pid (test_signing_profiles.SigningAdmissionDiagnosticTests.test_owned_process_records_actual_exit_and_pid) ... ok\ntest_owned_process_timeout_finishes_its_child (test_signing_profiles.SigningAdmissionDiagnosticTests.test_owned_process_timeout_finishes_its_child) ... ok\n\n----------------------------------------------------------------------\nRan 33 tests in 0.153s\n\nOK\n"
+  },
+  {
+    "name": "signed-bundles",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "Scripts/ProductSplit",
+      "-p",
+      "test_signed_product_bundles.py",
+      "-v"
+    ],
+    "exit": 0,
+    "stderr_tail": "test_duplicate_identity_across_containers_is_rejected (test_signed_product_bundles.ExportedBundleTargetsTests.test_duplicate_identity_across_containers_is_rejected) ... ok\ntest_extension_cannot_duplicate_main_application_identity (test_signed_product_bundles.ExportedBundleTargetsTests.test_extension_cannot_duplicate_main_application_identity) ... ok\ntest_miniapps_app_only_cannot_satisfy_source_extension_coverage (test_signed_product_bundles.ExportedBundleTargetsTests.test_miniapps_app_only_cannot_satisfy_source_extension_coverage) ... ok\ntest_missing_extensionkit_identity_is_rejected (test_signed_product_bundles.ExportedBundleTargetsTests.test_missing_extensionkit_identity_is_rejected) ... ok\ntest_original_ipa_includes_extensionkit_and_plugin_extensions (test_signed_product_bundles.ExportedBundleTargetsTests.test_original_ipa_includes_extensionkit_and_plugin_extensions) ... ok\ntest_profile_selection_retains_both_disjoint_original_app_families (test_signed_product_bundles.ExportedBundleTargetsTests.test_profile_selection_retains_both_disjoint_original_app_families) ... ok\ntest_unexpected_extension_is_rejected (test_signed_product_bundles.ExportedBundleTargetsTests.test_unexpected_extension_is_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 7 tests in 0.014s\n\nOK\n"
+  },
+  {
+    "name": "local-miniapps-profiles",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "Scripts/ProductSplit",
+      "-p",
+      "test_local_miniapps_profiles.py",
+      "-v"
+    ],
+    "exit": 0,
+    "stderr_tail": "test_all_eight_owned_roles_reuse_profiles_with_exact_prefix_matching (test_local_miniapps_profiles.MiniAppsLocalProfilesTests.test_all_eight_owned_roles_reuse_profiles_with_exact_prefix_matching) ... ok\ntest_all_source_plists_are_loaded_before_any_account_request (test_local_miniapps_profiles.MiniAppsLocalProfilesTests.test_all_source_plists_are_loaded_before_any_account_request) ... ok\ntest_invalid_release_identity_precedes_any_account_request (test_local_miniapps_profiles.MiniAppsLocalProfilesTests.test_invalid_release_identity_precedes_any_account_request) ... ok\ntest_missing_extension_is_created_once_and_get_cms_is_authoritative (test_local_miniapps_profiles.MiniAppsLocalProfilesTests.test_missing_extension_is_created_once_and_get_cms_is_authoritative) ... ok\ntest_unassigned_extension_app_group_is_rejected_even_with_valid_main (test_local_miniapps_profiles.MiniAppsLocalProfilesTests.test_unassigned_extension_app_group_is_rejected_even_with_valid_main) ... ok\ntest_widget_icloud_container_stays_required (test_local_miniapps_profiles.MiniAppsLocalProfilesTests.test_widget_icloud_container_stays_required) ... ok\n\n----------------------------------------------------------------------\nRan 6 tests in 0.031s\n\nOK\n"
+  },
+  {
+    "name": "local-distribution-profiles",
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "Scripts/ProductSplit",
+      "-p",
+      "test_local_distribution_profiles.py",
+      "-v"
+    ],
+    "exit": 0,
+    "stderr_tail": "any_account_read_or_write (test_local_distribution_profiles.LocalResolutionTests.test_invalid_local_naming_fails_before_any_account_read_or_write) ... ok\ntest_later_compatible_candidate_is_reused_before_any_creation (test_local_distribution_profiles.LocalResolutionTests.test_later_compatible_candidate_is_reused_before_any_creation) ... ok\ntest_missing_pair_has_one_creation_each_and_full_get_readback (test_local_distribution_profiles.LocalResolutionTests.test_missing_pair_has_one_creation_each_and_full_get_readback) ... ok\ntest_original_numeric_github_creation_default_is_unchanged (test_local_distribution_profiles.LocalResolutionTests.test_original_numeric_github_creation_default_is_unchanged) ... ok\ntest_pair_reuses_existing_profiles_and_returns_private_metadata_separately (test_local_distribution_profiles.LocalResolutionTests.test_pair_reuses_existing_profiles_and_returns_private_metadata_separately) ... ok\ntest_partial_local_context_cannot_fall_back_to_gha (test_local_distribution_profiles.LocalResolutionTests.test_partial_local_context_cannot_fall_back_to_gha) ... ok\ntest_uncertain_creation_is_not_retried (test_local_distribution_profiles.LocalResolutionTests.test_uncertain_creation_is_not_retried) ... ok\ntest_wrong_certificate_prevents_all_profile_resolution (test_local_distribution_profiles.LocalResolutionTests.test_wrong_certificate_prevents_all_profile_resolution) ... ok\n\n----------------------------------------------------------------------\nRan 16 tests in 0.030s\n\nOK\n"
+  }
+]

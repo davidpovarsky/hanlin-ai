@@ -47,6 +47,7 @@ public struct HanlinNativePresentationView: View {
 public struct HanlinNativePresentationContentView: View {
     public let request: HanlinNativePresentationRequest
     public let store: HanlinScriptExtensionStore
+    public let storage: HanlinNativePresentationStorage
     public let onEffect: (HanlinNativePresentationEffect) -> Void
     @State private var prepared: HanlinPreparedWidget?
     @State private var isLoading = false
@@ -55,9 +56,11 @@ public struct HanlinNativePresentationContentView: View {
     @State private var error: String?
 
     public init(request: HanlinNativePresentationRequest, store: HanlinScriptExtensionStore,
+                storage: HanlinNativePresentationStorage = .shared,
                 onEffect: @escaping (HanlinNativePresentationEffect) -> Void = { _ in }) {
         self.request = request
         self.store = store
+        self.storage = storage
         self.onEffect = onEffect
     }
 
@@ -114,9 +117,10 @@ public struct HanlinNativePresentationContentView: View {
             }
         }
         let currentStore = store
+        let currentStorage = storage
         let worker = Task.detached(priority: .userInitiated) {
             try Task.checkCancellation()
-            return try HanlinNativePresentationExecutor.prepare(currentRequest, store: currentStore, action: command)
+            return try HanlinNativePresentationExecutor.prepare(currentRequest, store: currentStore, action: command, storage: currentStorage)
         }
         do {
             let result = try await withTaskCancellationHandler {

@@ -1,4 +1,5 @@
 import AppIntents
+import HanlinCameraCaptureUI
 import ExpoWidgets
 import HanlinExtensionContracts
 import HanlinWidgetUI
@@ -15,11 +16,12 @@ struct HanlinMiniAppsWidgetBundle: WidgetBundle {
         ExpoWidgets.WidgetLiveActivity()
         ScriptWidgetButtonControlWidget()
         ScriptWidgetControlWidget()
+        HanlinCameraCaptureControl()
     }
 }
 
 struct HanlinMiniAppsWidgetIntents: AppIntentsPackage {
     static var includedPackages: [any AppIntentsPackage.Type] {
-        [HanlinWidgetIntentsPackage.self, HanlinExpoWidgetsIntentsPackage.self]
+        [HanlinWidgetIntentsPackage.self, HanlinExpoWidgetsIntentsPackage.self, HanlinCameraCaptureIntentsPackage.self]
     }
 }

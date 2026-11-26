@@ -34,6 +34,9 @@ test('all current manifest fields have source authorities and future reader/sche
   assert.equal(coverage.families.length, 8);
   const family = name => coverage.families.find(item => item.family === name);
   const script = family('script.json');
+  assert.deepEqual(script.fields.find(item => item.field === 'entrypoints[].kind').type.split(' | '),
+    ['assistantTool', 'appIntent', 'embeddedResult', 'share', 'translationUI', 'liveActivity',
+     'keyboard', 'notificationUI', 'spotlight', 'capture']);
   assert.equal(script.decoderKnownKeys.length, 16);
   for (const key of ['entrypoints[].exportedSymbol', 'nativePresentations.*.input.submitTitle',
     'hanlinWidget.actions[].stateKey', 'hanlinWidget.actions[].hostAction.entrypointID',

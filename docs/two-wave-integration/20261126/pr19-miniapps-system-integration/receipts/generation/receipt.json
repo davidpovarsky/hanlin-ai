@@ -1,0 +1,29 @@
+[
+  {
+    "command": [
+      "python3",
+      "Scripts/SDK/generate_manifest.py"
+    ],
+    "start_utc": "2026-11-26T16:55:37.749332+00:00",
+    "end_utc": "2026-11-26T16:55:47.052610+00:00",
+    "exit": 0
+  },
+  {
+    "command": [
+      "python3",
+      "Scripts/SDK/generate_app_intents_resources.py"
+    ],
+    "start_utc": "2026-11-26T16:55:47.052763+00:00",
+    "end_utc": "2026-11-26T16:55:47.109865+00:00",
+    "exit": 0
+  },
+  {
+    "command": [
+      "python3",
+      "Scripts/SDK/update_project.py"
+    ],
+    "start_utc": "2026-11-26T16:55:47.110089+00:00",
+    "end_utc": "2026-11-26T16:55:50.224061+00:00",
+    "exit": 0
+  }
+]

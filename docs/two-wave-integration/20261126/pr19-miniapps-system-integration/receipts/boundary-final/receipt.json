@@ -1,0 +1,112 @@
+{
+  "source_only": true,
+  "apple_native_acceptance": "NOT_RUN",
+  "commands": [
+    {
+      "name": "product-boundary-source",
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "Scripts/SDK/tests",
+        "-p",
+        "test_system_extension_targets.py",
+        "-v"
+      ],
+      "exit": 0,
+      "stdout_log": "product-boundary-source.stdout.log",
+      "stderr_log": "product-boundary-source.stderr.log"
+    },
+    {
+      "name": "system-authoring",
+      "command": [
+        "env",
+        "HANLIN_AUTHORING_TYPESCRIPT=file:///mnt/development/projects/worktrees/hanlin-miniapps-sdk-recovery-20261125/Scripts/NativeScript/node_modules/typescript/lib/typescript.js",
+        "node",
+        "--test",
+        "--test-name-pattern",
+        "prepared capture|system native presentations",
+        "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs"
+      ],
+      "exit": 0,
+      "stdout_log": "system-authoring.stdout.log",
+      "stderr_log": "system-authoring.stderr.log"
+    },
+    {
+      "name": "sdk-inventory-write",
+      "command": [
+        "node",
+        "Scripts/Audit/audit-miniapp-sdk.mjs",
+        "--typescript-module",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-recovery-20261125/Scripts/Expo/node_modules/typescript/lib/typescript.js",
+        "--write"
+      ],
+      "exit": 0,
+      "stdout_log": "sdk-inventory-write.stdout.log",
+      "stderr_log": "sdk-inventory-write.stderr.log"
+    },
+    {
+      "name": "reachability-write",
+      "command": [
+        "python3",
+        "Scripts/Audit/audit_miniapp_reachability.py"
+      ],
+      "exit": 0,
+      "stdout_log": "reachability-write.stdout.log",
+      "stderr_log": "reachability-write.stderr.log"
+    },
+    {
+      "name": "sdk-inventory-check",
+      "command": [
+        "node",
+        "Scripts/Audit/audit-miniapp-sdk.mjs",
+        "--typescript-module",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-recovery-20261125/Scripts/Expo/node_modules/typescript/lib/typescript.js",
+        "--check"
+      ],
+      "exit": 0,
+      "stdout_log": "sdk-inventory-check.stdout.log",
+      "stderr_log": "sdk-inventory-check.stderr.log"
+    },
+    {
+      "name": "reachability-check",
+      "command": [
+        "python3",
+        "Scripts/Audit/audit_miniapp_reachability.py",
+        "--check"
+      ],
+      "exit": 0,
+      "stdout_log": "reachability-check.stdout.log",
+      "stderr_log": "reachability-check.stderr.log"
+    },
+    {
+      "name": "swift-parse",
+      "command": [
+        "swiftc",
+        "-frontend",
+        "-parse",
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSpotlightIndex.swift",
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+        "AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift",
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSystemEntrypointsView.swift",
+        "AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests.swift"
+      ],
+      "exit": 0,
+      "stdout_log": "swift-parse.stdout.log",
+      "stderr_log": "swift-parse.stderr.log"
+    },
+    {
+      "name": "diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit": 0,
+      "stdout_log": "diff-check.stdout.log",
+      "stderr_log": "diff-check.stderr.log"
+    }
+  ]
+}

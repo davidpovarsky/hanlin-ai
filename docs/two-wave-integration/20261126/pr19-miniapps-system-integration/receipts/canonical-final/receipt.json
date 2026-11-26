@@ -1,0 +1,71 @@
+[
+  {
+    "name": "sdk-inventory-write",
+    "command": [
+      "node",
+      "Scripts/Audit/audit-miniapp-sdk.mjs",
+      "--typescript-module",
+      "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-recovery-20261125/Scripts/Expo/node_modules/typescript/lib/typescript.js",
+      "--write"
+    ],
+    "exit": 0,
+    "stdout_tail": "Wrote source inventory: 102 sources, 200 local public exports; E2E not inferred.\n",
+    "stderr_tail": ""
+  },
+  {
+    "name": "reachability-write",
+    "command": [
+      "python3",
+      "Scripts/Audit/audit_miniapp_reachability.py"
+    ],
+    "exit": 0,
+    "stdout_tail": "Wrote 100 canonical Host-runtime reachability cells plus separate original-library and local-presentation records; no physical/E2E pass inferred.\n",
+    "stderr_tail": ""
+  },
+  {
+    "name": "sdk-inventory-check",
+    "command": [
+      "node",
+      "Scripts/Audit/audit-miniapp-sdk.mjs",
+      "--typescript-module",
+      "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-recovery-20261125/Scripts/Expo/node_modules/typescript/lib/typescript.js",
+      "--check"
+    ],
+    "exit": 0,
+    "stdout_tail": "PASS: SDK source inventory matches 102 sources and 200 local public exports.\n",
+    "stderr_tail": ""
+  },
+  {
+    "name": "reachability-check",
+    "command": [
+      "python3",
+      "Scripts/Audit/audit_miniapp_reachability.py",
+      "--check"
+    ],
+    "exit": 0,
+    "stdout_tail": "PASS: 100 unique source-backed reachability cells; no E2E pass inferred.\n",
+    "stderr_tail": ""
+  },
+  {
+    "name": "manifest-contracts",
+    "command": [
+      "node",
+      "--test",
+      "Scripts/Audit/Tests/manifest-contracts.test.mjs"
+    ],
+    "exit": 1,
+    "stdout_tail": "\u2716 all current manifest fields have source authorities and future reader/schema drift is visible (42.780004ms)\n\u2139 tests 1\n\u2139 suites 0\n\u2139 pass 0\n\u2139 fail 1\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 142.526494\n\n\u2716 failing tests:\n\ntest at Scripts/Audit/Tests/manifest-contracts.test.mjs:30:1\n\u2716 all current manifest fields have source authorities and future reader/schema drift is visible (42.780004ms)\n  AssertionError [ERR_ASSERTION]: Expected values to be strictly deep-equal:\n  + actual - expected\n  \n    [\n  +   'assistantTool',\n      'appIntent',\n      'embeddedResult',\n      'share',\n      'translationUI',\n      'liveActivity',\n  \n      at TestContext.<anonymous> (file:///mnt/development/projects/worktrees/hanlin-pr19-system-integration-20261126/Scripts/Audit/Tests/manifest-contracts.test.mjs:37:10)\n      at async Test.run (node:internal/test_runner/test:1409:7)\n      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {\n    generatedMessage: true,\n    code: 'ERR_ASSERTION',\n    actual: [ 'assistantTool', 'appIntent', 'embeddedResult', 'share', 'translationUI', 'liveActivity', 'keyboard', 'notificationUI', 'spotlight', 'capture' ],\n    expected: [ 'appIntent', 'embeddedResult', 'share', 'translationUI', 'liveActivity', 'keyboard', 'notificationUI', 'spotlight', 'capture' ],\n    operator: 'deepStrictEqual',\n    diff: 'simple'\n  }\n",
+    "stderr_tail": ""
+  },
+  {
+    "name": "native-presentation-bindings",
+    "command": [
+      "node",
+      "--test",
+      "Scripts/MiniApps/Tests/native-presentation-effects.test.mjs"
+    ],
+    "exit": 0,
+    "stdout_tail": "\u2714 actual binding forwards ordered text edits and notification actions (4.895268ms)\n\u2714 bad JS edit arguments fail before reaching the native document proxy (2.299213ms)\n\u2714 the same binding preserves existing translation helpers (1.494649ms)\n\u2139 tests 3\n\u2139 suites 0\n\u2139 pass 3\n\u2139 fail 0\n\u2139 cancelled 0\n\u2139 skipped 0\n\u2139 todo 0\n\u2139 duration_ms 103.589751\n",
+    "stderr_tail": ""
+  }
+]

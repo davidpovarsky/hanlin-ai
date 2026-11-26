@@ -6,12 +6,7 @@ import copy
 import hashlib
 import json
 
-EXTENSIONS = (
-    ("HanlinMiniAppsWidgets", "HanlinScriptingWidgets", "Widgets", "widgets"),
-    ("HanlinMiniAppsShare", "ChavrusaChatShare", "Share", "share"),
-    ("HanlinMiniAppsTranslationProvider", "ChavrusaChatTranslationProvider", "Translation", "translation-provider"),
-    ("HanlinMiniAppsNotificationService", "ChavrusaChatNotificationService", "Notification", "notification-service"),
-)
+from extension_inventory import EXTENSIONS as SPECS, MINIAPPS_EXTENSIONS as EXTENSIONS
 
 def extension_id(role):
     return "AC1A" + hashlib.sha256(("miniapps-extension:" + role).encode()).hexdigest()[:20].upper()
@@ -24,7 +19,7 @@ def render(value, level=3):
         return "(\n" + "".join("\t" * (level + 1) + render(v, level + 1) + ",\n" for v in value) + "\t" * level + ")"
     return json.dumps(value)
 
-def wire_miniapps_extensions(text, edit_object, replace_list, insert_object):
+def wire_miniapps_extensions(text, edit_object, replace_list, insert_object, *, sdk_products):
     from project_graph import parse_project
     project = parse_project(text)
     objects = project["objects"]
@@ -45,8 +40,20 @@ def wire_miniapps_extensions(text, edit_object, replace_list, insert_object):
 
     new_targets, new_groups, new_products, dependencies = [], [], [], []
     embeds = {"app": [], "extensionkit": []}
-    for name, original_name, folder, suffix in EXTENSIONS:
-        original = targets[original_name][1]
+    for spec in SPECS:
+        name, folder, suffix = spec.mini_target, spec.mini_folder, spec.suffix
+        original = targets[spec.template_target][1]
+        new_surface = spec.ai_target is None
+        products = list(original.get("packageProductDependencies", []))
+        additions = []
+        if new_surface:
+            required = [spec.sdk_product] + ([] if spec.key == "camera-capture"
+                                            else ["HanlinExtensionContracts"])
+            products = [sdk_products[product] for product in required]
+            additions = products
+        elif spec.key == "widgets":
+            additions = [sdk_products["HanlinCameraCaptureUI"]]
+            products += [key for key in additions if key not in products]
         target_id = extension_id(name + ":target")
         product_id = extension_id(name + ":product")
         group_id = extension_id(name + ":group")
@@ -68,10 +75,16 @@ def wire_miniapps_extensions(text, edit_object, replace_list, insert_object):
             phase_id = extension_id(name + ":phase:" + original_phase["isa"])
             phase = copy.deepcopy(original_phase)
             phase["files"] = []
-            for source_file_id in original_phase["files"]:
-                file_id = extension_id(name + ":build:" + source_file_id)
-                upsert(file_id, copy.deepcopy(objects[source_file_id]))
-                phase["files"].append(file_id)
+            if not new_surface:
+                for source_file_id in original_phase["files"]:
+                    file_id = extension_id(name + ":build:" + source_file_id)
+                    upsert(file_id, copy.deepcopy(objects[source_file_id]))
+                    phase["files"].append(file_id)
+            if original_phase["isa"] == "PBXFrameworksBuildPhase":
+                for product_ref in additions:
+                    file_id = extension_id(name + ":sdk-product:" + product_ref)
+                    upsert(file_id, {"isa": "PBXBuildFile", "productRef": product_ref})
+                    phase["files"].append(file_id)
             upsert(phase_id, phase); phases.append(phase_id)
         configs = []
         for original_config_id in objects[original["buildConfigurationList"]]["buildConfigurations"]:
@@ -88,6 +101,8 @@ def wire_miniapps_extensions(text, edit_object, replace_list, insert_object):
                 "CURRENT_PROJECT_VERSION": app_settings["CURRENT_PROJECT_VERSION"],
                 "MARKETING_VERSION": app_settings["MARKETING_VERSION"],
             })
+            if new_surface:
+                settings["GENERATE_INFOPLIST_FILE"] = "YES"
             for key in ("PROVISIONING_PROFILE_SPECIFIER", "PROVISIONING_PROFILE", "CODE_SIGN_IDENTITY"):
                 settings.pop(key, None)
             config_id = extension_id(name + ":config:" + config["name"])
@@ -98,7 +113,8 @@ def wire_miniapps_extensions(text, edit_object, replace_list, insert_object):
         target = copy.deepcopy(original)
         target.update({"buildConfigurationList": config_list_id, "buildPhases": phases,
                        "dependencies": [], "fileSystemSynchronizedGroups": [group_id],
-                       "name": name, "productName": name, "productReference": product_id})
+                       "name": name, "productName": name, "productReference": product_id,
+                       "packageProductDependencies": products})
         upsert(target_id, target)
         proxy_id = extension_id(name + ":proxy")
         upsert(proxy_id, {"isa": "PBXContainerItemProxy", "containerPortal": project["rootObject"],

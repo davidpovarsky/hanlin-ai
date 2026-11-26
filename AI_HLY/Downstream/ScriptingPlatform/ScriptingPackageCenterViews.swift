@@ -296,6 +296,9 @@ struct ScriptingInstalledPackageDetailView: View {
                 LabeledContent(hanlin: "Generation", value: String(package.record.activeGeneration))
                 Toggle(hanlin: "Enabled", isOn: enabledBinding(for: package))
             }
+            if HanlinMiniAppSystemEntrypoints.isAvailableForCurrentProduct {
+                HanlinMiniAppCaptureSection(package: package, platform: platform)
+            }
             Section(hanlin: "Entry Points") {
                 ForEach(package.entrypoints, id: \.id) { entrypoint in
                     VStack(alignment: .leading) {

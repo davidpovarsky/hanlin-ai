@@ -1,0 +1,11 @@
+✔ actual binding forwards ordered text edits and notification actions (4.895268ms)
+✔ bad JS edit arguments fail before reaching the native document proxy (2.299213ms)
+✔ the same binding preserves existing translation helpers (1.494649ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 103.589751

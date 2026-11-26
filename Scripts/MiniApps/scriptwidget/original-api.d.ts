@@ -324,6 +324,11 @@ declare function $component<P>(name: string, builder: (props: P) => JSX.Element)
 /** Captures the actual original native element for each supplied Dynamic Island region. */
 declare function $dynamic_island(regions: ScriptWidgetDynamicIslandRegions): void;
 
-declare const $presentation: {expandSheet(): void; finish(replacementText?: string | null): void};
+declare const $presentation: {
+  expandSheet(): void;
+  finish(replacementText?: string | null): void;
+  keyboard: {insertText(text: string): void; deleteBackward(): void; adjustTextPosition(offset: number): void; nextInputMode(): void};
+  notification: {openApp(): void; dismiss(): void};
+};
 
 declare namespace JSX { interface GlobalProperties { actionParameters?: ScriptWidgetJSON; } }

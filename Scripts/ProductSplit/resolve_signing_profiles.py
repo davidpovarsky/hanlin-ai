@@ -235,7 +235,7 @@ def resolve_local_miniapps_profiles(certificate_sha, private_directory, facts, *
                                     source_sha, build_number, source_root=ROOT,
                                     get=apple_get, create=create_profile,
                                     decode_content=decode_cms):
-    """Resolve the original MiniApps main app and all four source extensions.
+    """Resolve the MiniApps main app and all seven source-owned extensions.
 
     Call only after actual App Group/iCloud associations have been reconciled.
     Enabling a capability alone is not evidence that a profile grants its data.

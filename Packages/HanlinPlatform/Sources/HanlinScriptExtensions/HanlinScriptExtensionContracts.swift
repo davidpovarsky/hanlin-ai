@@ -412,6 +412,25 @@ public struct HanlinScriptTranslationUISnapshot: Codable, Hashable, Sendable, Id
     }
 }
 
+/// An enabled installed package's native panel for a system extension.
+/// The immutable program uses the original declared renderer; its identity
+/// invalidates saved selections when the package generation changes.
+public struct HanlinNativePresentationSnapshot: Codable, Hashable, Sendable {
+    public let identity: HanlinScriptExtensionIdentity
+    public let displayName: String
+    public let kind: HanlinNativePresentationKind
+    public let nativePresentation: HanlinNativePresentationDescriptor
+
+    public init(identity: HanlinScriptExtensionIdentity, displayName: String,
+                kind: HanlinNativePresentationKind,
+                nativePresentation: HanlinNativePresentationDescriptor) {
+        self.identity = identity
+        self.displayName = displayName
+        self.kind = kind
+        self.nativePresentation = nativePresentation
+    }
+}
+
 public struct HanlinScriptExtensionSnapshot: Codable, Hashable, Sendable {
     public let schemaVersion: UInt32
     public let generatedAt: Date
@@ -419,6 +438,7 @@ public struct HanlinScriptExtensionSnapshot: Codable, Hashable, Sendable {
     public let intentEntities: [HanlinScriptIntentEntityRecord]
     public let liveActivities: [HanlinScriptLiveActivityDescriptor]
     public let translationApps: [HanlinScriptTranslationUISnapshot]
+    public let nativePresentations: [HanlinNativePresentationSnapshot]
     public let widgetInstances: [HanlinWidgetInstance]
     public let widgetStates: [HanlinWidgetInstanceState]
     public let widgetEntityMigrations: [String: String]
@@ -432,6 +452,7 @@ public struct HanlinScriptExtensionSnapshot: Codable, Hashable, Sendable {
         intentEntities: [HanlinScriptIntentEntityRecord] = [],
         liveActivities: [HanlinScriptLiveActivityDescriptor] = [],
         translationApps: [HanlinScriptTranslationUISnapshot] = [],
+        nativePresentations: [HanlinNativePresentationSnapshot] = [],
         widgetInstances: [HanlinWidgetInstance] = [],
         widgetStates: [HanlinWidgetInstanceState] = [],
         widgetEntityMigrations: [String: String] = [:],
@@ -444,6 +465,7 @@ public struct HanlinScriptExtensionSnapshot: Codable, Hashable, Sendable {
         self.intentEntities = intentEntities
         self.liveActivities = liveActivities
         self.translationApps = translationApps
+        self.nativePresentations = nativePresentations
         self.widgetInstances = widgetInstances
         self.widgetStates = widgetStates
         self.widgetEntityMigrations = widgetEntityMigrations
@@ -452,7 +474,7 @@ public struct HanlinScriptExtensionSnapshot: Codable, Hashable, Sendable {
     }
 
     private enum CodingKeys: String, CodingKey {
-        case schemaVersion, generatedAt, widgets, intentEntities, liveActivities, translationApps
+        case schemaVersion, generatedAt, widgets, intentEntities, liveActivities, translationApps, nativePresentations
         case widgetInstances, widgetStates
         case widgetEntityMigrations
         case inactiveWidgetInstallations, widgetLastSuccessfulRenders
@@ -473,6 +495,7 @@ public struct HanlinScriptExtensionSnapshot: Codable, Hashable, Sendable {
         intentEntities = try container.decodeIfPresent([HanlinScriptIntentEntityRecord].self, forKey: .intentEntities) ?? []
         liveActivities = try container.decodeIfPresent([HanlinScriptLiveActivityDescriptor].self, forKey: .liveActivities) ?? []
         translationApps = try container.decodeIfPresent([HanlinScriptTranslationUISnapshot].self, forKey: .translationApps) ?? []
+        nativePresentations = try container.decodeIfPresent([HanlinNativePresentationSnapshot].self, forKey: .nativePresentations) ?? []
         widgetInstances = try container.decodeIfPresent([HanlinWidgetInstance].self, forKey: .widgetInstances) ?? []
         widgetStates = try container.decodeIfPresent([HanlinWidgetInstanceState].self, forKey: .widgetStates) ?? []
         widgetEntityMigrations = try container.decodeIfPresent([String: String].self, forKey: .widgetEntityMigrations) ?? [:]

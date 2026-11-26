@@ -1,0 +1,17 @@
+node:internal/fs/promises:1345
+  return new FileHandle(await PromisePrototypeThen(
+                        ^
+
+Error: ENOENT: no such file or directory, open '/mnt/development/projects/worktrees/hanlin-pr19-system-integration-20261126/Tools/SwiftUIBridge/configuration.json'
+    at async open (node:internal/fs/promises:1345:25)
+    at async readFile (node:internal/fs/promises:2003:14)
+    at async source (file:///mnt/development/projects/worktrees/hanlin-pr19-system-integration-20261126/Scripts/Audit/audit-miniapp-sdk.mjs:31:19)
+    at async json (file:///mnt/development/projects/worktrees/hanlin-pr19-system-integration-20261126/Scripts/Audit/audit-miniapp-sdk.mjs:36:48)
+    at async file:///mnt/development/projects/worktrees/hanlin-pr19-system-integration-20261126/Scripts/Audit/audit-miniapp-sdk.mjs:101:16 {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/mnt/development/projects/worktrees/hanlin-pr19-system-integration-20261126/Tools/SwiftUIBridge/configuration.json'
+}
+
+Node.js v24.22.0
