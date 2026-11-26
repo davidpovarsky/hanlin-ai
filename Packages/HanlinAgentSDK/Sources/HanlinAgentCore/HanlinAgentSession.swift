@@ -19,6 +19,13 @@ public struct HanlinAgentRunCompletion: Sendable {
     public let outcome: Outcome
 }
 
+public struct HanlinAgentRunCancellation: Sendable {
+    public let session: HanlinHostSession
+    public let runID: UUID
+    /// An uncertain or missing host outcome still requires original-host reconciliation.
+    public let requiresReconciliation: Bool
+}
+
 public struct HanlinAgentToolApproval: Sendable {
     public let session: HanlinHostSession
     public let runID: UUID
@@ -43,8 +50,15 @@ public final class HanlinAgentSession {
     private let interactions: (any HanlinHostInteractionSource)?
     private let diagnostics: (any HanlinDiagnosticsSink)?
     public let dispatcher: HanlinHostDispatcher
-    public var isRunning: Bool { activeRun != nil }
+    public var isRunning: Bool { activeRun != nil || cancellationTask != nil }
     private var activeRun: UUID?
+    private var activeRunControl: HanlinAISDKRunControl?
+    private var transcriptRun: UUID?
+    private var cancelledRuns = Set<UUID>()
+    private var cancellationTask: (run: UUID, task: Task<HanlinAgentRunCancellation, Error>)?
+    private var runWaiters: [UUID: [CheckedContinuation<Void, Never>]] = [:]
+    private var toolExecutions: [UUID: Int] = [:]
+    private var toolWaiters: [UUID: [CheckedContinuation<Void, Never>]] = [:]
     private var record: HanlinConversationRecord?
     private var entries: [HanlinTranscriptEntry] = []
     private var sequence: UInt64 = 0
@@ -87,12 +101,14 @@ public final class HanlinAgentSession {
                              structuredResponse: HanlinNativeStructuredResponse?,
                              presentationReference: String?, transport: HanlinAISDKTurnTransport?) async throws -> AsyncThrowingStream<HanlinAgentEvent, Error> {
         guard !invalidated else { throw HanlinHostError.staleContext }
-        guard activeRun == nil else { throw HanlinHostError.duplicateInvocation }
+        guard !isRunning else { throw HanlinHostError.duplicateInvocation }
         guard host.apiVersion.major == 1 else { throw HanlinHostError.unsupportedVersion }
         guard presentationReference.map({ !$0.isEmpty && $0.utf8.count <= 4096 }) ?? true else { throw HanlinHostError.invalidArguments }
         // Reserve before ANY store/host await. Concurrent starts cannot share a producer.
         let run = UUID()
         activeRun = run
+        let runControl = HanlinAISDKRunControl()
+        activeRunControl = runControl
         do {
             try await requireCurrent(run: run)
             record = try await store.load(identity.conversationID, namespace: identity.context.namespace)
@@ -101,6 +117,7 @@ public final class HanlinAgentSession {
             entries = record?.entries ?? []
             guard entries.last?.sequence != UInt64.max else { throw HanlinHostError.storageLimitExceeded }
             sequence = (entries.last?.sequence).map { $0 + 1 } ?? 0
+            transcriptRun = run
             step = 0; preparationError = nil
             persistenceTail = nil
             associatedInvocations = [:]
@@ -169,6 +186,7 @@ public final class HanlinAgentSession {
                     promptVersion: "hanlin-system-v2"
                 ),
                 transport: transport,
+                runControl: runControl,
                 prepareStep: { [weak self] index in
                     guard let self, !self.invalidated, self.activeRun == run else { return .init(activeToolAliases: []) }
                     self.step = index
@@ -227,8 +245,7 @@ public final class HanlinAgentSession {
                         }
                         try await self.persist(model: modelReference)
                         try self.requireActive(run: run)
-                        self.activeRun = nil
-                        self.producerTask = nil
+                        self.finishRun(run)
                         if wasCancelled {
                             self.revokeInteractions(run: run)
                             if let interactionOrigin { self.revokeInteraction(interactionOrigin) }
@@ -242,13 +259,14 @@ public final class HanlinAgentSession {
                     } catch {
                         self.revokeInteractions(run: run)
                         if let interactionOrigin { self.revokeInteraction(interactionOrigin) }
-                        let safe = (error as? HanlinHostError) ?? (Task.isCancelled ? .cancelled : .unsupportedProviderCapability)
-                        self.onRunCompletion?(.init(session: self.identity, runID: run, outcome: .failed(safe)))
-                        do { try self.append(.failed(code: safe), run: run); try await self.persist(model: modelReference) }
-                        catch { self.activeRun = nil; self.producerTask = nil; continuation.finish(throwing: error); return }
-                        self.activeRun = nil
-                        self.producerTask = nil
-                        await self.diagnostics?.record(.init(kind: .hostFailure, runID: run))
+                        if !self.cancelledRuns.contains(run) {
+                            let safe = (error as? HanlinHostError) ?? (Task.isCancelled ? .cancelled : .unsupportedProviderCapability)
+                            self.onRunCompletion?(.init(session: self.identity, runID: run, outcome: .failed(safe)))
+                            do { try self.append(.failed(code: safe), run: run); try await self.persist(model: modelReference) }
+                            catch { self.finishRun(run); continuation.finish(throwing: error); return }
+                            await self.diagnostics?.record(.init(kind: .hostFailure, runID: run))
+                        }
+                        self.finishRun(run)
                         continuation.finish(throwing: error)
                     }
                 }
@@ -256,13 +274,100 @@ public final class HanlinAgentSession {
                 continuation.onTermination = { termination in
                     if case .cancelled = termination {
                         task.cancel()
-                        Task { @MainActor in await self.invalidate() }
+                        Task { @MainActor in
+                            // A delayed old consumer cannot revoke a newer run, and an
+                            // explicit stop is reusable rather than terminal invalidation.
+                            guard self.activeRun == run, !self.cancelledRuns.contains(run) else { return }
+                            await self.invalidate()
+                        }
                     }
                 }
             }
         } catch {
-            activeRun = nil
+            finishRun(run)
             throw error
+        }
+    }
+
+    /// Stops exactly the current run without discarding the conversation or the
+    /// presentation identity. The shared engine, tool callbacks and original
+    /// native host workers all finish before this method returns. A concurrent
+    /// caller joins the same stop; no newer run can start during reconciliation.
+    public func cancelCurrentRun() async throws -> HanlinAgentRunCancellation? {
+        if let cancellationTask { return try await cancellationTask.task.value }
+        guard let run = activeRun else { return nil }
+        cancelledRuns.insert(run)
+        let control = activeRunControl
+        control?.cancel()
+        producerTask?.cancel()
+        revokeInteractions(run: run)
+        let task = Task { @MainActor in
+            defer {
+                if self.cancellationTask?.run == run { self.cancellationTask = nil }
+            }
+            let receipts = await self.dispatcher.cancelAndDrain(runID: run, session: self.identity)
+            if self.activeRun == run {
+                await withCheckedContinuation { self.runWaiters[run, default: []].append($0) }
+            }
+            await control?.waitUntilFinished()
+            if self.toolExecutions[run, default: 0] > 0 {
+                await withCheckedContinuation { self.toolWaiters[run, default: []].append($0) }
+            }
+            try await self.persistenceTail?.value
+            if self.transcriptRun == run, let model = self.record?.model {
+                for event in receipts {
+                    // Preserve the actual original reservation/result identity. Never
+                    // infer a native effect or manufacture a successful cancellation.
+                    let existing = self.entries.contains { entry in
+                        guard entry.runID == run, case .toolResult(let id, let result) = entry.payload else { return false }
+                        return id == event.call.providerCallID && result == event.result.metadataReceipt()
+                    }
+                    if !existing {
+                        try self.append(.hostResultIdentity(resultID: event.resultID, call: event.call),
+                                        run: run, stepOverride: event.call.step)
+                        try self.append(.toolResult(providerCallID: event.call.providerCallID, result: event.result.metadataReceipt()),
+                                        run: run, stepOverride: event.call.step)
+                    }
+                }
+                try self.append(.cancelled, run: run)
+                try await self.persist(model: model)
+            }
+            let outcome = HanlinAgentRunCancellation(session: self.identity, runID: run,
+                requiresReconciliation: self.hasUnresolvedInvocations)
+            self.onRunCompletion?(.init(session: self.identity, runID: run, outcome: .cancelled))
+            return outcome
+        }
+        cancellationTask = (run, task)
+        return try await task.value
+    }
+
+    private var hasUnresolvedInvocations: Bool {
+        var pending = Set<String>()
+        for entry in entries {
+            switch entry.payload {
+            case .toolCall(let id, _, _): pending.insert(entry.runID.uuidString + id)
+            case .toolResult(let id, let result):
+                if result.effectState != .uncertain { pending.remove(entry.runID.uuidString + id) }
+            default: break
+            }
+        }
+        return !pending.isEmpty
+    }
+
+    private func finishRun(_ run: UUID) {
+        guard activeRun == run else { return }
+        activeRun = nil
+        producerTask = nil
+        activeRunControl = nil
+        for waiter in runWaiters.removeValue(forKey: run) ?? [] { waiter.resume() }
+    }
+
+    private func finishToolExecution(_ run: UUID) {
+        let remaining = max(0, toolExecutions[run, default: 0] - 1)
+        toolExecutions[run] = remaining
+        if remaining == 0 {
+            toolExecutions.removeValue(forKey: run)
+            for waiter in toolWaiters.removeValue(forKey: run) ?? [] { waiter.resume() }
         }
     }
 
@@ -328,8 +433,8 @@ public final class HanlinAgentSession {
         guard pending.isEmpty else { throw HanlinHostError.unresolvedWrite }
         guard presentationReference.map({ !$0.isEmpty && $0.utf8.count <= 4096 }) ?? true else { throw HanlinHostError.invalidArguments }
         let run = UUID()
-        activeRun = run; step = 0; preparationError = nil; persistenceTail = nil
-        defer { if activeRun == run { activeRun = nil } }
+        activeRun = run; transcriptRun = run; step = 0; preparationError = nil; persistenceTail = nil
+        defer { finishRun(run) }
         do {
             try await requireCurrent(run: run)
             let catalog = try await host.catalog(for: identity.context)
@@ -347,13 +452,15 @@ public final class HanlinAgentSession {
             // do not manufacture a provider-original provenance assertion.
             let result = try await definition.execute(argumentsJSON, request.requestID.uuidString)
             try await requireCurrent(run: run)
-            activeRun = nil
+            finishRun(run)
             onRunCompletion?(.init(session: identity, runID: run, outcome: .completed))
             return result
         } catch {
             let safe = (error as? HanlinHostError) ?? (Task.isCancelled ? .cancelled : .denied)
-            onRunCompletion?(.init(session: identity, runID: run, outcome: .failed(safe)))
-            if !invalidated { try append(.failed(code: safe), run: run); try await persist(model: model) }
+            if !cancelledRuns.contains(run) {
+                onRunCompletion?(.init(session: identity, runID: run, outcome: .failed(safe)))
+                if !invalidated { try append(.failed(code: safe), run: run); try await persist(model: model) }
+            }
             throw error
         }
     }
@@ -433,11 +540,11 @@ public final class HanlinAgentSession {
     private func requireInteraction(_ origin: HanlinHostInteractionOrigin) async throws {
         try Task.checkCancellation()
         guard !invalidated, origin.session == identity, interactionOrigins.contains(origin) else { throw HanlinHostError.staleContext }
-        guard activeRun == nil else { throw HanlinHostError.duplicateInvocation }
+        guard !isRunning else { throw HanlinHostError.duplicateInvocation }
         let current = try await host.context(for: identity)
         try Task.checkCancellation()
         guard !invalidated, origin.session == identity, interactionOrigins.contains(origin), current == identity.context else { throw HanlinHostError.staleContext }
-        guard activeRun == nil else { throw HanlinHostError.duplicateInvocation }
+        guard !isRunning else { throw HanlinHostError.duplicateInvocation }
     }
 
     private func revokeInteractions(run: UUID) {
@@ -450,6 +557,8 @@ public final class HanlinAgentSession {
             let execution: HanlinAISDKToolDefinition.ProvenanceExecutor = { [weak self] arguments, providerID, provenance in
                 guard let self else { throw HanlinHostError.cancelled }
                 try self.requireActive(run: run)
+                self.toolExecutions[run, default: 0] += 1
+                defer { self.finishToolExecution(run) }
                 let invocationStep = self.step
                 if let error = self.preparationError { throw error }
                 return try await HanlinModelToolInputGuard.withValidatedArguments(arguments, originalInputVerified: provenance == .acceptedOriginal) { _ -> HanlinAISDKToolExecutionOutput in
@@ -519,7 +628,7 @@ public final class HanlinAgentSession {
 
     private func requireActive(run: UUID) throws {
         try Task.checkCancellation()
-        guard !invalidated, activeRun == run else { throw HanlinHostError.cancelled }
+        guard !invalidated, activeRun == run, !cancelledRuns.contains(run) else { throw HanlinHostError.cancelled }
     }
 
     /// MainActor invalidation/run replacement may occur while the host returns an old context.

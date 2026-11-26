@@ -159,6 +159,10 @@ public struct HanlinChatComposer: View {
     public let isStreaming: Bool
     public let presentationMode: HanlinChatPresentationMode
     public let placeholder: String
+    public let isStopping: Bool
+    public let stopLabel: String
+    public let stoppingLabel: String
+    public let onStop: (() -> Void)?
     public let onSend: () -> Void
 
     @FocusState private var isInputFocused: Bool
@@ -169,6 +173,10 @@ public struct HanlinChatComposer: View {
         isStreaming: Bool = false,
         presentationMode: HanlinChatPresentationMode = .compact,
         placeholder: String = "Ask Hanlin...",
+        isStopping: Bool = false,
+        stopLabel: String = "Stop",
+        stoppingLabel: String = "Stopping...",
+        onStop: (() -> Void)? = nil,
         onSend: @escaping () -> Void
     ) {
         self._text = text
@@ -176,6 +184,10 @@ public struct HanlinChatComposer: View {
         self.isStreaming = isStreaming
         self.presentationMode = presentationMode
         self.placeholder = placeholder
+        self.isStopping = isStopping
+        self.stopLabel = stopLabel
+        self.stoppingLabel = stoppingLabel
+        self.onStop = onStop
         self.onSend = onSend
     }
 
@@ -194,12 +206,25 @@ public struct HanlinChatComposer: View {
                     }
                 }
 
-            HanlinChatSendButton(
-                canSend: canSend,
-                isStreaming: isStreaming,
-                presentationMode: presentationMode,
-                action: onSend
-            )
+            if (isStreaming || isStopping), let onStop {
+                Button(action: onStop) {
+                    Group {
+                        if isStopping { ProgressView().controlSize(.small) }
+                        else { Image(systemName: "stop.circle.fill").resizable() }
+                    }
+                    .frame(width: 32, height: 32)
+                }
+                .disabled(isStopping)
+                .accessibilityLabel(isStopping ? stoppingLabel : stopLabel)
+                .accessibilityIdentifier("hanlin-chat-stop")
+            } else {
+                HanlinChatSendButton(
+                    canSend: canSend,
+                    isStreaming: isStreaming,
+                    presentationMode: presentationMode,
+                    action: onSend
+                )
+            }
         }
         .padding(.horizontal, presentationMode == .compact ? 12 : 16)
         .padding(.vertical, 8)

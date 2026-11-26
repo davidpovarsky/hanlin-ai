@@ -268,9 +268,9 @@ private actor ControlledTextSource {
         if continuation != nil { return }
         await withCheckedContinuation { installedWaiter = $0 }
     }
-    func emitText() {
+    func emitText(_ text: String = "must not be delivered") {
         continuation?.yield(.textStart(id: "held", providerMetadata: nil))
-        continuation?.yield(.textDelta(id: "held", delta: "must not be delivered", providerMetadata: nil))
+        continuation?.yield(.textDelta(id: "held", delta: text, providerMetadata: nil))
         continuation?.yield(.textEnd(id: "held", providerMetadata: nil))
     }
     func finish() {
@@ -921,4 +921,269 @@ private struct ControlledTextModel: LanguageModelV3 {
         #expect(!record.entries.contains { if case .presentationReference = $0.payload { return true }; return false })
     }
 
+}
+
+private actor CancellationTestLatch {
+    private var opened = false
+    private var waiters: [CheckedContinuation<Void, Never>] = []
+    func open() {
+        opened = true
+        let current = waiters; waiters.removeAll()
+        for waiter in current { waiter.resume() }
+    }
+    func wait() async {
+        if opened { return }
+        await withCheckedContinuation { waiters.append($0) }
+    }
+}
+
+private struct CancellationTwoTurnModel: LanguageModelV3 {
+    let provider = "fixture"
+    let modelId = "cancel-resume"
+    let first: ControlledTextSource
+    let second: ControlledTextSource
+    let counter = StepCounter()
+    func doGenerate(options: LanguageModelV3CallOptions) async throws -> LanguageModelV3GenerateResult {
+        throw HanlinHostError.unsupportedProviderCapability
+    }
+    func doStream(options: LanguageModelV3CallOptions) async throws -> LanguageModelV3StreamResult {
+        let index = await counter.next()
+        return await (index == 1 ? first : second).install()
+    }
+}
+
+/// Fixture of the real host contract: execute returns uncertainty on cancellation
+/// while an independent native worker still owns its original account mutation.
+/// The SDK must join that worker without retrying or retargeting it.
+private actor CancellationDrainHost: HanlinHostCancellationDrainSource {
+    nonisolated let apiVersion = HanlinAPIVersion(major: 1, minor: 0)
+    let base: SyntheticFixtureHost
+    let entered = CancellationTestLatch()
+    let cancelled = CancellationTestLatch()
+    let draining = CancellationTestLatch()
+    let released = CancellationTestLatch()
+    private var current: HanlinHostContext
+    private var invocation: HanlinHostInvocation?
+    private(set) var executions = 0
+    private(set) var nativeCompletions = 0
+    private(set) var cancellationRequests = 0
+    let resolvesEffect: Bool
+
+    init(context: HanlinHostContext, resolvesEffect: Bool = true) {
+        current = context; base = .init(context: context); self.resolvesEffect = resolvesEffect
+    }
+    func context(for session: HanlinHostSession) -> HanlinHostContext { current }
+    func changeContext(_ value: HanlinHostContext) { current = value }
+    func catalog(for context: HanlinHostContext) async throws -> HanlinHostCatalog {
+        try await base.catalog(for: context)
+    }
+    func execute(_ invocation: HanlinHostInvocation, progress: @escaping HanlinHostProgressHandler) async throws -> HanlinHostExecutionResult {
+        self.invocation = invocation
+        executions += 1
+        await entered.open()
+        await cancelled.wait()
+        return receipt(invocation, effect: .uncertain)
+    }
+    func cancel(_ invocation: HanlinToolInvocationID) async {
+        guard self.invocation?.request.id == invocation else { return }
+        cancellationRequests += 1
+        await cancelled.open()
+    }
+    func drainCancelledInvocation(_ id: HanlinToolInvocationID) async -> HanlinHostExecutionResult? {
+        guard let invocation, invocation.request.id == id else { return nil }
+        await draining.open()
+        await released.wait()
+        nativeCompletions += 1
+        return receipt(invocation, effect: resolvesEffect ? .confirmedCommitted : .uncertain)
+    }
+    func open(_ destination: HanlinHostDestination) async throws -> HanlinHostNavigationResult {
+        throw SessionFixtureError.unsupportedNavigation
+    }
+    private func receipt(_ invocation: HanlinHostInvocation, effect: HanlinHostEffectState) -> HanlinHostExecutionResult {
+        .init(result: .init(invocationID: invocation.request.id, logicalToolID: invocation.request.logicalToolID,
+            outcome: .completed([.text("Original native worker receipt")]), completedAt: .now),
+            effectState: effect, context: invocation.session.context,
+            reconciliationReference: invocation.request.id.rawValue)
+    }
+}
+
+extension AgentSessionTests {
+    @Test(.timeLimit(.minutes(1))) @MainActor
+    func stopPreservesPartialTranscriptAndNewRunWhileOldConsumerTerminates() async throws {
+        let ns = try HanlinConversationNamespace(app: "fixture", account: "a", workspace: "w", space: "s")
+        let context = HanlinHostContext(namespace: ns, sceneID: UUID(), generation: UUID())
+        let identity = HanlinHostSession(conversationID: UUID(), context: context)
+        let firstSource = ControlledTextSource(), nextSource = ControlledTextSource()
+        let config = HanlinChatModelConfiguration(modelID: "fixture", endpoint: URL(filePath: "/fixture"), apiKey: "")
+        let engine = HanlinAISDKAgentEngine(configuration: config,
+            model: .v3(CancellationTwoTurnModel(first: firstSource, second: nextSource)))
+        let store = HanlinInMemoryConversationStore()
+        let session = HanlinAgentSession(identity: identity, host: SyntheticFixtureHost(context: context), engine: engine, store: store)
+        let model = HanlinModelReference(provider: "fixture", modelID: "cancel-resume")
+        var invalidations = 0
+        session.onSessionInvalidated = { _ in invalidations += 1 }
+        let delivered = CancellationTestLatch()
+        var originalRun: UUID?
+        let stream = try await session.stream(messages: [.init(role: .user, text: "first")], modelReference: model)
+        let consumer = Task { @MainActor in
+            do {
+                for try await event in stream {
+                    originalRun = event.runID
+                    if case .textDelta = event.event { await delivered.open() }
+                }
+            } catch { /* Explicit stop ends this stream, not the presentation. */ }
+        }
+        await firstSource.waitUntilInstalled()
+        await firstSource.emitText("Retained partial answer")
+        await delivered.wait()
+        let stopped = try #require(await session.cancelCurrentRun())
+        await consumer.value
+        #expect(stopped.runID == originalRun && !stopped.requiresReconciliation)
+        #expect(!session.isRunning && invalidations == 0)
+        let saved = try #require(await store.load(identity.conversationID, namespace: ns))
+        #expect(saved.entries.contains { if case .text("Retained partial answer") = $0.payload { return true }; return false })
+        #expect(saved.entries.contains { $0.runID == originalRun && $0.payload == .cancelled })
+
+        let next = try await session.stream(messages: [.init(role: .user, text: "continue")], modelReference: model)
+        var nextRuns = Set<UUID>()
+        let nextConsumer = Task { @MainActor in
+            for try await event in next { nextRuns.insert(event.runID) }
+        }
+        await nextSource.waitUntilInstalled()
+        consumer.cancel() // A late old consumer cannot clear/revoke this live run.
+        await firstSource.emitText("Late old bytes")
+        await firstSource.finish()
+        #expect(session.isRunning && invalidations == 0)
+        await nextSource.emitText("Continued answer")
+        await nextSource.finish()
+        try await nextConsumer.value
+        #expect(nextRuns.count == 1 && !nextRuns.contains(stopped.runID))
+        let final = try #require(await store.load(identity.conversationID, namespace: ns))
+        #expect(final.entries.contains { if case .text("Continued answer") = $0.payload { return true }; return false })
+        #expect(!final.entries.contains { if case .text("Late old bytes") = $0.payload { return true }; return false })
+    }
+
+    @Test(.timeLimit(.minutes(1))) @MainActor
+    func stopBeforeProducerInstallationJoinsPreparationAndPreservesStoredConversation() async throws {
+        let ns = try HanlinConversationNamespace(app: "fixture", account: "a", workspace: "w", space: "s")
+        let context = HanlinHostContext(namespace: ns, sceneID: UUID(), generation: UUID())
+        let identity = HanlinHostSession(conversationID: UUID(), context: context)
+        let host = GatedContextHost(context: context)
+        let store = HanlinInMemoryConversationStore()
+        let model = HanlinModelReference(provider: "fixture", modelID: "scripted")
+        let old = HanlinConversationRecord(namespace: ns, conversationID: identity.conversationID, revision: 0, model: model,
+            entries: [.init(runID: UUID(), step: 0, sequence: 0, payload: .text("Earlier answer"))])
+        try await store.save(old, replacing: nil)
+        let config = HanlinChatModelConfiguration(modelID: "fixture", endpoint: URL(filePath: "/fixture"), apiKey: "")
+        let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(ToolScriptModel()))
+        let session = HanlinAgentSession(identity: identity, host: host, engine: engine, store: store)
+        await host.gateContext()
+        let first = Task { @MainActor in
+            try await session.stream(messages: [.init(role: .user, text: "first")], modelReference: model)
+        }
+        await host.waitUntilContextIsSuspended()
+        // This actor task starts only once the direct stop call below reaches
+        // its first suspension, after the exact run's cancellation fence is set.
+        let release = Task { @MainActor in
+            #expect(session.isRunning)
+            do {
+                _ = try await session.stream(messages: [.init(role: .user, text: "too early")], modelReference: model)
+                Issue.record("Preparation was reused before cancellation drained")
+            } catch { #expect(error as? HanlinHostError == .duplicateInvocation) }
+            await host.releaseCapturedContext()
+        }
+        let stopped = try #require(await session.cancelCurrentRun())
+        await release.value
+        do { _ = try await first.value; Issue.record("Stopped preparation started a producer") }
+        catch { #expect(error as? HanlinHostError == .cancelled) }
+        #expect(!stopped.requiresReconciliation && !session.isRunning)
+        #expect(await store.load(identity.conversationID, namespace: ns) == old)
+        #expect(await host.base.executions == 0)
+        let next = try await session.stream(messages: [.init(role: .user, text: "continue")], modelReference: model)
+        for try await _ in next {}
+        #expect(await host.base.executions == 1)
+    }
+
+    @Test(.timeLimit(.minutes(1)), arguments: [false, true]) @MainActor
+    func stopWaitsForOriginalNativeWorkerAndKeepsAccountFence(changeAccount: Bool) async throws {
+        let ns = try HanlinConversationNamespace(app: "fixture", account: "a", workspace: "w", space: "s")
+        let context = HanlinHostContext(namespace: ns, sceneID: UUID(), generation: UUID())
+        let identity = HanlinHostSession(conversationID: UUID(), context: context)
+        let host = CancellationDrainHost(context: context)
+        let store = HanlinInMemoryConversationStore()
+        let config = HanlinChatModelConfiguration(modelID: "fixture", endpoint: URL(filePath: "/fixture"), apiKey: "")
+        let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(ToolScriptModel()))
+        let session = HanlinAgentSession(identity: identity, host: host, engine: engine, store: store)
+        let model = HanlinModelReference(provider: "fixture", modelID: "scripted")
+        var callbacks = 0, completions = 0
+        session.onHostResult = { _ in callbacks += 1 }
+        session.onRunCompletion = { if case .cancelled = $0.outcome { completions += 1 } }
+        let stream = try await session.stream(messages: [.init(role: .user, text: "write")], modelReference: model)
+        let consumer = Task { @MainActor in do { for try await _ in stream {} } catch {} }
+        await host.entered.wait()
+        let stopping = Task { @MainActor in try await session.cancelCurrentRun() }
+        await host.draining.wait()
+        #expect(session.isRunning && completions == 0)
+        #expect(await host.nativeCompletions == 0)
+        do {
+            _ = try await session.stream(messages: [.init(role: .user, text: "too early")], modelReference: model)
+            Issue.record("Send became available while the native write was still running")
+        } catch { #expect(error as? HanlinHostError == .duplicateInvocation) }
+        if changeAccount {
+            let nextNS = try HanlinConversationNamespace(app: "fixture", account: "b", workspace: "w", space: "s")
+            await host.changeContext(.init(namespace: nextNS, sceneID: context.sceneID, generation: UUID()))
+        }
+        let release = Task { @MainActor in await host.released.open() }
+        let joined = try #require(await session.cancelCurrentRun())
+        await release.value
+        let result = try #require(await stopping.value)
+        await consumer.value
+        #expect(joined.runID == result.runID && !result.requiresReconciliation)
+        #expect(!session.isRunning && completions == 1 && callbacks == 0)
+        #expect(await host.executions == 1)
+        #expect(await host.nativeCompletions == 1)
+        #expect(await host.cancellationRequests == 1)
+        let saved = try #require(await store.load(identity.conversationID, namespace: ns))
+        let outcomes = saved.entries.compactMap { entry -> HanlinHostExecutionResult? in
+            if case .toolResult(_, let receipt) = entry.payload { return receipt }; return nil
+        }
+        #expect(outcomes.last?.effectState == .confirmedCommitted)
+        #expect(outcomes.allSatisfy { $0.context == context })
+        if changeAccount {
+            do {
+                _ = try await session.stream(messages: [.init(role: .user, text: "new account")], modelReference: model)
+                Issue.record("Original receipt reauthorized a different account")
+            } catch { #expect(error as? HanlinHostError == .staleContext) }
+        } else {
+            let next = try await session.stream(messages: [.init(role: .user, text: "continue")], modelReference: model)
+            for try await _ in next {}
+        }
+        #expect(await host.executions == 1)
+    }
+
+    @Test(.timeLimit(.minutes(1))) @MainActor
+    func stopDoesNotConvertUncertainReceiptIntoPermissionToRetry() async throws {
+        let ns = try HanlinConversationNamespace(app: "fixture", account: "a", workspace: "w", space: "s")
+        let context = HanlinHostContext(namespace: ns, sceneID: UUID(), generation: UUID())
+        let identity = HanlinHostSession(conversationID: UUID(), context: context)
+        let host = CancellationDrainHost(context: context, resolvesEffect: false)
+        let config = HanlinChatModelConfiguration(modelID: "fixture", endpoint: URL(filePath: "/fixture"), apiKey: "")
+        let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(ToolScriptModel()))
+        let session = HanlinAgentSession(identity: identity, host: host, engine: engine, store: HanlinInMemoryConversationStore())
+        let model = HanlinModelReference(provider: "fixture", modelID: "scripted")
+        let stream = try await session.stream(messages: [.init(role: .user, text: "write")], modelReference: model)
+        let consumer = Task { @MainActor in do { for try await _ in stream {} } catch {} }
+        await host.entered.wait()
+        let stopping = Task { @MainActor in try await session.cancelCurrentRun() }
+        await host.draining.wait()
+        await host.released.open()
+        let result = try #require(await stopping.value)
+        await consumer.value
+        #expect(result.requiresReconciliation)
+        do {
+            _ = try await session.stream(messages: [.init(role: .user, text: "retry")], modelReference: model)
+            Issue.record("Uncertain native receipt was silently cleared by Stop")
+        } catch { #expect(error as? HanlinHostError == .unresolvedWrite) }
+        #expect(await host.executions == 1)
+    }
 }

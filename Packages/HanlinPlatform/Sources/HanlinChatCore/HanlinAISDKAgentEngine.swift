@@ -161,6 +161,7 @@ public actor HanlinAISDKAgentEngine {
         requestApproval: ApprovalHandler? = nil,
         cacheScope: HanlinPromptCacheScope? = nil,
         transport: HanlinAISDKTurnTransport? = nil,
+        runControl: HanlinAISDKRunControl? = nil,
         prepareStep: @escaping StepPreparation
     ) throws -> AsyncThrowingStream<HanlinAISDKStreamEvent, Error> {
         // The engine/agent loop remains shared. A host-supplied transport belongs
@@ -602,11 +603,13 @@ public actor HanlinAISDKAgentEngine {
                     continuation.finish(throwing: error)
                 }
             } }
-            continuation.onTermination = { @Sendable _ in
+            let stop: @Sendable () -> Void = {
                 task.cancel()
                 cancellation.cancel()
                 stopper.stop()
             }
+            runControl?.install(task: task, stop: stop)
+            continuation.onTermination = { @Sendable _ in stop() }
         }
     }
 
