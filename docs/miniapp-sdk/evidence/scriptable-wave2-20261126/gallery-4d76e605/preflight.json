@@ -1,0 +1,11 @@
+{
+  "at": "2026-11-26T14:39:32.991899+00:00",
+  "freeBytes": 5952126976,
+  "sdkInputSHA256": "48f09da9dc0ec43b5591db3a701d9572204b31785bf5049bae0044a78b191289",
+  "moduleHashesVerifiedAgainstHostZIP": {
+    "miniapp-authoring.mjs": "ed6244894695eeb4b83aa41ea1f7523cda2d5db2059452b666fd21a099238a30",
+    "miniapp-assistant-tools.mjs": "721ed8ccf94803776a8d0c2f9ea8e7bb9e9fb7bc9faa27cc216d6ec65512ebcf"
+  },
+  "node": "/Users/m1/builds/hanlin-two-wave-root-20261126/tool-bin/node",
+  "workspace": "/Users/m1/builds/hanlin-wave2-gallery-4d76e605-20261126"
+}

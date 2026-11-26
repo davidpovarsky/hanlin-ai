@@ -1,0 +1,90 @@
+{
+  "at": "2026-11-26T14:50:40.760737+00:00",
+  "head": "a35694f73d07b161d6db5e8c150b7d905e883455",
+  "base": "c34dd6ae752b3ab3ebc001743fc62c72fc48a203",
+  "planFile": "/mnt/development/projects/worktrees/hanlin-two-wave-integration-20261126/docs/two-wave-integration/20261126/affected-routing-a35694f7/plan.json",
+  "planSHA256": "1930975b4cb8a9dc0f79f4089d47f8ff9b80a3a202596c8a34d69fec21866f14",
+  "runnerFile": "/mnt/development/projects/worktrees/hanlin-two-wave-integration-20261126/Scripts/ProductSplit/run_paired_acceptance.py",
+  "runnerSHA256": "d1cc722f9fcbd712377df67afd4f9f85e353a73644cc843bd24d275391495cab",
+  "selectedSuiteCount": 87,
+  "is_full_validation": false,
+  "reused_tests": [],
+  "required_build_type": "Release Device IPA",
+  "scope": "Read-only coverage reconciliation, no test execution or new feature/test requirement.",
+  "existingPairedCoverage": {
+    "miniapp_authoringHanlinInvocations": 27,
+    "miniapp_completeHanlinInvocations": 29,
+    "miniapp_authoringStandaloneInvocations": 17,
+    "miniapp_completeStandaloneInvocations": 25,
+    "note": "Original Hanlin baseline25+27 preserved; two new Expo widget methods added to each. Standalone17/25 selectors are separate runner phase, not in affected87."
+  },
+  "requiredWave2SuitesNotSelectedByEither": [
+    {
+      "selector": "HanlinMiniAppsTests/NativeScriptShortcutConcurrencyTests",
+      "methods": 2,
+      "invocations": 2,
+      "scope": "Actual original NativeScript VM, foreground ownership, independent Shortcuts, durable replay, cancellation/deadline, cached persisted generation and legacy rejection",
+      "selectedByAffectedPlan": false,
+      "selectedByExistingPairedRunner": false,
+      "executionStatus": "NOT_RUN in this lane; check separate Mac owner receipts"
+    },
+    {
+      "selector": "HanlinMiniAppsTests/MiniAppsDeveloperWorkspaceTests",
+      "methods": 4,
+      "invocations": 4,
+      "scope": "Darwin coordinated Files operations and conflict preservation; portable Linux result does not establish Darwin behavior",
+      "selectedByAffectedPlan": false,
+      "selectedByExistingPairedRunner": false,
+      "executionStatus": "NOT_RUN in this lane; check separate Mac owner receipts"
+    },
+    {
+      "selector": "HanlinMiniAppsTests/MiniAppsStudioProjectTests",
+      "methods": 4,
+      "invocations": 6,
+      "scope": "Open-file rename, sourceRoot metadata, isolated draft recovery and real asynchronous original-authoring revision guard",
+      "selectedByAffectedPlan": false,
+      "selectedByExistingPairedRunner": false,
+      "executionStatus": "NOT_RUN in this lane; check separate Mac owner receipts"
+    },
+    {
+      "selector": "HanlinScriptExtensionsTests/HanlinWidgetLastSuccessfulRenderTests",
+      "methods": 4,
+      "invocations": 11,
+      "scope": "Apple HanlinPlatform package original prepared-widget LKG tests; original JavaScriptCore/SwiftUI path. Distinguish portable helper receipts from this actual package target.",
+      "selectedByAffectedPlan": false,
+      "selectedByExistingPairedRunner": false,
+      "executionStatus": "NOT_RUN in this lane; check separate Mac owner receipts"
+    },
+    {
+      "selector": "HanlinScriptExtensionsTests/HanlinOriginalScriptWidgetImageTests",
+      "methods": 4,
+      "invocations": 9,
+      "scope": "Apple original UIKit image angles, bounds and hostile image guards",
+      "selectedByAffectedPlan": false,
+      "selectedByExistingPairedRunner": false,
+      "executionStatus": "NOT_RUN in this lane; check separate Mac owner receipts"
+    }
+  ],
+  "selectedOriginalActivityKitSuite": "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests",
+  "originalActivityKitMethodCount": 3,
+  "activityNote": "Existing actual ActivityKit method was extended; selector inclusion is not execution.",
+  "systemAcceptanceStillRequiresActualEvidence": [
+    "LongRunningIntent opt-in, foreground/background, progress/cancel/deadline and typed IntentFile JSON through actual OS Shortcuts on the requested OS",
+    "Standalone Developer Studio native editing, coordinated Files/iCloud and recovery behavior",
+    "Gallery install/launch and native image-drawing four angles plus eight built-in invalid-input checks",
+    "Widget families, Toggle and transparency on actual system surfaces; distinguish simulator from physical-device criteria"
+  ],
+  "platform": {
+    "buildSDK": "iOS27.0",
+    "availableRequestedSimulatorRuntime": "iOS27.2 24B8117",
+    "note": "Availability is not test execution."
+  },
+  "additionalChangedLifecycleMethodOutsideRunner": {
+    "selector": "HanlinMiniAppsTests/NativeScriptWindowOwnershipTests/testClosingWindowReleasesLifecycleCaptureBeforeRuntimeStops",
+    "methods": 1,
+    "invocations": 1,
+    "selectedByAffectedPlan": false,
+    "selectedByExistingPairedRunner": false,
+    "note": "Runner selects only the first method testUnrelatedAndLateWindowCleanupPreservesNativeScriptOwner; explicit class selection would include both."
+  }
+}
