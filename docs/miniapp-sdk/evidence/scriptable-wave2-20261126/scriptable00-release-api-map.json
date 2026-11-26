@@ -171,8 +171,8 @@
         "S07"
       ],
       "api": "No standalone release-notes/What's New implementation was identified in the audited Studio/library source.",
-      "status": "IMPLEMENT_GAP",
-      "gate": "Record whether this comparison item is part of required product acceptance; do not mark it implemented or silently remove a required criterion."
+      "status": "COMPARISON_ONLY",
+      "gate": "The original Task10 note does not require a standalone What's New screen. Keep this vendor comparison visible without creating a new product requirement."
     },
     {
       "id": "v18-15",
@@ -229,8 +229,8 @@
         "S11"
       ],
       "api": "Workspace writes use coordinated compare-before-overwrite replacement intended to preserve existing file metadata. No corresponding public addTag/allTags/removeTag binding was identified.",
-      "status": "IMPLEMENT_GAP",
-      "gate": "A general Files tag API is absent from this mapping. Metadata preservation during editor save also needs Darwin/File Provider tests; it is a separate narrower behavior."
+      "status": "PROBE_UNKNOWN",
+      "gate": "Task10 explicitly includes Files tags. Verify the original system Files/document workflow and metadata preservation on Apple platforms. NSURLTagNamesKey is unavailable on iOS; no generic Scriptable-compatible tag API is claimed. Use the supported native document UI for a demonstrated workflow gap."
     },
     {
       "id": "v181-01",
@@ -345,5 +345,7 @@
       "Settings-list icons are not an alternate app icon requirement",
       ".foreground(.dynamic) is present; OS foreground-toggle behavior remains a native probe"
     ]
-  }
+  },
+  "task10ScopeFollowup": "closure-981-and-task10/scriptable10-scope.json",
+  "followupProductRevision": "9819697c1792119a6a93b492d12abad7b3330c93"
 }

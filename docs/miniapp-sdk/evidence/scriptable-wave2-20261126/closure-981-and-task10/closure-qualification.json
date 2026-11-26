@@ -1,0 +1,205 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-26T18:28:11.599619+00:00",
+  "productRevision": "9819697c1792119a6a93b492d12abad7b3330c93",
+  "routingRevision": "3f7c4a6f3cafa3919301750086cd1abf5c459955",
+  "checkedInputsProductEquivalent": true,
+  "productVsRoutingDifferences": [],
+  "nativeExecution": "NOT_RUN_BY_THIS_QUALIFICATION",
+  "motion": {
+    "acceptedSource": "95367b8c06b166873dfab2143a8323a869085af2",
+    "acceptedResult": "Original B/A/C and visual PASS",
+    "selectedManifestSHA256": "61b583342dc4c35519a7b7614c3269140edbd10590f7faf5269467b997e2bdc4",
+    "selectedManifestByteIdentical": true,
+    "targetCount": 5,
+    "sourceResourceComparison": {
+      "count": 418,
+      "equal": 416,
+      "changes": [
+        {
+          "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinDescriptors.swift",
+          "acceptedSHA256": "52cef01505c00514be2df9a1f59bf6acb14b800b88687ac6a292510106d0536b",
+          "currentSHA256": "6ddfa1da79db8f84f26c5cd1894043c2f9a8b5626fabbe674ac8541c3456d2bb",
+          "equal": false
+        },
+        {
+          "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+          "acceptedSHA256": "2d0f3ced366774bac16af0bfaa29047f7a1cb2d413b9940515668c59bfc44d12",
+          "currentSHA256": "2fed91226c1e8ebe152bc7445d97306897f95c1bfb75ed125d50af7e7bb55aaf",
+          "equal": false
+        }
+      ]
+    },
+    "fixtureOrchestrationComparison": {
+      "count": 10,
+      "equal": 10,
+      "changes": []
+    },
+    "graphInputComparison": {
+      "count": 25,
+      "equal": 21,
+      "changes": [
+        {
+          "path": "AI_HLY.xcodeproj/project.pbxproj",
+          "acceptedSHA256": "c5268b5b3c91dc0a3254a22a70cd330e3aad7d5061b36ff22267fa37856c82cc",
+          "currentSHA256": "52bd71e97d08c1982fe0547d2b0c80374c373533d9abcaf885591adab87dccdb",
+          "equal": false
+        },
+        {
+          "path": "Packages/HanlinAppExtensionsSDK/Package.swift",
+          "acceptedSHA256": "23056fa7df2e2aca75c3195452085a42151aa113f54370aeceb5a07df269d9bc",
+          "currentSHA256": "55a32b484dfecced9c96546063ce5f207c186add846fbc47711b2fb93d77cd86",
+          "equal": false
+        },
+        {
+          "path": "Scripts/CI/IntegrationValidation/project_graph.py",
+          "acceptedSHA256": "fc46f1e5266f054794811a0756fa51677a291b0533f816f1342a5d42f9ba85b8",
+          "currentSHA256": "b55b15a969fb438d32f78db491e65ea51d755019d3f2d563e61e1cffe9f9afbd",
+          "equal": false
+        },
+        {
+          "path": "Scripts/SDK/application_products.json",
+          "acceptedSHA256": "3095d0418b7cc5baf05f6ac39c5961a687a163345952d5f4df67e9158707f68a",
+          "currentSHA256": "75d508598ad67dbde717c31f88c96a0d53d9429796f4d2c5fe57321f322203ac",
+          "equal": false
+        }
+      ]
+    },
+    "focusedMotionImplementationAndActualFixture": {
+      "count": 7,
+      "equal": 7,
+      "changes": []
+    },
+    "originalTestFileSHA256": "5f714f6ad4fc5db3abec22abc5e520f4bba94d5f66740f69673ed3d401665874"
+  },
+  "sharedChat": {
+    "acceptedSource": "730bbb6d70e8c9f136c5ee21437f78cc5b6e7bfb",
+    "acceptedResult": "5 original focused methods PASS",
+    "selectedManifestSHA256": "83823bf6d107dc14f3b9f03e6ab6e4289c62728279cd34ca1da39dbba07c1e6a",
+    "selectedManifestByteIdentical": true,
+    "targetCount": 6,
+    "oldSourceCount": 419,
+    "currentSourceCount": 421,
+    "changedSourceResources": [
+      {
+        "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinDescriptors.swift",
+        "oldSHA256": "52cef01505c00514be2df9a1f59bf6acb14b800b88687ac6a292510106d0536b",
+        "currentSHA256": "6ddfa1da79db8f84f26c5cd1894043c2f9a8b5626fabbe674ac8541c3456d2bb"
+      },
+      {
+        "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+        "oldSHA256": "2d0f3ced366774bac16af0bfaa29047f7a1cb2d413b9940515668c59bfc44d12",
+        "currentSHA256": "2fed91226c1e8ebe152bc7445d97306897f95c1bfb75ed125d50af7e7bb55aaf"
+      },
+      {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+        "oldSHA256": "c0404a95196bc872936344588b87e5fae8df7e862d8bea279933e60806bb73f4",
+        "currentSHA256": "f90466b98c617432e6bd2e971fe111cc2f11a7302ae5c67868fb5e1b1882dc1f"
+      }
+    ],
+    "addedSourceFiles": [
+      "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinShortcutProgress.swift",
+      "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinShortcutValueCodec.swift"
+    ],
+    "removedSourceFiles": [],
+    "actualXcodeGenAndCompiledTestSources": {
+      "count": 4,
+      "equal": 4,
+      "changes": []
+    },
+    "exactInteractionImplementation": {
+      "count": 2,
+      "equal": 2,
+      "changes": []
+    },
+    "acceptedSelectors": [
+      "HanlinMessageActionTests/currentHostStateControlsTranslationAndSourceBoundSaving()",
+      "HanlinMessageActionTests/menusRetainTheirCreatingHostCallbacks()",
+      "HanlinMessageActionTests/unavailableHostServicesNeverCreateMenuEntries()",
+      "HanlinMessagePreviewMetricsTests/detachedInvalidOrNonfiniteViewportDoesNotPresent()",
+      "HanlinMessagePreviewMetricsTests/narrowAndShortHostViewportWinsOverPreferredSize()"
+    ]
+  },
+  "sharedExternalPins": [
+    {
+      "identity": "swiftui-shimmer",
+      "acceptedRevision": "0226e21f9bf355d40e07e5f5e1c33679d50e167f",
+      "currentRevision": "0226e21f9bf355d40e07e5f5e1c33679d50e167f",
+      "equal": true,
+      "retainedDependencySourceFilesSHA256": "e6f385c4105aa8d3e2dba9966df0ba75743a30ab1625db2b3a464de176d70a50"
+    },
+    {
+      "identity": "equatable",
+      "acceptedRevision": "597c2bb34af0c51331eb3b5e705f942d8ee20daa",
+      "currentRevision": "597c2bb34af0c51331eb3b5e705f942d8ee20daa",
+      "equal": true,
+      "retainedDependencySourceFilesSHA256": "09d5f2a6bd649e5fac86bdb1fa6717438854f6301f01bbe4dfa7d81d9e5a33d3"
+    },
+    {
+      "identity": "hanlin-streaming-markdown",
+      "acceptedRevision": "5cbb4b6c950051f98f02a0b0ae56756f5174a9b8",
+      "currentRevision": "5cbb4b6c950051f98f02a0b0ae56756f5174a9b8",
+      "equal": true,
+      "retainedDependencySourceFilesSHA256": "f1c5f1b2ab784547a7a7fd47ac0ddd09732027194686a25642f5557d48ecb181"
+    },
+    {
+      "identity": "highlightswift",
+      "acceptedRevision": "99c431b38a1444a5fd6a4978307fbbefe3a7af53",
+      "currentRevision": "99c431b38a1444a5fd6a4978307fbbefe3a7af53",
+      "equal": true,
+      "retainedDependencySourceFilesSHA256": "74197a97fed5b4e1d95120b8c02b411b6beafea226e8dc44b5b434e67d3e90f2"
+    },
+    {
+      "identity": "iosmath",
+      "acceptedRevision": "ba9ab7729b151329c54fd895a7c1859981d9484c",
+      "currentRevision": "ba9ab7729b151329c54fd895a7c1859981d9484c",
+      "equal": true,
+      "retainedDependencySourceFilesSHA256": "032d22761367a6557c6435f760af4436976d15d46ff2a5043fddfda04bf888ba"
+    },
+    {
+      "identity": "swift-cmark",
+      "acceptedRevision": "08ddb528923cc1a6527e02b7a1aee9e516ca749a",
+      "currentRevision": "08ddb528923cc1a6527e02b7a1aee9e516ca749a",
+      "equal": true,
+      "retainedDependencySourceFilesSHA256": "b8add4ab8b8c162b9b0b342a6893efa6a7532780ab4eb010725e4fb7e3e27cda"
+    },
+    {
+      "identity": "swift-markdown",
+      "acceptedRevision": "7d9a5ce307528578dfa777d505496bd5f544ad94",
+      "currentRevision": "7d9a5ce307528578dfa777d505496bd5f544ad94",
+      "equal": true,
+      "retainedDependencySourceFilesSHA256": "58d3159efd7f4960374c0b0f1fb9ecdd81997bf71263eddd91fd36066c5a9f9f"
+    },
+    {
+      "identity": "swift-syntax",
+      "acceptedRevision": "79e4b74a295b6eb74a8b585e3a39d29e70c1dbd1",
+      "currentRevision": "79e4b74a295b6eb74a8b585e3a39d29e70c1dbd1",
+      "equal": true,
+      "retainedDependencySourceFilesSHA256": "acfa7fa63ca4e6761943518581459084638fe23dfff8ec78a90e4c735c6c092f"
+    }
+  ],
+  "currentSourceResourceManifestSHA256": "3adc3bcfb1c638258a97f1fcde761b145a03203e87eee25c6d19a1a63dfe014f",
+  "focusedDirectReferenceSearch": {
+    "symbols": "HanlinAppDescriptor|HanlinEntryPointKind|HanlinAppManifest|HanlinShortcutValueCodec|HanlinShortcutProgress",
+    "paths": [
+      "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageActions.swift",
+      "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessagePreviewMetrics.swift",
+      "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatMotionConfiguration.swift",
+      "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatMotionPreferences.swift",
+      "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatShimmerEffect.swift",
+      "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+      "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinOriginalActivityControls.swift",
+      "docs/chat-motion/MotionUI/App.swift",
+      "docs/chat-motion/MotionUI/MotionUITests.swift"
+    ],
+    "matches": {},
+    "limit": "Direct reference search supports the semantic scope review; it is not a compiler call graph or a replacement native run."
+  },
+  "qualification": {
+    "selectedGraph": "REUSE_ACCEPTED_EXACT_GENERATED_MANIFESTS_AND_PIN_REQUIREMENTS",
+    "focusedBehaviorSources": "REUSE_ACCEPTED_EXACT_IMPLEMENTATIONS_FIXTURES_AND_ASSERTIONS",
+    "wholeCompiledModuleClosure": "VERIFY_REGRESSION: not byte-identical; changed/additional shared contract inputs require current module compilation and their own native contract cases",
+    "executionCredit": "Retain historical 953 three-case and 730 five-case outcomes at their original toolchain/runtime. No assertion of a new execution at981/3f.",
+    "targetedRemainingGate": "Current original HanlinPlatformContracts/codec/progress/schema tests and current HanlinChatUI/module compilation. Inspect any diagnostic or changed caller before deciding additional focused reruns; no full-app/device pass follows from this source audit."
+  }
+}

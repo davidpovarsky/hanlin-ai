@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "sourceOwnership": "one original source path per target",
+  "applicationModule": null,
+  "applicationSourceCount": 0,
+  "selectedProducts": [
+    "HanlinChatPresentation",
+    "HanlinPresentationKit",
+    "HanlinChatUI"
+  ],
+  "products": [
+    "HanlinPresentationKit",
+    "HanlinChatUI",
+    "HanlinChatPresentation"
+  ],
+  "targets": 6,
+  "localPackageEdgesRemaining": 0,
+  "inputs": {
+    "Packages/HanlinAgentSDK/Package.swift": "16becff5f9e626f171d21f0277684c249c773f3169334fc9a63a37876c44a36e",
+    "Packages/HanlinAppExtensionsSDK/Package.swift": "55a32b484dfecced9c96546063ce5f207c186add846fbc47711b2fb93d77cd86",
+    "Packages/HanlinExpoNativeAPI/Package.swift": "c5fd18fa28a1842be0351053d978cc55b752546dc798c663f0dedabfdbefc28c",
+    "Packages/HanlinExpoRuntime/Package.swift": "6a4169ffd1975358466068c3f7776d8ac88fab4b6c0b883005669522086cda0e",
+    "Packages/HanlinExpoWidgetSubset/Package.swift": "ed50b8b4f6ee4532ff3ed2af82d7994c7718e958387495280f9a939218323a41",
+    "Packages/HanlinMiniAppsBridge/Package.swift": "579cdb6febf974d7f463aee0cd6592cdf0cfd5a4c8e53840009ff170e52b6e2e",
+    "Packages/HanlinNativeScriptRuntime/Package.swift": "88a4926e884e6804246a7d077efed3837271886a9825585b1e561b4ce1576120",
+    "Packages/HanlinParityMiniApp/Package.swift": "66025f0b1fb7db7db9b8a24426319b651858f3454295780ee807edd335cec90b",
+    "Packages/HanlinPlatform/Package.swift": "78d7081d0e197c3e99746e5b3e476b41280fc5b32110035fab31a3e949cb4dab",
+    "Packages/HanlinPresentationSDK/Package.swift": "951afd5b85422e7d6ed99cf497602e7122b988c1d956132bd9c00e04c695b4c3",
+    "Packages/HanlinProductSplit/Package.swift": "31234398119e82e9895391040f281e9c9895c2cc73f962c12f1b37489e7f5e3a",
+    "Packages/HanlinQuickJS/Package.swift": "3b3e64732c71724b027fd28236f635073d02a3c208cbd9060fafaf802a47480e",
+    "Packages/HanlinSefariaMiniApp/Package.swift": "7ac94c46688313d32e03c2ffa3bb74c1f1dc00fc8b0b8b7322ae1286b918d50c",
+    "Packages/HanlinSkillFormat/Package.swift": "3878f654329884843943a463a901537c45f894b198a4bc9b9b9169410dc66741",
+    "Packages/HanlinTextStudioMiniApp/Package.swift": "d2049eb9401b85c9ab1734a369b818f930db964aee7ce7bb7bf865ec21af291d",
+    "Packages/HanlinWidgetSDK/Package.swift": "970610b13278a21fad358fa9c6f19b15789c6c7cb219fc2984f2aa92298502e6",
+    "Packages/HanlinWikipediaMiniApp/Package.swift": "01b8cc014f8a5e853b644947fd6684df56b65b37feb08ef23f410fb56c902d8e",
+    "Packages/IOSSystemLite/Package.swift": "06c6721c4b59328ba4f78997c9a8b23330357db12d3a619207dc1bac8cb76bab",
+    "Packages/TorahLibraryKit/Package.swift": "4423074f870fe146b8914dc275db77aedef4cc1b6c0b856dfad844b65c3a21d6",
+    "Scripts/SDK/application_products.json": "75d508598ad67dbde717c31f88c96a0d53d9429796f4d2c5fe57321f322203ac"
+  }
+}
