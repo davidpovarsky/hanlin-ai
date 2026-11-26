@@ -5,7 +5,8 @@ These two NEW source packages exercise the installed foreground Expo or NativeSc
 | Property | Expo | NativeScript |
 | --- | --- | --- |
 | Archive name | SurfaceExpo.hanlinExpo | SurfaceNativeScript.hanlinNativeScript |
-| Display name / widget configuration | Surface Expo | Surface NativeScript |
+| Display name / widget entity | Surface Expo | Surface NativeScript |
+| Widget gallery configuration | Hanlin Script | Hanlin Script |
 | Stable app ID | hanlin.surface.expo | hanlin.surface.nativescript |
 | Foreground runtime | Original Expo / React Native / Hermes | Original NativeScript |
 | Widget renderer | Original Expo native widget renderer | Original ScriptWidget |
@@ -34,7 +35,7 @@ Both apps show a single status line:
 
 Both expose Prepare challenge, Start Live Activity, End Live Activity, Run all five runtimes, and Read last result. Expo additionally exposes Publish widget, which calls the original typed prepared-widget publication API. NS exposes Widget setup: its actual widget is published by normal installation; the button gives gallery instructions and does not manufacture a publication receipt.
 
-Start Live Activity displays the actual authorization result, returned Activity ID, or error. The widget and activity buttons are Run Expo Surface and Run NativeScript Surface. The real gallery configuration display name follows the installed manifest name: Surface Expo / Surface NativeScript. OS rendering and placement must be observed separately.
+Start Live Activity displays the actual authorization result, returned Activity ID, or error. The widget and activity buttons are Run Expo Surface and Run NativeScript Surface. The shared prepared-program gallery configuration is Hanlin Script; its installed entity is Surface Expo or Surface NativeScript. The separate original ExpoWidgets createWidget configuration is not this fixture route. OS rendering and placement must be observed separately.
 
 Actual installedPackageID/packageID/generation must be read from the current published catalog. The JavaScript app does not invent those native ownership fields. The public surface-intent action uses the existing discoverable Run Script Action / Await result route. Share and Translation are explicit prepared-native declarations, mirroring the existing production routes; no native VM runs inside those extensions.
 

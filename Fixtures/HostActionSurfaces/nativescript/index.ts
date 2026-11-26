@@ -77,7 +77,7 @@ function createPage(): Page {
   button('Prepare challenge', 'surface-prepare', () => proof.prepare());
   button('Widget setup', 'surface-widget', async () => ({
     renderer: 'original ScriptWidget',
-    instruction: 'Normal installation declares the widget. In the Hanlin widget gallery choose Surface NativeScript, then tap Run NativeScript Surface.',
+    instruction: 'Normal installation declares the widget. Add Hanlin Script from the widget gallery, select Surface NativeScript, then tap Run NativeScript Surface.',
     note: 'This instruction is not a claim that the operating system placed or rendered a widget.'
   }));
   button('Start Live Activity', 'surface-start-activity', async () => {

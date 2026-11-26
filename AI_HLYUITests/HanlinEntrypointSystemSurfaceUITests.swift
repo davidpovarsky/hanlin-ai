@@ -390,7 +390,7 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
         try tap(safari.buttons[engine.title].firstMatch, "Select the actual installed Translation surface.")
         capture(safari, "translation-before-action")
         try checkpoint("before-system-action")
-        try tap(safari.buttons[engine.actionLabel].firstMatch, "Tap the actual provider's declared Host action.")
+        try tap(safari.buttons["Run " + engine.title + " in all five runtimes"].firstMatch, "Tap the actual provider's declared Host action.")
     }
 
     private func fillShortcutParameter(_ title: String, value: String) throws {

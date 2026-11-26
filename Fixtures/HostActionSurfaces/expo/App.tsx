@@ -105,7 +105,7 @@ export default function App() {
         return hostServices.publishWidget({engine: 'expo', entrypointID: 'widget',
           props: {challenge: current.challenge, counter: current.counter, title: 'Surface Expo'}});
       })}/>
-    <Text>Widget gallery configuration: Surface Expo; visible action: Run Expo Surface.</Text>
+    <Text>Widget gallery: Hanlin Script; select Surface Expo; visible action: Run Expo Surface.</Text>
     <Button title="Start Live Activity" testID="surface-start-activity" disabled={busy}
       onPress={() => void perform(startActivity)}/>
     <Button title="End Live Activity" testID="surface-end-activity" disabled={busy}
