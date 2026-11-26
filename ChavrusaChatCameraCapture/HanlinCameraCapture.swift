@@ -5,7 +5,7 @@ import LockedCameraCapture
 import SwiftUI
 
 @main
-struct HanlinCameraCaptureExtension: LockedCameraCaptureExtension {
+struct HanlinCameraCaptureExtension: @MainActor LockedCameraCaptureExtension {
     var body: some LockedCameraCaptureExtensionScene {
         LockedCameraCaptureUIScene { session in
             HanlinLockedCameraCaptureView(session: session)
