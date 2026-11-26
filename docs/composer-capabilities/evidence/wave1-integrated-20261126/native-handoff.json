@@ -182,6 +182,32 @@
     ],
     "source_methods": 4,
     "source_invocations": 4,
-    "followup_project_tests": "Six additional native Project methods are introduced by owner e641105fdc7ac5b418c49b9a146c96cfccf0f078; they are outside this 33f0eb31 inventory and must be counted after integration."
+    "followup_project_tests": "Four additional native Project methods / six parameterized invocations are introduced by owner e641105fdc7ac5b418c49b9a146c96cfccf0f078; they are outside this 33f0eb31 inventory and require native execution after integration.",
+    "followup_project_selectors": [
+      {
+        "selector": "HanlinMiniAppsTests/MiniAppsStudioProjectTests/renamingTheOpenFileRebindsLaterEditsAndSaves()",
+        "invocations": 1
+      },
+      {
+        "selector": "HanlinMiniAppsTests/MiniAppsStudioProjectTests/outerDescriptorRemainsAvailableWhenSourceRootHasNoCompleteDescriptor(hasPartialInnerDescriptor:)",
+        "invocations": 2,
+        "arguments": [
+          false,
+          true
+        ]
+      },
+      {
+        "selector": "HanlinMiniAppsTests/MiniAppsStudioProjectTests/malformedRecoveryDoesNotHideOrAlterAnotherWindowsDraft()",
+        "invocations": 1
+      },
+      {
+        "selector": "HanlinMiniAppsTests/MiniAppsStudioProjectTests/changedRevisionCannotPublishAnOriginalAuthoringResult(operation:)",
+        "invocations": 2,
+        "arguments": [
+          "validate",
+          "build"
+        ]
+      }
+    ]
   }
 }
