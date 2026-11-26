@@ -562,7 +562,10 @@ struct ScriptingApplicationContainerView: View {
         .onDisappear {
             // An external invocation supplies its own close/return controls and
             // owns the runtime across this container's nested presentations.
-            if ownsApplicationLifetime { platform.dismissActiveApplication() }
+            if ownsApplicationLifetime {
+                if let onClose { onClose() }
+                else { platform.dismissActiveApplication() }
+            }
         }
     }
 }
