@@ -64,6 +64,7 @@ struct HanlinCompactConversationLibrary: View {
                             .font(HanlinTypography.subheadline.weight(.semibold))
                             .textCase(nil)
                             .accessibilityIdentifier("hanlin-history-section-\(section.id.rawValue)")
+                            .accessibilityHidden(!isPresented)
                     }
                 }
             }
@@ -202,6 +203,11 @@ struct HanlinCompactConversationLibrary: View {
         }
         .id((record.id?.uuidString ?? "") + String(forceRefresh))
         .accessibilityIdentifier("hanlin-chat-row-\(record.name ?? "")")
+        // Native List cells retain their own accessibility leaves across the
+        // sidebar's NavigationStack boundary. Gate the actual row as well.
+        .disabled(!isPresented)
+        .allowsHitTesting(isPresented)
+        .accessibilityHidden(!isPresented)
     }
 
 }
