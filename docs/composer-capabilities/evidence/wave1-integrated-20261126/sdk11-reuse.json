@@ -1,0 +1,180 @@
+{
+  "classification": "REUSE_ACCEPTED",
+  "assessed_at": "2026-11-26T13:08:05.366400+00:00",
+  "original_execution_source": "a3aae0b952b0518cb8c40ed4a511d4cffadab99f",
+  "target_source": "a30c8267c1f5ce2a122889b81dc9fffc0f295758",
+  "new_test_execution": false,
+  "retained_execution_receipt": "docs/composer-capabilities/evidence/sdk-ios-a3aae0b95/receipt.json",
+  "retained_log_sha256": "e6f652f8ca70a8d67e0dc71616f811dfd0205f9549c7e6bfbac5835b5227f61c",
+  "original_counts": {
+    "total": 11,
+    "passed": 11,
+    "failed": 0,
+    "skipped": 0
+  },
+  "original_test_identities": [
+    "HanlinComposerCapabilityQueryTests/replacesOnlyTheWholeTokenAtTheCaretInRTLText()",
+    "HanlinComposerCapabilityQueryTests/slashSelectionPreservesFollowingTextAndProducesCorrectCaret()",
+    "HanlinComposerCapabilityQueryTests/rejectsStaleChoicesAndComposition()",
+    "HanlinComposerCapabilityQueryTests/ignoresEmailsURLsAndInvalidUTF16Caret()",
+    "HanlinComposerCapabilityQueryTests/modelMentionsRetainTheExistingTextRepresentation()",
+    "HanlinComposerCapabilityDraftTests/submittedSnapshotAndOtherDraftRemainUnchanged()",
+    "HanlinComposerCapabilityDraftTests/changingAnActionConsolidatesOnlyItsDuplicateAndKeepsTheEditingIdentity()",
+    "HanlinComposerCapabilityDraftTests/repeatedPickerSelectionKeepsConfigurationAndRemovalIsScoped()",
+    "HanlinCapabilityCustomPanelProviderTests/registrationRoutesOnlyTheDeclaredReferenceAndForwardsTheDraftBinding()",
+    "HanlinCapabilityNumberInputTests/decimalAndNegativeIntermediateEditsKeepTheirExactText()",
+    "HanlinCapabilityNumberInputTests/invalidCoordinatesReachValidationAndExternalMapUpdatesResynchronize()"
+  ],
+  "whole_file_comparisons": [
+    {
+      "path": "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/HanlinComposerCapabilityTests.swift",
+      "role": "test",
+      "original_sha256": "c18dd51a3931a751b93fb11c2ea285fd2e8020e2e03176d7e01448b15371757f",
+      "current_sha256": "c18dd51a3931a751b93fb11c2ea285fd2e8020e2e03176d7e01448b15371757f",
+      "byte_identical": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/HanlinCapabilityCustomPanelProviderTests.swift",
+      "role": "test",
+      "original_sha256": "b8c4796eac65d88fb9c4dfdb6c6e3673b05e06ae32c65cc16ff8439544800260",
+      "current_sha256": "b8c4796eac65d88fb9c4dfdb6c6e3673b05e06ae32c65cc16ff8439544800260",
+      "byte_identical": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/HanlinCapabilityNumberInputTests.swift",
+      "role": "test",
+      "original_sha256": "fb637c3fc42423076a7a8bf72fac43bf4124edc6a3720f28a101cfc6bdddb424",
+      "current_sha256": "fb637c3fc42423076a7a8bf72fac43bf4124edc6a3720f28a101cfc6bdddb424",
+      "byte_identical": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinCapabilityAttachment.swift",
+      "role": "production",
+      "original_sha256": "eb8ec5975b912c87f973064fef9ce000051894b27e9c58fdeec7f4aee23a531b",
+      "current_sha256": "eb8ec5975b912c87f973064fef9ce000051894b27e9c58fdeec7f4aee23a531b",
+      "byte_identical": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinComposerConfiguration.swift",
+      "role": "production",
+      "original_sha256": "5ce136bc896c30dd8b4a6f0cdbd5a51308d083d90cbdc4549e97418cf3ac2baa",
+      "current_sha256": "5ce136bc896c30dd8b4a6f0cdbd5a51308d083d90cbdc4549e97418cf3ac2baa",
+      "byte_identical": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinValue.swift",
+      "role": "production",
+      "original_sha256": "cd266a8b820ae8673fd576697bc30d77ba5dd563feaa670f7e5b2f18319ff3d8",
+      "current_sha256": "cd266a8b820ae8673fd576697bc30d77ba5dd563feaa670f7e5b2f18319ff3d8",
+      "byte_identical": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinCapabilityCustomPanelProvider.swift",
+      "role": "production",
+      "original_sha256": "d1aa1b4d573e67f4b8a358f160992da73d94a2959327485d9da94fd3533371d4",
+      "current_sha256": "d1aa1b4d573e67f4b8a358f160992da73d94a2959327485d9da94fd3533371d4",
+      "byte_identical": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinComposerCapabilityQuery.swift",
+      "role": "production",
+      "original_sha256": "c9e5287c6512e058475962c4988126fa067c813cf5917df85b9e4573ff54606a",
+      "current_sha256": "c9e5287c6512e058475962c4988126fa067c813cf5917df85b9e4573ff54606a",
+      "byte_identical": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinComposerDraft.swift",
+      "role": "production",
+      "original_sha256": "976a6dbebdc5e681e29ea0b44a1e79e51e36ea81dfcc49b88c7366097f981682",
+      "current_sha256": "976a6dbebdc5e681e29ea0b44a1e79e51e36ea81dfcc49b88c7366097f981682",
+      "byte_identical": true
+    }
+  ],
+  "tested_declaration_comparisons": [
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinCapabilityConfigurationView.swift",
+      "declaration": "HanlinCapabilityNumberInputState",
+      "original_declaration_sha256": "a73329e5bb8e1ad30ce54be1d7cd8aef265c254887f8a684dad562d0a03e6408",
+      "current_declaration_sha256": "a73329e5bb8e1ad30ce54be1d7cd8aef265c254887f8a684dad562d0a03e6408",
+      "byte_identical": true,
+      "enclosing_file_changed": true
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/NativeMultilineTextEditor.swift",
+      "declaration": "TextState",
+      "original_declaration_sha256": "1b959f7bdeb53a8358f1578582508d9972b3fa643790c3d8dacd44dab2e2ba98",
+      "current_declaration_sha256": "1b959f7bdeb53a8358f1578582508d9972b3fa643790c3d8dacd44dab2e2ba98",
+      "byte_identical": true,
+      "enclosing_file_changed": true
+    }
+  ],
+  "all_comparisons_equal": true,
+  "full_package_changed_files": [
+    "M\tPackages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinDescriptors.swift",
+    "M\tPackages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinIdentifiers.swift",
+    "M\tPackages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPresentationContracts.swift",
+    "A\tPackages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinShortcutProgress.swift",
+    "A\tPackages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinShortcutValueCodec.swift",
+    "M\tPackages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+    "M\tPackages/HanlinPresentationSDK/Package.swift",
+    "M\tPackages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Models/AgentActivityModels.swift",
+    "M\tPackages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityComposer.swift",
+    "M\tPackages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityHeaderPhase.swift",
+    "M\tPackages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Progress/ProgressSummarySanitizer.swift",
+    "M\tPackages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/ToolPresentation/LegacyToolPresentationAdapter.swift",
+    "M\tPackages/HanlinPresentationSDK/Sources/HanlinAgentActivityUI/HanlinAgentActivityView.swift",
+    "A\tPackages/HanlinPresentationSDK/Sources/HanlinChatPresentation/HanlinChatPresentation.swift",
+    "A\tPackages/HanlinPresentationSDK/Sources/HanlinChatPresentation/HanlinChatPresentationPolicy.swift",
+    "A\tPackages/HanlinPresentationSDK/Sources/HanlinChatPresentation/HanlinLauncher.swift",
+    "M\tPackages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinCapabilityConfigurationView.swift",
+    "M\tPackages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinCapabilityPicker.swift",
+    "A\tPackages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinComposerFieldFocus.swift",
+    "M\tPackages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/NativeMultilineTextEditor.swift",
+    "M\tPackages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinActivityHierarchy.swift",
+    "A\tPackages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinFileContentView.swift",
+    "A\tPackages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinImageViewer.swift",
+    "A\tPackages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageActionBar.swift",
+    "A\tPackages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageActions.swift",
+    "M\tPackages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageBubble.swift",
+    "A\tPackages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageDocumentAttachments.swift",
+    "A\tPackages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageImageAttachments.swift",
+    "A\tPackages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageMarkdownView.swift",
+    "A\tPackages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessagePreview.swift",
+    "A\tPackages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessagePreviewMetrics.swift",
+    "A\tPackages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageSelectionView.swift",
+    "M\tPackages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinSources.swift",
+    "M\tPackages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinToolActivityHeader.swift",
+    "A\tPackages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinToolDomainActivityGlyph.swift",
+    "A\tPackages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinVisualEffectBlur.swift",
+    "A\tPackages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinWritingTool.swift",
+    "M\tPackages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatMotionConfiguration.swift",
+    "M\tPackages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatShimmerEffect.swift",
+    "M\tPackages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+    "M\tPackages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/ChatAutoFollowController.swift",
+    "M\tPackages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/ChatScrollViewHandle.swift",
+    "M\tPackages/HanlinPresentationSDK/Sources/HanlinLocalization/HanlinColorAssets.swift",
+    "A\tPackages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLSidebarBackground.colorset/Contents.json",
+    "A\tPackages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLSidebarSelection.colorset/Contents.json",
+    "M\tPackages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/Localizable.xcstrings",
+    "M\tPackages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/RuntimeLocalizable.xcstrings",
+    "A\tPackages/HanlinPresentationSDK/Sources/HanlinPresentationKit/HanlinActivityDisclosureState.swift",
+    "M\tPackages/HanlinPresentationSDK/Sources/HanlinPresentationKit/MessageOpenUIStateStore.swift",
+    "A\tPackages/HanlinPresentationSDK/Tests/HanlinChatPresentationTests/HanlinChatPresentationTests.swift",
+    "A\tPackages/HanlinPresentationSDK/Tests/HanlinChatUITests/HanlinMessageInteractionTests.swift"
+  ],
+  "current_native_compile_evidence": "docs/agent-sdk/evidence/shared-chat-interactions-20261126/native/acceptance-r6.json",
+  "reasoning": [
+    "All eleven original test bodies remain byte-identical. Their directly exercised query, draft metadata ownership, custom panel registration, configuration validation and JSON value implementations are byte-identical.",
+    "The numeric-input tests instantiate HanlinCapabilityNumberInputState directly. That complete declaration is unchanged; changes elsewhere in its enclosing file add FocusState and focus routing to mounted SwiftUI fields, which these two state tests do not construct.",
+    "The draft initializer creates only NativeMultilineTextEditor.TextState. That complete value declaration is unchanged; the editor UIKit owner/focus methods changed elsewhere and are not invoked by the three metadata ownership tests.",
+    "The custom panel test calls the unchanged provider, constructs Text and EnvironmentValues, and forwards a Binding; it does not mount the changed configuration/picker fields.",
+    "The current original HanlinChatUI product and its canonical dependencies compiled and linked in the fresh native LauncherLab gate. The later two Shortcut contract additions compiled in the fresh complete PlatformContracts core gate; they do not participate in these eleven test bodies.",
+    "Original and current native receipts identify Xcode 27.0 / iOS 27.0 build 24A434. These bounded tests use Apple Foundation, SwiftUI, Observation and the unchanged contracts; no third-party Markdown, provider, Activity, shortcut or native bridge operation is invoked."
+  ],
+  "scope": "Reuse only the eleven recorded SDK query/draft/custom-panel/numeric-state tests. No new SDK test execution, mounted focus UI, native editor/IME, application or full module behavior acceptance is inferred.",
+  "remaining_gates": [
+    "Original native editor four methods / five invocations on current app source",
+    "Composer app scope and actual NativeScript/Expo engine acceptance",
+    "Original Composer UI four iPhone and three iPad executions"
+  ]
+}

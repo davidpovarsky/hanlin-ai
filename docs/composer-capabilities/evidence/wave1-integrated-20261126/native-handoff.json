@@ -86,7 +86,7 @@
       "parameterized_method": "markedTextOwnerSwitchPreservesCompositionAndAuthoritativeClear"
     },
     "shared_sdk": {
-      "classification": "PROBE_UNKNOWN",
+      "classification": "REUSE_ACCEPTED",
       "selectors": [
         "HanlinComposerCapabilityQueryTests",
         "HanlinComposerCapabilityDraftTests",
@@ -95,7 +95,7 @@
       ],
       "original_accepted_methods": 11,
       "original_source": "a3aae0b952b0518cb8c40ed4a511d4cffadab99f",
-      "applicability": "Requires source/dependency closure assessment; no fresh execution claimed."
+      "applicability": "sdk11-reuse.json: exact tests and directly exercised source/declarations assessed; no fresh execution claimed."
     },
     "ui": {
       "classification": "VERIFY_REGRESSION",
