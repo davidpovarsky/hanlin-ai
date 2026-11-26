@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "target": "ES2023",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "types": [],
+    "paths": {
+      "@expo/ui/swift-ui": [
+        "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/portable-sdk-consumer-validation-20261126/current-surface-nativescript-v2/kit/MiniAppSDK/expo/node_modules/@expo/ui/build/swift-ui/index.d.ts"
+      ]
+    }
+  },
+  "files": [
+    "/mnt/development/projects/worktrees/hanlin-miniapps-widget-wave2-20261126/Scripts/Widgets/Tests/widget-types-consumer.ts"
+  ]
+}

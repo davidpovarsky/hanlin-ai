@@ -20,6 +20,8 @@ export type WidgetToggleProps<Props extends object> = Omit<ToggleProps, 'onIsOnC
  */
 export type WidgetRefreshButtonProps = Omit<ButtonProps, 'onPress'> & {
   widgetRefresh: true;
+  /** Required for prepared widgets: the declared reload action ID. */
+  target?: string;
 };
 export interface WidgetToggleInteractionEvent {
   source: string;

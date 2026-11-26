@@ -21,7 +21,7 @@
         "/usr/local/bin/node",
         "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/portable-sdk-consumer-validation-20261126/current-surface-nativescript-v2/kit/MiniAppSDK/expo/node_modules/typescript/lib/tsc.js",
         "-p",
-        "/mnt/development/projects/worktrees/hanlin-miniapps-widget-wave2-20261126/docs/miniapps/evidence/widget-wave2-20261126/typescript-tsconfig.json"
+        "/mnt/development/projects/worktrees/hanlin-miniapps-widget-wave2-20261126/docs/miniapps/evidence/widget-wave2-20261126/typescript-options.json"
       ],
       "exitCode": 0,
       "durationSeconds": 1.8377079963684082,
