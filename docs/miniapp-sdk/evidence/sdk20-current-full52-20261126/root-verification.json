@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "status": "ROOT_INDEPENDENT_CURRENT_FULL52_VERIFIED",
+  "at": "2026-11-26T00:21:16.192972+00:00",
+  "source": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+  "receiptSHA256": "17ed05e188d53a743e5d15d4bd9f5b697a329755d9e4866d2199ea01c91eb4fa",
+  "membersVerifiedStoredAndRaw": 65,
+  "groups": {
+    "original-runtimes": {
+      "passedNodes": 25,
+      "failures": 0,
+      "skips": 0,
+      "runtimeWarnings": 17
+    },
+    "test": {
+      "passedNodes": 27,
+      "failures": 0,
+      "skips": 0,
+      "runtimeWarnings": 4
+    }
+  },
+  "chargedSeconds": 2367.7255637079943,
+  "priorChargedSeconds": 2551.057537292014,
+  "totalChargedSeconds": 4918.783101000008,
+  "combinedAllowanceSeconds": 14400,
+  "sourceErrors": [],
+  "cleanupErrors": [],
+  "remainingOwnedProcessGroup": [],
+  "ownedSimulator": {
+    "dataPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/ED1C7CA0-C85E-41DF-918F-3C9C9033F73E/data",
+    "dataPathSize": 6085431296,
+    "logPath": "/Users/m1/Library/Logs/CoreSimulator/ED1C7CA0-C85E-41DF-918F-3C9C9033F73E",
+    "udid": "ED1C7CA0-C85E-41DF-918F-3C9C9033F73E",
+    "lastUsedAt": "2026-11-25T23:39:08Z",
+    "isAvailable": true,
+    "logPathSize": 323584,
+    "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5-16GB",
+    "state": "Shutdown",
+    "name": "HanlinPaired-paired52-sdk20-v2"
+  },
+  "currentNativeScriptFive": "NOT_RUN",
+  "currentNotificationOS": "NOT_RUN",
+  "boundary": "One complete actual current run, not aggregated prior cases. Both downstream gates and physical inventory are separate."
+}

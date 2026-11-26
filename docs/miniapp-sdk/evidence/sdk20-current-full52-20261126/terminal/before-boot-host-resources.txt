@@ -1,0 +1,2 @@
+hw.memsize: 17179869184
+hw.ncpu: 10

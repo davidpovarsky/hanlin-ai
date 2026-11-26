@@ -1,0 +1,411 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "ED1C7CA0-C85E-41DF-918F-3C9C9033F73E",
+      "deviceName" : "HanlinPaired-paired52-sdk20-v2",
+      "modelName" : "iPad Pro 13-inch (M5)",
+      "osBuildNumber" : "24A434",
+      "osVersion" : "27.0",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "name" : "Update the Info.plist: Support for all orientations will soon be required.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "1m 30s",
+                  "durationInSeconds" : 90.33019006252289,
+                  "name" : "testExternalInvocationSurvivesNestedFullScreenModal()",
+                  "nodeIdentifier" : "MiniAppsExternalModalLifetimeUITests/testExternalInvocationSurvivesNestedFullScreenModal()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests/testExternalInvocationSurvivesNestedFullScreenModal",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "MiniAppsExternalModalLifetimeUITests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "name" : "Update the Info.plist: Support for all orientations will soon be required.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "59s",
+                  "durationInSeconds" : 59.49462103843689,
+                  "name" : "testStandaloneExpoGeneratedEditButtonEditsOriginalList()",
+                  "nodeIdentifier" : "MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEditButtonEditsOriginalList()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEditButtonEditsOriginalList",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Update the Info.plist: Support for all orientations will soon be required.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "1m 8s",
+                  "durationInSeconds" : 68.82788693904877,
+                  "name" : "testStandaloneExpoGeneratedEmptyViewReportsNativeLayout()",
+                  "nodeIdentifier" : "MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEmptyViewReportsNativeLayout()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEmptyViewReportsNativeLayout",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Update the Info.plist: Support for all orientations will soon be required.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "1m 31s",
+                  "durationInSeconds" : 91.1440680027008,
+                  "name" : "testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata()",
+                  "nodeIdentifier" : "MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Update the Info.plist: Support for all orientations will soon be required.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "1m 10s",
+                  "durationInSeconds" : 70.06766498088837,
+                  "name" : "testStandaloneExpoGeneratedModifierAccessibilityAndGeometry()",
+                  "nodeIdentifier" : "MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierAccessibilityAndGeometry()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierAccessibilityAndGeometry",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Update the Info.plist: Support for all orientations will soon be required.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "1m 15s",
+                  "durationInSeconds" : 75.25202095508575,
+                  "name" : "testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope()",
+                  "nodeIdentifier" : "MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Update the Info.plist: Support for all orientations will soon be required.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "2m 12s",
+                  "durationInSeconds" : 132.83216202259064,
+                  "name" : "testStandaloneExpoGeneratedModifierNativeContainerContexts()",
+                  "nodeIdentifier" : "MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierNativeContainerContexts()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierNativeContainerContexts",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Update the Info.plist: Support for all orientations will soon be required.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "1m 17s",
+                  "durationInSeconds" : 77.12048399448395,
+                  "name" : "testStandaloneExpoHostServicesUseRealStorageRuntimeAndWidgetPublication()",
+                  "nodeIdentifier" : "MiniAppsProductionRuntimeUITests/testStandaloneExpoHostServicesUseRealStorageRuntimeAndWidgetPublication()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoHostServicesUseRealStorageRuntimeAndWidgetPublication",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Update the Info.plist: Support for all orientations will soon be required.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "2m 26s",
+                  "durationInSeconds" : 146.19267189502716,
+                  "name" : "testStandaloneExpoManualInputLayoutAndDataAdapters()",
+                  "nodeIdentifier" : "MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Update the Info.plist: Support for all orientations will soon be required.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "2m 6s",
+                  "durationInSeconds" : 126.42503702640533,
+                  "name" : "testStandaloneExpoManualPresentationAdaptersAndDismissalEvents()",
+                  "nodeIdentifier" : "MiniAppsProductionRuntimeUITests/testStandaloneExpoManualPresentationAdaptersAndDismissalEvents()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualPresentationAdaptersAndDismissalEvents",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Update the Info.plist: Support for all orientations will soon be required.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "42s",
+                  "durationInSeconds" : 42.64928090572357,
+                  "name" : "testStandaloneExpoNativeAPIUsesActualUIKitAndWorklets()",
+                  "nodeIdentifier" : "MiniAppsProductionRuntimeUITests/testStandaloneExpoNativeAPIUsesActualUIKitAndWorklets()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoNativeAPIUsesActualUIKitAndWorklets",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Update the Info.plist: Support for all orientations will soon be required.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "1m 6s",
+                  "durationInSeconds" : 66.93427896499634,
+                  "name" : "testStandaloneExpoRendersNativeControlsAndRunsReactEvents()",
+                  "nodeIdentifier" : "MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Update the Info.plist: Support for all orientations will soon be required.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "1m 14s",
+                  "durationInSeconds" : 74.86954402923584,
+                  "name" : "testStandaloneExpoWidgetsUsesOriginalTimelinesAndLiveActivities()",
+                  "nodeIdentifier" : "MiniAppsProductionRuntimeUITests/testStandaloneExpoWidgetsUsesOriginalTimelinesAndLiveActivities()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoWidgetsUsesOriginalTimelinesAndLiveActivities",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Update the Info.plist: Support for all orientations will soon be required.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "2m 7s",
+                  "durationInSeconds" : 127.59427297115326,
+                  "name" : "testStandaloneModularSearchLoadsActualSefariaText()",
+                  "nodeIdentifier" : "MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Update the Info.plist: Support for all orientations will soon be required.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "1m 15s",
+                  "durationInSeconds" : 75.9966549873352,
+                  "name" : "testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch()",
+                  "nodeIdentifier" : "MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Update the Info.plist: Support for all orientations will soon be required.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "1m 18s",
+                  "durationInSeconds" : 78.77825391292572,
+                  "name" : "testStandaloneSDKOnlyExpoPackageImportsRendersAndHandlesEvents()",
+                  "nodeIdentifier" : "MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyExpoPackageImportsRendersAndHandlesEvents()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyExpoPackageImportsRendersAndHandlesEvents",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Update the Info.plist: Support for all orientations will soon be required.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "1m 7s",
+                  "durationInSeconds" : 67.5927460193634,
+                  "name" : "testStandaloneSDKOnlyNativeScriptPackageImportsRendersAndHandlesEvents()",
+                  "nodeIdentifier" : "MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyNativeScriptPackageImportsRendersAndHandlesEvents()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyNativeScriptPackageImportsRendersAndHandlesEvents",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "MiniAppsProductionRuntimeUITests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "HanlinMiniAppsUITests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests",
+          "nodeType" : "UI test bundle",
+          "result" : "Passed"
+        },
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "duration" : "1s",
+                  "durationInSeconds" : 1.033689022064209,
+                  "name" : "testActualIncomingRequestsCreateDistinctIPadScenes()",
+                  "nodeIdentifier" : "CrossAppInvocationTests/testActualIncomingRequestsCreateDistinctIPadScenes()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/CrossAppInvocationTests/testActualIncomingRequestsCreateDistinctIPadScenes",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,0096s",
+                  "durationInSeconds" : 0.009647011756896973,
+                  "name" : "testCancelAndDisplayDoneReturnNoDocumentMutation()",
+                  "nodeIdentifier" : "CrossAppInvocationTests/testCancelAndDisplayDoneReturnNoDocumentMutation()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/CrossAppInvocationTests/testCancelAndDisplayDoneReturnNoDocumentMutation",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,0038s",
+                  "durationInSeconds" : 0.003805994987487793,
+                  "name" : "testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained()",
+                  "nodeIdentifier" : "CrossAppInvocationTests/testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/CrossAppInvocationTests/testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,00053s",
+                  "durationInSeconds" : 0.0005320310592651367,
+                  "name" : "testReusingValueWindowKeepsItsInvocationBindingCurrent()",
+                  "nodeIdentifier" : "CrossAppInvocationTests/testReusingValueWindowKeepsItsInvocationBindingCurrent()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/CrossAppInvocationTests/testReusingValueWindowKeepsItsInvocationBindingCurrent",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,015s",
+                  "durationInSeconds" : 0.015157938003540039,
+                  "name" : "testUnavailableCallbackRetainsResultForSourceRecovery()",
+                  "nodeIdentifier" : "CrossAppInvocationTests/testUnavailableCallbackRetainsResultForSourceRecovery()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/CrossAppInvocationTests/testUnavailableCallbackRetainsResultForSourceRecovery",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "CrossAppInvocationTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/CrossAppInvocationTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0,00067s",
+                  "durationInSeconds" : 0.0006719827651977539,
+                  "name" : "testBridgeInvalidationReleasesPendingCallbacksBeforeProviderCancellation()",
+                  "nodeIdentifier" : "NativeScriptHostServicesLifetimeTests/testBridgeInvalidationReleasesPendingCallbacksBeforeProviderCancellation()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testBridgeInvalidationReleasesPendingCallbacksBeforeProviderCancellation",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,0088s",
+                  "durationInSeconds" : 0.008829116821289062,
+                  "name" : "testInvalidationReleasesHandlersAndRejectsLateActions()",
+                  "nodeIdentifier" : "NativeScriptHostServicesLifetimeTests/testInvalidationReleasesHandlersAndRejectsLateActions()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testInvalidationReleasesHandlersAndRejectsLateActions",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "NativeScriptHostServicesLifetimeTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0,0024s",
+                  "durationInSeconds" : 0.002357006072998047,
+                  "name" : "testUnrelatedAndLateWindowCleanupPreservesNativeScriptOwner()",
+                  "nodeIdentifier" : "NativeScriptWindowOwnershipTests/testUnrelatedAndLateWindowCleanupPreservesNativeScriptOwner()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/NativeScriptWindowOwnershipTests/testUnrelatedAndLateWindowCleanupPreservesNativeScriptOwner",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "NativeScriptWindowOwnershipTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/NativeScriptWindowOwnershipTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "HanlinMiniAppsTests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests",
+          "nodeType" : "Unit test bundle",
+          "result" : "Passed"
+        }
+      ],
+      "name" : "HanlinMiniApps",
+      "nodeType" : "Test Plan",
+      "result" : "Passed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

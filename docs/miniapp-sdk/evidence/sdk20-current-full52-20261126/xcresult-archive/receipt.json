@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "capturedAt": "2026-11-26T00:20:38.546649+00:00",
+  "terminal": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/state.json",
+    "bytes": 12578,
+    "sha256": "71a93134e5d50959d368d3bec2e10cde7f2214fab05606da702d75cd7da87b6b",
+    "status": "EXECUTED_PASS"
+  },
+  "roots": [
+    "OriginalRuntimes.xcresult",
+    "Paired.xcresult"
+  ],
+  "missing": [],
+  "archive": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-xcresult-archive/original-two-results.tar.gz",
+    "bytes": 95467520,
+    "sha256": "036eeac46b577aec82e731df6b0cb1a720462828f49dc9da7aaf2ac0b6b05a3a"
+  },
+  "manifest": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-xcresult-archive/original-results-manifest.json",
+    "bytes": 189371,
+    "sha256": "21f7c9097a66f2e8ce5c2314975432ff4112eb379c5487e214a850c664390d46"
+  },
+  "verified": {
+    "members": 508,
+    "regularFiles": 504,
+    "rawFileBytes": 101840051,
+    "allSHA256AndSizesAndModesAndOwners": true
+  },
+  "restoreParent": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product",
+  "boundary": "Read-only finalized original result bundles streamed over pinned SSH and independently verified member by member on Oracle. No Mac result was removed; no new test, export transformation or simulator operation."
+}
