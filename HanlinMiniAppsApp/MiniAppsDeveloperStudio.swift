@@ -356,6 +356,7 @@ private struct MiniAppsStudioProjectView: View {
                         .lineLimit(1).truncationMode(.middle)
                 }
                 .accessibilityIdentifier("miniapps-studio-files")
+                .disabled(project.isBusy)
                 Spacer()
                 if project.isDirty { Image(systemName: "circle.fill").font(.system(size: 6)).accessibilityLabel("Unsaved changes") }
                 if project.isBusy { ProgressView() }
@@ -375,6 +376,7 @@ private struct MiniAppsStudioProjectView: View {
                     project.edited()
                 }), selection: $project.selection, fontName: fontName, fontSize: fontSize, caret: $caret)
                     .accessibilityIdentifier("miniapps-studio-editor")
+                    .disabled(project.isBusy)
                     .overlay(alignment: .topLeading) {
                         if project.showsSuggestions, let inspection = project.inspection,
                            inspection.version == project.version, !inspection.completions.isEmpty {
@@ -430,10 +432,12 @@ private struct MiniAppsStudioProjectView: View {
                     .accessibilityIdentifier("miniapps-studio-build-install")
                 Menu {
                     Button("Save", systemImage: "square.and.arrow.down") { perform { try project.save() } }
+                        .disabled(project.isBusy)
                     Button("New source file", systemImage: "doc.badge.plus") { movingPath = nil; newPath = "new.ts"; showsPathPrompt = true }
+                        .disabled(project.isBusy)
                     Button("Rename or move file", systemImage: "folder.badge.arrow.forward") {
                         movingPath = project.selectedPath; newPath = project.selectedPath ?? ""; showsPathPrompt = true
-                    }
+                    }.disabled(project.isBusy)
                     Button("Choose font", systemImage: "textformat") { showsFontPicker = true }
                     Menu("Font size") {
                         ForEach([12.0, 15.0, 18.0, 22.0], id: \.self) { size in
@@ -455,7 +459,7 @@ private struct MiniAppsStudioProjectView: View {
         }
         .task(id: project.version) {
             do { try await Task.sleep(for: .milliseconds(350)) } catch { return }
-            if !project.conflict { perform { try project.save() } }
+            if !project.conflict && !project.isBusy { perform { try project.save() } }
         }
         .onChange(of: scenePhase) { _, phase in if phase != .active { perform { try project.save() } } }
         .onDisappear { perform { try project.save() } }
@@ -468,11 +472,14 @@ private struct MiniAppsStudioProjectView: View {
             TextField("Relative path", text: $newPath).textInputAutocapitalization(.never).autocorrectionDisabled()
             Button("Save") {
                 perform {
-                    try project.save()
-                    if let movingPath { try project.workspace.move(movingPath, to: newPath) }
-                    else { try project.workspace.createFile(newPath) }
-                    try project.refreshFiles()
-                    try project.select(newPath)
+                    if movingPath != nil {
+                        try project.moveSelectedFile(to: newPath)
+                    } else {
+                        try project.save()
+                        try project.workspace.createFile(newPath)
+                        try project.refreshFiles()
+                        try project.select(newPath)
+                    }
                 }
             }
             Button("Cancel", role: .cancel) {}
@@ -523,6 +530,7 @@ private struct MiniAppsStudioProjectView: View {
 private struct MiniAppsCodeTextView: UIViewRepresentable {
     @Binding var text: String
     @Binding var selection: NSRange
+    @Environment(\.isEnabled) private var isEnabled
     let fontName: String
     let fontSize: Double
     @Binding var caret: CGRect
@@ -542,6 +550,7 @@ private struct MiniAppsCodeTextView: UIViewRepresentable {
 
     func updateUIView(_ view: UITextView, context: Context) {
         context.coordinator.parent = self
+        view.isEditable = isEnabled
         if view.text != text { view.text = text }
         view.font = UIFont(name: fontName, size: fontSize) ?? .monospacedSystemFont(ofSize: fontSize, weight: .regular)
         if view.selectedRange != selection, NSMaxRange(selection) <= (view.text as NSString).length { view.selectedRange = selection }
