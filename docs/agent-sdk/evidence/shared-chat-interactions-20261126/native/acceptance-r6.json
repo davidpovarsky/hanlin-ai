@@ -1,0 +1,266 @@
+{
+  "status": "PASS",
+  "verified_at": "2026-11-26T12:46:48.240184+00:00",
+  "source_sha": "730bbb6d70e8c9f136c5ee21437f78cc5b6e7bfb",
+  "source_base": "a84ecd6db0dfa77e2241cb9481b9f9d43a7a13c6",
+  "canonical_profile": "HanlinChatPresentation HanlinPresentationKit HanlinChatUI; original generator six-target closure",
+  "source_archive_files_verified": 3318,
+  "canonical_pins_verified": true,
+  "xcode": "Xcode 27.0\nBuild version 27A266a",
+  "swift": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0",
+  "simulator": {
+    "udid": "35FB64E2-F0BC-4E19-952E-26323D8C6140",
+    "name": "HanlinSharedUI-a84ecd6d-20261126",
+    "runtime": "iOS 27.0 24A434",
+    "device_type": "iPad Pro 11-inch M5 12GB"
+  },
+  "expected_test_identifiers": [
+    "HanlinMessageActionTests/currentHostStateControlsTranslationAndSourceBoundSaving()",
+    "HanlinMessageActionTests/menusRetainTheirCreatingHostCallbacks()",
+    "HanlinMessageActionTests/unavailableHostServicesNeverCreateMenuEntries()",
+    "HanlinMessagePreviewMetricsTests/detachedInvalidOrNonfiniteViewportDoesNotPresent()",
+    "HanlinMessagePreviewMetricsTests/narrowAndShortHostViewportWinsOverPreferredSize()"
+  ],
+  "executed_cases": [
+    {
+      "nodeIdentifier": "HanlinMessagePreviewMetricsTests/narrowAndShortHostViewportWinsOverPreferredSize()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinLauncherLab/HanlinLauncherLabTests/HanlinMessagePreviewMetricsTests/narrowAndShortHostViewportWinsOverPreferredSize()",
+      "result": "Passed",
+      "durationInSeconds": 0.0005178451538085938
+    },
+    {
+      "nodeIdentifier": "HanlinMessagePreviewMetricsTests/detachedInvalidOrNonfiniteViewportDoesNotPresent()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinLauncherLab/HanlinLauncherLabTests/HanlinMessagePreviewMetricsTests/detachedInvalidOrNonfiniteViewportDoesNotPresent()",
+      "result": "Passed",
+      "durationInSeconds": 4.506111145019531e-05
+    },
+    {
+      "nodeIdentifier": "HanlinMessageActionTests/unavailableHostServicesNeverCreateMenuEntries()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinLauncherLab/HanlinLauncherLabTests/HanlinMessageActionTests/unavailableHostServicesNeverCreateMenuEntries()",
+      "result": "Passed",
+      "durationInSeconds": 0.0006721019744873047
+    },
+    {
+      "nodeIdentifier": "HanlinMessageActionTests/menusRetainTheirCreatingHostCallbacks()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinLauncherLab/HanlinLauncherLabTests/HanlinMessageActionTests/menusRetainTheirCreatingHostCallbacks()",
+      "result": "Passed",
+      "durationInSeconds": 0.0001010894775390625
+    },
+    {
+      "nodeIdentifier": "HanlinMessageActionTests/currentHostStateControlsTranslationAndSourceBoundSaving()",
+      "nodeIdentifierURL": "test://com.apple.xcode/HanlinLauncherLab/HanlinLauncherLabTests/HanlinMessageActionTests/currentHostStateControlsTranslationAndSourceBoundSaving()",
+      "result": "Passed",
+      "durationInSeconds": 0.0006411075592041016
+    }
+  ],
+  "passed": 5,
+  "failed": 0,
+  "skipped": 0,
+  "test_log_sha256": "99619cd0d2ff3c41b1b540c2c53bd875a241806ece031470a63179930da43410",
+  "xcresult_path": "/Users/m1/builds/hanlin-shared-chat-a84ecd6d-20261126/results/interaction-r6.xcresult",
+  "unchanged_policy_tests": "NOT_RERUN; compiled in original test target, historical evidence remains separate",
+  "not_claimed": [
+    "full Hanlin application acceptance",
+    "live provider integration",
+    "physical iPad appearance or interaction acceptance"
+  ],
+  "retained_attempts": [
+    {
+      "path": "native-receipt.json",
+      "source_sha": "a84ecd6db0dfa77e2241cb9481b9f9d43a7a13c6",
+      "status": "FAILED"
+    },
+    {
+      "path": "native-receipt-r2.json",
+      "source_sha": "7923425b636b9cd889e6cdc174956a2a46470595",
+      "status": "FAILED"
+    },
+    {
+      "path": "native-receipt-r3.json",
+      "source_sha": "a6aefeed53acbb49b686ad8f357d4fd5eafda5ee",
+      "status": "FAILED"
+    },
+    {
+      "path": "native-receipt-r4.json",
+      "source_sha": "f3b55fdd3926330a9169d104bd245d877ac942c4",
+      "status": "FAILED"
+    },
+    {
+      "path": "native-receipt-r5.json",
+      "source_sha": "07f6526841df1c356b873f2c4b79280a10ce045e",
+      "status": "FAILED"
+    },
+    {
+      "path": "native-receipt-r6.json",
+      "source_sha": "730bbb6d70e8c9f136c5ee21437f78cc5b6e7bfb",
+      "status": "NATIVE_COMMAND_PASSED_PENDING_COUNT_REVIEW"
+    }
+  ],
+  "xcresult_archive": {
+    "path": "interaction-r6.xcresult.tar.gz",
+    "bytes": 50605,
+    "sha256": "c541612fcbc1ea9b9f243de733dc464243ceb40c5839ac03e28648269bb77b67"
+  },
+  "xcresult_files": {
+    "Data/data.0~-SMMyHIqzUSPH3i1u8vWNZEQQCdFhn56B6_Pp9un31Ws_WO_V7Zq7r3p7EAyfjrEjrSpD8WCaosjWEetzdyPSg==": {
+      "bytes": 2255,
+      "sha256": "e2b280b652902af1a246e4cefb09dacb2d3a3f32748f704faa7d57d48210e7c7"
+    },
+    "Data/data.0~4VqMqsI5lOfxRppnud6-VDWcNsU8J7VgFCJfW2dXPwOcAkvU-I8Um5yp9n0Zv6nr3VmcxYggaVMDFfR0U_vjKw==": {
+      "bytes": 2,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "Data/data.0~9et5yPmWmHJmDHmKC4hKMDF8LEMsIZ4M5n4Xhy0oPrLfqLlKOOma9w0xXZUSWywxbd-rtll_ZNiA0SvaOh-C4A==": {
+      "bytes": 419,
+      "sha256": "50c91633e9db5b49aeab4d986e252fd8dfb9babcb018ae6decb48de49fd2e74b"
+    },
+    "Data/data.0~Dd9u7VLc0Q2IOCZLAXUeQDWKgX6jmpjVBaVPQZDMN7-H17HEhNvoqNOFuGzQrfwRjQZo5G7Cw98RlY5i1BE2xA==": {
+      "bytes": 14389,
+      "sha256": "5b1117ca0e65eb18aeab5419d7f27b38b49112c80708a6b36ef4eb4f0466e572"
+    },
+    "Data/data.0~GAPd89nk75RZvIg2_9kEhkhgX1_Dh13sp3dxGuG5Rh-Aq9KTNSvB6VzWlGOBZ5JbnrMjg-z26XNi4gfg4UecgQ==": {
+      "bytes": 1213,
+      "sha256": "e4b950523a17ae1ca3a3c69429b5736d9e0c5836b35f8d99813112e22842ff39"
+    },
+    "Data/data.0~GejDxQpt8hvz_J54DZQPHkh6ysN13jzHqVqUn91AeKLTNCRb9cGsTpclBgbdhr0KIs8FSBZZUz2csTI_XkQRqg==": {
+      "bytes": 8792,
+      "sha256": "a84287844f05682156a40fe81438d1c76a868af653ec0c2d127eab8fe6ba248b"
+    },
+    "Data/data.0~Gs2-0y70wGUnEyy_pFIKdGrVETwuw7FG84-KnxkDe6kIfPP74cxg_mEliIW63DHs0JnHZZMoMpEZ59R7h8UMZw==": {
+      "bytes": 205,
+      "sha256": "e116ddeb3851aff67c6f5ea3601fe4b074763b5b65f85a571e77c33f414b80b7"
+    },
+    "Data/data.0~JhkaMw1DBeRrn5_s1B8ZzCQERDM5NuE2-CF_T-6-6lKRIW_4UX59o9EFT6xqzgo0cR-p0KbtELZ1e7Ok0p2QpQ==": {
+      "bytes": 1132,
+      "sha256": "876c0ed62fcf40b3a3e16e835db1284c776b301ec303e7d78f24c8e0ac1b8f0d"
+    },
+    "Data/data.0~NNeSwXFLlg-xISZTHtX1BYGd4kg4VOgi83j9blChil6FX24IsgA0a_X1WwqPcsWBdtA0ajnmTZ4db_39kyHtNA==": {
+      "bytes": 116,
+      "sha256": "94f70858c4ac2e92816bb48058a641911d992aa67d366b01fa378a9418002e16"
+    },
+    "Data/data.0~O4ctFSO6s1nqtGl0jsHUQjXE_1P2yDKiI8xkFIOHiOY2pFdljGLy1c1jCvoHR5VSej7E_sIx4rfYksxVUBr_Yw==": {
+      "bytes": 409,
+      "sha256": "18c1a7e30a726b60cf3c2c469ce84e1d87d94f768f4bac5b7150337715ac0122"
+    },
+    "Data/data.0~S2wOp4wSipciH2_HUQygxGhwuC8a6a9oMfLuBKzGHo5_AqMAEfk-nhgiN_3zXSWXPUiDfQChW67cEMJX0Yx-3w==": {
+      "bytes": 122,
+      "sha256": "05e24072966494c3b08df9a864634229aa709acadd18e641d92b8ff25ae60bef"
+    },
+    "Data/data.0~SUEmzKb2Hf8EuCw8-FwTpzwNPReXg6zFFwglFQiNVHLWr6Uz05zORJl3OnNrU3do7ajv5nXnZYf8MIt0d-M93A==": {
+      "bytes": 38,
+      "sha256": "c6734c8f2e683db7e43e46b1d0c7df5b7da705bb15c83ff1b119482849034e55"
+    },
+    "Data/data.0~WPszfsZvQOixF-Pyl9b55alXCYyExi2HP0iYtLcR2tASZCIpKCK1sZmCc4SP9tkqiaxNkvpJjdjXPJOXWlKzgw==": {
+      "bytes": 4354,
+      "sha256": "60fae7cf85ed280372ba48a40c7429be43ade0a1dd62af8abd2e5611aadb9258"
+    },
+    "Data/data.0~_gZo_XB-kjBQ9UjYkYl0qEgDzAJIoY8LYDtqOiCtlht5RwZjhOcdQ4JM9IVmYyOnCcNoJyMCByl7hrTWVJvPaQ==": {
+      "bytes": 421,
+      "sha256": "349139b62275c78cf1cdc1191cf5a58801b8580001f9defc04ccdbf182647d49"
+    },
+    "Data/data.0~gpgYDzvykpuoPdMkxd4KDowZh6MieaPyI882mdA-1cLfh0uyf1HNGZXtMaxuxiu10HBsnCvEray361pf2zh_7A==": {
+      "bytes": 404,
+      "sha256": "b4f10affcf06ffb616fd6c2f47bfc1a4fed3e8724e6caa35cf7deb591c218a0a"
+    },
+    "Data/data.0~iEytyuiTpNYQT9O_cQQWepBy2rM-44T2Su2ykx1_Pyw5sCOV3uxNmnA6WyA_64ye0YgEUjdd1rpMvn8KROctPQ==": {
+      "bytes": 1720,
+      "sha256": "0b82540e3b51955d03b947c57db2f9b15151c40d0e7217151cbc28ce92c4ddc1"
+    },
+    "Data/data.0~nHWb5UKIc4TRd0VpGZZp_nfIOFvPvEu6Y_RVoY7TK0Xz6MK03JpTHMjF2gUllyAaTj5z7UVQP3Mop11D3-T7Dg==": {
+      "bytes": 416,
+      "sha256": "a8a72c7a1af38902bca9ae8afe5fff8617bf4701f9fe39d74d0e9a612465391d"
+    },
+    "Data/data.0~rlaT_QcFL1csDoEru__UVwYsMfYtb54LYcF8tny0Ya4oqrioDHiMk5VfV3BWjBJOIh1VEb1ztrV3wAoavlopuA==": {
+      "bytes": 322,
+      "sha256": "2d06619161e5e87d63e765e16c529d178ca430e41f02269e8d6b63ed806ebed1"
+    },
+    "Data/data.0~vpusu1O5P9rIY4a1J6w0beMpMjMUc9dPwSOrKly6-JX69vKadFmPkxx9_9qV-1t3a31IBWOkOJYIiHtbAvLd0Q==": {
+      "bytes": 306,
+      "sha256": "edb665edc9e6ffe232cc681165b33efd91105e3f5e86f2161508f830143db1b3"
+    },
+    "Data/refs.0~-SMMyHIqzUSPH3i1u8vWNZEQQCdFhn56B6_Pp9un31Ws_WO_V7Zq7r3p7EAyfjrEjrSpD8WCaosjWEetzdyPSg==": {
+      "bytes": 331,
+      "sha256": "a01aa33efed2a70973af881a679c1ad1b2e4b2c33622f070482e2bbfef0adb7d"
+    },
+    "Data/refs.0~4VqMqsI5lOfxRppnud6-VDWcNsU8J7VgFCJfW2dXPwOcAkvU-I8Um5yp9n0Zv6nr3VmcxYggaVMDFfR0U_vjKw==": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "Data/refs.0~9et5yPmWmHJmDHmKC4hKMDF8LEMsIZ4M5n4Xhy0oPrLfqLlKOOma9w0xXZUSWywxbd-rtll_ZNiA0SvaOh-C4A==": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "Data/refs.0~Dd9u7VLc0Q2IOCZLAXUeQDWKgX6jmpjVBaVPQZDMN7-H17HEhNvoqNOFuGzQrfwRjQZo5G7Cw98RlY5i1BE2xA==": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "Data/refs.0~GAPd89nk75RZvIg2_9kEhkhgX1_Dh13sp3dxGuG5Rh-Aq9KTNSvB6VzWlGOBZ5JbnrMjg-z26XNi4gfg4UecgQ==": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "Data/refs.0~GejDxQpt8hvz_J54DZQPHkh6ysN13jzHqVqUn91AeKLTNCRb9cGsTpclBgbdhr0KIs8FSBZZUz2csTI_XkQRqg==": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "Data/refs.0~Gs2-0y70wGUnEyy_pFIKdGrVETwuw7FG84-KnxkDe6kIfPP74cxg_mEliIW63DHs0JnHZZMoMpEZ59R7h8UMZw==": {
+      "bytes": 199,
+      "sha256": "fddcab1d7eb91ba1761a7744accd4ff77aa0d5d1aa523a30a466ee0953de58b3"
+    },
+    "Data/refs.0~JhkaMw1DBeRrn5_s1B8ZzCQERDM5NuE2-CF_T-6-6lKRIW_4UX59o9EFT6xqzgo0cR-p0KbtELZ1e7Ok0p2QpQ==": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "Data/refs.0~NNeSwXFLlg-xISZTHtX1BYGd4kg4VOgi83j9blChil6FX24IsgA0a_X1WwqPcsWBdtA0ajnmTZ4db_39kyHtNA==": {
+      "bytes": 133,
+      "sha256": "4aa92db83c2785884b19a6ac80a909822138e3dcac8bb1f244b73c0729e97ea9"
+    },
+    "Data/refs.0~O4ctFSO6s1nqtGl0jsHUQjXE_1P2yDKiI8xkFIOHiOY2pFdljGLy1c1jCvoHR5VSej7E_sIx4rfYksxVUBr_Yw==": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "Data/refs.0~S2wOp4wSipciH2_HUQygxGhwuC8a6a9oMfLuBKzGHo5_AqMAEfk-nhgiN_3zXSWXPUiDfQChW67cEMJX0Yx-3w==": {
+      "bytes": 133,
+      "sha256": "728fd7efe218643ee6a28a382364bb9655be862e689fec243bcca3f9f5380e21"
+    },
+    "Data/refs.0~SUEmzKb2Hf8EuCw8-FwTpzwNPReXg6zFFwglFQiNVHLWr6Uz05zORJl3OnNrU3do7ajv5nXnZYf8MIt0d-M93A==": {
+      "bytes": 67,
+      "sha256": "624e70de7c6e947b4745c1c55182af3588f43421a935251584641d544012acae"
+    },
+    "Data/refs.0~WPszfsZvQOixF-Pyl9b55alXCYyExi2HP0iYtLcR2tASZCIpKCK1sZmCc4SP9tkqiaxNkvpJjdjXPJOXWlKzgw==": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "Data/refs.0~_gZo_XB-kjBQ9UjYkYl0qEgDzAJIoY8LYDtqOiCtlht5RwZjhOcdQ4JM9IVmYyOnCcNoJyMCByl7hrTWVJvPaQ==": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "Data/refs.0~gpgYDzvykpuoPdMkxd4KDowZh6MieaPyI882mdA-1cLfh0uyf1HNGZXtMaxuxiu10HBsnCvEray361pf2zh_7A==": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "Data/refs.0~iEytyuiTpNYQT9O_cQQWepBy2rM-44T2Su2ykx1_Pyw5sCOV3uxNmnA6WyA_64ye0YgEUjdd1rpMvn8KROctPQ==": {
+      "bytes": 331,
+      "sha256": "e0d499fab506c5d1eadb1406068359131cc823b91bca3244d7b66d0a9bac21b5"
+    },
+    "Data/refs.0~nHWb5UKIc4TRd0VpGZZp_nfIOFvPvEu6Y_RVoY7TK0Xz6MK03JpTHMjF2gUllyAaTj5z7UVQP3Mop11D3-T7Dg==": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "Data/refs.0~rlaT_QcFL1csDoEru__UVwYsMfYtb54LYcF8tny0Ya4oqrioDHiMk5VfV3BWjBJOIh1VEb1ztrV3wAoavlopuA==": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "Data/refs.0~vpusu1O5P9rIY4a1J6w0beMpMjMUc9dPwSOrKly6-JX69vKadFmPkxx9_9qV-1t3a31IBWOkOJYIiHtbAvLd0Q==": {
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    "Info.plist": {
+      "bytes": 776,
+      "sha256": "8714105cac59e96b11a8c3de666f58df738211d91affc3610ea9c412ecdcebd6"
+    },
+    "database.sqlite3": {
+      "bytes": 245760,
+      "sha256": "566bfde43c1dff27ace4c9b24e9bfdf875438e52ee9e2dc8add9d0480ce207c3"
+    }
+  }
+}

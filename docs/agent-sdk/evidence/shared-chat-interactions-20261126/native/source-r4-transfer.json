@@ -1,0 +1,11 @@
+{
+  "source_sha": "f3b55fdd3926330a9169d104bd245d877ac942c4",
+  "parent": "a6aefeed53acbb49b686ad8f357d4fd5eafda5ee",
+  "archive_sha256": "10d6d84fcbfb213301a02a8601de46ecd02fb1fd7a81500f6a2b7a83bd08a9a8",
+  "files": {
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageActions.swift": {
+      "before_sha256": "99712e78d4a743237231eae7ee5a558807ea3d82b9fe36963659f4ec0b0f361c",
+      "after_sha256": "40561523428c78730dc052ed23349669860a3891638981c96a34dc2d68ef8d39"
+    }
+  }
+}

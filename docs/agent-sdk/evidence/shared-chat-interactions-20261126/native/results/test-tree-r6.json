@@ -1,0 +1,97 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "35FB64E2-F0BC-4E19-952E-26323D8C6140",
+      "deviceName" : "HanlinSharedUI-a84ecd6d-20261126",
+      "modelName" : "iPad Pro 11-inch (M5)",
+      "osBuildNumber" : "24A434",
+      "osVersion" : "27.0",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "duration" : "0,00052s",
+                  "durationInSeconds" : 0.0005178451538085938,
+                  "name" : "narrowAndShortHostViewportWinsOverPreferredSize()",
+                  "nodeIdentifier" : "HanlinMessagePreviewMetricsTests/narrowAndShortHostViewportWinsOverPreferredSize()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinLauncherLab/HanlinLauncherLabTests/HanlinMessagePreviewMetricsTests/narrowAndShortHostViewportWinsOverPreferredSize()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,000045s",
+                  "durationInSeconds" : 4.506111145019531e-05,
+                  "name" : "detachedInvalidOrNonfiniteViewportDoesNotPresent()",
+                  "nodeIdentifier" : "HanlinMessagePreviewMetricsTests/detachedInvalidOrNonfiniteViewportDoesNotPresent()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinLauncherLab/HanlinLauncherLabTests/HanlinMessagePreviewMetricsTests/detachedInvalidOrNonfiniteViewportDoesNotPresent()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "Shared original message preview geometry",
+              "nodeIdentifierURL" : "test://com.apple.xcode/HanlinLauncherLab/HanlinLauncherLabTests/HanlinMessagePreviewMetricsTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0,00067s",
+                  "durationInSeconds" : 0.0006721019744873047,
+                  "name" : "unavailableHostServicesNeverCreateMenuEntries()",
+                  "nodeIdentifier" : "HanlinMessageActionTests/unavailableHostServicesNeverCreateMenuEntries()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinLauncherLab/HanlinLauncherLabTests/HanlinMessageActionTests/unavailableHostServicesNeverCreateMenuEntries()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,0001s",
+                  "durationInSeconds" : 0.0001010894775390625,
+                  "name" : "menusRetainTheirCreatingHostCallbacks()",
+                  "nodeIdentifier" : "HanlinMessageActionTests/menusRetainTheirCreatingHostCallbacks()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinLauncherLab/HanlinLauncherLabTests/HanlinMessageActionTests/menusRetainTheirCreatingHostCallbacks()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,00064s",
+                  "durationInSeconds" : 0.0006411075592041016,
+                  "name" : "currentHostStateControlsTranslationAndSourceBoundSaving()",
+                  "nodeIdentifier" : "HanlinMessageActionTests/currentHostStateControlsTranslationAndSourceBoundSaving()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/HanlinLauncherLab/HanlinLauncherLabTests/HanlinMessageActionTests/currentHostStateControlsTranslationAndSourceBoundSaving()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "Shared original message action host authority",
+              "nodeIdentifierURL" : "test://com.apple.xcode/HanlinLauncherLab/HanlinLauncherLabTests/HanlinMessageActionTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "HanlinLauncherLabTests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/HanlinLauncherLab/HanlinLauncherLabTests",
+          "nodeType" : "Unit test bundle",
+          "result" : "Passed"
+        }
+      ],
+      "name" : "HanlinLauncherLab",
+      "nodeType" : "Test Plan",
+      "result" : "Passed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

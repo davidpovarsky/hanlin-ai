@@ -69,3 +69,34 @@ approved wave branches before any whole-wave completion claim.
 | IMPLEMENT_GAP | Host-bound message interactions and launcher consumer | Extracted original implementation with host callbacks; unavailable services omitted. |
 | PROBE_UNKNOWN | Exact candidate simulator interaction, physical device and TestFlight | No completion claim; assigned integration/build owner must supply receipts. |
 | FIX_REPRODUCED | Host-link graph test's obsolete 47-product count | Replaced fixed counts with exact canonical graph sets and retained independent host ownership check. |
+
+
+## Native LauncherLab gate — 2026-11-26
+
+[native/acceptance-r6.json](native/acceptance-r6.json) records a fresh
+original-source Xcode build and simulator test execution at source
+730bbb6d70e8c9f136c5ee21437f78cc5b6e7bfb:
+**5 passed, 0 failed, 0 skipped**. The canonical selected product profile includes
+six original targets. All 3,318 archived inputs were checked against the source
+snapshot and cumulative committed deltas; resolved dependency revisions match
+the integrated application lock. Xcode 27.0 (27A266a), Apple Swift 6.4 and an
+owned iPad Pro (M5) iOS 27 simulator were used.
+
+The five exact test identities cover invalid and bounded preview geometry,
+absent host services, retained host callbacks, and current host translation/save
+state. The original launcher policy test file compiled in the same test target,
+but unchanged policy methods were not selected again.
+
+Attempts 1–5 and their genuine build failures remain in the native directory;
+no zero-test attempt is classified as passing. Fixes retained the original
+shared haptic modifier, restored the original typed preview callback boundary,
+kept the main-actor action callback explicit, moved an unchanged predicate
+outside a Swift Testing macro expansion, and linked the existing pinned
+Markdown product in the consumer project. The successful result bundle,
+exported test tree, compressed raw logs, transfer hashes and artifact manifest
+are retained.
+
+This establishes the focused source-consumer build and interaction contracts.
+Full Hanlin UI acceptance, live provider behavior and physical iPad appearance
+remain separate parent-owned gates. The earlier receipt describes the earlier
+source-only checkpoint and is preserved as historical evidence.
