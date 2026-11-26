@@ -51,7 +51,7 @@ public struct HanlinMessageMarkdownView: View {
         highlightedRenderer
             .markdownDocumentSelectionMode(documentSelectionMode)
             .markdownSelectAllRequest(selectAllRequest)
-            .markdownSelectionChanged(onSelectionChanged)
+            .markdownSelectionChanged { selection in onSelectionChanged?(selection) }
             .markdownLongPressPreview(documentSelectionMode ? nil : messagePreview)
             .markdownEmbeddedBlockRenderer(embeddedBlockRenderer)
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -64,7 +64,7 @@ public struct HanlinMessageMarkdownView: View {
                            documentParts: documentParts)
             .markdownCodeBlockRenderer(codeBlockRenderer)
             .markdownSelectionHighlight(highlight)
-            .markdownSelectionActivity(onSelectionActivity)
+            .markdownSelectionActivity { id, active in onSelectionActivity?(id, active) }
     }
 
     private var codeBlockRenderer: MarkdownCodeBlockRenderer {
