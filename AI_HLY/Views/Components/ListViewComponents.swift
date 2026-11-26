@@ -88,6 +88,9 @@ struct ChatRowView: View {
             VStack(alignment: .leading, spacing: 3) {
                 HStack {
                     highlightedChatName()
+                        // Match the custom pale selection fill even while the
+                        // native sidebar supplies its focused selection style.
+                        .foregroundStyle(Color(uiColor: .label))
                         .lineLimit(1)
                         .truncationMode(.tail)
                     
@@ -95,7 +98,7 @@ struct ChatRowView: View {
                     
                     Text(formattedDate(record.lastEdited))
                         .font(HanlinTypography.caption2)
-                        .foregroundStyle(.secondary)
+                        .foregroundStyle(Color(uiColor: .secondaryLabel))
                         .lineLimit(1)
                         .fixedSize(horizontal: true, vertical: false)
                 }
@@ -104,20 +107,21 @@ struct ChatRowView: View {
                 if let snippet = matchedSnippet {
                     Text(snippet)
                         .font(HanlinTypography.caption2)
+                        .foregroundStyle(Color(uiColor: .secondaryLabel))
                         .lineLimit(searchText.isEmpty ? 1 : 2)
                         .truncationMode(.tail)
                 } else {
                     if let highlightedDescription = highlightedText(record.infoDescription ?? "", searchText: searchText) {
                         Text(highlightedDescription)
                             .font(HanlinTypography.caption2)
-                            .foregroundColor(Color(.systemGray))
+                            .foregroundStyle(Color(uiColor: .secondaryLabel))
                             .lineLimit(searchText.isEmpty ? 1 : 2)
                             .truncationMode(.tail)
                             .multilineTextAlignment(.leading)
                     } else {
                         Text(String(localized: "暂无消息", bundle: HanlinLocalization.bundle))
                             .font(HanlinTypography.caption2)
-                            .foregroundColor(Color(.systemGray))
+                            .foregroundStyle(Color(uiColor: .secondaryLabel))
                             .lineLimit(searchText.isEmpty ? 1 : 2)
                             .truncationMode(.tail)
                             .multilineTextAlignment(.leading)
@@ -193,7 +197,7 @@ struct ChatRowView: View {
         guard let name = record.name, !name.isEmpty else {
             return Text("Unknown", bundle: HanlinLocalization.bundle)
                 .font(HanlinTypography.subheadline.weight(.medium))
-                .foregroundColor(.primary)
+                .foregroundStyle(Color(uiColor: .label))
         }
         
         // 去除搜索词前后空格，并提前处理空搜索
