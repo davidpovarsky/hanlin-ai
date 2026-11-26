@@ -38,6 +38,11 @@ not owned by this offline host have no menu entries. The production Hanlin
 adapter supplies its existing speech, translation, saved knowledge, personal
 save, retry and continuation services.
 
+The native consumer directly links SwiftStreamingMarkdown because the public
+message-rendering API includes its configuration and selection types. Its
+revision matches the canonical Hanlin SDK and application lockfile; this keeps
+the consumer on the same original rendering implementation.
+
 The XcodeGen test target references the original SDK test source files in place;
 it does not copy source or substitute a second implementation. It contains the
 five new viewport/host-authority methods and the original launcher policy tests.

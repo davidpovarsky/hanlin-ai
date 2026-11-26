@@ -9,6 +9,9 @@ settings:
 packages:
   HanlinSDK:
     path: ../..
+  HanlinStreamingMarkdown:
+    url: https://github.com/davidpovarsky/hanlin-streaming-markdown
+    revision: 5cbb4b6c950051f98f02a0b0ae56756f5174a9b8
 targets:
   HanlinLauncherLab:
     type: application
@@ -21,6 +24,8 @@ targets:
         product: HanlinChatPresentation
       - package: HanlinSDK
         product: HanlinPresentationKit
+      - package: HanlinStreamingMarkdown
+        product: SwiftStreamingMarkdown
       - package: HanlinSDK
         product: HanlinChatUI
     settings:
