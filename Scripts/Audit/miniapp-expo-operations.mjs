@@ -4,7 +4,7 @@ function caseOperations(text) {
     .flatMap(match => [...match[1].matchAll(/"([^"\r\n]+)"/g)].map(value => value[1]));
 }
 
-export function auditExpoOperationRoutes({adapter, externalSession, platform, nativeNames, facadeOperations}) {
+export function auditExpoOperationRoutes({adapter, externalSession, shortcutSession, platform, nativeNames, facadeOperations}) {
   const marker = adapter.text.indexOf('// MARK: - HanlinExpoHostServicesProvider');
   const start = externalSession.text.indexOf('    func perform(');
   const end = externalSession.text.indexOf('\n    func done(', start);
@@ -24,7 +24,25 @@ export function auditExpoOperationRoutes({adapter, externalSession, platform, na
   if (!/return\s+try\s+await\s+HanlinScriptingPlatform\.shared\.invokeLiveActivity\(operation:\s*operation,\s*payloadJSON:\s*payloadJSON,\s*context:\s*context\)/.test(adapter.text) || !platform.text.includes('func invokeLiveActivity(')) {
     throw new Error('Expo Live Activity dispatch linkage changed; audit the native handler.');
   }
-  const operations = [...new Set([...direct, ...delegated])];
+  // Shortcuts supplies a different owned callback. Verify its exact operation,
+  // validated progress payload and headless platform connection; a prefix alone
+  // must not add arbitrary external operations to the public inventory.
+  const shortcutBody = shortcutSession?.text.match(
+    /platform\.externalMiniAppOperation\s*=\s*\{\s*operation,\s*payload\s+in([\s\S]*?)\n\s*\}\n\s*defer\s*\{/);
+  const shortcutHandler = shortcutBody?.[1] ?? '';
+  const shortcutOperations = [...shortcutHandler.matchAll(
+    /guard\s+operation\s*==\s*"([^"]+)"\s+else\s*\{/g)].map(match => match[1]);
+  const shortcutConnected = /let\s+platform\s*=\s*HanlinScriptingPlatform\(\s*actionPresentationAllowed:\s*false,\s*registersForegroundContinuation:\s*false\s*\)/.test(shortcutSession?.text ?? '')
+    && /try\s+await\s+platform\.executeShortcutCommand\(command\)/.test(shortcutSession?.text ?? '');
+  const shortcutProgress = /JSONDecoder\(\)\.decode\(HanlinShortcutProgress\.self,\s*from:\s*Data\(payload\.utf8\)\)/.test(shortcutHandler)
+    && /try\s+update\.validate\(\)/.test(shortcutHandler)
+    && /progress\.totalUnitCount\s*=\s*update\.totalUnitCount/.test(shortcutHandler)
+    && /progress\.completedUnitCount\s*=\s*update\.completedUnitCount/.test(shortcutHandler);
+  if (!shortcutConnected || !shortcutProgress || shortcutOperations.length !== 1
+      || shortcutOperations[0] !== 'miniapps.shortcutProgress') {
+    throw new Error('Shortcuts progress callback linkage changed; audit the owned native handler.');
+  }
+  const operations = [...new Set([...direct, ...delegated, ...shortcutOperations])];
   const missing = [...new Set(facadeOperations.filter(operation => !operations.includes(operation)))];
   if (!nativeNames.includes('invoke') || missing.length) {
     throw new Error(`Existing Expo facade/native operation drift; missing invoke or explicit handlers: ${JSON.stringify(missing)}`);
@@ -33,5 +51,7 @@ export function auditExpoOperationRoutes({adapter, externalSession, platform, na
     {kind: 'direct', source: adapter.path, operations: direct},
     {kind: 'delegated', source: externalSession.path, suppliedBy: platform.path,
       operations: delegated, condition: 'An active external MiniApp invocation supplies the typed callback.'},
+    {kind: 'shortcuts', source: shortcutSession.path, suppliedBy: platform.path,
+      operations: shortcutOperations, condition: 'An owned headless Shortcuts invocation validates and reports its Progress.'},
   ]};
 }
