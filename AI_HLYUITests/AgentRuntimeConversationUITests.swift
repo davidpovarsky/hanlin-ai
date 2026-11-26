@@ -1,4 +1,5 @@
 import XCTest
+import Darwin
 import UIKit
 import Vision
 
@@ -879,13 +880,31 @@ final class AgentRuntimeConversationUITests: XCTestCase {
 
     func testActivityAutoExpansionManualCollapseFinalCollapseAndColdReasoning() throws {
         continueAfterFailure = false
-        executionTimeAllowance = 120
+        executionTimeAllowance = 420
+        // The fixture advances only after the preceding UI assertions pass.
+        // A unique, retained state token cannot miss an acknowledgment.
+        let checkpointNonce = UUID().uuidString
+        let checkpointName = "com.itorah.hanlin.ui-acceptance.activity." + checkpointNonce
+        var checkpointToken: Int32 = 0
+        let checkpointRegistration = notify_register_check(checkpointName, &checkpointToken)
+        XCTAssertEqual(checkpointRegistration, NOTIFY_STATUS_OK)
+        guard checkpointRegistration == NOTIFY_STATUS_OK else { return }
+        defer { notify_cancel(checkpointToken) }
+        XCTAssertEqual(notify_set_state(checkpointToken, 0), NOTIFY_STATUS_OK)
+        func acknowledgeCheckpoint(_ phase: UInt64) {
+            var previous: UInt64 = 0
+            XCTAssertEqual(notify_get_state(checkpointToken, &previous), NOTIFY_STATUS_OK)
+            XCTAssertEqual(previous, phase - 1, "Fixture phases must advance in order")
+            XCTAssertEqual(notify_set_state(checkpointToken, phase), NOTIFY_STATUS_OK)
+            print("HANLIN_ACTIVITY_FIXTURE_ACK=\(phase) uptime=\(ProcessInfo.processInfo.systemUptime)")
+        }
         let app = XCUIApplication()
         defer { app.terminate() }
         app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
         app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
         app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
         app.launchEnvironment["HANLIN_PHASE2_STORE_ID"] = UUID().uuidString
+        app.launchEnvironment["HANLIN_ACTIVITY_FIXTURE_CHECKPOINT"] = checkpointNonce
         app.launch()
         openChat(in: app)
         sendPrompt("PROMPT_ACTIVITY_LIFECYCLE", in: app)
@@ -900,12 +919,14 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertFalse(toggle.label.contains("Activity history"))
         tapElement(toggle)
         XCTAssertTrue(summary.waitForNonExistence(timeout: 5))
+        acknowledgeCheckpoint(1)
 
         let interim = app.descendants(matching: .any).matching(NSPredicate(
             format: "label CONTAINS %@", "ACTIVITY_INTERIM_CHECKPOINT")).firstMatch
         XCTAssertTrue(interim.waitForExistence(timeout: 20))
         XCTAssertFalse(summary.exists, "Interim text must respect manual collapse")
         XCTAssertFalse(toggle.label.contains("Worked for"), "Provisional text is not a final answer")
+        acknowledgeCheckpoint(2)
         let nextThinking = XCTNSPredicateExpectation(
             predicate: NSPredicate(format: "label CONTAINS %@", "Thinking"), object: toggle)
         XCTAssertEqual(XCTWaiter.wait(for: [nextThinking], timeout: 15), .completed)
@@ -916,6 +937,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
             "ACTIVITY_SECOND_CHECKPOINT")).firstMatch
         XCTAssertTrue(second.waitForExistence(timeout: 5))
         XCTAssertTrue(summary.exists, "The first completed summary is retained beside later work")
+        acknowledgeCheckpoint(3)
 
         let final = app.descendants(matching: .any).matching(NSPredicate(
             format: "label CONTAINS %@", "ACTIVITY_FINAL_COMPLETE")).firstMatch

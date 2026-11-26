@@ -1,4 +1,7 @@
 import HanlinLocalization
+#if (DEBUG || HANLIN_TESTING) && targetEnvironment(simulator)
+import Darwin
+#endif
 import Foundation
 import HanlinChatCore
 import HanlinMiniAppCore
@@ -1241,15 +1244,63 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
                     Data(("data: " + String(decoding: data, as: UTF8.self) + "\n\n" + suffix).utf8))
                 if final { self.client?.urlProtocolDidFinishLoading(self) }
             }
+            #if (DEBUG || HANLIN_TESTING) && targetEnvironment(simulator)
+            // The UI test owns this unique channel and advances it only after
+            // asserting the preceding real UI state. No product state is changed.
+            let checkpointToken: Int32?
+            if let nonce = ProcessInfo.processInfo.environment["HANLIN_ACTIVITY_FIXTURE_CHECKPOINT"] {
+                guard let identifier = UUID(uuidString: nonce) else {
+                    self.client?.urlProtocol(self, didFailWithError: URLError(.badURL))
+                    return
+                }
+                var token: Int32 = 0
+                let name = "com.itorah.hanlin.ui-acceptance.activity." + identifier.uuidString
+                guard notify_register_check(name, &token) == NOTIFY_STATUS_OK else {
+                    self.client?.urlProtocol(self, didFailWithError: URLError(.cannotConnectToHost))
+                    return
+                }
+                checkpointToken = token
+            } else {
+                checkpointToken = nil
+            }
+            defer {
+                if let checkpointToken { notify_cancel(checkpointToken) }
+            }
+            let clock = ContinuousClock()
+            let checkpointDeadline = clock.now.advanced(by: .seconds(420))
+            #endif
+            func waitForCheckpoint(_ phase: UInt64) async throws {
+                #if (DEBUG || HANLIN_TESTING) && targetEnvironment(simulator)
+                if let checkpointToken {
+                    while true {
+                        try Task.checkCancellation()
+                        guard !self.isStopped else { throw CancellationError() }
+                        var acknowledged: UInt64 = 0
+                        guard notify_get_state(checkpointToken, &acknowledged) == NOTIFY_STATUS_OK else {
+                            throw URLError(.cannotParseResponse)
+                        }
+                        if acknowledged >= phase { return }
+                        guard clock.now < checkpointDeadline else { throw URLError(.timedOut) }
+                        try await Task.sleep(for: .milliseconds(100))
+                    }
+                }
+                #endif
+                try await Task.sleep(for: .seconds(10))
+            }
             let first = "ACTIVITY_FIRST_CHECKPOINT. "
                 + String(repeating: "Checking the requested calendar dates and comparing the available appointments. ", count: 3)
             emit(["reasoning_content": first])
-            do { try await Task.sleep(for: .seconds(10)) } catch { return }
-            emit(["content": "ACTIVITY_INTERIM_CHECKPOINT"])
-            do { try await Task.sleep(for: .seconds(10)) } catch { return }
-            emit(["reasoning_content": "ACTIVITY_SECOND_CHECKPOINT. I need to check the remaining appointment details."])
-            do { try await Task.sleep(for: .seconds(10)) } catch { return }
-            emit(["content": "ACTIVITY_FINAL_COMPLETE"], final: true)
+            do {
+                try await waitForCheckpoint(1)
+                emit(["content": "ACTIVITY_INTERIM_CHECKPOINT"])
+                try await waitForCheckpoint(2)
+                emit(["reasoning_content": "ACTIVITY_SECOND_CHECKPOINT. I need to check the remaining appointment details."])
+                try await waitForCheckpoint(3)
+                emit(["content": "ACTIVITY_FINAL_COMPLETE"], final: true)
+            } catch {
+                guard !self.isStopped, !(error is CancellationError) else { return }
+                self.client?.urlProtocol(self, didFailWithError: error)
+            }
         }
         installActivityLifecycleTask(task)
     }
