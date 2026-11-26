@@ -10,6 +10,17 @@ struct MiniAppsStudioDraft: Codable, Identifiable, Sendable {
     let original: Data
     let savedAt: Date
 
+    struct RecoveryIssue: Identifiable, Sendable {
+        let file: URL
+        let message: String
+        var id: String { file.path }
+    }
+
+    struct RecoveryListing: Sendable {
+        let drafts: [MiniAppsStudioDraft]
+        let issues: [RecoveryIssue]
+    }
+
     @MainActor private static func directory() throws -> URL {
         try RuntimeFileLayout.default.workspace(client: .tools, identifier: "miniapp-studio-drafts")
     }
@@ -24,23 +35,50 @@ struct MiniAppsStudioDraft: Codable, Identifiable, Sendable {
         if FileManager.default.fileExists(atPath: file.path) { try FileManager.default.removeItem(at: file) }
     }
 
-    @MainActor static func all() throws -> [Self] {
-        let files = try FileManager.default.contentsOfDirectory(at: directory(), includingPropertiesForKeys: nil)
-        return try files.filter { $0.pathExtension == "json" }.map {
-            try JSONDecoder().decode(Self.self, from: Data(contentsOf: $0))
-        }.sorted { $0.savedAt > $1.savedAt }
+    @MainActor static func all() throws -> RecoveryListing {
+        try readAll(from: directory())
+    }
+
+    static func readAll(from directory: URL) throws -> RecoveryListing {
+        let files = try FileManager.default.contentsOfDirectory(at: directory,
+            includingPropertiesForKeys: [.isRegularFileKey, .isSymbolicLinkKey])
+        var drafts: [Self] = []
+        var issues: [RecoveryIssue] = []
+        for file in files.filter({ $0.pathExtension == "json" }) {
+            do {
+                let values = try file.resourceValues(forKeys: [.isRegularFileKey, .isSymbolicLinkKey])
+                guard values.isRegularFile == true, values.isSymbolicLink != true else {
+                    throw MiniAppsDeveloperWorkspace.Failure.invalidPath
+                }
+                let draft = try JSONDecoder().decode(Self.self, from: Data(contentsOf: file))
+                guard file.deletingPathExtension().lastPathComponent == draft.id.uuidString else {
+                    throw MiniAppsDeveloperWorkspace.Failure.invalidPath
+                }
+                drafts.append(draft)
+            } catch {
+                // Keep unreadable bytes for export; one damaged file must not
+                // hide another window's valid recovery journal.
+                issues.append(.init(file: file, message: error.localizedDescription))
+            }
+        }
+        return RecoveryListing(drafts: drafts.sorted { $0.savedAt > $1.savedAt },
+            issues: issues.sorted { $0.file.lastPathComponent < $1.file.lastPathComponent })
     }
 }
 
 struct MiniAppsStudioRecoveredDrafts: View {
     @State private var drafts: [MiniAppsStudioDraft] = []
+    @State private var issues: [MiniAppsStudioDraft.RecoveryIssue] = []
     @State private var error: String?
 
     var body: some View {
         List {
-            if drafts.isEmpty {
+            if let error {
+                ContentUnavailableView("Recovery unavailable", systemImage: "exclamationmark.triangle",
+                    description: Text(error))
+            } else if drafts.isEmpty && issues.isEmpty {
                 ContentUnavailableView("No recovered drafts", systemImage: "checkmark.circle",
-                    description: Text(error ?? "Your source changes have been saved."))
+                    description: Text("Your source changes have been saved."))
             }
             ForEach(drafts) { draft in
                 NavigationLink {
@@ -56,11 +94,27 @@ struct MiniAppsStudioRecoveredDrafts: View {
                     Button("Copy draft text", systemImage: "doc.on.doc") { UIPasteboard.general.string = draft.text }
                 }
             }
+            if !issues.isEmpty {
+                Section("Drafts that could not be read") {
+                    ForEach(issues) { issue in
+                        VStack(alignment: .leading, spacing: 5) {
+                            Text(issue.file.lastPathComponent).font(.caption)
+                            Text(issue.message).font(.caption).foregroundStyle(.secondary)
+                            ShareLink(item: issue.file) {
+                                Label("Export original draft file", systemImage: "square.and.arrow.up")
+                            }
+                        }
+                    }
+                }
+            }
         }
         .navigationTitle("Recovered drafts")
         .task {
-            do { drafts = try MiniAppsStudioDraft.all() }
-            catch { self.error = error.localizedDescription }
+            do {
+                let listing = try MiniAppsStudioDraft.all()
+                drafts = listing.drafts
+                issues = listing.issues
+            } catch { self.error = error.localizedDescription }
         }
     }
 }

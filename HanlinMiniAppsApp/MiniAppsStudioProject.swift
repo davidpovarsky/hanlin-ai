@@ -47,12 +47,13 @@ struct MiniAppsStudioSDK: Decodable, Sendable {
 @MainActor @Observable
 final class MiniAppsStudioProject {
     struct Authoring: Decodable {
-        let engine: String
-        let entry: String
+        let engine: String?
+        let entry: String?
         let sourceRoot: String?
     }
 
     let workspace: MiniAppsDeveloperWorkspace
+    let authoringRoot: URL
     let engine: String
     private var draftID = UUID()
     private(set) var files: [MiniAppsDeveloperWorkspace.Entry] = []
@@ -81,14 +82,21 @@ final class MiniAppsStudioProject {
         workspace = try outerAuthor.sourceRoot.map {
             try MiniAppsDeveloperWorkspace(root: outer.url(for: $0, allowRoot: true))
         } ?? outer
-        let author = try JSONDecoder().decode(Authoring.self,
-            from: workspace.read("hanlin.authoring.json").original)
-        guard ["expo", "nativescript", "scriptwidget"].contains(author.engine) else {
+        let hasInnerAuthor = FileManager.default.fileExists(atPath:
+            workspace.root.appending(path: "hanlin.authoring.json").path)
+        let innerAuthor = hasInnerAuthor ? try JSONDecoder().decode(Authoring.self,
+            from: workspace.read("hanlin.authoring.json").original) : nil
+        guard let selectedEngine = innerAuthor?.engine ?? outerAuthor.engine,
+              ["expo", "nativescript", "scriptwidget"].contains(selectedEngine),
+              let entry = innerAuthor?.entry ?? outerAuthor.entry else {
             throw MiniAppsDeveloperWorkspace.Failure.invalidPath
         }
-        engine = author.engine
+        engine = selectedEngine
+        // Retained original projects can build directly from their source root.
+        // An outer-only descriptor must remain available to the canonical resolver.
+        authoringRoot = innerAuthor?.entry != nil ? workspace.root : outer.root
         files = try workspace.sourceFiles()
-        let initial = try workspace.read(author.entry)
+        let initial = try workspace.read(entry)
         document = initial
         text = initial.text
     }
@@ -107,6 +115,21 @@ final class MiniAppsStudioProject {
         conflict = false
     }
 
+    func moveSelectedFile(to destination: String) throws {
+        try save()
+        guard let original = document else { return }
+        try workspace.move(original.path, to: destination)
+        // Rebind immediately after the successful move. Calling select() here
+        // would attempt a second save through the now-missing old path.
+        document = .init(path: destination, text: original.text, original: original.original)
+        inspection = nil
+        report = nil
+        selectedCompletion = nil
+        conflict = false
+        version += 1
+        try refreshFiles()
+    }
+
     func edited() {
         version += 1
         selectedCompletion = nil
@@ -115,7 +138,7 @@ final class MiniAppsStudioProject {
         guard let document else { return }
         do {
             if isDirty {
-                try MiniAppsStudioDraft(id: draftID, projectPath: workspace.root.path, path: document.path,
+                try MiniAppsStudioDraft(id: draftID, projectPath: authoringRoot.path, path: document.path,
                     text: text, original: document.original, savedAt: .now).persist()
             } else {
                 try MiniAppsStudioDraft.remove(draftID)
@@ -124,7 +147,7 @@ final class MiniAppsStudioProject {
     }
 
     func recover(_ draft: MiniAppsStudioDraft) throws {
-        guard draft.projectPath == workspace.root.path else { throw MiniAppsDeveloperWorkspace.Failure.invalidPath }
+        guard draft.projectPath == authoringRoot.path else { throw MiniAppsDeveloperWorkspace.Failure.invalidPath }
         let current = try workspace.read(draft.path)
         document = .init(path: draft.path, text: String(decoding: draft.original, as: UTF8.self), original: draft.original)
         text = draft.text
@@ -184,7 +207,7 @@ final class MiniAppsStudioProject {
         let position = min(selection.location, source.utf16.count)
         do {
             let result = try await AppRuntimeCore.shared.node.inspectMiniAppSource(
-                project: workspace.root, engine: engine, file: path, source: source,
+                project: authoringRoot, engine: engine, file: path, source: source,
                 position: position, version: requestedVersion, completionName: selectedCompletion)
             let value = try JSONDecoder().decode(MiniAppsEditorInspection.self, from: JSONEncoder().encode(result))
             guard !Task.isCancelled, version == requestedVersion, document?.path == path else { return }
@@ -223,7 +246,13 @@ final class MiniAppsStudioProject {
         defer { isBusy = false }
         do {
             try save()
-            report = try await MiniAppAuthoringService.validate(project: workspace.root, engine: engine)
+            let revision = version
+            let result = try await MiniAppAuthoringService.validate(project: authoringRoot, engine: engine)
+            guard version == revision else {
+                error = "The source changed during validation. Validate the current revision again."
+                return
+            }
+            report = result
         } catch { self.error = error.localizedDescription }
     }
 
@@ -233,7 +262,12 @@ final class MiniAppsStudioProject {
         defer { isBusy = false }
         do {
             try save()
-            let result = try await MiniAppAuthoringService.build(project: workspace.root, engine: engine)
+            let revision = version
+            let result = try await MiniAppAuthoringService.build(project: authoringRoot, engine: engine)
+            guard version == revision else {
+                error = "The source changed during the build. Build the current revision before installing."
+                return nil
+            }
             report = result
             return result.succeeded ? result.archivePath.map { URL(fileURLWithPath: $0) } : nil
         } catch {
