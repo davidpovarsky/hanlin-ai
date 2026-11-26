@@ -1,0 +1,30 @@
+{
+  "schemaVersion": 1,
+  "runId": 45881659486,
+  "jobId": 140122618440,
+  "sourceCommit": "fba37e3636da21f897d6a86298b52f2149b462dd",
+  "recordedAt": "2026-11-26T19:37:13.519268+00:00",
+  "conclusion": "FAIL_BEFORE_APP_BUILD_HOST_AUDITOR_STALE_SOURCE_SHAPE",
+  "runtimeCoreReleaseDownloadAndChecksums": "PASS",
+  "nativeAppAcceptance": "NOT_RUN",
+  "error": "Shortcuts progress callback linkage changed; audit the owned native handler.",
+  "location": "Scripts/Audit/miniapp-expo-operations.mjs:43",
+  "relatedMacFailure": "job_c62aa8294250 at 628dbe083a5ceffc28b026e5701cd8c71c8734ff",
+  "rawLog": {
+    "bytes": 5203952,
+    "sha256": "230ebee8dce8ca98cc9bd584c9901614746997b6fc8b9f673b7612a1e5829e9c"
+  },
+  "gzip": {
+    "path": "simulator-job.log.gz",
+    "bytes": 611511,
+    "sha256": "0134dd31ec24ee079a94d6b610c5ed21d06468f72d860fd7e088105486cfcc44"
+  },
+  "excerpt": [
+    "2026-11-26T19:21:07.6507290Z /var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/tmp.aXtlL8w0fB/payload/NodeMobile.xcframework/Info.plist: OK",
+    "2026-11-26T19:21:07.6548980Z /var/folders/5n/5t77mfb93jd7q8v9s6f0dn0m0000gn/T/tmp.aXtlL8w0fB/payload/Python.xcframework/Info.plist: OK",
+    "2026-11-26T19:21:19.8639840Z     throw new Error('Shortcuts progress callback linkage changed; audit the owned native handler.');",
+    "2026-11-26T19:21:19.8642780Z Error: Shortcuts progress callback linkage changed; audit the owned native handler.",
+    "2026-11-26T19:21:19.8664190Z Runtime Host preparation failed: Command ['bash', '/Users/runner/work/hanlin-ai/hanlin-ai/Scripts/Runtime/prepare-runtime-host.sh'] returned non-zero exit status 1.",
+    "2026-11-26T19:21:20.0632430Z ##[error]Process completed with exit code 1."
+  ]
+}
