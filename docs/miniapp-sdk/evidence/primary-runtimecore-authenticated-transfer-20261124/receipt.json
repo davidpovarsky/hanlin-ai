@@ -1,0 +1,236 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-24T19:39:33.814402+00:00",
+  "status": "ACQUISITION_AND_TRANSFER_VERIFIED_FULL_PREPARATION_PENDING",
+  "sourceBase": "7de3a280bcd4e6202b7246735e5a9204e6a1d186",
+  "sourceCorrection": {
+    "path": "Scripts/Runtime/prepare-runtime-core.sh",
+    "beforeSHA256": "8765967fdba85cc77dcbf3c02936993c39bf186d7327560a3d84590222710a10",
+    "afterSHA256": "1ff99fabcbf8f40d515f3f1b944299286c1094a19520f9892a97f99cf8b64540",
+    "localInput": "RUNTIME_CORE_BUNDLE_ARCHIVE",
+    "semantics": "Only the acquisition transport changes. Explicit local file is copied into the existing private work directory; every common lock/native-input/archive/provenance/ownership-smoke/install validation stays mandatory and unchanged.",
+    "defaultNetworkBehavior": "Same artifact helper/release arguments and credentials; gh is required only when a network path is selected.",
+    "syntax": "bash -n exit0",
+    "commonBodyByteIdentical": true
+  },
+  "authenticAttempt4": {
+    "historyLabel": 4,
+    "rawStateAttemptCounter": 3,
+    "identityAuthority": "Exact source, plan, startedAt, logs-attempt4 path; historical raw counter was retained unchanged.",
+    "source": "7de3a280bcd4e6202b7246735e5a9204e6a1d186",
+    "planSHA256": "38fb5b160ca1a094cda6cdef56e5765ed50b3d19b125c006e26bad066708ada6",
+    "phase": {
+      "status": "FAIL",
+      "startedAt": "2026-11-24T19:30:04.935524+00:00",
+      "argv": [
+        "/bin/bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-preparation.sh"
+      ],
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt4/split-native-preparation.log",
+      "scriptSHA256": "47635289bc9238f28f65b6f72d4980b5cf0aa6def2cf146cd236261260f65a3e",
+      "pid": 23844,
+      "elapsedSeconds": 66.8095447079977,
+      "logBytes": 12801,
+      "exitCode": 1,
+      "finishedAt": "2026-11-24T19:31:11.745430+00:00",
+      "logSHA256": "8fef5f53d38578167740c2a446aeb1498a06704700b016df4fd4b5aa0aaf5839"
+    },
+    "log": "attempt4-native-preparation.log",
+    "nextRemedy": "Primary Mac gh has no authenticated account. Use unchanged original helper on authenticated Linux and transfer exact verified inner bundle, without credentials."
+  },
+  "completedOriginalComponents": {
+    "NativeScriptStrictGenerator": "PASS in actual attempt4 log line6",
+    "ExpoModulesJSI": {
+      "actualSelectedRoot": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo/node_modules/react-native",
+      "reactNativeVersion": "0.88.1",
+      "packageSHA256": "3f2bf69ed883e97a295b1de43f5a2d75d112ab45495153360c2fb521023c7f3f",
+      "rawLogLines": [
+        30,
+        31,
+        32,
+        36,
+        41,
+        42,
+        43,
+        44
+      ],
+      "observed": "Original producer selected the own graph, invalidated stale build state, built device and simulator slices in25s, then staged/normalized/signed/verified the framework.",
+      "boundary": "Original native component preparation; not an application or test execution claim."
+    }
+  },
+  "acquisition": {
+    "status": "ORIGINAL_HELPER_VERIFIED",
+    "startedAt": "2026-11-24T19:36:17.396897+00:00",
+    "repository": "davidpovarsky/hanlin-ai",
+    "runID": "42926628418",
+    "dependencyHash": "2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194",
+    "expectedInnerSHA256": "196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f",
+    "destination": "/mnt/development/projects/transfers/hanlin-runtimecore-42926628418-20261124",
+    "credentialTransfer": false,
+    "exitCode": 0,
+    "elapsedSeconds": 26.481353607028723,
+    "completedAt": "2026-11-24T19:36:44.830122+00:00",
+    "helperSHA256": "059f37520387b3cf49d7d08fd22c81e5c9bd4050ca90cd76f2b5989aafcb7038",
+    "argv": [
+      "sudo",
+      "-u",
+      "ubuntu",
+      "python3",
+      "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124/Scripts/Runtime/runtime_bundle_source.py",
+      "davidpovarsky/hanlin-ai",
+      "42926628418",
+      "2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194",
+      "196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f",
+      "/mnt/development/projects/transfers/hanlin-runtimecore-42926628418-20261124"
+    ],
+    "artifact": {
+      "id": 13813704965,
+      "name": "hanlin-runtime-bundle-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194",
+      "sizeInBytes": 86367710,
+      "authenticatedOuterDigest": "sha256:f329036ba1ed870b9afb43ed164418f987505361d2a3276bfef1a89826cab850",
+      "expiresAt": "2026-11-25T00:02:19Z"
+    },
+    "outerDigestBoundary": "Authenticated API metadata retained; original gh run download extracts the artifact, so no second raw outer download was made or claimed locally hashed.",
+    "archive": "/mnt/development/projects/transfers/hanlin-runtimecore-42926628418-20261124/hanlin-runtime-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194.zip",
+    "archiveBytes": 86253335,
+    "archiveSHA256": "196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f"
+  },
+  "transfer": {
+    "status": "TRANSFERRED_ORIGINAL_ARCHIVE_VERIFIED",
+    "startedAt": "2026-11-24T19:37:41.607520+00:00",
+    "finishedAt": "2026-11-24T19:37:59.022928+00:00",
+    "elapsedSeconds": 17.415429452434182,
+    "argv": [
+      "sudo",
+      "-u",
+      "ubuntu",
+      "scp",
+      "-o",
+      "BatchMode=yes",
+      "-o",
+      "StrictHostKeyChecking=yes",
+      "/mnt/development/projects/transfers/hanlin-runtimecore-42926628418-20261124/hanlin-runtime-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194.zip",
+      "scaleway-mac:/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-inputs/runtime-core/hanlin-runtime-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194.zip"
+    ],
+    "scpExitCode": 0,
+    "remote": {
+      "verifiedAt": "2026-11-24T19:37:58.917452+00:00",
+      "sourceHEAD": "7de3a280bcd4e6202b7246735e5a9204e6a1d186",
+      "archive": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-inputs/runtime-core/hanlin-runtime-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194.zip",
+      "bytes": 86253335,
+      "sha256": "196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f",
+      "expectedSHA256": "196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f",
+      "helperSHA256": "059f37520387b3cf49d7d08fd22c81e5c9bd4050ca90cd76f2b5989aafcb7038",
+      "originalArchiveVerifier": "PASS",
+      "fullRuntimeCorePreparation": "NOT_RUN_AFTER_FIX"
+    },
+    "credentialsTransferred": false
+  },
+  "nativeIdentityAlreadyVerifiedBeforeAcquisition": "d1e91cbfbc838b9a74c1127fe52eee87c2fec7ca220f29c99eab96ad45c43fd5",
+  "resumeInput": {
+    "RUNTIME_CORE_BUNDLE_ARCHIVE": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-inputs/runtime-core/hanlin-runtime-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194.zip",
+    "RUNTIME_CORE_ARTIFACT_RUN_ID": "42926628418"
+  },
+  "independentReadOnlyReviews": [
+    {
+      "agent": "/root",
+      "sourceSHA256": "1ff99fabcbf8f40d515f3f1b944299286c1094a19520f9892a97f99cf8b64540",
+      "result": "NO_CONCRETE_SOURCE_BLOCKER"
+    },
+    {
+      "agent": "/root/sdk_only_author",
+      "sourceSHA256": "1ff99fabcbf8f40d515f3f1b944299286c1094a19520f9892a97f99cf8b64540",
+      "result": "NO_CONCRETE_SOURCE_BLOCKER"
+    }
+  ],
+  "provenanceImpact": {
+    "nativeArtifactCatalogInput": true,
+    "engineNativeIdentityInput": false,
+    "directSDKInventoryReachabilityInput": false,
+    "manualProvenanceRegenerationRequired": false,
+    "normalFinalHostProvenanceHookRetained": true
+  },
+  "boundaries": {
+    "fullRuntimeCoreCommonPreparationAfterFix": "NOT_RUN",
+    "RuntimeHostSDKAndSnippets": "NOT_RUN",
+    "bothAppBuilds": "NOT_RUN",
+    "all52ApplicationCases": "NOT_RUN",
+    "outerArtifactDigest": "Authenticated metadata only; no duplicate outer ZIP fetch or locally computed outer digest claimed.",
+    "credentialsTransferred": false
+  },
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 1275,
+      "sha256": "6d08dcf79fb013d78e9617975fc2acf34a2ea91e68fe91f7f795fcb2392ab3ff"
+    },
+    {
+      "path": "acquisition-state.json",
+      "bytes": 1928,
+      "sha256": "b2ba64e23c8c186be9844fcacc348242fd1f092779cd386f6e656952deefb225"
+    },
+    {
+      "path": "attempt4-capture.json",
+      "bytes": 1158,
+      "sha256": "debe200407cc34e0d0bff7b8e1cc2c01c0aa716546078295cfc46bd8e8dfc318"
+    },
+    {
+      "path": "attempt4-native-preparation.log",
+      "bytes": 12801,
+      "sha256": "8fef5f53d38578167740c2a446aeb1498a06704700b016df4fd4b5aa0aaf5839"
+    },
+    {
+      "path": "attempt4-observed-terminal.json",
+      "bytes": 12735,
+      "sha256": "31896a2d8434c6113a99a9da6b8def4937b157c9a72de7a1c7249fc7203edd6a"
+    },
+    {
+      "path": "attempt4-state.json",
+      "bytes": 10216,
+      "sha256": "d1fa6428d45cdc504d79910722cb359a04a9f847ac82034be118ae356126e963"
+    },
+    {
+      "path": "authenticated-artifacts.json",
+      "bytes": 4622,
+      "sha256": "6789a78c574d24f76098aa852abc32b231b60b581d980d87b3c51a0a168c83aa"
+    },
+    {
+      "path": "authenticated-run.json",
+      "bytes": 13892,
+      "sha256": "18f5749c349362578c76e360b1eb49d7e15c51724b1b07f4acd63acbb04b2e9d"
+    },
+    {
+      "path": "original-helper-download.log",
+      "bytes": 160,
+      "sha256": "5cf6709f884fb0f5551584dc8221018793424b3289e880f0707d7a680cf0985d"
+    },
+    {
+      "path": "react-native-package.json",
+      "bytes": 6286,
+      "sha256": "3f2bf69ed883e97a295b1de43f5a2d75d112ab45495153360c2fb521023c7f3f"
+    },
+    {
+      "path": "source-proof.json",
+      "bytes": 556,
+      "sha256": "6e03dfbba9f38d6b83f5f3250377dec6a7f097d969a74bf55736e50c58721d83"
+    },
+    {
+      "path": "source-transport-diff.patch",
+      "bytes": 1182,
+      "sha256": "2e80ffd84600fd4a82826b2983108d1bf75e38c3f491322b2551946e04d667d3"
+    },
+    {
+      "path": "transfer-receipt.json",
+      "bytes": 1449,
+      "sha256": "776add5c65a50eb2bfe6382f251bb9d5c6797abe79e827adfca336ae006ed6a8"
+    },
+    {
+      "path": "transfer.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

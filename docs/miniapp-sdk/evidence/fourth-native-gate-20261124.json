@@ -1,0 +1,112 @@
+{
+  "schemaVersion": 1,
+  "status": "FAILED",
+  "runID": "45310162809",
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45310162809",
+  "headSHA": "565ec85a5baeb05e4146fafefdfc0e5b0eaa457e",
+  "jobID": 138163599427,
+  "jobStartedAt": "2026-11-24T02:08:24Z",
+  "jobCompletedAt": "2026-11-24T02:24:55Z",
+  "failedStep": "Prepare existing native dependencies and Runtime host",
+  "failure": "ERR_MODULE_NOT_FOUND: bare compiler name typescript became a file URL under the copied RuntimeHost working directory",
+  "correction": "The CLI resolves npm compiler overrides from the caller working directory while preserving file URLs and local paths. The real CLI case always exercises this bare module path, then validates its extracted archive with the actual staged-SDK compiler path and no override. The parent relocated test now resolves its own bare installed compiler without a path override.",
+  "shippingAppBuilds": "NOT_RUN",
+  "selectedNativeCases": "NOT_RUN",
+  "nativeCaseCount": 30,
+  "runtimeHostTests": {
+    "executedPass": 164,
+    "failed": 1,
+    "skipped": 1,
+    "reportedTotal": 166
+  },
+  "rawFailedLogSHA256": "b2c1e6aeb9af24c3b2b2a0cd1cc4fd82c95604a53fc9d6b1b59d377e991a75db",
+  "rawFailedLogBytes": 4761049,
+  "focusedRegression": {
+    "schemaVersion": 1,
+    "status": "EXECUTED_PASS",
+    "command": [
+      "node",
+      "--test",
+      "--test-name-pattern=the real CLI archives and revalidates retained source, diagnostics and output identity",
+      "Tests/miniapp-authoring.test.mjs"
+    ],
+    "cwd": "/dev/shm/hanlin-relocated-authoring-module-20261124",
+    "repository": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123",
+    "parentCompilerOverride": null,
+    "compilerModuleSymlink": "/dev/shm/hanlin-relocated-authoring-module-20261124/node_modules/typescript",
+    "originalCompilerPackage": "/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules/typescript",
+    "exitCode": 0,
+    "seconds": 9.113,
+    "coverage": "The existing CLI case always uses a bare npm compiler override from a relocated working directory, then validates its actual extracted archive through SDK compiler loading with no override. The parent test also resolves bare typescript from its local node_modules, matching actual Mac staging rather than using the previous local explicit compiler override. The SDK fixture contains the same typescriptPath field produced by stage-sdk.mjs. No fake compiler, skip or test-count change.",
+    "beforeLogSHA256": "84e5f32f3a543259e20f6910dc23100d442095b5d217f4d1ac01504c97d8ff82",
+    "afterLogSHA256": "fbf1dc036e96541f83f1c7ea82939194ed02d09e6c4a9f6fc4eaef0f85301464",
+    "sourceSHA256": {
+      "Scripts/MiniApps/miniapp.mjs": "1c256c00392c626a54ebee2abe3ededaa792c5bfa6dd9b6c5aceb89be84e5b30",
+      "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs": "bef93d623bae3ffa7ba5320d71cfaaed09d6316c46ec1715d16275e36b535dce"
+    }
+  },
+  "nativeAndInstallationLogEvidence": [
+    "miniapps\tPrepare existing native dependencies and Runtime host\t2026-11-24T02:10:54.5069370Z [MiniApps] Preparing original npm inputs: No verified original npm installation receipt. Run Scripts/MiniApps/install-tooling.mjs for /Users/runner/work/hanlin-ai/hanlin-ai/Scripts/NativeScript",
+    "miniapps\tPrepare existing native dependencies and Runtime host\t2026-11-24T02:11:00.1204530Z {\"status\":\"installed\",\"toolingRoot\":\"/Users/runner/work/hanlin-ai/hanlin-ai/Scripts/NativeScript\",\"files\":5966,\"packages\":140}",
+    "miniapps\tPrepare existing native dependencies and Runtime host\t2026-11-24T02:11:05.3836590Z [MiniApps] Preparing original npm inputs: No verified original npm installation receipt. Run Scripts/MiniApps/install-tooling.mjs for /Users/runner/work/hanlin-ai/hanlin-ai/Scripts/Expo",
+    "miniapps\tPrepare existing native dependencies and Runtime host\t2026-11-24T02:11:26.2983500Z {\"status\":\"installed\",\"toolingRoot\":\"/Users/runner/work/hanlin-ai/hanlin-ai/Scripts/Expo\",\"files\":19594,\"packages\":642}",
+    "miniapps\tPrepare existing native dependencies and Runtime host\t2026-11-24T02:15:44.0174200Z ** BUILD SUCCEEDED **",
+    "miniapps\tPrepare existing native dependencies and Runtime host\t2026-11-24T02:17:51.9289850Z ** BUILD SUCCEEDED **",
+    "miniapps\tPrepare existing native dependencies and Runtime host\t2026-11-24T02:17:57.0842070Z xcframework successfully written out to: /Users/runner/work/hanlin-ai/hanlin-ai/build/miniapp-upstreams/expo-native-source/ExpoUI.xcframework",
+    "miniapps\tPrepare existing native dependencies and Runtime host\t2026-11-24T02:22:15.5306030Z {\"status\":\"reused\",\"toolingRoot\":\"/Users/runner/work/hanlin-ai/hanlin-ai/Scripts/Expo\",\"files\":19594,\"packages\":642}",
+    "miniapps\tPrepare existing native dependencies and Runtime host\t2026-11-24T02:22:19.3211100Z {\"status\":\"reused\",\"toolingRoot\":\"/Users/runner/work/hanlin-ai/hanlin-ai/Scripts/NativeScript\",\"files\":5966,\"packages\":140}",
+    "miniapps\tPrepare existing native dependencies and Runtime host\t2026-11-24T02:24:32.0129050Z \u2139 tests 166",
+    "miniapps\tPrepare existing native dependencies and Runtime host\t2026-11-24T02:24:32.0129890Z \u2139 pass 164",
+    "miniapps\tPrepare existing native dependencies and Runtime host\t2026-11-24T02:24:32.0130240Z \u2139 fail 1",
+    "miniapps\tPrepare existing native dependencies and Runtime host\t2026-11-24T02:24:32.0130930Z \u2139 skipped 1"
+  ],
+  "remaining": "Owner SDK/cross-app integration and this correction require the next36-case native gate; no host app or device pass is established by this run.",
+  "rawEvidenceArtifact": {
+    "id": 14883333386,
+    "name": "app-split-45310162809",
+    "sizeInBytes": 353790,
+    "downloadedFilesSHA256": {
+      "acceptance.json": "dcb4ec9fa76bc17628ed6fdc99881300f201affe6786fe51a1f1d98c694d75be",
+      "upstream-resolution.json": "8bcb97b1de98bb11248af4ee161b51f2dc6584d1b7b3a690872d8cc25f1f05cc",
+      "upstream-inputs.patch": "ae131daede5e211c3ed7b8e283852c7d45747fa7794e6eac576b0e3d950ce032",
+      "native-dependencies.log": "2b1e086d99fb434d69c75b4f1a9e9b61615630fd69052adf7e8db16c0e1e1941",
+      "preflight.log": "4e094f46642a68c513c7229d979301fae9c9cf88cc6c5884abfc7145d6021cf7",
+      "ci-performance-report.json": "7ba34456b332f3ba4d23b3c55d30269228b654e3e1549306d8e4d6a605e1746b"
+    }
+  },
+  "upstreamVersions": {
+    "expo": {
+      "expo": "58.0.26",
+      "@expo/ui": "58.0.29",
+      "expo-brownfield": "58.0.20",
+      "react": "19.3.0",
+      "react-native": "0.88.1",
+      "react-native-worklets": "0.13.0",
+      "expo-modules-core": "58.1.0",
+      "expo-modules-jsi": "58.0.23",
+      "expo-widgets": "58.0.29",
+      "@nativescript/react-native": "9.1.2",
+      "@types/react": "19.3.0",
+      "@react-native/codegen": "0.88.1",
+      "@react-native/metro-config": "0.88.1",
+      "babel-preset-expo": "58.0.26"
+    },
+    "nativescript": {
+      "@nativescript/core": "9.1.4",
+      "@nativescript/ios": "9.1.1",
+      "@nativescript/swift-ui": "4.0.2",
+      "@nativescript/types": "9.1.4",
+      "@nativescript/vite": "8.0.24"
+    },
+    "scriptwidget": {
+      "revision": "4da256d58247bbafb9a5cd443a285250b97b3c4b"
+    }
+  },
+  "acceptance": {
+    "status": "INFRA_ERROR",
+    "ui": "NOT_RUN",
+    "xcresult": "NOT_CREATED: native test step not reached",
+    "sha": "565ec85a5baeb05e4146fafefdfc0e5b0eaa457e",
+    "reason": "preflight/dependency preparation failed; inspect original job logs"
+  }
+}

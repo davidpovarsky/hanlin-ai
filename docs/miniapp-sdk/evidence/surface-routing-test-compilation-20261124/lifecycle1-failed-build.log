@@ -1,0 +1,925 @@
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	﻿2026-11-24T08:04:36.4637110Z Current runner version: '2.338.2'
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:36.4669110Z ##[group]Runner Image Provisioner
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:36.4669830Z Hosted Compute Agent
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:36.4670270Z Version: 20261103.629
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:36.4670800Z Commit: 15dbd9ccb5dbf34fae002b6ed1a2670f52df37bc
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:36.4671390Z Build Date: 2026-11-03T17:26:59Z
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:36.4672010Z Worker ID: {50ee12e3-954f-4be3-bf7e-d21889018e87}
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:36.4672510Z Region: westus
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:36.4672900Z Cloud: MacCloud
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:36.4673340Z ##[endgroup]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:36.4674540Z ##[group]Operating System
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:36.4674940Z macOS
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:36.4675280Z 27.0.1
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:36.4675620Z 26A434
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:36.4676030Z ##[endgroup]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:36.4676420Z ##[group]Runner Image
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:36.4676820Z Image: xcode-27-arm64
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:36.4677210Z Version: 20261104.0337.1
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:36.4678150Z Included Software: https://github.com/actions/runner-images/blob/xcode-27-arm64/20261104.0337/images/macos/xcode-27-arm64-Readme.md
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:36.4679240Z Image Release: https://github.com/actions/runner-images/releases/tag/xcode-27-arm64%2F20261104.0337
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:36.4680000Z ##[endgroup]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:36.4680940Z ##[group]GITHUB_TOKEN Permissions
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:36.4682560Z Actions: read
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:36.4683510Z Contents: read
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:36.4684780Z Metadata: read
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:36.4685710Z ##[endgroup]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:36.4691240Z Secret source: Actions
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:36.4692860Z Cache mode: write
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:36.4694060Z Prepare workflow directory
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:36.5079470Z Prepare all required actions
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:36.5134570Z Getting action download info
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:36.8104670Z Download action repository 'davidpovarsky/github-automation@main' (SHA:61b34ae6d31e94afb6ceb8a836742275c495b0e2)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:37.4980530Z Download action repository 'actions/checkout@v7.0.1' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:37.6729520Z Download action repository 'actions/setup-node@v7.1.0' (SHA:949feb2413d6458794dcd2491c4babbbce0c15c1)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:37.9091150Z Download action repository 'actions/cache@v6.1.0' (SHA:55cc8345863c7cc4c66a329aec7e433d2d1c52a9)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:38.1817720Z Uses: davidpovarsky/hanlin-ai/.github/workflows/validate-scripting-runtime.yml@refs/heads/codex/hanlin-miniapps-sdk-completion-20261123 (09dbbe6480171be89816db72fb0ec0fa56b7f66f)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:38.1822000Z ##[group] Inputs
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:38.1822690Z   runtime_job_foundation_only: false
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:38.1823150Z   force_clean_build: true
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:38.1823640Z   test_filter: HanlinAtomicScriptStoreTests/lifecycle
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:38.1824190Z   prepare_miniapps_registration: false
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:38.1824670Z   signed_release_archives: false
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:38.1825130Z   signing_preflight_only: false
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:38.1825580Z   audit_release_resources: false
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:38.1826070Z   paired_product_acceptance: true
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:38.1826550Z   runtime_bundle_artifact_run_id: 42926628418
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:38.1827030Z   native_test_scope: baseline
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:38.1827460Z   paired_test_scope: miniapp_lifecycle
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:38.1827920Z ##[endgroup]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:38.1828520Z Complete job name: Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:38.2566800Z ##[group]Run davidpovarsky/github-automation/live-refresh@main
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:38.2567730Z with:
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:38.2568150Z   event: refresh
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:38.2568710Z   device_id: ***
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:38.2569150Z   token: ***
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:38.2572100Z   github_token: ***
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:38.2572600Z env:
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:38.2572990Z   PACKAGE_PATH: Packages/HanlinPlatform
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:38.2573510Z ##[endgroup]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:39.9420960Z ##[group]Run set -euo pipefail
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:39.9423130Z ^[[36;1mset -euo pipefail^[[0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:39.9425560Z ^[[36;1mselected_xcode="$(find /Applications -maxdepth 1 -type d -name 'Xcode_27*.app' -print \^[[0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:39.9430510Z ^[[36;1m  | grep -E '/Xcode_27([._][0-9]+)*\.app$' \^[[0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:39.9432150Z ^[[36;1m  | sort -V \^[[0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:39.9433700Z ^[[36;1m  | tail -1)"^[[0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:39.9434810Z ^[[36;1mtest -n "$selected_xcode"^[[0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:39.9436420Z ^[[36;1mexport DEVELOPER_DIR="$selected_xcode/Contents/Developer"^[[0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:39.9438360Z ^[[36;1mecho "DEVELOPER_DIR=$DEVELOPER_DIR" >> "$GITHUB_ENV"^[[0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:39.9440750Z ^[[36;1mxcode_build="$(xcodebuild -version | sed -n '2s/^Build version //p')"^[[0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:39.9444170Z ^[[36;1mecho "build=$xcode_build" >> "$GITHUB_OUTPUT"^[[0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:39.9446180Z ^[[36;1mxcodebuild -version^[[0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:39.9449400Z ^[[36;1mswift --version^[[0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:39.9878030Z shell: /bin/bash --noprofile --norc -e -o pipefail {0}
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:39.9879220Z env:
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:39.9880030Z   PACKAGE_PATH: Packages/HanlinPlatform
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:39.9881030Z ##[endgroup]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:43.4947640Z Xcode 27.2
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:43.4948380Z Build version 27B52
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:47.4099040Z Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:47.4099900Z Target: arm64-apple-macosx27.0.0
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:47.4154350Z swift-driver version: 1.168.6 
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:47.4327190Z ##[group]Run davidpovarsky/github-automation/live-refresh@main
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:47.4327880Z with:
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:47.4328070Z   event: refresh
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:47.4328640Z   device_id: ***
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:47.4328970Z   token: ***
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:47.4331980Z   github_token: ***
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:47.4332230Z env:
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:47.4332430Z   PACKAGE_PATH: Packages/HanlinPlatform
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:47.4332850Z   DEVELOPER_DIR: /Applications/Xcode_27.2.app/Contents/Developer
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:47.4333290Z ##[endgroup]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.5334460Z ##[group]Run actions/checkout@v7.0.1
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.5335210Z with:
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.5335410Z   clean: true
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.5335600Z   fetch-depth: 1
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.5335830Z   repository: davidpovarsky/hanlin-ai
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.5338550Z   token: ***
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.5338850Z   ssh-strict: true
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.5339150Z   ssh-user: git
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.5339430Z   persist-credentials: true
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.5339710Z   sparse-checkout-cone-mode: true
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.5339940Z   fetch-tags: false
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.5340130Z   show-progress: true
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.5340360Z   lfs: false
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.5340550Z   submodules: false
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.5340770Z   set-safe-directory: true
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.5341070Z   allow-unsafe-pr-checkout: false
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.5355220Z env:
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.5355480Z   PACKAGE_PATH: Packages/HanlinPlatform
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.5355800Z   DEVELOPER_DIR: /Applications/Xcode_27.2.app/Contents/Developer
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.5356200Z ##[endgroup]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.6774790Z Syncing repository: davidpovarsky/hanlin-ai
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.6776380Z ##[group]Getting Git version info
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.6776940Z Working directory is '/Users/runner/work/hanlin-ai/hanlin-ai'
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.6777540Z [command]/opt/homebrew/bin/git version
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.7305800Z git version 2.56.0
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.7321210Z ##[endgroup]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.7329690Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/0c15c6d6-8535-4e94-af0c-c4d7df4e5dff/.gitconfig'
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.7336950Z Temporarily overriding HOME='/Users/runner/work/_temp/0c15c6d6-8535-4e94-af0c-c4d7df4e5dff' before making global git config changes
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.7337620Z Adding repository directory to the temporary git global config as a safe directory
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.7341550Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/hanlin-ai/hanlin-ai
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.7446150Z Deleting the contents of '/Users/runner/work/hanlin-ai/hanlin-ai'
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.7450330Z ##[group]Determining repository object format
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.7451380Z ##[endgroup]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.7452890Z ##[group]Initializing the repository
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.7454900Z [command]/opt/homebrew/bin/git init /Users/runner/work/hanlin-ai/hanlin-ai
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.7690850Z hint: Using 'master' as the name for the initial branch. This default branch name
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.7791940Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.7797170Z hint: to use in all of your new repositories, which will suppress this warning,
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.7798600Z hint: call:
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.7800480Z hint:
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.7800930Z hint: 	git config --global init.defaultBranch <name>
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.7801360Z hint:
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.7801950Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.7803660Z hint: 'development'. The just-created branch can be renamed via this command:
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.7804070Z hint:
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.7804250Z hint: 	git branch -m <name>
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.7804710Z hint:
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.7805160Z hint: Disable this message with "git config set advice.defaultBranchName false"
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.7805740Z Initialized empty Git repository in /Users/runner/work/hanlin-ai/hanlin-ai/.git/
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.7806890Z [command]/opt/homebrew/bin/git remote add origin https://github.com/davidpovarsky/hanlin-ai
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.7816310Z ##[endgroup]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.7816700Z ##[group]Disabling automatic garbage collection
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.7821250Z [command]/opt/homebrew/bin/git config --local gc.auto 0
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.7890090Z ##[endgroup]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.7890650Z ##[group]Setting up auth
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.7891030Z Removing SSH command configuration
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.7897840Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.7975580Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.9020650Z Removing HTTP extra header
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.9026840Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.9096670Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.9978950Z Removing includeIf entries pointing to credentials config files
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:48.9986450Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:49.0053780Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:49.1862430Z [command]/opt/homebrew/bin/git config --file /Users/runner/work/_temp/git-credentials-812fc1e8-046d-4444-bfb2-3b3f9999d4c7.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:49.2008810Z [command]/opt/homebrew/bin/git config --local includeIf.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git.path /Users/runner/work/_temp/git-credentials-812fc1e8-046d-4444-bfb2-3b3f9999d4c7.config
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:49.2064280Z [command]/opt/homebrew/bin/git config --local includeIf.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git/worktrees/*.path /Users/runner/work/_temp/git-credentials-812fc1e8-046d-4444-bfb2-3b3f9999d4c7.config
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:49.2066240Z [command]/opt/homebrew/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-812fc1e8-046d-4444-bfb2-3b3f9999d4c7.config
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:49.2090350Z [command]/opt/homebrew/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-812fc1e8-046d-4444-bfb2-3b3f9999d4c7.config
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:49.2166520Z ##[endgroup]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:49.2167020Z ##[group]Fetching the repository
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:49.2172920Z [command]/opt/homebrew/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +09dbbe6480171be89816db72fb0ec0fa56b7f66f:refs/remotes/origin/codex/hanlin-miniapps-sdk-completion-20261123
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:53.9007220Z From https://github.com/davidpovarsky/hanlin-ai
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:53.9008170Z  * [new ref]         09dbbe6480171be89816db72fb0ec0fa56b7f66f -> origin/codex/hanlin-miniapps-sdk-completion-20261123
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:53.9053610Z [command]/opt/homebrew/bin/git branch --list --remote origin/codex/hanlin-miniapps-sdk-completion-20261123
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:53.9170560Z   origin/codex/hanlin-miniapps-sdk-completion-20261123
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:53.9182800Z [command]/opt/homebrew/bin/git rev-parse refs/remotes/origin/codex/hanlin-miniapps-sdk-completion-20261123
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:53.9267490Z 09dbbe6480171be89816db72fb0ec0fa56b7f66f
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:53.9271560Z ##[endgroup]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:53.9272090Z ##[group]Determining the checkout info
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:53.9274220Z ##[endgroup]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:53.9286300Z [command]/opt/homebrew/bin/git sparse-checkout disable
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:53.9395950Z [command]/opt/homebrew/bin/git config --local --unset-all extensions.worktreeConfig
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:53.9480980Z ##[group]Checking out the ref
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:53.9484870Z [command]/opt/homebrew/bin/git checkout --progress --force -B codex/hanlin-miniapps-sdk-completion-20261123 refs/remotes/origin/codex/hanlin-miniapps-sdk-completion-20261123
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.0578850Z Updating files:  39% (3544/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.1420950Z Updating files:  40% (3573/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.1745660Z Updating files:  41% (3662/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.1847670Z Updating files:  42% (3752/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.2049730Z Updating files:  43% (3841/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.2255800Z Updating files:  44% (3930/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.2457360Z Updating files:  45% (4019/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.2571100Z Updating files:  46% (4109/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.2771790Z Updating files:  47% (4198/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.2881670Z Updating files:  48% (4287/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.3087640Z Updating files:  49% (4377/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.3191020Z Updating files:  50% (4466/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.3389790Z Updating files:  51% (4555/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.3619950Z Updating files:  52% (4645/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.3819960Z Updating files:  53% (4734/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.3987940Z Updating files:  54% (4823/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.4121950Z Updating files:  55% (4913/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.4307690Z Updating files:  56% (5002/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.4457480Z Updating files:  57% (5091/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.4566630Z Updating files:  58% (5180/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.4903140Z Updating files:  59% (5270/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.5090260Z Updating files:  60% (5359/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.5341460Z Updating files:  61% (5448/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.5545800Z Updating files:  62% (5538/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.5745200Z Updating files:  63% (5627/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.6043910Z Updating files:  64% (5716/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.6345110Z Updating files:  65% (5806/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.6542100Z Updating files:  66% (5895/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.6810170Z Updating files:  67% (5984/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.7013170Z Updating files:  68% (6074/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.7337040Z Updating files:  69% (6163/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.7617340Z Updating files:  70% (6252/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.7861640Z Updating files:  71% (6342/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.8107980Z Updating files:  72% (6431/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.8586590Z Updating files:  73% (6520/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.8839900Z Updating files:  74% (6609/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.8998970Z Updating files:  75% (6699/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.9251050Z Updating files:  76% (6788/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.9468530Z Updating files:  77% (6877/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.9629820Z Updating files:  78% (6967/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.9716530Z Updating files:  79% (7056/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:55.9751670Z Updating files:  79% (7122/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:56.0042910Z Updating files:  80% (7145/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:56.0359950Z Updating files:  81% (7235/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:56.0534490Z Updating files:  82% (7324/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:56.0660780Z Updating files:  83% (7413/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:56.0953350Z Updating files:  84% (7503/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:56.1096430Z Updating files:  85% (7592/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:56.1287990Z Updating files:  86% (7681/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:56.1476840Z Updating files:  87% (7770/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:56.1665810Z Updating files:  88% (7860/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:56.1846730Z Updating files:  89% (7949/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:56.2163020Z Updating files:  90% (8038/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:56.2387560Z Updating files:  91% (8128/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:56.2598730Z Updating files:  92% (8217/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:56.3045550Z Updating files:  93% (8306/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:56.3183750Z Updating files:  94% (8396/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:56.3444980Z Updating files:  95% (8485/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:56.3657790Z Updating files:  96% (8574/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:56.3940120Z Updating files:  97% (8664/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:56.4091660Z Updating files:  98% (8753/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:56.4314750Z Updating files:  99% (8842/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:56.4315150Z Updating files: 100% (8931/8931)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:56.4315630Z Updating files: 100% (8931/8931), done.
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:56.4551690Z Switched to a new branch 'codex/hanlin-miniapps-sdk-completion-20261123'
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:56.4576860Z branch 'codex/hanlin-miniapps-sdk-completion-20261123' set up to track 'origin/codex/hanlin-miniapps-sdk-completion-20261123'.
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:56.4607370Z ##[endgroup]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:56.4774810Z [command]/opt/homebrew/bin/git log -1 --format=%H
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:56.4922680Z 09dbbe6480171be89816db72fb0ec0fa56b7f66f
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:56.5250330Z ##[group]Run davidpovarsky/github-automation/live-refresh@main
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:56.5251960Z with:
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:56.5252110Z   event: refresh
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:56.5252880Z   device_id: ***
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:56.5253130Z   token: ***
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:56.5256240Z   github_token: ***
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:56.5256470Z env:
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:56.5256650Z   PACKAGE_PATH: Packages/HanlinPlatform
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:56.5256940Z   DEVELOPER_DIR: /Applications/Xcode_27.2.app/Contents/Developer
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:56.5257270Z ##[endgroup]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:57.5724440Z ##[group]Run actions/setup-node@v7.1.0
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:57.5724810Z with:
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:57.5725110Z   node-version: 22.17.0
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:57.5725300Z   check-latest: false
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:57.5727410Z   token: ***
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:57.5727610Z   package-manager-cache: true
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:57.5727800Z env:
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:57.5728000Z   PACKAGE_PATH: Packages/HanlinPlatform
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:57.5728380Z   DEVELOPER_DIR: /Applications/Xcode_27.2.app/Contents/Developer
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:57.5728780Z ##[endgroup]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:57.7049780Z Attempting to download 22.17.0...
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:58.4826180Z Acquiring 22.17.0 - arm64 from https://github.com/actions/node-versions/releases/download/22.17.0-15866718879/node-22.17.0-darwin-arm64.tar.gz
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:59.2548880Z Extracting ...
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:04:59.2727990Z [command]/usr/bin/tar xz --strip 1 -C /Users/runner/work/_temp/0497bf6b-215b-4e43-85c5-b7b0c2be9c03 -f /Users/runner/work/_temp/9ed7f584-8977-4a88-9beb-3b2aedb5b87e
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:01.1949850Z Adding to the cache ...
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:04.1492660Z ##[group]Environment details
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:04.7094580Z node: v22.17.0
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:04.7095370Z npm: 10.9.2
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:04.7096050Z yarn: 1.22.22
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:04.7098130Z ##[endgroup]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:04.7443090Z ##[group]Run davidpovarsky/github-automation/live-refresh@main
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:04.7443500Z with:
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:04.7443830Z   event: refresh
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:04.7444280Z   device_id: ***
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:04.7444530Z   token: ***
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:04.7446890Z   github_token: ***
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:04.7447230Z env:
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:04.7447430Z   PACKAGE_PATH: Packages/HanlinPlatform
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:04.7448400Z   DEVELOPER_DIR: /Applications/Xcode_27.2.app/Contents/Developer
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:04.7448840Z ##[endgroup]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:05.8640690Z ##[group]Run set -euo pipefail
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:05.8641330Z ^[[36;1mset -euo pipefail^[[0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:05.8641720Z ^[[36;1msource_hash="$({^[[0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:05.8642070Z ^[[36;1m  find \^[[0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:05.8642490Z ^[[36;1m    Packages/HanlinPlatform/Sources/HanlinScriptingApplicationRuntime \^[[0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:05.8643200Z ^[[36;1m    Packages/HanlinPlatform/Sources/HanlinMiniAppCore \^[[0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:05.8646280Z ^[[36;1m    Packages/HanlinPlatform/Sources/HanlinScriptUI \^[[0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:05.8647470Z ^[[36;1m    Packages/HanlinPlatform/Sources/HanlinScriptExtensions \^[[0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:05.8648680Z ^[[36;1m    Packages/HanlinPlatform/Sources/HanlinPlatformContracts \^[[0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:05.8649720Z ^[[36;1m    -type f -print0^[[0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:05.8650670Z ^[[36;1m  printf '%s\0' Packages/HanlinPlatform/Package.swift^[[0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:05.8651960Z ^[[36;1m  if [ -f Packages/HanlinPlatform/Package.resolved ]; then^[[0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:05.8653320Z ^[[36;1m    printf '%s\0' Packages/HanlinPlatform/Package.resolved^[[0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:05.8654200Z ^[[36;1m  fi^[[0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:05.8655020Z ^[[36;1m} | sort -z | xargs -0 shasum -a 256 | shasum -a 256 | awk '{print $1}')"^[[0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:05.8656210Z ^[[36;1mecho "source-hash=$source_hash" >> "$GITHUB_OUTPUT"^[[0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:05.8744240Z shell: /bin/bash --noprofile --norc -e -o pipefail {0}
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:05.8744630Z env:
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:05.8744910Z   PACKAGE_PATH: Packages/HanlinPlatform
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:05.8745390Z   DEVELOPER_DIR: /Applications/Xcode_27.2.app/Contents/Developer
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:05.8745740Z ##[endgroup]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:06.0419150Z ##[group]Run davidpovarsky/github-automation/live-refresh@main
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:06.0419550Z with:
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:06.0419720Z   event: refresh
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:06.0420000Z   device_id: ***
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:06.0420180Z   token: ***
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:06.0422180Z   github_token: ***
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:06.0422360Z env:
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:06.0422530Z   PACKAGE_PATH: Packages/HanlinPlatform
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:06.0422850Z   DEVELOPER_DIR: /Applications/Xcode_27.2.app/Contents/Developer
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:06.0423140Z ##[endgroup]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:07.2132270Z ##[group]Run davidpovarsky/github-automation/live-refresh@main
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:07.2132660Z with:
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:07.2132900Z   event: refresh
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:07.2133130Z   device_id: ***
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:07.2133310Z   token: ***
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:07.2135270Z   github_token: ***
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:07.2135460Z env:
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:07.2135630Z   PACKAGE_PATH: Packages/HanlinPlatform
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:07.2135980Z   DEVELOPER_DIR: /Applications/Xcode_27.2.app/Contents/Developer
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:07.2136280Z ##[endgroup]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:08.1772730Z ##[group]Run davidpovarsky/github-automation/live-refresh@main
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:08.1773100Z with:
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:08.1773290Z   event: refresh
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:08.1774580Z   device_id: ***
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:08.1775160Z   token: ***
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:08.1777370Z   github_token: ***
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:08.1777540Z env:
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:08.1777740Z   PACKAGE_PATH: Packages/HanlinPlatform
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:08.1778130Z   DEVELOPER_DIR: /Applications/Xcode_27.2.app/Contents/Developer
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:08.1778410Z ##[endgroup]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:09.1100450Z ##[group]Run swift package --package-path "$PACKAGE_PATH" resolve
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:09.1101180Z ^[[36;1mswift package --package-path "$PACKAGE_PATH" resolve^[[0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:09.1211040Z shell: /bin/bash --noprofile --norc -e -o pipefail {0}
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:09.1211950Z env:
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:09.1212450Z   PACKAGE_PATH: Packages/HanlinPlatform
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:09.1213290Z   DEVELOPER_DIR: /Applications/Xcode_27.2.app/Contents/Developer
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:09.1214080Z ##[endgroup]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:19.4405550Z Fetching https://github.com/davidpovarsky/swift-ai-sdk.git
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:20.1488360Z [1/13453] Fetching swift-ai-sdk
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:20.7571120Z Fetched https://github.com/davidpovarsky/swift-ai-sdk.git (1.32s)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:21.4486650Z Fetching https://github.com/weichsel/ZIPFoundation.git
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:21.4495190Z Fetching https://github.com/SwiftyJSON/SwiftyJSON.git
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:21.9575220Z [1/7709] Fetching zipfoundation
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:21.9716720Z [156/14029] Fetching zipfoundation, swiftyjson
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:22.2156880Z Fetched https://github.com/SwiftyJSON/SwiftyJSON.git (0.76s)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:22.2382090Z Fetching https://github.com/apple/swift-argument-parser
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:22.2638900Z Fetched https://github.com/weichsel/ZIPFoundation.git (0.81s)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:23.0287310Z [1/19442] Fetching swift-argument-parser
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:23.3648880Z Fetched https://github.com/apple/swift-argument-parser (1.13s)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:23.3652650Z Computing version for https://github.com/apple/swift-argument-parser
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:23.7207760Z Computed https://github.com/apple/swift-argument-parser at 1.8.2 (2.29s)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:23.7208700Z Computing version for https://github.com/weichsel/ZIPFoundation.git
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:24.8779890Z warning: 'zipfoundation': /Package@swift-5.9.swift:23:61: warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:24.8781940Z 21 |     name: "ZIPFoundation",
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:24.8783060Z 22 |     platforms: [
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:24.8784310Z 23 |         .macOS(.v10_13), .iOS(.v12), .tvOS(.v12), .watchOS(.v4), .visionOS(.v1)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:24.8786470Z    |                                                             `- warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:24.8788540Z 24 |     ],
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:24.8789120Z 25 |     products: [
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:24.8789510Z 
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:24.8790920Z [#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:24.8858230Z Computed https://github.com/weichsel/ZIPFoundation.git at 0.9.19 (1.16s)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:24.8869120Z Computing version for https://github.com/SwiftyJSON/SwiftyJSON.git
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:28.8238660Z Computed https://github.com/SwiftyJSON/SwiftyJSON.git at 5.0.1 (3.94s)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:28.9709000Z Creating working copy for https://github.com/weichsel/ZIPFoundation.git
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:29.1645590Z Working copy of https://github.com/weichsel/ZIPFoundation.git resolved at 0.9.19
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:29.2463530Z Creating working copy for https://github.com/SwiftyJSON/SwiftyJSON.git
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:29.4455640Z Working copy of https://github.com/SwiftyJSON/SwiftyJSON.git resolved at 5.0.1
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:29.4620790Z Creating working copy for https://github.com/davidpovarsky/swift-ai-sdk.git
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:30.2648380Z Working copy of https://github.com/davidpovarsky/swift-ai-sdk.git resolved at 07431abccbfb151ca2dab67bca6cf86fcb2bd3b8
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:30.3307660Z Creating working copy for https://github.com/apple/swift-argument-parser
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:30.6041390Z Working copy of https://github.com/apple/swift-argument-parser resolved at 1.8.2
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:31.4475280Z warning: 'zipfoundation': /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/.build/checkouts/ZIPFoundation/Package@swift-5.9.swift:23:61: warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:31.4490990Z 21 |     name: "ZIPFoundation",
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:31.4492750Z 22 |     platforms: [
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:31.4494280Z 23 |         .macOS(.v10_13), .iOS(.v12), .tvOS(.v12), .watchOS(.v4), .visionOS(.v1)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:31.4496770Z    |                                                             `- warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:31.4498560Z 24 |     ],
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:31.4500460Z 25 |     products: [
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:31.4501300Z 
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:31.4503340Z [#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:31.8800770Z ##[group]Run davidpovarsky/github-automation/live-refresh@main
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:31.8801200Z with:
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:31.8801440Z   event: refresh
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:31.8801740Z   device_id: ***
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:31.8802060Z   token: ***
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:31.8804120Z   github_token: ***
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:31.8804400Z env:
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:31.8804710Z   PACKAGE_PATH: Packages/HanlinPlatform
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:31.8805230Z   DEVELOPER_DIR: /Applications/Xcode_27.2.app/Contents/Developer
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:31.8805600Z ##[endgroup]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:33.1440200Z ##[group]Run davidpovarsky/github-automation/live-refresh@main
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:33.1440730Z with:
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:33.1440960Z   event: refresh
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:33.1441290Z   device_id: ***
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:33.1441570Z   token: ***
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:33.1444660Z   github_token: ***
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:33.1444920Z env:
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:33.1445120Z   PACKAGE_PATH: Packages/HanlinPlatform
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:33.1445590Z   DEVELOPER_DIR: /Applications/Xcode_27.2.app/Contents/Developer
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:33.1446010Z ##[endgroup]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:34.1519660Z ##[group]Run set -euo pipefail
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:34.1520000Z ^[[36;1mset -euo pipefail^[[0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:34.1520250Z ^[[36;1mtest -n "$TEST_FILTER"^[[0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:34.1520610Z ^[[36;1mswift test --package-path "$PACKAGE_PATH" --filter "$TEST_FILTER"^[[0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:34.1743350Z shell: /bin/bash --noprofile --norc -e -o pipefail {0}
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:34.1743780Z env:
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:34.1744030Z   PACKAGE_PATH: Packages/HanlinPlatform
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:34.1744360Z   DEVELOPER_DIR: /Applications/Xcode_27.2.app/Contents/Developer
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:34.1744740Z   TEST_FILTER: HanlinAtomicScriptStoreTests/lifecycle
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:34.1745040Z ##[endgroup]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:48.1303760Z warning: 'zipfoundation': /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/.build/checkouts/ZIPFoundation/Package@swift-5.9.swift:23:61: warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:48.1310410Z 21 |     name: "ZIPFoundation",
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:48.1312460Z 22 |     platforms: [
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:48.1313110Z 23 |         .macOS(.v10_13), .iOS(.v12), .tvOS(.v12), .watchOS(.v4), .visionOS(.v1)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:48.1314820Z    |                                                             `- warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:48.1315330Z 24 |     ],
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:48.1317730Z 25 |     products: [
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:48.1318330Z 
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:05:48.1319280Z [#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:12.3795450Z Building for debugging...
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:12.3796360Z [Computing dependencies]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:12.8702490Z [Constructing description]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:14.0774710Z [Pre-planning 1 / 1931]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:14.1786100Z [Planning 477 / 1931]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:14.2948370Z [Planning 1383 / 1931]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:14.6491580Z [Planning deferred tasks]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:14.8166200Z [Constructing 210 / 4256]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:14.8266110Z [Writing build description]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:15.0892120Z [7 / 948] ZIPFoundation-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:15.1888580Z [146 / 948] HanlinScriptServicesTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:15.2881480Z [319 / 948] HanlinLegacyWidgetStoreFixture
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:15.3919960Z [398 / 948] ZIPFoundation_ZIPFoundation
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:15.5029840Z [415 / 948] HanlinPlatform_HanlinScriptingSDK
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:15.6127310Z [430 / 948]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:15.7230980Z [451 / 948]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:27.6715310Z [463 / 948]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:29.0352010Z [467 / 954] EventSourceParser
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:29.6062940Z [470 / 1034]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:29.7332220Z [472 / 1074]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:29.8338610Z [476 / 1074] AISDKProvider
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:29.9652620Z [480 / 1082]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:30.0882860Z [485 / 1082]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:30.1947740Z [489 / 1082]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:30.3036840Z [494 / 1082]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:30.4256020Z [500 / 1082]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:30.5342220Z [503 / 1082]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:30.6450430Z [507 / 1082]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:30.7697480Z [511 / 1082]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:30.8828920Z [514 / 1082]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:31.0442680Z [517 / 1082]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:31.1470310Z [521 / 1082]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:31.2906720Z [523 / 1082]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:31.4399300Z [526 / 1082]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:32.2752750Z [527 / 1082]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:32.3999320Z [531 / 1082]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:32.5005480Z [535 / 1082]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:32.6013280Z [537 / 1082]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:32.7078070Z [541 / 1082]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:32.8206660Z [543 / 1082]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:32.9218250Z [547 / 1082]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:33.0423980Z [549 / 1082]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:33.1538670Z [554 / 1082]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:33.2897540Z [556 / 1082]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:33.3966060Z [558 / 1082]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:33.5855670Z [560 / 1082]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:33.9355680Z [562 / 1082]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:34.0756670Z [564 / 1082]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:34.2212070Z [567 / 1082]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:34.6120410Z [569 / 1082]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:34.9079080Z [570 / 1082]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:35.0207780Z [571 / 1082]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:35.7496540Z [572 / 1082]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:35.9413980Z [573 / 1082]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:36.3049130Z [574 / 1082]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:37.3382040Z [576 / 1082] SwiftyJSON
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:37.4517370Z [577 / 1082] HanlinPlatformContracts
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:37.6979340Z [578 / 1082] HanlinExtensionContracts
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:38.1456000Z [579 / 1082] ZIPFoundation
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:38.3174670Z [582 / 1082] ZIPFoundation
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:38.4127510Z [594 / 1082] HanlinExtensionContracts
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:40.3808110Z [600 / 1082] EventSourceParser
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:40.4850030Z [614 / 1082] AISDKProvider
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:44.3661270Z [619 / 1082] SwiftyJSON
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:45.4760190Z [622 / 1082] SwiftyJSON
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:47.7462310Z [624 / 1082] SwiftyJSON-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:47.9958130Z [626 / 1082] HanlinScriptWidgetOriginal
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:48.2068020Z [631 / 1082] HanlinPlatformContracts
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:48.3097040Z [634 / 1082] AISDKProvider
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:49.0911680Z [635 / 1082] EventSourceParser
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:49.5064180Z [636 / 1082] AISDKZodAdapter
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:49.9136030Z [637 / 1082] AISDKProvider-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:50.8538750Z [638 / 1082]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:50.9962710Z [640 / 1082] SwiftyJSON
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:53.1443530Z [643 / 1083] HanlinPlatformContracts
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:53.2536290Z [644 / 1083] HanlinExtensionContracts
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:53.3527750Z [646 / 1083] HanlinPlatformContracts
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:53.9991640Z [647 / 1084]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:54.1290530Z [649 / 1091]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:54.2368110Z [650 / 1093] HanlinScriptWidgetOriginal
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:54.3901350Z [653 / 1156] HanlinScriptContracts
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:54.4914480Z [655 / 1156]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:54.6290060Z [656 / 1156]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:54.7481290Z [657 / 1156]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:54.8876410Z [661 / 1156] HanlinScriptContracts
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:54.9890590Z [670 / 1156]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:55.1561380Z [672 / 1156]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:55.2534620Z [675 / 1156]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:55.3585420Z [678 / 1156]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:55.5198750Z [681 / 1156]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:55.6463330Z [684 / 1156]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:55.7672050Z [687 / 1156]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:55.9982880Z [689 / 1156]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:56.1135250Z [691 / 1156]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:56.3145810Z [693 / 1156]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:56.4700600Z [696 / 1156]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:56.6736720Z [698 / 1156]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:56.9063200Z [700 / 1156]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:57.0288330Z [702 / 1156]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:57.1494910Z [703 / 1156]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:57.3250190Z [706 / 1156]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:57.4992250Z [710 / 1156]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:57.6203680Z [712 / 1156] HanlinScriptContracts
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:57.9279010Z [714 / 1156]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:58.1412380Z [715 / 1156]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:58.2635770Z [716 / 1156]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:58.4031970Z [718 / 1156]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:58.5092100Z [719 / 1156] HanlinScriptContracts
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:58.9081430Z [721 / 1156] HanlinScriptingSDK
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:06:59.1697640Z [723 / 1156] HanlinScriptWidgetOriginal
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:01.0831880Z [724 / 1156] HanlinScriptWidgetOriginal
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:13.9398750Z [725 / 1156] HanlinScriptWidgetOriginal
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:14.0523300Z [726 / 1156] HanlinScriptWidgetOriginal
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:15.3565990Z /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeMaps.swift:75:28: ^[[1;33mwarning: ^[[1;39m'CLGeocoder' was deprecated in macOS 26.0: Use MapKit^[[0;0m [#^[]8;;https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration^[\DeprecatedDeclaration^[]8;;^[\]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:15.3672470Z  ^[[0;36m73 |^[[0;0m                 return
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:15.3772670Z  ^[[0;36m74 |^[[0;0m             }
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:15.3874510Z  ^[[0;36m75 |^[[0;0m             let geocoder = CLGeocoder()
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:15.3993780Z     ^[[0;36m|^[[0;0m                            `- ^[[1;33mwarning: ^[[1;39m'CLGeocoder' was deprecated in macOS 26.0: Use MapKit^[[0;0m [#^[]8;;https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration^[\DeprecatedDeclaration^[]8;;^[\]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:15.4085530Z  ^[[0;36m76 |^[[0;0m             let cancellation = ScriptWidgetQueryCancellation(session: context.state.executionSession)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:15.4188540Z  ^[[0;36m77 |^[[0;0m             guard cancellation.install({ geocoder.cancelGeocode() }) else { throw ScriptWidgetSystemServiceError.unavailable }
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:15.4291100Z 
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:15.4393830Z /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeMaps.swift:77:51: ^[[1;33mwarning: ^[[1;39m'cancelGeocode()' was deprecated in macOS 26.0: Use MKGeocodingRequest^[[0;0m [#^[]8;;https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration^[\DeprecatedDeclaration^[]8;;^[\]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:15.4497140Z  ^[[0;36m75 |^[[0;0m             let geocoder = CLGeocoder()
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:15.4599920Z  ^[[0;36m76 |^[[0;0m             let cancellation = ScriptWidgetQueryCancellation(session: context.state.executionSession)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:15.4703970Z  ^[[0;36m77 |^[[0;0m             guard cancellation.install({ geocoder.cancelGeocode() }) else { throw ScriptWidgetSystemServiceError.unavailable }
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:15.4796150Z     ^[[0;36m|^[[0;0m                                                   `- ^[[1;33mwarning: ^[[1;39m'cancelGeocode()' was deprecated in macOS 26.0: Use MKGeocodingRequest^[[0;0m [#^[]8;;https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration^[\DeprecatedDeclaration^[]8;;^[\]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:15.4901840Z  ^[[0;36m78 |^[[0;0m             geocoder.reverseGeocodeLocation(CLLocation(latitude: value.coordinate.latitude, longitude: value.coordinate.longitude)) { places, error in
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:15.5006270Z  ^[[0;36m79 |^[[0;0m                 cancellation.complete()
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:15.5107110Z 
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:15.5214370Z /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeMaps.swift:78:22: ^[[1;33mwarning: ^[[1;39m'reverseGeocodeLocation(_:completionHandler:)' was deprecated in macOS 26.0: Use MKReverseGeocodingRequest^[[0;0m [#^[]8;;https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration^[\DeprecatedDeclaration^[]8;;^[\]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:15.5321750Z  ^[[0;36m76 |^[[0;0m             let cancellation = ScriptWidgetQueryCancellation(session: context.state.executionSession)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:15.5425550Z  ^[[0;36m77 |^[[0;0m             guard cancellation.install({ geocoder.cancelGeocode() }) else { throw ScriptWidgetSystemServiceError.unavailable }
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:15.5529980Z  ^[[0;36m78 |^[[0;0m             geocoder.reverseGeocodeLocation(CLLocation(latitude: value.coordinate.latitude, longitude: value.coordinate.longitude)) { places, error in
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:15.5634680Z     ^[[0;36m|^[[0;0m                      `- ^[[1;33mwarning: ^[[1;39m'reverseGeocodeLocation(_:completionHandler:)' was deprecated in macOS 26.0: Use MKReverseGeocodingRequest^[[0;0m [#^[]8;;https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration^[\DeprecatedDeclaration^[]8;;^[\]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:15.5740660Z  ^[[0;36m79 |^[[0;0m                 cancellation.complete()
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:15.5843930Z  ^[[0;36m80 |^[[0;0m                 guard error == nil else { finish(.failure(ScriptWidgetSystemServiceError.unavailable)); return }
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:15.5945060Z 
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:15.6057600Z [#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:15.6181710Z [727 / 1156] HanlinScriptWidgetOriginal
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:15.6297600Z [732 / 1156] AISDKProvider
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:15.7157340Z [733 / 1156] HanlinWidgetCompiler
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:16.3650890Z [737 / 1158] HanlinWidgetCompiler
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:16.4711150Z [737 / 1158] HanlinScriptingSDK
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:18.0168920Z [741 / 1163] AISDKZodAdapter
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:18.1612790Z [750 / 1201]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:18.2915660Z [754 / 1234]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:18.4183920Z [759 / 1234] AISDKZodAdapter
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:18.5462790Z [767 / 1234]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:18.6487500Z [770 / 1234]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:18.7650140Z [773 / 1234]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:18.8698170Z [777 / 1234]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:18.9711180Z [779 / 1234]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:19.1462030Z [784 / 1234]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:19.3225020Z [787 / 1234]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:19.4404400Z [790 / 1234]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:19.5599720Z [793 / 1234]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:19.6965350Z [797 / 1234]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:19.8023210Z [799 / 1234]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:19.9035830Z [801 / 1234]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:20.0433910Z [803 / 1234]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:20.1466530Z [805 / 1234]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:20.3436170Z [807 / 1234] HanlinScriptingSDK
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:20.6554160Z [809 / 1234] HanlinScriptingSDK
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:20.8438890Z [813 / 1234] AISDKZodAdapter
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:20.9554250Z [815 / 1234]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:21.1466510Z [817 / 1234] AISDKZodAdapter
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:21.5772380Z [819 / 1234]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:21.6914690Z [821 / 1234] HanlinMiniAppCore
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:21.9122620Z [822 / 1234]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:22.1182770Z [823 / 1234] HanlinMiniAppCore
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:22.4337360Z [825 / 1234] HanlinMiniAppCore
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:22.6624120Z [838 / 1234] HanlinScriptCompiler
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:23.3051110Z [839 / 1234] HanlinScriptCompiler
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:23.5201380Z [841 / 1234] HanlinWidgetCompiler
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:24.0588890Z [845 / 1236] HanlinScriptRuntime
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:24.4324740Z [847 / 1240] HanlinScriptingSDKTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:24.6037310Z [856 / 1242] HanlinScriptServices
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:24.8621890Z [858 / 1242] HanlinScriptServices
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:24.9792610Z [873 / 1243]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:25.6672310Z [876 / 1245] HanlinScriptContracts
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:26.0102620Z [877 / 1249] HanlinScriptStore
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:26.2393720Z [879 / 1253] HanlinScriptStore
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:26.6395320Z [881 / 1253] HanlinScriptDeviceServices
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:26.9782930Z [894 / 1257] HanlinScriptCompiler
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:27.1157980Z [896 / 1257] HanlinScriptCompiler
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:27.5396490Z [899 / 1257] HanlinScriptCompiler
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:27.7029310Z [904 / 1257] HanlinScriptDeviceServicesTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:27.9567080Z [906 / 1257] HanlinScriptCompiler
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:29.0689560Z [907 / 1257] HanlinScriptDeviceServices
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:29.3744640Z [909 / 1257] HanlinScriptStore
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:29.4799790Z [912 / 1257]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:29.5904130Z [920 / 1257] HanlinScriptRuntime
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:29.6925340Z [926 / 1259] HanlinScriptingSDK-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:29.9149430Z [927 / 1259] HanlinPlatformContractsTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:30.0152640Z [932 / 1259] HanlinPlatformContractsTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:30.3820410Z [935 / 1260] HanlinScriptingSDKTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:30.5195130Z [937 / 1265] HanlinScriptingSDKTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:30.6247530Z [944 / 1273] HanlinScriptDeviceServices
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:30.7512240Z [947 / 1273] HanlinExtensionContracts-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:31.1449140Z [949 / 1274] HanlinScriptServices-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:31.3738550Z [955 / 1279] HanlinScriptRuntimeTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:31.5748450Z [958 / 1284] HanlinScriptContractsTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:31.6755640Z [968 / 1284] HanlinScriptServicesTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:31.9258880Z [972 / 1287] HanlinScriptContractsTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:32.1464920Z [982 / 1287] HanlinScriptingSDKTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:32.2897980Z [995 / 1287] HanlinScriptServicesTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:32.4991150Z [997 / 1287] HanlinScriptRuntimeTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:32.7245260Z [1002 / 1287] HanlinScriptRuntimeTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:32.9152070Z [1003 / 1287] HanlinScriptRuntimeTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:33.2503780Z [1003 / 1287] HanlinScriptContractsTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:33.4311400Z [1005 / 1287] HanlinScriptServicesTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:34.0498410Z [1008 / 1287] HanlinScriptRuntimeTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:36.6611250Z [1011 / 1287] HanlinScriptContractsTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:37.0085610Z [1014 / 1287] HanlinPlatformContractsTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:38.9952730Z [1016 / 1287] AISDKProviderUtils
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:40.1670700Z [1017 / 1287] OpenAIProvider
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:40.5652760Z [1020 / 1287] HanlinPlatformContractsTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:40.9316520Z [1020 / 1287] OpenAIProvider
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:41.0485110Z [1022 / 1287] HanlinScriptServicesTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:41.9395850Z [1028 / 1289] HanlinScriptingSDKTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:42.4438120Z [1031 / 1297] OpenAIProvider
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:42.6957370Z [1032 / 1297] OpenAICompatibleProvider
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:43.8780130Z [1033 / 1297] OpenAIProvider
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:44.0319440Z [1045 / 1297] OpenAIProvider
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:45.7446610Z [1046 / 1297] OpenAIProvider-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:46.8137240Z [1047 / 1297] OpenAIProvider-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:50.1462000Z [1048 / 1297] OpenAIProvider-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:50.9965040Z [1051 / 1300] GatewayProvider
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:51.5883040Z [1052 / 1304] GoogleProvider
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:51.8798470Z [1053 / 1308] GatewayProvider
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:52.7811570Z [1054 / 1308] AnthropicProvider
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:52.8983990Z [1055 / 1308] GatewayProvider
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:53.2517340Z [1068 / 1308] HanlinScriptStore
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:54.5315320Z [1069 / 1312] HanlinScriptStore
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:55.6931140Z [1079 / 1312] HanlinMiniAppCore-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:55.8142490Z [1082 / 1312] GatewayProvider
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:56.0748110Z [1083 / 1312] OpenAIProvider
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:56.6337190Z [1085 / 1312] AnthropicProvider
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:57.4110810Z [1087 / 1312] AnthropicProvider-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:58.4203490Z [1089 / 1312] GatewayProvider
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:58.5497280Z [1091 / 1312] HanlinScriptCompiler
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:58.6775960Z [1097 / 1312]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:07:59.6164340Z [1104 / 1314] AISDKJSONSchema
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:00.0774090Z [1107 / 1318] HanlinScriptStoreTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:00.3315460Z [1108 / 1322] AISDKJSONSchema
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:00.5582580Z [1109 / 1322] HanlinScriptStoreTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:01.2976920Z [1122 / 1322] HanlinScriptStoreTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:03.5640320Z [1122 / 1322] HanlinScriptStore-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:03.8009180Z [1123 / 1322] HanlinScriptDeviceServicesTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:04.0472080Z [1128 / 1322] SwiftAISDK
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:04.9724680Z [1130 / 1323] HanlinMiniAppCoreTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:05.4168170Z [1134 / 1327] HanlinMiniAppCoreTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:06.3484680Z [1135 / 1327] HanlinMiniAppCoreTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:06.5918360Z [1136 / 1327] HanlinMiniAppCoreTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:07.4273440Z [1143 / 1329] HanlinScriptDeviceServicesTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:07.9209830Z [1146 / 1340] HanlinScriptDeviceServicesTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:08.1645220Z [1148 / 1344] HanlinScriptDeviceServicesTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:08.5386150Z [1149 / 1344] SwiftAISDK
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:08.8249740Z [1150 / 1344] HanlinScriptDeviceServicesTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:09.7724940Z [1152 / 1344] HanlinScriptDeviceServicesTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:11.6913830Z [1158 / 1344] SwiftAISDK
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:13.2414380Z [1160 / 1344] SwiftAISDK
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:14.1571940Z [1165 / 1344] SwiftAISDK
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:16.9882330Z [1166 / 1344] SwiftAISDK-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:19.2119990Z [1167 / 1344] SwiftAISDK-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:20.1555890Z [1168 / 1344] SwiftAISDK-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:21.8680990Z [1169 / 1344] HanlinScriptStoreTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:22.1253760Z [1171 / 1344] HanlinScriptDeviceServicesTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:23.2633460Z [1173 / 1344] HanlinScriptDeviceServicesTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:23.3918440Z [1179 / 1344] HanlinScriptDeviceServicesTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:23.9766110Z [1182 / 1344] HanlinScriptContractsTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:24.0747780Z [1183 / 1344] HanlinScriptCompiler
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:24.2457480Z [1188 / 1344] HanlinScriptStoreTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:24.3870130Z [1195 / 1344]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:24.4873160Z [1200 / 1345] HanlinScriptCompilerTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:25.3740510Z [1205 / 1346] HanlinMiniAppCoreTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:25.9600900Z [1206 / 1350] HanlinMiniAppCoreTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:26.6709500Z [1211 / 1350] HanlinChatCore
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:27.1675920Z [1213 / 1354] HanlinChatCore
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:27.6525290Z [1218 / 1354] HanlinScriptCompilerTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:29.0359590Z [1219 / 1354] HanlinScriptCompilerTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:30.0251900Z [1222 / 1354] HanlinScriptCompilerTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:31.2302750Z [1227 / 1355] HanlinMiniAppCore-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:31.3837990Z [1230 / 1355]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:31.6523500Z [1233 / 1355] OpenAICompatibleProvider
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:31.8113720Z [1235 / 1355] GatewayProvider
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:32.0165270Z [1237 / 1355] AISDKProviderUtils-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:32.2113590Z [1241 / 1355] HanlinScriptUI
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:32.4106670Z [1245 / 1360] HanlinChatCoreTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:33.1742050Z [1246 / 1361] HanlinChatCoreTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:33.7442020Z [1250 / 1365] HanlinScriptUI
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:34.4968720Z [1251 / 1365] HanlinScriptUI
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:34.9366810Z [1252 / 1365] HanlinScriptUI
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:35.1571670Z [1263 / 1365] HanlinScriptingApplicationRuntime
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:37.5287820Z [1264 / 1365] HanlinScriptingApplicationRuntime
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:37.9941890Z [1267 / 1365] HanlinChatCoreTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:40.3256960Z [1268 / 1365] HanlinScriptUI
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:40.4507650Z [1270 / 1365] HanlinScriptUITests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:40.5557740Z [1272 / 1365]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:41.6753160Z [1273 / 1366] HanlinScriptCompilerTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:42.2943740Z [1275 / 1370] HanlinScriptingApplicationRuntime
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:44.2374100Z [1275 / 1370] HanlinChatCoreTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:44.6688240Z [1277 / 1370] HanlinScriptingApplicationRuntime
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:45.8676740Z [1286 / 1371]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:46.8411360Z [1288 / 1372] HanlinLegacyWidgetStoreFixture
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:47.2254820Z [1291 / 1379] HanlinScriptExtensions
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:47.5889870Z [1292 / 1379] HanlinLegacyWidgetStoreFixture
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:49.2761220Z [1294 / 1379] HanlinLegacyWidgetStoreFixture
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:49.2765890Z /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/Animation/ClockHandRotationEffect.swift:31:24: ^[[1;33mwarning: ^[[1;39mstatic property 'effectType' is not concurrency-safe because non-'Sendable' type '(any Decodable.Type)?' may have shared mutable state^[[0;0m [#^[]8;;https://docs.swift.org/compiler/documentation/diagnostics/mutable-global-variable^[\MutableGlobalVariable^[]8;;^[\]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:49.2770190Z  ^[[0;36m29 |^[[0;0m     /// True in the widget extension, where WidgetKit draws the elements.
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:49.2771170Z  ^[[0;36m30 |^[[0;0m     static let isWidgetExtension = Bundle.main.bundleURL.pathExtension == "appex"
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:49.2771950Z  ^[[0;36m31 |^[[0;0m     private static let effectType: (any Decodable.Type)? = {
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:49.2787140Z     ^[[0;36m|^[[0;0m                        |- ^[[1;33mwarning: ^[[1;39mstatic property 'effectType' is not concurrency-safe because non-'Sendable' type '(any Decodable.Type)?' may have shared mutable state^[[0;0m [#^[]8;;https://docs.swift.org/compiler/documentation/diagnostics/mutable-global-variable^[\MutableGlobalVariable^[]8;;^[\]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:49.2891810Z     ^[[0;36m|^[[0;0m                        |- ^[[1;39mnote: ^[[1;39madd '@MainActor' to make static property 'effectType' part of global actor 'MainActor'^[[0;0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:49.2987250Z     ^[[0;36m|^[[0;0m                        `- ^[[1;39mnote: ^[[1;39mdisable concurrency-safety checks if accesses are protected by an external synchronization mechanism^[[0;0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:49.3023370Z  ^[[0;36m32 |^[[0;0m         guard isWidgetExtension else { return nil }
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:49.3128580Z  ^[[0;36m33 |^[[0;0m         guard let type = _typeByName("9WidgetKit24_ClockHandRotationEffectV") as? any Decodable.Type else {
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:49.3230710Z 
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:49.3231440Z [#MutableGlobalVariable]: <https://docs.swift.org/compiler/documentation/diagnostics/mutable-global-variable>
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:53.7802010Z [1307 / 1379] HanlinScriptExtensions
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:54.1046900Z [1308 / 1379] HanlinScriptExtensionsTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:54.1198590Z /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/Animation/ClockHandRotationEffect.swift:31:24: ^[[1;33mwarning: ^[[1;39mstatic property 'effectType' is not concurrency-safe because non-'Sendable' type '(any Decodable.Type)?' may have shared mutable state^[[0;0m [#^[]8;;https://docs.swift.org/compiler/documentation/diagnostics/mutable-global-variable^[\MutableGlobalVariable^[]8;;^[\]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:54.1322370Z  ^[[0;36m29 |^[[0;0m     /// True in the widget extension, where WidgetKit draws the elements.
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:54.1446880Z  ^[[0;36m30 |^[[0;0m     static let isWidgetExtension = Bundle.main.bundleURL.pathExtension == "appex"
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:54.1569930Z  ^[[0;36m31 |^[[0;0m     private static let effectType: (any Decodable.Type)? = {
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:54.1672450Z     ^[[0;36m|^[[0;0m                        |- ^[[1;33mwarning: ^[[1;39mstatic property 'effectType' is not concurrency-safe because non-'Sendable' type '(any Decodable.Type)?' may have shared mutable state^[[0;0m [#^[]8;;https://docs.swift.org/compiler/documentation/diagnostics/mutable-global-variable^[\MutableGlobalVariable^[]8;;^[\]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:54.1771100Z     ^[[0;36m|^[[0;0m                        |- ^[[1;39mnote: ^[[1;39madd '@MainActor' to make static property 'effectType' part of global actor 'MainActor'^[[0;0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:54.1873150Z     ^[[0;36m|^[[0;0m                        `- ^[[1;39mnote: ^[[1;39mdisable concurrency-safety checks if accesses are protected by an external synchronization mechanism^[[0;0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:54.1976240Z  ^[[0;36m32 |^[[0;0m         guard isWidgetExtension else { return nil }
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:54.2077510Z  ^[[0;36m33 |^[[0;0m         guard let type = _typeByName("9WidgetKit24_ClockHandRotationEffectV") as? any Decodable.Type else {
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:54.2194680Z 
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:54.2297350Z [#MutableGlobalVariable]: <https://docs.swift.org/compiler/documentation/diagnostics/mutable-global-variable>
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:54.6818820Z [1309 / 1379] HanlinScriptExtensionsTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:54.9085520Z [1312 / 1379] HanlinScriptExtensionsTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:55.0526440Z [1316 / 1379] HanlinScriptUITests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:55.1600320Z [1320 / 1379]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:55.2543880Z [1326 / 1380] HanlinScriptingApplicationRuntime-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:56.5428450Z [1328 / 1381] HanlinScriptUITests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:57.1307890Z [1333 / 1389] HanlinScriptingApplicationRuntimeTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:57.2376610Z [1335 / 1389] HanlinScriptingApplicationRuntimeTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:59.1357960Z [1346 / 1389] HanlinScriptingApplicationRuntimeTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:59.1486930Z /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionStore.swift:226:16: ^[[1;33mwarning: ^[[1;39mvalue 'commit' was defined but never used; consider replacing with boolean test^[[0;0m [#^[]8;;https://docs.swift.org/compiler/documentation/diagnostics/no-usage^[\NoUsage^[]8;;^[\]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:59.1615640Z  ^[[0;36m224 |^[[0;0m         var summary = "Storage consistency verified."
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:59.1738230Z  ^[[0;36m225 |^[[0;0m 
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:59.1854290Z  ^[[0;36m226 |^[[0;0m         if let commit {
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:59.1957610Z      ^[[0;36m|^[[0;0m                `- ^[[1;33mwarning: ^[[1;39mvalue 'commit' was defined but never used; consider replacing with boolean test^[[0;0m [#^[]8;;https://docs.swift.org/compiler/documentation/diagnostics/no-usage^[\NoUsage^[]8;;^[\]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:59.1961250Z  ^[[0;36m227 |^[[0;0m             if let actual = actualRevPrefix, let expected = commitSnapPrefix, actual != expected {
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:59.2064040Z  ^[[0;36m228 |^[[0;0m                 failingStage = "checkedRevision"
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:59.2165230Z 
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:59.2267560Z [#NoUsage]: <https://docs.swift.org/compiler/documentation/diagnostics/no-usage>
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:59.3865050Z [1347 / 1389] HanlinScriptUITests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:08:59.8341590Z [1349 / 1389] HanlinScriptUITests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:01.5711240Z [1350 / 1389] HanlinScriptUITests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:01.9350010Z [1351 / 1389] HanlinScriptExtensions
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:02.0342540Z [1352 / 1389]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:02.1833580Z [1353 / 1389] HanlinScriptExtensionsTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:03.5165250Z [1356 / 1390] HanlinScriptUITests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:04.1867410Z [1361 / 1390] HanlinScriptExtensionsTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:04.3277610Z [1363 / 1397]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:04.4847570Z [1364 / 1397]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:04.5941330Z [1365 / 1397] HanlinScriptExtensionsTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:04.7370190Z [1369 / 1397] HanlinScriptExtensionsTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:04.8486000Z [1371 / 1397] HanlinScriptExtensionsTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:05.8035580Z [1371 / 1397] HanlinScriptUITests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:07.3220500Z [1376 / 1397] HanlinScriptExtensionsTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:07.5080140Z [1382 / 1397] HanlinScriptUITests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:07.9061310Z [1383 / 1397] AllIncludingTests
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.0523360Z [1385 / 1397]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.1708680Z [1387 / 1397]
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.3962300Z error: SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinMiniAppSurfaceRoutingTests.swift failed with a nonzero exit code. Command line:     cd /Users/runner/work/hanlin-ai/hanlin-ai/Packages
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4063470Z     builtin-SwiftPerFileCompile HanlinMiniAppSurfaceRoutingTests.swift
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4165710Z [1391 / 1397] HanlinScriptExtensionsTests-product
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4267920Z error: SwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinOriginalScriptWidgetRenderingTests.swift failed with a nonzero exit code. Command line:     cd /Users/runner/work/hanlin-ai/hanlin-ai/Packages
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4371340Z     builtin-SwiftPerFileCompile HanlinOriginalScriptWidgetRenderingTests.swift
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4473610Z macro expansion #require:2:3: ^[[1;31merror: ^[[1;39mcall can throw, but it is not marked with 'try' and the error is not handled^[[0;0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4576830Z `- /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinMiniAppSurfaceRoutingTests.swift:28:54: ^[[1;39mnote: ^[[1;39mexpanded code originates here^[[0;0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4679350Z ^[[0;36m26 |^[[0;0m             try store.enqueue(.init(id: id, invocation: .init(identity: identity,
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4775670Z ^[[0;36m27 |^[[0;0m                 entityID: "search", parameters: .string(text), continueInForeground: true)))
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4792080Z ^[[0;36m28 |^[[0;0m             let claim = try ^[[4;39m#require(store.claim(id))^[[0;0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4793860Z    ^[[0;36m|^[[0;0m                             `- ^[[1;39mnote: ^[[1;39min expansion of macro 'require' here^[[0;0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4797910Z ^[[0;36m   +--- ^[[0;0mmacro expansion #require ^[[0;36m---------------------------------------^[[0;0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4804230Z ^[[0;36m   |^[[0;0m^[[0;36m1 |^[[0;0m Testing.__checkFunctionCall(store.self,calling: {
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4814650Z ^[[0;36m   |^[[0;0m^[[0;36m2 |^[[0;0m   $0.claim($1)
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4817100Z ^[[0;36m   |^[[0;0m  ^[[0;36m|^[[0;0m   `- ^[[1;31merror: ^[[1;39mcall can throw, but it is not marked with 'try' and the error is not handled^[[0;0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4821690Z ^[[0;36m   |^[[0;0m^[[0;36m3 |^[[0;0m },id,expression: .__fromFunctionCall(.__fromSyntaxNode("store"),"claim",(nil,.__fromSyntaxNode("id"))),comments: [],isRequired: true,sourceLocation: Testing.SourceLocation.__here()).__required()
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4823000Z ^[[0;36m   +-----------------------------^[[0;0m^[[0;36m---------------------------------------^[[0;0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4824770Z ^[[0;36m29 |^[[0;0m             try store.complete(claim, status: .succeeded, value: .string(text))
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4825570Z ^[[0;36m30 |^[[0;0m         }
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4825930Z 
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4827150Z /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinMiniAppSurfaceRoutingTests.swift:60:20: ^[[1;31merror: ^[[1;39mcannot find 'HanlinScriptUINode' in scope^[[0;0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4828620Z ^[[0;36m58 |^[[0;0m     func nestedTranslationPayloadDoesNotReinterpretText() {
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4830440Z ^[[0;36m59 |^[[0;0m         let selected = "שלום🙂 {{origin}} $1 \\ source"
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4832950Z ^[[0;36m60 |^[[0;0m         let root = ^[[4;39mHanlinScriptUINode^[[0;0m(kind: .button, properties: [
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4833900Z    ^[[0;36m|^[[0;0m                    `- ^[[1;31merror: ^[[1;39mcannot find 'HanlinScriptUINode' in scope^[[0;0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4834940Z ^[[0;36m61 |^[[0;0m             "intent": .object(["parameters": .object([
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4835900Z ^[[0;36m62 |^[[0;0m                 "query": .string("{{selectedText}}"),
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4836270Z 
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4837460Z /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinMiniAppSurfaceRoutingTests.swift:61:47: ^[[1;31merror: ^[[1;39mtype 'Any' has no member 'object'^[[0;0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4838760Z ^[[0;36m59 |^[[0;0m         let selected = "שלום🙂 {{origin}} $1 \\ source"
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4839620Z ^[[0;36m60 |^[[0;0m         let root = HanlinScriptUINode(kind: .button, properties: [
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4840530Z ^[[0;36m61 |^[[0;0m             "intent": .object(["parameters": ^[[4;39m.object^[[0;0m([
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4841380Z    ^[[0;36m|^[[0;0m                                               `- ^[[1;31merror: ^[[1;39mtype 'Any' has no member 'object'^[[0;0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4842300Z ^[[0;36m62 |^[[0;0m                 "query": .string("{{selectedText}}"),
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4843150Z ^[[0;36m63 |^[[0;0m                 "items": .array([.string("before {{selectedText}} / {{origin}}")])
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4844230Z 
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4845390Z /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinMiniAppSurfaceRoutingTests.swift:62:27: ^[[1;31merror: ^[[1;39mtype 'Any' has no member 'string'^[[0;0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4846640Z ^[[0;36m60 |^[[0;0m         let root = HanlinScriptUINode(kind: .button, properties: [
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4847440Z ^[[0;36m61 |^[[0;0m             "intent": .object(["parameters": .object([
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4848170Z ^[[0;36m62 |^[[0;0m                 "query": ^[[4;39m.string^[[0;0m("{{selectedText}}"),
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4848980Z    ^[[0;36m|^[[0;0m                           `- ^[[1;31merror: ^[[1;39mtype 'Any' has no member 'string'^[[0;0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4851240Z ^[[0;36m63 |^[[0;0m                 "items": .array([.string("before {{selectedText}} / {{origin}}")])
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4852080Z ^[[0;36m64 |^[[0;0m             ])])
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4852450Z 
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4854220Z /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinMiniAppSurfaceRoutingTests.swift:63:27: ^[[1;31merror: ^[[1;39mtype 'Any' has no member 'array'^[[0;0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4856230Z ^[[0;36m61 |^[[0;0m             "intent": .object(["parameters": .object([
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4857010Z ^[[0;36m62 |^[[0;0m                 "query": .string("{{selectedText}}"),
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4859230Z ^[[0;36m63 |^[[0;0m                 "items": ^[[4;39m.array^[[0;0m([.string("before {{selectedText}} / {{origin}}")])
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4860150Z    ^[[0;36m|^[[0;0m                           `- ^[[1;31merror: ^[[1;39mtype 'Any' has no member 'array'^[[0;0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4860680Z ^[[0;36m64 |^[[0;0m             ])])
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4861000Z ^[[0;36m65 |^[[0;0m         ])
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4861220Z 
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4862210Z /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinMiniAppSurfaceRoutingTests.swift:63:35: ^[[1;31merror: ^[[1;39mtype 'Any' has no member 'string'^[[0;0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4863490Z ^[[0;36m61 |^[[0;0m             "intent": .object(["parameters": .object([
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4864040Z ^[[0;36m62 |^[[0;0m                 "query": .string("{{selectedText}}"),
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4864840Z ^[[0;36m63 |^[[0;0m                 "items": .array([^[[4;39m.string^[[0;0m("before {{selectedText}} / {{origin}}")])
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4865560Z    ^[[0;36m|^[[0;0m                                   `- ^[[1;31merror: ^[[1;39mtype 'Any' has no member 'string'^[[0;0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4866070Z ^[[0;36m64 |^[[0;0m             ])])
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4866420Z ^[[0;36m65 |^[[0;0m         ])
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4867550Z 
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4869450Z /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinMiniAppSurfaceRoutingTests.swift:67:51: ^[[1;31merror: ^[[1;39mreference to member 'object' cannot be resolved without a contextual type^[[0;0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4870400Z ^[[0;36m65 |^[[0;0m         ])
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4871160Z ^[[0;36m66 |^[[0;0m         let resolved = root.substituting(context: ["selectedText": selected, "origin": "translation"])
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4872140Z ^[[0;36m67 |^[[0;0m         #expect(resolved.properties["intent"] == .object(["parameters": .object([
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4874850Z    ^[[0;36m|^[[0;0m                                                   `- ^[[1;31merror: ^[[1;39mreference to member 'object' cannot be resolved without a contextual type^[[0;0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4877350Z ^[[0;36m68 |^[[0;0m             "query": .string(selected),
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4879280Z ^[[0;36m69 |^[[0;0m             "items": .array([.string("before \(selected) / translation")])
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4880060Z 
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4882620Z /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinMiniAppSurfaceRoutingTests.swift:69:23: ^[[1;31merror: ^[[1;39mtype 'Any' has no member 'array'^[[0;0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4887450Z ^[[0;36m67 |^[[0;0m         #expect(resolved.properties["intent"] == .object(["parameters": .object([
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4889140Z ^[[0;36m68 |^[[0;0m             "query": .string(selected),
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4891000Z ^[[0;36m69 |^[[0;0m             "items": ^[[4;39m.array^[[0;0m([.string("before \(selected) / translation")])
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4929170Z    ^[[0;36m|^[[0;0m                       `- ^[[1;31merror: ^[[1;39mtype 'Any' has no member 'array'^[[0;0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4929650Z ^[[0;36m70 |^[[0;0m         ])]))
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4929880Z ^[[0;36m71 |^[[0;0m     }
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4930040Z 
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4931180Z /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinMiniAppSurfaceRoutingTests.swift:68:23: ^[[1;31merror: ^[[1;39mtype 'Any' has no member 'string'^[[0;0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4932610Z ^[[0;36m66 |^[[0;0m         let resolved = root.substituting(context: ["selectedText": selected, "origin": "translation"])
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4933540Z ^[[0;36m67 |^[[0;0m         #expect(resolved.properties["intent"] == .object(["parameters": .object([
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4935080Z ^[[0;36m68 |^[[0;0m             "query": ^[[4;39m.string^[[0;0m(selected),
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4936340Z    ^[[0;36m|^[[0;0m                       `- ^[[1;31merror: ^[[1;39mtype 'Any' has no member 'string'^[[0;0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4937430Z ^[[0;36m69 |^[[0;0m             "items": .array([.string("before \(selected) / translation")])
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4938290Z ^[[0;36m70 |^[[0;0m         ])]))
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4938780Z 
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4939840Z /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinMiniAppSurfaceRoutingTests.swift:69:31: ^[[1;31merror: ^[[1;39mtype 'Any' has no member 'string'^[[0;0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4941530Z ^[[0;36m67 |^[[0;0m         #expect(resolved.properties["intent"] == .object(["parameters": .object([
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4942200Z ^[[0;36m68 |^[[0;0m             "query": .string(selected),
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4942980Z ^[[0;36m69 |^[[0;0m             "items": .array([^[[4;39m.string^[[0;0m("before \(selected) / translation")])
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4945000Z    ^[[0;36m|^[[0;0m                               `- ^[[1;31merror: ^[[1;39mtype 'Any' has no member 'string'^[[0;0m
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4945870Z ^[[0;36m70 |^[[0;0m         ])]))
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4953650Z ^[[0;36m71 |^[[0;0m     }
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.4954500Z Failed frontend command:
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.5008070Z /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-frontend -frontend -c /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/.build/out/Intermediates.noindex/HanlinPlatform.build/Debug/HanlinScriptExtensionsTests-p.build/DerivedSources/test_entry_point.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinInvocationQueueTests.swift -primary-file /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinMiniAppSurfaceRoutingTests.swift -primary-file /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinOriginalScriptWidgetRenderingTests.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinScriptExtensionStoreTests.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinShareInvocationTests.swift -emit-dependencies-path /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/.build/out/Intermediates.noindex/HanlinPlatform.build/Debug/HanlinScriptExtensionsTests-p.build/Objects-normal/arm64/HanlinMiniAppSurfaceRoutingTests.d -emit-const-values-path /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/.build/out/Intermediates.noindex/HanlinPlatform.build/Debug/HanlinScriptExtensionsTests-p.build/Objects-normal/arm64/HanlinMiniAppSurfaceRoutingTests.swiftconstvalues -emit-reference-dependencies-path /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/.build/out/Intermediates.noindex/HanlinPlatform.build/Debug/HanlinScriptExtensionsTests-p.build/Objects-normal/arm64/HanlinMiniAppSurfaceRoutingTests.swiftdeps -serialize-diagnostics-path /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/.build/out/Intermediates.noindex/HanlinPlatform.build/Debug/HanlinScriptExtensionsTests-p.build/Objects-normal/arm64/HanlinMiniAppSurfaceRoutingTests.dia -emit-dependencies-path /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/.build/out/Intermediates.noindex/HanlinPlatform.build/Debug/HanlinScriptExtensionsTests-p.build/Objects-normal/arm64/HanlinOriginalScriptWidgetRenderingTests.d -emit-const-values-path /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/.build/out/Intermediates.noindex/HanlinPlatform.build/Debug/HanlinScriptExtensionsTests-p.build/Objects-normal/arm64/HanlinOriginalScriptWidgetRenderingTests.swiftconstvalues -emit-reference-dependencies-path /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/.build/out/Intermediates.noindex/HanlinPlatform.build/Debug/HanlinScriptExtensionsTests-p.build/Objects-normal/arm64/HanlinOriginalScriptWidgetRenderingTests.swiftdeps -serialize-diagnostics-path /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/.build/out/Intermediates.noindex/HanlinPlatform.build/Debug/HanlinScriptExtensionsTests-p.build/Objects-normal/arm64/HanlinOriginalScriptWidgetRenderingTests.dia -target arm64-apple-macos26.0 -module-can-import-version Testing 2403 0 -module-can-import-version XCTest 25435 0 -disable-cross-import-overlay-search -swift-module-cross-import Testing /Applications/Xcode_27.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks/Testing.framework/Modules/Testing.swiftcrossimport/AppKit.swiftoverlay -swift-module-cross-import Testing /Applications/Xcode_27.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks/Testing.framework/Modules/Testing.swiftcrossimport/CoreGraphics.swiftoverlay -swift-module-cross-import Testing /Applications/Xcode_27.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks/Testing.framework/Modules/Testing.swiftcrossimport/CoreImage.swiftoverlay -swift-module-cross-import Testing /Applications/Xcode_27.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks/Testing.framework/Modules/Testing.swiftcrossimport/CoreTransferable.swiftoverlay -swift-module-cross-import Testing /Applications/Xcode_27.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks/Testing.framework/Modules/Testing.swiftcrossimport/Foundation.swiftoverlay -load-resolved-plugin /Applications/Xcode_27.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/swift/host/plugins/libAppIntentsMacros.dylib\#/Applications/Xcode_27.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/bin/swift-plugin-server\#AppIntentsMacros -load-resolved-plugin /Applications/Xcode_27.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/swift/host/plugins/libFoundationMacros.dylib\#/Applications/Xcode_27.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/bin/swift-plugin-server\#FoundationMacros -load-resolved-plugin /Applications/Xcode_27.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/swift/host/plugins/libObservationMacros.dylib\#/Applications/Xcode_27.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/bin/swift-plugin-server\#ObservationMacros -load-resolved-plugin /Applications/Xcode_27.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/swift/host/plugins/libPreviewsMacros.dylib\#/Applications/Xcode_27.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/bin/swift-plugin-server\#PreviewsMacros -load-resolved-plugin /Applications/Xcode_27.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/swift/host/plugins/libSwiftMacros.dylib\#/Applications/Xcode_27.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/bin/swift-plugin-server\#SwiftMacros -load-resolved-plugin /Applications/Xcode_27.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib/swift/host/plugins/libSwiftUIMacros.dylib\#/Applications/Xcode_27.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/bin/swift-plugin-server\#SwiftUIMacros -load-resolved-plugin /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing/libTestingMacros.dylib\#\#TestingMacros -disable-implicit-swift-modules -Xcc -fno-implicit-modules -Xcc -fno-implicit-module-maps -explicit-swift-module-map-file /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/.build/out/Intermediates.noindex/HanlinPlatform.build/Debug/HanlinScriptExtensionsTests-p.build/Objects-normal/arm64/HanlinScriptExtensionsTests-dependencies-1.json -Xllvm -aarch64-use-tbi -enable-objc-interop -stack-check -sdk /Applications/Xcode_27.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.2.sdk -I /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/.build/out/Products/Debug -Isystem /Applications/Xcode_27.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/usr/lib -F /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/.build/out/Products/Debug/PackageFrameworks -F /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/.build/out/Products/Debug -F /Applications/Xcode_27.2.app/Contents/Developer/Platforms/MacOSX.platform/Developer/Library/Frameworks -module-cache-path /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/.build/out/Intermediates.noindex/SwiftExplicitPrecompiledModules -color-diagnostics -Xcc -fcolor-diagnostics -enable-testing -g -debug-info-format\=dwarf -dwarf-version\=5 -swift-version 6 -Onone -D SWIFT_PACKAGE -D DEBUG -D Xcode -serialize-debugging-options -enable-experimental-feature DebugDescriptionMacro -empty-abi-descriptor -validate-clang-modules-once -clang-build-session-file /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/.build/out/ModuleCache.noindex/Session.modulevalidation -Xcc -working-directory -Xcc /Users/runner/work/hanlin-ai/hanlin-ai/Packages -enable-anonymous-context-mangled-names -file-compilation-dir /Users/runner/work/hanlin-ai/hanlin-ai/Packages -Xcc -D_LIBCPP_HARDENING_MODE\=_LIBCPP_HARDENING_MODE_DEBUG -Xcc -ivfsstatcache -Xcc /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/.build/out/SDKStatCaches.noindex/macosx27.2-26B118-d56355c2f463f349a93388c94f7bc0b52381320ebe3dad37430e01b485811412.sdkstatcache -Xcc -fmodules-prune-interval\=86400 -Xcc -fmodules-prune-after\=345600 -Xcc -I/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/.build/out/Products/Debug/include -Xcc -I/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/.build/out/Intermediates.noindex/HanlinPlatform.build/Debug/HanlinScriptExtensionsTests-p.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/.build/out/Intermediates.noindex/HanlinPlatform.build/Debug/HanlinScriptExtensionsTests-p.build/DerivedSources/arm64 -Xcc -I/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/.build/out/Intermediates.noindex/HanlinPlatform.build/Debug/HanlinScriptExtensionsTests-p.build/DerivedSources -Xcc -DSWIFT_PACKAGE -Xcc -DDEBUG\=1 -no-auto-bridging-header-chaining -module-name HanlinScriptExtensionsTests -package-name hanlinplatform -const-gather-protocols-file /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/.build/out/Intermediates.noindex/HanlinPlatform.build/Debug/HanlinScriptExtensionsTests-p.build/Objects-normal/arm64/HanlinScriptExtensionsTests_const_extract_protocols.json -disable-clang-spi -clang-target arm64-apple-macos27.2 -target-sdk-version 27.2 -target-sdk-name macosx27.2 -in-process-plugin-server-path /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/libSwiftInProcPluginServer.dylib -parse-as-library -o /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/.build/out/Intermediates.noindex/HanlinPlatform.build/Debug/HanlinScriptExtensionsTests-p.build/Objects-normal/arm64/HanlinMiniAppSurfaceRoutingTests.o -o /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/.build/out/Intermediates.noindex/HanlinPlatform.build/Debug/HanlinScriptExtensionsTests-p.build/Objects-normal/arm64/HanlinOriginalScriptWidgetRenderingTests.o -debug-module-path /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/.build/out/Intermediates.noindex/HanlinPlatform.build/Debug/HanlinScriptExtensionsTests-p.build/Objects-normal/arm64/HanlinScriptExtensionsTests.swiftmodule -index-unit-output-path /HanlinPlatform.build/Debug/HanlinScriptExtensionsTests-p.build/Objects-normal/arm64/HanlinMiniAppSurfaceRoutingTests.o -index-unit-output-path /HanlinPlatform.build/Debug/HanlinScriptExtensionsTests-p.build/Objects-normal/arm64/HanlinOriginalScriptWidgetRenderingTests.o -index-store-path /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/.build/out -index-system-modules
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.8466730Z error: Build failed
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:08.9791710Z error: fatalError
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:09.0013880Z ##[error]Process completed with exit code 1.
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:09.0205990Z Post job cleanup.
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:09.5852070Z [command]/opt/homebrew/bin/git version
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:09.6546940Z git version 2.56.0
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:09.6571750Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/40fd91eb-47c1-4530-878a-140e86f41584/.gitconfig'
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:09.6581740Z Temporarily overriding HOME='/Users/runner/work/_temp/40fd91eb-47c1-4530-878a-140e86f41584' before making global git config changes
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:09.6583850Z Adding repository directory to the temporary git global config as a safe directory
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:09.6585740Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/hanlin-ai/hanlin-ai
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:09.6738430Z Removing SSH command configuration
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:09.6747640Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:09.6853840Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:09.8366060Z Removing HTTP extra header
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:09.8371070Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:09.8531660Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:10.0903080Z Removing includeIf entries pointing to credentials config files
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:10.1005300Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:10.1108780Z includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git.path
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:10.1211830Z includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git/worktrees/*.path
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:10.1228080Z includeif.gitdir:/github/workspace/.git.path
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:10.1228800Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:10.1230740Z [command]/opt/homebrew/bin/git config --local --get-all includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git.path
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:10.1233650Z /Users/runner/work/_temp/git-credentials-812fc1e8-046d-4444-bfb2-3b3f9999d4c7.config
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:10.1235940Z [command]/opt/homebrew/bin/git config --local --unset includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git.path \/Users\/runner\/work\/_temp\/git\-credentials\-812fc1e8\-046d\-4444\-bfb2\-3b3f9999d4c7\.config
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:10.1440080Z [command]/opt/homebrew/bin/git config --local --get-all includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git/worktrees/*.path
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:10.1592280Z /Users/runner/work/_temp/git-credentials-812fc1e8-046d-4444-bfb2-3b3f9999d4c7.config
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:10.1595600Z [command]/opt/homebrew/bin/git config --local --unset includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git/worktrees/*.path \/Users\/runner\/work\/_temp\/git\-credentials\-812fc1e8\-046d\-4444\-bfb2\-3b3f9999d4c7\.config
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:10.1679150Z [command]/opt/homebrew/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:10.1778550Z /github/runner_temp/git-credentials-812fc1e8-046d-4444-bfb2-3b3f9999d4c7.config
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:10.1792210Z [command]/opt/homebrew/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-812fc1e8\-046d\-4444\-bfb2\-3b3f9999d4c7\.config
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:10.1895380Z [command]/opt/homebrew/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:10.1986990Z /github/runner_temp/git-credentials-812fc1e8-046d-4444-bfb2-3b3f9999d4c7.config
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:10.1996830Z [command]/opt/homebrew/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-812fc1e8\-046d\-4444\-bfb2\-3b3f9999d4c7\.config
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:10.2091150Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:10.4444150Z Removing credentials config '/Users/runner/work/_temp/git-credentials-812fc1e8-046d-4444-bfb2-3b3f9999d4c7.config'
+Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:09:10.4550550Z Cleaning up orphan processes

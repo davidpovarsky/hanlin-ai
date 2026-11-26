@@ -1,0 +1,62 @@
+{
+  "schema": 1,
+  "observedAt": "2026-11-25T08:29:03.896144+00:00",
+  "source": "cffe7f75436aa2e37ec5d82891937965c0407d2d",
+  "originalSources": [
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo/node_modules/react-native-worklets/Common/cpp/worklets/Tools/WorkletsVersion.cpp",
+      "size": 1364,
+      "sha256": "239ac8f50ec7ce0f37fc3c897a76c97af6886130926bb8d985893099c3bbd2fa",
+      "text": "#include <worklets/Tools/JSLogger.h>\n#include <worklets/Tools/VersionUtils.h>\n#include <worklets/Tools/WorkletsVersion.h>\n\n#include <memory>\n#include <string>\n\n#ifdef WORKLETS_VERSION\n#define STRINGIZE(x) #x\n#define STRINGIZE2(x) STRINGIZE(x)\n#define WORKLETS_VERSION_STRING STRINGIZE2(WORKLETS_VERSION)\n#endif // WORKLETS_VERSION\n\nusing namespace facebook;\n\nnamespace worklets {\n\nstd::string getWorkletsCppVersion() {\n  return std::string(WORKLETS_VERSION_STRING);\n}\n\nvoid injectWorkletsCppVersion(jsi::Runtime &rnRuntime) {\n  auto version = getWorkletsCppVersion();\n  rnRuntime.global().setProperty(rnRuntime, \"_WORKLETS_VERSION_CPP\", jsi::String::createFromUtf8(rnRuntime, version));\n}\n\n#ifndef NDEBUG\nvoid checkJSVersion(jsi::Runtime &rnRuntime, const std::shared_ptr<worklets::JSLogger> &jsLogger) {\n  auto cppVersion = getWorkletsCppVersion();\n  auto jsVersionValue = rnRuntime.global().getProperty(rnRuntime, \"_WORKLETS_VERSION_JS\");\n  worklets::checkJSVersion(\n      rnRuntime,\n      jsVersionValue,\n      jsLogger,\n      cppVersion,\n      \"Worklets\",\n      \"https://docs.swmansion.com/react-native-worklets/docs\");\n}\n#else\nvoid checkJSVersion(jsi::Runtime &rnRuntime, const std::shared_ptr<worklets::JSLogger> &jsLogger) {\n  // In release builds we don't check the version, hence\n  // this function is a NOOP.\n}\n#endif // NDEBUG\n\n}; // namespace worklets\n"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo/node_modules/react-native-worklets/Common/cpp/worklets/Tools/WorkletsVersion.h",
+      "size": 352,
+      "sha256": "777ea5628b0708efcbde838955d672c185bd2b77b7e5eae03cb4099d148f6cf0",
+      "text": "#pragma once\n\n#include <worklets/Tools/JSLogger.h>\n\n#include <jsi/jsi.h>\n\n#include <memory>\n#include <string>\n\nusing namespace facebook;\n\nnamespace worklets {\n\nstd::string getWorkletsCppVersion();\nvoid injectWorkletsCppVersion(jsi::Runtime &);\nvoid checkJSVersion(jsi::Runtime &, const std::shared_ptr<worklets::JSLogger> &);\n\n}; // namespace worklets\n"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo/node_modules/react-native-worklets/lib/module/debug/jsVersion.js",
+      "size": 316,
+      "sha256": "81772aaba37cbc817b780ecbf9774453b6f5ad7b5449b22d6073d286ca567162",
+      "text": "'use strict';\n\n/**\n * We hardcode the version of Worklets here in order to compare it with the\n * version used to build the native part of the library in runtime. Remember to\n * keep this in sync with the version declared in `package.json`\n */\nexport const jsVersion = '0.13.0';\n//# sourceMappingURL=jsVersion.js.map"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo/node_modules/react-native-worklets/lib/module/debug/jsVersion.js.map",
+      "size": 193,
+      "sha256": "a47df90d6d5922e7041f15e00dff59217215a215e26fd337ec17cfad110791e6",
+      "text": "{\"version\":3,\"names\":[\"jsVersion\"],\"sourceRoot\":\"../../../src\",\"sources\":[\"debug/jsVersion.ts\"],\"mappings\":\"AAAA,YAAY;;AAEZ;AACA;AACA;AACA;AACA;AACA,OAAO,MAAMA,SAAS,GAAG,QAAQ\",\"ignoreList\":[]}\n"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo/node_modules/react-native-worklets/lib/typescript/debug/jsVersion.d.ts.map",
+      "size": 166,
+      "sha256": "416dcc7ebd2e2ff2b6558978c0abffcf7f08ea899934ccef36c2adf91f8487e8",
+      "text": "{\"version\":3,\"file\":\"jsVersion.d.ts\",\"sourceRoot\":\"\",\"sources\":[\"../../../src/debug/jsVersion.ts\"],\"names\":[],\"mappings\":\"AAEA;;;;GAIG;AACH,eAAO,MAAM,SAAS,WAAW,CAAC\"}"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo/node_modules/react-native-worklets/lib/typescript/debug/jsVersion.d.ts",
+      "size": 311,
+      "sha256": "8168220312a33299e936c535b41e972fa164302e730164c7f3775413d00facab",
+      "text": "/**\n * We hardcode the version of Worklets here in order to compare it with the\n * version used to build the native part of the library in runtime. Remember to\n * keep this in sync with the version declared in `package.json`\n */\nexport declare const jsVersion = \"0.13.0\";\n//# sourceMappingURL=jsVersion.d.ts.map"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo/node_modules/react-native-worklets/src/debug/jsVersion.ts",
+      "size": 279,
+      "sha256": "0d690a1518ee03b82322ed4d7d651fba3c2ea6da95ac42c465d984a2cf6b14bc",
+      "text": "'use strict';\n\n/**\n * We hardcode the version of Worklets here in order to compare it with the\n * version used to build the native part of the library in runtime. Remember to\n * keep this in sync with the version declared in `package.json`\n */\nexport const jsVersion = '0.13.0';\n"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWorklets/Common/cpp/worklets/Tools/WorkletsVersion.cpp",
+      "size": 1364,
+      "sha256": "239ac8f50ec7ce0f37fc3c897a76c97af6886130926bb8d985893099c3bbd2fa",
+      "text": "#include <worklets/Tools/JSLogger.h>\n#include <worklets/Tools/VersionUtils.h>\n#include <worklets/Tools/WorkletsVersion.h>\n\n#include <memory>\n#include <string>\n\n#ifdef WORKLETS_VERSION\n#define STRINGIZE(x) #x\n#define STRINGIZE2(x) STRINGIZE(x)\n#define WORKLETS_VERSION_STRING STRINGIZE2(WORKLETS_VERSION)\n#endif // WORKLETS_VERSION\n\nusing namespace facebook;\n\nnamespace worklets {\n\nstd::string getWorkletsCppVersion() {\n  return std::string(WORKLETS_VERSION_STRING);\n}\n\nvoid injectWorkletsCppVersion(jsi::Runtime &rnRuntime) {\n  auto version = getWorkletsCppVersion();\n  rnRuntime.global().setProperty(rnRuntime, \"_WORKLETS_VERSION_CPP\", jsi::String::createFromUtf8(rnRuntime, version));\n}\n\n#ifndef NDEBUG\nvoid checkJSVersion(jsi::Runtime &rnRuntime, const std::shared_ptr<worklets::JSLogger> &jsLogger) {\n  auto cppVersion = getWorkletsCppVersion();\n  auto jsVersionValue = rnRuntime.global().getProperty(rnRuntime, \"_WORKLETS_VERSION_JS\");\n  worklets::checkJSVersion(\n      rnRuntime,\n      jsVersionValue,\n      jsLogger,\n      cppVersion,\n      \"Worklets\",\n      \"https://docs.swmansion.com/react-native-worklets/docs\");\n}\n#else\nvoid checkJSVersion(jsi::Runtime &rnRuntime, const std::shared_ptr<worklets::JSLogger> &jsLogger) {\n  // In release builds we don't check the version, hence\n  // this function is a NOOP.\n}\n#endif // NDEBUG\n\n}; // namespace worklets\n"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWorklets/Common/cpp/worklets/Tools/WorkletsVersion.h",
+      "size": 352,
+      "sha256": "777ea5628b0708efcbde838955d672c185bd2b77b7e5eae03cb4099d148f6cf0",
+      "text": "#pragma once\n\n#include <worklets/Tools/JSLogger.h>\n\n#include <jsi/jsi.h>\n\n#include <memory>\n#include <string>\n\nusing namespace facebook;\n\nnamespace worklets {\n\nstd::string getWorkletsCppVersion();\nvoid injectWorkletsCppVersion(jsi::Runtime &);\nvoid checkJSVersion(jsi::Runtime &, const std::shared_ptr<worklets::JSLogger> &);\n\n}; // namespace worklets\n"
+    }
+  ],
+  "retainedCompilerResponses": []
+}

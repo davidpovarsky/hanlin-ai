@@ -1,0 +1,92 @@
+{
+  "operatingSystem": "macOS 27.0.1",
+  "operatingSystemBuild": "26A434",
+  "runnerImage": "xcode-27-arm64",
+  "runnerImageVersion": "20261104.0337.1",
+  "xcodeVersion": "27.2",
+  "xcodeBuild": "27B52",
+  "swiftVersion": "6.4.2",
+  "swiftBuild": "swiftlang-6.4.2.1.9 clang-2100.4.1.1",
+  "swiftCompilerTarget": "arm64-apple-macosx27.0.0",
+  "swiftDriverVersion": "1.168.6",
+  "testingLibraryVersion": "2403",
+  "testingReportedTarget": "arm64e-apple-macos14.0",
+  "nodeVersion": "22.17.0",
+  "npmVersion": "10.9.2",
+  "packagePath": "Packages/HanlinPlatform",
+  "invocation": [
+    "swift",
+    "test",
+    "--package-path",
+    "Packages/HanlinPlatform",
+    "--filter",
+    "HanlinDualWidgetEnginesTests/(rootFragmentsPreserveOriginalElementAllowances|scriptWidgetUsesOriginalElementLimitsWithoutExtraMaterialQuotas)"
+  ],
+  "buildDurationSeconds": 147.84,
+  "rows": [
+    {
+      "line": 12,
+      "text": "Verify original ScriptWidget adapter semantics / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T09:23:45.2385690Z macOS"
+    },
+    {
+      "line": 13,
+      "text": "Verify original ScriptWidget adapter semantics / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T09:23:45.2386020Z 27.0.1"
+    },
+    {
+      "line": 14,
+      "text": "Verify original ScriptWidget adapter semantics / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T09:23:45.2386360Z 26A434"
+    },
+    {
+      "line": 17,
+      "text": "Verify original ScriptWidget adapter semantics / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T09:23:45.2387440Z Image: xcode-27-arm64"
+    },
+    {
+      "line": 18,
+      "text": "Verify original ScriptWidget adapter semantics / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T09:23:45.2387830Z Version: 20261104.0337.1"
+    },
+    {
+      "line": 77,
+      "text": "Verify original ScriptWidget adapter semantics / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T09:23:51.6540010Z Xcode 27.2"
+    },
+    {
+      "line": 78,
+      "text": "Verify original ScriptWidget adapter semantics / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T09:23:51.6547190Z Build version 27B52"
+    },
+    {
+      "line": 79,
+      "text": "Verify original ScriptWidget adapter semantics / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T09:23:54.8955080Z Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)"
+    },
+    {
+      "line": 80,
+      "text": "Verify original ScriptWidget adapter semantics / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T09:23:54.8955980Z Target: arm64-apple-macosx27.0.0"
+    },
+    {
+      "line": 81,
+      "text": "Verify original ScriptWidget adapter semantics / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T09:23:54.9020970Z swift-driver version: 1.168.6 "
+    },
+    {
+      "line": 274,
+      "text": "Verify original ScriptWidget adapter semantics / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T09:24:17.3517470Z node: v22.17.0"
+    },
+    {
+      "line": 275,
+      "text": "Verify original ScriptWidget adapter semantics / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T09:24:17.3519490Z npm: 10.9.2"
+    },
+    {
+      "line": 276,
+      "text": "Verify original ScriptWidget adapter semantics / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T09:24:17.3520030Z yarn: 1.22.22"
+    },
+    {
+      "line": 798,
+      "text": "Verify original ScriptWidget adapter semantics / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T09:27:32.7613760Z Build complete! (147.84 sec)"
+    },
+    {
+      "line": 800,
+      "text": "Verify original ScriptWidget adapter semantics / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T09:27:37.9725860Z ↳ Testing Library Version: 2403"
+    },
+    {
+      "line": 801,
+      "text": "Verify original ScriptWidget adapter semantics / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T09:27:37.9827700Z ↳ Target Platform: arm64e-apple-macos14.0"
+    }
+  ]
+}

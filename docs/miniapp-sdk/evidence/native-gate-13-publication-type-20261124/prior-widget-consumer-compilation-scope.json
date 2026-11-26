@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-24T12:52:08.739621+00:00",
+  "reviewer": "entrypoints",
+  "runID": 45389020875,
+  "sourceCommit": "2cb851067c4339125ab6fb515522796bceb80c35",
+  "log": "paired-product/mini-build.log",
+  "logSHA256": "29c01baf62168b4ebcfbcaa79e33c7e0e0e998f52ab67707e29960eeb16d16c6",
+  "reviewMethod": "Read-only examination of actual full log for target-specific SwiftEmitModule, SwiftCompile, SwiftDriver compilation and output-copy events; no builds/tests/CI repeated.",
+  "targets": {
+    "HanlinScriptingWidgets": {
+      "swiftEmissionOrCompilationRecords": 0,
+      "observed": [
+        "Dependency graph",
+        "WriteAuxiliaryFile at4677/4713\u20134743",
+        "Modulemap copy4745"
+      ],
+      "conclusion": "SWIFT_COMPILATION_NOT_STARTED_IN_RETAINED_LOG"
+    },
+    "HanlinWidgetUI": {
+      "swiftEmissionOrCompilationRecords": 0,
+      "observed": [
+        "Dependency graph",
+        "WriteAuxiliaryFile4681\u20134711",
+        "Modulemap copy4717"
+      ],
+      "conclusion": "SWIFT_COMPILATION_NOT_STARTED_IN_RETAINED_LOG"
+    }
+  },
+  "positiveButBounded": {
+    "ExpoWidgets": "SwiftEmitModule46238; .swiftmodule/.swiftdoc copies46296/46300",
+    "HanlinExpoWidgetSubset": "SwiftEmitModule45356; modulecopy45496",
+    "HanlinScriptExtensions": "SwiftEmitModule92160; modulecopy92315; body compile92451 then actual error92452"
+  },
+  "conclusion": "Prior widget-consumer Cxx configuration fix remains pending actual Apple compilation of those consumers. Emitted HanlinScriptExtensions module does not override its later body-compilation failure. No full native/application success is inferred."
+}

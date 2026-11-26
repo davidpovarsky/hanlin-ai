@@ -1,0 +1,9 @@
+{
+  "baseCommit": "ce2eceeb20b4f38031264f161ac9829b3745275a",
+  "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExpoWidgetPublication.swift",
+  "beforeSHA256": "73267f6b7110ffd25adeb210eddca58f39a76b513dbde981b391e3c83cfdccf5",
+  "afterSHA256": "ce2b136f95d1eccfd27fc876e10307133602d673fd42d860816559510b5a5960",
+  "exactSingleStatementReplacement": true,
+  "before": "_ = try HanlinValue.object(props).canonicalJSONData(limits: .unbounded)",
+  "after": "_ = try HanlinValue.object(HanlinObject(uniqueMembers: Array(props))).canonicalJSONData(limits: .unbounded)"
+}

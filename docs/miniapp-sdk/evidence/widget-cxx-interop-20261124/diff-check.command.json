@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "git",
+    "diff",
+    "--cached",
+    "--check",
+    "--",
+    ".",
+    ":!docs/miniapp-sdk/evidence/widget-cxx-interop-20261124/*.log"
+  ],
+  "exitCode": 0,
+  "rawLogs": "Retained verbatim; excluded only from whitespace formatting check."
+}

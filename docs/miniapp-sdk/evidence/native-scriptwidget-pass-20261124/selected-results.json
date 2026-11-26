@@ -1,0 +1,33 @@
+{
+  "runID": 45364761765,
+  "jobID": 138343532787,
+  "sourceCommit": "71d176315dea14e4db524f9da642bfdca5a46618",
+  "filter": "HanlinDualWidgetEnginesTests/(rootFragmentsPreserveOriginalElementAllowances|scriptWidgetUsesOriginalElementLimitsWithoutExtraMaterialQuotas)",
+  "selected": 2,
+  "executed": 2,
+  "passed": 2,
+  "failed": 0,
+  "skipped": 0,
+  "cases": [
+    {
+      "suite": "HanlinDualWidgetEnginesTests",
+      "method": "scriptWidgetUsesOriginalElementLimitsWithoutExtraMaterialQuotas",
+      "status": "EXECUTED_PASS",
+      "logLine": 805,
+      "rawRow": "Verify original ScriptWidget adapter semantics / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T09:27:37.9865740Z ✔ Test scriptWidgetUsesOriginalElementLimitsWithoutExtraMaterialQuotas() passed after 0.682 seconds.",
+      "durationSeconds": 0.682
+    },
+    {
+      "suite": "HanlinDualWidgetEnginesTests",
+      "method": "rootFragmentsPreserveOriginalElementAllowances",
+      "status": "EXECUTED_PASS",
+      "logLine": 806,
+      "rawRow": "Verify original ScriptWidget adapter semantics / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T09:27:37.9866690Z ✔ Test rootFragmentsPreserveOriginalElementAllowances() passed after 0.847 seconds.",
+      "durationSeconds": 0.847
+    }
+  ],
+  "summaryRow": {
+    "line": 808,
+    "text": "Verify original ScriptWidget adapter semantics / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T09:27:37.9869240Z ✔ Test run with 2 tests in 1 suite passed after 0.848 seconds."
+  }
+}

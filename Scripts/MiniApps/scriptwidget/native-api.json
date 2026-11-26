@@ -1,0 +1,1897 @@
+{
+  "schemaVersion": 1,
+  "globals": [
+    "$alarms",
+    "$animation",
+    "$calendar",
+    "$component",
+    "$console",
+    "$contacts",
+    "$dataSource",
+    "$device",
+    "$documents",
+    "$dynamic_island",
+    "$element",
+    "$error",
+    "$fetch",
+    "$file",
+    "$getenv",
+    "$gradient",
+    "$health",
+    "$home",
+    "$http",
+    "$icloud",
+    "$import",
+    "$json",
+    "$location",
+    "$maps",
+    "$music",
+    "$notifications",
+    "$photos",
+    "$presentation",
+    "$reminders",
+    "$render",
+    "$runtime",
+    "$services",
+    "$storage",
+    "$system",
+    "$type_of_object",
+    "$weather",
+    "$widget",
+    "$xml",
+    "ScriptWidget",
+    "console",
+    "fetch"
+  ],
+  "nativeObjectCount": 24,
+  "nativeMethodCount": 118,
+  "bindings": [
+    {
+      "global": "$alarms",
+      "nativeClass": "ScriptWidgetRuntimeAlarms",
+      "source": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeAlarms.swift",
+      "methods": [
+        {
+          "name": "status",
+          "parameters": [],
+          "returnType": "ScriptWidgetNativePromise<{\"authorization\": string}>",
+          "nativeSignature": "static func status() -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "pending",
+          "parameters": [],
+          "returnType": "ScriptWidgetNativePromise<{key: string; state: string}[]>",
+          "nativeSignature": "static func pending() -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "native semantic refinement"
+        },
+        {
+          "name": "schedule",
+          "parameters": [
+            {
+              "name": "options",
+              "swiftType": "[String: Any]?",
+              "optional": false,
+              "type": "ScriptWidgetAlarmOptions"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<{\"key\": string; \"status\": string; \"replayed\": boolean}>",
+          "nativeSignature": "static func schedule(_ options: [String: Any]?) -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "cancel",
+          "parameters": [
+            {
+              "name": "key",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<{\"key\": string; \"status\": string}>",
+          "nativeSignature": "static func cancel(_ key: String) -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "stop",
+          "parameters": [
+            {
+              "name": "key",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<{\"key\": string; \"status\": string}>",
+          "nativeSignature": "static func stop(_ key: String) -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "pause",
+          "parameters": [
+            {
+              "name": "key",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<{\"key\": string; \"status\": string}>",
+          "nativeSignature": "static func pause(_ key: String) -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "resume",
+          "parameters": [
+            {
+              "name": "key",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<{\"key\": string; \"status\": string}>",
+          "nativeSignature": "static func resume(_ key: String) -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        }
+      ]
+    },
+    {
+      "global": "$calendar",
+      "nativeClass": "ScriptWidgetRuntimeCalendar",
+      "source": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeCalendar.swift",
+      "methods": [
+        {
+          "name": "isAvailable",
+          "parameters": [],
+          "returnType": "boolean",
+          "nativeSignature": "static func isAvailable() -> Bool",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "authorizationStatus",
+          "parameters": [],
+          "returnType": "string",
+          "nativeSignature": "static func authorizationStatus() -> String",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "requestAuthorization",
+          "parameters": [],
+          "returnType": "ScriptWidgetNativePromise<boolean>",
+          "nativeSignature": "static func requestAuthorization() -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "calendars",
+          "parameters": [],
+          "returnType": "ScriptWidgetNativePromise<({\"id\": string; \"title\": string})[]>",
+          "nativeSignature": "static func calendars() -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "create",
+          "parameters": [
+            {
+              "name": "options",
+              "swiftType": "[String: Any]?",
+              "optional": false,
+              "type": "ScriptWidgetCalendarMutation"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<{\"id\": string; \"calendarID\": string; \"status\": string; \"replayed\": boolean}>",
+          "nativeSignature": "static func create(_ options: [String: Any]?) -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "update",
+          "parameters": [
+            {
+              "name": "options",
+              "swiftType": "[String: Any]?",
+              "optional": false,
+              "type": "ScriptWidgetCalendarUpdate"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<{\"id\": string; \"calendarID\": string; \"status\": string; \"replayed\": boolean}>",
+          "nativeSignature": "static func update(_ options: [String: Any]?) -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "events",
+          "parameters": [
+            {
+              "name": "options",
+              "swiftType": "[String: Any]?",
+              "optional": true,
+              "type": "ScriptWidgetCalendarQuery"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<ScriptWidgetNativeList<ScriptWidgetCalendarEvent> & {truncated: boolean}>",
+          "nativeSignature": "static func events(_ options: [String: Any]?) -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "native semantic refinement"
+        }
+      ]
+    },
+    {
+      "global": "$console",
+      "nativeClass": "ScriptWidgetRuntimeConsole",
+      "source": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeConsole.swift",
+      "methods": [
+        {
+          "name": "log",
+          "parameters": [
+            {
+              "name": "string",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            }
+          ],
+          "returnType": "void",
+          "nativeSignature": "static func log(_ string: String) -> Void",
+          "asynchronous": false,
+          "resultAuthority": "original native Swift type"
+        },
+        {
+          "name": "error",
+          "parameters": [
+            {
+              "name": "string",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            }
+          ],
+          "returnType": "void",
+          "nativeSignature": "static func error(_ string: String) -> Void",
+          "asynchronous": false,
+          "resultAuthority": "original native Swift type"
+        }
+      ]
+    },
+    {
+      "global": "$contacts",
+      "nativeClass": "ScriptWidgetRuntimeContacts",
+      "source": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeContacts.swift",
+      "methods": [
+        {
+          "name": "selected",
+          "parameters": [],
+          "returnType": "ScriptWidgetNativePromise<({\"id\": string; \"name\": string; \"organization\": string; \"phones\": (string)[]; \"emails\": (string)[]})[]>",
+          "nativeSignature": "static func selected() -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        }
+      ]
+    },
+    {
+      "global": "$dataSource",
+      "nativeClass": "ScriptWidgetRuntimeDataSource",
+      "source": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Plugin/ScriptWidgetDataSources.swift",
+      "methods": [
+        {
+          "name": "request",
+          "parameters": [
+            {
+              "name": "pluginID",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            },
+            {
+              "name": "operationID",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            },
+            {
+              "name": "parameters",
+              "swiftType": "[String: Any]?",
+              "optional": true,
+              "type": "ScriptWidgetJSONObject"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<ScriptWidgetJSON>",
+          "nativeSignature": "static func request(_ pluginID: String, _ operationID: String, _ parameters: [String: Any]?) -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "native semantic refinement"
+        }
+      ]
+    },
+    {
+      "global": "$device",
+      "nativeClass": "ScriptWidgetRuntimeDevice",
+      "source": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeDevice.swift",
+      "methods": [
+        {
+          "name": "screen",
+          "parameters": [],
+          "returnType": "{\"width\": number; \"height\": number; \"scale\": number}",
+          "nativeSignature": "static func screen() -> [AnyHashable: Any]!",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "language",
+          "parameters": [],
+          "returnType": "string",
+          "nativeSignature": "static func language() -> String",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "model",
+          "parameters": [],
+          "returnType": "string",
+          "nativeSignature": "static func model() -> String",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "name",
+          "parameters": [],
+          "returnType": "string",
+          "nativeSignature": "static func name() -> String",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "battery",
+          "parameters": [],
+          "returnType": "{\"level\": number; \"state\": string}",
+          "nativeSignature": "static func battery() -> [AnyHashable: Any]!",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "systemVersion",
+          "parameters": [],
+          "returnType": "string",
+          "nativeSignature": "static func systemVersion() -> String",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "isdarkmode",
+          "parameters": [],
+          "returnType": "boolean",
+          "nativeSignature": "static func isdarkmode() -> Bool",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "totalDiskSpace",
+          "parameters": [],
+          "returnType": "number",
+          "nativeSignature": "static func totalDiskSpace() -> Int64",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "freeDiskSpace",
+          "parameters": [],
+          "returnType": "number",
+          "nativeSignature": "static func freeDiskSpace() -> Int64",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        }
+      ]
+    },
+    {
+      "global": "$documents",
+      "nativeClass": "ScriptWidgetRuntimeDocuments",
+      "source": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeDocuments.swift",
+      "methods": [
+        {
+          "name": "list",
+          "parameters": [],
+          "returnType": "ScriptWidgetNativePromise<({\"id\": string; \"name\": string; \"type\": string; \"bytes\": number})[]>",
+          "nativeSignature": "static func list() -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "readJSON",
+          "parameters": [
+            {
+              "name": "id",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<ScriptWidgetJSONObject | ScriptWidgetJSON[]>",
+          "nativeSignature": "static func readJSON(_ id: String) -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "native semantic refinement"
+        },
+        {
+          "name": "readCSV",
+          "parameters": [
+            {
+              "name": "id",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<{\"headers\": (string)[]; \"rows\": ((string)[])[]; \"truncated\": boolean}>",
+          "nativeSignature": "static func readCSV(_ id: String) -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        }
+      ]
+    },
+    {
+      "global": "$element",
+      "nativeClass": "ScriptWidgetRuntimeElement",
+      "source": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Component/ScriptWidgetRuntimeElement.swift",
+      "methods": [
+        {
+          "name": "createElement",
+          "parameters": [
+            {
+              "name": "tag",
+              "swiftType": "JSValue",
+              "optional": false,
+              "type": "string | ((props: Record<string, unknown>) => JSX.Element)"
+            },
+            {
+              "name": "props",
+              "swiftType": "[AnyHashable:Any]?",
+              "optional": false,
+              "type": "Record<string, unknown> | null"
+            },
+            {
+              "name": "children",
+              "swiftType": "[Any]?",
+              "optional": false,
+              "type": "JSX.Child[] | null"
+            }
+          ],
+          "returnType": "JSX.Element",
+          "nativeSignature": "static func createElement(_ tag: JSValue, _ props: [AnyHashable:Any]?, _ children: [Any]? ) -> ScriptWidgetRuntimeElement",
+          "asynchronous": false,
+          "resultAuthority": "native semantic refinement"
+        }
+      ]
+    },
+    {
+      "global": "$file",
+      "nativeClass": "ScriptWidgetRuntimeFile",
+      "source": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFile.swift",
+      "methods": [
+        {
+          "name": "exists",
+          "parameters": [
+            {
+              "name": "relativePath",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            }
+          ],
+          "returnType": "boolean",
+          "nativeSignature": "static func exists(_ relativePath: String) -> Bool",
+          "asynchronous": false,
+          "resultAuthority": "original native Swift type"
+        },
+        {
+          "name": "read",
+          "parameters": [
+            {
+              "name": "relativePath",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            }
+          ],
+          "returnType": "string",
+          "nativeSignature": "static func read(_ relativePath: String) -> String",
+          "asynchronous": false,
+          "resultAuthority": "original native Swift type"
+        },
+        {
+          "name": "readJSON",
+          "parameters": [
+            {
+              "name": "relativePath",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            }
+          ],
+          "returnType": "ScriptWidgetJSONObject",
+          "nativeSignature": "static func readJSON(_ relativePath: String) -> [AnyHashable: Any]!",
+          "asynchronous": false,
+          "resultAuthority": "native semantic refinement"
+        }
+      ]
+    },
+    {
+      "global": "$health",
+      "nativeClass": "ScriptWidgetRuntimeHealth",
+      "source": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeHealth.swift",
+      "methods": [
+        {
+          "name": "isAvailable",
+          "parameters": [],
+          "returnType": "boolean",
+          "nativeSignature": "static func isAvailable() -> Bool",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "authorizationStatus",
+          "parameters": [],
+          "returnType": "string",
+          "nativeSignature": "static func authorizationStatus() -> String",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "requestAuthorization",
+          "parameters": [],
+          "returnType": "ScriptWidgetNativePromise<boolean>",
+          "nativeSignature": "static func requestAuthorization() -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "stepCountToday",
+          "parameters": [],
+          "returnType": "ScriptWidgetNativePromise<ScriptWidgetHealthMeasurement>",
+          "nativeSignature": "static func stepCountToday() -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "native semantic refinement"
+        },
+        {
+          "name": "activeEnergyToday",
+          "parameters": [],
+          "returnType": "ScriptWidgetNativePromise<ScriptWidgetHealthMeasurement>",
+          "nativeSignature": "static func activeEnergyToday() -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "native semantic refinement"
+        },
+        {
+          "name": "heartRateLatest",
+          "parameters": [],
+          "returnType": "ScriptWidgetNativePromise<ScriptWidgetHealthMeasurement>",
+          "nativeSignature": "static func heartRateLatest() -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "native semantic refinement"
+        },
+        {
+          "name": "sleepSummary",
+          "parameters": [
+            {
+              "name": "options",
+              "swiftType": "[String: Any]?",
+              "optional": true,
+              "type": "ScriptWidgetHealthWindow"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<{\"start\": string; \"end\": string; \"timeZone\": string; \"hasSamples\": boolean; \"totalSleepSeconds\": number; \"inBedSeconds\": number; \"awakeSeconds\": number; \"stages\": {\"unspecified\": number; \"core\": number; \"deep\": number; \"rem\": number}; \"sourceCount\": number; \"truncated\": boolean; \"conflictSeconds\": number; \"aggregation\": string}>",
+          "nativeSignature": "static func sleepSummary(_ options: [String: Any]?) -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "activitySummary",
+          "parameters": [
+            {
+              "name": "options",
+              "swiftType": "[String: Any]?",
+              "optional": true,
+              "type": "{date?: string}"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<ScriptWidgetHealthActivity>",
+          "nativeSignature": "static func activitySummary(_ options: [String: Any]?) -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "native semantic refinement"
+        },
+        {
+          "name": "workouts",
+          "parameters": [
+            {
+              "name": "options",
+              "swiftType": "[String: Any]?",
+              "optional": true,
+              "type": "ScriptWidgetHealthWorkoutsQuery"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<ScriptWidgetHealthWorkouts>",
+          "nativeSignature": "static func workouts(_ options: [String: Any]?) -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "native semantic refinement"
+        },
+        {
+          "name": "dailyStatistics",
+          "parameters": [
+            {
+              "name": "options",
+              "swiftType": "[String: Any]?",
+              "optional": false,
+              "type": "ScriptWidgetHealthDailyQuery"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<ScriptWidgetHealthDailyStatistics>",
+          "nativeSignature": "static func dailyStatistics(_ options: [String: Any]?) -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "native semantic refinement"
+        }
+      ]
+    },
+    {
+      "global": "$home",
+      "nativeClass": "ScriptWidgetRuntimeHome",
+      "source": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeHome.swift",
+      "methods": [
+        {
+          "name": "items",
+          "parameters": [],
+          "returnType": "ScriptWidgetNativePromise<{id: string; name: string; kind: string; value: ScriptWidgetJSON; isCached: boolean; metric: string; unit: string}[]>",
+          "nativeSignature": "static func items() -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "native semantic refinement"
+        },
+        {
+          "name": "setPower",
+          "parameters": [
+            {
+              "name": "options",
+              "swiftType": "[String: Any]?",
+              "optional": false,
+              "type": "{id: string; on: boolean}"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<{\"id\": string; \"value\": boolean; \"status\": string}>",
+          "nativeSignature": "static func setPower(_ options: [String: Any]?) -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "runScene",
+          "parameters": [
+            {
+              "name": "options",
+              "swiftType": "[String: Any]?",
+              "optional": false,
+              "type": "{id: string; requestID: string}"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<{\"id\": string; \"status\": string; \"replayed\": boolean}>",
+          "nativeSignature": "static func runScene(_ options: [String: Any]?) -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        }
+      ]
+    },
+    {
+      "global": "$http",
+      "nativeClass": "ScriptWidgetRuntimeHttp",
+      "source": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift",
+      "methods": [
+        {
+          "name": "get",
+          "parameters": [
+            {
+              "name": "url",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            },
+            {
+              "name": "params",
+              "swiftType": "[AnyHashable : Any]?",
+              "optional": true,
+              "type": "ScriptWidgetHTTPOptions"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<string>",
+          "nativeSignature": "static func get(_ url: String, _ params: [AnyHashable : Any]?)-> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "native semantic refinement"
+        },
+        {
+          "name": "getResponse",
+          "parameters": [
+            {
+              "name": "url",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            },
+            {
+              "name": "params",
+              "swiftType": "[AnyHashable: Any]?",
+              "optional": true,
+              "type": "ScriptWidgetHTTPOptions"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<ScriptWidgetHTTPResponse>",
+          "nativeSignature": "static func getResponse(_ url: String, _ params: [AnyHashable: Any]?) -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "native semantic refinement"
+        },
+        {
+          "name": "post",
+          "parameters": [
+            {
+              "name": "url",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            },
+            {
+              "name": "params",
+              "swiftType": "[AnyHashable : Any]?",
+              "optional": true,
+              "type": "ScriptWidgetHTTPOptions"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<string>",
+          "nativeSignature": "static func post(_ url: String, _ params: [AnyHashable : Any]?)-> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "native semantic refinement"
+        },
+        {
+          "name": "put",
+          "parameters": [
+            {
+              "name": "url",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            },
+            {
+              "name": "params",
+              "swiftType": "[AnyHashable : Any]?",
+              "optional": true,
+              "type": "ScriptWidgetHTTPOptions"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<string>",
+          "nativeSignature": "static func put(_ url: String, _ params: [AnyHashable : Any]?)-> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "native semantic refinement"
+        },
+        {
+          "name": "patch",
+          "parameters": [
+            {
+              "name": "url",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            },
+            {
+              "name": "params",
+              "swiftType": "[AnyHashable : Any]?",
+              "optional": true,
+              "type": "ScriptWidgetHTTPOptions"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<string>",
+          "nativeSignature": "static func patch(_ url: String, _ params: [AnyHashable : Any]?)-> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "native semantic refinement"
+        },
+        {
+          "name": "delete",
+          "parameters": [
+            {
+              "name": "url",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            },
+            {
+              "name": "params",
+              "swiftType": "[AnyHashable : Any]?",
+              "optional": true,
+              "type": "ScriptWidgetHTTPOptions"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<string>",
+          "nativeSignature": "static func delete(_ url: String, _ params: [AnyHashable : Any]?)-> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "native semantic refinement"
+        }
+      ]
+    },
+    {
+      "global": "$icloud",
+      "nativeClass": "ScriptWidgetRuntimeCloudJSON",
+      "source": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeCloudJSON.swift",
+      "methods": [
+        {
+          "name": "readJSON",
+          "parameters": [
+            {
+              "name": "name",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<ScriptWidgetCloudJSONDocument>",
+          "nativeSignature": "static func readJSON(_ name: String) -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "native semantic refinement"
+        },
+        {
+          "name": "writeJSON",
+          "parameters": [
+            {
+              "name": "name",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            },
+            {
+              "name": "value",
+              "swiftType": "[String: Any]",
+              "optional": false,
+              "type": "ScriptWidgetJSONObject"
+            },
+            {
+              "name": "expectedRevision",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<ScriptWidgetCloudJSONDocument>",
+          "nativeSignature": "static func writeJSON(_ name: String, _ value: [String: Any], _ expectedRevision: String) -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "native semantic refinement"
+        },
+        {
+          "name": "resolveJSON",
+          "parameters": [
+            {
+              "name": "name",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            },
+            {
+              "name": "value",
+              "swiftType": "[String: Any]",
+              "optional": false,
+              "type": "ScriptWidgetJSONObject"
+            },
+            {
+              "name": "expectedRevision",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<ScriptWidgetCloudJSONDocument>",
+          "nativeSignature": "static func resolveJSON(_ name: String, _ value: [String: Any], _ expectedRevision: String) -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "native semantic refinement"
+        },
+        {
+          "name": "sync",
+          "parameters": [],
+          "returnType": "ScriptWidgetNativePromise<ScriptWidgetCloudJSONSync>",
+          "nativeSignature": "static func sync() -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "native semantic refinement"
+        },
+        {
+          "name": "status",
+          "parameters": [],
+          "returnType": "ScriptWidgetNativePromise<ScriptWidgetCloudJSONStatus>",
+          "nativeSignature": "static func status() -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "native semantic refinement"
+        }
+      ]
+    },
+    {
+      "global": "$location",
+      "nativeClass": "ScriptWidgetRuntimeLocation",
+      "source": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeLocation.swift",
+      "methods": [
+        {
+          "name": "isAvailable",
+          "parameters": [],
+          "returnType": "boolean",
+          "nativeSignature": "static func isAvailable() -> Bool",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "authorizationStatus",
+          "parameters": [],
+          "returnType": "string",
+          "nativeSignature": "static func authorizationStatus() -> String",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "isAuthorizedForWidgetUpdates",
+          "parameters": [],
+          "returnType": "boolean",
+          "nativeSignature": "static func isAuthorizedForWidgetUpdates() -> Bool",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "requestAuthorization",
+          "parameters": [
+            {
+              "name": "options",
+              "swiftType": "[String: Any]?",
+              "optional": true,
+              "type": "ScriptWidgetLocationOptions"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<boolean>",
+          "nativeSignature": "static func requestAuthorization(_ options: [String: Any]?) -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "current",
+          "parameters": [
+            {
+              "name": "options",
+              "swiftType": "[String: Any]?",
+              "optional": true,
+              "type": "ScriptWidgetLocationOptions"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<{\"latitude\": number; \"longitude\": number; \"altitude\": number; \"accuracy\": number; \"verticalAccuracy\": number; \"speed\": number; \"course\": number; \"timestamp\": string; \"accuracyAuthorization\": string; \"age\": number; \"isStale\": boolean}>",
+          "nativeSignature": "static func current(_ options: [String: Any]?) -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        }
+      ]
+    },
+    {
+      "global": "$maps",
+      "nativeClass": "ScriptWidgetRuntimeMaps",
+      "source": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeMaps.swift",
+      "methods": [
+        {
+          "name": "search",
+          "parameters": [
+            {
+              "name": "options",
+              "swiftType": "[String: Any]?",
+              "optional": false,
+              "type": "ScriptWidgetMapSearch"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<({\"name\": string; \"address\": string; \"latitude\": number; \"longitude\": number})[]>",
+          "nativeSignature": "static func search(_ options: [String: Any]?) -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "geocode",
+          "parameters": [
+            {
+              "name": "address",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<({\"name\": string; \"address\": string; \"latitude\": number; \"longitude\": number})[]>",
+          "nativeSignature": "static func geocode(_ address: String) -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "reverseGeocode",
+          "parameters": [
+            {
+              "name": "options",
+              "swiftType": "[String: Any]?",
+              "optional": false,
+              "type": "ScriptWidgetMapRegion"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<({\"name\": string; \"address\": string; \"latitude\": number; \"longitude\": number})[]>",
+          "nativeSignature": "static func reverseGeocode(_ options: [String: Any]?) -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "snapshot",
+          "parameters": [
+            {
+              "name": "options",
+              "swiftType": "[String: Any]?",
+              "optional": false,
+              "type": "ScriptWidgetMapSnapshot"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<{\"image\": string; \"width\": number; \"height\": number; \"provider\": string}>",
+          "nativeSignature": "static func snapshot(_ options: [String: Any]?) -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        }
+      ]
+    },
+    {
+      "global": "$music",
+      "nativeClass": "ScriptWidgetRuntimeMusic",
+      "source": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeMusic.swift",
+      "methods": [
+        {
+          "name": "isAvailable",
+          "parameters": [],
+          "returnType": "boolean",
+          "nativeSignature": "static func isAvailable() -> Bool",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "authorizationStatus",
+          "parameters": [],
+          "returnType": "string",
+          "nativeSignature": "static func authorizationStatus() -> String",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "current",
+          "parameters": [],
+          "returnType": "ScriptWidgetNativePromise<ScriptWidgetMusicSnapshot>",
+          "nativeSignature": "static func current() -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "native semantic refinement"
+        }
+      ]
+    },
+    {
+      "global": "$notifications",
+      "nativeClass": "ScriptWidgetRuntimeNotifications",
+      "source": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeNotifications.swift",
+      "methods": [
+        {
+          "name": "status",
+          "parameters": [],
+          "returnType": "ScriptWidgetNativePromise<{\"authorization\": string}>",
+          "nativeSignature": "static func status() -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "pending",
+          "parameters": [],
+          "returnType": "ScriptWidgetNativePromise<{key: string; title: string; body: string; repeats: boolean; date: string | null}[]>",
+          "nativeSignature": "static func pending() -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "native semantic refinement"
+        },
+        {
+          "name": "schedule",
+          "parameters": [
+            {
+              "name": "options",
+              "swiftType": "[String: Any]?",
+              "optional": false,
+              "type": "ScriptWidgetNotificationOptions"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<{\"key\": string; \"status\": string}>",
+          "nativeSignature": "static func schedule(_ options: [String: Any]?) -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "cancel",
+          "parameters": [
+            {
+              "name": "key",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<{\"key\": string; \"status\": string}>",
+          "nativeSignature": "static func cancel(_ key: String) -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        }
+      ]
+    },
+    {
+      "global": "$photos",
+      "nativeClass": "ScriptWidgetRuntimePhotos",
+      "source": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimePhotos.swift",
+      "methods": [
+        {
+          "name": "isAvailable",
+          "parameters": [],
+          "returnType": "boolean",
+          "nativeSignature": "static func isAvailable() -> Bool",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "authorizationStatus",
+          "parameters": [],
+          "returnType": "string",
+          "nativeSignature": "static func authorizationStatus() -> String",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "requestAuthorization",
+          "parameters": [],
+          "returnType": "ScriptWidgetNativePromise<boolean>",
+          "nativeSignature": "static func requestAuthorization() -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "items",
+          "parameters": [
+            {
+              "name": "options",
+              "swiftType": "[String: Any]?",
+              "optional": true,
+              "type": "ScriptWidgetPhotoQuery"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<ScriptWidgetNativeList<ScriptWidgetPhoto> & {unavailableCount: number}>",
+          "nativeSignature": "static func items(_ options: [String: Any]?) -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "native semantic refinement"
+        }
+      ]
+    },
+    {
+      "global": "$reminders",
+      "nativeClass": "ScriptWidgetRuntimeReminders",
+      "source": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeReminders.swift",
+      "methods": [
+        {
+          "name": "isAvailable",
+          "parameters": [],
+          "returnType": "boolean",
+          "nativeSignature": "static func isAvailable() -> Bool",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "authorizationStatus",
+          "parameters": [],
+          "returnType": "string",
+          "nativeSignature": "static func authorizationStatus() -> String",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "requestAuthorization",
+          "parameters": [],
+          "returnType": "ScriptWidgetNativePromise<boolean>",
+          "nativeSignature": "static func requestAuthorization() -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "lists",
+          "parameters": [],
+          "returnType": "ScriptWidgetNativePromise<({\"id\": string; \"title\": string})[]>",
+          "nativeSignature": "static func lists() -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "items",
+          "parameters": [
+            {
+              "name": "options",
+              "swiftType": "[String: Any]?",
+              "optional": true,
+              "type": "ScriptWidgetRemindersQuery"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<ScriptWidgetNativeList<ScriptWidgetReminder> & {truncated: boolean}>",
+          "nativeSignature": "static func items(_ options: [String: Any]?) -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "native semantic refinement"
+        },
+        {
+          "name": "create",
+          "parameters": [
+            {
+              "name": "options",
+              "swiftType": "[String: Any]",
+              "optional": false,
+              "type": "ScriptWidgetReminderCreate"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<{\"id\": string; \"listID\": string; \"status\": string; \"replayed\": boolean}>",
+          "nativeSignature": "static func create(_ options: [String: Any]) -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "update",
+          "parameters": [
+            {
+              "name": "options",
+              "swiftType": "[String: Any]",
+              "optional": false,
+              "type": "ScriptWidgetReminderUpdate"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<{\"id\": string; \"listID\": string; \"status\": string; \"replayed\": boolean}>",
+          "nativeSignature": "static func update(_ options: [String: Any]) -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "setCompleted",
+          "parameters": [
+            {
+              "name": "options",
+              "swiftType": "[String: Any]",
+              "optional": false,
+              "type": "ScriptWidgetReminderCompleted"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<{\"id\": string; \"listID\": string; \"status\": string; \"replayed\": boolean}>",
+          "nativeSignature": "static func setCompleted(_ options: [String: Any]) -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        }
+      ]
+    },
+    {
+      "global": "$services",
+      "nativeClass": "ScriptWidgetRuntimeServices",
+      "source": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeServices.swift",
+      "methods": [
+        {
+          "name": "status",
+          "parameters": [
+            {
+              "name": "service",
+              "swiftType": "String",
+              "optional": false,
+              "type": "\"github\""
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<string>",
+          "nativeSignature": "static func status(_ service: String) -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "profile",
+          "parameters": [
+            {
+              "name": "service",
+              "swiftType": "String",
+              "optional": false,
+              "type": "\"github\""
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<ScriptWidgetConnectedProfile>",
+          "nativeSignature": "static func profile(_ service: String) -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "native semantic refinement"
+        }
+      ]
+    },
+    {
+      "global": "$storage",
+      "nativeClass": "ScriptWidgetRuntimeStorage",
+      "source": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeStorage.swift",
+      "methods": [
+        {
+          "name": "getString",
+          "parameters": [
+            {
+              "name": "key",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            }
+          ],
+          "returnType": "string",
+          "nativeSignature": "static func getString(_ key: String) -> String",
+          "asynchronous": false,
+          "resultAuthority": "original native Swift type"
+        },
+        {
+          "name": "setString",
+          "parameters": [
+            {
+              "name": "key",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            },
+            {
+              "name": "value",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            }
+          ],
+          "returnType": "boolean",
+          "nativeSignature": "static func setString(_ key: String, _ value: String) -> Bool",
+          "asynchronous": false,
+          "resultAuthority": "original native Swift type"
+        },
+        {
+          "name": "getJSON",
+          "parameters": [
+            {
+              "name": "key",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            }
+          ],
+          "returnType": "ScriptWidgetJSONObject",
+          "nativeSignature": "static func getJSON(_ key: String) -> [AnyHashable: Any]!",
+          "asynchronous": false,
+          "resultAuthority": "native semantic refinement"
+        },
+        {
+          "name": "setJSON",
+          "parameters": [
+            {
+              "name": "key",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            },
+            {
+              "name": "value",
+              "swiftType": "[AnyHashable: Any]",
+              "optional": false,
+              "type": "ScriptWidgetJSONObject"
+            }
+          ],
+          "returnType": "boolean",
+          "nativeSignature": "static func setJSON(_ key: String, _ value: [AnyHashable: Any]) -> Bool",
+          "asynchronous": false,
+          "resultAuthority": "original native Swift type"
+        },
+        {
+          "name": "compareAndSetString",
+          "parameters": [
+            {
+              "name": "key",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            },
+            {
+              "name": "expected",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            },
+            {
+              "name": "value",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            }
+          ],
+          "returnType": "boolean",
+          "nativeSignature": "static func compareAndSetString(_ key: String, _ expected: String, _ value: String) -> Bool",
+          "asynchronous": false,
+          "resultAuthority": "original native Swift type"
+        },
+        {
+          "name": "compareAndSetJSON",
+          "parameters": [
+            {
+              "name": "key",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            },
+            {
+              "name": "expected",
+              "swiftType": "[AnyHashable: Any]",
+              "optional": false,
+              "type": "ScriptWidgetJSONObject"
+            },
+            {
+              "name": "value",
+              "swiftType": "[AnyHashable: Any]",
+              "optional": false,
+              "type": "ScriptWidgetJSONObject"
+            }
+          ],
+          "returnType": "boolean",
+          "nativeSignature": "static func compareAndSetJSON(_ key: String, _ expected: [AnyHashable: Any], _ value: [AnyHashable: Any]) -> Bool",
+          "asynchronous": false,
+          "resultAuthority": "original native Swift type"
+        },
+        {
+          "name": "remove",
+          "parameters": [
+            {
+              "name": "key",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            }
+          ],
+          "returnType": "boolean",
+          "nativeSignature": "static func remove(_ key: String) -> Bool",
+          "asynchronous": false,
+          "resultAuthority": "original native Swift type"
+        },
+        {
+          "name": "keys",
+          "parameters": [],
+          "returnType": "string[]",
+          "nativeSignature": "static func keys() -> [String]",
+          "asynchronous": false,
+          "resultAuthority": "original native Swift type"
+        },
+        {
+          "name": "clear",
+          "parameters": [],
+          "returnType": "boolean",
+          "nativeSignature": "static func clear() -> Bool",
+          "asynchronous": false,
+          "resultAuthority": "original native Swift type"
+        }
+      ]
+    },
+    {
+      "global": "$system",
+      "nativeClass": "ScriptWidgetRuntimeSystem",
+      "source": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeSystem.swift",
+      "methods": [
+        {
+          "name": "appInfo",
+          "parameters": [],
+          "returnType": "{\"name\": string; \"bundleId\": string; \"version\": string; \"build\": string}",
+          "nativeSignature": "static func appInfo() -> [AnyHashable: Any]!",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "locale",
+          "parameters": [],
+          "returnType": "string",
+          "nativeSignature": "static func locale() -> String",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "preferredLanguages",
+          "parameters": [],
+          "returnType": "(string)[]",
+          "nativeSignature": "static func preferredLanguages() -> [String]",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "timeZone",
+          "parameters": [],
+          "returnType": "{\"identifier\": string; \"abbreviation\": string; \"offsetSeconds\": number}",
+          "nativeSignature": "static func timeZone() -> [AnyHashable: Any]!",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "is24HourClock",
+          "parameters": [],
+          "returnType": "boolean",
+          "nativeSignature": "static func is24HourClock() -> Bool",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "calendarInfo",
+          "parameters": [],
+          "returnType": "{\"identifier\": string; \"firstWeekday\": number; \"minimumDaysInFirstWeek\": number}",
+          "nativeSignature": "static func calendarInfo() -> [AnyHashable: Any]!",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "systemUptime",
+          "parameters": [],
+          "returnType": "number",
+          "nativeSignature": "static func systemUptime() -> Double",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "memory",
+          "parameters": [],
+          "returnType": "{\"physical\": number}",
+          "nativeSignature": "static func memory() -> [AnyHashable: Any]!",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "thermalState",
+          "parameters": [],
+          "returnType": "string",
+          "nativeSignature": "static func thermalState() -> String",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "lowPowerMode",
+          "parameters": [],
+          "returnType": "boolean",
+          "nativeSignature": "static func lowPowerMode() -> Bool",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "brightness",
+          "parameters": [],
+          "returnType": "number",
+          "nativeSignature": "static func brightness() -> Double",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "reduceMotionEnabled",
+          "parameters": [],
+          "returnType": "boolean",
+          "nativeSignature": "static func reduceMotionEnabled() -> Bool",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "platform",
+          "parameters": [],
+          "returnType": "string",
+          "nativeSignature": "static func platform() -> String",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "hostName",
+          "parameters": [],
+          "returnType": "string",
+          "nativeSignature": "static func hostName() -> String",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "processName",
+          "parameters": [],
+          "returnType": "string",
+          "nativeSignature": "static func processName() -> String",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "osVersionString",
+          "parameters": [],
+          "returnType": "string",
+          "nativeSignature": "static func osVersionString() -> String",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "processorCount",
+          "parameters": [],
+          "returnType": "number",
+          "nativeSignature": "static func processorCount() -> Int",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        },
+        {
+          "name": "activeProcessorCount",
+          "parameters": [],
+          "returnType": "number",
+          "nativeSignature": "static func activeProcessorCount() -> Int",
+          "asynchronous": false,
+          "resultAuthority": "original editor catalog, primitive values widened"
+        }
+      ]
+    },
+    {
+      "global": "$weather",
+      "nativeClass": "ScriptWidgetRuntimeWeather",
+      "source": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeWeather.swift",
+      "methods": [
+        {
+          "name": "forecast",
+          "parameters": [
+            {
+              "name": "options",
+              "swiftType": "[String: Any]?",
+              "optional": false,
+              "type": "ScriptWidgetWeatherOptions"
+            }
+          ],
+          "returnType": "ScriptWidgetNativePromise<ScriptWidgetWeatherForecast>",
+          "nativeSignature": "static func forecast(_ options: [String: Any]?) -> ScriptWidgetRuntimePromise",
+          "asynchronous": true,
+          "resultAuthority": "native semantic refinement"
+        }
+      ]
+    },
+    {
+      "global": "console",
+      "nativeClass": "ScriptWidgetRuntimeConsole",
+      "source": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeConsole.swift",
+      "methods": [
+        {
+          "name": "log",
+          "parameters": [
+            {
+              "name": "string",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            }
+          ],
+          "returnType": "void",
+          "nativeSignature": "static func log(_ string: String) -> Void",
+          "asynchronous": false,
+          "resultAuthority": "original native Swift type"
+        },
+        {
+          "name": "error",
+          "parameters": [
+            {
+              "name": "string",
+              "swiftType": "String",
+              "optional": false,
+              "type": "string"
+            }
+          ],
+          "returnType": "void",
+          "nativeSignature": "static func error(_ string: String) -> Void",
+          "asynchronous": false,
+          "resultAuthority": "original native Swift type"
+        }
+      ]
+    }
+  ],
+  "sources": [
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift",
+      "sha256": "116b7dd61a683ab96852044c787283befd9173e2dbacb4f41cffba59fd346da5"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetCloudJSON.swift",
+      "sha256": "d26babdd82bf9ae3ee3288727966c005a3689061a52b7034e00002efd89b9705"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Plugin/ScriptWidgetDataSources.swift",
+      "sha256": "d430223eb01d352e8a617c8ee21fb39c6a8211756f7d9028b9d426b884fa9d09"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeAlarms.swift",
+      "sha256": "1e018a1f256ea16774cef9241e21c181783e92d17e19d96353aca95520e82245"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeCalendar.swift",
+      "sha256": "5a355f79b06e2e8085ee7668e5f836559048e6b42ad28abd523cbdd855164615"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeCalendarWrites.swift",
+      "sha256": "01a62e3c7bc201cb8c3efaf197ee2aa5ea3014dc6a27e4bcd88f3456b66af5c0"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeCloudJSON.swift",
+      "sha256": "e9361b1dbae78436e78c11f05ebc3f9b5660f0448e75324eddda2faf05a170dd"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeConsole.swift",
+      "sha256": "ad8f57abd7c175e91d874c6c09c0abd1a05f527a5e387ecb484737419f57774e"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeContacts.swift",
+      "sha256": "0c3a85ec23ed8263ec810c5b265f01af001a77a858623d87475c8019658a9def"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeDevice.swift",
+      "sha256": "9e88549b24a86c471afb4b5fb68450abaa84229a617938b47013ae72e1bb2922"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeDocuments.swift",
+      "sha256": "8b7c1b6dee0c3fedbccadd656c581b95917a176f6e23423db61a25f51f608552"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift",
+      "sha256": "33b17754b1298a7bb33c7e0d51632b5bd374c59edc6f897be3e38da26aa6d844"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFile.swift",
+      "sha256": "ac111e89f1f7a8be1930bfd2f7e111df22e34100a0db000a9ebd12501addfa58"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeHealth.swift",
+      "sha256": "6b5d764332e693654dc3d51a15089d4fd4ee73660d3c00e759a258559de04750"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeHealthHistory.swift",
+      "sha256": "3ff770753d3419c80efa973f62c6f6d46334c66392067741f382e75260921af9"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeHome.swift",
+      "sha256": "d9548a2cfdac8eb02026fd526ee2042edd515a55cae69aef573fb27876f33d21"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeLocation.swift",
+      "sha256": "b002544a5a6946725e07e2a715dce3e994f59637ddd47eafdbad3f6fa007dbe1"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeMaps.swift",
+      "sha256": "b9a1ec2b87723bdba8218585710f77eec686b8a2f60b44559cb6af3c9a4f7f1d"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeMusic.swift",
+      "sha256": "bc973eb825a8bfced7832000f114ea298ea15af53001a211cda5883a082a9268"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeNotifications.swift",
+      "sha256": "59a9580018b112427764dbb1a78422c2eb5eadd3173458930741c4c022d3f087"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimePhotos.swift",
+      "sha256": "7d9a6ffb098f225af83dde31e1e7d73ad23a01a505b76b8f0a72f93a44c96ce8"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimePromise.swift",
+      "sha256": "13f8c1563e906edd2fd9f96b372cace3e15be58e18c583ba60100f2ad842d8d5"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeReminders.swift",
+      "sha256": "d7d060b0bd004126ca34f977a3aa5e8bf0e2be314de3d37a9caafee6fadb56eb"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeServices.swift",
+      "sha256": "68458d34ed1ba2c72dac0792f53cd871ac1f6c81731b62fc41738d2dcf54e661"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeStorage.swift",
+      "sha256": "68d03e9712e1a13cb5db9581a651e2acf81fe68edaacfe6ae49e0af587e1beba"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeSystem.swift",
+      "sha256": "9881cb0bab5bb255eb78d0fdce46ad79014a112af25f953d92850da7532aff35"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeSystemServices.swift",
+      "sha256": "028a336864a6f0fbd9e30e5864eddf5b13aafcd3e87f49c622ee7233bc327f58"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeWeather.swift",
+      "sha256": "2f93ea5190ecfb1d05daeb75a8a483a8323dcdaa797833b4b97e35489859ab6c"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetServiceAccessPolicy.swift",
+      "sha256": "2fc60fe3b8dee13e444d2a4529776c7cc8c17adc82814ef2b9a253c4f4130a90"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetServiceAccountsView.swift",
+      "sha256": "7517b058087288d507086c0783a8f59d41b6f6d63fb6c2979be2382074d74c99"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetServiceAuthorization.swift",
+      "sha256": "19f0fbe63f278b0c610ff904a8c1ad7adebbcc400bc575f732f52fbd91d6674a"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetServiceConnections.swift",
+      "sha256": "24c073c04156659df1a77976b15751c91f3e202ee7bd27bc3ded420ba44c9c74"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetServiceCredentialVault.swift",
+      "sha256": "bcf3d0061a90d8f458c1257ad5982767f927001f3fc199dc823cd3b7f515451a"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetServiceTransport.swift",
+      "sha256": "98d869b47e59266096df70169c45337b7bc7b2fa14877ba8151778ec0e0fd518"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetStorageFiles.swift",
+      "sha256": "961c3b3242be4d669b8a10e8f79f9660297323f92798899248db3d12e3e79aba"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetStorageLock.swift",
+      "sha256": "98d1e5d58c8ccdb01b973f07f4c24d044147f334a74a3eeb9ca80e6487d8a5c0"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetStorageNamespaces.swift",
+      "sha256": "54833459d4600b6500d3cbb5a54966ec411ad8f0d7307e0ff27d865635564397"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Component/ScriptWidgetRuntimeElement.swift",
+      "sha256": "be05cea780d55eac944292b825f7a4ce2515e75ef5106c318f8df34bb26e85fc"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRuntime.swift",
+      "sha256": "f5e078895fcceaa2c675f32b8a2785fbd8a4c6f8eacd059ed1b0e9e12adc7f84"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Resources/support.bundle/util.js",
+      "sha256": "08f291ad3d1ddcc0a9c7637bef13506a978b7d2f47da1a69e8adaaf1618ba642"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/host-globals.d.ts",
+      "sha256": "f8298759ba905ae21a5b8b8aca983529c7976fd44f0e5b53a33a9eeaa7418c13"
+    }
+  ],
+  "originalCatalog": {
+    "schemaVersion": 1,
+    "files": [
+      {
+        "repository": "https://github.com/everettjf/scriptwidget",
+        "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
+        "upstream": "Editor/editorfe/src/scriptWidgetAPI.js",
+        "local": "scriptWidgetAPI.js",
+        "sha256": "d021101c46f554cd9ba77a83c088295ff2523e011424982facec8d1c9462ec9e"
+      },
+      {
+        "repository": "https://github.com/everettjf/scriptwidget",
+        "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
+        "upstream": "Editor/editorfe/src/storageAPICatalog.js",
+        "local": "storageAPICatalog.js",
+        "sha256": "9b9cb5e46575b38697d56d0263fa147d50cd9bef6685f82ddd175ebe561b9f45"
+      },
+      {
+        "repository": "https://github.com/everettjf/scriptwidget",
+        "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
+        "upstream": "Editor/editorfe/src/dataAPICatalog.js",
+        "local": "dataAPICatalog.js",
+        "sha256": "71958adac054862f6fe41100c6709bdbbdae7ed59a07f322f934ad2f73d70e88"
+      },
+      {
+        "repository": "https://github.com/everettjf/scriptwidget",
+        "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
+        "upstream": "LICENSE",
+        "local": "LICENSE",
+        "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+      },
+      {
+        "repository": "https://github.com/everettjf/scriptwidget",
+        "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
+        "upstream": "NOTICE",
+        "local": "NOTICE",
+        "sha256": "39d8aedeb5890cc1a1cda786d80b0133faf27f72df1158beacd1406ed275c249"
+      },
+      {
+        "repository": "https://github.com/everettjf/scriptwidget",
+        "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
+        "upstream": "Editor/editorfe/src/systemAPICatalog.js",
+        "local": "systemAPICatalog.js",
+        "sha256": "78f83702de1766718ebfde97151a373094fe38f2e480d0b915d99e968b862c90"
+      }
+    ]
+  },
+  "nativeAwaitable": "then(resolve,reject) returns void; await works; no native catch/finally/chaining",
+  "unavailableOriginalRendererGlobals": [],
+  "note": "Only actual installed native objects and evaluated utility/host additions are declared. Catalogs describe result shapes, not mock execution."
+}

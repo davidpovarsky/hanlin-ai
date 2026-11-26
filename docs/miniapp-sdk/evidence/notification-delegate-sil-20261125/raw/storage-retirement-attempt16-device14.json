@@ -1,0 +1,33 @@
+{
+  "owner": "/root/native_execution",
+  "authorization": "Root explicit obsolete failed paired-v1 device14 retirement 2026-11-25; all raw proof retained",
+  "device": "CD1C36FF-F6F3-4694-8CDC-A75160E1A407",
+  "createdDevicePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v1/evidence/paired-product/created-simulator.txt",
+  "createdDeviceSHA256": "983d9fa88838b33e101e35e8b8db4b19cd366314baf440eb57f3fc405ab73070",
+  "terminalStateSHA256": "9297e6f13487e3b21874f65ac7d1fc66f7a1617d790201d42c59b09b6dd3d1ba",
+  "acceptanceSHA256": "bf82704c8b490606e3ebbc982de87da231c802407243e41832332c74c427b7dd",
+  "observedState": {
+    "dataPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/CD1C36FF-F6F3-4694-8CDC-A75160E1A407/data",
+    "dataPathSize": 2309079040,
+    "logPath": "/Users/m1/Library/Logs/CoreSimulator/CD1C36FF-F6F3-4694-8CDC-A75160E1A407",
+    "udid": "CD1C36FF-F6F3-4694-8CDC-A75160E1A407",
+    "lastUsedAt": "2026-11-25T05:38:09Z",
+    "isAvailable": true,
+    "logPathSize": 114688,
+    "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5-16GB",
+    "state": "Shutdown",
+    "name": "HanlinPaired-primary-ce49e30d-20261124"
+  },
+  "processes": [],
+  "lsofExitCode": 1,
+  "allocatedDU": "2506476\t/Users/m1/Library/Developer/CoreSimulator/Devices/CD1C36FF-F6F3-4694-8CDC-A75160E1A407\n",
+  "beforeDF": "Filesystem   1024-blocks      Used Available Capacity iused    ifree %iused  Mounted on\n/dev/disk3s5   482797652 434104144   4808732    99% 6060090 48087320   11%   /System/Volumes/Data\n",
+  "startedAt": "2026-11-25T06:25:22.222367+00:00",
+  "deleteExitCode": 0,
+  "stdout": "",
+  "stderr": "",
+  "deviceDirectoryExists": false,
+  "afterDF": "Filesystem   1024-blocks      Used Available Capacity iused    ifree %iused  Mounted on\n/dev/disk3s5   482797652 434093464   4819408    99% 6059892 48194080   11%   /System/Volumes/Data\n",
+  "finishedAt": "2026-11-25T06:25:22.356494+00:00",
+  "observationBoundary": "Global physical df includes concurrent work; logical du is not a guaranteed reclaim."
+}

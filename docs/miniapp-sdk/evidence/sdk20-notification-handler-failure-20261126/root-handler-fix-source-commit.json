@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "at": "2026-11-26T01:01:45.571706+00:00",
+  "status": "COMMITTED_NATIVE_VERIFICATION_PENDING",
+  "parent": "77ec05fd4b25401771d149935225b646bdfe6e0e",
+  "commit": "8b85a66ab7f220bb18aa14516f0508205b4f9669",
+  "tree": "6ca4c7b0b68b752a6740111066bba54c850cd22e",
+  "files": [
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m",
+      "before": {
+        "source": "77ec05fd4b25401771d149935225b646bdfe6e0e",
+        "bytes": 37015,
+        "sha256": "e36a9d2ba06dd7878d17df7c9e8f17df8952ac67f087c0a43174742c1c0ebe0c"
+      },
+      "originalNativeSource": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+      "beforeEqualsOriginalNativeSource": true,
+      "candidate": {
+        "bytes": 35889,
+        "sha256": "28909ea2c10145989c4605613f0ac6cc0185a5b34397bab70f8253291a004b3d"
+      }
+    },
+    {
+      "path": "AI_HLYTests/NativeScriptRuntimeWireTests.swift",
+      "before": {
+        "source": "77ec05fd4b25401771d149935225b646bdfe6e0e",
+        "bytes": 17996,
+        "sha256": "4ac7ed256f861133e3b84eda85d1f5df659317477c6a42c637a42a59def46835"
+      },
+      "originalNativeSource": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+      "beforeEqualsOriginalNativeSource": true,
+      "candidate": {
+        "bytes": 23501,
+        "sha256": "c184923313576d396bbf3ee44759a42905145990011352383ca9935f134597db"
+      }
+    }
+  ],
+  "candidateReceipt": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-handler-registration-fix-v2/receipt.json",
+    "sha256": "ea8041576f2e062e51e9424b7a3e747a2a03f240b9194869c6d3716aeb4170dc"
+  },
+  "review": "Root full two-file review and independent peer clear; root verified v2 only changes new test metadata9.1.0 to actualSDK9.1.4.",
+  "protectedUnchanged": true,
+  "indexEmpty": true,
+  "statusPorcelain": "M AGENTS.md\n?? Scripts/Expo/node_modules\n?? Scripts/NativeScript/node_modules",
+  "pushed": false
+}

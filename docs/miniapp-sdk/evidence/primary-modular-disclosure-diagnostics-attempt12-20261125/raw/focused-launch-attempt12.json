@@ -1,0 +1,19 @@
+{
+  "owner": "/root/native_execution",
+  "source": "1a611764779b0a57cc57d71b26d2cd6449895d8d",
+  "status": "MEASURED_STORAGE_REVIEW_REQUIRED",
+  "pid": 6874,
+  "startedAt": "2026-11-25T03:23:16.210839+00:00",
+  "original52": "NOT_RUN",
+  "wrapperSHA256": "b8122500556429a554a1a63286e19e5af119c0f6b60d6b8c5f1ace64d54d3e8a",
+  "diagnosticState": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt12/state.json",
+  "resourceObservation": {
+    "observedAt": "2026-11-25T03:23:16.250183+00:00",
+    "df": "Filesystem   1024-blocks      Used Available Capacity iused     ifree %iused  Mounted on\n/dev/disk3s5   482797652 427106132  11806744    98% 5752085 118067440    5%   /System/Volumes/Data\n",
+    "freeBytes": 12090105856,
+    "estimatedIncrementalBytes": 11811160064,
+    "concurrentGrowthAndOSAllowanceBytes": 4294967296,
+    "basis": "One fresh dedicated simulator; retained measured6.2GB data footprint,0.6GB evidence, existing compatible product cache and <=4GB incremental compilation. No CPU-idle/load/job-count gate."
+  },
+  "finishedAt": "2026-11-25T03:23:16.250229+00:00"
+}

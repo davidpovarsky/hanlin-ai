@@ -1,0 +1,463 @@
+{
+  "schema": 1,
+  "copiedFiles": [
+    {
+      "path": "terminal/outer-state.json",
+      "bytes": 12578,
+      "sha256": "71a93134e5d50959d368d3bec2e10cde7f2214fab05606da702d75cd7da87b6b",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/outer-state.json"
+    },
+    {
+      "path": "terminal/outer-ledger.json",
+      "bytes": 6158,
+      "sha256": "62fec27bb62ea8be73c70ce3386ab9382aedc82bb75aa4e91f3bde9f0e078ea8",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/outer-ledger.json"
+    },
+    {
+      "path": "terminal/outer-runner.log.gz",
+      "bytes": 1984,
+      "sha256": "83e3b0f07b6c4a6c1f5fd688770abbd5f2ffc9c7bd3b162148be59d742dbf9a8",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/outer-runner.log.gz"
+    },
+    {
+      "path": "terminal/acceptance.json",
+      "bytes": 29600,
+      "sha256": "baba32ca541c6e8a087e6fed91ed0aedb3d34ea6d5f3f50858c4aae40958b875",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/acceptance.json"
+    },
+    {
+      "path": "terminal/test-summary.json",
+      "bytes": 1990,
+      "sha256": "b59fab35b496fc73d74cf081a1cffa954cc03b5bd3a858cbc50dec13e359ea05",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/test-summary.json"
+    },
+    {
+      "path": "terminal/test-nodes.json",
+      "bytes": 22363,
+      "sha256": "0227a44dc4532aad95821f625e2f5a19debb18c579983e8bba5ccb99d96e4568",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/test-nodes.json"
+    },
+    {
+      "path": "terminal/requested-tests.log.gz",
+      "bytes": 75,
+      "sha256": "640232ab2a02d5f6ef89211eba5cc0f82e226a0d760c715a6176a1e10c57ad1e",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/requested-tests.log.gz"
+    },
+    {
+      "path": "terminal/original-runtimes-summary.json",
+      "bytes": 3534,
+      "sha256": "26c8b33adbb9e3c5d5ba8089a411750f3901605afdfe8be7cbcf708ac60cead0",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/original-runtimes-summary.json"
+    },
+    {
+      "path": "terminal/original-runtimes-nodes.json",
+      "bytes": 22895,
+      "sha256": "05d9f3551588d8940286ca97de62605cc123a267a359eb738d8d27a0f963e81e",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/original-runtimes-nodes.json"
+    },
+    {
+      "path": "terminal/original-runtimes-selected-tests.log.gz",
+      "bytes": 75,
+      "sha256": "640232ab2a02d5f6ef89211eba5cc0f82e226a0d760c715a6176a1e10c57ad1e",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/original-runtimes-selected-tests.log.gz"
+    },
+    {
+      "path": "terminal/paired-tests.log.gz",
+      "bytes": 13140,
+      "sha256": "d7b6324d38a408df747b1b0a5eb075acf1ed7a2e796da82ca290204a35f55312",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/paired-tests.log.gz"
+    },
+    {
+      "path": "terminal/original-runtimes.log.gz",
+      "bytes": 50390,
+      "sha256": "edbc20a85d5f438244ca0f8c939fc16803520e932f21d672d135122fd063aae8",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/original-runtimes.log.gz"
+    },
+    {
+      "path": "terminal/commands.jsonl.gz",
+      "bytes": 5405,
+      "sha256": "81f0dd029d8765f375ce02161a44b6d9796b86a123622fff8a638887031c6a54",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/commands.jsonl.gz"
+    },
+    {
+      "path": "terminal/command-events.jsonl.gz",
+      "bytes": 13429,
+      "sha256": "862fa480bd82daf98e51669fb7832d178ceefbc89d1fbee3ba971404a623196d",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/command-events.jsonl.gz"
+    },
+    {
+      "path": "terminal/created-simulator.txt",
+      "bytes": 37,
+      "sha256": "30f36492f55131b3bc1361cd8ad4ba6bb4f337bd54fca300dd881c4df46f57e6",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/created-simulator.txt"
+    },
+    {
+      "path": "terminal/hosted-fixture-built-check.json",
+      "bytes": 1418,
+      "sha256": "072304963e1427286dee6365c4541496729de186116f5469405d157423bf1a4f",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/hosted-fixture-built-check.json"
+    },
+    {
+      "path": "terminal/mini-build.log.gz",
+      "bytes": 66851,
+      "sha256": "992991b3a9c46634fdcec2fb13576e64d446d62488f4ecfa7951a271eb0364a1",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/mini-build.log.gz"
+    },
+    {
+      "path": "terminal/ai-build.log.gz",
+      "bytes": 54104,
+      "sha256": "2033c463bf5694d4b712a216f8f23e7017f019d3acdac13ebe4df5720d7887a1",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/ai-build.log.gz"
+    },
+    {
+      "path": "terminal/active-command.json",
+      "bytes": 690,
+      "sha256": "9fe308c186ea79e0b6e60027a716a5c67492cf0bc9c4c744ea4453e4ba8b8d34",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/active-command.json"
+    },
+    {
+      "path": "terminal/authoring-fixture-build.log.gz",
+      "bytes": 962,
+      "sha256": "778342272738d24a1838271b42029d8f216e16c1c0be21582e145649fab8cd99",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/authoring-fixture-build.log.gz"
+    },
+    {
+      "path": "terminal/authoring-fixture-provenance.json",
+      "bytes": 4234,
+      "sha256": "95e385d877f397a4a256c073dbad59aca8966b6c0a6e7362add421fce9131008",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/authoring-fixture-provenance.json"
+    },
+    {
+      "path": "terminal/authoring-mini-data-container.txt",
+      "bytes": 157,
+      "sha256": "f73fad89077cd7cf057ad46029a145b2ec82adda8c06f48b383568a3ad0ff0c7",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/authoring-mini-data-container.txt"
+    },
+    {
+      "path": "terminal/before-boot-host-resources.txt",
+      "bytes": 36,
+      "sha256": "383b4760df6e18f59de559f86adfb83243b7d86268ace6242ce6f80f85f8c68d",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/before-boot-host-resources.txt"
+    },
+    {
+      "path": "terminal/before-boot-memory.txt",
+      "bytes": 1247,
+      "sha256": "aaf3116aabd12f0fb57b7425b7b6944ecf189f0cfcb2265a47885a3cb6a45107",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/before-boot-memory.txt"
+    },
+    {
+      "path": "terminal/before-boot-processes.txt.gz",
+      "bytes": 29590,
+      "sha256": "668be1ad1a130bf025f68093d035fe1934d092b7074ab73d01fe385543e7b99f",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/before-boot-processes.txt.gz"
+    },
+    {
+      "path": "terminal/boot.log.gz",
+      "bytes": 20,
+      "sha256": "abfbb86f9f5ddfbd9fc1a72c43ab384702ce8bae86b60f3324748485e235e61e",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/boot.log.gz"
+    },
+    {
+      "path": "terminal/bootstatus.log.gz",
+      "bytes": 635,
+      "sha256": "4f948e3bf20af0accedfcad176425f88b97933c9759d219b0556b1df6e2ca7f0",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/bootstatus.log.gz"
+    },
+    {
+      "path": "terminal/com.itorah.chavrusachat-embedded-entitlements.json",
+      "bytes": 1382,
+      "sha256": "2c9f9603c4574e012be88a9574e1e82bbfb999dd337f4d855667c48c3b1fe9d9",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/com.itorah.chavrusachat-embedded-entitlements.json"
+    },
+    {
+      "path": "terminal/com.itorah.chavrusachat-first-launch-terminate.log.gz",
+      "bytes": 20,
+      "sha256": "abfbb86f9f5ddfbd9fc1a72c43ab384702ce8bae86b60f3324748485e235e61e",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/com.itorah.chavrusachat-first-launch-terminate.log.gz"
+    },
+    {
+      "path": "terminal/com.itorah.chavrusachat-first-launch.log.gz",
+      "bytes": 49,
+      "sha256": "1f0904a05363a0c35e1293a72affc32cadef597b64c20e3a22431634089cd62a",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/com.itorah.chavrusachat-first-launch.log.gz"
+    },
+    {
+      "path": "terminal/com.itorah.chavrusachat-group-container.txt",
+      "bytes": 156,
+      "sha256": "2c5b0c327eded140b0c9bac74d2061f6ac10c683252f4692aa58134be067d4b9",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/com.itorah.chavrusachat-group-container.txt"
+    },
+    {
+      "path": "terminal/com.itorah.chavrusachat-install.log.gz",
+      "bytes": 20,
+      "sha256": "abfbb86f9f5ddfbd9fc1a72c43ab384702ce8bae86b60f3324748485e235e61e",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/com.itorah.chavrusachat-install.log.gz"
+    },
+    {
+      "path": "terminal/com.itorah.chavrusachat-ios-system-resources.json",
+      "bytes": 682,
+      "sha256": "8fb16ec2a17f0d543e5e783c7da92013bb2586bb761deabce81216c7070de80e",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/com.itorah.chavrusachat-ios-system-resources.json"
+    },
+    {
+      "path": "terminal/com.itorah.chavrusachat-signature.log.gz",
+      "bytes": 20,
+      "sha256": "abfbb86f9f5ddfbd9fc1a72c43ab384702ce8bae86b60f3324748485e235e61e",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/com.itorah.chavrusachat-signature.log.gz"
+    },
+    {
+      "path": "terminal/com.itorah.hanlinminiapps-embedded-entitlements.json",
+      "bytes": 1211,
+      "sha256": "0d0b8368d7280cc578bdc60104c9a174de97fc3b9f416ca056397299f2667bf0",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/com.itorah.hanlinminiapps-embedded-entitlements.json"
+    },
+    {
+      "path": "terminal/com.itorah.hanlinminiapps-first-launch-terminate.log.gz",
+      "bytes": 20,
+      "sha256": "abfbb86f9f5ddfbd9fc1a72c43ab384702ce8bae86b60f3324748485e235e61e",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/com.itorah.hanlinminiapps-first-launch-terminate.log.gz"
+    },
+    {
+      "path": "terminal/com.itorah.hanlinminiapps-first-launch.log.gz",
+      "bytes": 53,
+      "sha256": "27f61f75fcfc65d262a360f7f2c1ab19fcba7199af8a277e3ff3bb0d52f033c6",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/com.itorah.hanlinminiapps-first-launch.log.gz"
+    },
+    {
+      "path": "terminal/com.itorah.hanlinminiapps-group-container.txt",
+      "bytes": 156,
+      "sha256": "2c5b0c327eded140b0c9bac74d2061f6ac10c683252f4692aa58134be067d4b9",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/com.itorah.hanlinminiapps-group-container.txt"
+    },
+    {
+      "path": "terminal/com.itorah.hanlinminiapps-install.log.gz",
+      "bytes": 20,
+      "sha256": "abfbb86f9f5ddfbd9fc1a72c43ab384702ce8bae86b60f3324748485e235e61e",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/com.itorah.hanlinminiapps-install.log.gz"
+    },
+    {
+      "path": "terminal/com.itorah.hanlinminiapps-ios-system-resources.json",
+      "bytes": 687,
+      "sha256": "a3117b8ed687e411895c435b095b37dbf218a074e887c2d8b2724458ef299ef5",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/com.itorah.hanlinminiapps-ios-system-resources.json"
+    },
+    {
+      "path": "terminal/com.itorah.hanlinminiapps-signature.log.gz",
+      "bytes": 20,
+      "sha256": "abfbb86f9f5ddfbd9fc1a72c43ab384702ce8bae86b60f3324748485e235e61e",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/com.itorah.hanlinminiapps-signature.log.gz"
+    },
+    {
+      "path": "terminal/container-command-help.txt",
+      "bytes": 386,
+      "sha256": "62b5b30225c28644c70945a598f2385b4414e2f11c75c4ec2d134d6822f0053b",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/container-command-help.txt"
+    },
+    {
+      "path": "terminal/device-types.json",
+      "bytes": 64328,
+      "sha256": "96d335258081671854ac94ea0afb6ae77b8b7efc5892942fc8856d1e6f31be0f",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/device-types.json"
+    },
+    {
+      "path": "terminal/external-modal-fixture-stage.log.gz",
+      "bytes": 851,
+      "sha256": "62bff90b1c39af12dc37b3c36bcec454317ede43e3e06eafa2746dff13122459",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/external-modal-fixture-stage.log.gz"
+    },
+    {
+      "path": "terminal/external-modal-result.json",
+      "bytes": 535,
+      "sha256": "9ae186e3157034a6a3644f636ccafaf17369ace893fed035c6c27423e344cb9a",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/external-modal-result.json"
+    },
+    {
+      "path": "terminal/modular-search-build.json",
+      "bytes": 1654,
+      "sha256": "d8a840fc20e2d8c7d3717f02f16e38c565b238bbd13994a4efe764f7a1a8ed09",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/modular-search-build.json"
+    },
+    {
+      "path": "terminal/modular-search-build.log.gz",
+      "bytes": 693,
+      "sha256": "b7324fb5a8a77a0589504e7a5c6b7315600a6c257e9854b6c8932421278ca7ba",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/modular-search-build.log.gz"
+    },
+    {
+      "path": "terminal/original-a2ui-generator.log.gz",
+      "bytes": 1211,
+      "sha256": "11764a0dbce653b501afa39c3f7fe3aadfb15861d6e7b525f9945787e18c37af",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/original-a2ui-generator.log.gz"
+    },
+    {
+      "path": "terminal/originalruntimes-attachments-export.log.gz",
+      "bytes": 10003,
+      "sha256": "902200e5392ee89ae24e7fdd668f41d06aa8772c4a1c06ac85596e2e81e5b58e",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/originalruntimes-attachments-export.log.gz"
+    },
+    {
+      "path": "terminal/paired-attachments-export.log.gz",
+      "bytes": 1983,
+      "sha256": "b3bc1aacc3c8a1e23ad7315a844e37955f781a0238146326fc6eb49e04123009",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/paired-attachments-export.log.gz"
+    },
+    {
+      "path": "terminal/runtimes.json",
+      "bytes": 45201,
+      "sha256": "8ffab85d0c400fc9fe452582668daf01679d31c2492b1cf48f406be98ef70d71",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/runtimes.json"
+    },
+    {
+      "path": "terminal/sample-package-hashes.json",
+      "bytes": 443,
+      "sha256": "996ce32170c65791e393d2686a8be00a726f2340e2cb12e689ff4825f85c425d",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/sample-package-hashes.json"
+    },
+    {
+      "path": "terminal/sdk-only-departure-budget-build.json",
+      "bytes": 1679,
+      "sha256": "d87d0bc4cb1a823930989c35007089a4071c92ff33e798f0a0c091410138e74d",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/sdk-only-departure-budget-build.json"
+    },
+    {
+      "path": "terminal/sdk-only-departure-budget-build.log.gz",
+      "bytes": 710,
+      "sha256": "89521a01c8f2ad4413bfa5d4056811487eb2e192c86a9300b8143b8c7707638a",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/sdk-only-departure-budget-build.log.gz"
+    },
+    {
+      "path": "terminal/sdk-only-package-provenance.json",
+      "bytes": 2573,
+      "sha256": "1fe6e0329fd83cca78c8f7bc5acedca66492f85d675ef8601c18fc895c1a10bc",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/sdk-only-package-provenance.json"
+    },
+    {
+      "path": "terminal/sdk-only-table-share-build.json",
+      "bytes": 1223,
+      "sha256": "3e7020440ca4002548c1a23e12157f94724860f47d628659e84a603e5f6b6bdf",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/sdk-only-table-share-build.json"
+    },
+    {
+      "path": "terminal/sdk-only-table-share-build.log.gz",
+      "bytes": 565,
+      "sha256": "3d590aab6e63d66698491aeccf7efbb0b0a8d76de452ca7db046184005b9f88b",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/sdk-only-table-share-build.log.gz"
+    },
+    {
+      "path": "terminal/sdk.txt",
+      "bytes": 5,
+      "sha256": "7b01c549928398a045692f24bcac7803b348524cdd76f21265b02984b2ba556a",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/sdk.txt"
+    },
+    {
+      "path": "terminal/source-sha.txt",
+      "bytes": 41,
+      "sha256": "5623d70dcfee926e83650635f0c6c7f18877aaebcde983de83d7a7b5f8c86b2e",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/source-sha.txt"
+    },
+    {
+      "path": "terminal/external-modal-fixture--staging.json",
+      "bytes": 2097,
+      "sha256": "21cf619482ce77a809cb5d94f512e3e8b247505004f1c654dc2a149e763483ee",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/external-modal-fixture--staging.json"
+    },
+    {
+      "path": "terminal/paired52-sdk20-v2-launch.json",
+      "bytes": 1436,
+      "sha256": "d06fca714b6d042c310766f243ebdf178b43e403802250faee0e2ac82e8e106b",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/paired52-sdk20-v2-launch.json"
+    },
+    {
+      "path": "terminal/paired52-sdk20-v2-launch.log.gz",
+      "bytes": 20,
+      "sha256": "abfbb86f9f5ddfbd9fc1a72c43ab384702ce8bae86b60f3324748485e235e61e",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/paired52-sdk20-v2-launch.log.gz"
+    },
+    {
+      "path": "terminal/paired52-sdk20-v2-decision.json",
+      "bytes": 47750,
+      "sha256": "10e76a4916899f9345cb30421cc4b84566b1cf2b0f054005c70e80c52dce5928",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/paired52-sdk20-v2-decision.json"
+    },
+    {
+      "path": "terminal/paired52-sdk20-v4b.py",
+      "bytes": 25006,
+      "sha256": "a9040dd634acfe7d1d01d6f477771f9033ab305cde9576b1b5d5ad6423726bcb",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/paired52-sdk20-v4b.py"
+    },
+    {
+      "path": "terminal/run-original-paired-with-hosted-check-v1.py",
+      "bytes": 3819,
+      "sha256": "a31179f13706cf7a130bef2768afaf316ae541350d3dd439bf4fa6773bd4a825",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/run-original-paired-with-hosted-check-v1.py"
+    },
+    {
+      "path": "terminal/receipt.json",
+      "bytes": 45463,
+      "sha256": "17ed05e188d53a743e5d15d4bd9f5b697a329755d9e4866d2199ea01c91eb4fa",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/receipt.json"
+    },
+    {
+      "path": "products/AI_HLY_iphonesimulator27.0-arm64.xctestrun",
+      "bytes": 10920,
+      "sha256": "b2cc79f4b3780daec837e119cc5e4a07d5ecccd618ab793b88bb0b80dbfa2062",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-built-inputs/AI_HLY_iphonesimulator27.0-arm64.xctestrun"
+    },
+    {
+      "path": "products/HanlinMiniApps_iphonesimulator27.0-arm64.xctestrun",
+      "bytes": 16737,
+      "sha256": "2d6b493aa93663d03e17a15722eab010326b260ccbbb454ed12077cae45cda96",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-built-inputs/HanlinMiniApps_iphonesimulator27.0-arm64.xctestrun"
+    },
+    {
+      "path": "products/built-input-bindings.json",
+      "bytes": 13999,
+      "sha256": "799f464fcd5edae6e7218be4e0d461bbc9a899e1bb07516e298097b1d32bdc47",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-built-inputs/built-input-bindings.json"
+    },
+    {
+      "path": "products/remaining-native-product-metadata.json",
+      "bytes": 12497,
+      "sha256": "7222a7f3d589d2484a7b7b0eb709b5fc65afce35ddd85a8a2ba8f56afa48ccff",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-built-inputs/remaining-native-product-metadata.json"
+    },
+    {
+      "path": "products/build-commands-through-capture.jsonl",
+      "bytes": 12972,
+      "sha256": "c14b358bbe943fb9e7cb00aad9be35c2ab4d540f618a1a65a631d0228b747043",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-built-inputs/build-commands-through-capture.jsonl"
+    },
+    {
+      "path": "products/hosted-fixture-built-check.json",
+      "bytes": 1418,
+      "sha256": "072304963e1427286dee6365c4541496729de186116f5469405d157423bf1a4f",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-built-inputs/hosted-fixture-built-check.json"
+    },
+    {
+      "path": "products/receipt.json",
+      "bytes": 2707,
+      "sha256": "31f262c7121f6e84205e22121dfefb4194a4ac644d31ac582f73265fd8e06e68",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-built-inputs/receipt.json"
+    },
+    {
+      "path": "xcresult-archive/receipt.json",
+      "bytes": 1460,
+      "sha256": "c4ee4f9d4ac1d40cca84735e19b3921da08fccc4b4601a803ff5e1440411423c",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-xcresult-archive/receipt.json"
+    },
+    {
+      "path": "xcresult-archive/original-results-manifest.json",
+      "bytes": 189371,
+      "sha256": "21f7c9097a66f2e8ce5c2314975432ff4112eb379c5487e214a850c664390d46",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-xcresult-archive/original-results-manifest.json"
+    },
+    {
+      "path": "root-verification.json",
+      "bytes": 1587,
+      "sha256": "6fe8ca9b652f71567b067c6f64235efe37e253fe09cd61415b5b960fed50d379",
+      "originalEvidencePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/root-current-full52-sdk20-v2-verification.json"
+    }
+  ],
+  "count": 76,
+  "boundary": "Exact proof copies only; no production source or original evidence changed."
+}

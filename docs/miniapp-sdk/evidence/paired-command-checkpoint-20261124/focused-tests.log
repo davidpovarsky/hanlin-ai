@@ -1,0 +1,45 @@
+test_external_termination_preserves_precompletion_checkpoint_and_partial_output_through_cleanup (__main__.PairedCommandEvidenceTests.test_external_termination_preserves_precompletion_checkpoint_and_partial_output_through_cleanup) ... Paired command starting: cleanup.log; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: cleanup.log; pid=3476988; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: cleanup.log; pid=3476988; elapsed=0.0s; log_bytes=8; observed_exit=0
+ok
+test_keyboard_interrupt_keeps_child_cleanup_and_unfinished_receipt (__main__.PairedCommandEvidenceTests.test_keyboard_interrupt_keeps_child_cleanup_and_unfinished_receipt) ... FAIL
+test_nonzero_and_signal_exit_keep_failure_policy_without_inventing_timeout (__main__.PairedCommandEvidenceTests.test_nonzero_and_signal_exit_keep_failure_policy_without_inventing_timeout) ... Paired command starting: failed.log; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: failed.log; pid=3476994; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: failed.log; pid=3476994; elapsed=0.0s; log_bytes=7; observed_exit=7
+Paired command starting: allowed.log; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: allowed.log; pid=3476996; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: allowed.log; pid=3476996; elapsed=0.0s; log_bytes=7; observed_exit=7
+Paired command starting: signal.log; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: signal.log; pid=3476998; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: signal.log; pid=3476998; elapsed=0.0s; log_bytes=0; observed_exit=-1
+ok
+test_success_keeps_streamed_output_environment_and_completed_contract (__main__.PairedCommandEvidenceTests.test_success_keeps_streamed_output_environment_and_completed_contract) ... Paired command starting: success.log; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: success.log; pid=3477000; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: success.log; pid=3477000; elapsed=0.0s; log_bytes=102; observed_exit=0
+ok
+test_timeout_retains_partial_output_kills_child_and_preserves_minus_one (__main__.PairedCommandEvidenceTests.test_timeout_retains_partial_output_kills_child_and_preserves_minus_one) ... Paired command starting: timeout.log; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: timeout.log; pid=3477002; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: timeout.log; pid=3477002; elapsed=0.1s; log_bytes=15; observed_exit=None
+Paired command running: timeout.log; pid=3477002; elapsed=0.1s; log_bytes=15; observed_exit=None
+Paired command running: timeout.log; pid=3477002; elapsed=0.2s; log_bytes=15; observed_exit=None
+Paired command timed_out: timeout.log; pid=3477002; elapsed=0.2s; log_bytes=15; observed_exit=-9
+Paired command starting: timeout-error.log; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: timeout-error.log; pid=3477004; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: timeout-error.log; pid=3477004; elapsed=0.1s; log_bytes=15; observed_exit=None
+Paired command running: timeout-error.log; pid=3477004; elapsed=0.1s; log_bytes=15; observed_exit=None
+Paired command running: timeout-error.log; pid=3477004; elapsed=0.2s; log_bytes=15; observed_exit=None
+Paired command timed_out: timeout-error.log; pid=3477004; elapsed=0.2s; log_bytes=15; observed_exit=-9
+ok
+
+======================================================================
+FAIL: test_keyboard_interrupt_keeps_child_cleanup_and_unfinished_receipt (__main__.PairedCommandEvidenceTests.test_keyboard_interrupt_keeps_child_cleanup_and_unfinished_receipt)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-miniapps-command-checkpoint-20261124/Scripts/ProductSplit/test_run_paired_acceptance.py", line 140, in test_keyboard_interrupt_keeps_child_cleanup_and_unfinished_receipt
+    self.assertEqual(final["observed_returncode"], -signal.SIGKILL)
+AssertionError: None != -9
+
+----------------------------------------------------------------------
+Ran 5 tests in 1.200s
+
+FAILED (failures=1)

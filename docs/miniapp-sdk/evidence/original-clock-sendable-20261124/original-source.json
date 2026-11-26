@@ -1,0 +1,11 @@
+{
+  "atUTC": "2026-11-24T07:42:39.601768+00:00",
+  "repository": "everettjf/scriptwidget",
+  "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
+  "path": "Shared/ScriptWidgetRuntime/Widget/Component/Attributes/Animation/ClockHandRotationEffect.swift",
+  "gitBlob": "75a6f1301cfed1a5a7e95c7f7cf5f704eddbd778",
+  "sha256": "3158af2c8f4b3aed89c478f58484933b70e1235035fbcec4e2ed5b8ae2b549f8",
+  "bytes": 6140,
+  "fixture": "Scripts/MiniApps/Tests/Fixtures/scriptwidget-4da256d5/ClockHandRotationEffect.swift",
+  "testedBase": "df436d7650bc5918d29707868565fc114e65c445"
+}

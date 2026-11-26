@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-25T10:56:45.048486+00:00",
+  "status": "EXACT_STREAM_RECONSTRUCTION_PASS",
+  "base": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/user-deliverables-sdk18/Hanlin-MiniApp-SDK-2026-11-25.zip",
+    "bytes": 68726436,
+    "sha256": "78e8a83d42ebfba2c9c8194acf6a0c16d3c7aab92d0ad2fbc4ecc137930226dd"
+  },
+  "output": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/user-deliverables-sdk19/Hanlin-MiniApp-SDK-2026-11-25.zip",
+    "bytes": 68726642,
+    "sha256": "1bf347311b9547054725f8674419a11b3c502a4994feb6dbd9283c3af7400210"
+  },
+  "delta": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/user-deliverables-sdk19/SDK18-to-SDK19-exact.delta.zip",
+    "bytes": 2683094,
+    "sha256": "6974fe7da2dceadec9cac10a328f9053e079c5dc92956081b1f35715bff22de9"
+  },
+  "helper": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk-transport-delta-v1/apply_exact_zip_delta.py",
+    "bytes": 4064,
+    "sha256": "a88bbdacbcbb08d9d03dd7ecd4e39d3bcd5108772e734a8679889d2f1305f27e"
+  },
+  "operationCount": 51295,
+  "baseBytesReused": 61377904,
+  "insertedBytes": 7348738,
+  "wholeLocalRecordsReused": 0,
+  "compressedPayloadsReused": 25665,
+  "verification": "Authenticated base + compressed insertion stream reconstructed the full expected SDK19 byte count and SHA256 in a streaming hash sink. No duplicate reconstructed ZIP or expanded SDK tree was written. Existing exact application helper format is unchanged.",
+  "sourceProducer": "a2c8a1b1be746461272ba77254603304567c309d",
+  "sourceSnapshotReceiptSHA256": "037889771056c2ac5b5051d74156ce3fb65b0d257d2183b8b4630863257f4b9c"
+}

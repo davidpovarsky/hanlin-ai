@@ -17,6 +17,9 @@ public struct HanlinMiniAppHostContext: Sendable {
     public let network: @Sendable (URL) async throws -> String
     public let dismiss: @MainActor @Sendable () -> Void
     public let requestWidgetRefresh: (@MainActor @Sendable () -> Void)?
+    /// Input and return route for this foreground invocation, independent per scene.
+    public let sharedInput: HanlinValue?
+    public let completeSharedRequest: (@MainActor @Sendable (HanlinValue) async throws -> Void)?
 
     public init(
         appID: HanlinAppID,
@@ -24,7 +27,9 @@ public struct HanlinMiniAppHostContext: Sendable {
         requestBroker: HanlinMiniAppRequestBroker,
         network: @escaping @Sendable (URL) async throws -> String,
         dismiss: @escaping @MainActor @Sendable () -> Void = {},
-        requestWidgetRefresh: (@MainActor @Sendable () -> Void)? = nil
+        requestWidgetRefresh: (@MainActor @Sendable () -> Void)? = nil,
+        sharedInput: HanlinValue? = nil,
+        completeSharedRequest: (@MainActor @Sendable (HanlinValue) async throws -> Void)? = nil
     ) {
         self.appID = appID
         self.storage = storage
@@ -32,6 +37,8 @@ public struct HanlinMiniAppHostContext: Sendable {
         self.network = network
         self.dismiss = dismiss
         self.requestWidgetRefresh = requestWidgetRefresh
+        self.sharedInput = sharedInput
+        self.completeSharedRequest = completeSharedRequest
     }
 }
 

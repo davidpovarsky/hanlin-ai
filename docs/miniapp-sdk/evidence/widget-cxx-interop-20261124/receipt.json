@@ -1,0 +1,102 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-11-24T10:24:03.514763+00:00",
+  "baseCommit": "d9d3bcd1fb04b7bc68836691de7641f607740b55",
+  "nativeFailure": {
+    "runID": 45365620977,
+    "sourcePrefix": "6d9a59bf",
+    "logSHA256": "423fc5a44046a27e6924c9b99a5954177835dc3fb95918da3e1c18c2635bab59",
+    "excerpt": "native-failure-excerpt.log",
+    "excerptLines": [
+      49141,
+      49148
+    ],
+    "diagnostic": "ExpoWidgets was built with C++ interoperability enabled, but HanlinScriptingWidgets current compilation does not enable it.",
+    "artifactRegistry": [
+      {
+        "id": 14909676649,
+        "name": "app-split-45365620977",
+        "size_in_bytes": 333778731,
+        "digest": "sha256:223f3fb87e311948950a5bbcb15c5c83829c8e67cafe59e8e9d8853626fd6be5"
+      }
+    ],
+    "rawRunEvidenceOwner": "root; docs/miniapp-sdk/evidence/native-gate-11-widget-interop-20261124/",
+    "appleRetest": "NOT_RUN"
+  },
+  "applicability": {
+    "Packages/HanlinWidgetSDK/Package.swift": {
+      "nativeRunSHA256": "89f76fb97945ba2a963f010e67ea707507826ad80896d2f737a9887c461088dc",
+      "preFixSHA256": "89f76fb97945ba2a963f010e67ea707507826ad80896d2f737a9887c461088dc",
+      "unchangedSinceNativeRun": true
+    },
+    "Packages/HanlinExpoRuntime/Package.swift": {
+      "nativeRunSHA256": "116a910cffe061ff3eea0e289402bc51769d3268daedc94ea5b1e043e6d109a4",
+      "preFixSHA256": "116a910cffe061ff3eea0e289402bc51769d3268daedc94ea5b1e043e6d109a4",
+      "unchangedSinceNativeRun": true
+    }
+  },
+  "changes": [
+    "Source HanlinWidgetSDK assigns the original ExpoWidgets Cxx + Clang import settings to HanlinScriptingWidgets and its public HanlinWidgetUI re-export. Both consumers retain package Swift6.",
+    "Existing generate_manifest.py already preserves these settings; evaluated generation updates only the two unified target definitions and the source manifest digest receipt.",
+    "update_project.py reads ExpoWidgets' evaluated import flags, maps repository paths to SRCROOT and configures the original Xcode widget host; the existing MiniApps extension cloning path inherits that same configuration.",
+    "Only four Xcode Debug/Release configuration objects change, each only OTHER_SWIFT_FLAGS and SWIFT_OBJC_INTEROP_MODE. Target, source, resources, module identities, signing and selectors are unchanged."
+  ],
+  "closure": {
+    "missingModeFixed": [
+      "SPM HanlinScriptingWidgets",
+      "SPM HanlinWidgetUI",
+      "Xcode HanlinScriptingWidgetsHost",
+      "Xcode HanlinMiniAppsWidgetsHost"
+    ],
+    "existingModePreserved": [
+      "SPM HanlinExpoRuntime",
+      "SPM AI_Hanlin",
+      "Xcode HanlinApp",
+      "Xcode HanlinMiniApps",
+      "Xcode AI_HLYTests",
+      "Xcode HanlinMiniAppsTests"
+    ],
+    "producerOriginalManifestUnchanged": "116a910cffe061ff3eea0e289402bc51769d3268daedc94ea5b1e043e6d109a4",
+    "scope": "Existing direct ExpoWidgets imports and HanlinWidgetUI re-export; no new runtime or dependency."
+  },
+  "checks": [
+    {
+      "status": "EXECUTED_FAIL",
+      "command": "before.command.json",
+      "tests": 1,
+      "failures": 2,
+      "errors": 4,
+      "meaning": "Both SPM consumers lack the mode/import settings; all four native host build configurations lack the mode."
+    },
+    {
+      "status": "EXECUTED_PASS",
+      "command": "after.command.json",
+      "tests": 1,
+      "scope": "Actual SwiftPM source/unified manifests, original setting parity, actual generated target bodies, real Xcode project producer/clone and idempotence."
+    },
+    {
+      "status": "EXECUTED_PASS",
+      "command": "manifest-generate.command.json",
+      "scope": "Regenerate unified package from source manifests."
+    },
+    {
+      "status": "EXECUTED_PASS",
+      "command": "project-generate.command.json",
+      "scope": "Regenerate actual project with existing producer."
+    }
+  ],
+  "limitations": [
+    "No Apple-framework typecheck, simulator run, native tests, CI, artifact download, package installation or full source SDK audit in this lane.",
+    "Original producer flags/defines/search paths stay intact; this patch does not claim external cancellation or app behavior is fixed."
+  ],
+  "officialSource": {
+    "url": "https://www.swift.org/documentation/cxx-interop/project-build-setup/",
+    "verifiedSections": [
+      "Enabling C++ Interoperability in a Package Target",
+      "Vending Packages That Enable C++ Interoperability",
+      "Enabling C++ Interoperability in Xcode",
+      "Importing a C++ Clang Module When Invoking Compiler Directly"
+    ]
+  },
+  "sourceHashes": "source-hashes.json"
+}

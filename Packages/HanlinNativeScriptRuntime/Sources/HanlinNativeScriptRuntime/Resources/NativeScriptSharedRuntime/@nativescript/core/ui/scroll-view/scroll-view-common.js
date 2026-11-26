@@ -10,6 +10,12 @@ let ScrollViewBase = ScrollViewBase_1 = class ScrollViewBase extends ContentView
         super(...arguments);
         this._addedScrollEvent = false;
     }
+    addScrollEdgeContainer(view, edge) {
+        // iOS 26+ only; see the iOS implementation.
+    }
+    removeScrollEdgeContainer(view) {
+        // iOS 26+ only; see the iOS implementation.
+    }
     addEventListener(eventName, callback, thisArg, once) {
         const hasExistingScrollListeners = this.hasListeners(ScrollViewBase_1.scrollEvent);
         super.addEventListener(eventName, callback, thisArg, once);
@@ -99,4 +105,11 @@ export const iosContentInsetAdjustmentBehaviorProperty = new Property({
     valueConverter: insetAdjustmentConverter,
 });
 iosContentInsetAdjustmentBehaviorProperty.register(ScrollViewBase);
+const scrollEdgeEffectConverter = makeParser(makeValidator('automatic', 'soft', 'hard', 'none'));
+export const iosScrollEdgeEffectProperty = new Property({
+    name: 'iosScrollEdgeEffect',
+    defaultValue: 'automatic',
+    valueConverter: scrollEdgeEffectConverter,
+});
+iosScrollEdgeEffectProperty.register(ScrollViewBase);
 //# sourceMappingURL=scroll-view-common.js.map

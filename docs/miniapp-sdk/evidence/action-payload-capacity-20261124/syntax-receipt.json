@@ -1,0 +1,34 @@
+{
+  "command": [
+    "swiftc",
+    "-frontend",
+    "-parse",
+    "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
+    "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
+    "AI_HLYTests/HanlinMiniAppStorageCapacityTests.swift",
+    "Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/HanlinNativePresentationView.swift",
+    "Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinMiniAppActionChannel.swift",
+    "Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinMiniAppRequestBroker.swift",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptAppIntentBridge.swift",
+    "Packages/HanlinPlatform/Tests/HanlinMiniAppCoreTests/HanlinMiniAppActionChannelTests.swift",
+    "Packages/HanlinPlatform/Tests/HanlinMiniAppCoreTests/HanlinMiniAppRequestLifetimeTests.swift",
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinInvocationQueueTests.swift"
+  ],
+  "exitCode": 0,
+  "diffCheckExitCode": 0,
+  "sourceHashes": {
+    "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift": "e792e0c8eb6424ca8e989c571746c0679c37c612996e8ea95e8a4e78986e1b16",
+    "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift": "e8da50eb4d076d995135132810444f16900a65d55edd901270a2af07132a57a3",
+    "AI_HLYTests/HanlinMiniAppStorageCapacityTests.swift": "95ea844181b906f5449dab7129646b7e8144d71abba7894be62b9681c6d8227d",
+    "Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/HanlinNativePresentationView.swift": "2a25a2bf539f6b19ba96f12cfd4e730d02675d16a0a02d1214116a9614189b2c",
+    "Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinMiniAppActionChannel.swift": "6b759f6c21148cd3b0678b8f32e4c4e04c913aa0d646f2a2e705eb103f8de98e",
+    "Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinMiniAppRequestBroker.swift": "01bf31169e04ca73898fc830d72e0d8824c43563678291823103ac978f114f2c",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift": "fbc500e1ee59d0d5c014ee0d0dcf54f9bd0048e2696267f27c276666086878b6",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptAppIntentBridge.swift": "ce28dca905466819536ac77b4a740091bc7092f8096f3ce3dc70ea02ab97a78f",
+    "Packages/HanlinPlatform/Tests/HanlinMiniAppCoreTests/HanlinMiniAppActionChannelTests.swift": "e6842b24c6271dc8f8ba850ebb7e800cdff37c4c0af9b11660a31b3af9ad7e3a",
+    "Packages/HanlinPlatform/Tests/HanlinMiniAppCoreTests/HanlinMiniAppRequestLifetimeTests.swift": "c45b65971304d9279edbe71212d58a79257fa1613481d07c28e2bbc4d14b6c1e",
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinInvocationQueueTests.swift": "6638cda3c9e55db4979bbd9c13f021f748db96a6b6cbf36a2bea5b22f686fa2f"
+  },
+  "scope": "Swift syntax only, no Apple SDK compilation or native execution."
+}

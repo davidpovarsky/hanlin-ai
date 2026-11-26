@@ -5,28 +5,35 @@ import Darwin
 #endif
 
 extension HanlinScriptExtensionStore {
-    // Explicit ingress/result budgets; attachments belong in owned artifact
-    // storage. Rejection is visible and never truncates an accepted value.
-    private static let maximumCommandBytes = 256 * 1_024
-    private static let maximumReceiptBytes = 4 * 1_024 * 1_024
-
     public func enqueue(_ command: HanlinScriptResumeCommand) throws {
+        try withLock { try enqueueUnlocked(command) }
+    }
+
+    /// Atomically validates the current published origin and retains the original
+    /// command's timestamps on an exact retry. No nested store lock is acquired.
+    func enqueueValidated(_ id: UUID,
+        makeCommand: (HanlinScriptExtensionSnapshot?, HanlinScriptResumeCommand?) throws -> HanlinScriptResumeCommand
+    ) throws -> HanlinScriptResumeCommand {
         try withLock {
-            try validateCommand(command)
-            if let existing = try readCommand(command.id) {
-                guard try Self.encoded(existing.command) == Self.encoded(command) else {
-                    throw HanlinInvocationQueueError.duplicateIdentity
-                }
-                return // A repeated delivery cannot clear a lease or receipt.
+            let command = try makeCommand(try loadUnlocked().snapshot, try readCommand(id)?.command)
+            guard command.id == id else { throw HanlinInvocationQueueError.invalidEnvelope }
+            try enqueueUnlocked(command)
+            guard let persisted = try readCommand(id)?.command else {
+                throw HanlinInvocationQueueError.missingCommand
             }
-            let active = try commandURLs().reduce(0) { count, url in
-                // An unreadable item still occupies ingress capacity. It must
-                // neither block every healthy enqueue nor bypass the bound.
-                count + ((try? readCommandURL(url).currentReceipt.status.isTerminal) == true ? 0 : 1)
-            }
-            guard active < 128 else { throw HanlinInvocationQueueError.queueFull }
-            try writeCommand(.init(command))
+            return persisted
         }
+    }
+
+    private func enqueueUnlocked(_ command: HanlinScriptResumeCommand) throws {
+        try validateCommand(command)
+        if let existing = try readCommand(command.id) {
+            guard try Self.encoded(existing.command) == Self.encoded(command) else {
+                throw HanlinInvocationQueueError.duplicateIdentity
+            }
+            return // A repeated delivery cannot clear a lease or receipt.
+        }
+        try writeCommand(.init(command))
     }
 
     public func pendingCommands(limit: Int = 64) throws -> [HanlinScriptResumeCommand] {
@@ -136,8 +143,8 @@ extension HanlinScriptExtensionStore {
                          value: HanlinValue? = nil, failure: HanlinInvocationReceipt.Failure? = nil,
                          now: Date = .now) throws {
         guard status.isTerminal, status != .acknowledged, status != .succeeded || failure == nil else { throw HanlinInvocationQueueError.invalidTransition }
-        // Validate the original canonical value with its real depth/size limits.
-        if let value { _ = try value.canonicalJSONData(limits: .init(maximumPayloadBytes: Self.maximumReceiptBytes)) }
+        // Preserve typed-value validation without an additional Host payload quota.
+        if let value { _ = try value.canonicalJSONData(limits: .unbounded) }
         try withLock {
             // Completion may follow cooperative cancellation/draining after a
             // deadline. The token still fences out any replacement owner.
@@ -185,13 +192,12 @@ extension HanlinScriptExtensionStore {
     }
 
     private func validateCommand(_ command: HanlinScriptResumeCommand) throws {
-        guard command.createdAt.timeIntervalSince1970.isFinite,
-              try Self.encoded(command).count <= Self.maximumCommandBytes else { throw HanlinInvocationQueueError.invalidEnvelope }
-        _ = try command.invocation.parameters.canonicalJSONData(limits: .init(maximumPayloadBytes: Self.maximumCommandBytes))
+        guard command.createdAt.timeIntervalSince1970.isFinite else { throw HanlinInvocationQueueError.invalidEnvelope }
+        _ = try command.invocation.parameters.canonicalJSONData(limits: .unbounded)
         if let delivery = command.invocation.delivery {
             guard delivery.schemaVersion == 1, delivery.expiresAt.timeIntervalSince1970.isFinite,
                   delivery.expiresAt > command.createdAt,
-                  delivery.expiresAt.timeIntervalSince(command.createdAt) <= 86_400,
+                  delivery.expiresAt.timeIntervalSince(command.createdAt) <= HanlinInvocationDelivery.maximumLifetime,
                   (1...16).contains(delivery.maximumAttempts),
                   delivery.idempotent || delivery.maximumAttempts == 1,
                   let action = command.invocation.entityID, (try? HanlinActionID(validating: action)) != nil else {
@@ -230,16 +236,14 @@ extension HanlinScriptExtensionStore {
         let handle = FileHandle(fileDescriptor: fd, closeOnDealloc: true)
         defer { try? handle.close() }
         var info = stat()
-        guard fstat(fd, &info) == 0, info.st_mode & S_IFMT == S_IFREG,
-              info.st_size <= Self.maximumReceiptBytes + Self.maximumCommandBytes, info.st_nlink == 1 else {
+        guard fstat(fd, &info) == 0, info.st_mode & S_IFMT == S_IFREG, info.st_nlink == 1 else {
             throw HanlinInvocationQueueError.invalidEnvelope
         }
-        let data = try handle.read(upToCount: Self.maximumReceiptBytes + Self.maximumCommandBytes + 1) ?? Data()
+        let data = try handle.readToEnd() ?? Data()
 #else
         throw HanlinScriptExtensionStoreError.appGroupUnavailable
 #endif
 #if canImport(Darwin)
-        guard data.count <= Self.maximumReceiptBytes + Self.maximumCommandBytes else { throw HanlinInvocationQueueError.invalidEnvelope }
         let record = try Self.decoded(HanlinInvocationRecord.self, from: data)
         guard record.id == id, record.deliverySchemaVersion == nil || record.deliverySchemaVersion == 1,
               record.deliverySchemaVersion == nil || record.receipt != nil,
@@ -264,7 +268,6 @@ extension HanlinScriptExtensionStore {
         let url = commandURL(record.id)
         try rejectSymlinks(to: url, phase: .actionPerform)
         let data = try Self.encoded(record)
-        guard data.count <= Self.maximumReceiptBytes + Self.maximumCommandBytes else { throw HanlinInvocationQueueError.invalidEnvelope }
         try data.write(to: url, options: [.atomic, .completeFileProtectionUntilFirstUserAuthentication])
         if record.currentReceipt.status.isTerminal {
             try rejectSymlinks(to: receiptRoot, phase: .actionPerform)

@@ -1,0 +1,344 @@
+{
+  "schema": 1,
+  "observedAt": "2026-11-25T20:51:59.403994+00:00",
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "device": "2EFAD83F-45A2-4A8B-B326-16B83BC56DA9",
+  "stateSHA256": "b28e10666a324436171352f6f7d821c1186f4d174a35ed90ec03ecb2aabefa74",
+  "containersAuthoritySHA256": "ac2835071f55e60529cdadb009381d6feb44c0deacfb969a75f24f4da781c23c",
+  "eventID": "1a36dea1-72a1-4ba4-b23d-f36ad3f693b5",
+  "containers": {
+    "appData": {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/2EFAD83F-45A2-4A8B-B326-16B83BC56DA9/data/Containers/Data/Application/0BB6D895-F0A0-4D43-820F-8C8555914BFA",
+      "metadataSHA256": "0fdef8b0e58640968540d9faafb7d92446ff9f3a2952a92556da905c1fecd289",
+      "metadata": {
+        "MCMMetadataIdentifier": "com.itorah.hanlinminiapps",
+        "MCMMetadataInfo": {
+          "com.apple.MobileInstallation.ContentProtectionClass": 0
+        },
+        "MCMMetadataVersion": 9,
+        "MCMMetadataUserIdentity": {
+          "posixUID": 501,
+          "posixGID": 20,
+          "type": 2,
+          "version": "2"
+        },
+        "MCMMetadataContentClass": 2,
+        "MCMMetadataUUID": "64494AB0-F49B-4227-AA48-BFE2DBD80848",
+        "MCMMetadataOwnership": {
+          "uid": 501,
+          "gid": 20,
+          "mode": "u+rwx,g+rx,o+rx",
+          "version": 1
+        },
+        "MCMMetadataSchemaVersion": 1,
+        "MCMMetadataCreator": "com.apple.installd",
+        "MCMMetadataActiveDPClass": 0
+      }
+    },
+    "appGroup": {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/2EFAD83F-45A2-4A8B-B326-16B83BC56DA9/data/Containers/Shared/AppGroup/FAA877B9-C174-4F03-964C-8DEB65E1D3C5",
+      "metadataSHA256": "b4a9a83dd90b23d7d19ec83eefcc0af58eba2ca31535fcb1933e1bf3827231b4",
+      "metadata": {
+        "MCMMetadataIdentifier": "group.com.itorah.chavrusachat",
+        "MCMMetadataInfo": {
+          "com.apple.MobileInstallation.ContentProtectionClass": 0
+        },
+        "MCMMetadataVersion": 9,
+        "MCMMetadataUserIdentity": {
+          "posixUID": 501,
+          "posixGID": 20,
+          "type": 2,
+          "version": "2"
+        },
+        "MCMMetadataContentClass": 7,
+        "MCMMetadataUUID": "D1F36529-B0B7-46F8-B86C-B618B2CC02E1",
+        "MCMMetadataOwnership": {
+          "uid": 501,
+          "gid": 20,
+          "mode": "u+rwx,g+rx,o+rx",
+          "version": 1
+        },
+        "MCMMetadataSchemaVersion": 2,
+        "MCMMetadataCreator": "com.apple.installd",
+        "MCMMetadataActiveDPClass": 0
+      }
+    },
+    "runnerData": {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/2EFAD83F-45A2-4A8B-B326-16B83BC56DA9/data/Containers/Data/Application/6973B2EC-C632-4D28-B9AE-6EF448BC8A1A",
+      "metadataSHA256": "40c9ec32dc0082c3b8f81cfa1d32379c5aa626a4849f7d3e7d410fdb845ca80a",
+      "metadata": {
+        "MCMMetadataIdentifier": "com.itorah.hanlinminiapps.integration.uitests.xctrunner",
+        "MCMMetadataInfo": {
+          "com.apple.MobileInstallation.ContentProtectionClass": 0
+        },
+        "MCMMetadataVersion": 9,
+        "MCMMetadataUserIdentity": {
+          "posixUID": 501,
+          "posixGID": 20,
+          "type": 2,
+          "version": "2"
+        },
+        "MCMMetadataContentClass": 2,
+        "MCMMetadataUUID": "00CA5030-63E6-4094-B2A4-B44CCFCF9D59",
+        "MCMMetadataOwnership": {
+          "uid": 501,
+          "gid": 20,
+          "mode": "u+rwx,g+rx,o+rx",
+          "version": 1
+        },
+        "MCMMetadataSchemaVersion": 1,
+        "MCMMetadataCreator": "com.apple.installd",
+        "MCMMetadataActiveDPClass": 0
+      }
+    }
+  },
+  "directories": [
+    {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/2EFAD83F-45A2-4A8B-B326-16B83BC56DA9/data/Containers/Shared/AppGroup/FAA877B9-C174-4F03-964C-8DEB65E1D3C5",
+      "exists": true,
+      "children": [
+        {
+          "name": ".com.apple.mobile_container_manager.metadata.plist",
+          "directory": false,
+          "bytes": 606
+        },
+        {
+          "name": "HanlinMiniApps",
+          "directory": true,
+          "bytes": null
+        },
+        {
+          "name": "HanlinSplit",
+          "directory": true,
+          "bytes": null
+        },
+        {
+          "name": "Library",
+          "directory": true,
+          "bytes": null
+        }
+      ]
+    },
+    {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/2EFAD83F-45A2-4A8B-B326-16B83BC56DA9/data/Containers/Shared/AppGroup/FAA877B9-C174-4F03-964C-8DEB65E1D3C5/HanlinMiniApps",
+      "exists": true,
+      "children": [
+        {
+          "name": "v1",
+          "directory": true,
+          "bytes": null
+        }
+      ]
+    },
+    {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/2EFAD83F-45A2-4A8B-B326-16B83BC56DA9/data/Containers/Shared/AppGroup/FAA877B9-C174-4F03-964C-8DEB65E1D3C5/HanlinMiniApps/v1",
+      "exists": true,
+      "children": [
+        {
+          "name": "ScriptingExtensions",
+          "directory": true,
+          "bytes": null
+        }
+      ]
+    },
+    {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/2EFAD83F-45A2-4A8B-B326-16B83BC56DA9/data/Containers/Shared/AppGroup/FAA877B9-C174-4F03-964C-8DEB65E1D3C5/HanlinMiniApps/v1/ScriptingExtensions",
+      "exists": true,
+      "children": [
+        {
+          "name": ".transaction.lock",
+          "directory": false,
+          "bytes": 0
+        },
+        {
+          "name": "Packages",
+          "directory": true,
+          "bytes": null
+        },
+        {
+          "name": "Revisions",
+          "directory": true,
+          "bytes": null
+        },
+        {
+          "name": "ScriptWidgetOriginal",
+          "directory": true,
+          "bytes": null
+        },
+        {
+          "name": "commit.json",
+          "directory": false,
+          "bytes": 175
+        },
+        {
+          "name": "snapshot-v1.json",
+          "directory": false,
+          "bytes": 9864
+        }
+      ]
+    },
+    {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/2EFAD83F-45A2-4A8B-B326-16B83BC56DA9/data/Containers/Shared/AppGroup/FAA877B9-C174-4F03-964C-8DEB65E1D3C5/HanlinMiniApps/v1/ScriptingExtensions/ResumeQueue",
+      "exists": false,
+      "children": []
+    },
+    {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/2EFAD83F-45A2-4A8B-B326-16B83BC56DA9/data/Containers/Shared/AppGroup/FAA877B9-C174-4F03-964C-8DEB65E1D3C5/HanlinMiniApps/v1/ScriptingExtensions/ResumeQueue/Receipts",
+      "exists": false,
+      "children": []
+    },
+    {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/2EFAD83F-45A2-4A8B-B326-16B83BC56DA9/data/Containers/Data/Application/0BB6D895-F0A0-4D43-820F-8C8555914BFA/Documents",
+      "exists": true,
+      "children": [
+        {
+          "name": "ExpoSwiftUIProbeA.hanlinExpo",
+          "directory": false,
+          "bytes": 325929
+        },
+        {
+          "name": "Hanlin-ScriptWidget-Actions.scripting",
+          "directory": false,
+          "bytes": 825
+        },
+        {
+          "name": "hanlin-script-parity.hanlinNativeScript",
+          "directory": false,
+          "bytes": 7512
+        }
+      ]
+    },
+    {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/2EFAD83F-45A2-4A8B-B326-16B83BC56DA9/data/Containers/Data/Application/0BB6D895-F0A0-4D43-820F-8C8555914BFA/Library/Application Support/Hanlin",
+      "exists": true,
+      "children": [
+        {
+          "name": "MiniApps",
+          "directory": true,
+          "bytes": null
+        },
+        {
+          "name": "ScriptingPlatform",
+          "directory": true,
+          "bytes": null
+        }
+      ]
+    },
+    {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/2EFAD83F-45A2-4A8B-B326-16B83BC56DA9/data/Containers/Data/Application/0BB6D895-F0A0-4D43-820F-8C8555914BFA/Library/Application Support/Hanlin/ScriptingPlatform",
+      "exists": true,
+      "children": [
+        {
+          "name": "ImportStaging",
+          "directory": true,
+          "bytes": null
+        },
+        {
+          "name": "Installed",
+          "directory": true,
+          "bytes": null
+        }
+      ]
+    }
+  ],
+  "members": [
+    {
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/2EFAD83F-45A2-4A8B-B326-16B83BC56DA9/data/Containers/Data/Application/0BB6D895-F0A0-4D43-820F-8C8555914BFA/.com.apple.mobile_container_manager.metadata.plist",
+      "label": "appData-mcm.plist",
+      "bytes": 602,
+      "sha256": "0fdef8b0e58640968540d9faafb7d92446ff9f3a2952a92556da905c1fecd289",
+      "mode": 384,
+      "mtimeNs": "1795639433937992222",
+      "storedPath": "raw/000-appData-mcm.plist",
+      "storedBytes": 602,
+      "storedSHA256": "0fdef8b0e58640968540d9faafb7d92446ff9f3a2952a92556da905c1fecd289",
+      "encoding": "raw"
+    },
+    {
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/2EFAD83F-45A2-4A8B-B326-16B83BC56DA9/data/Containers/Shared/AppGroup/FAA877B9-C174-4F03-964C-8DEB65E1D3C5/.com.apple.mobile_container_manager.metadata.plist",
+      "label": "appGroup-mcm.plist",
+      "bytes": 606,
+      "sha256": "b4a9a83dd90b23d7d19ec83eefcc0af58eba2ca31535fcb1933e1bf3827231b4",
+      "mode": 384,
+      "mtimeNs": "1795639434032711725",
+      "storedPath": "raw/001-appGroup-mcm.plist",
+      "storedBytes": 606,
+      "storedSHA256": "b4a9a83dd90b23d7d19ec83eefcc0af58eba2ca31535fcb1933e1bf3827231b4",
+      "encoding": "raw"
+    },
+    {
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/2EFAD83F-45A2-4A8B-B326-16B83BC56DA9/data/Containers/Data/Application/6973B2EC-C632-4D28-B9AE-6EF448BC8A1A/.com.apple.mobile_container_manager.metadata.plist",
+      "label": "runnerData-mcm.plist",
+      "bytes": 632,
+      "sha256": "40c9ec32dc0082c3b8f81cfa1d32379c5aa626a4849f7d3e7d410fdb845ca80a",
+      "mode": 384,
+      "mtimeNs": "1795639437974868781",
+      "storedPath": "raw/002-runnerData-mcm.plist",
+      "storedBytes": 632,
+      "storedSHA256": "40c9ec32dc0082c3b8f81cfa1d32379c5aa626a4849f7d3e7d410fdb845ca80a",
+      "encoding": "raw"
+    },
+    {
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/2EFAD83F-45A2-4A8B-B326-16B83BC56DA9/data/Containers/Data/Application/6973B2EC-C632-4D28-B9AE-6EF448BC8A1A/Documents/HanlinNotificationOSProbe/3787daba-fac3-441b-8dc5-c3aec5ae025a/expo.complete.json",
+      "label": "3787daba-fac3-441b-8dc5-c3aec5ae025a__expo.complete.json-165ed694",
+      "bytes": 319,
+      "sha256": "2008fa04ba35a8676a8dcc152d2d5b923bb4ca0cac8b7f9d0e9a705ce126784c",
+      "mode": 420,
+      "mtimeNs": "1795639619410569282",
+      "storedPath": "raw/003-3787daba-fac3-441b-8dc5-c3aec5ae025a__expo.complete.json-165ed694",
+      "storedBytes": 319,
+      "storedSHA256": "2008fa04ba35a8676a8dcc152d2d5b923bb4ca0cac8b7f9d0e9a705ce126784c",
+      "encoding": "raw"
+    },
+    {
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/2EFAD83F-45A2-4A8B-B326-16B83BC56DA9/data/Containers/Data/Application/6973B2EC-C632-4D28-B9AE-6EF448BC8A1A/Documents/HanlinNotificationOSProbe/3787daba-fac3-441b-8dc5-c3aec5ae025a/expo.request.json",
+      "label": "3787daba-fac3-441b-8dc5-c3aec5ae025a__expo.request.json-165ed694",
+      "bytes": 181,
+      "sha256": "06177ebcd1e9fc9d1d2c31f9fbf125472945ea430d64fed4109fb0c513410a0d",
+      "mode": 420,
+      "mtimeNs": "1795639548811574530",
+      "storedPath": "raw/004-3787daba-fac3-441b-8dc5-c3aec5ae025a__expo.request.json-165ed694",
+      "storedBytes": 181,
+      "storedSHA256": "06177ebcd1e9fc9d1d2c31f9fbf125472945ea430d64fed4109fb0c513410a0d",
+      "encoding": "raw"
+    },
+    {
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/2EFAD83F-45A2-4A8B-B326-16B83BC56DA9/data/Containers/Data/Application/6973B2EC-C632-4D28-B9AE-6EF448BC8A1A/Documents/HanlinNotificationOSProbe/active.json",
+      "label": "active.json-165ed694",
+      "bytes": 127,
+      "sha256": "23675b1a36e9d71664f54ada2e29977be4db2ad70776a25c157979e74659a58d",
+      "mode": 420,
+      "mtimeNs": "1795639469702272404",
+      "storedPath": "raw/005-active.json-165ed694",
+      "storedBytes": 127,
+      "storedSHA256": "23675b1a36e9d71664f54ada2e29977be4db2ad70776a25c157979e74659a58d",
+      "encoding": "raw"
+    },
+    {
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/2EFAD83F-45A2-4A8B-B326-16B83BC56DA9/data/Containers/Shared/AppGroup/FAA877B9-C174-4F03-964C-8DEB65E1D3C5/HanlinMiniApps/v1/ScriptingExtensions/commit.json",
+      "label": "retained-commit.json-cd2f0c9a",
+      "bytes": 175,
+      "sha256": "8ee88f77244a911a1d893d70fa0d4f82021095f799a79991a98bd28d0925ff4a",
+      "mode": 420,
+      "mtimeNs": "1795639539175273036",
+      "storedPath": "raw/006-retained-commit.json-cd2f0c9a",
+      "storedBytes": 175,
+      "storedSHA256": "8ee88f77244a911a1d893d70fa0d4f82021095f799a79991a98bd28d0925ff4a",
+      "encoding": "raw"
+    },
+    {
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/2EFAD83F-45A2-4A8B-B326-16B83BC56DA9/data/Containers/Data/Application/0BB6D895-F0A0-4D43-820F-8C8555914BFA/Library/Application Support/Hanlin/ScriptingPlatform/Installed/registry/catalog.json",
+      "label": "retained-catalog.json-fb1b6c77",
+      "bytes": 6367,
+      "sha256": "5e8034c118bbc3b52026e89ebbd91b4b3f3611649925e81b0557985316eaf7df",
+      "mode": 420,
+      "mtimeNs": "1795639530669968654",
+      "storedPath": "raw/007-retained-catalog.json-fb1b6c77",
+      "storedBytes": 6367,
+      "storedSHA256": "5e8034c118bbc3b52026e89ebbd91b4b3f3611649925e81b0557985316eaf7df",
+      "encoding": "raw"
+    }
+  ],
+  "expectedReceiptPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/2EFAD83F-45A2-4A8B-B326-16B83BC56DA9/data/Containers/Shared/AppGroup/FAA877B9-C174-4F03-964C-8DEB65E1D3C5/HanlinMiniApps/v1/ScriptingExtensions/ResumeQueue/Receipts/1a36dea1-72a1-4ba4-b23d-f36ad3f693b5.json",
+  "expectedReceiptExists": false
+}

@@ -86,7 +86,7 @@ public struct HanlinRunScriptActionIntent: AppIntent {
         Summary("Run \(\.$action) with \(\.$input)")
     }
 
-    public func perform() async throws -> some IntentResult & ProvidesDialog {
+    public func perform() async throws -> some IntentResult & ReturnsValue<String> & ProvidesDialog & ShowsSnippetIntent {
         let rawActionID = action.id.components(separatedBy: "::").last ?? action.id
         let invocation = HanlinScriptIntentInvocation(
             identity: action.identity,
@@ -94,7 +94,9 @@ public struct HanlinRunScriptActionIntent: AppIntent {
             parameters: .string(input),
             continueInForeground: true
         )
-        try HanlinScriptExtensionStore().enqueue(.init(invocation: invocation))
-        return .result(dialog: IntentDialog(LocalizedStringResource("Continuing in Hanlin", bundle: .atURL(HanlinLocalization.bundle.bundleURL))))
+        let command = HanlinScriptResumeCommand(invocation: invocation)
+        try HanlinScriptExtensionStore().enqueue(command)
+        return .result(value: command.id.uuidString, dialog: IntentDialog(LocalizedStringResource("Continuing in Hanlin", bundle: .atURL(HanlinLocalization.bundle.bundleURL))),
+                       snippetIntent: HanlinInvocationSnippetIntent(invocationID: command.id))
     }
 }

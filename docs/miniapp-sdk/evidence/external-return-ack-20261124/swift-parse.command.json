@@ -1,0 +1,13 @@
+{
+  "command": [
+    "swiftc",
+    "-frontend",
+    "-parse",
+    "AI_HLY/Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift",
+    "HanlinMiniAppsTests/CrossAppInvocationTests.swift"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-external-return-receipt-20261124",
+  "exitCode": 0,
+  "durationSeconds": 0.09306788444519043,
+  "boundary": "Full changed native files parse only; Apple imports are not typechecked."
+}

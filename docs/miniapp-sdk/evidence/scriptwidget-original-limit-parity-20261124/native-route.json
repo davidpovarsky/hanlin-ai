@@ -1,0 +1,16 @@
+{
+  "atUTC": "2026-11-24T08:53:09.020182+00:00",
+  "workflow": ".github/workflows/validate-app-split.yml",
+  "beforeSHA256": "dbd1e6d3b6519001be6c83cc79c9cc21465a9a1ffe91e92b907e988a553a26ba",
+  "afterSHA256": "4e61939d1c7af7940ec5b72afedacef04b9f4e73d183b42b8eb9fc0073d9c185",
+  "registeredWorkflowID": 419196373,
+  "directReusableRegistration": "Not listed by authenticated GitHub workflow inventory; existing caller reuses branch-local implementation.",
+  "scope": "miniapp_scriptwidget",
+  "selectedMethods": 2,
+  "yamlParse": "PASS",
+  "dispatchInputs": 10,
+  "existingModernAndLifecycleJobsUnchanged": true,
+  "existingMainStepsUnchanged": true,
+  "concurrencyAndPermissionsUnchanged": true,
+  "nativeResult": "NOT_RUN"
+}

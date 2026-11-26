@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "status": "VERIFIED_EXACT_SDK_SUBSET",
+  "verifiedAt": "2026-11-25T09:25:18.546269+00:00",
+  "sourceSnapshot": "prepared-snapshot-attempt18",
+  "sourceSnapshotReceiptSHA256": "eb18c6769824496ae5b37f2483dc191c36e614f166e799efe4490b3dbcda83f8",
+  "generationProducerSource": "1d5e598614f2bc7c689f34f5d7b364f67e1d5ae1",
+  "producerSource": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+  "producerTree": "3e18683d6b88c3d49abdb1f256aad1e73d9f52c4",
+  "consumerTargetSource": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+  "sourceHostArchive": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt18/files/build/runtime-host/RuntimeHostResources.zip",
+    "bytes": 81824515,
+    "sha256": "ce240d8d4083a2babfa3827fd12f93e0ad469b45c5f7055a259fcb8babe1881f"
+  },
+  "sdkManifest": {
+    "archiveMember": "MiniAppSDK/miniapp-sdk.json",
+    "snapshotPath": "extracted-sdk/miniapp-sdk.json",
+    "bytes": 5224120,
+    "sha256": "1ca059acbc56b0d8d33f3d678c5023fd5aff26c744ac1e5412c3b1663529dfcd",
+    "inputSHA256": "ca69ce053b0d82c258ffd29f1e0ec07eb77da9f8f6893ffe1a68eecdbe02c7ca",
+    "sourceInputs": 235
+  },
+  "export": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/user-deliverables-sdk18/Hanlin-MiniApp-SDK-2026-11-25.zip",
+    "bytes": 68726436,
+    "sha256": "78e8a83d42ebfba2c9c8194acf6a0c16d3c7aab92d0ad2fbc4ecc137930226dd",
+    "files": 25670,
+    "directories": 0,
+    "uncompressedBytes": 299642221,
+    "compressedPayloadBytes": 62780416
+  },
+  "method": "Copied exact original selected local ZIP records and compressed payloads; original central metadata retained with only relocated offsets and rebuilt EOCD. No recompilation, regeneration, recompression, renaming or extracted SDK tree.",
+  "verification": {
+    "independentSecondRead": true,
+    "sourceAndExportMemberSHA256Equality": 25670,
+    "zipMetadataAttributesEqual": [
+      "filename",
+      "orig_filename",
+      "date_time",
+      "compress_type",
+      "comment",
+      "extra",
+      "create_system",
+      "create_version",
+      "extract_version",
+      "reserved",
+      "flag_bits",
+      "volume",
+      "internal_attr",
+      "external_attr",
+      "CRC",
+      "compress_size",
+      "file_size"
+    ],
+    "allManifestFileRowsMatched": 25669,
+    "manifestByteIdentity": true,
+    "rawCopySeconds": 0.7894308948889375,
+    "independentReadSeconds": 5.354162099771202
+  },
+  "memberLedger": {
+    "path": "verified-members.json.gz",
+    "bytes": 1599143,
+    "sha256": "ce8bdcda3942a45314c3ab86ae07e2a537acd76bc4e6d2f2f9e71c2348c01658",
+    "uncompressedBytes": 7498064,
+    "uncompressedSHA256": "a3a1d3a4f71568b21e2e68429ce2a0d4478bbdec74ecd6c18a9c7c7f47cb2225"
+  },
+  "boundaries": [
+    "SDK18 actual completed original producer output on sourcef33; generation source1d5 is retained separately.",
+    "Fresh @types/react19.3.2 and five existing declared compatibility corrections are retained exactly.",
+    "Source provenance does not claim subsequent consumer, paired52, OS or physical-device acceptance.",
+    "No Library upload or delivery action performed by this export lane."
+  ]
+}

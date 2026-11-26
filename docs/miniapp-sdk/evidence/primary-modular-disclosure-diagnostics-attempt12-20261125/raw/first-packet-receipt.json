@@ -1,0 +1,161 @@
+{
+  "schema": "hanlin-focused-terminal-packet-v1",
+  "observedAt": "2026-11-25T03:46:50.719047+00:00",
+  "source": "1a611764779b0a57cc57d71b26d2cd6449895d8d",
+  "scope": "Original Modular selector only",
+  "result": {
+    "passed": 0,
+    "failed": 1,
+    "skipped": 0,
+    "failure": "UI1220 Source version must respond to original disclosure control"
+  },
+  "files": [
+    {
+      "path": "focused-launch-attempt12-continuation.json",
+      "bytes": 2608,
+      "sha256": "c471e47e61c928a20ef2c407978238b8d19ef303ab56994e3d815f3346822fdd"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/state.json",
+      "bytes": 8026,
+      "sha256": "6a4c11e60a7e8aff1130d274774f1ea12885937ffbe4c6019884de7b340836a3"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/ModularFocusedDiagnostic-attachments/manifest.json",
+      "bytes": 14099,
+      "sha256": "cfc8757cf717c2f998200ba5dfbed11bc9774381b32fd7e296b9ad2f103704db"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/paired-prefix/ModularFocusedDiagnostic-summary.json",
+      "bytes": 1741,
+      "sha256": "70c45c3463e90788c357e869560da21efdd90dfc40963315ac7ff6d834f06373"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/paired-prefix/ModularFocusedDiagnostic-nodes.json",
+      "bytes": 2545,
+      "sha256": "753a3bd0be54edd31119426a5dd28d3b3b70dd9e0a8789003a52b931bd9a501e"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/paired-prefix/ModularFocusedDiagnostic.log",
+      "bytes": 49364,
+      "sha256": "3f21d43bad9ed2869dd146669a92167379c1b8e2048f5d95b4b6e62f21b99e6b"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/ModularFocusedDiagnostic-attachments/337F5944-3C60-45BB-96B1-9051AF562CC6.txt",
+      "bytes": 32995,
+      "sha256": "7453050d31b8b0c6781cdce64753126250062627497a946685665541593e002b"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/ModularFocusedDiagnostic-attachments/CD45B46D-B622-4F39-9035-C52C645CD694.png",
+      "bytes": 274932,
+      "sha256": "7b9de14ebc4e60c1af1ad43ea22efe8433b51ed77b388a1cfd2fe81c765deaa0"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/ModularFocusedDiagnostic-attachments/4A415529-833F-4AE9-9E5D-0CD83C749C68.txt",
+      "bytes": 32974,
+      "sha256": "205a6783b15120dd8e29d526e80cc52a65238866c1c96fc16cd40b66a1967f64"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/ModularFocusedDiagnostic-attachments/33BAC638-FEF4-4CB2-9BFE-D0F13FBDE8A1.png",
+      "bytes": 274223,
+      "sha256": "5577e8e8109170638c7d1d031e60e5ca904bf7fbb938e4999f202d895d471ac7"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/ModularFocusedDiagnostic-attachments/E8A96EA4-FB4C-48C1-A29C-CAC6F56F94FA.txt",
+      "bytes": 30756,
+      "sha256": "f9df43d603886b21bb4c45168156953a675924d4f34dcb932e1073eaedff9634"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/ModularFocusedDiagnostic-attachments/1AD14F22-EA19-4398-B5AE-E7861B41DCBE.png",
+      "bytes": 350311,
+      "sha256": "252e06341b30dd71d464ea6d7fb1a9582af280da48a961bd2b935b43b409059c"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/ModularFocusedDiagnostic-attachments/9CE2F418-2B14-4076-877E-A114EF54345F.txt",
+      "bytes": 8755,
+      "sha256": "31d788b774cff30e3a1c504d7d063b409e77fd2eb99a4ca6484817e441dbef96"
+    },
+    {
+      "path": "focused-diagnostics-attempt12/ModularFocusedDiagnostic-attachments/17C342EC-0C4B-4E0C-987B-9B965080DE1F.png",
+      "bytes": 1154983,
+      "sha256": "88f5cd6133315045d5e10b3284f2878fa8c07db8d88a228155453ac59d5d70ec"
+    }
+  ],
+  "budget": {
+    "activeElapsedSeconds": 9411.875027748993
+  },
+  "attachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "4EC498EF-82B7-4FC1-B1CF-20AB8BD5CB25",
+      "deviceName": "HanlinPaired-primary-ce49e30d-20261124",
+      "exportedFileName": "337F5944-3C60-45BB-96B1-9051AF562CC6.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "companion-runtime-failure-accessibility_0_6FB62A94-9066-4A9D-BBFF-ABA1F525EDBF.txt",
+      "timestamp": 1795578129.04
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "4EC498EF-82B7-4FC1-B1CF-20AB8BD5CB25",
+      "deviceName": "HanlinPaired-primary-ce49e30d-20261124",
+      "exportedFileName": "CD45B46D-B622-4F39-9035-C52C645CD694.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "companion-runtime-failure_0_B8704B94-C30D-48AF-B7FE-7CDF45F98F13.png",
+      "timestamp": 1795578128.171
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "4EC498EF-82B7-4FC1-B1CF-20AB8BD5CB25",
+      "deviceName": "HanlinPaired-primary-ce49e30d-20261124",
+      "exportedFileName": "4A415529-833F-4AE9-9E5D-0CD83C749C68.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "modular-search-native-detail-accessibility_0_339CDC9F-FD90-4CCE-8111-DFB54071C39E.txt",
+      "timestamp": 1795578115.263
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "4EC498EF-82B7-4FC1-B1CF-20AB8BD5CB25",
+      "deviceName": "HanlinPaired-primary-ce49e30d-20261124",
+      "exportedFileName": "33BAC638-FEF4-4CB2-9BFE-D0F13FBDE8A1.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "modular-search-native-detail_0_D94A447F-8A08-4C83-A47D-4DBA8B549348.png",
+      "timestamp": 1795578114.338
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "4EC498EF-82B7-4FC1-B1CF-20AB8BD5CB25",
+      "deviceName": "HanlinPaired-primary-ce49e30d-20261124",
+      "exportedFileName": "E8A96EA4-FB4C-48C1-A29C-CAC6F56F94FA.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "modular-search-live-sefaria-results-accessibility_0_294659BF-2F4A-4926-9161-9CE7DAFF1C61.txt",
+      "timestamp": 1795578111.082
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "4EC498EF-82B7-4FC1-B1CF-20AB8BD5CB25",
+      "deviceName": "HanlinPaired-primary-ce49e30d-20261124",
+      "exportedFileName": "1AD14F22-EA19-4398-B5AE-E7861B41DCBE.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "modular-search-live-sefaria-results_0_0372617B-E622-4388-8492-3B4F878C1841.png",
+      "timestamp": 1795578110.279
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "4EC498EF-82B7-4FC1-B1CF-20AB8BD5CB25",
+      "deviceName": "HanlinPaired-primary-ce49e30d-20261124",
+      "exportedFileName": "9CE2F418-2B14-4076-877E-A114EF54345F.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "companion-import-ModularTextSearch-accessibility_0_908D451D-95AF-4207-A810-55010D1A12BE.txt",
+      "timestamp": 1795578093.259
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "4EC498EF-82B7-4FC1-B1CF-20AB8BD5CB25",
+      "deviceName": "HanlinPaired-primary-ce49e30d-20261124",
+      "exportedFileName": "17C342EC-0C4B-4E0C-987B-9B965080DE1F.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "companion-import-ModularTextSearch_0_F4A9B003-975D-4382-B0E6-184E3D1E9CA8.png",
+      "timestamp": 1795578092.866
+    }
+  ]
+}

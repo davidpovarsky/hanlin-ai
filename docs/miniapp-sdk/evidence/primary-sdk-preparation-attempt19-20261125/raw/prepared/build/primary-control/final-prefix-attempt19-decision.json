@@ -1,0 +1,255 @@
+{
+  "schema": 1,
+  "owner": "/root/native_execution",
+  "id": "final-prefix-continuation-attempt19",
+  "root": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete",
+  "source": "a2c8a1b1be746461272ba77254603304567c309d",
+  "sourceTree": "c3cfefa7775c91e2b2a9eaff980bbde6e681cc37",
+  "authorization": {
+    "by": "/root",
+    "scope": "Separate600 active seconds for exact a2c8 normal SDK19 original preparation; preserves original12600 plan and every past charge; focused3600, original paired remaining3720.3727040829836, companion and OS allowances are separate."
+  },
+  "allowanceSeconds": 600,
+  "originalPlanMaximumActiveSeconds": 12600,
+  "activeBaselineSeconds": 15206.084556709033,
+  "primaryStateSHA256": "c8c6cfdabfeac2a4b3598c7a39657f4491b9f26d0a0e3ad5a8bc4d5855cfe910",
+  "planSHA256": "fb888d78c49d9849f30dd888a7c4e2b6c053963f861137b288ccf6147242a4d3",
+  "sourceAdvanceReceiptSHA256": "3b0c403d49939507e391241a6c105e548ef6dbc3ac640ae7d9fe91c7d1ff4ebd",
+  "requiredFiles": [
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/GeneratedModifiersProbe.tsx",
+      "sha256": "ea8594b03cf65e8b06a83faa25fd86e3cb7fa065ac6f0e3d5eea663198ad958e"
+    },
+    {
+      "path": "Generated/SwiftUIBridge/HanlinGeneratedViews.swift",
+      "sha256": "659364752ba7b69ef70d90f5aad061f391526cb8b6f135a47bf72f0f19b00e18"
+    },
+    {
+      "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "sha256": "da0fa21f26b677f4d18f8e1972208b39e30401a127e9dd2a9643e0fe8d7ad17c"
+    },
+    {
+      "path": "HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests.swift",
+      "sha256": "76bd2441ee618b5d0cc6db88902f5985408a7b77842b6724fa991cee4c24ef83"
+    },
+    {
+      "path": "Packages/HanlinExpoNativeAPI/Package.swift",
+      "sha256": "c5fd18fa28a1842be0351053d978cc55b752546dc798c663f0dedabfdbefc28c"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedViews.swift",
+      "sha256": "659364752ba7b69ef70d90f5aad061f391526cb8b6f135a47bf72f0f19b00e18"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoUIModule.swift",
+      "sha256": "3ad8217ce87005fab1fe3dc256e7d7680ced7c330f7cd9dc5561f1a5e5905e09"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/README.md",
+      "sha256": "4e2965ada75bf9bd6bdf6ffb4ebcfe4a06ba49888bb04e803086e358a2a481df"
+    },
+    {
+      "path": "Packages/HanlinSwiftUIBridgeGenerator/Sources/HanlinSwiftUIBridgeCore/OutputGenerator.swift",
+      "sha256": "9468d0da401cbe55a4f041918c107ecc2b676159ee0f6d309d26de7d19750cd8"
+    },
+    {
+      "path": "Scripts/Audit/Tests/runtime-version-contract.test.mjs",
+      "sha256": "42536f15ecc821f3f71b86ed6d662634c7929c8413bf1295ddadf5b09e0f16b5"
+    },
+    {
+      "path": "Scripts/Audit/miniapp-runtime-contract.mjs",
+      "sha256": "8682bb4d11fb38ebaeddc4543745916b313c341da26075791b929726fe630fa7"
+    },
+    {
+      "path": "Scripts/MiniApps/resolve-upstreams.mjs",
+      "sha256": "4e2c12f497d312db93132f69741b783f6e31b1f2604dd852129f3c61109d7428"
+    },
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "sha256": "a99b6194f8dd20bc30998ff2ad9e86ec219415a00615b250c65670f7dfcdba7d"
+    },
+    {
+      "path": "Scripts/Runtime/Tests/test_ios_system_project_resources.py",
+      "sha256": "13b7dd82643476739fe523ab2ebfd894b2b89020b2862bd4228669fdc84b2f53"
+    },
+    {
+      "path": "Scripts/Runtime/validate_ios_system_resources.py",
+      "sha256": "8474f676aa8d071bf91f2028d636e7b14653d133ecbeb5804898cb48bb4c0cf5"
+    },
+    {
+      "path": "Scripts/SDK/update_project.py",
+      "sha256": "7977cbf986ff1cc41d1014c92de44faf0f4aa413bada4d1ff7f710ef35bb7166"
+    },
+    {
+      "path": "Scripts/SDK/generate_manifest.py",
+      "sha256": "47ae0d5c34fa5c3baa870b4213a98c6999958f57c71f19a8be421fb6723182ec"
+    },
+    {
+      "path": "Scripts/ProductSplit/verify_targets.py",
+      "sha256": "51afe8636b570c3ba411cf077b21bc71b947b82bb61cff6d1841b0ae5075eba4"
+    },
+    {
+      "path": "Package.swift",
+      "sha256": "392ece3430f8e61eb28afdaa925adf006b1a3dbf82a233568c2c279ab768e53b"
+    },
+    {
+      "path": "AI_HLY.xcodeproj/project.pbxproj",
+      "sha256": "a80e2947b4dedf0ce95b326cf44b0efac613b7b044058e3afc3fccb870cb0087"
+    },
+    {
+      "path": "AI_HLY/RuntimeHostResources.zip",
+      "sha256": "ce240d8d4083a2babfa3827fd12f93e0ad469b45c5f7055a259fcb8babe1881f"
+    },
+    {
+      "path": "build/primary-inputs/runtime-core/hanlin-runtime-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194.zip",
+      "sha256": "196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f"
+    },
+    {
+      "path": "AI_HLY/ChatView.swift",
+      "sha256": "d21659cdaa7d3e6141d4677d10ccaee067e7238ba8c4ccc2f689b63db4c41ffe"
+    },
+    {
+      "path": "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift",
+      "sha256": "7d6b159d580636269daf67f6ed04634d586b94d07c960bd099cc9c5f4da9e164"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/manual-components.tsx",
+      "sha256": "b95b387fce797a3c0ffe8c258e1fe0b411e76956e6cd50ae9235267f5b638da6"
+    },
+    {
+      "path": "Scripts/ProductSplit/test_run_paired_acceptance.py",
+      "sha256": "3791b4178c5cc49b64c38ead6f913284f29fc990c7223953aa74f2075f3771f1"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbe.hanlinExpo",
+      "sha256": "c1ad901a6e02d31846bdcb478f986fdec8ea12add17aeab52d0bb90381236d9d"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
+      "sha256": "c1ad901a6e02d31846bdcb478f986fdec8ea12add17aeab52d0bb90381236d9d"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeB.hanlinExpo",
+      "sha256": "3839e0dfd05595c70f9859a7b80deb857994ec3aa572cd9a7bbc549bb71d4fe1"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbe.hanlinExpo",
+      "sha256": "c1ad901a6e02d31846bdcb478f986fdec8ea12add17aeab52d0bb90381236d9d"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeA.hanlinExpo",
+      "sha256": "c1ad901a6e02d31846bdcb478f986fdec8ea12add17aeab52d0bb90381236d9d"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeB.hanlinExpo",
+      "sha256": "3839e0dfd05595c70f9859a7b80deb857994ec3aa572cd9a7bbc549bb71d4fe1"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/original-runtime-receipt.json",
+      "sha256": "930fa2685c39e238da2ff557a6653bc7530a5a64edc9166b63dd720b410c01d0"
+    },
+    {
+      "path": "Scripts/Expo/package-lock.json",
+      "sha256": "3b31e1c8fd34145df900764a2cda013ab02ecea7f890c969ad5e0a92925d0dd8"
+    },
+    {
+      "path": "Scripts/Expo/package.json",
+      "sha256": "bb447094c0ef2250c445f580fa91c81a55fc3187c7d49e145b84e9c1c3756dce"
+    },
+    {
+      "path": "Scripts/MiniApps/upstream-resolution.json",
+      "sha256": "28a724580a5c7b03268335bfba6a144b7db155198a916305cd00e2e339db1b2e"
+    },
+    {
+      "path": "docs/agent-sdk/unified-package-manifest.json",
+      "sha256": "dd14c80e4223465e6a600f93c153c0f4c80a290b28520dfb8aa65d33f1862e4d"
+    },
+    {
+      "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "sha256": "283c96260a51c095be32f262f9f77ba58bebc5372aa1af994176816c8fb5d538"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "sha256": "4ba23a27fc1dae71f7bba128d564bcdb0df114511c98231b28ae43013f7227af"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "sha256": "3465dc8ceda07aea884eb51cacd91310ac899e0f575b362e7586c5c726e3e9c9"
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "sha256": "659853eb35e2959e936635ab5bbc1df2e91c4b8b4923f9619f25a663cc70f803"
+    },
+    {
+      "path": "build/primary-control/source-advance-a2c8a1b1/receipt.json",
+      "sha256": "3b0c403d49939507e391241a6c105e548ef6dbc3ac640ae7d9fe91c7d1ff4ebd"
+    },
+    {
+      "path": "build/primary-control/source-advance-a2c8a1b1/payload.json",
+      "sha256": "7379eabe056d277ca0dee63a718db7d10ec08bb5abb540e61cbc07e5594a46dd"
+    },
+    {
+      "path": "build/primary-control/source-advance-a2c8a1b1/prepared-working-before.tar.gz",
+      "sha256": "e147a71ce7a59af763167a38db9dfcab4a6cb81ca604106b315f7a8783423c21"
+    },
+    {
+      "path": "build/primary-control/paired52-continuation-v4/state.json",
+      "sha256": "439cd234a138a0e37f895345d2580df2ec70f5272e7e25534c6428bec94968ac"
+    },
+    {
+      "path": "build/primary-control/paired52-continuation-v4/decision.json",
+      "sha256": "62177d808a5c0101dd87548307ece8c3d6c542a8bc56d6c0c93d3fdc4ade7e1d"
+    },
+    {
+      "path": "build/primary-control/ai27-diagnostic-v1/state.json",
+      "sha256": "9ce14c6e9b7370652b2658c681f7c0b8810235eece6c77d77883ab90f6dc4626"
+    },
+    {
+      "path": "build/primary-control/ai27-diagnostic-v1/ledger.json",
+      "sha256": "2d2b7be234b068877e6b1a2ce80ed80e93d04fc884dbf1d832f1ffc5cda14780"
+    },
+    {
+      "path": "build/primary-control/companion-native-v1/ledger.json",
+      "sha256": "0601f21cbf3d2433dec7e5ce7fb66806555bcca6e4577e92b94f265c7a255068"
+    },
+    {
+      "path": "build/primary-control/final-prefix-continuation-attempt19.py",
+      "sha256": "4f9f7e165fcf2b412bace4b9c6859b2acb026b4877247ea31b1e05983a22c488"
+    },
+    {
+      "path": "build/primary-control/paired52-continuation-v3.py",
+      "sha256": "dad6581212134987b666a5161ab33994e6d79b57ed38108faba6ffb22c3bb520"
+    }
+  ],
+  "stepOrder": [
+    "split-upstreams",
+    "generate-manifest",
+    "generate-project",
+    "verify-targets",
+    "lint-generated-project",
+    "runtime-version-contract8",
+    "split-native-preparation",
+    "split-native-artifacts",
+    "split-restore-inputs",
+    "split-inputs"
+  ],
+  "resourceAssessment": {
+    "decision": "FITS_MEASURED_PREFIX",
+    "observedAt": "2026-11-25T10:39:05.728853+00:00",
+    "df": "Filesystem   1024-blocks      Used Available Capacity iused    ifree %iused  Mounted on\n/dev/disk3s5   482797652 431321496   7591380    99% 6746898 75913800    8%   /System/Volumes/Data\n",
+    "observedFreeBytes": 7773573120,
+    "estimatedIncrementalBytes": 1250000000,
+    "concurrentAndOSAllowanceBytes": 400000000,
+    "basis": {
+      "existingHostArchiveBytes": 81824515,
+      "actualExpandedHostBytes": 356865685,
+      "maximumSimultaneousHostWorkAndVerificationBytes": 713731370,
+      "native15ExportAfterHostTemporaryCleanup": true,
+      "originalFrameworkMetadataAndDerivedDataReuse": true,
+      "newSimulatorOrAppBuildInThisPrefix": false,
+      "changedJSWrapperRequiresNormalRebuild": true
+    },
+    "scope": "Cached prefix only. Fresh consumer build/focused cases receive a separate measured assessment; global df movement is not attributed to our phase."
+  },
+  "recordedAt": "2026-11-25T10:39:05.728853+00:00"
+}

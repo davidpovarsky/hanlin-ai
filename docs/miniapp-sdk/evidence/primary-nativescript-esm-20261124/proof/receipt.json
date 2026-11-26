@@ -1,0 +1,78 @@
+{
+  "source": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+  "members": {
+    "prepared.json": {
+      "bytes": 1734,
+      "sha256": "1f2e6d5e5055ebd00e877d8808c00e6ebb4499b55cd1359c31b796d8876f440e"
+    },
+    "state.json": {
+      "bytes": 4575,
+      "sha256": "1da085e4246d6a9ebc069ba4847900fdce768432504cb6aaca2296c5f097d6fb"
+    },
+    "run.py": {
+      "bytes": 3397,
+      "sha256": "76e68ab18a958909690141b97423017010fe2deecebb2e131c81cf8a88242fa6"
+    },
+    "baseline.log": {
+      "bytes": 1581,
+      "sha256": "60def20df028dd434b6c8d9ff5e2f178db1ebeb29dd7877b3a700183d0fb9716"
+    },
+    "candidate.log": {
+      "bytes": 1415,
+      "sha256": "3b18446b1f2f52f762af50bf363be7768ec9193c73602528a2286d440d536816"
+    },
+    "controller.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "actual-installed-table-share/bundle.mjs": {
+      "bytes": 29,
+      "sha256": "8f35a0f4aff91d2310533efdd2defefd2edea91a4e12f564c0940b7b19c8d8af"
+    },
+    "actual-installed-table-share/package.json": {
+      "bytes": 294,
+      "sha256": "94fa53de3297f8159bd4114fe85975fe954ef361d373a35a2e779577a5b10dff"
+    },
+    "actual-installed-table-share/modules/index.js": {
+      "bytes": 5118,
+      "sha256": "7849ede81720f715c846a8a0a705dd7a0ebdc5e36d5a4713da2a6e1855d197c4"
+    },
+    "actual-installed-table-share/modules/index.js.map": {
+      "bytes": 10606,
+      "sha256": "684bdef105bda23a5cfc112b0b9e76c82eda9ed17ba06258464ae15aa4352604"
+    },
+    "actual-installed-table-share/modules/model.js": {
+      "bytes": 1215,
+      "sha256": "3a1dfd2d654b2ea588a6f229d65e91abea171d04a5b7e6d9e2133a63ec5ef8f0"
+    },
+    "actual-installed-table-share/modules/model.js.map": {
+      "bytes": 3005,
+      "sha256": "2913ac5e38853cf13c51fed61bf9de7a9d00af41d9010389590ce446380dae9b"
+    }
+  },
+  "at": "2026-11-24T23:43:45.717966+00:00",
+  "upstreamRuntime": {
+    "tag": "v9.1.1",
+    "commit": "95b52affd694bb0d933b3b81820c14ddc5e47341",
+    "sourceURL": "https://raw.githubusercontent.com/NativeScript/ios/95b52affd694bb0d933b3b81820c14ddc5e47341/NativeScript/runtime/ModuleInternal.mm",
+    "sourceSHA256": "218c19307c35b843a4f69bcb982e359e63c90aabaefcc31a78cbd70c770da883",
+    "relevantLines": [
+      24,
+      25,
+      26,
+      27,
+      943,
+      944,
+      945,
+      946,
+      949,
+      1732,
+      1733,
+      1734,
+      1735,
+      1736,
+      1739,
+      1745
+    ]
+  }
+}

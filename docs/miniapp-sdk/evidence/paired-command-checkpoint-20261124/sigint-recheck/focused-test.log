@@ -1,0 +1,6 @@
+test_keyboard_interrupt_keeps_child_cleanup_and_unfinished_receipt (__main__.PairedCommandEvidenceTests.test_keyboard_interrupt_keeps_child_cleanup_and_unfinished_receipt) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.439s
+
+OK

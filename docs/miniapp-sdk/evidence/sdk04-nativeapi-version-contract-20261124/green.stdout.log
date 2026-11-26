@@ -1,0 +1,14 @@
+✔ actual importer and sessions reconcile independent original versions and the bridge baseline (39.238791ms)
+✔ future independent Core iOS and SwiftUI updates reach both generated consumers (22.08337ms)
+✔ stale direct-session runtime and using iOS as the Core ceiling both fail the audit (25.45579ms)
+✔ original dependency drift and bridge baseline drift remain rejected separately (25.131428ms)
+✔ Native API facade versions follow the resolved graph and reject an actual exported mismatch (37.821343ms)
+✔ dependency-lock.json matches the resolved original versions and checksums (23.220897ms)
+ℹ tests 6
+ℹ suites 0
+ℹ pass 6
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 483.863213

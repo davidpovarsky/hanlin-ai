@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-24T17:24:02.502583+00:00",
+  "owner": "/root/entrypoints",
+  "kind": "READ_ONLY_HOSTED_RUNNER_QUEUE_TERMINATION",
+  "evidenceBaseCommit": "ea91d8759a7cbc20735591acc4e59a9a4d2f3898",
+  "runID": 45441138261,
+  "jobID": 138612265040,
+  "testedSourceCommit": "ce49e30d69466e44b0aa26582beaa57ee7a91a9b",
+  "runURL": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45441138261",
+  "jobURL": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45441138261/job/138612265040",
+  "terminal": {
+    "runStatus": "completed",
+    "runConclusion": "failure",
+    "jobStatus": "completed",
+    "jobConclusion": "cancelled",
+    "createdAtUTC": "2026-11-24T16:47:07Z",
+    "jobStartedAtMetadataUTC": "2026-11-24T16:47:09Z",
+    "jobCompletedAtUTC": "2026-11-24T17:02:09Z",
+    "recordedStepCount": 0,
+    "artifactCount": 0,
+    "startedAtBoundary": "The job startedAt metadata is not evidence that a build or step executed; the recorded steps array is empty."
+  },
+  "reason": {
+    "classification": "HOSTED_RUNNER_ACQUISITION_FAILED",
+    "exactGitHubAnnotation": "The job was not acquired by Runner of type hosted even after multiple attempts",
+    "annotationLevel": "failure",
+    "checkRunOutput": {
+      "title": null,
+      "summary": null,
+      "text": null,
+      "annotations_count": 1,
+      "annotations_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/check-runs/138612265040/annotations"
+    },
+    "interpretation": "GitHub explicitly reports failure to acquire a hosted runner after multiple attempts. This is queue/infrastructure failure before application execution, not a compiler or test failure.",
+    "notEstablished": "The annotation does not identify a particular offline/busy runner, account capacity limit, underlying provider cause, or cancellation actor. No reason is inferred from elapsed duration."
+  },
+  "acceptance": {
+    "scope": "miniapp_complete",
+    "expectedMiniAppsCases": 25,
+    "expectedAICases": 27,
+    "expectedUniqueCases": 52,
+    "miniAppsBuild": "NOT_RUN",
+    "aiBuild": "NOT_RUN",
+    "nativeCases": "ALL_52_NOT_RUN",
+    "nativePassClaimed": false,
+    "physicalDeviceAcceptance": "NOT_RUN"
+  },
+  "inspection": {
+    "apiReads": "One bounded terminal check-run read plus its one reported annotation page, using the existing sudo -u ubuntu gh authentication route.",
+    "additionalRunOrJobStatusPolls": 0,
+    "watchersStarted": 0,
+    "dispatches": 0,
+    "cancellations": 0,
+    "builds": 0,
+    "tests": 0,
+    "sourceOrWorkflowChanges": false,
+    "artifactDownloads": 0,
+    "retainedTerminalSource": "Root-owned watcher outputs were copied byte-for-byte; its no-job-log error does not replace the authoritative run/check terminal state."
+  },
+  "rawEvidence": [
+    {
+      "path": "check-run.json",
+      "originalPath": "/dev/shm/hanlin-main17-check-run-20261124/check-run.json",
+      "bytes": 3597,
+      "sha256": "04b697f592c5d16b1afca139c4050b25ea6f4e942a7486fa2d66bb8153dac066"
+    },
+    {
+      "path": "annotations.json",
+      "originalPath": "/dev/shm/hanlin-main17-check-run-20261124/annotations.json",
+      "bytes": 345,
+      "sha256": "5a0a074080fc605830416f578e57a7154fa260975166ede132398c102ea5a158"
+    },
+    {
+      "path": "api-commands.json",
+      "originalPath": "/dev/shm/hanlin-main17-check-run-20261124/commands.json",
+      "bytes": 816,
+      "sha256": "828d2f923f0fbce4d49099ca57ab08469c54d3fed023fbbc1188a21f543072a1"
+    },
+    {
+      "path": "check-run.stderr.txt",
+      "originalPath": "/dev/shm/hanlin-main17-check-run-20261124/check-run.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "annotations.stderr.txt",
+      "originalPath": "/dev/shm/hanlin-main17-check-run-20261124/annotations.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "run-final.json",
+      "originalPath": "/dev/shm/hanlin-native-watch-45441138261/run-final.json",
+      "bytes": 1991,
+      "sha256": "abb1efc1a4fe3c9467818765c79be505a069e9283b9f434d84b427c58f28d92f"
+    },
+    {
+      "path": "artifacts-final.json",
+      "originalPath": "/dev/shm/hanlin-native-watch-45441138261/artifacts-final.json",
+      "bytes": 32,
+      "sha256": "244563f989470892c537c9a4622920af0d228ee4528f7d00c64a06d6cd95856c"
+    },
+    {
+      "path": "watcher-segment.json",
+      "originalPath": "/dev/shm/hanlin-native-watch-45441138261/segment-1.json",
+      "bytes": 302,
+      "sha256": "0c9bb6b54524939e5f7488375aa341926df0ed79a7ef90fa1f2a526efc3b800d"
+    },
+    {
+      "path": "watcher-segment.log",
+      "originalPath": "/dev/shm/hanlin-native-watch-45441138261/segment-1.log",
+      "bytes": 16314,
+      "sha256": "179ad436c11076213bc3a08c8af3acc3b6e34d1ee6d405bfe84a803b01547aec"
+    }
+  ]
+}

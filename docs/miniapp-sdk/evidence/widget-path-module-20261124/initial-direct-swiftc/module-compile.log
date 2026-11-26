@@ -1,0 +1,7 @@
+/mnt/development/projects/worktrees/hanlin-miniapps-path-contract-20261124/Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinManifestSchema.swift:8:32: error: type 'Bundle' has no member 'module'
+ 6 | 
+ 7 |     public static func data() throws -> Data {
+ 8 |         guard let url = Bundle.module.url(
+   |                                `- error: type 'Bundle' has no member 'module'
+ 9 |             forResource: resourceName,
+10 |             withExtension: resourceExtension

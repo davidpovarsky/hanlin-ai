@@ -1,0 +1,167 @@
+{
+  "schema_version": 1,
+  "observed_utc": "2026-11-23",
+  "scope": "READ_ONLY_SUPPORTED_CURRENT_RUNTIME_FEASIBILITY",
+  "result": "NO_PUBLISHED_WHOLE_APPLICATION_WRAPPER_WITH_CONCURRENT_INDEPENDENT_MAIN_ROOTS_OBSERVED",
+  "dependencies_changed": false,
+  "native_tests_repeated": false,
+  "current_contract": {
+    "entrypoint": "whole application package runMainApplication; top-level Application.run",
+    "root_ownership": "Application._rootView and embedded primaryWindow; single NativeScriptEmbedder delegate replaces prior guest",
+    "invocation_binding": "createHostServices captures one active session bridge; adapter captures one externalMiniAppOperation",
+    "cooperating_windows": "NativeWindow can host distinct view trees in one application/JS context, with an explicitly cooperating per-invocation factory and presentation/bridge adaptation",
+    "independent_package_roots": "Current contract does not provide a transparent view factory or separate global application configuration"
+  },
+  "published_ios": {
+    "latest_stable": {
+      "tag": "v9.1.1",
+      "published_at": "2026-11-12T00:17:34Z",
+      "target_commit": "95b52affd694bb0d933b3b81820c14ddc5e47341"
+    },
+    "latest_next": {
+      "tag": "v9.1.2-next.2026-11-23-45255582945",
+      "published_at": "2026-11-23T20:37:04Z",
+      "target_commit": "6add145b70d186ca2f10d74830ff7a0a7b0a43b6",
+      "spm_commit": "b06724f96defb9f8cb992cb1a3f55543270cfeb1",
+      "xcframework_sha256_from_official_manifest": "9d283b8bd9cde6b9b12d71121468643747fdba894a3a6f2962bbcf2974e8ee91",
+      "binary_downloaded_or_executed": false
+    },
+    "wrapper": "NativeScript.mm:119 process-global Runtime pointer; initializeWithConfig:233-248 writes shared RuntimeConfig then destroys/replaces main runtime; shutdown:223-228 clears global tasks/runtime"
+  },
+  "node_api_main": {
+    "commit": "8cdc398d30339e809fc2c491238e0af0deb3442d",
+    "github_releases_observed": 0,
+    "wrapper": "NativeScript/runtime/apple/NativeScript.mm:32 one global Runtime pointer;185-187 initialize new runtime then reset previous; RuntimeConfig.cpp global struct",
+    "current_thread": "Runtime.cpp:109-118 constructor assigns one currentRuntime and destructor clears it; Runtime.h:71 thread_local, not a stack of active main-thread app roots; RunModule:923 resolves against global BaseDir",
+    "lower_level_interop": "ObjCBridgeState::InstanceData(napi_env) and NativeApiV8 InstallNativeApi(isolate,context,config) are context-bound interop building blocks; they do not expose independent full NativeScript application bootstraps",
+    "migration_scope": "A separate host-owned engine/module/filesystem/bootstrap/presenter lifecycle project and compatibility proof, not an SPM version bump"
+  },
+  "npm_publication": {
+    "ios-node-api": {
+      "version": "0.4.0",
+      "dist-tags": {
+        "latest": "0.4.0",
+        "next": "0.4.1-next.2026-08-09-31292056208"
+      },
+      "repository": {
+        "url": "git+https://github.com/NativeScript/napi-ios.git",
+        "type": "git",
+        "directory": "packages/ios"
+      },
+      "dist.integrity": "sha512-wAAxPQzEbvmvkySYtucIDBcrKRr61Uv4LWBd1ws+Estjt1UidCuZviCz8n1y9O27Kd97YLEM7gn/s5ABliueZw==",
+      "dist.tarball": "https://registry.npmjs.org/@nativescript/ios-node-api/-/ios-node-api-0.4.0.tgz"
+    },
+    "ios-v8": {
+      "version": "0.0.1",
+      "dist-tags": {
+        "latest": "0.0.1",
+        "preview": "9.0.0-preview.2",
+        "alpha": "9.1.0-alpha.0"
+      },
+      "repository": {
+        "url": "git+https://github.com/NativeScript/napi-ios.git",
+        "type": "git",
+        "directory": "packages/ios"
+      },
+      "dist.integrity": "sha512-6NGA+zV4quNLpmEJZcTWZ3r3EnL5baViTkVLUKX4O36rcbtp2nbDXuXKnal4gXiGj5vCkZmj4sJ8qaDH5sB94w==",
+      "dist.tarball": "https://registry.npmjs.org/@nativescript/ios-v8/-/ios-v8-0.0.1.tgz"
+    },
+    "ios-hermes": {
+      "version": "0.0.1",
+      "dist-tags": {
+        "latest": "0.0.1",
+        "preview": "9.0.0-preview.2",
+        "alpha": "9.1.0-alpha.0"
+      },
+      "repository": {
+        "url": "git+https://github.com/NativeScript/napi-ios.git",
+        "type": "git",
+        "directory": "packages/ios"
+      },
+      "dist.integrity": "sha512-zUBo+LppNJ0f51wbukzSs7BFxAb/JMsjQWayhQ2TWStyF29sFbrbmw6gIwBh590HXOvERrGVLVHapan3lMletA==",
+      "dist.tarball": "https://registry.npmjs.org/@nativescript/ios-hermes/-/ios-hermes-0.0.1.tgz"
+    },
+    "ios-jsc": {
+      "version": "0.0.1",
+      "dist-tags": {
+        "latest": "0.0.1",
+        "preview": "9.0.0-preview.2",
+        "alpha": "9.1.0-alpha.0"
+      },
+      "repository": {
+        "url": "git+https://github.com/NativeScript/napi-ios.git",
+        "type": "git",
+        "directory": "packages/ios"
+      },
+      "dist.integrity": "sha512-5lPdpjY4LARrTOutuaR2aoBrrdi8bL4Dqm/H/yzUykH0g9TSUb7JnqAOXj44vhDJCK+trHGYlOMcIRGXvduB1g==",
+      "dist.tarball": "https://registry.npmjs.org/@nativescript/ios-jsc/-/ios-jsc-0.0.1.tgz"
+    }
+  },
+  "primary_sources": [
+    {
+      "name": "ios_stable_wrapper",
+      "url": "https://github.com/NativeScript/ios/blob/v9.1.1/NativeScript/NativeScript.mm",
+      "git_blob": "0576ea727c8ba6af0ae530158e0f999dae66c661",
+      "downloaded_source_sha256": "827b1c4c12aa9d71fa58bfe00920ae780e1a93bbb8dcb80c5e65036c0f6317b2"
+    },
+    {
+      "name": "ios_next_wrapper",
+      "url": "https://api.github.com/repos/NativeScript/ios/contents/NativeScript/NativeScript.mm?ref=v9.1.2-next.2026-11-23-45255582945",
+      "git_blob": "0576ea727c8ba6af0ae530158e0f999dae66c661",
+      "downloaded_source_sha256": "827b1c4c12aa9d71fa58bfe00920ae780e1a93bbb8dcb80c5e65036c0f6317b2"
+    },
+    {
+      "name": "ios_next_config",
+      "url": "https://api.github.com/repos/NativeScript/ios/contents/NativeScript/runtime/RuntimeConfig.cpp?ref=v9.1.2-next.2026-11-23-45255582945",
+      "git_blob": "18f87a1a8727577527a7bef203a614eb2c540da1",
+      "downloaded_source_sha256": "9986bb251de299ffb1808b6ee5666cbd412d5ebbf11c0696d0f8186e53cf53b2"
+    },
+    {
+      "name": "ios_next_spm",
+      "url": "https://api.github.com/repos/NativeScript/ios-spm/contents/Package.swift?ref=9.1.2-next.2026-11-23-45255582945",
+      "git_blob": "fe1cb31b00833d2db3490231edb9b66a2d5d8881",
+      "downloaded_source_sha256": "a26c27c404fd2f26b11fd5db40858fb5194f4b3ea32ff88d1a7ced7633da34ce"
+    },
+    {
+      "name": "napi_runtime",
+      "url": "https://github.com/NativeScript/runtimes/blob/8cdc398d30339e809fc2c491238e0af0deb3442d/NativeScript/runtime/apple/Runtime.cpp",
+      "git_blob": "ae779a642b10e96828a5f864a9f07bc4c3fac11d",
+      "downloaded_source_sha256": "e3f5c8a80d1ff5748620d034224163338ffcf767d5b740cb8bdb862709926a46"
+    },
+    {
+      "name": "napi_bridge",
+      "url": "https://github.com/NativeScript/runtimes/blob/8cdc398d30339e809fc2c491238e0af0deb3442d/NativeScript/ffi/objc/napi/ObjCBridge.h",
+      "git_blob": "96a55ecf92176ec8581dfe0441a73560be5b77ab",
+      "downloaded_source_sha256": "c2c7347b8644a509d9b85f2f34681c3aed66582b71c716de1a07df948a0b49b4"
+    },
+    {
+      "name": "napi_v8_header",
+      "url": "https://github.com/NativeScript/runtimes/blob/8cdc398d30339e809fc2c491238e0af0deb3442d/NativeScript/ffi/objc/v8/NativeApiV8.h",
+      "git_blob": "e9ed9c63f4737b82fffc82dd19017264b7498d70",
+      "downloaded_source_sha256": "ff74375b3ff47a416f5a5c568cd738adcfa80c0c497fddcca68ddd99aff38443"
+    },
+    {
+      "name": "NativeScript/runtime/apple/NativeScript.mm",
+      "url": "https://github.com/NativeScript/runtimes/blob/8cdc398d30339e809fc2c491238e0af0deb3442d/NativeScript/runtime/apple/NativeScript.mm",
+      "git_blob": "0e3e4173059d0c8bfd6239698eed786c934d8f5d",
+      "downloaded_source_sha256": "9f8ce00fadaa06ddfe03c9af771c40c0ac406c8d104c87b101091209aba97bf8"
+    },
+    {
+      "name": "NativeScript/runtime/apple/RuntimeConfig.cpp",
+      "url": "https://github.com/NativeScript/runtimes/blob/8cdc398d30339e809fc2c491238e0af0deb3442d/NativeScript/runtime/apple/RuntimeConfig.cpp",
+      "git_blob": "5691f6eea40462a465745b2f135c4fcc572c98f9",
+      "downloaded_source_sha256": "ad684eb802176382aeff045f5a87962606a3fffa19b6ab92a49c0797be6ab1e7"
+    },
+    {
+      "name": "NativeScript/runtime/apple/Runtime.h",
+      "url": "https://github.com/NativeScript/runtimes/blob/8cdc398d30339e809fc2c491238e0af0deb3442d/NativeScript/runtime/apple/Runtime.h",
+      "git_blob": "b7c259df7c0e32fd7a04b884fecd0dcb78b9fe9f",
+      "downloaded_source_sha256": "93609248a672c699536e1930a538f742f6829e095675fa480ddadf2aacc98fbb"
+    }
+  ],
+  "documentation": [
+    "https://docs.nativescript.org/guide/multi-window",
+    "https://github.com/NativeScript/runtimes",
+    "https://github.com/NativeScript/runtimes/blob/8cdc398d30339e809fc2c491238e0af0deb3442d/packages/ios-node-api/README.md"
+  ]
+}

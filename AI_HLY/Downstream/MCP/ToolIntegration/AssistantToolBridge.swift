@@ -216,15 +216,18 @@ enum AssistantToolBridge {
     let authority: HanlinCanonicalToolAuthority
     let executors: Executors
     let legacySources: [HanlinCanonicalToolAuthority.LegacySource]
+    let preparedTools: HanlinPreparedAssistantToolAdapter?
 
     init(
       authority: HanlinCanonicalToolAuthority,
       executors: Executors = .live,
-      legacySources: [HanlinCanonicalToolAuthority.LegacySource] = []
+      legacySources: [HanlinCanonicalToolAuthority.LegacySource] = [],
+      preparedTools: HanlinPreparedAssistantToolAdapter? = nil
     ) {
       self.authority = authority
       self.executors = executors
       self.legacySources = legacySources
+      self.preparedTools = preparedTools
     }
 
     var mcpAliases: [String] {
@@ -237,9 +240,10 @@ enum AssistantToolBridge {
     ) async throws -> PreparedTools {
       let nativeSources = try NativeToolBridge.canonicalSourcesForRequest()
       let mcpTools = await MCPToolBridge.resolveDescriptors(scope: scope)
+      let preparedCatalog = await HanlinPreparedAssistantToolAdapter.catalogContribution()
       let scriptSources = try HanlinScriptCanonicalAdapter.project(
         await scriptingRegistry.snapshots()
-      )
+      ) + preparedCatalog.sources
       return PreparedTools(
         authority: try HanlinCanonicalToolAuthority.build(
           nativeSources: nativeSources,
@@ -248,7 +252,8 @@ enum AssistantToolBridge {
           legacySources: legacySources
         ),
         executors: executors,
-        legacySources: legacySources
+        legacySources: legacySources,
+        preparedTools: preparedCatalog.adapter
       )
     }
 
@@ -384,7 +389,11 @@ enum AssistantToolBridge {
           argumentsJSON
         )
       case .scripting(let route):
-        result = await executors.executeScripting(route, argumentsJSON)
+        if let preparedTools, preparedTools.contains(route) {
+          result = await preparedTools.execute(route: route, argumentsJSON: argumentsJSON)
+        } else {
+          result = await executors.executeScripting(route, argumentsJSON)
+        }
       case .legacy(let toolName):
         result = await executors.executeLegacy(toolName, argumentsJSON, context)
       }
@@ -431,9 +440,10 @@ enum AssistantToolBridge {
     do {
       let nativeSources = try NativeToolBridge.canonicalSourcesForRequest()
       let mcpTools = await MCPToolBridge.resolveDescriptors(scope: scope)
+      let preparedCatalog = await HanlinPreparedAssistantToolAdapter.catalogContribution()
       let scriptSources = try HanlinScriptCanonicalAdapter.project(
         await scriptingRegistry.snapshots()
-      )
+      ) + preparedCatalog.sources
       let executors = Executors.live(
         scriptingRegistry: scriptingRegistry,
         executeLegacy: legacyExecutor
@@ -446,7 +456,8 @@ enum AssistantToolBridge {
           legacySources: legacySources
         ),
         executors: executors,
-        legacySources: legacySources
+        legacySources: legacySources,
+        preparedTools: preparedCatalog.adapter
       )
     } catch {
       NativeToolTraceLogger.shared.log(

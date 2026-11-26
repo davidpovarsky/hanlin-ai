@@ -1,0 +1,55 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "4EC498EF-82B7-4FC1-B1CF-20AB8BD5CB25",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "modelName" : "iPad Pro 13-inch (M5)",
+        "osBuildNumber" : "24A434",
+        "osVersion" : "27.0",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 1,
+      "passedTests" : 0,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "HanlinMiniApps · Built with macOS 27.0",
+  "expectedFailures" : 0,
+  "failedTests" : 1,
+  "finishTime" : 1795578130.975,
+  "passedTests" : 0,
+  "result" : "Failed",
+  "runtimeWarnings" : [
+    {
+      "issueType" : "Runtime Warning",
+      "message" : "Update the Info.plist: Support for all orientations will soon be required."
+    }
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1795577951.429,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "XCTAssertTrue failed - Source version must respond to the original disclosure control",
+      "targetName" : "HanlinMiniAppsUITests",
+      "testIdentifier" : 1,
+      "testIdentifierString" : "MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText()",
+      "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText",
+      "testName" : "testStandaloneModularSearchLoadsActualSefariaText()"
+    }
+  ],
+  "title" : "Test - HanlinMiniApps",
+  "topInsights" : [
+
+  ],
+  "totalTestCount" : 1
+}

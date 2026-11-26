@@ -1,0 +1,857 @@
+{
+  "schema": 1,
+  "status": "SEALED",
+  "id": "paired52-sdk20-v2",
+  "source": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+  "root": "/Users/m1/builds/hanlin-notification-wire-fix-20261125",
+  "derivedData": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125",
+  "output": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2",
+  "allowanceSeconds": 11848.942462707986,
+  "scope": "miniapp_complete",
+  "expectedCases": {
+    "mini": 25,
+    "ai": 27
+  },
+  "selectors": {
+    "mini": [
+      "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch",
+      "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents",
+      "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters",
+      "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualPresentationAdaptersAndDismissalEvents",
+      "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoNativeAPIUsesActualUIKitAndWorklets",
+      "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoWidgetsUsesOriginalTimelinesAndLiveActivities",
+      "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText",
+      "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyExpoPackageImportsRendersAndHandlesEvents",
+      "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyNativeScriptPackageImportsRendersAndHandlesEvents",
+      "HanlinMiniAppsTests/CrossAppInvocationTests/testCancelAndDisplayDoneReturnNoDocumentMutation",
+      "HanlinMiniAppsTests/CrossAppInvocationTests/testReusingValueWindowKeepsItsInvocationBindingCurrent",
+      "HanlinMiniAppsTests/CrossAppInvocationTests/testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained",
+      "HanlinMiniAppsTests/CrossAppInvocationTests/testActualIncomingRequestsCreateDistinctIPadScenes",
+      "HanlinMiniAppsTests/NativeScriptWindowOwnershipTests/testUnrelatedAndLateWindowCleanupPreservesNativeScriptOwner",
+      "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testInvalidationReleasesHandlersAndRejectsLateActions",
+      "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testBridgeInvalidationReleasesPendingCallbacksBeforeProviderCancellation",
+      "HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests/testExternalInvocationSurvivesNestedFullScreenModal",
+      "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata",
+      "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEditButtonEditsOriginalList",
+      "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEmptyViewReportsNativeLayout",
+      "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierAccessibilityAndGeometry",
+      "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope",
+      "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierNativeContainerContexts",
+      "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoHostServicesUseRealStorageRuntimeAndWidgetPublication",
+      "HanlinMiniAppsTests/CrossAppInvocationTests/testUnavailableCallbackRetainsResultForSourceRecovery"
+    ],
+    "ai": [
+      "AI_HLYTests/PendingFirstTurnTests/importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings()",
+      "AI_HLYTests/PendingFirstTurnTests/cancelledMiniAppRepairPreservesHomeDraft()",
+      "AI_HLYTests/HanlinScriptingPlatformCompositionTests/malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic()",
+      "AI_HLYTests/MiniAppAuthoringToolTests/originalSDKWriteValidateBuildAndRepair()",
+      "AI_HLYTests/MiniAppAuthoringToolTests/sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource()",
+      "AI_HLYTests/MiniAppAuthoringToolTests/originalExpoMetroBuildOnEmbeddedNode()",
+      "AI_HLYTests/HanlinOriginalScriptWidgetAPITests",
+      "AI_HLYTests/HanlinNativePresentationTests",
+      "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests",
+      "AI_HLYTests/HanlinOriginalScriptWidgetControlTests",
+      "AI_HLYTests/HanlinMiniAppStorageCapacityTests",
+      "AI_HLYTests/HanlinOriginalExpoWidgetTests",
+      "AI_HLYUITests/MiniAppAuthoringUITests",
+      "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure",
+      "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer"
+    ]
+  },
+  "controllerSHA256": "a9040dd634acfe7d1d01d6f477771f9033ab305cde9576b1b5d5ad6423726bcb",
+  "consumerSourceHashes": {
+    "AI_HLY/ChatView.swift": "d21659cdaa7d3e6141d4677d10ccaee067e7238ba8c4ccc2f689b63db4c41ffe",
+    "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift": "ea6c76e33bb4594931bb118ab713e2de2d85e561f0e40eb21d64d154c45f9c90",
+    "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift": "da0fa21f26b677f4d18f8e1972208b39e30401a127e9dd2a9643e0fe8d7ad17c",
+    "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoUIModule.swift": "3ad8217ce87005fab1fe3dc256e7d7680ced7c330f7cd9dc5561f1a5e5905e09",
+    "Packages/HanlinExpoUI/src/manual-components.tsx": "b95b387fce797a3c0ffe8c258e1fe0b411e76956e6cd50ae9235267f5b638da6",
+    "Scripts/ProductSplit/run_paired_acceptance.py": "a99b6194f8dd20bc30998ff2ad9e86ec219415a00615b250c65670f7dfcdba7d",
+    "Scripts/ProductSplit/test_run_paired_acceptance.py": "3791b4178c5cc49b64c38ead6f913284f29fc990c7223953aa74f2075f3771f1",
+    "Fixtures/ExpoSwiftUIProbe/ManualAdapterProbe.tsx": "c93a882be209437f388c5d67a9af6ef98ca5371db4aef084aaf7cd464ce42d57",
+    "AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift": "baec47f25aba9e08d078b65641a622ab56eb2f76421cb3e714eb08fdd01661dc",
+    "AI_HLYUITests/MiniAppAuthoringUITests.swift": "60a786ea3864a118710f8814a41f52cc454d35c71e4fb911b611a70ba5c2f565",
+    "Scripts/Expo/build-probe.mjs": "cdead47d9914543725e0e3160a14a13d91b31b2d584b737f0eb95c1b5539618c",
+    "AI_HLY/Downstream/ChatCore/HanlinAppHostIntegration.swift": "f09bd56c25571bbc897fb40327b424ddc67f0e9926e86b7bf8d674eeaa5ce216",
+    "HanlinMiniAppsApp/HanlinMiniAppsApp.swift": "f1489c1f8c4ca1039d4ffc5698b43a5e672ec586fb5b9393dc69f246f11de4c1",
+    "AI_HLY/Downstream/SDK/MiniAppRepairCoordinator.swift": "8b705812d607cded83ba5c3b96768307af88e388aaea16fcc9ff8fb9678c6c64",
+    "AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift": "5d3852f726f180788ba60da91137789c0651ff385232cca4b1ebd0c9ce7d23b7"
+  },
+  "additionalSourceHashes": {
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinNotificationInvocationTests.swift": "7ee626a9f4e53cfa5c74d9f123d367eb43f5d6de21dfb152047ab75e4cb0e066",
+    "Scripts/ProductSplit/run_paired_acceptance.py": "a99b6194f8dd20bc30998ff2ad9e86ec219415a00615b250c65670f7dfcdba7d",
+    "Scripts/ProductSplit/prepare_authoring_fixture.mjs": "7db762a97f15611eeb84c530b63b9062763f70d9eccb1666809214b533405f5b",
+    "Scripts/CI/stage_a2ui_schemas.py": "dbd8d4f9ec21c113ba2dbb23c05959d10d0ded75ce7bfa302221a711d2bae8b1",
+    "Scripts/Runtime/validate_ios_system_resources.py": "8474f676aa8d071bf91f2028d636e7b14653d133ecbeb5804898cb48bb4c0cf5",
+    "Scripts/CI/verify_selected_tests.py": "4ae4a28934341461b364a9b83fb891ca214da64cf3046635278fb4e6837caad5",
+    "Scripts/ProductSplit/stage_external_modal_fixture.py": "926727998d186585347fc7737a5d87e0ac499b52483aafe463292db0db99bc29",
+    "Scripts/ProductSplit/simulator_entitlements.py": "aa1cfcd4f371dd25a637bc56ab281ef94f8bcdcc2bb415b9125dd0b0aa0b27a8",
+    "Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64/libReactNativeHeaders-ios.a": "770c9bd74f4c398ba46c307536f26ca51ae5c50b668ab076c8f38077484df068",
+    "Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64_x86_64-simulator/libReactNativeHeaders-ios-simulator.a": "dacca1290ec6b34f1f9820068f2e3fa00dfe31e9d57408e970de742a77638920",
+    "Packages/HanlinExpoRuntime/Artifacts/React.xcframework/ios-arm64_x86_64-simulator/React.framework/React": "b14f9d4a824d6919d13de0db204195f2caba856fde2f8a2ea4cddf9f3ceff27b",
+    "Packages/HanlinExpoRuntime/Artifacts/React.xcframework/ios-arm64/React.framework/React": "553c55df62d1472bafa9483317f193469864c4953c5e2b3ce5f673fc2a6cd3e8",
+    "Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/ios-arm64/ReactNativeDependencies.framework/ReactNativeDependencies": "5c612c23ad6904b9b771ccbab0b4221a0b74cda384c151235c8cf91a43fe2b91",
+    "Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/ios-arm64_x86_64-simulator/ReactNativeDependencies.framework/ReactNativeDependencies": "41eb01ffcbcad6ddf93ce5cf4eac65b87e14f18257b1ee0f313f7eceb5843ac7",
+    "Packages/HanlinExpoRuntime/Artifacts/hermesvm.xcframework/ios-arm64_x86_64-simulator/hermesvm.framework/hermesvm": "effde4b7c515ca4b95e8e1f7ee93983d12dbe675281362e147644eec657f947c",
+    "Packages/HanlinExpoRuntime/Artifacts/hermesvm.xcframework/ios-arm64/hermesvm.framework/hermesvm": "b1476b4a43dabab8ed267283d279f3b67db5e72d1e5670b834bb3aedd662f136",
+    "Packages/HanlinExpoRuntime/Artifacts/ExpoModulesJSI.xcframework/ios-arm64/ExpoModulesJSI.framework/ExpoModulesJSI": "1eac70cd5bc578179acf18adbcb7a443960e53c56e407dca9213026d707d6f01",
+    "Packages/HanlinExpoRuntime/Artifacts/ExpoModulesJSI.xcframework/ios-arm64_x86_64-simulator/ExpoModulesJSI.framework/ExpoModulesJSI": "b69481ec159b4a92b60c18ffc722a24779768f738f17269fb924a7de8c0bed35",
+    "Packages/HanlinExpoRuntime/Artifacts/ExpoModulesCore.xcframework/ios-arm64_x86_64-simulator/ExpoModulesCore.framework/ExpoModulesCore": "7825f81ffec8d42676554af4e2e7efbaf171f276a467cffcf9e74a4c8b3ec906",
+    "Packages/HanlinExpoRuntime/Artifacts/ExpoModulesCore.xcframework/ios-arm64/ExpoModulesCore.framework/ExpoModulesCore": "4b4b8a271c2394083fecb55afa4514767ff99d432916353e038c01870961d64c",
+    "Packages/HanlinExpoRuntime/Artifacts/ExpoModulesWorklets.xcframework/ios-arm64/ExpoModulesWorklets.framework/ExpoModulesWorklets": "f6e9c5e3829e41031e08ef466d3f6ec8199fa6aba03b4644f3cd937f5a1ffcf8",
+    "Packages/HanlinExpoRuntime/Artifacts/ExpoModulesWorklets.xcframework/ios-arm64_x86_64-simulator/ExpoModulesWorklets.framework/ExpoModulesWorklets": "a0fddc922b70655a68f4d99da9328c77f52f989c444980f87962cc4df55295e1",
+    "Packages/HanlinExpoRuntime/Artifacts/ExpoUI.xcframework/ios-arm64/ExpoUI.framework/ExpoUI": "48253446416db3d617708be70bdb76632d61b620b31ed664d70518d659732a5f",
+    "Packages/HanlinExpoRuntime/Artifacts/ExpoUI.xcframework/ios-arm64_x86_64-simulator/ExpoUI.framework/ExpoUI": "006fefc0d2f0929a491430cf1434fe0627fd3e1ee4177714dd460e85bc90199d",
+    "Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/ios-arm64_x86_64-simulator/ExpoAsset.framework/ExpoAsset": "516275213efd8776c9e62fb9eca85f05e5821419677142b4bc4149436c036070",
+    "Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/ios-arm64/ExpoAsset.framework/ExpoAsset": "2661d4faeb9a2ad13514c79c7670e27c26b12d18087452b717f855471cba7699",
+    "Packages/HanlinExpoRuntime/Artifacts/ExpoBrownfield.xcframework/ios-arm64/ExpoBrownfield.framework/ExpoBrownfield": "fb08be09caafea6790641e3f5de1607834a0a5180f0cf56551a84053d40802ce",
+    "Packages/HanlinExpoRuntime/Artifacts/ExpoBrownfield.xcframework/ios-arm64_x86_64-simulator/ExpoBrownfield.framework/ExpoBrownfield": "77e6bbb2ce166391c590647655c813b0505e968352f993cf2a28a7034cf33076",
+    "Packages/HanlinExpoNativeAPI/Artifacts/Libffi.xcframework/ios-arm64_x86_64-simulator/libffi.a": "bc606b462e39d126c40accc8b87a7fb293b6ddf9e29b038d71c56b5a8df4edb1",
+    "Packages/HanlinExpoNativeAPI/Artifacts/Libffi.xcframework/ios-arm64/libffi.a": "b9af1e0fa8fef0ef42f2318909edf2d45a589388fb4927b48585bec99123d4ab",
+    "Packages/HanlinNativeScriptRuntime/Artifacts/TNSWidgets.xcframework/ios-arm64/TNSWidgets.framework/TNSWidgets": "1139ca728fd26962074bab0ef9be77cebfe267f57684228131a09b3b268e8c3d",
+    "Packages/HanlinNativeScriptRuntime/Artifacts/TNSWidgets.xcframework/ios-arm64_x86_64-maccatalyst/TNSWidgets.framework/Versions/A/TNSWidgets": "d9e634e975b9c5e0540a8e573eaebfb125f9dd44e6636d2891e3f803b88e1c3a",
+    "Packages/HanlinNativeScriptRuntime/Artifacts/TNSWidgets.xcframework/ios-arm64_x86_64-simulator/TNSWidgets.framework/TNSWidgets": "c9f33af5cd4389d62637e612e734ab3875eff71d0ae0aaaa31309015d69142e9",
+    "Packages/HanlinNativeScriptRuntime/Artifacts/TNSWidgets.xcframework/xros-arm64/TNSWidgets.framework/TNSWidgets": "20156193a0f68f91709bb0acd2cffb441bd6584d0c5aeaa343dd7a7187fdc3d6",
+    "Packages/HanlinNativeScriptRuntime/Artifacts/TNSWidgets.xcframework/xros-arm64_x86_64-simulator/TNSWidgets.framework/TNSWidgets": "330be5d2ae9304e2b5cfecf7b686fb9df42a1f8f2c99a6f7febcb009cd959624",
+    "Packages/HanlinNativeScriptRuntime/Artifacts/NSCWinterTC.xcframework/ios-arm64_x86_64-simulator/NSCWinterTC.framework/NSCWinterTC": "70a681e0a9df00a2dfbfe2758993adfab987c59002426b0685c8351ef358481d",
+    "Packages/HanlinNativeScriptRuntime/Artifacts/NSCWinterTC.xcframework/ios-arm64_x86_64-maccatalyst/NSCWinterTC.framework/Versions/A/NSCWinterTC": "fdfe3fe639cf603e283dfc9caf792abfb4d60ec4d7b99a07fc9f9f12a58add48",
+    "Packages/HanlinNativeScriptRuntime/Artifacts/NSCWinterTC.xcframework/xros-arm64_x86_64-simulator/NSCWinterTC.framework/NSCWinterTC": "016ebe799a5f063d08ca9900b3fd33ba4e342976c8dcf31cc60efc4147ae637e",
+    "Packages/HanlinNativeScriptRuntime/Artifacts/NSCWinterTC.xcframework/xros-arm64/NSCWinterTC.framework/NSCWinterTC": "96c2fd2401cae85993c4907cddb75ce1703e8d3e775c524a2097d18d88c6edb7",
+    "Packages/HanlinNativeScriptRuntime/Artifacts/NSCWinterTC.xcframework/ios-arm64/NSCWinterTC.framework/NSCWinterTC": "3eae0169d57e6606c550f6daa2f8a3bef59e6c9d7dee1c520ed82ed661104584",
+    "Vendor/NodeMobile/NodeMobile.xcframework/ios-arm64-simulator/NodeMobile.framework/NodeMobile": "a0daa0ebeb6a1f819726fff5228f2efadd58be9b8475ffe142edc992194bb8a0",
+    "Vendor/NodeMobile/NodeMobile.xcframework/ios-arm64/NodeMobile.framework/NodeMobile": "86492ee2e27c580f38747522a443094b5db02aa74b9460b3a593545f5bc2a23c",
+    "Vendor/Python/Python.xcframework/ios-arm64/Python.framework/Python": "bab15643505f43f9902515f48f8d198161e1a0207303c454860eed8337375df5",
+    "Vendor/Python/Python.xcframework/ios-arm64_x86_64-simulator/Python.framework/Python": "3503ecf5bbf78bfb9aed1918b5ac386ea837917967b9d32b53bf98340ac792bc",
+    "Config.xcconfig": "03d96d520f785e34d85b643e31bcb4a424e46e76a81c6b4c245f91eaac3e110f"
+  },
+  "preparedTrackedDiffSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "nativePreparation": {
+    "status": "PREPARED",
+    "authority": {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/state.json",
+      "bytes": 15567,
+      "sha256": "0eb409b8ea1853620b8fbc462f67ae3c5a19973e085ba61bfa7149622f2e4d45"
+    },
+    "producerSource": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f"
+  },
+  "componentHistory": [
+    {
+      "id": "historical-native-aggregate",
+      "host": "primary-mac",
+      "seconds": 25438.734638920043,
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-history/historical-os-recovery-ledger.json",
+        "bytes": 3201,
+        "sha256": "cfa1ab524fe4c871268b2b364d3bf73dc0d5fd30bb1e584fa002a934771ac62f"
+      },
+      "accountingRelation": "Historical cumulativeActiveSeconds already includes original OS 897.3027506670041 and independent OS recovery 233.90022650000174. Preserve as one historical aggregate; do not add those children again. Not charged to this new 14400-second ledger."
+    },
+    {
+      "id": "focused-notification-wire-unit",
+      "host": "primary-mac",
+      "seconds": 86.5407380000106,
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-history/focused-wire-unit-state.json",
+        "bytes": 2488,
+        "sha256": "95d72c8829b026d2e61b08c037e0cc6a332c2ccd0cdb5ea13d391b174c7aef80"
+      },
+      "accountingRelation": "Separate measured focused unit execution after the historical aggregate. This timing authority is not a substitute for original whole-run acceptance and is not charged to this new ledger."
+    },
+    {
+      "id": "oracle-sdk20-original-preparation",
+      "host": "oracle-linux-arm64",
+      "seconds": 360.1092938221991,
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-history/oracle-sdk20-verification.json",
+        "bytes": 6485,
+        "sha256": "8c33bf22355ab2749f81c8abc5fa0b08ef8fe87fca78077512f35060d789f21d"
+      },
+      "accountingRelation": "Separate Oracle preparation on a different host; not included in historical Mac aggregate or this new Mac run. No combined cross-host total is asserted."
+    },
+    {
+      "id": "native-input-restoration",
+      "host": "primary-mac",
+      "seconds": 54.375687207997544,
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-wire-input-restoration-v1/state.json",
+        "bytes": 7747,
+        "sha256": "12322840e33a7d48464b484932f7546fb265b6defae1dbb2396039a25493cba9"
+      },
+      "accountingRelation": "Separate measured input restoration, recorded before native preparation and excluded from that preparation ledger and this new ledger."
+    },
+    {
+      "id": "native-dependency-preparation",
+      "host": "primary-mac",
+      "seconds": 303.8050289590028,
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/ledger.json",
+        "bytes": 1884,
+        "sha256": "26a4bc05363573082404f43e604678e8126c37afb9493096e2c8764993c92fdd"
+      },
+      "accountingRelation": "Includes exact failed v1 and v2 charges, measured CMake installation, and successful v3 phase. Do not add their child charges again; not charged to this new 14400-second whole-run ledger."
+    },
+    {
+      "id": "original-config-materialization",
+      "host": "primary-mac",
+      "seconds": 0.0022692089987685904,
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/config-materialization.json",
+        "bytes": 658,
+        "sha256": "d9647613e2110f4bba9afee6b552bf43dff84964e5bb08d16eb3225191a767c0"
+      },
+      "accountingRelation": "Separate exact original-workflow config materialization after native preparation; not included in that ledger or this new run."
+    }
+  ],
+  "historyBindingNotes": {
+    "originalAggregateSeconds": 25438.734638920043,
+    "oldOSSecondsIncludedInOriginalAggregate": 897.3027506670041,
+    "independentOSSecondsIncludedInOriginalAggregate": 233.90022650000174,
+    "focusedUnitSecondsSeparate": 86.5407380000106,
+    "oracleSDK20PreparationSecondsSeparate": 360.1092938221991,
+    "nativeRestorationSecondsSeparate": 54.375687207997544,
+    "nativePreparationSeconds": 303.8050289590028,
+    "aggregation": "Do not sum overlapping or cross-host histories. Each component needs its actual authority and accountingRelation before sealing.",
+    "nativePreparationFirstFailedPrefixSeconds": 188.837976625,
+    "nativePreparationContinuationAccounting": "Final actual PREPARED total is math.fsum of both failed prefixes, measured CMake installation, and the final successful continuation. All four raw charges remain verbatim in the bound final ledger; do not add the prefixes or installation twice.",
+    "nativePreparationSecondFailedPrefixSeconds": 5.938364417001139,
+    "nativeToolchainInstallationSeconds": 7.347363291992224,
+    "nativePreparationFinalContinuationSeconds": 101.68132462500944,
+    "configMaterializationSecondsSeparate": 0.0022692089987685904
+  },
+  "resourceAssessment": {
+    "minimumFreeBytes": 32000000000,
+    "observedFreeBytes": 200286765056,
+    "kind": "Same reviewed conservative 32 GB bound for the original whole chain, fresh owned device, and both original incremental builds",
+    "componentsBytes": {
+      "newDerivedDataAndPackageClones": 20000000000,
+      "ownedSimulatorAndInstalls": 3000000000,
+      "fixtureSDKAndWorkspaces": 2000000000,
+      "finalizedResultsAndExports": 4000000000,
+      "reserveAndConcurrentGrowth": 3000000000
+    },
+    "oldProductsAndPreparedInputsAlreadyPresent": true,
+    "measurement": "Actual statvfs of owned DerivedData volume; controller rechecks the R3 filesystem at launch",
+    "authority": {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2-resource.json",
+      "bytes": 821,
+      "sha256": "dcf961c8afc52be11699033130e634456321a2da2341018bee4cb7b347c0846d"
+    },
+    "observedAt": "2026-11-25T23:24:52.340363+00:00"
+  },
+  "requiredFiles": [
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/state.json",
+      "bytes": 15567,
+      "sha256": "0eb409b8ea1853620b8fbc462f67ae3c5a19973e085ba61bfa7149622f2e4d45"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/ledger.json",
+      "bytes": 1884,
+      "sha256": "26a4bc05363573082404f43e604678e8126c37afb9493096e2c8764993c92fdd"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/prepared-frameworks.json",
+      "bytes": 15613,
+      "sha256": "38b16127d7045ed40051b3c2d968fae5a4ca35655a36cdeef52324da99428993"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/prepared-source.diff",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/paired52-readiness-observation.json",
+      "bytes": 3058,
+      "sha256": "0e3b2cd6c245e65d02a03d4f3b34493f5041a9b41cb64e24ed5c6ed94df24c9f"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/config-materialization.json",
+      "bytes": 658,
+      "sha256": "d9647613e2110f4bba9afee6b552bf43dff84964e5bb08d16eb3225191a767c0"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Config.xcconfig",
+      "bytes": 217,
+      "sha256": "03d96d520f785e34d85b643e31bcb4a424e46e76a81c6b4c245f91eaac3e110f"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/.github/workflows/validate-app-split.yml",
+      "bytes": 31644,
+      "sha256": "677ba19c3a2e281e850b182b3bef8bcde709ee167f58d601c1c3aa6ade665982"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/build/nativescript-metadata-tool/provenance.json",
+      "bytes": 935,
+      "sha256": "f83479c7a5cdf9014fb7b5f2bf8425ecf9809c4de9680666ca255706022b9696"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/build/nativescript-metadata-tool/bin/objc-metadata-generator",
+      "bytes": 35685672,
+      "sha256": "e2bfd9ecd5f5b235dda04b05b6b1b838c799323a558dee7e6651c8d6a93f9e25"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-wire-input-restoration-v1/cache/miniapp-sdk.json",
+      "bytes": 5226713,
+      "sha256": "6f11ed8da3df18627f05932d47b5b68dec54eb26ac396151a21cbc8c3e65800e"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/AI_HLY/RuntimeHostResources.zip",
+      "bytes": 81839498,
+      "sha256": "ed18d93a88a1020bc2140417cea3847daf3d03472cdd4769d9a5ac4e44f48a22"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/build/runtime-host/RuntimeHostResources.zip",
+      "bytes": 81839498,
+      "sha256": "ed18d93a88a1020bc2140417cea3847daf3d03472cdd4769d9a5ac4e44f48a22"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-wire-input-restoration-v1/state.json",
+      "bytes": 7747,
+      "sha256": "12322840e33a7d48464b484932f7546fb265b6defae1dbb2396039a25493cba9"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-plan-v3.json",
+      "bytes": 23366,
+      "sha256": "8a26ffc0166f71cf6976e9f663758208d1bc1817f1959e2f151eaa51475f92ee"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/native-preparation-v3.py",
+      "bytes": 16033,
+      "sha256": "1bdeeda671a5eb8b85b113a3fa71ee242ef7a748a244c0e9f95a282333b97d1b"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/prepare-original-nativescript-native.log",
+      "bytes": 5190,
+      "sha256": "53f0f3d540415809a88ba728abf4a1a7ecfc697aab872a4370a9ede18cb03fdf"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/verify-nativeapi-artifacts.log",
+      "bytes": 357,
+      "sha256": "ea2d894e0c272076abc81ddbc25e981eefa49a6313fcff6a9ecab119a3c28ebd"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/verify-nativeapi-metadata.log",
+      "bytes": 688,
+      "sha256": "89847abdedfb856f3092d073d6c2684124b694bbf3a4ecc91088bda345cc3a31"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/verify-nativeapi-preflight.log",
+      "bytes": 1724,
+      "sha256": "aa9afe7e8c6671008eef6bc51dae9efca4a856d9cd988e9e1aeb294660d9255b"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-history/historical-os-recovery-ledger.json",
+      "bytes": 3201,
+      "sha256": "cfa1ab524fe4c871268b2b364d3bf73dc0d5fd30bb1e584fa002a934771ac62f"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-history/focused-wire-unit-state.json",
+      "bytes": 2488,
+      "sha256": "95d72c8829b026d2e61b08c037e0cc6a332c2ccd0cdb5ea13d391b174c7aef80"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-history/oracle-sdk20-verification.json",
+      "bytes": 6485,
+      "sha256": "8c33bf22355ab2749f81c8abc5fa0b08ef8fe87fca78077512f35060d789f21d"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v1/state.json",
+      "bytes": 6485,
+      "sha256": "62fa0f2144ce6dd280e8a6615baea3f2ec822beb13f544528e9ec79b3e3d241a"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v1/ledger.json",
+      "bytes": 4713,
+      "sha256": "f62166616dc312aa689cc2543bbe1f0ca1c9e75d619c0061bccda4f1c488e75f"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/probe-fixture-sdk20-preparation-v1/state.json",
+      "bytes": 12255,
+      "sha256": "949660502e1637c5c96aa41372e07d380fe36a0bab586c0f43cc87e7fbcd50d9"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/probe-fixture-sdk20-preparation-v1/ledger.json",
+      "bytes": 1331,
+      "sha256": "fd4e5beca04d71756853be1b9f0badb74f0d0d58bee6213782c22fac2782b4b1"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/probe-fixture-sdk20-preparation-v1/hosted-git-predicate-reconciliation.json",
+      "bytes": 6858,
+      "sha256": "449cc069f7e23873b6da57e3af283ae0f135ac25d0d8677157e2d9978b1a0651"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/root-probe-fixture-sdk20-preparation-reconciliation.json",
+      "bytes": 3144,
+      "sha256": "f4837dfaecc143ded5cfa925ed3cf611c31c644c4c0c3161d60f4f4be7ed04f6"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/AI_HLYTests/Fixtures/HostServicesProbe.bundle/ExpoSwiftUIProbeA.hanlinExpo",
+      "bytes": 325929,
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/run-original-paired-with-hosted-check-v1.py",
+      "bytes": 3819,
+      "sha256": "a31179f13706cf7a130bef2768afaf316ae541350d3dd439bf4fa6773bd4a825"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2-resource.json",
+      "bytes": 821,
+      "sha256": "dcf961c8afc52be11699033130e634456321a2da2341018bee4cb7b347c0846d"
+    }
+  ],
+  "environment": {
+    "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer",
+    "RUNNER_TEMP": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/build/primary-temp",
+    "PATH": "/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+  },
+  "boundary": "One new original miniapp_complete invocation with all original commands, selectors, assertions, inner timeouts and result verification preserved. The first failed whole run (2501.629630375013 s) and original probe preparation (49.427906917000655 s) remain immutable charges within the original 14400 s allowance. The raw probe SOURCE_CHANGED terminal is retained; exact read-only reconciliation proves its sole incorrect ignored-file assumption while the original producer exited 0 and all guarded inputs remained unchanged. The new hosted fixture is untracked, not ignored. The external guard verifies the actual original resource in the rebuilt hosted XCTest bundle after ai-build.log exit 0, before the unchanged original main advances. No prior case results are aggregated into this run.",
+  "python": {
+    "path": "/opt/homebrew/opt/python@3.12/libexec/bin/python3",
+    "resolvedPath": "/opt/homebrew/Cellar/python@3.12/3.12.16/Frameworks/Python.framework/Versions/3.12/bin/python3.12",
+    "bytes": 34640,
+    "sha256": "ab825fde913c394f6fb8dc57da39108ad98e1827a5404119993de3d3bc6d8fb7",
+    "version": "3.12.16",
+    "requiredCapability": "tarfile.TarFile.extractall filter parameter"
+  },
+  "sourceTree": "c0f027896b1edd67ea824c48b2b3bbf7c4e5e73a",
+  "nativeInputBindingAuthority": {
+    "authority": {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/prepared-frameworks.json",
+      "bytes": 15613,
+      "sha256": "38b16127d7045ed40051b3c2d968fae5a4ca35655a36cdeef52324da99428993"
+    },
+    "frameworkTargets": 15,
+    "binaryFiles": 36,
+    "bindingField": "additionalSourceHashes",
+    "files": [
+      {
+        "target": "ReactNativeHeaders",
+        "path": "Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64/libReactNativeHeaders-ios.a",
+        "sha256": "770c9bd74f4c398ba46c307536f26ca51ae5c50b668ab076c8f38077484df068",
+        "platform": "ios",
+        "variant": null,
+        "architectures": [
+          "arm64"
+        ]
+      },
+      {
+        "target": "ReactNativeHeaders",
+        "path": "Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework/ios-arm64_x86_64-simulator/libReactNativeHeaders-ios-simulator.a",
+        "sha256": "dacca1290ec6b34f1f9820068f2e3fa00dfe31e9d57408e970de742a77638920",
+        "platform": "ios",
+        "variant": "simulator",
+        "architectures": [
+          "arm64",
+          "x86_64"
+        ]
+      },
+      {
+        "target": "React",
+        "path": "Packages/HanlinExpoRuntime/Artifacts/React.xcframework/ios-arm64_x86_64-simulator/React.framework/React",
+        "sha256": "b14f9d4a824d6919d13de0db204195f2caba856fde2f8a2ea4cddf9f3ceff27b",
+        "platform": "ios",
+        "variant": "simulator",
+        "architectures": [
+          "arm64",
+          "x86_64"
+        ]
+      },
+      {
+        "target": "React",
+        "path": "Packages/HanlinExpoRuntime/Artifacts/React.xcframework/ios-arm64/React.framework/React",
+        "sha256": "553c55df62d1472bafa9483317f193469864c4953c5e2b3ce5f673fc2a6cd3e8",
+        "platform": "ios",
+        "variant": null,
+        "architectures": [
+          "arm64"
+        ]
+      },
+      {
+        "target": "ReactNativeDependencies",
+        "path": "Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/ios-arm64/ReactNativeDependencies.framework/ReactNativeDependencies",
+        "sha256": "5c612c23ad6904b9b771ccbab0b4221a0b74cda384c151235c8cf91a43fe2b91",
+        "platform": "ios",
+        "variant": null,
+        "architectures": [
+          "arm64"
+        ]
+      },
+      {
+        "target": "ReactNativeDependencies",
+        "path": "Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/ios-arm64_x86_64-simulator/ReactNativeDependencies.framework/ReactNativeDependencies",
+        "sha256": "41eb01ffcbcad6ddf93ce5cf4eac65b87e14f18257b1ee0f313f7eceb5843ac7",
+        "platform": "ios",
+        "variant": "simulator",
+        "architectures": [
+          "arm64",
+          "x86_64"
+        ]
+      },
+      {
+        "target": "hermesvm",
+        "path": "Packages/HanlinExpoRuntime/Artifacts/hermesvm.xcframework/ios-arm64_x86_64-simulator/hermesvm.framework/hermesvm",
+        "sha256": "effde4b7c515ca4b95e8e1f7ee93983d12dbe675281362e147644eec657f947c",
+        "platform": "ios",
+        "variant": "simulator",
+        "architectures": [
+          "arm64",
+          "x86_64"
+        ]
+      },
+      {
+        "target": "hermesvm",
+        "path": "Packages/HanlinExpoRuntime/Artifacts/hermesvm.xcframework/ios-arm64/hermesvm.framework/hermesvm",
+        "sha256": "b1476b4a43dabab8ed267283d279f3b67db5e72d1e5670b834bb3aedd662f136",
+        "platform": "ios",
+        "variant": null,
+        "architectures": [
+          "arm64"
+        ]
+      },
+      {
+        "target": "ExpoModulesJSI",
+        "path": "Packages/HanlinExpoRuntime/Artifacts/ExpoModulesJSI.xcframework/ios-arm64/ExpoModulesJSI.framework/ExpoModulesJSI",
+        "sha256": "1eac70cd5bc578179acf18adbcb7a443960e53c56e407dca9213026d707d6f01",
+        "platform": "ios",
+        "variant": null,
+        "architectures": [
+          "arm64"
+        ]
+      },
+      {
+        "target": "ExpoModulesJSI",
+        "path": "Packages/HanlinExpoRuntime/Artifacts/ExpoModulesJSI.xcframework/ios-arm64_x86_64-simulator/ExpoModulesJSI.framework/ExpoModulesJSI",
+        "sha256": "b69481ec159b4a92b60c18ffc722a24779768f738f17269fb924a7de8c0bed35",
+        "platform": "ios",
+        "variant": "simulator",
+        "architectures": [
+          "arm64",
+          "x86_64"
+        ]
+      },
+      {
+        "target": "ExpoModulesCore",
+        "path": "Packages/HanlinExpoRuntime/Artifacts/ExpoModulesCore.xcframework/ios-arm64_x86_64-simulator/ExpoModulesCore.framework/ExpoModulesCore",
+        "sha256": "7825f81ffec8d42676554af4e2e7efbaf171f276a467cffcf9e74a4c8b3ec906",
+        "platform": "ios",
+        "variant": "simulator",
+        "architectures": [
+          "arm64",
+          "x86_64"
+        ]
+      },
+      {
+        "target": "ExpoModulesCore",
+        "path": "Packages/HanlinExpoRuntime/Artifacts/ExpoModulesCore.xcframework/ios-arm64/ExpoModulesCore.framework/ExpoModulesCore",
+        "sha256": "4b4b8a271c2394083fecb55afa4514767ff99d432916353e038c01870961d64c",
+        "platform": "ios",
+        "variant": null,
+        "architectures": [
+          "arm64"
+        ]
+      },
+      {
+        "target": "ExpoModulesWorklets",
+        "path": "Packages/HanlinExpoRuntime/Artifacts/ExpoModulesWorklets.xcframework/ios-arm64/ExpoModulesWorklets.framework/ExpoModulesWorklets",
+        "sha256": "f6e9c5e3829e41031e08ef466d3f6ec8199fa6aba03b4644f3cd937f5a1ffcf8",
+        "platform": "ios",
+        "variant": null,
+        "architectures": [
+          "arm64"
+        ]
+      },
+      {
+        "target": "ExpoModulesWorklets",
+        "path": "Packages/HanlinExpoRuntime/Artifacts/ExpoModulesWorklets.xcframework/ios-arm64_x86_64-simulator/ExpoModulesWorklets.framework/ExpoModulesWorklets",
+        "sha256": "a0fddc922b70655a68f4d99da9328c77f52f989c444980f87962cc4df55295e1",
+        "platform": "ios",
+        "variant": "simulator",
+        "architectures": [
+          "arm64",
+          "x86_64"
+        ]
+      },
+      {
+        "target": "ExpoUI",
+        "path": "Packages/HanlinExpoRuntime/Artifacts/ExpoUI.xcframework/ios-arm64/ExpoUI.framework/ExpoUI",
+        "sha256": "48253446416db3d617708be70bdb76632d61b620b31ed664d70518d659732a5f",
+        "platform": "ios",
+        "variant": null,
+        "architectures": [
+          "arm64"
+        ]
+      },
+      {
+        "target": "ExpoUI",
+        "path": "Packages/HanlinExpoRuntime/Artifacts/ExpoUI.xcframework/ios-arm64_x86_64-simulator/ExpoUI.framework/ExpoUI",
+        "sha256": "006fefc0d2f0929a491430cf1434fe0627fd3e1ee4177714dd460e85bc90199d",
+        "platform": "ios",
+        "variant": "simulator",
+        "architectures": [
+          "arm64",
+          "x86_64"
+        ]
+      },
+      {
+        "target": "ExpoAsset",
+        "path": "Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/ios-arm64_x86_64-simulator/ExpoAsset.framework/ExpoAsset",
+        "sha256": "516275213efd8776c9e62fb9eca85f05e5821419677142b4bc4149436c036070",
+        "platform": "ios",
+        "variant": "simulator",
+        "architectures": [
+          "arm64",
+          "x86_64"
+        ]
+      },
+      {
+        "target": "ExpoAsset",
+        "path": "Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/ios-arm64/ExpoAsset.framework/ExpoAsset",
+        "sha256": "2661d4faeb9a2ad13514c79c7670e27c26b12d18087452b717f855471cba7699",
+        "platform": "ios",
+        "variant": null,
+        "architectures": [
+          "arm64"
+        ]
+      },
+      {
+        "target": "ExpoBrownfield",
+        "path": "Packages/HanlinExpoRuntime/Artifacts/ExpoBrownfield.xcframework/ios-arm64/ExpoBrownfield.framework/ExpoBrownfield",
+        "sha256": "fb08be09caafea6790641e3f5de1607834a0a5180f0cf56551a84053d40802ce",
+        "platform": "ios",
+        "variant": null,
+        "architectures": [
+          "arm64"
+        ]
+      },
+      {
+        "target": "ExpoBrownfield",
+        "path": "Packages/HanlinExpoRuntime/Artifacts/ExpoBrownfield.xcframework/ios-arm64_x86_64-simulator/ExpoBrownfield.framework/ExpoBrownfield",
+        "sha256": "77e6bbb2ce166391c590647655c813b0505e968352f993cf2a28a7034cf33076",
+        "platform": "ios",
+        "variant": "simulator",
+        "architectures": [
+          "arm64",
+          "x86_64"
+        ]
+      },
+      {
+        "target": "Libffi",
+        "path": "Packages/HanlinExpoNativeAPI/Artifacts/Libffi.xcframework/ios-arm64_x86_64-simulator/libffi.a",
+        "sha256": "bc606b462e39d126c40accc8b87a7fb293b6ddf9e29b038d71c56b5a8df4edb1",
+        "platform": "ios",
+        "variant": "simulator",
+        "architectures": [
+          "arm64",
+          "x86_64"
+        ]
+      },
+      {
+        "target": "Libffi",
+        "path": "Packages/HanlinExpoNativeAPI/Artifacts/Libffi.xcframework/ios-arm64/libffi.a",
+        "sha256": "b9af1e0fa8fef0ef42f2318909edf2d45a589388fb4927b48585bec99123d4ab",
+        "platform": "ios",
+        "variant": null,
+        "architectures": [
+          "arm64"
+        ]
+      },
+      {
+        "target": "TNSWidgets",
+        "path": "Packages/HanlinNativeScriptRuntime/Artifacts/TNSWidgets.xcframework/ios-arm64/TNSWidgets.framework/TNSWidgets",
+        "sha256": "1139ca728fd26962074bab0ef9be77cebfe267f57684228131a09b3b268e8c3d",
+        "platform": "ios",
+        "variant": null,
+        "architectures": [
+          "arm64"
+        ]
+      },
+      {
+        "target": "TNSWidgets",
+        "path": "Packages/HanlinNativeScriptRuntime/Artifacts/TNSWidgets.xcframework/ios-arm64_x86_64-maccatalyst/TNSWidgets.framework/Versions/A/TNSWidgets",
+        "sha256": "d9e634e975b9c5e0540a8e573eaebfb125f9dd44e6636d2891e3f803b88e1c3a",
+        "platform": "ios",
+        "variant": "maccatalyst",
+        "architectures": [
+          "arm64",
+          "x86_64"
+        ]
+      },
+      {
+        "target": "TNSWidgets",
+        "path": "Packages/HanlinNativeScriptRuntime/Artifacts/TNSWidgets.xcframework/ios-arm64_x86_64-simulator/TNSWidgets.framework/TNSWidgets",
+        "sha256": "c9f33af5cd4389d62637e612e734ab3875eff71d0ae0aaaa31309015d69142e9",
+        "platform": "ios",
+        "variant": "simulator",
+        "architectures": [
+          "arm64",
+          "x86_64"
+        ]
+      },
+      {
+        "target": "TNSWidgets",
+        "path": "Packages/HanlinNativeScriptRuntime/Artifacts/TNSWidgets.xcframework/xros-arm64/TNSWidgets.framework/TNSWidgets",
+        "sha256": "20156193a0f68f91709bb0acd2cffb441bd6584d0c5aeaa343dd7a7187fdc3d6",
+        "platform": "xros",
+        "variant": null,
+        "architectures": [
+          "arm64"
+        ]
+      },
+      {
+        "target": "TNSWidgets",
+        "path": "Packages/HanlinNativeScriptRuntime/Artifacts/TNSWidgets.xcframework/xros-arm64_x86_64-simulator/TNSWidgets.framework/TNSWidgets",
+        "sha256": "330be5d2ae9304e2b5cfecf7b686fb9df42a1f8f2c99a6f7febcb009cd959624",
+        "platform": "xros",
+        "variant": "simulator",
+        "architectures": [
+          "arm64",
+          "x86_64"
+        ]
+      },
+      {
+        "target": "NSCWinterTC",
+        "path": "Packages/HanlinNativeScriptRuntime/Artifacts/NSCWinterTC.xcframework/ios-arm64_x86_64-simulator/NSCWinterTC.framework/NSCWinterTC",
+        "sha256": "70a681e0a9df00a2dfbfe2758993adfab987c59002426b0685c8351ef358481d",
+        "platform": "ios",
+        "variant": "simulator",
+        "architectures": [
+          "arm64",
+          "x86_64"
+        ]
+      },
+      {
+        "target": "NSCWinterTC",
+        "path": "Packages/HanlinNativeScriptRuntime/Artifacts/NSCWinterTC.xcframework/ios-arm64_x86_64-maccatalyst/NSCWinterTC.framework/Versions/A/NSCWinterTC",
+        "sha256": "fdfe3fe639cf603e283dfc9caf792abfb4d60ec4d7b99a07fc9f9f12a58add48",
+        "platform": "ios",
+        "variant": "maccatalyst",
+        "architectures": [
+          "arm64",
+          "x86_64"
+        ]
+      },
+      {
+        "target": "NSCWinterTC",
+        "path": "Packages/HanlinNativeScriptRuntime/Artifacts/NSCWinterTC.xcframework/xros-arm64_x86_64-simulator/NSCWinterTC.framework/NSCWinterTC",
+        "sha256": "016ebe799a5f063d08ca9900b3fd33ba4e342976c8dcf31cc60efc4147ae637e",
+        "platform": "xros",
+        "variant": "simulator",
+        "architectures": [
+          "arm64",
+          "x86_64"
+        ]
+      },
+      {
+        "target": "NSCWinterTC",
+        "path": "Packages/HanlinNativeScriptRuntime/Artifacts/NSCWinterTC.xcframework/xros-arm64/NSCWinterTC.framework/NSCWinterTC",
+        "sha256": "96c2fd2401cae85993c4907cddb75ce1703e8d3e775c524a2097d18d88c6edb7",
+        "platform": "xros",
+        "variant": null,
+        "architectures": [
+          "arm64"
+        ]
+      },
+      {
+        "target": "NSCWinterTC",
+        "path": "Packages/HanlinNativeScriptRuntime/Artifacts/NSCWinterTC.xcframework/ios-arm64/NSCWinterTC.framework/NSCWinterTC",
+        "sha256": "3eae0169d57e6606c550f6daa2f8a3bef59e6c9d7dee1c520ed82ed661104584",
+        "platform": "ios",
+        "variant": null,
+        "architectures": [
+          "arm64"
+        ]
+      },
+      {
+        "target": "NodeMobile",
+        "path": "Vendor/NodeMobile/NodeMobile.xcframework/ios-arm64-simulator/NodeMobile.framework/NodeMobile",
+        "sha256": "a0daa0ebeb6a1f819726fff5228f2efadd58be9b8475ffe142edc992194bb8a0",
+        "platform": "ios",
+        "variant": "simulator",
+        "architectures": [
+          "arm64"
+        ]
+      },
+      {
+        "target": "NodeMobile",
+        "path": "Vendor/NodeMobile/NodeMobile.xcframework/ios-arm64/NodeMobile.framework/NodeMobile",
+        "sha256": "86492ee2e27c580f38747522a443094b5db02aa74b9460b3a593545f5bc2a23c",
+        "platform": "ios",
+        "variant": null,
+        "architectures": [
+          "arm64"
+        ]
+      },
+      {
+        "target": "Python",
+        "path": "Vendor/Python/Python.xcframework/ios-arm64/Python.framework/Python",
+        "sha256": "bab15643505f43f9902515f48f8d198161e1a0207303c454860eed8337375df5",
+        "platform": "ios",
+        "variant": null,
+        "architectures": [
+          "arm64"
+        ]
+      },
+      {
+        "target": "Python",
+        "path": "Vendor/Python/Python.xcframework/ios-arm64_x86_64-simulator/Python.framework/Python",
+        "sha256": "3503ecf5bbf78bfb9aed1918b5ac386ea837917967b9d32b53bf98340ac792bc",
+        "platform": "ios",
+        "variant": "simulator",
+        "architectures": [
+          "arm64",
+          "x86_64"
+        ]
+      }
+    ],
+    "boundary": "The existing field name is retained. These 36 entries are actual prepared native binary inputs, not Swift/TypeScript source. The reviewed source_closure hashes them before and after execution. Individual Info.plist byte identities were not separately captured and are not fabricated here."
+  },
+  "combinedAllowanceSeconds": 14400,
+  "priorChargedSeconds": 2551.057537292014,
+  "priorWholeRun": {
+    "terminal": {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v1/state.json",
+      "bytes": 6485,
+      "sha256": "62fa0f2144ce6dd280e8a6615baea3f2ec822beb13f544528e9ec79b3e3d241a"
+    },
+    "ledger": {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v1/ledger.json",
+      "bytes": 4713,
+      "sha256": "f62166616dc312aa689cc2543bbe1f0ca1c9e75d619c0061bccda4f1c488e75f"
+    }
+  },
+  "probePreparation": {
+    "state": {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/probe-fixture-sdk20-preparation-v1/state.json",
+      "bytes": 12255,
+      "sha256": "949660502e1637c5c96aa41372e07d380fe36a0bab586c0f43cc87e7fbcd50d9"
+    },
+    "ledger": {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/probe-fixture-sdk20-preparation-v1/ledger.json",
+      "bytes": 1331,
+      "sha256": "fd4e5beca04d71756853be1b9f0badb74f0d0d58bee6213782c22fac2782b4b1"
+    },
+    "reconciliation": {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/probe-fixture-sdk20-preparation-v1/hosted-git-predicate-reconciliation.json",
+      "bytes": 6858,
+      "sha256": "449cc069f7e23873b6da57e3af283ae0f135ac25d0d8677157e2d9978b1a0651"
+    },
+    "reviewAuthority": {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/root-probe-fixture-sdk20-preparation-reconciliation.json",
+      "bytes": 3144,
+      "sha256": "f4837dfaecc143ded5cfa925ed3cf611c31c644c4c0c3161d60f4f4be7ed04f6"
+    }
+  },
+  "hostedFixture": {
+    "source": {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/AI_HLYTests/Fixtures/HostServicesProbe.bundle/ExpoSwiftUIProbeA.hanlinExpo",
+      "bytes": 325929,
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20"
+    },
+    "gitDisposition": "UNTRACKED_NOT_IGNORED"
+  },
+  "originalMainGuard": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/run-original-paired-with-hosted-check-v1.py",
+    "bytes": 3819,
+    "sha256": "a31179f13706cf7a130bef2768afaf316ae541350d3dd439bf4fa6773bd4a825"
+  }
+}

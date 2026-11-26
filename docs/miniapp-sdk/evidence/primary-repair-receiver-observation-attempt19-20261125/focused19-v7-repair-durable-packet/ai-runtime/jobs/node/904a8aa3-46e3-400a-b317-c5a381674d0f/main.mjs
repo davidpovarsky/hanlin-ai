@@ -1,0 +1,6 @@
+import { runMiniAppOperation } from "file:\/\/\/Users\/m1\/Library\/Developer\/CoreSimulator\/Devices\/E742FBCD-8FF0-4130-B143-7F8328637138\/data\/Containers\/Data\/Application\/BB02E47D-090F-49C1-A512-34B1D33D87DB\/Library\/Application%20Support\/HanlinRuntime\/v1\/runtime\/node\/host-7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc\/miniapp-authoring.mjs";
+const report = await runMiniAppOperation({"operation":"validate","engine":"nativescript","projectRoot":"\/Users\/m1\/Library\/Developer\/CoreSimulator\/Devices\/E742FBCD-8FF0-4130-B143-7F8328637138\/data\/Containers\/Data\/Application\/BB02E47D-090F-49C1-A512-34B1D33D87DB\/Library\/Application Support\/HanlinRuntime\/v1\/clients\/agents\/miniapp-repair-2ff15551-9ed0-464b-b844-abcb1836fff6\/project"}, {sdkRoot: "\/Users\/m1\/Library\/Developer\/CoreSimulator\/Devices\/E742FBCD-8FF0-4130-B143-7F8328637138\/data\/Containers\/Data\/Application\/BB02E47D-090F-49C1-A512-34B1D33D87DB\/Library\/Application Support\/HanlinRuntime\/v1\/runtime\/node\/host-7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc\/MiniAppSDK"});
+const receipt = { ...report, executionID: "904a8aa3-46e3-400a-b317-c5a381674d0f" };
+console.log(JSON.stringify(receipt));
+process.exitCode = receipt.succeeded === false ? 1 : 0;
+export default receipt;

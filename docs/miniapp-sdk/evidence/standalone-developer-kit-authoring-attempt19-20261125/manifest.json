@@ -1,0 +1,103 @@
+{
+  "schema": 1,
+  "status": "EXECUTED_PASS",
+  "scope": "SDK08 standalone authoring and archive creation",
+  "capturedAt": "2026-11-25T18:21:00.373707+00:00",
+  "productionSource": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "SDKProducerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+  "SDKManifest": {
+    "path": "MiniAppSDK/miniapp-sdk.json",
+    "sha256": "4505c28495d8b6ecd1073254e0e395adcc898cc02dd1d40699591f51db4dee92"
+  },
+  "SDKArchive": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/user-deliverables-sdk19/Hanlin-MiniApp-SDK-2026-11-25.zip",
+    "bytes": 68726642,
+    "sha256": "1bf347311b9547054725f8674419a11b3c502a4994feb6dbd9283c3af7400210"
+  },
+  "productionFiles": [
+    {
+      "path": "Scripts/MiniApps/miniapp.mjs",
+      "bytes": 4101,
+      "sha256": "1c256c00392c626a54ebee2abe3ededaa792c5bfa6dd9b6c5aceb89be84e5b30",
+      "gitMode": "100644",
+      "identicalSources": [
+        "d4a0b115b106d4250ea40ad66153d5156847a07c",
+        "a2c8a1b1be746461272ba77254603304567c309d"
+      ]
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+      "bytes": 50327,
+      "sha256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9",
+      "gitMode": "100644",
+      "identicalSources": [
+        "d4a0b115b106d4250ea40ad66153d5156847a07c",
+        "a2c8a1b1be746461272ba77254603304567c309d"
+      ]
+    }
+  ],
+  "commands": {
+    "actual": 6,
+    "positiveSuccesses": 4,
+    "expectedTypeErrorRejections": 2,
+    "nativeExecution": "NOT_RUN"
+  },
+  "SDKFileIntegrity": {
+    "files": 25670,
+    "unchangedAfterExecution": true,
+    "fileSetUnchanged": true
+  },
+  "typecheckBoundary": {
+    "expo": {
+      "strict": true,
+      "skipLibCheck": false,
+      "dependencyDeclarationsChecked": true
+    },
+    "nativescript": {
+      "strict": true,
+      "skipLibCheck": true,
+      "dependencyDeclarationsChecked": false
+    },
+    "explanation": "The original NativeScript SDK configuration skips checking dependency declaration internals. Authored TypeScript remains strict and the deliberate TS2322 was rejected by validate and build."
+  },
+  "retainedRaw": [
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only/SDK08-Standalone-Authoring-Proof-2026-11-25.zip",
+      "sourceRelativePath": "SDK08-Standalone-Authoring-Proof-2026-11-25.zip",
+      "retainedPath": "SDK08-Standalone-Authoring-Proof-2026-11-25.zip",
+      "bytes": 4404863,
+      "sha256": "357827dad828dea02aa422523df8cc460222bfb1b7e5fc84c02ddde12bb4cb16"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only/delivery-receipt.json",
+      "sourceRelativePath": "delivery-receipt.json",
+      "retainedPath": "delivery-receipt.json",
+      "bytes": 2314,
+      "sha256": "1bf9785cd842793026aa720a44c4fd7a8289cdfc09aa42f1e4891f64e1b84b8e"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only/evidence/verification-summary.json",
+      "sourceRelativePath": "evidence/verification-summary.json",
+      "retainedPath": "verification-summary.json",
+      "bytes": 12347,
+      "sha256": "7d1885c948302bc7a4b8151be968105bc41ffbebee715d2d5cdc4800fea9970f"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only/evidence/receipt.json",
+      "sourceRelativePath": "evidence/receipt.json",
+      "retainedPath": "proof-receipt.json",
+      "bytes": 13018,
+      "sha256": "8408547fc4351508d8a6ed349be59dba0631aa963a29bb699921202ced902919"
+    }
+  ],
+  "originalProofZIP": {
+    "memberCount": 63,
+    "receiptedFiles": 62,
+    "receiptMember": "evidence/receipt.json",
+    "completeRawTraces": true,
+    "fullSDKCopied": false
+  },
+  "recipeStatus": "AST_VERIFIED_NOT_EXECUTED",
+  "canonicalSourceMutation": false,
+  "historicalAndNativeBoundary": "Independent Oracle authoring proof; no native installation/execution result or full52/NS5/OS outcome inferred."
+}

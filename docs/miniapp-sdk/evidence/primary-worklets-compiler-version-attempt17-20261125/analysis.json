@@ -1,0 +1,194 @@
+{
+  "schemaVersion": 1,
+  "kind": "ACTUAL_NATIVE_MISMATCH_AND_REVIEWED_SOURCE_CORRECTION_WITH_PORTABLE_PROOF",
+  "observedAt": "2026-11-25T08:45:06.332346+00:00",
+  "actualFailedRuntimeSource": "cffe7f75436aa2e37ec5d82891937965c0407d2d",
+  "sourceCommits": {
+    "canonicalGeneratedMirror": "683a9601e19c79fe32147401de1fd94fa499d6ed",
+    "workletsCorrection": "20de36b7c5020304e4bd45adcdabfa52eff7e23d"
+  },
+  "changes": [
+    {
+      "path": "Generated/SwiftUIBridge/HanlinGeneratedViews.swift",
+      "beforeSHA256": "838154d4e8a44b07eb312dee19df283b217842633c6dbeb84bc369edba77699e",
+      "afterSHA256": "659364752ba7b69ef70d90f5aad061f391526cb8b6f135a47bf72f0f19b00e18",
+      "beforeBytes": 3020,
+      "afterBytes": 3269,
+      "mode": "100644"
+    },
+    {
+      "path": "Packages/HanlinExpoNativeAPI/Package.swift",
+      "beforeSHA256": "1bf2b967d85c4759f94f39330b1b435148a9d3956ec6b8e645cec7dd65bec83d",
+      "afterSHA256": "c5fd18fa28a1842be0351053d978cc55b752546dc798c663f0dedabfdbefc28c",
+      "beforeBytes": 7069,
+      "afterBytes": 7065,
+      "mode": "100644"
+    },
+    {
+      "path": "Scripts/MiniApps/resolve-upstreams.mjs",
+      "beforeSHA256": "7973977cf986cbee14fd147fd8b10c1d54a6f1a1c790511d2df5cf054063e7a2",
+      "afterSHA256": "4e2c12f497d312db93132f69741b783f6e31b1f2604dd852129f3c61109d7428",
+      "beforeBytes": 29048,
+      "afterBytes": 30102,
+      "mode": "100644"
+    },
+    {
+      "path": "Scripts/Audit/miniapp-runtime-contract.mjs",
+      "beforeSHA256": "61f5e1b1bbf09236ee000388ca0c7451e5d151b7712f9420abcfea5bb4c7dd0f",
+      "afterSHA256": "8682bb4d11fb38ebaeddc4543745916b313c341da26075791b929726fe630fa7",
+      "beforeBytes": 14541,
+      "afterBytes": 15226,
+      "mode": "100644"
+    },
+    {
+      "path": "Scripts/Audit/Tests/runtime-version-contract.test.mjs",
+      "beforeSHA256": "8384cf0b94173a56ddfa5eb4140683587b2442acfbace5cde0873ce3058dc8d9",
+      "afterSHA256": "42536f15ecc821f3f71b86ed6d662634c7929c8413bf1295ddadf5b09e0f16b5",
+      "beforeBytes": 10248,
+      "afterBytes": 13818,
+      "mode": "100644"
+    }
+  ],
+  "unchangedSourceBindings": [
+    {
+      "path": "Scripts/Expo/package.json",
+      "bytes": 1759,
+      "sha256": "e2b50fae013276229c78619bbbe0b63d8c29b00fefde3afeccea98af117aa206"
+    },
+    {
+      "path": "Scripts/Expo/package-lock.json",
+      "bytes": 336324,
+      "sha256": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8"
+    },
+    {
+      "path": "Scripts/ExpoNativeAPI/dependency-lock.json",
+      "bytes": 1645,
+      "sha256": "08657d657c1f4efa36149075b632cfc75685fc1ca9af0397fc1168fe9253b768"
+    },
+    {
+      "path": "Scripts/MiniApps/upstream-resolution.json",
+      "bytes": 15092,
+      "sha256": "e0c2944ea24c09330825dee58badedcec58606ba603ccdedc888abf1a63a13cb"
+    },
+    {
+      "path": "Scripts/SDK/generate_manifest.py",
+      "bytes": 17123,
+      "sha256": "47ae0d5c34fa5c3baa870b4213a98c6999958f57c71f19a8be421fb6723182ec"
+    },
+    {
+      "path": "Scripts/Runtime/prepare-runtime-host.sh",
+      "bytes": 4998,
+      "sha256": "af0fda26d53a6b72b495a73e104835af176dccfc39cda2d5bcfffa3f7a04cbd6"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/package.json",
+      "bytes": 816,
+      "sha256": "1794af1338974e7f024e67daceb586fb0b7d897a702ce26ab66b690d41e20968"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedViews.swift",
+      "bytes": 3269,
+      "sha256": "659364752ba7b69ef70d90f5aad061f391526cb8b6f135a47bf72f0f19b00e18"
+    },
+    {
+      "path": "Packages/HanlinSwiftUIBridgeGenerator/Sources/HanlinSwiftUIBridgeCore/OutputGenerator.swift",
+      "bytes": 51603,
+      "sha256": "9468d0da401cbe55a4f041918c107ecc2b676159ee0f6d309d26de7d19750cd8"
+    }
+  ],
+  "actualNativeObject": {
+    "path": "raw/native/WorkletsVersion.o.gz",
+    "uncompressedBytes": 199424,
+    "uncompressedSHA256": "858156d8df38aa4c6def868ac563da18ff6b2aa76484b8e4558aef75d60ebe97",
+    "nulTerminatedValue": "\"0.13.1\"",
+    "byteOffset": 4448,
+    "occurrences": 1
+  },
+  "originalSemantics": {
+    "packageVersion": "0.13.0",
+    "podspec": "original/RNWorklets.podspec:17 emits -DWORKLETS_VERSION=#{package version} without nested quotes",
+    "cpp": "raw/native/WorkletsVersion.cpp stringizes macro and injects resulting string unchanged",
+    "versionCheck": "original/VersionUtils.cpp permits stable versions with equal major/minor, but literal quotes invalidate that branch; warning formatter adds no quotation marks",
+    "correction": "Bare exact selected version 0.13.0, preserving the original native publication and its C++ implementation"
+  },
+  "sdk16Baseline": {
+    "source": "cffe7f75436aa2e37ec5d82891937965c0407d2d",
+    "hostZIPBytes": 81823972,
+    "hostZIPSHA256": "4c71d23f55391e0b7eb87073bea65bec8b323d6f688214b60e49b9600c80e857",
+    "manifestSHA256": "0ef02a708019c0401c50222e4186f0bbad2e6576fdc333b7d748eb7702cad66f",
+    "inputSHA256": "d381e9db6bce1c74e1c52ff43d7f948d23f5ad07a103701dbf442327f420ed31",
+    "sourceInputCount": 235,
+    "selectedMembers": [
+      {
+        "member": "MiniAppSDK/expo/node_modules/react-native-worklets/package.json",
+        "bytes": 7265,
+        "sha256": "aa8f3e796568bedf9b72b8cac0b1935a2356a5cd5ba5bd7735e75e1bad7e9ead"
+      },
+      {
+        "member": "MiniAppSDK/expo/node_modules/react-native-worklets/src/debug/jsVersion.ts",
+        "bytes": 279,
+        "sha256": "0d690a1518ee03b82322ed4d7d651fba3c2ea6da95ac42c465d984a2cf6b14bc"
+      },
+      {
+        "member": "MiniAppSDK/expo/node_modules/react-native-worklets/lib/module/debug/jsVersion.js",
+        "bytes": 316,
+        "sha256": "81772aaba37cbc817b780ecbf9774453b6f5ad7b5449b22d6073d286ca567162"
+      }
+    ],
+    "directChangedInputPaths": [
+      "Scripts/MiniApps/resolve-upstreams.mjs"
+    ],
+    "archiveProofReuse": "primary-sdk-preparation-attempt17-20261125/receipt.json; no repeated full archive audit"
+  },
+  "portableRuns": {
+    "initial": {
+      "status": "FAILED",
+      "pass": 1,
+      "fail": 1,
+      "skip": 0,
+      "cause": "Canonical Generated/SwiftUIBridge/HanlinGeneratedViews.swift omitted prior reviewed slot projection; original mirror guard correctly failed",
+      "receipt": "raw/portable/focused-portable-candidate.json"
+    },
+    "final": {
+      "status": "EXECUTED_PASS",
+      "pass": 2,
+      "fail": 0,
+      "skip": 0,
+      "receipt": "raw/portable/focused-portable-final.json",
+      "scope": "Candidate child and root manifest inputs to real production audit, malformed/stale/quoted/missing/duplicate variants, legacy repair and future-version byte idempotence"
+    }
+  },
+  "normalProducerClosure": [
+    "Resolver writes the child Package.swift through its existing files map and backs it up in the original rollback set.",
+    "Original generate_manifest.py regenerates root Package.swift after resolver writes; no handwritten generated root change is included.",
+    "Run node --test Scripts/Audit/Tests/runtime-version-contract.test.mjs once after actual root generation: eight original-plus-new functions.",
+    "Native API preflight and prepare-runtime-host --write/--check invoke the same production contract guard; normal Host test glob does not execute the separate Audit/Tests module.",
+    "Rebuild affected HanlinExpoWorklets C++ target with bare selected-version compiler flag, normal probe fixtures and consumers; retain fresh native object/runtime and SDK provenance.",
+    "Normal audit source inventory includes new root Package.swift read; changed resolver is already a direct SDK input. Fresh actual SDK identity is required."
+  ],
+  "boundaries": {
+    "nativeCompilerRerun": false,
+    "nativeAcceptanceAfterCorrection": "NOT_RUN",
+    "fullEightPortableModuleAfterActualGeneration": "NOT_RUN",
+    "npmFetchOrPublicationChange": false,
+    "vendorSourceMutation": false,
+    "optionalAppleAPIGeneration": false,
+    "originalMiniApps25": {
+      "pass": 16,
+      "fail": 9,
+      "skip": 0
+    },
+    "originalAI27": "NOT_RUN",
+    "original52": "NOT_PASSED"
+  },
+  "retainedEvidence": {
+    "nativeTransferReceipt": "raw/native-transfer-receipt.json",
+    "selectedNativeFiles": 8,
+    "unrelatedStorageRowsNotCopied": 3,
+    "actualMismatchLog": {
+      "repositoryPath": "docs/miniapp-sdk/evidence/primary-expo-adapter-diagnostics-attempt17-20261125/raw/modifier-input-pid94039.json",
+      "sha256": "8fdd4fbf8dd268c3da6427475ca0ec181dd9d57b5346c50e9f6d0e1ced3c545a",
+      "originalLine": 999984
+    }
+  }
+}

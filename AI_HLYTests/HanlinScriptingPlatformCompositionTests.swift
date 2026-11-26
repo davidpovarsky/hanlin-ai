@@ -1,5 +1,6 @@
 import Foundation
 import HanlinScriptExtensions
+import HanlinPlatformContracts
 import HanlinScriptingApplicationRuntime
 import Testing
 @testable import AI_Hanlin
@@ -131,6 +132,34 @@ struct HanlinScriptingPlatformCompositionTests {
         #expect(first.publicationCount == 0)
         #expect(second.publicationCount == 1)
         #expect(queue.pending.isEmpty)
+    }
+
+    @Test func malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic() async throws {
+        let (root, platform, _) = makePlatform()
+        defer { try? FileManager.default.removeItem(at: root) }
+        let original = root.appending(path: "invalid-miniapp.zip")
+        try Data("This is not a valid ZIP archive.".utf8).write(to: original)
+        await platform.importPackage(from: original)
+        guard case .failed = platform.activity else {
+            Issue.record("Malformed archive must return the original import failure")
+            return
+        }
+        #expect(!platform.canInstallPreview)
+        #expect(platform.preview == nil)
+        #expect(platform.authoringReport == nil)
+        #expect(platform.canRepairImport)
+        try FileManager.default.removeItem(at: original)
+        // The original file-provider URL can disappear; the owned repair copy remains.
+        #expect(platform.canRepairImport)
+        let report = try JSONDecoder().decode(HanlinMiniAppAuthoringReport.self,
+            from: platform.importDiagnosticJSON())
+        #expect(!report.succeeded)
+        #expect(report.operation == "import")
+        #expect(report.diagnostics.contains { $0.code == "PACKAGE_IMPORT" && $0.category == "error" })
+        platform.discardPreview()
+        #expect(!platform.canRepairImport)
+        platform.clearFailure()
+        #expect(platform.importDiagnostics.isEmpty)
     }
 
     private func makePlatform() -> (URL, HanlinScriptingPlatform, PublicationQueue) {

@@ -1,0 +1,29 @@
+{
+  "recordedAtUTC": "2026-11-24T08:17:20.241463+00:00",
+  "reviewer": "/root/control_authoring",
+  "reviewedAuthorCommit": "4c9b51b2d4de405494e52439fed1d4d298d9a016",
+  "integratedCommit": "098fbb64aca02227327e0d517030d969e73c0a44",
+  "status": "NO_CONCRETE_SOURCE_BLOCKER",
+  "inputs": {
+    "Fixtures/ExpoSwiftUIProbe/ManualAdapterProbe.tsx": "4794f92fc158639b806c0f80bf74cf71775651ad2acd2c24c9462f9d810ff48e",
+    "Fixtures/ExpoSwiftUIProbe/App.tsx": "3570bea58a9584e0b98356d616444f88c38e7a5cda8e47d715a0eacf78d9cfb1",
+    "Fixtures/ExpoSwiftUIProbe/native-adapter-assets/pixel.png": "7713482a5fab3ae135193484df75f4d0a7ce5c8ee50f6b5c33f7aacef5c5ea45",
+    "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift": "6031d8ea46c2deafa3eb18bbdc28ecbf9d9848d858d9b6a47e26e72beb256aee",
+    "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoUIModule.swift": "700fde24b841e544b21ad20edd0bc2edc485465284a81271eaf4cc6630b476cd",
+    "Packages/HanlinExpoUI/src/manual-components.tsx": "23315409689a8fb0f1a652a3d62428eade12822a4626224d0080046f08a80fe2",
+    "Scripts/ProductSplit/run_paired_acceptance.py": "a4ed4cd8eebe1c7b38d8d71fa68a7700db8dbbc1817c1a5c8cc81be68b41d423"
+  },
+  "rootConfirmedIntegratedHashes": true,
+  "findings": [
+    "Controlled close emits one onDismiss while suppressing onPresentedChange prop echo; native dismissal followed by the same React value does not create a second transition.",
+    "UI assertions require actual values/focus/geometry/selection/image phases and presented-content disappearance with event counts.",
+    "Owned HTTP transport serves exact PNG and actual404, requires both requests after17-case native verification, and closes in finally.",
+    "Public SDK compiler6.0.3 validate/build evidence and Python-only HTTP plus Swift parse-only evidence remain distinct."
+  ],
+  "limits": [
+    "Transition callback timing, not animation-completion timing.",
+    "Sheet/Popover include native dismissal; FullScreenCover/Inspector controlled close only.",
+    "Apple execution, native13-adapter semantics and physical-device acceptance remain NOT_RUN."
+  ],
+  "newTestsRunByReviewer": false
+}

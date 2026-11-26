@@ -1,0 +1,67 @@
+{
+  "status": "ACTUAL_FAILED_HISTORY_CONTINUATION_DATA",
+  "historicalSource": "542714964a0f12a964651c2306d5f992ca13ae85",
+  "currentValidationHistory": [
+    {
+      "id": "current-source-builds-v1",
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-builds-v1/state.json",
+        "bytes": 7157,
+        "sha256": "a3523c3f47c8fc4845fce453712023b5666f72410ad5ace7f88afc9c4558005d"
+      },
+      "status": "FAILED",
+      "seconds": 505.0227289169852
+    },
+    {
+      "id": "camera-isolated-conformance-probe-v1",
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-camera-conformance-probe-20261126-v1/state.json",
+        "bytes": 16498,
+        "sha256": "2ab21e2361388d3c0dd8d1996af11bf4db6e17adb8a6a243de0ee8c44e086bee"
+      },
+      "status": "FAILED",
+      "seconds": 1.6203245419892482
+    },
+    {
+      "id": "camera-isolated-conformance-probe-v2",
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-camera-conformance-probe-20261126-v2/state.json",
+        "bytes": 32839,
+        "sha256": "90c339722bf856629aaf44b0883e8580d3dfde01508efd3fc8f241369333ef25"
+      },
+      "status": "BASELINES_FAILED_CANDIDATES_PASSED",
+      "seconds": 25.275434000010137
+    },
+    {
+      "id": "current-source-swiftpm-v1",
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-swiftpm-v1/state.json",
+        "bytes": 4526,
+        "sha256": "262736a12db1ae311550e54770da20caaaa9c37310d90a78fa872bcaf4c839f9"
+      },
+      "status": "FAILED",
+      "seconds": 173.54221920800046
+    },
+    {
+      "id": "current-source-swiftpm-v1-supervision",
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-swiftpm-v1-supervision/state.json",
+        "bytes": 2420,
+        "sha256": "d14ab36d110a229aa488e91950480745274ac2f509aec5136ff59782722a8435"
+      },
+      "controller": {
+        "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-independent-swiftpm-controls-v1/supervise-current-swiftpm-v1.py",
+        "bytes": 6396,
+        "sha256": "19c237580de1d42aeec0eb1443f34643d2dfdd6ad36d82e745461b575d680259"
+      },
+      "status": "FAILED",
+      "secondsField": "additionalObservedElapsedSeconds",
+      "seconds": 1.534450208011549
+    }
+  ],
+  "chargedCurrentValidationBeforeSeconds": 706.9951568749966,
+  "validationScopeSeconds": 10800,
+  "remainingCurrentValidationSeconds": 10093.004843125003,
+  "successfulReuse": false,
+  "boundary": "Historical failed execution charge only. Every required current source test/build obligation remains required."
+}

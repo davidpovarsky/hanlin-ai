@@ -25,7 +25,7 @@ ROOT = Path(__file__).resolve().parents[2]
 TARGETS = {
     **{name: f"Packages/HanlinExpoRuntime/Artifacts/{name}.xcframework" for name in (
         "ReactNativeHeaders", "React", "ReactNativeDependencies", "hermesvm",
-        "ExpoModulesJSI", "ExpoModulesCore", "ExpoModulesWorklets", "ExpoUI", "ExpoBrownfield")},
+        "ExpoModulesJSI", "ExpoModulesCore", "ExpoModulesWorklets", "ExpoUI", "ExpoAsset", "ExpoBrownfield")},
     "Libffi": "Packages/HanlinExpoNativeAPI/Artifacts/Libffi.xcframework",
     "TNSWidgets": "Packages/HanlinNativeScriptRuntime/Artifacts/TNSWidgets.xcframework",
     "NSCWinterTC": "Packages/HanlinNativeScriptRuntime/Artifacts/NSCWinterTC.xcframework",
@@ -37,6 +37,10 @@ SUPPORT_GROUPS = {
         "targets": tuple(name for name in TARGETS if name not in ("TNSWidgets", "NSCWinterTC", "NodeMobile", "Python")),
         "paths": ("Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks",
                   "Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders"),
+    },
+    "HanlinExpoWidgetRuntimeSupport": {
+        "targets": ("ExpoUI", "ExpoModulesCore"),
+        "paths": ("Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle",),
     },
     "HanlinNativeScriptHostSupport": {
         "targets": ("TNSWidgets", "NSCWinterTC"),
@@ -55,8 +59,13 @@ SUPPORT_GROUPS = {
 INPUTS = (
     "RuntimeDependencies.lock.json", "Scripts/Expo/dependency-lock.json",
     "Scripts/Expo/prepare-ios-dependencies.mjs",
+    "Scripts/Expo/build-original-expo-source.mjs",
+    "Scripts/Expo/build-original-widget-runtime.mjs",
+    "Scripts/Expo/package-lock.json", "Scripts/Expo/babel.config.cjs",
+
     "Scripts/ExpoNativeAPI/dependency-lock.json",
     "Scripts/ExpoNativeAPI/prepare-ios-dependencies.mjs",
+    "Scripts/ExpoNativeAPI/multiscene-patch.mjs",
     "Scripts/NativeScript/dependency-lock.json", "Scripts/NativeScript/package-lock.json",
     "Scripts/NativeScript/prepare-ios-dependencies.mjs",
     "Scripts/NativeScript/build-metadata-tool.py",

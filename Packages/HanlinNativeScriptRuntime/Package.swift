@@ -15,7 +15,7 @@ let package = Package(
         .package(name: "HanlinPlatform", path: "../HanlinPlatform"),
         .package(
             url: "https://github.com/NativeScript/ios-spm.git",
-            exact: "9.1.0"
+            exact: "9.1.1"
         )
     ],
     targets: [

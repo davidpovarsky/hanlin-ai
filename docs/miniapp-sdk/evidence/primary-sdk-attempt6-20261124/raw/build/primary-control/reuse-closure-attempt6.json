@@ -1,0 +1,289 @@
+{
+  "utc": "2026-11-24T21:02:59.862947+00:00",
+  "source": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
+  "actualPriorSource": "ce49e30d69466e44b0aa26582beaa57ee7a91a9b",
+  "foregroundSourceAndToolFiles": [
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinCatalogContracts.swift",
+      "expectedSHA256": "757478b238a1fc3144ef51c70275539502f959dd2aca9e67dbbf2449b24f7473",
+      "actualSHA256": "757478b238a1fc3144ef51c70275539502f959dd2aca9e67dbbf2449b24f7473"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinChatStructuredPart.swift",
+      "expectedSHA256": "07479b91a7ce77a8fdf5d53f3cb16939d9d46b0287efbd50b8b20b446c8ea2fa",
+      "actualSHA256": "07479b91a7ce77a8fdf5d53f3cb16939d9d46b0287efbd50b8b20b446c8ea2fa"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinContractError.swift",
+      "expectedSHA256": "ad59a698345d7c218b3787c721b93fc6104ae462f7f11000d9204b1dd03e8518",
+      "actualSHA256": "ad59a698345d7c218b3787c721b93fc6104ae462f7f11000d9204b1dd03e8518"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinDescriptors.swift",
+      "expectedSHA256": "48fe15520f4758ad6d856c2deb40b2e5437392131c16717088f32edc3d163b64",
+      "actualSHA256": "48fe15520f4758ad6d856c2deb40b2e5437392131c16717088f32edc3d163b64"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinExposureContracts.swift",
+      "expectedSHA256": "a975c82c8584d3f46e06150efc1222c4688283c62b5cb767b777fbafaf08ed64",
+      "actualSHA256": "a975c82c8584d3f46e06150efc1222c4688283c62b5cb767b777fbafaf08ed64"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinIdentifiers.swift",
+      "expectedSHA256": "3b3651705d4ee066324e623f284718d985ce7e44d1b01d4a9c3a437ed3d7410a",
+      "actualSHA256": "3b3651705d4ee066324e623f284718d985ce7e44d1b01d4a9c3a437ed3d7410a"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinJSONSchemaDocument.swift",
+      "expectedSHA256": "d763b95edd959241d4c6931892802eb20f1bf90bd21037ed6371c4d68a5e661a",
+      "actualSHA256": "d763b95edd959241d4c6931892802eb20f1bf90bd21037ed6371c4d68a5e661a"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinMiniAppAuthoring.swift",
+      "expectedSHA256": "ef40e7b0ee39954a7d704a121adb03a13b1cd02db0cba8c28e47fb0af49a7a33",
+      "actualSHA256": "ef40e7b0ee39954a7d704a121adb03a13b1cd02db0cba8c28e47fb0af49a7a33"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinMiniAppContracts.swift",
+      "expectedSHA256": "eb880c3c00a789bcd21d8e0cbc353018e32b4e7d7f781415809781751515ae63",
+      "actualSHA256": "eb880c3c00a789bcd21d8e0cbc353018e32b4e7d7f781415809781751515ae63"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPackagePath.swift",
+      "expectedSHA256": "ab230354fd913397dfb2cb776bdde629fe0cf603b17729a7b9dc7cd9aab98c76",
+      "actualSHA256": "ab230354fd913397dfb2cb776bdde629fe0cf603b17729a7b9dc7cd9aab98c76"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPermissionContracts.swift",
+      "expectedSHA256": "f0911d44d578d35f2714b30e4aa925a953475d54fb4f9ee2da39cf0f8590fed3",
+      "actualSHA256": "f0911d44d578d35f2714b30e4aa925a953475d54fb4f9ee2da39cf0f8590fed3"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPreparedRuntimeVersion.swift",
+      "expectedSHA256": "e7e6dcb882b853a086c8ea33023de3a3f6889eefd6ed7c7075ba26d1ba511134",
+      "actualSHA256": "e7e6dcb882b853a086c8ea33023de3a3f6889eefd6ed7c7075ba26d1ba511134"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPresentationContracts.swift",
+      "expectedSHA256": "96cde68f978ef19a5de552835be8c6dc2c62741f4aeab38c40f27586272e99b4",
+      "actualSHA256": "96cde68f978ef19a5de552835be8c6dc2c62741f4aeab38c40f27586272e99b4"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinRuntimeProfiles.swift",
+      "expectedSHA256": "43bffad1d4245d9a00924aab08ffd498a622d32321b5165ff036f0e425140262",
+      "actualSHA256": "43bffad1d4245d9a00924aab08ffd498a622d32321b5165ff036f0e425140262"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinScriptContracts.swift",
+      "expectedSHA256": "e92224cd4a0a1b5ed8e49bd85881c647595337b95ccbb20e6a6684110977679c",
+      "actualSHA256": "e92224cd4a0a1b5ed8e49bd85881c647595337b95ccbb20e6a6684110977679c"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinSessionContracts.swift",
+      "expectedSHA256": "03493cb4f2f414088282d97b2b4c0a01a918c0df1db78451974400bbfcba7386",
+      "actualSHA256": "03493cb4f2f414088282d97b2b4c0a01a918c0df1db78451974400bbfcba7386"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinSkillContracts.swift",
+      "expectedSHA256": "cb8910c6d12ac4cc0f8546e89a0a514151fc9d3cd53d30aacd8abc479f2af99f",
+      "actualSHA256": "cb8910c6d12ac4cc0f8546e89a0a514151fc9d3cd53d30aacd8abc479f2af99f"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinStoreFileAccess.swift",
+      "expectedSHA256": "ee87c52bc778c1a3848c37e125a709378f69e032ca91f80cc58f250a3c81a3f5",
+      "actualSHA256": "ee87c52bc778c1a3848c37e125a709378f69e032ca91f80cc58f250a3c81a3f5"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinToolApprovalDescriptor.swift",
+      "expectedSHA256": "f091f9d83f629f5ba94b4fd30c6775255226f13a671eb047a1dc40f3c3a30ca7",
+      "actualSHA256": "f091f9d83f629f5ba94b4fd30c6775255226f13a671eb047a1dc40f3c3a30ca7"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinToolContracts.swift",
+      "expectedSHA256": "8ce9c0771689e43f24b42fb16b0f1bf2a545628e99f972b625af57314257156d",
+      "actualSHA256": "8ce9c0771689e43f24b42fb16b0f1bf2a545628e99f972b625af57314257156d"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinValue.swift",
+      "expectedSHA256": "cd266a8b820ae8673fd576697bc30d77ba5dd563feaa670f7e5b2f18319ff3d8",
+      "actualSHA256": "cd266a8b820ae8673fd576697bc30d77ba5dd563feaa670f7e5b2f18319ff3d8"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinVersions.swift",
+      "expectedSHA256": "014a9f0d5d078b84cda43d805e8b95b89203cabd834254f4e30030805e8dad0f",
+      "actualSHA256": "014a9f0d5d078b84cda43d805e8b95b89203cabd834254f4e30030805e8dad0f"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinWireProtocol.swift",
+      "expectedSHA256": "13fc4ffbffef08ac7d439f6e9f961b4b94b05d6d0e45ba3cec6522709b7870d7",
+      "actualSHA256": "13fc4ffbffef08ac7d439f6e9f961b4b94b05d6d0e45ba3cec6522709b7870d7"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinMiniAppRequestBroker.swift",
+      "expectedSHA256": "01bf31169e04ca73898fc830d72e0d8824c43563678291823103ac978f114f2c",
+      "actualSHA256": "01bf31169e04ca73898fc830d72e0d8824c43563678291823103ac978f114f2c"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinCanonicalMiniAppCatalog.swift",
+      "expectedSHA256": "b254b91bbb4729edae5b16618519440c7b99f1669318e1c113e25c5a6ec11613",
+      "actualSHA256": "b254b91bbb4729edae5b16618519440c7b99f1669318e1c113e25c5a6ec11613"
+    },
+    {
+      "path": "Packages/HanlinProductSplit/Sources/HanlinProductSplit/CanonicalRequestAdapter.swift",
+      "expectedSHA256": "c83de1cc18e027210f2ea44f5c632fee2598cc9db39e888c07d1848e86f6b3d7",
+      "actualSHA256": "c83de1cc18e027210f2ea44f5c632fee2598cc9db39e888c07d1848e86f6b3d7"
+    },
+    {
+      "path": "Packages/HanlinProductSplit/Sources/HanlinProductSplit/DurableMigration.swift",
+      "expectedSHA256": "80c3ee98ca765dbf9a4c356bb883eabd0c2b0fe5f6c5ebf231fe59b11a1db5c7",
+      "actualSHA256": "80c3ee98ca765dbf9a4c356bb883eabd0c2b0fe5f6c5ebf231fe59b11a1db5c7"
+    },
+    {
+      "path": "Packages/HanlinProductSplit/Sources/HanlinProductSplit/DurableReceiver.swift",
+      "expectedSHA256": "da3b7d14fc66dd388e00ab845cbeae08bd1f8b76dda8ab7c06635e28df8a39cd",
+      "actualSHA256": "da3b7d14fc66dd388e00ab845cbeae08bd1f8b76dda8ab7c06635e28df8a39cd"
+    },
+    {
+      "path": "Packages/HanlinProductSplit/Sources/HanlinProductSplit/ForegroundBridge.swift",
+      "expectedSHA256": "daf4d90a2198f3401728b2e00294a520ffedb452232e7d1c7637e25e2e360db5",
+      "actualSHA256": "daf4d90a2198f3401728b2e00294a520ffedb452232e7d1c7637e25e2e360db5"
+    },
+    {
+      "path": "Packages/HanlinProductSplit/Sources/HanlinProductSplit/MiniAppAuthoringTransfer.swift",
+      "expectedSHA256": "813fc2564abbeec081a2b5d656f726a55874d6891cb34f50c08a37d4920d1604",
+      "actualSHA256": "813fc2564abbeec081a2b5d656f726a55874d6891cb34f50c08a37d4920d1604"
+    },
+    {
+      "path": "Packages/HanlinProductSplit/Sources/HanlinProductSplit/SplitAppStorageLayout.swift",
+      "expectedSHA256": "75a94d34c08b1d8538a2a2b26ab746824cc973b33279c4880a8e7520f1087818",
+      "actualSHA256": "75a94d34c08b1d8538a2a2b26ab746824cc973b33279c4880a8e7520f1087818"
+    },
+    {
+      "path": "Packages/HanlinProductSplit/Sources/HanlinProductSplit/SplitFixtureStore.swift",
+      "expectedSHA256": "db40251edffc6458bc1afa883de0977bb5a7da1f015aa9b05e570a2825d55f2e",
+      "actualSHA256": "db40251edffc6458bc1afa883de0977bb5a7da1f015aa9b05e570a2825d55f2e"
+    },
+    {
+      "path": "Packages/HanlinProductSplit/Sources/HanlinProductSplit/SplitForegroundRoute.swift",
+      "expectedSHA256": "1472de50b21de243f8b9089d6ef79ca2dd39511724633acbd4aa3b092f59cff5",
+      "actualSHA256": "1472de50b21de243f8b9089d6ef79ca2dd39511724633acbd4aa3b092f59cff5"
+    },
+    {
+      "path": "Packages/HanlinProductSplit/Sources/HanlinProductSplit/SplitMigration.swift",
+      "expectedSHA256": "0a289a90c2fd601385549b3e8b4f4582f54a9fafeac7cad7ad706f0e2a710fd2",
+      "actualSHA256": "0a289a90c2fd601385549b3e8b4f4582f54a9fafeac7cad7ad706f0e2a710fd2"
+    },
+    {
+      "path": "Packages/HanlinProductSplit/Sources/HanlinProductSplit/SplitMigrationFixturePersistence.swift",
+      "expectedSHA256": "353eecf17fc27891d2ad7c5e89a8f156a0d761eafd0df02d121d527d81abd183",
+      "actualSHA256": "353eecf17fc27891d2ad7c5e89a8f156a0d761eafd0df02d121d527d81abd183"
+    },
+    {
+      "path": "Packages/HanlinProductSplit/Sources/HanlinProductSplit/SplitReceiverFixturePersistence.swift",
+      "expectedSHA256": "b6e9ddba8b5159e9c2d9e1565f7caa70e739590ee7e9f6af446324adf4a965ba",
+      "actualSHA256": "b6e9ddba8b5159e9c2d9e1565f7caa70e739590ee7e9f6af446324adf4a965ba"
+    },
+    {
+      "path": "Packages/HanlinProductSplit/Sources/HanlinProductSplit/SplitTargetRegistration.swift",
+      "expectedSHA256": "59ba4daaca18d60fcfe269d9cc9aeda6ceb26a260b655d5e3857d423184a42ff",
+      "actualSHA256": "59ba4daaca18d60fcfe269d9cc9aeda6ceb26a260b655d5e3857d423184a42ff"
+    },
+    {
+      "path": "Packages/HanlinProductSplit/Tests/ForegroundSchemeTests.swift",
+      "expectedSHA256": "d92c9dfb6a8b2e52558eaa5ecd69d0bc9ef92d6c388ad4b926fb0663962818d2",
+      "actualSHA256": "d92c9dfb6a8b2e52558eaa5ecd69d0bc9ef92d6c388ad4b926fb0663962818d2"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/ProductSplit/run_portable.py",
+      "expectedSHA256": "74bb2557f6b17eacd1786769d0095d9edc787cf5de2308be35368b7798d87bc9",
+      "actualSHA256": "74bb2557f6b17eacd1786769d0095d9edc787cf5de2308be35368b7798d87bc9"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/ProductSplit/provenance.py",
+      "expectedSHA256": "2069ba7bb6e4f86247a0c4ff67f8517446abbee5bfa36b3af26be88973f4718d",
+      "actualSHA256": "2069ba7bb6e4f86247a0c4ff67f8517446abbee5bfa36b3af26be88973f4718d"
+    },
+    {
+      "path": "/usr/bin/swiftc",
+      "expectedSHA256": "34129c71a01a74f7f3b2443521519b2e5447553fa187f5fcafaaf8c42cc192e2",
+      "actualSHA256": "34129c71a01a74f7f3b2443521519b2e5447553fa187f5fcafaaf8c42cc192e2"
+    }
+  ],
+  "foregroundStatus": "EXECUTED_PASS",
+  "foregroundCount": 53,
+  "foregroundToolchain": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0",
+  "hostLifecycleChangedInputs": [],
+  "phaseScriptHashes": [
+    {
+      "id": "split-platform",
+      "scriptSHA256": "7f1edd791bb43546b753d6834c0cd7b85f558f57883312892364110ad2cbfa4c",
+      "retained": true
+    },
+    {
+      "id": "split-upstreams",
+      "scriptSHA256": "890c8ac2b02ff5a5909c71789e639e333cbc78c687797f2a060a7dd2591cfa84",
+      "retained": true
+    },
+    {
+      "id": "host-proof",
+      "scriptSHA256": "f0f0bbd389a9307dd721135a391b23a20cd9d640f149838fb19fa1cf9daa8bcc",
+      "retained": true
+    },
+    {
+      "id": "split-foreground",
+      "scriptSHA256": "29e26e4ab82898091d69fadeae7245be79fe86294416919cb1ebb5bbee9ffc43",
+      "retained": true
+    },
+    {
+      "id": "split-host-lifecycle",
+      "scriptSHA256": "956541d15f45f12b7777b8ebeb800fe14e1686db5fc7ceae397835547953d7bc",
+      "retained": true
+    },
+    {
+      "id": "split-metadata",
+      "scriptSHA256": "242b75c7edfb94f90ab0cd5d2032af9e2bfda15141c8d98743074d999b10fc14",
+      "retained": true
+    },
+    {
+      "id": "split-native-preparation",
+      "scriptSHA256": "47635289bc9238f28f65b6f72d4980b5cf0aa6def2cf146cd236261260f65a3e",
+      "retained": false
+    },
+    {
+      "id": "split-native-artifacts",
+      "scriptSHA256": "eb0405f89f5da3d48e1591650d42e2f7a8ff8f86eebac9b82ded2e5c70cefebd",
+      "retained": false
+    },
+    {
+      "id": "split-restore-inputs",
+      "scriptSHA256": "f848273286ad9fdcecc9635ee01148c5f54b45230a5199938ef3d362a709f39a",
+      "retained": false
+    },
+    {
+      "id": "split-inputs",
+      "scriptSHA256": "03a05318e9c17e6b2a3fc91dc40ee908b81ee204fb961cda64687179778621bc",
+      "retained": false
+    },
+    {
+      "id": "split-paired-acceptance",
+      "scriptSHA256": "f271e6f1b95bb261417cee5fc13104e41df44f8ec35d2ab565b1f6135191c0c8",
+      "retained": false
+    }
+  ],
+  "metadataPhase": "echo \"digest=$(xcodebuild -version | shasum -a 256 | cut -d ' ' -f 1)\" >> \"$GITHUB_OUTPUT\"\nset -euo pipefail\nif [ ! -f Scripts/NativeScript/node_modules/@nativescript/ios/package.json ]; then\n  npm ci --prefix Scripts/NativeScript --ignore-scripts --no-audit --no-fund\nfi\npython3 Scripts/NativeScript/build-metadata-tool.py\n",
+  "retainedPhaseIDs": [
+    "split-platform",
+    "split-upstreams",
+    "host-proof",
+    "split-foreground",
+    "split-host-lifecycle",
+    "split-metadata"
+  ],
+  "nativeResumePhases": [
+    "split-native-preparation",
+    "split-native-artifacts",
+    "split-restore-inputs",
+    "split-inputs",
+    "split-paired-acceptance"
+  ]
+}

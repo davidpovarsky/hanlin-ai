@@ -1,0 +1,78 @@
+✖ SlotView refresh preserves native children and upstream changes without a React shadow hook (7.770123ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 105.238073
+
+✖ failing tests:
+
+test at Scripts/MiniApps/Tests/upstream-resolution.test.mjs:88:1
+✖ SlotView refresh preserves native children and upstream changes without a React shadow hook (7.770123ms)
+  AssertionError [ERR_ASSERTION]: The input was expected to not match the regular expression /publishZeroContentOrigin|shadowNodeProxy/. Input:
+  
+  '// Copyright 2025-present 650 Industries. All rights reserved.\n' +
+    '\n' +
+    'import SwiftUI\n' +
+    'import ExpoModulesCore\n' +
+    '\n' +
+    'public final class SlotViewProps: ExpoSwiftUI.ViewProps {\n' +
+    '  @Field var name: String = ""\n' +
+    '  @Field var extraProps: [String: Any]?\n' +
+    '}\n' +
+    '\n' +
+    'public struct SlotView: ExpoSwiftUI.View {\n' +
+    '  @ObservedObject public var props: SlotViewProps\n' +
+    '\n' +
+    '  public init(props: SlotViewProps) {\n' +
+    '    self.props = props\n' +
+    '  }\n' +
+    '\n' +
+    '  public var body: some View {\n' +
+    '    Children()\n' +
+    '      .publishZeroContentOrigin(props.shadowNodeProxy)\n' +
+    '  }\n' +
+    '\n' +
+    '  func extra<T>(_ key: String, as type: T.Type = T.self) -> T? {\n' +
+    '    return props.extraProps?[key] as? T\n' +
+    '  }\n' +
+    '}\n' +
+    '\n' +
+    'extension [any ExpoSwiftUI.AnyChild] {\n' +
+    '  func slot(_ name: String) -> SlotView? {\n' +
+    '    compactMap { $0.childView as? SlotView }\n' +
+    '      .first { $0.props.name == name }\n' +
+    '  }\n' +
+    '\n' +
+    '  func slots(_ name: String) -> [SlotView] {\n' +
+    '    compactMap { $0.childView as? SlotView }\n' +
+    '      .filter { $0.props.name == name }\n' +
+    '  }\n' +
+    '\n' +
+    '  func withoutSlot(_ name: String) -> [any ExpoSwiftUI.AnyChild] {\n' +
+    '    filter {\n' +
+    '      guard let slot = $0.childView as? SlotView else { return true }\n' +
+    '      return slot.props.name != name\n' +
+    '    }\n' +
+    '  }\n' +
+    '\n' +
+    '  func withoutSlots() -> [any ExpoSwiftUI.AnyChild] {\n' +
+    '    filter { !($0.childView is SlotView) }\n' +
+    '  }\n' +
+    '}\n' +
+    '\n' +
+    '// Existing host customization.\n'
+  
+      at TestContext.<anonymous> (file:///mnt/development/projects/worktrees/hanlin-miniapps-widget-slot-fix-20261124/Scripts/MiniApps/Tests/upstream-resolution.test.mjs:95:12)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: true,
+    code: 'ERR_ASSERTION',
+    actual: '// Copyright 2025-present 650 Industries. All rights reserved.\n\nimport SwiftUI\nimport ExpoModulesCore\n\npublic final class SlotViewProps: ExpoSwiftUI.ViewProps {\n  @Field var name: String = ""\n  @Field var extraProps: [String: Any]?\n}\n\npublic struct SlotView: ExpoSwiftUI.View {\n  @ObservedObject public var props: SlotViewProps\n\n  public init(props: SlotViewProps) {\n    self.props = props\n  }\n\n  public var body: some View {\n    Children()\n      .publishZeroContentOrigin(props.shadowNodeProxy)\n  }\n\n  func extra<T>(_ key: String, as type: T.Type = T.self) -> T? {\n    return props.extraProps?[key] as? T\n  }\n}\n\nextension [any ExpoSwiftUI.AnyChild] {\n  func slot(_ name: String) -> SlotView? {\n    compactMap { $0.childView as? SlotView }\n      .first { $0.props.name == name }\n  }\n\n  func slots(_ name: String) -> [SlotView] {\n    compactMap { $0.childView as? SlotView }\n      .filter { $0.props.name == name }\n  }\n\n  func withoutSlot(_ name: String) -> [any ExpoSwiftUI.AnyChild] {\n    filter {\n      guard let slot = $0.childView as? SlotView else { return true }\n      return slot.props.name != name\n    }\n  }\n\n  func withoutSlots() -> [any ExpoSwiftUI.AnyChild] {\n    filter { !($0.childView is SlotView) }\n  }\n}\n\n// Existing host customization.\n',
+    expected: /publishZeroContentOrigin|shadowNodeProxy/,
+    operator: 'doesNotMatch',
+    diff: 'simple'
+  }

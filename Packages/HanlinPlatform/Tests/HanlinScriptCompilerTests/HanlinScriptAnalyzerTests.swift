@@ -49,7 +49,8 @@ struct HanlinScriptAnalyzerTests {
             if !expected { #expect(preview.findings.contains { $0.code == "MINIAPP_EXPO_VERSION_MISMATCH" }) }
         }
         for (version, expected) in ["9.1.0": true, "^9.0.0": true, "9.10.0": false, "^9.999.0": false,
-                                    "9.1.invalid": false, "9.1.1": false, "*": false, "latest": false] {
+                                    "9.1.invalid": false, "9.1.1": true, "9.1.4": true, "9.1.5": false,
+                                    "*": false, "latest": false] {
             let prepared = try JSONSerialization.data(withJSONObject: ["name": "fixture", "main": "bundle.mjs", "hanlinRuntime": "hanlin-nativescript",
                 "dependencies": ["@nativescript/core": version]])
             let fixture = try package(files: [
@@ -60,6 +61,39 @@ struct HanlinScriptAnalyzerTests {
             let preview = try analyzer.analyze(fixture)
             #expect(preview.canInstall == expected, "NativeScript Core required version \(version)")
             if !expected { #expect(preview.findings.contains { $0.code == "MINIAPP_CORE_VERSION_MISMATCH" }) }
+        }
+    }
+
+    @Test("Prepared Expo packages preserve the embedded original asset version contract")
+    func expoAssetPluginRequiresItsActualEmbeddedVersion() throws {
+        let analyzer = HanlinScriptAnalyzer(inventory: .init(
+            baselineID: "fixture", baselineDigest: String(repeating: "a", count: 64), symbols: []
+        ))
+        let cases = [
+            ("expo-asset", HanlinMiniAppHostVersions.expoAssetVersion, true),
+            ("expo-asset", "999.0.0", false),
+            ("expo-not-embedded", HanlinMiniAppHostVersions.expoAssetVersion, false)
+        ]
+        for (name, version, expected) in cases {
+            let prepared = try JSONSerialization.data(withJSONObject: [
+                "name": "fixture", "main": "bundle.js", "hanlinRuntime": "hanlin-expo",
+                "hanlinExpo": [
+                    "runtimeVersion": HanlinMiniAppHostVersions.expoUIVersion,
+                    "plugins": ["@expo/ui": HanlinMiniAppHostVersions.expoUIVersion, name: version]
+                ]
+            ])
+            let fixture = try package(files: [
+                "script.json": #"{"name":"Expo Asset Fixture","version":"1.0.0","entry":"expo/app/bundle.js","hanlinRuntime":"hanlin-expo"}"#,
+                "expo/app/bundle.js": "console.log('asset version fixture')",
+                "expo/app/package.json": String(decoding: prepared, as: UTF8.self)
+            ])
+            defer { try? FileManager.default.removeItem(at: fixture.stagingRoot) }
+            let preview = try analyzer.analyze(fixture)
+            #expect(preview.canInstall == expected, "\(name) required version \(version)")
+            #expect(preview.findings.contains {
+                $0.sourcePath == "expo/app/package.json" && $0.message.contains(name) &&
+                $0.state == (expected ? .supported : .unsupported)
+            })
         }
     }
 
@@ -252,7 +286,7 @@ struct HanlinScriptAnalyzerTests {
         ))
         let supportedPreview = try analyzer.analyze(supported)
         #expect(supportedPreview.canInstall)
-        #expect(supportedPreview.findings.contains { $0.message.contains("supported by embedded runtime 9.1.0") })
+        #expect(supportedPreview.findings.contains { $0.message.contains("supported by embedded runtime \(HanlinMiniAppHostVersions.nativeScriptRuntimeVersion)") })
 
         let unsupported = try package(files: [
             "script.json": #"{"name":"Unsupported Core Fixture","version":"1.0.0","entry":"nativescript/app/bundle.mjs","hanlinRuntime":"hanlin-nativescript"}"#,
@@ -263,7 +297,7 @@ struct HanlinScriptAnalyzerTests {
         let unsupportedPreview = try analyzer.analyze(unsupported)
         #expect(!unsupportedPreview.canInstall)
         #expect(unsupportedPreview.findings.contains {
-            $0.message == "This Hanlin build supports @nativescript/core 9.1.0, but the package requires ^10.0.0."
+            $0.message == "This Hanlin build supports @nativescript/core \(HanlinMiniAppHostVersions.nativeScriptCoreVersion), but the package requires ^10.0.0."
         })
     }
 
@@ -315,8 +349,51 @@ struct HanlinScriptAnalyzerTests {
         let unsupportedPreview = try analyzer.analyze(unsupported)
         #expect(!unsupportedPreview.canInstall)
         #expect(unsupportedPreview.findings.contains {
-            $0.message.contains("supports @expo/ui 58.0.3") && $0.message.contains("@expo/ui 99.0.0")
+            $0.message.contains("supports @expo/ui \(HanlinMiniAppHostVersions.expoUIVersion)") && $0.message.contains("@expo/ui 99.0.0")
         })
+    }
+
+    @Test("Unavailable native plugins fail before Expo and NativeScript import")
+    func unavailableModernNativePluginsFailBeforeImport() throws {
+        let analyzer = HanlinScriptAnalyzer(inventory: .init(
+            baselineID: "fixture", baselineDigest: String(repeating: "a", count: 64), symbols: []))
+        let missingPlugin = "@hanlin-test/unavailable-native-plugin"
+        let engines: [(runtime: String, directory: String, bundle: String, contract: String, version: String)] = [
+            ("hanlin-expo", "expo/app", "bundle.js", "hanlinExpo", HanlinMiniAppHostVersions.expoUIVersion),
+            ("hanlin-nativescript", "nativescript/app", "bundle.mjs", "hanlinNativeScript", HanlinMiniAppHostVersions.nativeScriptRuntimeVersion)
+        ]
+        for engine in engines {
+            let entry = "\(engine.directory)/\(engine.bundle)"
+            let packagePath = "\(engine.directory)/package.json"
+            let manifest = try JSONSerialization.data(withJSONObject: [
+                "name": "Native plugin fixture", "version": "1.0.0",
+                "entry": entry, "hanlinRuntime": engine.runtime
+            ])
+            let pluginDeclarations: [[String: String]] = [[:], [missingPlugin: "1.0.0"]]
+            for plugins in pluginDeclarations {
+                let prepared = try JSONSerialization.data(withJSONObject: [
+                    "name": "fixture", "main": engine.bundle, "hanlinRuntime": engine.runtime,
+                    engine.contract: ["runtimeVersion": engine.version, "plugins": plugins]
+                ] as [String: Any])
+                let fixture = try package(files: [
+                    "script.json": String(decoding: manifest, as: UTF8.self),
+                    entry: "console.log('prepared');",
+                    packagePath: String(decoding: prepared, as: UTF8.self)
+                ])
+                defer { try? FileManager.default.removeItem(at: fixture.stagingRoot) }
+                let preview = try analyzer.analyze(fixture)
+                if plugins.isEmpty {
+                    #expect(preview.canInstall)
+                } else {
+                    #expect(!preview.canInstall)
+                    let finding = try #require(preview.findings.first { $0.message.contains(missingPlugin) })
+                    #expect(finding.state == .unsupported)
+                    #expect(finding.severity == .error)
+                    #expect(finding.sourcePath == packagePath)
+                    #expect(finding.message.contains("requires \(missingPlugin) 1.0.0"))
+                }
+            }
+        }
     }
 
     @Test("Detects capability-bearing ambient Scripting globals")
@@ -458,6 +535,267 @@ struct HanlinScriptAnalyzerTests {
         #expect(widgetOnlyPreview.findings.contains {
             $0.severity == .error && $0.message.contains("package.json")
         })
+    }
+
+    @Test("Prepared Expo and NativeScript exposures retain independent action and embedded identities")
+    func explicitPreparedEntrypointsPreserveAllIDs() throws {
+        let analyzer = HanlinScriptAnalyzer(inventory: .init(baselineID: "fixture", baselineDigest: String(repeating: "a", count: 64), symbols: []))
+        for (runtime, bundle) in [("hanlin-expo", "bundle.js"), ("hanlin-nativescript", "bundle.mjs")] {
+            let fixture = try package(files: [
+                "script.json": #"{"name":"Entry points","version":"1.0.0","entry":"\#(bundle)","hanlinRuntime":"\#(runtime)","entrypoints":[{"id":"appIntents","kind":"appIntent","sourcePath":"\#(bundle)"},{"id":"intent","kind":"appIntent","sourcePath":"\#(bundle)"},{"id":"share","kind":"share","sourcePath":"\#(bundle)"},{"id":"translation","kind":"translationUI","sourcePath":"\#(bundle)","exportedSymbol":"search"},{"id":"chat","kind":"embeddedResult","sourcePath":"\#(bundle)"}]}"#,
+                bundle: "console.log('prepared')",
+                "package.json": #"{"name":"fixture","main":"\#(bundle)","hanlinRuntime":"\#(runtime)"}"#
+            ])
+            defer { try? FileManager.default.removeItem(at: fixture.stagingRoot) }
+            let preview = try analyzer.analyze(fixture)
+            #expect(preview.canInstall)
+            #expect(Set(preview.entrypoints.map(\.id)) == ["app", "appIntents", "intent", "share", "translation", "chat"])
+            #expect(preview.entrypoints.filter { $0.kind == .appIntent }.count == 2)
+            #expect(preview.entrypoints.first { $0.kind == .translationUI }?.exportedSymbol == "search")
+            let embedded = try #require(preview.entrypoints.first { $0.kind == .embeddedResult })
+            #expect(embedded.id == "chat")
+            #expect(embedded.sourcePath == bundle)
+            #expect(embedded.supportedContexts == [.mainApplication])
+            #expect(embedded.runtimePolicyID == "embedded-result-v1")
+        }
+    }
+
+    @Test("Malformed and duplicate prepared entrypoints are visible import failures")
+    func malformedPreparedEntrypointsFailWithStableDiagnostic() throws {
+        let analyzer = HanlinScriptAnalyzer(inventory: .init(baselineID: "fixture", baselineDigest: String(repeating: "a", count: 64), symbols: []))
+        for declarations in [
+            #"[{"id":"share","kind":"share","sourcePath":"../bundle.js"}]"#,
+            #"[{"id":"share","kind":"share","sourcePath":"missing.js"}]"#,
+            #"[{"id":"same","kind":"share","sourcePath":"bundle.js"},{"id":"same","kind":"appIntent","sourcePath":"bundle.js"}]"#,
+            #"[{"id":"home","kind":"customHome","sourcePath":"bundle.js"}]"#,
+            #"[{"id":"chat","kind":"embeddedResult","sourcePath":"other.js"}]"#,
+            #"{"id":"share"}"#
+        ] {
+            let fixture = try package(files: [
+                "script.json": "{\"name\":\"Invalid exposures\",\"version\":\"1.0.0\",\"entry\":\"bundle.js\",\"hanlinRuntime\":\"hanlin-expo\",\"entrypoints\":\(declarations)}",
+                "bundle.js": "console.log('prepared')",
+                "other.js": "console.log('unprepared embedded source')",
+                "package.json": #"{"name":"fixture","main":"bundle.js","hanlinRuntime":"hanlin-expo"}"#
+            ])
+            defer { try? FileManager.default.removeItem(at: fixture.stagingRoot) }
+            let preview = try analyzer.analyze(fixture)
+            #expect(!preview.canInstall)
+            #expect(preview.findings.contains { $0.code == "MINIAPP_ENTRYPOINT_DECLARATION_INVALID" })
+        }
+    }
+
+    @Test("Prepared system entrypoints retain Host identity and separately compile their native panels")
+    func preparedSystemEntrypointsCompileBothOriginalPanels() throws {
+        let analyzer = HanlinScriptAnalyzer(inventory: .init(baselineID: "fixture", baselineDigest: String(repeating: "a", count: 64), symbols: []))
+        for (runtime, bundle) in [("hanlin-expo", "bundle.js"), ("hanlin-nativescript", "bundle.mjs")] {
+            let fixture = try package(files: [
+                "script.json": #"{"name":"System entrypoints","version":"1.0.0","entry":"\#(bundle)","hanlinRuntime":"\#(runtime)","entrypoints":[{"id":"keys","kind":"keyboard","sourcePath":"\#(bundle)"},{"id":"notice","kind":"notificationUI","sourcePath":"\#(bundle)"},{"id":"find","kind":"spotlight","sourcePath":"\#(bundle)"},{"id":"photo","kind":"capture","sourcePath":"\#(bundle)","exportedSymbol":"capture.receive"}],"actions":[{"id":"capture.receive","handler":"\#(bundle)"}],"nativePresentations":{"keys":{"engine":"scriptwidget","sourcePath":"native/keys.tsx","sourceFormat":"tsx"},"notice":{"engine":"expo","sourcePath":"native/notice.layout","sourceFormat":"expo-layout"}}}"#,
+                bundle: "console.log('prepared system Host')",
+                "package.json": #"{"name":"fixture","main":"\#(bundle)","hanlinRuntime":"\#(runtime)"}"#,
+                "native/keys.tsx": "export default function render() { $render(<text font=\"headline\">Keyboard</text>); }",
+                "native/notice.layout": #"({type:"Text",props:{text:"Notification"},children:[]})"#
+            ])
+            defer { try? FileManager.default.removeItem(at: fixture.stagingRoot) }
+            let preview = try analyzer.analyze(fixture)
+            #expect(preview.canInstall)
+            #expect(Set(preview.entrypoints.map(\.id)) == ["app", "keys", "notice", "find", "photo"])
+            for entrypoint in preview.entrypoints {
+                #expect(entrypoint.sourcePath == bundle)
+                #expect(entrypoint.runtimeProfile.rawValue == runtime)
+            }
+            #expect(preview.entrypoints.first { $0.id == "keys" }?.supportedContexts == [.keyboard, .mainApplication])
+            #expect(preview.entrypoints.first { $0.id == "notice" }?.supportedContexts == [.notificationUI, .mainApplication])
+            #expect(preview.entrypoints.first { $0.id == "find" }?.runtimePolicyID == "prepared-spotlight-v1")
+            #expect(preview.entrypoints.first { $0.id == "photo" }?.runtimePolicyID == "prepared-capture-v1")
+        }
+    }
+
+    @Test("Keyboard and notification declarations without compiled panels are actionable import errors")
+    func systemPresentationsRequireTheirMatchingNativeSource() throws {
+        let analyzer = HanlinScriptAnalyzer(inventory: .init(baselineID: "fixture", baselineDigest: String(repeating: "a", count: 64), symbols: []))
+        for runtime in ["hanlin-expo", "hanlin-nativescript"] {
+            let fixture = try package(files: [
+                "script.json": #"{"name":"Missing native panel","version":"1.0.0","entry":"bundle.js","hanlinRuntime":"\#(runtime)","entrypoints":[{"id":"keys","kind":"keyboard","sourcePath":"bundle.js"},{"id":"notice","kind":"notificationUI","sourcePath":"bundle.js"}]}"#,
+                "bundle.js": "console.log('prepared')",
+                "package.json": #"{"name":"fixture","main":"bundle.js","hanlinRuntime":"\#(runtime)"}"#
+            ])
+            defer { try? FileManager.default.removeItem(at: fixture.stagingRoot) }
+            let preview = try analyzer.analyze(fixture)
+            #expect(!preview.canInstall)
+            let failures = preview.findings.filter { $0.code == "MINIAPP_SYSTEM_PRESENTATION_REQUIRED" }
+            #expect(failures.count == 2)
+            #expect(failures.allSatisfy { $0.severity == .error && $0.sourcePath == "script.json" })
+            #expect(failures.contains { $0.message.contains("'keys'") })
+            #expect(failures.contains { $0.message.contains("'notice'") })
+        }
+    }
+
+    @Test("System exposures cannot redirect from the prepared Host to an unrelated source")
+    func preparedSystemEntrypointsRequireThePreparedForegroundBundle() throws {
+        let analyzer = HanlinScriptAnalyzer(inventory: .init(baselineID: "fixture", baselineDigest: String(repeating: "a", count: 64), symbols: []))
+        for kind in ["keyboard", "notificationUI", "spotlight", "capture"] {
+            let fixture = try package(files: [
+                "script.json": #"{"name":"Wrong Host entry","version":"1.0.0","entry":"bundle.js","hanlinRuntime":"hanlin-expo","entrypoints":[{"id":"surface","kind":"\#(kind)","sourcePath":"other.js"}]}"#,
+                "bundle.js": "console.log('prepared')", "other.js": "console.log('unprepared')",
+                "package.json": #"{"name":"fixture","main":"bundle.js","hanlinRuntime":"hanlin-expo"}"#
+            ])
+            defer { try? FileManager.default.removeItem(at: fixture.stagingRoot) }
+            let preview = try analyzer.analyze(fixture)
+            #expect(!preview.canInstall)
+            #expect(preview.findings.contains { $0.code == "MINIAPP_ENTRYPOINT_DECLARATION_INVALID" })
+            #expect(!preview.entrypoints.contains { $0.id == "surface" })
+        }
+    }
+
+    @Test("Capture and Spotlight reject undeclared, ambiguous or unrelated foreground actions")
+    func systemActionMetadataMustMatchThePreparedHandler() throws {
+        let analyzer = HanlinScriptAnalyzer(inventory: .init(baselineID: "fixture", baselineDigest: String(repeating: "a", count: 64), symbols: []))
+        let valid = ["id": "capture.receive", "handler": "bundle.js"]
+        let cases: [(String, String?, [[String: String]])] = [
+            ("capture", nil, [valid]),
+            ("capture", "capture.receive", []),
+            ("capture", "capture.receive", [["id": "capture.receive", "handler": "other.js"]]),
+            ("capture", "capture.receive", [valid, valid]),
+            ("capture", "wrong..id", [["id": "wrong..id", "handler": "bundle.js"]]),
+            ("spotlight", "capture.receive", [["id": "capture.receive", "handler": "other.js"]])
+        ]
+        for (kind, symbol, actions) in cases {
+            var entry: [String: Any] = ["id": "surface", "kind": kind, "sourcePath": "bundle.js"]
+            if let symbol { entry["exportedSymbol"] = symbol }
+            let manifest: [String: Any] = [
+                "name": "Invalid system action", "version": "1.0.0", "entry": "bundle.js",
+                "hanlinRuntime": "hanlin-expo", "entrypoints": [entry], "actions": actions
+            ]
+            let encoded = try JSONSerialization.data(withJSONObject: manifest, options: [.sortedKeys])
+            let fixture = try package(files: [
+                "script.json": String(decoding: encoded, as: UTF8.self),
+                "bundle.js": "console.log('prepared')", "other.js": "console.log('unprepared')",
+                "package.json": #"{"name":"fixture","main":"bundle.js","hanlinRuntime":"hanlin-expo"}"#
+            ])
+            defer { try? FileManager.default.removeItem(at: fixture.stagingRoot) }
+            let preview = try analyzer.analyze(fixture)
+            #expect(!preview.canInstall)
+            #expect(preview.findings.contains {
+                $0.code == "MINIAPP_SYSTEM_ACTION_INVALID" && $0.sourcePath == "script.json" && $0.severity == .error
+            })
+        }
+    }
+
+    @Test("Both prepared engines admit typed assistant tools without a second approval")
+    func preparedAssistantToolsUseTheDeclaredNativeAction() throws {
+        for runtime in ["hanlin-expo", "hanlin-nativescript"] {
+            let fixture = try assistantToolPackage(runtime: runtime)
+            defer { try? FileManager.default.removeItem(at: fixture.stagingRoot) }
+            let preview = try HanlinScriptAnalyzer(inventory: .init(
+                baselineID: "fixture", baselineDigest: String(repeating: "a", count: 64), symbols: [])).analyze(fixture)
+            #expect(preview.canInstall)
+            let tool = try #require(preview.entrypoints.first { $0.kind == .assistantTool })
+            #expect(tool.exportedSymbol == "LookupText")
+            #expect(tool.runtimePolicyID == "prepared-foreground-action-v1")
+            #expect(tool.runtimeProfile.rawValue == runtime)
+            #expect(preview.requestedCapabilities.contains { $0.capabilityID.rawValue == "inter-app.share" && !$0.required })
+        }
+    }
+
+    @Test("Prepared assistant tools reject missing, ambiguous and unrelated action contracts")
+    func preparedAssistantToolsRejectBrokenActionContracts() throws {
+        let invalid: [(String, (inout [String: Any], inout [String: Any]) -> Void)] = [
+            ("symbol", { entry, _ in entry.removeValue(forKey: "exportedSymbol") }),
+            ("action", { _, manifest in manifest["actions"] = [] as [[String: Any]] }),
+            ("duplicate", { _, manifest in
+                let action = (manifest["actions"] as! [[String: Any]])[0]
+                manifest["actions"] = [action, action]
+            }),
+            ("handler", { _, manifest in
+                var actions = manifest["actions"] as! [[String: Any]]
+                actions[0]["handler"] = "other.js"; manifest["actions"] = actions
+            }),
+            ("schema missing", { _, manifest in
+                var actions = manifest["actions"] as! [[String: Any]]
+                actions[0].removeValue(forKey: "inputSchema"); manifest["actions"] = actions
+            }),
+            ("schema not object", { _, manifest in
+                var actions = manifest["actions"] as! [[String: Any]]
+                actions[0]["inputSchema"] = true; manifest["actions"] = actions
+            }),
+            ("input missing object type", { _, manifest in
+                var actions = manifest["actions"] as! [[String: Any]]
+                actions[0]["inputSchema"] = [:] as [String: Any]; manifest["actions"] = actions
+            }),
+            ("input describes scalar", { _, manifest in
+                var actions = manifest["actions"] as! [[String: Any]]
+                actions[0]["inputSchema"] = ["type": "string"]; manifest["actions"] = actions
+            }),
+            ("input describes array", { _, manifest in
+                var actions = manifest["actions"] as! [[String: Any]]
+                actions[0]["inputSchema"] = ["type": "array"]; manifest["actions"] = actions
+            }),
+            ("output not object", { _, manifest in
+                var actions = manifest["actions"] as! [[String: Any]]
+                actions[0]["outputSchema"] = ["invalid"] as [String]; manifest["actions"] = actions
+            }),
+            ("nonforeground", { entry, manifest in
+                entry["sourcePath"] = "other.js"
+                var actions = manifest["actions"] as! [[String: Any]]
+                actions[0]["handler"] = "other.js"; manifest["actions"] = actions
+            }),
+        ]
+        for runtime in ["hanlin-expo", "hanlin-nativescript"] {
+            for (label, alter) in invalid {
+                let fixture = try assistantToolPackage(runtime: runtime, alter: alter)
+                defer { try? FileManager.default.removeItem(at: fixture.stagingRoot) }
+                let preview = try HanlinScriptAnalyzer(inventory: .init(
+                    baselineID: "fixture", baselineDigest: String(repeating: "a", count: 64), symbols: [])).analyze(fixture)
+                #expect(!preview.canInstall, "\(runtime): \(label)")
+                #expect(preview.findings.contains {
+                    ["MINIAPP_ASSISTANT_TOOL_INVALID", "MINIAPP_ENTRYPOINT_DECLARATION_INVALID"].contains($0.code ?? "")
+                })
+            }
+        }
+    }
+
+    @Test("Assistant tool result schemas may describe scalar or array values")
+    func preparedAssistantToolResultSchemasRemainUnrestricted() throws {
+        for runtime in ["hanlin-expo", "hanlin-nativescript"] {
+            for resultType in ["string", "array"] {
+                let fixture = try assistantToolPackage(runtime: runtime) { _, manifest in
+                    var actions = manifest["actions"] as! [[String: Any]]
+                    actions[0]["outputSchema"] = ["type": resultType]
+                    manifest["actions"] = actions
+                }
+                defer { try? FileManager.default.removeItem(at: fixture.stagingRoot) }
+                let preview = try HanlinScriptAnalyzer(inventory: .init(
+                    baselineID: "fixture", baselineDigest: String(repeating: "a", count: 64),
+                    symbols: [])).analyze(fixture)
+                #expect(preview.canInstall)
+            }
+        }
+    }
+
+    private func assistantToolPackage(
+        runtime: String,
+        alter: (inout [String: Any], inout [String: Any]) -> Void = { _, _ in }
+    ) throws -> HanlinStagedPackage {
+        let nativeScript = runtime == "hanlin-nativescript"
+        let path = nativeScript ? "nativescript/app/bundle.mjs" : "bundle.js"
+        var entry: [String: Any] = ["id": "assistant.lookup", "kind": "assistantTool",
+                                   "sourcePath": path, "exportedSymbol": "LookupText"]
+        var manifest: [String: Any] = [
+            "name": "Prepared assistant fixture", "version": "1.0.0", "entry": path, "hanlinRuntime": runtime,
+            "actions": [["id": "LookupText", "title": "Look up text", "description": "Find the requested text",
+                         "handler": path, "inputSchema": ["type": "object", "properties": ["query": ["type": "string"]]],
+                         "outputSchema": ["type": "object"]]]
+        ]
+        alter(&entry, &manifest)
+        manifest["entrypoints"] = [entry]
+        let metadata: [String: Any] = ["name": "fixture", "main": nativeScript ? "bundle.mjs" : "bundle.js",
+                                       "hanlinRuntime": runtime]
+        return try package(files: [
+            "script.json": String(decoding: JSONSerialization.data(withJSONObject: manifest), as: UTF8.self),
+            path: "console.log('prepared fixture');", "other.js": "console.log('not the app');",
+            nativeScript ? "nativescript/app/package.json" : "package.json":
+                String(decoding: JSONSerialization.data(withJSONObject: metadata), as: UTF8.self)
+        ])
     }
 
     private func package(files: [String: String]) throws -> HanlinStagedPackage {

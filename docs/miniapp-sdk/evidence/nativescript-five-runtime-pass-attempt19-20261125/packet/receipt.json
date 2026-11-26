@@ -1,0 +1,327 @@
+{
+  "schema": 1,
+  "observedAt": "2026-11-25T18:40:33.056567+00:00",
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "status": "EXECUTED_PASS",
+  "chargedSeconds": 102.41237045900198,
+  "cumulativeActiveSeconds": 24307.531661753037,
+  "cumulativeCompanionSeconds": 128.54957408401242,
+  "summary": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "deviceId": "E742FBCD-8FF0-4130-B143-7F8328637138",
+          "deviceName": "HanlinPaired-local",
+          "modelName": "iPad Pro 13-inch (M5)",
+          "osBuildNumber": "24A434",
+          "osVersion": "27.0",
+          "platform": "iOS Simulator"
+        },
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "passedTests": 1,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "AI_HLY \u00b7 Built with macOS 27.0",
+    "expectedFailures": 0,
+    "failedTests": 0,
+    "finishTime": 1795631955.949,
+    "passedTests": 1,
+    "result": "Passed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1795631908.312,
+    "statistics": [],
+    "testFailures": [],
+    "title": "Test - AI_HLY",
+    "topInsights": [],
+    "totalTestCount": 1
+  },
+  "files": [
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1/ledger.json",
+      "relativePath": "companion-native-v1/ledger.json",
+      "rawBytes": 2144,
+      "rawSHA256": "8b24d810f4a9e3f6d7a5e8440391cdb45c6a6cb0ed2e212d4e59aead0d699301",
+      "bytes": 2144,
+      "sha256": "8b24d810f4a9e3f6d7a5e8440391cdb45c6a6cb0ed2e212d4e59aead0d699301",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1-ns5/companion-ledger-before.json",
+      "relativePath": "companion-native-v1-ns5/companion-ledger-before.json",
+      "rawBytes": 1332,
+      "rawSHA256": "0601f21cbf3d2433dec7e5ce7fb66806555bcca6e4577e92b94f265c7a255068",
+      "bytes": 1332,
+      "sha256": "0601f21cbf3d2433dec7e5ce7fb66806555bcca6e4577e92b94f265c7a255068",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1-ns5/controller-child.log",
+      "relativePath": "companion-native-v1-ns5/controller-child.log",
+      "rawBytes": 2446,
+      "rawSHA256": "75ee5fa71649889fdf88da25b20e44abbc9050a7b2589b462c0b7ed56b2a5330",
+      "bytes": 2446,
+      "sha256": "75ee5fa71649889fdf88da25b20e44abbc9050a7b2589b462c0b7ed56b2a5330",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1-ns5/decision.json",
+      "relativePath": "companion-native-v1-ns5/decision.json.gz",
+      "rawBytes": 157442,
+      "rawSHA256": "331f71fbbdb88ff1de29ef41ce9c001d196a68f5ce72af6816be2314f3ebc4a9",
+      "bytes": 42230,
+      "sha256": "0477684967bfccf660a89d0d4b8eb9ab6f9fa58192970f80fdf99f59a888f25a",
+      "encoding": "gzip"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1-ns5/events.jsonl",
+      "relativePath": "companion-native-v1-ns5/events.jsonl",
+      "rawBytes": 1666,
+      "rawSHA256": "dc1459afbf7ff17c29fbef944213e66e9fa0b81d8cb99ec0040d3f238686ab2e",
+      "bytes": 1666,
+      "sha256": "dc1459afbf7ff17c29fbef944213e66e9fa0b81d8cb99ec0040d3f238686ab2e",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1-ns5/native-result/active-command.json",
+      "relativePath": "companion-native-v1-ns5/native-result/active-command.json",
+      "rawBytes": 714,
+      "rawSHA256": "f19beae5ad10089c1978187a10e85cc1d5346da5ad2cd4d6fcfba90c23bce7f6",
+      "bytes": 714,
+      "sha256": "f19beae5ad10089c1978187a10e85cc1d5346da5ad2cd4d6fcfba90c23bce7f6",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1-ns5/native-result/boot-retained-owned-simulator.log",
+      "relativePath": "companion-native-v1-ns5/native-result/boot-retained-owned-simulator.log",
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1-ns5/native-result/bootstatus.log",
+      "relativePath": "companion-native-v1-ns5/native-result/bootstatus.log",
+      "rawBytes": 504,
+      "rawSHA256": "4bb35d619a9029f2beed64dd01813e84d5a06381ced129809c522fdea5ff3bbe",
+      "bytes": 504,
+      "sha256": "4bb35d619a9029f2beed64dd01813e84d5a06381ced129809c522fdea5ff3bbe",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1-ns5/native-result/command-events.jsonl",
+      "relativePath": "companion-native-v1-ns5/native-result/command-events.jsonl",
+      "rawBytes": 16481,
+      "rawSHA256": "8e01426c037fd4b86f9a5462fe4a92726a586072892f764336028eb3a1d95c30",
+      "bytes": 16481,
+      "sha256": "8e01426c037fd4b86f9a5462fe4a92726a586072892f764336028eb3a1d95c30",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1-ns5/native-result/commands.jsonl",
+      "relativePath": "companion-native-v1-ns5/native-result/commands.jsonl",
+      "rawBytes": 3021,
+      "rawSHA256": "c6eee4cc0b932b3596cca86d0cb421f7b33edf0e778c4b2b1e4bb9fa744faf0e",
+      "bytes": 3021,
+      "sha256": "c6eee4cc0b932b3596cca86d0cb421f7b33edf0e778c4b2b1e4bb9fa744faf0e",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1-ns5/native-result/devices-before.json",
+      "relativePath": "companion-native-v1-ns5/native-result/devices-before.json",
+      "rawBytes": 42956,
+      "rawSHA256": "5b0818692bd7bac2d6c7574158697dcdc526ec1fa1c3f1960184510e0a0f1019",
+      "bytes": 42956,
+      "sha256": "5b0818692bd7bac2d6c7574158697dcdc526ec1fa1c3f1960184510e0a0f1019",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1-ns5/native-result/ns5-nodes.json",
+      "relativePath": "companion-native-v1-ns5/native-result/ns5-nodes.json",
+      "rawBytes": 1794,
+      "rawSHA256": "642c3eae0437a60fd4fb5e92d1e49dbf9f52fee7524cc0010a2627c797a2c8ad",
+      "bytes": 1794,
+      "sha256": "642c3eae0437a60fd4fb5e92d1e49dbf9f52fee7524cc0010a2627c797a2c8ad",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1-ns5/native-result/ns5-selected-tests.log",
+      "relativePath": "companion-native-v1-ns5/native-result/ns5-selected-tests.log",
+      "rawBytes": 57,
+      "rawSHA256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96",
+      "bytes": 57,
+      "sha256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1-ns5/native-result/ns5-summary.json",
+      "relativePath": "companion-native-v1-ns5/native-result/ns5-summary.json",
+      "rawBytes": 1006,
+      "rawSHA256": "d874cc63dcedb20a62198d815aa4906d3002c2315377ae619587be2c54f31150",
+      "bytes": 1006,
+      "sha256": "d874cc63dcedb20a62198d815aa4906d3002c2315377ae619587be2c54f31150",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1-ns5/native-result/ns5-tests.log",
+      "relativePath": "companion-native-v1-ns5/native-result/ns5-tests.log",
+      "rawBytes": 7786,
+      "rawSHA256": "4d7163834ae5079e27d7a9da7c7a824b1363459780e463408e89fa220e013c42",
+      "bytes": 7786,
+      "sha256": "4d7163834ae5079e27d7a9da7c7a824b1363459780e463408e89fa220e013c42",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1-ns5/native-result/result-review.json",
+      "relativePath": "companion-native-v1-ns5/native-result/result-review.json",
+      "rawBytes": 1925,
+      "rawSHA256": "ab16b1d1a080c9434c2fefe123ff198f5f5c15f756d5a0096fe207b20014b4b9",
+      "bytes": 1925,
+      "sha256": "ab16b1d1a080c9434c2fefe123ff198f5f5c15f756d5a0096fe207b20014b4b9",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1-ns5/native-result/selected-command.json",
+      "relativePath": "companion-native-v1-ns5/native-result/selected-command.json",
+      "rawBytes": 1448,
+      "rawSHA256": "2a882a85afaeede2a16261b17eb1bd19740af889cd351c9b93d20ccf11d7bcf5",
+      "bytes": 1448,
+      "sha256": "2a882a85afaeede2a16261b17eb1bd19740af889cd351c9b93d20ccf11d7bcf5",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1-ns5/notification-result-review.json",
+      "relativePath": "companion-native-v1-ns5/notification-result-review.json",
+      "rawBytes": 1308,
+      "rawSHA256": "4396672e8dd3fe2546d89d108c2e57eeb98a48f386171a93bee5e0322ee98999",
+      "bytes": 1308,
+      "sha256": "4396672e8dd3fe2546d89d108c2e57eeb98a48f386171a93bee5e0322ee98999",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1-ns5/original-companion-decision.json",
+      "relativePath": "companion-native-v1-ns5/original-companion-decision.json",
+      "rawBytes": 1830,
+      "rawSHA256": "e4c47637ab828da11bdbd3ba9dc6bc2453dbf9c0214e6640949bd3138de563b3",
+      "bytes": 1830,
+      "sha256": "e4c47637ab828da11bdbd3ba9dc6bc2453dbf9c0214e6640949bd3138de563b3",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1-ns5/paired-terminal-before.json",
+      "relativePath": "companion-native-v1-ns5/paired-terminal-before.json",
+      "rawBytes": 28524,
+      "rawSHA256": "796a24bcc641e31409c7d9e68de2f95206264e0211952885aba61d8ca7ee8820",
+      "bytes": 28524,
+      "sha256": "796a24bcc641e31409c7d9e68de2f95206264e0211952885aba61d8ca7ee8820",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1-ns5/primary-state-before.json",
+      "relativePath": "companion-native-v1-ns5/primary-state-before.json",
+      "rawBytes": 124308,
+      "rawSHA256": "36063a9d865126cc8fe31abad97a982bdced62380226079f07592de033e3a7d2",
+      "bytes": 124308,
+      "sha256": "36063a9d865126cc8fe31abad97a982bdced62380226079f07592de033e3a7d2",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1-ns5/state.json",
+      "relativePath": "companion-native-v1-ns5/state.json",
+      "rawBytes": 3030,
+      "rawSHA256": "8e20572d909c4d0908a0573685f4e87f80155988ed95c677f6ff3215533f15ab",
+      "bytes": 3030,
+      "sha256": "8e20572d909c4d0908a0573685f4e87f80155988ed95c677f6ff3215533f15ab",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1-ns5-decision-receipt.json",
+      "relativePath": "companion-native-v1-ns5-decision-receipt.json",
+      "rawBytes": 1434,
+      "rawSHA256": "c538ee065e2e36b80d8bdc7a66ed034e29ac99a597ce9237540062046edf435e",
+      "bytes": 1434,
+      "sha256": "c538ee065e2e36b80d8bdc7a66ed034e29ac99a597ce9237540062046edf435e",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1-ns5-launch.json",
+      "relativePath": "companion-native-v1-ns5-launch.json",
+      "rawBytes": 1075,
+      "rawSHA256": "62ec3358556bd12dff8bf6e928377935050b63e73836ef14999cdfea00490a20",
+      "bytes": 1075,
+      "sha256": "62ec3358556bd12dff8bf6e928377935050b63e73836ef14999cdfea00490a20",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1-ns5-seal-command-v2.json",
+      "relativePath": "companion-native-v1-ns5-seal-command-v2.json",
+      "rawBytes": 1791,
+      "rawSHA256": "71589cc686e0f7c7c06f7cad880fcf76f3d68f0c992c6490e6ef3a8fdcadfbfc",
+      "bytes": 1791,
+      "sha256": "71589cc686e0f7c7c06f7cad880fcf76f3d68f0c992c6490e6ef3a8fdcadfbfc",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1-ns5-seal-command.json",
+      "relativePath": "companion-native-v1-ns5-seal-command.json",
+      "rawBytes": 1452,
+      "rawSHA256": "5acfdf9f899dc3e0264f4905bd9e3a9c131dceb49f26ce2c2277e1645ba279e1",
+      "bytes": 1452,
+      "sha256": "5acfdf9f899dc3e0264f4905bd9e3a9c131dceb49f26ce2c2277e1645ba279e1",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1-ns5-seal-inputs.json",
+      "relativePath": "companion-native-v1-ns5-seal-inputs.json",
+      "rawBytes": 7114,
+      "rawSHA256": "898a97cf9f26da92aff280313f4573919f52fa7c4bde1a586c40f780582733c2",
+      "bytes": 7114,
+      "sha256": "898a97cf9f26da92aff280313f4573919f52fa7c4bde1a586c40f780582733c2",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-ns5-v6.py",
+      "relativePath": "companion-ns5-v6.py",
+      "rawBytes": 29236,
+      "rawSHA256": "e1e8855b85be3fe99c9fe34c040b4ec73937d3a818994b6f4c56385aae7c6b69",
+      "bytes": 29236,
+      "sha256": "e1e8855b85be3fe99c9fe34c040b4ec73937d3a818994b6f4c56385aae7c6b69",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/node245-restoration-after-full52/receipt.json",
+      "relativePath": "node245-restoration-after-full52/receipt.json",
+      "rawBytes": 3667,
+      "rawSHA256": "5cafb4d715cf5ebfb8072a64f10be550165ca216dcffa5e5bed03d7d49e7fd7a",
+      "bytes": 3667,
+      "sha256": "5cafb4d715cf5ebfb8072a64f10be550165ca216dcffa5e5bed03d7d49e7fd7a",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/seal-ns5-decision-v4.py",
+      "relativePath": "seal-ns5-decision-v4.py",
+      "rawBytes": 25735,
+      "rawSHA256": "bbb071cacc24c136da576cb48c172b3e8bbf352ce9e4978be82dd1bea01f3dd7",
+      "bytes": 25735,
+      "sha256": "bbb071cacc24c136da576cb48c172b3e8bbf352ce9e4978be82dd1bea01f3dd7",
+      "encoding": "identity"
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/state.json",
+      "relativePath": "state.json",
+      "rawBytes": 124965,
+      "rawSHA256": "783d3f71a3b6ac01271b68a22280e265062bc6642ba18de9bdd3dc4c4da78af2",
+      "bytes": 124965,
+      "sha256": "783d3f71a3b6ac01271b68a22280e265062bc6642ba18de9bdd3dc4c4da78af2",
+      "encoding": "identity"
+    }
+  ]
+}

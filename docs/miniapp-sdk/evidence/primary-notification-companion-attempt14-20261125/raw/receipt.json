@@ -1,0 +1,103 @@
+{
+  "capturedAt": "2026-11-25T05:41:13.315055+00:00",
+  "source": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
+  "scope": "Actual completed notification package companion; paired decision/start and storage receipts are separate status evidence, not52 results.",
+  "files": [
+    {
+      "path": "build/primary-control/companion-notification-v1.py",
+      "snapshotPath": "raw/build/primary-control/companion-notification-v1.py",
+      "bytes": 6564,
+      "sha256": "1b50935c72c5795ba81f1f2e543ef1593df9ea84bce4e174cd81744003c1111a"
+    },
+    {
+      "path": "build/primary-control/companion-native-v1/decision.json",
+      "snapshotPath": "raw/build/primary-control/companion-native-v1/decision.json",
+      "bytes": 1830,
+      "sha256": "e4c47637ab828da11bdbd3ba9dc6bc2453dbf9c0214e6640949bd3138de563b3"
+    },
+    {
+      "path": "build/primary-control/companion-native-v1/ledger.json",
+      "snapshotPath": "raw/build/primary-control/companion-native-v1/ledger.json",
+      "bytes": 1332,
+      "sha256": "0601f21cbf3d2433dec7e5ce7fb66806555bcca6e4577e92b94f265c7a255068"
+    },
+    {
+      "path": "build/primary-control/companion-native-v1/notification-package/state.json",
+      "snapshotPath": "raw/build/primary-control/companion-native-v1/notification-package/state.json",
+      "bytes": 872,
+      "sha256": "d8aff42e0c8e45d3ed4fed37ca33da932e7da3c2f74cc1b3a837464666ddfc22"
+    },
+    {
+      "path": "build/primary-control/companion-native-v1/notification-package/result-review.json",
+      "snapshotPath": "raw/build/primary-control/companion-native-v1/notification-package/result-review.json",
+      "bytes": 1308,
+      "sha256": "4396672e8dd3fe2546d89d108c2e57eeb98a48f386171a93bee5e0322ee98999"
+    },
+    {
+      "path": "build/primary-control/companion-native-v1/notification-package/swift-notification-suite.log",
+      "snapshotPath": "raw/build/primary-control/companion-native-v1/notification-package/swift-notification-suite.log",
+      "bytes": 6247,
+      "sha256": "3e8a1217f04fe6f439d0adf25f691f1af33123b6a9b5a045ffc5ee4b58b941fe"
+    },
+    {
+      "path": "build/primary-control/companion-native-v1/notification-package/primary-state-before.json",
+      "snapshotPath": "raw/build/primary-control/companion-native-v1/notification-package/primary-state-before.json",
+      "bytes": 63438,
+      "sha256": "15f53a0ab93a41609e89819acbd56f0b02ac05a19ee32a1a8f355bc31b45130c"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinNotificationInvocationTests.swift",
+      "snapshotPath": "raw/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinNotificationInvocationTests.swift",
+      "bytes": 16840,
+      "sha256": "918dac76ba987164dfc80ea47ff3365d4a4fa42cecc87ee36db863721c9e1667"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Package.swift",
+      "snapshotPath": "raw/Packages/HanlinPlatform/Package.swift",
+      "bytes": 10347,
+      "sha256": "864210a4e3d3a77c375c3211095467e876f41352e5f25bcf72730353d77d6981"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationEvent.swift",
+      "snapshotPath": "raw/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationEvent.swift",
+      "bytes": 5280,
+      "sha256": "982bbdff39e2baeb944ab476bc16d8f826f36ca38e9a3e6a75e6efaeaf3b318b"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationInvocation.swift",
+      "snapshotPath": "raw/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationInvocation.swift",
+      "bytes": 4618,
+      "sha256": "210a1266c9b276cd0865bf9238faec73c8caaf464329a22b2c470f71f6f76706"
+    },
+    {
+      "path": "build/primary-control/paired52-continuation-v1-decision.json",
+      "snapshotPath": "raw/build/primary-control/paired52-continuation-v1-decision.json",
+      "bytes": 75465,
+      "sha256": "492f9c7b75e7776d7a48a34ce2531f140c0c0f9585c437d42922e8308582a734"
+    },
+    {
+      "path": "build/primary-control/paired52-continuation-v1-launch.json",
+      "snapshotPath": "raw/build/primary-control/paired52-continuation-v1-launch.json",
+      "bytes": 400,
+      "sha256": "19d039c3c5f5ef5668d9e7dfa59697127b6352fd6f50bb0bf91003a6f9749f62"
+    },
+    {
+      "path": "build/primary-control/paired52-resource-rejection-attempt14-052857.json",
+      "snapshotPath": "raw/build/primary-control/paired52-resource-rejection-attempt14-052857.json",
+      "bytes": 511,
+      "sha256": "6d903ff93ec231db20c5aafb7a3ba68fa81a0e5c7d843c4cfeff24b7df8aaebb"
+    },
+    {
+      "path": "build/primary-control/storage-retirement-attempt14-device12.json",
+      "snapshotPath": "raw/build/primary-control/storage-retirement-attempt14-device12.json",
+      "bytes": 2269,
+      "sha256": "86635606becc5678e315fdcd65cbf0d115915160768334d82b2f7b22162682f0"
+    },
+    {
+      "path": "build/primary-control/storage-retirement-attempt14-device13.json",
+      "snapshotPath": "raw/build/primary-control/storage-retirement-attempt14-device13.json",
+      "bytes": 2060,
+      "sha256": "f34f73769833adcce826d5f3df50dd928a2639a351e2e7949ad418e17f99e2d5"
+    }
+  ]
+}

@@ -1,0 +1,128 @@
+{
+  "sourceCommit": "ce2eceeb20b4f38031264f161ac9829b3745275a",
+  "changedFile": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExpoWidgetPublication.swift",
+  "currentSourceSHA256": "73267f6b7110ffd25adeb210eddca58f39a76b513dbde981b391e3c83cfdccf5",
+  "sourceInventoryProducer": {
+    "source": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExpoWidgetPublication.swift",
+    "sha256": "73267f6b7110ffd25adeb210eddca58f39a76b513dbde981b391e3c83cfdccf5"
+  },
+  "sourceInventoryInput": [
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExpoWidgetPublication.swift",
+      "sha256": "73267f6b7110ffd25adeb210eddca58f39a76b513dbde981b391e3c83cfdccf5"
+    }
+  ],
+  "reachabilityInput": [
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExpoWidgetPublication.swift",
+      "sha256": "73267f6b7110ffd25adeb210eddca58f39a76b513dbde981b391e3c83cfdccf5"
+    }
+  ],
+  "shippingInputInclusion": [
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExpoWidgetPublication.swift",
+      "inSourceInputs": false,
+      "inSDKFiles": false
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "inSourceInputs": true,
+      "inSDKFiles": true
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "inSourceInputs": true,
+      "inSDKFiles": true
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "inSourceInputs": true,
+      "inSDKFiles": true
+    },
+    {
+      "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "inSourceInputs": true,
+      "inSDKFiles": true
+    }
+  ],
+  "generationRequired": true,
+  "reason": "Both inventory producer/source SHA and reachability sdkSources embed this exact native file hash. Reachability also rejects stale inventory authority before generation.",
+  "recommendedCWD": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123",
+  "recommendedArgv": [
+    [
+      "/usr/local/bin/node",
+      "Scripts/Audit/audit-miniapp-sdk.mjs",
+      "--write"
+    ],
+    [
+      "/usr/local/bin/node",
+      "Scripts/Audit/audit-miniapp-sdk.mjs",
+      "--check"
+    ],
+    [
+      "python3",
+      "Scripts/Audit/audit_miniapp_reachability.py"
+    ],
+    [
+      "python3",
+      "Scripts/Audit/audit_miniapp_reachability.py",
+      "--check"
+    ]
+  ],
+  "compilerResolution": "The JS audit uses createRequire(Scripts/Expo/package.json).resolve(typescript) by default. If the owning audit lane supplies its established absolute compiler path, append --typescript-module <absolute lib/typescript.js> to both JS commands. This is an inventory parser, not shipping declaration validation.",
+  "commandsExecutedHere": false,
+  "sourceRecords": [
+    {
+      "path": "Scripts/Audit/audit-miniapp-sdk.mjs",
+      "sha256": "f2a38e9af505a02e231c67294b8e21de4d7b4bc0fd539bf46935ab706993ab18",
+      "excerpts": [
+        {
+          "firstLine": 12,
+          "lastLine": 19,
+          "text": "const compilerArgument = process.argv.indexOf('--typescript-module');\nconst compilerFile = compilerArgument >= 0\n  ? path.resolve(process.argv[compilerArgument + 1] ?? '')\n  : createRequire(new URL('../Expo/package.json', import.meta.url)).resolve('typescript');\nconst compilerPackage = JSON.parse(await readFile(path.resolve(path.dirname(compilerFile), '../package.json'), 'utf8'));\nif (compilerPackage.name !== '@typescript/typescript6' || compilerPackage.version !== '6.0.2') {\n  throw new Error('Audit with the existing Expo tooling @typescript/typescript6 package pinned to 6.0.2.');\n}"
+        },
+        {
+          "firstLine": 23,
+          "lastLine": 35,
+          "text": "const destination = path.join(root, 'docs/miniapp-sdk/source-inventory.json');\nconst manifestReference = path.join(root, 'docs/miniapp-sdk/MANIFEST_REFERENCE.md');\nconst files = new Map();\nconst compare = (a, b) => a < b ? -1 : a > b ? 1 : 0;\nconst relative = file => path.relative(root, file).replaceAll('\\\\', '/');\nasync function source(file) {\n  file = path.resolve(root, file);\n  if (!files.has(file)) {\n    const bytes = await readFile(file);\n    files.set(file, {path: relative(file), sha256: createHash('sha256').update(bytes).digest('hex'), text: bytes.toString('utf8')});\n  }\n  return files.get(file);\n}"
+        },
+        {
+          "firstLine": 165,
+          "lastLine": 167,
+          "text": "const preparedWidgetPublication = await source('Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExpoWidgetPublication.swift');\nconst preparedWidgetConsumer = await source('Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinPreparedWidget.swift');\nconst generatedViewProducer = await source('Packages/HanlinSwiftUIBridgeGenerator/Sources/HanlinSwiftUIBridgeCore/OutputGenerator.swift');"
+        },
+        {
+          "firstLine": 200,
+          "lastLine": 204,
+          "text": "    hostInvoke: {source: adapter.path, operations, routes: operationContract.routes, facadeOperations, status: 'partial_source_wiring_not_surface_acceptance'},\n    preparedWidgetPublication: {producer: {source: preparedWidgetPublication.path, sha256: preparedWidgetPublication.sha256},\n      consumer: {source: preparedWidgetConsumer.path, sha256: preparedWidgetConsumer.sha256},\n      status: 'source authorities; installed JS/native/store/prepared-consumer execution is separate evidence',\n      osRendering: 'not inferred from state commit or reload request'},"
+        },
+        {
+          "firstLine": 222,
+          "lastLine": 240,
+          "text": "  sources: [...files.values()].map(({path, sha256}) => ({path, sha256})).sort((a, b) => compare(a.path, b.path)),\n};\nif (process.argv.includes('--check')) {\n  const prior = JSON.parse(await readFile(destination, 'utf8'));\n  delete prior.sourceCommit;\n  delete prior.uncommittedSourcePaths;\n  if (JSON.stringify(prior) !== JSON.stringify(inventory)) throw new Error('SDK source inventory drift. Audit source changes, then regenerate with --write.');\n  if (await readFile(manifestReference, 'utf8') !== manifestMarkdown) throw new Error('Manifest field reference drift. Regenerate with --write after source review.');\n  console.log(`PASS: SDK source inventory matches ${inventory.sources.length} sources and ${exports.length} local public exports.`);\n} else if (process.argv.includes('--write')) {\n  const sourceCommit = execFileSync('git', ['rev-parse', 'HEAD'], {cwd: root, encoding: 'utf8'}).trim();\n  const changed = execFileSync('git', ['status', '--porcelain', '--untracked-files=all'], {cwd: root, encoding: 'utf8'})\n    .split('\\n').filter(Boolean).map(line => line.slice(3).replaceAll('\\\\', '/'));\n  const uncommittedSourcePaths = inventory.sources.map(s => s.path).filter(p => changed.includes(p));\n  await mkdir(path.dirname(destination), {recursive: true});\n  await writeFile(destination, JSON.stringify({sourceCommit, uncommittedSourcePaths, ...inventory}, null, 2) + '\\n');\n  await writeFile(manifestReference, manifestMarkdown);\n  console.log(`Wrote source inventory: ${inventory.sources.length} sources, ${exports.length} local public exports; E2E not inferred.`);\n} else throw new Error('Use --check for read-only drift verification or --write after auditing changes.');"
+        }
+      ]
+    },
+    {
+      "path": "Scripts/Audit/audit_miniapp_reachability.py",
+      "sha256": "a28d4702744f94e265489ca9df18ae6a2fd666290598d6faa693810d794a0dce",
+      "excerpts": [
+        {
+          "firstLine": 70,
+          "lastLine": 76,
+          "text": "def build() -> dict:\n    sources = TrackedSources(ROOT)\n    sdk = json.loads(sources.read_text(\"docs/miniapp-sdk/source-inventory.json\"))\n    sources.prefetch(entry[\"path\"] for entry in sdk[\"sources\"])\n    for entry in sdk[\"sources\"]:\n        if hashlib.sha256(sources.read_bytes(entry[\"path\"])).hexdigest() != entry[\"sha256\"]:\n            raise ValueError(f\"SDK authority is stale: {entry['path']}; run its source audit first.\")"
+        },
+        {
+          "firstLine": 260,
+          "lastLine": 268,
+          "text": "    changed_paths = {line[3:].replace(\"\\\\\", \"/\") for line in changed if line}\n    return {\"schemaVersion\": 1, \"sourceCommit\": subprocess.check_output([\"git\", \"rev-parse\", \"HEAD\"], cwd=ROOT, text=True).strip(),\n        \"snapshotIdentity\": \"Base commit plus exact current hashes; uncommitted audit sources are listed separately\",\n        \"uncommittedSourcePaths\": sorted({r[\"file\"] for r in refs.values()} & changed_paths),\n        \"status\": \"IN_PROGRESS_SOURCE_AUDIT\", \"sdkAuthority\": \"source-inventory.json\",\n        \"sdkSources\": sdk[\"sources\"], \"history\": {\"ownerTestFlightBuild\": \"93401\", \"source\": \"7fa8fe26\",\n            \"boundary\": \"Historical owner delivery only; not current branch/signature/matrix acceptance\"},\n        \"targetsDeclaredInProject\": target_names, \"entitlements\": entitlements, \"optionalSurfaceSymbolScan\": optional_surfaces,\n        \"sourceRefs\": refs, \"paths\": paths, \"matrix\": rows, \"originalLibrarySurfaces\": original_surfaces,"
+        },
+        {
+          "firstLine": 317,
+          "lastLine": 339,
+          "text": "def main() -> None:\n    parser = argparse.ArgumentParser()\n    parser.add_argument(\"--check\", action=\"store_true\")\n    args = parser.parse_args()\n    value = build()\n    output = OUT / \"extension-reachability.json\"\n    if args.check:\n        prior = json.loads(output.read_text(encoding=\"utf-8\"))\n        recorded_commit = prior[\"sourceCommit\"]\n        prior.pop(\"sourceCommit\", None)\n        prior.pop(\"uncommittedSourcePaths\", None)\n        value.pop(\"sourceCommit\", None)\n        value.pop(\"uncommittedSourcePaths\", None)\n        if prior != value:\n            raise SystemExit(\"Extension source inventory drift; re-audit before regenerating.\")\n        value[\"sourceCommit\"] = recorded_commit\n        if (OUT / \"extension-reachability.md\").read_text(encoding=\"utf-8\") != markdown(value):\n            raise SystemExit(\"Reachability Markdown differs from the versioned matrix.\")\n        print(\"PASS: 80 unique source-backed reachability cells; no E2E pass inferred.\")\n    else:\n        output.write_text(json.dumps(value, ensure_ascii=False, indent=2) + \"\\n\", encoding=\"utf-8\", newline=\"\\n\")\n        (OUT / \"extension-reachability.md\").write_text(markdown(value), encoding=\"utf-8\", newline=\"\\n\")\n        print(\"Wrote 80 canonical Host-runtime reachability cells plus separate original-library surface records; no physical/E2E pass inferred.\")"
+        }
+      ]
+    }
+  ]
+}

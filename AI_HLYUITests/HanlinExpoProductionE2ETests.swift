@@ -438,7 +438,7 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         }
         field.typeText("hanlin")
 
-        let typedPredicate = NSPredicate(format: "label == 'SEARCHABLE_QUERY_VALUE:hanlin' OR label CONTAINS 'SEARCHABLE_QUERY_VALUE:ha'")
+        let typedPredicate = NSPredicate(format: "label == 'SEARCHABLE_QUERY_VALUE:hanlin'")
         let typed = app.staticTexts.matching(typedPredicate).firstMatch
         XCTAssertTrue(typed.waitForExistence(timeout: 15),
                       "Native Searchable typing was not forwarded to React")
@@ -450,7 +450,7 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
             field.typeText("\n")
         }
 
-        let submitPredicate = NSPredicate(format: "label == 'SEARCHABLE_SUBMIT_COUNT:1' OR label CONTAINS 'SEARCHABLE_SUBMIT_COUNT'")
+        let submitPredicate = NSPredicate(format: "label == 'SEARCHABLE_SUBMIT_COUNT:1'")
         let submitted = app.staticTexts.matching(submitPredicate).firstMatch
         XCTAssertTrue(submitted.waitForExistence(timeout: 15),
                       "Native Searchable keyboard submit was not forwarded to React")

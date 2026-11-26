@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "baseSourceSHA": "bbf5eeb71d62412242ddc54cf62c410cf3c7221d",
+  "requestedObligations": [
+    "Actual archive missing canonical package manifest",
+    "Unavailable native plugin for both modern foreground engines"
+  ],
+  "executeNow": {
+    "command": [
+      "python3",
+      "Scripts/MiniApps/Tests/test_archive_import_policy.py",
+      "--filter",
+      "HanlinArchiveDirectoryTests/realArchiveWithoutPackageManifestIsRejected",
+      "--output",
+      "docs/miniapp-sdk/evidence/sdk02-sdk06-contracts-20261124/missing-manifest"
+    ],
+    "expectedMethods": 1,
+    "reason": "Newly covered negative branch; production DirectoryParser and ArchivePolicy are unchanged and used verbatim with an actual two-entry ZIP."
+  },
+  "needsAppleExecution": {
+    "target": "HanlinScriptCompilerTests",
+    "suite": "HanlinScriptAnalyzerTests",
+    "method": "unavailableModernNativePluginsFailBeforeImport",
+    "fixtures": [
+      "Expo valid metadata with empty plugins",
+      "Expo same metadata with unavailable plugin",
+      "NativeScript valid metadata with empty plugins",
+      "NativeScript same metadata with unavailable plugin"
+    ],
+    "expectedFailureFields": [
+      "canInstall=false",
+      "state=unsupported",
+      "severity=error",
+      "sourcePath=engine package.json",
+      "message names required plugin and1.0.0"
+    ]
+  },
+  "unchangedExistingTestProof": {
+    "originalArchiveDirectoryTestSourceSHA256": "f0c4281b9b0edbbfed458a2b6e186a8988e287e571b9355381ce88d9a93e9cda",
+    "sameAfterRemovingOnlyNewMethod": true,
+    "archivePolicyTestFileSHA256": "ec941d33c0a715be42ad9b21c09791a5c8ced721c99c8d2fbe1c667332a91816",
+    "allExistingAnalyzerSourceUnchangedAfterRemovingNewMethod": true,
+    "existingSwiftAssertionsAndFixturesUnchanged": true
+  },
+  "harnessChanges": "Add optional Swift Testing filter and one separate ZIP/metadata fixture. Default command flags and all old fixture generation/test bodies remain unchanged.",
+  "productionChanged": false,
+  "notRun": [
+    "prior12 archive methods",
+    "prior2 permission methods",
+    "prior module proof",
+    "Apple/CI"
+  ]
+}

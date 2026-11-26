@@ -1,0 +1,17 @@
+{
+  "recordedAtUTC": "2026-11-24T09:17:47.321151+00:00",
+  "reviewer": "/root/entrypoints",
+  "reviewedCommit": "c61e2c18605da61e05c9ab82ed85b7df5ce78fc1",
+  "rootIntegrationCommit": "01d08ed453040d74a76211e7fb51a611b0d1e2cc",
+  "result": "NO_CONCRETE_SOURCE_BLOCKER",
+  "receiptSHA256": "fd64952d4b5e6fc808c103249d9ef5f68b9b86a60afe47d2175cb2f10a206da8",
+  "findings": [
+    "Native validator delegates to unchanged installed helper in same original target.",
+    "Public JavaScript syntax matches actual helper; malformed/schema/permission-domain pairing retained.",
+    "Semantic generator fingerprints called helper and verifies exact upstream/local provenance.",
+    "Host matcher/network transport/redirect/push matching unchanged.",
+    "Existing upstream three-way refresh retains explicit adaptation or reports conflict.",
+    "Consumed manifest-field reference has no stale wildcard rejection statement."
+  ],
+  "verificationReuse": "Owner actual3/3 focused policy/schema/drift checks and unchanged-source Swift helper matrix; no reviewer tests/CI. Corrected Apple execution pending."
+}

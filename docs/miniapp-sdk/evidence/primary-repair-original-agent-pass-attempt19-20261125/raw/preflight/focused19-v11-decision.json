@@ -1,0 +1,2288 @@
+{
+  "schema": 1,
+  "id": "focused19-v11",
+  "owner": "/root/native_execution",
+  "authorization": {
+    "by": "/root",
+    "scope": "Only original repair UI after the shared importer lifecycle correction and both affected original MiniApps and AI builds; preserve original SDK/probe output, historical ManualInput PASS and owned E742. Preserve all original52 requirements, all nine actual focused charges, separate prior400/750/200/300 grants and reconciled historical collector warning; explicitly add650 seconds to the existing5250 focused allowance."
+  },
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "sourceTree": "f7a6596a1ef53d8d962ceb9f619460ffa19ee91e",
+  "allowanceSeconds": 1088.8944576229987,
+  "original52Unchanged": true,
+  "groups": {
+    "FocusedRepair1": {
+      "expected": 1,
+      "selectors": [
+        "AI_HLYUITests/MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport"
+      ]
+    }
+  },
+  "commandCeilingsSeconds": {
+    "FocusedRepair1": 2100
+  },
+  "activeBaselineSeconds": 20284.01731496104,
+  "root": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete",
+  "originalController": {
+    "path": "build/primary-control/paired52-continuation-v3.py",
+    "sha256": "dad6581212134987b666a5161ab33994e6d79b57ed38108faba6ffb22c3bb520"
+  },
+  "child": {
+    "path": "build/primary-control/focused-native-child-v11.py",
+    "sha256": "f5bf628915da0b169468d78dac232aa9e8b4d702995051049eaa8d75274dd644"
+  },
+  "outputDirectory": "build/primary-control/focused19-v11",
+  "primaryStateSHA256": "b79929000b15193245f1607592d925c606bf6c8a5a8c8592dcf8460f633de9a5",
+  "preparedTrackedDiffSHA256": "8eebad41405fad444ff058766f02cbeaf3d3181022ff04b586f090482b1b4e9d",
+  "preparedPayloads": [
+    {
+      "path": "AI_HLY.xcodeproj/project.pbxproj",
+      "sha256": "a80e2947b4dedf0ce95b326cf44b0efac613b7b044058e3afc3fccb870cb0087",
+      "bytes": 252023,
+      "mode": "0o644"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeA.hanlinExpo",
+      "sha256": "c050720db91ffb2c32a9723d8b42a960f126cfed3192e14ccd67a1a8472d93c6",
+      "bytes": 1403392,
+      "mode": "0o644"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeB.hanlinExpo",
+      "sha256": "794c7a2237c32166a4cd36a4d1088b585f4057073454b17684bee938f5c665ad",
+      "bytes": 1403384,
+      "mode": "0o644"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeIncompatible.hanlinExpo",
+      "sha256": "c83750124f42597209a9bbadd1b85f9cfe51128b6b6d7781f16a0cb274cc4e27",
+      "bytes": 1403399,
+      "mode": "0o644"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeMissingGrant.hanlinExpo",
+      "sha256": "9bf9cd16e84d7c1c097fab3b2da04aaf0441f814f30852f1e9a0e40ebf506ba7",
+      "bytes": 1403397,
+      "mode": "0o644"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbe.hanlinExpo",
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+      "bytes": 325929,
+      "mode": "0o644"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+      "bytes": 325929,
+      "mode": "0o644"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeB.hanlinExpo",
+      "sha256": "c60e7d88f759118cf52c9ed50f464031a61402367e02e7fe45b50e37ee0bc016",
+      "bytes": 325930,
+      "mode": "0o644"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeA.hanlinExpo",
+      "sha256": "c050720db91ffb2c32a9723d8b42a960f126cfed3192e14ccd67a1a8472d93c6",
+      "bytes": 1403392,
+      "mode": "0o644"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeB.hanlinExpo",
+      "sha256": "794c7a2237c32166a4cd36a4d1088b585f4057073454b17684bee938f5c665ad",
+      "bytes": 1403384,
+      "mode": "0o644"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeIncompatible.hanlinExpo",
+      "sha256": "c83750124f42597209a9bbadd1b85f9cfe51128b6b6d7781f16a0cb274cc4e27",
+      "bytes": 1403399,
+      "mode": "0o644"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeMissingGrant.hanlinExpo",
+      "sha256": "9bf9cd16e84d7c1c097fab3b2da04aaf0441f814f30852f1e9a0e40ebf506ba7",
+      "bytes": 1403397,
+      "mode": "0o644"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbe.hanlinExpo",
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+      "bytes": 325929,
+      "mode": "0o644"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeA.hanlinExpo",
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+      "bytes": 325929,
+      "mode": "0o644"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeB.hanlinExpo",
+      "sha256": "c60e7d88f759118cf52c9ed50f464031a61402367e02e7fe45b50e37ee0bc016",
+      "bytes": 325930,
+      "mode": "0o644"
+    },
+    {
+      "path": "Package.swift",
+      "sha256": "392ece3430f8e61eb28afdaa925adf006b1a3dbf82a233568c2c279ab768e53b",
+      "bytes": 88328,
+      "mode": "0o644"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/original-runtime-receipt.json",
+      "sha256": "930fa2685c39e238da2ff557a6653bc7530a5a64edc9166b63dd720b410c01d0",
+      "bytes": 6085,
+      "mode": "0o644"
+    },
+    {
+      "path": "Scripts/Expo/package-lock.json",
+      "sha256": "3b31e1c8fd34145df900764a2cda013ab02ecea7f890c969ad5e0a92925d0dd8",
+      "bytes": 336324,
+      "mode": "0o644"
+    },
+    {
+      "path": "Scripts/Expo/package.json",
+      "sha256": "bb447094c0ef2250c445f580fa91c81a55fc3187c7d49e145b84e9c1c3756dce",
+      "bytes": 1759,
+      "mode": "0o644"
+    },
+    {
+      "path": "Scripts/MiniApps/upstream-resolution.json",
+      "sha256": "28a724580a5c7b03268335bfba6a144b7db155198a916305cd00e2e339db1b2e",
+      "bytes": 15092,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/agent-sdk/unified-package-manifest.json",
+      "sha256": "dd14c80e4223465e6a600f93c153c0f4c80a290b28520dfb8aa65d33f1862e4d",
+      "bytes": 3901,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "sha256": "283c96260a51c095be32f262f9f77ba58bebc5372aa1af994176816c8fb5d538",
+      "bytes": 118804,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "sha256": "84849e4928f42f1b417ad1136c62329e94f7ea9a46f22667177fe6180155b977",
+      "bytes": 153644,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "sha256": "3742686d8b088e8c6afcc6b473b2ffa2cf342dae0723ed1365b265d72e120d27",
+      "bytes": 23332,
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "sha256": "de8326436f4ecb7f03c7c28e913f00ef3dc6fa331c1c8a7f355406cd9f0c81ea",
+      "bytes": 494020,
+      "mode": "0o644"
+    }
+  ],
+  "prefix": {
+    "path": "build/primary-control/final-prefix-continuation-attempt19/state.json",
+    "sha256": "846d7b35087174f0c6d5032dc0615d04f5f50eaedc7e48447438d187da90b954"
+  },
+  "priorTerminals": [
+    {
+      "path": "build/primary-control/paired52-continuation-v4/state.json",
+      "sha256": "439cd234a138a0e37f895345d2580df2ec70f5272e7e25534c6428bec94968ac"
+    },
+    {
+      "path": "build/primary-control/ai27-diagnostic-v1/state.json",
+      "sha256": "9ce14c6e9b7370652b2658c681f7c0b8810235eece6c77d77883ab90f6dc4626"
+    },
+    {
+      "path": "build/primary-control/focused19-v1/state.json",
+      "sha256": "a7ae2d21b27503b71939ff72670333a7e05736e47e999801f52e6ee6c1520dd6"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/state.json",
+      "sha256": "9e199031a41095f66c101962da3c1c4ad330e748a9ac2afc267aac71384c2a21"
+    },
+    {
+      "path": "build/primary-control/focused19-v3/state.json",
+      "sha256": "fc722c1417dfcb5029336df1b27f06fd1ec636ae2bc5bcfc82a2258d4f894d25"
+    },
+    {
+      "path": "build/primary-control/focused19-v5/state.json",
+      "sha256": "a4cfa1c2803d9bd6df5353e0818ec412d51d4d6ae138385842341a9eeb574186"
+    },
+    {
+      "path": "build/primary-control/focused19-v6/state.json",
+      "sha256": "4ddca9a8b8bc061dc32e288a392b8ea1e36171617d120342106a7fe0cf8bb5a4"
+    },
+    {
+      "path": "build/primary-control/focused19-v7/state.json",
+      "sha256": "b5910e3c415ba2fd73dac642483dc10314fc9d6c798d66049e4353013d89c971"
+    },
+    {
+      "path": "build/primary-control/focused19-v8/state.json",
+      "sha256": "67b563ebb5623d62b12970225a3644a81af55a8667090296de5fdc0db37541cc"
+    },
+    {
+      "path": "build/primary-control/focused19-v9/state.json",
+      "sha256": "33340d4bb32a7d89d48a1e10a112c8bc210e51370b7a41809f1cab9cf98e0b4e"
+    },
+    {
+      "path": "build/primary-control/focused19-v10/state.json",
+      "sha256": "dabb6291f9cf251526c229c42affed69b15cf6bae7702acb57bcff0a62bcee79"
+    }
+  ],
+  "requiredFiles": [
+    {
+      "path": "AI_HLY.xcodeproj/project.pbxproj",
+      "sha256": "a80e2947b4dedf0ce95b326cf44b0efac613b7b044058e3afc3fccb870cb0087"
+    },
+    {
+      "path": "AI_HLY/ChatView.swift",
+      "sha256": "d21659cdaa7d3e6141d4677d10ccaee067e7238ba8c4ccc2f689b63db4c41ffe"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift",
+      "sha256": "baec47f25aba9e08d078b65641a622ab56eb2f76421cb3e714eb08fdd01661dc"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppHostIntegration.swift",
+      "sha256": "f09bd56c25571bbc897fb40327b424ddc67f0e9926e86b7bf8d674eeaa5ce216"
+    },
+    {
+      "path": "AI_HLY/Downstream/SDK/MiniAppRepairCoordinator.swift",
+      "sha256": "8b705812d607cded83ba5c3b96768307af88e388aaea16fcc9ff8fb9678c6c64"
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift",
+      "sha256": "c36fadd1099529226434fc11d258772556ecc82f71a594c3a81d4d6f2ac0e0d9"
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift",
+      "sha256": "5d3852f726f180788ba60da91137789c0651ff385232cca4b1ebd0c9ce7d23b7"
+    },
+    {
+      "path": "AI_HLY/RuntimeHostResources.zip",
+      "sha256": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc"
+    },
+    {
+      "path": "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift",
+      "sha256": "ea6c76e33bb4594931bb118ab713e2de2d85e561f0e40eb21d64d154c45f9c90"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeA.hanlinExpo",
+      "sha256": "c050720db91ffb2c32a9723d8b42a960f126cfed3192e14ccd67a1a8472d93c6"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeB.hanlinExpo",
+      "sha256": "794c7a2237c32166a4cd36a4d1088b585f4057073454b17684bee938f5c665ad"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeIncompatible.hanlinExpo",
+      "sha256": "c83750124f42597209a9bbadd1b85f9cfe51128b6b6d7781f16a0cb274cc4e27"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeMissingGrant.hanlinExpo",
+      "sha256": "9bf9cd16e84d7c1c097fab3b2da04aaf0441f814f30852f1e9a0e40ebf506ba7"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbe.hanlinExpo",
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeB.hanlinExpo",
+      "sha256": "c60e7d88f759118cf52c9ed50f464031a61402367e02e7fe45b50e37ee0bc016"
+    },
+    {
+      "path": "AI_HLYUITests/MiniAppAuthoringUITests.swift",
+      "sha256": "60a786ea3864a118710f8814a41f52cc454d35c71e4fb911b611a70ba5c2f565"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeA.hanlinExpo",
+      "sha256": "c050720db91ffb2c32a9723d8b42a960f126cfed3192e14ccd67a1a8472d93c6"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeB.hanlinExpo",
+      "sha256": "794c7a2237c32166a4cd36a4d1088b585f4057073454b17684bee938f5c665ad"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeIncompatible.hanlinExpo",
+      "sha256": "c83750124f42597209a9bbadd1b85f9cfe51128b6b6d7781f16a0cb274cc4e27"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeMissingGrant.hanlinExpo",
+      "sha256": "9bf9cd16e84d7c1c097fab3b2da04aaf0441f814f30852f1e9a0e40ebf506ba7"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbe.hanlinExpo",
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeA.hanlinExpo",
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeB.hanlinExpo",
+      "sha256": "c60e7d88f759118cf52c9ed50f464031a61402367e02e7fe45b50e37ee0bc016"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ManualAdapterProbe.tsx",
+      "sha256": "c93a882be209437f388c5d67a9af6ef98ca5371db4aef084aaf7cd464ce42d57"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/native-adapter-assets/pixel.png",
+      "sha256": "7713482a5fab3ae135193484df75f4d0a7ce5c8ee50f6b5c33f7aacef5c5ea45"
+    },
+    {
+      "path": "HanlinMiniAppsApp/HanlinMiniAppsApp.swift",
+      "sha256": "f1489c1f8c4ca1039d4ffc5698b43a5e672ec586fb5b9393dc69f246f11de4c1"
+    },
+    {
+      "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "sha256": "da0fa21f26b677f4d18f8e1972208b39e30401a127e9dd2a9643e0fe8d7ad17c"
+    },
+    {
+      "path": "Package.swift",
+      "sha256": "392ece3430f8e61eb28afdaa925adf006b1a3dbf82a233568c2c279ab768e53b"
+    },
+    {
+      "path": "Packages/HanlinAppExtensionsSDK/Sources/HanlinNotificationExtension/HanlinNotificationService.swift",
+      "sha256": "fd2568e373da3dfdd2c35a2f0138f02cf46d7e6bd67c70b4d38109718b39480e"
+    },
+    {
+      "path": "Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPI/HanlinExpoNativeAPIHostVersions.swift",
+      "sha256": "3094b19bbeef676478a22be01efe6ad4679039fb5832bb10d0e7630305b5d138"
+    },
+    {
+      "path": "Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPI/HanlinExpoNativeAPIManager.swift",
+      "sha256": "e714fc23dd1507ba915a674b3beddfd59ecfbf73128d0db655be9ce8dfd1ef48"
+    },
+    {
+      "path": "Packages/HanlinExpoNativeAPIJS/package.json",
+      "sha256": "7a46122e4b3ca8e9fb1caa54bb7bdd0a6e4c56226b6c3bdded20e6134bb5909e"
+    },
+    {
+      "path": "Packages/HanlinExpoNativeAPIJS/src/index.ts",
+      "sha256": "000de857839c76e86a426123d4bce30f0b56854f7655d4021342b2d932b98390"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/HanlinExpoWidgetsIntegration.swift",
+      "sha256": "445d8c707bdb5f74c536d1ab9aa6e11c3fdbaba266a2fee15121cd44619c0e5a"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/HanlinExpoWidgetsIntentsPackage.swift",
+      "sha256": "acb09fc16173670ec0c79d3b9be412b4da4cc7cb0d8698193b893fd14be48cc5"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/LiveActivity.swift",
+      "sha256": "5cd3246b91d1814fa2a8ee204e5791cdb3e2210822246dec7f642817fda6daa2"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/LiveActivityFactory.swift",
+      "sha256": "34aa1afdce0c88e3a81c4013f518d492df561539548ba7c5d5c5244fe479affb"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetObject.swift",
+      "sha256": "025a1cd04deb5333523aa50c0e17c59917f9966f584a82072c2b015d03cde5ea"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/AccessoryWidgetBackgroundView.swift",
+      "sha256": "16436a1b8fc3a66996555de8fe5a9995924f68a70dcdf33d7e63f8f1e8be683e"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/AppIntent.swift",
+      "sha256": "b8316b264e367ba538f09444a74e4a9721d829f10ea69f03f68f9fc9cfa6812a"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/Buttons.swift",
+      "sha256": "5a8b9b6b740e11686c173d67cd4fcf75c3d0b6bd3dc64b668e867e770e59ce29"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/ChildView.swift",
+      "sha256": "1e8f9d57fa6ac106b09df262e6319b44a8995166235381de4c1ad5df94a44b9d"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/DynamicView.swift",
+      "sha256": "f5b5563210ee58f53460dad9de97abd54499b6a8ad024038699a0af9462f5a27"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/EntryView.swift",
+      "sha256": "65ae5ef22a6b4777f7d90e82365108991b8e8b369e28a1607f93b7ae70a76422"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/Fragment.swift",
+      "sha256": "072b40dc5b3e9908cf3a351d707c9e69d6744c5412fbef8cab6dd98f53945dc1"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/LiveActivityBanner.swift",
+      "sha256": "ca7f65ceb0cfbc43c829350521afe11be8d1891a8b322c0a4846210dc7674bbc"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/RedBoxView.swift",
+      "sha256": "652b887b0cda62d993440e0ab41f1507e1592dac45899e4fe03e124c0dff8b50"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/TimelineEntry.swift",
+      "sha256": "f3028ccce31246641f2d537bff4dd50b0686c87d8d208e05c96bd91a23c65b4f"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/TimelineProvider.swift",
+      "sha256": "3431d9cfe5af815b42964dd7dc9b3de8e6e6d20b276739b6eecf5f0a9d5bc689"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/Type.swift",
+      "sha256": "bea95a0d86ec6048f4488111e8bacf5aa7582b55579415620bcfc2e31b6e5ca0"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/Utils.swift",
+      "sha256": "08c1a02e1eaae8ee190a9c908cae0c2e672cddbfb450ed97f978b43b018268ed"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/ViewRenderer.swift",
+      "sha256": "c38e906a25fad080c09fc60789fb336a9c7de3aa31149f4d72500b0947227b60"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/WidgetLiveActivity.swift",
+      "sha256": "0f6d6b8e994d06e4acb69b8e793ded04143b3db96c2e89ba384890bbad176c11"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/WidgetModifiers.swift",
+      "sha256": "be592a19078bf4a06d95fdcc675863f4b13b212cbd46ece1b812196b037aea14"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/WidgetsJSRuntime.swift",
+      "sha256": "ba0e7d6351e1e6dd5f95d4f891203cbdd6954f90e8019e298639b1be2e49c70b"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/WidgetsLayoutRegistry.swift",
+      "sha256": "19a7f6ebf859a2d2695f839c8ccf1968b29fa9426b0325bb1e59f256539fc997"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsContext.swift",
+      "sha256": "14feb7544bff21a7223d59600a1f00b603ebd2ca364459bd5f3fcb964740b246"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsEvents.swift",
+      "sha256": "2afe29cd894b7722645ff0b410d564068e3e6e5d7b8f503c2885f4a8e89103b6"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsExceptions.swift",
+      "sha256": "31b695f7237481a38673ab7e52bd2091b53a1d1e80841a5933292842fe84a4db"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsModule.swift",
+      "sha256": "153e723f0e7a75cb325dc74333efe3788010a1f74319a09ddb386853232634a5"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsRecords.swift",
+      "sha256": "65079174172668f7d9a2595d3e18e3c90351c68903aef8db42760ac605fa3e2f"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsStorage.swift",
+      "sha256": "4a3c58daafb36fc77be701a34431446d96cfc4172f4de60bcaa7f96046f61e5b"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/ExpoWidgets.bundle",
+      "sha256": "6ec4f91b442f8c387f2ea339f503b5a39082878811806cb58179236d06323aed"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/ExpoWidgetsLayoutRegistry.json",
+      "sha256": "71c9d33ca106b100af05bbb627934736fc082bfcf2bb33c412ead9eb0c5840b5"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/Info.plist",
+      "sha256": "06a9c2c6630712a6761042823033448a59a6242cf6e93ddd57edabad88ff724b"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/README.txt",
+      "sha256": "ecab392c89bea2ecf2153f046c9107dec788736ed800907c2c51ab353a5d4a06"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/original-runtime-receipt.json",
+      "sha256": "930fa2685c39e238da2ff557a6653bc7530a5a64edc9166b63dd720b410c01d0"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoUIModule.swift",
+      "sha256": "3ad8217ce87005fab1fe3dc256e7d7680ced7c330f7cd9dc5561f1a5e5905e09"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/README.md",
+      "sha256": "4e2965ada75bf9bd6bdf6ffb4ebcfe4a06ba49888bb04e803086e358a2a481df"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/package.json",
+      "sha256": "18dbddebb3c641742ca5f83d0492cec1cbbc7bb1affbefe641477b7481110568"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/generated/bridge-manifest.ts",
+      "sha256": "a56c8a16334bfe76ebe6489fc1f018f25f28f7cadba6c1ef11a268e5336f3b37"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+      "sha256": "fee40e3a17dd3466ad2a97301e877501832f044968360684af8e473fe6055483"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/generated/views.tsx",
+      "sha256": "7c3bf97da0a680dc80d1a1d19f915b67778e17f42021355c5d99ea4f99c85c74"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/host-services.ts",
+      "sha256": "010488e8c6aae2635f67d45cefebb9fdb2d4f97af71161af011a83d626ad60e7"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/index.ts",
+      "sha256": "d0907d0fd364c9b0621f48099d98ece640ba25d8d40f53cb60aabb3b1dbd3922"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/manual-components.tsx",
+      "sha256": "b95b387fce797a3c0ffe8c258e1fe0b411e76956e6cd50ae9235267f5b638da6"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/miniapp-actions.ts",
+      "sha256": "d5d38fc209d8d8dedb2832ffd037e53d4eabd8b8c92320bd79e791fdfef2c607"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/modifiers.ts",
+      "sha256": "56b1efa29241c519d325682828e944becae6b516887908777661b3a574821782"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/system-surfaces.ts",
+      "sha256": "3a2c4424ce074056ef76d62a4502fb16c389e10a46967fcde15835efde94543f"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/tests/generated-views.test.mjs",
+      "sha256": "03c46a995205ca0b1730fc8aa26bac97771c1f4cd3951665c13f7c2fa2c046fa"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/tests/host-services-publication.test.mjs",
+      "sha256": "84a995d298fd75a7959a63083fb6bdd0c3db65c16850d1571c456c32309ffb1e"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/tests/miniapp-actions.test.mjs",
+      "sha256": "566e95d9b0ba53fdf576de2000c6e97707fb3b85e6fb014445f1c96546eea4bc"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.d.ts",
+      "sha256": "75f055c7067c2497b64f64714ca175fc09a323236e236b1d57621d4a07c3f7c1"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.mjs",
+      "sha256": "c6cc15960daeb071fc5adc8daf3f041c3e990ee8ce285a0b6c945667763a7dc5"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/package.json",
+      "sha256": "c42e3fe3eb38b7289ba3cf49ca0b56bcbd7ac2d27d68955f27e3d5e33e642a7e"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/system-surfaces.d.ts",
+      "sha256": "04a07d066efe992bc4a421e7a8aadd5e555ac82478dcf4fc613703da3ca417f8"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/system-surfaces.mjs",
+      "sha256": "ff92a9423fcfa566d4e00546e7a8e9fb0c8b206a361911225c1f67dddba68d19"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Package.swift",
+      "sha256": "864210a4e3d3a77c375c3211095467e876f41352e5f25bcf72730353d77d6981"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationDelivery.swift",
+      "sha256": "b029004be2138cb11ef6221ab7b2c64489ec05b8e22ead565b822da1a946431f"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift",
+      "sha256": "b9671f1d78db83f6786320a68878d01852d5a81a3383866cb26a5e52a87da5ff"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationEvent.swift",
+      "sha256": "982bbdff39e2baeb944ab476bc16d8f826f36ca38e9a3e6a75e6efaeaf3b318b"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationInvocation.swift",
+      "sha256": "210a1266c9b276cd0865bf9238faec73c8caaf464329a22b2c470f71f6f76706"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift",
+      "sha256": "d3735e19e7e2603d17449acd0c57c22bc676ee022bfe3152a20d2d846dd58afd"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/HanlinOriginalScriptWidgetArchive.swift",
+      "sha256": "7d5ccfd581640690601e58cef9822dac34ba02320a0e708595ef54987933f7bb"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/HanlinOriginalScriptWidgetConfiguration.swift",
+      "sha256": "4bcf3b53a0a308c7c777cee946872076d87f3541c07913e2f8026fd7b0ace897"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/HanlinOriginalScriptWidgetControls.swift",
+      "sha256": "f79c2efa49d41f215a38293d9dbd068283af9d49066878f5a67c6da03b383063"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/HanlinOriginalScriptWidgetEnvironment.swift",
+      "sha256": "4e4cc8d5cd867e7aa17736ff5d69b7e5a289b8d9bf362f7527ae59a198272eb3"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/HanlinOriginalScriptWidgetSession.swift",
+      "sha256": "aaba22894ddd8bf7863a5ddd4e1e61cece90081b579bb8ce7b2a084f751f8f9b"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptManager.swift",
+      "sha256": "facae6f7b15611a71869ab87fe077c542be22ce58b4c09b280fb7e29236bbe7f"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptMetadata.swift",
+      "sha256": "f1b202b4caef78877cad69700ff698350066066c12f7fcc5bf557810aa1234f9"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptModel.swift",
+      "sha256": "7396a815f5c31e6ad08c6606230304bca663f1caa7789659138e4c66905a4379"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetCloudJSON.swift",
+      "sha256": "d26babdd82bf9ae3ee3288727966c005a3689061a52b7034e00002efd89b9705"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetCloudJSONView.swift",
+      "sha256": "23ae017217072997721d8b18251f1960ba6e07b94b2f43a4733925ce0883d9d0"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetDiagnosticLog.swift",
+      "sha256": "a0caeb5028f04651e9a9b632827a04cde8bcbcafbf8182b5d37c741ad82bf59d"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetPackage.swift",
+      "sha256": "3aa2274d41edd3e7e87edd91697a4a204489d0efc6a2efaa00ea82d517af16fd"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetStorageProfiles.swift",
+      "sha256": "a61b98d72597569fa5fbef1b2c323c52197a0f5224b01ee91fb6ff74fceb0ee5"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetStorageUpgrade.swift",
+      "sha256": "29df6a3af86343a2b97677f410691c35b16f2ec57d9bed6b62af404c62990ff3"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetSystemAccessView.swift",
+      "sha256": "07459e60d68dbb65b1c87d6a1ba4af940a2f6322e7d114bc914e3c9b56051323"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/LICENSE.txt",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/NOTICE.txt",
+      "sha256": "9c66a31a160e44905959f8e02f59f91325439e75e869d9ef7de52ad1983a1a06"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Plugin/ScriptWidgetDataSources.swift",
+      "sha256": "6d5a062de80aeae763087c66b0f31910af63190821942d55d39f782f62095607"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeAlarms.swift",
+      "sha256": "1e018a1f256ea16774cef9241e21c181783e92d17e19d96353aca95520e82245"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeCalendar.swift",
+      "sha256": "5a355f79b06e2e8085ee7668e5f836559048e6b42ad28abd523cbdd855164615"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeCalendarWrites.swift",
+      "sha256": "01a62e3c7bc201cb8c3efaf197ee2aa5ea3014dc6a27e4bcd88f3456b66af5c0"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeCloudJSON.swift",
+      "sha256": "e9361b1dbae78436e78c11f05ebc3f9b5660f0448e75324eddda2faf05a170dd"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeConsole.swift",
+      "sha256": "ad8f57abd7c175e91d874c6c09c0abd1a05f527a5e387ecb484737419f57774e"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeContacts.swift",
+      "sha256": "0c3a85ec23ed8263ec810c5b265f01af001a77a858623d87475c8019658a9def"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeDevice.swift",
+      "sha256": "9e88549b24a86c471afb4b5fb68450abaa84229a617938b47013ae72e1bb2922"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeDocuments.swift",
+      "sha256": "8b7c1b6dee0c3fedbccadd656c581b95917a176f6e23423db61a25f51f608552"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift",
+      "sha256": "8a7bb65bffe0390ac719e33b0ece71e19b20e9be96841e422a3a4c37f09352b3"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFile.swift",
+      "sha256": "ac111e89f1f7a8be1930bfd2f7e111df22e34100a0db000a9ebd12501addfa58"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeHealth.swift",
+      "sha256": "6b5d764332e693654dc3d51a15089d4fd4ee73660d3c00e759a258559de04750"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeHealthHistory.swift",
+      "sha256": "3ff770753d3419c80efa973f62c6f6d46334c66392067741f382e75260921af9"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeHome.swift",
+      "sha256": "d9548a2cfdac8eb02026fd526ee2042edd515a55cae69aef573fb27876f33d21"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeLocation.swift",
+      "sha256": "b002544a5a6946725e07e2a715dce3e994f59637ddd47eafdbad3f6fa007dbe1"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeMaps.swift",
+      "sha256": "b9a1ec2b87723bdba8218585710f77eec686b8a2f60b44559cb6af3c9a4f7f1d"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeMusic.swift",
+      "sha256": "bc973eb825a8bfced7832000f114ea298ea15af53001a211cda5883a082a9268"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeNotifications.swift",
+      "sha256": "59a9580018b112427764dbb1a78422c2eb5eadd3173458930741c4c022d3f087"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimePhotos.swift",
+      "sha256": "7d9a6ffb098f225af83dde31e1e7d73ad23a01a505b76b8f0a72f93a44c96ce8"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimePromise.swift",
+      "sha256": "13f8c1563e906edd2fd9f96b372cace3e15be58e18c583ba60100f2ad842d8d5"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeReminders.swift",
+      "sha256": "d7d060b0bd004126ca34f977a3aa5e8bf0e2be314de3d37a9caafee6fadb56eb"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeServices.swift",
+      "sha256": "68458d34ed1ba2c72dac0792f53cd871ac1f6c81731b62fc41738d2dcf54e661"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeStorage.swift",
+      "sha256": "68d03e9712e1a13cb5db9581a651e2acf81fe68edaacfe6ae49e0af587e1beba"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeSystem.swift",
+      "sha256": "9881cb0bab5bb255eb78d0fdce46ad79014a112af25f953d92850da7532aff35"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeSystemServices.swift",
+      "sha256": "028a336864a6f0fbd9e30e5864eddf5b13aafcd3e87f49c622ee7233bc327f58"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeWeather.swift",
+      "sha256": "beb2d479aadf532c827b31eacd1ec68d80586d409133acedaa1616384fc7aae8"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetServiceAccessPolicy.swift",
+      "sha256": "2952863b469cc93e9fbe545290f6210ef53f0c085aab67111aa63b8b332b01b0"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetServiceAccountsView.swift",
+      "sha256": "7517b058087288d507086c0783a8f59d41b6f6d63fb6c2979be2382074d74c99"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetServiceAuthorization.swift",
+      "sha256": "19f0fbe63f278b0c610ff904a8c1ad7adebbcc400bc575f732f52fbd91d6674a"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetServiceConnections.swift",
+      "sha256": "24c073c04156659df1a77976b15751c91f3e202ee7bd27bc3ded420ba44c9c74"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetServiceCredentialVault.swift",
+      "sha256": "bcf3d0061a90d8f458c1257ad5982767f927001f3fc199dc823cd3b7f515451a"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetServiceTransport.swift",
+      "sha256": "1312ac317ead67b8fa32bc581350c6c8b293fe1724b56d680f853cecc5452b3d"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetStorageFiles.swift",
+      "sha256": "961c3b3242be4d669b8a10e8f79f9660297323f92798899248db3d12e3e79aba"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetStorageLock.swift",
+      "sha256": "98d1e5d58c8ccdb01b973f07f4c24d044147f334a74a3eeb9ca80e6487d8a5c0"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetStorageNamespaces.swift",
+      "sha256": "54833459d4600b6500d3cbb5a54966ec411ad8f0d7307e0ff27d865635564397"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Component/ScriptWidgetRuntimeElement.swift",
+      "sha256": "be05cea780d55eac944292b825f7a4ce2515e75ef5106c318f8df34bb26e85fc"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/DeepLinkDefine.swift",
+      "sha256": "9615881c68517a5fccb601abf6a4bb0d765f63e70bf6da8a0ca879aec5477bcf"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetAppState.swift",
+      "sha256": "dd15a508b6c39b97c611643c4f5ee71fbbee9581b2c10711c5d00159c2659c3c"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRunningState.swift",
+      "sha256": "f7b50ceacdf034833c92554a769fe692abebe296b87e55091e7a2fb09146d9da"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRuntime.swift",
+      "sha256": "15a60ffc1a6171dde86fa442a7a51764fd073eee4f615e329b6593dc5cf9b34a"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRuntimeDelivery.swift",
+      "sha256": "b7d5f4238764f0fc84327ac40efc307982726dadd4beee06d2495da3964792f4"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRuntimeDiagnostics.swift",
+      "sha256": "67fa58dfe4e59209c1b56f927844c51a1f2ce28c03361127b5afbcd0dc0e7307"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Resources/support.bundle/core.js",
+      "sha256": "01546b893cd7951ab5e3dce30009b0e684022f334e9a49d4b498b85b4c4bf163"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Resources/support.bundle/moment.min.js",
+      "sha256": "73de4254959530e4d1d9bec586379184f96b4953dacf9cd5e5e2bdd7bfeceef7"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Resources/support.bundle/util.js",
+      "sha256": "08f291ad3d1ddcc0a9c7637bef13506a978b7d2f47da1a69e8adaaf1618ba642"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/project_graph.py",
+      "sha256": "fc46f1e5266f054794811a0756fa51677a291b0533f816f1342a5d42f9ba85b8"
+    },
+    {
+      "path": "Scripts/CI/verify_selected_tests.py",
+      "sha256": "4ae4a28934341461b364a9b83fb891ca214da64cf3046635278fb4e6837caad5"
+    },
+    {
+      "path": "Scripts/Expo/babel.config.cjs",
+      "sha256": "62581fd5caf7b97cb36290093b7bbf7103e1c1b1300e0e11a1b3eaaf96c998ba"
+    },
+    {
+      "path": "Scripts/Expo/build-original-widget-runtime.mjs",
+      "sha256": "5928bb12ed2fd2f6b2ecfeb6d8fc309d46e5837c58dcc4272d73af13434eb549"
+    },
+    {
+      "path": "Scripts/Expo/build-probe.mjs",
+      "sha256": "cdead47d9914543725e0e3160a14a13d91b31b2d584b737f0eb95c1b5539618c"
+    },
+    {
+      "path": "Scripts/Expo/dependency-lock.json",
+      "sha256": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65"
+    },
+    {
+      "path": "Scripts/Expo/metro.config.cjs",
+      "sha256": "23907e12eb10e51229e3edebab5cacf46f15c8e9eced70eac2411846fb7062a7"
+    },
+    {
+      "path": "Scripts/Expo/package-lock.json",
+      "sha256": "3b31e1c8fd34145df900764a2cda013ab02ecea7f890c969ad5e0a92925d0dd8"
+    },
+    {
+      "path": "Scripts/Expo/package.json",
+      "sha256": "bb447094c0ef2250c445f580fa91c81a55fc3187c7d49e145b84e9c1c3756dce"
+    },
+    {
+      "path": "Scripts/Expo/prepare-types.mjs",
+      "sha256": "e32603c7fd4a24f2c5223155185e35bc59ad87455859cf3bf321a23a5e6f878e"
+    },
+    {
+      "path": "Scripts/Expo/sync-original-ui-exports.mjs",
+      "sha256": "0991e011951d7469e29111ae742c1b9479978a6aa5a039c6992762c559504455"
+    },
+    {
+      "path": "Scripts/ExpoNativeAPI/dependency-lock.json",
+      "sha256": "08657d657c1f4efa36149075b632cfc75685fc1ca9af0397fc1168fe9253b768"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/expo-hello-world/App.tsx",
+      "sha256": "e0ec9b33bbe972668b0be87b6f8263faff0977e5bfea7654334c7f7f68b95531"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/expo-hello-world/README.md",
+      "sha256": "367e2b77ec0d06230ed8b7a3756cc5ef6bd2b4328c2405977e383f8ecc52b403"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/expo-hello-world/hanlin.authoring.json",
+      "sha256": "23628daa17919961823da4ebc9a4166ab9e1d7a9b3ec2ff47fdc70d7b444bf94"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/expo-hello-world/index.ts",
+      "sha256": "f3532a443c0193cbb6866cb1a7474d0f5055917ffdc7f5e60efe35159e544d19"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/expo-hello-world/notification-event.ts",
+      "sha256": "3faaf31c55f30954b8c3a74cce95d0461bdef531269bcd7832a886be4ac390de"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/expo-hello-world/package.json",
+      "sha256": "ce6b14d9dd58a68d245000b2d9997086754acba6b3213087e9531b59701cd9bc"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/expo-hello-world/script.json",
+      "sha256": "308768a8274c3f58254c4f6daafa7b16a07f0c68dc519f17d3e5feae895dcafb"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/expo-hello-world/tsconfig.json",
+      "sha256": "989df0a97a5ac05cb6b26df1d7f2d18896e2627da8ac72d4d35e66a60da84b19"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/index.json",
+      "sha256": "a0eddbc0e8dc3b15d6ddf74e8173d674afec99c5a52c77366e1000116eb4c8d1"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/nativescript-hello-world/README.md",
+      "sha256": "aae06c1b3c963f8a6cf246ea52642d73f5e6ec237cfb19fc4737dd4072570e6a"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/nativescript-hello-world/hanlin.authoring.json",
+      "sha256": "1bf949fb4ba1fd14481df380299652fe9b587aa5c30afdb6621fe23be6c02094"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/nativescript-hello-world/index.ts",
+      "sha256": "bfb34d9b7ac0f50488468a5cf8200d55cefbb9d0d345d080bb652323a1df9bf6"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/nativescript-hello-world/notification-event.ts",
+      "sha256": "3faaf31c55f30954b8c3a74cce95d0461bdef531269bcd7832a886be4ac390de"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/nativescript-hello-world/package.json",
+      "sha256": "ab65e0e388ac19daf337b29965fd030e6196faf90cee439c786de9e1c3f49cb6"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/nativescript-hello-world/script.json",
+      "sha256": "521f9d8332544a7858dca222d635cf8530e13d72cfb4e2e62d4196acc3a249cb"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/nativescript-hello-world/tsconfig.json",
+      "sha256": "089155f616dd73ff0bebb1469f21fda41c51ad93c7b7db83d2745fa5e88ce0e5"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-departure-budget/App.tsx",
+      "sha256": "b2cdbefb1cdfc9c392294692e0c2d4aec7f79176505f3fd4714585716920e0f6"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-departure-budget/README.md",
+      "sha256": "2e14a982ddb34ee47eeba68605d938f580c0706333d58756544037f05a32f192"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-departure-budget/hanlin.authoring.json",
+      "sha256": "23628daa17919961823da4ebc9a4166ab9e1d7a9b3ec2ff47fdc70d7b444bf94"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-departure-budget/index.ts",
+      "sha256": "f3532a443c0193cbb6866cb1a7474d0f5055917ffdc7f5e60efe35159e544d19"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-departure-budget/model.ts",
+      "sha256": "b1b7c165ad8bce614aaf59657750eb508ce867f2e03dedf76119cf76270e05eb"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-departure-budget/package.json",
+      "sha256": "eaca3101f64376e4a2f23475839757d2215fc565b8be582d5e40e0542c89734b"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-departure-budget/script.json",
+      "sha256": "fce829f1ede25e2a95377b3d270c36b974a342c61dd9d8038ae8682d26361a60"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-departure-budget/tsconfig.json",
+      "sha256": "48dc261d79c7417b5e10c2ab83bdce581d8be8f16b70e867789ae7b3f5c9eb59"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-table-share/README.md",
+      "sha256": "2ca21af20c04538813dc2799b29d7b2e44525cd4c92b77ce985361b509a6951f"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-table-share/hanlin.authoring.json",
+      "sha256": "1bf949fb4ba1fd14481df380299652fe9b587aa5c30afdb6621fe23be6c02094"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-table-share/index.ts",
+      "sha256": "afbfe5116695db1f0a2641a19e474493c3559f5c9f6e470bf0b72d500c9c461c"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-table-share/model.ts",
+      "sha256": "f9fbaa39afdd00df325ada8177d0bb8213557672a9af7c54fc98936f00d95e9e"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-table-share/package.json",
+      "sha256": "1341e9a334dcd928fcdee84456d6069e5476a54440395e1bf1732c271836bccb"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-table-share/script.json",
+      "sha256": "1cd5129c60227b1ab53e2752e27b3acc29b73d8161de9495d46b2470393653f1"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-table-share/tsconfig.json",
+      "sha256": "b70b632b881af38c566610fa375116ee8172fc20ed495f58b0d0261f0226ac0f"
+    },
+    {
+      "path": "Scripts/MiniApps/authoring-examples.json",
+      "sha256": "3ff3b2272bb77eb22fcc3df81063aab3994ec555b1e78562ee9e256b3cd0aa26"
+    },
+    {
+      "path": "Scripts/MiniApps/check-authoring-examples.mjs",
+      "sha256": "419f295ee6f0e7dcbf9cee42560ef1e8760010ae07b1d6767a0f6017fc7b317a"
+    },
+    {
+      "path": "Scripts/MiniApps/generate-scriptwidget-manifest.mjs",
+      "sha256": "2c768de46884937c6ac6e99a0430c754be99257c32571e80c6a7210dbe049aff"
+    },
+    {
+      "path": "Scripts/MiniApps/generate-scriptwidget-service-types.mjs",
+      "sha256": "36362e6c8f4bbbc6a5731b3aa219e8bae102e2e2613ce83ef78a347a72ae2fca"
+    },
+    {
+      "path": "Scripts/MiniApps/generate-scriptwidget-types.mjs",
+      "sha256": "1bfd0374d0340080c9dd256126eef9b03b3f1d579a874fdd921cd87bc372ae13"
+    },
+    {
+      "path": "Scripts/MiniApps/install-tooling.mjs",
+      "sha256": "6fb5f130d1a381d628ffa5042eff7ce36d48431ed7636a36c28fec20e5b79120"
+    },
+    {
+      "path": "Scripts/MiniApps/miniapp.mjs",
+      "sha256": "1c256c00392c626a54ebee2abe3ededaa792c5bfa6dd9b6c5aceb89be84e5b30"
+    },
+    {
+      "path": "Scripts/MiniApps/native-presentations.d.ts",
+      "sha256": "a034605ea3d9582b390a466231fb37023c523a559d807c353ada61c689e396ff"
+    },
+    {
+      "path": "Scripts/MiniApps/notification-events/index.d.ts",
+      "sha256": "1fca542efed873474b4541f09945af3db035b570c691be63982a3ddf9ae2f837"
+    },
+    {
+      "path": "Scripts/MiniApps/notification-events/package.json",
+      "sha256": "b6ec9ece2d15d32b029e720cd5dde983a681cba511e807cd5766862d79ef8456"
+    },
+    {
+      "path": "Scripts/MiniApps/refresh-original-sources.mjs",
+      "sha256": "9b367c79ece68771e1ab193cc22c218feb72d2f519ffb410fc560b6fca59a7e8"
+    },
+    {
+      "path": "Scripts/MiniApps/resolve-upstreams.mjs",
+      "sha256": "4e2c12f497d312db93132f69741b783f6e31b1f2604dd852129f3c61109d7428"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/components.d.ts",
+      "sha256": "6a58b4510a4f6ed0b4fb35ced943f25d9748bcd4d9f290af021ee4cad3263651"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/host-globals.d.ts",
+      "sha256": "603148dada2fd81794f8bd2953e6da8aa3f4aaf8bed1176d50435c31b1136c7a"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/manifest-validation.mjs",
+      "sha256": "f84c8dfbe6c86a862c87c4bc6423b30003620fae4d1a7a826cd8c02ae4410289"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/native-api.json",
+      "sha256": "e8ec69ede5ef8b3deaa74767b4c473d7c97733e13dcef6feb063c9aa2973ce96"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/original-api.d.ts",
+      "sha256": "e7212325aa3eb7a8e10cd00de34ab3b09ff4acb7259b296114c8f26672934a7c"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/service-shapes.mjs",
+      "sha256": "eed9da2be6229161f5781c29ee47c2535383b36bfa1c09556a67008ea073a57d"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/service-types.d.ts",
+      "sha256": "51bd5d47d2190ebb8e0f8ddc5ab031b7007dcedaef1213de0c0ef4c4e7d7e446"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/tsconfig.json",
+      "sha256": "7c3f30d1c5e0e38a5250930cc62aea4a47e1cfd9a9dbe5110f5796f0e6bf2e2b"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/upstream/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/upstream/NOTICE",
+      "sha256": "39d8aedeb5890cc1a1cda786d80b0133faf27f72df1158beacd1406ed275c249"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/upstream/dataAPICatalog.js",
+      "sha256": "71958adac054862f6fe41100c6709bdbbdae7ed59a07f322f934ad2f73d70e88"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/upstream/package.json",
+      "sha256": "1239d4d885dcad42201a27ed9324f8f0f760b78700d8db9ced39a511cffe7eae"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/upstream/provenance.json",
+      "sha256": "425e5bae37920bd571a469c273c923471cb9f1cad5a945e7f28bf972fff8b0d1"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/upstream/scriptWidgetAPI.js",
+      "sha256": "d021101c46f554cd9ba77a83c088295ff2523e011424982facec8d1c9462ec9e"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/upstream/storageAPICatalog.js",
+      "sha256": "9b9cb5e46575b38697d56d0263fa147d50cd9bef6685f82ddd175ebe561b9f45"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/upstream/systemAPICatalog.js",
+      "sha256": "78f83702de1766718ebfde97151a373094fe38f2e480d0b915d99e968b862c90"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/widget-manifest.d.ts",
+      "sha256": "6d9d086bb8d8289390f5b3454b17a435aea0f148724f897c9befb62bf31d5e8f"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
+      "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2"
+    },
+    {
+      "path": "Scripts/MiniApps/stage-sdk.mjs",
+      "sha256": "f0d2b438ee79ac0973f8d261ecf626b2a94268e5140c6dcb67f48b07cabd1f25"
+    },
+    {
+      "path": "Scripts/MiniApps/test-native-presentations.mjs",
+      "sha256": "e2eb617fcecdb7b0d0dee8b7dec10c287c23f7d38fb0d765c458f2a35dda1fd7"
+    },
+    {
+      "path": "Scripts/MiniApps/upstream-fetch.mjs",
+      "sha256": "762ec94347f12c2ae7cc8bf3b6f4296d5d730c6980b8689f67abf8427df59743"
+    },
+    {
+      "path": "Scripts/MiniApps/upstream-resolution.json",
+      "sha256": "28a724580a5c7b03268335bfba6a144b7db155198a916305cd00e2e339db1b2e"
+    },
+    {
+      "path": "Scripts/MiniApps/verify-sefaria-live.mjs",
+      "sha256": "dfba32975b1cafdf226ecbcab73afdcdece4fa86979f84ab4a3a13e5b1457e1c"
+    },
+    {
+      "path": "Scripts/NativeScript/dependency-lock.json",
+      "sha256": "8499976a4ea0a069ed654b09b597d8fabede4bbbfb62227451a68707b851e8e5"
+    },
+    {
+      "path": "Scripts/NativeScript/package-lock.json",
+      "sha256": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b"
+    },
+    {
+      "path": "Scripts/NativeScript/package.json",
+      "sha256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b"
+    },
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "sha256": "a99b6194f8dd20bc30998ff2ad9e86ec219415a00615b250c65670f7dfcdba7d"
+    },
+    {
+      "path": "Scripts/ProductSplit/test_run_paired_acceptance.py",
+      "sha256": "3791b4178c5cc49b64c38ead6f913284f29fc990c7223953aa74f2075f3771f1"
+    },
+    {
+      "path": "Tools/SwiftUIBridge/configuration.json",
+      "sha256": "a8711bcfc51ae85ee58cf8ebd5a5724c6a142994dcbe3d558e8644d9c48fda8a"
+    },
+    {
+      "path": "build/primary-control/advance-focus19-importer-view-identity.py",
+      "sha256": "622863fc92fb1d7a70c4a291979d5e61fc27d8d6e92647d6ba2f74806aa27262"
+    },
+    {
+      "path": "build/primary-control/focused-native-child-v1.py",
+      "sha256": "625dd0eb7279e1a93eceaab8ae48ca58de0970218befdd78799475cb58bd6d53"
+    },
+    {
+      "path": "build/primary-control/focused-native-child-v10.py",
+      "sha256": "5ffd86a10eadcb15a0c7e3c7991f593c342a458ed3644d3622a401341e62c4fc"
+    },
+    {
+      "path": "build/primary-control/focused-native-child-v11.py",
+      "sha256": "f5bf628915da0b169468d78dac232aa9e8b4d702995051049eaa8d75274dd644"
+    },
+    {
+      "path": "build/primary-control/focused-native-child-v3.py",
+      "sha256": "bfa992d6793451374eb847f9e0b0f4d28d32a153163ded9ae427acd0bfa5f478"
+    },
+    {
+      "path": "build/primary-control/focused-native-child-v6.py",
+      "sha256": "3499ac0688b0d3fca54885eda0b7d774338a1e3c972a8944f3f22aa162146517"
+    },
+    {
+      "path": "build/primary-control/focused-native-child-v7.py",
+      "sha256": "2476dc9960a6067d9615d6d2f105487739eac45e784cbeb8256f2c7579730931"
+    },
+    {
+      "path": "build/primary-control/focused-native-child-v8.py",
+      "sha256": "8dffdf0cf86deeaa7936922b94ff5a84523085a6a14d02549dacc02c8f13e686"
+    },
+    {
+      "path": "build/primary-control/focused-native-child-v9.py",
+      "sha256": "588fada17b124228e5b2d5a41d182a64c219e81d50a220901034a691fb3b482e"
+    },
+    {
+      "path": "build/primary-control/focused19-controller-v2.py",
+      "sha256": "bd450c6f3d3f2da7d3abdce827b3f26f368d765dc48e969fe7f98254b821eda7"
+    },
+    {
+      "path": "build/primary-control/focused19-mini-reuse-observation.json",
+      "sha256": "81dbdacfebf83dd80c2e5c108c3e8284e041f396ec7c8358e533fb5e564ef3da"
+    },
+    {
+      "path": "build/primary-control/focused19-recovery-controller-v10.py",
+      "sha256": "9501a5ef3dc56dcfae1b0d1e26f22a11fc4896145d1e64efd4f267c854a5eb62"
+    },
+    {
+      "path": "build/primary-control/focused19-recovery-controller-v11.py",
+      "sha256": "f517434f396cbddf2c5c2fcc2870da1112a432f865bbbcb9767ee656c885b73c"
+    },
+    {
+      "path": "build/primary-control/focused19-recovery-controller-v6.py",
+      "sha256": "26975d9a652e7ef1c1306bbd92c329e5fda04eb65b2bb76a9be937141c33381c"
+    },
+    {
+      "path": "build/primary-control/focused19-recovery-controller-v6b.py",
+      "sha256": "b3dc734c44f34a9f9c49a7acb8fc6d078f22172679c1700a850c7c9c0e87c3bd"
+    },
+    {
+      "path": "build/primary-control/focused19-recovery-controller-v7.py",
+      "sha256": "4570da142e8a61608818f1b4011486c26b53ed727bd694c73a6a3203332101b2"
+    },
+    {
+      "path": "build/primary-control/focused19-recovery-controller-v8.py",
+      "sha256": "5cbffa3404d72fd2ff3b702da5cefc8a938e4f39c5a9295f3d4e80c083a5609e"
+    },
+    {
+      "path": "build/primary-control/focused19-recovery-controller-v9.py",
+      "sha256": "0c6aba0089a5a12fe5f0c0107a38b377fe2a8b79d14c1c5d6922455e74262d98"
+    },
+    {
+      "path": "build/primary-control/focused19-recovery-inputs.json",
+      "sha256": "bd84aba433c2da0138c4679e368efdbdf078bc897a8ff2ee5c0c9b09f93a47ae"
+    },
+    {
+      "path": "build/primary-control/focused19-v1/decision.json",
+      "sha256": "77eef76303d4df1ac274a6cbf3db71b8f7efc4ee7f4e9b623334d565dd3297a3"
+    },
+    {
+      "path": "build/primary-control/focused19-v1/ledger.json",
+      "sha256": "c7835bb97d3017d305628e76ce25b35cfb415433780c4a43f806d0d56fbf708f"
+    },
+    {
+      "path": "build/primary-control/focused19-v1/native-result/state.json",
+      "sha256": "f8f7fd1284b984d77237a2e487961eab0782ba079fadfe43f3805d68148fc24e"
+    },
+    {
+      "path": "build/primary-control/focused19-v1/state.json",
+      "sha256": "a7ae2d21b27503b71939ff72670333a7e05736e47e999801f52e6ee6c1520dd6"
+    },
+    {
+      "path": "build/primary-control/focused19-v10-mini-reuse-observation.json",
+      "sha256": "c14c3639721a01a91f2f4f82b49b7eda3ceb38fcda5b03549a0579b8c1779284"
+    },
+    {
+      "path": "build/primary-control/focused19-v10-mini-source-impact.json",
+      "sha256": "4d4c3ae14cd2a9beeab28a1b02e252a65da7e6e549144ab22ea16db520dc3ca2"
+    },
+    {
+      "path": "build/primary-control/focused19-v10-readiness.json",
+      "sha256": "3407facfe7d1c86b0b1e2b4db967f6d5c2266a4b8797b09fce941bf7196a7a4c"
+    },
+    {
+      "path": "build/primary-control/focused19-v10-recovery-inputs.json",
+      "sha256": "2f0a8d41db048fee040a398334e1ade3cf8ca064525a546b6987b1c35b1ea006"
+    },
+    {
+      "path": "build/primary-control/focused19-v10/decision.json",
+      "sha256": "e5c4f55ab15c4b8360380bf2523847d073a1c47622fb06fce8b0c7bf83a7a01e"
+    },
+    {
+      "path": "build/primary-control/focused19-v10/ledger.json",
+      "sha256": "6f87f56ae70751274ba77a623e88a40ee8e2febd39b64f7cfa98c4eb3e2ca855"
+    },
+    {
+      "path": "build/primary-control/focused19-v10/native-result/built-input-bindings.json",
+      "sha256": "94c307dbe265089e62bbc10c8bf67b8acf05f4640ded3a6f2658d3982ec53c9e"
+    },
+    {
+      "path": "build/primary-control/focused19-v10/native-result/paired-prefix/commands.jsonl",
+      "sha256": "bb1ab5ae516c2eeb9ac5a85501376ffb043e0b15a12b7dae6b0cf5137b935e8e"
+    },
+    {
+      "path": "build/primary-control/focused19-v10/native-result/staged-inputs.json",
+      "sha256": "bdfb50639abf0a92cb97e9a20d01316452f171f4f7399d1c872106f5d51c7d7b"
+    },
+    {
+      "path": "build/primary-control/focused19-v10/native-result/state.json",
+      "sha256": "06e5aeeb03749df8b63b151b6cbac290040f95d6bbef9745928c91455754f703"
+    },
+    {
+      "path": "build/primary-control/focused19-v10/state.json",
+      "sha256": "dabb6291f9cf251526c229c42affed69b15cf6bae7702acb57bcff0a62bcee79"
+    },
+    {
+      "path": "build/primary-control/focused19-v11-importer-source-impact.json",
+      "sha256": "e086b1661f99277ccdb18e5d84dca93311a7f65fe55cb004f79ff5771910e380"
+    },
+    {
+      "path": "build/primary-control/focused19-v11-readiness.json",
+      "sha256": "052260363c51c344733c514a90a71081e8dbe2164575088d604a7db570ff4f29"
+    },
+    {
+      "path": "build/primary-control/focused19-v11-recovery-inputs.json",
+      "sha256": "eaccf3795eb755f1bfad0a89794a7ee59dbb4d8b0673d69e690b4bf5fbfa2524"
+    },
+    {
+      "path": "build/primary-control/focused19-v11-source-advance-command.json",
+      "sha256": "ff48207d484f3829fd44f10759519aad112cba5d69c0f15babe16add839a4ca4"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/decision.json",
+      "sha256": "72608e39bc0987c619ea24b0eeea53b18cd5cca6f86c4a3dab688699580a315c"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/ledger.json",
+      "sha256": "ec1d8b41595201d0a64b86d714a0fbd049cfbc9339b8a494fff25875cf6d6898"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/native-result/built-input-bindings.json",
+      "sha256": "f63dc050246a3887ab4d64a632235e88db94f618748d336eeb8aa0ec90b12faf"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/native-result/intercepted-original-command.json",
+      "sha256": "0761e032f202f92ec87e5413ade1890e23d4aa0b22b4aa858f024cb8085a13b9"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/native-result/paired-prefix/commands.jsonl",
+      "sha256": "287977f7fcbf5ec63c4abac2c90a64ef499340eb582e79f47be56277f37886ca"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/native-result/paired-prefix/original-prefix-state.json",
+      "sha256": "4801986291deaff7bb15e83eabbad48529c72729054cd021225e8a34b71069e0"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/native-result/state.json",
+      "sha256": "5a0005645e789fc4979ff7515faf2c7ed28a589ff1f5aacdaa35cfdb388a3339"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/state.json",
+      "sha256": "9e199031a41095f66c101962da3c1c4ad330e748a9ac2afc267aac71384c2a21"
+    },
+    {
+      "path": "build/primary-control/focused19-v3-inputs/mini-source-impact.json",
+      "sha256": "f9df39312b04c98f20d33982c6bf8fe0874377b294b286ebc6e48c54807e93f3"
+    },
+    {
+      "path": "build/primary-control/focused19-v3-recovery-inputs.json",
+      "sha256": "2791472af9e3fc99292ce8889ac3c2f2b6f08bf11f8faa1bdd1ac7e561d3f56c"
+    },
+    {
+      "path": "build/primary-control/focused19-v3-reuse-observation.json",
+      "sha256": "e46e61d307f6b5fe4186e9bddf9faa83bd126b6d3e914d0cbb57feaaaeda1956"
+    },
+    {
+      "path": "build/primary-control/focused19-v3/decision.json",
+      "sha256": "e5317f244c6cf6cecb4b9a9c1b3043b1921fbe646d922f332d7bdcd103fea86a"
+    },
+    {
+      "path": "build/primary-control/focused19-v3/ledger.json",
+      "sha256": "c69a3001ec612c74afeaeafcbdf3e8fc2b0ea59fbb96bf18488a2ff641e76ebf"
+    },
+    {
+      "path": "build/primary-control/focused19-v3/native-result/state.json",
+      "sha256": "627355b9bb7c970106c2c5dee504937235d6d55e5782b2129b7427e3f1024e48"
+    },
+    {
+      "path": "build/primary-control/focused19-v3/state.json",
+      "sha256": "fc722c1417dfcb5029336df1b27f06fd1ec636ae2bc5bcfc82a2258d4f894d25"
+    },
+    {
+      "path": "build/primary-control/focused19-v4-decision.json",
+      "sha256": "e8ada819b562484a9834662c33d2452d77c49eeb314f66e29469ae582c24a603"
+    },
+    {
+      "path": "build/primary-control/focused19-v4-launch.json",
+      "sha256": "a210df388b4cce520c7975b9ca090f89f3a64a787c3ea6ddf7de20cbd796f749"
+    },
+    {
+      "path": "build/primary-control/focused19-v4-launch.log",
+      "sha256": "5cb15346a4bbafd69c0385dfe77356ab8dc03cc717b5ab5b1ee314d0de90d292"
+    },
+    {
+      "path": "build/primary-control/focused19-v5/decision.json",
+      "sha256": "288fff0babef0edb6cf02f392285a194d9707a79af6214fe4d1e1396a3dff51b"
+    },
+    {
+      "path": "build/primary-control/focused19-v5/ledger.json",
+      "sha256": "fd8a062065a7b7124f68a7a58251238a503aa54797ce8d911b8e857a268fa5a6"
+    },
+    {
+      "path": "build/primary-control/focused19-v5/native-result/built-input-bindings.json",
+      "sha256": "670784311bd912b5c142a8fa99da5e6c91365b741ca3f702564b75b122b953d8"
+    },
+    {
+      "path": "build/primary-control/focused19-v5/native-result/fixture-production.json",
+      "sha256": "b83ff708fb95153e2b362843b77b0a1b0d1a7e174a8dac776bf5c0621e820e4a"
+    },
+    {
+      "path": "build/primary-control/focused19-v5/native-result/paired-prefix/commands.jsonl",
+      "sha256": "e0edf79da781f0b942101a3f422fc8ff408243325005c4c56ee5fe7781c5648b"
+    },
+    {
+      "path": "build/primary-control/focused19-v5/native-result/staged-inputs.json",
+      "sha256": "9f6b8927a6a3ba1ffd43e373e341db3ca6dbd88fbbf06933c0141ccc8077e06c"
+    },
+    {
+      "path": "build/primary-control/focused19-v5/native-result/state.json",
+      "sha256": "7cb9bda65b2cad09de873402d449aee0999fa88ad6b47d713514149afaea8d23"
+    },
+    {
+      "path": "build/primary-control/focused19-v5/state.json",
+      "sha256": "a4cfa1c2803d9bd6df5353e0818ec412d51d4d6ae138385842341a9eeb574186"
+    },
+    {
+      "path": "build/primary-control/focused19-v6-cleanup-reconciliation.json",
+      "sha256": "886cb2a7694c2118d65248b33b736e82985e88f58b81e497c13eec025231de8b"
+    },
+    {
+      "path": "build/primary-control/focused19-v6-decision.json",
+      "sha256": "1ce6f140dba24b8a282b833b25a27288f1e2b90003cf7f4d665b1360793a6567"
+    },
+    {
+      "path": "build/primary-control/focused19-v6-launch.json",
+      "sha256": "fdf19a94bf7f922eb05c42ec1325a349a7b312744657fc2f261aa9baba1d4fc0"
+    },
+    {
+      "path": "build/primary-control/focused19-v6-launch.log",
+      "sha256": "03b6fb87b29aa2c7f1669b5a34eda6d6c92df0e5839c1d1f8f652d12f56b4985"
+    },
+    {
+      "path": "build/primary-control/focused19-v6-mini-source-impact.json",
+      "sha256": "5af2987d2265e6fd6999c23efb0539d622b46d069571979dbe273974d93189c2"
+    },
+    {
+      "path": "build/primary-control/focused19-v6-preflight-rejection.json",
+      "sha256": "ff93343392a900bb1443e6188e3cc8df21727d027a90b874e0372e24bdb55317"
+    },
+    {
+      "path": "build/primary-control/focused19-v6-recovery-inputs.json",
+      "sha256": "df4a80f91795d16dbeb0c920249e3a4fbd9bd1888817ad5024c2a78fe70bb126"
+    },
+    {
+      "path": "build/primary-control/focused19-v6-retry1-decision.json",
+      "sha256": "d0df391b5f5c23b0678dc76cd42adff45001e27ddb2670078111a7dc89635698"
+    },
+    {
+      "path": "build/primary-control/focused19-v6-retry1-launch.json",
+      "sha256": "a95cc8e75c2dea1581f8afeb0e95a8cceda8ed3d41343bc418d3f011b9bd57a6"
+    },
+    {
+      "path": "build/primary-control/focused19-v6-retry1-launch.log",
+      "sha256": "03b6fb87b29aa2c7f1669b5a34eda6d6c92df0e5839c1d1f8f652d12f56b4985"
+    },
+    {
+      "path": "build/primary-control/focused19-v6/decision.json",
+      "sha256": "39b1aad0ac110ac97a638b08ec1d9c22b3efa4723cce1378e87a7028a056ce4f"
+    },
+    {
+      "path": "build/primary-control/focused19-v6/ledger.json",
+      "sha256": "1e48202497a91db193cfe656222d27fe8dafe75ddd886a8296f2975c91a59004"
+    },
+    {
+      "path": "build/primary-control/focused19-v6/native-result/built-input-bindings.json",
+      "sha256": "caa7d554eda20e6caaf02e053fdd0bb10bcc3afe65e3558504d699a2940222bc"
+    },
+    {
+      "path": "build/primary-control/focused19-v6/native-result/staged-inputs.json",
+      "sha256": "fb48a2597fdb9b14a5023a63306d8fef8e93f8daa08e8ce10058475d30d38601"
+    },
+    {
+      "path": "build/primary-control/focused19-v6/native-result/state.json",
+      "sha256": "68715beec45e143bbf7cc46615aae1704348e6dba213760c970f47ffc8cd36c5"
+    },
+    {
+      "path": "build/primary-control/focused19-v6/state.json",
+      "sha256": "4ddca9a8b8bc061dc32e288a392b8ea1e36171617d120342106a7fe0cf8bb5a4"
+    },
+    {
+      "path": "build/primary-control/focused19-v7-mini-source-impact.json",
+      "sha256": "e58bf630f6e3c509c266ddfc9a7148c02eced34dbf39fd4a21a2716ab9c39da2"
+    },
+    {
+      "path": "build/primary-control/focused19-v7-recovery-inputs.json",
+      "sha256": "3666ff8aeccad416ef8e333feed8dd0f662915870dd8642c70a02e8ca54eb82c"
+    },
+    {
+      "path": "build/primary-control/focused19-v7/decision.json",
+      "sha256": "51e5f719fc302d9e55dc5da77069b03cd33f1e2eae9def2c59a7c48a819abbb6"
+    },
+    {
+      "path": "build/primary-control/focused19-v7/ledger.json",
+      "sha256": "1af45eba7e832d63fea413326cdb232f4dba879771181669ad3bc8b324871685"
+    },
+    {
+      "path": "build/primary-control/focused19-v7/native-result/built-input-bindings.json",
+      "sha256": "e2ee9f0368c627b7c4b45ae847a0472aa14e1da91b63957ff53c6b94a15c8e43"
+    },
+    {
+      "path": "build/primary-control/focused19-v7/native-result/staged-inputs.json",
+      "sha256": "f30becc670e67684e8a1399f6c3662ad7fc887e247482eba7854c8cd7b6203bf"
+    },
+    {
+      "path": "build/primary-control/focused19-v7/native-result/state.json",
+      "sha256": "38b0f5cf3b0c256050fc5e90c374ab2768592e67321cfc04007f2a7c8a7c9886"
+    },
+    {
+      "path": "build/primary-control/focused19-v7/state.json",
+      "sha256": "b5910e3c415ba2fd73dac642483dc10314fc9d6c798d66049e4353013d89c971"
+    },
+    {
+      "path": "build/primary-control/focused19-v8-readiness.json",
+      "sha256": "0d373016fe7c344abdc58db9dc21e7ec9999978551491afb4021ea3863912f0e"
+    },
+    {
+      "path": "build/primary-control/focused19-v8-recovery-inputs.json",
+      "sha256": "48bb7b37c434b40eae8b3baf8ad708abcf2315b45ef241a6682ae26cf8a2a10a"
+    },
+    {
+      "path": "build/primary-control/focused19-v8/decision.json",
+      "sha256": "7c16a01c08f9ebfe7ac34844afcf1008e8be97975449c7424c3640bbeeab640f"
+    },
+    {
+      "path": "build/primary-control/focused19-v8/ledger.json",
+      "sha256": "b6a1ca5c24d248c8f249e5e05f65b515bfd542c2716ebbf74e28bbc3853196a0"
+    },
+    {
+      "path": "build/primary-control/focused19-v8/native-result/built-input-bindings.json",
+      "sha256": "c09fe3337da9e9d0f869560cb22cde7c969d5d22713dcdf61f3a495a3abd8173"
+    },
+    {
+      "path": "build/primary-control/focused19-v8/native-result/paired-prefix/commands.jsonl",
+      "sha256": "bbf6d39f888dddaf00f44f698308585685c3e92d8b79bbf49b7c98a9c8ea0ac9"
+    },
+    {
+      "path": "build/primary-control/focused19-v8/native-result/staged-inputs.json",
+      "sha256": "c9b2b3c790b4014807bbfd5e37a9ba70cb6b04744597d3ad9120bdcd0923655e"
+    },
+    {
+      "path": "build/primary-control/focused19-v8/native-result/state.json",
+      "sha256": "a99bebccbfe4f0edcbe1d319ac954b82be1264584cdf0194cd330ee533b5af5e"
+    },
+    {
+      "path": "build/primary-control/focused19-v8/state.json",
+      "sha256": "67b563ebb5623d62b12970225a3644a81af55a8667090296de5fdc0db37541cc"
+    },
+    {
+      "path": "build/primary-control/focused19-v9-readiness.json",
+      "sha256": "d46cfbdee088adfc048658a35cb60b6d6812a914909bea5e34f2d2b951ac64ff"
+    },
+    {
+      "path": "build/primary-control/focused19-v9-recovery-inputs.json",
+      "sha256": "d2a9636d6d0e26e3f1ff7c8e80e1d070b208e8806641c60888ad138a8fd21ba7"
+    },
+    {
+      "path": "build/primary-control/focused19-v9/decision.json",
+      "sha256": "dd38954a1f5db85b02c65c02566053e7c2dea660500ccb08c8220f34d5e7c6f9"
+    },
+    {
+      "path": "build/primary-control/focused19-v9/ledger.json",
+      "sha256": "553df5216f223f237f7ede78e997ca21ebd6c8ad63ee591417b585bc9b2aa082"
+    },
+    {
+      "path": "build/primary-control/focused19-v9/native-result/built-input-bindings.json",
+      "sha256": "77d128b2a5214c78c6b35067c989872d32ac51af4ba381a73ff3e0dcd2b11b29"
+    },
+    {
+      "path": "build/primary-control/focused19-v9/native-result/paired-prefix/commands.jsonl",
+      "sha256": "169f61509774aeafc5c9276f6b043c503976f44821b5f7e014d061e83d6f1acb"
+    },
+    {
+      "path": "build/primary-control/focused19-v9/native-result/staged-inputs.json",
+      "sha256": "ce091bb3382fc334afd4e73d05ddda76aef8b2e1aab9100cca4b6620edfe6e8f"
+    },
+    {
+      "path": "build/primary-control/focused19-v9/native-result/state.json",
+      "sha256": "02f2ee47df6f9efb0762f320fbacc6e1f187339d11f907e2a8dad1f8b2d90044"
+    },
+    {
+      "path": "build/primary-control/focused19-v9/state.json",
+      "sha256": "33340d4bb32a7d89d48a1e10a112c8bc210e51370b7a41809f1cab9cf98e0b4e"
+    },
+    {
+      "path": "build/primary-control/node245-restoration/receipt.json",
+      "sha256": "1b34ad8a2a392cebdfa34ee6a56da504e020189788f1d3bbdb440522e035ecc6"
+    },
+    {
+      "path": "build/primary-control/paired52-continuation-v3.py",
+      "sha256": "dad6581212134987b666a5161ab33994e6d79b57ed38108faba6ffb22c3bb520"
+    },
+    {
+      "path": "build/primary-control/source-advance-4cde88df/receipt.json",
+      "sha256": "81b4af063ad1bda1f80c7f7a0121a2a8c252ae1dca475e715ce96e43e148e372"
+    },
+    {
+      "path": "build/primary-control/source-advance-62dfff9a/receipt.json",
+      "sha256": "bd316f63704af5cd9b6981bc7637f6fa5ee73ba66c12d34effa114fbdf5c8b09"
+    },
+    {
+      "path": "build/primary-control/source-advance-6c006c94/receipt.json",
+      "sha256": "46bec03fc6828c1807d3ed1a07d28d1c4f617aab5ab6e89120ba201ac5e6cfc1"
+    },
+    {
+      "path": "build/primary-control/source-advance-7bf0c2fd/receipt.json",
+      "sha256": "696d830db7515fa0bf5965b1f0d4a20a7b407a9ac6511b5bdac9cbfc688c88db"
+    },
+    {
+      "path": "build/primary-control/source-advance-958cf666/receipt.json",
+      "sha256": "5dab9fd095ea4922780e285b128c0478f5fd7527a444714d1455f97500640fd2"
+    },
+    {
+      "path": "build/primary-control/source-advance-a2c8a1b1/receipt.json",
+      "sha256": "3b0c403d49939507e391241a6c105e548ef6dbc3ac640ae7d9fe91c7d1ff4ebd"
+    },
+    {
+      "path": "build/primary-control/source-advance-d4a0b115-payload.json",
+      "sha256": "806f95e58ff55736a1a92ee938ff7c94619382198d3568d9a599b3c766aa0457"
+    },
+    {
+      "path": "build/primary-control/source-advance-d4a0b115/receipt.json",
+      "sha256": "cc3e8d2360726ef9b17c520282bc1694ccc7d5d6f20ba42404d14dfbef55fecb"
+    },
+    {
+      "path": "build/primary-control/source-advance-dc53a6c8/receipt.json",
+      "sha256": "89b5b8c690bc174be1710f933c95d446493805e33692d55ea03da185acd9e869"
+    },
+    {
+      "path": "build/primary-control/source-advance-f6bb035f/receipt.json",
+      "sha256": "5683953c6a4afab2422ae32dee52ef2ee93af52e6e0184fac17d9d55d1edb30c"
+    },
+    {
+      "path": "docs/agent-sdk/unified-package-manifest.json",
+      "sha256": "dd14c80e4223465e6a600f93c153c0f4c80a290b28520dfb8aa65d33f1862e4d"
+    },
+    {
+      "path": "docs/hanlin-expo-runtime.md",
+      "sha256": "14ba327519fd1b16c72f398eefcbbb4058eaf7682ba98f267807a5c462939808"
+    },
+    {
+      "path": "docs/hanlin-nativescript-guide.md",
+      "sha256": "5545b69b00e47508121c2d80a7b44241b854a7abad4019cc70696d6c0da8d1c6"
+    },
+    {
+      "path": "docs/miniapp-sdk/AUTHORING_WORKFLOW.md",
+      "sha256": "cbf07d75821695da68bddfdfc75fe7b98943ee89b67479afb717cd739383804f"
+    },
+    {
+      "path": "docs/miniapp-sdk/DURABLE_INVOCATION_DELIVERY_2026-11-13.md",
+      "sha256": "810922f08de982da10f4319454d7784ecd31c73d7e5d651d269be40d960d72bf"
+    },
+    {
+      "path": "docs/miniapp-sdk/EXAMPLES.md",
+      "sha256": "a17984f1d39f3f8ea73c9fe5be03eebec5884665a8fd18981639442ba1261e70"
+    },
+    {
+      "path": "docs/miniapp-sdk/EXPO_HOST_FACADE_CORRECTIONS_2026-11-13.md",
+      "sha256": "11f29f3c73015c955e5c63eddc7ccf264ac4489ce0fa927838ba1a364a225bc4"
+    },
+    {
+      "path": "docs/miniapp-sdk/EXPO_STRICT_TYPES_AND_FILE_WIRE_2026-11-14.md",
+      "sha256": "e1a48b1daa1020475feec68d3296a21ce063fef6b6354ee9f485d55f6988d98d"
+    },
+    {
+      "path": "docs/miniapp-sdk/EXPO_WIDGETS_ORIGINAL.md",
+      "sha256": "9862848b1833f255631c6be20b00fc2514d9855eac16cfb9fe63beb6325b236c"
+    },
+    {
+      "path": "docs/miniapp-sdk/HANDOFF_2026-11-15.md",
+      "sha256": "60e35d7e563685be98b83db8a19257bff008b53e00a1685d65c3a0484fa8391e"
+    },
+    {
+      "path": "docs/miniapp-sdk/IMPORT_REPAIR.md",
+      "sha256": "489d50e487708c860b023da81c5a1a960e124fee0c07f197ab8bdd98090590f2"
+    },
+    {
+      "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "sha256": "283c96260a51c095be32f262f9f77ba58bebc5372aa1af994176816c8fb5d538"
+    },
+    {
+      "path": "docs/miniapp-sdk/METADATA_FRAMEWORK_DEDUP_2026-11-15.md",
+      "sha256": "5a40ec3f450ba1c7a5941b76df1bdc40aa972049e0130a70258cdbe7ab323c51"
+    },
+    {
+      "path": "docs/miniapp-sdk/MINIAPP_ACTION_LIFETIME_2026-11-13.md",
+      "sha256": "0392ccf073019a5a5260cf84b3967831b5916a992d61ae824a7f313e9dd8f234"
+    },
+    {
+      "path": "docs/miniapp-sdk/NATIVESCRIPT_RUNTIME_WIRE_2026-11-13.md",
+      "sha256": "da34a6f1432e7eaa5ee0c0f05a04a2451ba9e2d7f390fd87d134c45f89a12ce0"
+    },
+    {
+      "path": "docs/miniapp-sdk/NATIVESCRIPT_SDK_METADATA_2026-11-14.md",
+      "sha256": "493c6fc61e7fe5dc6b3ad3bd47c9cb5f80ccaded81be42b8e689ba57a1512bc5"
+    },
+    {
+      "path": "docs/miniapp-sdk/NOTIFICATION_EVENTS.md",
+      "sha256": "d027d20f9b95087ec7adcfb290ee7f4dab7ee057d623a81c87eeb561e321998f"
+    },
+    {
+      "path": "docs/miniapp-sdk/ORIGINAL_UPSTREAM_BUILD.md",
+      "sha256": "dbce13974c47d171dec19432a97b2cf56d4e42e3be78a32afff4dc0cd0eb5639"
+    },
+    {
+      "path": "docs/miniapp-sdk/OWNED_SHARE_INGRESS_2026-11-13.md",
+      "sha256": "b49fdab8b88cc5225480fd9b24a9213ba5437fb298b327db18069dc27aadc059"
+    },
+    {
+      "path": "docs/miniapp-sdk/PREPARED_PACKAGE_VERSION_CONTRACT_2026-11-13.md",
+      "sha256": "68b8ad713aa3177eeb4e3f5a03390f9e40f858fd14f55c50ac357931ddcdf349"
+    },
+    {
+      "path": "docs/miniapp-sdk/README.md",
+      "sha256": "90068db0d87718cc9f995f9d45c1e2e8a7bd670aa8b8f3b324f0bf4cfc591d95"
+    },
+    {
+      "path": "docs/miniapp-sdk/SCRIPTWIDGET_AUTHORING.md",
+      "sha256": "1c9a43f36b5317c263868ac549567a31d08440e600d20b96fd7fef493e31fbca"
+    },
+    {
+      "path": "docs/miniapp-sdk/SCRIPTWIDGET_CONTROLS.md",
+      "sha256": "1a22bcd767f2747a6e522fae41c4ef245594ad43ecacf85bed768c1912f34064"
+    },
+    {
+      "path": "docs/miniapp-sdk/SKILL_RUNTIME_CONTRACT_2026-11-16.md",
+      "sha256": "4ed91dfebcb5c146338b570e1bed33357c2cc10ed3217112c9f2e67bdf901eb9"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "sha256": "84849e4928f42f1b417ad1136c62329e94f7ea9a46f22667177fe6180155b977"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "sha256": "3742686d8b088e8c6afcc6b473b2ffa2cf342dae0723ed1365b265d72e120d27"
+    },
+    {
+      "path": "docs/miniapp-sdk/notification-event.schema.json",
+      "sha256": "519d0ffaf9bb70368de9f2772d141082cef5feefe77d7a2117495f5a19ad7699"
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "sha256": "de8326436f4ecb7f03c7c28e913f00ef3dc6fa331c1c8a7f355406cd9f0c81ea"
+    },
+    {
+      "path": "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json",
+      "sha256": "63aa2132a1463552c274c328d63fd4b76b45046de28a8420e5a278257905bb5c"
+    }
+  ],
+  "sdk": {
+    "producerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+    "manifestPath": "build/primary-control/focused19-inputs/miniapp-sdk.json",
+    "manifestSHA256": "4505c28495d8b6ecd1073254e0e395adcc898cc02dd1d40699591f51db4dee92",
+    "archiveSHA256": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc",
+    "inputSHA256": "ba8f3f1f09054887eed62532fa1d5ca2ac3bd60e6aa99a98ab1035c7653882a2",
+    "sourceInputCount": 235
+  },
+  "preservedLedgers": [
+    {
+      "path": "build/primary-control/plan.json",
+      "sha256": "0f48ac183faabd8db7cb8cd37f37702f1e548e7c8862ffe539071a5b406b5e82"
+    },
+    {
+      "path": "build/primary-control/companion-native-v1/ledger.json",
+      "sha256": "0601f21cbf3d2433dec7e5ce7fb66806555bcca6e4577e92b94f265c7a255068"
+    },
+    {
+      "path": "build/primary-control/companion-native-v1/decision.json",
+      "sha256": "e4c47637ab828da11bdbd3ba9dc6bc2453dbf9c0214e6640949bd3138de563b3"
+    },
+    {
+      "path": "build/primary-control/paired52-continuation-v1/state.json",
+      "sha256": "9297e6f13487e3b21874f65ac7d1fc66f7a1617d790201d42c59b09b6dd3d1ba"
+    },
+    {
+      "path": "build/primary-control/paired52-continuation-v2/state.json",
+      "sha256": "1341ed597fedc2ee9a4dd99bf6bdca4706b33ff3256c3d0e2dfacdf1a9b463be"
+    },
+    {
+      "path": "build/primary-control/paired52-continuation-v3/state.json",
+      "sha256": "f6bc0a4d6689e1bc08b40747e67c0ae0d7768f4c81f3821dafa3ab552408c75f"
+    },
+    {
+      "path": "build/primary-control/paired52-continuation-v4/state.json",
+      "sha256": "439cd234a138a0e37f895345d2580df2ec70f5272e7e25534c6428bec94968ac"
+    },
+    {
+      "path": "build/primary-control/paired52-continuation-v1/decision.json",
+      "sha256": "492f9c7b75e7776d7a48a34ce2531f140c0c0f9585c437d42922e8308582a734"
+    },
+    {
+      "path": "build/primary-control/paired52-continuation-v2/decision.json",
+      "sha256": "23fe291c3b673d415c51849a6371c5cdb8ebf374eabad5806a42fc8b6663488d"
+    },
+    {
+      "path": "build/primary-control/paired52-continuation-v3/decision.json",
+      "sha256": "c271a5662b7f31e66e4bb9acac84f0f105c26bb3d956c8b0e41df9e02b1030a9"
+    },
+    {
+      "path": "build/primary-control/paired52-continuation-v4/decision.json",
+      "sha256": "62177d808a5c0101dd87548307ece8c3d6c542a8bc56d6c0c93d3fdc4ade7e1d"
+    },
+    {
+      "path": "build/primary-control/ai27-diagnostic-v1/state.json",
+      "sha256": "9ce14c6e9b7370652b2658c681f7c0b8810235eece6c77d77883ab90f6dc4626"
+    },
+    {
+      "path": "build/primary-control/ai27-diagnostic-v1/ledger.json",
+      "sha256": "2d2b7be234b068877e6b1a2ce80ed80e93d04fc884dbf1d832f1ffc5cda14780"
+    },
+    {
+      "path": "build/primary-control/ai27-diagnostic-v1/decision.json",
+      "sha256": "15f6ca053ae5470e96a68dc0a874a16d34551e65831ddffdd58d61ce83654d86"
+    },
+    {
+      "path": "build/primary-control/final-prefix-continuation-attempt19/state.json",
+      "sha256": "846d7b35087174f0c6d5032dc0615d04f5f50eaedc7e48447438d187da90b954"
+    },
+    {
+      "path": "build/primary-control/final-prefix-continuation-attempt19/decision.json",
+      "sha256": "8c23c59be78a089501ee4bbc336147d997c1fde98230b452f09fc1c8424be280"
+    },
+    {
+      "path": "build/primary-control/focused19-v1/ledger.json",
+      "sha256": "c7835bb97d3017d305628e76ce25b35cfb415433780c4a43f806d0d56fbf708f"
+    },
+    {
+      "path": "build/primary-control/focused19-v1/decision.json",
+      "sha256": "77eef76303d4df1ac274a6cbf3db71b8f7efc4ee7f4e9b623334d565dd3297a3"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/state.json",
+      "sha256": "9e199031a41095f66c101962da3c1c4ad330e748a9ac2afc267aac71384c2a21"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/ledger.json",
+      "sha256": "ec1d8b41595201d0a64b86d714a0fbd049cfbc9339b8a494fff25875cf6d6898"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/decision.json",
+      "sha256": "72608e39bc0987c619ea24b0eeea53b18cd5cca6f86c4a3dab688699580a315c"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/native-result/state.json",
+      "sha256": "5a0005645e789fc4979ff7515faf2c7ed28a589ff1f5aacdaa35cfdb388a3339"
+    },
+    {
+      "path": "build/primary-control/focused19-v1/state.json",
+      "sha256": "a7ae2d21b27503b71939ff72670333a7e05736e47e999801f52e6ee6c1520dd6"
+    },
+    {
+      "path": "build/primary-control/focused19-v1/native-result/state.json",
+      "sha256": "f8f7fd1284b984d77237a2e487961eab0782ba079fadfe43f3805d68148fc24e"
+    },
+    {
+      "path": "build/primary-control/focused19-v3/state.json",
+      "sha256": "fc722c1417dfcb5029336df1b27f06fd1ec636ae2bc5bcfc82a2258d4f894d25"
+    },
+    {
+      "path": "build/primary-control/focused19-v3/ledger.json",
+      "sha256": "c69a3001ec612c74afeaeafcbdf3e8fc2b0ea59fbb96bf18488a2ff641e76ebf"
+    },
+    {
+      "path": "build/primary-control/focused19-v3/decision.json",
+      "sha256": "e5317f244c6cf6cecb4b9a9c1b3043b1921fbe646d922f332d7bdcd103fea86a"
+    },
+    {
+      "path": "build/primary-control/focused19-v3/native-result/state.json",
+      "sha256": "627355b9bb7c970106c2c5dee504937235d6d55e5782b2129b7427e3f1024e48"
+    },
+    {
+      "path": "build/primary-control/focused19-v5/state.json",
+      "sha256": "a4cfa1c2803d9bd6df5353e0818ec412d51d4d6ae138385842341a9eeb574186"
+    },
+    {
+      "path": "build/primary-control/focused19-v5/ledger.json",
+      "sha256": "fd8a062065a7b7124f68a7a58251238a503aa54797ce8d911b8e857a268fa5a6"
+    },
+    {
+      "path": "build/primary-control/focused19-v5/decision.json",
+      "sha256": "288fff0babef0edb6cf02f392285a194d9707a79af6214fe4d1e1396a3dff51b"
+    },
+    {
+      "path": "build/primary-control/focused19-v5/native-result/state.json",
+      "sha256": "7cb9bda65b2cad09de873402d449aee0999fa88ad6b47d713514149afaea8d23"
+    },
+    {
+      "path": "build/primary-control/focused19-v6/state.json",
+      "sha256": "4ddca9a8b8bc061dc32e288a392b8ea1e36171617d120342106a7fe0cf8bb5a4"
+    },
+    {
+      "path": "build/primary-control/focused19-v6/ledger.json",
+      "sha256": "1e48202497a91db193cfe656222d27fe8dafe75ddd886a8296f2975c91a59004"
+    },
+    {
+      "path": "build/primary-control/focused19-v6/decision.json",
+      "sha256": "39b1aad0ac110ac97a638b08ec1d9c22b3efa4723cce1378e87a7028a056ce4f"
+    },
+    {
+      "path": "build/primary-control/focused19-v6/native-result/state.json",
+      "sha256": "68715beec45e143bbf7cc46615aae1704348e6dba213760c970f47ffc8cd36c5"
+    },
+    {
+      "path": "build/primary-control/focused19-v7/state.json",
+      "sha256": "b5910e3c415ba2fd73dac642483dc10314fc9d6c798d66049e4353013d89c971"
+    },
+    {
+      "path": "build/primary-control/focused19-v7/ledger.json",
+      "sha256": "1af45eba7e832d63fea413326cdb232f4dba879771181669ad3bc8b324871685"
+    },
+    {
+      "path": "build/primary-control/focused19-v7/decision.json",
+      "sha256": "51e5f719fc302d9e55dc5da77069b03cd33f1e2eae9def2c59a7c48a819abbb6"
+    },
+    {
+      "path": "build/primary-control/focused19-v7/native-result/state.json",
+      "sha256": "38b0f5cf3b0c256050fc5e90c374ab2768592e67321cfc04007f2a7c8a7c9886"
+    },
+    {
+      "path": "build/primary-control/focused19-v8/state.json",
+      "sha256": "67b563ebb5623d62b12970225a3644a81af55a8667090296de5fdc0db37541cc"
+    },
+    {
+      "path": "build/primary-control/focused19-v8/ledger.json",
+      "sha256": "b6a1ca5c24d248c8f249e5e05f65b515bfd542c2716ebbf74e28bbc3853196a0"
+    },
+    {
+      "path": "build/primary-control/focused19-v8/decision.json",
+      "sha256": "7c16a01c08f9ebfe7ac34844afcf1008e8be97975449c7424c3640bbeeab640f"
+    },
+    {
+      "path": "build/primary-control/focused19-v8/native-result/state.json",
+      "sha256": "a99bebccbfe4f0edcbe1d319ac954b82be1264584cdf0194cd330ee533b5af5e"
+    },
+    {
+      "path": "build/primary-control/focused19-v9/state.json",
+      "sha256": "33340d4bb32a7d89d48a1e10a112c8bc210e51370b7a41809f1cab9cf98e0b4e"
+    },
+    {
+      "path": "build/primary-control/focused19-v9/ledger.json",
+      "sha256": "553df5216f223f237f7ede78e997ca21ebd6c8ad63ee591417b585bc9b2aa082"
+    },
+    {
+      "path": "build/primary-control/focused19-v9/decision.json",
+      "sha256": "dd38954a1f5db85b02c65c02566053e7c2dea660500ccb08c8220f34d5e7c6f9"
+    },
+    {
+      "path": "build/primary-control/focused19-v9/native-result/state.json",
+      "sha256": "02f2ee47df6f9efb0762f320fbacc6e1f187339d11f907e2a8dad1f8b2d90044"
+    },
+    {
+      "path": "build/primary-control/focused19-v10/state.json",
+      "sha256": "dabb6291f9cf251526c229c42affed69b15cf6bae7702acb57bcff0a62bcee79"
+    },
+    {
+      "path": "build/primary-control/focused19-v10/ledger.json",
+      "sha256": "6f87f56ae70751274ba77a623e88a40ee8e2febd39b64f7cfa98c4eb3e2ca855"
+    },
+    {
+      "path": "build/primary-control/focused19-v10/decision.json",
+      "sha256": "e5c4f55ab15c4b8360380bf2523847d073a1c47622fb06fce8b0c7bf83a7a01e"
+    },
+    {
+      "path": "build/primary-control/focused19-v10/native-result/state.json",
+      "sha256": "06e5aeeb03749df8b63b151b6cbac290040f95d6bbef9745928c91455754f703"
+    }
+  ],
+  "derivedData": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete",
+  "producerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+  "priorFocusRecords": [
+    {
+      "path": "build/primary-control/focused19-v1/state.json",
+      "sha256": "a7ae2d21b27503b71939ff72670333a7e05736e47e999801f52e6ee6c1520dd6"
+    },
+    {
+      "path": "build/primary-control/focused19-v1/ledger.json",
+      "sha256": "c7835bb97d3017d305628e76ce25b35cfb415433780c4a43f806d0d56fbf708f"
+    },
+    {
+      "path": "build/primary-control/focused19-v1/decision.json",
+      "sha256": "77eef76303d4df1ac274a6cbf3db71b8f7efc4ee7f4e9b623334d565dd3297a3"
+    },
+    {
+      "path": "build/primary-control/focused19-v1/native-result/state.json",
+      "sha256": "f8f7fd1284b984d77237a2e487961eab0782ba079fadfe43f3805d68148fc24e"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/state.json",
+      "sha256": "9e199031a41095f66c101962da3c1c4ad330e748a9ac2afc267aac71384c2a21"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/ledger.json",
+      "sha256": "ec1d8b41595201d0a64b86d714a0fbd049cfbc9339b8a494fff25875cf6d6898"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/decision.json",
+      "sha256": "72608e39bc0987c619ea24b0eeea53b18cd5cca6f86c4a3dab688699580a315c"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/native-result/state.json",
+      "sha256": "5a0005645e789fc4979ff7515faf2c7ed28a589ff1f5aacdaa35cfdb388a3339"
+    },
+    {
+      "path": "build/primary-control/focused19-v3/state.json",
+      "sha256": "fc722c1417dfcb5029336df1b27f06fd1ec636ae2bc5bcfc82a2258d4f894d25"
+    },
+    {
+      "path": "build/primary-control/focused19-v3/ledger.json",
+      "sha256": "c69a3001ec612c74afeaeafcbdf3e8fc2b0ea59fbb96bf18488a2ff641e76ebf"
+    },
+    {
+      "path": "build/primary-control/focused19-v3/decision.json",
+      "sha256": "e5317f244c6cf6cecb4b9a9c1b3043b1921fbe646d922f332d7bdcd103fea86a"
+    },
+    {
+      "path": "build/primary-control/focused19-v3/native-result/state.json",
+      "sha256": "627355b9bb7c970106c2c5dee504937235d6d55e5782b2129b7427e3f1024e48"
+    },
+    {
+      "path": "build/primary-control/focused19-v5/state.json",
+      "sha256": "a4cfa1c2803d9bd6df5353e0818ec412d51d4d6ae138385842341a9eeb574186"
+    },
+    {
+      "path": "build/primary-control/focused19-v5/ledger.json",
+      "sha256": "fd8a062065a7b7124f68a7a58251238a503aa54797ce8d911b8e857a268fa5a6"
+    },
+    {
+      "path": "build/primary-control/focused19-v5/decision.json",
+      "sha256": "288fff0babef0edb6cf02f392285a194d9707a79af6214fe4d1e1396a3dff51b"
+    },
+    {
+      "path": "build/primary-control/focused19-v5/native-result/state.json",
+      "sha256": "7cb9bda65b2cad09de873402d449aee0999fa88ad6b47d713514149afaea8d23"
+    },
+    {
+      "path": "build/primary-control/focused19-v6/state.json",
+      "sha256": "4ddca9a8b8bc061dc32e288a392b8ea1e36171617d120342106a7fe0cf8bb5a4"
+    },
+    {
+      "path": "build/primary-control/focused19-v6/ledger.json",
+      "sha256": "1e48202497a91db193cfe656222d27fe8dafe75ddd886a8296f2975c91a59004"
+    },
+    {
+      "path": "build/primary-control/focused19-v6/decision.json",
+      "sha256": "39b1aad0ac110ac97a638b08ec1d9c22b3efa4723cce1378e87a7028a056ce4f"
+    },
+    {
+      "path": "build/primary-control/focused19-v6/native-result/state.json",
+      "sha256": "68715beec45e143bbf7cc46615aae1704348e6dba213760c970f47ffc8cd36c5"
+    },
+    {
+      "path": "build/primary-control/focused19-v7/state.json",
+      "sha256": "b5910e3c415ba2fd73dac642483dc10314fc9d6c798d66049e4353013d89c971"
+    },
+    {
+      "path": "build/primary-control/focused19-v7/ledger.json",
+      "sha256": "1af45eba7e832d63fea413326cdb232f4dba879771181669ad3bc8b324871685"
+    },
+    {
+      "path": "build/primary-control/focused19-v7/decision.json",
+      "sha256": "51e5f719fc302d9e55dc5da77069b03cd33f1e2eae9def2c59a7c48a819abbb6"
+    },
+    {
+      "path": "build/primary-control/focused19-v7/native-result/state.json",
+      "sha256": "38b0f5cf3b0c256050fc5e90c374ab2768592e67321cfc04007f2a7c8a7c9886"
+    },
+    {
+      "path": "build/primary-control/focused19-v8/state.json",
+      "sha256": "67b563ebb5623d62b12970225a3644a81af55a8667090296de5fdc0db37541cc"
+    },
+    {
+      "path": "build/primary-control/focused19-v8/ledger.json",
+      "sha256": "b6a1ca5c24d248c8f249e5e05f65b515bfd542c2716ebbf74e28bbc3853196a0"
+    },
+    {
+      "path": "build/primary-control/focused19-v8/decision.json",
+      "sha256": "7c16a01c08f9ebfe7ac34844afcf1008e8be97975449c7424c3640bbeeab640f"
+    },
+    {
+      "path": "build/primary-control/focused19-v8/native-result/state.json",
+      "sha256": "a99bebccbfe4f0edcbe1d319ac954b82be1264584cdf0194cd330ee533b5af5e"
+    },
+    {
+      "path": "build/primary-control/focused19-v9/state.json",
+      "sha256": "33340d4bb32a7d89d48a1e10a112c8bc210e51370b7a41809f1cab9cf98e0b4e"
+    },
+    {
+      "path": "build/primary-control/focused19-v9/ledger.json",
+      "sha256": "553df5216f223f237f7ede78e997ca21ebd6c8ad63ee591417b585bc9b2aa082"
+    },
+    {
+      "path": "build/primary-control/focused19-v9/decision.json",
+      "sha256": "dd38954a1f5db85b02c65c02566053e7c2dea660500ccb08c8220f34d5e7c6f9"
+    },
+    {
+      "path": "build/primary-control/focused19-v9/native-result/state.json",
+      "sha256": "02f2ee47df6f9efb0762f320fbacc6e1f187339d11f907e2a8dad1f8b2d90044"
+    },
+    {
+      "path": "build/primary-control/focused19-v10/state.json",
+      "sha256": "dabb6291f9cf251526c229c42affed69b15cf6bae7702acb57bcff0a62bcee79"
+    },
+    {
+      "path": "build/primary-control/focused19-v10/ledger.json",
+      "sha256": "6f87f56ae70751274ba77a623e88a40ee8e2febd39b64f7cfa98c4eb3e2ca855"
+    },
+    {
+      "path": "build/primary-control/focused19-v10/decision.json",
+      "sha256": "e5c4f55ab15c4b8360380bf2523847d073a1c47622fb06fce8b0c7bf83a7a01e"
+    },
+    {
+      "path": "build/primary-control/focused19-v10/native-result/state.json",
+      "sha256": "06e5aeeb03749df8b63b151b6cbac290040f95d6bbef9745928c91455754f703"
+    }
+  ],
+  "controller": {
+    "path": "build/primary-control/focused19-recovery-controller-v11.py",
+    "sha256": "f517434f396cbddf2c5c2fcc2870da1112a432f865bbbcb9767ee656c885b73c"
+  },
+  "originalNode": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/node-v24.5.0-darwin-arm64/bin/node",
+    "sha256": "336b5b3ebc5deb86df842102b20b6e4761605b7a667823e68dda7761b91a161b",
+    "version": "24.5.0"
+  },
+  "historicalPreflightRejections": {
+    "status": "PRIOR_PREFLIGHT_REJECTED_NOT_RUN_UNCHARGED",
+    "authority": {
+      "path": "build/primary-control/focused19-v6-preflight-rejection.json",
+      "sha256": "ff93343392a900bb1443e6188e3cc8df21727d027a90b874e0372e24bdb55317"
+    },
+    "unchangedBaselineSeconds": 17569.521183794048,
+    "secondAttempt": {
+      "decisionSHA256": "d0df391b5f5c23b0678dc76cd42adff45001e27ddb2670078111a7dc89635698",
+      "logSHA256": "03b6fb87b29aa2c7f1669b5a34eda6d6c92df0e5839c1d1f8f652d12f56b4985",
+      "status": "PREFLIGHT_REJECTED_NOT_RUN_UNCHARGED"
+    },
+    "controllerChange": "Only bounded identity-only process-group inventory and targeted historic controller argv query; no source, selector, budget or cleanup ownership change.",
+    "priorReviewedController": {
+      "path": "build/primary-control/focused19-recovery-controller-v6.py",
+      "sha256": "26975d9a652e7ef1c1306bbd92c329e5fda04eb65b2bb76a9be937141c33381c"
+    }
+  },
+  "continuationGrant": {
+    "by": "/root",
+    "additionalSeconds": 650,
+    "basis": "The user explicitly authorized completing the remaining implementation without repeated permission. Preserve the original3600, separate prior400/750/200/300 grants and all nine actual charges; add650 for the measured shared importer lifecycle correction requiring both original MiniApps and AI builds.",
+    "plannedNextPhaseSeconds": 1080,
+    "components": {
+      "affectedMiniBuild": 180,
+      "affectedAIBuild": 180,
+      "originalCase": 600,
+      "setupResultCleanup": 120
+    },
+    "otherGrantsUnchanged": true
+  },
+  "priorContinuationGrants": [
+    {
+      "authority": {
+        "path": "build/primary-control/focused19-v8/decision.json",
+        "sha256": "7c16a01c08f9ebfe7ac34844afcf1008e8be97975449c7424c3640bbeeab640f"
+      },
+      "grant": {
+        "by": "/root",
+        "additionalSeconds": 400,
+        "basis": "The user explicitly authorized completing the remaining implementation without repeated permission. Preserve the original3600 and all six actual charges; add400 for the measured receiver-synchronization continuation.",
+        "plannedNextPhaseSeconds": 900,
+        "components": {
+          "affectedAIBuild": 180,
+          "originalCase": 600,
+          "setupResultCleanup": 120
+        },
+        "otherGrantsUnchanged": true
+      }
+    },
+    {
+      "authority": {
+        "path": "build/primary-control/focused19-v9/decision.json",
+        "sha256": "dd38954a1f5db85b02c65c02566053e7c2dea660500ccb08c8220f34d5e7c6f9"
+      },
+      "grant": {
+        "by": "/root",
+        "additionalSeconds": 750,
+        "basis": "The user explicitly authorized completing the remaining implementation without repeated permission. Preserve the original3600, prior explicit400 grant and all seven actual charges; add750 for the measured MiniApps receiver-presentation continuation.",
+        "plannedNextPhaseSeconds": 900,
+        "components": {
+          "affectedMiniBuild": 180,
+          "originalCase": 600,
+          "setupResultCleanup": 120
+        },
+        "otherGrantsUnchanged": true
+      }
+    },
+    {
+      "authority": {
+        "path": "build/primary-control/focused19-v9/decision.json",
+        "sha256": "dd38954a1f5db85b02c65c02566053e7c2dea660500ccb08c8220f34d5e7c6f9"
+      },
+      "grant": {
+        "by": "/root",
+        "additionalSeconds": 200,
+        "basis": "The user explicitly authorized completing the remaining implementation without repeated permission. Preserve the original3600, prior400, separate750 and all seven actual charges; add200 after the actual V8 transcript established pending receiver status before installation, requiring the provider correction and both original builds.",
+        "plannedNextPhaseSeconds": 1080,
+        "components": {
+          "affectedMiniBuild": 180,
+          "affectedAIBuild": 180,
+          "originalCase": 600,
+          "setupResultCleanup": 120
+        },
+        "otherGrantsUnchanged": true
+      }
+    },
+    {
+      "authority": {
+        "path": "build/primary-control/focused19-v10/decision.json",
+        "sha256": "e5c4f55ab15c4b8360380bf2523847d073a1c47622fb06fce8b0c7bf83a7a01e"
+      },
+      "grant": {
+        "by": "/root",
+        "additionalSeconds": 300,
+        "basis": "The user explicitly authorized completing the remaining implementation without repeated permission. Preserve the original3600, separate prior400/750/200 grants and all eight actual charges; add300 for the measured AI-only repair-coordinator continuation while authenticating unchanged dc53 MiniApps products.",
+        "plannedNextPhaseSeconds": 900,
+        "components": {
+          "affectedAIBuild": 180,
+          "originalCase": 600,
+          "setupResultCleanup": 120
+        },
+        "otherGrantsUnchanged": true
+      }
+    }
+  ],
+  "resourceAssessment": {
+    "decision": "FITS_MEASURED_NEXT_PHASE",
+    "observedAt": "2026-11-25T16:47:06.119565+00:00",
+    "observedFreeBytes": 13880193024,
+    "df": "Filesystem   1024-blocks      Used Available Capacity iused     ifree %iused  Mounted on\n/dev/disk3s5   482797652 423260824  13554876    97% 5599576 135548760    4%   /System/Volumes/Data\n",
+    "estimatedIncrementalBytes": 4848846634,
+    "concurrentAndOSAllowanceBytes": 400000000,
+    "components": {
+      "retainedOwnedBootDeviceAdditionalBytes": 0,
+      "conservativeBothAppsAndUIRunnersInstallBytes": 2505814016,
+      "conservativeHostRecreationBytes": 713731370,
+      "twoTimesActualFull25ResultAndExportBytes": 629301248,
+      "incrementalCompilerLinkAndResourceTemporaryBytes": 1000000000
+    },
+    "basis": "Same authenticated E742 is retained; its existing device allocation is not counted as new. The retained measured two-app/runner byte total conservatively bounds both affected reinstalls and XCTest installation, with prior Host recreation and larger two-group result allocations reserved for this one-test continuation. The shared importer Swift source is present in both actual compiler lists, so both original incremental build-for-testing commands execute. All235 SDK inputs and13 probe outputs stay exact. No APFS clone savings assumed or globaldf change attributed to this phase.",
+    "boundary": "Both original affected consumer build/install commands and the original repair UI execute. Prior ManualInput PASS and unchanged original probe remain historical proof. Original52/companions remain separate."
+  },
+  "recordedAt": "2026-11-25T16:47:06.119782+00:00"
+}

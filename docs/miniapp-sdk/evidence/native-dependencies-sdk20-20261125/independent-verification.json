@@ -1,0 +1,361 @@
+{
+  "status": "FOUR_PHASE_NATIVE_PREPARATION_INDEPENDENTLY_VERIFIED",
+  "at": "2026-11-25T22:22:27.839626+00:00",
+  "source": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+  "packets": [
+    {
+      "phase": "notification-native-preparation-v1",
+      "receipt": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v1/terminal/receipt.json",
+      "bytes": 7700,
+      "sha256": "6c7ca63aa2f221d94479dc242f0e1b3ffff11bceae4dceaaf7341005f8dc67cb",
+      "members": 9
+    },
+    {
+      "phase": "notification-native-preparation-v2",
+      "receipt": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v2/terminal/receipt.json",
+      "bytes": 2131,
+      "sha256": "40a28e548e76a7705e0eb07c40cee663379f946ce87f929e6a8dae6f41a72e6e",
+      "members": 3
+    },
+    {
+      "phase": "notification-metadata-toolchain-v1",
+      "receipt": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-metadata-toolchain-v1/terminal/receipt.json",
+      "bytes": 1100,
+      "sha256": "e4578db7395f72a856d23ca7b7053e3e63851af0051b6347968e13911701d019",
+      "members": 2
+    },
+    {
+      "phase": "notification-native-preparation-v3",
+      "receipt": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v3/terminal/receipt.json",
+      "bytes": 9854,
+      "sha256": "470d5e25704e6d8c7aad8d70860ce56ac769f8331492e45d87a33ddc28d63f57",
+      "members": 15
+    }
+  ],
+  "rawBindings": [
+    {
+      "phase": "notification-native-preparation-v1",
+      "name": "install-expo-tooling.log.gz",
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v1/terminal/install-expo-tooling.log.gz",
+      "bytes": 720,
+      "sha256": "8af7665139233ee031fce953be0738177502a85f9832a5a636e837ddd3bd1551",
+      "originalBytes": 4218,
+      "originalSHA256": "67e6c426fd461177d4d9f180f0ec6ae7c7bea76d8e76811dba876e893f13b74e",
+      "gzip": true
+    },
+    {
+      "phase": "notification-native-preparation-v1",
+      "name": "install-nativescript-tooling.log.gz",
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v1/terminal/install-nativescript-tooling.log.gz",
+      "bytes": 293,
+      "sha256": "362996dd1d10339ab88ed19110eb07c0309e6018a9cab36608556fe7db2494a0",
+      "originalBytes": 485,
+      "originalSHA256": "9bde731e9c6e961f3b42fe62dfbbee22a06762034c0f55a99996b25f5cec39df",
+      "gzip": true
+    },
+    {
+      "phase": "notification-native-preparation-v1",
+      "name": "ledger.json",
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v1/terminal/ledger.json",
+      "bytes": 473,
+      "sha256": "416bd3cc78ef76fe48136427314ea59ec07d5f2873ccab4e84fa6bf65bf5d056",
+      "originalBytes": 473,
+      "originalSHA256": "416bd3cc78ef76fe48136427314ea59ec07d5f2873ccab4e84fa6bf65bf5d056",
+      "gzip": false
+    },
+    {
+      "phase": "notification-native-preparation-v1",
+      "name": "post-expo-prepared.diff",
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v1/terminal/post-expo-prepared.diff",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gzip": false
+    },
+    {
+      "phase": "notification-native-preparation-v1",
+      "name": "prepare-exact-types.log.gz",
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v1/terminal/prepare-exact-types.log.gz",
+      "bytes": 103,
+      "sha256": "3d87c7128567b259cad9ddcdc792e3e3a41cefb95d90a1f60311663b9c0dcb6f",
+      "originalBytes": 90,
+      "originalSHA256": "6104127c609c61304c6058c86e9f827fd85219a10aef358ef5957cb8b6ed2723",
+      "gzip": true
+    },
+    {
+      "phase": "notification-native-preparation-v1",
+      "name": "prepare-original-expo-native.log.gz",
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v1/terminal/prepare-original-expo-native.log.gz",
+      "bytes": 421444,
+      "sha256": "8f5fb2cd264fe3fae309ea3eacc9828a3e212376d358ba16e268569426513276",
+      "originalBytes": 4176112,
+      "originalSHA256": "34f3e789b3ab737199f3b0206be77ac1e9a42917e8c3e092cda181d24d76c89d",
+      "gzip": true
+    },
+    {
+      "phase": "notification-native-preparation-v1",
+      "name": "prepare-original-nativescript-native.log.gz",
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v1/terminal/prepare-original-nativescript-native.log.gz",
+      "bytes": 570,
+      "sha256": "b64e6357f68c87679447284652e4c04987569ed548cc35fa3c6c37a3994ce519",
+      "originalBytes": 1198,
+      "originalSHA256": "f792ff9ecd158016efd9fd6eb5740a82287f08ce8e0005b1f93e2d26c68efa4e",
+      "gzip": true
+    },
+    {
+      "phase": "notification-native-preparation-v1",
+      "name": "python-resolution-proof.json",
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v1/terminal/python-resolution-proof.json",
+      "bytes": 1987,
+      "sha256": "4a3f922f54a70affb837f537670496e96397bc7326d5bd267c4298d8709a2239",
+      "originalBytes": 1987,
+      "originalSHA256": "4a3f922f54a70affb837f537670496e96397bc7326d5bd267c4298d8709a2239",
+      "gzip": false
+    },
+    {
+      "phase": "notification-native-preparation-v1",
+      "name": "state.json",
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v1/terminal/state.json",
+      "bytes": 8595,
+      "sha256": "0d29750c7e800819b9d2ba8c4158635b6bf0c054fc4d0d7a3acd0c3e598003cb",
+      "originalBytes": 8595,
+      "originalSHA256": "0d29750c7e800819b9d2ba8c4158635b6bf0c054fc4d0d7a3acd0c3e598003cb",
+      "gzip": false
+    },
+    {
+      "phase": "notification-native-preparation-v2",
+      "name": "ledger.json",
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v2/terminal/ledger.json",
+      "bytes": 918,
+      "sha256": "cd80f10afb1848c12df73eca2de13663633794e3abf52b27b35e5ef2f3bd7d69",
+      "originalBytes": 918,
+      "originalSHA256": "cd80f10afb1848c12df73eca2de13663633794e3abf52b27b35e5ef2f3bd7d69",
+      "gzip": false
+    },
+    {
+      "phase": "notification-native-preparation-v2",
+      "name": "prepare-original-nativescript-native.log.gz",
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v2/terminal/prepare-original-nativescript-native.log.gz",
+      "bytes": 794,
+      "sha256": "81a5b022ed47a7e6719143682be4e82679f14f33461f5cf78fe035c990149347",
+      "originalBytes": 1911,
+      "originalSHA256": "74f23955f6758197e325b5e010cc3494f4393e338f48e7cae618d884c9897954",
+      "gzip": true
+    },
+    {
+      "phase": "notification-native-preparation-v2",
+      "name": "state.json",
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v2/terminal/state.json",
+      "bytes": 9897,
+      "sha256": "ce068c7cc498e57adeda19d300f30e109fc0dbee7c7b638bd3491b1aff00d923",
+      "originalBytes": 9897,
+      "originalSHA256": "ce068c7cc498e57adeda19d300f30e109fc0dbee7c7b638bd3491b1aff00d923",
+      "gzip": false
+    },
+    {
+      "phase": "notification-metadata-toolchain-v1",
+      "name": "state.json",
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-metadata-toolchain-v1/terminal/state.json",
+      "bytes": 1139,
+      "sha256": "86e8c111510ad1baf953e613a6ce22f2ba4b061ccd4b6db30787cd794ad1a446",
+      "originalBytes": 1139,
+      "originalSHA256": "86e8c111510ad1baf953e613a6ce22f2ba4b061ccd4b6db30787cd794ad1a446",
+      "gzip": false
+    },
+    {
+      "phase": "notification-metadata-toolchain-v1",
+      "name": "brew-install-cmake.log",
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-metadata-toolchain-v1/terminal/brew-install-cmake.log",
+      "bytes": 423,
+      "sha256": "ffc0d0a091cc4738ccf069c98ec903b10164573c0f6bc0f0c57cd9f4f8c3bb06",
+      "originalBytes": 423,
+      "originalSHA256": "ffc0d0a091cc4738ccf069c98ec903b10164573c0f6bc0f0c57cd9f4f8c3bb06",
+      "gzip": false
+    },
+    {
+      "phase": "notification-native-preparation-v3",
+      "name": "config-materialization.json",
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v3/terminal/config-materialization.json",
+      "bytes": 658,
+      "sha256": "d9647613e2110f4bba9afee6b552bf43dff84964e5bb08d16eb3225191a767c0",
+      "originalBytes": 658,
+      "originalSHA256": "d9647613e2110f4bba9afee6b552bf43dff84964e5bb08d16eb3225191a767c0",
+      "gzip": false
+    },
+    {
+      "phase": "notification-native-preparation-v3",
+      "name": "ledger.json",
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v3/terminal/ledger.json",
+      "bytes": 1884,
+      "sha256": "26a4bc05363573082404f43e604678e8126c37afb9493096e2c8764993c92fdd",
+      "originalBytes": 1884,
+      "originalSHA256": "26a4bc05363573082404f43e604678e8126c37afb9493096e2c8764993c92fdd",
+      "gzip": false
+    },
+    {
+      "phase": "notification-native-preparation-v3",
+      "name": "paired52-readiness-observation.json",
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v3/terminal/paired52-readiness-observation.json",
+      "bytes": 3058,
+      "sha256": "0e3b2cd6c245e65d02a03d4f3b34493f5041a9b41cb64e24ed5c6ed94df24c9f",
+      "originalBytes": 3058,
+      "originalSHA256": "0e3b2cd6c245e65d02a03d4f3b34493f5041a9b41cb64e24ed5c6ed94df24c9f",
+      "gzip": false
+    },
+    {
+      "phase": "notification-native-preparation-v3",
+      "name": "prepare-original-nativescript-native.log.gz",
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v3/terminal/prepare-original-nativescript-native.log.gz",
+      "bytes": 1691,
+      "sha256": "39791bde2087e4b854915901d8206524555fe16f451f0e9420d176f126332e8a",
+      "originalBytes": 5190,
+      "originalSHA256": "53f0f3d540415809a88ba728abf4a1a7ecfc697aab872a4370a9ede18cb03fdf",
+      "gzip": true
+    },
+    {
+      "phase": "notification-native-preparation-v3",
+      "name": "prepared-frameworks.json",
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v3/terminal/prepared-frameworks.json",
+      "bytes": 15613,
+      "sha256": "38b16127d7045ed40051b3c2d968fae5a4ca35655a36cdeef52324da99428993",
+      "originalBytes": 15613,
+      "originalSHA256": "38b16127d7045ed40051b3c2d968fae5a4ca35655a36cdeef52324da99428993",
+      "gzip": false
+    },
+    {
+      "phase": "notification-native-preparation-v3",
+      "name": "prepared-source.diff",
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v3/terminal/prepared-source.diff",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gzip": false
+    },
+    {
+      "phase": "notification-native-preparation-v3",
+      "name": "state.json",
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v3/terminal/state.json",
+      "bytes": 15567,
+      "sha256": "0eb409b8ea1853620b8fbc462f67ae3c5a19973e085ba61bfa7149622f2e4d45",
+      "originalBytes": 15567,
+      "originalSHA256": "0eb409b8ea1853620b8fbc462f67ae3c5a19973e085ba61bfa7149622f2e4d45",
+      "gzip": false
+    },
+    {
+      "phase": "notification-native-preparation-v3",
+      "name": "tracked-status.txt",
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v3/terminal/tracked-status.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gzip": false
+    },
+    {
+      "phase": "notification-native-preparation-v3",
+      "name": "verify-nativeapi-artifacts.log.gz",
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v3/terminal/verify-nativeapi-artifacts.log.gz",
+      "bytes": 251,
+      "sha256": "5f9f8a6ee392f4fc14ef4484f4e60bf27dc729a731f3f62586988f344b85f12c",
+      "originalBytes": 357,
+      "originalSHA256": "ea2d894e0c272076abc81ddbc25e981eefa49a6313fcff6a9ecab119a3c28ebd",
+      "gzip": true
+    },
+    {
+      "phase": "notification-native-preparation-v3",
+      "name": "verify-nativeapi-metadata.log.gz",
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v3/terminal/verify-nativeapi-metadata.log.gz",
+      "bytes": 372,
+      "sha256": "831d5b56475f8315280b1b2551cc45c2fea141d12b263c499a9dbb74c3b462db",
+      "originalBytes": 688,
+      "originalSHA256": "89847abdedfb856f3092d073d6c2684124b694bbf3a4ecc91088bda345cc3a31",
+      "gzip": true
+    },
+    {
+      "phase": "notification-native-preparation-v3",
+      "name": "verify-nativeapi-preflight.log.gz",
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v3/terminal/verify-nativeapi-preflight.log.gz",
+      "bytes": 593,
+      "sha256": "1ad96b0b6445442252d95096d7f2f0f7311abdcc7756eea0f6ba4e89e3e7a87b",
+      "originalBytes": 1724,
+      "originalSHA256": "aa9afe7e8c6671008eef6bc51dae9efca4a856d9cd988e9e1aeb294660d9255b",
+      "gzip": true
+    },
+    {
+      "phase": "notification-native-preparation-v3",
+      "name": "metadata-provenance.json",
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v3/terminal/metadata-provenance.json",
+      "bytes": 935,
+      "sha256": "f83479c7a5cdf9014fb7b5f2bf8425ecf9809c4de9680666ca255706022b9696",
+      "originalBytes": 935,
+      "originalSHA256": "f83479c7a5cdf9014fb7b5f2bf8425ecf9809c4de9680666ca255706022b9696",
+      "gzip": false
+    },
+    {
+      "phase": "notification-native-preparation-v3",
+      "name": "history-focused-wire-unit-state.json",
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v3/terminal/history-focused-wire-unit-state.json",
+      "bytes": 2488,
+      "sha256": "95d72c8829b026d2e61b08c037e0cc6a332c2ccd0cdb5ea13d391b174c7aef80",
+      "originalBytes": 2488,
+      "originalSHA256": "95d72c8829b026d2e61b08c037e0cc6a332c2ccd0cdb5ea13d391b174c7aef80",
+      "gzip": false
+    },
+    {
+      "phase": "notification-native-preparation-v3",
+      "name": "history-historical-os-recovery-ledger.json",
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v3/terminal/history-historical-os-recovery-ledger.json",
+      "bytes": 3201,
+      "sha256": "cfa1ab524fe4c871268b2b364d3bf73dc0d5fd30bb1e584fa002a934771ac62f",
+      "originalBytes": 3201,
+      "originalSHA256": "cfa1ab524fe4c871268b2b364d3bf73dc0d5fd30bb1e584fa002a934771ac62f",
+      "gzip": false
+    },
+    {
+      "phase": "notification-native-preparation-v3",
+      "name": "history-oracle-sdk20-verification.json",
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v3/terminal/history-oracle-sdk20-verification.json",
+      "bytes": 6485,
+      "sha256": "8c33bf22355ab2749f81c8abc5fa0b08ef8fe87fca78077512f35060d789f21d",
+      "originalBytes": 6485,
+      "originalSHA256": "8c33bf22355ab2749f81c8abc5fa0b08ef8fe87fca78077512f35060d789f21d",
+      "gzip": false
+    }
+  ],
+  "originalSuccessfulCommands": 8,
+  "finalFrameworkTargets": 15,
+  "sdkSourceInputs": 235,
+  "hostSHA256": "ed18d93a88a1020bc2140417cea3847daf3d03472cdd4769d9a5ac4e44f48a22",
+  "preparedTrackedDiffEmpty": true,
+  "chargedSeconds": 303.8050289590028,
+  "originalPhases": [
+    {
+      "startedAt": "2026-11-25T21:47:17.425063+00:00",
+      "finishedAt": "2026-11-25T21:50:26.262338+00:00",
+      "seconds": 188.837976625,
+      "status": "FAILED"
+    },
+    {
+      "startedAt": "2026-11-25T22:01:28.732166+00:00",
+      "finishedAt": "2026-11-25T22:01:34.670411+00:00",
+      "seconds": 5.938364417001139,
+      "status": "FAILED"
+    },
+    {
+      "startedAt": "2026-11-25T22:05:07.315082+00:00",
+      "finishedAt": "2026-11-25T22:05:14.662384+00:00",
+      "seconds": 7.347363291992224,
+      "status": "INSTALLED",
+      "phase": "notification-metadata-toolchain-v1"
+    },
+    {
+      "startedAt": "2026-11-25T22:10:25.345242+00:00",
+      "finishedAt": "2026-11-25T22:12:07.026124+00:00",
+      "seconds": 101.68132462500944,
+      "status": "PREPARED"
+    }
+  ],
+  "noApplicationBuildOrTestClaim": true
+}

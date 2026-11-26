@@ -1,0 +1,36 @@
+
+added 1 package in 376ms
+npm warn deprecated node-domexception@1.0.0: Use your platform's native DOMException instead
+
+added 166 packages in 868ms
+{"package":"@yarnpkg/shell","version":"4.1.3","files":5}
+{"unicode":"16.0","patterns":3,"comparedPerPattern":1114112,"ranges":736,"upstreamSHA256":"1847afd90236234c0797bd072647aca486a027c6ff696029e294b742985b57fb","patchedSHA256":"35d8582e121e974a0bd611fd2e628f5ea7c992ada05fc584b8eb1be57c575e85"}
+{"compiler":"0.10.0","originalParserReproduced":true,"grammarSHA256":"7471bb6efa3ffc8cafeeb73ae5443121d8f98fd55c12e04e3d2595f3ff25024f","parserSHA256":"cc894ae3938649fc62037e0a574ad3cded99c9771e4e042a2d893185789a47ef"}
+v24.5.0
+1ec7ffe20def4025cec4d228b8432c9d9950d01ccdf5b076a3c4b92dd3a16a5c  /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/AI_HLY/Downstream/RuntimeCore/Node/Host/global-package-state.mjs
+c7d0fb58af6b07e61bfd235e01bdb9d11483254ed0601d4f9363b375c2e0f2f9  /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/package-lifecycle.test.mjs
+4a1f2ecaae83c3f68cb02b605c03323260bc4bbb32923865d5c654be5736c7b4  /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/AI_HLY/Downstream/RuntimeCore/Node/Host/package-lock.json
+✔ actual Arborist tree plans dependency phases, root project phases and skips unchanged build products (86.175416ms)
+✔ immutable package generations preserve old files, reject conflicting commits and retain published generations (38.171792ms)
+✔ root aliases expose the same physical legacy and published generation without mutating reads (20.69575ms)
+✔ competing commits through host root aliases preserve conflict rejection (14.365792ms)
+✔ reading a missing legacy host does not create directories or introduce a missing-path error (2.571625ms)
+✔ npm lifecycle environment retains user values and flattens RFC183 package metadata (4.2715ms)
+✔ actual registry extraction and Arborist dependency hooks publish atomically and preserve unchanged builds (1070.670292ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 1553.125584
+✔ the real CLI archives and revalidates retained source, diagnostics and output identity (3749.405166ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 1
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4078.550292

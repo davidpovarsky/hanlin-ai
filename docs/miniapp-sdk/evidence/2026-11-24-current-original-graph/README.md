@@ -1,0 +1,9 @@
+# Current original graph: canonical modular search 1.4
+
+The canonical project was compiled with the actual staged original Expo 58.0.26, Expo UI/Widgets 58.0.29, React Native 0.88.1, Worklets 0.13.0 and Babel preset 58.0.26 graph. The original compiler reports TypeScript 6.0.3 (its package metadata is 6.0.2; both identities are recorded). Strict checking includes declaration bodies. The Expo application and native ScriptWidget TSX presentation have independent original type environments. The complete build returned zero diagnostics.
+
+The output uses the original Expo Metro transformer and includes its bundle/source map, declared native presentation module tree and editable original source. Every retained source hash was compared with the canonical project, every compiled hash was checked, and the final ZIP passed CRC validation. Prepared dependency/bridge/native-plugin metadata names the versions actually used in this build, including the original Expo Widgets host module.
+
+Five focused cases also ran against this current SDK: isolated renderers, a native source beside the application config, invalid native JSX location/blocking, malformed/missing layout and renderer diagnostics, and an actionable original Metro configuration error. Separate existing evidence covers original NativeScript dependency/resource round trips and all generated ScriptWidget service signatures; those are not relabeled as tests against a different dependency graph.
+
+`evidence.json` records exact source, compiler, SDK and artifact identities. `build-report.json` is the production authoring report; the remaining files are raw output. The SDK is an Expo/ScriptWidget subset for this package build. The application pipeline stages all three engines. This Linux compiler/archive evidence does not establish Apple installation, native presentation behavior, or physical-device execution; those remain separately recorded by the combined native acceptance gate.

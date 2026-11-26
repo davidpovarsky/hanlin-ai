@@ -1,0 +1,32 @@
+Building for debugging...
+[Computing dependencies]
+[Using on-disk description]
+[1 / 8] HanlinPlatformContracts
+[2 / 9] HanlinPlatformContracts
+[6 / 13] HanlinScriptContracts
+[10 / 17] HanlinMiniAppCore
+[14 / 21] HanlinScriptStore
+[21 / 26] HanlinScriptStoreTests-product
+[27 / 46] HanlinScriptStore
+[28 / 46] HanlinScriptContracts
+[30 / 46] HanlinPlatformContracts
+[31 / 47] HanlinScriptStore
+[36 / 49] HanlinStoreLifecycleProjection_HanlinScriptContracts
+[38 / 50] HanlinMiniAppCore
+[39 / 51] HanlinPlatformContracts
+[41 / 49] HanlinPlatformContracts
+[42 / 49] HanlinMiniAppCore
+[46 / 50] HanlinScriptStore
+[47 / 50] HanlinScriptStoreTests-product
+[53 / 55] HanlinScriptStoreTests-test-runner
+[54 / 56] HanlinScriptStoreTests-test-runner
+[56 / 56] HanlinScriptStoreTests-test-runner
+Build complete! (27.15 secs)
+◇ Test run started.
+↳ Testing Library Version: 6.4.3 (ba0861fb203553c)
+↳ Target Platform: aarch64-unknown-linux-gnu
+◇ Suite "Atomic Scripting installation store" started.
+◇ Test "Install, update, rollback, disable, restore, and uninstall preserve stable identity" started.
+✔ Test "Install, update, rollback, disable, restore, and uninstall preserve stable identity" passed after 0.139 seconds.
+✔ Suite "Atomic Scripting installation store" passed after 0.139 seconds.
+✔ Test run with 1 test in 1 suite passed after 0.139 seconds.

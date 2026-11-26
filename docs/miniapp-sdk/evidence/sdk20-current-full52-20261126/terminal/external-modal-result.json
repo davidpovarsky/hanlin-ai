@@ -1,0 +1,18 @@
+{
+  "items" : [
+    {
+      "kind" : "text",
+      "text" : "modal-survived:4f2ecda0-9c21-46a2-b2e1-8cd4f017c623:counter=2:input=Shared modal input 20261123"
+    }
+  ],
+  "message" : "Modal invocation survived",
+  "metadata" : {
+    "afterRequestID" : "4f2ecda0-9c21-46a2-b2e1-8cd4f017c623",
+    "beforeRequestID" : "4f2ecda0-9c21-46a2-b2e1-8cd4f017c623",
+    "counter" : "2",
+    "documentID" : "external-modal-document"
+  },
+  "operation" : "display",
+  "requestID" : "4F2ECDA0-9C21-46A2-B2E1-8CD4F017C623",
+  "status" : "success"
+}

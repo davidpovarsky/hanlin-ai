@@ -1,0 +1,57 @@
+{
+  "sourceSHA": "74ba980dbb91f3a38d4531f043801f5e742c283a",
+  "runID": 45360272675,
+  "jobID": 138328276796,
+  "status": "EXECUTED_FAIL",
+  "selected": 2,
+  "executed": 2,
+  "passed": 0,
+  "failed": 2,
+  "appleBuild": "SUCCEEDED",
+  "failureStage": "Production synthesized widget.json validation, before element-limit assertions",
+  "error": "HanlinOriginalScriptWidgetFailure(message: \"Invalid network host declaration: *.\")",
+  "rawLog": {
+    "file": "native-45360272675-job-138328276796.log.gz",
+    "originalBytes": 164349,
+    "originalSHA256": "57ae57e89b98e3993a8b6b4b41cf5a38420efe3b718131f21d95e0b4216c70ae",
+    "compressedSHA256": "232818904f65622e5f5680a6fb4fbafdc580eef62e63745f17fe4ac8bcc2c795"
+  },
+  "rows": [
+    {
+      "line": 834,
+      "text": "Verify original ScriptWidget adapter semantics / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T08:59:35.8728430Z Build complete! (183.04 sec)"
+    },
+    {
+      "line": 839,
+      "text": "Verify original ScriptWidget adapter semantics / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T08:59:42.3175240Z \u25c7 Test scriptWidgetUsesOriginalElementLimitsWithoutExtraMaterialQuotas() started."
+    },
+    {
+      "line": 840,
+      "text": "Verify original ScriptWidget adapter semantics / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T08:59:42.3176390Z \u25c7 Test rootFragmentsPreserveOriginalElementAllowances() started."
+    },
+    {
+      "line": 841,
+      "text": "Verify original ScriptWidget adapter semantics / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T08:59:42.3178810Z \u2718 Test scriptWidgetUsesOriginalElementLimitsWithoutExtraMaterialQuotas() recorded an issue at HanlinDualWidgetEnginesTests.swift:23:6: Caught error: HanlinOriginalScriptWidgetFailure(message: \"Invalid network host declaration: *.\")"
+    },
+    {
+      "line": 842,
+      "text": "Verify original ScriptWidget adapter semantics / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T08:59:42.3181570Z \u2718 Test scriptWidgetUsesOriginalElementLimitsWithoutExtraMaterialQuotas() failed after 0.073 seconds with 1 issue."
+    },
+    {
+      "line": 843,
+      "text": "Verify original ScriptWidget adapter semantics / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T08:59:42.3199040Z \u2718 Test rootFragmentsPreserveOriginalElementAllowances() recorded an issue at HanlinScriptWidgetOriginalLimitParityTests.swift:9:6: Caught error: HanlinOriginalScriptWidgetFailure(message: \"Invalid network host declaration: *.\")"
+    },
+    {
+      "line": 844,
+      "text": "Verify original ScriptWidget adapter semantics / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T08:59:42.3204990Z \u2718 Test rootFragmentsPreserveOriginalElementAllowances() failed after 0.358 seconds with 1 issue."
+    },
+    {
+      "line": 846,
+      "text": "Verify original ScriptWidget adapter semantics / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T08:59:42.3207050Z \u2718 Test run with 2 tests in 1 suite failed after 0.359 seconds with 2 issues."
+    }
+  ],
+  "dispatch": "dispatch.json",
+  "run": "run-api.json",
+  "retrieval": "job-138328276796-log-receipt.json",
+  "retrievedBy": "Root; this agent copied the existing raw evidence without CI access"
+}

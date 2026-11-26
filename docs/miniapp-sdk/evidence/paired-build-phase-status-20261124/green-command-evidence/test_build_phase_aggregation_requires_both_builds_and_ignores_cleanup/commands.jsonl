@@ -1,0 +1,3 @@
+{"argv": ["/usr/bin/python3", "-c", "print('mini build')"], "exit": 0, "seconds": 0.0436087716370821, "log": "mini-build.log", "sha256": "37e58049cc8156a68bfb7de8b7a1547e55c38337f921e68680306fa78e9a089c"}
+{"argv": ["/usr/bin/python3", "-c", "print('ai build')"], "exit": 0, "seconds": 0.026287111453711987, "log": "ai-build.log", "sha256": "3e24906c02c0ee657370e68b0aa5a7997350f5703546b55eb9069d63b64212ec"}
+{"argv": ["/usr/bin/python3", "-c", "import sys; sys.exit(9)"], "exit": 9, "seconds": 0.042579405941069126, "log": "cleanup.log", "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}

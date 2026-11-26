@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 1,
+  "baseSHA": "25b14790e5c79b8ddd821984ed97d37e6af0bfa4",
+  "scope": [
+    "Hanlin per-compile deadline parity with unchanged original contract",
+    "Hanlin root-only single-Fragment normalization before original tree allowances"
+  ],
+  "affectedProduction": [
+    "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift",
+    "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/Resources/prepare-widget.js",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift"
+  ],
+  "validation": [
+    {
+      "kind": "portable real original Babel and production adapter",
+      "cases": "One new compile-operation lifecycle regression, with initial actual failure; affected existing ScriptWidget compiler/action/native-presentation cases only",
+      "reason": "Changes compilation boundary reset for entry, imports and modules. No artificial elapsed clock or sleep."
+    },
+    {
+      "kind": "Swift syntax only",
+      "files": "Changed Swift production and new Apple test source",
+      "reason": "Portable compiler can parse the changed syntax but cannot validate JavaScriptCore/Apple native behavior."
+    },
+    {
+      "kind": "Apple native JSC regression",
+      "status": "NOT_RUN",
+      "case": "HanlinDualWidgetEnginesTests/rootFragmentsPreserveOriginalElementAllowances",
+      "reason": "Actual engine freeze pipeline requires Apple JavaScriptCore; root owns later native execution.",
+      "relatedExistingCase": "HanlinDualWidgetEnginesTests/scriptWidgetUsesOriginalElementLimitsWithoutExtraMaterialQuotas"
+    }
+  ],
+  "notRun": [
+    "CI",
+    "Full app builds",
+    "Timing/performance tests",
+    "Unrelated Expo or NativeScript adapter suites",
+    "Frozen legacy Scripting/ScriptUI suites"
+  ],
+  "reuse": "No previous passing result is relabeled as execution in this change."
+}

@@ -1,0 +1,61 @@
+--- Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinNativePresentationMetadata.swift
++++ projection/HanlinNativePresentationMetadata.swift
+@@ -1,4 +1,4 @@
+-import CryptoKit
++import Crypto
+ import Foundation
+ import HanlinPlatformContracts
+ 
+--- Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift
++++ projection/HanlinAtomicScriptStore.swift
+@@ -1,9 +1,11 @@
+-import CryptoKit
++import Crypto
+ import Foundation
+ import HanlinPlatformContracts
+ import HanlinMiniAppCore
+ import HanlinScriptContracts
++#if canImport(OSLog)
+ import OSLog
++#endif
+ 
+ public enum HanlinInstallFaultPoint: String, Codable, CaseIterable, Sendable {
+     case journalPersisted
+@@ -114,7 +116,9 @@
+ }
+ 
+ public actor HanlinAtomicScriptStore {
++#if canImport(OSLog)
+     private static let logger = Logger(subsystem: "com.hanlin.ai", category: "ScriptArtifactStore")
++#endif
+     private struct Registry: Codable, Sendable {
+         let schemaVersion: UInt32
+         var revision: UInt64
+@@ -742,9 +746,11 @@
+             let parentExists = fileManager.fileExists(atPath: directory.path(percentEncoded: false))
+             let standardizedPath = url.standardizedFileURL.path(percentEncoded: false)
+             let symlinkResolvedPath = url.resolvingSymlinksInPath().path(percentEncoded: false)
++#if canImport(OSLog)
+             Self.logger.error(
+                 "phase=artifact-manifest-resolution expected=\(expectedPath, privacy: .public) parentExists=\(parentExists, privacy: .public) standardized=\(standardizedPath, privacy: .public) symlinkResolved=\(symlinkResolvedPath, privacy: .public) discovered=\(discovered, privacy: .public)"
+             )
++#endif
+             throw HanlinAtomicScriptStoreError.artifactManifestMissing
+         }
+         let manifest = try decoder.decode(HanlinPackageArtifactManifest.self, from: Data(contentsOf: url))
+--- Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinProductTransfer.swift
++++ projection/HanlinProductTransfer.swift
+@@ -1,4 +1,4 @@
+-import CryptoKit
++import Crypto
+ import Foundation
+ import HanlinPlatformContracts
+ import HanlinMiniAppCore
+--- Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinAtomicScriptStoreTests.swift
++++ projection/HanlinAtomicScriptStoreTests.swift
+@@ -1,4 +1,4 @@
+-import CryptoKit
++import Crypto
+ import Foundation
+ import HanlinPlatformContracts
+ import HanlinMiniAppCore

@@ -1,0 +1,58 @@
+{
+  "kind": "FOCUSED_PORTABLE_NODE_CANDIDATE_CONTRACT_NOT_NATIVE_EXECUTION",
+  "startedAt": "2026-11-25T08:40:34.202898+00:00",
+  "completedAt": "2026-11-25T08:40:34.658697+00:00",
+  "durationSeconds": 0.4556220816448331,
+  "command": [
+    "node",
+    "--test",
+    "--test-name-pattern=Worklets native compiler",
+    "Scripts/Audit/Tests/runtime-version-contract.test.mjs"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-primary-sdk-preparation-20261124",
+  "sourceHead": "683a9601e19c79fe32147401de1fd94fa499d6ed",
+  "exitCode": 0,
+  "log": {
+    "path": "focused-portable-final.log",
+    "bytes": 349,
+    "sha256": "91c7117ac20616c0eb18d26751c98d658bf657916bfd852c3ac7b9b0367b1735"
+  },
+  "sourceFiles": [
+    {
+      "path": "Packages/HanlinExpoNativeAPI/Package.swift",
+      "bytes": 7065,
+      "sha256": "c5fd18fa28a1842be0351053d978cc55b752546dc798c663f0dedabfdbefc28c"
+    },
+    {
+      "path": "Scripts/MiniApps/resolve-upstreams.mjs",
+      "bytes": 30102,
+      "sha256": "4e2c12f497d312db93132f69741b783f6e31b1f2604dd852129f3c61109d7428"
+    },
+    {
+      "path": "Scripts/Audit/miniapp-runtime-contract.mjs",
+      "bytes": 15226,
+      "sha256": "8682bb4d11fb38ebaeddc4543745916b313c341da26075791b929726fe630fa7"
+    },
+    {
+      "path": "Scripts/Audit/Tests/runtime-version-contract.test.mjs",
+      "bytes": 13818,
+      "sha256": "42536f15ecc821f3f71b86ed6d662634c7929c8413bf1295ddadf5b09e0f16b5"
+    },
+    {
+      "path": "Generated/SwiftUIBridge/HanlinGeneratedViews.swift",
+      "bytes": 3269,
+      "sha256": "659364752ba7b69ef70d90f5aad061f391526cb8b6f135a47bf72f0f19b00e18"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedViews.swift",
+      "bytes": 3269,
+      "sha256": "659364752ba7b69ef70d90f5aad061f391526cb8b6f135a47bf72f0f19b00e18"
+    },
+    {
+      "path": "Package.swift",
+      "bytes": 88215,
+      "sha256": "2238e4db391c3460cd81d6bfaf972ad7fa6683828e105de4e7df234d14ab3b0c"
+    }
+  ],
+  "boundary": "Two new candidate tests supply updated child/root manifest text to the real audit. Canonical root Package.swift has not been regenerated in this lane. Original full module/active native preflight and compiled runtime remain pending normal native-owner preparation."
+}

@@ -1,0 +1,174 @@
+{
+  "source": "6c006c948f0a6f371f7fc68b90e393f43734f8dd",
+  "SDKProducerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+  "producer": {
+    "path": "Scripts/Expo/build-probe.mjs",
+    "sha256": "cdead47d9914543725e0e3160a14a13d91b31b2d584b737f0eb95c1b5539618c"
+  },
+  "argv": [
+    "node",
+    "Scripts/Expo/build-probe.mjs"
+  ],
+  "exitCode": 0,
+  "log": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/native-result/paired-prefix/original-expo-probe.log",
+    "sha256": "8dc9382950955ae0512c91ffb3c9ecfddc17628e7c98f7062bd4969e6d122f22"
+  },
+  "declaredOutputs": [
+    "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbe.hanlinExpo",
+    "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeA.hanlinExpo",
+    "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeB.hanlinExpo",
+    "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIMalformed.hanlinExpo",
+    "AI_HLYUITests/Fixtures/ExpoSwiftUIProbe.hanlinExpo",
+    "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
+    "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeB.hanlinExpo",
+    "AI_HLYUITests/Fixtures/ExpoSwiftUIMalformed.hanlinExpo",
+    "AI_HLYTests/Fixtures/HostServicesProbe.bundle/ExpoSwiftUIProbeA.hanlinExpo",
+    "Fixtures/ExpoWidgetsProbe/ExpoWidgetsProbeA.hanlinExpo",
+    "Fixtures/ExpoWidgetsProbe/ExpoWidgetsProbeB.hanlinExpo",
+    "AI_HLYUITests/Fixtures/ExpoWidgetsProbeA.hanlinExpo",
+    "AI_HLYUITests/Fixtures/ExpoWidgetsProbeB.hanlinExpo"
+  ],
+  "mutableRequiredFiles": [
+    "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbe.hanlinExpo",
+    "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeA.hanlinExpo",
+    "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeB.hanlinExpo",
+    "AI_HLYUITests/Fixtures/ExpoSwiftUIProbe.hanlinExpo",
+    "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
+    "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeB.hanlinExpo"
+  ],
+  "before": [
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbe.hanlinExpo",
+      "bytes": 325934,
+      "sha256": "6475c3f5d37620ad5882040c2906924df4cf2dd9f627e17a47d360a58ced5b4b"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeA.hanlinExpo",
+      "bytes": 325934,
+      "sha256": "6475c3f5d37620ad5882040c2906924df4cf2dd9f627e17a47d360a58ced5b4b"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeB.hanlinExpo",
+      "bytes": 325935,
+      "sha256": "6131172f65aaeab7f14063324ea605835d8eef099d56ef32f708e2a449228a08"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIMalformed.hanlinExpo",
+      "bytes": 274,
+      "sha256": "a2115ad2fc9395154e793c15fc0c42fffb056e7b259b6c63852b7b61531313e4"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbe.hanlinExpo",
+      "bytes": 325934,
+      "sha256": "6475c3f5d37620ad5882040c2906924df4cf2dd9f627e17a47d360a58ced5b4b"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
+      "bytes": 325934,
+      "sha256": "6475c3f5d37620ad5882040c2906924df4cf2dd9f627e17a47d360a58ced5b4b"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeB.hanlinExpo",
+      "bytes": 325935,
+      "sha256": "6131172f65aaeab7f14063324ea605835d8eef099d56ef32f708e2a449228a08"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIMalformed.hanlinExpo",
+      "bytes": 274,
+      "sha256": "a2115ad2fc9395154e793c15fc0c42fffb056e7b259b6c63852b7b61531313e4"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/HostServicesProbe.bundle/ExpoSwiftUIProbeA.hanlinExpo",
+      "bytes": 325934,
+      "sha256": "6475c3f5d37620ad5882040c2906924df4cf2dd9f627e17a47d360a58ced5b4b"
+    },
+    {
+      "path": "Fixtures/ExpoWidgetsProbe/ExpoWidgetsProbeA.hanlinExpo",
+      "bytes": 302853,
+      "sha256": "26f1309c3851a6c5af30b24ce62d94b9dd28501b0075673ffdfadb53bd800eee"
+    },
+    {
+      "path": "Fixtures/ExpoWidgetsProbe/ExpoWidgetsProbeB.hanlinExpo",
+      "bytes": 302853,
+      "sha256": "af76fc6c37297bddc7e70bc2499694edb92d5d6ee18a51a584dca9feca8e0385"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoWidgetsProbeA.hanlinExpo",
+      "bytes": 302853,
+      "sha256": "26f1309c3851a6c5af30b24ce62d94b9dd28501b0075673ffdfadb53bd800eee"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoWidgetsProbeB.hanlinExpo",
+      "bytes": 302853,
+      "sha256": "af76fc6c37297bddc7e70bc2499694edb92d5d6ee18a51a584dca9feca8e0385"
+    }
+  ],
+  "after": [
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbe.hanlinExpo",
+      "bytes": 325929,
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeA.hanlinExpo",
+      "bytes": 325929,
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeB.hanlinExpo",
+      "bytes": 325930,
+      "sha256": "c60e7d88f759118cf52c9ed50f464031a61402367e02e7fe45b50e37ee0bc016"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIMalformed.hanlinExpo",
+      "bytes": 274,
+      "sha256": "a2115ad2fc9395154e793c15fc0c42fffb056e7b259b6c63852b7b61531313e4"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbe.hanlinExpo",
+      "bytes": 325929,
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
+      "bytes": 325929,
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeB.hanlinExpo",
+      "bytes": 325930,
+      "sha256": "c60e7d88f759118cf52c9ed50f464031a61402367e02e7fe45b50e37ee0bc016"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIMalformed.hanlinExpo",
+      "bytes": 274,
+      "sha256": "a2115ad2fc9395154e793c15fc0c42fffb056e7b259b6c63852b7b61531313e4"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/HostServicesProbe.bundle/ExpoSwiftUIProbeA.hanlinExpo",
+      "bytes": 325929,
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20"
+    },
+    {
+      "path": "Fixtures/ExpoWidgetsProbe/ExpoWidgetsProbeA.hanlinExpo",
+      "bytes": 302853,
+      "sha256": "26f1309c3851a6c5af30b24ce62d94b9dd28501b0075673ffdfadb53bd800eee"
+    },
+    {
+      "path": "Fixtures/ExpoWidgetsProbe/ExpoWidgetsProbeB.hanlinExpo",
+      "bytes": 302853,
+      "sha256": "af76fc6c37297bddc7e70bc2499694edb92d5d6ee18a51a584dca9feca8e0385"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoWidgetsProbeA.hanlinExpo",
+      "bytes": 302853,
+      "sha256": "26f1309c3851a6c5af30b24ce62d94b9dd28501b0075673ffdfadb53bd800eee"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoWidgetsProbeB.hanlinExpo",
+      "bytes": 302853,
+      "sha256": "af76fc6c37297bddc7e70bc2499694edb92d5d6ee18a51a584dca9feca8e0385"
+    }
+  ]
+}

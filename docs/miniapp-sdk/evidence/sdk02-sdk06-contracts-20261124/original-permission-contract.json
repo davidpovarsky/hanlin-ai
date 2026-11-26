@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "status": "EXECUTED_PASS",
+  "sourceSHA": "4ea670e120a3217423bc73db68dab514c78079de",
+  "command": [
+    "/usr/local/bin/node",
+    "--test",
+    "--test-reporter=tap",
+    "--test-name-pattern",
+    "^(?:genuine\\ action\\ references,\\ legacy\\ controls\\ and\\ nullable\\ optional\\ fields\\ validate|original\\ semantic\\ and\\ JSON\\ shape\\ errors\\ include\\ precise\\ manifest\\ locations)$",
+    "Scripts/MiniApps/Tests/scriptwidget-manifest.test.mjs"
+  ],
+  "environmentOverrides": {
+    "HANLIN_AUTHORING_TYPESCRIPT": "file:///dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK/expo/node_modules/typescript/lib/typescript.js",
+    "HANLIN_AUTHORING_TMP": "/dev/shm"
+  },
+  "exit": 0,
+  "seconds": 0.5086152339354157,
+  "selectedTests": [
+    "genuine action references, legacy controls and nullable optional fields validate",
+    "original semantic and JSON shape errors include precise manifest locations"
+  ],
+  "counts": {
+    "tests": 2,
+    "suites": 0,
+    "pass": 2,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0,
+    "todo": 0
+  },
+  "currentSDK": {
+    "artifactRunID": 45335292541,
+    "root": "/dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK",
+    "manifestSHA256": "fa1e737ec63e640175cdb5c9dad51903cd86d50ae7b340ba5b8ec1ff4e408d85",
+    "inputFingerprint": "4028f9fc58e1a9a95937ed7b4eb223c3caa2a94714bbbdaae4ddc7b0aa6de795",
+    "compilerPath": "/dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK/expo/node_modules/typescript/lib/typescript.js",
+    "compilerModuleSHA256": "d3f3cd2b04b7f466f4484df921b744223f7bd1f3e353ec9110bdf52695b983d5",
+    "declaredTypeScript": {
+      "packageName": "@typescript/typescript6",
+      "packageVersion": "6.0.2",
+      "compilerVersion": "6.0.3"
+    },
+    "observedIdentity": {
+      "compilerVersion": "6.0.3",
+      "node": "v24.22.0"
+    },
+    "packagedSourceComparison": [
+      {
+        "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
+        "packagedPath": "/dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK/scriptwidget/widget-manifest.schema.json",
+        "sha256": "4deb4b2a1071ed0557ae6924a4f4ab3a5d57e467eb8796c4e6febb629ddde022",
+        "sameBytes": true
+      },
+      {
+        "path": "Scripts/MiniApps/scriptwidget/manifest-validation.mjs",
+        "packagedPath": "/dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK/scriptwidget/manifest-validation.mjs",
+        "sha256": "326176eac507dc298b91065d2ce93de15869ab801bd02c31edfc0a474d9cd7c5",
+        "sameBytes": true
+      }
+    ]
+  },
+  "inputs": [
+    {
+      "path": "Scripts/MiniApps/Tests/scriptwidget-manifest.test.mjs",
+      "sha256": "93bc4596d363fac13165fc17a1935341da2bea0ba35cd34331769a151b60e5f2"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/manifest-validation.mjs",
+      "sha256": "326176eac507dc298b91065d2ce93de15869ab801bd02c31edfc0a474d9cd7c5"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
+      "sha256": "4deb4b2a1071ed0557ae6924a4f4ab3a5d57e467eb8796c4e6febb629ddde022"
+    },
+    {
+      "path": "Scripts/MiniApps/generate-scriptwidget-manifest.mjs",
+      "sha256": "ca852f733478f46e5e829b803251aa354a32e48ff0bd21f51b58bfa3d708f791"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+      "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptMetadata.swift",
+      "sha256": "27dada0499f2d5d3299bc4a8c7131f066ba148c4b89be6d5a48ce24224120075"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetPackage.swift",
+      "sha256": "3aa2274d41edd3e7e87edd91697a4a204489d0efc6a2efaa00ea82d517af16fd"
+    }
+  ],
+  "rawLog": "original-permission-contract.tap.txt",
+  "rawLogSHA256": "77d3b0e37971c54bf78861804be054708129a741d5c2f71936316ba509126d3b",
+  "exactPermissionProof": {
+    "nativeOriginalSource": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptMetadata.swift",
+    "nativeOriginalLines": [
+      413,
+      414
+    ],
+    "fixture": "toggle control with valid stateKey and permissions=[]",
+    "diagnostic": "control_storage",
+    "assertions": [
+      "valid original manifest produces no diagnostics",
+      "missing storage permission produces the original code",
+      "file is widget.json",
+      "line and column are positive",
+      "jsonPath is present"
+    ]
+  },
+  "boundary": "Production-backed portable authoring validator/schema, byte-identical to exported SDK; not native permission execution, OS permission UI, or full archive import.",
+  "notRun": [
+    "12 archive cases",
+    "module visibility proof",
+    "native/Apple tests",
+    "other 5 ScriptWidget manifest test methods"
+  ]
+}

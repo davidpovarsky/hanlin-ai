@@ -1,0 +1,19 @@
+{
+  "argv": [
+    "python3",
+    "/mnt/development/projects/worktrees/hanlin-primary-sdk-preparation-20261124/docs/miniapp-sdk/evidence/primary-sdk-preparation-20261124/inspect_primary_sdk.py"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-primary-sdk-preparation-20261124",
+  "startedAt": "2026-11-24T20:43:27.499710+00:00",
+  "finishedAt": "2026-11-24T20:43:29.952309+00:00",
+  "exitCode": 0,
+  "elapsedSeconds": 2.452588158659637,
+  "scriptSHA256": "8c06bd475153bddbd5eae3affbc638dabd201c4fceb15d5691187f758bb1a79f",
+  "purpose": "Read-only artifact/Git reconciliation; no original compiler, checker, generator, native preparation or test rerun.",
+  "inspectorCorrection": {
+    "originalReceipt": "inspection-command.initial-fixture-layout.json",
+    "originalScript": "inspect_primary_sdk.initial-fixture-layout.py",
+    "originalError": "Nested fixture mirror assumed; actual existing UI fixtures are flat by basename.",
+    "scope": "Inspection-only path join corrected against authenticated ledger; no production path or fixture bytes changed."
+  }
+}

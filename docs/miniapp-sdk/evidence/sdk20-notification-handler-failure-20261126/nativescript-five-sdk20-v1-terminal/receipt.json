@@ -1,0 +1,241 @@
+{
+  "schema": 1,
+  "capturedAt": "2026-11-26T00:27:54.860673+00:00",
+  "phase": "nativescript-five-sdk20-v1",
+  "stateStatus": "EXECUTED_PASS",
+  "chargedSeconds": 171.6645217910118,
+  "allowanceSeconds": 1200,
+  "sourceErrors": [],
+  "cleanupErrors": [],
+  "remainingOwnedProcessGroup": [],
+  "members": [
+    {
+      "name": "decision.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/nativescript-five-sdk20-v1/decision.json",
+      "rawBytes": 24233,
+      "rawSHA256": "1b17c3e7d5327731eb62be2c2b98f8d9262c638fde0ce62091621f052177bea4",
+      "bytes": 24233,
+      "sha256": "1b17c3e7d5327731eb62be2c2b98f8d9262c638fde0ce62091621f052177bea4",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/decision.json"
+    },
+    {
+      "name": "execution-environment.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/nativescript-five-sdk20-v1/execution-environment.json",
+      "rawBytes": 917,
+      "rawSHA256": "25aec12400438cb63d79af48e386e6a9cc81677d4afb19dcb5f906175dc91653",
+      "bytes": 917,
+      "sha256": "25aec12400438cb63d79af48e386e6a9cc81677d4afb19dcb5f906175dc91653",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/execution-environment.json"
+    },
+    {
+      "name": "ledger.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/nativescript-five-sdk20-v1/ledger.json",
+      "rawBytes": 6344,
+      "rawSHA256": "d1c5e8a6e9a890bc319b6afc914d0b41e1038485c2b4f7c675bf44dc51085168",
+      "bytes": 6344,
+      "sha256": "d1c5e8a6e9a890bc319b6afc914d0b41e1038485c2b4f7c675bf44dc51085168",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/ledger.json"
+    },
+    {
+      "name": "native-child.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/nativescript-five-sdk20-v1/native-child.log",
+      "rawBytes": 2549,
+      "rawSHA256": "2f505817cb6f74c5776aeb7aa6e6ffc92c02532e3d3a888cfde3405e98aa68b4",
+      "bytes": 357,
+      "sha256": "0ba626375dad4c93995c3b2fe3d4924f4fc64c5fbf4b30a1ac19f22bdee026fc",
+      "compression": "gzip",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/native-child.log.gz"
+    },
+    {
+      "name": "paired-state-before.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/nativescript-five-sdk20-v1/paired-state-before.json",
+      "rawBytes": 12578,
+      "rawSHA256": "71a93134e5d50959d368d3bec2e10cde7f2214fab05606da702d75cd7da87b6b",
+      "bytes": 12578,
+      "sha256": "71a93134e5d50959d368d3bec2e10cde7f2214fab05606da702d75cd7da87b6b",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/paired-state-before.json"
+    },
+    {
+      "name": "state.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/nativescript-five-sdk20-v1/state.json",
+      "rawBytes": 8233,
+      "rawSHA256": "4400cba15a0d1412791c9da9cbf20897ddc99b2f056674a91197af32d6595361",
+      "bytes": 8233,
+      "sha256": "4400cba15a0d1412791c9da9cbf20897ddc99b2f056674a91197af32d6595361",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/state.json"
+    },
+    {
+      "name": "native-result/active-command.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/nativescript-five-sdk20-v1/native-result/active-command.json",
+      "rawBytes": 709,
+      "rawSHA256": "270f28dfa3ddb0be3d161db3f46dfa96681fec19a6a631751aa4fa0128d7395d",
+      "bytes": 709,
+      "sha256": "270f28dfa3ddb0be3d161db3f46dfa96681fec19a6a631751aa4fa0128d7395d",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/native-result/active-command.json"
+    },
+    {
+      "name": "native-result/boot-retained-owned-simulator.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/nativescript-five-sdk20-v1/native-result/boot-retained-owned-simulator.log",
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 20,
+      "sha256": "abfbb86f9f5ddfbd9fc1a72c43ab384702ce8bae86b60f3324748485e235e61e",
+      "compression": "gzip",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/native-result/boot-retained-owned-simulator.log.gz"
+    },
+    {
+      "name": "native-result/bootstatus.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/nativescript-five-sdk20-v1/native-result/bootstatus.log",
+      "rawBytes": 609,
+      "rawSHA256": "95cdd88ec141627bdc84ca3d95173aa99e6670213f0e05a949bbd5a2d54d3f57",
+      "bytes": 283,
+      "sha256": "e0702438d624239351709f738d75188474eb3142a02a9f15e9b03997d639e407",
+      "compression": "gzip",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/native-result/bootstatus.log.gz"
+    },
+    {
+      "name": "native-result/command-events.jsonl.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/nativescript-five-sdk20-v1/native-result/command-events.jsonl",
+      "rawBytes": 17693,
+      "rawSHA256": "b2e85560dab5ba23feef7c4ddc6f850c7f6e6dc6ecbe1d9d54357c4a02242fd2",
+      "bytes": 1919,
+      "sha256": "a22677684f625f49dd1493c6dc33c1f4725d60b032af9a218b70cafade7ec44d",
+      "compression": "gzip",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/native-result/command-events.jsonl.gz"
+    },
+    {
+      "name": "native-result/commands.jsonl.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/nativescript-five-sdk20-v1/native-result/commands.jsonl",
+      "rawBytes": 3003,
+      "rawSHA256": "738bd2854ef589a7d3d11030ac740fc2bf3873322b8e744d07bd90a0df175f43",
+      "bytes": 1200,
+      "sha256": "d6e7e18711e9794d90e73264a6aa0b32db43c07abec026de8354e52faaa32fe6",
+      "compression": "gzip",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/native-result/commands.jsonl.gz"
+    },
+    {
+      "name": "native-result/devices-before.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/nativescript-five-sdk20-v1/native-result/devices-before.json",
+      "rawBytes": 24611,
+      "rawSHA256": "4f416c5027cc420411049ba2356ffadc3ba96eeaec281315c49b272eac2e0bc3",
+      "bytes": 24611,
+      "sha256": "4f416c5027cc420411049ba2356ffadc3ba96eeaec281315c49b272eac2e0bc3",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/native-result/devices-before.json"
+    },
+    {
+      "name": "native-result/ns5-nodes.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/nativescript-five-sdk20-v1/native-result/ns5-nodes.json",
+      "rawBytes": 1806,
+      "rawSHA256": "ef673322d637e8e6ac4553d3bfb434cc7731f7841ec2125cd5b544c3383e02b6",
+      "bytes": 1806,
+      "sha256": "ef673322d637e8e6ac4553d3bfb434cc7731f7841ec2125cd5b544c3383e02b6",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/native-result/ns5-nodes.json"
+    },
+    {
+      "name": "native-result/ns5-selected-tests.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/nativescript-five-sdk20-v1/native-result/ns5-selected-tests.log",
+      "rawBytes": 57,
+      "rawSHA256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96",
+      "bytes": 75,
+      "sha256": "640232ab2a02d5f6ef89211eba5cc0f82e226a0d760c715a6176a1e10c57ad1e",
+      "compression": "gzip",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/native-result/ns5-selected-tests.log.gz"
+    },
+    {
+      "name": "native-result/ns5-summary.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/nativescript-five-sdk20-v1/native-result/ns5-summary.json",
+      "rawBytes": 1018,
+      "rawSHA256": "f57ce2e307494e5d61a57c3de41500676f22f6ee2c321b84c1a7b42b8abea137",
+      "bytes": 1018,
+      "sha256": "f57ce2e307494e5d61a57c3de41500676f22f6ee2c321b84c1a7b42b8abea137",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/native-result/ns5-summary.json"
+    },
+    {
+      "name": "native-result/ns5-tests.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/nativescript-five-sdk20-v1/native-result/ns5-tests.log",
+      "rawBytes": 9571,
+      "rawSHA256": "cc564fd97b4ff35ffe727fe13e28944076f824e3cec3565b7f8c89d20db570e0",
+      "bytes": 3213,
+      "sha256": "6ae35e480c3aae3188ef5f12dd6fb4f5ef1c4a5e7d66f2952f2307bcbf832594",
+      "compression": "gzip",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/native-result/ns5-tests.log.gz"
+    },
+    {
+      "name": "native-result/result-review.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/nativescript-five-sdk20-v1/native-result/result-review.json",
+      "rawBytes": 1927,
+      "rawSHA256": "8201d12bb488be1d528515c4aad78c600a99871ac3bcd50beacc8e55b8d46da4",
+      "bytes": 1927,
+      "sha256": "8201d12bb488be1d528515c4aad78c600a99871ac3bcd50beacc8e55b8d46da4",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/native-result/result-review.json"
+    },
+    {
+      "name": "native-result/selected-command.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/nativescript-five-sdk20-v1/native-result/selected-command.json",
+      "rawBytes": 1446,
+      "rawSHA256": "68dc1bf2e61e7fdf64fa28bd263310d2d2f60911dedad778d6bc1b8c3b338a4a",
+      "bytes": 1446,
+      "sha256": "68dc1bf2e61e7fdf64fa28bd263310d2d2f60911dedad778d6bc1b8c3b338a4a",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/native-result/selected-command.json"
+    },
+    {
+      "name": "controls/nativescript-five-sdk20-v1.py",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/nativescript-five-sdk20-v1.py",
+      "rawBytes": 24538,
+      "rawSHA256": "4d5799c415f979feca1ef72da2aea071e7c1b9d803fc463e1002cd51d55d284c",
+      "bytes": 24538,
+      "sha256": "4d5799c415f979feca1ef72da2aea071e7c1b9d803fc463e1002cd51d55d284c",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/controls/nativescript-five-sdk20-v1.py"
+    },
+    {
+      "name": "controls/nativescript-five-sdk20-v1-decision.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/nativescript-five-sdk20-v1-decision.json",
+      "rawBytes": 24233,
+      "rawSHA256": "1b17c3e7d5327731eb62be2c2b98f8d9262c638fde0ce62091621f052177bea4",
+      "bytes": 24233,
+      "sha256": "1b17c3e7d5327731eb62be2c2b98f8d9262c638fde0ce62091621f052177bea4",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/controls/nativescript-five-sdk20-v1-decision.json"
+    },
+    {
+      "name": "controls/nativescript-five-sdk20-v1-launch.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/nativescript-five-sdk20-v1-launch.json",
+      "rawBytes": 1253,
+      "rawSHA256": "48e1e2c782e01a98b3bd6c1953544a196b03870890b86315b9b1e1877022b8eb",
+      "bytes": 1253,
+      "sha256": "48e1e2c782e01a98b3bd6c1953544a196b03870890b86315b9b1e1877022b8eb",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/controls/nativescript-five-sdk20-v1-launch.json"
+    },
+    {
+      "name": "controls/nativescript-five-sdk20-v1-launch.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/nativescript-five-sdk20-v1-launch.log",
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 20,
+      "sha256": "abfbb86f9f5ddfbd9fc1a72c43ab384702ce8bae86b60f3324748485e235e61e",
+      "compression": "gzip",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/controls/nativescript-five-sdk20-v1-launch.log.gz"
+    }
+  ],
+  "skipped": [],
+  "boundary": "Existing finalized original companion state, selected result and actual worker artifacts only. No new native test, result export, simulator or product action.",
+  "captureScript": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/remaining-sdk20-draft/capture-current-companion-terminal-v1.py",
+    "bytes": 2596,
+    "sha256": "180c508d68a1dbe619aef42143da7e757b851c8dcf219065fdabe6b2d47709c6"
+  },
+  "transferredAt": "2026-11-26T00:27:55.203228+00:00"
+}

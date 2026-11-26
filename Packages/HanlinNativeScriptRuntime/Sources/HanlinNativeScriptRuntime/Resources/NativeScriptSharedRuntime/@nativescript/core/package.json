@@ -1,8 +1,8 @@
 {
-  "type": "module",
   "name": "@nativescript/core",
-  "version": "9.1.0",
+  "version": "9.1.4",
   "description": "A JavaScript library providing an easy to use api for interacting with iOS and Android platform APIs.",
+  "type": "module",
   "main": "index",
   "types": "index.d.ts",
   "module": "./index.js",
@@ -68,6 +68,7 @@
     "css-tree": "^3.1.0",
     "css-what": "^7.0.0",
     "emoji-regex": "^10.2.1",
+    "semver": "^7.0.0",
     "source-map": "0.7.6",
     "source-map-js": "^1.2.1",
     "tslib": "^2.0.0"

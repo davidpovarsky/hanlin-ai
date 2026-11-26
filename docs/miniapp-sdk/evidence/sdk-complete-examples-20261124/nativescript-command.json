@@ -1,0 +1,24 @@
+{
+  "command": [
+    "/usr/local/bin/node",
+    "Scripts/MiniApps/miniapp.mjs",
+    "build",
+    "--sdk",
+    "/dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK",
+    "--engine",
+    "nativescript",
+    "--project",
+    "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-examples-20261124/Scripts/MiniApps/Examples/nativescript-hello-world",
+    "--archive",
+    "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-examples-20261124/docs/miniapp-sdk/evidence/sdk-complete-examples-20261124/NativeScriptHelloWorld.hanlinNativeScript",
+    "--report",
+    "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-examples-20261124/docs/miniapp-sdk/evidence/sdk-complete-examples-20261124/nativescript-build.json"
+  ],
+  "exitCode": 0,
+  "seconds": 18.9499089717865,
+  "status": "EXECUTED_PASS",
+  "report": "nativescript-build.json",
+  "archive": "NativeScriptHelloWorld.hanlinNativeScript",
+  "archiveSHA256": "740e812e6835a784e955691c941c99d7989c4c6dbd0f8aaf7a9c41fad30d1b08",
+  "archiveBytes": 5911
+}

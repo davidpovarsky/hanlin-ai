@@ -1,0 +1,99 @@
+{
+  "schema": 1,
+  "baselineExecutionSource": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+  "testCorrectionCommit": "ebf40f335fe8af5cdc61c910ee722922f5fed330",
+  "bindings": [
+    {
+      "path": "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift",
+      "identities": [
+        {
+          "commit": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+          "bytes": 11136,
+          "sha256": "3f41a14d9754cb24e74cb5656b8975485459259bc27acc08a4f845d5675446ec",
+          "gitMode": "100644"
+        },
+        {
+          "commit": "ebf40f335fe8af5cdc61c910ee722922f5fed330",
+          "bytes": 12639,
+          "sha256": "7d6b159d580636269daf67f6ed04634d586b94d07c960bd099cc9c5f4da9e164",
+          "gitMode": "100644"
+        }
+      ]
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptWidgetLiveActivity.swift",
+      "identities": [
+        {
+          "commit": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+          "bytes": 15081,
+          "sha256": "05e64cd225c0af6056f579b00c494378fd828957396e8bbc507f422ba464a8d4",
+          "gitMode": "100644"
+        },
+        {
+          "commit": "ebf40f335fe8af5cdc61c910ee722922f5fed330",
+          "bytes": 15081,
+          "sha256": "05e64cd225c0af6056f579b00c494378fd828957396e8bbc507f422ba464a8d4",
+          "gitMode": "100644"
+        }
+      ]
+    },
+    {
+      "path": "AI_HLYTests/A2UITests.swift",
+      "identities": [
+        {
+          "commit": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+          "bytes": 74011,
+          "sha256": "c66ab3fbd7e6087208336737c8ea6dcfa28c26c3215cdfc9ffe0d00fb6774f89",
+          "gitMode": "100644"
+        },
+        {
+          "commit": "ebf40f335fe8af5cdc61c910ee722922f5fed330",
+          "bytes": 74011,
+          "sha256": "c66ab3fbd7e6087208336737c8ea6dcfa28c26c3215cdfc9ffe0d00fb6774f89",
+          "gitMode": "100644"
+        }
+      ]
+    },
+    {
+      "path": "AI_HLYTests/HanlinAppSplitOriginTests.swift",
+      "identities": [
+        {
+          "commit": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+          "bytes": 37351,
+          "sha256": "476b3a6cca2635a68dc2436f2aba261a5f32633a268d4e163edc0cb0c75277a0",
+          "gitMode": "100644"
+        },
+        {
+          "commit": "ebf40f335fe8af5cdc61c910ee722922f5fed330",
+          "bytes": 37351,
+          "sha256": "476b3a6cca2635a68dc2436f2aba261a5f32633a268d4e163edc0cb0c75277a0",
+          "gitMode": "100644"
+        }
+      ]
+    }
+  ],
+  "preservedAssertions": {
+    "expectCallsBefore": 22,
+    "expectCallsAfter": 22,
+    "testFunctionsBefore": 3,
+    "testFunctionsAfter": 3,
+    "exactRevision": 2,
+    "sameObservedContentStateUsedForImmutableLoad": true,
+    "unchangedSuffixFromCount9ThroughEndReconcile": true,
+    "productionSourceUnchanged": true
+  },
+  "selection": {
+    "originalSuite": "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests",
+    "affectedFunction": "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests/actualActivityKitStartsUpdatesAndEndsTheOriginalProgram()",
+    "expectedFunctionsInExistingSuite": 3,
+    "noSelectionCountReduction": true
+  },
+  "candidateSemantics": {
+    "stream": "Activity.contentUpdates",
+    "isolation": "MainActor observer child; only own Sendable ContentState leaves the child",
+    "timeoutSeconds": 5,
+    "timeoutMechanism": "Existing project throwing-task-group timeout idiom; a clock task throws if no exact state is observed, defer cancels siblings",
+    "cancellation": "Explicit before current-state fast path and each streamed candidate; actual iterator cancellation behavior awaits native validation",
+    "noFixedSleepAsSuccessOracle": true
+  }
+}

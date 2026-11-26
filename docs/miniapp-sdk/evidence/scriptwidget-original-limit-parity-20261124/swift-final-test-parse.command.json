@@ -1,0 +1,18 @@
+{
+  "argv": [
+    "swiftc",
+    "-frontend",
+    "-parse",
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinScriptWidgetOriginalLimitParityTests.swift"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-scriptwidget-original-limit-parity-20261124",
+  "exitCode": 0,
+  "seconds": 0.251,
+  "atUTC": "2026-11-24T08:39:36.069459+00:00",
+  "inputs": [
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinScriptWidgetOriginalLimitParityTests.swift",
+      "sha256": "1bb84b5decffcd17ddf54d9283f6871e85f4dd83a4fc67fa95dcaa3ef00bf148"
+    }
+  ]
+}

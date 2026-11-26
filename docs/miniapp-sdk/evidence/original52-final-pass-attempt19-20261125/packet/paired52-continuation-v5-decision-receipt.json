@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "status": "SEALED_NOT_LAUNCHED",
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "SDKProducerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+  "decision": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5-decision.json",
+  "decisionSHA256": "b38292358c011d2db0a1a96c167494ca84f87bd806c27e399d7ec294f7e4b42b",
+  "requiredCount": 752,
+  "productCount": 35,
+  "stagedCount": 11,
+  "activeBaselineSeconds": 21098.44556183604,
+  "allowanceSeconds": 3720.3727040829835,
+  "focusTerminal": {
+    "path": "build/primary-control/focused19-v11/state.json",
+    "bytes": 19067,
+    "sha256": "f32e48626bf862f325486ad86044796c68cc4760c66d18feee0ecfcb033133bd"
+  },
+  "focusChild": {
+    "path": "build/primary-control/focused19-v11/native-result/state.json",
+    "bytes": 15513,
+    "sha256": "269576b8c1494c6c6d33c551a2dfcadc793b8c2484bdfbce075191e1f148f4ab"
+  },
+  "original52": "NOT_RUN"
+}

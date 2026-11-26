@@ -1,0 +1,17 @@
+{
+  "reviewer": "/root/entrypoints",
+  "scope": "Read-only mapper/integration source review; no tests or CI repeated.",
+  "reviewedFindings": [
+    "Script manifest/native presentation/action aliases and separate original/canonical boundaries match inspected source.",
+    "Confirmed real dependency-package fields and truthiness/installed-only graph semantics; explicit family added.",
+    "Original meta.json contains exactly seven optional fields; nativePresentation actions defaults empty, required input fields retained.",
+    "Clarified repository-relative implementation provenance links are not paths to shipped SDK resources.",
+    "Contributor homepage is metadata-only; primary author is what current registration consumes."
+  ],
+  "finalImplementationSHA256": {
+    "Scripts/Audit/miniapp-manifest-contracts.mjs": "790c5c4fb9fb928df5feb7b981ca3eaef89076f30b255538e8f8df82fc62f0c6",
+    "Scripts/Audit/audit-miniapp-sdk.mjs": "c56ca61571f127b06ea50f5a8afee1ec8dde0ad9a1e54bd8b56da6dcecb22f7c",
+    "Scripts/Audit/Tests/manifest-contracts.test.mjs": "f939724ac769afabeb64e329593d682ba32cd7d5ce28ff9fdfedc92a01f9c326"
+  },
+  "nativeAcceptance": "NOT_INFERRED"
+}

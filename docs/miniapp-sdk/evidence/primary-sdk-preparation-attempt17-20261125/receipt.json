@@ -1,0 +1,774 @@
+{
+  "schemaVersion": 1,
+  "kind": "PREPARED_SDK16_ATTEMPT17_RECONCILIATION",
+  "status": "PASS",
+  "sealedAt": "2026-11-25T07:22:40.061475+00:00",
+  "sourceProducer": "cffe7f75436aa2e37ec5d82891937965c0407d2d",
+  "sourceTree": "7c3bb41be526f15302ae523db24e21ae96d02bf7",
+  "snapshot": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt17",
+  "snapshotReceiptSHA256": "18b3f4d5b4d3da0b13f326eaa48c04de856bcbbd1fa58e055e9ade34de33df4b",
+  "hostArchive": {
+    "path": "build/runtime-host/RuntimeHostResources.zip",
+    "snapshotPath": "files/build/runtime-host/RuntimeHostResources.zip",
+    "bytes": 81823972,
+    "sha256": "4c71d23f55391e0b7eb87073bea65bec8b323d6f688214b60e49b9600c80e857"
+  },
+  "sdkManifest": {
+    "archiveMember": "MiniAppSDK/miniapp-sdk.json",
+    "snapshotPath": "extracted-sdk/miniapp-sdk.json",
+    "bytes": 5224120,
+    "sha256": "0ef02a708019c0401c50222e4186f0bbad2e6576fdc333b7d748eb7702cad66f"
+  },
+  "sdkIdentity": {
+    "schemaVersion": 1,
+    "inputSHA256": "d381e9db6bce1c74e1c52ff43d7f948d23f5ad07a103701dbf442327f420ed31",
+    "sourceInputCount": 235,
+    "fileCount": 25669
+  },
+  "materializationPlan": {
+    "path": "materialization-plan.json",
+    "sha256": "7ad834fd9e7741f72571cf7a679da4fcff6e852ce76f15b552917239e3c2ecc6",
+    "canonicalBindingSHA256": "fe45288f12fb4e2db225a63888b952e6652ca69bd62d7c64cf31963f731ff2f6",
+    "files": 13,
+    "payloadBytes": 3088387
+  },
+  "userSDKExport": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/user-deliverables-sdk16/Hanlin-MiniApp-SDK-2026-11-25.zip",
+    "bytes": 68725893,
+    "sha256": "e2aa6797377c3dc805c9557c73beba7d2d9f60af02285e6d04a6687041ab08ec",
+    "files": 25670,
+    "directories": 0,
+    "uncompressedBytes": 299641014,
+    "compressedPayloadBytes": 62779873
+  },
+  "userSDKExportReceiptSHA256": "437df4629b465d3bd9824ecbad3d8c053197c471aabd1f25b7e6cdc9cf93cf25",
+  "retainedOriginalFiles": [
+    {
+      "source": "prepared-snapshot-attempt17/receipt.json",
+      "storedPath": "raw/handoff-receipt.json",
+      "encoding": "identity",
+      "storedBytes": 17009,
+      "storedSHA256": "18b3f4d5b4d3da0b13f326eaa48c04de856bcbbd1fa58e055e9ade34de33df4b",
+      "rawBytes": 17009,
+      "rawSHA256": "18b3f4d5b4d3da0b13f326eaa48c04de856bcbbd1fa58e055e9ade34de33df4b"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/tracked-delta.json",
+      "storedPath": "raw/tracked-delta.json",
+      "encoding": "identity",
+      "storedBytes": 5248,
+      "storedSHA256": "7dd0eb8970c8115ca2eebd8c43ffce0427c7991efd7669bd3f210c62e176f777",
+      "rawBytes": 5248,
+      "rawSHA256": "7dd0eb8970c8115ca2eebd8c43ffce0427c7991efd7669bd3f210c62e176f777"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/controller-state-at-capture.json",
+      "storedPath": "raw/controller-state-at-capture.json.gz",
+      "encoding": "gzip",
+      "storedBytes": 12337,
+      "storedSHA256": "18c922aac2f7743e837a6e41ca4958bd07cf7b6ae0b195a09a1f287588f9e117",
+      "rawBytes": 82430,
+      "rawSHA256": "f33a9b901927aa383f87df0041705e5103b26e31b7933631f0fbbca6f85000a2"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/extracted-sdk/miniapp-sdk.json",
+      "storedPath": "raw/miniapp-sdk.json.gz",
+      "encoding": "gzip",
+      "storedBytes": 1302561,
+      "storedSHA256": "3886e3feae227d2febb44ba8bfb552f28d0d510fefc5311c5547f6f3877186a0",
+      "rawBytes": 5224120,
+      "rawSHA256": "0ef02a708019c0401c50222e4186f0bbad2e6576fdc333b7d748eb7702cad66f"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/expo-asset-produced-bindings.json",
+      "storedPath": "raw/expo-asset-produced-bindings.json",
+      "encoding": "identity",
+      "storedBytes": 9116,
+      "storedSHA256": "299f617ecc8909c16d2a2776488181b5d399a25abed4f255f6b526f8b78ece52",
+      "rawBytes": 9116,
+      "rawSHA256": "299f617ecc8909c16d2a2776488181b5d399a25abed4f255f6b526f8b78ece52"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/files/Package.swift",
+      "storedPath": "raw/transferred/Package.swift.gz",
+      "encoding": "gzip",
+      "storedBytes": 11504,
+      "storedSHA256": "2cdd8fcddd80aeaa945c5734e833ab9a95fb0d0ee163037ce12164efdd0d1a43",
+      "rawBytes": 88332,
+      "rawSHA256": "c58ad5f37b35c38e9199b1ad5641a4b38523d13542c75e90a34f862877409bb1"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/files/AI_HLY.xcodeproj/project.pbxproj",
+      "storedPath": "raw/transferred/AI_HLY.xcodeproj/project.pbxproj.gz",
+      "encoding": "gzip",
+      "storedBytes": 33508,
+      "storedSHA256": "ec49e1566490a5cfb71016bea915abd89acc051e5433b819fd0f6b4a3b49c5fd",
+      "rawBytes": 251761,
+      "rawSHA256": "71409346bb25cdc8fd5d1d3e8b7363549146e9038044360c93b659615c3b3b3d"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/files/docs/agent-sdk/unified-package-manifest.json",
+      "storedPath": "raw/transferred/docs/agent-sdk/unified-package-manifest.json",
+      "encoding": "identity",
+      "storedBytes": 3901,
+      "storedSHA256": "2dce00d3544b324ea9b2df5fa1a744a1bad534e2faa3e54c10195b4ce0a2e66f",
+      "rawBytes": 3901,
+      "rawSHA256": "2dce00d3544b324ea9b2df5fa1a744a1bad534e2faa3e54c10195b4ce0a2e66f"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/files/build/primary-control/generation-attempt14/state.json",
+      "storedPath": "raw/transferred/build/primary-control/generation-attempt14/state.json",
+      "encoding": "identity",
+      "storedBytes": 3306,
+      "storedSHA256": "28f474759db1388b3c808694c9825920702315827fa8ff8a931ad7fc5c32b5fe",
+      "rawBytes": 3306,
+      "rawSHA256": "28f474759db1388b3c808694c9825920702315827fa8ff8a931ad7fc5c32b5fe"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/files/build/primary-control/generation-attempt14/generated-source.patch",
+      "storedPath": "raw/transferred/build/primary-control/generation-attempt14/generated-source.patch.gz",
+      "encoding": "gzip",
+      "storedBytes": 9509,
+      "storedSHA256": "67c52a9ea8459b2467e73d2cf60e783cb8d89af278d9a58001101f30cb2c2adb",
+      "rawBytes": 78331,
+      "rawSHA256": "8154eb6689fcfd37e79073eac36736f45df3bda845964b46ed39d22ab877d982"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/files/build/primary-control/generation-attempt14/1-generate_manifest.py.log",
+      "storedPath": "raw/transferred/build/primary-control/generation-attempt14/1-generate_manifest.py.log.gz",
+      "encoding": "gzip",
+      "storedBytes": 1526,
+      "storedSHA256": "ecd26b5215c8b83b4245e4c2ff59a29d0703e7923b9e81ce15339c75ff36251e",
+      "rawBytes": 3605,
+      "rawSHA256": "eddd4ef7539f88d74f80e958861d9db7bee352562aa1df62f2e2225512c53980"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/files/build/primary-control/generation-attempt14/2-update_project.py.log",
+      "storedPath": "raw/transferred/build/primary-control/generation-attempt14/2-update_project.py.log.gz",
+      "encoding": "gzip",
+      "storedBytes": 103,
+      "storedSHA256": "b44fe6e0a9fe538f4926f1682de104830f83fafbeb7a206b936ee8e8d9e48210",
+      "rawBytes": 88,
+      "rawSHA256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/files/build/primary-control/generation-attempt14/3-verify_targets.py.log",
+      "storedPath": "raw/transferred/build/primary-control/generation-attempt14/3-verify_targets.py.log.gz",
+      "encoding": "gzip",
+      "storedBytes": 596,
+      "storedSHA256": "0618405dacd7a0cb7c11b7547e2025d6f7b8ab3080feffd4e36da12324980745",
+      "rawBytes": 1438,
+      "rawSHA256": "4f49124a3b6c18a0b8c4540cb46c33b31c436deed0ad97c4084e189157ed9c8e"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/files/build/primary-control/generation-attempt14/4--lint.log",
+      "storedPath": "raw/transferred/build/primary-control/generation-attempt14/4--lint.log.gz",
+      "encoding": "gzip",
+      "storedBytes": 126,
+      "storedSHA256": "889beecc9494db624bd1af17d822f5b7c1d621ab58bb3d060fb20e4e89bde2a2",
+      "rawBytes": 179,
+      "rawSHA256": "b019c7e18b5b8a4825f382e7c3a04552e29a406d658592b9f6105fe88a6fe18a"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/files/RuntimeDependencies.lock.json",
+      "storedPath": "raw/transferred/RuntimeDependencies.lock.json",
+      "encoding": "identity",
+      "storedBytes": 7925,
+      "storedSHA256": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a",
+      "rawBytes": 7925,
+      "rawSHA256": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/files/Scripts/Expo/package-lock.json",
+      "storedPath": "raw/transferred/Scripts/Expo/package-lock.json.gz",
+      "encoding": "gzip",
+      "storedBytes": 75790,
+      "storedSHA256": "6f138b84b43884c0c582fcc281ce881dc83adbb94f2d75bcb2b4282fcf901d04",
+      "rawBytes": 336324,
+      "rawSHA256": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/files/Scripts/Expo/package.json",
+      "storedPath": "raw/transferred/Scripts/Expo/package.json",
+      "encoding": "identity",
+      "storedBytes": 1759,
+      "storedSHA256": "e2b50fae013276229c78619bbbe0b63d8c29b00fefde3afeccea98af117aa206",
+      "rawBytes": 1759,
+      "rawSHA256": "e2b50fae013276229c78619bbbe0b63d8c29b00fefde3afeccea98af117aa206"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/files/Scripts/Expo/dependency-lock.json",
+      "storedPath": "raw/transferred/Scripts/Expo/dependency-lock.json",
+      "encoding": "identity",
+      "storedBytes": 5375,
+      "storedSHA256": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65",
+      "rawBytes": 5375,
+      "rawSHA256": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/files/Scripts/MiniApps/upstream-resolution.json",
+      "storedPath": "raw/transferred/Scripts/MiniApps/upstream-resolution.json",
+      "encoding": "identity",
+      "storedBytes": 15092,
+      "storedSHA256": "e0c2944ea24c09330825dee58badedcec58606ba603ccdedc888abf1a63a13cb",
+      "rawBytes": 15092,
+      "rawSHA256": "e0c2944ea24c09330825dee58badedcec58606ba603ccdedc888abf1a63a13cb"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/files/Scripts/NativeScript/package-lock.json",
+      "storedPath": "raw/transferred/Scripts/NativeScript/package-lock.json.gz",
+      "encoding": "gzip",
+      "storedBytes": 22999,
+      "storedSHA256": "507a1568c8f21af385539f09d77b95b8dcf5954f4438861e5c63e36f1189dc0f",
+      "rawBytes": 110219,
+      "rawSHA256": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/files/Scripts/NativeScript/package.json",
+      "storedPath": "raw/transferred/Scripts/NativeScript/package.json",
+      "encoding": "identity",
+      "storedBytes": 851,
+      "storedSHA256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b",
+      "rawBytes": 851,
+      "rawSHA256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/files/build/runtime-host/host-metadata.json",
+      "storedPath": "raw/transferred/build/runtime-host/host-metadata.json",
+      "encoding": "identity",
+      "storedBytes": 358,
+      "storedSHA256": "6dc98edc718d98464b9a24275fb17fbe6375a17d7c6915e729c45b744c73915c",
+      "rawBytes": 358,
+      "rawSHA256": "6dc98edc718d98464b9a24275fb17fbe6375a17d7c6915e729c45b744c73915c"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/files/build/app-split-evidence-attempt17/miniapp-documentation-snippets.json",
+      "storedPath": "raw/transferred/build/app-split-evidence-attempt17/miniapp-documentation-snippets.json",
+      "encoding": "identity",
+      "storedBytes": 20207,
+      "storedSHA256": "8c2cd46c6d7262a2d154c1fd600accc8083fb9fe445ed7d2d9d6906219fbfe4e",
+      "rawBytes": 20207,
+      "rawSHA256": "8c2cd46c6d7262a2d154c1fd600accc8083fb9fe445ed7d2d9d6906219fbfe4e"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/files/build/app-split-evidence-attempt17/prepared-native/native-artifacts.json",
+      "storedPath": "raw/transferred/build/app-split-evidence-attempt17/prepared-native/native-artifacts.json",
+      "encoding": "identity",
+      "storedBytes": 29897,
+      "storedSHA256": "4f8f72fb51f002421ee7cb5500a407f98e728034ae0b6c5b487652e4680311fd",
+      "rawBytes": 29897,
+      "rawSHA256": "4f8f72fb51f002421ee7cb5500a407f98e728034ae0b6c5b487652e4680311fd"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/files/build/primary-control/logs-attempt17/split-native-preparation.log",
+      "storedPath": "raw/transferred/build/primary-control/logs-attempt17/split-native-preparation.log.gz",
+      "encoding": "gzip",
+      "storedBytes": 10496,
+      "storedSHA256": "1a3903e98d875086e493c610500c604f2db048bbc24ad25dc5e3ad061a92b19d",
+      "rawBytes": 32738,
+      "rawSHA256": "736f93184addc310b3e2918118ce075e0e6391dfffd969bdd58dd2472b25b13a"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/files/build/primary-control/logs-attempt17-export-recovery/split-native-artifacts.log",
+      "storedPath": "raw/transferred/build/primary-control/logs-attempt17-export-recovery/split-native-artifacts.log.gz",
+      "encoding": "gzip",
+      "storedBytes": 844,
+      "storedSHA256": "bc7c73d074184119d9b2d6e034dbb5fe13ee124efb2c0c81c81c84fb633222dc",
+      "rawBytes": 1604,
+      "rawSHA256": "6ba90756cd5ae1a7ee915af12e22160528b0ceb7d8065409f71ea5d5ffa96f27"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/files/build/primary-control/export-recovery-attempt17/receipt.json",
+      "storedPath": "raw/transferred/build/primary-control/export-recovery-attempt17/receipt.json",
+      "encoding": "identity",
+      "storedBytes": 2641,
+      "storedSHA256": "1dd03b4d7db916b032995e2344ce8e47301c9b2dcc922f6d32ef44b6ca675342",
+      "rawBytes": 2641,
+      "rawSHA256": "1dd03b4d7db916b032995e2344ce8e47301c9b2dcc922f6d32ef44b6ca675342"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/files/build/primary-control/export-recovery-attempt17/state.json",
+      "storedPath": "raw/transferred/build/primary-control/export-recovery-attempt17/state.json.gz",
+      "encoding": "gzip",
+      "storedBytes": 12060,
+      "storedSHA256": "b2cb350e0414efd711c2b62991b950042a3c2b40b7b8cce30525e05bae6e5d36",
+      "rawBytes": 80462,
+      "rawSHA256": "40e928a03c4cc3397ce70a01cdcbcc10a833c68d466e2bae33ea56244afb8ea4"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/files/build/primary-control/export-recovery-attempt17/split-native-artifacts.log",
+      "storedPath": "raw/transferred/build/primary-control/export-recovery-attempt17/split-native-artifacts.log.gz",
+      "encoding": "gzip",
+      "storedBytes": 949,
+      "storedSHA256": "13f3025ea15acc7dc63a44636df80c6f8e07d9854fff9872598e57db9ec0fe70",
+      "rawBytes": 1745,
+      "rawSHA256": "5ce8bc79792a24ba854ce1c0c2f59db6bd03e0f880173d180bd25444350b4063"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/files/build/primary-control/export-recovery-attempt17/launch.json",
+      "storedPath": "raw/transferred/build/primary-control/export-recovery-attempt17/launch.json",
+      "encoding": "identity",
+      "storedBytes": 383,
+      "storedSHA256": "8d975c0576771e5c4805ed64d92f99c5bd573d0c2ae2827a509c817055842260",
+      "rawBytes": 383,
+      "rawSHA256": "8d975c0576771e5c4805ed64d92f99c5bd573d0c2ae2827a509c817055842260"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/files/build/primary-control/plan.json",
+      "storedPath": "raw/transferred/build/primary-control/plan.json",
+      "encoding": "identity",
+      "storedBytes": 13892,
+      "storedSHA256": "981e57b45389501015be38d662c27229a56b9f2ea64927497538ec1c970a4e95",
+      "rawBytes": 13892,
+      "rawSHA256": "981e57b45389501015be38d662c27229a56b9f2ea64927497538ec1c970a4e95"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/files/build/primary-control/source-advance-cffe7f75/receipt.json",
+      "storedPath": "raw/transferred/build/primary-control/source-advance-cffe7f75/receipt.json",
+      "encoding": "identity",
+      "storedBytes": 7948,
+      "storedSHA256": "2825cd482d3bd97fc36ec228d831ad5a3bf05bc9e0112624e3c1700874605d5a",
+      "rawBytes": 7948,
+      "rawSHA256": "2825cd482d3bd97fc36ec228d831ad5a3bf05bc9e0112624e3c1700874605d5a"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/files/build/primary-control/attempt17-prefix-launch.json",
+      "storedPath": "raw/transferred/build/primary-control/attempt17-prefix-launch.json",
+      "encoding": "identity",
+      "storedBytes": 563,
+      "storedSHA256": "1f304b8d942eab67cce837336c97167b46ed53cc75f931863a9ad91872eb8531",
+      "rawBytes": 563,
+      "rawSHA256": "1f304b8d942eab67cce837336c97167b46ed53cc75f931863a9ad91872eb8531"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/files/build/acceptance/expo-type-declarations/corrections.json",
+      "storedPath": "raw/transferred/build/acceptance/expo-type-declarations/corrections.json",
+      "encoding": "identity",
+      "storedBytes": 3600,
+      "storedSHA256": "c5e5322a6177f36a713380134006d4beb3a0ebd275e435e66b7de93a4cb60f82",
+      "rawBytes": 3600,
+      "rawSHA256": "c5e5322a6177f36a713380134006d4beb3a0ebd275e435e66b7de93a4cb60f82"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/files/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/.source-build-receipt.json",
+      "storedPath": "raw/transferred/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/.source-build-receipt.json",
+      "encoding": "identity",
+      "storedBytes": 1355,
+      "storedSHA256": "78a6b4b85330189dd162c09ae250cb280bf7dbe62608ca6438e6f3fabde6ee3b",
+      "rawBytes": 1355,
+      "rawSHA256": "78a6b4b85330189dd162c09ae250cb280bf7dbe62608ca6438e6f3fabde6ee3b"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/files/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/.artifact-manifest.json",
+      "storedPath": "raw/transferred/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/.artifact-manifest.json",
+      "encoding": "identity",
+      "storedBytes": 226,
+      "storedSHA256": "80afcbce26c01da5a63f951e04c6fea5959d3b3a51271d6a24002c35c07ceb47",
+      "rawBytes": 226,
+      "rawSHA256": "80afcbce26c01da5a63f951e04c6fea5959d3b3a51271d6a24002c35c07ceb47"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/files/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/Info.plist",
+      "storedPath": "raw/transferred/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/Info.plist",
+      "encoding": "identity",
+      "storedBytes": 1196,
+      "storedSHA256": "b239db0645c42fb07b6dd21e54c6012289f62593186b64b880c419d293da984d",
+      "rawBytes": 1196,
+      "rawSHA256": "b239db0645c42fb07b6dd21e54c6012289f62593186b64b880c419d293da984d"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/files/build/miniapp-upstreams/expo-native-source/ios/Podfile.lock",
+      "storedPath": "raw/transferred/build/miniapp-upstreams/expo-native-source/ios/Podfile.lock.gz",
+      "encoding": "gzip",
+      "storedBytes": 8723,
+      "storedSHA256": "1a4724b009336f6470d1c89f013c029ff89b1ac77f290986a37abf67f895e945",
+      "rawBytes": 76498,
+      "rawSHA256": "c012c6f8ee2ca782aea7788349d75a3a57e6e4be8d324037a8b9dce573e4d8e6"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/tracked-delta/AI_HLY.xcodeproj/project.pbxproj",
+      "storedPath": "raw/transferred/AI_HLY.xcodeproj/project.pbxproj.gz",
+      "encoding": "gzip",
+      "storedBytes": 33508,
+      "storedSHA256": "ec49e1566490a5cfb71016bea915abd89acc051e5433b819fd0f6b4a3b49c5fd",
+      "rawBytes": 251761,
+      "rawSHA256": "71409346bb25cdc8fd5d1d3e8b7363549146e9038044360c93b659615c3b3b3d"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/tracked-delta/AI_HLYUITests/Fixtures/ExpoSwiftUIProbe.hanlinExpo",
+      "storedPath": "raw/prepared-payload/b81e8ecccb8e8495f203b51273787df1ab10d64d4236abfa061dc6cb9dd60b1c.hanlinExpo",
+      "encoding": "identity",
+      "storedBytes": 325823,
+      "storedSHA256": "b81e8ecccb8e8495f203b51273787df1ab10d64d4236abfa061dc6cb9dd60b1c",
+      "rawBytes": 325823,
+      "rawSHA256": "b81e8ecccb8e8495f203b51273787df1ab10d64d4236abfa061dc6cb9dd60b1c"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/tracked-delta/AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
+      "storedPath": "raw/prepared-payload/b81e8ecccb8e8495f203b51273787df1ab10d64d4236abfa061dc6cb9dd60b1c.hanlinExpo",
+      "encoding": "identity",
+      "storedBytes": 325823,
+      "storedSHA256": "b81e8ecccb8e8495f203b51273787df1ab10d64d4236abfa061dc6cb9dd60b1c",
+      "rawBytes": 325823,
+      "rawSHA256": "b81e8ecccb8e8495f203b51273787df1ab10d64d4236abfa061dc6cb9dd60b1c"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/tracked-delta/AI_HLYUITests/Fixtures/ExpoSwiftUIProbeB.hanlinExpo",
+      "storedPath": "raw/prepared-payload/cdf1b95be3e210621095a6269f9d17bf6cab11c6b7e6c6d8895265fcb8a4b84b.hanlinExpo",
+      "encoding": "identity",
+      "storedBytes": 325825,
+      "storedSHA256": "cdf1b95be3e210621095a6269f9d17bf6cab11c6b7e6c6d8895265fcb8a4b84b",
+      "rawBytes": 325825,
+      "rawSHA256": "cdf1b95be3e210621095a6269f9d17bf6cab11c6b7e6c6d8895265fcb8a4b84b"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/tracked-delta/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbe.hanlinExpo",
+      "storedPath": "raw/prepared-payload/b81e8ecccb8e8495f203b51273787df1ab10d64d4236abfa061dc6cb9dd60b1c.hanlinExpo",
+      "encoding": "identity",
+      "storedBytes": 325823,
+      "storedSHA256": "b81e8ecccb8e8495f203b51273787df1ab10d64d4236abfa061dc6cb9dd60b1c",
+      "rawBytes": 325823,
+      "rawSHA256": "b81e8ecccb8e8495f203b51273787df1ab10d64d4236abfa061dc6cb9dd60b1c"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/tracked-delta/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeA.hanlinExpo",
+      "storedPath": "raw/prepared-payload/b81e8ecccb8e8495f203b51273787df1ab10d64d4236abfa061dc6cb9dd60b1c.hanlinExpo",
+      "encoding": "identity",
+      "storedBytes": 325823,
+      "storedSHA256": "b81e8ecccb8e8495f203b51273787df1ab10d64d4236abfa061dc6cb9dd60b1c",
+      "rawBytes": 325823,
+      "rawSHA256": "b81e8ecccb8e8495f203b51273787df1ab10d64d4236abfa061dc6cb9dd60b1c"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/tracked-delta/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeB.hanlinExpo",
+      "storedPath": "raw/prepared-payload/cdf1b95be3e210621095a6269f9d17bf6cab11c6b7e6c6d8895265fcb8a4b84b.hanlinExpo",
+      "encoding": "identity",
+      "storedBytes": 325825,
+      "storedSHA256": "cdf1b95be3e210621095a6269f9d17bf6cab11c6b7e6c6d8895265fcb8a4b84b",
+      "rawBytes": 325825,
+      "rawSHA256": "cdf1b95be3e210621095a6269f9d17bf6cab11c6b7e6c6d8895265fcb8a4b84b"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/tracked-delta/Package.swift",
+      "storedPath": "raw/transferred/Package.swift.gz",
+      "encoding": "gzip",
+      "storedBytes": 11504,
+      "storedSHA256": "2cdd8fcddd80aeaa945c5734e833ab9a95fb0d0ee163037ce12164efdd0d1a43",
+      "rawBytes": 88332,
+      "rawSHA256": "c58ad5f37b35c38e9199b1ad5641a4b38523d13542c75e90a34f862877409bb1"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/tracked-delta/docs/agent-sdk/unified-package-manifest.json",
+      "storedPath": "raw/transferred/docs/agent-sdk/unified-package-manifest.json",
+      "encoding": "identity",
+      "storedBytes": 3901,
+      "storedSHA256": "2dce00d3544b324ea9b2df5fa1a744a1bad534e2faa3e54c10195b4ce0a2e66f",
+      "rawBytes": 3901,
+      "rawSHA256": "2dce00d3544b324ea9b2df5fa1a744a1bad534e2faa3e54c10195b4ce0a2e66f"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/tracked-delta/docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "storedPath": "raw/prepared-payload/283c96260a51c095be32f262f9f77ba58bebc5372aa1af994176816c8fb5d538.md.gz",
+      "encoding": "gzip",
+      "storedBytes": 10100,
+      "storedSHA256": "66c442939d019e0a41a8be0b1f61ecc904bb4be6ee21ef0460b645df42f59f7f",
+      "rawBytes": 118804,
+      "rawSHA256": "283c96260a51c095be32f262f9f77ba58bebc5372aa1af994176816c8fb5d538"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/tracked-delta/docs/miniapp-sdk/extension-reachability.json",
+      "storedPath": "raw/prepared-payload/e8532f65e6dca533f63bade581e12ccc485ad835377523201073ef6dd402fb04.json.gz",
+      "encoding": "gzip",
+      "storedBytes": 16544,
+      "storedSHA256": "ad16e754e792fdd713302e8421ac02963c337bd697c03dbe83d2727f94ab963b",
+      "rawBytes": 153517,
+      "rawSHA256": "e8532f65e6dca533f63bade581e12ccc485ad835377523201073ef6dd402fb04"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/tracked-delta/docs/miniapp-sdk/extension-reachability.md",
+      "storedPath": "raw/prepared-payload/f164b2e5c8b1271d9d673e87d438ef8f4016315860596a25800ef78de8e6dcb1.md.gz",
+      "encoding": "gzip",
+      "storedBytes": 5017,
+      "storedSHA256": "2cfbc85a744e333cb0c97dcdf4a0aa367f37828d452c269fff41f80986e4d690",
+      "rawBytes": 23332,
+      "rawSHA256": "f164b2e5c8b1271d9d673e87d438ef8f4016315860596a25800ef78de8e6dcb1"
+    },
+    {
+      "source": "prepared-snapshot-attempt17/tracked-delta/docs/miniapp-sdk/source-inventory.json",
+      "storedPath": "raw/prepared-payload/e2aa1346d6c5409fc7dcf658fc2f0e8c108a4dfb8e95c2c6f9769cc1aa4983a6.json.gz",
+      "encoding": "gzip",
+      "storedBytes": 40639,
+      "storedSHA256": "03bba3dffe1fa8fd7ce4c31b561be10b48bbf3c8531d9d022db606604707835d",
+      "rawBytes": 493798,
+      "rawSHA256": "e2aa1346d6c5409fc7dcf658fc2f0e8c108a4dfb8e95c2c6f9769cc1aa4983a6"
+    },
+    {
+      "source": "prepared-sdk16-verification/reconciliation.json",
+      "storedPath": "raw/reconciliation.json",
+      "encoding": "identity",
+      "storedBytes": 20200,
+      "storedSHA256": "9f5050ba16b10062bd03c53437eca2cc3f6256ca033b1538558707326f2cec4d",
+      "rawBytes": 20200,
+      "rawSHA256": "9f5050ba16b10062bd03c53437eca2cc3f6256ca033b1538558707326f2cec4d"
+    },
+    {
+      "source": "user-deliverables-sdk16/receipt.json",
+      "storedPath": "raw/user-sdk-export-receipt.json",
+      "encoding": "identity",
+      "storedBytes": 3300,
+      "storedSHA256": "437df4629b465d3bd9824ecbad3d8c053197c471aabd1f25b7e6cdc9cf93cf25",
+      "rawBytes": 3300,
+      "rawSHA256": "437df4629b465d3bd9824ecbad3d8c053197c471aabd1f25b7e6cdc9cf93cf25"
+    }
+  ],
+  "storedMembers": [
+    {
+      "path": "README.md",
+      "bytes": 5686,
+      "sha256": "da972140d999a089ab2c4a741e87ae68dcbd0dc92a5492dee25a6cc0c362c810"
+    },
+    {
+      "path": "completeness-and-boundaries.json",
+      "bytes": 9841,
+      "sha256": "9959449c9d4e077c6ac29194e46dcad461ec7b3c7063c42b73a744c0dc1a75e5"
+    },
+    {
+      "path": "materialization-plan.json",
+      "bytes": 13222,
+      "sha256": "7ad834fd9e7741f72571cf7a679da4fcff6e852ce76f15b552917239e3c2ecc6"
+    },
+    {
+      "path": "raw/controller-state-at-capture.json.gz",
+      "bytes": 12337,
+      "sha256": "18c922aac2f7743e837a6e41ca4958bd07cf7b6ae0b195a09a1f287588f9e117"
+    },
+    {
+      "path": "raw/expo-asset-produced-bindings.json",
+      "bytes": 9116,
+      "sha256": "299f617ecc8909c16d2a2776488181b5d399a25abed4f255f6b526f8b78ece52"
+    },
+    {
+      "path": "raw/handoff-receipt.json",
+      "bytes": 17009,
+      "sha256": "18b3f4d5b4d3da0b13f326eaa48c04de856bcbbd1fa58e055e9ade34de33df4b"
+    },
+    {
+      "path": "raw/miniapp-sdk.json.gz",
+      "bytes": 1302561,
+      "sha256": "3886e3feae227d2febb44ba8bfb552f28d0d510fefc5311c5547f6f3877186a0"
+    },
+    {
+      "path": "raw/prepared-payload/283c96260a51c095be32f262f9f77ba58bebc5372aa1af994176816c8fb5d538.md.gz",
+      "bytes": 10100,
+      "sha256": "66c442939d019e0a41a8be0b1f61ecc904bb4be6ee21ef0460b645df42f59f7f"
+    },
+    {
+      "path": "raw/prepared-payload/b81e8ecccb8e8495f203b51273787df1ab10d64d4236abfa061dc6cb9dd60b1c.hanlinExpo",
+      "bytes": 325823,
+      "sha256": "b81e8ecccb8e8495f203b51273787df1ab10d64d4236abfa061dc6cb9dd60b1c"
+    },
+    {
+      "path": "raw/prepared-payload/cdf1b95be3e210621095a6269f9d17bf6cab11c6b7e6c6d8895265fcb8a4b84b.hanlinExpo",
+      "bytes": 325825,
+      "sha256": "cdf1b95be3e210621095a6269f9d17bf6cab11c6b7e6c6d8895265fcb8a4b84b"
+    },
+    {
+      "path": "raw/prepared-payload/e2aa1346d6c5409fc7dcf658fc2f0e8c108a4dfb8e95c2c6f9769cc1aa4983a6.json.gz",
+      "bytes": 40639,
+      "sha256": "03bba3dffe1fa8fd7ce4c31b561be10b48bbf3c8531d9d022db606604707835d"
+    },
+    {
+      "path": "raw/prepared-payload/e8532f65e6dca533f63bade581e12ccc485ad835377523201073ef6dd402fb04.json.gz",
+      "bytes": 16544,
+      "sha256": "ad16e754e792fdd713302e8421ac02963c337bd697c03dbe83d2727f94ab963b"
+    },
+    {
+      "path": "raw/prepared-payload/f164b2e5c8b1271d9d673e87d438ef8f4016315860596a25800ef78de8e6dcb1.md.gz",
+      "bytes": 5017,
+      "sha256": "2cfbc85a744e333cb0c97dcdf4a0aa367f37828d452c269fff41f80986e4d690"
+    },
+    {
+      "path": "raw/reconciliation.json",
+      "bytes": 20200,
+      "sha256": "9f5050ba16b10062bd03c53437eca2cc3f6256ca033b1538558707326f2cec4d"
+    },
+    {
+      "path": "raw/tracked-delta.json",
+      "bytes": 5248,
+      "sha256": "7dd0eb8970c8115ca2eebd8c43ffce0427c7991efd7669bd3f210c62e176f777"
+    },
+    {
+      "path": "raw/transferred/AI_HLY.xcodeproj/project.pbxproj.gz",
+      "bytes": 33508,
+      "sha256": "ec49e1566490a5cfb71016bea915abd89acc051e5433b819fd0f6b4a3b49c5fd"
+    },
+    {
+      "path": "raw/transferred/Package.swift.gz",
+      "bytes": 11504,
+      "sha256": "2cdd8fcddd80aeaa945c5734e833ab9a95fb0d0ee163037ce12164efdd0d1a43"
+    },
+    {
+      "path": "raw/transferred/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/.artifact-manifest.json",
+      "bytes": 226,
+      "sha256": "80afcbce26c01da5a63f951e04c6fea5959d3b3a51271d6a24002c35c07ceb47"
+    },
+    {
+      "path": "raw/transferred/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/.source-build-receipt.json",
+      "bytes": 1355,
+      "sha256": "78a6b4b85330189dd162c09ae250cb280bf7dbe62608ca6438e6f3fabde6ee3b"
+    },
+    {
+      "path": "raw/transferred/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/Info.plist",
+      "bytes": 1196,
+      "sha256": "b239db0645c42fb07b6dd21e54c6012289f62593186b64b880c419d293da984d"
+    },
+    {
+      "path": "raw/transferred/RuntimeDependencies.lock.json",
+      "bytes": 7925,
+      "sha256": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a"
+    },
+    {
+      "path": "raw/transferred/Scripts/Expo/dependency-lock.json",
+      "bytes": 5375,
+      "sha256": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65"
+    },
+    {
+      "path": "raw/transferred/Scripts/Expo/package-lock.json.gz",
+      "bytes": 75790,
+      "sha256": "6f138b84b43884c0c582fcc281ce881dc83adbb94f2d75bcb2b4282fcf901d04"
+    },
+    {
+      "path": "raw/transferred/Scripts/Expo/package.json",
+      "bytes": 1759,
+      "sha256": "e2b50fae013276229c78619bbbe0b63d8c29b00fefde3afeccea98af117aa206"
+    },
+    {
+      "path": "raw/transferred/Scripts/MiniApps/upstream-resolution.json",
+      "bytes": 15092,
+      "sha256": "e0c2944ea24c09330825dee58badedcec58606ba603ccdedc888abf1a63a13cb"
+    },
+    {
+      "path": "raw/transferred/Scripts/NativeScript/package-lock.json.gz",
+      "bytes": 22999,
+      "sha256": "507a1568c8f21af385539f09d77b95b8dcf5954f4438861e5c63e36f1189dc0f"
+    },
+    {
+      "path": "raw/transferred/Scripts/NativeScript/package.json",
+      "bytes": 851,
+      "sha256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b"
+    },
+    {
+      "path": "raw/transferred/build/acceptance/expo-type-declarations/corrections.json",
+      "bytes": 3600,
+      "sha256": "c5e5322a6177f36a713380134006d4beb3a0ebd275e435e66b7de93a4cb60f82"
+    },
+    {
+      "path": "raw/transferred/build/app-split-evidence-attempt17/miniapp-documentation-snippets.json",
+      "bytes": 20207,
+      "sha256": "8c2cd46c6d7262a2d154c1fd600accc8083fb9fe445ed7d2d9d6906219fbfe4e"
+    },
+    {
+      "path": "raw/transferred/build/app-split-evidence-attempt17/prepared-native/native-artifacts.json",
+      "bytes": 29897,
+      "sha256": "4f8f72fb51f002421ee7cb5500a407f98e728034ae0b6c5b487652e4680311fd"
+    },
+    {
+      "path": "raw/transferred/build/miniapp-upstreams/expo-native-source/ios/Podfile.lock.gz",
+      "bytes": 8723,
+      "sha256": "1a4724b009336f6470d1c89f013c029ff89b1ac77f290986a37abf67f895e945"
+    },
+    {
+      "path": "raw/transferred/build/primary-control/attempt17-prefix-launch.json",
+      "bytes": 563,
+      "sha256": "1f304b8d942eab67cce837336c97167b46ed53cc75f931863a9ad91872eb8531"
+    },
+    {
+      "path": "raw/transferred/build/primary-control/export-recovery-attempt17/launch.json",
+      "bytes": 383,
+      "sha256": "8d975c0576771e5c4805ed64d92f99c5bd573d0c2ae2827a509c817055842260"
+    },
+    {
+      "path": "raw/transferred/build/primary-control/export-recovery-attempt17/receipt.json",
+      "bytes": 2641,
+      "sha256": "1dd03b4d7db916b032995e2344ce8e47301c9b2dcc922f6d32ef44b6ca675342"
+    },
+    {
+      "path": "raw/transferred/build/primary-control/export-recovery-attempt17/split-native-artifacts.log.gz",
+      "bytes": 949,
+      "sha256": "13f3025ea15acc7dc63a44636df80c6f8e07d9854fff9872598e57db9ec0fe70"
+    },
+    {
+      "path": "raw/transferred/build/primary-control/export-recovery-attempt17/state.json.gz",
+      "bytes": 12060,
+      "sha256": "b2cb350e0414efd711c2b62991b950042a3c2b40b7b8cce30525e05bae6e5d36"
+    },
+    {
+      "path": "raw/transferred/build/primary-control/generation-attempt14/1-generate_manifest.py.log.gz",
+      "bytes": 1526,
+      "sha256": "ecd26b5215c8b83b4245e4c2ff59a29d0703e7923b9e81ce15339c75ff36251e"
+    },
+    {
+      "path": "raw/transferred/build/primary-control/generation-attempt14/2-update_project.py.log.gz",
+      "bytes": 103,
+      "sha256": "b44fe6e0a9fe538f4926f1682de104830f83fafbeb7a206b936ee8e8d9e48210"
+    },
+    {
+      "path": "raw/transferred/build/primary-control/generation-attempt14/3-verify_targets.py.log.gz",
+      "bytes": 596,
+      "sha256": "0618405dacd7a0cb7c11b7547e2025d6f7b8ab3080feffd4e36da12324980745"
+    },
+    {
+      "path": "raw/transferred/build/primary-control/generation-attempt14/4--lint.log.gz",
+      "bytes": 126,
+      "sha256": "889beecc9494db624bd1af17d822f5b7c1d621ab58bb3d060fb20e4e89bde2a2"
+    },
+    {
+      "path": "raw/transferred/build/primary-control/generation-attempt14/generated-source.patch.gz",
+      "bytes": 9509,
+      "sha256": "67c52a9ea8459b2467e73d2cf60e783cb8d89af278d9a58001101f30cb2c2adb"
+    },
+    {
+      "path": "raw/transferred/build/primary-control/generation-attempt14/state.json",
+      "bytes": 3306,
+      "sha256": "28f474759db1388b3c808694c9825920702315827fa8ff8a931ad7fc5c32b5fe"
+    },
+    {
+      "path": "raw/transferred/build/primary-control/logs-attempt17/split-native-preparation.log.gz",
+      "bytes": 10496,
+      "sha256": "1a3903e98d875086e493c610500c604f2db048bbc24ad25dc5e3ad061a92b19d"
+    },
+    {
+      "path": "raw/transferred/build/primary-control/logs-attempt17-export-recovery/split-native-artifacts.log.gz",
+      "bytes": 844,
+      "sha256": "bc7c73d074184119d9b2d6e034dbb5fe13ee124efb2c0c81c81c84fb633222dc"
+    },
+    {
+      "path": "raw/transferred/build/primary-control/plan.json",
+      "bytes": 13892,
+      "sha256": "981e57b45389501015be38d662c27229a56b9f2ea64927497538ec1c970a4e95"
+    },
+    {
+      "path": "raw/transferred/build/primary-control/source-advance-cffe7f75/receipt.json",
+      "bytes": 7948,
+      "sha256": "2825cd482d3bd97fc36ec228d831ad5a3bf05bc9e0112624e3c1700874605d5a"
+    },
+    {
+      "path": "raw/transferred/build/runtime-host/host-metadata.json",
+      "bytes": 358,
+      "sha256": "6dc98edc718d98464b9a24275fb17fbe6375a17d7c6915e729c45b744c73915c"
+    },
+    {
+      "path": "raw/transferred/docs/agent-sdk/unified-package-manifest.json",
+      "bytes": 3901,
+      "sha256": "2dce00d3544b324ea9b2df5fa1a744a1bad534e2faa3e54c10195b4ce0a2e66f"
+    },
+    {
+      "path": "raw/user-sdk-export-receipt.json",
+      "bytes": 3300,
+      "sha256": "437df4629b465d3bd9824ecbad3d8c053197c471aabd1f25b7e6cdc9cf93cf25"
+    }
+  ],
+  "storedMemberCount": 49,
+  "storedBytes": 2431676,
+  "boundary": "Evidence only. Full archive/export remain in immutable shared transfer paths, not copied into Git. No consumer or OS acceptance is inferred."
+}

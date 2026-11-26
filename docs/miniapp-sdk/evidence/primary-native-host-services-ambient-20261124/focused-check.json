@@ -1,0 +1,22 @@
+{
+  "sourceBase": "ce49e30d69466e44b0aa26582beaa57ee7a91a9b",
+  "path": "Scripts/NativeScript/build-host-services.mjs",
+  "beforeSHA256": "9389c754c2708ac1592352f9ec0b184f9a154a0a2471259104f2f64dab29726b",
+  "afterSHA256": "b46fcc461ad34fcf49140e4fd0e11e0dcb8f47a8523a15116029435289ee7003",
+  "argv": [
+    "node",
+    "Scripts/NativeScript/build-host-services.mjs",
+    "--check"
+  ],
+  "cwd": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete",
+  "startedAt": "2026-11-24T17:59:46.459921+00:00",
+  "node": "v24.5.0",
+  "compiler": "5.9.3",
+  "ambientAncestor": "/Users/m1/builds/Maktabah-3c5a57be-shared-20261124/Vendor/SefariaMobile/Upstream/node_modules/@types",
+  "status": "PASS",
+  "exitCode": 0,
+  "elapsedSeconds": 3.347037208000984,
+  "finishedAt": "2026-11-24T17:59:49.936584+00:00",
+  "logBytes": 112,
+  "logSHA256": "480742f18b8ef01a023f07eff2064a34b4a8f65a59deef55e49b505788f8b263"
+}

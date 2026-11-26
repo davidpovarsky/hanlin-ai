@@ -1,0 +1,11 @@
+{
+  "destination": "/Users/m1/builds/hanlin-ai-dc518aa3-widget-options-20261124",
+  "baseCommit": "dc518aa35d123b611c02b10ad75e11477a7eb131",
+  "scopedDirtyFiles": {
+    "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidgetOptions.swift": "6ca742d0e0413a2f219723ec65caab7df5a485257ba75277603ec132a7a6deac",
+    "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift": "024bd8bcb47d43ace64fb410938f393effb3c6e8bd327506cf9065851de8073c"
+  },
+  "archiveSHA256": "5e0986f7568e9d0849cbc342f15b621dc1f24a9fc0172c7b1fe884657666c779",
+  "exit": 0,
+  "note": "Final staged source supersedes an earlier unexecuted projection; no prior probe result exists."
+}

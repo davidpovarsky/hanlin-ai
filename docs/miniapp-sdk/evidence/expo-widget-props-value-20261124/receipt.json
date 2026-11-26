@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-11-24T12:55:42.865211+00:00",
+  "owner": "/root/control_authoring",
+  "baseCommit": "ce2eceeb20b4f38031264f161ac9829b3745275a",
+  "change": "One production statement constructs HanlinObject from the existing Dictionary members before the unchanged canonical JSON validation.",
+  "source": "source-change.json",
+  "failure": {
+    "runID": 45389020875,
+    "status": "EXECUTED_FAIL",
+    "kind": "Apple app compilation",
+    "logSHA256": "29c01baf62168b4ebcfbcaa79e33c7e0e0e998f52ab67707e29960eeb16d16c6",
+    "diagnosticLine": 92452,
+    "error": "Cannot convert [String: HanlinValue] to HanlinObject<HanlinValue>.",
+    "originalRootReceipt": "docs/miniapp-sdk/evidence/native-gate-13-publication-type-20261124/receipt.json",
+    "originalRootReceiptSHA256": "a52bda79b49f50b204c39ed61e97b350300c6561e3debfa943274acb4fab600b",
+    "retainedExcerpt": "native-failure-excerpt.log"
+  },
+  "verification": {
+    "status": "EXECUTED_PASS",
+    "kind": "Focused real Swift source-closure compilation plus value/JSON execution on primary Scaleway Mac",
+    "toolchain": "Xcode27.0 (27A266a), Apple Swift6.4.0.34.1, arm64 macOS27.0",
+    "proof": "mac-probe.json",
+    "inputProvenance": "probe-inputs.json",
+    "result": "Exact publication statement compiled against the unchanged real public value types; received property values and exact UTF-8 key bytes retained, canonical JSON round trip passed, non-finite value still rejected.",
+    "elapsedSeconds": 3.82450475,
+    "bounds": "HanlinValue.swift and HanlinContractError.swift are copied byte-for-byte. Their ManifestIssue payload declarations are verbatim extracted source. This compiles the necessary source closure as a module; it does not compile the complete package target, store, app, WidgetKit consumers or acceptance tests."
+  },
+  "preserved": [
+    "Public method and receipt API",
+    "Current package/session/generation validation",
+    "Transactional state replacement and revision/nonces",
+    "Actual program authentication and catalog/state consumer",
+    "Existing unbounded JSON structural/numeric validation",
+    "All other production source and native acceptance selectors"
+  ],
+  "routing": {
+    "authorityFiles": [
+      "/home/ubuntu/.agents/skills/build-runner-router/SKILL.md",
+      "/home/ubuntu/.agents/skills/hybrid-workspace-bridge/SKILL.md"
+    ],
+    "preflight": "mac-preflight.json",
+    "destination": "/Users/m1/builds/hanlin-ai-ce2eceeb-expo-widget-props-20261124",
+    "capacity": "Fresh disk/memory and active-process observation retained; two existing xcodebuild processes were observed and left untouched. This isolated three-file value closure and executable took under four seconds; no app, package, simulator or heavy build was started.",
+    "requiredGate": "Xcode27.2 remains unavailable in the recorded primary-Mac observation. Root owns the exact27.2 full-gate fallback and any dispatch."
+  },
+  "independentReview": "independent-review.json",
+  "appAcceptance": "NOT_RUN by this lane; MAIN13 app build remains FAILED, AI and 52 acceptance cases were not executed. No downstream widget-consumer compilation PASS is claimed."
+}

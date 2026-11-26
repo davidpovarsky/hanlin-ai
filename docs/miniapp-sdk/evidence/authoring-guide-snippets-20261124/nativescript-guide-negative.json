@@ -1,0 +1,43 @@
+{
+  "source": "const view = UIView.new();\nconst label = UILabel.new();\nview.backgroundColor = UIColor.systemBackgroundColor;\nview.layer.cornerRadius = 14;\nview.translatesAutoresizingMaskIntoConstraints = false;\nlabel.text = \"תוכן בעברית\";\nlabel.numberOfLines = 0;\nlabel.font = UIFont.preferredFontForTextStyle(UIFontTextStyleHeadline);\n\nview.notAnOriginalUIKitProperty = 1;\n",
+  "sourceSHA256": "72cef8444c0394be8bb82f753030381fe21f9c8423fbd22809b89f5fe58760d2",
+  "report": {
+    "schemaVersion": 1,
+    "engine": "nativescript",
+    "operation": "validate",
+    "succeeded": false,
+    "diagnostics": [
+      {
+        "code": "TS2339",
+        "category": "error",
+        "message": "Property 'notAnOriginalUIKitProperty' does not exist on type 'UIView'.",
+        "file": "src/properties.js",
+        "line": 10,
+        "column": 6,
+        "endLine": 10,
+        "endColumn": 32
+      }
+    ],
+    "sourceRoot": "/tmp/hanlin-guide-regression-pDEmun/nativescript-guide",
+    "sdk": {
+      "packageVersions": {
+        "@nativescript/core": "9.1.4",
+        "@nativescript/swift-ui": "4.0.2",
+        "@nativescript/ios": "9.1.1",
+        "@nativescript/types": "9.1.4",
+        "@nativescript/vite": "8.0.24",
+        "typescript": "5.9.3",
+        "vite": "8.0.0",
+        "@hanlin/host-services": "1.0.0"
+      },
+      "manifestSHA256": "fa1e737ec63e640175cdb5c9dad51903cd86d50ae7b340ba5b8ec1ff4e408d85",
+      "compilerVersion": "5.9.3"
+    },
+    "typecheck": {
+      "strict": true,
+      "checkJs": true,
+      "skipLibCheck": true,
+      "dependencyDeclarationsChecked": false
+    }
+  }
+}

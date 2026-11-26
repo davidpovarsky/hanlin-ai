@@ -18,6 +18,7 @@ const TRANSITION = '_transition';
 const NON_ANIMATED_TRANSITION = 'non-animated';
 let navDepth = -1;
 let navControllerDelegate = null;
+let transitionControllerDelegate = null;
 export class Frame extends FrameBase {
     constructor() {
         super();
@@ -58,6 +59,7 @@ export class Frame extends FrameBase {
         // This was the last frame so we can get rid of the controller delegate reference
         if (this._isFrameStackEmpty()) {
             navControllerDelegate = null;
+            transitionControllerDelegate = null;
         }
         if (this._ios) {
             this._ios.controller = null;
@@ -97,19 +99,28 @@ export class Frame extends FrameBase {
         const animated = this.currentPage ? this._getIsAnimatedNavigation(backstackEntry.entry) : false;
         if (animated) {
             navigationTransition = this._getNavigationTransition(backstackEntry.entry);
-            if (navigationTransition) {
-                viewController[TRANSITION] = navigationTransition;
-            }
+            viewController[TRANSITION] = navigationTransition;
         }
         else {
             //https://github.com/NativeScript/NativeScript/issues/1787
             viewController[TRANSITION] = { name: NON_ANIMATED_TRANSITION };
         }
-        if (!navControllerDelegate) {
-            navControllerDelegate = UINavigationControllerDelegateImpl.new();
+        // UIKit disables content Back when custom animation callbacks are advertised.
+        let delegate;
+        if (navigationTransition) {
+            if (!transitionControllerDelegate) {
+                transitionControllerDelegate = UINavigationControllerTransitionDelegateImpl.new();
+            }
+            delegate = transitionControllerDelegate;
         }
-        this._ios.controller.delegate = navControllerDelegate;
-        viewController[DELEGATE] = navControllerDelegate;
+        else {
+            if (!navControllerDelegate) {
+                navControllerDelegate = UINavigationControllerDelegateImpl.new();
+            }
+            delegate = navControllerDelegate;
+        }
+        this._ios.controller.delegate = delegate;
+        viewController[DELEGATE] = delegate;
         const nativeTransition = _getNativeTransition(navigationTransition, true, this.direction);
         if (!nativeTransition && navigationTransition) {
             if (navigationTransition.instance) {
@@ -282,11 +293,14 @@ export class Frame extends FrameBase {
         const heightAndState = View.resolveSizeAndState(height, height, heightMode, 0);
         this.setMeasuredDimension(widthAndState, heightAndState);
     }
-    layoutNativeView(left, top, right, bottom) {
-        //
-    }
     _setNativeViewFrame(nativeView, frame) {
-        //
+        // UIKit lays out the controller's view inside a container controller, but not inside a NativeScript view.
+        if (IOSHelper.isHostedInView(this)) {
+            super._setNativeViewFrame(nativeView, frame);
+        }
+    }
+    applySafeAreaInsets(frame) {
+        return IOSHelper.extendUnderContainerSafeArea(this.nativeViewProtected, frame);
     }
     // Emits an event whenever the UINavigationController shows a view controller.
     // Consumers can subscribe to 'viewControllerShown'
@@ -350,12 +364,36 @@ var TransitionDelegate = (function (_super) {
     };
     return TransitionDelegate;
 }(NSObject));
+function navigationControllerDidShow(navigationController, viewController, animated) {
+    if (Trace.isEnabled()) {
+        Trace.write('Frame.navigationController.DID_show(' + navigationController + ', ' + viewController + ', ' + animated + ');', Trace.categories.Debug);
+    }
+    const owner = navigationController.owner;
+    if (owner) {
+        owner._onViewControllerShown(viewController);
+    }
+    IOSHelper.invalidateStatusBarAppearance(navigationController, 'navigationControllerDidShowViewControllerAnimated');
+}
 var UINavigationControllerDelegateImpl = (function (_super) {
     __extends(UINavigationControllerDelegateImpl, _super);
     function UINavigationControllerDelegateImpl() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    UINavigationControllerDelegateImpl.prototype.navigationControllerAnimationControllerForOperationFromViewControllerToViewController = function (navigationController, operation, fromVC, toVC) {
+    UINavigationControllerDelegateImpl.prototype.navigationControllerDidShowViewControllerAnimated = function (navigationController, viewController, animated) {
+        navigationControllerDidShow(navigationController, viewController, animated);
+    };
+    UINavigationControllerDelegateImpl.ObjCProtocols = [UINavigationControllerDelegate];
+    return UINavigationControllerDelegateImpl;
+}(NSObject));
+var UINavigationControllerTransitionDelegateImpl = (function (_super) {
+    __extends(UINavigationControllerTransitionDelegateImpl, _super);
+    function UINavigationControllerTransitionDelegateImpl() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    UINavigationControllerTransitionDelegateImpl.prototype.navigationControllerDidShowViewControllerAnimated = function (navigationController, viewController, animated) {
+        navigationControllerDidShow(navigationController, viewController, animated);
+    };
+    UINavigationControllerTransitionDelegateImpl.prototype.navigationControllerAnimationControllerForOperationFromViewControllerToViewController = function (navigationController, operation, fromVC, toVC) {
         var _a;
         var viewController;
         switch (operation) {
@@ -399,7 +437,7 @@ var UINavigationControllerDelegateImpl = (function (_super) {
         }
         return null;
     };
-    UINavigationControllerDelegateImpl.prototype.navigationControllerInteractionControllerForAnimationController = function (navigationController, animationController) {
+    UINavigationControllerTransitionDelegateImpl.prototype.navigationControllerInteractionControllerForAnimationController = function (navigationController, animationController) {
         var _a, _b;
         var owner = navigationController.owner;
         if (owner) {
@@ -412,18 +450,8 @@ var UINavigationControllerDelegateImpl = (function (_super) {
         }
         return null;
     };
-    UINavigationControllerDelegateImpl.prototype.navigationControllerDidShowViewControllerAnimated = function (navigationController, viewController, animated) {
-        if (Trace.isEnabled()) {
-            Trace.write("Frame.navigationController.DID_show(" + navigationController + ", " + viewController + ", " + animated + ");", Trace.categories.Debug);
-        }
-        var owner = navigationController.owner;
-        if (owner) {
-            owner._onViewControllerShown(viewController);
-        }
-        IOSHelper.invalidateStatusBarAppearance(navigationController, "navigationControllerDidShowViewControllerAnimated");
-    };
-    UINavigationControllerDelegateImpl.ObjCProtocols = [UINavigationControllerDelegate];
-    return UINavigationControllerDelegateImpl;
+    UINavigationControllerTransitionDelegateImpl.ObjCProtocols = [UINavigationControllerDelegate];
+    return UINavigationControllerTransitionDelegateImpl;
 }(NSObject));
 var UINavigationControllerImpl = (function (_super) {
     __extends(UINavigationControllerImpl, _super);

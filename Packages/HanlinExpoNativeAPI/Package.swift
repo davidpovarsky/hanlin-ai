@@ -47,7 +47,7 @@ let package = Package(
                     "-DFOLLY_USE_LIBCPP=1",
                     "-DREACT_NATIVE_PRODUCTION=1",
                     "-DRN_DEBUG_STRING_CONVERTIBLE=0",
-                    "-DWORKLETS_VERSION=\"0.13.1\"",
+                    "-DWORKLETS_VERSION=0.13.0",
                     "-Wno-quoted-include-in-framework-header",
                     "-Wno-non-modular-include-in-framework-module",
                     "-I\(packageRoot)/Sources/HanlinExpoWorklets/include",

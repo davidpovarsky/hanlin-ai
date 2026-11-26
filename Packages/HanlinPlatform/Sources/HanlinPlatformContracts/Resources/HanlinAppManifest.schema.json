@@ -155,7 +155,7 @@
           "type": "array"
         },
         "id": {
-          "$ref": "#/$defs/identifier"
+          "$ref": "#/$defs/actionIdentifier"
         },
         "inputSchema": {
           "$ref": "#/$defs/schema"
@@ -178,6 +178,11 @@
         "risk"
       ],
       "type": "object"
+    },
+    "actionIdentifier": {
+      "maxLength": 255,
+      "pattern": "^[A-Za-z0-9]+(?:[._-][A-Za-z0-9]+)*(?![\\s\\S])",
+      "type": "string"
     },
     "appearance": {
       "additionalProperties": true,
@@ -331,7 +336,8 @@
             "hanlin-quickjs",
             "hanlin-node",
             "hanlin-python",
-            "hanlin-nativescript"
+            "hanlin-nativescript",
+            "hanlin-expo"
           ],
           "type": "string"
         }
@@ -357,7 +363,8 @@
         "translationUI",
         "backgroundTask",
         "spotlight",
-        "shareExtension"
+        "shareExtension",
+        "capture"
       ],
       "type": "string"
     },

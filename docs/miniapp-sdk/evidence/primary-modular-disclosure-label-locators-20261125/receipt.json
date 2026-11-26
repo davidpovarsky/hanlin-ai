@@ -1,0 +1,55 @@
+{
+  "schemaVersion": 1,
+  "createdAtUTC": "2026-11-25T03:55:18.140294+00:00",
+  "kind": "ORIGINAL_DISCLOSURE_LABEL_LOCATOR_CORRECTION",
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 1928,
+      "sha256": "e94aff805bf7977ebff5551d429f53a5239382c6f71f405a89e1654546819f42"
+    },
+    {
+      "path": "change.json",
+      "bytes": 2686,
+      "sha256": "a93531ed54097f7c8bcbcfae31633383a5b1e6027130ab0d5b9f6aad81263717"
+    },
+    {
+      "path": "original-api-bindings.json",
+      "bytes": 1036,
+      "sha256": "37fbb5a35bad4316e057be26540b8ecb9331ceda69e5f88b6975d6b16fa3986e"
+    },
+    {
+      "path": "source.patch",
+      "bytes": 8297,
+      "sha256": "023af0c740226b1a01fb48d13f44f0a814762ef5736f3f7dbcc291549ee3f506"
+    }
+  ],
+  "totalMemberBytes": 13947,
+  "sourceChanges": [
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/App.tsx",
+      "mode": "100644",
+      "before": {
+        "bytes": 25786,
+        "sha256": "4e8389eb6a232e6ed5db8273dd2686e45ab04edabd2e86bfea74cbdf862e5b7c"
+      },
+      "after": {
+        "bytes": 26038,
+        "sha256": "ac62c2f394dceedb422c0fbe05d4182afba07e1bf78fb15828d3f936d212ae8a"
+      }
+    },
+    {
+      "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "mode": "100644",
+      "before": {
+        "bytes": 76913,
+        "sha256": "93db32b6af9af1eeba85070086c5d0eb6b9b80198dc161004d5729c7cc38d4d0"
+      },
+      "after": {
+        "bytes": 78468,
+        "sha256": "84ede1a7dbafac2415c88cb276d2b04c0c0bce0a139f704b7737bcd307dd4ad8"
+      }
+    }
+  ],
+  "nativeExecution": "NOT_RUN"
+}

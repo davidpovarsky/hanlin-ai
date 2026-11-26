@@ -1,0 +1,28 @@
+Test Suite 'All tests' started at 2026-11-23 22:59:29.085
+Test Suite 'Debug-linux-aarch64.xctest' started at 2026-11-23 22:59:29.086
+Test Suite 'Debug-linux-aarch64.xctest' passed at 2026-11-23 22:59:29.086
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'All tests' passed at 2026-11-23 22:59:29.086
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+◇ Test run started.
+↳ Testing Library Version: 6.4.3 (ba0861fb203553c)
+↳ Target Platform: aarch64-unknown-linux-gnu
+◇ Suite "NativeScript shared module links" started.
+◇ Test aHostResourceLinkLeftByAnInterruptedOldAppRefreshesAfterAnAppUpdate() started.
+◇ Test existingUserPackagesAndScopesKeepTheirBytesWhileOriginalCoreRemainsResolvable() started.
+◇ Test anApplicationWithoutPrivateDependenciesUsesTheExistingWholeSharedTree() started.
+✔ Test aHostResourceLinkLeftByAnInterruptedOldAppRefreshesAfterAnAppUpdate() passed after 0.009 seconds.
+✔ Test anApplicationWithoutPrivateDependenciesUsesTheExistingWholeSharedTree() passed after 0.010 seconds.
+✔ Test existingUserPackagesAndScopesKeepTheirBytesWhileOriginalCoreRemainsResolvable() passed after 0.013 seconds.
+✔ Suite "NativeScript shared module links" passed after 0.013 seconds.
+✔ Test run with 3 tests in 1 suite passed after 0.013 seconds.
+Building for debugging...
+[Using on-disk description]
+[2 / 9] HanlinNativeScriptRuntime
+[7 / 12] SharedModuleTests-product
+[11 / 17] HanlinNativeScriptRuntime
+[15 / 18] SharedModuleTests-product
+[22 / 24] SharedModuleTests-test-runner
+[23 / 25] SharedModuleTests-test-runner
+[25 / 25] SharedModuleTests-test-runner
+Build complete! (2.42 secs)

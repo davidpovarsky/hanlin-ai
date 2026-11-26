@@ -1,0 +1,229 @@
+{
+  "schema": 1,
+  "id": "widget-host-action-queue",
+  "source": "542714964a0f12a964651c2306d5f992ca13ae85",
+  "status": "EXECUTED_PASS",
+  "startedAt": "2026-11-26T20:07:51.558246+00:00",
+  "argv": [
+    "xcrun",
+    "swift",
+    "test",
+    "--package-path",
+    "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinPlatform",
+    "--scratch-path",
+    "/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/swiftpm-widget-host-actions",
+    "--enable-swift-testing",
+    "--no-parallel",
+    "--filter",
+    "HanlinWidgetHostActionTests"
+  ],
+  "commandCeilingSeconds": 1200,
+  "expectedDefinitions": 10,
+  "expectedCases": 16,
+  "proofs": [
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-swiftpm-v1/original/paired-product/widget-host-action-queue-tests.log",
+      "bytes": 29719,
+      "sha256": "c607b35313eb6ab4334a30bf4741fb0aa7ca6a70cea40a71c5880923633bd2bd"
+    }
+  ],
+  "commandExitCode": 0,
+  "verification": {
+    "observedFunctions": 10,
+    "observedParameterInstances": 16,
+    "failedFunctions": 0,
+    "skippedFunctions": 0,
+    "functionResults": [
+      {
+        "name": "ordinaryJSONParametersKeepNullNumbersUnicodeAndOmission()",
+        "status": "EXECUTED_PASS",
+        "instances": 1,
+        "terminal": {
+          "name": "ordinaryJSONParametersKeepNullNumbersUnicodeAndOmission()",
+          "parameterCount": null,
+          "line": 533,
+          "marker": "\u2714 Test ordinaryJSONParametersKeepNullNumbersUnicodeAndOmission() passed after 0.001 seconds."
+        },
+        "argumentStarts": []
+      },
+      {
+        "name": "currentOriginQueuesExactDeclaredTargetAndRetainsNull(engine:)",
+        "status": "EXECUTED_PASS",
+        "instances": 2,
+        "terminal": {
+          "name": "currentOriginQueuesExactDeclaredTargetAndRetainsNull(engine:)",
+          "parameterCount": 2,
+          "line": 537,
+          "marker": "\u2714 Test currentOriginQueuesExactDeclaredTargetAndRetainsNull(engine:) with 2 test cases passed after 0.023 seconds."
+        },
+        "argumentStarts": [
+          {
+            "name": "currentOriginQueuesExactDeclaredTargetAndRetainsNull(engine:)",
+            "label": "engine",
+            "value": "expo",
+            "rendered": ".expo",
+            "line": 535,
+            "marker": "\u25c7 Test case passing 1 argument engine \u2192 .expo to currentOriginQueuesExactDeclaredTargetAndRetainsNull(engine:) started."
+          },
+          {
+            "name": "currentOriginQueuesExactDeclaredTargetAndRetainsNull(engine:)",
+            "label": "engine",
+            "value": "scriptwidget",
+            "rendered": ".scriptwidget",
+            "line": 536,
+            "marker": "\u25c7 Test case passing 1 argument engine \u2192 .scriptwidget to currentOriginQueuesExactDeclaredTargetAndRetainsNull(engine:) started."
+          }
+        ]
+      },
+      {
+        "name": "liveActivityParametersOverrideDefaultsWithoutChangingSourceIdentity()",
+        "status": "EXECUTED_PASS",
+        "instances": 1,
+        "terminal": {
+          "name": "liveActivityParametersOverrideDefaultsWithoutChangingSourceIdentity()",
+          "parameterCount": null,
+          "line": 539,
+          "marker": "\u2714 Test liveActivityParametersOverrideDefaultsWithoutChangingSourceIdentity() passed after 0.006 seconds."
+        },
+        "argumentStarts": []
+      },
+      {
+        "name": "nativeNodeLiveActivityRecordsItsRealRouteAndRetainsLegacyCompatibility()",
+        "status": "EXECUTED_PASS",
+        "instances": 1,
+        "terminal": {
+          "name": "nativeNodeLiveActivityRecordsItsRealRouteAndRetainsLegacyCompatibility()",
+          "parameterCount": null,
+          "line": 541,
+          "marker": "\u2714 Test nativeNodeLiveActivityRecordsItsRealRouteAndRetainsLegacyCompatibility() passed after 0.010 seconds."
+        },
+        "argumentStarts": []
+      },
+      {
+        "name": "optionalPresentationKeepsRealHandlerButPanelOnlyCannotQueue()",
+        "status": "EXECUTED_PASS",
+        "instances": 1,
+        "terminal": {
+          "name": "optionalPresentationKeepsRealHandlerButPanelOnlyCannotQueue()",
+          "parameterCount": null,
+          "line": 543,
+          "marker": "\u2714 Test optionalPresentationKeepsRealHandlerButPanelOnlyCannotQueue() passed after 0.015 seconds."
+        },
+        "argumentStarts": []
+      },
+      {
+        "name": "explicitNonceRetainsReceiptAndRejectsConflictingParameters()",
+        "status": "EXECUTED_PASS",
+        "instances": 1,
+        "terminal": {
+          "name": "explicitNonceRetainsReceiptAndRejectsConflictingParameters()",
+          "parameterCount": null,
+          "line": 545,
+          "marker": "\u2714 Test explicitNonceRetainsReceiptAndRejectsConflictingParameters() passed after 0.024 seconds."
+        },
+        "argumentStarts": []
+      },
+      {
+        "name": "invalidCurrentOriginOrTargetDoesNotEnqueue(reason:)",
+        "status": "EXECUTED_PASS",
+        "instances": 6,
+        "terminal": {
+          "name": "invalidCurrentOriginOrTargetDoesNotEnqueue(reason:)",
+          "parameterCount": 6,
+          "line": 553,
+          "marker": "\u2714 Test invalidCurrentOriginOrTargetDoesNotEnqueue(reason:) with 6 test cases passed after 0.043 seconds."
+        },
+        "argumentStarts": [
+          {
+            "name": "invalidCurrentOriginOrTargetDoesNotEnqueue(reason:)",
+            "label": "reason",
+            "value": "disabled",
+            "rendered": "\"disabled\"",
+            "line": 547,
+            "marker": "\u25c7 Test case passing 1 argument reason \u2192 \"disabled\" to invalidCurrentOriginOrTargetDoesNotEnqueue(reason:) started."
+          },
+          {
+            "name": "invalidCurrentOriginOrTargetDoesNotEnqueue(reason:)",
+            "label": "reason",
+            "value": "removedVariant",
+            "rendered": "\"removedVariant\"",
+            "line": 548,
+            "marker": "\u25c7 Test case passing 1 argument reason \u2192 \"removedVariant\" to invalidCurrentOriginOrTargetDoesNotEnqueue(reason:) started."
+          },
+          {
+            "name": "invalidCurrentOriginOrTargetDoesNotEnqueue(reason:)",
+            "label": "reason",
+            "value": "staleProgram",
+            "rendered": "\"staleProgram\"",
+            "line": 549,
+            "marker": "\u25c7 Test case passing 1 argument reason \u2192 \"staleProgram\" to invalidCurrentOriginOrTargetDoesNotEnqueue(reason:) started."
+          },
+          {
+            "name": "invalidCurrentOriginOrTargetDoesNotEnqueue(reason:)",
+            "label": "reason",
+            "value": "missingTarget",
+            "rendered": "\"missingTarget\"",
+            "line": 550,
+            "marker": "\u25c7 Test case passing 1 argument reason \u2192 \"missingTarget\" to invalidCurrentOriginOrTargetDoesNotEnqueue(reason:) started."
+          },
+          {
+            "name": "invalidCurrentOriginOrTargetDoesNotEnqueue(reason:)",
+            "label": "reason",
+            "value": "wrongProduct",
+            "rendered": "\"wrongProduct\"",
+            "line": 551,
+            "marker": "\u25c7 Test case passing 1 argument reason \u2192 \"wrongProduct\" to invalidCurrentOriginOrTargetDoesNotEnqueue(reason:) started."
+          },
+          {
+            "name": "invalidCurrentOriginOrTargetDoesNotEnqueue(reason:)",
+            "label": "reason",
+            "value": "duplicateTarget",
+            "rendered": "\"duplicateTarget\"",
+            "line": 552,
+            "marker": "\u25c7 Test case passing 1 argument reason \u2192 \"duplicateTarget\" to invalidCurrentOriginOrTargetDoesNotEnqueue(reason:) started."
+          }
+        ]
+      },
+      {
+        "name": "queuedOriginIsRevalidatedAfterDisableAndCancellationDoesNotExecute()",
+        "status": "EXECUTED_PASS",
+        "instances": 1,
+        "terminal": {
+          "name": "queuedOriginIsRevalidatedAfterDisableAndCancellationDoesNotExecute()",
+          "parameterCount": null,
+          "line": 555,
+          "marker": "\u2714 Test queuedOriginIsRevalidatedAfterDisableAndCancellationDoesNotExecute() passed after 0.011 seconds."
+        },
+        "argumentStarts": []
+      },
+      {
+        "name": "continuationUsesCanonicalStoreRootBeforeAndAfterCreation()",
+        "status": "EXECUTED_PASS",
+        "instances": 1,
+        "terminal": {
+          "name": "continuationUsesCanonicalStoreRootBeforeAndAfterCreation()",
+          "parameterCount": null,
+          "line": 557,
+          "marker": "\u2714 Test continuationUsesCanonicalStoreRootBeforeAndAfterCreation() passed after 0.004 seconds."
+        },
+        "argumentStarts": []
+      },
+      {
+        "name": "activationBeforeEnqueueUsesExistingDrainAndMissingHostKeepsQueue()",
+        "status": "EXECUTED_PASS",
+        "instances": 1,
+        "terminal": {
+          "name": "activationBeforeEnqueueUsesExistingDrainAndMissingHostKeepsQueue()",
+          "parameterCount": null,
+          "line": 559,
+          "marker": "\u2714 Test activationBeforeEnqueueUsesExistingDrainAndMissingHostKeepsQueue() passed after 0.010 seconds."
+        },
+        "argumentStarts": []
+      }
+    ],
+    "suitePassMarker": "\u2714 Suite \"Declared widget Host actions and canonical delivery\" passed after 0.154 seconds.",
+    "runPassMarker": "\u2714 Test run with 10 tests in 1 suite passed after 0.155 seconds.",
+    "countBoundary": "Function terminal counts and actual argument markers establish parameter invocations; the native aggregate counts functions."
+  },
+  "finishedAt": "2026-11-26T20:10:26.241022+00:00"
+}

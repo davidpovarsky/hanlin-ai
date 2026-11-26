@@ -1,0 +1,22 @@
+{
+  "observedAt": "2026-11-25T16:52:41.597515+00:00",
+  "outputExists": false,
+  "primaryBaseline": 20284.01731496104,
+  "primaryStatus": "PAUSED_AFTER_PHASE",
+  "controllerPID": null,
+  "log": "Traceback (most recent call last):\n  File \"/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-recovery-controller-v11.py\", line 770, in <module>\n    raise SystemExit(main())\n                     ^^^^^^\n  File \"/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-recovery-controller-v11.py\", line 392, in main\n    assert not live_group(old[\"phasePID\"]), \"Prior owned native process group remains\"\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError: Prior owned native process group remains\n",
+  "files": [
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v11-launch.log",
+      "bytes": 563,
+      "sha256": "959401d96ba66b8a1343a8c74d7181f018e2ba913964702ecdb59e521fbcaf6e",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-launch.log"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/state.json",
+      "bytes": 121947,
+      "sha256": "b79929000b15193245f1607592d925c606bf6c8a5a8c8592dcf8460f633de9a5",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-rejected-primary-state.json"
+    }
+  ]
+}

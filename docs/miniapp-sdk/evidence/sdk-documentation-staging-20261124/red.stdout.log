@@ -1,0 +1,25 @@
+✖ SDK documentation staging retains exact guides without excluded evidence (40.516395ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 133.705933
+
+✖ failing tests:
+
+test at Scripts/MiniApps/Tests/stage-sdk.test.mjs:71:1
+✖ SDK documentation staging retains exact guides without excluded evidence (40.516395ms)
+  AssertionError [ERR_ASSERTION]: Missing expected rejection: evidence is outside the existing SDK source-input policy
+      at async TestContext.<anonymous> (file:///mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/MiniApps/Tests/stage-sdk.test.mjs:95:7)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: undefined,
+    expected: { code: 'ENOENT' },
+    operator: 'rejects',
+    diff: 'simple'
+  }

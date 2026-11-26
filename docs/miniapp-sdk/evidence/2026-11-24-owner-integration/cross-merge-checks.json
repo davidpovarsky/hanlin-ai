@@ -1,0 +1,74 @@
+[
+  {
+    "command": [
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "Scripts/CI/IntegrationValidation",
+      "-p",
+      "test_project_graph.py",
+      "-v"
+    ],
+    "exitCode": 0,
+    "cases": 19,
+    "seconds": 0.597,
+    "log": "cross-merge-check-1.log"
+  },
+  {
+    "command": [
+      "python3",
+      "Scripts/ProductSplit/verify_targets.py"
+    ],
+    "exitCode": 1,
+    "log": "cross-merge-check-2.log",
+    "cause": "Auto-merge duplicated already-present original external session source and two bridge products; deduplicated preserving their existing canonical order."
+  },
+  {
+    "command": [
+      "python3",
+      "Scripts/ProductSplit/verify_targets.py"
+    ],
+    "exitCode": 0,
+    "seconds": 0.171,
+    "log": "cross-merge-check-3.log"
+  },
+  {
+    "command": [
+      "python3",
+      "Scripts/SDK/generate_manifest.py",
+      "--check"
+    ],
+    "exitCode": 0,
+    "seconds": 2.13,
+    "log": "cross-merge-check-4.log"
+  },
+  {
+    "command": [
+      "python3",
+      "Scripts/SDK/update_project.py",
+      "--check"
+    ],
+    "exitCode": 0,
+    "seconds": 0.573,
+    "log": "cross-merge-check-5.log"
+  },
+  {
+    "check": "Python syntax and exact11 existing MiniApps XCTest selector methods",
+    "status": "EXECUTED_PASS",
+    "selectors": [
+      "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch",
+      "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents",
+      "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoNativeAPIUsesActualUIKitAndWorklets",
+      "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoWidgetsUsesOriginalTimelinesAndLiveActivities",
+      "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText",
+      "HanlinMiniAppsTests/CrossAppInvocationTests/testCancelAndDisplayDoneReturnNoDocumentMutation",
+      "HanlinMiniAppsTests/CrossAppInvocationTests/testReusingValueWindowKeepsItsInvocationBindingCurrent",
+      "HanlinMiniAppsTests/CrossAppInvocationTests/testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained",
+      "HanlinMiniAppsTests/CrossAppInvocationTests/testActualIncomingRequestsCreateDistinctIPadScenes",
+      "HanlinMiniAppsTests/NativeScriptWindowOwnershipTests/testUnrelatedAndLateWindowCleanupPreservesNativeScriptOwner",
+      "HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests/testExternalInvocationSurvivesNestedFullScreenModal"
+    ]
+  }
+]

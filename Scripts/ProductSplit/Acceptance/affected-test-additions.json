@@ -1,0 +1,85 @@
+{
+  "schema": 1,
+  "source": "84dd7c19332b5f964155f2ff477b9260dff5bd59",
+  "sourceTree": "2db8a085f2b9e7596b88d8e24b958db841707d34",
+  "candidateManifest": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/swiftpm-failure-candidate-v2/manifest.json",
+    "bytes": 44576,
+    "sha256": "27288545860b42db145e21ad7e0a38c659d77c587442bdef70789d1b92ba494c"
+  },
+  "testDeclarations": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/swiftpm-failure-candidate-v2/test-declarations.json",
+    "bytes": 3082,
+    "sha256": "4a2b023e940a3241dae65ca8d192e8b88387c27e057d8f1be143950bd5db295c"
+  },
+  "additions": [
+    {
+      "family": "HanlinDualWidgetEnginesTests",
+      "sourcePath": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinScriptWidgetExecutionLifetimeTests.swift",
+      "definitions": [
+        {
+          "function": "scriptWidgetDefaultLifetimeAllowsHTTPBeyondFiveSeconds",
+          "functionSignature": "scriptWidgetDefaultLifetimeAllowsHTTPBeyondFiveSeconds()",
+          "declaration": "func scriptWidgetDefaultLifetimeAllowsHTTPBeyondFiveSeconds() throws",
+          "displayName": null,
+          "declaredSuite": "HanlinDualWidgetEnginesTests",
+          "module": "HanlinScriptExtensionsTests",
+          "annotation": "@Test",
+          "newSinceC34": true,
+          "parameterValues": [],
+          "parameterIdentityBoundary": null
+        },
+        {
+          "function": "scriptWidgetCallerDeadlineCancelsRealTransport",
+          "functionSignature": "scriptWidgetCallerDeadlineCancelsRealTransport()",
+          "declaration": "func scriptWidgetCallerDeadlineCancelsRealTransport() async throws",
+          "displayName": null,
+          "declaredSuite": "HanlinDualWidgetEnginesTests",
+          "module": "HanlinScriptExtensionsTests",
+          "annotation": "@Test",
+          "newSinceC34": true,
+          "parameterValues": [],
+          "parameterIdentityBoundary": null
+        },
+        {
+          "function": "scriptWidgetTaskCancellationStopsTransportWithoutCommittingStorage",
+          "functionSignature": "scriptWidgetTaskCancellationStopsTransportWithoutCommittingStorage()",
+          "declaration": "func scriptWidgetTaskCancellationStopsTransportWithoutCommittingStorage() async throws",
+          "displayName": null,
+          "declaredSuite": "HanlinDualWidgetEnginesTests",
+          "module": "HanlinScriptExtensionsTests",
+          "annotation": "@Test",
+          "newSinceC34": true,
+          "parameterValues": [],
+          "parameterIdentityBoundary": null
+        },
+        {
+          "function": "scriptWidgetCancellationRejectsQueuedPreparationBeforeSideEffects",
+          "functionSignature": "scriptWidgetCancellationRejectsQueuedPreparationBeforeSideEffects()",
+          "declaration": "func scriptWidgetCancellationRejectsQueuedPreparationBeforeSideEffects() async throws",
+          "displayName": null,
+          "declaredSuite": "HanlinDualWidgetEnginesTests",
+          "module": "HanlinScriptExtensionsTests",
+          "annotation": "@Test",
+          "newSinceC34": true,
+          "parameterValues": [],
+          "parameterIdentityBoundary": null
+        },
+        {
+          "function": "scriptWidgetDeadlineInterruptsCompilerGuardedSynchronousLoop",
+          "functionSignature": "scriptWidgetDeadlineInterruptsCompilerGuardedSynchronousLoop()",
+          "declaration": "func scriptWidgetDeadlineInterruptsCompilerGuardedSynchronousLoop() async throws",
+          "displayName": null,
+          "declaredSuite": "HanlinDualWidgetEnginesTests",
+          "module": "HanlinScriptExtensionsTests",
+          "annotation": "@Test",
+          "newSinceC34": true,
+          "parameterValues": [],
+          "parameterIdentityBoundary": null
+        }
+      ]
+    }
+  ],
+  "sourceProducerBoundary": "This SHA/tree produced the test inventory. A later workflow/generated-doc carrier may have another HEAD; the consuming runner must authenticate the exact source file bytes and its actual consumer SHA separately.",
+  "nativeExecution": false
+}

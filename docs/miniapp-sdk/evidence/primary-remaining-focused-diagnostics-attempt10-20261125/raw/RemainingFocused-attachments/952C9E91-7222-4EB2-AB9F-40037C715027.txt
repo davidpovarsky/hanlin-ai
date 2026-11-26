@@ -1,0 +1,311 @@
+Attributes: Application, 0x1131ad540, pid: 60442, label: 'Hanlin MiniApps'
+Element subtree:
+ →Application, 0x1131ad540, pid: 60442, label: 'Hanlin MiniApps'
+    Window (Main), 0x1131ad680, {{0.0, 0.0}, {1032.0, 1376.0}}
+      Other, 0x1131ad2c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+      Other, 0x1131ad400, {{0.0, 0.0}, {1032.0, 1376.0}}
+        Other, 0x1131ad040, {{0.0, 0.0}, {1032.0, 1376.0}}
+          Other, 0x1131ad180, {{0.0, 0.0}, {1032.0, 1376.0}}
+            Other, 0x1131ac640, {{0.0, 0.0}, {1032.0, 1376.0}}
+              Other, 0x1131acc80, {{0.0, 0.0}, {1032.0, 1376.0}}
+                NavigationBar, 0x1131acdc0, {{0.0, 32.0}, {1032.0, 106.0}}, identifier: 'Apps'
+                  Other, 0x1131acf00, {{14.0, 36.0}, {43.5, 36.0}}
+                    Other, 0x1131ac780, {{14.0, 36.0}, {43.5, 36.0}}
+                      Button, 0x1131acb40, {{14.0, 36.0}, {43.5, 36.0}}, label: 'Edit'
+                  Button, 0x1131aca00, {{73.5, 36.0}, {40.0, 36.0}}, identifier: 'hanlin-apps-torah-capture', label: 'לימוד מצילום'
+                  Button, 0x1131ac8c0, {{618.5, 36.0}, {37.0, 36.0}}, identifier: 'hanlin-apps-add', label: 'hanlin-apps-add'
+                  Other, 0x1131ac500, {{671.5, 36.0}, {41.0, 36.0}}
+                    Other, 0x1131ac140, {{671.5, 36.0}, {41.0, 36.0}}
+                      Button, 0x1131ac280, {{671.5, 36.0}, {41.0, 36.0}}, identifier: 'miniapps-preferences', label: 'Edit MiniApps and windows'
+                  Button, 0x1131ac3c0, {{728.5, 36.0}, {37.5, 36.0}}, identifier: 'hanlin-miniapps-transfer', label: 'Transfer from Hanlin'
+                  SearchField, 0x1131ac000, {{782.0, 32.0}, {240.0, 44.0}}, label: 'Search Apps', placeholderValue: 'Search Apps'
+                    Image, 0x1131ae440, {{794.0, 43.5}, {20.5, 20.0}}, identifier: 'magnifyingglass', label: 'Search'
+                  StaticText, 0x1130b1b80, {{20.0, 89.5}, {83.0, 41.0}}, label: 'Apps'
+                Other, 0x1130b1e00, {{0.0, 0.0}, {1032.0, 1376.0}}
+                  Other, 0x1130b1f40, {{0.0, 0.0}, {1032.0, 1376.0}}
+                    Other, 0x1130b2080, {{0.0, 0.0}, {1032.0, 1376.0}}
+                      Other, 0x1130b21c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+                        ScrollView, 0x1130b2300, {{0.0, 0.0}, {1032.0, 1376.0}}, identifier: 'hanlin-apps-catalog'
+                          Other, 0x1130b2440, {{0.0, 0.0}, {1032.0, 1376.0}}
+                            Other, 0x1130b2580, {{0.0, 0.0}, {1032.0, 126.0}}
+                          Other, 0x1130b26c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+                          Other, 0x1130b2800, {{0.0, 138.0}, {1032.0, 760.0}}
+                            Other, 0x1130b2940, {{23.5, 156.0}, {985.0, 724.0}}
+                              StaticText, 0x1135f2940, {{24.0, 156.0}, {54.0, 26.5}}, identifier: 'hanlin-miniapps-section-swift', label: 'Swift'
+                              Other, 0x1135f0dc0, {{23.5, 210.0}, {985.0, 169.0}}
+                                Button, 0x1135f0f00, {{23.5, 210.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Swift Parity', label: 'Swift Parity'
+                                  Image, 0x1135f1040, {{204.0, 231.0}, {30.5, 27.0}}, identifier: 'swift', label: 'Swift Programming Language Bird Logo'
+                                  StaticText, 0x1135f1180, {{42.0, 318.0}, {105.5, 24.0}}, label: 'Swift Parity'
+                                  StaticText, 0x1135f12c0, {{42.0, 346.0}, {139.0, 14.5}}, label: 'Native SwiftPM Mini App'
+                                Button, 0x1135f1400, {{36.0, 222.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-hanlin.demo.swift-parity', label: 'App Actions'
+                                  Button, 0x1135f1540, {{36.0, 222.5}, {38.0, 38.0}}
+                                    Image, 0x1135f1680, {{47.0, 239.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                                Button, 0x1135f17c0, {{274.5, 210.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Sefaria', label: 'Sefaria'
+                                  Image, 0x1135f1900, {{451.0, 231.0}, {34.0, 30.0}}, identifier: 'books.vertical.fill', label: 'Bookshelf'
+                                  StaticText, 0x1135f1a40, {{293.0, 302.0}, {64.5, 24.0}}, label: 'Sefaria'
+                                  StaticText, 0x1135f1b80, {{293.0, 330.0}, {132.0, 30.5}}, label: 'Search, read, save and revisit sources'
+                                Button, 0x1135f1cc0, {{287.0, 222.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-nativeapp.sefaria', label: 'App Actions'
+                                  Button, 0x1135f1e00, {{287.0, 222.5}, {38.0, 38.0}}
+                                    Image, 0x1135f1f40, {{298.0, 239.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                                Button, 0x1135f2080, {{525.5, 210.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Text Studio', label: 'Text Studio'
+                                  Image, 0x1135f21c0, {{702.5, 231.0}, {33.0, 20.5}}, identifier: 'textformat.alt', label: 'Text Formatting'
+                                  StaticText, 0x1135f2300, {{544.0, 302.0}, {103.0, 24.0}}, label: 'Text Studio'
+                                  StaticText, 0x1135f2440, {{544.0, 330.0}, {168.5, 30.5}}, label: 'Write, inspect, transform and keep history'
+                                Button, 0x1135f2580, {{538.0, 222.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-nativeapp.textstudio', label: 'App Actions'
+                                  Button, 0x1135f26c0, {{538.0, 222.5}, {38.0, 38.0}}
+                                    Image, 0x1135f2800, {{549.0, 239.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                                Button, 0x109881680, {{776.5, 210.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Wikipedia', label: 'Wikipedia'
+                                  Image, 0x109883340, {{960.0, 231.0}, {27.5, 27.5}}, identifier: 'globe.americas.fill', label: 'Globe Showing The Americas, Filled'
+                                  StaticText, 0x1098817c0, {{795.0, 302.0}, {90.5, 24.0}}, label: 'Wikipedia'
+                                  StaticText, 0x109881180, {{795.0, 330.0}, {103.0, 30.5}}, label: 'Explore, save and revisit knowledge'
+                                Button, 0x109883e80, {{789.0, 222.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-nativeapp.wikipedia', label: 'App Actions'
+                                  Button, 0x109882300, {{789.0, 222.5}, {38.0, 38.0}}
+                                    Image, 0x1098821c0, {{800.0, 239.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                              StaticText, 0x109881e00, {{24.0, 406.5}, {127.5, 26.5}}, identifier: 'hanlin-miniapps-section-nativeScript', label: 'NativeScript'
+                              Other, 0x109883980, {{23.5, 460.5}, {232.0, 169.0}}
+                                Button, 0x109883ac0, {{23.5, 460.5}, {232.0, 169.0}}, identifier: 'hanlin-package-card-HanlinScript Parity', label: 'HanlinScript Parity'
+                                  StaticText, 0x109883840, {{49.0, 483.0}, {29.5, 13.5}}, label: 'BETA'
+                                  Image, 0x109883c00, {{202.0, 481.5}, {31.5, 25.0}}, identifier: 'terminal.fill', label: 'Terminal Command Prompt, Filled'
+                                  StaticText, 0x113584000, {{42.0, 552.5}, {171.0, 24.0}}, label: 'HanlinScript Parity'
+                                  StaticText, 0x113584140, {{42.0, 580.5}, {194.5, 30.5}}, label: 'Real HanlinScript parity MiniApp with deterministic Node, Python, JavaScript, and HTTPS execution.'
+                                Button, 0x113586800, {{36.0, 473.0}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-hanlin.demo.script-parity', label: 'App Actions'
+                                  Button, 0x113586940, {{36.0, 473.0}, {38.0, 38.0}}
+                                    Image, 0x113586a80, {{47.0, 490.0}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                              StaticText, 0x113586bc0, {{24.0, 657.0}, {51.0, 26.5}}, identifier: 'hanlin-miniapps-section-expo', label: 'Expo'
+                              Other, 0x113586d00, {{23.5, 711.0}, {232.0, 169.0}}
+                                Button, 0x1135861c0, {{23.5, 711.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-חיפוש טקסטים מודולרי — Expo', label: 'חיפוש טקסטים מודולרי — Expo'
+                                  Image, 0x113586300, {{207.5, 732.0}, {26.5, 26.5}}, identifier: 'magnifyingglass', label: 'Search'
+                                  StaticText, 0x113586440, {{42.0, 803.0}, {195.0, 24.0}}, label: 'חיפוש טקסטים מודולרי — Expo'
+                                  StaticText, 0x113586580, {{42.0, 831.0}, {194.5, 30.5}}, label: 'Original native Expo search app, Share, interactive native Shortcuts snippets and editable Translation UI with original ScriptWidget services.'
+                                Button, 0x1135866c0, {{36.0, 723.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-script-470d111992ef6fd2dfdc24b6', label: 'App Actions'
+                                  Button, 0x113585b80, {{36.0, 723.5}, {38.0, 38.0}}
+                                    Image, 0x113585cc0, {{47.0, 740.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                          Other, 0x113585e00, {{999.0, 86.0}, {30.0, 1260.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                            Other, 0x113585f40, {{1026.0, 547.0}, {3.0, 796.0}}
+                          Other, 0x113586080, {{999.0, 86.0}, {30.0, 1260.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                            Other, 0x113585540, {{1026.0, 547.0}, {3.0, 796.0}}
+                Toolbar, 0x113585680, {{0.0, 0.0}, {1032.0, 1376.0}}, identifier: 'Toolbar', label: 'Toolbar'
+                  Other, 0x1135857c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+      Other, 0x113585900, {{0.0, 0.0}, {1032.0, 1376.0}}
+        Other, 0x113585a40, {{0.0, 0.0}, {1032.0, 1376.0}}
+          Other, 0x113584f00, {{0.0, 0.0}, {1032.0, 1376.0}}
+            Other, 0x113585040, {{0.0, 0.0}, {1032.0, 1376.0}}
+              NavigationBar, 0x113585180, {{0.0, 32.0}, {1032.0, 54.0}}, identifier: 'Text Search'
+                Other, 0x1135852c0, {{659.0, 36.0}, {67.0, 36.0}}
+                  Other, 0x113585400, {{659.0, 36.0}, {67.0, 36.0}}
+                    Button, 0x1135848c0, {{659.0, 36.0}, {67.0, 36.0}}, identifier: 'hanlin-script-app-close', label: 'Close'
+                SearchField, 0x113584a00, {{742.0, 32.0}, {280.0, 44.0}}, label: 'Search a word, phrase, or source', placeholderValue: 'Search a word, phrase, or source', value: In the beginning G...
+                  Image, 0x113584b40, {{754.0, 43.5}, {20.5, 20.0}}, identifier: 'magnifyingglass', label: 'Search'
+                  Button, 0x113584c80, {{987.5, 43.5}, {20.5, 20.5}}, label: 'Clear text'
+              Other, 0x113584dc0, {{0.0, 0.0}, {1032.0, 1376.0}}
+                Other, 0x113584280, {{0.0, 0.0}, {1032.0, 1376.0}}
+                  Other, 0x1135843c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+                    Other, 0x113584500, {{0.0, 0.0}, {1032.0, 1376.0}}
+                      Other, 0x113584640, {{0.0, 86.0}, {1032.0, 1270.0}}
+                        Other, 0x113584780, {{0.0, 86.0}, {1032.0, 1270.0}}
+                          Other, 0x1131a4000, {{0.0, 86.0}, {1032.0, 1270.0}}
+                            Other, 0x1131a4140, {{0.0, 86.0}, {1032.0, 1270.0}}
+                              Other, 0x1131a4280, {{0.0, 86.0}, {1032.0, 1270.0}}
+                                Other, 0x1131a43c0, {{0.0, 86.0}, {1032.0, 1270.0}}
+                                  Other, 0x1131a4500, {{0.0, 86.0}, {1032.0, 1270.0}}
+                                    CollectionView, 0x1131a4640, {{0.0, 86.0}, {1032.0, 1270.0}}
+                                      Other, 0x1131a4780, {{-20.0, -2454.0}, {1072.0, 2910.0}}
+                                      Cell, 0x1131a48c0, {{20.0, 86.0}, {992.0, 40.5}}
+                                        Other, 0x1131a4a00, {{20.0, 86.0}, {992.0, 40.5}}
+                                        Other, 0x1131a4b40, {{20.0, 86.0}, {992.0, 40.5}}
+                                          Other, 0x1131a4c80, {{20.0, 86.0}, {992.0, 40.5}}
+                                            Other, 0x1131a4dc0, {{20.0, 86.0}, {992.0, 40.5}}
+                                              StaticText, 0x1131a4f00, {{20.0, 86.0}, {992.0, 40.5}}, label: 'Search'
+                                      Cell, 0x1131a5040, {{20.0, 126.5}, {992.0, 52.0}}
+                                        Other, 0x1131a5180, {{20.0, 126.5}, {992.0, 52.0}}
+                                          Other, 0x1131a52c0, {{20.0, 126.5}, {992.0, 52.0}}
+                                        Other, 0x1131a5400, {{20.0, 126.5}, {992.0, 52.0}}
+                                          Other, 0x1131a5540, {{20.0, 126.5}, {992.0, 52.0}}
+                                            Other, 0x1131a5680, {{20.0, 126.5}, {992.0, 52.0}}
+                                              StaticText, 0x1131a57c0, {{20.0, 126.5}, {992.0, 52.0}}, label: 'Hanlin Native Searchable 1.2.0'
+                                      Cell, 0x1131a5900, {{20.0, 178.5}, {992.0, 52.0}}
+                                        Other, 0x1131a5a40, {{20.0, 178.5}, {992.0, 52.0}}
+                                          Other, 0x1131a5b80, {{20.0, 178.5}, {992.0, 52.0}}
+                                        Other, 0x1131a5cc0, {{20.0, 178.5}, {992.0, 52.0}}
+                                          Other, 0x1131a5e00, {{20.0, 178.5}, {992.0, 52.0}}
+                                            Other, 0x1131a5f40, {{20.0, 178.5}, {992.0, 52.0}}
+                                              Button, 0x1131a6080, {{20.0, 178.5}, {992.0, 52.0}}, label: 'Search now'
+                                                StaticText, 0x1131a61c0, {{863.0, 194.0}, {127.5, 21.0}}, label: 'Search now'
+                                                Image, 0x1131a6300, {{969.5, 194.0}, {21.0, 21.0}}, identifier: 'magnifyingglass', label: 'Search'
+                                      Other, 0x1131a6440, {{40.0, 177.5}, {952.0, 1.0}}
+                                      Cell, 0x1131a6580, {{20.0, 230.5}, {992.0, 52.0}}
+                                        Other, 0x1131a66c0, {{20.0, 230.5}, {992.0, 52.0}}
+                                          Other, 0x1131a6800, {{20.0, 230.5}, {992.0, 52.0}}
+                                        Other, 0x1131a6940, {{20.0, 230.5}, {992.0, 52.0}}
+                                          Other, 0x1131a6a80, {{20.0, 230.5}, {992.0, 52.0}}
+                                            Other, 0x1131a6bc0, {{20.0, 230.5}, {992.0, 52.0}}
+                                              Button, 0x1131a6d00, {{20.0, 230.5}, {992.0, 52.0}}, label: 'Check connection'
+                                                StaticText, 0x1131a6e40, {{814.0, 245.5}, {177.0, 22.0}}, label: 'Check connection'
+                                                Image, 0x1131a6f80, {{969.0, 245.5}, {22.0, 22.0}}, identifier: 'network', label: 'Network Nodes Connected By Lines'
+                                      Other, 0x1131a70c0, {{40.0, 229.5}, {912.0, 1.0}}
+                                      Cell, 0x1131a7200, {{20.0, 282.5}, {992.0, 52.0}}
+                                        Other, 0x1131a7340, {{20.0, 282.5}, {992.0, 52.0}}
+                                          Other, 0x1131a7480, {{20.0, 282.5}, {992.0, 52.0}}
+                                        Other, 0x1131a75c0, {{20.0, 282.5}, {992.0, 52.0}}
+                                          Other, 0x1131a7700, {{20.0, 282.5}, {992.0, 52.0}}
+                                            Other, 0x1131a7840, {{20.0, 282.5}, {992.0, 52.0}}
+                                              Button, 0x1131a7980, {{20.0, 282.5}, {992.0, 52.0}}, label: 'Search options'
+                                                Image, 0x1131a7ac0, {{42.5, 302.5}, {7.0, 12.0}}, identifier: 'chevron.forward'
+                                                StaticText, 0x1131a7c00, {{877.5, 298.2}, {114.5, 20.5}}, label: 'Search options'
+                                      Other, 0x1131a7d40, {{40.0, 281.5}, {912.0, 1.0}}
+                                      Cell, 0x1131a7e80, {{20.0, 334.5}, {992.0, 52.0}}
+                                        Other, 0x1135f4000, {{20.0, 334.5}, {992.0, 52.0}}
+                                          Other, 0x1135f4140, {{20.0, 334.5}, {992.0, 52.0}}
+                                        Other, 0x1135f4280, {{20.0, 334.5}, {992.0, 52.0}}
+                                          Other, 0x1135f43c0, {{20.0, 334.5}, {992.0, 52.0}}
+                                            Other, 0x1135f4500, {{20.0, 334.5}, {992.0, 52.0}}
+                                              Button, 0x1135f4640, {{20.0, 334.5}, {992.0, 52.0}}, label: 'עברית'
+                                                StaticText, 0x1135f4780, {{907.5, 349.5}, {83.5, 22.0}}, label: 'עברית'
+                                                Image, 0x1135f48c0, {{969.0, 349.5}, {22.0, 22.0}}, identifier: 'globe', label: 'Globe'
+                                      Other, 0x1135f4a00, {{40.0, 333.5}, {952.0, 1.0}}
+                                      Cell, 0x1135f4b40, {{20.0, 386.5}, {992.0, 52.0}}
+                                        Other, 0x1135f4c80, {{20.0, 386.5}, {992.0, 52.0}}
+                                          Other, 0x1135f4dc0, {{20.0, 386.5}, {992.0, 52.0}}
+                                        Other, 0x1135f4f00, {{20.0, 386.5}, {992.0, 52.0}}
+                                          Other, 0x1135f5040, {{20.0, 386.5}, {992.0, 52.0}}
+                                            Other, 0x1135f5180, {{20.0, 386.5}, {992.0, 52.0}}
+                                              StaticText, 0x1135f52c0, {{20.0, 386.5}, {992.0, 52.0}}, label: 'Native search submitted.'
+                                      Other, 0x1135f5400, {{40.0, 385.5}, {912.0, 1.0}}
+                                      Other, 0x1135f5540, {{-20.0, 456.0}, {1072.0, 162.0}}
+                                      Cell, 0x1135f5680, {{20.0, 456.0}, {992.0, 40.5}}
+                                        Other, 0x1135f57c0, {{20.0, 456.0}, {992.0, 40.5}}
+                                        Other, 0x1135f5900, {{20.0, 456.0}, {992.0, 40.5}}
+                                          Other, 0x1135f5a40, {{20.0, 456.0}, {992.0, 40.5}}
+                                            Other, 0x1135f5b80, {{20.0, 456.0}, {992.0, 40.5}}
+                                              StaticText, 0x1135f5cc0, {{20.0, 456.0}, {992.0, 40.5}}, label: 'Results summary'
+                                      Cell, 0x1135f5e00, {{20.0, 496.5}, {992.0, 52.0}}
+                                        Other, 0x1135f5f40, {{20.0, 496.5}, {992.0, 52.0}}
+                                          Other, 0x1135f6080, {{20.0, 496.5}, {992.0, 52.0}}
+                                        Other, 0x1135f61c0, {{20.0, 496.5}, {992.0, 52.0}}
+                                          Other, 0x1135f6300, {{20.0, 496.5}, {992.0, 52.0}}
+                                            Other, 0x1135f6440, {{20.0, 496.5}, {992.0, 52.0}}
+                                              StaticText, 0x1135f6580, {{20.0, 496.5}, {992.0, 52.0}}, label: '11 shown, 247 results'
+                                              StaticText, 0x1135f66c0, {{923.0, 512.2}, {69.0, 20.5}}, label: '11 shown'
+                                      Cell, 0x1135f6800, {{20.0, 548.5}, {992.0, 52.0}}
+                                        Other, 0x1135f6940, {{20.0, 548.5}, {992.0, 52.0}}
+                                          Other, 0x1135f6a80, {{20.0, 548.5}, {992.0, 52.0}}
+                                        Other, 0x1135f6bc0, {{20.0, 548.5}, {992.0, 52.0}}
+                                          Other, 0x1135f6d00, {{20.0, 548.5}, {992.0, 52.0}}
+                                            Other, 0x1135f6e40, {{20.0, 548.5}, {992.0, 52.0}}
+                                              StaticText, 0x1135f6f80, {{20.0, 548.5}, {992.0, 52.0}}, label: '2990 ms'
+                                      Other, 0x1135f70c0, {{40.0, 547.5}, {952.0, 1.0}}
+                                      Other, 0x1135f7200, {{-20.0, 618.0}, {1072.0, 3608.5}}
+                                      Cell, 0x1135f7340, {{20.0, 618.0}, {992.0, 40.5}}
+                                        Other, 0x1135f7480, {{20.0, 618.0}, {992.0, 40.5}}
+                                        Other, 0x1135f75c0, {{20.0, 618.0}, {992.0, 40.5}}
+                                          Other, 0x1135f7700, {{20.0, 618.0}, {992.0, 40.5}}
+                                            Other, 0x1135f7840, {{20.0, 618.0}, {992.0, 40.5}}
+                                              StaticText, 0x1135f7980, {{20.0, 618.0}, {992.0, 40.5}}, label: 'Results'
+                                      Cell, 0x1135f7ac0, {{20.0, 658.5}, {992.0, 94.5}}
+                                        Other, 0x1135f7c00, {{20.0, 658.5}, {992.0, 94.5}}
+                                          Other, 0x1135f7d40, {{20.0, 658.5}, {992.0, 94.5}}
+                                        Other, 0x1135f7e80, {{20.0, 658.5}, {992.0, 94.5}}
+                                          Other, 0x1135fc000, {{20.0, 658.5}, {992.0, 94.5}}
+                                            Other, 0x1135fc140, {{20.0, 658.5}, {992.0, 94.5}}
+                                              Button, 0x1135fc280, {{20.0, 658.5}, {992.0, 94.5}}, label: 'בראשית א׳:א׳
+In the beginning God created the heaven and the earth.
+7 more versions'
+                                                StaticText, 0x1135fc3c0, {{572.5, 673.5}, {419.5, 64.5}}, label: 'בראשית א׳:א׳
+In the beginning God created the heaven and the earth.
+7 more versions'
+                                                Image, 0x1135fc500, {{42.5, 700.0}, {7.0, 12.0}}, identifier: 'chevron.forward'
+                                      Cell, 0x1135fc640, {{20.0, 753.0}, {992.0, 94.5}}
+                                        Other, 0x1135fc780, {{20.0, 753.0}, {992.0, 94.5}}
+                                          Other, 0x1135fc8c0, {{20.0, 753.0}, {992.0, 94.5}}
+                                        Other, 0x1135fca00, {{20.0, 753.0}, {992.0, 94.5}}
+                                          Other, 0x1135fcb40, {{20.0, 753.0}, {992.0, 94.5}}
+                                            Other, 0x1135fcc80, {{20.0, 753.0}, {992.0, 94.5}}
+                                              Button, 0x1135fcdc0, {{20.0, 753.0}, {992.0, 94.5}}, label: 'רש"י על בראשית א׳:א׳:ב׳
+בראשית ברא IN THE BEGINNING GOD CREATED — This verse calls aloud for explanation in the manner that our Rabbis explained it: God created the world for the sake of the Torah which is called “The beginning'
+                                                StaticText, 0x1135fcf00, {{98.0, 768.0}, {894.0, 64.5}}, label: 'רש"י על בראשית א׳:א׳:ב׳
+בראשית ברא IN THE BEGINNING GOD CREATED — This verse calls aloud for explanation in the manner that our Rabbis explained it: God created the world for the sake of the Torah which is called “The beginning'
+                                                Image, 0x1135fd040, {{42.5, 794.5}, {7.0, 12.0}}, identifier: 'chevron.forward'
+                                      Other, 0x1135fd180, {{40.0, 752.0}, {952.0, 1.0}}
+                                      Cell, 0x1135fd2c0, {{20.0, 847.5}, {992.0, 94.5}}
+                                        Other, 0x1135fd400, {{20.0, 847.5}, {992.0, 94.5}}
+                                          Other, 0x1135fd540, {{20.0, 847.5}, {992.0, 94.5}}
+                                        Other, 0x1135fd680, {{20.0, 847.5}, {992.0, 94.5}}
+                                          Other, 0x1135fd7c0, {{20.0, 847.5}, {992.0, 94.5}}
+                                            Other, 0x1135fd900, {{20.0, 847.5}, {992.0, 94.5}}
+                                              Button, 0x1135fda40, {{20.0, 847.5}, {992.0, 94.5}}, label: 'בראשית רבה א׳:א׳
+sacking child . ' Amon ' means covered, as in the verse, Ha'emunim in scarlet . ' Amon ' means hidden, as in the verse, And he concealed Hadassah . ' Amon ' means great, as in the verse, Art thou better'
+                                                StaticText, 0x1135fdb80, {{62.0, 862.5}, {930.0, 64.5}}, label: 'בראשית רבה א׳:א׳
+sacking child . ' Amon ' means covered, as in the verse, Ha'emunim in scarlet . ' Amon ' means hidden, as in the verse, And he concealed Hadassah . ' Amon ' means great, as in the verse, Art thou better'
+                                                Image, 0x1135fdcc0, {{42.5, 889.0}, {7.0, 12.0}}, identifier: 'chevron.forward'
+                                      Other, 0x1135fde00, {{40.0, 846.5}, {952.0, 1.0}}
+                                      Cell, 0x1135fdf40, {{20.0, 942.0}, {992.0, 94.5}}
+                                        Other, 0x1135fe080, {{20.0, 942.0}, {992.0, 94.5}}
+                                          Other, 0x1135fe1c0, {{20.0, 942.0}, {992.0, 94.5}}
+                                        Other, 0x1135fe300, {{20.0, 942.0}, {992.0, 94.5}}
+                                          Other, 0x1135fe440, {{20.0, 942.0}, {992.0, 94.5}}
+                                            Other, 0x1135fe580, {{20.0, 942.0}, {992.0, 94.5}}
+                                              Button, 0x1135fe6c0, {{20.0, 942.0}, {992.0, 94.5}}, label: 'בראשית רבה א׳:ד׳
+“In the beginning, God created” – six items preceded the creation of the world; some of them were [actually] created, and some of them God contemplated creating, [though He did not actually do so].'
+                                                StaticText, 0x1135fe800, {{66.0, 957.0}, {926.0, 64.5}}, label: 'בראשית רבה א׳:ד׳
+“In the beginning, God created” – six items preceded the creation of the world; some of them were [actually] created, and some of them God contemplated creating, [though He did not actually do so].'
+                                                Image, 0x1135fe940, {{42.5, 983.5}, {7.0, 12.0}}, identifier: 'chevron.forward'
+                                      Other, 0x1135fea80, {{40.0, 941.0}, {952.0, 1.0}}
+                                      Cell, 0x1135febc0, {{20.0, 1036.5}, {992.0, 94.5}}
+                                        Other, 0x1135fed00, {{20.0, 1036.5}, {992.0, 94.5}}
+                                          Other, 0x1135fee40, {{20.0, 1036.5}, {992.0, 94.5}}
+                                        Other, 0x1135fef80, {{20.0, 1036.5}, {992.0, 94.5}}
+                                          Other, 0x1135ff0c0, {{20.0, 1036.5}, {992.0, 94.5}}
+                                            Other, 0x1135ff200, {{20.0, 1036.5}, {992.0, 94.5}}
+                                              Button, 0x1135ff340, {{20.0, 1036.5}, {992.0, 94.5}}, label: 'רמב"ן על בראשית א׳:א׳:א׳
+In the beginning, God created: Rabbi Yitshak said: "The Torah should not have been begun except from 'This month is for you,' which is the first commandment that Israel was commanded.'
+                                                StaticText, 0x1135ff480, {{70.0, 1051.5}, {922.0, 64.5}}, label: 'רמב"ן על בראשית א׳:א׳:א׳
+In the beginning, God created: Rabbi Yitshak said: "The Torah should not have been begun except from 'This month is for you,' which is the first commandment that Israel was commanded.'
+                                                Image, 0x1135ff5c0, {{42.5, 1078.0}, {7.0, 12.0}}, identifier: 'chevron.forward'
+                                      Other, 0x1135ff700, {{40.0, 1035.5}, {952.0, 1.0}}
+                                      Cell, 0x1135ff840, {{20.0, 1131.0}, {992.0, 116.5}}
+                                        Other, 0x1135ff980, {{20.0, 1131.0}, {992.0, 116.5}}
+                                          Other, 0x1135ffac0, {{20.0, 1131.0}, {992.0, 116.5}}
+                                        Other, 0x1135ffc00, {{20.0, 1131.0}, {992.0, 116.5}}
+                                          Other, 0x1135ffd40, {{20.0, 1131.0}, {992.0, 116.5}}
+                                            Other, 0x1135ffe80, {{20.0, 1131.0}, {992.0, 116.5}}
+                                              Button, 0x113608000, {{20.0, 1131.0}, {992.0, 116.5}}, label: 'חגיגה י״ב א:ט״ז
+Our Rabbis have taught, The house of Shammai say, The heavens were created first, and afterwards the earth was created, as it is said, "In the beginning God created the heaven and the earth."
+1 more versions'
+                                                StaticText, 0x113608140, {{123.5, 1146.0}, {868.5, 86.5}}, label: 'חגיגה י״ב א:ט״ז
+Our Rabbis have taught, The house of Shammai say, The heavens were created first, and afterwards the earth was created, as it is said, "In the beginning God created the heaven and the earth."
+1 more versions'
+                                                Image, 0x113608280, {{42.5, 1183.5}, {7.0, 12.0}}, identifier: 'chevron.forward'
+                                      Other, 0x1136083c0, {{40.0, 1130.0}, {952.0, 1.0}}
+                                      Cell, 0x113608500, {{20.0, 1247.5}, {992.0, 116.5}}
+                                        Other, 0x113608640, {{20.0, 1247.5}, {992.0, 116.5}}
+                                          Other, 0x113608780, {{20.0, 1247.5}, {992.0, 116.5}}
+                                        Other, 0x1136088c0, {{20.0, 1247.5}, {992.0, 116.5}}
+                                          Other, 0x113608a00, {{20.0, 1247.5}, {992.0, 116.5}}
+                                            Other, 0x113608b40, {{20.0, 1247.5}, {992.0, 116.5}}
+                                              Button, 0x113608c80, {{20.0, 1247.5}, {992.0, 116.5}}, label: 'ויקרא רבה ט׳:ט׳
+On the first day He created some of the upper and lower parts, as it is written "In the beginning God created the heavens and the earth" .
+1 more versions'
+                                                StaticText, 0x113608dc0, {{74.0, 1262.5}, {918.0, 86.5}}, label: 'ויקרא רבה ט׳:ט׳
+On the first day He created some of the upper and lower parts, as it is written "In the beginning God created the heavens and the earth" .
+1 more versions'
+                                                Image, 0x113608f00, {{42.5, 1300.0}, {7.0, 12.0}}, identifier: 'chevron.forward'
+                                      Other, 0x113609040, {{40.0, 1246.5}, {952.0, 1.0}}
+                                      Other, 0x113609180, {{3.0, 86.0}, {30.0, 1260.0}}, label: 'Vertical scroll bar, 2 pages', value: 0%
+                                        Other, 0x1136092c0, {{3.0, 93.5}, {3.0, 876.5}}
+                                      Other, 0x113609400, {{3.0, 86.0}, {30.0, 1260.0}}, label: 'Vertical scroll bar, 2 pages', value: 0%
+                                        Other, 0x113609540, {{3.0, 93.5}, {3.0, 876.5}}
+                  Other, 0x113609680, {{0.0, 0.0}, {1032.0, 1376.0}}
+                    Other, 0x1136097c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+                      Other, 0x113609900, {{0.0, 0.0}, {1032.0, 1376.0}}
+              Toolbar, 0x113609a40, {{0.0, 0.0}, {1032.0, 1376.0}}, identifier: 'Toolbar', label: 'Toolbar'
+                Other, 0x113609b80, {{0.0, 0.0}, {1032.0, 1376.0}}
+    Window, 0x113609cc0, {{0.0, 0.0}, {1032.0, 1376.0}}
+      Other, 0x113609e00, {{0.0, 0.0}, {1032.0, 1376.0}}
+        Other, 0x113609f40, {{0.0, 0.0}, {1032.0, 1376.0}}
+Path to element:
+ →Application, 0x1131ad540, pid: 60442, label: 'Hanlin MiniApps'
+Query chain:
+ →Find: Target Application 'com.itorah.hanlinminiapps'
+  Output: {
+    Application, 0x11360a080, pid: 60442, label: 'Hanlin MiniApps'
+  }

@@ -1,0 +1,25 @@
+{
+  "sourceCommit": "ee3b0ede43fcb4aac02def04d469eae542ba035b",
+  "branch": "codex/hanlin-miniapps-sdk-completion-20261123",
+  "requestedAt": "2026-11-24T05:43:22.371590+00:00",
+  "inputs": {
+    "paired_product_acceptance": "true",
+    "paired_test_scope": "miniapp_authoring",
+    "runtime_bundle_artifact_run_id": "42926628418",
+    "host_proof_run_id": "",
+    "foreground_proof_run_id": ""
+  },
+  "previousRunIDs": [
+    45324257778,
+    45318878050,
+    45318751956,
+    45314033438,
+    45310162809
+  ],
+  "dispatchExitCode": 0,
+  "dispatchStdout": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45335292541\n",
+  "dispatchStderr": "",
+  "observedNewRuns": [],
+  "runID": "45335292541",
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45335292541"
+}

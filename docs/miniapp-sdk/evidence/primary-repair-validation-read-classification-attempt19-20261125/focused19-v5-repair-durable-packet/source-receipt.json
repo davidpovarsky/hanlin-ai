@@ -1,0 +1,279 @@
+{
+  "capturedAt": "2026-11-25T12:59:41.606590+00:00",
+  "appData": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/E2B02896-9E6E-47FD-A342-0AE8024D3604",
+  "scope": "Read-only actual finalized repair tool payloads/jobs/project and shared bridge records; no app launch, mutation, or retry.",
+  "jobs": [
+    {
+      "executionID": "6a7e98b9-9d29-4bde-9e5b-5904a435ad75",
+      "state": "completed",
+      "startedAt": 1795610917864,
+      "completedAt": 1795610918034,
+      "error": null,
+      "exitCode": 0,
+      "operation": null,
+      "stdoutBytes": 13936,
+      "durationMilliseconds": 169
+    },
+    {
+      "executionID": "e6193390-2d8b-497d-aee0-69c2e17544fe",
+      "state": "failed",
+      "startedAt": 1795610936967,
+      "completedAt": 1795610967471,
+      "error": null,
+      "exitCode": 1,
+      "operation": "validate",
+      "stdoutBytes": 1357,
+      "durationMilliseconds": 30505
+    }
+  ],
+  "members": [
+    {
+      "path": "toolResults/chat-fa6b9f8b1c41b733f52b4b531271467b9bfe90d590316f52227220727e5fb6fa/ref_be4737dc56834778a4b497e3e973d1cb.json",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/E2B02896-9E6E-47FD-A342-0AE8024D3604/Library/Application Support/Hanlin/ToolResults/chat-fa6b9f8b1c41b733f52b4b531271467b9bfe90d590316f52227220727e5fb6fa/ref_be4737dc56834778a4b497e3e973d1cb.json",
+      "bytes": 140,
+      "sha256": "755a802b6e3190ea9d0f2ef85a2f2649d967dc1217b3ae6073f7ef0eb12da600",
+      "mtimeNs": "1795610918240788597",
+      "mode": "0o644"
+    },
+    {
+      "path": "toolResults/chat-fa6b9f8b1c41b733f52b4b531271467b9bfe90d590316f52227220727e5fb6fa/ref_be4737dc56834778a4b497e3e973d1cb.payload",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/E2B02896-9E6E-47FD-A342-0AE8024D3604/Library/Application Support/Hanlin/ToolResults/chat-fa6b9f8b1c41b733f52b4b531271467b9bfe90d590316f52227220727e5fb6fa/ref_be4737dc56834778a4b497e3e973d1cb.payload",
+      "bytes": 13935,
+      "sha256": "ff0db3038900f25a4a3c3d8b6469167640799fc1d6b1e5f8cb3839f19355b5b5",
+      "mtimeNs": "1795610918238462936",
+      "mode": "0o644"
+    },
+    {
+      "path": "toolResults/chat-fa6b9f8b1c41b733f52b4b531271467b9bfe90d590316f52227220727e5fb6fa/ref_edb23164f1424114b4903a8bd689d50d.json",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/E2B02896-9E6E-47FD-A342-0AE8024D3604/Library/Application Support/Hanlin/ToolResults/chat-fa6b9f8b1c41b733f52b4b531271467b9bfe90d590316f52227220727e5fb6fa/ref_edb23164f1424114b4903a8bd689d50d.json",
+      "bytes": 139,
+      "sha256": "8c49e145fcdd4a9e4fa2c32bcc65c1824d8428e7fe1799b4acc0658493f50702",
+      "mtimeNs": "1795610968406238528",
+      "mode": "0o644"
+    },
+    {
+      "path": "toolResults/chat-fa6b9f8b1c41b733f52b4b531271467b9bfe90d590316f52227220727e5fb6fa/ref_edb23164f1424114b4903a8bd689d50d.payload",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/E2B02896-9E6E-47FD-A342-0AE8024D3604/Library/Application Support/Hanlin/ToolResults/chat-fa6b9f8b1c41b733f52b4b531271467b9bfe90d590316f52227220727e5fb6fa/ref_edb23164f1424114b4903a8bd689d50d.payload",
+      "bytes": 1340,
+      "sha256": "00747aa1ecf3c483ed86e7fde114d73d18965c42b06a10eff972d15b0eddbd8e",
+      "mtimeNs": "1795610968405867028",
+      "mode": "0o644"
+    },
+    {
+      "path": "jobs/node/6a7e98b9-9d29-4bde-9e5b-5904a435ad75/job.json",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/E2B02896-9E6E-47FD-A342-0AE8024D3604/Library/Application Support/HanlinRuntime/v1/jobs/node/6a7e98b9-9d29-4bde-9e5b-5904a435ad75/job.json",
+      "bytes": 30283,
+      "sha256": "45c687425dded288400a2192698c86a6f520170883886372813ff713238db297",
+      "mtimeNs": "1795610918035840025",
+      "mode": "0o600"
+    },
+    {
+      "path": "jobs/node/6a7e98b9-9d29-4bde-9e5b-5904a435ad75/main.mjs",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/E2B02896-9E6E-47FD-A342-0AE8024D3604/Library/Application Support/HanlinRuntime/v1/jobs/node/6a7e98b9-9d29-4bde-9e5b-5904a435ad75/main.mjs",
+      "bytes": 995,
+      "sha256": "8d167a01f7bfe9c54409be1d807be1960d23ca19c7fc11afab6e64f73a98b90a",
+      "mtimeNs": "1795610917874610177",
+      "mode": "0o600"
+    },
+    {
+      "path": "jobs/node/6a7e98b9-9d29-4bde-9e5b-5904a435ad75/stderr.log",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/E2B02896-9E6E-47FD-A342-0AE8024D3604/Library/Application Support/HanlinRuntime/v1/jobs/node/6a7e98b9-9d29-4bde-9e5b-5904a435ad75/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mtimeNs": "1795610917881262202",
+      "mode": "0o600"
+    },
+    {
+      "path": "jobs/node/6a7e98b9-9d29-4bde-9e5b-5904a435ad75/stdout.log",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/E2B02896-9E6E-47FD-A342-0AE8024D3604/Library/Application Support/HanlinRuntime/v1/jobs/node/6a7e98b9-9d29-4bde-9e5b-5904a435ad75/stdout.log",
+      "bytes": 13936,
+      "sha256": "4eb8b10892ebc376516bfa94b28356abfcbf8f0c9ac621701f95d3c51bc97453",
+      "mtimeNs": "1795610918029132041",
+      "mode": "0o600"
+    },
+    {
+      "path": "jobs/node/e6193390-2d8b-497d-aee0-69c2e17544fe/job.json",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/E2B02896-9E6E-47FD-A342-0AE8024D3604/Library/Application Support/HanlinRuntime/v1/jobs/node/e6193390-2d8b-497d-aee0-69c2e17544fe/job.json",
+      "bytes": 3998,
+      "sha256": "03784a265c8f2e7af54cc57e7ae6a1b52de89218feb3e34748e3207d3e0d395e",
+      "mtimeNs": "1795610967472371526",
+      "mode": "0o600"
+    },
+    {
+      "path": "jobs/node/e6193390-2d8b-497d-aee0-69c2e17544fe/main.mjs",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/E2B02896-9E6E-47FD-A342-0AE8024D3604/Library/Application Support/HanlinRuntime/v1/jobs/node/e6193390-2d8b-497d-aee0-69c2e17544fe/main.mjs",
+      "bytes": 1313,
+      "sha256": "22b3da9c20727289ca16080164c2f476dd5453cf5cbfcb6a8c9c7ac2b3d88817",
+      "mtimeNs": "1795610936971037088",
+      "mode": "0o600"
+    },
+    {
+      "path": "jobs/node/e6193390-2d8b-497d-aee0-69c2e17544fe/stderr.log",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/E2B02896-9E6E-47FD-A342-0AE8024D3604/Library/Application Support/HanlinRuntime/v1/jobs/node/e6193390-2d8b-497d-aee0-69c2e17544fe/stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mtimeNs": "1795610936974469829",
+      "mode": "0o600"
+    },
+    {
+      "path": "jobs/node/e6193390-2d8b-497d-aee0-69c2e17544fe/stdout.log",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/E2B02896-9E6E-47FD-A342-0AE8024D3604/Library/Application Support/HanlinRuntime/v1/jobs/node/e6193390-2d8b-497d-aee0-69c2e17544fe/stdout.log",
+      "bytes": 1357,
+      "sha256": "e9824c12b6e150feaeb494fe344f83be37b380257a14c30552fcbc14af54526c",
+      "mtimeNs": "1795610967467325622",
+      "mode": "0o600"
+    },
+    {
+      "path": "repairProject/MiniAppTypeError.hanlinNativeScript",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/E2B02896-9E6E-47FD-A342-0AE8024D3604/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-f7426b5c-b2d3-4144-a451-338ff9c82658/MiniAppTypeError.hanlinNativeScript",
+      "bytes": 4399,
+      "sha256": "9a2a14be4ad24565bad66a98fc53522229de903acfb8a41b3df18006e81b51c9",
+      "mtimeNs": "1795606009009589935",
+      "mode": "0o644"
+    },
+    {
+      "path": "repairProject/diagnostics.json",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/E2B02896-9E6E-47FD-A342-0AE8024D3604/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-f7426b5c-b2d3-4144-a451-338ff9c82658/diagnostics.json",
+      "bytes": 1973,
+      "sha256": "5c503367a94e21a2796df9792bf4fb30bb664dd228b5a7f14eb0c7d7941e8253",
+      "mtimeNs": "1795610909249585875",
+      "mode": "0o644"
+    },
+    {
+      "path": "repairProject/project/hanlin.authoring.json",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/E2B02896-9E6E-47FD-A342-0AE8024D3604/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-f7426b5c-b2d3-4144-a451-338ff9c82658/project/hanlin.authoring.json",
+      "bytes": 1643,
+      "sha256": "e642cc15f45d70c606097c3b62cca6534b9bd53a659b8a28bd8175f7a3e40019",
+      "mtimeNs": "1795609606000000000",
+      "mode": "0o644"
+    },
+    {
+      "path": "repairProject/project/hanlin.validation.json",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/E2B02896-9E6E-47FD-A342-0AE8024D3604/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-f7426b5c-b2d3-4144-a451-338ff9c82658/project/hanlin.validation.json",
+      "bytes": 774,
+      "sha256": "a59ff01c18c3a992b45cb055a5af4deca5d1893b3a7b38000e65a77f2c6f30ba",
+      "mtimeNs": "1795609606000000000",
+      "mode": "0o644"
+    },
+    {
+      "path": "repairProject/project/nativescript/app/bundle.mjs",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/E2B02896-9E6E-47FD-A342-0AE8024D3604/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-f7426b5c-b2d3-4144-a451-338ff9c82658/project/nativescript/app/bundle.mjs",
+      "bytes": 30,
+      "sha256": "77326621f8ddcf98a2eccfc7deb128f535b962f1969f914b562a8d3823a7d049",
+      "mtimeNs": "1795609606000000000",
+      "mode": "0o644"
+    },
+    {
+      "path": "repairProject/project/nativescript/app/modules/index.mjs",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/E2B02896-9E6E-47FD-A342-0AE8024D3604/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-f7426b5c-b2d3-4144-a451-338ff9c82658/project/nativescript/app/modules/index.mjs",
+      "bytes": 473,
+      "sha256": "385f77fdbb936605a555084d36db281e8b0c81914de51815927a47595bca1844",
+      "mtimeNs": "1795609606000000000",
+      "mode": "0o644"
+    },
+    {
+      "path": "repairProject/project/nativescript/app/modules/index.mjs.map",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/E2B02896-9E6E-47FD-A342-0AE8024D3604/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-f7426b5c-b2d3-4144-a451-338ff9c82658/project/nativescript/app/modules/index.mjs.map",
+      "bytes": 1005,
+      "sha256": "75817b5a5e3fcef325906ef4e6609c122cb17692e83fa94f55a161acfbf72507",
+      "mtimeNs": "1795609606000000000",
+      "mode": "0o644"
+    },
+    {
+      "path": "repairProject/project/nativescript/app/package.json",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/E2B02896-9E6E-47FD-A342-0AE8024D3604/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-f7426b5c-b2d3-4144-a451-338ff9c82658/project/nativescript/app/package.json",
+      "bytes": 299,
+      "sha256": "9afb516e7e0301554d6dc122a33651d5b15af29e134879f6e616d4da29903345",
+      "mtimeNs": "1795609606000000000",
+      "mode": "0o644"
+    },
+    {
+      "path": "repairProject/project/script.json",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/E2B02896-9E6E-47FD-A342-0AE8024D3604/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-f7426b5c-b2d3-4144-a451-338ff9c82658/project/script.json",
+      "bytes": 171,
+      "sha256": "acd6800ca8220fa14546ed28eab6dd1e8676ec8f107d13ccf8535f467bd6b39f",
+      "mtimeNs": "1795609606000000000",
+      "mode": "0o644"
+    },
+    {
+      "path": "repairProject/project/source/hanlin.authoring.json",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/E2B02896-9E6E-47FD-A342-0AE8024D3604/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-f7426b5c-b2d3-4144-a451-338ff9c82658/project/source/hanlin.authoring.json",
+      "bytes": 76,
+      "sha256": "fcd55704f81de3ab56c92484d1c59bb3e5efe8dd9383ee791e61a58429314e0c",
+      "mtimeNs": "1795609602000000000",
+      "mode": "0o644"
+    },
+    {
+      "path": "repairProject/project/source/index.ts",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/E2B02896-9E6E-47FD-A342-0AE8024D3604/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-f7426b5c-b2d3-4144-a451-338ff9c82658/project/source/index.ts",
+      "bytes": 402,
+      "sha256": "a0150df126fe244e9d1b49fee0fe10a11756569e8e82cfe4381584e30f79dcaa",
+      "mtimeNs": "1795609606000000000",
+      "mode": "0o644"
+    },
+    {
+      "path": "repairProject/project/source/package.json",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/E2B02896-9E6E-47FD-A342-0AE8024D3604/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-f7426b5c-b2d3-4144-a451-338ff9c82658/project/source/package.json",
+      "bytes": 94,
+      "sha256": "5832acb1bde65c8cac7e628b64902291ee2aa2a20c23962524b0ea5e7ae933eb",
+      "mtimeNs": "1795609602000000000",
+      "mode": "0o644"
+    },
+    {
+      "path": "repairProject/project/source/script.json",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/E2B02896-9E6E-47FD-A342-0AE8024D3604/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-f7426b5c-b2d3-4144-a451-338ff9c82658/project/source/script.json",
+      "bytes": 171,
+      "sha256": "acd6800ca8220fa14546ed28eab6dd1e8676ec8f107d13ccf8535f467bd6b39f",
+      "mtimeNs": "1795609602000000000",
+      "mode": "0o644"
+    },
+    {
+      "path": "repairProject/project/source/tsconfig.json",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/E2B02896-9E6E-47FD-A342-0AE8024D3604/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-f7426b5c-b2d3-4144-a451-338ff9c82658/project/source/tsconfig.json",
+      "bytes": 188,
+      "sha256": "91961a73001983b248169b1544e7ef30f96334bfa5528aaad3c24429a1d92af0",
+      "mtimeNs": "1795609602000000000",
+      "mode": "0o644"
+    },
+    {
+      "path": "runtimeLogs/node-runtime.log",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/E2B02896-9E6E-47FD-A342-0AE8024D3604/Library/Application Support/HanlinRuntime/v1/logs/node-runtime.log",
+      "bytes": 3432,
+      "sha256": "dc88243e4883aa9a36a0ff7ea2b645b3b26097ef62592fe326b120927ddeedb3",
+      "mtimeNs": "1795610836632075970",
+      "mode": "0o644"
+    },
+    {
+      "path": "miniAppTransfers/.catalog-state/version",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/E2B02896-9E6E-47FD-A342-0AE8024D3604/Library/Application Support/Hanlin/MiniApps/.catalog-state/version",
+      "bytes": 2,
+      "sha256": "4355a46b19d348dc2f57c046f8ef63d4538ebb936000f3c9ee954a27460dd865",
+      "mtimeNs": "1795606611187144213",
+      "mode": "0o644"
+    },
+    {
+      "path": "sharedMiniAppsBridge/v1/.lock",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428/MiniAppsBridge/v1/.lock",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mtimeNs": "1795606046613864212",
+      "mode": "0o600"
+    },
+    {
+      "path": "sharedMiniAppsBridge/v1/catalog.json",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428/MiniAppsBridge/v1/catalog.json",
+      "bytes": 1400,
+      "sha256": "5203348ad0970794db8fdc1af79c0c496bab11d9311d58984f681f79b81390d9",
+      "mtimeNs": "1795610853045183708",
+      "mode": "0o644"
+    },
+    {
+      "path": "sharedMiniAppsBridge/v1/requests/4f2ecda0-9c21-46a2-b2e1-8cd4f017c623.json",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428/MiniAppsBridge/v1/requests/4f2ecda0-9c21-46a2-b2e1-8cd4f017c623.json",
+      "bytes": 510,
+      "sha256": "cc04047d96b795430060e79e97828a988e70569dc136ac71718775a950debe7a",
+      "mtimeNs": "1795606046615268417",
+      "mode": "0o644"
+    }
+  ]
+}

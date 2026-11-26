@@ -1,0 +1,51 @@
+{
+  "status": "EXECUTED_PASS",
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "selector": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualNativeScriptImportsTheGeneratedTypedFacadeAndCallsEveryEngine()",
+  "expectedTests": 1,
+  "summary": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "deviceId": "E742FBCD-8FF0-4130-B143-7F8328637138",
+          "deviceName": "HanlinPaired-local",
+          "modelName": "iPad Pro 13-inch (M5)",
+          "osBuildNumber": "24A434",
+          "osVersion": "27.0",
+          "platform": "iOS Simulator"
+        },
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "passedTests": 1,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "AI_HLY \u00b7 Built with macOS 27.0",
+    "expectedFailures": 0,
+    "failedTests": 0,
+    "finishTime": 1795631955.949,
+    "passedTests": 1,
+    "result": "Passed",
+    "runtimeWarnings": [],
+    "skippedTests": 0,
+    "startTime": 1795631908.312,
+    "statistics": [],
+    "testFailures": [],
+    "title": "Test - AI_HLY",
+    "topInsights": [],
+    "totalTestCount": 1
+  },
+  "commandExitCode": 0,
+  "resultBundle": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1-ns5/native-result/NS5.xcresult",
+  "resultInfoSHA256": "54f83969a04930420b63d487958c34f4dd8c3f220035518cbf916d658ff9b5cc",
+  "summarySHA256": "d874cc63dcedb20a62198d815aa4906d3002c2315377ae619587be2c54f31150",
+  "nodesSHA256": "642c3eae0437a60fd4fb5e92d1e49dbf9f52fee7524cc0010a2627c797a2c8ad",
+  "selectorVerifierLogSHA256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96",
+  "reviewedAt": "2026-11-25T18:39:16.349948+00:00",
+  "original52Status": "UNCHANGED_BY_COMPANION"
+}

@@ -1,0 +1,12 @@
+{
+  "sourceLogLine": 3761,
+  "sourceCommandSHA256": "102709ee415beb39b8dafb79750f02ce43cc8a10b59c0fbc75c69af979d5695a",
+  "target": "arm64-apple-ios27.0-simulator",
+  "swiftVersion": "6",
+  "extension": true,
+  "cxxMode": "-cxx-interoperability-mode=default",
+  "extraClangDefines": [
+    "-D_LIBCPP_HARDENING_MODE=_LIBCPP_HARDENING_MODE_DEBUG",
+    "-DDEBUG=1"
+  ]
+}

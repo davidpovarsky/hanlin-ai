@@ -1,0 +1,8 @@
+{
+  "name": "Original Expo Widgets Probe",
+  "version": "1.0.0",
+  "description": "Original Expo Widgets native API, timeline, shared directory and Live Activity probe.",
+  "runInApp": true,
+  "hanlinRuntime": "hanlin-expo",
+  "entry": "bundle.js"
+}

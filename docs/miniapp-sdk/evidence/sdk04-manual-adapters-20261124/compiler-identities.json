@@ -1,0 +1,14 @@
+{
+  "localShared": {
+    "compilerVersion": "6.0.3",
+    "node": "v24.22.0",
+    "compilerSHA256": "d3f3cd2b04b7f466f4484df921b744223f7bd1f3e353ec9110bdf52695b983d5",
+    "path": "/mnt/development/projects/worktrees/hanlin-sdk04-manual-adapters-20261124/Scripts/Expo/node_modules/typescript/lib/typescript.js"
+  },
+  "exactExport": {
+    "compilerVersion": "6.0.3",
+    "node": "v24.22.0",
+    "compilerSHA256": "d3f3cd2b04b7f466f4484df921b744223f7bd1f3e353ec9110bdf52695b983d5",
+    "path": "/dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK/expo/node_modules/typescript/lib/typescript.js"
+  }
+}

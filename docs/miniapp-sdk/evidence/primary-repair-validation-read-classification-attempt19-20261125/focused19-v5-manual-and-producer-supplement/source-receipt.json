@@ -1,0 +1,231 @@
+{
+  "capturedAt": "2026-11-25T13:12:50.973992+00:00",
+  "members": [
+    {
+      "path": "native-result/FocusedManual1-attachments/03657BDD-49C5-456F-B895-F3E72F5EDECA.png",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/native-result/FocusedManual1-attachments/03657BDD-49C5-456F-B895-F3E72F5EDECA.png",
+      "bytes": 1152215,
+      "sha256": "4e3a0588f36485fc4a81bf7dd8dad3e332f60d79004e4db485c1aa7ec5f92332",
+      "storedBytes": 1152215,
+      "storedSHA256": "4e3a0588f36485fc4a81bf7dd8dad3e332f60d79004e4db485c1aa7ec5f92332",
+      "compression": null
+    },
+    {
+      "path": "native-result/FocusedManual1-attachments/08472FEF-5C43-42B1-9D69-873A581EDC8F.png",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/native-result/FocusedManual1-attachments/08472FEF-5C43-42B1-9D69-873A581EDC8F.png",
+      "bytes": 145728,
+      "sha256": "009ebc7a4c2a90800acee8c7a60e201cfb694adcf3728f67bd35d9cbd31035ad",
+      "storedBytes": 145728,
+      "storedSHA256": "009ebc7a4c2a90800acee8c7a60e201cfb694adcf3728f67bd35d9cbd31035ad",
+      "compression": null
+    },
+    {
+      "path": "native-result/FocusedManual1-attachments/355DA642-1DC2-48FA-B755-E5E912FAD285.txt",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/native-result/FocusedManual1-attachments/355DA642-1DC2-48FA-B755-E5E912FAD285.txt",
+      "bytes": 12172,
+      "sha256": "ce3587e5bfb5f0bec5b6b7514d953647c64ddf5d0a4462dea8b86e60f68d3845",
+      "storedBytes": 12172,
+      "storedSHA256": "ce3587e5bfb5f0bec5b6b7514d953647c64ddf5d0a4462dea8b86e60f68d3845",
+      "compression": null
+    },
+    {
+      "path": "native-result/FocusedManual1-attachments/366F65D9-D92B-4D13-BFFE-79D1FC91D728.txt",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/native-result/FocusedManual1-attachments/366F65D9-D92B-4D13-BFFE-79D1FC91D728.txt",
+      "bytes": 11353,
+      "sha256": "79af4cf300f3b65ad6f46db8dd5b51b34f44778578e5d257c8c7c8c82803295b",
+      "storedBytes": 11353,
+      "storedSHA256": "79af4cf300f3b65ad6f46db8dd5b51b34f44778578e5d257c8c7c8c82803295b",
+      "compression": null
+    },
+    {
+      "path": "native-result/FocusedManual1-attachments/4584D179-6608-4E9F-86DD-4C74DA4F81E9.txt",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/native-result/FocusedManual1-attachments/4584D179-6608-4E9F-86DD-4C74DA4F81E9.txt",
+      "bytes": 16768,
+      "sha256": "f5382c6f9c20c4292115ac967b2bcf9c421eadec0abdfc298f6c07b55c6941fa",
+      "storedBytes": 16768,
+      "storedSHA256": "f5382c6f9c20c4292115ac967b2bcf9c421eadec0abdfc298f6c07b55c6941fa",
+      "compression": null
+    },
+    {
+      "path": "native-result/FocusedManual1-attachments/555E8F03-203A-417F-9516-421A5322EB36.png",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/native-result/FocusedManual1-attachments/555E8F03-203A-417F-9516-421A5322EB36.png",
+      "bytes": 154248,
+      "sha256": "f59189acbdde2c4404c1445ded02e64ae936e9ed2fe24e312572d7337a7f3af2",
+      "storedBytes": 154248,
+      "storedSHA256": "f59189acbdde2c4404c1445ded02e64ae936e9ed2fe24e312572d7337a7f3af2",
+      "compression": null
+    },
+    {
+      "path": "native-result/FocusedManual1-attachments/9F5F5FBC-BDA2-4686-8D0C-0E4D5AF4BC10.txt",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/native-result/FocusedManual1-attachments/9F5F5FBC-BDA2-4686-8D0C-0E4D5AF4BC10.txt",
+      "bytes": 11319,
+      "sha256": "1bcc8d25ffe28008f1e31390054842cae1300cf8eabf91728c4de394467b7006",
+      "storedBytes": 11319,
+      "storedSHA256": "1bcc8d25ffe28008f1e31390054842cae1300cf8eabf91728c4de394467b7006",
+      "compression": null
+    },
+    {
+      "path": "native-result/FocusedManual1-attachments/A2FC7C3F-8AD3-4CAF-BFCB-4F04154A9D77.png",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/native-result/FocusedManual1-attachments/A2FC7C3F-8AD3-4CAF-BFCB-4F04154A9D77.png",
+      "bytes": 233849,
+      "sha256": "ae3b21ff2e6d373fa3298477fc5604a92fa475957028d3ba91c1455a3a18314f",
+      "storedBytes": 233849,
+      "storedSHA256": "ae3b21ff2e6d373fa3298477fc5604a92fa475957028d3ba91c1455a3a18314f",
+      "compression": null
+    },
+    {
+      "path": "native-result/FocusedManual1-attachments/CB0340DC-5489-43F5-962D-C53132C5E76B.png",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/native-result/FocusedManual1-attachments/CB0340DC-5489-43F5-962D-C53132C5E76B.png",
+      "bytes": 1151894,
+      "sha256": "7d354b8f8255d136b8c7d6542b8ade6110b289b721edf9752b5baf8969d7e9bb",
+      "storedBytes": 1151894,
+      "storedSHA256": "7d354b8f8255d136b8c7d6542b8ade6110b289b721edf9752b5baf8969d7e9bb",
+      "compression": null
+    },
+    {
+      "path": "native-result/FocusedManual1-attachments/CBE35BE2-2A19-470D-A839-513F206DF3CE.txt",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/native-result/FocusedManual1-attachments/CBE35BE2-2A19-470D-A839-513F206DF3CE.txt",
+      "bytes": 14290,
+      "sha256": "770bb814401ed89f364bee63104d9bea7f7adfdc0f66290dd64fe6861f54be83",
+      "storedBytes": 14290,
+      "storedSHA256": "770bb814401ed89f364bee63104d9bea7f7adfdc0f66290dd64fe6861f54be83",
+      "compression": null
+    },
+    {
+      "path": "native-result/FocusedManual1-attachments/D082B0D1-8A54-456E-8C43-6E1742387D19.txt",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/native-result/FocusedManual1-attachments/D082B0D1-8A54-456E-8C43-6E1742387D19.txt",
+      "bytes": 8751,
+      "sha256": "5abba8c69ec8b769202df09dee1fda19593023981b1f1b65f980b2d95ba364e8",
+      "storedBytes": 8751,
+      "storedSHA256": "5abba8c69ec8b769202df09dee1fda19593023981b1f1b65f980b2d95ba364e8",
+      "compression": null
+    },
+    {
+      "path": "native-result/FocusedManual1-attachments/D1563AAC-E678-4D3D-BDBC-CEF109D1AE5F.png",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/native-result/FocusedManual1-attachments/D1563AAC-E678-4D3D-BDBC-CEF109D1AE5F.png",
+      "bytes": 148663,
+      "sha256": "ef062a9427ef112365f7d6d46b442f6a3cf4a4bd0863bb444e149fb7ab388dc2",
+      "storedBytes": 148663,
+      "storedSHA256": "ef062a9427ef112365f7d6d46b442f6a3cf4a4bd0863bb444e149fb7ab388dc2",
+      "compression": null
+    },
+    {
+      "path": "native-result/FocusedManual1-attachments/E1571211-6509-485E-A730-DD11023C896E.png",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/native-result/FocusedManual1-attachments/E1571211-6509-485E-A730-DD11023C896E.png",
+      "bytes": 147337,
+      "sha256": "2ea40a21f5623b2751472f59c3d617d3ff824cae2926a24683006648575c342f",
+      "storedBytes": 147337,
+      "storedSHA256": "2ea40a21f5623b2751472f59c3d617d3ff824cae2926a24683006648575c342f",
+      "compression": null
+    },
+    {
+      "path": "native-result/FocusedManual1-attachments/E8CF182E-C1BD-4F61-9785-3CF052C91C43.png",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/native-result/FocusedManual1-attachments/E8CF182E-C1BD-4F61-9785-3CF052C91C43.png",
+      "bytes": 152505,
+      "sha256": "abbf763cd735b24fdbd4fecf306300c4ac15bc2a5200214a49cab211eb7a9b10",
+      "storedBytes": 152505,
+      "storedSHA256": "abbf763cd735b24fdbd4fecf306300c4ac15bc2a5200214a49cab211eb7a9b10",
+      "compression": null
+    },
+    {
+      "path": "native-result/FocusedManual1-attachments/EF253D66-8069-4BB1-8E05-05CA3A1FA115.txt",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/native-result/FocusedManual1-attachments/EF253D66-8069-4BB1-8E05-05CA3A1FA115.txt",
+      "bytes": 8579,
+      "sha256": "e5b67869236cf237ccbbc4093d08f9b664943d4df26ff37fc16cd065db84897c",
+      "storedBytes": 8579,
+      "storedSHA256": "e5b67869236cf237ccbbc4093d08f9b664943d4df26ff37fc16cd065db84897c",
+      "compression": null
+    },
+    {
+      "path": "native-result/FocusedManual1-attachments/F9791004-080E-4932-833B-0E6E89A1F024.txt",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/native-result/FocusedManual1-attachments/F9791004-080E-4932-833B-0E6E89A1F024.txt",
+      "bytes": 20502,
+      "sha256": "fd77d381eb5d2790f0b9687b4e8b68c32d7557ac597cbb26a6ed19c05efb1167",
+      "storedBytes": 20502,
+      "storedSHA256": "fd77d381eb5d2790f0b9687b4e8b68c32d7557ac597cbb26a6ed19c05efb1167",
+      "compression": null
+    },
+    {
+      "path": "native-result/FocusedManual1-attachments/manifest.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/native-result/FocusedManual1-attachments/manifest.json",
+      "bytes": 7666,
+      "sha256": "528d7108b12f77c6efd505b842b0d31a33ce82b5fda1bb70d715dabebae0d6ae",
+      "storedBytes": 7666,
+      "storedSHA256": "528d7108b12f77c6efd505b842b0d31a33ce82b5fda1bb70d715dabebae0d6ae",
+      "compression": null
+    },
+    {
+      "path": "controller-child.log",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/controller-child.log",
+      "bytes": 17145,
+      "sha256": "d1ad80a8abe2aaae22be3cf0a654497d8de0f9b6ac2433ef28c2259d6897ca82",
+      "storedBytes": 17145,
+      "storedSHA256": "d1ad80a8abe2aaae22be3cf0a654497d8de0f9b6ac2433ef28c2259d6897ca82",
+      "compression": null
+    },
+    {
+      "path": "native-result/paired-prefix/ai-build.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/native-result/paired-prefix/ai-build.log",
+      "bytes": 1813727,
+      "sha256": "9261b6d67c5fb556271fee7e79401de6b98b53a43f7fa78bb5333e71889187cd",
+      "storedBytes": 88966,
+      "storedSHA256": "0858140c726f8d8f473cca3adb59399d46d78f4c6a8e7b477dbe2ef5d027da8a",
+      "compression": "gzip"
+    },
+    {
+      "path": "produced-source/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbe.hanlinExpo",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbe.hanlinExpo",
+      "bytes": 325929,
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+      "storedBytes": 325929,
+      "storedSHA256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+      "compression": null
+    },
+    {
+      "path": "produced-source/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeA.hanlinExpo",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeA.hanlinExpo",
+      "bytes": 325929,
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+      "storedBytes": 325929,
+      "storedSHA256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+      "compression": null
+    },
+    {
+      "path": "produced-source/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeB.hanlinExpo",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeB.hanlinExpo",
+      "bytes": 325930,
+      "sha256": "c60e7d88f759118cf52c9ed50f464031a61402367e02e7fe45b50e37ee0bc016",
+      "storedBytes": 325930,
+      "storedSHA256": "c60e7d88f759118cf52c9ed50f464031a61402367e02e7fe45b50e37ee0bc016",
+      "compression": null
+    },
+    {
+      "path": "produced-source/AI_HLYUITests/Fixtures/ExpoSwiftUIProbe.hanlinExpo",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/AI_HLYUITests/Fixtures/ExpoSwiftUIProbe.hanlinExpo",
+      "bytes": 325929,
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+      "storedBytes": 325929,
+      "storedSHA256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+      "compression": null
+    },
+    {
+      "path": "produced-source/AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
+      "bytes": 325929,
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+      "storedBytes": 325929,
+      "storedSHA256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+      "compression": null
+    },
+    {
+      "path": "produced-source/AI_HLYUITests/Fixtures/ExpoSwiftUIProbeB.hanlinExpo",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/AI_HLYUITests/Fixtures/ExpoSwiftUIProbeB.hanlinExpo",
+      "bytes": 325930,
+      "sha256": "c60e7d88f759118cf52c9ed50f464031a61402367e02e7fe45b50e37ee0bc016",
+      "storedBytes": 325930,
+      "storedSHA256": "c60e7d88f759118cf52c9ed50f464031a61402367e02e7fe45b50e37ee0bc016",
+      "compression": null
+    }
+  ],
+  "excludedManualMovies": []
+}

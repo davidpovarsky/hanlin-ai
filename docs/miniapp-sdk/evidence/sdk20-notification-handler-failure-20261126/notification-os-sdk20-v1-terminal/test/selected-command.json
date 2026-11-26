@@ -1,0 +1,27 @@
+{
+  "argv": [
+    "xcodebuild",
+    "test-without-building",
+    "-xctestrun",
+    "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/HanlinMiniApps_iphonesimulator27.0-arm64.xctestrun",
+    "-destination",
+    "platform=iOS Simulator,id=ED1C7CA0-C85E-41DF-918F-3C9C9033F73E",
+    "-parallel-testing-enabled",
+    "NO",
+    "-collect-test-diagnostics",
+    "never",
+    "-resultBundlePath",
+    "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-os-sdk20-v1/test/NotificationOS.xcresult",
+    "-only-testing:HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines"
+  ],
+  "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines",
+  "expectedTests": 1,
+  "source": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+  "runnerSHA256": "a99b6194f8dd20bc30998ff2ad9e86ec219415a00615b250c65670f7dfcdba7d",
+  "executionMode": "UNCHANGED_PREBUILT_XCTESTRUN",
+  "xctestrun": {
+    "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/HanlinMiniApps_iphonesimulator27.0-arm64.xctestrun",
+    "bytes": 16737,
+    "sha256": "2d6b493aa93663d03e17a15722eab010326b260ccbbb454ed12077cae45cda96"
+  }
+}

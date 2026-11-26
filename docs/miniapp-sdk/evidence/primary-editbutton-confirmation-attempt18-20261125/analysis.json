@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 1,
+  "observedSource": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+  "sourceCorrectionCommit": "c954d9a21b6789368305548e8e2502a6aada7131",
+  "test": "MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEditButtonEditsOriginalList",
+  "observedCase": "FAILED",
+  "failedLine": 769,
+  "elapsedSeconds": 54.268,
+  "observedNativeState": {
+    "editButtonLabel": "Done",
+    "alphaRowText": "Remove, Generated Alpha",
+    "deleteButtonLabel": "Delete",
+    "deleteButtonFrame": {
+      "x": 914.0,
+      "y": 182.5,
+      "width": 88.0,
+      "height": 44.0
+    },
+    "callbackCount": 0,
+    "rows": "alpha,beta"
+  },
+  "cause": "The native Delete button is under a sibling Other of the swiped Cell inside the List CollectionView, so row.buttons excludes it. The cell label query remains valid.",
+  "correction": "Resolve the CollectionView by its Original editable list StaticText header, then query its Delete button.",
+  "preserved": [
+    "Original native EditButton and List.ForEach/onDelete",
+    "Existing initial Edit->Done and removal-control assertions",
+    "10-second confirmation wait",
+    "Exactly one deletion callback",
+    "Exact remaining beta row and Alpha removal",
+    "All original selector names and other test bytes"
+  ],
+  "rootViewedActualScreenshot": true,
+  "correctedNativeAcceptance": "NOT_RUN",
+  "scope": "Test query only; no product, native API, fixture or timeout change"
+}

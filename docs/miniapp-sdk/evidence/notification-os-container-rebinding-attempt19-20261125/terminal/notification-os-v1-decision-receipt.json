@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "status": "SEALED_NOT_LAUNCHED",
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "sourceTree": "f7a6596a1ef53d8d962ceb9f619460ffa19ee91e",
+  "decision": {
+    "path": "build/primary-control/notification-os-v1-decision.json",
+    "bytes": 158863,
+    "sha256": "6c6daf1c44424cd0c7e68de78a6a46f8727cac01c392eda43c4ed97648109d88"
+  },
+  "sealer": {
+    "path": "build/primary-control/seal-notification-os-decision-v4.py",
+    "bytes": 28082,
+    "sha256": "925016737f34363f451222c81a3d38e16a5e6abf12ee33315368e1018fd3bd63"
+  },
+  "controller": {
+    "path": "build/primary-control/notification-os-v6.py",
+    "sha256": "379008353af52593df805257d076ed13c1df93e13b9b39f76782738a8fff9535"
+  },
+  "sealedAt": "2026-11-25T18:41:09.063378+00:00",
+  "fieldCount": 28,
+  "productRows": 44,
+  "originalProductRows": 35,
+  "stagedInputCount": 11,
+  "inputObservation": {
+    "path": "build/primary-control/notification-os-v1-seal-inputs.json",
+    "bytes": 7350,
+    "sha256": "21b654ac4c21988b212f8f67a11529e70daa23889567656ab0b779f9fbe25053"
+  },
+  "activeBaselineSeconds": 24307.531661753037,
+  "allowanceSeconds": 900,
+  "actualPairedStatus": "EXECUTED_PASS",
+  "phaseExecution": "NOT_RUN",
+  "SDKProducerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+  "miniBuildProducerSource": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "aiBuildProducerSource": "d4a0b115b106d4250ea40ad66153d5156847a07c"
+}

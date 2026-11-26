@@ -1,0 +1,80 @@
+{
+  "schema": 1,
+  "status": "REVIEWABLE_TWO_FILE_FIX_NATIVE_VERIFICATION_NOT_RUN",
+  "createdAt": "2026-11-26T00:52:07.343099+00:00",
+  "authoringWorktree": "/mnt/development/projects/worktrees/hanlin-notification-handler-fix-20261126",
+  "base": "77ec05fd4b25401771d149935225b646bdfe6e0e",
+  "originalNativeSource": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+  "files": [
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m",
+      "before": {
+        "source": "77ec05fd4b25401771d149935225b646bdfe6e0e",
+        "bytes": 37015,
+        "sha256": "e36a9d2ba06dd7878d17df7c9e8f17df8952ac67f087c0a43174742c1c0ebe0c"
+      },
+      "originalNativeSource": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+      "beforeEqualsOriginalNativeSource": true,
+      "candidate": {
+        "bytes": 35889,
+        "sha256": "28909ea2c10145989c4605613f0ac6cc0185a5b34397bab70f8253291a004b3d"
+      }
+    },
+    {
+      "path": "AI_HLYTests/NativeScriptRuntimeWireTests.swift",
+      "before": {
+        "source": "77ec05fd4b25401771d149935225b646bdfe6e0e",
+        "bytes": 17996,
+        "sha256": "4ac7ed256f861133e3b84eda85d1f5df659317477c6a42c637a42a59def46835"
+      },
+      "originalNativeSource": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+      "beforeEqualsOriginalNativeSource": true,
+      "candidate": {
+        "bytes": 23501,
+        "sha256": "35356d95d7fb0e8e7a6ed707d4f89afcb1832cf03366c950b86e14fc5aae31e6"
+      }
+    }
+  ],
+  "diff": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-handler-registration-fix/handler-registration-fix.diff",
+    "bytes": 8727,
+    "sha256": "fa4414b936bbf6ec14a0ae489078d028b91f08ff72378ec352a9966183898ab4"
+  },
+  "sourceImpact": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-handler-registration-fix/source-impact.json",
+    "bytes": 861,
+    "sha256": "216f496b5ae7ae46d4e0e30bdd0d2d72c33815d890a2cd7a418f8466f471dafa"
+  },
+  "regressionSelector": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptActionDeclarationsPreserveRegisteredJavaScriptState()",
+  "regressionMeaning": "Real NativeScript VM registers a stateful JS handler, then receives late direct/bridge-roundTrip/compatibility-roundTrip declarations. Actual callbacks must retain counter41 then42, unique name and request. A bare declaration must remain routeNotFound. No canned result or worker relaxation.",
+  "protectedCanonical": {
+    "canonicalStatus": [
+      " M AGENTS.md",
+      "?? Scripts/Expo/node_modules",
+      "?? Scripts/NativeScript/node_modules"
+    ],
+    "canonicalIndexEmpty": true,
+    "AGENTSSHA256": "f27d4554d8dda88996d1511b361e8b8e5520cb08e8198c5fbc7816b1fbc9aa9f",
+    "nodeModulesRemainSymlinks": {
+      "Scripts/Expo/node_modules": "/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules",
+      "Scripts/NativeScript/node_modules": "/dev/shm/hanlin-nativescript-sdk-20261123/node_modules"
+    },
+    "boundary": "No canonical source or index mutation by this authoring lane; only detached authoring worktree and this evidence directory were written."
+  },
+  "preserved": [
+    "original notification UI selector and assertion1598",
+    "original worker and assertion277",
+    "all three frozen fixture archives",
+    "all original full52 and five-runtime test methods",
+    "SDK20 payload, public header/types, generated metadata and host archive"
+  ],
+  "validation": {
+    "gitDiffCheck": "PASS",
+    "sourceIdentityChecks": "PASS",
+    "compile": "NOT_RUN",
+    "tests": "NOT_RUN",
+    "MacActions": 0,
+    "committed": false,
+    "pushed": false
+  }
+}

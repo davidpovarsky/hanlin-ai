@@ -1,0 +1,67 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "4EC498EF-82B7-4FC1-B1CF-20AB8BD5CB25",
+      "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+      "modelName" : "iPad Pro 13-inch (M5)",
+      "osBuildNumber" : "24A434",
+      "osVersion" : "27.0",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "name" : "XCTAssertTrue failed - Source version must respond to the original disclosure control",
+                      "nodeType" : "Failure Message",
+                      "sourceLocation" : {
+                        "filePath" : "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+                        "lineNumber" : 1220
+                      }
+                    },
+                    {
+                      "name" : "Update the Info.plist: Support for all orientations will soon be required.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "2m 52s",
+                  "durationInSeconds" : 172.79144597053528,
+                  "name" : "testStandaloneModularSearchLoadsActualSefariaText()",
+                  "nodeIdentifier" : "MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText",
+                  "nodeType" : "Test Case",
+                  "result" : "Failed"
+                }
+              ],
+              "name" : "MiniAppsProductionRuntimeUITests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests",
+              "nodeType" : "Test Suite",
+              "result" : "Failed"
+            }
+          ],
+          "name" : "HanlinMiniAppsUITests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests",
+          "nodeType" : "UI test bundle",
+          "result" : "Failed"
+        }
+      ],
+      "name" : "HanlinMiniApps",
+      "nodeType" : "Test Plan",
+      "result" : "Failed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

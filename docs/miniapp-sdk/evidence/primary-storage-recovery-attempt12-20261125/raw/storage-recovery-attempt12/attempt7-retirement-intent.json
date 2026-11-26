@@ -1,0 +1,44 @@
+{
+  "startedAt": "2026-11-25T03:53:23.994512+00:00",
+  "uid": "D45E88A7-3C07-4227-86C4-D3B2E61C251A",
+  "candidateSHA256": "a03edca23208b1dd59de468d84985a9df7246c65c5aa32735bc1f65749d2e423",
+  "command": [
+    "xcrun",
+    "simctl",
+    "delete",
+    "D45E88A7-3C07-4227-86C4-D3B2E61C251A"
+  ],
+  "freeBytesBefore": 7268999168,
+  "candidateLogicalBytes": 5669134336,
+  "ownership": "Own completed attempt7; no matching processes/open files; retained raw results/control/SDK proof outside device",
+  "preserved": [
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired-product-attempt7/OriginalRuntimes.xcresult",
+      "duKiB": 1127656,
+      "InfoPlistExists": false,
+      "topLevel": [
+        "Staging",
+        "Data"
+      ]
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired-product-attempt7/MiniBuild.xcresult",
+      "duKiB": 112,
+      "InfoPlistExists": true,
+      "topLevel": [
+        "Data",
+        "Info.plist"
+      ]
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired-product-attempt7/AIBuild.xcresult",
+      "duKiB": 112,
+      "InfoPlistExists": true,
+      "topLevel": [
+        "Data",
+        "Info.plist"
+      ]
+    }
+  ],
+  "status": "STARTING"
+}

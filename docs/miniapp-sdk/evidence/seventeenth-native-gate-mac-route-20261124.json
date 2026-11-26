@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "primary": "Scaleway M2Pro",
+  "actualObservation": {
+    "capturedAtUTC": "2026-11-24T16:45:08.789870+00:00",
+    "xcodeApps": [
+      {
+        "path": "/Applications/Xcode.app",
+        "shortVersion": "27.0",
+        "build": "27A266a",
+        "simulatorSDKs": [
+          "iPhoneSimulator.sdk",
+          "iPhoneSimulator27.0.sdk"
+        ]
+      }
+    ],
+    "activeBuildProcesses": [
+      "10157 /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild",
+      "10986 /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild"
+    ],
+    "diskFreeBytes": 286043398144
+  },
+  "required": "Full existing gate Xcode27.2/27B52 and iOS27.2",
+  "decision": "Use existing GitHub27.2 lane; primary lacks required installed toolchain and owns other active builds. Do not start a competing build or alter another owner process.",
+  "probeOrBuildStarted": false
+}

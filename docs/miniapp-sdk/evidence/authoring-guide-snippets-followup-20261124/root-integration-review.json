@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "atUTC": "2026-11-24T07:37:02.801872+00:00",
+  "integrationSource": "cbb662d3cd669901de2e18f2c7d94c0487aecc20",
+  "checkerCommits": [
+    "43360835",
+    "cbb662d3"
+  ],
+  "reviewedAgentCommits": [
+    "a8104f8154e024e7eb876bb1878065aa9117177c",
+    "f00e50ed725205e0679c9604e1dfa95dc983f2f6"
+  ],
+  "independentReview": {
+    "reviewer": "sdk_only_author",
+    "mode": "read-only Git object/source identity review after original SDK-only proof was frozen",
+    "result": "NO_REMAINING_BLOCKERS",
+    "confirmed": [
+      "unsupported quote/list/indent/info-string fences reject outside recognized blocks",
+      "Objective-C original spellings restored; NativeScript enums preserved",
+      "real red coverage failure followed by only affected coverage and NativeScript2/2 pass",
+      "all18 original artifacts unchanged and all10 follow-up artifact identities match",
+      "21 effective inputs reconcile to actual original compiler passes"
+    ]
+  },
+  "runtimeOrUITestsRunByReviewer": false,
+  "nativeStatus": "NOT_RUN",
+  "freshShippingDocumentMatch": "PENDING_NEXT_CI",
+  "sources": [
+    {
+      "path": "Scripts/MiniApps/check-authoring-examples.mjs",
+      "sha256": "419f295ee6f0e7dcbf9cee42560ef1e8760010ae07b1d6767a0f6017fc7b317a",
+      "bytes": 17675,
+      "matchesReviewedCommit": true
+    },
+    {
+      "path": "Scripts/MiniApps/authoring-examples.json",
+      "sha256": "3ff3b2272bb77eb22fcc3df81063aab3994ec555b1e78562ee9e256b3cd0aa26",
+      "bytes": 4606,
+      "matchesReviewedCommit": true
+    },
+    {
+      "path": "Scripts/MiniApps/Tests/authoring-examples.test.mjs",
+      "sha256": "e40ace95a429ba0ee013f2832a00e1d0d004106a18e2f7709ecd6275726c682e",
+      "bytes": 8683,
+      "matchesReviewedCommit": true
+    },
+    {
+      "path": "docs/hanlin-nativescript-guide.md",
+      "sha256": "5545b69b00e47508121c2d80a7b44241b854a7abad4019cc70696d6c0da8d1c6",
+      "bytes": 17048,
+      "matchesReviewedCommit": true
+    }
+  ]
+}

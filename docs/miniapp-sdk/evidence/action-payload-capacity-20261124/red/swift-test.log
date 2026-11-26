@@ -1,0 +1,42 @@
+Building for debugging...
+[Computing dependencies]
+[Pre-planning 1 / 153]
+[Planning deferred tasks]
+[38 / 68] ActionPayloadCapacity_HanlinPlatformContracts
+[42 / 71] HanlinPlatformContracts
+[51 / 76] HanlinMiniAppCore
+[54 / 76] HanlinMiniAppCore
+[59 / 76] HanlinMiniAppCore
+[62 / 80] ActionPayloadCapacityTests-product
+[63 / 81] HanlinMiniAppCore
+[69 / 81] ActionPayloadCapacityTests-test-runner
+[70 / 81] ActionPayloadCapacityTests-product
+[74 / 82] ActionPayloadCapacityTests-product
+[78 / 85] ActionPayloadCapacityTests-test-runner
+[82 / 85] ActionPayloadCapacityTests-test-runner
+[86 / 86] ActionPayloadCapacityTests-test-runner
+Build complete! (20.40 secs)
+◇ Test run started.
+↳ Testing Library Version: 6.4.3 (ba0861fb203553c)
+↳ Target Platform: aarch64-unknown-linux-gnu
+◇ Suite "Prepared MiniApp action delivery" started.
+◇ Suite "Personal Host action lifetime" started.
+◇ Test "An invocation returns its actual registered JavaScript result" started.
+◇ Test explicitlyRequestedDeadlinesAndSizeBudgetsAreStillEnforced() started.
+✘ Test explicitlyRequestedDeadlinesAndSizeBudgetsAreStillEnforced() recorded an issue at HanlinMiniAppRequestLifetimeTests.swift:26:9: Expectation failed: HanlinMiniAppRequestBroker.Limits.personalHost.maximumPayloadBytes == .max
+↳ HanlinMiniAppRequestBroker.Limits.personalHost.maximumPayloadBytes == .max → false
+↳   HanlinMiniAppRequestBroker.Limits.personalHost.maximumPayloadBytes → 1048576
+↳   .max → 9223372036854775807
+✘ Test explicitlyRequestedDeadlinesAndSizeBudgetsAreStillEnforced() recorded an issue at HanlinMiniAppRequestLifetimeTests.swift:27:9: Expectation failed: HanlinMiniAppRequestBroker.Limits.personalHost.maximumResponseBytes == .max
+↳ HanlinMiniAppRequestBroker.Limits.personalHost.maximumResponseBytes == .max → false
+↳   HanlinMiniAppRequestBroker.Limits.personalHost.maximumResponseBytes → 4194304
+↳   .max → 9223372036854775807
+✘ Test explicitlyRequestedDeadlinesAndSizeBudgetsAreStillEnforced() recorded an issue at HanlinMiniAppRequestLifetimeTests.swift:23:6: Caught error: .payloadTooLarge
+✘ Test explicitlyRequestedDeadlinesAndSizeBudgetsAreStillEnforced() failed after 0.147 seconds with 3 issues.
+✘ Suite "Personal Host action lifetime" failed after 0.147 seconds with 3 issues.
+✘ Test "An invocation returns its actual registered JavaScript result" recorded an issue at HanlinMiniAppActionChannelTests.swift:8:6: Caught error: .sizeLimitExceeded(kind: "string UTF-8 bytes", measured: 1048577, maximum: 1048576, path: "/parameters/document")
+✘ Test "An invocation returns its actual registered JavaScript result" failed after 0.363 seconds with 1 issue.
+✘ Suite "Prepared MiniApp action delivery" failed after 0.364 seconds with 1 issue.
+✘ Test run with 2 tests in 2 suites failed after 0.364 seconds with 4 issues.
+Note: Some test targets reported failures:
+  - ActionPayloadCapacityTests (Swift Testing)

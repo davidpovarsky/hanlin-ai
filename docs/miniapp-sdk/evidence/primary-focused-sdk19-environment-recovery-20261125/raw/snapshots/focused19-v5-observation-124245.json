@@ -1,0 +1,285 @@
+{
+  "at": "2026-11-25T12:42:45.484829+00:00",
+  "state": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/state.json",
+    "bytes": 4261,
+    "sha256": "a1721d3af5e9488e529ea62237c09a5d99fa4f795267e076661abe74fd172346",
+    "data": {
+      "schema": 1,
+      "id": "focused19-v5",
+      "owner": "/root/native_execution",
+      "source": "6c006c948f0a6f371f7fc68b90e393f43734f8dd",
+      "sourceTree": "ecd109e872e08873410a6bf55db697bd42864fa2",
+      "status": "RUNNING",
+      "expectedGroups": {
+        "FocusedManual1": {
+          "expected": 1,
+          "selectors": [
+            "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters"
+          ]
+        },
+        "FocusedRepair1": {
+          "expected": 1,
+          "selectors": [
+            "AI_HLYUITests/MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport"
+          ]
+        }
+      },
+      "expectedTotal": 2,
+      "producerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+      "originalFocusedAllowanceSeconds": 3600,
+      "priorFocusedChargeSeconds": 1383.5333837510116,
+      "priorFocusRecords": [
+        {
+          "path": "build/primary-control/focused19-v1/state.json",
+          "sha256": "a7ae2d21b27503b71939ff72670333a7e05736e47e999801f52e6ee6c1520dd6"
+        },
+        {
+          "path": "build/primary-control/focused19-v1/ledger.json",
+          "sha256": "c7835bb97d3017d305628e76ce25b35cfb415433780c4a43f806d0d56fbf708f"
+        },
+        {
+          "path": "build/primary-control/focused19-v1/decision.json",
+          "sha256": "77eef76303d4df1ac274a6cbf3db71b8f7efc4ee7f4e9b623334d565dd3297a3"
+        },
+        {
+          "path": "build/primary-control/focused19-v1/native-result/state.json",
+          "sha256": "f8f7fd1284b984d77237a2e487961eab0782ba079fadfe43f3805d68148fc24e"
+        },
+        {
+          "path": "build/primary-control/focused19-v2/state.json",
+          "sha256": "9e199031a41095f66c101962da3c1c4ad330e748a9ac2afc267aac71384c2a21"
+        },
+        {
+          "path": "build/primary-control/focused19-v2/ledger.json",
+          "sha256": "ec1d8b41595201d0a64b86d714a0fbd049cfbc9339b8a494fff25875cf6d6898"
+        },
+        {
+          "path": "build/primary-control/focused19-v2/decision.json",
+          "sha256": "72608e39bc0987c619ea24b0eeea53b18cd5cca6f86c4a3dab688699580a315c"
+        },
+        {
+          "path": "build/primary-control/focused19-v2/native-result/state.json",
+          "sha256": "5a0005645e789fc4979ff7515faf2c7ed28a589ff1f5aacdaa35cfdb388a3339"
+        },
+        {
+          "path": "build/primary-control/focused19-v3/state.json",
+          "sha256": "fc722c1417dfcb5029336df1b27f06fd1ec636ae2bc5bcfc82a2258d4f894d25"
+        },
+        {
+          "path": "build/primary-control/focused19-v3/ledger.json",
+          "sha256": "c69a3001ec612c74afeaeafcbdf3e8fc2b0ea59fbb96bf18488a2ff641e76ebf"
+        },
+        {
+          "path": "build/primary-control/focused19-v3/decision.json",
+          "sha256": "e5317f244c6cf6cecb4b9a9c1b3043b1921fbe646d922f332d7bdcd103fea86a"
+        },
+        {
+          "path": "build/primary-control/focused19-v3/native-result/state.json",
+          "sha256": "627355b9bb7c970106c2c5dee504937235d6d55e5782b2129b7427e3f1024e48"
+        }
+      ],
+      "controllerPID": 44298,
+      "activeBaselineSeconds": 16856.44515633505,
+      "allowanceSeconds": 2216.4666162489884,
+      "decisionSHA256": "288fff0babef0edb6cf02f392285a194d9707a79af6214fe4d1e1396a3dff51b",
+      "original52": "UNCHANGED_BY_FOCUSED_RUN",
+      "nativeResult": "RUNNING",
+      "resourceObservationAtLaunch": {
+        "observedAt": "2026-11-25T12:39:49.298359+00:00",
+        "freeBytes": 115157852160,
+        "df": "Filesystem   1024-blocks      Used Available Capacity iused      ifree %iused  Mounted on\n/dev/disk3s5   482797652 326454036 112458840    75% 5065200 1124588400    0%   /System/Volumes/Data"
+      },
+      "originalNode": {
+        "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/node-v24.5.0-darwin-arm64/bin/node",
+        "sha256": "336b5b3ebc5deb86df842102b20b6e4761605b7a667823e68dda7761b91a161b",
+        "version": "24.5.0",
+        "observedIdentity": {
+          "node": "24.5.0",
+          "platform": "darwin",
+          "architecture": "arm64"
+        }
+      },
+      "startedAt": "2026-11-25T12:39:49.505756+00:00",
+      "argv": [
+        "/opt/homebrew/opt/python@3.12/bin/python3.12",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-native-child-v3.py",
+        "--source",
+        "6c006c948f0a6f371f7fc68b90e393f43734f8dd",
+        "--output",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/native-result"
+      ],
+      "phasePID": 44325,
+      "elapsedSeconds": 150.05167325001094,
+      "logBytes": 3078
+    }
+  },
+  "child": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/native-result/state.json",
+    "bytes": 3969,
+    "sha256": "96d048ed2fbcc4041594a8da79ecad0880098ca147a6251aff971f08c4c18e58",
+    "data": {
+      "schema": 1,
+      "owner": "/root/native_execution",
+      "source": "6c006c948f0a6f371f7fc68b90e393f43734f8dd",
+      "tree": "ecd109e872e08873410a6bf55db697bd42864fa2",
+      "status": "RUNNING",
+      "startedAt": "2026-11-25T12:39:52.684362+00:00",
+      "pid": 44325,
+      "phase": "ai-build.log",
+      "original52": "NOT_RUN",
+      "original25": "NOT_RUN",
+      "original27": "NOT_RUN",
+      "scope": "Only original ManualInput and repair UI; previous nine focused passes are retained separately, not aggregated into original52.",
+      "selectors": {
+        "FocusedManual1": [
+          "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters"
+        ],
+        "FocusedRepair1": [
+          "AI_HLYUITests/MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport"
+        ]
+      },
+      "groups": {},
+      "errors": [],
+      "sourceErrors": [],
+      "cleanupErrors": [],
+      "originalRunnerSHA256": "a99b6194f8dd20bc30998ff2ad9e86ec219415a00615b250c65670f7dfcdba7d",
+      "sourceHashes": {
+        "AI_HLY/ChatView.swift": "d21659cdaa7d3e6141d4677d10ccaee067e7238ba8c4ccc2f689b63db4c41ffe",
+        "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift": "ea6c76e33bb4594931bb118ab713e2de2d85e561f0e40eb21d64d154c45f9c90",
+        "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift": "da0fa21f26b677f4d18f8e1972208b39e30401a127e9dd2a9643e0fe8d7ad17c",
+        "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoUIModule.swift": "3ad8217ce87005fab1fe3dc256e7d7680ced7c330f7cd9dc5561f1a5e5905e09",
+        "Packages/HanlinExpoUI/src/manual-components.tsx": "b95b387fce797a3c0ffe8c258e1fe0b411e76956e6cd50ae9235267f5b638da6",
+        "Scripts/ProductSplit/run_paired_acceptance.py": "a99b6194f8dd20bc30998ff2ad9e86ec219415a00615b250c65670f7dfcdba7d",
+        "Scripts/ProductSplit/test_run_paired_acceptance.py": "3791b4178c5cc49b64c38ead6f913284f29fc990c7223953aa74f2075f3771f1",
+        "Fixtures/ExpoSwiftUIProbe/ManualAdapterProbe.tsx": "c93a882be209437f388c5d67a9af6ef98ca5371db4aef084aaf7cd464ce42d57",
+        "AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift": "ac5c259fb195d09e641213f7fc33311db658bb3a52a58ee81e89ce6e7aa2a806",
+        "AI_HLYUITests/MiniAppAuthoringUITests.swift": "f60502af88a5e4b1166146cf5834e5d54eaa0451159b11f95ff26207f210fd72",
+        "Scripts/Expo/build-probe.mjs": "cdead47d9914543725e0e3160a14a13d91b31b2d584b737f0eb95c1b5539618c"
+      },
+      "hostArchiveSHA256": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc",
+      "recoveryInputSHA256": "2791472af9e3fc99292ce8889ac3c2f2b6f08bf11f8faa1bdd1ac7e561d3f56c",
+      "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138",
+      "miniBuildProducerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+      "SDKProducerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+      "reusedSetup": [
+        {
+          "status": "REUSED_AUTHENTICATED_OWNED_DEVICE",
+          "authority": {
+            "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v1/native-result/paired-prefix/created-simulator.txt",
+            "sha256": "df333300ba32a39a07bcd88aed5fc6bb5f0b51f738c521f6a0949dc54456a37e",
+            "device": "E742FBCD-8FF0-4130-B143-7F8328637138",
+            "state": "Shutdown"
+          }
+        },
+        {
+          "status": "REUSED_EXECUTED_PASS",
+          "authority": {
+            "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-mini-reuse-observation.json",
+            "sha256": "81dbdacfebf83dd80c2e5c108c3e8284e041f396ec7c8358e533fb5e564ef3da"
+          },
+          "producerSource": "a2c8a1b1be746461272ba77254603304567c309d"
+        }
+      ],
+      "checkpointReached": false,
+      "observedAt": "2026-11-25T12:40:52.018960+00:00",
+      "elapsedSeconds": 59.29098479100503,
+      "fixtureProduction": {
+        "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/native-result/fixture-production.json",
+        "sha256": "b83ff708fb95153e2b362843b77b0a1b0d1a7e174a8dac776bf5c0621e820e4a",
+        "outputs": 13
+      }
+    }
+  },
+  "activeCommand": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/native-result/paired-prefix/active-command.json",
+    "bytes": 1030,
+    "sha256": "6ffdddbc8b1465f0b5506138554504314f91496807b8f9bc719cdd4c9fd1e9aa",
+    "data": {
+      "command_id": "6dfbbd53cdb34b2daff51709cc91249a",
+      "argv": [
+        "xcodebuild",
+        "-project",
+        "AI_HLY.xcodeproj",
+        "-destination",
+        "platform=iOS Simulator,id=E742FBCD-8FF0-4130-B143-7F8328637138",
+        "-parallel-testing-enabled",
+        "NO",
+        "-derivedDataPath",
+        "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete",
+        "-clonedSourcePackagesDirPath",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/SourcePackages",
+        "-skipPackagePluginValidation",
+        "-skipMacroValidation",
+        "CODE_SIGNING_ALLOWED=YES",
+        "CODE_SIGNING_REQUIRED=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "-scheme",
+        "AI_HLY",
+        "build-for-testing",
+        "-resultBundlePath",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/native-result/paired-prefix/AIBuild.xcresult"
+      ],
+      "log": "ai-build.log",
+      "runner_pid": 44325,
+      "pid": 44903,
+      "started_at": 1795610452.019395,
+      "timeout": 1800,
+      "status": "running",
+      "observed_at": 1795610542.084309,
+      "seconds": 90.0652237500035,
+      "log_bytes": 1240907,
+      "completion_recorded": false,
+      "observed_returncode": null
+    }
+  },
+  "ownedProcesses": [
+    "44298 44298 Ss   /opt/homebrew/Cellar/python@3.12/3.12.16/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-recovery-controller-v5.py --decision /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5-decision.json",
+    "44325 44325 Ss   /opt/homebrew/Cellar/python@3.12/3.12.16/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-native-child-v3.py --source 6c006c948f0a6f371f7fc68b90e393f43734f8dd --output /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/native-result",
+    "44903 44325 S    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project AI_HLY.xcodeproj -destination platform=iOS Simulator,id=E742FBCD-8FF0-4130-B143-7F8328637138 -parallel-testing-enabled NO -derivedDataPath /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete -clonedSourcePackagesDirPath /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/SourcePackages -skipPackagePluginValidation -skipMacroValidation CODE_SIGNING_ALLOWED=YES CODE_SIGNING_REQUIRED=YES CODE_SIGN_IDENTITY=- -scheme AI_HLY build-for-testing -resultBundlePath /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/native-result/paired-prefix/AIBuild.xcresult"
+  ],
+  "df": "Filesystem   1024-blocks      Used Available Capacity iused      ifree %iused  Mounted on\n/dev/disk3s5   482797652 326592564 112320312    75% 5050018 1123203120    0%   /System/Volumes/Data\n",
+  "freeBytes": 115015999488,
+  "logs": {
+    "original-expo-probe.log": {
+      "bytes": 1922,
+      "tail": "kipLibCheck or runtime changes.\nPASS: TypeScript6.0.3 strict original Widgets declarations, zero valid diagnostics and 3 exact negative diagnostics.\nWarning: Assets destination folder is not set, skipping...\n[HanlinExpo] Original public Widgets API probe staged: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Fixtures/ExpoWidgetsProbe/ExpoWidgetsProbeA.hanlinExpo\nWarning: Assets destination folder is not set, skipping...\n[HanlinExpo] Original public Widgets API probe staged: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Fixtures/ExpoWidgetsProbe/ExpoWidgetsProbeB.hanlinExpo\n[HanlinExpo] Building Expo SwiftUI Probe Variant A with Metro...\nWarning: Assets destination folder is not set, skipping...\n[HanlinExpo] Created probe package: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeA.hanlinExpo\n[HanlinExpo] Building Expo SwiftUI Probe Variant B with Metro...\nWarning: Assets destination folder is not set, skipping...\n[HanlinExpo] Created probe package: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeB.hanlinExpo\n[HanlinExpo] Building Malformed Expo Probe...\n[HanlinExpo] Staged malformed probe package: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIMalformed.hanlinExpo\n[HanlinExpo] Default probe package staged at: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbe.hanlinExpo\n[HanlinExpo] Test fixtures staged into: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/AI_HLYUITests/Fixtures\n"
+    },
+    "ai-build.log": {
+      "bytes": 1505916,
+      "tail": "Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/Python.framework/Headers -Xcc -I/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinApp.build/DerivedSources-normal/arm64 -Xcc -I/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinApp.build/DerivedSources/arm64 -Xcc -I/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinApp.build/DerivedSources -Xcc -DDEBUG\\=1 -emit-objc-header -emit-objc-header-path /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinApp.build/Objects-normal/arm64/HanlinApp-Swift.h -working-directory /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete -experimental-emit-module-separately -disable-cmo\n\nSwiftExplicitDependencyGeneratePcm arm64 /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/SDKExplicitPrecompiledModules/CxxStdlibShim-2D8GV95S5QFZXB1YLDLUK84KA.pcm\n\nSwiftExplicitDependencyCompileModuleFromInterface arm64 /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/SDKExplicitPrecompiledModules/CxxStdlib-39KCUYAKOGMCV.swiftmodule\n\nSwiftEmitModule normal arm64 Emitting\\ module\\ for\\ HanlinApp (in target 'HanlinApp' from project 'AI_HLY')\n"
+    },
+    "launch.log": {
+      "bytes": 0,
+      "tail": ""
+    }
+  },
+  "modalFixture": {
+    "status": "REAL_IMPORT_AND_INCOMING_REQUEST_STAGED",
+    "simulator_udid": "E742FBCD-8FF0-4130-B143-7F8328637138",
+    "bundle_id": "com.itorah.hanlinminiapps",
+    "source_sha": "62dfff9aebd0a272486c7770d4f77ba603d535ab",
+    "fixture_sources": {
+      "Scripts/ProductSplit/Fixtures/ExternalModal/script.json": "c70a875eec94bc9173993def1cf9d17e98dab5d5ea07f5f317b3f7f57b897433",
+      "Scripts/ProductSplit/Fixtures/ExternalModal/index.tsx": "d03ae8f4c78fb3f7e75a359215dfd0147b0da1b143e2f6ca167266334d97c2fb"
+    },
+    "archive_sha256": "5e9b0eadbcb91e8a01c2c993be6f50356bf94c345940ec86bae25ce3c2127ba1",
+    "archive": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/4AB09E58-6099-47DC-B2F2-2D0AF4B6B8D8/Documents/MiniAppsExternalModal.zip",
+    "shared_group": "group.com.itorah.shared",
+    "shared_group_container": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428",
+    "seeder": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/external-modal-fixture/external-modal-bridge-fixture",
+    "request": {
+      "app_group_container": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428",
+      "launch_url": "hanlinminiapps://x-callback-url/run?request=4f2ecda0-9c21-46a2-b2e1-8cd4f017c623&x-source=Modal%20fixture%20source",
+      "request_id": "4f2ecda0-9c21-46a2-b2e1-8cd4f017c623",
+      "result_synthesized": false,
+      "status": "INCOMING_REQUEST_STAGED"
+    },
+    "verify_command": [
+      "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/external-modal-fixture/external-modal-bridge-fixture",
+      "verify",
+      "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428"
+    ],
+    "runtime_result_synthesized": false
+  }
+}

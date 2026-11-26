@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 1,
+  "atUTC": "2026-11-24T07:43:12.067318+00:00",
+  "failedAppleRun": {
+    "runID": 45348880385,
+    "jobID": 138290071519,
+    "sourceCommit": "0e48d2f3d7df2b2039b5a3e9f83d7c9536450923",
+    "result": "BUILD_FAILED",
+    "selectedTestsExecuted": 0,
+    "error": "ClockHandRotationEffect.swift:47:24 static forms property has a non-Sendable closure-array type under Swift6",
+    "log": "failed-mac-build.log",
+    "logSHA256": "66f8e9cc54f7c41dcb17ecd708b16d6c3265a719e8c78398f37f7f1e4af3011e"
+  },
+  "fix": {
+    "sourcePath": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/Animation/ClockHandRotationEffect.swift",
+    "beforeSHA256": "dc092536d71aeb07dd66bd3678ed52c1066bce20d6db3201af350bc3b9cda218",
+    "afterSHA256": "5055ea7277afe42bf3fc914bd1fe4462722cf68a1e67ca24b8177f8900b3772e",
+    "onlyNativeDelta": "Add @Sendable to the existing immutable capture-free closure-array element type",
+    "swiftLanguageMode": "unchanged Swift6 host; no global concurrency relaxation",
+    "upstreamHandling": "Existing three-way source projection applies the same annotation to local/previous/next before equality shortcuts; upstream content and original revision/blob are retained.",
+    "nativeBehaviorChanges": false
+  },
+  "executed": {
+    "actualRefreshProjectionRed": {
+      "cases": 1,
+      "passed": 0,
+      "failed": 1
+    },
+    "actualRefreshProjectionGreen": {
+      "cases": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0
+    },
+    "swiftSyntax": "PASS_PARSE_ONLY"
+  },
+  "notRun": [
+    "full Apple compilation after annotation",
+    "eight selected Analyzer methods",
+    "iOS app/native UI/device validation"
+  ],
+  "artifacts": [
+    {
+      "path": "failed-mac-build.log",
+      "bytes": 169239,
+      "sha256": "66f8e9cc54f7c41dcb17ecd708b16d6c3265a719e8c78398f37f7f1e4af3011e"
+    },
+    {
+      "path": "failed-mac-run.json",
+      "bytes": 8407,
+      "sha256": "8b51dbebe3d7db38e7d12ebdbba463198edb5e34b0eb43c909452993d5389862"
+    },
+    {
+      "path": "original-source.json",
+      "bytes": 570,
+      "sha256": "43dfbbf05bcfeeb794d1509add1ae7d2ef88c43d15a848fcbc8da7b79dd4cba0"
+    },
+    {
+      "path": "projection-green.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "projection-green.stdout.log",
+      "bytes": 226,
+      "sha256": "fac1f40d336d002163e2cdf1e4d566141e27db18f4fa51db0d983c58e40fd0e1"
+    },
+    {
+      "path": "projection-red.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "projection-red.stdout.log",
+      "bytes": 1710,
+      "sha256": "3132a9ca1d544f65dd6b11eddacb93018c83258911bcf0e8c1aad06251d54abe"
+    },
+    {
+      "path": "swift-syntax.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "swift-syntax.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

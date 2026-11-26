@@ -1,0 +1,1756 @@
+{
+  "caches": [
+    "/root/.npm/_cacache",
+    "/dev/shm/hanlin-expo-sdk-20261123/npm-cache/_cacache"
+  ],
+  "counts": [
+    {
+      "engine": "expo",
+      "lockEntries": 691,
+      "verifiedTarballs": 623,
+      "missingRequired": 18,
+      "missingOptional": 45,
+      "localOrBundled": 5
+    },
+    {
+      "engine": "nativescript",
+      "lockEntries": 206,
+      "verifiedTarballs": 136,
+      "missingRequired": 6,
+      "missingOptional": 63,
+      "localOrBundled": 1
+    }
+  ],
+  "missing": [
+    {
+      "engine": "expo",
+      "path": "node_modules/@esbuild/aix-ppc64",
+      "version": "0.25.12",
+      "integrity": "sha512-Hhmwd6CInZ3dwpuGTF8fJG6yoWmsToE+vYgD4nytZVxcu1ulHpUQRAB1UJ8+N1Am3Mz4+xOByoQoSZf4D+CpkA==",
+      "optional": true,
+      "os": [
+        "aix"
+      ],
+      "cpu": [
+        "ppc64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@esbuild/android-arm",
+      "version": "0.25.12",
+      "integrity": "sha512-VJ+sKvNA/GE7Ccacc9Cha7bpS8nyzVv0jdVgwNDaR4gDMC/2TTRc33Ip8qrNYUcpkOHUT5OZ0bUcNNVZQ9RLlg==",
+      "optional": true,
+      "os": [
+        "android"
+      ],
+      "cpu": [
+        "arm"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@esbuild/android-arm64",
+      "version": "0.25.12",
+      "integrity": "sha512-6AAmLG7zwD1Z159jCKPvAxZd4y/VTO0VkprYy+3N2FtJ8+BQWFXU+OxARIwA46c5tdD9SsKGZ/1ocqBS/gAKHg==",
+      "optional": true,
+      "os": [
+        "android"
+      ],
+      "cpu": [
+        "arm64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@esbuild/android-x64",
+      "version": "0.25.12",
+      "integrity": "sha512-5jbb+2hhDHx5phYR2By8GTWEzn6I9UqR11Kwf22iKbNpYrsmRB18aX/9ivc5cabcUiAT/wM+YIZ6SG9QO6a8kg==",
+      "optional": true,
+      "os": [
+        "android"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@esbuild/darwin-arm64",
+      "version": "0.25.12",
+      "integrity": "sha512-N3zl+lxHCifgIlcMUP5016ESkeQjLj/959RxxNYIthIg+CQHInujFuXeWbWMgnTo4cp5XVHqFPmpyu9J65C1Yg==",
+      "optional": true,
+      "os": [
+        "darwin"
+      ],
+      "cpu": [
+        "arm64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@esbuild/darwin-x64",
+      "version": "0.25.12",
+      "integrity": "sha512-HQ9ka4Kx21qHXwtlTUVbKJOAnmG1ipXhdWTmNXiPzPfWKpXqASVcWdnf2bnL73wgjNrFXAa3yYvBSd9pzfEIpA==",
+      "optional": true,
+      "os": [
+        "darwin"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@esbuild/freebsd-arm64",
+      "version": "0.25.12",
+      "integrity": "sha512-gA0Bx759+7Jve03K1S0vkOu5Lg/85dou3EseOGUes8flVOGxbhDDh/iZaoek11Y8mtyKPGF3vP8XhnkDEAmzeg==",
+      "optional": true,
+      "os": [
+        "freebsd"
+      ],
+      "cpu": [
+        "arm64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@esbuild/freebsd-x64",
+      "version": "0.25.12",
+      "integrity": "sha512-TGbO26Yw2xsHzxtbVFGEXBFH0FRAP7gtcPE7P5yP7wGy7cXK2oO7RyOhL5NLiqTlBh47XhmIUXuGciXEqYFfBQ==",
+      "optional": true,
+      "os": [
+        "freebsd"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@esbuild/linux-arm",
+      "version": "0.25.12",
+      "integrity": "sha512-lPDGyC1JPDou8kGcywY0YILzWlhhnRjdof3UlcoqYmS9El818LLfJJc3PXXgZHrHCAKs/Z2SeZtDJr5MrkxtOw==",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "arm"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@esbuild/linux-ia32",
+      "version": "0.25.12",
+      "integrity": "sha512-0y9KrdVnbMM2/vG8KfU0byhUN+EFCny9+8g202gYqSSVMonbsCfLjUO+rCci7pM0WBEtz+oK/PIwHkzxkyharA==",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "ia32"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@esbuild/linux-loong64",
+      "version": "0.25.12",
+      "integrity": "sha512-h///Lr5a9rib/v1GGqXVGzjL4TMvVTv+s1DPoxQdz7l/AYv6LDSxdIwzxkrPW438oUXiDtwM10o9PmwS/6Z0Ng==",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "loong64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@esbuild/linux-mips64el",
+      "version": "0.25.12",
+      "integrity": "sha512-iyRrM1Pzy9GFMDLsXn1iHUm18nhKnNMWscjmp4+hpafcZjrr2WbT//d20xaGljXDBYHqRcl8HnxbX6uaA/eGVw==",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "mips64el"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@esbuild/linux-ppc64",
+      "version": "0.25.12",
+      "integrity": "sha512-9meM/lRXxMi5PSUqEXRCtVjEZBGwB7P/D4yT8UG/mwIdze2aV4Vo6U5gD3+RsoHXKkHCfSxZKzmDssVlRj1QQA==",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "ppc64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@esbuild/linux-riscv64",
+      "version": "0.25.12",
+      "integrity": "sha512-Zr7KR4hgKUpWAwb1f3o5ygT04MzqVrGEGXGLnj15YQDJErYu/BGg+wmFlIDOdJp0PmB0lLvxFIOXZgFRrdjR0w==",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "riscv64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@esbuild/linux-s390x",
+      "version": "0.25.12",
+      "integrity": "sha512-MsKncOcgTNvdtiISc/jZs/Zf8d0cl/t3gYWX8J9ubBnVOwlk65UIEEvgBORTiljloIWnBzLs4qhzPkJcitIzIg==",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "s390x"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@esbuild/linux-x64",
+      "version": "0.25.12",
+      "integrity": "sha512-uqZMTLr/zR/ed4jIGnwSLkaHmPjOjJvnm6TVVitAa08SLS9Z0VM8wIRx7gWbJB5/J54YuIMInDquWyYvQLZkgw==",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@esbuild/netbsd-arm64",
+      "version": "0.25.12",
+      "integrity": "sha512-xXwcTq4GhRM7J9A8Gv5boanHhRa/Q9KLVmcyXHCTaM4wKfIpWkdXiMog/KsnxzJ0A1+nD+zoecuzqPmCRyBGjg==",
+      "optional": true,
+      "os": [
+        "netbsd"
+      ],
+      "cpu": [
+        "arm64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@esbuild/netbsd-x64",
+      "version": "0.25.12",
+      "integrity": "sha512-Ld5pTlzPy3YwGec4OuHh1aCVCRvOXdH8DgRjfDy/oumVovmuSzWfnSJg+VtakB9Cm0gxNO9BzWkj6mtO1FMXkQ==",
+      "optional": true,
+      "os": [
+        "netbsd"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@esbuild/openbsd-arm64",
+      "version": "0.25.12",
+      "integrity": "sha512-fF96T6KsBo/pkQI950FARU9apGNTSlZGsv1jZBAlcLL1MLjLNIWPBkj5NlSz8aAzYKg+eNqknrUJ24QBybeR5A==",
+      "optional": true,
+      "os": [
+        "openbsd"
+      ],
+      "cpu": [
+        "arm64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@esbuild/openbsd-x64",
+      "version": "0.25.12",
+      "integrity": "sha512-MZyXUkZHjQxUvzK7rN8DJ3SRmrVrke8ZyRusHlP+kuwqTcfWLyqMOE3sScPPyeIXN/mDJIfGXvcMqCgYKekoQw==",
+      "optional": true,
+      "os": [
+        "openbsd"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@esbuild/openharmony-arm64",
+      "version": "0.25.12",
+      "integrity": "sha512-rm0YWsqUSRrjncSXGA7Zv78Nbnw4XL6/dzr20cyrQf7ZmRcsovpcRBdhD43Nuk3y7XIoW2OxMVvwuRvk9XdASg==",
+      "optional": true,
+      "os": [
+        "openharmony"
+      ],
+      "cpu": [
+        "arm64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@esbuild/sunos-x64",
+      "version": "0.25.12",
+      "integrity": "sha512-3wGSCDyuTHQUzt0nV7bocDy72r2lI33QL3gkDNGkod22EsYl04sMf0qLb8luNKTOmgF/eDEDP5BFNwoBKH441w==",
+      "optional": true,
+      "os": [
+        "sunos"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@esbuild/win32-arm64",
+      "version": "0.25.12",
+      "integrity": "sha512-rMmLrur64A7+DKlnSuwqUdRKyd3UE7oPJZmnljqEptesKM8wx9J8gx5u0+9Pq0fQQW8vqeKebwNXdfOyP+8Bsg==",
+      "optional": true,
+      "os": [
+        "win32"
+      ],
+      "cpu": [
+        "arm64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@esbuild/win32-ia32",
+      "version": "0.25.12",
+      "integrity": "sha512-HkqnmmBoCbCwxUKKNPBixiWDGCpQGVsrQfJoVGYLPT41XWF8lHuE5N6WhVia2n4o5QK5M4tYr21827fNhi4byQ==",
+      "optional": true,
+      "os": [
+        "win32"
+      ],
+      "cpu": [
+        "ia32"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@esbuild/win32-x64",
+      "version": "0.25.12",
+      "integrity": "sha512-alJC0uCZpTFrSL0CCDjcgleBXPnCrEAhTBILpeAp7M/OFgoqtAetfBzX0xM00MUsVVPpVjlPuMbREqnZCXaTnA==",
+      "optional": true,
+      "os": [
+        "win32"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@expo/modules-macros-linux-arm64",
+      "version": "0.33.0",
+      "integrity": "sha512-5F4L/IJThOBq3oRo9NB5BI4+Od8K2YDTbU+2IHgsnXsrTc5icQtOlLwHOEfExghjo0PHCXGap4zprfOKvtANxw==",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "arm64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@expo/modules-macros-linux-x64",
+      "version": "0.33.0",
+      "integrity": "sha512-G3kxfmMpH7BDtoeBVeJA4vh5O3kQ3wmjmSfDremRBWENHKwHJXTOsyerLQqkJC39oPKCuXgXhzvp+/5qy+DyvA==",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@expo/modules-macros-win32-arm64",
+      "version": "0.33.0",
+      "integrity": "sha512-sAYEhKqywo+38UcWt1KLNzJkSkpba4HYybSSZfpFsoA28/MCBupFZggkbU/E9z81fZeuiWVA2Ote1fp8ogqRAA==",
+      "optional": true,
+      "os": [
+        "win32"
+      ],
+      "cpu": [
+        "arm64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@expo/modules-macros-win32-x64",
+      "version": "0.33.0",
+      "integrity": "sha512-O7tmET8ehVpmocxpVUlXkV9yfKCNo3uKvpN7wNyWcJlEIM6xo+WZuN4RDtndExI6CE5wn8Io608US+BYtrE9+w==",
+      "optional": true,
+      "os": [
+        "win32"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@expo/ui",
+      "version": "58.0.29",
+      "integrity": "sha512-+zeaoDU1zS1rKe1afVsH8sh7+b+HNZyq93ZL0BRJ03RtrxZyYxKljqOcl78Q9NkX1oOO8CdQxzhFa8Dl6o52ug==",
+      "optional": false,
+      "os": null,
+      "cpu": null,
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@noxcturnal/noxcturnal-darwin-arm64",
+      "version": "0.1.14",
+      "integrity": "sha512-5g1fvtfmDsaDzNoqZicO7UKUUaGm9HOTJy30KNxXbSJRreLOQwK0fd0wuAA0OEbBgJSQAvVdAovpjT5HvYRIWw==",
+      "optional": true,
+      "os": [
+        "darwin"
+      ],
+      "cpu": [
+        "arm64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@noxcturnal/noxcturnal-darwin-x64",
+      "version": "0.1.14",
+      "integrity": "sha512-rnZ8LRa+rYOyHmPS2PpPgxRHaeU0zJZ7Ii8huuAMbADfJHGceGBU8SQYqd7+Vs1VwSUcxRm4BMC4+QL1IgdqrA==",
+      "optional": true,
+      "os": [
+        "darwin"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@noxcturnal/noxcturnal-linux-arm64-musl",
+      "version": "0.1.14",
+      "integrity": "sha512-dxZXo7Xj00w8eeFac+ev/75lJd/62GSUIX4wwCN2yYn6r9Jrim3DJ6yKVZwmfqHDE0v55TZsif0/vdhNFxFXfQ==",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "arm64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@noxcturnal/noxcturnal-linux-x64-gnu",
+      "version": "0.1.14",
+      "integrity": "sha512-ek3098/TS+Ma2vJUjzpIZnhU70lryFzFPEdKdQ5u+1w00QKvMg0teFa2mec1H8/ndK74/xYWy8e4d92Uz+s9Dg==",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@noxcturnal/noxcturnal-linux-x64-musl",
+      "version": "0.1.14",
+      "integrity": "sha512-qblXyvGhD5HoJSK32Q8YN6PnEz4GPXgr2KLgStpRG1oG8+BRPlrqZCaQRbQI5Bn3L8NZ+OjyGWhLEG1kgdzHBw==",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@noxcturnal/noxcturnal-win32-arm64-msvc",
+      "version": "0.1.14",
+      "integrity": "sha512-K9Q82l32juE/p7Ca6p36rAWfNzORkCyoL0R2aDUq3tkYOmivu3xTewnxUwDLTzDIuLsMgb4niy5vrtr4IXdNXw==",
+      "optional": true,
+      "os": [
+        "win32"
+      ],
+      "cpu": [
+        "arm64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@noxcturnal/noxcturnal-win32-x64-msvc",
+      "version": "0.1.14",
+      "integrity": "sha512-qiiOLLQUYnLZai3traWx90yzMLGZlkvwGNYMFkGw5MwnMifVgfl3Z3ooFiSYaVKjkTYqxBF9rOCvhFL6yXaoxA==",
+      "optional": true,
+      "os": [
+        "win32"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@react-native/babel-preset",
+      "version": "0.88.1",
+      "integrity": "sha512-tnacL6tECmtFyBf59tI1GuadSvpm/XCcRQ1vMkL3qoQECpgMVdCfhw79A6l7iZdKM78TcZ0xKV98kZlERydwCg==",
+      "optional": false,
+      "os": null,
+      "cpu": null,
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@react-native/community-cli-plugin",
+      "version": "0.88.1",
+      "integrity": "sha512-L2CQvzsOMz4oof6AVLSzesFL1Q92nrtXpK0uQH2VwdOmzzgkiHql8WFQSo9VLvMFGJDg8+G6enrHH573ruqqWA==",
+      "optional": false,
+      "os": null,
+      "cpu": null,
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@react-native/gradle-plugin",
+      "version": "0.88.1",
+      "integrity": "sha512-zalxoJJ/m5kxLnBy9I1zYrx4jaPxPXdys8DeROvrSOa3pSQkTwVVXRZ4FkXCdGodVA9KR2WitplDo/URNjyvFA==",
+      "optional": false,
+      "os": null,
+      "cpu": null,
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@react-native/metro-babel-transformer",
+      "version": "0.88.1",
+      "integrity": "sha512-74bvSM4lVZcv+M777/uYW2Nzs6Ga5/F0Ncn9dmeXyUPFMkJO3Ys5v9YlhI//AQ2+0nxojYYFVS/rlAjOkVjtHA==",
+      "optional": false,
+      "os": null,
+      "cpu": null,
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@react-native/metro-config",
+      "version": "0.88.1",
+      "integrity": "sha512-Q0rKoC55HSOIc4j55lCOHpjIt/JkGQ66u2KsorfTC99LaRIez9UYJ/mhMwhjkZqGHq5Z4iBT6PCd4eQf35zdgQ==",
+      "optional": false,
+      "os": null,
+      "cpu": null,
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/@react-native/virtualized-lists",
+      "version": "0.88.1",
+      "integrity": "sha512-Zt+OGvJE6VgmzgemZL8TSA0VomNWpHMNcG0OvLkkBQEGrzY8OdDHRfjJh7S+f+UFJF77kicRC6o6mt3A7ER9lQ==",
+      "optional": false,
+      "os": null,
+      "cpu": null,
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/bplist-parser",
+      "version": "0.3.2",
+      "integrity": "sha512-apC2+fspHGI3mMKj+dGevkGo/tCqVB8jMb6i+OX+E29p0Iposz07fABkRIfVUPNd5A5VbuOz1bZbnmkKLYF+wQ==",
+      "optional": false,
+      "os": null,
+      "cpu": null,
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/expo",
+      "version": "58.0.26",
+      "integrity": "sha512-6i4kqt5lbcQdxmtnkkJ3JR5sn+A3L+xO45duLhh2rndvrek/chX/GTysTYozl4oL3+txKD53pDlJd75XRYf9Ow==",
+      "optional": false,
+      "os": null,
+      "cpu": null,
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/expo-brownfield",
+      "version": "58.0.20",
+      "integrity": "sha512-IQy7FD4QzLcRtrwljcr/C/QB+oWJDgo3dDnBhjtzgGMn90AFP4ZT3ZAKVDBKlfejrXQf7jEpRgw03mpqaS5IMg==",
+      "optional": false,
+      "os": null,
+      "cpu": null,
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/expo-modules-cli",
+      "version": "0.5.0",
+      "integrity": "sha512-uBNKkp5NIMo2bmJiQL36EBLNMeX+2GEIxpz10BioT0EGQTsPcgrV0ypfGy31GtPoFOObyc9ibHhklsOtpzhblw==",
+      "optional": false,
+      "os": null,
+      "cpu": null,
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/expo-modules-core",
+      "version": "58.1.0",
+      "integrity": "sha512-eXHOPyxHkDyTxUWnKEatC+Hx4tLoPWCPd5pCynAU4WkaBvAG/l5t/wu5jXiE5eh2CRr2NU4iAQePX2zUfNEVhA==",
+      "optional": false,
+      "os": null,
+      "cpu": null,
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/expo-modules-jsi",
+      "version": "58.0.23",
+      "integrity": "sha512-ex3CnT8KLubsPjUG0RpEL5VgmpnWxf7Ouc+WXEr8jEbIwqcULEWtA2tfhGZwjg6jS3zeNwjygF1w8QSstP7JfQ==",
+      "optional": false,
+      "os": null,
+      "cpu": null,
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/expo-modules-macros",
+      "version": "0.33.0",
+      "integrity": "sha512-ddrT2jbYPYmiHmzcYOixRemFUUK9qQEb5pOBWgoFoW0gj3sGld1CZX0GwblUXeZMyEX65S9vc1bEhIAGVDRA9w==",
+      "optional": false,
+      "os": null,
+      "cpu": null,
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/expo-widgets",
+      "version": "58.0.29",
+      "integrity": "sha512-iDq5M3+T5OXcldvHmUbedptclmMLeckMwSHa7KDdUeqy0l/EStNphANZB1QiCMwcDaxwDKQ0/47BkrQXv6EtOQ==",
+      "optional": false,
+      "os": null,
+      "cpu": null,
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/hermes-compiler",
+      "version": "260318099.0.5",
+      "integrity": "sha512-4Gze+pGTGTUBRmnv6LtdOMo6ZzMMh3hEkvDiWzvuNL5LM0EO5YGhr8xh3fRjFaEqReUwEGjJGcGgEPFe9+E6Gw==",
+      "optional": false,
+      "os": null,
+      "cpu": null,
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/lightningcss-android-arm64",
+      "version": "1.33.0",
+      "integrity": "sha512-gEpRTalKdosp4Bb8qWtc2iOgE5SeIHlpS1up9bFq2wAyYhl1UdTObYiHe98zEM9SQvSoqQZ1IQD0JNpg3Ml5pg==",
+      "optional": true,
+      "os": [
+        "android"
+      ],
+      "cpu": [
+        "arm64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/lightningcss-darwin-arm64",
+      "version": "1.33.0",
+      "integrity": "sha512-Sciaz8eenNTKn9b3t7+xr0ipTp9YxKQY4npwQ3mrRuL0BAVHBLyZxofhaKBAVtzmtRZ/zTyo0/to4B1uWG/Djg==",
+      "optional": true,
+      "os": [
+        "darwin"
+      ],
+      "cpu": [
+        "arm64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/lightningcss-darwin-x64",
+      "version": "1.33.0",
+      "integrity": "sha512-Z5UPAxzrjlWNNyGy6i65cJzzvgJ5D3T6wMvs+gWpY9d7qRhANrxqAp6LhxIgZhWEw18RfJTGcRxjuLIBr+m8XQ==",
+      "optional": true,
+      "os": [
+        "darwin"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/lightningcss-freebsd-x64",
+      "version": "1.33.0",
+      "integrity": "sha512-QQM/Ti/hQajJwCY+RiWuCZ9sdtI/XQk7nDK5vC8kkdwixezOlDgvDx7+RT+QjK6FcFT4MpsuoBnHIo/O3StRRg==",
+      "optional": true,
+      "os": [
+        "freebsd"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/lightningcss-linux-arm-gnueabihf",
+      "version": "1.33.0",
+      "integrity": "sha512-N7FVBe6iS24MlM6R/4RBTxGhQheZGs7tiQ9U32UtF75NzP5Q7xWPRqLBCKxlRQRk3rY1jCIPLzx7WzOhuUIRLQ==",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "arm"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/lightningcss-linux-x64-gnu",
+      "version": "1.33.0",
+      "integrity": "sha512-ar+Ju7LmcN0Jo4FpL4hpFybwNG9/3A/Br5KW2n2jyODg3MEZXaDYADdemoNS+BDNfMgKvylJLj4S5tyRActuAg==",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/lightningcss-linux-x64-musl",
+      "version": "1.33.0",
+      "integrity": "sha512-RYiYbkokw0trfKqqzfF55lginwEPrD3OJDfTuJzFs1MK6iFnDenaz1fqLLtX4ITG3OktJQXOeTaw1awrBAlZPw==",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/lightningcss-win32-arm64-msvc",
+      "version": "1.33.0",
+      "integrity": "sha512-1K+MPfLSFVpphzpdbfkhlWk6wBrTObBzS2T6db10PNOZgR9GoVsAWzwNyuhUYYbTp23j+4RrncfujZ4uAzXvwA==",
+      "optional": true,
+      "os": [
+        "win32"
+      ],
+      "cpu": [
+        "arm64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/lightningcss-win32-x64-msvc",
+      "version": "1.33.0",
+      "integrity": "sha512-OlEICDx/Xl0FqSp4bry8zFnCvGpig3Gl4gCquvYwHuqJKEC1+n9NgDniFvqHGmMv1ZkqDJrDqKKSykTDX+ehuA==",
+      "optional": true,
+      "os": [
+        "win32"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/react-native",
+      "version": "0.88.1",
+      "integrity": "sha512-wajWcLZ93GCN7k4Uwh4CS4L2Ah8ohcvkOXnvIYmh4Yvuqho5j3APZ9qozK+nQrHWSgauq4h8D3HN5DKK84SrHA==",
+      "optional": false,
+      "os": null,
+      "cpu": null,
+      "cache": null
+    },
+    {
+      "engine": "expo",
+      "path": "node_modules/react-native-worklets",
+      "version": "0.13.0",
+      "integrity": "sha512-1OrhAeAKaZF4XrBa4YbPQbKzNOpjh52HDlId8e6ete1OCHNdAlrQHzG4gznJ225EAj3dgQXHViJvK51M9B52jQ==",
+      "optional": false,
+      "os": null,
+      "cpu": null,
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@emnapi/core",
+      "version": "1.11.3",
+      "integrity": "sha512-zLpS5asjEb7lq8jYLq37N6XKaE41DIexlY1rF/z4/tIl3wo13Sqm28fRyfIsKZD+NZ8mM5RoKkpW/rBcuoSZSg==",
+      "optional": true,
+      "os": null,
+      "cpu": null,
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@emnapi/runtime",
+      "version": "1.11.3",
+      "integrity": "sha512-Xz4Tpyki7XyrpbUK1jR1AhdAdaXyhhY4lZ3neLodmhpuWfy2PAQN5B46sAiU4liOXGLkHypn/qU+jvfWSCYYLA==",
+      "optional": true,
+      "os": null,
+      "cpu": null,
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@emnapi/wasi-threads",
+      "version": "1.2.3",
+      "integrity": "sha512-ELEBe8PsLvvJ6QMr0zLt8ffvOHW/dc1m3CEzNMg7aJUv3bMaoDtw2TXyDAwkYBuroxxuHEwhRTLJSe5sya547g==",
+      "optional": true,
+      "os": null,
+      "cpu": null,
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@esbuild/aix-ppc64",
+      "version": "0.27.7",
+      "integrity": "sha512-EKX3Qwmhz1eMdEJokhALr0YiD0lhQNwDqkPYyPhiSwKrh7/4KRjQc04sZ8db+5DVVnZ1LmbNDI1uAMPEUBnQPg==",
+      "optional": true,
+      "os": [
+        "aix"
+      ],
+      "cpu": [
+        "ppc64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@esbuild/android-arm",
+      "version": "0.27.7",
+      "integrity": "sha512-jbPXvB4Yj2yBV7HUfE2KHe4GJX51QplCN1pGbYjvsyCZbQmies29EoJbkEc+vYuU5o45AfQn37vZlyXy4YJ8RQ==",
+      "optional": true,
+      "os": [
+        "android"
+      ],
+      "cpu": [
+        "arm"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@esbuild/android-arm64",
+      "version": "0.27.7",
+      "integrity": "sha512-62dPZHpIXzvChfvfLJow3q5dDtiNMkwiRzPylSCfriLvZeq0a1bWChrGx/BbUbPwOrsWKMn8idSllklzBy+dgQ==",
+      "optional": true,
+      "os": [
+        "android"
+      ],
+      "cpu": [
+        "arm64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@esbuild/android-x64",
+      "version": "0.27.7",
+      "integrity": "sha512-x5VpMODneVDb70PYV2VQOmIUUiBtY3D3mPBG8NxVk5CogneYhkR7MmM3yR/uMdITLrC1ml/NV1rj4bMJuy9MCg==",
+      "optional": true,
+      "os": [
+        "android"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@esbuild/darwin-arm64",
+      "version": "0.27.7",
+      "integrity": "sha512-5lckdqeuBPlKUwvoCXIgI2D9/ABmPq3Rdp7IfL70393YgaASt7tbju3Ac+ePVi3KDH6N2RqePfHnXkaDtY9fkw==",
+      "optional": true,
+      "os": [
+        "darwin"
+      ],
+      "cpu": [
+        "arm64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@esbuild/darwin-x64",
+      "version": "0.27.7",
+      "integrity": "sha512-rYnXrKcXuT7Z+WL5K980jVFdvVKhCHhUwid+dDYQpH+qu+TefcomiMAJpIiC2EM3Rjtq0sO3StMV/+3w3MyyqQ==",
+      "optional": true,
+      "os": [
+        "darwin"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@esbuild/freebsd-arm64",
+      "version": "0.27.7",
+      "integrity": "sha512-B48PqeCsEgOtzME2GbNM2roU29AMTuOIN91dsMO30t+Ydis3z/3Ngoj5hhnsOSSwNzS+6JppqWsuhTp6E82l2w==",
+      "optional": true,
+      "os": [
+        "freebsd"
+      ],
+      "cpu": [
+        "arm64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@esbuild/freebsd-x64",
+      "version": "0.27.7",
+      "integrity": "sha512-jOBDK5XEjA4m5IJK3bpAQF9/Lelu/Z9ZcdhTRLf4cajlB+8VEhFFRjWgfy3M1O4rO2GQ/b2dLwCUGpiF/eATNQ==",
+      "optional": true,
+      "os": [
+        "freebsd"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@esbuild/linux-arm",
+      "version": "0.27.7",
+      "integrity": "sha512-RkT/YXYBTSULo3+af8Ib0ykH8u2MBh57o7q/DAs3lTJlyVQkgQvlrPTnjIzzRPQyavxtPtfg0EopvDyIt0j1rA==",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "arm"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@esbuild/linux-ia32",
+      "version": "0.27.7",
+      "integrity": "sha512-GA48aKNkyQDbd3KtkplYWT102C5sn/EZTY4XROkxONgruHPU72l+gW+FfF8tf2cFjeHaRbWpOYa/uRBz/Xq1Pg==",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "ia32"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@esbuild/linux-loong64",
+      "version": "0.27.7",
+      "integrity": "sha512-a4POruNM2oWsD4WKvBSEKGIiWQF8fZOAsycHOt6JBpZ+JN2n2JH9WAv56SOyu9X5IqAjqSIPTaJkqN8F7XOQ5Q==",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "loong64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@esbuild/linux-mips64el",
+      "version": "0.27.7",
+      "integrity": "sha512-KabT5I6StirGfIz0FMgl1I+R1H73Gp0ofL9A3nG3i/cYFJzKHhouBV5VWK1CSgKvVaG4q1RNpCTR2LuTVB3fIw==",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "mips64el"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@esbuild/linux-ppc64",
+      "version": "0.27.7",
+      "integrity": "sha512-gRsL4x6wsGHGRqhtI+ifpN/vpOFTQtnbsupUF5R5YTAg+y/lKelYR1hXbnBdzDjGbMYjVJLJTd2OFmMewAgwlQ==",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "ppc64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@esbuild/linux-riscv64",
+      "version": "0.27.7",
+      "integrity": "sha512-hL25LbxO1QOngGzu2U5xeXtxXcW+/GvMN3ejANqXkxZ/opySAZMrc+9LY/WyjAan41unrR3YrmtTsUpwT66InQ==",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "riscv64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@esbuild/linux-s390x",
+      "version": "0.27.7",
+      "integrity": "sha512-2k8go8Ycu1Kb46vEelhu1vqEP+UeRVj2zY1pSuPdgvbd5ykAw82Lrro28vXUrRmzEsUV0NzCf54yARIK8r0fdw==",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "s390x"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@esbuild/linux-x64",
+      "version": "0.27.7",
+      "integrity": "sha512-hzznmADPt+OmsYzw1EE33ccA+HPdIqiCRq7cQeL1Jlq2gb1+OyWBkMCrYGBJ+sxVzve2ZJEVeePbLM2iEIZSxA==",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@esbuild/netbsd-arm64",
+      "version": "0.27.7",
+      "integrity": "sha512-b6pqtrQdigZBwZxAn1UpazEisvwaIDvdbMbmrly7cDTMFnw/+3lVxxCTGOrkPVnsYIosJJXAsILG9XcQS+Yu6w==",
+      "optional": true,
+      "os": [
+        "netbsd"
+      ],
+      "cpu": [
+        "arm64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@esbuild/netbsd-x64",
+      "version": "0.27.7",
+      "integrity": "sha512-OfatkLojr6U+WN5EDYuoQhtM+1xco+/6FSzJJnuWiUw5eVcicbyK3dq5EeV/QHT1uy6GoDhGbFpprUiHUYggrw==",
+      "optional": true,
+      "os": [
+        "netbsd"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@esbuild/openbsd-arm64",
+      "version": "0.27.7",
+      "integrity": "sha512-AFuojMQTxAz75Fo8idVcqoQWEHIXFRbOc1TrVcFSgCZtQfSdc1RXgB3tjOn/krRHENUB4j00bfGjyl2mJrU37A==",
+      "optional": true,
+      "os": [
+        "openbsd"
+      ],
+      "cpu": [
+        "arm64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@esbuild/openbsd-x64",
+      "version": "0.27.7",
+      "integrity": "sha512-+A1NJmfM8WNDv5CLVQYJ5PshuRm/4cI6WMZRg1by1GwPIQPCTs1GLEUHwiiQGT5zDdyLiRM/l1G0Pv54gvtKIg==",
+      "optional": true,
+      "os": [
+        "openbsd"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@esbuild/openharmony-arm64",
+      "version": "0.27.7",
+      "integrity": "sha512-+KrvYb/C8zA9CU/g0sR6w2RBw7IGc5J2BPnc3dYc5VJxHCSF1yNMxTV5LQ7GuKteQXZtspjFbiuW5/dOj7H4Yw==",
+      "optional": true,
+      "os": [
+        "openharmony"
+      ],
+      "cpu": [
+        "arm64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@esbuild/sunos-x64",
+      "version": "0.27.7",
+      "integrity": "sha512-ikktIhFBzQNt/QDyOL580ti9+5mL/YZeUPKU2ivGtGjdTYoqz6jObj6nOMfhASpS4GU4Q/Clh1QtxWAvcYKamA==",
+      "optional": true,
+      "os": [
+        "sunos"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@esbuild/win32-arm64",
+      "version": "0.27.7",
+      "integrity": "sha512-7yRhbHvPqSpRUV7Q20VuDwbjW5kIMwTHpptuUzV+AA46kiPze5Z7qgt6CLCK3pWFrHeNfDd1VKgyP4O+ng17CA==",
+      "optional": true,
+      "os": [
+        "win32"
+      ],
+      "cpu": [
+        "arm64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@esbuild/win32-ia32",
+      "version": "0.27.7",
+      "integrity": "sha512-SmwKXe6VHIyZYbBLJrhOoCJRB/Z1tckzmgTLfFYOfpMAx63BJEaL9ExI8x7v0oAO3Zh6D/Oi1gVxEYr5oUCFhw==",
+      "optional": true,
+      "os": [
+        "win32"
+      ],
+      "cpu": [
+        "ia32"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@esbuild/win32-x64",
+      "version": "0.27.7",
+      "integrity": "sha512-56hiAJPhwQ1R4i+21FVF7V8kSD5zZTdHcVuRFMW0hn753vVfQN8xlx4uOPT4xoGH0Z/oVATuR82AiqSTDIpaHg==",
+      "optional": true,
+      "os": [
+        "win32"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@napi-rs/wasm-runtime",
+      "version": "1.2.3",
+      "integrity": "sha512-UMduMbqO5s5zF2NkNacMT/yK5Y5QiKvWr2+50bzIIxFDwVJ2h49b+oyjaCGPhJxd2/gC2x39EHv/gHVuu36x2Q==",
+      "optional": true,
+      "os": null,
+      "cpu": null,
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@nativescript/core",
+      "version": "9.1.4",
+      "integrity": "sha512-S8HQDKi7Md9SIr7rzBHvobS3X3HC9RG5qMCLqnXsOzW1u8Kp8W4TuCVIdjoyRoj5/V8xLMv+ZpMYsJ7K5iE9Ug==",
+      "optional": false,
+      "os": null,
+      "cpu": null,
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@nativescript/ios",
+      "version": "9.1.1",
+      "integrity": "sha512-xgSo3sRJinexjcbcKUz7N+Wz6M53+mf8oQaTvekPWVeHG0E8WvS9S7cnkU7IYzTpyBwR5h6z9m7RfTYv9iAvOw==",
+      "optional": false,
+      "os": null,
+      "cpu": null,
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@nativescript/types",
+      "version": "9.1.4",
+      "integrity": "sha512-7XhcnFg98c3gm/lVF1jmH4u9viADxVlPkhDbY+swtsSKvNAGpof3BeKbbnnYAZpw1xIIAvPFbGtz4jWD6ey3Yw==",
+      "optional": false,
+      "os": null,
+      "cpu": null,
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@nativescript/types-android",
+      "version": "9.1.1",
+      "integrity": "sha512-PGaTum9tyqyyza3QT21Z7WrRR1+nM7ITsq9EJiaShLArThJI0PD1ZuDO5IoUUvSQ+gTKU2nLiVMnFbU4s3FeeQ==",
+      "optional": false,
+      "os": null,
+      "cpu": null,
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@nativescript/types-ios",
+      "version": "9.1.3",
+      "integrity": "sha512-iymdyLJfDX16T+t0oKOF3BpZxCPay35EQrd1U4pyBKYTGICAya1v3NgGc6SRdaHNDKQ89Xh5ASP1xQHIfxEKgg==",
+      "optional": false,
+      "os": null,
+      "cpu": null,
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@nativescript/vite",
+      "version": "8.0.23",
+      "integrity": "sha512-Xj+k5ZrKSeOhiWg5SWzmXNXnyWPzRWRrEdkfAVAaG7dfGOxvVvfzgJ5ZAOwi8Kb5E85IrVwV9JaDGufhOnNDAg==",
+      "optional": false,
+      "os": null,
+      "cpu": null,
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@parcel/watcher-android-arm64",
+      "version": "2.6.0",
+      "integrity": "sha512-trgpLSCKRC/huFjXX/Smh+0sWe4+YtKfktIToiMl59ghz7z+qkH6kMvNnUbLyRs9N11t8l4svSCs1+5B3rOAhA==",
+      "optional": true,
+      "os": [
+        "android"
+      ],
+      "cpu": [
+        "arm64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@parcel/watcher-darwin-arm64",
+      "version": "2.6.0",
+      "integrity": "sha512-Y3QV0gl7Q1zbfueunkWIERICbEojQFCgpyG7YqOGNFLsckXyI1xu9mAIUpKY9QBYzBtSkN8dBPwd3yiAO9ovMw==",
+      "optional": true,
+      "os": [
+        "darwin"
+      ],
+      "cpu": [
+        "arm64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@parcel/watcher-darwin-x64",
+      "version": "2.6.0",
+      "integrity": "sha512-Ohv6OpzhUfKYD7Beb8kDvG0jbIxORCYY1JRdZnaBtnjjkJxgD7ZVL0nw2sCYd0yTMKTvz3nnTnOF3cDifK+kvw==",
+      "optional": true,
+      "os": [
+        "darwin"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@parcel/watcher-freebsd-x64",
+      "version": "2.6.0",
+      "integrity": "sha512-5HmXvDgs8VK+74jF9y9/2FE3/OnlcKmc56tjmSrEuZjpSZOGL+fvAu+HKJBdPs9uwoP2hE6TlSUpXZ/C5jUFmQ==",
+      "optional": true,
+      "os": [
+        "freebsd"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@parcel/watcher-linux-arm-glibc",
+      "version": "2.6.0",
+      "integrity": "sha512-Ps/hui3A+vMbjdqlqAowK2ZL8+BO8dBjxeWXj6npTBs3jx4wWmbPpaLuqwrQrSqIVMCnpWo238bJ1U37GhQOYg==",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "arm"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@parcel/watcher-linux-arm-musl",
+      "version": "2.6.0",
+      "integrity": "sha512-9c6AUHgHoG+IY88MRIHupztQiQnrbqHYQjkM2btA+Bf/wQnQMuiD0Wfk1EVv3TlNT3x41uU71rn6E4xh/+zvkw==",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "arm"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@parcel/watcher-linux-x64-glibc",
+      "version": "2.6.0",
+      "integrity": "sha512-ulGE6x6Oz6iAwg75T8YQSoguBWasniIbX+QWpaYPcCnDOpdWX3k+4xbEYPZVLxOuoJI+svJJPD3sEj8G7lrQ3A==",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@parcel/watcher-linux-x64-musl",
+      "version": "2.6.0",
+      "integrity": "sha512-tkBYKt7YQrjIJWYDnto2YgO8MRkjlMTSNoRHzsXinBqbLdeOM3L32wPZJvIZxqaLMfSlS/4sUjH/6STVP/XDLw==",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@parcel/watcher-win32-arm64",
+      "version": "2.6.0",
+      "integrity": "sha512-gIZAP23jaHjGWasY/TY6yL7NHFClf0Ga7FN+iINvk+KN94rhm94lYZhFsbYFNcA04/onvGD9kKmiJLJB2HbNwQ==",
+      "optional": true,
+      "os": [
+        "win32"
+      ],
+      "cpu": [
+        "arm64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@parcel/watcher-win32-x64",
+      "version": "2.6.0",
+      "integrity": "sha512-cA+/pXV2YkfxlIcXOQ5fSWqAzzPyD78/x5qbK/I0vUkrlYHA8TIz+MXjAbGouguKVSI4bOmkTSJ1/poVSsgt+A==",
+      "optional": true,
+      "os": [
+        "win32"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@rolldown/binding-android-arm64",
+      "version": "1.0.0-rc.9",
+      "integrity": "sha512-lcJL0bN5hpgJfSIz/8PIf02irmyL43P+j1pTCfbD1DbLkmGRuFIA4DD3B3ZOvGqG0XiVvRznbKtN0COQVaKUTg==",
+      "optional": true,
+      "os": [
+        "android"
+      ],
+      "cpu": [
+        "arm64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@rolldown/binding-darwin-arm64",
+      "version": "1.0.0-rc.9",
+      "integrity": "sha512-J7Zk3kLYFsLtuH6U+F4pS2sYVzac0qkjcO5QxHS7OS7yZu2LRs+IXo+uvJ/mvpyUljDJ3LROZPoQfgBIpCMhdQ==",
+      "optional": true,
+      "os": [
+        "darwin"
+      ],
+      "cpu": [
+        "arm64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@rolldown/binding-darwin-x64",
+      "version": "1.0.0-rc.9",
+      "integrity": "sha512-iwtmmghy8nhfRGeNAIltcNXzD0QMNaaA5U/NyZc1Ia4bxrzFByNMDoppoC+hl7cDiUq5/1CnFthpT9n+UtfFyg==",
+      "optional": true,
+      "os": [
+        "darwin"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@rolldown/binding-freebsd-x64",
+      "version": "1.0.0-rc.9",
+      "integrity": "sha512-DLFYI78SCiZr5VvdEplsVC2Vx53lnA4/Ga5C65iyldMVaErr86aiqCoNBLl92PXPfDtUYjUh+xFFor40ueNs4Q==",
+      "optional": true,
+      "os": [
+        "freebsd"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@rolldown/binding-linux-arm-gnueabihf",
+      "version": "1.0.0-rc.9",
+      "integrity": "sha512-CsjTmTwd0Hri6iTw/DRMK7kOZ7FwAkrO4h8YWKoX/kcj833e4coqo2wzIFywtch/8Eb5enQ/lwLM7w6JX1W5RQ==",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "arm"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@rolldown/binding-linux-ppc64-gnu",
+      "version": "1.0.0-rc.9",
+      "integrity": "sha512-aOKU9dJheda8Kj8Y3w9gnt9QFOO+qKPAl8SWd7JPHP+Cu0EuDAE5wokQubLzIDQWg2myXq2XhTpOVS07qqvT+w==",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "ppc64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@rolldown/binding-linux-s390x-gnu",
+      "version": "1.0.0-rc.9",
+      "integrity": "sha512-OalO94fqj7IWRn3VdXWty75jC5dk4C197AWEuMhIpvVv2lw9fiPhud0+bW2ctCxb3YoBZor71QHbY+9/WToadA==",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "s390x"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@rolldown/binding-linux-x64-gnu",
+      "version": "1.0.0-rc.9",
+      "integrity": "sha512-cVEl1vZtBsBZna3YMjGXNvnYYrOJ7RzuWvZU0ffvJUexWkukMaDuGhUXn0rjnV0ptzGVkvc+vW9Yqy6h8YX4pg==",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@rolldown/binding-linux-x64-musl",
+      "version": "1.0.0-rc.9",
+      "integrity": "sha512-UzYnKCIIc4heAKgI4PZ3dfBGUZefGCJ1TPDuLHoCzgrMYPb5Rv6TLFuYtyM4rWyHM7hymNdsg5ik2C+UD9VDbA==",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@rolldown/binding-openharmony-arm64",
+      "version": "1.0.0-rc.9",
+      "integrity": "sha512-+6zoiF+RRyf5cdlFQP7nm58mq7+/2PFaY2DNQeD4B87N36JzfF/l9mdBkkmTvSYcYPE8tMh/o3cRlsx1ldLfog==",
+      "optional": true,
+      "os": [
+        "openharmony"
+      ],
+      "cpu": [
+        "arm64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@rolldown/binding-wasm32-wasi",
+      "version": "1.0.0-rc.9",
+      "integrity": "sha512-rgFN6sA/dyebil3YTlL2evvi/M+ivhfnyxec7AccTpRPccno/rPoNlqybEZQBkcbZu8Hy+eqNJCqfBR8P7Pg8g==",
+      "optional": true,
+      "os": null,
+      "cpu": [
+        "wasm32"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@rolldown/binding-win32-arm64-msvc",
+      "version": "1.0.0-rc.9",
+      "integrity": "sha512-lHVNUG/8nlF1IQk1C0Ci574qKYyty2goMiPlRqkC5R+3LkXDkL5Dhx8ytbxq35m+pkHVIvIxviD+TWLdfeuadA==",
+      "optional": true,
+      "os": [
+        "win32"
+      ],
+      "cpu": [
+        "arm64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@rolldown/binding-win32-x64-msvc",
+      "version": "1.0.0-rc.9",
+      "integrity": "sha512-G0oA4+w1iY5AGi5HcDTxWsoxF509hrFIPB2rduV5aDqS9FtDg1CAfa7V34qImbjfhIcA8C+RekocJZA96EarwQ==",
+      "optional": true,
+      "os": [
+        "win32"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/@tybys/wasm-util",
+      "version": "0.10.3",
+      "integrity": "sha512-F3fo1MYrRJYL3zER0OUOmkutjr1Vp23m7OsSgp7nq4SP6OqX6C/56XFIPAl5bt3zaBRjmW7SGz3u/6LwFpYcOg==",
+      "optional": true,
+      "os": null,
+      "cpu": null,
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/fsevents",
+      "version": "2.3.3",
+      "integrity": "sha512-5xoDfX+fL7faATnagmWPpbFtwh/R77WmMMqqHGS65C3vvB0YHrgF+B1YmZ3441tMj5n63k0212XNoJwzlhffQw==",
+      "optional": true,
+      "os": [
+        "darwin"
+      ],
+      "cpu": null,
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/lightningcss-android-arm64",
+      "version": "1.33.0",
+      "integrity": "sha512-gEpRTalKdosp4Bb8qWtc2iOgE5SeIHlpS1up9bFq2wAyYhl1UdTObYiHe98zEM9SQvSoqQZ1IQD0JNpg3Ml5pg==",
+      "optional": true,
+      "os": [
+        "android"
+      ],
+      "cpu": [
+        "arm64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/lightningcss-darwin-arm64",
+      "version": "1.33.0",
+      "integrity": "sha512-Sciaz8eenNTKn9b3t7+xr0ipTp9YxKQY4npwQ3mrRuL0BAVHBLyZxofhaKBAVtzmtRZ/zTyo0/to4B1uWG/Djg==",
+      "optional": true,
+      "os": [
+        "darwin"
+      ],
+      "cpu": [
+        "arm64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/lightningcss-darwin-x64",
+      "version": "1.33.0",
+      "integrity": "sha512-Z5UPAxzrjlWNNyGy6i65cJzzvgJ5D3T6wMvs+gWpY9d7qRhANrxqAp6LhxIgZhWEw18RfJTGcRxjuLIBr+m8XQ==",
+      "optional": true,
+      "os": [
+        "darwin"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/lightningcss-freebsd-x64",
+      "version": "1.33.0",
+      "integrity": "sha512-QQM/Ti/hQajJwCY+RiWuCZ9sdtI/XQk7nDK5vC8kkdwixezOlDgvDx7+RT+QjK6FcFT4MpsuoBnHIo/O3StRRg==",
+      "optional": true,
+      "os": [
+        "freebsd"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/lightningcss-linux-arm-gnueabihf",
+      "version": "1.33.0",
+      "integrity": "sha512-N7FVBe6iS24MlM6R/4RBTxGhQheZGs7tiQ9U32UtF75NzP5Q7xWPRqLBCKxlRQRk3rY1jCIPLzx7WzOhuUIRLQ==",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "arm"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/lightningcss-linux-x64-gnu",
+      "version": "1.33.0",
+      "integrity": "sha512-ar+Ju7LmcN0Jo4FpL4hpFybwNG9/3A/Br5KW2n2jyODg3MEZXaDYADdemoNS+BDNfMgKvylJLj4S5tyRActuAg==",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/lightningcss-linux-x64-musl",
+      "version": "1.33.0",
+      "integrity": "sha512-RYiYbkokw0trfKqqzfF55lginwEPrD3OJDfTuJzFs1MK6iFnDenaz1fqLLtX4ITG3OktJQXOeTaw1awrBAlZPw==",
+      "optional": true,
+      "os": [
+        "linux"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/lightningcss-win32-arm64-msvc",
+      "version": "1.33.0",
+      "integrity": "sha512-1K+MPfLSFVpphzpdbfkhlWk6wBrTObBzS2T6db10PNOZgR9GoVsAWzwNyuhUYYbTp23j+4RrncfujZ4uAzXvwA==",
+      "optional": true,
+      "os": [
+        "win32"
+      ],
+      "cpu": [
+        "arm64"
+      ],
+      "cache": null
+    },
+    {
+      "engine": "nativescript",
+      "path": "node_modules/lightningcss-win32-x64-msvc",
+      "version": "1.33.0",
+      "integrity": "sha512-OlEICDx/Xl0FqSp4bry8zFnCvGpig3Gl4gCquvYwHuqJKEC1+n9NgDniFvqHGmMv1ZkqDJrDqKKSykTDX+ehuA==",
+      "optional": true,
+      "os": [
+        "win32"
+      ],
+      "cpu": [
+        "x64"
+      ],
+      "cache": null
+    }
+  ],
+  "invalidContent": [],
+  "mutation": false
+}

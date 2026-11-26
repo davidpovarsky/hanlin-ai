@@ -5,6 +5,7 @@ import type { CommonViewModifierProps } from '@expo/ui/swift-ui';
 import { createViewModifierEventListener } from '@expo/ui/swift-ui/modifiers';
 
 type ValueChangeEvent = NativeSyntheticEvent<{ value: string }>;
+type TextEditorChangeEvent = NativeSyntheticEvent<{ value: string; eventCount: number }>;
 type BooleanChangeEvent = NativeSyntheticEvent<{ value: boolean }>;
 type PhaseChangeEvent = NativeSyntheticEvent<{ phase: 'empty' | 'success' | 'failure' }>;
 
@@ -28,16 +29,24 @@ export interface TextEditorProps extends CommonViewModifierProps {
 }
 
 const NativeTextEditor = requireNativeView<Omit<TextEditorProps, 'onValueChange'> & {
-  onValueChange?: (event: ValueChangeEvent) => void;
+  mostRecentEventCount: number;
+  onValueChange?: (event: TextEditorChangeEvent) => void;
 }>('HanlinExpoUI', 'HanlinTextEditorView');
 
 export function TextEditor({ modifiers, onValueChange, ...props }: TextEditorProps) {
+  const [mostRecentEventCount, setMostRecentEventCount] = React.useState(0);
   return (
     <NativeTextEditor
       {...props}
+      mostRecentEventCount={mostRecentEventCount}
       modifiers={modifiers}
       {...(modifiers ? createViewModifierEventListener(modifiers) : undefined)}
-      onValueChange={(event) => onValueChange?.(event.nativeEvent.value)}
+      onValueChange={(event) => {
+        onValueChange?.(event.nativeEvent.value);
+        // Acknowledge after the callback so controlled props settle before native synchronization.
+        // State also forces a render when the parent rejects or normalizes this edit.
+        setMostRecentEventCount(event.nativeEvent.eventCount);
+      }}
     />
   );
 }
@@ -147,6 +156,7 @@ export interface PresentationProps extends CommonViewModifierProps {
   children: React.ReactNode;
   presented: React.ReactNode;
   onPresentedChange?: (value: boolean) => void;
+  /** Once per transition to dismissed, including a controlled close. */
   onDismiss?: () => void;
 }
 

@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "source": "dc53a6c8ff1bb68bfbc52a64667e14ce688055b0",
+  "observedAt": "2026-11-25T15:37:36.075895+00:00",
+  "miniBuildProducerSource": "dc53a6c8ff1bb68bfbc52a64667e14ce688055b0",
+  "aiBuildProducerSource": "dc53a6c8ff1bb68bfbc52a64667e14ce688055b0",
+  "SDKProducerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+  "files": [
+    {
+      "path": "built-input-bindings.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v9/native-result/built-input-bindings.json",
+      "bytes": 11631,
+      "sha256": "77d128b2a5214c78c6b35067c989872d32ac51af4ba381a73ff3e0dcd2b11b29"
+    },
+    {
+      "path": "staged-inputs.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v9/native-result/staged-inputs.json",
+      "bytes": 5833,
+      "sha256": "ce091bb3382fc334afd4e73d05ddda76aef8b2e1aab9100cca4b6620edfe6e8f"
+    },
+    {
+      "path": "paired-prefix/commands.jsonl",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v9/native-result/paired-prefix/commands.jsonl",
+      "bytes": 6147,
+      "sha256": "f2f3d33af3b1ef658b99ded247f75ccf4d450baa75c10a4735439e904beb5f33"
+    },
+    {
+      "path": "paired-prefix/original-prefix-state.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/original-prefix-state.json",
+      "bytes": 25360,
+      "sha256": "4801986291deaff7bb15e83eabbad48529c72729054cd021225e8a34b71069e0"
+    }
+  ],
+  "currentProductBindings": 35,
+  "stagedInputs": 11,
+  "boundary": "Read-only copies of actual completed original build bindings and unchanged staged inputs; commands.jsonl is the capture-time snapshot, original-prefix-state.json remains its authentic historical producer record. No test result or full52 pass is inferred."
+}

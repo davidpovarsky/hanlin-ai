@@ -1,0 +1,12 @@
+==> Downloading bottle manifests
+✔︎ Bottle Manifest cmake (4.5.1)
+==> Fetching downloads for: cmake
+✔︎ Bottle cmake (4.5.1)
+==> Pouring cmake--4.5.1.arm64_golden_gate.bottle.tar.gz
+🍺  /opt/homebrew/Cellar/cmake/4.5.1: 4,291 files, 71.9MB
+==> Caveats
+Emacs Lisp files have been installed to:
+  /opt/homebrew/share/emacs/site-lisp/cmake
+==> cmake
+To install the CMake documentation, run:
+  brew install cmake-docs

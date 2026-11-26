@@ -1,0 +1,190 @@
+{
+  "schemaVersion": 1,
+  "checkedAt": "2026-11-24T05:41:03.639339+00:00",
+  "baseCommit": "9f091beccc3538d6db06bd73ddc7e1aad78b6321",
+  "generator": {
+    "path": "Scripts/Audit/audit_miniapp_reachability.py",
+    "beforeSHA256": "2e487d5e0c9d6cdce6f9fed8317e63658e60e52a9d46e56808f53390288bff9f",
+    "afterSHA256": "a28d4702744f94e265489ca9df18ae6a2fd666290598d6faa693810d794a0dce"
+  },
+  "scope": "Source-reachability generator and evidence only;no runtime/ABI/semver or native behavior changes.",
+  "beforeAfter": [
+    {
+      "claim": "Sparse tracked source reading",
+      "before": "Direct filesystem reads fail when tracked extension/Swift files are outside sparse checkout.",
+      "after": "Local working bytes win; only absent tracked files read exact HEAD blobs through one cat-file batch. Missing/untracked/changed-source failures remain explicit.",
+      "sources": [
+        "Scripts/Audit/audit_miniapp_reachability.py:TrackedSources"
+      ]
+    },
+    {
+      "claim": "Expo Share actions",
+      "before": "Expo share parity disconnected;five canonical cells disconnected.",
+      "after": "Declared Expo shares use installed action selection, durable queue, dispatchResumeCommand and real foreground actionChannel;five cells partially-wired, generic receipt not automatically returned to ingress.",
+      "sources": [
+        "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareActionTarget.swift:shareActionTargets",
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift:dispatchResumeCommand",
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift:executeHeadlessAction",
+        "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift:runtime.execute"
+      ]
+    },
+    {
+      "claim": "Expo App Intents and Shortcuts",
+      "before": "Obsolete Expo unsupported guard;ten canonical cells disconnected.",
+      "after": "Existing typed intents enqueue foreground continuation; installed declared action reaches the same Expo adapter and runtime facade. Ten cells partially-wired. Existing alarm/notification AppShortcutsProvider is not renamed as original ScriptWidget provider.",
+      "sources": [
+        "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptAppIntentBridge.swift:perform",
+        "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingAppIntents.swift:HanlinRunScriptActionIntent",
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift:executeHeadlessAction"
+      ]
+    },
+    {
+      "claim": "Translation",
+      "before": "Snapshot-only route;Expo non-widget exposure rejected;ten cells disconnected.",
+      "after": "Declared NativeScript/Expo foreground action continuation carries selected text through actual App Intent/resume dispatch;ten conditional canonical cells partially-wired. Original snippet/translation program UI and native finish/expansion are a separate original-engine route.",
+      "sources": [
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift:Translation UI Discovery",
+        "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExtensionNodeView.swift:scriptActionIntent",
+        "Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/TranslationProviderNativePresentationView.swift",
+        "Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/HanlinNativePresentationView.swift"
+      ]
+    },
+    {
+      "claim": "Original ScriptWidget Controls",
+      "before": "ControlWidget mentioned only in exposure contracts;no implementation.",
+      "after": "Original button/toggle wrappers,configuration intents,queries,value providers and installed-state action catalog exist and both product WidgetBundles register them. Separate originalLibrarySurfaces record;no Node/Shell cell added or marked connected.",
+      "sources": [
+        "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/ScriptWidgetControls/Original/ScriptWidgetControlWidget.swift",
+        "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/ScriptWidgetControls/Original/ScriptWidgetSelectTimerIntent.swift",
+        "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptWidgetControls.swift",
+        "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift",
+        "HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+        "HanlinMiniAppsExtensions/Widgets/HanlinMiniAppsWidgets.swift",
+        "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json",
+        "Scripts/MiniApps/refresh-original-sources.mjs"
+      ]
+    },
+    {
+      "claim": "Live Activities and widgets",
+      "before": "Live Activity described only as static presentation.",
+      "after": "Original Expo native module/ActivityKit and ScriptWidget original renderer/lifecycle are recorded separately as UI/action source support. Widget/LiveActivity canonical runtime cells remain disconnected;no execution PASS is inferred.",
+      "sources": [
+        "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsModule.swift",
+        "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/WidgetLiveActivity.swift",
+        "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptWidgetLiveActivity.swift",
+        "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingWidgets.swift"
+      ]
+    },
+    {
+      "claim": "Moved source implementations and current share callers",
+      "before": "Anchors pointed into thin host aliases/principal wrappers;five share callers expected.",
+      "after": "Anchors point into actual shared SDK implementations. Exact seven reviewed share callers include the current public SDK share facade and composer;unexpected future callers still fail.",
+      "sources": [
+        "Packages/HanlinAppExtensionsSDK/Sources/HanlinShareExtensionUI/HanlinShareViewController.swift",
+        "Packages/HanlinAppExtensionsSDK/Sources/HanlinNotificationExtension/HanlinNotificationService.swift",
+        "AI_HLY/Downstream/SDK/HanlinApplicationComponents.swift",
+        "AI_HLY/Views/Components/ChatViewBottom.swift"
+      ]
+    },
+    {
+      "claim": "Product and matrix scope",
+      "before": "Four actual extensions described as complete set;source declarations only covered AI target.",
+      "after": "Four ingress categories plus four additional categories retain80 canonical cells. Both current products/seven declared extensions/nine source entitlement files are included;four original-library surface records remain separate. Native/physical acceptance and task completion stay external."
+    }
+  ],
+  "inputSDKAuthority": {
+    "source": "Captured root source-inventory after successful audit at9f091beccc3538d6db06bd73ddc7e1aad78b6321",
+    "sha256": "ca1c69daeb4232719849a3b395c3c9c8b323d36988405496d0ef0b1ecff69bba",
+    "sources": 72
+  },
+  "priorRootFailure": {
+    "schemaVersion": 1,
+    "sourceCommit": "9f091beccc3538d6db06bd73ddc7e1aad78b6321",
+    "createdAt": "2026-11-24T05:31:18.010308+00:00",
+    "evidenceBoundary": "Source inventory/provenance reconciliation only. No native compilation or UI/device acceptance is asserted.",
+    "priorRootFailures": [
+      {
+        "sourceCommit": "efcb479dbb12772c1f4647e2697e8e12a08a6f3c",
+        "command": [
+          "node",
+          "Scripts/Audit/audit-miniapp-sdk.mjs",
+          "--write"
+        ],
+        "failure": "ENOENT Fixtures/ExpoSwiftUIProbe/tsconfig.json",
+        "resolution": "Materialized both existing tracked ExpoSwiftUIProbe and ExpoNativeAPIProbe fixture directories with sparse-checkout; no content edits."
+      },
+      {
+        "sourceCommit": "efcb479dbb12772c1f4647e2697e8e12a08a6f3c",
+        "command": [
+          "node",
+          "Scripts/Audit/audit-miniapp-sdk.mjs",
+          "--write"
+        ],
+        "failure": "Prepared runtime version validation changed; audit the installed contract.",
+        "resolution": "Integrated independently reviewed version bindings and strict source extraction from 8c3aaa5895d26076bd98060244beb03c71a3ede7 as 2eccb2f4a3a5680a28412f6c0dd5605d795c8ef2. Original worker red outputs remain in runtime-version-audit-20261124."
+      }
+    ],
+    "commands": [
+      {
+        "argv": [
+          "node",
+          "Scripts/Audit/audit-miniapp-sdk.mjs",
+          "--write"
+        ],
+        "exitCode": 0,
+        "elapsedSeconds": 0.544,
+        "stdout": "Wrote source inventory: 72 sources, 173 local public exports; E2E not inferred.\n",
+        "stderr": ""
+      },
+      {
+        "argv": [
+          "python3",
+          "Scripts/Audit/audit_miniapp_reachability.py"
+        ],
+        "exitCode": 1,
+        "elapsedSeconds": 0.137,
+        "stdout": "",
+        "stderr": "Traceback (most recent call last):\n  File \"/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Audit/audit_miniapp_reachability.py\", line 207, in <module>\n    main()\n  File \"/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Audit/audit_miniapp_reachability.py\", line 185, in main\n    value = build()\n            ^^^^^^^\n  File \"/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Audit/audit_miniapp_reachability.py\", line 33, in build\n    ref(\"shareWrite\", \"ChavrusaChatShare/ShareViewController.swift\", \"store.commit(batchID, items: items)\")\n  File \"/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Audit/audit_miniapp_reachability.py\", line 25, in ref\n    data = (ROOT / file).read_bytes()\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/pathlib.py\", line 1021, in read_bytes\n    with self.open(mode='rb') as f:\n         ^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/pathlib.py\", line 1015, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/ChavrusaChatShare/ShareViewController.swift'\n"
+      },
+      {
+        "argv": [
+          "node",
+          "Scripts/Audit/audit-miniapp-sdk.mjs",
+          "--check"
+        ],
+        "exitCode": 0,
+        "stdout": "PASS: SDK source inventory matches 72 sources and 173 local public exports.\n",
+        "stderr": ""
+      }
+    ]
+  },
+  "reviewedAdditionalCallerFailure": {
+    "status": "FAIL",
+    "elapsedSeconds": 0.424,
+    "error": "Traceback (most recent call last):\n  File \"/var/lib/sentinelx/uploads/.sentinelx_uploads/script_job_ee6cac5a3108413285bd10b7545afc83/script.py\", line 11, in <module>\n    value=mod.build();results={'status':'PASS','elapsedSeconds':round(time.monotonic()-start,3),'refs':len(value['sourceRefs']),'rows':len(value['matrix']),'originalSurfaces':list(value['originalLibrarySurfaces']),'statuses':{status:sum(r['status']==status for r in value['matrix'])for status in ['not-tested','partially-wired','disconnected']}}\n          ^^^^^^^^^^^\n  File \"/mnt/development/projects/worktrees/hanlin-miniapps-version-audit-20261124/Scripts/Audit/audit_miniapp_reachability.py\", line 169, in build\n    raise ValueError(f\"Share inbox callers changed; re-audit reachability: {share_references}\")\nValueError: Share inbox callers changed; re-audit reachability: ['AI_HLY/Downstream/SDK/HanlinApplicationComponents.swift', 'AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift', 'AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift', 'AI_HLY/Downstream/SystemIntegrations/ChavrusaShareActionTarget.swift', 'AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInbox.swift', 'AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInboxView.swift', 'AI_HLY/Views/Components/ChatViewBottom.swift']\n"
+  },
+  "focusedChecks": {
+    "argv": [
+      "python3",
+      "/dev/shm/hanlin-reachability-focused-checks-20261124.py"
+    ],
+    "checkedAt": "2026-11-24T05:39:45.656737+00:00",
+    "scriptSHA256": "635f664cacc1bdedc7e97f2328f8bc2f8f24f74f9123b0ac50601ecc93760189",
+    "script": "\nimport sys\nsys.dont_write_bytecode = True\nimport importlib.util, json, os, subprocess, tempfile, time\nfrom pathlib import Path\nfrom unittest.mock import patch\np=Path('Scripts/Audit/audit_miniapp_reachability.py')\nspec=importlib.util.spec_from_file_location('reachability',p)\nmod=importlib.util.module_from_spec(spec); spec.loader.exec_module(mod)\nchecks=[]\ndef rejected(call, expected):\n    try: call()\n    except ValueError as error:\n        assert expected in str(error), str(error)\n        return str(error)\n    raise AssertionError('Expected strict source rejection')\nwith tempfile.TemporaryDirectory(prefix='hanlin-reachability-reader-',dir='/dev/shm') as tmp:\n    root=Path(tmp)\n    env=dict(os.environ,GIT_AUTHOR_NAME='ChatGPT',GIT_AUTHOR_EMAIL='chatgpt@users.noreply.github.com',GIT_COMMITTER_NAME='ChatGPT',GIT_COMMITTER_EMAIL='chatgpt@users.noreply.github.com')\n    def git(*args): return subprocess.run(['git',*args],cwd=root,env=env,text=True,capture_output=True,check=True)\n    git('init','-q')\n    (root/'Local.swift').write_text('let local = 1\\n')\n    (root/'Sparse.swift').write_text('let original = 2\\n')\n    git('add','Local.swift','Sparse.swift'); git('commit','-qm','reader fixture')\n    (root/'Local.swift').write_text('let local = 9\\n')\n    (root/'Sparse.swift').unlink()\n    reader=mod.TrackedSources(root);reader.prefetch(['Local.swift','Sparse.swift'])\n    assert reader.read_text('Local.swift')=='let local = 9\\n'\n    assert reader.read_text('Sparse.swift')=='let original = 2\\n'\n    checks.append({'name':'local edits win; missing tracked Swift reads exact HEAD bytes in one batch','pass':True})\n    (root/'Untracked.swift').write_text('untracked')\n    rejected(lambda:reader.read_bytes('Untracked.swift'),'not a normalized tracked file')\n    rejected(lambda:reader.read_bytes('Missing.swift'),'not a normalized tracked file')\n    (root/'Staged.swift').write_text('new');git('add','Staged.swift');(root/'Staged.swift').unlink()\n    rejected(lambda:mod.TrackedSources(root).read_bytes('Staged.swift'),'Missing tracked HEAD source')\n    checks.append({'name':'untracked existing/missing files and absent HEAD blobs remain rejected','pass':True})\nsdk=Path('docs/miniapp-sdk/source-inventory.json');before=sdk.read_bytes()\nauthority=Path('/dev/shm/hanlin-reachability-authority-20261124.json').read_bytes()\ntry:\n    sdk.write_bytes(authority)\n    started=time.monotonic(); value=mod.build()\n    assert len(value['matrix'])==80\n    assert len({(r['surface'],r['engine'],r['runtime'])for r in value['matrix']})==80\n    assert all(not r['realSurfaceE2E']and r['onDeviceProof']is None for r in value['matrix'])\n    assert all(r['sourcePathReachesCanonicalExecutor']==(r['surface']in ['foreground','share','translation','hostAppIntent','shortcuts'])for r in value['matrix'])\n    assert all(r['runtimeTail']==[]for r in value['matrix']if r['surface']in ['widget','notification','liveActivity'])\n    assert all(not r['structuredReceiptReturnedToIngressInSource']for r in value['matrix']if r['surface']!='foreground')\n    controls=value['originalLibrarySurfaces']['scriptWidgetControls']\n    assert controls['status']=='source-wired'and controls['canonicalHostRuntimePassthroughEstablished']is False\n    assert all(not r['realSurfaceE2E']for r in value['originalLibrarySurfaces'].values())\n    assert len(value['entitlements'])==9\n    text=mod.markdown(value)\n    assert 'ControlWidget/CoreSpotlight names occur'not in text\n    assert 'Expo action parity remains disconnected'not in text\n    assert 'Original library surfaces outside the 80 cells'in text\n    checks.append({'name':'real sparse source graph preserves80 canonical cells and separates4 original UI/action surfaces','pass':True,'elapsedSeconds':round(time.monotonic()-started,3),'sdkSourceCount':len(value['sdkSources']),'referenceCount':len(value['sourceRefs']),'declaredEntitlementFiles':len(value['entitlements']),'statuses':{s:sum(r['status']==s for r in value['matrix'])for s in ['not-tested','partially-wired','disconnected']}})\n    wrong=json.loads(authority);wrong['sources'][0]['sha256']='0'*64;sdk.write_text(json.dumps(wrong))\n    error=rejected(mod.build,'SDK authority is stale:')\n    sdk.write_bytes(authority)\n    original_read=mod.TrackedSources.read_bytes\n    def changed_anchor(self,file):\n        data=original_read(self,file)\n        return data.replace(b'public struct ScriptWidgetButtonControlWidget: ControlWidget',b'public struct ChangedOriginalControl: ControlWidget')if file.endswith('/Original/ScriptWidgetControlWidget.swift')else data\n    with patch.object(mod.TrackedSources,'read_bytes',changed_anchor):\n        anchor_error=rejected(mod.build,'Audit anchor changed:')\n    checks.append({'name':'SDK hash drift and removed real original ControlWidget anchor both fail','pass':True,'hashFailure':error,'anchorFailure':anchor_error})\nfinally:\n    sdk.write_bytes(before)\nassert sdk.read_bytes()==before\nprint(json.dumps({'status':'PASS','checks':checks,'noInventoriesWritten':True,'boundary':'Reader/source-graph/strict-drift checks only; no native or physical execution.'},indent=2))\n",
+    "exitCode": 0,
+    "stdout": "{\n  \"status\": \"PASS\",\n  \"checks\": [\n    {\n      \"name\": \"local edits win; missing tracked Swift reads exact HEAD bytes in one batch\",\n      \"pass\": true\n    },\n    {\n      \"name\": \"untracked existing/missing files and absent HEAD blobs remain rejected\",\n      \"pass\": true\n    },\n    {\n      \"name\": \"real sparse source graph preserves80 canonical cells and separates4 original UI/action surfaces\",\n      \"pass\": true,\n      \"elapsedSeconds\": 1.66,\n      \"sdkSourceCount\": 72,\n      \"referenceCount\": 77,\n      \"declaredEntitlementFiles\": 9,\n      \"statuses\": {\n        \"not-tested\": 10,\n        \"partially-wired\": 40,\n        \"disconnected\": 30\n      }\n    },\n    {\n      \"name\": \"SDK hash drift and removed real original ControlWidget anchor both fail\",\n      \"pass\": true,\n      \"hashFailure\": \"SDK authority is stale: AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift; run its source audit first.\",\n      \"anchorFailure\": \"Audit anchor changed: Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/ScriptWidgetControls/Original/ScriptWidgetControlWidget.swift: public struct ScriptWidgetButtonControlWidget: ControlWidget\"\n    }\n  ],\n  \"noInventoriesWritten\": true,\n  \"boundary\": \"Reader/source-graph/strict-drift checks only; no native or physical execution.\"\n}\n",
+    "stderr": ""
+  },
+  "whitespaceCheck": {
+    "argv": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "dataHandling": "Only the captured existing SDK authority was temporarily projected into this isolated worktree as test input,then restored byte-for-byte. No extension-reachability output was written. All3 versioned inventory/Markdown outputs remain identical to base and are excluded from this commit. Root owns final write/check generation.",
+  "acceptanceBoundary": "All80 realSurfaceE2E=false and onDeviceProof=null. Four original-library UI/action source records also claim no canonical Host-runtime passthrough or native PASS. Six prior version/operation tests were not rerun."
+}

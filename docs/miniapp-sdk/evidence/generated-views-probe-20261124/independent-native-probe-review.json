@@ -1,0 +1,21 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "control_authoring",
+  "status": "NO_CONCRETE_BLOCKER",
+  "reviewedAtUTC": "2026-11-24T10:18:36.457942+00:00",
+  "sources": {
+    "Fixtures/ExpoSwiftUIProbe/GeneratedViewsProbe.tsx": "c3be93227141ac5d52ed52d02272eb631b6923d76fb66c4d02b024bb09ef3878",
+    "Fixtures/ExpoSwiftUIProbe/App.tsx": "199f024921e35fbedca737045e342b75cf903b37e6692be5faf524a19a8e91ca",
+    "Fixtures/ExpoSwiftUIProbe/tsconfig.json": "1b682272df710c0d8b97b3fcde9c795204e28e287e6e7ba9b1850112e92854f4",
+    "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift": "732bc4e23f4f72d8978cdce54e99fe87a7cec9ac9070f0b479524b42fdd50695",
+    "Fixtures/ExpoSwiftUIProbe/GeneratedModifiersProbe.tsx": "3b20939a057885bd2293fc65080bfdb28b51ecaa68adab8a26298e8fd251ea1d"
+  },
+  "findings": [
+    "Real original List/EditButton/Host callbacks traced from installed @expo/ui58.0.29.",
+    "Seven new methods require native UI changes, callback values or actual facade replies.",
+    "Ordinary-child/explicit-content/null GroupBox assertions agree with the corrected wrapper.",
+    "Import/resources/helpers match the parent focused selector plan.",
+    "Document actions remain unmounted/type-only; host-context modifier mounting does not prove OS-specific behavior."
+  ],
+  "reviewBoundary": "Read-only source review; no duplicate tests/build/CI, no native acceptance claim."
+}

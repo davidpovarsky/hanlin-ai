@@ -7,6 +7,7 @@ or backed up. Secrets stay in a temporary private directory/keychain; retained l
 redact credential identifiers and tokens.
 """
 from __future__ import annotations
+import argparse
 import base64
 from datetime import datetime, timezone
 import hashlib
@@ -25,6 +26,11 @@ import time
 import zipfile
 
 from audit_release_resources import ROLES, certificate, decode, evaluate_profile
+from extension_inventory import signing_targets_for_owner, embedded_product_bundles
+from unsigned_product_archives import (
+    PRODUCTS, archive_arguments, prepare_archive_inputs, create_archives, restore_archives, sha256,
+    record_archive_capacity,
+)
 from resolve_signing_profiles import (
     resolve_original_profiles, install_profile, remove_installed_profiles,
 )
@@ -37,9 +43,75 @@ from signing_profile_preflight import (
 ROOT = Path(__file__).resolve().parents[2]
 OUT = Path(os.environ["SPLIT_EVIDENCE"]) / "signed-products"
 
-def main():
+def parse_arguments(argv=None):
+    parser = argparse.ArgumentParser(description=__doc__)
+    mode = parser.add_mutually_exclusive_group()
+    mode.add_argument("--archive-only", action="store_true",
+                      help="Create exact unsigned transfer archives; no signing material is read")
+    mode.add_argument("--export-existing", type=Path, metavar="MANIFEST",
+                      help="Export the original verified unsigned archives without rebuilding")
+    parser.add_argument("--producer-receipt", type=Path)
+    parser.add_argument("--archive-output", type=Path)
+    parser.add_argument("--manifest-sha256")
+    parser.add_argument("--expected-source", default=os.environ.get("GITHUB_SHA"))
+    parser.add_argument("--existing-identity", metavar="SHA1",
+                        help="Use this already-unlocked local distribution identity; never export its key")
+    options = parser.parse_args(argv)
+    if options.archive_only and not options.producer_receipt:
+        parser.error("--archive-only requires --producer-receipt")
+    if options.export_existing and (not options.manifest_sha256 or not options.expected_source):
+        parser.error("--export-existing requires --manifest-sha256 and --expected-source")
+    if options.archive_only and options.existing_identity:
+        parser.error("--archive-only does not use a signing identity")
+    if options.export_existing and os.environ.get("SPLIT_SIGNING_PREFLIGHT_ONLY", "false").lower() == "true":
+        parser.error("--export-existing cannot be combined with signing preflight only")
+    return options
+
+
+def installed_distribution_identity(identifier, quiet):
+    """Read only the public certificate for the existing trusted keychain identity."""
+    from cryptography import x509
+    from cryptography.hazmat.primitives import hashes
+    from cryptography.x509.oid import NameOID
+
+    identifier = identifier.upper()
+    if not re.fullmatch(r"[0-9A-F]{40}", identifier):
+        raise ValueError("Existing distribution identity must be its exact SHA1 fingerprint")
+    identities = quiet(["security", "find-identity", "-v", "-p", "codesigning"])
+    if not re.search(r'(?m)^\s*\d+\)\s+' + identifier + r'\s+"', identities):
+        raise ValueError("Existing distribution identity is not available for local code signing")
+    public_certificates = quiet(["security", "find-certificate", "-a", "-p"])
+    matches = {}
+    for pem in re.findall(r"-----BEGIN CERTIFICATE-----.*?-----END CERTIFICATE-----",
+                          public_certificates, flags=re.S):
+        cert = x509.load_pem_x509_certificate(pem.encode())
+        if cert.fingerprint(hashes.SHA1()).hex().upper() == identifier:
+            matches[cert.fingerprint(hashes.SHA256()).hex()] = cert
+    if len(matches) != 1:
+        raise ValueError("Existing keychain identity must match one public certificate")
+    digest, cert = next(iter(matches.items()))
+    now = datetime.now(timezone.utc)
+    teams = [item.value for item in cert.subject.get_attributes_for_oid(NameOID.ORGANIZATIONAL_UNIT_NAME)]
+    names = [item.value for item in cert.subject.get_attributes_for_oid(NameOID.COMMON_NAME)]
+    checks = {"os_codesigning_trust": True,
+              "valid_dates": cert.not_valid_before_utc <= now < cert.not_valid_after_utc,
+              "team_matches": bool(os.environ.get("APPLE_TEAM_ID")) and os.environ["APPLE_TEAM_ID"] in teams,
+              "distribution_identity": any(name.startswith("Apple Distribution:") for name in names)}
+    if not all(checks.values()):
+        raise ValueError("Existing local distribution certificate failed the original resource checks")
+    return {"status": "READY_RESOURCE", "checks": checks, "mode": "installed-keychain",
+            "expiration": cert.not_valid_after_utc.isoformat(),
+            "public_certificate_sha256": digest, "os_codesigning_trust": "VERIFIED"}, digest, identifier
+
+
+def main(argv=None):
+    options_cli = parse_arguments(argv)
+    if options_cli.archive_only:
+        return create_archives(ROOT, options_cli.archive_output or OUT.parent / "unsigned-archives",
+                               options_cli.producer_receipt)
     OUT.mkdir(parents=True, exist_ok=False)
-    state = {"sha": os.environ["GITHUB_SHA"], "run_id": os.environ["GITHUB_RUN_ID"],
+    state = {"sha": options_cli.expected_source if options_cli.export_existing else os.environ["GITHUB_SHA"],
+             "run_id": os.environ.get("GITHUB_RUN_ID") if options_cli.export_existing else os.environ["GITHUB_RUN_ID"],
              "status": "NOT_RUN", "products": [], "physical_device": "NOT_RUN",
              "publication": "NOT_REQUESTED", "release_decision": "NO_GO",
              "scope": "Actual original iOS device archives and local App Store export only; separate product/device acceptance gates still apply."}
@@ -47,6 +119,10 @@ def main():
         ["ASC_KEY_P8", "ASC_KEY_ID", "ASC_ISSUER_ID", "APPLE_TEAM_ID",
          "APPLE_CERTIFICATE_P12_B64", "APPLE_CERTIFICATE_PASSWORD"]]
     commands = []
+    imported_manifest = None
+    imported_archives = {}
+    if options_cli.export_existing:
+        state["scope"] = "Export exact verified unsigned product archives with the existing identity; no product rebuild."
 
     def sanitize(text):
         for value in sorted((v for v in private_values if v), key=len, reverse=True):
@@ -56,7 +132,7 @@ def main():
         return re.sub(r"\beyJ[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\.[A-Za-z0-9_-]+\b",
                       "[JWT REDACTED]", text)
 
-    with tempfile.TemporaryDirectory(prefix="hanlin-authorized-signing-", dir=os.environ["RUNNER_TEMP"]) as directory:
+    with tempfile.TemporaryDirectory(prefix="hanlin-authorized-signing-", dir=os.environ.get("RUNNER_TEMP")) as directory:
         folder = Path(directory)
         folder.chmod(0o700)
         keychain = folder / "owner.keychain-db"
@@ -105,45 +181,68 @@ def main():
             return result.stdout.decode().strip()
 
         try:
-            required = ["APPLE_TEAM_ID", "APPLE_CERTIFICATE_P12_B64", "APPLE_CERTIFICATE_PASSWORD",
-                        "ASC_KEY_P8", "ASC_KEY_ID", "ASC_ISSUER_ID"]
+            if options_cli.export_existing:
+                head = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=ROOT, text=True).strip()
+                if head != options_cli.expected_source:
+                    raise ValueError("Export checkout does not match the original archive source")
+                imported_manifest, imported_archives = restore_archives(
+                    options_cli.export_existing, options_cli.manifest_sha256,
+                    options_cli.expected_source, folder / "unsigned-archives")
+                current_patch = subprocess.check_output(["git", "diff", "--binary", "HEAD"], cwd=ROOT)
+                if hashlib.sha256(current_patch).hexdigest() != imported_manifest["producer"]["sourcePatch"]["sha256"]:
+                    raise ValueError("Export checkout tracked patch differs from the exact archive producer")
+                for item in imported_manifest["sdkSourceInputs"]["files"]:
+                    path = ROOT / item["path"]
+                    if not path.resolve().is_relative_to(ROOT.resolve()) or sha256(path) != item["sha256"]:
+                        raise ValueError("Export checkout SDK source differs from archive producer: " + item["path"])
+                state["archive_producer"] = {
+                    "source": imported_manifest["sourceCommit"],
+                    "manifest_sha256": options_cli.manifest_sha256,
+                    "producer": imported_manifest["producer"]}
+            required = ["APPLE_TEAM_ID", "ASC_KEY_P8", "ASC_KEY_ID", "ASC_ISSUER_ID"]
+            if not options_cli.existing_identity:
+                required += ["APPLE_CERTIFICATE_P12_B64", "APPLE_CERTIFICATE_PASSWORD"]
             missing = [key for key in required if not os.environ.get(key)]
             if missing:
                 raise RuntimeError("Missing secret names: " + ", ".join(missing))
             if os.environ.get("GITHUB_REPOSITORY") != "davidpovarsky/hanlin-ai":
                 raise RuntimeError("Signing is scoped to the owner's existing repository")
-            cert, cert_sha = certificate()
-            state["existing_distribution_identity"] = cert
-            if cert["status"] != "READY_RESOURCE":
-                raise RuntimeError("Existing distribution identity failed the resource checks")
-            from cryptography.hazmat.primitives import hashes
-            from cryptography.hazmat.primitives.serialization.pkcs12 import load_key_and_certificates
-            _, distribution_cert, _ = load_key_and_certificates(
-                decode(os.environ["APPLE_CERTIFICATE_P12_B64"]),
-                os.environ["APPLE_CERTIFICATE_PASSWORD"].encode())
-            # Export must use this already-existing identity, never request a new one.
-            distribution_identity = distribution_cert.fingerprint(hashes.SHA1()).hex().upper()
-            cert_path = folder / "distribution.p12"
-            cert_path.write_bytes(decode(os.environ["APPLE_CERTIFICATE_P12_B64"]))
-            cert_path.chmod(0o600)
-            password = secrets.token_hex(24)
-            private_values.append(password)
-            old_default = shlex.split(quiet(["security", "default-keychain", "-d", "user"]))[0]
-            old_search = shlex.split(quiet(["security", "list-keychains", "-d", "user"]))
-            quiet(["security", "create-keychain", "-p", password, keychain])
-            quiet(["security", "set-keychain-settings", "-lut", "10800", keychain])
-            quiet(["security", "unlock-keychain", "-p", password, keychain])
-            quiet(["security", "import", cert_path, "-P", os.environ["APPLE_CERTIFICATE_PASSWORD"],
-                   "-T", "/usr/bin/codesign", "-f", "pkcs12", "-k", keychain])
-            quiet(["security", "set-key-partition-list", "-S", "apple-tool:,apple:,codesign:",
-                   "-s", "-k", password, keychain])
-            quiet(["security", "list-keychains", "-d", "user", "-s", keychain, *old_search])
-            quiet(["security", "default-keychain", "-d", "user", "-s", keychain])
-            cert_path.unlink()
-            identities = quiet(["security", "find-identity", "-v", "-p", "codesigning", keychain])
-            if not re.search(r'(?m)^\s*\d+\)\s+' + distribution_identity + r'\s+"', identities):
-                raise RuntimeError("The existing distribution identity is not trusted for local code signing")
-            state["existing_distribution_identity"]["os_codesigning_trust"] = "VERIFIED"
+            if options_cli.existing_identity:
+                cert, cert_sha, distribution_identity = installed_distribution_identity(options_cli.existing_identity, quiet)
+                state["existing_distribution_identity"] = cert
+            else:
+                cert, cert_sha = certificate()
+                state["existing_distribution_identity"] = cert
+                if cert["status"] != "READY_RESOURCE":
+                    raise RuntimeError("Existing distribution identity failed the resource checks")
+                from cryptography.hazmat.primitives import hashes
+                from cryptography.hazmat.primitives.serialization.pkcs12 import load_key_and_certificates
+                _, distribution_cert, _ = load_key_and_certificates(
+                    decode(os.environ["APPLE_CERTIFICATE_P12_B64"]),
+                    os.environ["APPLE_CERTIFICATE_PASSWORD"].encode())
+                # Export must use this already-existing identity, never request a new one.
+                distribution_identity = distribution_cert.fingerprint(hashes.SHA1()).hex().upper()
+                cert_path = folder / "distribution.p12"
+                cert_path.write_bytes(decode(os.environ["APPLE_CERTIFICATE_P12_B64"]))
+                cert_path.chmod(0o600)
+                password = secrets.token_hex(24)
+                private_values.append(password)
+                old_default = shlex.split(quiet(["security", "default-keychain", "-d", "user"]))[0]
+                old_search = shlex.split(quiet(["security", "list-keychains", "-d", "user"]))
+                quiet(["security", "create-keychain", "-p", password, keychain])
+                quiet(["security", "set-keychain-settings", "-lut", "10800", keychain])
+                quiet(["security", "unlock-keychain", "-p", password, keychain])
+                quiet(["security", "import", cert_path, "-P", os.environ["APPLE_CERTIFICATE_PASSWORD"],
+                       "-T", "/usr/bin/codesign", "-f", "pkcs12", "-k", keychain])
+                quiet(["security", "set-key-partition-list", "-S", "apple-tool:,apple:,codesign:",
+                       "-s", "-k", password, keychain])
+                quiet(["security", "list-keychains", "-d", "user", "-s", keychain, *old_search])
+                quiet(["security", "default-keychain", "-d", "user", "-s", keychain])
+                cert_path.unlink()
+                identities = quiet(["security", "find-identity", "-v", "-p", "codesigning", keychain])
+                if not re.search(r'(?m)^\s*\d+\)\s+' + distribution_identity + r'\s+"', identities):
+                    raise RuntimeError("The existing distribution identity is not trusted for local code signing")
+                state["existing_distribution_identity"]["os_codesigning_trust"] = "VERIFIED"
             state["provisioning_profiles"] = []
             profiles = resolve_original_profiles(cert_sha, folder, state["provisioning_profiles"])
             # Xcode's current cache and the established legacy cache both receive
@@ -167,16 +266,8 @@ def main():
             run_profile_discovery_preflight(
                 folder, profiles, os.environ["APPLE_TEAM_ID"], distribution_identity,
                 cert_sha, run, state["provisioning_preflight"])
-            derived = ROOT / "build/ReleaseDerivedData"
-            packages = ROOT / "build/SourcePackages"
-            common = ["xcodebuild", "-project", "AI_HLY.xcodeproj",
-                      "-clonedSourcePackagesDirPath", packages,
-                      "-skipPackagePluginValidation", "-skipMacroValidation"]
-            if not preflight_only:
-                run(common + ["-scheme", "AI_HLY", "-resolvePackageDependencies"], "resolve-original-packages", 600)
-                run([sys.executable, "Scripts/CI/stage_a2ui_schemas.py", "--source-packages-path", packages,
-                     "--derived-data-path", derived, "--evidence", OUT / "original-a2ui-schemas"],
-                     "original-schema-generator", 360)
+            if not preflight_only and not options_cli.export_existing:
+                prepare_archive_inputs(ROOT, OUT, run)
             export_options = folder / "ExportOptions.plist"
             options = {
                 "method": "app-store-connect", "destination": "export",
@@ -184,31 +275,32 @@ def main():
                 "signingCertificate": distribution_identity, "uploadSymbols": False,
                 "manageAppVersionAndBuildNumber": False, "stripSwiftSymbols": True
             }
-            product_archives = [] if preflight_only else [
-                ("miniapps", "HanlinMiniApps", "com.itorah.hanlinminiapps"),
-                ("ai", "AI_HLY", "com.itorah.chavrusachat")]
+            product_archives = [] if preflight_only else PRODUCTS
             for role, scheme, bundle in product_archives:
                 product = {"role": role, "bundle_id": bundle, "archive": "NOT_RUN", "export": "NOT_RUN",
                            "entitlements": "NOT_RUN"}
                 state["products"].append(product)
-                selected_bundles = {b for r, b, _, _ in ROLES
-                                    if (r == "miniapps") == (role == "miniapps")}
+                selected_bundles = {target.bundle for target in signing_targets_for_owner(role)}
                 options["provisioningProfiles"] = {b: profile_mapping[b] for b in selected_bundles}
                 export_options.write_bytes(plistlib.dumps(options))
                 export_options.chmod(0o600)
-                archive = ROOT / "build/ReleaseArchives" / (scheme + ".xcarchive")
-                archive.parent.mkdir(exist_ok=True)
                 export = OUT / role
-                result, _ = run(common + ["-scheme", scheme, "-configuration", "Release",
-                    "-destination", "generic/platform=iOS", "-derivedDataPath", derived,
-                    "-archivePath", archive, "archive",
-                    "CODE_SIGNING_ALLOWED=NO", "CODE_SIGNING_REQUIRED=NO",
-                    "CODE_SIGN_IDENTITY=", "PROVISIONING_PROFILE_SPECIFIER=",
-                    "PROVISIONING_PROFILE="],
-                    role + "-archive", 3300, required=False)
-                product["archive"] = "EXECUTED_PASS" if result == 0 else "EXECUTED_FAIL"
-                if result:
-                    continue
+                if options_cli.export_existing:
+                    archive = imported_archives[role]["path"]
+                    product["archive"] = "REUSED_VERIFIED_ARCHIVE"
+                    product["archive_sha256"] = imported_archives[role]["record"]["archiveSHA256"]
+                    product["archive_tree_sha256"] = imported_archives[role]["record"]["treeSHA256"]
+                else:
+                    archive = ROOT / "build/ReleaseArchives" / (scheme + ".xcarchive")
+                    archive.parent.mkdir(exist_ok=True)
+                    capacity_before = record_archive_capacity(ROOT, OUT, role, "before-archive")
+                    result, _ = run(archive_arguments(ROOT, scheme, archive),
+                                    role + "-archive", 3300, required=False)
+                    product["archive_capacity"] = [capacity_before,
+                        record_archive_capacity(ROOT, OUT, role, "after-archive", capacity_before)]
+                    product["archive"] = "EXECUTED_PASS" if result == 0 else "EXECUTED_FAIL"
+                    if result:
+                        continue
                 info = plistlib.loads((archive / "Info.plist").read_bytes())
                 application = info.get("ApplicationProperties", {})
                 if application.get("CFBundleIdentifier") != bundle:
@@ -240,15 +332,15 @@ def main():
                 if len(apps) != 1:
                     raise RuntimeError("Exported product has an ambiguous app payload")
                 run(["codesign", "--verify", "--deep", "--strict", apps[0]], role + "-signature")
-                targets = [apps[0], *apps[0].glob("PlugIns/*.appex")]
-                expected = {b: (name, path) for name, b, _, path in ROLES if name != "miniapps"} if role == "ai" else {
-                    b: (name, path) for name, b, _, path in ROLES if name == "miniapps"}
+                targets = embedded_product_bundles(apps[0])
+                expected = {target.bundle: (target.role, target.entitlements)
+                            for target in signing_targets_for_owner(role)}
                 observed = {}
                 for target in targets:
                     bundle_info = plistlib.loads((target / "Info.plist").read_bytes())
                     identity = bundle_info["CFBundleIdentifier"]
-                    if identity not in expected:
-                        raise RuntimeError("Unexpected signed extension or product")
+                    if identity not in expected or identity in observed:
+                        raise RuntimeError("Unexpected or duplicate signed extension or product")
                     name, source = expected[identity]
                     decoded = subprocess.run(["security", "cms", "-D", "-i", str(target / "embedded.mobileprovision")],
                                              capture_output=True, timeout=20, check=True)

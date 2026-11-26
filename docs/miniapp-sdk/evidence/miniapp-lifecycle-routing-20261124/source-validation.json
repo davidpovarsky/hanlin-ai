@@ -1,0 +1,97 @@
+{
+  "schemaVersion": 1,
+  "status": "SOURCE_CHECKS_PASS",
+  "baseSourceSHA": "98ce6516d56bbd6d908fd1e2b7e9b053df911912",
+  "caller": {
+    "path": ".github/workflows/validate-app-split.yml",
+    "sha256": "dbd1e6d3b6519001be6c83cc79c9cc21465a9a1ffe91e92b907e988a553a26ba"
+  },
+  "callee": {
+    "path": ".github/workflows/validate-scripting-runtime.yml",
+    "sha256": "395ea6430af04b1ca8c66386af45073a1b0abc4d0c6ed20a1c46b30854fe0016",
+    "unchanged": true,
+    "reference": "local ./ path at caller commit"
+  },
+  "workflowDispatchInputCount": 10,
+  "unchangedExistingModeCombinations": 192,
+  "newModeTruthTable": [
+    {
+      "paired": false,
+      "registration": false,
+      "audit": false,
+      "miniapps": true,
+      "contracts": false
+    },
+    {
+      "paired": false,
+      "registration": false,
+      "audit": true,
+      "miniapps": false,
+      "contracts": false
+    },
+    {
+      "paired": false,
+      "registration": true,
+      "audit": false,
+      "miniapps": false,
+      "contracts": false
+    },
+    {
+      "paired": false,
+      "registration": true,
+      "audit": true,
+      "miniapps": false,
+      "contracts": false
+    },
+    {
+      "paired": true,
+      "registration": false,
+      "audit": false,
+      "miniapps": false,
+      "contracts": true
+    },
+    {
+      "paired": true,
+      "registration": false,
+      "audit": true,
+      "miniapps": false,
+      "contracts": false
+    },
+    {
+      "paired": true,
+      "registration": true,
+      "audit": false,
+      "miniapps": false,
+      "contracts": false
+    },
+    {
+      "paired": true,
+      "registration": true,
+      "audit": true,
+      "miniapps": false,
+      "contracts": false
+    }
+  ],
+  "scopeGroupSuffixes": {
+    "miniapp_authoring": "paired-miniapp_authoring",
+    "miniapp_contracts": "paired-miniapp_contracts",
+    "miniapp_lifecycle": "paired-miniapp_lifecycle"
+  },
+  "concurrencyAndCancelInProgressUnchanged": true,
+  "permissionsUnchanged": true,
+  "existingMainJobBodyByteIdentical": true,
+  "registrationAndAuditJobsUnchanged": true,
+  "secretsConvention": "inherit, matching existing focused-scripting-package-tests caller",
+  "selectedMethods": [
+    "lifecycle"
+  ],
+  "expectedExecutedMethods": 1,
+  "checks": "YAML parsing with BaseLoader, exact source/body/input comparisons and evaluation of the actual job/group expressions. No runtime tests.",
+  "notEstablished": [
+    "GitHub service acceptance/dispatch",
+    "native compilation or method execution",
+    "app UI acceptance"
+  ],
+  "dispatchExecuted": false,
+  "portableStoreTestRerun": false
+}

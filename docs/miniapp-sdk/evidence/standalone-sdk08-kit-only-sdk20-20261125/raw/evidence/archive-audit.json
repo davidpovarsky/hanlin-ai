@@ -1,0 +1,287 @@
+{
+  "schema": 1,
+  "archives": [
+    {
+      "path": "kit/artifacts/Expo-Hello-World.hanlinExpo",
+      "bytes": 1949299,
+      "sha256": "30b66015c36fb93884ed5360112fb7224c623ae8357d8d8a2894dfd959fa46f1",
+      "engine": "expo",
+      "CRC": "PASS",
+      "memberCount": 14,
+      "entry": "bundle.js",
+      "manifest": {
+        "name": "Expo Hello World",
+        "version": "1.0.0",
+        "description": "A minimal original Expo SwiftUI screen with a React state update.",
+        "entry": "bundle.js",
+        "runInApp": true,
+        "hanlinRuntime": "hanlin-expo",
+        "icon": "hand.wave",
+        "color": "#315ACB"
+      },
+      "retainedSourceRows": {
+        "App.tsx": "e0ec9b33bbe972668b0be87b6f8263faff0977e5bfea7654334c7f7f68b95531",
+        "README.md": "367e2b77ec0d06230ed8b7a3756cc5ef6bd2b4328c2405977e383f8ecc52b403",
+        "hanlin.authoring.json": "23628daa17919961823da4ebc9a4166ab9e1d7a9b3ec2ff47fdc70d7b444bf94",
+        "index.ts": "f3532a443c0193cbb6866cb1a7474d0f5055917ffdc7f5e60efe35159e544d19",
+        "notification-event.ts": "3faaf31c55f30954b8c3a74cce95d0461bdef531269bcd7832a886be4ac390de",
+        "package.json": "ce6b14d9dd58a68d245000b2d9997086754acba6b3213087e9531b59701cd9bc",
+        "script.json": "308768a8274c3f58254c4f6daafa7b16a07f0c68dc519f17d3e5feae895dcafb",
+        "tsconfig.json": "989df0a97a5ac05cb6b26df1d7f2d18896e2627da8ac72d4d35e66a60da84b19"
+      },
+      "validation": {
+        "schemaVersion": 1,
+        "engine": "expo",
+        "operation": "build",
+        "succeeded": true,
+        "diagnostics": [],
+        "sourceRoot": "source",
+        "sdk": {
+          "packageVersions": {
+            "@expo/ui": "58.0.29",
+            "@hanlin/expo-native-api": "1.0.0",
+            "@hanlin/expo-ui": "1.0.0",
+            "@nativescript/react-native": "9.1.2",
+            "expo": "58.0.26",
+            "expo-asset": "58.0.21",
+            "expo-brownfield": "58.0.20",
+            "expo-modules-core": "58.1.0",
+            "expo-modules-jsi": "58.0.23",
+            "react": "19.3.0",
+            "react-native": "0.88.1",
+            "react-native-worklets": "0.13.0",
+            "expo-widgets": "58.0.29",
+            "@babel/core": "7.29.7",
+            "@react-native-community/cli": "20.2.0",
+            "@react-native/codegen": "0.88.1",
+            "@react-native/metro-config": "0.88.1",
+            "@types/react": "19.3.2",
+            "babel-preset-expo": "58.0.26",
+            "esbuild": "0.25.12",
+            "typescript": "6.0.2",
+            "@hanlin/notification-events": "1.0.0"
+          },
+          "manifestSHA256": "6f11ed8da3df18627f05932d47b5b68dec54eb26ac396151a21cbc8c3e65800e",
+          "compilerVersion": "6.0.3"
+        },
+        "typecheck": {
+          "strict": true,
+          "checkJs": false,
+          "skipLibCheck": false,
+          "dependencyDeclarationsChecked": true
+        }
+      },
+      "members": [
+        {
+          "path": "bundle.js",
+          "bytes": 3044714,
+          "sha256": "e149cdf3991e249d3f5168d2c17112edc5149baf20699e3799613c63b0af0d20"
+        },
+        {
+          "path": "bundle.js.map",
+          "bytes": 6526901,
+          "sha256": "fc6c5ad7f2383ee06d1b4a6760618d2b49ebf9e9bf08c46c1ff6ba64d6b83873"
+        },
+        {
+          "path": "hanlin.authoring.json",
+          "bytes": 2187,
+          "sha256": "d3413cd993f78a530b05486ceb51bf20c7134e940c3c1442d3f76fa80a765f14"
+        },
+        {
+          "path": "hanlin.validation.json",
+          "bytes": 1223,
+          "sha256": "459066b9a55b498b37daf9a1940000f5f75a98e7d32509dd0bf5b3374dfec6c6"
+        },
+        {
+          "path": "package.json",
+          "bytes": 691,
+          "sha256": "efc3a916e969bdb4cf8b56962553d1d37c28b3529566dd6bbc573f5aafce35c3"
+        },
+        {
+          "path": "script.json",
+          "bytes": 264,
+          "sha256": "308768a8274c3f58254c4f6daafa7b16a07f0c68dc519f17d3e5feae895dcafb"
+        },
+        {
+          "path": "source/App.tsx",
+          "bytes": 478,
+          "sha256": "e0ec9b33bbe972668b0be87b6f8263faff0977e5bfea7654334c7f7f68b95531"
+        },
+        {
+          "path": "source/README.md",
+          "bytes": 831,
+          "sha256": "367e2b77ec0d06230ed8b7a3756cc5ef6bd2b4328c2405977e383f8ecc52b403"
+        },
+        {
+          "path": "source/hanlin.authoring.json",
+          "bytes": 99,
+          "sha256": "23628daa17919961823da4ebc9a4166ab9e1d7a9b3ec2ff47fdc70d7b444bf94"
+        },
+        {
+          "path": "source/index.ts",
+          "bytes": 120,
+          "sha256": "f3532a443c0193cbb6866cb1a7474d0f5055917ffdc7f5e60efe35159e544d19"
+        },
+        {
+          "path": "source/notification-event.ts",
+          "bytes": 650,
+          "sha256": "3faaf31c55f30954b8c3a74cce95d0461bdef531269bcd7832a886be4ac390de"
+        },
+        {
+          "path": "source/package.json",
+          "bytes": 223,
+          "sha256": "ce6b14d9dd58a68d245000b2d9997086754acba6b3213087e9531b59701cd9bc"
+        },
+        {
+          "path": "source/script.json",
+          "bytes": 264,
+          "sha256": "308768a8274c3f58254c4f6daafa7b16a07f0c68dc519f17d3e5feae895dcafb"
+        },
+        {
+          "path": "source/tsconfig.json",
+          "bytes": 82,
+          "sha256": "989df0a97a5ac05cb6b26df1d7f2d18896e2627da8ac72d4d35e66a60da84b19"
+        }
+      ]
+    },
+    {
+      "path": "kit/artifacts/NativeScript-Hello-World.hanlinNativeScript",
+      "bytes": 7816,
+      "sha256": "f58ef154b7bb2036653ce44139824c96738eb0258c7c257bc8e4ca72854379d9",
+      "engine": "nativescript",
+      "CRC": "PASS",
+      "memberCount": 16,
+      "entry": "nativescript/app/bundle.mjs",
+      "manifest": {
+        "name": "NativeScript Hello World",
+        "version": "1.0.0",
+        "description": "A minimal original NativeScript Core screen with a native event and iOS metadata value.",
+        "entry": "nativescript/app/bundle.mjs",
+        "runInApp": true,
+        "hanlinRuntime": "hanlin-nativescript",
+        "icon": "hand.wave",
+        "color": "#315ACB"
+      },
+      "retainedSourceRows": {
+        "README.md": "aae06c1b3c963f8a6cf246ea52642d73f5e6ec237cfb19fc4737dd4072570e6a",
+        "hanlin.authoring.json": "1bf949fb4ba1fd14481df380299652fe9b587aa5c30afdb6621fe23be6c02094",
+        "index.ts": "bfb34d9b7ac0f50488468a5cf8200d55cefbb9d0d345d080bb652323a1df9bf6",
+        "notification-event.ts": "3faaf31c55f30954b8c3a74cce95d0461bdef531269bcd7832a886be4ac390de",
+        "package.json": "ab65e0e388ac19daf337b29965fd030e6196faf90cee439c786de9e1c3f49cb6",
+        "script.json": "521f9d8332544a7858dca222d635cf8530e13d72cfb4e2e62d4196acc3a249cb",
+        "tsconfig.json": "089155f616dd73ff0bebb1469f21fda41c51ad93c7b7db83d2745fa5e88ce0e5"
+      },
+      "validation": {
+        "schemaVersion": 1,
+        "engine": "nativescript",
+        "operation": "build",
+        "succeeded": true,
+        "diagnostics": [],
+        "sourceRoot": "source",
+        "sdk": {
+          "packageVersions": {
+            "@nativescript/core": "9.1.4",
+            "@nativescript/swift-ui": "4.0.2",
+            "@nativescript/ios": "9.1.1",
+            "@nativescript/types": "9.1.4",
+            "@nativescript/vite": "8.0.24",
+            "typescript": "5.9.3",
+            "vite": "8.0.0",
+            "@hanlin/notification-events": "1.0.0",
+            "@hanlin/host-services": "1.0.0"
+          },
+          "manifestSHA256": "6f11ed8da3df18627f05932d47b5b68dec54eb26ac396151a21cbc8c3e65800e",
+          "compilerVersion": "5.9.3"
+        },
+        "typecheck": {
+          "strict": true,
+          "checkJs": false,
+          "skipLibCheck": true,
+          "dependencyDeclarationsChecked": false
+        }
+      },
+      "members": [
+        {
+          "path": "hanlin.authoring.json",
+          "bytes": 2075,
+          "sha256": "3b58d3fb6b4b81cf28fc298b6f50f7dda5396f60ccee1494460c674d0d626be4"
+        },
+        {
+          "path": "hanlin.validation.json",
+          "bytes": 774,
+          "sha256": "892eee4bab58c521dbaf2e35755bc2ba2cf21269f59c4873edb4e95ee7d11a50"
+        },
+        {
+          "path": "nativescript/app/bundle.mjs",
+          "bytes": 30,
+          "sha256": "77326621f8ddcf98a2eccfc7deb128f535b962f1969f914b562a8d3823a7d049"
+        },
+        {
+          "path": "nativescript/app/modules/index.mjs",
+          "bytes": 1068,
+          "sha256": "34f7e6759fc0fa588aeb333340d68f94399d348fcb14da9197250a3c9e71c423"
+        },
+        {
+          "path": "nativescript/app/modules/index.mjs.map",
+          "bytes": 2303,
+          "sha256": "c34a7c0411a4af8f438dde5049d331caacf089c5be883cbc6cfc8b4c3adc321d"
+        },
+        {
+          "path": "nativescript/app/modules/notification-event.mjs",
+          "bytes": 527,
+          "sha256": "8022470b48c0a2dfe01e778fa18b51a8b233be6c07fcbb0e94d697d625fdad4b"
+        },
+        {
+          "path": "nativescript/app/modules/notification-event.mjs.map",
+          "bytes": 1123,
+          "sha256": "f26454f01710983b9271cd6620d689d32582de65759c11f50393cc9d3ddf201a"
+        },
+        {
+          "path": "nativescript/app/package.json",
+          "bytes": 307,
+          "sha256": "5fb742ee72cb9fda2da169d95aacf94f1249bf17148b0860d5d51db70a314b92"
+        },
+        {
+          "path": "script.json",
+          "bytes": 320,
+          "sha256": "521f9d8332544a7858dca222d635cf8530e13d72cfb4e2e62d4196acc3a249cb"
+        },
+        {
+          "path": "source/README.md",
+          "bytes": 914,
+          "sha256": "aae06c1b3c963f8a6cf246ea52642d73f5e6ec237cfb19fc4737dd4072570e6a"
+        },
+        {
+          "path": "source/hanlin.authoring.json",
+          "bytes": 107,
+          "sha256": "1bf949fb4ba1fd14481df380299652fe9b587aa5c30afdb6621fe23be6c02094"
+        },
+        {
+          "path": "source/index.ts",
+          "bytes": 991,
+          "sha256": "bfb34d9b7ac0f50488468a5cf8200d55cefbb9d0d345d080bb652323a1df9bf6"
+        },
+        {
+          "path": "source/notification-event.ts",
+          "bytes": 650,
+          "sha256": "3faaf31c55f30954b8c3a74cce95d0461bdef531269bcd7832a886be4ac390de"
+        },
+        {
+          "path": "source/package.json",
+          "bytes": 225,
+          "sha256": "ab65e0e388ac19daf337b29965fd030e6196faf90cee439c786de9e1c3f49cb6"
+        },
+        {
+          "path": "source/script.json",
+          "bytes": 320,
+          "sha256": "521f9d8332544a7858dca222d635cf8530e13d72cfb4e2e62d4196acc3a249cb"
+        },
+        {
+          "path": "source/tsconfig.json",
+          "bytes": 67,
+          "sha256": "089155f616dd73ff0bebb1469f21fda41c51ad93c7b7db83d2745fa5e88ce0e5"
+        }
+      ]
+    }
+  ]
+}

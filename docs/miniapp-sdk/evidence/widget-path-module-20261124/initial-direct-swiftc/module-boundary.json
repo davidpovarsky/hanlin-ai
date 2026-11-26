@@ -1,0 +1,178 @@
+{
+  "schemaVersion": 1,
+  "baseSourceSHA": "ee3b0ede43fcb4aac02def04d469eae542ba035b",
+  "sourceCheckpointSHA": "1b34855035c7a4d22bd9ac3d41a47ed1229405e1",
+  "status": "FAILED",
+  "scope": "Compile the complete actual Foundation-only PlatformContracts target, then typecheck the old and new production path predicate in a separate consumer module; this is not full WidgetCompiler or Apple compilation.",
+  "checks": {
+    "normalizedRelativePathBody": {
+      "status": "BYTE_IDENTICAL",
+      "beforeSHA256": "c7ea7c941fcf8abbca3fbb37b3f6d1c262facdcb4c259d2dcf41c54850c614f2",
+      "afterSHA256": "c7ea7c941fcf8abbca3fbb37b3f6d1c262facdcb4c259d2dcf41c54850c614f2"
+    },
+    "hasDrivePrefixBody": {
+      "status": "BYTE_IDENTICAL",
+      "beforeSHA256": "e46ec430154a3af127cd8d9d5cc2d8ed8d4053772a071da1b0fc1d1e7402d986",
+      "afterSHA256": "e46ec430154a3af127cd8d9d5cc2d8ed8d4053772a071da1b0fc1d1e7402d986"
+    },
+    "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinArchivePolicyTests.swift": {
+      "status": "UNCHANGED",
+      "sha256": "ec941d33c0a715be42ad9b21c09791a5c8ced721c99c8d2fbe1c667332a91816"
+    },
+    "Package.swift": {
+      "status": "UNCHANGED",
+      "sha256": "dcc55c511a8d1238b0dd9f8d6189351cf9311a8923e151fc5eee73464a02afdd"
+    },
+    "Packages/HanlinPlatform/Package.swift": {
+      "status": "UNCHANGED",
+      "sha256": "864210a4e3d3a77c375c3211095467e876f41352e5f25bcf72730353d77d6981"
+    }
+  },
+  "commands": [
+    {
+      "argv": [
+        "/usr/local/bin/swiftc",
+        "-emit-module",
+        "-parse-as-library",
+        "-swift-version",
+        "6",
+        "-module-name",
+        "HanlinPlatformContracts",
+        "-emit-module-path",
+        "/tmp/hanlin-widget-path-module-47cjtxgw/HanlinPlatformContracts.swiftmodule",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-path-contract-20261124/Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinCatalogContracts.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-path-contract-20261124/Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinChatStructuredPart.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-path-contract-20261124/Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinContractError.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-path-contract-20261124/Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinDescriptors.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-path-contract-20261124/Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinExposureContracts.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-path-contract-20261124/Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinIdentifiers.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-path-contract-20261124/Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinJSONSchemaDocument.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-path-contract-20261124/Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinManifestSchema.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-path-contract-20261124/Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinMiniAppAuthoring.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-path-contract-20261124/Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinMiniAppContracts.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-path-contract-20261124/Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPackagePath.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-path-contract-20261124/Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPermissionContracts.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-path-contract-20261124/Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPreparedRuntimeVersion.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-path-contract-20261124/Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPresentationContracts.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-path-contract-20261124/Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinRuntimeProfiles.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-path-contract-20261124/Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinScriptContracts.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-path-contract-20261124/Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinSessionContracts.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-path-contract-20261124/Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinSkillContracts.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-path-contract-20261124/Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinStoreFileAccess.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-path-contract-20261124/Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinToolApprovalDescriptor.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-path-contract-20261124/Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinToolContracts.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-path-contract-20261124/Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinValue.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-path-contract-20261124/Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinVersions.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-path-contract-20261124/Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinWireProtocol.swift"
+      ],
+      "exit": 1,
+      "seconds": 5.577023822814226,
+      "log": "module-compile.log",
+      "logSHA256": "d005f4d69418261f77a9e0fc966f603f013554ceee4b41cb6b46c7330dd1b84b"
+    }
+  ],
+  "notRun": [
+    "Full HanlinWidgetCompiler target with Apple dependencies",
+    "Apple SDK compilation",
+    "native gate38"
+  ],
+  "toolchain": "Swift version 6.4.3 (swift-6.4.3-RELEASE)\nTarget: aarch64-unknown-linux-gnu",
+  "moduleSources": [
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinCatalogContracts.swift",
+      "sha256": "757478b238a1fc3144ef51c70275539502f959dd2aca9e67dbbf2449b24f7473"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinChatStructuredPart.swift",
+      "sha256": "07479b91a7ce77a8fdf5d53f3cb16939d9d46b0287efbd50b8b20b446c8ea2fa"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinContractError.swift",
+      "sha256": "ad59a698345d7c218b3787c721b93fc6104ae462f7f11000d9204b1dd03e8518"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinDescriptors.swift",
+      "sha256": "48fe15520f4758ad6d856c2deb40b2e5437392131c16717088f32edc3d163b64"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinExposureContracts.swift",
+      "sha256": "a975c82c8584d3f46e06150efc1222c4688283c62b5cb767b777fbafaf08ed64"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinIdentifiers.swift",
+      "sha256": "3b3651705d4ee066324e623f284718d985ce7e44d1b01d4a9c3a437ed3d7410a"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinJSONSchemaDocument.swift",
+      "sha256": "d763b95edd959241d4c6931892802eb20f1bf90bd21037ed6371c4d68a5e661a"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinManifestSchema.swift",
+      "sha256": "c1dd837d01913bc58b72d62cf47a9a21ef4bf1f23a1b3ccdaf93858e987c4d23"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinMiniAppAuthoring.swift",
+      "sha256": "ef40e7b0ee39954a7d704a121adb03a13b1cd02db0cba8c28e47fb0af49a7a33"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinMiniAppContracts.swift",
+      "sha256": "eb880c3c00a789bcd21d8e0cbc353018e32b4e7d7f781415809781751515ae63"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPackagePath.swift",
+      "sha256": "ab230354fd913397dfb2cb776bdde629fe0cf603b17729a7b9dc7cd9aab98c76"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPermissionContracts.swift",
+      "sha256": "f0911d44d578d35f2714b30e4aa925a953475d54fb4f9ee2da39cf0f8590fed3"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPreparedRuntimeVersion.swift",
+      "sha256": "e7e6dcb882b853a086c8ea33023de3a3f6889eefd6ed7c7075ba26d1ba511134"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPresentationContracts.swift",
+      "sha256": "96cde68f978ef19a5de552835be8c6dc2c62741f4aeab38c40f27586272e99b4"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinRuntimeProfiles.swift",
+      "sha256": "43bffad1d4245d9a00924aab08ffd498a622d32321b5165ff036f0e425140262"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinScriptContracts.swift",
+      "sha256": "e92224cd4a0a1b5ed8e49bd85881c647595337b95ccbb20e6a6684110977679c"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinSessionContracts.swift",
+      "sha256": "03493cb4f2f414088282d97b2b4c0a01a918c0df1db78451974400bbfcba7386"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinSkillContracts.swift",
+      "sha256": "cb8910c6d12ac4cc0f8546e89a0a514151fc9d3cd53d30aacd8abc479f2af99f"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinStoreFileAccess.swift",
+      "sha256": "ee87c52bc778c1a3848c37e125a709378f69e032ca91f80cc58f250a3c81a3f5"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinToolApprovalDescriptor.swift",
+      "sha256": "f091f9d83f629f5ba94b4fd30c6775255226f13a671eb047a1dc40f3c3a30ca7"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinToolContracts.swift",
+      "sha256": "8ce9c0771689e43f24b42fb16b0f1bf2a545628e99f972b625af57314257156d"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinValue.swift",
+      "sha256": "cd266a8b820ae8673fd576697bc30d77ba5dd563feaa670f7e5b2f18319ff3d8"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinVersions.swift",
+      "sha256": "014a9f0d5d078b84cda43d805e8b95b89203cabd834254f4e30030805e8dad0f"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinWireProtocol.swift",
+      "sha256": "13fc4ffbffef08ac7d439f6e9f961b4b94b05d6d0e45ba3cec6522709b7870d7"
+    }
+  ]
+}

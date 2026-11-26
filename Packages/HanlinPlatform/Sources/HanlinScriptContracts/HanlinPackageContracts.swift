@@ -312,7 +312,7 @@ public struct HanlinScriptingManifest: Codable, Hashable, Sendable {
 /// Adapts ordinary JSON used by `script.json` to the canonical value model.
 /// `HanlinJSONValue.Codable` intentionally uses a tagged wire format, so it
 /// cannot be decoded directly from forward-compatible manifest fields.
-private struct ManifestJSONValue: Codable {
+struct ManifestJSONValue: Codable {
     let value: HanlinJSONValue
 
     init(_ value: HanlinJSONValue) {

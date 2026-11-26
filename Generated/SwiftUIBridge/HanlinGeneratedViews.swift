@@ -64,7 +64,13 @@ public struct HanlinGeneratedGroupBoxView: ExpoSwiftUI.View {
     }
 
     @ViewBuilder private func namedSlot(_ name: String) -> some View {
-        if let slot = props.children?.compactMap({ $0.childView as? HanlinGeneratedSlotView }).first(where: { $0.props.name == name }) {
+        if let slot = props.children?.compactMap({ child -> HanlinGeneratedSlotView? in
+            let view = child.childView
+            if let wrapper = view as? ExpoSwiftUI.ViewWrapper {
+                return wrapper.getWrappedView() as? HanlinGeneratedSlotView
+            }
+            return view as? HanlinGeneratedSlotView
+        }).first(where: { $0.props.name == name }) {
             slot
         }
     }
@@ -86,7 +92,7 @@ public struct HanlinGeneratedEmptyViewView: ExpoSwiftUI.View {
 }
 
 public enum HanlinGeneratedBridgeMetadata {
-    public static let runtimeVersion = "58.0.3"
+    public static let runtimeVersion = "58.0.30"
     public static let bridgeVersion = "3.0.0"
     public static let inventoryIdentity = "xcode-27.0-ios-27.0-arm64e-apple-ios"
 }

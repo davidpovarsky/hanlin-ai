@@ -1,0 +1,213 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-24T07:54:53.293749+00:00",
+  "runID": 45343362337,
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45343362337",
+  "jobID": 138272006553,
+  "sourceCommit": "4ea670e120a3217423bc73db68dab514c78079de",
+  "conclusion": "FAILURE",
+  "actualResult": "BUILD_FAILED",
+  "artifact": {
+    "id": 14900225434,
+    "bytes": 334550789,
+    "sha256": "cdc749408c30d994ffa32f6d67317b3ba484a3fb5b7b70b17bdb9c7dbc1b9fe0",
+    "authenticatedDigestMatched": true
+  },
+  "build": {
+    "command": {
+      "argv": [
+        "xcodebuild",
+        "-project",
+        "AI_HLY.xcodeproj",
+        "-destination",
+        "platform=iOS Simulator,id=16D196EF-BF1C-4590-B417-A5C92E1CFADF",
+        "-parallel-testing-enabled",
+        "NO",
+        "-derivedDataPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages",
+        "-skipPackagePluginValidation",
+        "-skipMacroValidation",
+        "CODE_SIGNING_ALLOWED=YES",
+        "CODE_SIGNING_REQUIRED=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "-scheme",
+        "HanlinMiniApps",
+        "build-for-testing",
+        "-resultBundlePath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/paired-product/MiniBuild.xcresult"
+      ],
+      "exit": 65,
+      "seconds": 1730.741648709,
+      "log": "mini-build.log",
+      "sha256": "51bf4e548ff6091068faa6442acfa78e2ebe8d72d278ce4e2b76d828bd178923"
+    },
+    "journal": {
+      "commandID": "b2d74d45180942a7bc93bf4c65a2cbab",
+      "pid": null,
+      "configuredTimeoutSeconds": 2400,
+      "startedEvents": 0,
+      "runningEvents": 54,
+      "final": {
+        "command_id": "b2d74d45180942a7bc93bf4c65a2cbab",
+        "argv": [
+          "xcodebuild",
+          "-project",
+          "AI_HLY.xcodeproj",
+          "-destination",
+          "platform=iOS Simulator,id=16D196EF-BF1C-4590-B417-A5C92E1CFADF",
+          "-parallel-testing-enabled",
+          "NO",
+          "-derivedDataPath",
+          "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData",
+          "-clonedSourcePackagesDirPath",
+          "/Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages",
+          "-skipPackagePluginValidation",
+          "-skipMacroValidation",
+          "CODE_SIGNING_ALLOWED=YES",
+          "CODE_SIGNING_REQUIRED=YES",
+          "CODE_SIGN_IDENTITY=-",
+          "-scheme",
+          "HanlinMiniApps",
+          "build-for-testing",
+          "-resultBundlePath",
+          "/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/paired-product/MiniBuild.xcresult"
+        ],
+        "log": "mini-build.log",
+        "runner_pid": 56738,
+        "pid": 58026,
+        "started_at": 1795504272.940335,
+        "timeout": 2400,
+        "status": "completed",
+        "observed_at": 1795506003.699838,
+        "seconds": 1730.759630042,
+        "log_bytes": 4731618,
+        "completion_recorded": true,
+        "exit": 65,
+        "observed_returncode": 65
+      }
+    },
+    "exactCompilerErrors": [
+      {
+        "line": 51923,
+        "text": "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/Animation/ClockHandRotationEffect.swift:47:24: error: static property 'forms' is not concurrency-safe because non-'Sendable' type '[(ClockHandPeriod, UnitPoint) -> (Any, Any)]' may have shared mutable state [#MutableGlobalVariable]"
+      }
+    ],
+    "timeoutOrCancellation": false
+  },
+  "hostComponents": {
+    "tests": 166,
+    "passed": 165,
+    "failed": 0,
+    "skipped": 1,
+    "scope": "Actual native preparation Node Host suite; not application UI"
+  },
+  "preparedNativeAndHostExport": "PASS",
+  "selectedApplicationCases": 38,
+  "selectedApplicationCasesExecuted": 0,
+  "aiBuild": "NOT_RUN",
+  "ui": "NOT_RUN",
+  "appIntentsMetadata": "NOT_PRODUCED_BEFORE_BUILD_FAILURE",
+  "physicalDevice": "NOT_RUN",
+  "screenshots": "failure.png is a failure collection screenshot, not diagnostic sheet or successful application evidence",
+  "resultBundles": [
+    "MiniBuild.xcresult (build failure only)"
+  ],
+  "fix": {
+    "commit": "a35cc1770e044f7b5388a8cfb0433bacb2782301",
+    "evidence": "docs/miniapp-sdk/evidence/original-clock-sendable-20261124/receipt.json",
+    "sameFailureAsIsolatedMacRun": 45348880385,
+    "isolatedRetestRun": 45350372512,
+    "boundary": "Retest passed the former clock compile point but failed on later original TagStack actor isolation before selected tests; separate correction in progress."
+  },
+  "logs": [
+    {
+      "file": "docs/miniapp-sdk/evidence/ninth-native-gate-20261124/mini-build.log.gz",
+      "rawBytes": 4731618,
+      "rawSHA256": "51bf4e548ff6091068faa6442acfa78e2ebe8d72d278ce4e2b76d828bd178923",
+      "gzipBytes": 181781,
+      "gzipSHA256": "48afcba1e0c5fec83fe59867771fc399b9fbbd756fbfed6a13062a72e93a1bb9"
+    },
+    {
+      "file": "docs/miniapp-sdk/evidence/ninth-native-gate-20261124/native-dependencies.log.gz",
+      "rawBytes": 2810867,
+      "rawSHA256": "dbdc94bed757a831478f35d7cc8df2adfb0aa9f90177b81c80b4dc7468e8484f",
+      "gzipBytes": 304207,
+      "gzipSHA256": "6ffc5e31d7d759bf0433a4cc06c5d0eb87f4345448638a342ce9410194ff420e"
+    }
+  ],
+  "embeddedSDK": {
+    "runtimeHostArchiveBytes": 82186211,
+    "runtimeHostArchiveSHA256": "e097bce897033c3767d4b7b3dd7bfd0cdae47904df3a6ed50981a1bbd2608da5",
+    "manifestPath": "MiniAppSDK/miniapp-sdk.json",
+    "manifestBytes": 5250687,
+    "manifestSHA256": "058d8f47cf53d11bf4b3c7afc53a1344ed33e9a1bfdfdd8cbb7e4f056e22e57c",
+    "manifestKeys": [
+      "schemaVersion",
+      "inputSHA256",
+      "engines",
+      "upstream",
+      "files",
+      "sourceInputs",
+      "nativeBinaries"
+    ],
+    "verificationBoundary": "Manifest read from authenticated native artifact; no redundant full SDK file-hash sweep claimed here.",
+    "manifestFileCount": 25825,
+    "inputSHA256": "6ea80407d2830c227c5ccd411dd3ffe02d50a07886b77c55a75ed67b9e1d24b1",
+    "retainedFile": "docs/miniapp-sdk/evidence/ninth-native-gate-20261124/embedded-sdk-manifest.json.gz",
+    "retainedEncoding": "gzip; decompress to exact original miniapp-sdk.json bytes"
+  },
+  "artifacts": [
+    {
+      "path": "docs/miniapp-sdk/evidence/ninth-native-gate-20261124/artifact-download-receipt.json",
+      "bytes": 6442,
+      "sha256": "68415f22495e42de6127b064ae3ebc19b9a0bdb2ee551a985a55a85bba3e84f6"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/ninth-native-gate-20261124/artifacts-api.json",
+      "bytes": 771,
+      "sha256": "5225934f5b5d1963d54567b11d9851133f5de0d54c24504c57ba3d0dccc99db8"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/ninth-native-gate-20261124/command-events.jsonl",
+      "bytes": 75383,
+      "sha256": "038e6f8c54835276131aeb01ca9e3050451523a7083b3fb4e41378798b0e06d2"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/ninth-native-gate-20261124/commands.jsonl",
+      "bytes": 4359,
+      "sha256": "d03897c1180b7c88d5f31f8df86067924635cdd2d8b7cbf28d4d3f227538c9fe"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/ninth-native-gate-20261124/mini-build.log.gz",
+      "bytes": 181781,
+      "sha256": "48afcba1e0c5fec83fe59867771fc399b9fbbd756fbfed6a13062a72e93a1bb9"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/ninth-native-gate-20261124/native-dependencies.log.gz",
+      "bytes": 304207,
+      "sha256": "6ffc5e31d7d759bf0433a4cc06c5d0eb87f4345448638a342ce9410194ff420e"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/ninth-native-gate-20261124/paired-acceptance.json",
+      "bytes": 2012,
+      "sha256": "98cf0b6ef27880bc7baabe855dc0666a2eac754f58f37244b571877c346093be"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/ninth-native-gate-20261124/run-api.json",
+      "bytes": 9130,
+      "sha256": "13ce0052607c61dc2104a0002664b5b1f59a72ef99ffe9d1817aa6d0ff006796"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/ninth-native-gate-20261124/upstream-resolution.json",
+      "bytes": 14914,
+      "sha256": "7ba0f858cdf79ed9fe9617b838dfc71510549162e6ba7435046c46cdbb742702"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/ninth-native-gate-20261124/embedded-sdk-manifest.json.gz",
+      "bytes": 1308660,
+      "sha256": "bcf0868367cc29c1c415bd8c2bad34fef125e95d3e0865bbc9057e2a8f3a6aa0"
+    }
+  ]
+}

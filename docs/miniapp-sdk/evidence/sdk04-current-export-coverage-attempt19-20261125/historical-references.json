@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "originalDoDReceipt": {
+    "path": "docs/miniapp-sdk/evidence/sdk04-coverage-reconciliation-20261124/receipt.json",
+    "bytes": 19814,
+    "sha256": "ae36c8d9c7ed0f7bfe2b58ccc8476ffba1db23783e9d37ccb3fa5aa6008befec"
+  },
+  "retainedCriteriaSnapshot": {
+    "commit": "22eaa6c1c93970b1ce916bc8b19c3022d9b6258f",
+    "path": "docs/miniapp-sdk/evidence/acceptance-criteria-map-20261124.json",
+    "sha256": "c0240a3d1ae2521c0c22d19488c89e21661e6e165c859dcb7defcd19517b30fb",
+    "exactSDK04Criterion": "DoD: תוכן .d.ts מדויק + tooling שמגלה drift, typecheck strict ו-Metro bundle, tests לכל public exported adapter, תיעוד מגבלות מכשיר."
+  },
+  "historicalManualReceipt": {
+    "path": "docs/miniapp-sdk/evidence/sdk04-manual-adapters-20261124/receipt.json",
+    "bytes": 13565,
+    "sha256": "42f219e86de9746a33084bea341b5e0d42793eeca2600235186eb5125360208f"
+  },
+  "rawHistoryPolicy": "Older NOT_RUN/PENDING/failed records remain unchanged and retain their original source/version. Current selected results are recorded separately.",
+  "currentBuildAuthority": {
+    "path": "docs/miniapp-sdk/evidence/primary-repair-original-agent-pass-attempt19-20261125/manifest.json",
+    "heldCommit": "2e55181e1de9db14340b7d8a5038bf3b8808f295",
+    "scope": "Actual V11 original Mini and AI build PASS, exact d4a products, SDK19 a2 source and 25 prepared inputs."
+  },
+  "runtimeMetadataDrift": {
+    "receipt": {
+      "path": "docs/miniapp-sdk/evidence/expo-runtime-metadata-20261124/receipt.json",
+      "bytes": 4899,
+      "sha256": "824b095964bfa9dc392986cffdde87daa8c4ae03cb3e251bd69c3ec0f42d7b0d"
+    },
+    "red": {
+      "tests": 1,
+      "passed": 0,
+      "failed": 1,
+      "command": "red.command.json",
+      "result": "Real stale public metadata assertion failed before implementation"
+    },
+    "green": {
+      "tests": 6,
+      "passed": 6,
+      "failed": 0,
+      "skipped": 0,
+      "command": "green.command.json",
+      "covered": [
+        "Actual independent original runtime versions",
+        "Existing independent NativeScript and Native API rules",
+        "All five public metadata stale mutations rejected",
+        "Controlled future UI version updates exactly five inputs",
+        "Resolving same graph is byte-idempotent",
+        "Missing exact runtime fails",
+        "All other generated API/coverage/bridge bytes preserved"
+      ]
+    },
+    "boundary": "Retained historical portable execution; current source/native status is separate. No rerun was performed for this reconciliation."
+  },
+  "nativeApiDrift": {
+    "receipt": {
+      "path": "docs/miniapp-sdk/evidence/sdk04-nativeapi-version-contract-20261124/receipt.json",
+      "bytes": 7157,
+      "sha256": "1d5a58bc353ea20c7240bbc897d2ea14ca6bbb2e663865b7dec2e7b33639b21b"
+    },
+    "red": {
+      "result": "FAILED_EXPECTED_ACTUAL_DRIFT",
+      "tests": 1,
+      "actual": "0.13.1",
+      "expected": "0.13.0",
+      "receipt": "red.json"
+    },
+    "green": {
+      "result": "EXECUTED_PASS",
+      "tests": 6,
+      "receipt": "green.json",
+      "coverage": "new facade equality/mismatch/future-resolution check; existing runtime-version checks; active preflight version/lock check"
+    },
+    "boundary": "Retained historical portable execution; current source/native status is separate. No rerun was performed for this reconciliation."
+  }
+}

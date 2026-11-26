@@ -1,0 +1,31 @@
+✖ Expo UI public runtime metadata follows the installed original runtime across every mirror (10.558741ms)
+ℹ tests 1
+ℹ suites 0
+ℹ pass 0
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 103.638197
+
+✖ failing tests:
+
+test at Scripts/Audit/Tests/runtime-version-contract.test.mjs:120:1
+✖ Expo UI public runtime metadata follows the installed original runtime across every mirror (10.558741ms)
+  AssertionError [ERR_ASSERTION]: public generator runtime identity must match installed original Expo UI
+  + actual - expected
+  
+  + '58.0.3'
+  - '58.0.29'
+          ^
+  
+      at TestContext.<anonymous> (file:///mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Audit/Tests/runtime-version-contract.test.mjs:123:10)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async startSubtestAfterBootstrap (node:internal/test_runner/harness:387:3) {
+    generatedMessage: false,
+    code: 'ERR_ASSERTION',
+    actual: '58.0.3',
+    expected: '58.0.29',
+    operator: 'strictEqual',
+    diff: 'simple'
+  }

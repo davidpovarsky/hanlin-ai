@@ -1,11 +1,13 @@
+import { readFileSync } from 'node:fs';
+const expo = JSON.parse(readFileSync(new URL('../Expo/dependency-lock.json', import.meta.url), 'utf8')).expo;
 const json = value => JSON.stringify(value, null, 2) + '\n';
 const families = ['systemSmall', 'systemMedium', 'systemLarge', 'systemExtraLarge'];
 const metadata = (actions, sourceFormat = 'jsx') => ({ abiVersion: 1, sourceFormat, families, actions });
 const manifest = (name, engine, actions, entry = 'widget.jsx') => ({ name, version: '1.0.0', entry, kind: 'widget', widgetEngine: engine,
   hanlinRuntime: engine === 'expo' ? 'hanlin-expo' : 'scripting-jsc', hanlinWidget: metadata(actions, entry.endsWith('.tsx') ? 'tsx' : 'jsx') });
 const expoPackage = name => json({ name, version: '1.0.0', hanlinRuntime: 'hanlin-expo',
-  hanlinExpo: { runtimeVersion: '58.0.3', plugins: { '@expo/ui': '58.0.3' } },
-  dependencies: { '@expo/ui': '58.0.3', 'expo-widgets': '58.0.3', react: '19.3.0' } });
+  hanlinExpo: { runtimeVersion: expo.uiVersion, plugins: { '@expo/ui': expo.uiVersion } },
+  dependencies: { '@expo/ui': expo.uiVersion, 'expo-widgets': expo.widgetsVersion, react: expo.reactVersion } });
 const png = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jBqkAAAAASUVORK5CYII=', 'base64');
 const counterActions = ['increment', 'decrement', 'status'].map(id => ({ id, kind: 'expoCallback' }));
 const scriptActions = [{ id: 'sync', kind: 'function', handler: 'syncNow' }, { id: 'backup', kind: 'setValue', stateKey: 'backup' },

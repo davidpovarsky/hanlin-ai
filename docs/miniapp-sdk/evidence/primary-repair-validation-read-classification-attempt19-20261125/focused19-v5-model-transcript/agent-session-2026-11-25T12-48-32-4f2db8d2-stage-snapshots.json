@@ -1,0 +1,12 @@
+{
+  "01C18531-145A-452F-8AA8-3002CDE90079.response.choices.0.delta.tool_calls.0.function.arguments" : "{\"limit\":4096,\"offset\":8192,\"reference\":\"ref_be4737dc56834778a4b497e3e973d1cb\"}",
+  "7B855013-A1F5-4E2A-A9BE-0995BCD8B56F.response.choices.0.delta.tool_calls.0.function.arguments" : "{\"limit\":4096,\"offset\":4096,\"reference\":\"ref_be4737dc56834778a4b497e3e973d1cb\"}",
+  "92AE6BE4-045E-423C-A64B-9968C69A5CC3.response.choices.0.delta.tool_calls.0.function.arguments" : "{\"limit\":4096,\"offset\":0,\"reference\":\"ref_be4737dc56834778a4b497e3e973d1cb\"}",
+  "A7BF8880-7FCD-4BEC-B472-9B5325A05B0A.response.choices.0.delta.tool_calls.0.function.arguments" : "{\"limit\":4096,\"offset\":12288,\"reference\":\"ref_be4737dc56834778a4b497e3e973d1cb\"}",
+  "A1453E59-4A3A-45C4-AB51-D40DA08C7309.response.choices.0.delta.tool_calls.0.function.arguments" : "{\"engine\":\"nativescript\",\"progress_summary\":\"Run the requested MiniApp authoring step and inspect its actual result.\",\"project_path\":\"\\\/Users\\\/m1\\\/Library\\\/Developer\\\/CoreSimulator\\\/Devices\\\/E742FBCD-8FF0-4130-B143-7F8328637138\\\/data\\\/Containers\\\/Data\\\/Application\\\/E2B02896-9E6E-47FD-A342-0AE8024D3604\\\/Library\\\/Application Support\\\/HanlinRuntime\\\/v1\\\/clients\\\/agents\\\/miniapp-repair-f7426b5c-b2d3-4144-a451-338ff9c82658\\\/project\\\/\"}",
+  "CC4C1BB6-BC9F-48B6-BA28-E24E806F0147.response.choices.0.delta.tool_calls.0.function.arguments" : "{\"engine\":\"nativescript\",\"progress_summary\":\"Run the requested MiniApp authoring step and inspect its actual result.\"}",
+  "E9981098-C5AD-4CAD-A72B-A196C106E98E.response.choices.0.delta.tool_calls.0.function.arguments" : "{\"query\":\"miniapp\"}",
+  "F5C83304-1458-4161-BEF3-2CD780E21AAD.response.choices.0.delta.content" : "MINIAPP_AUTHORING_NONJSON_RESULT_miniapp-invalid",
+  "F9C624D0-76DA-47C9-BD10-77C9CCEBB9B1.StreamData.content" : "MINIAPP_AUTHORING_NONJSON_RESULT_miniapp-invalid",
+  "F9C624D0-76DA-47C9-BD10-77C9CCEBB9B1.SwiftAISDK.content" : "MINIAPP_AUTHORING_NONJSON_RESULT_miniapp-invalid"
+}

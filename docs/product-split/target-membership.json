@@ -24,12 +24,15 @@
     "AI_HLY/Downstream/ProductSplit/HanlinSplitForegroundTransport.swift",
     "AI_HLY/Downstream/ProductSplit/HanlinSplitLiveTarget.swift",
     "AI_HLY/Downstream/ProductSplit/HanlinSplitMailbox.swift",
+    "AI_HLY/Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift",
     "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsBootstrap.swift",
     "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsCatalogView.swift",
     "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsForegroundBridge.swift",
     "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsProvider.swift",
+    "AI_HLY/Downstream/ProductSplitIntegration/MiniAppAuthoringDelivery.swift",
     "AI_HLY/Downstream/RuntimeCore/Core/AppRuntimeCore.swift",
     "AI_HLY/Downstream/RuntimeCore/Core/HanlinApplicationRuntimeConfiguration.swift",
+    "AI_HLY/Downstream/RuntimeCore/Core/MiniAppAuthoringService.swift",
     "AI_HLY/Downstream/RuntimeCore/Core/RuntimeDiagnostics.swift",
     "AI_HLY/Downstream/RuntimeCore/Core/RuntimeExecutionInputArtifact.swift",
     "AI_HLY/Downstream/RuntimeCore/Core/RuntimeFileLayout.swift",
@@ -64,6 +67,7 @@
     "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingApplicationRuntimeBridge.swift",
     "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
     "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingSystemUI.swift",
+    "AI_HLY/Downstream/ScriptingPlatform/MiniAppImportDiagnosticsView.swift",
     "AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift",
     "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareActionTarget.swift",
     "AI_HLY/Downstream/SystemIntegrations/ChavrusaShareInbox.swift",
@@ -77,7 +81,14 @@
     "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsAddSheet.swift",
     "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsCatalogView.swift",
     "AI_HLY/NativeAppPlatform/BuiltinApps/BuiltinCanonicalRegistrations.swift",
-    "AI_HLY/NativeAppPlatform/Support/NativeAppColor.swift"
+    "AI_HLY/NativeAppPlatform/Support/NativeAppColor.swift",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSystemCatalog.swift",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppCaptureCoordinator.swift",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSpotlightIndex.swift",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppCaptureInbox.swift",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSystemEntrypointsView.swift"
   ],
   "excludes": [
     "AI_HLY/AI_HLY.swift",
@@ -105,13 +116,20 @@
     "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeLinkDependencyNotices.txt",
     "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeManifest.json",
     "AI_HLY/RuntimeHostResources.zip",
-    "AI_HLY/Assets.xcassets"
+    "AI_HLY/Assets.xcassets",
+    "Packages/HanlinWidgetSDK/HostResources/HanlinAppIntents.xcstrings",
+    "Packages/IOSSystemLite/Sources/IOSSystemLite/Resources/commandDictionary.plist",
+    "Packages/IOSSystemLite/Sources/IOSSystemLite/Resources/extraCommandsDictionary.plist"
   ],
   "integration_base": "16934250",
   "sdk_resources": {
     "HanlinLocalization": "Original three language catalogs and shared image/color assets"
   },
   "shared_sdk_products": {
-    "HanlinAgentActivityCore": "Original shared redaction and native-result DTO implementations; no ChatUI or AgentCore dependency"
+    "HanlinAgentActivityCore": "Original shared redaction and native-result DTO implementations; no ChatUI or AgentCore dependency",
+    "HanlinTranslationUI": "Original native snippet and translation presentation UI and AppIntent metadata; no AI chat or credential dependency",
+    "HanlinExpoWidgetsOriginal": "Original Expo Widgets module, JavaScript runtime, timelines and ActivityKit/AppIntent implementations; installation lifecycle follows each shipping product",
+    "HanlinMiniAppsBridge": "Shared Foundation request, result, catalog and attachment mailbox; engines remain in MiniApps.",
+    "HanlinMiniAppsPicker": "Native SwiftUI app chooser and shared favorites, visibility and window preferences."
   }
 }

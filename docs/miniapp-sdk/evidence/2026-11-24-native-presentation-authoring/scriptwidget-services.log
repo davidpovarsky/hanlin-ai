@@ -1,0 +1,13 @@
+✔ generated API inventory agrees with actual installed native exports and original catalog provenance (1570.459641ms)
+✔ real TypeScript accepts typed original services, nullable results, native await and JSX (1060.474441ms)
+✔ real TypeScript reports wrong native options, nullable results, unsupported Promise APIs and missing methods (952.048387ms)
+✔ a new original native method cannot silently receive a fabricated result schema (332.046884ms)
+✔ actual presentation bindings preserve native context, regions, action values and diagnostics (1521.646944ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 6000.902423

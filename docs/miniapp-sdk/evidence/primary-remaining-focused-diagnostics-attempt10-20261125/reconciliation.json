@@ -1,0 +1,423 @@
+{
+  "schemaVersion": 1,
+  "reconciledAt": "2026-11-25T03:12:25.362819+00:00",
+  "inspection": "Read immutable Oracle handoff and exact Git source; no native query, build, test, SDK generator or archive repack.",
+  "execution": {
+    "sourceCommit": "fda6948ca6a1f541293a1a1dd20e97f75eb0a527",
+    "sourceTree": "a1fe06e442f36f104adca116eab14892674452ed",
+    "uiSourceVariant": false,
+    "sourceBindings": [
+      {
+        "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+        "sourceCommit": "fda6948ca6a1f541293a1a1dd20e97f75eb0a527",
+        "bytes": 75742,
+        "sha256": "6c87c9751bf4b5910cc72716bfa1a6cb384c3ef53908a6ca074f713656f5730e"
+      },
+      {
+        "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+        "sourceCommit": "fda6948ca6a1f541293a1a1dd20e97f75eb0a527",
+        "bytes": 47460,
+        "sha256": "6e3abbb16c9b55b048b69c2391784510d8c143c7ed00e760a73ecb903cdbb61d"
+      },
+      {
+        "path": "Scripts/Expo/miniapps/modular-text-search/App.tsx",
+        "sourceCommit": "fda6948ca6a1f541293a1a1dd20e97f75eb0a527",
+        "bytes": 25362,
+        "sha256": "574e69fa47345e9847cb98b7f9c8a75d92e941854b5fd2764edb3b0d894f0c7a"
+      }
+    ],
+    "hostArchiveSHA256": "86733eba5d80156edf52da87f0f371c208122d6e60f618f182990330514984c3",
+    "testBinariesAsObservedByNativeOwner": {
+      "exactPublishedSource": [
+        {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app/PlugIns/HanlinMiniAppsUITests.xctest/HanlinMiniAppsUITests",
+          "bytes": 606400,
+          "sha256": "cee227a2886e897635d44df91c93df83e245b9278b8f057ab73dc1e2cbe734ab"
+        }
+      ]
+    }
+  },
+  "handoff": {
+    "receiptPath": "raw/receipt.json",
+    "receiptSHA256": "87672e323f4c8cb463fb56916cd8ecb9547d71bf4eb417c74e082ee57c59c767",
+    "capturedAt": "2026-11-25T02:54:13.629034+00:00",
+    "memberCount": 23,
+    "memberBytes": 2339777,
+    "memberChecks": [
+      {
+        "path": "RemainingFocused-attachments/277E3363-1E69-44EC-9EA9-CD76CFC7024B.txt",
+        "bytes": 32813,
+        "sha256": "8e52aa8ddc62f7c344f656324b6019decada6dc4ad80f22663f0d648a5caa62d",
+        "status": "PASS"
+      },
+      {
+        "path": "RemainingFocused-attachments/37B14A7C-FDA2-4195-BB01-9C9B342547CF.txt",
+        "bytes": 16973,
+        "sha256": "5e4776ca8e5af40bd10a16c5011990084740acc0ef2a03886c7786b2593df61d",
+        "status": "PASS"
+      },
+      {
+        "path": "RemainingFocused-attachments/5F25918F-5775-458E-A48E-BE62294B2972.txt",
+        "bytes": 34553,
+        "sha256": "ff8436d9c715e5875a1b546d22cd62bcc481c57ca315b7471ae7f028a049ad5a",
+        "status": "PASS"
+      },
+      {
+        "path": "RemainingFocused-attachments/67E0F819-FDD1-4293-AE01-D8B126291CB3.txt",
+        "bytes": 34547,
+        "sha256": "f124a7388f3e34ee2497779509217da8688e43ac606a2b67e5db322ab3a2df15",
+        "status": "PASS"
+      },
+      {
+        "path": "RemainingFocused-attachments/8952EA4F-4654-4A1A-9DC5-87676994ABC5.png",
+        "bytes": 274681,
+        "sha256": "c257bd61c88b07f48ce42bd81e860948fa89fa5ba6307627a9c6d966007db95f",
+        "status": "PASS"
+      },
+      {
+        "path": "RemainingFocused-attachments/952C9E91-7222-4EB2-AB9F-40037C715027.txt",
+        "bytes": 32114,
+        "sha256": "2a88b25d1a74f76f81ab0640692796cb3d1f29f6c336240892d61510c4f74414",
+        "status": "PASS"
+      },
+      {
+        "path": "RemainingFocused-attachments/96EBFA60-581D-4E41-A83F-FE39084C0144.png",
+        "bytes": 350306,
+        "sha256": "4e0306706a72ad9e5a5eea9e8b7d22af51eb00b28a6fa3a26d208dd424bc9d33",
+        "status": "PASS"
+      },
+      {
+        "path": "RemainingFocused-attachments/CB3FAEE2-1BF0-421A-814D-D4D65FF6B7A6.txt",
+        "bytes": 16966,
+        "sha256": "342e9ef15ea9d5ae2a585b1362a8afef0964c3d875edf50cd106f5d9f8737810",
+        "status": "PASS"
+      },
+      {
+        "path": "RemainingFocused-attachments/manifest.json",
+        "bytes": 22495,
+        "sha256": "aec34e8b5a1a598bba01422757a855f3bf1239d407cfad0e40bc3dd5c247d020",
+        "status": "PASS"
+      },
+      {
+        "path": "RemainingFocused-runtime-markers.json",
+        "bytes": 3,
+        "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+        "status": "PASS"
+      },
+      {
+        "path": "container-observations.jsonl",
+        "bytes": 957,
+        "sha256": "494822f1d4b649d411d4916a3388fdd992ec4ddc4421ae0c8f6052165e776491",
+        "status": "PASS"
+      },
+      {
+        "path": "host-ready-observations.jsonl",
+        "bytes": 4307,
+        "sha256": "cbbae2d85efddfb0894f3a153404339fdc85dd5be7d3830f84385d7d84de7a5d",
+        "status": "PASS"
+      },
+      {
+        "path": "launch-state.json",
+        "bytes": 1843,
+        "sha256": "6d977549d7793931ca57da767bebac9f67b44796501a6090cbfef6959334f800",
+        "status": "PASS"
+      },
+      {
+        "path": "node-job-observations.jsonl",
+        "bytes": 24072,
+        "sha256": "2da7bbdf616463ff8324ae5fd11e53acb9441c7d904cc59103ca4a9da2aa6275",
+        "status": "PASS"
+      },
+      {
+        "path": "paired-prefix/RemainingFocused-attachments-export.log",
+        "bytes": 6847,
+        "sha256": "cc7e8c38ae100c56bf94794c9c267880967efb0ed74234bd8a3d59aeee9e7b24",
+        "status": "PASS"
+      },
+      {
+        "path": "paired-prefix/RemainingFocused-nodes.json",
+        "bytes": 4370,
+        "sha256": "b173f5f1e8d299d3f0c35dba26c4659d7e1bf872392e9d1ceec0b26e6036a95d",
+        "status": "PASS"
+      },
+      {
+        "path": "paired-prefix/RemainingFocused-selected-tests.log",
+        "bytes": 57,
+        "sha256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96",
+        "status": "PASS"
+      },
+      {
+        "path": "paired-prefix/RemainingFocused-summary.json",
+        "bytes": 2034,
+        "sha256": "84be6845eebe1671db186f4159efaf561c626173bede6c76082a38d807bba341",
+        "status": "PASS"
+      },
+      {
+        "path": "paired-prefix/RemainingFocused.log",
+        "bytes": 97095,
+        "sha256": "7eb149680ca27d7cf28b3c694335c18bfe6e0ec07a281e4bf11e7a5b5541c524",
+        "status": "PASS"
+      },
+      {
+        "path": "primary-state-at-capture.json",
+        "bytes": 45345,
+        "sha256": "e1bfe8e2475ba5b7aa992f02a595e1e3e4eeefc548999a1883dab9a159a0b943",
+        "status": "PASS"
+      },
+      {
+        "path": "runtime-logstream.jsonl.gz",
+        "bytes": 1327952,
+        "sha256": "f11af323a3aa3be2697a62b56a1f599752c805afc4d0c1897b76d5eb19d9a8b7",
+        "status": "PASS",
+        "losslessGzip": {
+          "bytes": 13566194,
+          "sha256": "b3d0a847b4e44067df1217740d7c21e2fdf792c649e36dc57f43d267f3b8488d",
+          "status": "PASS"
+        }
+      },
+      {
+        "path": "runtime-logstream.stderr",
+        "bytes": 91,
+        "sha256": "94fd1a5b55265199a9a6a67d888250b037e52f5788dd490d3721204d6132d8d0",
+        "status": "PASS"
+      },
+      {
+        "path": "state.json",
+        "bytes": 9356,
+        "sha256": "c1f061fcc8a8aedaeb5a27795478b5cda3feab67c2fbc7c2575493b9a4614d81",
+        "status": "PASS"
+      }
+    ]
+  },
+  "remainingFocused": {
+    "startedAt": "2026-11-25T02:37:24.174236+00:00",
+    "finishedAt": "2026-11-25T02:44:43.510666+00:00",
+    "exitCode": 65,
+    "resultFinalized": true,
+    "passed": 2,
+    "failed": 1,
+    "skipped": 0,
+    "caseResults": [
+      {
+        "selector": "MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText",
+        "result": "Failed",
+        "durationSeconds": 241.37376999855042,
+        "issues": [
+          {
+            "name": "XCTAssertTrue failed - Native detail navigation must finish with an interactive list",
+            "nodeType": "Failure Message",
+            "sourceLocation": {
+              "filePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+              "lineNumber": 1184
+            }
+          },
+          {
+            "name": "Update the Info.plist: Support for all orientations will soon be required.",
+            "nodeType": "Runtime Warning"
+          }
+        ]
+      },
+      {
+        "selector": "MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyExpoPackageImportsRendersAndHandlesEvents",
+        "result": "Passed",
+        "durationSeconds": 95.16099500656128,
+        "issues": [
+          {
+            "name": "Update the Info.plist: Support for all orientations will soon be required.",
+            "nodeType": "Runtime Warning"
+          }
+        ]
+      },
+      {
+        "selector": "MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyNativeScriptPackageImportsRendersAndHandlesEvents",
+        "result": "Passed",
+        "durationSeconds": 66.491161942482,
+        "issues": [
+          {
+            "name": "Update the Info.plist: Support for all orientations will soon be required.",
+            "nodeType": "Runtime Warning"
+          }
+        ]
+      }
+    ],
+    "executionCoverage": "All three selected cases are present in actual xcresult nodes and the selected-tests log confirms execution.",
+    "collectorWording": "The raw generic 'did not execute every selected case' failure is retained. Actual selected cases executed; one failed, so this message is not evidence of missing execution."
+  },
+  "separateParityDiagnostic": {
+    "result": "FAIL",
+    "relationship": "Earlier single case is preserved independently in primary-parity-startup-diagnostic-attempt10-20261125. This terminal packet retains its state but does not replace or rewrite that frozen packet.",
+    "combinedFourCaseOutcome": {
+      "passed": 2,
+      "failed": 2,
+      "skipped": 0
+    }
+  },
+  "visualAndAX": {
+    "attachmentMappings": [
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "9DB610ED-23EB-451F-B74C-4C46438D25E8",
+        "deviceName": "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName": "277E3363-1E69-44EC-9EA9-CD76CFC7024B.txt",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "modular-search-native-detail-accessibility_0_F024D257-2CB4-4212-B9F9-294F64CCD891.txt",
+        "timestamp": 1795574517.572
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "9DB610ED-23EB-451F-B74C-4C46438D25E8",
+        "deviceName": "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName": "8952EA4F-4654-4A1A-9DC5-87676994ABC5.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "modular-search-native-detail_0_C967A385-D387-40DD-B7DF-915DF834B499.png",
+        "timestamp": 1795574516.342
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "9DB610ED-23EB-451F-B74C-4C46438D25E8",
+        "deviceName": "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName": "952C9E91-7222-4EB2-AB9F-40037C715027.txt",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "modular-search-live-sefaria-results-accessibility_0_3FD8567E-8360-4FBD-B316-F2A687680D52.txt",
+        "timestamp": 1795574497.751
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "9DB610ED-23EB-451F-B74C-4C46438D25E8",
+        "deviceName": "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName": "96EBFA60-581D-4E41-A83F-FE39084C0144.png",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "modular-search-live-sefaria-results_0_2D9E3ACF-0942-4FB9-9F5D-C3D8A93EB82C.png",
+        "timestamp": 1795574496.578
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "9DB610ED-23EB-451F-B74C-4C46438D25E8",
+        "deviceName": "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName": "5F25918F-5775-458E-A48E-BE62294B2972.txt",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "SDK-only Expo installed package relaunch-accessibility_0_C1622F28-B068-44E3-BF9E-FCA1C0B6A0B0.txt",
+        "timestamp": 1795574609.632
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "9DB610ED-23EB-451F-B74C-4C46438D25E8",
+        "deviceName": "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName": "67E0F819-FDD1-4293-AE01-D8B126291CB3.txt",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "SDK-only Expo native Local result-accessibility_0_A101170E-0241-4383-9423-4D0A7EB50D90.txt",
+        "timestamp": 1795574591.793
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "9DB610ED-23EB-451F-B74C-4C46438D25E8",
+        "deviceName": "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName": "37B14A7C-FDA2-4195-BB01-9C9B342547CF.txt",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "SDK-only NativeScript native reset result-accessibility_0_060F8D0B-1B0B-46E2-A1A5-E8E33F83A675.txt",
+        "timestamp": 1795574676.165
+      },
+      {
+        "configurationName": "Test Scheme Action",
+        "deviceId": "9DB610ED-23EB-451F-B74C-4C46438D25E8",
+        "deviceName": "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName": "CB3FAEE2-1BF0-421A-814D-D4D65FF6B7A6.txt",
+        "isAssociatedWithFailure": false,
+        "suggestedHumanReadableName": "SDK-only NativeScript native rounded result-accessibility_0_A2838688-1516-4EEA-B8CC-3B1A9E3C54AF.txt",
+        "timestamp": 1795574674.493
+      }
+    ],
+    "modularDetail": {
+      "png": "raw/RemainingFocused-attachments/8952EA4F-4654-4A1A-9DC5-87676994ABC5.png",
+      "sha256": "c257bd61c88b07f48ce42bd81e860948fa89fa5ba6307627a9c6d966007db95f",
+      "accessibility": "raw/RemainingFocused-attachments/277E3363-1E69-44EC-9EA9-CD76CFC7024B.txt",
+      "independentlyViewedByReconciler": true,
+      "observation": "Native detail is visibly populated with Genesis 1:1 source metadata, source link, version disclosure headings and Full text buttons; several version groups are visibly expanded. No visible sheet or overlay obscures this frame. Static image does not establish the parent collection's accessibility hit point."
+    },
+    "modularSearchResults": {
+      "png": "raw/RemainingFocused-attachments/96EBFA60-581D-4E41-A83F-FE39084C0144.png",
+      "sha256": "4e0306706a72ad9e5a5eea9e8b7d22af51eb00b28a6fa3a26d208dd424bc9d33",
+      "independentlyViewedByReconciler": true,
+      "observation": "Live result rows and summary are visible. SwiftUI content glyphs appear horizontally mirrored while system/status/search chrome is normally oriented. This is a retained visual observation, with no causal attribution or correction claim."
+    },
+    "failureBoundary": "The executed test failed at the preexisting parent-list hittability requirement, line 1184. It did not reach the following disclosure toggles or full-text request assertions. A populated screenshot does not convert this failure to PASS.",
+    "mappingBoundary": "The original attachment manifest lists additional exports. Only the eight selected PNG/text attachments named in this handoff are retained here; no claim of a complete xcresult/attachment export."
+  },
+  "hostReadiness": {
+    "observations": [
+      {
+        "observedAt": "2026-11-25T02:35:38.356293+00:00",
+        "container": "/Users/m1/Library/Developer/CoreSimulator/Devices/9DB610ED-23EB-451F-B74C-4C46438D25E8/data/Containers/Data/Application/CF8B4D6A-3C0C-4662-91D8-B9AAF9474D44",
+        "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/9DB610ED-23EB-451F-B74C-4C46438D25E8/data/Containers/Data/Application/CF8B4D6A-3C0C-4662-91D8-B9AAF9474D44/Library/Application Support/HanlinRuntime/v1/runtime/node/host-86733eba5d80156edf52da87f0f371c208122d6e60f618f182990330514984c3/.ready",
+        "activeCase": "ParityStartupDiagnostic",
+        "exists": false,
+        "hostSHA256": "86733eba5d80156edf52da87f0f371c208122d6e60f618f182990330514984c3"
+      },
+      {
+        "observedAt": "2026-11-25T02:36:21.203059+00:00",
+        "container": "/Users/m1/Library/Developer/CoreSimulator/Devices/9DB610ED-23EB-451F-B74C-4C46438D25E8/data/Containers/Data/Application/D7CB83B8-1D6F-472C-B081-B4F0049FFCB3",
+        "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/9DB610ED-23EB-451F-B74C-4C46438D25E8/data/Containers/Data/Application/D7CB83B8-1D6F-472C-B081-B4F0049FFCB3/Library/Application Support/HanlinRuntime/v1/runtime/node/host-86733eba5d80156edf52da87f0f371c208122d6e60f618f182990330514984c3/.ready",
+        "activeCase": "ParityStartupDiagnostic",
+        "exists": false,
+        "hostSHA256": "86733eba5d80156edf52da87f0f371c208122d6e60f618f182990330514984c3"
+      },
+      {
+        "observedAt": "2026-11-25T02:37:24.833683+00:00",
+        "container": "/Users/m1/Library/Developer/CoreSimulator/Devices/9DB610ED-23EB-451F-B74C-4C46438D25E8/data/Containers/Data/Application/D7CB83B8-1D6F-472C-B081-B4F0049FFCB3",
+        "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/9DB610ED-23EB-451F-B74C-4C46438D25E8/data/Containers/Data/Application/D7CB83B8-1D6F-472C-B081-B4F0049FFCB3/Library/Application Support/HanlinRuntime/v1/runtime/node/host-86733eba5d80156edf52da87f0f371c208122d6e60f618f182990330514984c3/.ready",
+        "activeCase": "RemainingFocused",
+        "exists": false,
+        "hostSHA256": "86733eba5d80156edf52da87f0f371c208122d6e60f618f182990330514984c3"
+      },
+      {
+        "observedAt": "2026-11-25T02:38:08.689701+00:00",
+        "container": "/Users/m1/Library/Developer/CoreSimulator/Devices/9DB610ED-23EB-451F-B74C-4C46438D25E8/data/Containers/Data/Application/6E68C289-5FEC-4AF7-BAF8-B36A8E932CA3",
+        "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/9DB610ED-23EB-451F-B74C-4C46438D25E8/data/Containers/Data/Application/6E68C289-5FEC-4AF7-BAF8-B36A8E932CA3/Library/Application Support/HanlinRuntime/v1/runtime/node/host-86733eba5d80156edf52da87f0f371c208122d6e60f618f182990330514984c3/.ready",
+        "activeCase": "RemainingFocused",
+        "exists": false,
+        "hostSHA256": "86733eba5d80156edf52da87f0f371c208122d6e60f618f182990330514984c3"
+      },
+      {
+        "observedAt": "2026-11-25T02:39:27.602395+00:00",
+        "container": "/Users/m1/Library/Developer/CoreSimulator/Devices/9DB610ED-23EB-451F-B74C-4C46438D25E8/data/Containers/Data/Application/6E68C289-5FEC-4AF7-BAF8-B36A8E932CA3",
+        "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/9DB610ED-23EB-451F-B74C-4C46438D25E8/data/Containers/Data/Application/6E68C289-5FEC-4AF7-BAF8-B36A8E932CA3/Library/Application Support/HanlinRuntime/v1/runtime/node/host-86733eba5d80156edf52da87f0f371c208122d6e60f618f182990330514984c3/.ready",
+        "activeCase": "RemainingFocused",
+        "exists": true,
+        "hostSHA256": "86733eba5d80156edf52da87f0f371c208122d6e60f618f182990330514984c3",
+        "bytes": 64,
+        "mtimeNs": 1795574367001728422,
+        "birthtime": 1795574367.0016737,
+        "sha256": "a6508b2920946245c1ce52b8a3ca417b731ecd1cfb7f31e212c37b516153bacb"
+      },
+      {
+        "observedAt": "2026-11-25T02:44:44.749865+00:00",
+        "container": "/Users/m1/Library/Developer/CoreSimulator/Devices/9DB610ED-23EB-451F-B74C-4C46438D25E8/data/Containers/Data/Application/6E68C289-5FEC-4AF7-BAF8-B36A8E932CA3",
+        "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/9DB610ED-23EB-451F-B74C-4C46438D25E8/data/Containers/Data/Application/6E68C289-5FEC-4AF7-BAF8-B36A8E932CA3/Library/Application Support/HanlinRuntime/v1/runtime/node/host-86733eba5d80156edf52da87f0f371c208122d6e60f618f182990330514984c3/.ready",
+        "activeCase": "RemainingFocused-attachments-export.log",
+        "exists": true,
+        "hostSHA256": "86733eba5d80156edf52da87f0f371c208122d6e60f618f182990330514984c3",
+        "bytes": 64,
+        "mtimeNs": 1795574367001728422,
+        "birthtime": 1795574367.0016737,
+        "sha256": "a6508b2920946245c1ce52b8a3ca417b731ecd1cfb7f31e212c37b516153bacb"
+      }
+    ],
+    "boundary": "Ready-file events belong to the named container and active diagnostic segment. The later ready event cannot establish completion of the prior failed parity cold start, because the container changed."
+  },
+  "cleanupAsObservedByNativeOwner": {
+    "simulator": "9DB610ED-23EB-451F-B74C-4C46438D25E8",
+    "state": "Shutdown",
+    "remainingOwnedRunners": []
+  },
+  "scopeBoundaries": {
+    "original25": "NOT_RUN",
+    "original27": "NOT_RUN",
+    "original52": "NOT_RUN",
+    "acceptanceRequiresIndependentRun": true,
+    "physicalDeviceProof": "NOT_PERFORMED by this evidence reconciliation",
+    "taskClosure": "NONE",
+    "sourceCorrections": "Later parity/Modular fixture corrections and their execution are outside this frozen fda checkpoint.",
+    "sdk": "SDK10 preparation, exact five-consumer resource binding and installed metadata remain separately retained in primary-sdk-attempt10-20261125; not rerun here.",
+    "runtimeMarkers": "RemainingFocused-runtime-markers.json is an empty array from a narrow extractor, not proof of no native activity."
+  }
+}

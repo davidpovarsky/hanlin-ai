@@ -1,0 +1,367 @@
+{
+  "schemaVersion": 1,
+  "task": "Repair ScriptWidget host-generated wildcard manifest validation without additional host restrictions",
+  "baseSHA": "74ba980dbb91f3a38d4531f043801f5e742c283a",
+  "createdUTC": "2026-11-24T09:15:48.287349+00:00",
+  "worktree": "/mnt/development/projects/worktrees/hanlin-scriptwidget-host-validation-20261124",
+  "initialAppleAttempt": {
+    "sourceSHA": "74ba980dbb91f3a38d4531f043801f5e742c283a",
+    "runID": 45360272675,
+    "jobID": 138328276796,
+    "status": "EXECUTED_FAIL",
+    "selected": 2,
+    "executed": 2,
+    "passed": 0,
+    "failed": 2,
+    "appleBuild": "SUCCEEDED",
+    "failureStage": "Production synthesized widget.json validation, before element-limit assertions",
+    "error": "HanlinOriginalScriptWidgetFailure(message: \"Invalid network host declaration: *.\")",
+    "rawLog": {
+      "file": "native-45360272675-job-138328276796.log.gz",
+      "originalBytes": 164349,
+      "originalSHA256": "57ae57e89b98e3993a8b6b4b41cf5a38420efe3b718131f21d95e0b4216c70ae",
+      "compressedSHA256": "232818904f65622e5f5680a6fb4fbafdc580eef62e63745f17fe4ac8bcc2c795"
+    },
+    "rows": [
+      {
+        "line": 834,
+        "text": "Verify original ScriptWidget adapter semantics / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T08:59:35.8728430Z Build complete! (183.04 sec)"
+      },
+      {
+        "line": 839,
+        "text": "Verify original ScriptWidget adapter semantics / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T08:59:42.3175240Z \u25c7 Test scriptWidgetUsesOriginalElementLimitsWithoutExtraMaterialQuotas() started."
+      },
+      {
+        "line": 840,
+        "text": "Verify original ScriptWidget adapter semantics / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T08:59:42.3176390Z \u25c7 Test rootFragmentsPreserveOriginalElementAllowances() started."
+      },
+      {
+        "line": 841,
+        "text": "Verify original ScriptWidget adapter semantics / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T08:59:42.3178810Z \u2718 Test scriptWidgetUsesOriginalElementLimitsWithoutExtraMaterialQuotas() recorded an issue at HanlinDualWidgetEnginesTests.swift:23:6: Caught error: HanlinOriginalScriptWidgetFailure(message: \"Invalid network host declaration: *.\")"
+      },
+      {
+        "line": 842,
+        "text": "Verify original ScriptWidget adapter semantics / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T08:59:42.3181570Z \u2718 Test scriptWidgetUsesOriginalElementLimitsWithoutExtraMaterialQuotas() failed after 0.073 seconds with 1 issue."
+      },
+      {
+        "line": 843,
+        "text": "Verify original ScriptWidget adapter semantics / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T08:59:42.3199040Z \u2718 Test rootFragmentsPreserveOriginalElementAllowances() recorded an issue at HanlinScriptWidgetOriginalLimitParityTests.swift:9:6: Caught error: HanlinOriginalScriptWidgetFailure(message: \"Invalid network host declaration: *.\")"
+      },
+      {
+        "line": 844,
+        "text": "Verify original ScriptWidget adapter semantics / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T08:59:42.3204990Z \u2718 Test rootFragmentsPreserveOriginalElementAllowances() failed after 0.358 seconds with 1 issue."
+      },
+      {
+        "line": 846,
+        "text": "Verify original ScriptWidget adapter semantics / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T08:59:42.3207050Z \u2718 Test run with 2 tests in 1 suite failed after 0.359 seconds with 2 issues."
+      }
+    ],
+    "dispatch": "dispatch.json",
+    "run": "run-api.json",
+    "retrieval": "job-138328276796-log-receipt.json",
+    "retrievedBy": "Root; this agent copied the existing raw evidence without CI access"
+  },
+  "cause": {
+    "wildcardOrigin": "Production HanlinOriginalScriptWidgetSession synthesized legacy-compatible original manifest, not a test fixture",
+    "alreadyAuthoritative": "ScriptWidgetNetworkPolicy.isValidDomainDeclaration permits *; existing host matcher honors *",
+    "inconsistentValidator": "Original inline WidgetPackageManifestValidator domain pattern rejected the same declaration before limit assertions"
+  },
+  "fix": {
+    "native": "Delegate manifest domain declaration validation to unchanged installed policy",
+    "publicAuthoring": "Mirror the called native helper and include its exact body in the existing semantic fingerprint",
+    "semanticSHA256": "2ba51a3d9c899d0e0145a88030f358944a374622782d10a0d3e116e963a6c16d",
+    "provenance": "Preserve recorded original blob; mark only actual ScriptMetadata adaptation with new local SHA256",
+    "sourceChanges": [
+      {
+        "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptMetadata.swift",
+        "beforeSHA256": "27dada0499f2d5d3299bc4a8c7131f066ba148c4b89be6d5a48ce24224120075",
+        "afterSHA256": "f1b202b4caef78877cad69700ff698350066066c12f7fcc5bf557810aa1234f9",
+        "beforeBytes": 25174,
+        "afterBytes": 24769
+      },
+      {
+        "path": "Scripts/MiniApps/Tests/scriptwidget-manifest.test.mjs",
+        "beforeSHA256": "93bc4596d363fac13165fc17a1935341da2bea0ba35cd34331769a151b60e5f2",
+        "afterSHA256": "36d94f587b0a9be6d503678d4d11c3f73fc5c9d0c9d7bcba3baa7bbdfcf03cc1",
+        "beforeBytes": 11707,
+        "afterBytes": 13673
+      },
+      {
+        "path": "Scripts/MiniApps/generate-scriptwidget-manifest.mjs",
+        "beforeSHA256": "ca852f733478f46e5e829b803251aa354a32e48ff0bd21f51b58bfa3d708f791",
+        "afterSHA256": "2c768de46884937c6ac6e99a0430c754be99257c32571e80c6a7210dbe049aff",
+        "beforeBytes": 12343,
+        "afterBytes": 12810
+      },
+      {
+        "path": "Scripts/MiniApps/scriptwidget/manifest-validation.mjs",
+        "beforeSHA256": "326176eac507dc298b91065d2ce93de15869ab801bd02c31edfc0a474d9cd7c5",
+        "afterSHA256": "f84c8dfbe6c86a862c87c4bc6423b30003620fae4d1a7a826cd8c02ae4410289",
+        "beforeBytes": 12768,
+        "afterBytes": 13070
+      },
+      {
+        "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
+        "beforeSHA256": "4deb4b2a1071ed0557ae6924a4f4ab3a5d57e467eb8796c4e6febb629ddde022",
+        "afterSHA256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+        "beforeBytes": 12845,
+        "afterBytes": 13230
+      },
+      {
+        "path": "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json",
+        "beforeSHA256": "ddbed82d8b5ab54941772979355dec4b61a9186ce6b260edd0d12b417872ea7d",
+        "afterSHA256": "63aa2132a1463552c274c328d63fd4b76b45046de28a8420e5a278257905bb5c",
+        "beforeBytes": 210987,
+        "afterBytes": 210998
+      }
+    ],
+    "unchangedInputs": [
+      {
+        "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/HanlinOriginalScriptWidgetSession.swift",
+        "bytes": 13303,
+        "sha256": "aaba22894ddd8bf7863a5ddd4e1e61cece90081b579bb8ce7b2a084f751f8f9b",
+        "byteIdenticalToBase": true
+      },
+      {
+        "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift",
+        "bytes": 17207,
+        "sha256": "8a7bb65bffe0390ac719e33b0ece71e19b20e9be96841e422a3a4c37f09352b3",
+        "byteIdenticalToBase": true
+      },
+      {
+        "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRuntime.swift",
+        "bytes": 69622,
+        "sha256": "15a60ffc1a6171dde86fa442a7a51764fd073eee4f615e329b6593dc5cf9b34a",
+        "byteIdenticalToBase": true
+      },
+      {
+        "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+        "bytes": 79563,
+        "sha256": "f79bb40cbfff82eb8631275fd70f99e2f527c5ee497b4cbb168602b6fbf81658",
+        "byteIdenticalToBase": true
+      },
+      {
+        "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinScriptWidgetOriginalLimitParityTests.swift",
+        "bytes": 5431,
+        "sha256": "1bb84b5decffcd17ddf54d9283f6871e85f4dd83a4fc67fa95dcaa3ef00bf148",
+        "byteIdenticalToBase": true
+      },
+      {
+        "path": "Scripts/MiniApps/refresh-original-sources.mjs",
+        "bytes": 31410,
+        "sha256": "9b367c79ece68771e1ab193cc22c218feb72d2f519ffb410fc560b6fca59a7e8",
+        "byteIdenticalToBase": true
+      },
+      {
+        "path": "Scripts/MiniApps/scriptwidget/widget-manifest.d.ts",
+        "bytes": 2052,
+        "sha256": "6d9d086bb8d8289390f5b3454b17a435aea0f148724f897c9befb62bf31d5e8f",
+        "byteIdenticalToBase": true
+      }
+    ]
+  },
+  "focusedVerification": {
+    "initialRegression": {
+      "command": "host-declarations-red.command.json",
+      "passed": 0,
+      "failed": 1,
+      "actualFailureCode": "SCRIPTWIDGET_INVALID_NETWORK_DOMAIN",
+      "actualInput": "*"
+    },
+    "affectedTests": {
+      "command": "manifest-policy-green.command.json",
+      "passed": 3,
+      "failed": 0,
+      "checks": [
+        "generated declaration/schema and exact source provenance",
+        "valid/wildcard and malformed declaration diagnostics; required permission/domain pairing",
+        "stale semantic mapping rejects changes in original validator and delegated native helper"
+      ]
+    },
+    "swiftInstalledFunctions": {
+      "command": "swift-installed-policy.command.json",
+      "extraction": "swift-helper-extraction.json",
+      "validDeclarations": 4,
+      "malformedDeclarationsRejected": 9,
+      "matchingCases": 7,
+      "allPassed": true,
+      "boundary": "Exact source functions on Linux Foundation; not full module or Apple acceptance"
+    },
+    "swiftSyntax": {
+      "command": "swift-native-parse.command.json",
+      "exitCode": 0,
+      "boundary": "Syntax parse only"
+    },
+    "schemaGeneration": {
+      "command": "manifest-regenerate.command.json",
+      "exitCode": 0
+    },
+    "sourceWhitespace": {
+      "command": "source-whitespace.command.json",
+      "exitCode": 0
+    }
+  },
+  "sourceReview": {
+    "reviewer": "/root/entrypoints",
+    "status": "NO_CONCRETE_BLOCKER",
+    "scope": "Six-file stable source diff; same-module symbol linkage, native/public policy parity, exact helper fingerprint and source provenance, unchanged matcher and refresh retention; consumed-field mapper has no contradictory wildcard statement",
+    "repeatedTestsOrCI": false
+  },
+  "remaining": {
+    "afterFixApple": "NOT_RUN",
+    "requiredFilter": "HanlinDualWidgetEnginesTests/(rootFragmentsPreserveOriginalElementAllowances|scriptWidgetUsesOriginalElementLimitsWithoutExtraMaterialQuotas)",
+    "owner": "Root",
+    "fullShippingSDKAssembly": "NOT_RUN",
+    "fullSuite": "NOT_RUN"
+  },
+  "boundaries": [
+    "No native test or fixture weakening; both Apple test source bytes retained",
+    "No changes to existing network transport, hostname matching, push matching, or permissions",
+    "No original caps or frozen legacy source changes",
+    "No installation, shared cache mutation, CI request/dispatch, or arbitrary upstream fetch",
+    "Frozen original SDK-only experiment and prior parity receipts unmodified"
+  ],
+  "artifacts": {
+    "InstalledNetworkPolicy.swift": {
+      "bytes": 2332,
+      "sha256": "ab9ecc4f9bd6fff01583147628963ba228bd4d6a7e9197e15d86ff26c22312e9"
+    },
+    "README.md": {
+      "bytes": 4999,
+      "sha256": "6d5a2f6afd4127fe7646f7497f02a35a08e802f6f7baa768a9ad52d223612f70"
+    },
+    "dispatch.json": {
+      "bytes": 1121,
+      "sha256": "7fb27add5489cbbc81c63249bc1f651613e79f8532c306ca91da9189555dfe29"
+    },
+    "environment.json": {
+      "bytes": 729,
+      "sha256": "e54e86bb4869a824b3db0178a34f6c2f24e5195e98a7dfe4220fd30460ddae3f"
+    },
+    "evidence-formatting.json": {
+      "bytes": 814,
+      "sha256": "3615a532dfc9dfc9488524e80c9a9794249da877371d62a2be8f3e5f25b96f82"
+    },
+    "host-declarations-red.command.json": {
+      "bytes": 1064,
+      "sha256": "3a5653da77ecf4a45ab25562d62d8614114b0d7f55ab1eb25ebec427fa2fcd45"
+    },
+    "host-declarations-red.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "host-declarations-red.stdout.txt.gz": {
+      "bytes": 784,
+      "sha256": "0797ba89c55d8248e9c0aa0050949a2d9a360ba78995a95406d3c00f78e54d4a"
+    },
+    "initial-native-failure.json": {
+      "bytes": 3374,
+      "sha256": "431a154a4e320128c1d9a4d14970db8925bc8622ed627092f293e3ffc4c6d217"
+    },
+    "installed-manifest-semantic-source.txt.gz": {
+      "bytes": 4534,
+      "sha256": "bd1bd70d62bdd2bf35bd93a9a76fb5c5762a4c6f6dcbbab1d7529e47e2271fb3"
+    },
+    "job-138328276796-log-receipt.json": {
+      "bytes": 230,
+      "sha256": "3e45f06dd754525e750c4919b9b3cc7181d48967724f159238e0aab179bba7a8"
+    },
+    "manifest-policy-green.command.json": {
+      "bytes": 929,
+      "sha256": "bd74ce5438187caf00b1706432334781175b03885a4b492eb53c2ccebc0e776c"
+    },
+    "manifest-policy-green.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "manifest-policy-green.stdout.txt": {
+      "bytes": 423,
+      "sha256": "1e5ec8bb162915567f5d17010aa8d82c817a08e5f0a2eba526651c2743452e79"
+    },
+    "manifest-regenerate.command.json": {
+      "bytes": 562,
+      "sha256": "cc28524650b23ab512a737ded2b3d00f4aaa95e16eca6f4a23412a6ea21aff7d"
+    },
+    "manifest-regenerate.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "manifest-regenerate.stdout.txt": {
+      "bytes": 1153,
+      "sha256": "990fa9f78ab6d2983cec3c3a41912af1bbec0236b3287f556c3186412917e21d"
+    },
+    "native-45360272675-job-138328276796.log.gz": {
+      "bytes": 15404,
+      "sha256": "232818904f65622e5f5680a6fb4fbafdc580eef62e63745f17fe4ac8bcc2c795"
+    },
+    "run-api.json": {
+      "bytes": 9162,
+      "sha256": "637e7b794ecf2d011df75726fa33f11a9d461179f4f4249f8f7f21396a1ccc67"
+    },
+    "source-changes.patch.gz": {
+      "bytes": 4379,
+      "sha256": "9e4c38308afe4ce76b4f747fa79cd1bfd1f7e3318eba34a08c56230346d3ef4f"
+    },
+    "source-provenance.json": {
+      "bytes": 4873,
+      "sha256": "2334c2c6bd51f80d26704f6af533feab6bf74c295fa3812f9eb3425424243325"
+    },
+    "source-whitespace.command.json": {
+      "bytes": 550,
+      "sha256": "a483c934e43892dddf3d157349fc53c458fc369f2a491ebeb8bc238a209eeec3"
+    },
+    "source-whitespace.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "source-whitespace.stdout.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "swift-helper-extraction.json": {
+      "bytes": 746,
+      "sha256": "46ad743d06c86458ad9b89b5d7f5a80a1be61365377d483491006730edb7cb47"
+    },
+    "swift-installed-policy.command.json": {
+      "bytes": 807,
+      "sha256": "3eaa36948675a5e997dc681b451a975f1ab487a74939600a5eadaed15333e312"
+    },
+    "swift-installed-policy.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "swift-installed-policy.stdout.txt": {
+      "bytes": 124,
+      "sha256": "d3aa545f95b659f76a7213faada4b1d4ab4e0d6a28cda31f16798360c3483d77"
+    },
+    "swift-native-parse.command.json": {
+      "bytes": 700,
+      "sha256": "c2f101b3104e2dd205e6651ad37c679a24e5ecafbfd20259dfe869a49a69bd65"
+    },
+    "swift-native-parse.stderr.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "swift-native-parse.stdout.txt": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "validation-plan.json": {
+      "bytes": 771,
+      "sha256": "2038b9960bc02f4a13af9e559d2b7a826174c3b61ca351c35f8a8b2fb1d64d76"
+    }
+  },
+  "sourceDiff": {
+    "file": "source-changes.patch.gz",
+    "originalBytes": 14560,
+    "originalSHA256": "5613f56ed2c875f41abc259f2243e457415ae4fa974193894a5d758f33c00ae3",
+    "compressedSHA256": "9e4c38308afe4ce76b4f747fa79cd1bfd1f7e3318eba34a08c56230346d3ef4f"
+  },
+  "semanticSource": {
+    "file": "installed-manifest-semantic-source.txt.gz",
+    "originalBytes": 18280,
+    "originalSHA256": "2ba51a3d9c899d0e0145a88030f358944a374622782d10a0d3e116e963a6c16d",
+    "compressedSHA256": "bd1bd70d62bdd2bf35bd93a9a76fb5c5762a4c6f6dcbbab1d7529e47e2271fb3"
+  },
+  "evidenceFormatting": "evidence-formatting.json"
+}

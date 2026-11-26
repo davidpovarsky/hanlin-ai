@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "status": "CORRECTED_SOURCE_NATIVE_RETEST_PENDING",
+  "baseCommit": "c0e33300da596cc3f42b00a79f2c7ec1eed9e0aa",
+  "priorIncorrectTestBindingCommit": "d7aa2b01",
+  "rawNativeResult": "native-result.json",
+  "sourceCorroboration": "source-corroboration.json",
+  "parseOnly": "swift-parse.json",
+  "rootCause": "The informational success assertion conflated @nativescript/core with @nativescript/ios. The analyzer's success wording has always named the embedded iOS runtime; the negative Core compatibility message correctly names the Core package. Current generated versions differ: runtime9.1.1, Core9.1.4.",
+  "correction": {
+    "path": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift",
+    "line": 255,
+    "before": "HanlinMiniAppHostVersions.nativeScriptCoreVersion",
+    "after": "HanlinMiniAppHostVersions.nativeScriptRuntimeVersion"
+  },
+  "preserved": [
+    "Seven actual passed Apple methods and one actual failure retained verbatim.",
+    "Supported Core9.1.0 and rejected Core^10.0.0 fixtures unchanged.",
+    "Both canInstall assertions and exact negative Core-version message unchanged.",
+    "No analyzer, engine version, format, grant, quota, workflow, selector or production changes."
+  ],
+  "newExecution": {
+    "native": "NOT_RUN; root dispatches.",
+    "portableAnalyzer": "NOT_RUN.",
+    "sourceDiffCheck": "PASS",
+    "swiftSyntax": "PASS_PARSE_ONLY"
+  }
+}

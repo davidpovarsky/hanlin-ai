@@ -1,0 +1,99 @@
+{
+  "schemaVersion": 1,
+  "sdk": {
+    "packageVersions": {
+      "@nativescript/core": "9.1.4",
+      "@nativescript/swift-ui": "4.0.2",
+      "@nativescript/ios": "9.1.1",
+      "@nativescript/types": "9.1.4",
+      "@nativescript/vite": "8.0.24",
+      "typescript": "5.9.3",
+      "vite": "8.0.0",
+      "@hanlin/host-services": "1.0.0"
+    },
+    "manifestSHA256": "19726b5eecc1459e30dae9e7ec4ca6761001de92b22055ac41b9a96aabdd7a88",
+    "compilerVersion": "5.9.3"
+  },
+  "preparedPackagePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt13/paired-prefix/authoring-fixture/project/.hanlin-build/86635651-03a4-44e4-b03c-82960c82702c/package",
+  "validPreparedPackagePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt13/paired-prefix/authoring-fixture/valid-package",
+  "sourceSHA256": "9ca13f866936891fd664e0001e366632c94fe2f069308ae6cca0cc09149a6101",
+  "negativeSourceSHA256": "a0150df126fe244e9d1b49fee0fe10a11756569e8e82cfe4381584e30f79dcaa",
+  "build": {
+    "schemaVersion": 1,
+    "engine": "nativescript",
+    "operation": "build",
+    "succeeded": true,
+    "diagnostics": [],
+    "sourceRoot": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt13/paired-prefix/authoring-fixture/project",
+    "sdk": {
+      "packageVersions": {
+        "@nativescript/core": "9.1.4",
+        "@nativescript/swift-ui": "4.0.2",
+        "@nativescript/ios": "9.1.1",
+        "@nativescript/types": "9.1.4",
+        "@nativescript/vite": "8.0.24",
+        "typescript": "5.9.3",
+        "vite": "8.0.0",
+        "@hanlin/host-services": "1.0.0"
+      },
+      "manifestSHA256": "19726b5eecc1459e30dae9e7ec4ca6761001de92b22055ac41b9a96aabdd7a88",
+      "compilerVersion": "5.9.3"
+    },
+    "typecheck": {
+      "strict": true,
+      "checkJs": false,
+      "skipLibCheck": true,
+      "dependencyDeclarationsChecked": false
+    },
+    "preparedPackagePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt13/paired-prefix/authoring-fixture/project/.hanlin-build/86635651-03a4-44e4-b03c-82960c82702c/package"
+  },
+  "negativeValidation": {
+    "schemaVersion": 1,
+    "engine": "nativescript",
+    "operation": "validate",
+    "succeeded": false,
+    "diagnostics": [
+      {
+        "code": "TS2322",
+        "category": "error",
+        "message": "Type 'string' is not assignable to type 'number'.",
+        "file": "index.ts",
+        "line": 1,
+        "column": 14,
+        "endLine": 1,
+        "endColumn": 20
+      },
+      {
+        "code": "MINIAPP_SOURCE_CHANGED",
+        "category": "error",
+        "message": "The package no longer matches its recorded build: index.ts",
+        "file": "index.ts",
+        "remediation": "Repair and validate the source project, then build a fresh archive before importing."
+      }
+    ],
+    "sourceRoot": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt13/paired-prefix/authoring-fixture/project/.hanlin-build/86635651-03a4-44e4-b03c-82960c82702c/package/source",
+    "sdk": {
+      "packageVersions": {
+        "@nativescript/core": "9.1.4",
+        "@nativescript/swift-ui": "4.0.2",
+        "@nativescript/ios": "9.1.1",
+        "@nativescript/types": "9.1.4",
+        "@nativescript/vite": "8.0.24",
+        "typescript": "5.9.3",
+        "vite": "8.0.0",
+        "@hanlin/host-services": "1.0.0"
+      },
+      "manifestSHA256": "19726b5eecc1459e30dae9e7ec4ca6761001de92b22055ac41b9a96aabdd7a88",
+      "compilerVersion": "5.9.3"
+    },
+    "typecheck": {
+      "strict": true,
+      "checkJs": false,
+      "skipLibCheck": true,
+      "dependencyDeclarationsChecked": false
+    }
+  },
+  "scope": "Actual original SDK build, followed by an intentionally invalid retained source. No installed state or success receipt is seeded.",
+  "archiveSHA256": "2c9cb86d725ac1ba7043ebdc805b98ce4e468cb153a6f3c403330726baae924d",
+  "invalidArchiveSHA256": "f3b130defe72d6067c0af6f52a1badc66a2a422634d010860ff9cb035506618d"
+}

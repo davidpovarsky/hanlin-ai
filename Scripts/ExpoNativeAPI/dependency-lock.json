@@ -26,10 +26,10 @@
   },
   "worklets": {
     "package": "react-native-worklets",
-    "version": "0.13.1",
-    "distIntegrity": "sha512-sX55Vx89/Y9uJmvAbAGoHXBZvCWXtYPGWPJ9Z9yl0h76mP9A10ULlSrixzGqBFLXeQMBpIpyJEhWpzXP7GG6YA==",
-    "tarballUrl": "https://registry.npmjs.org/react-native-worklets/-/react-native-worklets-0.13.1.tgz",
-    "sha256": "9d7a0e35344d454a8c661e01b6846252f4b016ef813a178a84768aa1197c5f9c",
+    "version": "0.13.0",
+    "distIntegrity": "sha512-1OrhAeAKaZF4XrBa4YbPQbKzNOpjh52HDlId8e6ete1OCHNdAlrQHzG4gznJ225EAj3dgQXHViJvK51M9B52jQ==",
+    "tarballUrl": "https://registry.npmjs.org/react-native-worklets/-/react-native-worklets-0.13.0.tgz",
+    "sha256": "5894c90a9bf3abaf81b5a92587884d757e0328dd3450a9cffe0e56e35b0a43a4",
     "targetPlatform": "iOS 15.0+",
     "codegen": {
       "name": "rnworklets",
@@ -38,9 +38,9 @@
     }
   },
   "runtimeClosure": {
-    "reactNativeVersion": "0.88.0",
+    "reactNativeVersion": "0.88.1",
     "reactVersion": "19.3.0",
-    "expoSdkVersion": "58.0.0",
-    "hermesVersion": "260318099.0.4"
+    "expoSdkVersion": "58.1.0",
+    "hermesVersion": "260318099.0.5"
   }
 }

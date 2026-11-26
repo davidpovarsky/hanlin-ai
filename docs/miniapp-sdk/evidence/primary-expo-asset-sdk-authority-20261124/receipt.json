@@ -1,0 +1,164 @@
+{
+  "schemaVersion": 1,
+  "observedAtUTC": "2026-11-24T23:48:34.193368+00:00",
+  "status": "SOURCE_AND_PURE_VERSION_GENERATION_COMPLETE_NATIVE_VERIFICATION_PENDING",
+  "sourceBase": "7865249ad98f7c9286a15e1c022aba0fabde91b6",
+  "initialExpoAssetReceipt": "../primary-expo-asset-native-20261124/receipt.json",
+  "initialExpoAssetReceiptSHA256": "65076914ac92855510080aa0f98d75ebb0a1e4565fd150a4799309fe3bd302e7",
+  "sourceChanges": [
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift",
+      "mode": "100644",
+      "beforeSHA256": "a31357ce803c24ba80aed6f4c81b7e31f82abde1ec6c2ef00c6ee4a57c272717",
+      "afterSHA256": "8e99e562bacbe6354bc23caf6a1233930a1e0d61c3abe0444195dd36164f747d",
+      "bytes": 825
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
+      "mode": "100644",
+      "beforeSHA256": "a8b4b96df4fb0782e78e0c48132def346f63436b9cff96286088f52b5889da54",
+      "afterSHA256": "7c58f10cc6a5f89c452842490b8ee6eb2378066929c8db27c5dfe6139d441527",
+      "bytes": 52059
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift",
+      "mode": "100644",
+      "beforeSHA256": "3f3b3565384b7e8a66948d6be67ee95f2f735f038dc69ea07d287e1c6a3cfca2",
+      "afterSHA256": "e71673cd27ee0b780bc9ca254ee62e2da1a38eb45250bdae8983ab0e5443633c",
+      "bytes": 40125
+    },
+    {
+      "path": "Scripts/Expo/package-lock.json",
+      "mode": "100644",
+      "beforeSHA256": "95d2a560d4eb01de64fcd0d43875a4ef2392e9747ed9fa79c2e0a0e58abececf",
+      "afterSHA256": "9ee1d2babe6266148d8f969b25f542c00897c569969e5aae6dd6f744e2a0c53c",
+      "bytes": 336324
+    },
+    {
+      "path": "Scripts/Expo/package.json",
+      "mode": "100644",
+      "beforeSHA256": "db6fd60dbc8f2b15eac5fee7029781cf14834ffbad53f0c8948fc4c2945c1e91",
+      "afterSHA256": "da083105462f40368adb89acba0dbc1b623d2249b26b2ac1cbe1d326edc2bd3d",
+      "bytes": 1759
+    },
+    {
+      "path": "Scripts/MiniApps/Tests/upstream-resolution.test.mjs",
+      "mode": "100644",
+      "beforeSHA256": "42001deb8dd18953b96f6a22d63fcc5ad9b27ab400ce701a3cf183922cbc35f6",
+      "afterSHA256": "2b8ab415f6343b2cdf33cf9029aa5b39f52b5a9959f6d52dd31a3fd7e3cea16e",
+      "bytes": 9882
+    },
+    {
+      "path": "Scripts/MiniApps/resolve-upstreams.mjs",
+      "mode": "100644",
+      "beforeSHA256": "f6c92fb61dd5d06f806a9f2c89c931bb57c390201133f941b5c7e7498b2a777d",
+      "afterSHA256": "7973977cf986cbee14fd147fd8b10c1d54a6f1a1c790511d2df5cf054063e7a2",
+      "bytes": 29048
+    },
+    {
+      "path": "Scripts/MiniApps/stage-sdk.mjs",
+      "mode": "100644",
+      "beforeSHA256": "a9d02de9128acde4bcdd14b60c3227627a43c004075f55c6d9f41e2045c9bcce",
+      "afterSHA256": "b1b0a3bd2c560fcf93eca064053aba7bcbf7786fb800e083bb7f297a0a300c40",
+      "bytes": 21137
+    }
+  ],
+  "generation": {
+    "operation": "Existing exported generatedHostVersions helper only",
+    "startedAtUTC": "2026-11-24T23:46:24.781792+00:00",
+    "elapsedSeconds": 0.056599169969558716,
+    "command": [
+      "/usr/local/bin/node",
+      "/mnt/development/projects/worktrees/hanlin-primary-sdk-preparation-20261124/docs/miniapp-sdk/evidence/primary-expo-asset-sdk-authority-20261124/generate-host-version-constant.mjs",
+      "/mnt/development/projects/worktrees/hanlin-primary-sdk-preparation-20261124/Scripts/MiniApps/resolve-upstreams.mjs",
+      "/mnt/development/projects/worktrees/hanlin-primary-sdk-preparation-20261124/docs/miniapp-sdk/evidence/primary-expo-asset-sdk-authority-20261124/generator-input-versions.json"
+    ],
+    "exitCode": 0,
+    "nodeVersion": "v24.22.0",
+    "producerSHA256": "7973977cf986cbee14fd147fd8b10c1d54a6f1a1c790511d2df5cf054063e7a2",
+    "inputSHA256": "983e6f2b6bcff69c8438f0b4f343bba2fb1b438b4228a274ace7e21fbc6315d1",
+    "outputSHA256": "8e99e562bacbe6354bc23caf6a1233930a1e0d61c3abe0444195dd36164f747d",
+    "outputPath": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift",
+    "selection": "Retained original upstream-resolution.versions plus current native/npm/package-locked expo-asset58.0.21",
+    "networkResolution": false,
+    "nativeCompilation": false,
+    "tests": false,
+    "allOtherGeneratedBytesUnchanged": true
+  },
+  "lockBoundary": {
+    "existingNonRootPackageRows": 690,
+    "allExistingRowsUnchanged": true,
+    "originalExpoAssetPackageRowUnchanged": true,
+    "onlyRawLockChange": "Add exact expo-asset58.0.21 to root dependencies; every other lock byte unchanged."
+  },
+  "expectedNextSDKState": {
+    "state": "REQUIRES_ACTUAL_ORIGINAL_SDK_PREPARATION",
+    "expoDirectPackageCount": 21,
+    "packageVersions": {
+      "expo-asset": "58.0.21"
+    },
+    "packageResource": {
+      "name": "expo-asset",
+      "packageJSON": "expo/node_modules/expo-asset/package.json",
+      "types": "expo/node_modules/expo-asset/build/index.d.ts"
+    },
+    "hostContractPlugin": {
+      "expo-asset": "58.0.21"
+    },
+    "freshInstallReceiptRequired": true
+  },
+  "validation": {
+    "gitDiffCheck": "PASS",
+    "nativeCompilation": "NOT_RUN",
+    "tests": "NOT_RUN",
+    "fullSDKGeneration": "NOT_RUN",
+    "upstreamNetworkResolution": "NOT_RUN"
+  },
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 2719,
+      "sha256": "ef05836bc8a035e2ee1065c4e991527ab859cf4651c62602bc78a1c67776d631"
+    },
+    {
+      "path": "canonical-authority-trace.json",
+      "bytes": 3389,
+      "sha256": "a3cf3c381ca442006885ecac16644139d851d0415d67ed4402af7a53b5af151c"
+    },
+    {
+      "path": "generate-host-version-constant.mjs",
+      "bytes": 334,
+      "sha256": "f231b57d9250018266a2448bcc901dc5a157baf8a1a633145ed309cfb4bc6262"
+    },
+    {
+      "path": "generator-input-versions.json",
+      "bytes": 805,
+      "sha256": "983e6f2b6bcff69c8438f0b4f343bba2fb1b438b4228a274ace7e21fbc6315d1"
+    },
+    {
+      "path": "generator-observation.json",
+      "bytes": 1356,
+      "sha256": "cd012ff70ddbd1300a14fcd4155e34254c92e1d9496ce5934923fd659300456d"
+    },
+    {
+      "path": "generator.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "generator.stdout.swift",
+      "bytes": 825,
+      "sha256": "8e99e562bacbe6354bc23caf6a1233930a1e0d61c3abe0444195dd36164f747d"
+    },
+    {
+      "path": "original-asset-index.d.ts",
+      "bytes": 76,
+      "sha256": "d13143ef38f2d4ae059fd11345909a4de633b7df37ed98c82c2f4a58d4a6d341"
+    },
+    {
+      "path": "source-changes.json",
+      "bytes": 2352,
+      "sha256": "ffb5afe4b0ecbf0facbe999ecc45a6e7932da04128ee36a27c177e419ed1bf5d"
+    }
+  ]
+}

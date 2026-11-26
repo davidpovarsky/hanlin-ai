@@ -1,0 +1,109 @@
+{
+  "baselineSnapshot": "prepared-snapshot-attempt18",
+  "baselineManifestSHA256": "1ca059acbc56b0d8d33f3d678c5023fd5aff26c744ac1e5412c3b1663529dfcd",
+  "sourceInputChanges": [
+    {
+      "path": "Packages/HanlinExpoUI/src/manual-components.tsx",
+      "before": {
+        "path": "Packages/HanlinExpoUI/src/manual-components.tsx",
+        "sha256": "23315409689a8fb0f1a652a3d62428eade12822a4626224d0080046f08a80fe2"
+      },
+      "after": {
+        "path": "Packages/HanlinExpoUI/src/manual-components.tsx",
+        "sha256": "b95b387fce797a3c0ffe8c258e1fe0b411e76956e6cd50ae9235267f5b638da6"
+      }
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "before": {
+        "path": "docs/miniapp-sdk/extension-reachability.json",
+        "sha256": "4ba23a27fc1dae71f7bba128d564bcdb0df114511c98231b28ae43013f7227af"
+      },
+      "after": {
+        "path": "docs/miniapp-sdk/extension-reachability.json",
+        "sha256": "84849e4928f42f1b417ad1136c62329e94f7ea9a46f22667177fe6180155b977"
+      }
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "before": {
+        "path": "docs/miniapp-sdk/extension-reachability.md",
+        "sha256": "3465dc8ceda07aea884eb51cacd91310ac899e0f575b362e7586c5c726e3e9c9"
+      },
+      "after": {
+        "path": "docs/miniapp-sdk/extension-reachability.md",
+        "sha256": "3742686d8b088e8c6afcc6b473b2ffa2cf342dae0723ed1365b265d72e120d27"
+      }
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "before": {
+        "path": "docs/miniapp-sdk/source-inventory.json",
+        "sha256": "659853eb35e2959e936635ab5bbc1df2e91c4b8b4923f9619f25a663cc70f803"
+      },
+      "after": {
+        "path": "docs/miniapp-sdk/source-inventory.json",
+        "sha256": "de8326436f4ecb7f03c7c28e913f00ef3dc6fa331c1c8a7f355406cd9f0c81ea"
+      }
+    }
+  ],
+  "packagedFileChanges": [
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "before": {
+        "path": "docs/miniapp-sdk/extension-reachability.json",
+        "sha256": "4ba23a27fc1dae71f7bba128d564bcdb0df114511c98231b28ae43013f7227af",
+        "bytes": 153644
+      },
+      "after": {
+        "path": "docs/miniapp-sdk/extension-reachability.json",
+        "sha256": "84849e4928f42f1b417ad1136c62329e94f7ea9a46f22667177fe6180155b977",
+        "bytes": 153644
+      }
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "before": {
+        "path": "docs/miniapp-sdk/extension-reachability.md",
+        "sha256": "3465dc8ceda07aea884eb51cacd91310ac899e0f575b362e7586c5c726e3e9c9",
+        "bytes": 23332
+      },
+      "after": {
+        "path": "docs/miniapp-sdk/extension-reachability.md",
+        "sha256": "3742686d8b088e8c6afcc6b473b2ffa2cf342dae0723ed1365b265d72e120d27",
+        "bytes": 23332
+      }
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "before": {
+        "path": "docs/miniapp-sdk/source-inventory.json",
+        "sha256": "659853eb35e2959e936635ab5bbc1df2e91c4b8b4923f9619f25a663cc70f803",
+        "bytes": 494019
+      },
+      "after": {
+        "path": "docs/miniapp-sdk/source-inventory.json",
+        "sha256": "de8326436f4ecb7f03c7c28e913f00ef3dc6fa331c1c8a7f355406cd9f0c81ea",
+        "bytes": 494020
+      }
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/src/manual-components.tsx",
+      "before": {
+        "path": "expo/node_modules/@hanlin/expo-ui/src/manual-components.tsx",
+        "sha256": "23315409689a8fb0f1a652a3d62428eade12822a4626224d0080046f08a80fe2",
+        "bytes": 11311
+      },
+      "after": {
+        "path": "expo/node_modules/@hanlin/expo-ui/src/manual-components.tsx",
+        "sha256": "b95b387fce797a3c0ffe8c258e1fe0b411e76956e6cd50ae9235267f5b638da6",
+        "bytes": 11834
+      }
+    }
+  ],
+  "enginePackageVersionsUnchanged": true,
+  "sourceInputCount": 235,
+  "fileCount": 25669,
+  "sourceSetAdded": [],
+  "sourceSetRemoved": []
+}

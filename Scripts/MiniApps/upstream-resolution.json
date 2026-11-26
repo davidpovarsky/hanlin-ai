@@ -1,0 +1,327 @@
+{
+  "schemaVersion": 1,
+  "typingSelection": {
+    "react": {
+      "mode": "original-compatible-range",
+      "requested": "^19.1.1 ~19.3.0",
+      "constraints": [
+        {
+          "source": "react-native@0.88.1 peerDependencies",
+          "range": "^19.1.1"
+        },
+        {
+          "source": "expo@58.1.0 devDependencies",
+          "range": "~19.3.0"
+        }
+      ]
+    },
+    "compilers": {
+      "expo": {
+        "mode": "explicit-verified-host-toolchain",
+        "requested": "npm:@typescript/typescript6@6.0.2",
+        "upstreamPeerRange": null,
+        "reason": "Retain the explicitly verified host compiler. Original consumer peer constraints remain part of npm graph resolution; an absent or unconstrained peer does not select an arbitrary newest compiler."
+      },
+      "nativescript": {
+        "mode": "explicit-verified-host-toolchain",
+        "requested": "5.9.3",
+        "upstreamPeerRange": "*",
+        "reason": "Retain the verified NativeScript host compiler; an unconstrained original Vite peer does not select an arbitrary newest compiler."
+      }
+    }
+  },
+  "versions": {
+    "expo": {
+      "expo": "58.1.0",
+      "@expo/ui": "58.0.30",
+      "expo-brownfield": "58.0.20",
+      "react": "19.3.0",
+      "react-native": "0.88.1",
+      "react-native-worklets": "0.13.0",
+      "expo-modules-core": "58.2.0",
+      "expo-asset": "58.0.21",
+      "expo-modules-jsi": "58.0.24",
+      "expo-widgets": "58.0.30",
+      "@nativescript/react-native": "9.1.2",
+      "@types/react": "19.3.3",
+      "@react-native/codegen": "0.88.1",
+      "@react-native/metro-config": "0.88.1",
+      "babel-preset-expo": "58.0.27"
+    },
+    "nativescript": {
+      "@nativescript/core": "9.1.4",
+      "@nativescript/ios": "9.1.1",
+      "@nativescript/swift-ui": "4.0.2",
+      "@nativescript/types": "9.1.4",
+      "@nativescript/vite": "8.0.24"
+    },
+    "scriptwidget": {
+      "revision": "4da256d58247bbafb9a5cd443a285250b97b3c4b"
+    }
+  },
+  "hermesVersion": "260318099.0.5",
+  "originals": {
+    "expo": {
+      "package": "expo",
+      "version": "58.1.0",
+      "tarball": "https://registry.npmjs.org/expo/-/expo-58.1.0.tgz",
+      "integrity": "sha512-Q0KDTf0zAP7yaVnYgQXMBnLh3soQf2Di2pCZABOz8xeDzS+fPv5SE25NLsJTDE59ZVz6+p3ejxYgVduQcsllRQ==",
+      "sha256": "0cf19e0a80610e65f0895a17e848ea3ae315d10795d401c349fddd44e758a7eb"
+    },
+    "@expo/ui": {
+      "package": "@expo/ui",
+      "version": "58.0.30",
+      "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+      "integrity": "sha512-b31dbJSKyMTylptXbb3Dx+XG57ehvYa+JVIkkoBwY6zLIAePNGlgQKzlFUyWF5jsgzqNZUXKJTjw0roY4MicZA==",
+      "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94"
+    },
+    "expo-asset": {
+      "package": "expo-asset",
+      "version": "58.0.21",
+      "tarball": "https://registry.npmjs.org/expo-asset/-/expo-asset-58.0.21.tgz",
+      "integrity": "sha512-qaJmuTtswggXdBQfiUdpxrVGM7l+tH8iEDHwVDMuxyCF/kAau8sUGVuWrDKYNW4yAx7Z8ncgsT8s27pXjRH5GA==",
+      "sha256": "2bfbb115da9111702530e5df550eac7e2a074aa12b6297fcc332744767623126"
+    },
+    "expo-brownfield": {
+      "package": "expo-brownfield",
+      "version": "58.0.20",
+      "tarball": "https://registry.npmjs.org/expo-brownfield/-/expo-brownfield-58.0.20.tgz",
+      "integrity": "sha512-IQy7FD4QzLcRtrwljcr/C/QB+oWJDgo3dDnBhjtzgGMn90AFP4ZT3ZAKVDBKlfejrXQf7jEpRgw03mpqaS5IMg==",
+      "sha256": "f7ca2c000242e572f15395f0d0e3edb670e38a79c19d75224af7c6fd424391f8"
+    },
+    "expo-modules-core": {
+      "package": "expo-modules-core",
+      "version": "58.2.0",
+      "tarball": "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-58.2.0.tgz",
+      "integrity": "sha512-Xt8rjT+so/SzQCB0q7MFpz/SlazIfy4MLid/tKIjp6nKQz/kpT0zDVp8LofSs3penSYOzot9ZB023LMWL58dUg==",
+      "sha256": "c36f39aaaac93b8dbb0b3cb687e7cf73f566e1538d4785c652049f5d51f8213d"
+    },
+    "expo-modules-jsi": {
+      "package": "expo-modules-jsi",
+      "version": "58.0.24",
+      "tarball": "https://registry.npmjs.org/expo-modules-jsi/-/expo-modules-jsi-58.0.24.tgz",
+      "integrity": "sha512-xoJLTtRaCSuxAhJXY0XJn31puGK0ugzke1At92FsjsQ14N62x55JZeY/4qEgzimLP74Vk6OKyCwgHarQs/WCmw==",
+      "sha256": "7f5b9873dbca9cf10b4f0a4aac51eec1173ba0015e66ed1601f225239da2519d"
+    },
+    "expo-widgets": {
+      "package": "expo-widgets",
+      "version": "58.0.30",
+      "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+      "integrity": "sha512-a2JMusFtp4+R8KEmm7KNXVpDwMyxS9ElVA/7ge6M/VzENZF0JPYfwzada9rYAkjxhI93BozHwiANt5uT+MYjOw==",
+      "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2"
+    },
+    "react-native": {
+      "package": "react-native",
+      "version": "0.88.1",
+      "tarball": "https://registry.npmjs.org/react-native/-/react-native-0.88.1.tgz",
+      "integrity": "sha512-wajWcLZ93GCN7k4Uwh4CS4L2Ah8ohcvkOXnvIYmh4Yvuqho5j3APZ9qozK+nQrHWSgauq4h8D3HN5DKK84SrHA==",
+      "sha256": "092228927de1b20001001f3bf1f494bd4bac5fff60da83f796655dc7b784489a"
+    },
+    "react-native-worklets": {
+      "package": "react-native-worklets",
+      "version": "0.13.0",
+      "tarball": "https://registry.npmjs.org/react-native-worklets/-/react-native-worklets-0.13.0.tgz",
+      "integrity": "sha512-1OrhAeAKaZF4XrBa4YbPQbKzNOpjh52HDlId8e6ete1OCHNdAlrQHzG4gznJ225EAj3dgQXHViJvK51M9B52jQ==",
+      "sha256": "5894c90a9bf3abaf81b5a92587884d757e0328dd3450a9cffe0e56e35b0a43a4"
+    },
+    "@nativescript/react-native": {
+      "package": "@nativescript/react-native",
+      "version": "9.1.2",
+      "tarball": "https://registry.npmjs.org/@nativescript/react-native/-/react-native-9.1.2.tgz",
+      "integrity": "sha512-sqgsqg++6etbihWzLeIeSi7OxlmAsEegxz4yHerqCbYBuxyrVnTrtK4vDNnTYbNM+q6u2b0hwDNhX0aOEKTeTw==",
+      "sha256": "906f2106215426e6211c27f37fe2e874b9d91d174efbabb1d8b512fcdb2d4798"
+    },
+    "@nativescript/swift-ui": {
+      "package": "@nativescript/swift-ui",
+      "version": "4.0.2",
+      "tarball": "https://registry.npmjs.org/@nativescript/swift-ui/-/swift-ui-4.0.2.tgz",
+      "integrity": "sha512-tPmOnjCmslUpDPe6+ye2gPG+MxamuzvEwL656RFmg+HQFOcnxymmFIrp/X0vpY8nHTKi/rX9+srCN06KGZBLbw==",
+      "sha256": "c4eabcd37bba66db5d272b7f5ee6b3d900ea49b8dc8b829deeff8dbf4060e85a"
+    }
+  },
+  "iosSPM": {
+    "repository": "https://github.com/NativeScript/ios-spm.git",
+    "version": "9.1.1",
+    "revision": "33605a91197dc86bd9f15fecaad6e897223caa8a"
+  },
+  "sourceUpdates": {
+    "scriptWidgetCommit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
+    "changedNativeSources": [
+      {
+        "path": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/ViewModifierRegistry.swift",
+        "originalBeforeSHA256": "4cb49138695127b562e79727299068b0652172ba50d0752e35e281a6a4cd914b",
+        "originalAfterSHA256": "e0b5855ae893c4629bcffe9154927f58e69b34b9b91687971f6d676722392a68",
+        "adapted": true
+      },
+      {
+        "path": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/RenderingModeModifier.swift",
+        "originalAfterSHA256": "201600e59ef77b44b3d6f471ee68f5a6d4bdbbe5cb02478a0235806a59565932",
+        "added": true,
+        "requiredType": "RenderingModeModifier"
+      }
+    ],
+    "adapterContracts": [
+      {
+        "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift",
+        "upstream": "Shared/ScriptWidgetRuntime/Widget/Runtime/ScriptWidgetRuntime.swift",
+        "identity": {
+          "repository": "everettjf/scriptwidget",
+          "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
+          "path": "Shared/ScriptWidgetRuntime/Widget/Runtime/ScriptWidgetRuntime.swift"
+        },
+        "originalSHA256": "7040cab9a460f5845ee96114c396b7e27e46caf8c9e62614a717e25adb1af574",
+        "changed": true,
+        "hostSHA256": "fa62de1025c7ae06406794e9c397e3f64ed0e32a8fb0fc3584e43fa2e28bd066",
+        "implementation": "Hanlin host adapter; original renderer source and original app service coverage are separate"
+      },
+      {
+        "local": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/Resources/prepare-widget.js",
+        "upstream": "Shared/ScriptWidgetRuntime/Widget/Runtime/ScriptWidgetRuntime.swift",
+        "identity": {
+          "repository": "everettjf/scriptwidget",
+          "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
+          "path": "Shared/ScriptWidgetRuntime/Widget/Runtime/ScriptWidgetRuntime.swift"
+        },
+        "originalSHA256": "7040cab9a460f5845ee96114c396b7e27e46caf8c9e62614a717e25adb1af574",
+        "changed": true,
+        "hostSHA256": "5053e0587036008a1ae85d24b4d469271d5f6c880e1a1244e752ec436b32813c",
+        "implementation": "Hanlin host adapter; original renderer source and original app service coverage are separate"
+      },
+      {
+        "local": "Packages/HanlinExpoRuntime/Sources/HanlinExpoWidgetNative/HanlinExpoWidgetNative.swift",
+        "upstream": "packages/expo-widgets/ios/Widgets/Buttons.swift",
+        "identity": {
+          "package": "expo-widgets",
+          "version": "58.0.30",
+          "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+          "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
+          "path": "ios/Widgets/Buttons.swift"
+        },
+        "originalSHA256": "ed7d8d4b0091aacab0a60fa88466497b4fa3f12b0c741551b96d084d18e81903",
+        "changed": false,
+        "hostSHA256": "cb3209fa98cde069a47a12ed95d12d830c66a777fe11bd27eb788ac769e3c2bf",
+        "implementation": "Hanlin host adapter; original renderer source and original app service coverage are separate"
+      },
+      {
+        "local": "Packages/HanlinExpoRuntime/Sources/HanlinExpoWidgetNative/HanlinExpoWidgetNative.swift",
+        "upstream": "packages/expo-widgets/ios/WidgetsContext.swift",
+        "identity": {
+          "package": "expo-widgets",
+          "version": "58.0.30",
+          "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+          "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
+          "path": "ios/WidgetsContext.swift"
+        },
+        "originalSHA256": "aa9f9ad9f00e2afac731ea6ce5dc8d8e68230d20de6b2627a0d55b0aa8596722",
+        "changed": true,
+        "hostSHA256": "cb3209fa98cde069a47a12ed95d12d830c66a777fe11bd27eb788ac769e3c2bf",
+        "implementation": "Hanlin host adapter; original renderer source and original app service coverage are separate"
+      }
+    ],
+    "manifestSHA256": "8bbe9acb8ec610861401134e8bddd9013c19d9ab9ced81eae4d97e3c99459b29",
+    "catalogSHA256": "425e5bae37920bd571a469c273c923471cb9f1cad5a945e7f28bf972fff8b0d1"
+  },
+  "nativeArtifacts": [
+    {
+      "name": "ExpoUI",
+      "source": "npm-source",
+      "package": "@expo/ui",
+      "version": "58.0.30",
+      "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+      "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
+      "target": "Packages/HanlinExpoRuntime/Artifacts/ExpoUI.xcframework",
+      "sourceBuild": {
+        "producer": "original-cocoapods",
+        "packageIntegrity": "sha512-b31dbJSKyMTylptXbb3Dx+XG57ehvYa+JVIkkoBwY6zLIAePNGlgQKzlFUyWF5jsgzqNZUXKJTjw0roY4MicZA=="
+      }
+    },
+    {
+      "name": "ExpoAsset",
+      "source": "npm-source",
+      "package": "expo-asset",
+      "version": "58.0.21",
+      "tarball": "https://registry.npmjs.org/expo-asset/-/expo-asset-58.0.21.tgz",
+      "sha256": "2bfbb115da9111702530e5df550eac7e2a074aa12b6297fcc332744767623126",
+      "target": "Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework",
+      "sourceBuild": {
+        "producer": "original-cocoapods",
+        "packageIntegrity": "sha512-qaJmuTtswggXdBQfiUdpxrVGM7l+tH8iEDHwVDMuxyCF/kAau8sUGVuWrDKYNW4yAx7Z8ncgsT8s27pXjRH5GA=="
+      }
+    },
+    {
+      "name": "ExpoModulesJSI",
+      "source": "npm-source",
+      "package": "expo-modules-jsi",
+      "version": "58.0.24",
+      "tarball": "https://registry.npmjs.org/expo-modules-jsi/-/expo-modules-jsi-58.0.24.tgz",
+      "sha256": "7f5b9873dbca9cf10b4f0a4aac51eec1173ba0015e66ed1601f225239da2519d",
+      "target": "Packages/HanlinExpoRuntime/Artifacts/ExpoModulesJSI.xcframework",
+      "sourceBuild": {
+        "producer": "original-swiftpm",
+        "packageIntegrity": "sha512-xoJLTtRaCSuxAhJXY0XJn31puGK0ugzke1At92FsjsQ14N62x55JZeY/4qEgzimLP74Vk6OKyCwgHarQs/WCmw=="
+      }
+    },
+    {
+      "name": "ExpoModulesCore",
+      "source": "npm",
+      "package": "expo-modules-core",
+      "version": "58.2.0",
+      "tarball": "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-58.2.0.tgz",
+      "sha256": "c36f39aaaac93b8dbb0b3cb687e7cf73f566e1538d4785c652049f5d51f8213d",
+      "subpath": "package/prebuilds/output/release/xcframeworks/ExpoModulesCore.tar.gz",
+      "target": "Packages/HanlinExpoRuntime/Artifacts/ExpoModulesCore.xcframework"
+    },
+    {
+      "name": "ExpoModulesWorklets",
+      "source": "npm",
+      "package": "expo-modules-core",
+      "version": "58.2.0",
+      "tarball": "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-58.2.0.tgz",
+      "sha256": "c36f39aaaac93b8dbb0b3cb687e7cf73f566e1538d4785c652049f5d51f8213d",
+      "subpath": "package/prebuilds/output/release/xcframeworks/ExpoModulesWorklets.tar.gz",
+      "target": "Packages/HanlinExpoRuntime/Artifacts/ExpoModulesWorklets.xcframework"
+    },
+    {
+      "name": "ExpoBrownfield",
+      "source": "npm",
+      "package": "expo-brownfield",
+      "version": "58.0.20",
+      "tarball": "https://registry.npmjs.org/expo-brownfield/-/expo-brownfield-58.0.20.tgz",
+      "sha256": "f7ca2c000242e572f15395f0d0e3edb670e38a79c19d75224af7c6fd424391f8",
+      "subpath": "package/prebuilds/output/release/xcframeworks/ExpoBrownfield.tar.gz",
+      "target": "Packages/HanlinExpoRuntime/Artifacts/ExpoBrownfield.xcframework"
+    },
+    {
+      "name": "React",
+      "source": "maven",
+      "url": "https://repo1.maven.org/maven2/com/facebook/react/react-native-artifacts/0.88.1/react-native-artifacts-0.88.1-reactnative-core-release.tar.gz",
+      "sha256": "1a5658fff6d807f5a249e2497be45d8912f740cdddad976116365cdd9d9a0806",
+      "subpath": "React.xcframework",
+      "target": "Packages/HanlinExpoRuntime/Artifacts/React.xcframework"
+    },
+    {
+      "name": "ReactNativeDependencies",
+      "source": "maven",
+      "url": "https://repo1.maven.org/maven2/com/facebook/react/react-native-artifacts/0.88.1/react-native-artifacts-0.88.1-reactnative-dependencies-release.tar.gz",
+      "sha256": "5bbf9e9cb6178c5705be9ae312fd902585b53d508a1649916dcab4e810b39a74",
+      "subpath": "packages/react-native/third-party/ReactNativeDependencies.xcframework",
+      "target": "Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework"
+    },
+    {
+      "name": "hermesvm",
+      "source": "maven",
+      "url": "https://repo1.maven.org/maven2/com/facebook/hermes/hermes-ios/260318099.0.5/hermes-ios-260318099.0.5-hermes-ios-release.tar.gz",
+      "sha256": "4e137490ffdf5b145bd629c5cabdfe9aee54573308d7c357bc3300ac78d64507",
+      "subpath": "destroot/Library/Frameworks/universal/hermesvm.xcframework",
+      "target": "Packages/HanlinExpoRuntime/Artifacts/hermesvm.xcframework"
+    },
+    {
+      "name": "ReactNativeHeaders",
+      "source": "maven",
+      "url": "https://repo1.maven.org/maven2/com/facebook/react/react-native-artifacts/0.88.1/react-native-artifacts-0.88.1-reactnative-headers-release.tar.gz",
+      "sha256": "ee710a1aa98a8d54d06b56c04ead95f16bd3f10062e12f24464cba27ccbecacd",
+      "subpath": "ReactNativeHeaders.xcframework",
+      "target": "Packages/HanlinExpoRuntime/Artifacts/ReactNativeHeaders.xcframework"
+    }
+  ]
+}

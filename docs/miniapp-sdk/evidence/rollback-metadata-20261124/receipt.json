@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "baseSourceSHA": "cbb662d3cd669901de2e18f2c7d94c0487aecc20",
+  "defect": "Rollback selected V1 artifact files but kept V2 manifest and entrypoint/runtime metadata in the catalog, including after cold restoration.",
+  "status": "PORTABLE_PROJECTED_SOURCE_PASS; NEEDS_APPLE_EXECUTION",
+  "productionChange": "Persist per-generation descriptors/manifest, restore them together, and migrate only authoritative matching old registry snapshots.",
+  "publicDiagnostic": "HanlinAtomicScriptStoreError.generationMetadataUnavailable(generation) when inactive historic descriptors are truly absent; registry and retained artifact bytes remain unchanged.",
+  "red": {
+    "exit": 1,
+    "executedMethods": 1,
+    "issues": 4,
+    "rawLog": "red/swift-test.txt",
+    "sha256": "f34c2a755f246d0187606df1fa32b213a5706324614d642326ef7b889ccc95f1",
+    "testPatch": "red/test-change.diff"
+  },
+  "green": {
+    "exit": 0,
+    "executedMethods": 1,
+    "failed": 0,
+    "skipped": 0,
+    "rawLog": "green/swift-test.txt",
+    "sha256": "7ec01c681a02b564580be9734ae38cd22850524943780fd5f9cac9d7423d7cf5"
+  },
+  "exactSelector": "HanlinScriptStoreTests/HanlinAtomicScriptStoreTests/lifecycle",
+  "swiftTestFilter": "HanlinAtomicScriptStoreTests/lifecycle",
+  "checkedScenarios": [
+    "install V1 and update to distinct V2 engine metadata",
+    "rollback to V1 with matching artifact bytes and descriptors/manifest",
+    "disable and cold restore",
+    "uninstall and reinstall with stable ID and fresh generation history",
+    "old active generation backfilled before update despite later backup replacement",
+    "old inactive generation recovered only from its exact matching registry backup",
+    "departing generation preserved for redo",
+    "missing history rejects before primary/backup/catalog/metadata mutation"
+  ],
+  "unchangedPolicies": [
+    "capability grants",
+    "enabled-state semantics",
+    "OS authorization",
+    "artifact hash verification",
+    "safe artifact paths",
+    "new package admission",
+    "legacy engine freeze"
+  ],
+  "actualDependencies": [
+    {
+      "package": "swift-crypto",
+      "originalRevision": "3280a5f72874d2f73bf25551bbb64f524c76d834",
+      "originalTree": "26415836c9d545b23d87f67de0a9a1ad24e5edce",
+      "gitArchiveSHA256": "3bc01aa6e9acf14d2a4ae8161b6aab32864d825741287999d094fbc1f19aeca2",
+      "packageManifestSHA256": "22f4ff48ac580bcff17fd8ec099159c667e2f410c3777f10e3ec14b6dcdeb20e",
+      "source": "Existing original Git cache, git archive; no network fetch or package install."
+    },
+    {
+      "package": "swift-asn1",
+      "originalRevision": "97fd57437fc94cfa6b62f2b8f84c50f433534e17",
+      "originalTree": "77186768a21490044d119245c010b53dc7e5702f",
+      "gitArchiveSHA256": "966cc934b25055a3ab5f972fb6ab0810f57eb8d817c0566898b32a55dc391843",
+      "packageManifestSHA256": "c46482de4edb5c21c263682d102e52b180c1420be592d6c957cdc06f8fc4e516",
+      "source": "Existing original Git cache, git archive; no network fetch or package install."
+    }
+  ],
+  "projection": "Real production contracts/core/store closure and real Apple SwiftCrypto. Only CryptoKit-to-Crypto imports and conditional OSLog diagnostics differ in the Linux projection. Exact diffs/inputs are retained separately for both phases.",
+  "changedInputsBetweenRedAndGreen": [
+    "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift",
+    "Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinAtomicScriptStoreTests.swift"
+  ],
+  "projectionUnreferencedStoreExclusions": [
+    "HanlinShareInboxStore.swift",
+    "HanlinShareItemLoader.swift"
+  ],
+  "artifactFixtureScope": "Existing hash-verified store-test artifacts with distinct real modern contract types; no original Expo/NativeScript build or engine execution is claimed.",
+  "remainingBoundaries": [
+    "Apple execution of the exact store method",
+    "application update/rollback/reinstall UI and session behavior",
+    "OS permission revocation"
+  ],
+  "historyRecoveryBoundary": "source/script.json retains the author manifest but not analyzer-derived installed descriptors. The host already has the analyzer above the store dependency layer, so retained-source reimport can recreate metadata; this patch does not add a store-to-compiler dependency or an automatic host migration.",
+  "review": "independent-review.json"
+}

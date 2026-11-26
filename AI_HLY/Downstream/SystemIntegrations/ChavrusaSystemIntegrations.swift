@@ -2,6 +2,7 @@ import HanlinWidgetUI
 import HanlinLocalization
 import AlarmKit
 import AppIntents
+import HanlinCameraCaptureUI
 import Foundation
 import UIKit
 import UserNotifications
@@ -114,6 +115,6 @@ public struct ChavrusaChatShortcuts: AppShortcutsProvider {
 /// to index the original Hanlin intent implementations after SDK extraction.
 public struct HanlinApplicationIntentsPackage: AppIntentsPackage {
     public static var includedPackages: [any AppIntentsPackage.Type] {
-        [HanlinWidgetIntentsPackage.self]
+        [HanlinWidgetIntentsPackage.self, HanlinMiniAppSystemIntentsPackage.self, HanlinCameraCaptureIntentsPackage.self]
     }
 }

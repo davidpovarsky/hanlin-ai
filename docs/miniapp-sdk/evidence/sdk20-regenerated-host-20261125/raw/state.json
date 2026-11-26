@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "id": "sdk20-dff3b45c",
+  "source": "dff3b45c99a57bf8fe8ec721db3fa1fafce7134b",
+  "status": "ORIGINAL_PREPARATION_PASS",
+  "startedAt": "2026-11-25T21:13:58.366457+00:00",
+  "pid": 2105044,
+  "nativeExecution": false,
+  "upstreamResolution": false,
+  "elapsedSeconds": 360.1092938221991,
+  "node": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/tools/node-v24.5.0-linux-arm64/bin/node",
+    "version": "v24.5.0",
+    "archiveBytes": 30984052,
+    "archiveSHA256": "313367534186a8551d68b39fbc2a6cc36638e583fb5dc75dcf5da3c6582bff3b",
+    "binarySHA256": "47befb5f57df96771ce343d6293349ecf4d46c91110b626423ec3a49d2fee7c1",
+    "platform": "linux",
+    "architecture": "arm64"
+  },
+  "sourceChecks": {
+    "Scripts/Runtime/prepare-runtime-host.sh": "af0fda26d53a6b72b495a73e104835af176dccfc39cda2d5bcfffa3f7a04cbd6",
+    "Scripts/MiniApps/install-tooling.mjs": "6fb5f130d1a381d628ffa5042eff7ce36d48431ed7636a36c28fec20e5b79120",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationEvent.swift": "867613ea9cf2785e6eff3caad96c620a8c50d16fd22d266eeda899b7ab784f69"
+  },
+  "command": [
+    "bash",
+    "Scripts/Runtime/prepare-runtime-host.sh"
+  ],
+  "environment": {
+    "PATHPrefix": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/tools/node-v24.5.0-linux-arm64/bin",
+    "RUNNER_TEMP": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/work"
+  },
+  "archive": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/source/build/runtime-host/RuntimeHostResources.zip",
+  "generatedTrackedPaths": [
+    "docs/miniapp-sdk/extension-reachability.json",
+    "docs/miniapp-sdk/extension-reachability.md",
+    "docs/miniapp-sdk/source-inventory.json"
+  ],
+  "finishedAt": "2026-11-25T21:19:58.475730+00:00"
+}

@@ -110,6 +110,7 @@ function parseBorderColorPositioning(value) {
     // top-level separators delimit the sides.
     return positioningFromParts(splitOnTopLevelSpacesAndCommas(value.trim()), value);
 }
+const TRANSPARENT = new Color('transparent');
 function convertToBackgrounds(value) {
     if (typeof value === 'string') {
         const backgrounds = parseBackground(value).value;
@@ -117,9 +118,15 @@ function convertToBackgrounds(value) {
         if (backgrounds.color) {
             backgroundColor = backgrounds.color instanceof Color ? backgrounds.color : new Color(backgrounds.color);
         }
+        else if (backgrounds.image === 'none') {
+            backgroundColor = TRANSPARENT;
+        }
         let backgroundImage;
         if (typeof backgrounds.image === 'object' && backgrounds.image) {
             backgroundImage = LinearGradient.parse(backgrounds.image);
+        }
+        else if (backgrounds.image === 'none') {
+            backgroundImage = unsetValue;
         }
         else {
             backgroundImage = backgrounds.image || unsetValue;
@@ -367,22 +374,6 @@ export const paddingInternalProperty = new CssProperty({
     cssName: '_paddingInternal',
 });
 paddingInternalProperty.register(Style);
-const paddingSetNativeOverrides = new WeakMap();
-/**
- * Whether a subclass overrides any of the per-side [padding*Property.setNative]
- * handlers `coreProto` defines. An override owns padding application - the
- * consolidated paddingInternal write must stand down, or it would apply padding
- * around handlers designed to intercept it.
- */
-export function _hasPaddingSetNativeOverrides(view, coreProto) {
-    const constructor = view.constructor;
-    let overrides = paddingSetNativeOverrides.get(constructor);
-    if (overrides === undefined) {
-        overrides = [paddingTopProperty, paddingRightProperty, paddingBottomProperty, paddingLeftProperty].some((property) => view[property.setNative] !== coreProto[property.setNative]);
-        paddingSetNativeOverrides.set(constructor, overrides);
-    }
-    return overrides;
-}
 const paddingProperty = new ShorthandProperty({
     name: 'padding',
     cssName: 'padding',
@@ -1114,6 +1105,9 @@ export const fontScaleInternalProperty = new InheritedCssProperty({
     valueConverter: (v) => parseFloat(v),
 });
 fontScaleInternalProperty.register(Style);
+function parseFontSize(value) {
+    return typeof value === 'string' && value.trim().endsWith('rem') ? Length.parse(value) : parseFloat(value);
+}
 export const fontSizeProperty = new InheritedCssProperty({
     name: 'fontSize',
     cssName: 'font-size',
@@ -1128,7 +1122,7 @@ export const fontSizeProperty = new InheritedCssProperty({
             target.fontInternal = Font.equals(Font.default, newFont) ? unsetValue : newFont;
         }
     },
-    valueConverter: (v) => parseFloat(v),
+    valueConverter: parseFontSize,
 });
 fontSizeProperty.register(Style);
 export const fontStyleProperty = new InheritedCssProperty({
@@ -1178,7 +1172,7 @@ const fontProperty = new ShorthandProperty({
         }
         else {
             const font = parseFont(value);
-            const fontSize = parseFloat(font.fontSize);
+            const fontSize = parseFontSize(font.fontSize);
             return [
                 [fontStyleProperty, font.fontStyle],
                 [fontWeightProperty, font.fontWeight],

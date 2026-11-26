@@ -1,0 +1,21 @@
+{
+  "baseCommit": "01d08ed453040d74a76211e7fb51a611b0d1e2cc",
+  "purpose": "Bind the three actual original manifest authority sources exactly; preserve hash and field-drift rejection.",
+  "priorFailure": {
+    "command": [
+      "node",
+      "Scripts/Audit/audit-miniapp-sdk.mjs",
+      "--write"
+    ],
+    "receiptSource": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/docs/miniapp-sdk/evidence/native-corrections-reconciliation-20261124/1.stderr.log",
+    "sha256": "91e181045285f97178ca7ae68f9809694c9aef442e5927756f4b8b4c6bfeafdc",
+    "reexecuted": false
+  },
+  "beforeMapperSHA256": "790c5c4fb9fb928df5feb7b981ca3eaef89076f30b255538e8f8df82fc62f0c6",
+  "targetedCheck": [
+    "node",
+    "--test",
+    "Scripts/Audit/Tests/manifest-contracts.test.mjs"
+  ],
+  "boundary": "Source contract only; no full inventory regeneration, app runtime, native test, or CI dispatch."
+}

@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "node",
+    "--test",
+    "Packages/HanlinExpoUI/tests/generated-views.test.mjs"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124",
+  "env": {
+    "HANLIN_EXPO_TEST_PACKAGE_ROOT": "/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo"
+  },
+  "startedAt": "2026-11-24T10:13:26.499880+00:00",
+  "exitCode": 1,
+  "scope": "Actual generated TSX wrapper/React slot boundary only; native bindings are inert tags."
+}

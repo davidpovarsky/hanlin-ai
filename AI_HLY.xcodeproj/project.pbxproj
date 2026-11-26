@@ -665,6 +665,314 @@
 			isa = PBXBuildFile;
 			fileRef = AC1900000000000000000130;
 		};
+		5A455D1CE7DD9747544C429A = { isa = PBXBuildFile; fileRef = 10D8B14397FF408416D24D50; };
+		AA2EE09EBEA951A8D246ABF6 = { isa = PBXBuildFile; productRef = C0F20F8DB55A21AFC010BCE2; };
+		5C9E09846872D07C4D50662E = { isa = PBXBuildFile; productRef = 26B9238591CBD8BD492D137C; };
+		FD2B21070BBD04C64242ADD1 = {isa = PBXBuildFile; fileRef = 6B236C9460137676E26D4468; };
+		D50F4D163E01EE6798757607 = {isa = PBXBuildFile; productRef = D7532BF517832175AD2CF8EE; };
+		9D281EC999A9E368745F917A = {isa = PBXBuildFile; productRef = 499632C6BDF7BBBDF296C7D6; };
+		AC1A6D099BDD2DC48D895ABC = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "A10000000000000000000015";
+		};
+		AC1A93AFC6C506E050118171 = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "C10000000000000000000022";
+		};
+		AC1A3E54344A743FE14ACA26 = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "C10000000000000000000021";
+		};
+		AC1ACECBCE5DE78D1F638406 = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "E3A100000000000000000002";
+		};
+		AC1A18E8388907D5BA70D589 = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "AC1900000000000000000044";
+		};
+		AC1A81E995779F79D4F7E3A2 = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "AC1900000000000000000040";
+		};
+		AC1ACBC7AA033812AE06B7C2 = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "AC1900000000000000000130";
+		};
+		AC1A4AE4C663668DDFD0F810 = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "AC1A06108AD498E0B09DC231";
+			"settings" = {
+				"ATTRIBUTES" = (
+					"RemoveHeadersOnCopy",
+				);
+			};
+		};
+		AC1AFCF4C4C42C3759D6ACAA = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "C10000000000000000000019";
+		};
+		AC1A2FD9C72C61B8DF6EAB53 = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "AC1900000000000000000041";
+		};
+		AC1A2EDEB75BFF977C66EBE8 = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "AC1900000000000000000040";
+		};
+		AC1AB4E42CBACB1F5D38A204 = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "AC1A7440D7F7BFC2A59D0385";
+			"settings" = {
+				"ATTRIBUTES" = (
+					"RemoveHeadersOnCopy",
+				);
+			};
+		};
+		AC1A37E5DFAA28A2E838F81F = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "A10000000000000000000015";
+		};
+		AC1A7E3F15DE792BD4456523 = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "C10000000000000000000022";
+		};
+		AC1A8FDA5AF4222D8F41BCAA = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "C10000000000000000000021";
+		};
+		AC1AFEDD8645E13666511617 = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "AC1900000000000000000043";
+		};
+		AC1AA44F252A314605798864 = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "AC1900000000000000000040";
+		};
+		AC1A4542C7D84CCEE569F38F = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "AC1AB2CB7B93EA577E6BCD07";
+			"settings" = {
+				"ATTRIBUTES" = (
+					"RemoveHeadersOnCopy",
+				);
+			};
+		};
+		AC1900000000000000000119 = {
+			isa = PBXBuildFile;
+			fileRef = AC1900000000000000000118;
+		};
+		AC190000000000000000011B = {
+			isa = PBXBuildFile;
+			fileRef = AC190000000000000000011A;
+		};
+		AC190000000000000000011D = {
+			isa = PBXBuildFile;
+			fileRef = AC190000000000000000011C;
+		};
+		AC1900000000000000000049 = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000043;
+		};
+		AC190000000000000000004B = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000043;
+		};
+		AC190000000000000000004A = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000043;
+		};
+		AC1900000000000000000051 = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000050;
+		};
+		AC1900000000000000000053 = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000050;
+		};
+		AC1900000000000000000052 = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000050;
+		};
+		AC1900000000000000000054 = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000050;
+		};
+		AC1A6C96CE3730871961A620 = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "AC1900000000000000000050";
+		};
+		D0AD25D376AEA6B0A4824621 = {
+			isa = PBXBuildFile;
+			fileRef = 865725CC287EA6A3C2986ABB;
+		};
+		AC1900000000000000000055 = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000044;
+		};
+		AC1900000000000000000133 = {
+			isa = PBXBuildFile;
+			fileRef = AC1900000000000000000130;
+		};
+		AC1900000000000000000140 = {
+			isa = PBXBuildFile;
+			fileRef = A10000000000000000000062;
+		};
+		AC1900000000000000000141 = {
+			isa = PBXBuildFile;
+			fileRef = A10000000000000000000063;
+		};
+		AC190000000000000000011F = {
+			isa = PBXBuildFile;
+			fileRef = AC190000000000000000011E;
+		};
+		AC1A1B5D880F589211E7E2BC = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "AC1900000000000000000042";
+		};
+		AC1AF5C4112280B3C8D77673 = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "AC1900000000000000000040";
+		};
+		AC1A883326E8B07E1F5AEF41 = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "AC1A4E112E2B27FFB777C17B";
+			"settings" = {
+				"ATTRIBUTES" = (
+					"RemoveHeadersOnCopy",
+				);
+			};
+		};
+		AC1B280F7D5EC93F266E38A6 = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "AC1B367A3ABA28E34FD9506E";
+			"settings" = {
+				"ATTRIBUTES" = (
+					"RemoveHeadersOnCopy",
+				);
+			};
+		};
+		AC1B3EA3C00ECCA501A7BF64 = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "AC1B747158E8B466D958BC91";
+			"settings" = {
+				"ATTRIBUTES" = (
+					"RemoveHeadersOnCopy",
+				);
+			};
+		};
+		AC1B4B8B71798ED91F5941C9 = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "AC1BA3BF949880501062F21C";
+			"settings" = {
+				"ATTRIBUTES" = (
+					"RemoveHeadersOnCopy",
+				);
+			};
+		};
+		AC1900000000000000000063 = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000062;
+		};
+		AC1900000000000000000064 = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000062;
+		};
+		AC1900000000000000000026 = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000060;
+		};
+		AC1900000000000000000027 = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000040;
+		};
+		AC190000000000000000002A = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000061;
+		};
+		AC190000000000000000002B = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000040;
+		};
+		AC190000000000000000002E = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000062;
+		};
+		AC1CED5DAE1E76828E6393FA = {
+			isa = PBXBuildFile;
+			fileRef = AC1CD38ECCBFC21EA49C84D4;
+		};
+		AC1C4E55820E68F0C491DE13 = {
+			isa = PBXBuildFile;
+			fileRef = AC1C45E40FFC20D42D6CB92B;
+		};
+		AC1C9788682F778A9EAC023D = {
+			isa = PBXBuildFile;
+			fileRef = AC1CEFD7CC40A6FF8EBBEDA0;
+		};
+		AC1CB6208C586041AF6D4ABF = {
+			isa = PBXBuildFile;
+			fileRef = AC1C66E1108C1E670D216E7A;
+		};
+		AC1CF7732DE6B950FC597415 = {
+			isa = PBXBuildFile;
+			fileRef = AC1C730C079EA94BD6887991;
+		};
+		AC1C77737A671B2C338F1C07 = {
+			isa = PBXBuildFile;
+			fileRef = AC1CDE04D87A479237C05C8E;
+		};
+		AC1AB4E614188C6D43C40C0A = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "AC1900000000000000000062";
+		};
+		AC1A2E999503CFA4954FCD7E = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "AC1900000000000000000060";
+		};
+		AC1AFA7DF7862B7D6FF3375E = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "AC1900000000000000000040";
+		};
+		AC1A4BDD87A0C736A208B0F5 = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "AC1A004C34E886F9789A91D4";
+			"settings" = {
+				"ATTRIBUTES" = (
+					"RemoveHeadersOnCopy",
+				);
+			};
+		};
+		AC1AF1AA09FA328B4264AAB8 = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "AC1900000000000000000061";
+		};
+		AC1AF3EF12BD00F87EAA97D8 = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "AC1900000000000000000040";
+		};
+		AC1A4885D309FDBB764BC584 = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "AC1ACF2CB9BDADCFFA5BFC33";
+			"settings" = {
+				"ATTRIBUTES" = (
+					"RemoveHeadersOnCopy",
+				);
+			};
+		};
+		AC1AB54B41AD5E965FD0AFA3 = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "AC1900000000000000000062";
+		};
+		AC1ADFF474DC5D808173EA24 = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "AC1A925C7D8DF5F78A43A2F9";
+			"settings" = {
+				"ATTRIBUTES" = (
+					"RemoveHeadersOnCopy",
+				);
+			};
+		};
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -717,6 +1025,76 @@
 			"remoteGlobalIDString" = "F80000000000000000000001";
 			"remoteInfo" = "HanlinMiniApps";
 		};
+		AC1A1ABF551E6140E2B59412 = {
+			"isa" = "PBXContainerItemProxy";
+			"containerPortal" = "D7B6C3B92D50A55D004E3AD6";
+			"proxyType" = "1";
+			"remoteGlobalIDString" = "AC1A01653B049EEFD4A02BC6";
+			"remoteInfo" = "HanlinMiniAppsWidgets";
+		};
+		AC1ACED5F4E923C6487798F5 = {
+			"isa" = "PBXContainerItemProxy";
+			"containerPortal" = "D7B6C3B92D50A55D004E3AD6";
+			"proxyType" = "1";
+			"remoteGlobalIDString" = "AC1AF61019ACF70564084A0F";
+			"remoteInfo" = "HanlinMiniAppsShare";
+		};
+		AC1AFA461F336306A1946585 = {
+			"isa" = "PBXContainerItemProxy";
+			"containerPortal" = "D7B6C3B92D50A55D004E3AD6";
+			"proxyType" = "1";
+			"remoteGlobalIDString" = "AC1AAB1214124A3513123C79";
+			"remoteInfo" = "HanlinMiniAppsTranslationProvider";
+		};
+		AC1A954FBEE716202B86FF2F = {
+			"isa" = "PBXContainerItemProxy";
+			"containerPortal" = "D7B6C3B92D50A55D004E3AD6";
+			"proxyType" = "1";
+			"remoteGlobalIDString" = "AC1AB2E6EF07D8BD19B35EDC";
+			"remoteInfo" = "HanlinMiniAppsNotificationService";
+		};
+		AC1BA2BFDB20C7243E02F16F = {
+			"isa" = "PBXContainerItemProxy";
+			"containerPortal" = "D7B6C3B92D50A55D004E3AD6";
+			"proxyType" = "1";
+			"remoteGlobalIDString" = "AC1B8C37E26C75C3B96E868B";
+			"remoteInfo" = "ChavrusaChatKeyboard";
+		};
+		AC1B24A1C1D8284DF3D668FE = {
+			"isa" = "PBXContainerItemProxy";
+			"containerPortal" = "D7B6C3B92D50A55D004E3AD6";
+			"proxyType" = "1";
+			"remoteGlobalIDString" = "AC1BCE72E27DBDB88929C2DF";
+			"remoteInfo" = "ChavrusaChatNotificationContent";
+		};
+		AC1BA3B5487FC2C3FA4D18A1 = {
+			"isa" = "PBXContainerItemProxy";
+			"containerPortal" = "D7B6C3B92D50A55D004E3AD6";
+			"proxyType" = "1";
+			"remoteGlobalIDString" = "AC1B139CFDB6BE78AE6CC203";
+			"remoteInfo" = "ChavrusaChatCameraCapture";
+		};
+		AC1A5F58A86B56DB651C4218 = {
+			"isa" = "PBXContainerItemProxy";
+			"containerPortal" = "D7B6C3B92D50A55D004E3AD6";
+			"proxyType" = "1";
+			"remoteGlobalIDString" = "AC1A9D0BD4FE0767C06C27EC";
+			"remoteInfo" = "HanlinMiniAppsKeyboard";
+		};
+		AC1A2873CEBF9372F86ED6BC = {
+			"isa" = "PBXContainerItemProxy";
+			"containerPortal" = "D7B6C3B92D50A55D004E3AD6";
+			"proxyType" = "1";
+			"remoteGlobalIDString" = "AC1A7D240E2DB977937226A0";
+			"remoteInfo" = "HanlinMiniAppsNotificationContent";
+		};
+		AC1A54ADAEF2DB7998924AEF = {
+			"isa" = "PBXContainerItemProxy";
+			"containerPortal" = "D7B6C3B92D50A55D004E3AD6";
+			"proxyType" = "1";
+			"remoteGlobalIDString" = "AC1A7134E61D322FB5CC2B3A";
+			"remoteInfo" = "HanlinMiniAppsCameraCapture";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -726,9 +1104,11 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				D20000000000000000000001 /* HanlinScriptingWidgets.appex in Embed App Extensions */,
-				E40000000000000000000001 /* ChavrusaChatShare.appex in Embed App Extensions */,
-				E60000000000000000000001 /* ChavrusaChatNotificationService.appex in Embed App Extensions */,
+				"D20000000000000000000001" ,
+				"E40000000000000000000001" ,
+				"E60000000000000000000001" ,
+				"AC1B280F7D5EC93F266E38A6" ,
+				"AC1B3EA3C00ECCA501A7BF64" ,
 			);
 			name = "Embed App Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -739,7 +1119,8 @@
 			dstPath = "$(EXTENSIONS_FOLDER_PATH)";
 			dstSubfolderSpec = 16;
 			files = (
-				E50000000000000000000001 /* ChavrusaChatTranslationProvider.appex in Embed ExtensionKit Extensions */,
+				"E50000000000000000000001" ,
+				"AC1B4B8B71798ED91F5941C9" ,
 			);
 			name = "Embed ExtensionKit Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -761,6 +1142,33 @@
 			"dstSubfolderSpec" = "10";
 			"files" = ("F9F9C1AF59048DC600017718", "F909E2BBB934C271506C7F1B", );
 			"name" = "Embed Frameworks";
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1A17AA49C9B5C7EF88344D = {
+			"isa" = "PBXCopyFilesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"dstPath" = "";
+			"dstSubfolderSpec" = "13";
+			"files" = (
+				"AC1A4AE4C663668DDFD0F810",
+				"AC1AB4E42CBACB1F5D38A204",
+				"AC1A883326E8B07E1F5AEF41",
+				"AC1A4BDD87A0C736A208B0F5",
+				"AC1A4885D309FDBB764BC584",
+			);
+			"name" = "Embed MiniApps App Extensions";
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1A6B582C931A2255B43A79 = {
+			"isa" = "PBXCopyFilesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"dstPath" = "$(EXTENSIONS_FOLDER_PATH)";
+			"dstSubfolderSpec" = "16";
+			"files" = (
+				"AC1A4542C7D84CCEE569F38F",
+				"AC1ADFF474DC5D808173EA24",
+			);
+			"name" = "Embed MiniApps ExtensionKit Extensions";
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -1358,6 +1766,144 @@
 			path = "Packages/HanlinWidgetSDK/HostResources/HanlinAppIntents.xcstrings";
 			sourceTree = SOURCE_ROOT;
 		};
+		10D8B14397FF408416D24D50 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "AI_HLY/Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift"; sourceTree = SOURCE_ROOT; };
+		6B236C9460137676E26D4468 = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests.swift; sourceTree = SOURCE_ROOT; };
+		AC1A06108AD498E0B09DC231 = {
+			"isa" = "PBXFileReference";
+			"explicitFileType" = "wrapper.app-extension";
+			"includeInIndex" = "0";
+			"path" = "HanlinMiniAppsWidgets.appex";
+			"sourceTree" = "BUILT_PRODUCTS_DIR";
+		};
+		AC1A7440D7F7BFC2A59D0385 = {
+			"isa" = "PBXFileReference";
+			"explicitFileType" = "wrapper.app-extension";
+			"includeInIndex" = "0";
+			"path" = "HanlinMiniAppsShare.appex";
+			"sourceTree" = "BUILT_PRODUCTS_DIR";
+		};
+		AC1AB2CB7B93EA577E6BCD07 = {
+			"isa" = "PBXFileReference";
+			"explicitFileType" = "wrapper.extensionkit-extension";
+			"includeInIndex" = "0";
+			"path" = "HanlinMiniAppsTranslationProvider.appex";
+			"sourceTree" = "BUILT_PRODUCTS_DIR";
+		};
+		AC1900000000000000000118 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/Downstream/ProductSplitIntegration/MiniAppAuthoringDelivery.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC190000000000000000011A = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/Downstream/ScriptingPlatform/MiniAppImportDiagnosticsView.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC190000000000000000011C = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/Downstream/RuntimeCore/Core/MiniAppAuthoringService.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		865725CC287EA6A3C2986ABB = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		AC190000000000000000011E = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC1A4E112E2B27FFB777C17B = {
+			"isa" = "PBXFileReference";
+			"explicitFileType" = "wrapper.app-extension";
+			"includeInIndex" = "0";
+			"path" = "HanlinMiniAppsNotificationService.appex";
+			"sourceTree" = "BUILT_PRODUCTS_DIR";
+		};
+		AC1B367A3ABA28E34FD9506E = {
+			"isa" = "PBXFileReference";
+			"explicitFileType" = "wrapper.app-extension";
+			"includeInIndex" = "0";
+			"path" = "ChavrusaChatKeyboard.appex";
+			"sourceTree" = "BUILT_PRODUCTS_DIR";
+		};
+		AC1B747158E8B466D958BC91 = {
+			"isa" = "PBXFileReference";
+			"explicitFileType" = "wrapper.app-extension";
+			"includeInIndex" = "0";
+			"path" = "ChavrusaChatNotificationContent.appex";
+			"sourceTree" = "BUILT_PRODUCTS_DIR";
+		};
+		AC1BA3BF949880501062F21C = {
+			"isa" = "PBXFileReference";
+			"explicitFileType" = "wrapper.app-extension";
+			"includeInIndex" = "0";
+			"path" = "ChavrusaChatCameraCapture.appex";
+			"sourceTree" = "BUILT_PRODUCTS_DIR";
+		};
+		AC1CD38ECCBFC21EA49C84D4 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC1C45E40FFC20D42D6CB92B = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppCaptureCoordinator.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC1CEFD7CC40A6FF8EBBEDA0 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppCaptureInbox.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC1C66E1108C1E670D216E7A = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSpotlightIndex.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC1C730C079EA94BD6887991 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSystemCatalog.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC1CDE04D87A479237C05C8E = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSystemEntrypointsView.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC1A004C34E886F9789A91D4 = {
+			"isa" = "PBXFileReference";
+			"explicitFileType" = "wrapper.app-extension";
+			"includeInIndex" = "0";
+			"path" = "HanlinMiniAppsKeyboard.appex";
+			"sourceTree" = "BUILT_PRODUCTS_DIR";
+		};
+		AC1ACF2CB9BDADCFFA5BFC33 = {
+			"isa" = "PBXFileReference";
+			"explicitFileType" = "wrapper.app-extension";
+			"includeInIndex" = "0";
+			"path" = "HanlinMiniAppsNotificationContent.appex";
+			"sourceTree" = "BUILT_PRODUCTS_DIR";
+		};
+		AC1A925C7D8DF5F78A43A2F9 = {
+			"isa" = "PBXFileReference";
+			"explicitFileType" = "wrapper.app-extension";
+			"includeInIndex" = "0";
+			"path" = "HanlinMiniAppsCameraCapture.appex";
+			"sourceTree" = "BUILT_PRODUCTS_DIR";
+		};
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -1654,12 +2200,15 @@
 				"Downstream/ProductSplit/HanlinSplitForegroundTransport.swift" ,
 				"Downstream/ProductSplit/HanlinSplitLiveTarget.swift" ,
 				"Downstream/ProductSplit/HanlinSplitMailbox.swift" ,
+				"Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift" ,
 				"Downstream/ProductSplitIntegration/HanlinMiniAppsBootstrap.swift" ,
 				"Downstream/ProductSplitIntegration/HanlinMiniAppsCatalogView.swift" ,
 				"Downstream/ProductSplitIntegration/HanlinMiniAppsForegroundBridge.swift" ,
 				"Downstream/ProductSplitIntegration/HanlinMiniAppsProvider.swift" ,
+				"Downstream/ProductSplitIntegration/MiniAppAuthoringDelivery.swift" ,
 				"Downstream/RuntimeCore/Core/AppRuntimeCore.swift" ,
 				"Downstream/RuntimeCore/Core/HanlinApplicationRuntimeConfiguration.swift" ,
+				"Downstream/RuntimeCore/Core/MiniAppAuthoringService.swift" ,
 				"Downstream/RuntimeCore/Core/RuntimeBackgroundContinuation.swift" ,
 				"Downstream/RuntimeCore/Core/RuntimeCapabilityContract.swift" ,
 				"Downstream/RuntimeCore/Core/RuntimeDiagnostics.swift" ,
@@ -1801,6 +2350,7 @@
 				"Downstream/RuntimeCore/Tools/ListToolsTool.swift" ,
 				"Downstream/RuntimeCore/Tools/ManageMCPServersTool.swift" ,
 				"Downstream/RuntimeCore/Tools/ManageRuntimePackagesTool.swift" ,
+				"Downstream/RuntimeCore/Tools/MiniAppAuthoringTool.swift" ,
 				"Downstream/RuntimeCore/Tools/NativeToolCatalog+RuntimeTools.swift" ,
 				"Downstream/RuntimeCore/Tools/RuntimeToolSupport.swift" ,
 				"Downstream/RuntimeCore/UI/NodePackagesView.swift" ,
@@ -1826,6 +2376,7 @@
 				"Downstream/SDK/HanlinConversationView.swift" ,
 				"Downstream/SDK/HanlinMountedComposerContent.swift" ,
 				"Downstream/SDK/HanlinToolActivityView.swift" ,
+				"Downstream/SDK/MiniAppRepairCoordinator.swift" ,
 				"Downstream/Scripting/HanlinJavaScriptCoreSession.swift" ,
 				"Downstream/Scripting/HanlinQuickJSSession.swift" ,
 				"Downstream/Scripting/HanlinScriptCanonicalAdapter.swift" ,
@@ -1837,12 +2388,20 @@
 				"Downstream/Scripting/HanlinWorkerScriptingSessions.swift" ,
 				"Downstream/Scripting/README.md" ,
 				"Downstream/ScriptingPlatform/HanlinAppleDeviceSnapshotProvider.swift" ,
+				"Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift" ,
+				"Downstream/ScriptingPlatform/HanlinMiniAppCaptureCoordinator.swift" ,
+				"Downstream/ScriptingPlatform/HanlinMiniAppCaptureInbox.swift" ,
+				"Downstream/ScriptingPlatform/HanlinMiniAppSpotlightIndex.swift" ,
+				"Downstream/ScriptingPlatform/HanlinMiniAppSystemCatalog.swift" ,
+				"Downstream/ScriptingPlatform/HanlinMiniAppSystemEntrypointsView.swift" ,
 				"Downstream/ScriptingPlatform/HanlinNodeMobileScriptingCompiler.swift" ,
+				"Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift" ,
 				"Downstream/ScriptingPlatform/HanlinScriptingApplicationRuntimeBridge.swift" ,
 				"Downstream/ScriptingPlatform/HanlinScriptingAssistantProviderAdapter.swift" ,
 				"Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift" ,
 				"Downstream/ScriptingPlatform/HanlinScriptingPlatformAIIntegration.swift" ,
 				"Downstream/ScriptingPlatform/HanlinScriptingSystemUI.swift" ,
+				"Downstream/ScriptingPlatform/MiniAppImportDiagnosticsView.swift" ,
 				"Downstream/ScriptingPlatform/ScriptingPackageCardView.swift" ,
 				"Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift" ,
 				"Downstream/SystemIntegrations/ChavrusaShareActionTarget.swift" ,
@@ -2001,6 +2560,86 @@
 			);
 			target = D7B6C3C02D50A55D004E3AD6 /* AI_Hanlin */;
 		};
+		AC1ABB952E27F64536D6C1FE = {
+			"isa" = "PBXFileSystemSynchronizedBuildFileExceptionSet";
+			"membershipExceptions" = (
+				"Info.plist",
+				"HanlinMiniAppsWidgets.entitlements",
+			);
+			"target" = "AC1A01653B049EEFD4A02BC6";
+		};
+		AC1A0045A8A564CE7C1E3CB5 = {
+			"isa" = "PBXFileSystemSynchronizedBuildFileExceptionSet";
+			"membershipExceptions" = (
+				"Info.plist",
+				"HanlinMiniAppsShare.entitlements",
+			);
+			"target" = "AC1AF61019ACF70564084A0F";
+		};
+		AC1A2BAB113A8C47D3948678 = {
+			"isa" = "PBXFileSystemSynchronizedBuildFileExceptionSet";
+			"membershipExceptions" = (
+				"Info.plist",
+				"HanlinMiniAppsTranslationProvider.entitlements",
+			);
+			"target" = "AC1AAB1214124A3513123C79";
+		};
+		AC1A9185B3B115E3031BE620 = {
+			"isa" = "PBXFileSystemSynchronizedBuildFileExceptionSet";
+			"membershipExceptions" = (
+				"Info.plist",
+				"HanlinMiniAppsNotificationService.entitlements",
+			);
+			"target" = "AC1AB2E6EF07D8BD19B35EDC";
+		};
+		AC1B0CCBCF90EA84050D6BD0 = {
+			"isa" = "PBXFileSystemSynchronizedBuildFileExceptionSet";
+			"membershipExceptions" = (
+				"Info.plist",
+				"ChavrusaChatKeyboard.entitlements",
+			);
+			"target" = "AC1B8C37E26C75C3B96E868B";
+		};
+		AC1B675F20EBA69AEF86F1FB = {
+			"isa" = "PBXFileSystemSynchronizedBuildFileExceptionSet";
+			"membershipExceptions" = (
+				"Info.plist",
+				"ChavrusaChatNotificationContent.entitlements",
+			);
+			"target" = "AC1BCE72E27DBDB88929C2DF";
+		};
+		AC1B7DCC0C87C39D7127F8F7 = {
+			"isa" = "PBXFileSystemSynchronizedBuildFileExceptionSet";
+			"membershipExceptions" = (
+				"Info.plist",
+				"ChavrusaChatCameraCapture.entitlements",
+			);
+			"target" = "AC1B139CFDB6BE78AE6CC203";
+		};
+		AC1A38C2CBF0EB3ECA0010C4 = {
+			"isa" = "PBXFileSystemSynchronizedBuildFileExceptionSet";
+			"membershipExceptions" = (
+				"Info.plist",
+				"HanlinMiniAppsKeyboard.entitlements",
+			);
+			"target" = "AC1A9D0BD4FE0767C06C27EC";
+		};
+		AC1AC4EF69FA4B761338875B = {
+			"isa" = "PBXFileSystemSynchronizedBuildFileExceptionSet";
+			"membershipExceptions" = (
+				"Info.plist",
+				"HanlinMiniAppsNotificationContent.entitlements",
+			);
+			"target" = "AC1A7D240E2DB977937226A0";
+		};
+		AC1A70D09DF905CBD552311D = {
+			"isa" = "PBXFileSystemSynchronizedBuildFileExceptionSet";
+			"membershipExceptions" = (
+				"Info.plist",
+				"HanlinMiniAppsCameraCapture.entitlements",
+			);
+			"target" = "AC1A7134E61D322FB5CC2B3A";
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -2060,6 +2699,86 @@
 			"sourceTree" = "<group>";
 			"exceptions" = ("7FE313BA594C7AB411944585", );
 		};
+		AC1AC813F89150E6CECE7B77 = {
+			"isa" = "PBXFileSystemSynchronizedRootGroup";
+			"exceptions" = (
+				"AC1ABB952E27F64536D6C1FE",
+			);
+			"path" = "HanlinMiniAppsExtensions/Widgets";
+			"sourceTree" = "<group>";
+		};
+		AC1AEC849494086A29AC7660 = {
+			"isa" = "PBXFileSystemSynchronizedRootGroup";
+			"exceptions" = (
+				"AC1A0045A8A564CE7C1E3CB5",
+			);
+			"path" = "HanlinMiniAppsExtensions/Share";
+			"sourceTree" = "<group>";
+		};
+		AC1A33D68C4056BE0A7A2B08 = {
+			"isa" = "PBXFileSystemSynchronizedRootGroup";
+			"exceptions" = (
+				"AC1A2BAB113A8C47D3948678",
+			);
+			"path" = "HanlinMiniAppsExtensions/Translation";
+			"sourceTree" = "<group>";
+		};
+		AC1AE93E557E12AD64B8088E = {
+			"isa" = "PBXFileSystemSynchronizedRootGroup";
+			"exceptions" = (
+				"AC1A9185B3B115E3031BE620",
+			);
+			"path" = "HanlinMiniAppsExtensions/Notification";
+			"sourceTree" = "<group>";
+		};
+		AC1BF495C19B8E71C8549F3C = {
+			"isa" = "PBXFileSystemSynchronizedRootGroup";
+			"exceptions" = (
+				"AC1B0CCBCF90EA84050D6BD0",
+			);
+			"path" = "ChavrusaChatKeyboard";
+			"sourceTree" = "<group>";
+		};
+		AC1B2803797E6A94F11B9FBA = {
+			"isa" = "PBXFileSystemSynchronizedRootGroup";
+			"exceptions" = (
+				"AC1B675F20EBA69AEF86F1FB",
+			);
+			"path" = "ChavrusaChatNotificationContent";
+			"sourceTree" = "<group>";
+		};
+		AC1BE04BBB9228200F2697E5 = {
+			"isa" = "PBXFileSystemSynchronizedRootGroup";
+			"exceptions" = (
+				"AC1B7DCC0C87C39D7127F8F7",
+			);
+			"path" = "ChavrusaChatCameraCapture";
+			"sourceTree" = "<group>";
+		};
+		AC1A30ED03A568B5E7064298 = {
+			"isa" = "PBXFileSystemSynchronizedRootGroup";
+			"exceptions" = (
+				"AC1A38C2CBF0EB3ECA0010C4",
+			);
+			"path" = "HanlinMiniAppsExtensions/Keyboard";
+			"sourceTree" = "<group>";
+		};
+		AC1AFFBB562B6F443DCF2F7A = {
+			"isa" = "PBXFileSystemSynchronizedRootGroup";
+			"exceptions" = (
+				"AC1AC4EF69FA4B761338875B",
+			);
+			"path" = "HanlinMiniAppsExtensions/NotificationContent";
+			"sourceTree" = "<group>";
+		};
+		AC1AEDDEAE299E360927E6C1 = {
+			"isa" = "PBXFileSystemSynchronizedRootGroup";
+			"exceptions" = (
+				"AC1A70D09DF905CBD552311D",
+			);
+			"path" = "HanlinMiniAppsExtensions/CameraCapture";
+			"sourceTree" = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -2097,6 +2816,8 @@
 				"E3A100000000000000000001" ,
 				"AC1900000000000000000022" ,
 				"AC1900000000000000000023" ,
+				"AC1900000000000000000054" ,
+				"AC1900000000000000000064" ,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2135,6 +2856,8 @@
 			"isa" = "PBXFrameworksBuildPhase";
 			"buildActionMask" = "2147483647";
 			files = (
+				"AA2EE09EBEA951A8D246ABF6" ,
+				"5C9E09846872D07C4D50662E" ,
 				"F800000000000000000000B5" ,
 				"F800000000000000000000B6" ,
 				"F800000000000000000000B7" ,
@@ -2165,6 +2888,10 @@
 				"AC1900000000000000000046" ,
 				"AC1900000000000000000047" ,
 				"AC1900000000000000000048" ,
+				"AC190000000000000000004A" ,
+				"AC1900000000000000000052" ,
+				"AC1900000000000000000055" ,
+				"AC1900000000000000000063" ,
 			);
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
@@ -2178,6 +2905,104 @@
 			"isa" = "PBXFrameworksBuildPhase";
 			"buildActionMask" = "2147483647";
 			"files" = ();
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1ABDDDD994DE8E806DF12F = {
+			"isa" = "PBXFrameworksBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+				"AC1A6D099BDD2DC48D895ABC",
+				"AC1A93AFC6C506E050118171",
+				"AC1A3E54344A743FE14ACA26",
+				"AC1ACECBCE5DE78D1F638406",
+				"AC1A18E8388907D5BA70D589",
+				"AC1A81E995779F79D4F7E3A2",
+				"AC1A6C96CE3730871961A620",
+				"AC1AB4E614188C6D43C40C0A",
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1AFBECDAA5DDD290C91415 = {
+			"isa" = "PBXFrameworksBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+				"AC1AFCF4C4C42C3759D6ACAA",
+				"AC1A2FD9C72C61B8DF6EAB53",
+				"AC1A2EDEB75BFF977C66EBE8",
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1A72B35420D79A7E25C5D1 = {
+			"isa" = "PBXFrameworksBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+				"AC1A37E5DFAA28A2E838F81F",
+				"AC1A7E3F15DE792BD4456523",
+				"AC1A8FDA5AF4222D8F41BCAA",
+				"AC1AFEDD8645E13666511617",
+				"AC1AA44F252A314605798864",
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1A50B915F19FB8F7941F7E = {
+			"isa" = "PBXFrameworksBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+				"AC1A1B5D880F589211E7E2BC",
+				"AC1AF5C4112280B3C8D77673",
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1B8CAC64DD0155FFDFAA29 = {
+			"isa" = "PBXFrameworksBuildPhase";
+			"buildActionMask" = "2147483647";
+			files = (
+				"AC1900000000000000000026" ,
+				"AC1900000000000000000027" ,
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1B05614CE7CB4BB59A8630 = {
+			"isa" = "PBXFrameworksBuildPhase";
+			"buildActionMask" = "2147483647";
+			files = (
+				"AC190000000000000000002A" ,
+				"AC190000000000000000002B" ,
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1B712E4197F4A129425146 = {
+			"isa" = "PBXFrameworksBuildPhase";
+			"buildActionMask" = "2147483647";
+			files = (
+				"AC190000000000000000002E" ,
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1AFF68852ADD79AEFA895E = {
+			"isa" = "PBXFrameworksBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+				"AC1A2E999503CFA4954FCD7E",
+				"AC1AFA7DF7862B7D6FF3375E",
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1AC8F752185B795B36328A = {
+			"isa" = "PBXFrameworksBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+				"AC1AF1AA09FA328B4264AAB8",
+				"AC1AF3EF12BD00F87EAA97D8",
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1A23BEC927AC3475092B85 = {
+			"isa" = "PBXFrameworksBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+				"AC1AB54B41AD5E965FD0AFA3",
+			);
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
 /* End PBXFrameworksBuildPhase section */
@@ -2227,12 +3052,44 @@
 				"AC5329707A767DC9898843A8" ,
 				"ACD98DDA0CD38EB99694E203" ,
 				"AC1900000000000000000130" ,
+				"AC1AC813F89150E6CECE7B77" ,
+				"AC1AEC849494086A29AC7660" ,
+				"AC1A33D68C4056BE0A7A2B08" ,
+				"AC1AE93E557E12AD64B8088E" ,
+				"AC1BF495C19B8E71C8549F3C" ,
+				"AC1B2803797E6A94F11B9FBA" ,
+				"AC1BE04BBB9228200F2697E5" ,
+				"AC1A30ED03A568B5E7064298" ,
+				"AC1AFFBB562B6F443DCF2F7A" ,
+				"AC1AEDDEAE299E360927E6C1" ,
 			);
 			"sourceTree" = "<group>";
 		};
 		D7B6C3C22D50A55D004E3AD6 = {
 			"isa" = "PBXGroup";
-			"children" = ("F80000000000000000000002", "D7B6C3C12D50A55D004E3AD6", "B10000000000000000000002", "E30000000000000000000001", "D20000000000000000000020", "E40000000000000000000020", "E50000000000000000000020", "E60000000000000000000020", "F956B6CF50F924EFD80320F6", "FAA953B53E83BC49521A6AAD", "145350813A91990EA5F13A88", );
+			children = (
+				"F80000000000000000000002" ,
+				"D7B6C3C12D50A55D004E3AD6" ,
+				"B10000000000000000000002" ,
+				"E30000000000000000000001" ,
+				"D20000000000000000000020" ,
+				"E40000000000000000000020" ,
+				"E50000000000000000000020" ,
+				"E60000000000000000000020" ,
+				"F956B6CF50F924EFD80320F6" ,
+				"FAA953B53E83BC49521A6AAD" ,
+				"145350813A91990EA5F13A88" ,
+				"AC1A06108AD498E0B09DC231" ,
+				"AC1A7440D7F7BFC2A59D0385" ,
+				"AC1AB2CB7B93EA577E6BCD07" ,
+				"AC1A4E112E2B27FFB777C17B" ,
+				"AC1B367A3ABA28E34FD9506E" ,
+				"AC1B747158E8B466D958BC91" ,
+				"AC1BA3BF949880501062F21C" ,
+				"AC1A004C34E886F9789A91D4" ,
+				"AC1ACF2CB9BDADCFFA5BFC33" ,
+				"AC1A925C7D8DF5F78A43A2F9" ,
+			);
 			"name" = "Products";
 			"sourceTree" = "<group>";
 		};
@@ -2327,6 +3184,16 @@
 				"AC1900000000000000000112" ,
 				"AC1900000000000000000114" ,
 				"AC1900000000000000000116" ,
+				"AC1900000000000000000118" ,
+				"AC190000000000000000011A" ,
+				"AC190000000000000000011C" ,
+				"AC190000000000000000011E" ,
+				"AC1CD38ECCBFC21EA49C84D4" ,
+				"AC1C45E40FFC20D42D6CB92B" ,
+				"AC1CEFD7CC40A6FF8EBBEDA0" ,
+				"AC1C66E1108C1E670D216E7A" ,
+				"AC1C730C079EA94BD6887991" ,
+				"AC1CDE04D87A479237C05C8E" ,
 			);
 			"name" = "MiniApps Shared Implementation";
 			"sourceTree" = "<group>";
@@ -2339,7 +3206,15 @@
 			"buildConfigurationList" = "D7B6C3E52D50A55E004E3AD6";
 			"buildPhases" = ("A10000000000000000000051", "D7B6C3BD2D50A55D004E3AD6", "D7B6C3BE2D50A55D004E3AD6", "D7B6C3BF2D50A55D004E3AD6", "A10000000000000000000050", "D73E237E2D818F0300ACC644", "E50000000000000000000002", "D79AD5752DB545F9000646D4", );
 			"buildRules" = ();
-			"dependencies" = ("D20000000000000000000060", "E40000000000000000000060", "E50000000000000000000060", "E60000000000000000000060", );
+			dependencies = (
+				"D20000000000000000000060" ,
+				"E40000000000000000000060" ,
+				"E50000000000000000000060" ,
+				"E60000000000000000000060" ,
+				"AC1B520506CCD0E0F9AAFF71" ,
+				"AC1B7C4DB2FF221D2E7A7AB3" ,
+				"AC1BC2169EBA9E6B9D050B77" ,
+			);
 			"fileSystemSynchronizedGroups" = ("D7B6C3C32D50A55D004E3AD6", );
 			"name" = HanlinApp;
 			packageProductDependencies = (
@@ -2410,6 +3285,8 @@
 				"A10000000000000000000015" ,
 				"AC1900000000000000000044" ,
 				"AC1900000000000000000040" ,
+				"AC1900000000000000000050" ,
+				"AC1900000000000000000062" ,
 			);
 			productName = HanlinScriptingWidgets;
 			productReference = D20000000000000000000020 /* HanlinScriptingWidgets.appex */;
@@ -2494,12 +3371,31 @@
 		F80000000000000000000001 = {
 			"isa" = "PBXNativeTarget";
 			"buildConfigurationList" = "F80000000000000000000014";
-			"buildPhases" = ("F989CF55282FA3F9E392899B", "F8000000000000000000000A", "F8000000000000000000000B", "F8000000000000000000000C", "F9071A6DEA050DF055F5A852", "F93D28AB8E5150AD3A29B2C9", );
+			buildPhases = (
+				"F989CF55282FA3F9E392899B" ,
+				"F8000000000000000000000A" ,
+				"F8000000000000000000000B" ,
+				"F8000000000000000000000C" ,
+				"F9071A6DEA050DF055F5A852" ,
+				"F93D28AB8E5150AD3A29B2C9" ,
+				"AC1A17AA49C9B5C7EF88344D" ,
+				"AC1A6B582C931A2255B43A79" ,
+			);
 			"buildRules" = ();
-			"dependencies" = ();
+			dependencies = (
+				"AC1A6519F98CBE30315F945A" ,
+				"AC1A00F8DB26183FED918108" ,
+				"AC1AEFFA16A846A91B66E76E" ,
+				"AC1AE5855A7557AAA5F678C1" ,
+				"AC1AE0B7B003B4FB5471D454" ,
+				"AC1A287A592C30582EA45898" ,
+				"AC1A74EC09673909838A13E6" ,
+			);
 			"fileSystemSynchronizedGroups" = ("F80000000000000000000003", );
 			"name" = "HanlinMiniApps";
 			packageProductDependencies = (
+				"C0F20F8DB55A21AFC010BCE2" ,
+				"26B9238591CBD8BD492D137C" ,
 				"F80000000000000000000051" ,
 				"F80000000000000000000052" ,
 				"F80000000000000000000053" ,
@@ -2528,6 +3424,10 @@
 				"AC1900000000000000000045" ,
 				"AC1800000000000000000002" ,
 				"F70000000000000000000051" ,
+				"AC1900000000000000000043" ,
+				"AC1900000000000000000050" ,
+				"AC1900000000000000000044" ,
+				"AC1900000000000000000062" ,
 			);
 			"productName" = "HanlinMiniApps";
 			"productReference" = "F80000000000000000000002";
@@ -2556,6 +3456,254 @@
 			"productName" = "HanlinMiniAppsBootstrapTests";
 			"productReference" = "FAA953B53E83BC49521A6AAD";
 			"productType" = "com.apple.product-type.bundle.unit-test";
+		};
+		AC1A01653B049EEFD4A02BC6 = {
+			"isa" = "PBXNativeTarget";
+			"buildConfigurationList" = "AC1AB9FCCB521DFD7B4C93B6";
+			"buildPhases" = (
+				"AC1A0A003F4F79A817290DD2",
+				"AC1ABDDDD994DE8E806DF12F",
+				"AC1A7192378FAE622DA82D5E",
+			);
+			"buildRules" = (
+			);
+			"dependencies" = (
+			);
+			"fileSystemSynchronizedGroups" = (
+				"AC1AC813F89150E6CECE7B77",
+			);
+			"name" = "HanlinMiniAppsWidgets";
+			"packageProductDependencies" = (
+				"E3A100000000000000000002",
+				"C10000000000000000000021",
+				"C10000000000000000000022",
+				"A10000000000000000000015",
+				"AC1900000000000000000044",
+				"AC1900000000000000000040",
+				"AC1900000000000000000050",
+				"AC1900000000000000000062",
+			);
+			"productName" = "HanlinMiniAppsWidgets";
+			"productReference" = "AC1A06108AD498E0B09DC231";
+			"productType" = "com.apple.product-type.app-extension";
+		};
+		AC1AF61019ACF70564084A0F = {
+			"isa" = "PBXNativeTarget";
+			"buildConfigurationList" = "AC1A4D123140D10459C4E4F5";
+			"buildPhases" = (
+				"AC1AD39393ABE95B7DB8DF84",
+				"AC1AFBECDAA5DDD290C91415",
+				"AC1AA629E1EFA5211DD3FE6A",
+			);
+			"buildRules" = (
+			);
+			"dependencies" = (
+			);
+			"fileSystemSynchronizedGroups" = (
+				"AC1AEC849494086A29AC7660",
+			);
+			"name" = "HanlinMiniAppsShare";
+			"packageProductDependencies" = (
+				"C10000000000000000000019",
+				"AC1900000000000000000041",
+				"AC1900000000000000000040",
+			);
+			"productName" = "HanlinMiniAppsShare";
+			"productReference" = "AC1A7440D7F7BFC2A59D0385";
+			"productType" = "com.apple.product-type.app-extension";
+		};
+		AC1AAB1214124A3513123C79 = {
+			"isa" = "PBXNativeTarget";
+			"buildConfigurationList" = "AC1A7AE7421DB8885F6763C6";
+			"buildPhases" = (
+				"AC1A64B2162C94DE6C39BE93",
+				"AC1A72B35420D79A7E25C5D1",
+				"AC1A9B7B2D4BEFD34738C462",
+			);
+			"buildRules" = (
+			);
+			"dependencies" = (
+			);
+			"fileSystemSynchronizedGroups" = (
+				"AC1A33D68C4056BE0A7A2B08",
+			);
+			"name" = "HanlinMiniAppsTranslationProvider";
+			"packageProductDependencies" = (
+				"C10000000000000000000021",
+				"C10000000000000000000022",
+				"A10000000000000000000015",
+				"AC1900000000000000000043",
+				"AC1900000000000000000040",
+			);
+			"productName" = "HanlinMiniAppsTranslationProvider";
+			"productReference" = "AC1AB2CB7B93EA577E6BCD07";
+			"productType" = "com.apple.product-type.extensionkit-extension";
+		};
+		AC1AB2E6EF07D8BD19B35EDC = {
+			"isa" = "PBXNativeTarget";
+			"buildConfigurationList" = "AC1A5D505EC62DBE097D5194";
+			"buildPhases" = (
+				"AC1A38D284DE915B7FC5EA13",
+				"AC1A50B915F19FB8F7941F7E",
+				"AC1A200F83C701AE3CFCA82E",
+			);
+			"buildRules" = (
+			);
+			"dependencies" = (
+			);
+			"fileSystemSynchronizedGroups" = (
+				"AC1AE93E557E12AD64B8088E",
+			);
+			"name" = "HanlinMiniAppsNotificationService";
+			"packageProductDependencies" = (
+				"AC1900000000000000000042",
+				"AC1900000000000000000040",
+			);
+			"productName" = "HanlinMiniAppsNotificationService";
+			"productReference" = "AC1A4E112E2B27FFB777C17B";
+			"productType" = "com.apple.product-type.app-extension";
+		};
+		AC1B8C37E26C75C3B96E868B = {
+			"isa" = "PBXNativeTarget";
+			"buildConfigurationList" = "AC1B5655CE1E0AF513A97F0D";
+			"buildPhases" = (
+				"AC1BDB9439B942FC77FE8DF3",
+				"AC1B8CAC64DD0155FFDFAA29",
+				"AC1B50CE4BF178A81B0965E5",
+			);
+			"buildRules" = (
+			);
+			"dependencies" = (
+			);
+			"fileSystemSynchronizedGroups" = (
+				"AC1BF495C19B8E71C8549F3C",
+			);
+			"name" = "ChavrusaChatKeyboard";
+			packageProductDependencies = (
+				"AC1900000000000000000060" ,
+				"AC1900000000000000000040" ,
+			);
+			"productName" = "ChavrusaChatKeyboard";
+			"productReference" = "AC1B367A3ABA28E34FD9506E";
+			"productType" = "com.apple.product-type.app-extension";
+		};
+		AC1BCE72E27DBDB88929C2DF = {
+			"isa" = "PBXNativeTarget";
+			"buildConfigurationList" = "AC1B1E0814682810EB91A504";
+			"buildPhases" = (
+				"AC1BB55B3262E38A19ECCBA8",
+				"AC1B05614CE7CB4BB59A8630",
+				"AC1B4B19E625F06F744C2B63",
+			);
+			"buildRules" = (
+			);
+			"dependencies" = (
+			);
+			"fileSystemSynchronizedGroups" = (
+				"AC1B2803797E6A94F11B9FBA",
+			);
+			"name" = "ChavrusaChatNotificationContent";
+			packageProductDependencies = (
+				"AC1900000000000000000061" ,
+				"AC1900000000000000000040" ,
+			);
+			"productName" = "ChavrusaChatNotificationContent";
+			"productReference" = "AC1B747158E8B466D958BC91";
+			"productType" = "com.apple.product-type.app-extension";
+		};
+		AC1B139CFDB6BE78AE6CC203 = {
+			"isa" = "PBXNativeTarget";
+			"buildConfigurationList" = "AC1BFF625B9E7D895EB59ADD";
+			"buildPhases" = (
+				"AC1B588EB345AD79C5750B54",
+				"AC1B712E4197F4A129425146",
+				"AC1B22BF7CD435AC31CF6F04",
+			);
+			"buildRules" = (
+			);
+			"dependencies" = (
+			);
+			"fileSystemSynchronizedGroups" = (
+				"AC1BE04BBB9228200F2697E5",
+			);
+			"name" = "ChavrusaChatCameraCapture";
+			packageProductDependencies = (
+				"AC1900000000000000000062" ,
+			);
+			"productName" = "ChavrusaChatCameraCapture";
+			"productReference" = "AC1BA3BF949880501062F21C";
+			"productType" = "com.apple.product-type.extensionkit-extension";
+		};
+		AC1A9D0BD4FE0767C06C27EC = {
+			"isa" = "PBXNativeTarget";
+			"buildConfigurationList" = "AC1A2E0CA63379BC8806978C";
+			"buildPhases" = (
+				"AC1A68E7DFF538BCE01FD9AC",
+				"AC1AFF68852ADD79AEFA895E",
+				"AC1A7B4D655D750157083ADD",
+			);
+			"buildRules" = (
+			);
+			"dependencies" = (
+			);
+			"fileSystemSynchronizedGroups" = (
+				"AC1A30ED03A568B5E7064298",
+			);
+			"name" = "HanlinMiniAppsKeyboard";
+			"packageProductDependencies" = (
+				"AC1900000000000000000060",
+				"AC1900000000000000000040",
+			);
+			"productName" = "HanlinMiniAppsKeyboard";
+			"productReference" = "AC1A004C34E886F9789A91D4";
+			"productType" = "com.apple.product-type.app-extension";
+		};
+		AC1A7D240E2DB977937226A0 = {
+			"isa" = "PBXNativeTarget";
+			"buildConfigurationList" = "AC1A1982D77C8FABE4402231";
+			"buildPhases" = (
+				"AC1A7B47631188DE32BD54E7",
+				"AC1AC8F752185B795B36328A",
+				"AC1A1ABF7430506A5DEA2EDD",
+			);
+			"buildRules" = (
+			);
+			"dependencies" = (
+			);
+			"fileSystemSynchronizedGroups" = (
+				"AC1AFFBB562B6F443DCF2F7A",
+			);
+			"name" = "HanlinMiniAppsNotificationContent";
+			"packageProductDependencies" = (
+				"AC1900000000000000000061",
+				"AC1900000000000000000040",
+			);
+			"productName" = "HanlinMiniAppsNotificationContent";
+			"productReference" = "AC1ACF2CB9BDADCFFA5BFC33";
+			"productType" = "com.apple.product-type.app-extension";
+		};
+		AC1A7134E61D322FB5CC2B3A = {
+			"isa" = "PBXNativeTarget";
+			"buildConfigurationList" = "AC1A5A8E0AC9A129F1D13AAE";
+			"buildPhases" = (
+				"AC1A63C6648916369008128F",
+				"AC1A23BEC927AC3475092B85",
+				"AC1A506072CDAB6460D3D53A",
+			);
+			"buildRules" = (
+			);
+			"dependencies" = (
+			);
+			"fileSystemSynchronizedGroups" = (
+				"AC1AEDDEAE299E360927E6C1",
+			);
+			"name" = "HanlinMiniAppsCameraCapture";
+			"packageProductDependencies" = (
+				"AC1900000000000000000062",
+			);
+			"productName" = "HanlinMiniAppsCameraCapture";
+			"productReference" = "AC1A925C7D8DF5F78A43A2F9";
+			"productType" = "com.apple.product-type.extensionkit-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -2624,7 +3772,29 @@
 			"productRefGroup" = "D7B6C3C22D50A55D004E3AD6";
 			"projectDirPath" = "";
 			"projectRoot" = "";
-			"targets" = ("F80000000000000000000001", "D7B6C3C02D50A55D004E3AD6", "B10000000000000000000007", "E30000000000000000000003", "D20000000000000000000050", "E40000000000000000000050", "E50000000000000000000050", "E60000000000000000000050", "F9AB2938F7BF9D8F3F6C9844", "FA34D7A774EB6BF57D06CAA6", "ACBD51096D0F560753B6520B", );
+			targets = (
+				"F80000000000000000000001" ,
+				"D7B6C3C02D50A55D004E3AD6" ,
+				"B10000000000000000000007" ,
+				"E30000000000000000000003" ,
+				"D20000000000000000000050" ,
+				"E40000000000000000000050" ,
+				"E50000000000000000000050" ,
+				"E60000000000000000000050" ,
+				"F9AB2938F7BF9D8F3F6C9844" ,
+				"FA34D7A774EB6BF57D06CAA6" ,
+				"ACBD51096D0F560753B6520B" ,
+				"AC1A01653B049EEFD4A02BC6" ,
+				"AC1AF61019ACF70564084A0F" ,
+				"AC1AAB1214124A3513123C79" ,
+				"AC1AB2E6EF07D8BD19B35EDC" ,
+				"AC1B8C37E26C75C3B96E868B" ,
+				"AC1BCE72E27DBDB88929C2DF" ,
+				"AC1B139CFDB6BE78AE6CC203" ,
+				"AC1A9D0BD4FE0767C06C27EC" ,
+				"AC1A7D240E2DB977937226A0" ,
+				"AC1A7134E61D322FB5CC2B3A" ,
+			);
 		};
 /* End PBXProject section */
 
@@ -2702,6 +3872,9 @@
 				"F97F2034C82C07A1C253F2D2" ,
 				"F946FB32616C40A65485DF3D" ,
 				"F99926B4C8149320C8634158" ,
+				"AC1900000000000000000133" ,
+				"AC1900000000000000000140" ,
+				"AC1900000000000000000141" ,
 			);
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
@@ -2715,6 +3888,77 @@
 			"isa" = "PBXResourcesBuildPhase";
 			"buildActionMask" = "2147483647";
 			"files" = ();
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1A7192378FAE622DA82D5E = {
+			"isa" = "PBXResourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+				"AC1ACBC7AA033812AE06B7C2",
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1AA629E1EFA5211DD3FE6A = {
+			"isa" = "PBXResourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1A9B7B2D4BEFD34738C462 = {
+			"isa" = "PBXResourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1A200F83C701AE3CFCA82E = {
+			"isa" = "PBXResourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1B50CE4BF178A81B0965E5 = {
+			"isa" = "PBXResourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1B4B19E625F06F744C2B63 = {
+			"isa" = "PBXResourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1B22BF7CD435AC31CF6F04 = {
+			"isa" = "PBXResourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1A7B4D655D750157083ADD = {
+			"isa" = "PBXResourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1A1ABF7430506A5DEA2EDD = {
+			"isa" = "PBXResourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1A506072CDAB6460D3D53A = {
+			"isa" = "PBXResourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+			);
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
 /* End PBXResourcesBuildPhase section */
@@ -2738,7 +3982,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "set -euo pipefail\nhost_arch=\"$(uname -m)\"\ntarget_arch=\"${CURRENT_ARCH:-}\"\nif [[ -z \"$target_arch\" || \"$target_arch\" == \"undefined_arch\" ]]; then\n  target_arch=\"${ARCHS%% *}\"\nfi\ngenerator_root=\"$SRCROOT/Scripts/NativeScript/node_modules/@nativescript/ios/framework/internal/metadata-generator-$host_arch/bin\"\ngenerator=\"$generator_root/build-step-metadata-generator.py\"\nif [[ ! -x \"$generator\" ]]; then\n  echo \"NativeScript metadata generator is missing: $generator\" >&2\n  exit 1\nfi\npushd \"$generator_root\" >/dev/null\n\"$generator\" \"$target_arch\"\npopd >/dev/null\ntest -f \"$CONFIGURATION_BUILD_DIR/metadata-$target_arch.bin\"\n";
+			shellScript = "set -euo pipefail\nhost_arch=\"$(uname -m)\"\ntarget_arch=\"${CURRENT_ARCH:-}\"\nif [[ -z \"$target_arch\" || \"$target_arch\" == \"undefined_arch\" ]]; then\n  target_arch=\"${ARCHS%% *}\"\nfi\ngenerator_root=\"$SRCROOT/Scripts/NativeScript/node_modules/@nativescript/ios/framework/internal/metadata-generator-$host_arch/bin\"\ngenerator=\"$generator_root/build-step-metadata-generator.py\"\nif [[ ! -x \"$generator\" ]]; then\n  echo \"NativeScript metadata generator is missing: $generator\" >&2\n  exit 1\nfi\npushd \"$generator_root\" >/dev/null\npython3 \"$SRCROOT/Scripts/NativeScript/build-step-metadata-generator-wrapper.py\" \"$target_arch\" --generator-root \"$generator_root\"\npopd >/dev/null\ntest -f \"$CONFIGURATION_BUILD_DIR/metadata-$target_arch.bin\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A10000000000000000000050 /* Process Python libraries */ = {
@@ -2773,7 +4017,7 @@
 			"outputPaths" = ("$(CONFIGURATION_BUILD_DIR)/metadata-$(ARCHS).bin", );
 			"runOnlyForDeploymentPostprocessing" = "0";
 			"shellPath" = "/bin/bash";
-			"shellScript" = "set -euo pipefail\nhost_arch=\"$(uname -m)\"\ntarget_arch=\"${CURRENT_ARCH:-}\"\nif [[ -z \"$target_arch\" || \"$target_arch\" == \"undefined_arch\" ]]; then\n  target_arch=\"${ARCHS%% *}\"\nfi\ngenerator_root=\"$SRCROOT/Scripts/NativeScript/node_modules/@nativescript/ios/framework/internal/metadata-generator-$host_arch/bin\"\ngenerator=\"$generator_root/build-step-metadata-generator.py\"\nif [[ ! -x \"$generator\" ]]; then\n  echo \"NativeScript metadata generator is missing: $generator\" >&2\n  exit 1\nfi\npushd \"$generator_root\" >/dev/null\n\"$generator\" \"$target_arch\"\npopd >/dev/null\ntest -f \"$CONFIGURATION_BUILD_DIR/metadata-$target_arch.bin\"\n";
+			"shellScript" = "set -euo pipefail\nhost_arch=\"$(uname -m)\"\ntarget_arch=\"${CURRENT_ARCH:-}\"\nif [[ -z \"$target_arch\" || \"$target_arch\" == \"undefined_arch\" ]]; then\n  target_arch=\"${ARCHS%% *}\"\nfi\ngenerator_root=\"$SRCROOT/Scripts/NativeScript/node_modules/@nativescript/ios/framework/internal/metadata-generator-$host_arch/bin\"\ngenerator=\"$generator_root/build-step-metadata-generator.py\"\nif [[ ! -x \"$generator\" ]]; then\n  echo \"NativeScript metadata generator is missing: $generator\" >&2\n  exit 1\nfi\npushd \"$generator_root\" >/dev/null\npython3 \"$SRCROOT/Scripts/NativeScript/build-step-metadata-generator-wrapper.py\" \"$target_arch\" --generator-root \"$generator_root\"\npopd >/dev/null\ntest -f \"$CONFIGURATION_BUILD_DIR/metadata-$target_arch.bin\"\n";
 			"showEnvVarsInLog" = "0";
 		};
 		F9071A6DEA050DF055F5A852 /* W1-007 */ = {
@@ -2828,6 +4072,56 @@
 			"isa" = "PBXTargetDependency";
 			"target" = "F80000000000000000000001";
 			"targetProxy" = "F9FA458A16A0B0F810CDD884";
+		};
+		AC1A6519F98CBE30315F945A = {
+			"isa" = "PBXTargetDependency";
+			"target" = "AC1A01653B049EEFD4A02BC6";
+			"targetProxy" = "AC1A1ABF551E6140E2B59412";
+		};
+		AC1A00F8DB26183FED918108 = {
+			"isa" = "PBXTargetDependency";
+			"target" = "AC1AF61019ACF70564084A0F";
+			"targetProxy" = "AC1ACED5F4E923C6487798F5";
+		};
+		AC1AEFFA16A846A91B66E76E = {
+			"isa" = "PBXTargetDependency";
+			"target" = "AC1AAB1214124A3513123C79";
+			"targetProxy" = "AC1AFA461F336306A1946585";
+		};
+		AC1AE5855A7557AAA5F678C1 = {
+			"isa" = "PBXTargetDependency";
+			"target" = "AC1AB2E6EF07D8BD19B35EDC";
+			"targetProxy" = "AC1A954FBEE716202B86FF2F";
+		};
+		AC1B520506CCD0E0F9AAFF71 = {
+			"isa" = "PBXTargetDependency";
+			"target" = "AC1B8C37E26C75C3B96E868B";
+			"targetProxy" = "AC1BA2BFDB20C7243E02F16F";
+		};
+		AC1B7C4DB2FF221D2E7A7AB3 = {
+			"isa" = "PBXTargetDependency";
+			"target" = "AC1BCE72E27DBDB88929C2DF";
+			"targetProxy" = "AC1B24A1C1D8284DF3D668FE";
+		};
+		AC1BC2169EBA9E6B9D050B77 = {
+			"isa" = "PBXTargetDependency";
+			"target" = "AC1B139CFDB6BE78AE6CC203";
+			"targetProxy" = "AC1BA3B5487FC2C3FA4D18A1";
+		};
+		AC1AE0B7B003B4FB5471D454 = {
+			"isa" = "PBXTargetDependency";
+			"target" = "AC1A9D0BD4FE0767C06C27EC";
+			"targetProxy" = "AC1A5F58A86B56DB651C4218";
+		};
+		AC1A287A592C30582EA45898 = {
+			"isa" = "PBXTargetDependency";
+			"target" = "AC1A7D240E2DB977937226A0";
+			"targetProxy" = "AC1A2873CEBF9372F86ED6BC";
+		};
+		AC1A74EC09673909838A13E6 = {
+			"isa" = "PBXTargetDependency";
+			"target" = "AC1A7134E61D322FB5CC2B3A";
+			"targetProxy" = "AC1A54ADAEF2DB7998924AEF";
 		};
 /* End PBXTargetDependency section */
 
@@ -2886,6 +4180,7 @@
 			"isa" = "PBXSourcesBuildPhase";
 			"buildActionMask" = "2147483647";
 			files = (
+				"5A455D1CE7DD9747544C429A" ,
 				"F926BAA61CFBBF736F943D1C" ,
 				"F919A2D150582186EC03055E" ,
 				"F9A7168DD69AF06B26512861" ,
@@ -2961,19 +4256,104 @@
 				"AC1900000000000000000113" ,
 				"AC1900000000000000000115" ,
 				"AC1900000000000000000117" ,
+				"AC1900000000000000000119" ,
+				"AC190000000000000000011B" ,
+				"AC190000000000000000011D" ,
+				"AC190000000000000000011F" ,
+				"AC1CED5DAE1E76828E6393FA" ,
+				"AC1C4E55820E68F0C491DE13" ,
+				"AC1C9788682F778A9EAC023D" ,
+				"AC1CB6208C586041AF6D4ABF" ,
+				"AC1CF7732DE6B950FC597415" ,
+				"AC1C77737A671B2C338F1C07" ,
 			);
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
 		F96EF6D85246FA36B39BE515 = {
 			"isa" = "PBXSourcesBuildPhase";
 			"buildActionMask" = "2147483647";
-			"files" = ("F927041F0B429D7A68AD6E86", "AC4F02D6D50561F3F8BF1799", );
+			files = (
+				"FD2B21070BBD04C64242ADD1" ,
+				"F927041F0B429D7A68AD6E86" ,
+				"AC4F02D6D50561F3F8BF1799" ,
+				"D0AD25D376AEA6B0A4824621" ,
+			);
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
 		FA30C73C6864055FEECAD847 /* W1-007 bootstrap */ = {
 			"isa" = "PBXSourcesBuildPhase";
 			"buildActionMask" = "2147483647";
 			"files" = ("FAD05FC4A8022F585827D2C6", "FA57119DB4C83C17C4E16B35", );
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1A0A003F4F79A817290DD2 = {
+			"isa" = "PBXSourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1AD39393ABE95B7DB8DF84 = {
+			"isa" = "PBXSourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1A64B2162C94DE6C39BE93 = {
+			"isa" = "PBXSourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1A38D284DE915B7FC5EA13 = {
+			"isa" = "PBXSourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1BDB9439B942FC77FE8DF3 = {
+			"isa" = "PBXSourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1BB55B3262E38A19ECCBA8 = {
+			"isa" = "PBXSourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1B588EB345AD79C5750B54 = {
+			"isa" = "PBXSourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1A68E7DFF538BCE01FD9AC = {
+			"isa" = "PBXSourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1A7B47631188DE32BD54E7 = {
+			"isa" = "PBXSourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1A63C6648916369008128F = {
+			"isa" = "PBXSourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+			);
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
 /* End PBXSourcesBuildPhase section */
@@ -3020,6 +4400,8 @@
 		B10000000000000000000008 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				OTHER_SWIFT_FLAGS = ("$(inherited)", "-Xcc", "-std=gnu++20", "-Xcc", "-DREACT_NATIVE_PRODUCTION=1", "-Xcc", "-DRN_DEBUG_STRING_CONVERTIBLE=0", "-Xcc", "-Wno-quoted-include-in-framework-header", "-Xcc", "-Wno-non-modular-include-in-framework-module", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/bridge", "-Xcc", "-F$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-FArtifacts/ModularFrameworks", "-Xcc", "-FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-IArtifacts/ReactModularHeaders", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IArtifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",);
+				SWIFT_ENABLE_EXPLICIT_MODULES = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) HANLIN_A2UI_POC HANLIN_SKILL_ANALYSIS_POC";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -3046,6 +4428,8 @@
 		B10000000000000000000009 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				OTHER_SWIFT_FLAGS = ("$(inherited)", "-Xcc", "-std=gnu++20", "-Xcc", "-DREACT_NATIVE_PRODUCTION=1", "-Xcc", "-DRN_DEBUG_STRING_CONVERTIBLE=0", "-Xcc", "-Wno-quoted-include-in-framework-header", "-Xcc", "-Wno-non-modular-include-in-framework-module", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/bridge", "-Xcc", "-F$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-FArtifacts/ModularFrameworks", "-Xcc", "-FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-IArtifacts/ReactModularHeaders", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IArtifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",);
+				SWIFT_ENABLE_EXPLICIT_MODULES = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) HANLIN_A2UI_POC HANLIN_SKILL_ANALYSIS_POC";
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
@@ -3204,6 +4588,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D7C6558C2E6C731A0041F1C7 /* Config.xcconfig */;
 			buildSettings = {
+				OTHER_SWIFT_FLAGS = ("$(inherited)", "-Xcc", "-std=gnu++20", "-Xcc", "-DREACT_NATIVE_PRODUCTION=1", "-Xcc", "-DRN_DEBUG_STRING_CONVERTIBLE=0", "-Xcc", "-Wno-quoted-include-in-framework-header", "-Xcc", "-Wno-non-modular-include-in-framework-module", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/bridge", "-Xcc", "-F$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-FArtifacts/ModularFrameworks", "-Xcc", "-FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-IArtifacts/ReactModularHeaders", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IArtifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",);
+				SWIFT_ENABLE_EXPLICIT_MODULES = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) HANLIN_A2UI_POC HANLIN_SKILL_ANALYSIS_POC";
 				APS_ENVIRONMENT = development;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -3446,6 +4832,9 @@
 		D20000000000000000000070 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				SWIFT_ENABLE_EXPLICIT_MODULES = YES;
+				OTHER_SWIFT_FLAGS = ("$(inherited)", "-Xcc", "-std=gnu++20", "-Xcc", "-DREACT_NATIVE_PRODUCTION=1", "-Xcc", "-DRN_DEBUG_STRING_CONVERTIBLE=0", "-Xcc", "-Wno-quoted-include-in-framework-header", "-Xcc", "-Wno-non-modular-include-in-framework-module", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/bridge", "-Xcc", "-F$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-FArtifacts/ModularFrameworks", "-Xcc", "-FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-IArtifacts/ReactModularHeaders", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IArtifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",);
+				SWIFT_OBJC_INTEROP_MODE = objcxx;
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_ENTITLEMENTS = HanlinScriptingWidgets/HanlinScriptingWidgets.entitlements;
 				CODE_SIGN_STYLE = Automatic;
@@ -3474,6 +4863,9 @@
 		D20000000000000000000071 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				SWIFT_ENABLE_EXPLICIT_MODULES = YES;
+				OTHER_SWIFT_FLAGS = ("$(inherited)", "-Xcc", "-std=gnu++20", "-Xcc", "-DREACT_NATIVE_PRODUCTION=1", "-Xcc", "-DRN_DEBUG_STRING_CONVERTIBLE=0", "-Xcc", "-Wno-quoted-include-in-framework-header", "-Xcc", "-Wno-non-modular-include-in-framework-module", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/bridge", "-Xcc", "-F$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-FArtifacts/ModularFrameworks", "-Xcc", "-FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-IArtifacts/ReactModularHeaders", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IArtifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",);
+				SWIFT_OBJC_INTEROP_MODE = objcxx;
 				APPLICATION_EXTENSION_API_ONLY = YES;
 				CODE_SIGN_ENTITLEMENTS = HanlinScriptingWidgets/HanlinScriptingWidgets.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Distribution";
@@ -3505,6 +4897,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D7C6558C2E6C731A0041F1C7 /* Config.xcconfig */;
 			buildSettings = {
+				OTHER_SWIFT_FLAGS = ("$(inherited)", "-Xcc", "-std=gnu++20", "-Xcc", "-DREACT_NATIVE_PRODUCTION=1", "-Xcc", "-DRN_DEBUG_STRING_CONVERTIBLE=0", "-Xcc", "-Wno-quoted-include-in-framework-header", "-Xcc", "-Wno-non-modular-include-in-framework-module", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/bridge", "-Xcc", "-F$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-FArtifacts/ModularFrameworks", "-Xcc", "-FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-IArtifacts/ReactModularHeaders", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IArtifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",);
+				SWIFT_ENABLE_EXPLICIT_MODULES = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) HANLIN_A2UI_POC HANLIN_SKILL_ANALYSIS_POC";
 				APS_ENVIRONMENT = production;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -3605,6 +4999,9 @@
 		F80000000000000000000015 = {
 			"isa" = "XCBuildConfiguration";
 			"buildSettings" = {
+				OTHER_SWIFT_FLAGS = ("$(inherited)", "-Xcc", "-std=gnu++20", "-Xcc", "-DREACT_NATIVE_PRODUCTION=1", "-Xcc", "-DRN_DEBUG_STRING_CONVERTIBLE=0", "-Xcc", "-Wno-quoted-include-in-framework-header", "-Xcc", "-Wno-non-modular-include-in-framework-module", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/bridge", "-Xcc", "-F$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-FArtifacts/ModularFrameworks", "-Xcc", "-FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-IArtifacts/ReactModularHeaders", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IArtifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",);
+				SWIFT_ENABLE_EXPLICIT_MODULES = YES;
+				APS_ENVIRONMENT = "development";
 				"CODE_SIGNING_ALLOWED" = "YES";
 				"CODE_SIGNING_REQUIRED" = "YES";
 				"CODE_SIGN_STYLE" = "Automatic";
@@ -3632,7 +5029,7 @@
 				"LD" = "$(SRCROOT)/Scripts/NativeScript/hanlin-nsld.sh";
 				"LDPLUSPLUS" = "$(SRCROOT)/Scripts/NativeScript/hanlin-nsld.sh";
 				"OTHER_LDFLAGS" = ("$(inherited)", "-ObjC", "-sectcreate", "__DATA", "__TNSMetadata", "$(CONFIGURATION_BUILD_DIR)/metadata-$(CURRENT_ARCH).bin", "-licucore", "-lz", "-lc++", "-framework", "Foundation", "-framework", "UIKit", "-framework", "CoreGraphics", "-framework", "CoreServices", "-framework", "Security", );
-				"SWIFT_OBJC_INTEROP_MODE" = "objcxx";
+				SWIFT_OBJC_INTEROP_MODE = objcxx;
 				"ENABLE_USER_SCRIPT_SANDBOXING" = "NO";
 				"PYTHONDONTWRITEBYTECODE" = "1";
 				"INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription" = "Hanlin MiniApps accesses your calendars only when you ask it to read or add an event.";
@@ -3659,6 +5056,9 @@
 		F80000000000000000000016 = {
 			"isa" = "XCBuildConfiguration";
 			"buildSettings" = {
+				OTHER_SWIFT_FLAGS = ("$(inherited)", "-Xcc", "-std=gnu++20", "-Xcc", "-DREACT_NATIVE_PRODUCTION=1", "-Xcc", "-DRN_DEBUG_STRING_CONVERTIBLE=0", "-Xcc", "-Wno-quoted-include-in-framework-header", "-Xcc", "-Wno-non-modular-include-in-framework-module", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/bridge", "-Xcc", "-F$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-FArtifacts/ModularFrameworks", "-Xcc", "-FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-IArtifacts/ReactModularHeaders", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IArtifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",);
+				SWIFT_ENABLE_EXPLICIT_MODULES = YES;
+				APS_ENVIRONMENT = "production";
 				"CODE_SIGNING_ALLOWED" = "YES";
 				"CODE_SIGNING_REQUIRED" = "YES";
 				"CODE_SIGN_STYLE" = "Automatic";
@@ -3686,7 +5086,7 @@
 				"LD" = "$(SRCROOT)/Scripts/NativeScript/hanlin-nsld.sh";
 				"LDPLUSPLUS" = "$(SRCROOT)/Scripts/NativeScript/hanlin-nsld.sh";
 				"OTHER_LDFLAGS" = ("$(inherited)", "-ObjC", "-sectcreate", "__DATA", "__TNSMetadata", "$(CONFIGURATION_BUILD_DIR)/metadata-$(CURRENT_ARCH).bin", "-licucore", "-lz", "-lc++", "-framework", "Foundation", "-framework", "UIKit", "-framework", "CoreGraphics", "-framework", "CoreServices", "-framework", "Security", );
-				"SWIFT_OBJC_INTEROP_MODE" = "objcxx";
+				SWIFT_OBJC_INTEROP_MODE = objcxx;
 				"ENABLE_USER_SCRIPT_SANDBOXING" = "NO";
 				"PYTHONDONTWRITEBYTECODE" = "1";
 				"INFOPLIST_KEY_NSCalendarsFullAccessUsageDescription" = "Hanlin MiniApps accesses your calendars only when you ask it to read or add an event.";
@@ -3775,6 +5175,572 @@
 				"SUPPORTED_PLATFORMS" = "iphonesimulator";
 				"SWIFT_VERSION" = "6.0";
 				"TARGETED_DEVICE_FAMILY" = "1,2";
+			};
+			"name" = "Release";
+		};
+		AC1A1AAAEF4F0104C4B10D76 = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				SWIFT_ENABLE_EXPLICIT_MODULES = YES;
+				OTHER_SWIFT_FLAGS = ("$(inherited)", "-Xcc", "-std=gnu++20", "-Xcc", "-DREACT_NATIVE_PRODUCTION=1", "-Xcc", "-DRN_DEBUG_STRING_CONVERTIBLE=0", "-Xcc", "-Wno-quoted-include-in-framework-header", "-Xcc", "-Wno-non-modular-include-in-framework-module", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/bridge", "-Xcc", "-F$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-FArtifacts/ModularFrameworks", "-Xcc", "-FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-IArtifacts/ReactModularHeaders", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IArtifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",);
+				SWIFT_OBJC_INTEROP_MODE = objcxx;
+				"APPLICATION_EXTENSION_API_ONLY" = "YES";
+				"CODE_SIGN_ENTITLEMENTS" = "HanlinMiniAppsExtensions/Widgets/HanlinMiniAppsWidgets.entitlements";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"DEVELOPMENT_TEAM" = "NA6HPWARQ2";
+				"GENERATE_INFOPLIST_FILE" = "NO";
+				"INFOPLIST_FILE" = "HanlinMiniAppsExtensions/Widgets/Info.plist";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "27.0";
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				"MARKETING_VERSION" = "0.1.0";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.itorah.hanlinminiapps.widgets";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"PRODUCT_MODULE_NAME" = "HanlinMiniAppsWidgetsHost";
+				"SKIP_INSTALL" = "YES";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"SWIFT_APPROACHABLE_CONCURRENCY" = "YES";
+				"SWIFT_VERSION" = "6.0";
+				"TARGETED_DEVICE_FAMILY" = "1,2";
+			};
+			"name" = "Debug";
+		};
+		AC1A2ADEBAFA5244E61C45C2 = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				SWIFT_ENABLE_EXPLICIT_MODULES = YES;
+				OTHER_SWIFT_FLAGS = ("$(inherited)", "-Xcc", "-std=gnu++20", "-Xcc", "-DREACT_NATIVE_PRODUCTION=1", "-Xcc", "-DRN_DEBUG_STRING_CONVERTIBLE=0", "-Xcc", "-Wno-quoted-include-in-framework-header", "-Xcc", "-Wno-non-modular-include-in-framework-module", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/bridge", "-Xcc", "-F$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-FArtifacts/ModularFrameworks", "-Xcc", "-FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-IArtifacts/ReactModularHeaders", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IArtifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",);
+				SWIFT_OBJC_INTEROP_MODE = objcxx;
+				"APPLICATION_EXTENSION_API_ONLY" = "YES";
+				"CODE_SIGN_ENTITLEMENTS" = "HanlinMiniAppsExtensions/Widgets/HanlinMiniAppsWidgets.entitlements";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"DEVELOPMENT_TEAM" = "NA6HPWARQ2";
+				"GENERATE_INFOPLIST_FILE" = "NO";
+				"INFOPLIST_FILE" = "HanlinMiniAppsExtensions/Widgets/Info.plist";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "27.0";
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				"MARKETING_VERSION" = "0.1.0";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.itorah.hanlinminiapps.widgets";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"PRODUCT_MODULE_NAME" = "HanlinMiniAppsWidgetsHost";
+				"SKIP_INSTALL" = "YES";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"SWIFT_APPROACHABLE_CONCURRENCY" = "YES";
+				"SWIFT_VERSION" = "6.0";
+				"TARGETED_DEVICE_FAMILY" = "1,2";
+			};
+			"name" = "Release";
+		};
+		AC1AB6D51B9E021AAFE2ABF0 = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"APPLICATION_EXTENSION_API_ONLY" = "YES";
+				"CODE_SIGN_ENTITLEMENTS" = "HanlinMiniAppsExtensions/Share/HanlinMiniAppsShare.entitlements";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"DEVELOPMENT_TEAM" = "NA6HPWARQ2";
+				"GENERATE_INFOPLIST_FILE" = "NO";
+				"INFOPLIST_FILE" = "HanlinMiniAppsExtensions/Share/Info.plist";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "27.0";
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				"MARKETING_VERSION" = "0.1.0";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.itorah.hanlinminiapps.share";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"SKIP_INSTALL" = "YES";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"SWIFT_APPROACHABLE_CONCURRENCY" = "YES";
+				"SWIFT_VERSION" = "6.0";
+				"TARGETED_DEVICE_FAMILY" = "1,2";
+				"PRODUCT_MODULE_NAME" = "HanlinMiniAppsShareHost";
+			};
+			"name" = "Debug";
+		};
+		AC1AD47C5D552C577DF6D32F = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"APPLICATION_EXTENSION_API_ONLY" = "YES";
+				"CODE_SIGN_ENTITLEMENTS" = "HanlinMiniAppsExtensions/Share/HanlinMiniAppsShare.entitlements";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"DEVELOPMENT_TEAM" = "NA6HPWARQ2";
+				"GENERATE_INFOPLIST_FILE" = "NO";
+				"INFOPLIST_FILE" = "HanlinMiniAppsExtensions/Share/Info.plist";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "27.0";
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				"MARKETING_VERSION" = "0.1.0";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.itorah.hanlinminiapps.share";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"SKIP_INSTALL" = "YES";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"SWIFT_APPROACHABLE_CONCURRENCY" = "YES";
+				"SWIFT_VERSION" = "6.0";
+				"TARGETED_DEVICE_FAMILY" = "1,2";
+				"PRODUCT_MODULE_NAME" = "HanlinMiniAppsShareHost";
+			};
+			"name" = "Release";
+		};
+		AC1AAD1268A94F0EF4496BF5 = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"APPLICATION_EXTENSION_API_ONLY" = "YES";
+				"CODE_SIGN_ENTITLEMENTS" = "HanlinMiniAppsExtensions/Translation/HanlinMiniAppsTranslationProvider.entitlements";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"DEVELOPMENT_TEAM" = "NA6HPWARQ2";
+				"GENERATE_INFOPLIST_FILE" = "YES";
+				"INFOPLIST_FILE" = "HanlinMiniAppsExtensions/Translation/Info.plist";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "27.0";
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				"MARKETING_VERSION" = "0.1.0";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.itorah.hanlinminiapps.translation-provider";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"SKIP_INSTALL" = "YES";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"SWIFT_APPROACHABLE_CONCURRENCY" = "YES";
+				"SWIFT_VERSION" = "6.0";
+				"TARGETED_DEVICE_FAMILY" = "1,2";
+				"PRODUCT_MODULE_NAME" = "HanlinMiniAppsTranslationProviderHost";
+			};
+			"name" = "Debug";
+		};
+		AC1AA590F5CB3DD6F387B172 = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"APPLICATION_EXTENSION_API_ONLY" = "YES";
+				"CODE_SIGN_ENTITLEMENTS" = "HanlinMiniAppsExtensions/Translation/HanlinMiniAppsTranslationProvider.entitlements";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"DEVELOPMENT_TEAM" = "NA6HPWARQ2";
+				"GENERATE_INFOPLIST_FILE" = "YES";
+				"INFOPLIST_FILE" = "HanlinMiniAppsExtensions/Translation/Info.plist";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "27.0";
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				"MARKETING_VERSION" = "0.1.0";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.itorah.hanlinminiapps.translation-provider";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"SKIP_INSTALL" = "YES";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"SWIFT_APPROACHABLE_CONCURRENCY" = "YES";
+				"SWIFT_VERSION" = "6.0";
+				"TARGETED_DEVICE_FAMILY" = "1,2";
+				"PRODUCT_MODULE_NAME" = "HanlinMiniAppsTranslationProviderHost";
+			};
+			"name" = "Release";
+		};
+		AC1AECB5949F2A312BA8FBAA = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"APPLICATION_EXTENSION_API_ONLY" = "YES";
+				"CODE_SIGN_ENTITLEMENTS" = "HanlinMiniAppsExtensions/Notification/HanlinMiniAppsNotificationService.entitlements";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"DEVELOPMENT_TEAM" = "NA6HPWARQ2";
+				"GENERATE_INFOPLIST_FILE" = "NO";
+				"INFOPLIST_FILE" = "HanlinMiniAppsExtensions/Notification/Info.plist";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "27.0";
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				"MARKETING_VERSION" = "0.1.0";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.itorah.hanlinminiapps.notification-service";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"SKIP_INSTALL" = "YES";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"SWIFT_APPROACHABLE_CONCURRENCY" = "YES";
+				"SWIFT_VERSION" = "6.0";
+				"TARGETED_DEVICE_FAMILY" = "1,2";
+				"PRODUCT_MODULE_NAME" = "HanlinMiniAppsNotificationServiceHost";
+			};
+			"name" = "Debug";
+		};
+		AC1A55CB050528CAA62C349A = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"APPLICATION_EXTENSION_API_ONLY" = "YES";
+				"CODE_SIGN_ENTITLEMENTS" = "HanlinMiniAppsExtensions/Notification/HanlinMiniAppsNotificationService.entitlements";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"DEVELOPMENT_TEAM" = "NA6HPWARQ2";
+				"GENERATE_INFOPLIST_FILE" = "NO";
+				"INFOPLIST_FILE" = "HanlinMiniAppsExtensions/Notification/Info.plist";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "27.0";
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				"MARKETING_VERSION" = "0.1.0";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.itorah.hanlinminiapps.notification-service";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"SKIP_INSTALL" = "YES";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"SWIFT_APPROACHABLE_CONCURRENCY" = "YES";
+				"SWIFT_VERSION" = "6.0";
+				"TARGETED_DEVICE_FAMILY" = "1,2";
+				"PRODUCT_MODULE_NAME" = "HanlinMiniAppsNotificationServiceHost";
+			};
+			"name" = "Release";
+		};
+		AC1B37B92DC1D0C1FD2B1F04 = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"APPLICATION_EXTENSION_API_ONLY" = "YES";
+				"CODE_SIGN_ENTITLEMENTS" = "ChavrusaChatKeyboard/ChavrusaChatKeyboard.entitlements";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"DEVELOPMENT_TEAM" = "NA6HPWARQ2";
+				"GENERATE_INFOPLIST_FILE" = "YES";
+				"INFOPLIST_FILE" = "ChavrusaChatKeyboard/Info.plist";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "27.0";
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				"MARKETING_VERSION" = "0.7.3";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.itorah.chavrusachat.keyboard";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"SKIP_INSTALL" = "YES";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"SWIFT_APPROACHABLE_CONCURRENCY" = "YES";
+				"SWIFT_VERSION" = "6.0";
+				"TARGETED_DEVICE_FAMILY" = "1,2";
+				"PRODUCT_MODULE_NAME" = "ChavrusaChatKeyboardHost";
+			};
+			"name" = "Debug";
+		};
+		AC1BB08B2FC76EA39D6BB5CE = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"APPLICATION_EXTENSION_API_ONLY" = "YES";
+				"CODE_SIGN_ENTITLEMENTS" = "ChavrusaChatKeyboard/ChavrusaChatKeyboard.entitlements";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"DEVELOPMENT_TEAM" = "NA6HPWARQ2";
+				"GENERATE_INFOPLIST_FILE" = "YES";
+				"INFOPLIST_FILE" = "ChavrusaChatKeyboard/Info.plist";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "27.0";
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				"MARKETING_VERSION" = "0.7.3";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.itorah.chavrusachat.keyboard";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"SKIP_INSTALL" = "YES";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"SWIFT_APPROACHABLE_CONCURRENCY" = "YES";
+				"SWIFT_VERSION" = "6.0";
+				"TARGETED_DEVICE_FAMILY" = "1,2";
+				"PRODUCT_MODULE_NAME" = "ChavrusaChatKeyboardHost";
+			};
+			"name" = "Release";
+		};
+		AC1B38A829FA5BD438388BD9 = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"APPLICATION_EXTENSION_API_ONLY" = "YES";
+				"CODE_SIGN_ENTITLEMENTS" = "ChavrusaChatNotificationContent/ChavrusaChatNotificationContent.entitlements";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"DEVELOPMENT_TEAM" = "NA6HPWARQ2";
+				"GENERATE_INFOPLIST_FILE" = "YES";
+				"INFOPLIST_FILE" = "ChavrusaChatNotificationContent/Info.plist";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "27.0";
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				"MARKETING_VERSION" = "0.7.3";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.itorah.chavrusachat.notification-content";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"SKIP_INSTALL" = "YES";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"SWIFT_APPROACHABLE_CONCURRENCY" = "YES";
+				"SWIFT_VERSION" = "6.0";
+				"TARGETED_DEVICE_FAMILY" = "1,2";
+				"PRODUCT_MODULE_NAME" = "ChavrusaChatNotificationContentHost";
+			};
+			"name" = "Debug";
+		};
+		AC1B522F7A1AFD2E953C939D = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"APPLICATION_EXTENSION_API_ONLY" = "YES";
+				"CODE_SIGN_ENTITLEMENTS" = "ChavrusaChatNotificationContent/ChavrusaChatNotificationContent.entitlements";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"DEVELOPMENT_TEAM" = "NA6HPWARQ2";
+				"GENERATE_INFOPLIST_FILE" = "YES";
+				"INFOPLIST_FILE" = "ChavrusaChatNotificationContent/Info.plist";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "27.0";
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				"MARKETING_VERSION" = "0.7.3";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.itorah.chavrusachat.notification-content";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"SKIP_INSTALL" = "YES";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"SWIFT_APPROACHABLE_CONCURRENCY" = "YES";
+				"SWIFT_VERSION" = "6.0";
+				"TARGETED_DEVICE_FAMILY" = "1,2";
+				"PRODUCT_MODULE_NAME" = "ChavrusaChatNotificationContentHost";
+			};
+			"name" = "Release";
+		};
+		AC1BEF191523A6D13ABBBF1E = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"APPLICATION_EXTENSION_API_ONLY" = "YES";
+				"CODE_SIGN_ENTITLEMENTS" = "ChavrusaChatCameraCapture/ChavrusaChatCameraCapture.entitlements";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"DEVELOPMENT_TEAM" = "NA6HPWARQ2";
+				"GENERATE_INFOPLIST_FILE" = "YES";
+				"INFOPLIST_FILE" = "ChavrusaChatCameraCapture/Info.plist";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "27.0";
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				"MARKETING_VERSION" = "0.7.3";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.itorah.chavrusachat.camera-capture";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"SKIP_INSTALL" = "YES";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"SWIFT_APPROACHABLE_CONCURRENCY" = "YES";
+				"SWIFT_VERSION" = "6.0";
+				"TARGETED_DEVICE_FAMILY" = "1,2";
+				"PRODUCT_MODULE_NAME" = "ChavrusaChatCameraCaptureHost";
+			};
+			"name" = "Debug";
+		};
+		AC1B856244C038C3AC2FF832 = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"APPLICATION_EXTENSION_API_ONLY" = "YES";
+				"CODE_SIGN_ENTITLEMENTS" = "ChavrusaChatCameraCapture/ChavrusaChatCameraCapture.entitlements";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"DEVELOPMENT_TEAM" = "NA6HPWARQ2";
+				"GENERATE_INFOPLIST_FILE" = "YES";
+				"INFOPLIST_FILE" = "ChavrusaChatCameraCapture/Info.plist";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "27.0";
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				"MARKETING_VERSION" = "0.7.3";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.itorah.chavrusachat.camera-capture";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"SKIP_INSTALL" = "YES";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"SWIFT_APPROACHABLE_CONCURRENCY" = "YES";
+				"SWIFT_VERSION" = "6.0";
+				"TARGETED_DEVICE_FAMILY" = "1,2";
+				"PRODUCT_MODULE_NAME" = "ChavrusaChatCameraCaptureHost";
+			};
+			"name" = "Release";
+		};
+		AC1AE6E1B24E7E44199A92F9 = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"APPLICATION_EXTENSION_API_ONLY" = "YES";
+				"CODE_SIGN_ENTITLEMENTS" = "HanlinMiniAppsExtensions/Keyboard/HanlinMiniAppsKeyboard.entitlements";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"DEVELOPMENT_TEAM" = "NA6HPWARQ2";
+				"GENERATE_INFOPLIST_FILE" = "YES";
+				"INFOPLIST_FILE" = "HanlinMiniAppsExtensions/Keyboard/Info.plist";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "27.0";
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				"MARKETING_VERSION" = "0.1.0";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.itorah.hanlinminiapps.keyboard";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"SKIP_INSTALL" = "YES";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"SWIFT_APPROACHABLE_CONCURRENCY" = "YES";
+				"SWIFT_VERSION" = "6.0";
+				"TARGETED_DEVICE_FAMILY" = "1,2";
+				"PRODUCT_MODULE_NAME" = "HanlinMiniAppsKeyboardHost";
+			};
+			"name" = "Debug";
+		};
+		AC1AF0FE6C9B3E476DE1E0FA = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"APPLICATION_EXTENSION_API_ONLY" = "YES";
+				"CODE_SIGN_ENTITLEMENTS" = "HanlinMiniAppsExtensions/Keyboard/HanlinMiniAppsKeyboard.entitlements";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"DEVELOPMENT_TEAM" = "NA6HPWARQ2";
+				"GENERATE_INFOPLIST_FILE" = "YES";
+				"INFOPLIST_FILE" = "HanlinMiniAppsExtensions/Keyboard/Info.plist";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "27.0";
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				"MARKETING_VERSION" = "0.1.0";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.itorah.hanlinminiapps.keyboard";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"SKIP_INSTALL" = "YES";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"SWIFT_APPROACHABLE_CONCURRENCY" = "YES";
+				"SWIFT_VERSION" = "6.0";
+				"TARGETED_DEVICE_FAMILY" = "1,2";
+				"PRODUCT_MODULE_NAME" = "HanlinMiniAppsKeyboardHost";
+			};
+			"name" = "Release";
+		};
+		AC1A89F5A11CF54B1F6B12FA = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"APPLICATION_EXTENSION_API_ONLY" = "YES";
+				"CODE_SIGN_ENTITLEMENTS" = "HanlinMiniAppsExtensions/NotificationContent/HanlinMiniAppsNotificationContent.entitlements";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"DEVELOPMENT_TEAM" = "NA6HPWARQ2";
+				"GENERATE_INFOPLIST_FILE" = "YES";
+				"INFOPLIST_FILE" = "HanlinMiniAppsExtensions/NotificationContent/Info.plist";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "27.0";
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				"MARKETING_VERSION" = "0.1.0";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.itorah.hanlinminiapps.notification-content";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"SKIP_INSTALL" = "YES";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"SWIFT_APPROACHABLE_CONCURRENCY" = "YES";
+				"SWIFT_VERSION" = "6.0";
+				"TARGETED_DEVICE_FAMILY" = "1,2";
+				"PRODUCT_MODULE_NAME" = "HanlinMiniAppsNotificationContentHost";
+			};
+			"name" = "Debug";
+		};
+		AC1ACA59821E5875B98EBFA7 = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"APPLICATION_EXTENSION_API_ONLY" = "YES";
+				"CODE_SIGN_ENTITLEMENTS" = "HanlinMiniAppsExtensions/NotificationContent/HanlinMiniAppsNotificationContent.entitlements";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"DEVELOPMENT_TEAM" = "NA6HPWARQ2";
+				"GENERATE_INFOPLIST_FILE" = "YES";
+				"INFOPLIST_FILE" = "HanlinMiniAppsExtensions/NotificationContent/Info.plist";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "27.0";
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				"MARKETING_VERSION" = "0.1.0";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.itorah.hanlinminiapps.notification-content";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"SKIP_INSTALL" = "YES";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"SWIFT_APPROACHABLE_CONCURRENCY" = "YES";
+				"SWIFT_VERSION" = "6.0";
+				"TARGETED_DEVICE_FAMILY" = "1,2";
+				"PRODUCT_MODULE_NAME" = "HanlinMiniAppsNotificationContentHost";
+			};
+			"name" = "Release";
+		};
+		AC1A62FF682DBFB819C1C5DA = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"APPLICATION_EXTENSION_API_ONLY" = "YES";
+				"CODE_SIGN_ENTITLEMENTS" = "HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.entitlements";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"DEVELOPMENT_TEAM" = "NA6HPWARQ2";
+				"GENERATE_INFOPLIST_FILE" = "YES";
+				"INFOPLIST_FILE" = "HanlinMiniAppsExtensions/CameraCapture/Info.plist";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "27.0";
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				"MARKETING_VERSION" = "0.1.0";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.itorah.hanlinminiapps.camera-capture";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"SKIP_INSTALL" = "YES";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"SWIFT_APPROACHABLE_CONCURRENCY" = "YES";
+				"SWIFT_VERSION" = "6.0";
+				"TARGETED_DEVICE_FAMILY" = "1,2";
+				"PRODUCT_MODULE_NAME" = "HanlinMiniAppsCameraCaptureHost";
+			};
+			"name" = "Debug";
+		};
+		AC1A3713FA7252A25C7016D4 = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"APPLICATION_EXTENSION_API_ONLY" = "YES";
+				"CODE_SIGN_ENTITLEMENTS" = "HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.entitlements";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"DEVELOPMENT_TEAM" = "NA6HPWARQ2";
+				"GENERATE_INFOPLIST_FILE" = "YES";
+				"INFOPLIST_FILE" = "HanlinMiniAppsExtensions/CameraCapture/Info.plist";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "27.0";
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				"MARKETING_VERSION" = "0.1.0";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.itorah.hanlinminiapps.camera-capture";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"SKIP_INSTALL" = "YES";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"SWIFT_APPROACHABLE_CONCURRENCY" = "YES";
+				"SWIFT_VERSION" = "6.0";
+				"TARGETED_DEVICE_FAMILY" = "1,2";
+				"PRODUCT_MODULE_NAME" = "HanlinMiniAppsCameraCaptureHost";
 			};
 			"name" = "Release";
 		};
@@ -3868,6 +5834,96 @@
 		FA33402702F6D03A614031F9 /* W1-007 bootstrap */ = {
 			"isa" = "XCConfigurationList";
 			"buildConfigurations" = ("FA4E242EAB30BA0FDB576386", "FA40A8A475DABB49F20C1CB0", );
+			"defaultConfigurationIsVisible" = "0";
+			"defaultConfigurationName" = "Release";
+		};
+		AC1AB9FCCB521DFD7B4C93B6 = {
+			"isa" = "XCConfigurationList";
+			"buildConfigurations" = (
+				"AC1A1AAAEF4F0104C4B10D76",
+				"AC1A2ADEBAFA5244E61C45C2",
+			);
+			"defaultConfigurationIsVisible" = "0";
+			"defaultConfigurationName" = "Release";
+		};
+		AC1A4D123140D10459C4E4F5 = {
+			"isa" = "XCConfigurationList";
+			"buildConfigurations" = (
+				"AC1AB6D51B9E021AAFE2ABF0",
+				"AC1AD47C5D552C577DF6D32F",
+			);
+			"defaultConfigurationIsVisible" = "0";
+			"defaultConfigurationName" = "Release";
+		};
+		AC1A7AE7421DB8885F6763C6 = {
+			"isa" = "XCConfigurationList";
+			"buildConfigurations" = (
+				"AC1AAD1268A94F0EF4496BF5",
+				"AC1AA590F5CB3DD6F387B172",
+			);
+			"defaultConfigurationIsVisible" = "0";
+			"defaultConfigurationName" = "Release";
+		};
+		AC1A5D505EC62DBE097D5194 = {
+			"isa" = "XCConfigurationList";
+			"buildConfigurations" = (
+				"AC1AECB5949F2A312BA8FBAA",
+				"AC1A55CB050528CAA62C349A",
+			);
+			"defaultConfigurationIsVisible" = "0";
+			"defaultConfigurationName" = "Release";
+		};
+		AC1B5655CE1E0AF513A97F0D = {
+			"isa" = "XCConfigurationList";
+			"buildConfigurations" = (
+				"AC1B37B92DC1D0C1FD2B1F04",
+				"AC1BB08B2FC76EA39D6BB5CE",
+			);
+			"defaultConfigurationIsVisible" = "0";
+			"defaultConfigurationName" = "Release";
+		};
+		AC1B1E0814682810EB91A504 = {
+			"isa" = "XCConfigurationList";
+			"buildConfigurations" = (
+				"AC1B38A829FA5BD438388BD9",
+				"AC1B522F7A1AFD2E953C939D",
+			);
+			"defaultConfigurationIsVisible" = "0";
+			"defaultConfigurationName" = "Release";
+		};
+		AC1BFF625B9E7D895EB59ADD = {
+			"isa" = "XCConfigurationList";
+			"buildConfigurations" = (
+				"AC1BEF191523A6D13ABBBF1E",
+				"AC1B856244C038C3AC2FF832",
+			);
+			"defaultConfigurationIsVisible" = "0";
+			"defaultConfigurationName" = "Release";
+		};
+		AC1A2E0CA63379BC8806978C = {
+			"isa" = "XCConfigurationList";
+			"buildConfigurations" = (
+				"AC1AE6E1B24E7E44199A92F9",
+				"AC1AF0FE6C9B3E476DE1E0FA",
+			);
+			"defaultConfigurationIsVisible" = "0";
+			"defaultConfigurationName" = "Release";
+		};
+		AC1A1982D77C8FABE4402231 = {
+			"isa" = "XCConfigurationList";
+			"buildConfigurations" = (
+				"AC1A89F5A11CF54B1F6B12FA",
+				"AC1ACA59821E5875B98EBFA7",
+			);
+			"defaultConfigurationIsVisible" = "0";
+			"defaultConfigurationName" = "Release";
+		};
+		AC1A5A8E0AC9A129F1D13AAE = {
+			"isa" = "XCConfigurationList";
+			"buildConfigurations" = (
+				"AC1A62FF682DBFB819C1C5DA",
+				"AC1A3713FA7252A25C7016D4",
+			);
 			"defaultConfigurationIsVisible" = "0";
 			"defaultConfigurationName" = "Release";
 		};
@@ -4213,6 +6269,30 @@
 			package = AC1900000000000000000001;
 			productName = HanlinMiniAppsUI;
 		};
+		C0F20F8DB55A21AFC010BCE2 = { isa = XCSwiftPackageProductDependency; package = AC1900000000000000000001; productName = HanlinMiniAppsBridge; };
+		26B9238591CBD8BD492D137C = { isa = XCSwiftPackageProductDependency; package = AC1900000000000000000001; productName = HanlinMiniAppsPicker; };
+		D7532BF517832175AD2CF8EE = {isa = XCSwiftPackageProductDependency; package = AC1900000000000000000001; productName = HanlinMiniAppsBridge; };
+		499632C6BDF7BBBDF296C7D6 = {isa = XCSwiftPackageProductDependency; package = AC1900000000000000000001; productName = HanlinTextStudioMiniApp; };
+		AC1900000000000000000050 = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC1900000000000000000001;
+			productName = HanlinExpoWidgetsOriginal;
+		};
+		AC1900000000000000000060 = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC1900000000000000000001;
+			productName = HanlinKeyboardUI;
+		};
+		AC1900000000000000000061 = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC1900000000000000000001;
+			productName = HanlinNotificationContentUI;
+		};
+		AC1900000000000000000062 = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC1900000000000000000001;
+			productName = HanlinCameraCaptureUI;
+		};
 /* End XCSwiftPackageProductDependency section */
 
 /* Integrated standalone target and transport objects */
@@ -4237,6 +6317,8 @@
 		3A86CB87F13B3976AB038CFD = {
 			"isa" = "XCBuildConfiguration";
 			"buildSettings" = {
+				OTHER_SWIFT_FLAGS = ("$(inherited)", "-Xcc", "-std=gnu++20", "-Xcc", "-DREACT_NATIVE_PRODUCTION=1", "-Xcc", "-DRN_DEBUG_STRING_CONVERTIBLE=0", "-Xcc", "-Wno-quoted-include-in-framework-header", "-Xcc", "-Wno-non-modular-include-in-framework-module", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/bridge", "-Xcc", "-F$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-FArtifacts/ModularFrameworks", "-Xcc", "-FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-IArtifacts/ReactModularHeaders", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IArtifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",);
+				SWIFT_ENABLE_EXPLICIT_MODULES = YES;
 				"BUNDLE_LOADER" = "$(TEST_HOST)";
 				"GENERATE_INFOPLIST_FILE" = "YES";
 				"IPHONEOS_DEPLOYMENT_TARGET" = "27.0";
@@ -4246,7 +6328,7 @@
 				"PRODUCT_NAME" = "$(TARGET_NAME)";
 				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
 				"SWIFT_APPROACHABLE_CONCURRENCY" = "YES";
-				"SWIFT_OBJC_INTEROP_MODE" = "objcxx";
+				SWIFT_OBJC_INTEROP_MODE = objcxx;
 				"CLANG_CXX_LANGUAGE_STANDARD" = "gnu++20";
 				"SWIFT_VERSION" = "6.0";
 				"TARGETED_DEVICE_FAMILY" = "1,2";
@@ -4280,6 +6362,8 @@
 		8D99F33AE4F678BB2DE29E45 = {
 			"isa" = "XCBuildConfiguration";
 			"buildSettings" = {
+				OTHER_SWIFT_FLAGS = ("$(inherited)", "-Xcc", "-std=gnu++20", "-Xcc", "-DREACT_NATIVE_PRODUCTION=1", "-Xcc", "-DRN_DEBUG_STRING_CONVERTIBLE=0", "-Xcc", "-Wno-quoted-include-in-framework-header", "-Xcc", "-Wno-non-modular-include-in-framework-module", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/include", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPICore/bridge", "-Xcc", "-F$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-F../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-FArtifacts/ModularFrameworks", "-Xcc", "-FPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-IArtifacts/ReactModularHeaders", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactModularHeaders", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IArtifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers/react", "-Xcc", "-I$(SRCROOT)/Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-I../Packages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IArtifacts/ReactNativeDependencies.xcframework/Headers", "-Xcc", "-IPackages/HanlinExpoRuntime/Artifacts/ReactNativeDependencies.xcframework/Headers",);
+				SWIFT_ENABLE_EXPLICIT_MODULES = YES;
 				"BUNDLE_LOADER" = "$(TEST_HOST)";
 				"GENERATE_INFOPLIST_FILE" = "YES";
 				"IPHONEOS_DEPLOYMENT_TARGET" = "27.0";
@@ -4289,7 +6373,7 @@
 				"PRODUCT_NAME" = "$(TARGET_NAME)";
 				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
 				"SWIFT_APPROACHABLE_CONCURRENCY" = "YES";
-				"SWIFT_OBJC_INTEROP_MODE" = "objcxx";
+				SWIFT_OBJC_INTEROP_MODE = objcxx;
 				"CLANG_CXX_LANGUAGE_STANDARD" = "gnu++20";
 				"SWIFT_VERSION" = "6.0";
 				"TARGETED_DEVICE_FAMILY" = "1,2";
@@ -4339,7 +6423,9 @@
 			"dependencies" = ("C0CA92CB46DB8D474390D107", );
 			"fileSystemSynchronizedGroups" = ("C1D9E69575D3B7BC691961CD", );
 			"name" = "HanlinMiniAppsTests";
-			"packageProductDependencies" = ("F80000000000000000000053", "A10000000000000000000015", "C10000000000000000000021", );
+			"packageProductDependencies" = (
+				"499632C6BDF7BBBDF296C7D6",
+				"D7532BF517832175AD2CF8EE","F80000000000000000000053", "A10000000000000000000015", "C10000000000000000000021", );
 			"productName" = "HanlinMiniAppsTests";
 			"productReference" = "145350813A91990EA5F13A88";
 			"productType" = "com.apple.product-type.bundle.unit-test";
@@ -4377,7 +6463,9 @@
 		EE337AFAF2E9CA5BC30BC377 = {
 			"isa" = "PBXFrameworksBuildPhase";
 			"buildActionMask" = "2147483647";
-			"files" = ("27E5EA35A3EEA9C6064501CA", "48464889287ACCC43468009D", "E40956A56BB0674B33B35099", );
+			"files" = (
+				"9D281EC999A9E368745F917A",
+				"D50F4D163E01EE6798757607","27E5EA35A3EEA9C6064501CA", "48464889287ACCC43468009D", "E40956A56BB0674B33B35099", );
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
 		F820C81AA4E27696CB4C26CD = {

@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/Users/m1/builds/hanlin-notification-os-recovery-20261125/Scripts/CI/observe_notification_os_delivery.py", line 334, in main
+    completion["observations"] = observe(
+                                 ^^^^^^^^
+  File "/Users/m1/builds/hanlin-notification-os-recovery-20261125/Scripts/CI/observe_notification_os_delivery.py", line 241, in observe
+    path, raw, record = wait_for(
+                        ^^^^^^^^^
+  File "/Users/m1/builds/hanlin-notification-os-recovery-20261125/Scripts/CI/observe_notification_os_delivery.py", line 55, in wait_for
+    raise TimeoutError(description)
+TimeoutError: No actual terminal OS-ingress receipt

@@ -34,6 +34,28 @@ function loadActionIcon(item) {
     }
     return img;
 }
+function applyBarPlacement(barButtonItem, settings) {
+    if (!barButtonItem || !settings || !barButtonItem.respondsToSelector('setVisibilityPriority:')) {
+        return;
+    }
+    const placement = barButtonItem;
+    const priority = settings.visibilityPriority;
+    if (priority === 'high') {
+        placement.visibilityPriority = UIBarButtonItemVisibilityPriorityHigh;
+    }
+    else if (priority === 'low') {
+        placement.visibilityPriority = UIBarButtonItemVisibilityPriorityLow;
+    }
+    else if (priority !== undefined && priority !== 'standard' && !isNaN(+priority)) {
+        placement.visibilityPriority = +priority;
+    }
+    if (settings.axisBehavior === 'horizontalOnly') {
+        placement.axisBehavior = 1 /* BarButtonItemAxisBehavior.HorizontalOnly */;
+    }
+    else if (settings.axisBehavior === 'verticalPreferred') {
+        placement.axisBehavior = 2 /* BarButtonItemAxisBehavior.VerticalPreferred */;
+    }
+}
 var TapBarItemHandlerImpl = (function (_super) {
     __extends(TapBarItemHandlerImpl, _super);
     function TapBarItemHandlerImpl() {
@@ -304,6 +326,9 @@ export class ActionBar extends ActionBarBase {
             if (img) {
                 const image = img.imageWithRenderingMode(this._getIconRenderingMode());
                 barButtonItem = UIBarButtonItem.alloc().initWithImageStyleTargetAction(image, 0 /* UIBarButtonItemStyle.Plain */, tapHandler, 'tap');
+                if (item.text) {
+                    barButtonItem.title = item.text;
+                }
             }
         }
         else {
@@ -314,6 +339,7 @@ export class ActionBar extends ActionBarBase {
             barButtonItem.accessibilityLabel = item.text;
             barButtonItem.accessibilityTraits = UIAccessibilityTraitButton;
         }
+        applyBarPlacement(barButtonItem, item.ios);
         return barButtonItem;
     }
     updateFills(navBar) {

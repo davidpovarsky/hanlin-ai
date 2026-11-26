@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "sourceBase": "789949132fc4e9399425958c343571fbe8e420eb",
+  "status": "SOURCE_REVIEWED_NATIVE_PENDING",
+  "finding": "The existing modal UI case saved a successful result but left the main scene inlineRequestID in SceneStorage. A subsequent runtime/authoring case can restore the completed external screen instead of the catalog.",
+  "change": "After the existing saved-result screenshot, invoke the existing Apps button (miniapps.external.cancel), then assert the catalog hanlin-apps-add control. This exercises session.close/onClose and preserves the persisted mailbox result for the original verifier.",
+  "newTestMethods": 0,
+  "nextRequiredNativeCaseCount": 36,
+  "currentRun": "45314033438",
+  "currentRunIncludesThisPostcondition": false,
+  "review": "Existing source/route/lifetime review; no native result claimed for the added postcondition."
+}

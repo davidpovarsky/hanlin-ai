@@ -1,0 +1,28 @@
+{
+  "startedAtUTC": "2026-11-24T11:48:29.201725+00:00",
+  "command": [
+    "python3",
+    "docs/miniapp-sdk/evidence/sdk05-current-shipping-20261124/inspect_artifact.py"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-sdk05-current-shipping-20261124",
+  "sourceSHA256": "127e48da04e5dd067d8834da92c81f28781912202abf873c7570b52a8406d91a",
+  "durationSeconds": 2.1781337736174464,
+  "exit": 0,
+  "scope": "Read-only artifact identity inspection; no product tests/builds/SDK execution.",
+  "logs": {
+    "stdout": {
+      "path": "inspection-attempt-03.stdout.log.gz",
+      "originalBytes": 1020,
+      "originalSHA256": "ae5b6e8132a97c235a23a147b69efd1f8dc3eb4dde12516bc4a2866fc519845c",
+      "bytes": 612,
+      "sha256": "556b050833e7721b2a85c4aed1fc6eb18def10132eea9d89d206099ea4e3d678"
+    },
+    "stderr": {
+      "path": "inspection-attempt-03.stderr.log.gz",
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 20,
+      "sha256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    }
+  }
+}

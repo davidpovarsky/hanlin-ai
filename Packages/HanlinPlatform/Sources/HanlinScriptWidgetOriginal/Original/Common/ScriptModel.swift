@@ -1,0 +1,75 @@
+//
+//  ScriptModel.swift
+//  ScriptWidget
+//
+//  Created by everettjf on 2021/2/10.
+//
+
+import SwiftUI
+
+struct ScriptModel : Identifiable {
+
+    let id = UUID()
+    let package: ScriptWidgetPackage
+    let metadata: ScriptMetadata?
+
+    init(package: ScriptWidgetPackage) {
+        self.package = package
+        if let manifest = package.readManifest() {
+            self.metadata = ScriptMetadata(
+                description: manifest.description,
+                category: manifest.category,
+                tags: manifest.tags,
+                difficulty: nil,
+                icon: manifest.icon,
+                preview: manifest.preview,
+                featured: nil
+            )
+        } else {
+            self.metadata = package.readMetadata()
+        }
+    }
+
+    var name: String {
+        get {
+            self.package.name
+        }
+    }
+
+    var exportFileName: String {
+        get {
+            "\(self.package.name).swt"
+        }
+    }
+
+    var summary: String? {
+        metadata?.description
+    }
+
+    var category: ScriptCategory? {
+        guard let raw = metadata?.category else { return nil }
+        return ScriptCategory(rawValue: raw)
+    }
+
+    var tags: [String] {
+        metadata?.tags ?? []
+    }
+
+    var difficulty: ScriptDifficulty? {
+        guard let raw = metadata?.difficulty else { return nil }
+        return ScriptDifficulty(rawValue: raw)
+    }
+
+    var iconSystemName: String {
+        metadata?.icon ?? category?.systemImage ?? "doc.text.fill"
+    }
+
+    var isFeatured: Bool {
+        metadata?.featured ?? false
+    }
+}
+
+
+
+
+// Standalone app preview instances are not part of the embedded host.

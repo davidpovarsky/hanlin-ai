@@ -1,0 +1,10 @@
+{
+  "refreshCommit": "23502f5430d0f57876f10d26c239b533fb181cf1",
+  "isAncestorOfTestedSource": true,
+  "publicationSource": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExpoWidgetPublication.swift",
+  "publicationSHA256": "ce2b136f95d1eccfd27fc876e10307133602d673fd42d860816559510b5a5960",
+  "sourceInventoryProducerMatches": true,
+  "sourceInventorySourceMatches": true,
+  "reachabilitySDKSourceMatches": true,
+  "noGeneratorExecuted": true
+}

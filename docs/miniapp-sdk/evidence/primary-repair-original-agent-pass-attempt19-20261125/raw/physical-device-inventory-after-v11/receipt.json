@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "startedAt": "2026-11-25T17:23:16.326255+00:00",
+  "finishedAt": "2026-11-25T17:23:22.789928+00:00",
+  "argv": [
+    "xcrun",
+    "xcdevice",
+    "list",
+    "--timeout",
+    "5"
+  ],
+  "seconds": 6.46353820800141,
+  "exitCode": 0,
+  "stderr": "",
+  "raw": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/physical-device-inventory-after-v11/xcdevice-list.json",
+    "bytes": 28520,
+    "sha256": "9e76e4c8e56177bd8c12d1461fce8e5e2788e252b8f42f7eaf5b4352fe7760c9"
+  },
+  "physicalAppleMobile": [],
+  "simulatorCount": 60,
+  "physicalMac": [
+    {
+      "ignored": false,
+      "modelCode": "Mac14,12",
+      "simulator": false,
+      "modelName": "Mac mini",
+      "operatingSystemVersion": "27.0 (26A428)",
+      "identifier": "00006020-001C403E2233C01E",
+      "platform": "com.apple.platform.macosx",
+      "architecture": "arm64e",
+      "interface": "usb",
+      "available": true,
+      "name": "My Mac",
+      "modelUTI": "com.apple.macmini-2023"
+    }
+  ],
+  "freeBytesAfter": 2051518464,
+  "boundary": "One current read-only original xcdevice inventory after authenticated V11 native cleanup; no pairing, signing, device mutation or physical test performed."
+}

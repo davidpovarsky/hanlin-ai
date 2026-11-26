@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-11-24T10:15:34.772540+00:00",
+  "baseCommit": "56539e07ba9a5ccf5853063c063948f95a8f946a",
+  "scope": "GroupBox generated JavaScript content-slot forwarding; no native runtime, registration, selector, capability or CI changes.",
+  "observedDefect": "Declared children remained in spread props and were replaced by explicit slot JSX; omitted content lost the normal React child.",
+  "contract": "For multi-slot wrappers with a content builder, destructure children before content = children. Omitted/undefined content falls back to children; explicit null/false/0/empty string and explicit nodes take precedence. Other named slots stay independent.",
+  "results": [
+    {
+      "status": "EXECUTED_FAIL",
+      "case": "actual generated GroupBox wrapper, original React/TypeScript",
+      "command": "before.command.json",
+      "tests": 1,
+      "failed": 1,
+      "assertion": "Omitted content emitted 1 slot instead of content plus label (2)."
+    },
+    {
+      "status": "EXECUTED_PASS",
+      "case": "same exact wrapper/render test after fix, both canonical and installed mirrors",
+      "command": "after.command.json",
+      "tests": 1,
+      "failed": 0,
+      "skipped": 0,
+      "variants": [
+        "omitted",
+        "undefined",
+        "explicit node",
+        "null",
+        "false",
+        "zero",
+        "empty string",
+        "absent children",
+        "label only"
+      ]
+    },
+    {
+      "status": "EXECUTED_PASS",
+      "case": "compile actual production generator core with installed portable Swift6.4.3 host SwiftSyntax",
+      "command": "generator-build.command.json"
+    },
+    {
+      "status": "EXECUTED_PASS",
+      "case": "actual production generator write over unchanged recorded1950-declaration IR equals both affected views.tsx mirrors",
+      "command": "generator-parity.command.json"
+    }
+  ],
+  "boundary": {
+    "node": "Actual production wrapper + original React19.3.0 + compiler6.0.3; native-view bindings replaced only with inert string tags. Transpile check is not a full strict authoring validation.",
+    "generator": "Actual unmodified production core bodies aside from the fix; installed Swift6.4.3 host SwiftSyntax libraries, not a pinned SwiftPM603.0.2 package run. Parser not exercised by replay of stored production IR.",
+    "swiftPackageDeterministicTest": "Existing deterministicOutput assertions strengthened; Swift Testing method not run in this lane.",
+    "apple": "NOT_RUN; existing GroupBox native method is strengthened by entrypoints without a new selector.",
+    "combinedPublicSDKBuild": "Owned by entrypoints; not executed by this lane."
+  },
+  "sourceHashes": "source-hashes.json",
+  "dependencyHashes": "original-module-hashes.json",
+  "nativeConsumerUnchanged": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedViews.swift"
+}

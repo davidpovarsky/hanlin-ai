@@ -1,0 +1,18 @@
+{
+  "command": [
+    "node",
+    "/mnt/development/projects/worktrees/hanlin-generated-views-probe-20261124/docs/miniapp-sdk/evidence/generated-views-probe-20261124/archive-public-build.mjs",
+    "/mnt/development/projects/worktrees/hanlin-generated-views-probe-20261124",
+    "/tmp/hanlin-generated-probe-authoring-20261124/attempt-02/package",
+    "/mnt/development/projects/worktrees/hanlin-generated-views-probe-20261124/docs/miniapp-sdk/evidence/generated-views-probe-20261124/public-build-artifact.zip"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 1.0365027664229274,
+  "reason": "The preceding dependency cherry-pick reapplied sparse patterns and removed an ad hoc materialized tracked ZIP helper. Added its real tracked directory to this isolated sparse checkout; no compiler/Metro/SDK operation repeated.",
+  "sourceMaterializationCommand": [
+    "git",
+    "sparse-checkout",
+    "add",
+    "Scripts/Widgets"
+  ]
+}

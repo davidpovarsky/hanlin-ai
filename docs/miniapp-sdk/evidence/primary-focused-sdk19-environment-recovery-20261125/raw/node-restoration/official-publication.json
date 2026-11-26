@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "at": "2026-11-25T12:29:40.245524+00:00",
+  "url": "https://nodejs.org/dist/v24.5.0/SHASUMS256.txt",
+  "manifestSHA256": "16988564d18cce79ef0db0f3e645df921cfdcab3467ec36dcd0ff3d2ce6603b4",
+  "manifestBytes": 2943,
+  "archiveURL": "https://nodejs.org/dist/v24.5.0/node-v24.5.0-darwin-arm64.tar.xz",
+  "archiveName": "node-v24.5.0-darwin-arm64.tar.xz",
+  "archiveSHA256": "8b6379059b3347a9d0335dd682b0ec9eb7888e1a9c8b23483d3dd2c32e744420",
+  "scope": "Restore exact original prepared Node24.5.0 authoring runtime only; no npm install, reseal, SDK generation or native acceptance."
+}

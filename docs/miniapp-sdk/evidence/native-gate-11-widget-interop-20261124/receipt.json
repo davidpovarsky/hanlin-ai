@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "createdAtUTC": "2026-11-24T10:18:44.476260+00:00",
+  "runID": 45365620977,
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45365620977",
+  "jobID": 138346476075,
+  "testedSourceCommit": "6d9a59bfc1bd1830a8d56e694c42b19c6bd7d468",
+  "result": "BUILD_FAILED",
+  "miniBuild": {
+    "status": "EXECUTED_FAIL",
+    "exit": 65,
+    "seconds": 1411.22278,
+    "sha256": "423fc5a44046a27e6924c9b99a5954177835dc3fb95918da3e1c18c2635bab59"
+  },
+  "aiBuild": "NOT_RUN",
+  "selectedAppCases": 42,
+  "executedAppCases": 0,
+  "appCaseStatus": "NOT_RUN",
+  "actualCompilerHeaders": [
+    {
+      "line": 49142,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidget.swift:2:24: error: module 'ExpoWidgets' was built with C++ interoperability enabled, but current compilation does not enable C++ interoperability"
+    }
+  ],
+  "cause": "HanlinScriptingWidgets imports original ExpoWidgets compiled with C++ interoperability, but this consumer in the unified HanlinSDK manifest has no C++ interoperability setting.",
+  "previousButtonRoleCompilerDiagnosticsPresent": false,
+  "reporterCorrectionVerified": "Actual final raw acceptance now correctly reports mini_build/build EXECUTED_FAIL and unstarted ai_build/ui NOT_RUN.",
+  "artifact": {
+    "id": 14909676649,
+    "bytes": 333778731,
+    "sha256": "223f3fb87e311948950a5bbcb15c5c83829c8e67cafe59e8e9d8853626fd6be5",
+    "digestVerified": true
+  },
+  "evidence": [
+    {
+      "retained": {
+        "path": "docs/miniapp-sdk/evidence/native-gate-11-widget-interop-20261124/job.log.gz",
+        "bytes": 479070,
+        "sha256": "189f8c375da9e4eb180d423636d87fd0a4915df04babb590773afabd87ac5058"
+      },
+      "original": {
+        "path": "/dev/shm/hanlin-native-gate-evidence-45365620977/job-138346476075.log",
+        "bytes": 5324338,
+        "sha256": "ec28d58ff8dae327b23e4e0ec2a32c969906842465b7045841dcd5d664bfb48b"
+      }
+    },
+    {
+      "retained": {
+        "path": "docs/miniapp-sdk/evidence/native-gate-11-widget-interop-20261124/mini-build.log.gz",
+        "bytes": 146379,
+        "sha256": "16db7c6fe774fa6cabc86eada0d0f7df225f1d23aee1d65e02cc3ec5bfe66864"
+      },
+      "original": {
+        "path": "/dev/shm/hanlin-native-gate-evidence-45365620977/app-split-evidence/paired-product/mini-build.log",
+        "bytes": 3949930,
+        "sha256": "423fc5a44046a27e6924c9b99a5954177835dc3fb95918da3e1c18c2635bab59"
+      }
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/native-gate-11-widget-interop-20261124/run-api.json",
+      "bytes": 10233,
+      "sha256": "7bef0c938f83488fcdf257b03e881752a44a1ffa0d08cfc86e8783d957d3fe85"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/native-gate-11-widget-interop-20261124/artifacts-api.json",
+      "bytes": 771,
+      "sha256": "bf827f8433d035e0d2f371820f829025010ed3a9e588f8389e9373f4196911eb"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/native-gate-11-widget-interop-20261124/artifact-download-receipt.json",
+      "bytes": 10269,
+      "sha256": "334bf7d69b00cea8c12d40d22eb219a39f324e0e1bb3c86900f36a663fab31e7"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/native-gate-11-widget-interop-20261124/acceptance.json",
+      "bytes": 2403,
+      "sha256": "a8d34aa40e7d9aa67f519260a34769b2620d08c8ee53bfadeafc998f134c5d52"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/native-gate-11-widget-interop-20261124/commands.jsonl",
+      "bytes": 4365,
+      "sha256": "ed174c11243b2abbf6b833c388b661378df7c49628026dab1bf70765412ba0fe"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/native-gate-11-widget-interop-20261124/command-events.jsonl",
+      "bytes": 65144,
+      "sha256": "031f21611ed7015d0ae6c4472a26058ce15d6b524b5eb7352e47d6c9629e14a1"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/native-gate-11-widget-interop-20261124/active-command.json",
+      "bytes": 515,
+      "sha256": "99f8b5436f74260ea50eb2d7004c595b7301df5752e8b48ca63db7374a44fd6a"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/native-gate-11-widget-interop-20261124/shipping-documentation-snippets.json",
+      "bytes": 20066,
+      "sha256": "723cec6e7d8652d89945ef0ea54e8658d3875a903dae53a499c8eead995303b7"
+    }
+  ],
+  "boundaries": {
+    "nativeFullBuild": "FAILED",
+    "appUI": "NOT_RUN",
+    "physicalDevice": "NOT_RUN",
+    "newFollowupSource": "Not included in tested6d9 source",
+    "currentCorrection": "Assigned /root/control_authoring; source/unified target closure fix pending",
+    "nextGate": "miniapp_complete52 after actual compiler correction/current source integration"
+  }
+}

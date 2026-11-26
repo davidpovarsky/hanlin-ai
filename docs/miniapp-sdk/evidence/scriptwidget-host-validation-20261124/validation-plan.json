@@ -1,0 +1,17 @@
+{
+  "baseSHA": "74ba980dbb91f3a38d4531f043801f5e742c283a",
+  "scope": "Production generated wildcard manifest consistency with the existing installed network declaration policy; no test-fixture permission changes",
+  "nativeInitialAttempt": "initial-native-failure.json",
+  "validationPlan": [
+    "One new actual public manifest-validator host case, initial red then corrected green",
+    "Affected existing source/schema and semantic-drift tests only",
+    "Portable execution of the exact unchanged native host-normalizer function with Foundation; not the full Apple validator",
+    "Changed Swift syntax parse; source/manifest reconciliation"
+  ],
+  "notRun": [
+    "CI dispatch or polling",
+    "Full suite",
+    "Native retake"
+  ],
+  "nativeRetakeOwner": "root"
+}

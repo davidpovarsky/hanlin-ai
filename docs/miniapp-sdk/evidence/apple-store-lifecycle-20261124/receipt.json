@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-24T08:26:47.818817+00:00",
+  "runID": 45354891567,
+  "jobID": 138310154255,
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45354891567",
+  "sourceCommit": "a12eb646aeb5c484f746c07ecffafc7d9f34f167",
+  "result": "EXECUTED_PASS_APPLE",
+  "selectedMethod": "HanlinAtomicScriptStoreTests/lifecycle",
+  "executedMethods": 1,
+  "passed": 1,
+  "failed": 0,
+  "skipped": 0,
+  "durationSeconds": 0.29,
+  "toolchain": {
+    "xcode": "27.2",
+    "build": "27B52",
+    "appleSwift": "6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)",
+    "testingLibrary": "2403"
+  },
+  "rawLog": {
+    "path": "job-138310154255.log",
+    "bytes": 155338,
+    "sha256": "dc2edb9faa777238d18e14bd1967a1ec4ade58eaef83ad6990662accc36c2b93"
+  },
+  "actualRows": [
+    {
+      "line": 883,
+      "text": "Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T08:23:51.5963740Z \u25c7 Test \"Install, update, rollback, disable, restore, and uninstall preserve stable identity\" started."
+    },
+    {
+      "line": 884,
+      "text": "Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T08:23:51.6183680Z \u2714 Test \"Install, update, rollback, disable, restore, and uninstall preserve stable identity\" passed after 0.290 seconds."
+    },
+    {
+      "line": 886,
+      "text": "Verify MiniApp store lifecycle / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T08:23:51.6439980Z \u2714 Test run with 1 test in 1 suite passed after 0.290 seconds."
+    }
+  ],
+  "testedInputs": {
+    "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift": "7402b0237d625ad1c0f920b2a2b1824d488ab99896eb3393a25b73ded11fe78d",
+    "Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/HanlinAtomicScriptStoreTests.swift": "df659d94f126564781dcb9336d8a079a042527f0ebaa315b34102a506844b75a"
+  },
+  "currentSourceMatchesTestedStoreAndTest": true,
+  "earlierPortableProof": "../rollback-metadata-20261124/receipt.json",
+  "scope": [
+    "Install/update and per-generation manifest/entrypoint rollback",
+    "Cold restore and stable installed identity",
+    "Redo/reinstall and legacy active/backed-up metadata recovery",
+    "Missing historic metadata failure preserves registry and artifacts"
+  ],
+  "boundary": [
+    "Actual Apple package test, not an app UI test or physical-device proof",
+    "No OS permission revocation or whole80-cell runtime proof implied",
+    "No new storage policy or assertions were disabled"
+  ]
+}

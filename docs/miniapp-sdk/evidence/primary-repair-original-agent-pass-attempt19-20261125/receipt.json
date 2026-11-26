@@ -1,0 +1,630 @@
+{
+  "schemaVersion": 1,
+  "kind": "actual-original-agent-repair-pass-source-bound-evidence",
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "SDKProducerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+  "createdAt": "2026-11-25T17:40:57.255032+00:00",
+  "fileCount": 67,
+  "totalBytes": 5598475,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 6528,
+      "sha256": "aa0676967e66a37281fc9e8e18443f1287f0a621d913810e80df94840f8ed666"
+    },
+    {
+      "path": "manifest.json",
+      "bytes": 7103,
+      "sha256": "ffa5248ecfd09d2977745d89c4b6de01ab73f41def2b94cfa54cc0efda13e595"
+    },
+    {
+      "path": "raw/controls/focused-native-child-v11.py",
+      "bytes": 24240,
+      "sha256": "f5bf628915da0b169468d78dac232aa9e8b4d702995051049eaa8d75274dd644",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-draft/focused-native-child-v11.py"
+    },
+    {
+      "path": "raw/controls/focused19-recovery-controller-v11b-review.json",
+      "bytes": 2454,
+      "sha256": "1e9d75b459776de68231bc75fd924231d814cb31d6128efd401a7493d4a59164",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-draft/focused19-recovery-controller-v11b-review.json"
+    },
+    {
+      "path": "raw/controls/focused19-recovery-controller-v11b.diff",
+      "bytes": 5490,
+      "sha256": "428874fde079a719cbe0eea8ea328583e9264476e18cea7bd704dac8693cccb4",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-draft/focused19-recovery-controller-v11b.diff"
+    },
+    {
+      "path": "raw/controls/focused19-recovery-controller-v11b.py",
+      "bytes": 72636,
+      "sha256": "332728f7590a572aac6aaf61f5bb6e8b12a3d7d103c185da97fbfba2e5c6ddc4",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-draft/focused19-recovery-controller-v11b.py"
+    },
+    {
+      "path": "raw/controls/focused19-v11-recovery-inputs.json",
+      "bytes": 7113,
+      "sha256": "eaccf3795eb755f1bfad0a89794a7ee59dbb4d8b0673d69e690b4bf5fbfa2524",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-recovery-inputs.json"
+    },
+    {
+      "path": "raw/controls/focused19-v11b-decision-template.json",
+      "bytes": 102533,
+      "sha256": "655d28d51717c024d114d1b72d2eb9025047628408319511bfd0621bd96581c7",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11b-decision-template.json"
+    },
+    {
+      "path": "raw/controls/focused19-v11b-launch-command.json",
+      "bytes": 17099,
+      "sha256": "d0142e3b7efa1fb1363531a4fa21a53debea10ee3a6ded761b76b957d3705406",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11b-launch-command.json"
+    },
+    {
+      "path": "raw/controls/focused19-v11b-launch.json",
+      "bytes": 4644,
+      "sha256": "f79764d022145d94d3aec5089233969a388747d4983bc2c460941250dfd04e9c",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11b-launch.json"
+    },
+    {
+      "path": "raw/controls/focused19-v11b-seal-command.json",
+      "bytes": 6660,
+      "sha256": "4b5514ccb527abfcd4c1eda120fd76f0d189de1704cae0b0e5b4e56737149b9e",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11b-seal-command.json"
+    },
+    {
+      "path": "raw/controls/focused19-v11b-seal.json",
+      "bytes": 6240,
+      "sha256": "9174cfad73349c8a49403b09af377b7307b32770b26302675c142de1bd0cd5f3",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11b-seal.json"
+    },
+    {
+      "path": "raw/controls/import-view-source-impact-receipt.json",
+      "bytes": 4445,
+      "sha256": "e086b1661f99277ccdb18e5d84dca93311a7f65fe55cb004f79ff5771910e380",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-import-view-source-impact/receipt.json"
+    },
+    {
+      "path": "raw/controls/launch-focused19-importer-view-identity-v11b.py",
+      "bytes": 2898,
+      "sha256": "99383761d6c49415d30e60050353d6e063cc95b818a70c33f31b3a6329a3dbd6",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/launch-focused19-importer-view-identity-v11b.py"
+    },
+    {
+      "path": "raw/controls/seal-focused19-importer-view-identity-v11b.py",
+      "bytes": 4738,
+      "sha256": "8e81fad7169996763c30885f599856f335b69cbde622356b4edb1d700f86c72c",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/seal-focused19-importer-view-identity-v11b.py"
+    },
+    {
+      "path": "raw/focused19-v11-built-inputs/built-input-bindings.json",
+      "bytes": 11631,
+      "sha256": "71831b770ee518a6d926650704c509a53d74c41540bd51d743de431b7ca0c640",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-built-inputs/built-input-bindings.json",
+      "authority": {
+        "packetReceipt": "raw/focused19-v11-built-inputs/receipt.json",
+        "packetReceiptSHA256": "039aec0e4297275cee4a5d9c08e8077ed24a3981bf46368feb9bd7b2109635aa",
+        "originalSourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v11/native-result/built-input-bindings.json"
+      }
+    },
+    {
+      "path": "raw/focused19-v11-built-inputs/commands.jsonl",
+      "bytes": 6148,
+      "sha256": "cc4bd7c8a2e85c142f5731438bd7baedea4d2fcda81c7955dd17b87455d87f95",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-built-inputs/commands.jsonl",
+      "authority": {
+        "packetReceipt": "raw/focused19-v11-built-inputs/receipt.json",
+        "packetReceiptSHA256": "039aec0e4297275cee4a5d9c08e8077ed24a3981bf46368feb9bd7b2109635aa",
+        "originalSourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v11/native-result/paired-prefix/commands.jsonl"
+      }
+    },
+    {
+      "path": "raw/focused19-v11-built-inputs/original-prefix-state.json",
+      "bytes": 25360,
+      "sha256": "4801986291deaff7bb15e83eabbad48529c72729054cd021225e8a34b71069e0",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-built-inputs/original-prefix-state.json",
+      "authority": {
+        "packetReceipt": "raw/focused19-v11-built-inputs/receipt.json",
+        "packetReceiptSHA256": "039aec0e4297275cee4a5d9c08e8077ed24a3981bf46368feb9bd7b2109635aa",
+        "originalSourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/original-prefix-state.json"
+      }
+    },
+    {
+      "path": "raw/focused19-v11-built-inputs/receipt.json",
+      "bytes": 1899,
+      "sha256": "039aec0e4297275cee4a5d9c08e8077ed24a3981bf46368feb9bd7b2109635aa",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-built-inputs/receipt.json",
+      "authority": "Original packet receipt"
+    },
+    {
+      "path": "raw/focused19-v11-built-inputs/staged-inputs.json",
+      "bytes": 5834,
+      "sha256": "ab3d55ab809ff78a5a93f28dc058c20e76f98a2a1176f8b6228ce9b3d319d976",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-built-inputs/staged-inputs.json",
+      "authority": {
+        "packetReceipt": "raw/focused19-v11-built-inputs/receipt.json",
+        "packetReceiptSHA256": "039aec0e4297275cee4a5d9c08e8077ed24a3981bf46368feb9bd7b2109635aa",
+        "originalSourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v11/native-result/staged-inputs.json"
+      }
+    },
+    {
+      "path": "raw/focused19-v11-repair-durable-packet/authoring/035554a0-5fd7-402e-b465-e699eaf2a6ca/MiniAppTypeError.hanlinNativeScript",
+      "bytes": 4399,
+      "sha256": "9a2a14be4ad24565bad66a98fc53522229de903acfb8a41b3df18006e81b51c9",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-repair-durable-packet/authoring/035554a0-5fd7-402e-b465-e699eaf2a6ca/MiniAppTypeError.hanlinNativeScript",
+      "authority": {
+        "packetReceipt": "raw/focused19-v11-repair-durable-packet/receipt.json",
+        "packetReceiptSHA256": "47f643af4a2b466a600e1ebc90662603aedde9ccb30cd0dbb57f540460005ca0",
+        "originalSourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428/HanlinSplit/v1/Authoring/v1/035554a0-5fd7-402e-b465-e699eaf2a6ca/MiniAppTypeError.hanlinNativeScript"
+      }
+    },
+    {
+      "path": "raw/focused19-v11-repair-durable-packet/authoring/035554a0-5fd7-402e-b465-e699eaf2a6ca/diagnostics.json",
+      "bytes": 1973,
+      "sha256": "2492a89eadb008a5e81c14a8d652c951b72665a7e197e0dfb7fd25f292cc8dd5",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-repair-durable-packet/authoring/035554a0-5fd7-402e-b465-e699eaf2a6ca/diagnostics.json",
+      "authority": {
+        "packetReceipt": "raw/focused19-v11-repair-durable-packet/receipt.json",
+        "packetReceiptSHA256": "47f643af4a2b466a600e1ebc90662603aedde9ccb30cd0dbb57f540460005ca0",
+        "originalSourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428/HanlinSplit/v1/Authoring/v1/035554a0-5fd7-402e-b465-e699eaf2a6ca/diagnostics.json"
+      }
+    },
+    {
+      "path": "raw/focused19-v11-repair-durable-packet/authoring/035554a0-5fd7-402e-b465-e699eaf2a6ca/receipt.json",
+      "bytes": 214,
+      "sha256": "59e1c7bbd401d16e97779e0b8bbb38833edc8caad7c2adfeddede606248110c0",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-repair-durable-packet/authoring/035554a0-5fd7-402e-b465-e699eaf2a6ca/receipt.json",
+      "authority": {
+        "packetReceipt": "raw/focused19-v11-repair-durable-packet/receipt.json",
+        "packetReceiptSHA256": "47f643af4a2b466a600e1ebc90662603aedde9ccb30cd0dbb57f540460005ca0",
+        "originalSourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428/HanlinSplit/v1/Authoring/v1/035554a0-5fd7-402e-b465-e699eaf2a6ca/receipt.json"
+      }
+    },
+    {
+      "path": "raw/focused19-v11-repair-durable-packet/authoring/035554a0-5fd7-402e-b465-e699eaf2a6ca/request.json",
+      "bytes": 251,
+      "sha256": "f58fc29fda08a9b86f5305738ff094568065abf41dacb1bef96b0d18e7f55150",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-repair-durable-packet/authoring/035554a0-5fd7-402e-b465-e699eaf2a6ca/request.json",
+      "authority": {
+        "packetReceipt": "raw/focused19-v11-repair-durable-packet/receipt.json",
+        "packetReceiptSHA256": "47f643af4a2b466a600e1ebc90662603aedde9ccb30cd0dbb57f540460005ca0",
+        "originalSourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428/HanlinSplit/v1/Authoring/v1/035554a0-5fd7-402e-b465-e699eaf2a6ca/request.json"
+      }
+    },
+    {
+      "path": "raw/focused19-v11-repair-durable-packet/authoring/92c4747f-f222-4e51-942b-be752be84819/MiniApp.hanlinNativeScript",
+      "bytes": 7247,
+      "sha256": "2f0f5c55d583a55fbba85d2a7010e55c1f0290ac935c59e3a65e8f5c96228d40",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-repair-durable-packet/authoring/92c4747f-f222-4e51-942b-be752be84819/MiniApp.hanlinNativeScript",
+      "authority": {
+        "packetReceipt": "raw/focused19-v11-repair-durable-packet/receipt.json",
+        "packetReceiptSHA256": "47f643af4a2b466a600e1ebc90662603aedde9ccb30cd0dbb57f540460005ca0",
+        "originalSourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428/HanlinSplit/v1/Authoring/v1/92c4747f-f222-4e51-942b-be752be84819/MiniApp.hanlinNativeScript"
+      }
+    },
+    {
+      "path": "raw/focused19-v11-repair-durable-packet/authoring/92c4747f-f222-4e51-942b-be752be84819/diagnostics.json",
+      "bytes": 2,
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-repair-durable-packet/authoring/92c4747f-f222-4e51-942b-be752be84819/diagnostics.json",
+      "authority": {
+        "packetReceipt": "raw/focused19-v11-repair-durable-packet/receipt.json",
+        "packetReceiptSHA256": "47f643af4a2b466a600e1ebc90662603aedde9ccb30cd0dbb57f540460005ca0",
+        "originalSourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428/HanlinSplit/v1/Authoring/v1/92c4747f-f222-4e51-942b-be752be84819/diagnostics.json"
+      }
+    },
+    {
+      "path": "raw/focused19-v11-repair-durable-packet/authoring/92c4747f-f222-4e51-942b-be752be84819/receipt.json",
+      "bytes": 166,
+      "sha256": "03deddc64c1f3a8eb492975d8e90893612aebec662e370ec187bb75ff4ba7c41",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-repair-durable-packet/authoring/92c4747f-f222-4e51-942b-be752be84819/receipt.json",
+      "authority": {
+        "packetReceipt": "raw/focused19-v11-repair-durable-packet/receipt.json",
+        "packetReceiptSHA256": "47f643af4a2b466a600e1ebc90662603aedde9ccb30cd0dbb57f540460005ca0",
+        "originalSourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428/HanlinSplit/v1/Authoring/v1/92c4747f-f222-4e51-942b-be752be84819/receipt.json"
+      }
+    },
+    {
+      "path": "raw/focused19-v11-repair-durable-packet/authoring/92c4747f-f222-4e51-942b-be752be84819/request.json",
+      "bytes": 243,
+      "sha256": "3c2c70e85fbec557b5d4034bc4616d22597b37d50570040e4daf4951e4b73658",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-repair-durable-packet/authoring/92c4747f-f222-4e51-942b-be752be84819/request.json",
+      "authority": {
+        "packetReceipt": "raw/focused19-v11-repair-durable-packet/receipt.json",
+        "packetReceiptSHA256": "47f643af4a2b466a600e1ebc90662603aedde9ccb30cd0dbb57f540460005ca0",
+        "originalSourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428/HanlinSplit/v1/Authoring/v1/92c4747f-f222-4e51-942b-be752be84819/request.json"
+      }
+    },
+    {
+      "path": "raw/focused19-v11-repair-durable-packet/diagnostics/agent-session-2026-11-25T17-11-35-0dbe65bf-manifest.json",
+      "bytes": 881,
+      "sha256": "35bd6bdbe817dc57724d644b9259fea6652885d645ae1d785baab840b0472f63",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-repair-durable-packet/diagnostics/agent-session-2026-11-25T17-11-35-0dbe65bf-manifest.json",
+      "authority": {
+        "packetReceipt": "raw/focused19-v11-repair-durable-packet/receipt.json",
+        "packetReceiptSHA256": "47f643af4a2b466a600e1ebc90662603aedde9ccb30cd0dbb57f540460005ca0",
+        "originalSourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/FAE80CB3-0A85-4C82-8539-412574242E70/Documents/Diagnostics/agent-session-2026-11-25T17-11-35-0dbe65bf-manifest.json"
+      }
+    },
+    {
+      "path": "raw/focused19-v11-repair-durable-packet/diagnostics/agent-session-2026-11-25T17-11-35-0dbe65bf-stage-events.jsonl.gz",
+      "bytes": 1037880,
+      "sha256": "cbee6ff7c66aa3567178a0a335276cb079bcf10d4a759aa339ea9023060e7359",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-repair-durable-packet/diagnostics/agent-session-2026-11-25T17-11-35-0dbe65bf-stage-events.jsonl.gz",
+      "authority": {
+        "packetReceipt": "raw/focused19-v11-repair-durable-packet/receipt.json",
+        "packetReceiptSHA256": "47f643af4a2b466a600e1ebc90662603aedde9ccb30cd0dbb57f540460005ca0",
+        "originalSourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/FAE80CB3-0A85-4C82-8539-412574242E70/Documents/Diagnostics/agent-session-2026-11-25T17-11-35-0dbe65bf-stage-events.jsonl"
+      }
+    },
+    {
+      "path": "raw/focused19-v11-repair-durable-packet/diagnostics/agent-session-2026-11-25T17-11-35-0dbe65bf-stage-snapshots.json",
+      "bytes": 6108,
+      "sha256": "2ae18540c11f2722763d8c7909189649fafd3d40ace0801a75e7d35493b721f9",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-repair-durable-packet/diagnostics/agent-session-2026-11-25T17-11-35-0dbe65bf-stage-snapshots.json",
+      "authority": {
+        "packetReceipt": "raw/focused19-v11-repair-durable-packet/receipt.json",
+        "packetReceiptSHA256": "47f643af4a2b466a600e1ebc90662603aedde9ccb30cd0dbb57f540460005ca0",
+        "originalSourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/FAE80CB3-0A85-4C82-8539-412574242E70/Documents/Diagnostics/agent-session-2026-11-25T17-11-35-0dbe65bf-stage-snapshots.json"
+      }
+    },
+    {
+      "path": "raw/focused19-v11-repair-durable-packet/diagnostics/agent-session-2026-11-25T17-11-35-0dbe65bf.json.gz",
+      "bytes": 528975,
+      "sha256": "1bd104de9705aafda430e9808cdb9fbdd12a571daa4a215a1b204f0cfe78a95f",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-repair-durable-packet/diagnostics/agent-session-2026-11-25T17-11-35-0dbe65bf.json.gz",
+      "authority": {
+        "packetReceipt": "raw/focused19-v11-repair-durable-packet/receipt.json",
+        "packetReceiptSHA256": "47f643af4a2b466a600e1ebc90662603aedde9ccb30cd0dbb57f540460005ca0",
+        "originalSourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/FAE80CB3-0A85-4C82-8539-412574242E70/Documents/Diagnostics/agent-session-2026-11-25T17-11-35-0dbe65bf.json"
+      }
+    },
+    {
+      "path": "raw/focused19-v11-repair-durable-packet/diagnostics/agent-session-2026-11-25T17-11-35-0dbe65bf.txt.gz",
+      "bytes": 520317,
+      "sha256": "808b107a8b56fa64fb7424a3d8dbd751ee5ae0d73d167f88f70a27364c613f2e",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-repair-durable-packet/diagnostics/agent-session-2026-11-25T17-11-35-0dbe65bf.txt.gz",
+      "authority": {
+        "packetReceipt": "raw/focused19-v11-repair-durable-packet/receipt.json",
+        "packetReceiptSHA256": "47f643af4a2b466a600e1ebc90662603aedde9ccb30cd0dbb57f540460005ca0",
+        "originalSourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/FAE80CB3-0A85-4C82-8539-412574242E70/Documents/Diagnostics/agent-session-2026-11-25T17-11-35-0dbe65bf.txt"
+      }
+    },
+    {
+      "path": "raw/focused19-v11-repair-durable-packet/metadata/ai-container-metadata.plist",
+      "bytes": 600,
+      "sha256": "64d877dc1ce2f9d25c76f3f549a7ad4bf7028a34efeb289016b00ebd64eaa778",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-repair-durable-packet/metadata/ai-container-metadata.plist",
+      "authority": {
+        "packetReceipt": "raw/focused19-v11-repair-durable-packet/receipt.json",
+        "packetReceiptSHA256": "47f643af4a2b466a600e1ebc90662603aedde9ccb30cd0dbb57f540460005ca0",
+        "originalSourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/FAE80CB3-0A85-4C82-8539-412574242E70/.com.apple.mobile_container_manager.metadata.plist"
+      }
+    },
+    {
+      "path": "raw/focused19-v11-repair-durable-packet/metadata/app-group-metadata.plist",
+      "bytes": 600,
+      "sha256": "5d786796ff8cd0b5295885e3cbd155d9f4f80fb9662bf8ca18b50b978174d44f",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-repair-durable-packet/metadata/app-group-metadata.plist",
+      "authority": {
+        "packetReceipt": "raw/focused19-v11-repair-durable-packet/receipt.json",
+        "packetReceiptSHA256": "47f643af4a2b466a600e1ebc90662603aedde9ccb30cd0dbb57f540460005ca0",
+        "originalSourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428/.com.apple.mobile_container_manager.metadata.plist"
+      }
+    },
+    {
+      "path": "raw/focused19-v11-repair-durable-packet/receipt.json",
+      "bytes": 15794,
+      "sha256": "47f643af4a2b466a600e1ebc90662603aedde9ccb30cd0dbb57f540460005ca0",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-repair-durable-packet/receipt.json",
+      "authority": "Original packet receipt"
+    },
+    {
+      "path": "raw/focused19-v11-repair-first-packet/decision.json",
+      "bytes": 104200,
+      "sha256": "7dd6fbe9469886c57813740b7b9e11fc44605e4d0524cc06879f9ec1170d438c",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-repair-first-packet/decision.json",
+      "authority": {
+        "packetReceipt": "raw/focused19-v11-repair-first-packet/receipt.json",
+        "packetReceiptSHA256": "6bc74702e0780fcb570a9c36657de3d5d6c6978e6da491e1302d002be0848406",
+        "originalSourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v11/decision.json"
+      }
+    },
+    {
+      "path": "raw/focused19-v11-repair-first-packet/ledger.json",
+      "bytes": 10038,
+      "sha256": "f40ad052aa79657b9f54151488393069a4e2383c928db17f9ecfa44d2d3baf34",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-repair-first-packet/ledger.json",
+      "authority": {
+        "packetReceipt": "raw/focused19-v11-repair-first-packet/receipt.json",
+        "packetReceiptSHA256": "6bc74702e0780fcb570a9c36657de3d5d6c6978e6da491e1302d002be0848406",
+        "originalSourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v11/ledger.json"
+      }
+    },
+    {
+      "path": "raw/focused19-v11-repair-first-packet/native-result/FocusedRepair1-attachments/69AE47BD-2CDE-418F-858D-081EB1092ADB.png",
+      "bytes": 780587,
+      "sha256": "74102c900489cb084d6ccab3212b1d7e19ad1d7ec7f1fcf53bbd672efa12692c",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-repair-first-packet/native-result/FocusedRepair1-attachments/69AE47BD-2CDE-418F-858D-081EB1092ADB.png",
+      "authority": {
+        "packetReceipt": "raw/focused19-v11-repair-first-packet/receipt.json",
+        "packetReceiptSHA256": "6bc74702e0780fcb570a9c36657de3d5d6c6978e6da491e1302d002be0848406",
+        "originalSourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v11/native-result/FocusedRepair1-attachments/69AE47BD-2CDE-418F-858D-081EB1092ADB.png"
+      }
+    },
+    {
+      "path": "raw/focused19-v11-repair-first-packet/native-result/FocusedRepair1-attachments/804AE0FF-D793-4D68-9C55-B1DE67DCED2B.txt",
+      "bytes": 27399,
+      "sha256": "34ff3afe38b12a6b54126bec7560baaab9c1019b45d02f566de65926d2f35b2c",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-repair-first-packet/native-result/FocusedRepair1-attachments/804AE0FF-D793-4D68-9C55-B1DE67DCED2B.txt",
+      "authority": {
+        "packetReceipt": "raw/focused19-v11-repair-first-packet/receipt.json",
+        "packetReceiptSHA256": "6bc74702e0780fcb570a9c36657de3d5d6c6978e6da491e1302d002be0848406",
+        "originalSourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v11/native-result/FocusedRepair1-attachments/804AE0FF-D793-4D68-9C55-B1DE67DCED2B.txt"
+      }
+    },
+    {
+      "path": "raw/focused19-v11-repair-first-packet/native-result/FocusedRepair1-attachments/9B5C8802-9A33-43C9-9D46-CDEDF1E0FC18.png",
+      "bytes": 111081,
+      "sha256": "a445957e12456a2b01da29eaf6cafccaa6efcd0ddfe9139610ec047f94664164",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-repair-first-packet/native-result/FocusedRepair1-attachments/9B5C8802-9A33-43C9-9D46-CDEDF1E0FC18.png",
+      "authority": {
+        "packetReceipt": "raw/focused19-v11-repair-first-packet/receipt.json",
+        "packetReceiptSHA256": "6bc74702e0780fcb570a9c36657de3d5d6c6978e6da491e1302d002be0848406",
+        "originalSourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v11/native-result/FocusedRepair1-attachments/9B5C8802-9A33-43C9-9D46-CDEDF1E0FC18.png"
+      }
+    },
+    {
+      "path": "raw/focused19-v11-repair-first-packet/native-result/FocusedRepair1-attachments/DCC10FA2-BF0E-4C10-B5F7-E3A5AE65EDC5.png",
+      "bytes": 1467577,
+      "sha256": "2319afd74945a0d97e32d67c5d9b9d934d81db2a672274fa96b4200560553c5b",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-repair-first-packet/native-result/FocusedRepair1-attachments/DCC10FA2-BF0E-4C10-B5F7-E3A5AE65EDC5.png",
+      "authority": {
+        "packetReceipt": "raw/focused19-v11-repair-first-packet/receipt.json",
+        "packetReceiptSHA256": "6bc74702e0780fcb570a9c36657de3d5d6c6978e6da491e1302d002be0848406",
+        "originalSourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v11/native-result/FocusedRepair1-attachments/DCC10FA2-BF0E-4C10-B5F7-E3A5AE65EDC5.png"
+      }
+    },
+    {
+      "path": "raw/focused19-v11-repair-first-packet/native-result/FocusedRepair1-attachments/manifest.json",
+      "bytes": 2091,
+      "sha256": "74c034af2d1789e699d7596050df63d0e2916f08614b5853a9b5096e45dfc41d",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-repair-first-packet/native-result/FocusedRepair1-attachments/manifest.json",
+      "authority": {
+        "packetReceipt": "raw/focused19-v11-repair-first-packet/receipt.json",
+        "packetReceiptSHA256": "6bc74702e0780fcb570a9c36657de3d5d6c6978e6da491e1302d002be0848406",
+        "originalSourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v11/native-result/FocusedRepair1-attachments/manifest.json"
+      }
+    },
+    {
+      "path": "raw/focused19-v11-repair-first-packet/native-result/paired-prefix/FocusedRepair1-attachments-export.log",
+      "bytes": 874,
+      "sha256": "1ec78e2319c6a5d6f92e828af189e6a4f716e33fce5390298a736f117af7b504",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-repair-first-packet/native-result/paired-prefix/FocusedRepair1-attachments-export.log",
+      "authority": {
+        "packetReceipt": "raw/focused19-v11-repair-first-packet/receipt.json",
+        "packetReceiptSHA256": "6bc74702e0780fcb570a9c36657de3d5d6c6978e6da491e1302d002be0848406",
+        "originalSourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v11/native-result/paired-prefix/FocusedRepair1-attachments-export.log"
+      }
+    },
+    {
+      "path": "raw/focused19-v11-repair-first-packet/native-result/paired-prefix/FocusedRepair1-nodes.json",
+      "bytes": 1969,
+      "sha256": "9f1d4bf800917691076e4c3da79b6e0a21a58735fc63f4ca84d2256945249b7f",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-repair-first-packet/native-result/paired-prefix/FocusedRepair1-nodes.json",
+      "authority": {
+        "packetReceipt": "raw/focused19-v11-repair-first-packet/receipt.json",
+        "packetReceiptSHA256": "6bc74702e0780fcb570a9c36657de3d5d6c6978e6da491e1302d002be0848406",
+        "originalSourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v11/native-result/paired-prefix/FocusedRepair1-nodes.json"
+      }
+    },
+    {
+      "path": "raw/focused19-v11-repair-first-packet/native-result/paired-prefix/FocusedRepair1-selected-tests.log",
+      "bytes": 57,
+      "sha256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-repair-first-packet/native-result/paired-prefix/FocusedRepair1-selected-tests.log",
+      "authority": {
+        "packetReceipt": "raw/focused19-v11-repair-first-packet/receipt.json",
+        "packetReceiptSHA256": "6bc74702e0780fcb570a9c36657de3d5d6c6978e6da491e1302d002be0848406",
+        "originalSourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v11/native-result/paired-prefix/FocusedRepair1-selected-tests.log"
+      }
+    },
+    {
+      "path": "raw/focused19-v11-repair-first-packet/native-result/paired-prefix/FocusedRepair1-summary.json",
+      "bytes": 1637,
+      "sha256": "cbef976ef1bff7adb5b5a7e14aa0d71db5ab4b930bc9d5614c853fb7e56c7059",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-repair-first-packet/native-result/paired-prefix/FocusedRepair1-summary.json",
+      "authority": {
+        "packetReceipt": "raw/focused19-v11-repair-first-packet/receipt.json",
+        "packetReceiptSHA256": "6bc74702e0780fcb570a9c36657de3d5d6c6978e6da491e1302d002be0848406",
+        "originalSourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v11/native-result/paired-prefix/FocusedRepair1-summary.json"
+      }
+    },
+    {
+      "path": "raw/focused19-v11-repair-first-packet/native-result/paired-prefix/FocusedRepair1.log",
+      "bytes": 37780,
+      "sha256": "bbc39dfc984e8de5fe03a6ed92155ab2dd8606a80d50164d259a85629c051025",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-repair-first-packet/native-result/paired-prefix/FocusedRepair1.log",
+      "authority": {
+        "packetReceipt": "raw/focused19-v11-repair-first-packet/receipt.json",
+        "packetReceiptSHA256": "6bc74702e0780fcb570a9c36657de3d5d6c6978e6da491e1302d002be0848406",
+        "originalSourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v11/native-result/paired-prefix/FocusedRepair1.log"
+      }
+    },
+    {
+      "path": "raw/focused19-v11-repair-first-packet/native-result/paired-prefix/command-events.jsonl",
+      "bytes": 64324,
+      "sha256": "4004536dbef52720f01bbc55f1e069e69adab2382001c7a37f868a7efa5ffafb",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-repair-first-packet/native-result/paired-prefix/command-events.jsonl",
+      "authority": {
+        "packetReceipt": "raw/focused19-v11-repair-first-packet/receipt.json",
+        "packetReceiptSHA256": "6bc74702e0780fcb570a9c36657de3d5d6c6978e6da491e1302d002be0848406",
+        "originalSourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v11/native-result/paired-prefix/command-events.jsonl"
+      }
+    },
+    {
+      "path": "raw/focused19-v11-repair-first-packet/native-result/paired-prefix/commands.jsonl",
+      "bytes": 9091,
+      "sha256": "0eda4680ccd48802b2d5c44385c14590dd4ba4ae7fcba540b6a350b43973967e",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-repair-first-packet/native-result/paired-prefix/commands.jsonl",
+      "authority": {
+        "packetReceipt": "raw/focused19-v11-repair-first-packet/receipt.json",
+        "packetReceiptSHA256": "6bc74702e0780fcb570a9c36657de3d5d6c6978e6da491e1302d002be0848406",
+        "originalSourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v11/native-result/paired-prefix/commands.jsonl"
+      }
+    },
+    {
+      "path": "raw/focused19-v11-repair-first-packet/native-result/state.json",
+      "bytes": 15513,
+      "sha256": "269576b8c1494c6c6d33c551a2dfcadc793b8c2484bdfbce075191e1f148f4ab",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-repair-first-packet/native-result/state.json",
+      "authority": {
+        "packetReceipt": "raw/focused19-v11-repair-first-packet/receipt.json",
+        "packetReceiptSHA256": "6bc74702e0780fcb570a9c36657de3d5d6c6978e6da491e1302d002be0848406",
+        "originalSourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v11/native-result/state.json"
+      }
+    },
+    {
+      "path": "raw/focused19-v11-repair-first-packet/plan.json",
+      "bytes": 18768,
+      "sha256": "0f48ac183faabd8db7cb8cd37f37702f1e548e7c8862ffe539071a5b406b5e82",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-repair-first-packet/plan.json",
+      "authority": {
+        "packetReceipt": "raw/focused19-v11-repair-first-packet/receipt.json",
+        "packetReceiptSHA256": "6bc74702e0780fcb570a9c36657de3d5d6c6978e6da491e1302d002be0848406",
+        "originalSourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/plan.json"
+      }
+    },
+    {
+      "path": "raw/focused19-v11-repair-first-packet/primary-state.json",
+      "bytes": 122508,
+      "sha256": "535e1f70ec507834b52783c40e508bd88cc84709df0de57fa0cd6b00fe87682d",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-repair-first-packet/primary-state.json",
+      "authority": {
+        "packetReceipt": "raw/focused19-v11-repair-first-packet/receipt.json",
+        "packetReceiptSHA256": "6bc74702e0780fcb570a9c36657de3d5d6c6978e6da491e1302d002be0848406",
+        "originalSourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/state.json"
+      }
+    },
+    {
+      "path": "raw/focused19-v11-repair-first-packet/receipt.json",
+      "bytes": 6369,
+      "sha256": "6bc74702e0780fcb570a9c36657de3d5d6c6978e6da491e1302d002be0848406",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-repair-first-packet/receipt.json",
+      "authority": "Original packet receipt"
+    },
+    {
+      "path": "raw/focused19-v11-repair-first-packet/state.json",
+      "bytes": 19067,
+      "sha256": "f32e48626bf862f325486ad86044796c68cc4760c66d18feee0ecfcb033133bd",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-repair-first-packet/state.json",
+      "authority": {
+        "packetReceipt": "raw/focused19-v11-repair-first-packet/receipt.json",
+        "packetReceiptSHA256": "6bc74702e0780fcb570a9c36657de3d5d6c6978e6da491e1302d002be0848406",
+        "originalSourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v11/state.json"
+      }
+    },
+    {
+      "path": "raw/physical-device-inventory-after-v11/receipt.json",
+      "bytes": 1286,
+      "sha256": "4d87d5a89a6059afc63d3a50af58815fc4f0c1e95ec503209637b1c05bff2d60",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/physical-device-inventory-after-v11/receipt.json"
+    },
+    {
+      "path": "raw/physical-device-inventory-after-v11/xcdevice-list.json",
+      "bytes": 28520,
+      "sha256": "9e76e4c8e56177bd8c12d1461fce8e5e2788e252b8f42f7eaf5b4352fe7760c9",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/physical-device-inventory-after-v11/xcdevice-list.json",
+      "authority": {
+        "packetReceipt": "raw/physical-device-inventory-after-v11/receipt.json",
+        "originalSourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/physical-device-inventory-after-v11/xcdevice-list.json"
+      }
+    },
+    {
+      "path": "raw/preflight/focused19-recovery-controller-v11.py",
+      "bytes": 69531,
+      "sha256": "f517434f396cbddf2c5c2fcc2870da1112a432f865bbbcb9767ee656c885b73c",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-draft/focused19-recovery-controller-v11.py"
+    },
+    {
+      "path": "raw/preflight/focused19-v11-decision.json",
+      "bytes": 100564,
+      "sha256": "eb1af82f6ccb1bb00a0f61b80f16ee6cef3099f0b7519ea8aa32afd781c9d6ea",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-decision.json"
+    },
+    {
+      "path": "raw/preflight/focused19-v11-historical-group-observation.json",
+      "bytes": 7249,
+      "sha256": "4aa9fa8360003410a60e4eeaf45040fcf18c5285198f13d5707c9c38ca9d89b7",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-historical-group-observation.json"
+    },
+    {
+      "path": "raw/preflight/focused19-v11-historical-group-utc.json",
+      "bytes": 900,
+      "sha256": "bcdf20adb75298ee011415a59239c8a5eb5ed1ff589875726264d94ba680e2de",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-historical-group-utc.json"
+    },
+    {
+      "path": "raw/preflight/focused19-v11-launch-command.json",
+      "bytes": 4811,
+      "sha256": "00a7cbacb37d27b3e0ce4b699b9914b7017eb8be11901e1b1ca2143e6fad139e",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-launch-command.json"
+    },
+    {
+      "path": "raw/preflight/focused19-v11-launch.json",
+      "bytes": 4641,
+      "sha256": "7c5b6991ebd6677c7c64d2913616cc14baf71206badd978598e23ba4bd405196",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-launch.json"
+    },
+    {
+      "path": "raw/preflight/focused19-v11-launch.log",
+      "bytes": 563,
+      "sha256": "959401d96ba66b8a1343a8c74d7181f018e2ba913964702ecdb59e521fbcaf6e",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-launch.log"
+    },
+    {
+      "path": "raw/preflight/focused19-v11-preflight-rejection.json",
+      "bytes": 1493,
+      "sha256": "ff4b426a7f64e21a32890cde78f6935237f75b07a26725c1d07181ddc23cdae9",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-preflight-rejection.json"
+    },
+    {
+      "path": "raw/preflight/focused19-v11-rejected-primary-state.json",
+      "bytes": 121947,
+      "sha256": "b79929000b15193245f1607592d925c606bf6c8a5a8c8592dcf8460f633de9a5",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-rejected-primary-state.json"
+    },
+    {
+      "path": "raw/remaining-native-product-metadata-v11.json",
+      "bytes": 4697,
+      "sha256": "b1163811263ef4b648e6d5e265c012cbbf5f946e504f5bd084d28fe13514d724",
+      "oracleSource": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/remaining-native-product-metadata-v11.json"
+    }
+  ],
+  "nativeAcceptance": {
+    "selector": "AI_HLYUITests/MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport",
+    "status": "FOCUSED_PASS",
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "driverExitCode": 0,
+    "runtimeWarnings": [
+      {
+        "issueType": "Runtime Warning",
+        "message": "           SessionCore.mm:631   This method can lead to UI unresponsiveness if called on the main thread while the audio session is active."
+      },
+      {
+        "issueType": "Runtime Warning",
+        "message": "    AVAudioSession_iOS.mm:978   This method can lead to UI unresponsiveness if called on the main thread. Consider using the asynchronous activate/deactivate API instead for calls from the main thread."
+      },
+      {
+        "issueType": "Runtime Warning",
+        "message": "Update the Info.plist: Support for all orientations will soon be required."
+      }
+    ],
+    "original52": "NOT_RUN_AT_CAPTURE",
+    "nativeScriptFiveRuntime": "PENDING_AT_CAPTURE",
+    "notificationOS": "PENDING_AT_CAPTURE",
+    "physicalAcceptance": "NOT_RUN"
+  },
+  "receiptBoundary": "Binds all other files; this receipt is excluded from its own member list."
+}

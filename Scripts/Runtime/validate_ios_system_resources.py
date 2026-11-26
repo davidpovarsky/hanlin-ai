@@ -97,33 +97,35 @@ def validate_project_resources(project_text: str) -> None:
         project = parse_project(project_text)
         objects = project["objects"]
         root = objects[project["rootObject"]]
-        targets = [objects[key] for key in root["targets"]
-                   if objects[key].get("isa") == "PBXNativeTarget"
-                   and objects[key].get("name") == "HanlinApp"
-                   and objects[key].get("productType") == "com.apple.product-type.application"]
-        if len(targets) != 1:
-            raise ResourceValidationError("RuntimeCore requires exactly one original HanlinApp app target")
-        references = []
-        for phase_id in targets[0].get("buildPhases", []):
-            phase = objects[phase_id]
-            if phase.get("isa") != "PBXResourcesBuildPhase":
-                continue
-            for build_id in phase.get("files", []):
-                build = objects[build_id]
-                if build.get("isa") == "PBXBuildFile":
-                    reference = objects[build["fileRef"]]
-                    if reference.get("isa") == "PBXFileReference":
-                        references.append(reference)
-        for path in (COMMAND_DICTIONARY, EXTRA_DICTIONARY):
-            copies = [reference for reference in references if reference.get("path") == path.as_posix()]
-            if len(copies) != 1:
+        for target_name in ("HanlinApp", "HanlinMiniApps"):
+            targets = [objects[key] for key in root["targets"]
+                       if objects[key].get("isa") == "PBXNativeTarget"
+                       and objects[key].get("name") == target_name
+                       and objects[key].get("productType") == "com.apple.product-type.application"]
+            if len(targets) != 1:
                 raise ResourceValidationError(
-                    f"Xcode Copy Bundle Resources must contain exactly one {path.name} in HanlinApp"
-                )
-            if copies[0].get("sourceTree") != "SOURCE_ROOT" or copies[0].get("explicitFileType") != "text":
-                raise ResourceValidationError(
-                    f"Xcode must copy {path.name} as raw text from its canonical source-root path"
-                )
+                    f"RuntimeCore requires exactly one original {target_name} app target")
+            references = []
+            for phase_id in targets[0].get("buildPhases", []):
+                phase = objects[phase_id]
+                if phase.get("isa") != "PBXResourcesBuildPhase":
+                    continue
+                for build_id in phase.get("files", []):
+                    build = objects[build_id]
+                    if build.get("isa") == "PBXBuildFile":
+                        reference = objects[build["fileRef"]]
+                        if reference.get("isa") == "PBXFileReference":
+                            references.append(reference)
+            for path in (COMMAND_DICTIONARY, EXTRA_DICTIONARY):
+                copies = [reference for reference in references if reference.get("path") == path.as_posix()]
+                if len(copies) != 1:
+                    raise ResourceValidationError(
+                        f"Xcode Copy Bundle Resources must contain exactly one {path.name} in {target_name}"
+                    )
+                if copies[0].get("sourceTree") != "SOURCE_ROOT" or copies[0].get("explicitFileType") != "text":
+                    raise ResourceValidationError(
+                        f"Xcode must copy {path.name} as raw text from its canonical source-root path"
+                    )
     except (KeyError, TypeError, ValueError, IndexError) as error:
         raise ResourceValidationError(f"Malformed Xcode resource graph: {error}") from error
 

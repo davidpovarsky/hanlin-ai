@@ -40,12 +40,13 @@ export function EditButton({ modifiers, ...props }: EditButtonProps) {
 export interface GroupBoxProps extends CommonViewModifierProps {
   content?: React.ReactNode;
   label?: React.ReactNode;
+  /** Used when content is omitted or undefined; explicit content, including null, wins. */
   children?: React.ReactNode;
 }
 
 const NativeGroupBox = requireNativeView<GroupBoxProps>('HanlinGeneratedExpoUI', 'HanlinGeneratedGroupBoxView');
 
-export function GroupBox({ modifiers, content, label, ...props }: GroupBoxProps) {
+export function GroupBox({ modifiers, children, content = children, label, ...props }: GroupBoxProps) {
   return (
     <NativeGroupBox
       {...props}

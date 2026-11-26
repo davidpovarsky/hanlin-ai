@@ -1,0 +1,22 @@
+[
+  {
+    "packet": "focused19-v5-repair-first-packet",
+    "sourceReceiptSHA256": "a4ff8b640a426402523d7e49e99d00c2fcca3751569d85b2ea091b4eaa81e66a",
+    "memberCount": 20
+  },
+  {
+    "packet": "focused19-v5-repair-durable-packet",
+    "sourceReceiptSHA256": "6045e71430260b83ed892cefed75c1e56906c6b4d3053caf4c76d4d24e85334a",
+    "memberCount": 31
+  },
+  {
+    "packet": "focused19-v5-model-transcript",
+    "sourceReceiptSHA256": "a7ede692b44937d3eeb4ccf8b2373c2c05c94dff234af092d9ce79a7d009dd30",
+    "memberCount": 6
+  },
+  {
+    "packet": "focused19-v5-manual-and-producer-supplement",
+    "sourceReceiptSHA256": "441137c06a8c8c1978b73fb1142083d1bd8c9db7fec33e11c1c0b46c7dff9e25",
+    "memberCount": 25
+  }
+]

@@ -1,0 +1,261 @@
+{
+  "baseCommit": "2aa24f1460f238d9b1a8e046bb0774c238306028",
+  "files": [
+    {
+      "path": "AI_HLY/AI_HLY.swift",
+      "beforeSHA256": "11840d5e3f1dc0c87dba1dbe7380f8e761bdf3ed89e4d5a365d824045df72c51",
+      "afterSHA256": "68e1f6a51fdc9bf9a313c5fea760085844d3980fd54a937075b2e3ca42879bd7",
+      "afterBytes": 1057,
+      "beforeMode": "100644",
+      "afterMode": "100644"
+    },
+    {
+      "path": "AI_HLY/Downstream/SDK/HanlinApplicationLifecycle.swift",
+      "beforeSHA256": "011fe718a59dc468efcc97415e94cd65eac62b648437d1ce38f1cb4d134262bd",
+      "afterSHA256": "21a90a9a6c0f6684394e41403705aedade0f6fd8c0c9a8fe9331fed70c27e18e",
+      "afterBytes": 2574,
+      "beforeMode": "100644",
+      "afterMode": "100644"
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift",
+      "beforeSHA256": null,
+      "afterSHA256": "65e908cc29df4bab76ef3a1b44e032fe2651b47ed4b438035b4e5757a468fa67",
+      "afterBytes": 3109,
+      "beforeMode": null,
+      "afterMode": "100644"
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "beforeSHA256": "44dfc39f53d8b39f6e54675ea02a9e4682578ed36985d5939948c2006335ae6f",
+      "afterSHA256": "0bd52a056289803eb8fa01c45e681df8b3e2f9ac4ac9639fb59577c8624f4efc",
+      "afterBytes": 156844,
+      "beforeMode": "100644",
+      "afterMode": "100644"
+    },
+    {
+      "path": "HanlinMiniAppsApp/HanlinMiniAppsApp.swift",
+      "beforeSHA256": "d809d6a2e17fa989466c3c2a908884510d850d6a3070ddb691ab931af452a202",
+      "afterSHA256": "579a27ec799ea414cd1ae58533748e79840167fca9d8b849e8a0b3d9d55118c2",
+      "afterBytes": 10778,
+      "beforeMode": "100644",
+      "afterMode": "100644"
+    },
+    {
+      "path": "HanlinMiniAppsExtensions/Notification/HanlinMiniAppsNotificationService.entitlements",
+      "beforeSHA256": null,
+      "afterSHA256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc",
+      "afterBytes": 349,
+      "beforeMode": null,
+      "afterMode": "100644"
+    },
+    {
+      "path": "HanlinMiniAppsExtensions/Notification/Info.plist",
+      "beforeSHA256": null,
+      "afterSHA256": "9f1fc3aa8ef55f957f6b14151c982c7ee3b006783d08c1de77d4a05a634ee6e4",
+      "afterBytes": 1442,
+      "beforeMode": null,
+      "afterMode": "100644"
+    },
+    {
+      "path": "HanlinMiniAppsExtensions/Notification/NotificationService.swift",
+      "beforeSHA256": null,
+      "afterSHA256": "82f906b9759f275e52db99a9354642546f0b4f9f89437c4c9031e92460e627a9",
+      "afterBytes": 235,
+      "beforeMode": null,
+      "afterMode": "100644"
+    },
+    {
+      "path": "HanlinMiniAppsTests/SplitAppStorageLayoutTests.swift",
+      "beforeSHA256": "e0c4ce7caf0bfacfcf9dd5a325904daed2c40664381b95c043d023da7a6f0418",
+      "afterSHA256": "92b4bcab25a77556847a408763a409268dd74ff0bf6b4de61738468903735383",
+      "afterBytes": 10102,
+      "beforeMode": "100644",
+      "afterMode": "100644"
+    },
+    {
+      "path": "Packages/HanlinAppExtensionsSDK/Package.swift",
+      "beforeSHA256": "64d5594128c50035fd2dc37665d92927b45badefcc52b1ec521a5bfc8c8e3cde",
+      "afterSHA256": "23056fa7df2e2aca75c3195452085a42151aa113f54370aeceb5a07df269d9bc",
+      "afterBytes": 1944,
+      "beforeMode": "100644",
+      "afterMode": "100644"
+    },
+    {
+      "path": "Packages/HanlinAppExtensionsSDK/Sources/HanlinNotificationExtension/HanlinNotificationService.swift",
+      "beforeSHA256": "c0d9dfb00212b2da93cc74dc44340e7fd439b587ca643c3097c0a9324243b716",
+      "afterSHA256": "fd2568e373da3dfdd2c35a2f0138f02cf46d7e6bd67c70b4d38109718b39480e",
+      "afterBytes": 4713,
+      "beforeMode": "100644",
+      "afterMode": "100644"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationDelivery.swift",
+      "beforeSHA256": "a5bfb9b1aa24952538ab1a5c790e2d1b2eafbf412265e337dfb56ab726e495f0",
+      "afterSHA256": "b029004be2138cb11ef6221ab7b2c64489ec05b8e22ead565b822da1a946431f",
+      "afterBytes": 4555,
+      "beforeMode": "100644",
+      "afterMode": "100644"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift",
+      "beforeSHA256": "fbc500e1ee59d0d5c014ee0d0dcf54f9bd0048e2696267f27c276666086878b6",
+      "afterSHA256": "b9671f1d78db83f6786320a68878d01852d5a81a3383866cb26a5e52a87da5ff",
+      "afterBytes": 15384,
+      "beforeMode": "100644",
+      "afterMode": "100644"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationEvent.swift",
+      "beforeSHA256": null,
+      "afterSHA256": "982bbdff39e2baeb944ab476bc16d8f826f36ca38e9a3e6a75e6efaeaf3b318b",
+      "afterBytes": 5280,
+      "beforeMode": null,
+      "afterMode": "100644"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationInvocation.swift",
+      "beforeSHA256": null,
+      "afterSHA256": "210a1266c9b276cd0865bf9238faec73c8caaf464329a22b2c470f71f6f76706",
+      "afterBytes": 4618,
+      "beforeMode": null,
+      "afterMode": "100644"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinNotificationInvocationTests.swift",
+      "beforeSHA256": null,
+      "afterSHA256": "918dac76ba987164dfc80ea47ff3365d4a4fa42cecc87ee36db863721c9e1667",
+      "afterBytes": 16840,
+      "beforeMode": null,
+      "afterMode": "100644"
+    },
+    {
+      "path": "Scripts/Audit/audit_miniapp_reachability.py",
+      "beforeSHA256": "a28d4702744f94e265489ca9df18ae6a2fd666290598d6faa693810d794a0dce",
+      "afterSHA256": "39b24956ef354e6adb3ed918ebc8ea067645c462b73bbbfea82f46d7ccd6224e",
+      "afterBytes": 37443,
+      "beforeMode": "100644",
+      "afterMode": "100644"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/miniapps_provider_sources.json",
+      "beforeSHA256": "286c788a4dc6bff94ddb76a7400b1e5f45831e49533d139fd4656f007bdc4213",
+      "afterSHA256": "56c217fd7bdda512e88bc90f64595336e9621ca0f29b202b31a2b175884d7952",
+      "afterBytes": 9957,
+      "beforeMode": "100644",
+      "afterMode": "100644"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/project_graph.py",
+      "beforeSHA256": "39af26a39620977cc306b65e58b6cdbaa5aea3d6baea21b440499bd80965ff49",
+      "afterSHA256": "fc46f1e5266f054794811a0756fa51677a291b0533f816f1342a5d42f9ba85b8",
+      "afterBytes": 18232,
+      "beforeMode": "100644",
+      "afterMode": "100644"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/expo-hello-world/notification-event.ts",
+      "beforeSHA256": null,
+      "afterSHA256": "3faaf31c55f30954b8c3a74cce95d0461bdef531269bcd7832a886be4ac390de",
+      "afterBytes": 650,
+      "beforeMode": null,
+      "afterMode": "100644"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/expo-hello-world/tsconfig.json",
+      "beforeSHA256": "02e14c4b983c0f436d32ce0eb2f96309512a7d69774ed0c7d39ffa4175ccf7df",
+      "afterSHA256": "989df0a97a5ac05cb6b26df1d7f2d18896e2627da8ac72d4d35e66a60da84b19",
+      "afterBytes": 82,
+      "beforeMode": "100644",
+      "afterMode": "100644"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/nativescript-hello-world/notification-event.ts",
+      "beforeSHA256": null,
+      "afterSHA256": "3faaf31c55f30954b8c3a74cce95d0461bdef531269bcd7832a886be4ac390de",
+      "afterBytes": 650,
+      "beforeMode": null,
+      "afterMode": "100644"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/nativescript-hello-world/tsconfig.json",
+      "beforeSHA256": "c979f6e45b2a9c6151dbb12b4d9f04b76a5ce3822a270680ce479ee25f28e43e",
+      "afterSHA256": "089155f616dd73ff0bebb1469f21fda41c51ad93c7b7db83d2745fa5e88ce0e5",
+      "afterBytes": 67,
+      "beforeMode": "100644",
+      "afterMode": "100644"
+    },
+    {
+      "path": "Scripts/MiniApps/Tests/notification-events.test.mjs",
+      "beforeSHA256": null,
+      "afterSHA256": "b4c7753bbcd8ebfc757a54b9c4783bc40280125f982c48fe12e953097e853d80",
+      "afterBytes": 3470,
+      "beforeMode": null,
+      "afterMode": "100644"
+    },
+    {
+      "path": "Scripts/MiniApps/notification-events/index.d.ts",
+      "beforeSHA256": null,
+      "afterSHA256": "1fca542efed873474b4541f09945af3db035b570c691be63982a3ddf9ae2f837",
+      "afterBytes": 1306,
+      "beforeMode": null,
+      "afterMode": "100644"
+    },
+    {
+      "path": "Scripts/MiniApps/notification-events/package.json",
+      "beforeSHA256": null,
+      "afterSHA256": "b6ec9ece2d15d32b029e720cd5dde983a681cba511e807cd5766862d79ef8456",
+      "afterBytes": 134,
+      "beforeMode": null,
+      "afterMode": "100644"
+    },
+    {
+      "path": "Scripts/MiniApps/stage-sdk.mjs",
+      "beforeSHA256": "b1b0a3bd2c560fcf93eca064053aba7bcbf7786fb800e083bb7f297a0a300c40",
+      "afterSHA256": "1c23351919756510899c02f4f8b9ce305f4d31edeed49110b6b3d310e51b3d10",
+      "afterBytes": 22545,
+      "beforeMode": "100644",
+      "afterMode": "100644"
+    },
+    {
+      "path": "Scripts/ProductSplit/miniapps_extensions.py",
+      "beforeSHA256": "2bd683a289c67492f998ea23eed39185643a193b04faec9783a2f1979d656d3d",
+      "afterSHA256": "09d86c238e3f315268b1e849fc82c6c689a2428c4ef682d86cf889c599eb9242",
+      "afterBytes": 7897,
+      "beforeMode": "100644",
+      "afterMode": "100644"
+    },
+    {
+      "path": "Scripts/SDK/update_project.py",
+      "beforeSHA256": "5aae859211e8bc7cfeb389c50d7d38817de4e0167f8a3ae54d9f1cf5475be550",
+      "afterSHA256": "1b5d810909953ec55914b9e706eeae6a5523ec31a80c60a8c05a920d346bf270",
+      "afterBytes": 24445,
+      "beforeMode": "100644",
+      "afterMode": "100644"
+    },
+    {
+      "path": "docs/miniapp-sdk/NOTIFICATION_EVENTS.md",
+      "beforeSHA256": null,
+      "afterSHA256": "d027d20f9b95087ec7adcfb290ee7f4dab7ee057d623a81c87eeb561e321998f",
+      "afterBytes": 8433,
+      "beforeMode": null,
+      "afterMode": "100644"
+    },
+    {
+      "path": "docs/miniapp-sdk/notification-event.schema.json",
+      "beforeSHA256": null,
+      "afterSHA256": "519d0ffaf9bb70368de9f2772d141082cef5feefe77d7a2117495f5a19ad7699",
+      "afterBytes": 2615,
+      "beforeMode": null,
+      "afterMode": "100644"
+    },
+    {
+      "path": "docs/product-split/target-membership.json",
+      "beforeSHA256": "cedb08a8d897ab3a3e18cc580b1c93594a493c0dc34d903a67eab944c4438729",
+      "afterSHA256": "20b6f6efecede2ee7ef476e7854cb5fedd7db07868a99e84930ee03eb9bbe699",
+      "afterBytes": 8770,
+      "beforeMode": "100644",
+      "afterMode": "100644"
+    }
+  ]
+}

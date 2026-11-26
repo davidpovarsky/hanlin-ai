@@ -1,0 +1,82 @@
+{
+  "schema": 1,
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138",
+  "observedAt": "2026-11-25T18:30:15.904594+00:00",
+  "authority": {
+    "path": "build/primary-control/focused19-v11/native-result/staged-inputs.json",
+    "bytes": 5834,
+    "sha256": "ab3d55ab809ff78a5a93f28dc058c20e76f98a2a1176f8b6228ce9b3d319d976"
+  },
+  "status": "EXECUTED_PASS",
+  "preTestObservationPreserved": true,
+  "files": [
+    {
+      "name": "ExpoNativeAPIProbeA.hanlinExpo",
+      "bytes": 1403392,
+      "sha256": "c050720db91ffb2c32a9723d8b42a960f126cfed3192e14ccd67a1a8472d93c6"
+    },
+    {
+      "name": "ExpoSwiftUIProbeA.hanlinExpo",
+      "bytes": 325929,
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20"
+    },
+    {
+      "name": "ExpoWidgetsProbeA.hanlinExpo",
+      "bytes": 302853,
+      "sha256": "26f1309c3851a6c5af30b24ce62d94b9dd28501b0075673ffdfadb53bd800eee"
+    },
+    {
+      "name": "ExpoWidgetsProbeB.hanlinExpo",
+      "bytes": 302853,
+      "sha256": "af76fc6c37297bddc7e70bc2499694edb92d5d6ee18a51a584dca9feca8e0385"
+    },
+    {
+      "name": "InvalidMiniApp.zip",
+      "bytes": 53,
+      "sha256": "f3b130defe72d6067c0af6f52a1badc66a2a422634d010860ff9cb035506618d"
+    },
+    {
+      "name": "MiniAppTypeError.hanlinNativeScript",
+      "bytes": 4399,
+      "sha256": "9a2a14be4ad24565bad66a98fc53522229de903acfb8a41b3df18006e81b51c9"
+    },
+    {
+      "name": "MiniAppsExternalModal.zip",
+      "bytes": 1221,
+      "sha256": "5e9b0eadbcb91e8a01c2c993be6f50356bf94c345940ec86bae25ce3c2127ba1"
+    },
+    {
+      "name": "ModularTextSearch.hanlinExpo",
+      "bytes": 2203953,
+      "sha256": "40ade14cf7ebcaa96d0f7bf71757d92a243236f682227c9683ebf06bc8255f6f"
+    },
+    {
+      "name": "SDKOnlyDepartureBudget.hanlinExpo",
+      "bytes": 1956567,
+      "sha256": "dda4e3b1536426156d2695209736186f4d804895f0a04fb3741bbe24c5a4df1f"
+    },
+    {
+      "name": "SDKOnlyTableShare.hanlinNativeScript",
+      "bytes": 12933,
+      "sha256": "4d817ba5dd1c84fce5c0ae4b3d281929520dfaebbbe1dd41465d1ebe6305c4b3"
+    },
+    {
+      "name": "hanlin-script-parity.hanlinNativeScript",
+      "bytes": 7512,
+      "sha256": "2e48509336edba2b301490422102dbf25cb7f1b894430d52994febdc1c33c199"
+    }
+  ],
+  "differences": [],
+  "lookupExitCode": 0,
+  "metadata": {
+    "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/C129E146-10B3-4B74-81C5-5D5FFF89DC38/.com.apple.mobile_container_manager.metadata.plist",
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/final-mini-container-metadata.plist",
+    "bytes": 602,
+    "sha256": "cde9660338425f9d80813bfce0c335fca4780f4390b8e84b108c7f0b306ccf8f",
+    "identifier": "com.itorah.hanlinminiapps",
+    "containerUUID": "C129E146-10B3-4B74-81C5-5D5FFF89DC38"
+  },
+  "documentsRoot": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/C129E146-10B3-4B74-81C5-5D5FFF89DC38/Documents",
+  "finishedAt": "2026-11-25T18:30:16.839869+00:00"
+}

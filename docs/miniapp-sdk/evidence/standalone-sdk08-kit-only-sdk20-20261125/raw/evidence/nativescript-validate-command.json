@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "id": "nativescript-validate",
+  "startedAt": "2026-11-25T21:31:34.175935+00:00",
+  "finishedAt": "2026-11-25T21:31:41.810854+00:00",
+  "elapsedSeconds": 7.63492555078119,
+  "cwd": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only-sdk20/kit",
+  "command": [
+    "/usr/local/bin/node",
+    "Scripts/MiniApps/miniapp.mjs",
+    "validate",
+    "--sdk",
+    "./MiniAppSDK",
+    "--engine",
+    "nativescript",
+    "--project",
+    "./workspace/nativescript-hello-world",
+    "--report",
+    "./artifacts/nativescript-validate.json"
+  ],
+  "traceCommand": [
+    "/usr/bin/strace",
+    "-f",
+    "-qq",
+    "-e",
+    "trace=%file,%process,%network",
+    "-s",
+    "2048",
+    "-o",
+    "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only-sdk20/evidence/nativescript-validate.strace",
+    "/usr/local/bin/node",
+    "Scripts/MiniApps/miniapp.mjs",
+    "validate",
+    "--sdk",
+    "./MiniAppSDK",
+    "--engine",
+    "nativescript",
+    "--project",
+    "./workspace/nativescript-hello-world",
+    "--report",
+    "./artifacts/nativescript-validate.json"
+  ],
+  "environment": {
+    "PATH": "/usr/local/bin:/usr/bin:/bin",
+    "LANG": "C.UTF-8",
+    "LC_ALL": "C.UTF-8",
+    "TZ": "UTC",
+    "CI": "1",
+    "TERM": "dumb",
+    "TMPDIR": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only-sdk20/tmp"
+  },
+  "returncode": 0,
+  "expectedReturnCode": 0,
+  "expectedOutcomeMatched": true,
+  "report": "kit/artifacts/nativescript-validate.json",
+  "originalRecord": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only/evidence/nativescript-validate-command.json",
+    "bytes": 1520,
+    "sha256": "1748b2cabfc6b4715db96c83268c6c97ec49c5160bd7c5054cff03c842d5e659"
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "kind": "EXACT_EVIDENCE_FILE_INVENTORY",
+  "fileCountIncludingReceipt": 7,
+  "memberCount": 6,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 4968,
+      "sha256": "1df59bb2ceaa0c454f586161025f429c7aaa624f8fd644de2ce8677c69c979c5",
+      "mode": "100644"
+    },
+    {
+      "path": "manifest.json",
+      "bytes": 8146,
+      "sha256": "661ebd7edc7c894ed50a90ccd2849d682672fc6dc3b4b929ef546fe7160daff6",
+      "mode": "100644"
+    },
+    {
+      "path": "raw/notification-os-v4-import-only-verification.json",
+      "bytes": 1656,
+      "sha256": "7fe00e42a95dd07f8bf5eef96af7359470945b0e54b2e0ff81e4c37ccfe47dfd",
+      "mode": "100644"
+    },
+    {
+      "path": "raw/notification-os-v4-owned-cache-retirement.json",
+      "bytes": 193488,
+      "sha256": "7a0d9a726a7de52586ac27de77dd486d0f5834ab693421769e3a375db308adba",
+      "mode": "100644"
+    },
+    {
+      "path": "raw/notification-os-v4-resource-rejection.json",
+      "bytes": 3221,
+      "sha256": "6aa6c87b00c8c5154c21bd32ac7cea3ff53aaa9e021a3f59736d7eba3141ab6c",
+      "mode": "100644"
+    },
+    {
+      "path": "raw/notification-os-v4-seal-command.json",
+      "bytes": 1138,
+      "sha256": "c76a09d59048a8fa50fc288529bfed91f62d249e8adae459fa79cf4a78609c9f",
+      "mode": "100644"
+    }
+  ]
+}

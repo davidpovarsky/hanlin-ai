@@ -1,0 +1,142 @@
+{
+  "schema": 1,
+  "concurrentGrowthReserveBytes": 1073741824,
+  "modestOSMarginBytes": 1073741824,
+  "monitor": {
+    "intervalSeconds": 15,
+    "criticalFreeBytes": 1073741824,
+    "action": "Persist resource-stop.json with actual RESOURCE_STOP; signal only this owned guard process with SIGINT. The unchanged original command kills/waits its child on BaseException; wrapper converts its own resource KeyboardInterrupt to RuntimeError RESOURCE_STOP so original failure capture/finally and outer owned cleanup run. No retry or synthetic skip/pass.",
+    "boundary": "1GiB is a rolling concurrent-growth reserve with active15s observations, not a prediction that external capacity remains constant for an entire3600s command."
+  },
+  "buildAllocationPaths": [
+    "Build/Products",
+    "Build/Intermediates.noindex",
+    "ModuleCache.noindex",
+    "Index.noindex",
+    "Logs"
+  ],
+  "phaseByLogName": {
+    "created-simulator.txt": "freshDeviceAndMiniBuild",
+    "mini-build.log": "miniBuild",
+    "original-a2ui-generator.log": "a2uiSchemas",
+    "ai-build.log": "aiBuild",
+    "handler-regression-install.log": "installAI",
+    "handler-registration-tests.log": "handlerRegression",
+    "entrypoint-contracts-tests.log": "rendererRegression",
+    "widget-host-action-queue-tests.log": "queueContract",
+    "com.itorah.chavrusachat-install.log": "installAI",
+    "com.itorah.hanlinminiapps-install.log": "installMini",
+    "authoring-mini-data-container.txt": "fixturesInitial",
+    "authoring-fixture-build.log": "fixtureProducer",
+    "modular-search-build.log": "fixtureProducer",
+    "sdk-only-departure-budget-build.log": "fixtureProducer",
+    "sdk-only-table-share-build.log": "fixtureProducer",
+    "original-runtimes.log": "originalMini25",
+    "paired-tests.log": "originalAI27",
+    "boot.log": "freshDeviceBoot",
+    "bootstatus.log": "freshDeviceBoot",
+    "discovery-capture-hosted-tests.log": "affectedHosted",
+    "affected-swiftpm-tests.log": "affectedSwiftPM",
+    "assistant-hosted-tests.log": "affectedHosted"
+  },
+  "phases": {
+    "freshDeviceAndMiniBuild": {
+      "allocationModel": "remainingBuildAllocation",
+      "buildAllocationCeilingBytes": 9645633280,
+      "additionalAllocationBytes": 2278289408,
+      "basis": "Same cumulative Mini build ceiling and fresh boot/workspace allowance; subtract only five actual owned DerivedData allocations from authenticated final SDK staging. Both current original app builds still execute."
+    },
+    "miniBuild": {
+      "allocationModel": "remainingBuildAllocation",
+      "buildAllocationCeilingBytes": 9645633280,
+      "additionalAllocationBytes": 201326592,
+      "basis": "Current original Mini build with the prepared pinned package graph. The25% expansion above the old ceiling is an estimate, not a measured new build."
+    },
+    "a2uiSchemas": {
+      "allocationModel": "static",
+      "additionalAllocationBytes": 67108864,
+      "basis": "Original actual A2UI evidence directory4096 B and original timings1.09\u20131.25s; 64MiB explicit schema/generator temporary allowance. No app build or full package clone."
+    },
+    "aiBuild": {
+      "allocationModel": "remainingBuildAllocation",
+      "buildAllocationCeilingBytes": 12228722433,
+      "additionalAllocationBytes": 201326592,
+      "basis": "Current both-build cumulative ceiling increases historical ceiling25% for six new shipping extensions and affected native code; subtract only actual current DerivedData allocations, then retain original workspace/margins."
+    },
+    "installAI": {
+      "allocationModel": "productInstall",
+      "productRelativePath": "Build/Products/Debug-iphonesimulator/AI_Hanlin.app",
+      "copyFactor": 2,
+      "additionalAllocationBytes": 67108864,
+      "basis": "Two actual current product allocations cover installed destination plus one full temporary copy, regardless of APFS cloning; no credit for previous installation."
+    },
+    "installMini": {
+      "allocationModel": "productInstall",
+      "productRelativePath": "Build/Products/Debug-iphonesimulator/HanlinMiniApps.app",
+      "copyFactor": 2,
+      "additionalAllocationBytes": 67108864,
+      "basis": "Two actual current product allocations cover installed destination plus one full temporary copy, regardless of APFS cloning; no credit for previous installation."
+    },
+    "handlerRegression": {
+      "allocationModel": "static",
+      "additionalAllocationBytes": 1519741334,
+      "basis": "First actual VM case: two full current Host extractions, bounded one-case result/export each256MiB,256MiB runtime workspace. Installs have their own immediately preceding gate."
+    },
+    "rendererRegression": {
+      "allocationModel": "static",
+      "additionalAllocationBytes": 805306368,
+      "basis": "Single renderer/compiler contract case after actual handler completion; no second initial Host extraction or app build."
+    },
+    "queueContract": {
+      "allocationModel": "static",
+      "additionalAllocationBytes": 2851284480,
+      "basis": "Original full-package SwiftPM queue invocation compiles current affected modules; previous complete scratch allowance plus explicit25% current-source growth; no reuse credit at first invocation."
+    },
+    "fixturesInitial": {
+      "allocationModel": "static",
+      "additionalAllocationBytes": 1251305878,
+      "basis": "Current original SDK/Host extraction plus production CLI temporary/output workspaces; original runner inputs and all output semantics unchanged."
+    },
+    "fixtureProducer": {
+      "allocationModel": "static",
+      "additionalAllocationBytes": 536870912,
+      "basis": "One original sequential CLI producer after initial SDK extraction; private staging/result workspace allowance, not a new native build."
+    },
+    "originalMini25": {
+      "allocationModel": "testWithProductInstall",
+      "additionalAllocationBytes": 1212216523,
+      "basis": "Same original25: one full app install and temporary copy; one current Host extraction; twice measured same25 result+export;512MiB runtime workspace. Current app allocation is measured again for the dynamic install part.",
+      "productRelativePath": "Build/Products/Debug-iphonesimulator/HanlinMiniApps.app",
+      "copyFactor": 2
+    },
+    "originalAI27": {
+      "allocationModel": "testWithProductInstall",
+      "additionalAllocationBytes": 1195578571,
+      "basis": "Same original27: one actual full app install and temporary copy; current Host extraction; twice measured same27 result+export;768MiB authoring/Metro/Repair workspace.",
+      "productRelativePath": "Build/Products/Debug-iphonesimulator/AI_Hanlin.app",
+      "copyFactor": 2
+    },
+    "freshDeviceBoot": {
+      "allocationModel": "static",
+      "additionalAllocationBytes": 2076962816,
+      "basis": "Observed allocation of the actual prior boot-only owned4D0 device:2,076,962,816 bytes. This is a measured planning reference, not an exclusive incremental guarantee; concurrent-growth and OS margins remain separate."
+    },
+    "affectedHosted": {
+      "allocationModel": "static",
+      "additionalAllocationBytes": 805306368,
+      "basis": "Serialized discovery/capture4 and assistant7 hosted cases after actual AI install; each phase admits768MiB for results/export/native workspace. No build or initial runtime extraction is charged twice."
+    },
+    "affectedSwiftPM": {
+      "allocationModel": "static",
+      "additionalAllocationBytes": 536870912,
+      "basis": "Same unchanged filter and original command, now authenticated125 definitions/205 cases including five added lifetime regressions; 512MiB growth after queue compiled the same scratch."
+    }
+  },
+  "status": "HOSTED_MODEL_BASIS_ACTUAL_BINDINGS_PENDING",
+  "basis": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/current-final-native-controls-v1/current-phase-resource-assessment-v2.json",
+    "sha256": "4fd6189b7d4860ed875d9bb06f74d9f5fd63a52e65ec120384e4c392486161cc",
+    "hostUncompressedBytes": 357217483,
+    "packageRegenerationAllowanceBytes": 4330760602
+  }
+}

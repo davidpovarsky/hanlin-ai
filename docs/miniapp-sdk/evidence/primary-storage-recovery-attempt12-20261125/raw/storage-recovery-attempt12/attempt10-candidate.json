@@ -1,0 +1,101 @@
+{
+  "observedAt": "2026-11-25T03:56:02.166259+00:00",
+  "uid": "9DB610ED-23EB-451F-B74C-4C46438D25E8",
+  "device": "/Users/m1/Library/Developer/CoreSimulator/Devices/9DB610ED-23EB-451F-B74C-4C46438D25E8",
+  "priorAuthorization": "Root explicit additional obsolete attempt10 only, after necessary measured attempt7 reclamation; protect passed11/current12/all raw evidence and caches.",
+  "actualDevice": {
+    "dataPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/9DB610ED-23EB-451F-B74C-4C46438D25E8/data",
+    "dataPathSize": 5986480128,
+    "logPath": "/Users/m1/Library/Logs/CoreSimulator/9DB610ED-23EB-451F-B74C-4C46438D25E8",
+    "udid": "9DB610ED-23EB-451F-B74C-4C46438D25E8",
+    "lastUsedAt": "2026-11-25T02:28:58Z",
+    "isAvailable": true,
+    "logPathSize": 274432,
+    "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5-16GB",
+    "state": "Shutdown",
+    "name": "HanlinPaired-primary-ce49e30d-20261124"
+  },
+  "matchingProcesses": [],
+  "lsofReturncode": 0,
+  "matchingOpenFiles": [],
+  "retainedCriticalFiles": [
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt10/state.json",
+      "bytes": 9356,
+      "sha256": "c1f061fcc8a8aedaeb5a27795478b5cda3feab67c2fbc7c2575493b9a4614d81"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt10/paired-prefix/created-simulator.txt",
+      "bytes": 37,
+      "sha256": "37443e518529b3d037bcba0e179299736ff35fab8588d7ce91ac3b99aae976cd"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt10/paired-prefix/commands.jsonl",
+      "bytes": 18553,
+      "sha256": "6ca788d6233226a4744a4a2534a3818464ca69b659cb857c64f4e5cd7a68bd6c"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt10/paired-prefix/ParityStartupDiagnostic.log",
+      "bytes": 23199,
+      "sha256": "9f94424d82da711ead9656c445e34bc0dba6d17c81fd634c76a261c960dc58e6"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt10/paired-prefix/ParityStartupDiagnostic-summary.json",
+      "bytes": 1827,
+      "sha256": "82f8e9afd43caa5b4c1a77b1f37946739ce7bbe4b34ba8a9a42b451d68b9bc9c"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt10/paired-prefix/RemainingFocused.log",
+      "bytes": 97095,
+      "sha256": "7eb149680ca27d7cf28b3c694335c18bfe6e0ec07a281e4bf11e7a5b5541c524"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt10/paired-prefix/RemainingFocused-summary.json",
+      "bytes": 2034,
+      "sha256": "84be6845eebe1671db186f4159efaf561c626173bede6c76082a38d807bba341"
+    }
+  ],
+  "retainedFullResults": [
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt10/paired-prefix/AIBuild.xcresult",
+      "duKiB": 120,
+      "InfoPlistExists": true
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt10/paired-prefix/MiniBuild.xcresult",
+      "duKiB": 72,
+      "InfoPlistExists": true
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt10/paired-prefix/ParityStartupDiagnostic.xcresult",
+      "duKiB": 33320,
+      "InfoPlistExists": true
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt10/paired-prefix/RemainingFocused.xcresult",
+      "duKiB": 116808,
+      "InfoPlistExists": true
+    }
+  ],
+  "frozenEvidence": [
+    {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused-terminal-attempt10/receipt.json",
+      "sha256": "87672e323f4c8cb463fb56916cd8ecb9547d71bf4eb417c74e082ee57c59c767"
+    },
+    {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/parity-triage-attempt10/receipt.json",
+      "sha256": "56cd644b34012d4e4f690621f7c734bc0d3b58143d3fa9e6605e822a8c91161f"
+    }
+  ],
+  "sealedEvidenceCommits": [
+    "4f8e037db259056c2dc7489ffd3b956af1cf8d9a",
+    "51861a2b76df4f110fe2a7f22affdc1c2c5b46bd",
+    "2e9c26d6c8a13f0db4a43c26010277674d80db98"
+  ],
+  "candidateDUKiB": 6097688,
+  "df": "Filesystem   1024-blocks      Used Available Capacity iused    ifree %iused  Mounted on\n/dev/disk3s5   482797652 429605748   9307128    98% 5786254 93071280    6%   /System/Volumes/Data\n",
+  "freeBytes": 9530499072,
+  "nextFreshDeviceKnownRequirement": 12149612544,
+  "needed": true,
+  "status": "ELIGIBLE_OWNED_INACTIVE"
+}

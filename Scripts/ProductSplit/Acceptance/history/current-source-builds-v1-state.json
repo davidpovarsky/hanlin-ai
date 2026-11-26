@@ -1,0 +1,172 @@
+{
+  "schema": 1,
+  "id": "current-source-builds-v1",
+  "source": "75c21bec8e709dc4f07f8fde36f1b350f118969e",
+  "sourceTree": "9d27ce831871d385e06384b3ec60834aa32af75e",
+  "status": "FAILED",
+  "startedAt": "2026-11-26T17:45:04.525139+00:00",
+  "decision": {
+    "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-acceptance-controls-v1/current-builds-v1-decision.json",
+    "bytes": 42512,
+    "sha256": "d6824c466113030c90c04334e1abc036f45e3cdeb345917d5398913099b2a80a"
+  },
+  "sourceBefore": {
+    "head": "75c21bec8e709dc4f07f8fde36f1b350f118969e",
+    "tree": "9d27ce831871d385e06384b3ec60834aa32af75e",
+    "trackedDiff": "",
+    "sdkSourceInputsVerified": 363,
+    "requiredFilesVerified": 130,
+    "host": {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/AI_HLY/RuntimeHostResources.zip",
+      "bytes": 81873071,
+      "sha256": "e38aaf2942066093d944cb6b23481775d337449b9a4515c831fb994e93a27b67"
+    },
+    "sdkManifest": {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-miniapp-sdk.json",
+      "bytes": 5257142,
+      "sha256": "2907a8f562e5eda1e7d364daa9ca31a0d89519434590f90b7117cd66c9bb6956"
+    }
+  },
+  "resourceAdmission": {
+    "freeBytes": 37208985600,
+    "requiredBytes": 14071406336
+  },
+  "sourceErrors": [],
+  "cleanupErrors": [],
+  "cleanupSignals": [],
+  "remainingOwnedProcessGroup": [],
+  "tests": "NOT_RUN",
+  "historicalC34": {
+    "source": "c34dd6ae752b3ab3ebc001743fc62c72fc48a203",
+    "status": "INCOMPLETE_INFRASTRUCTURE_INTERRUPTED",
+    "actualChargedSeconds": 13369.258655683429,
+    "originalCeilingSeconds": 14400,
+    "authorizedAdditionalSeconds": 3600,
+    "combinedCeilingSeconds": 18000,
+    "productsObservation": {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/r4-v17-preflight-path-reconciliation-v1/state.json",
+      "bytes": 258168,
+      "sha256": "a59a83057631f753ab2abaa9395412f3b2d66f366df80b7b84199dbcdec5ab3d"
+    },
+    "boundary": "Old c34 source/results and all actual charges retained; its products disappeared, no c34 acceptance or charge reset is claimed."
+  },
+  "preparationHistory": {
+    "components": [
+      {
+        "id": "current-source-native-preparation-v1",
+        "authority": {
+          "path": "/Users/m1/builds/hanlin-current-entrypoints-preparation-20261126-v1/state.json",
+          "bytes": 50422,
+          "sha256": "b9d19036109d279ee8f385effae32829a2627e0cc0e5a806323f66c9355d52a8"
+        },
+        "status": "SOURCE_AND_NATIVE_INPUTS_PREPARED_SDK_PENDING",
+        "seconds": 26.08193487499375
+      },
+      {
+        "id": "current-source-package-resolution-v1",
+        "authority": {
+          "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/native-package-resolution-v1/state.json",
+          "bytes": 60505,
+          "sha256": "966db18cb4d9e670791bfadab7ef0ca763cdcc640e1cf8cbf7f2905c2a90516e"
+        },
+        "status": "RESOLVED_ORIGINAL_PINNED_GRAPH",
+        "seconds": 84.79754241599585
+      },
+      {
+        "id": "current-sdk-native-staging-v1",
+        "authority": {
+          "path": "/Users/m1/builds/hanlin-current-sdk-staging-20261126-v1/state.json",
+          "bytes": 11081,
+          "sha256": "edd9909a14a3319c87d82b3b54d3461cf6c71eac9b401366dbdef31d71eb5c85"
+        },
+        "status": "CURRENT_SOURCE_SDK_TOOLING_AND_HOSTED_FIXTURE_PREPARED",
+        "seconds": 135.16120637502172
+      }
+    ],
+    "actualElapsedSeconds": 246.04068366601132,
+    "boundary": "Actual isolated source/native, pinned resolution and SDK/tooling preparation retained separately from the current 10800-second validation scope."
+  },
+  "validationScopeSeconds": 10800,
+  "childPID": 16719,
+  "ownedPGID": 16719,
+  "childExitCode": 1,
+  "result": {
+    "schema": 1,
+    "id": "current-source-builds-v1",
+    "source": "75c21bec8e709dc4f07f8fde36f1b350f118969e",
+    "status": "FAILED",
+    "acceptance": "NOT_RUN",
+    "ui": "NOT_RUN",
+    "startedAt": "2026-11-26T17:45:05.218581+00:00",
+    "boundary": "Original setup and contiguous Mini/A2UI/AI build prefix only. No test, app install, source edit, or shipping acceptance is claimed.",
+    "error": {
+      "type": "RuntimeError",
+      "message": "xcodebuild exit 65; inspect mini-build.log"
+    },
+    "finishedAt": "2026-11-26T17:53:22.653868+00:00",
+    "completedBuildHooks": []
+  },
+  "resultAuthority": {
+    "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-builds-v1/build-only-result.json",
+    "bytes": 565,
+    "sha256": "a0d91169f886c55b61caaa0ce225cac67f7d4aadb8641e55632ad042265a2a6e"
+  },
+  "error": {
+    "type": "AssertionError",
+    "message": ""
+  },
+  "ownedDevice": {
+    "status": "SHUTDOWN",
+    "creation": {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-builds-v1/original/paired-product/created-simulator.txt",
+      "bytes": 37,
+      "sha256": "fd11803bb5091ee94b4f2417a02bdcd15df50831f521cbf0a3d21181137c44df"
+    },
+    "before": {
+      "dataPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/BA843900-69AD-49DC-93ED-8C92DFF3025F/data",
+      "dataPathSize": 1720139776,
+      "logPath": "/Users/m1/Library/Logs/CoreSimulator/BA843900-69AD-49DC-93ED-8C92DFF3025F",
+      "udid": "BA843900-69AD-49DC-93ED-8C92DFF3025F",
+      "lastUsedAt": "2026-11-26T17:45:13Z",
+      "isAvailable": true,
+      "logPathSize": 122880,
+      "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5-16GB",
+      "state": "Booted",
+      "name": "HanlinPaired-current-source-builds-v1"
+    },
+    "after": {
+      "dataPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/BA843900-69AD-49DC-93ED-8C92DFF3025F/data",
+      "dataPathSize": 1728950272,
+      "logPath": "/Users/m1/Library/Logs/CoreSimulator/BA843900-69AD-49DC-93ED-8C92DFF3025F",
+      "udid": "BA843900-69AD-49DC-93ED-8C92DFF3025F",
+      "lastUsedAt": "2026-11-26T17:45:13Z",
+      "isAvailable": true,
+      "logPathSize": 122880,
+      "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5-16GB",
+      "state": "Shutdown",
+      "name": "HanlinPaired-current-source-builds-v1"
+    }
+  },
+  "sourceAfter": {
+    "head": "75c21bec8e709dc4f07f8fde36f1b350f118969e",
+    "tree": "9d27ce831871d385e06384b3ec60834aa32af75e",
+    "trackedDiff": "",
+    "sdkSourceInputsVerified": 363,
+    "requiredFilesVerified": 130,
+    "host": {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/AI_HLY/RuntimeHostResources.zip",
+      "bytes": 81873071,
+      "sha256": "e38aaf2942066093d944cb6b23481775d337449b9a4515c831fb994e93a27b67"
+    },
+    "sdkManifest": {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-miniapp-sdk.json",
+      "bytes": 5257142,
+      "sha256": "2907a8f562e5eda1e7d364daa9ca31a0d89519434590f90b7117cd66c9bb6956"
+    }
+  },
+  "finishedAt": "2026-11-26T17:53:29.546501+00:00",
+  "actualElapsedSeconds": 505.0227289169852,
+  "remainingCurrentValidationSeconds": 10294.977271083015,
+  "chargeCommitted": true,
+  "availableBytesAfter": 28076318720
+}

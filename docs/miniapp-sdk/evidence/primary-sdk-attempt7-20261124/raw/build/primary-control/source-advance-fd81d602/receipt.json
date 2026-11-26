@@ -1,0 +1,60 @@
+{
+  "status": "SOURCE_READY_HEAVY_RESUME_NOT_STARTED",
+  "utc": "2026-11-24T21:59:06.434280+00:00",
+  "sourceBase": "bd6da170da7936fe3c5353ddaf8b25c97477a380",
+  "target": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+  "targetTree": "c143ef6bba91db06182175fca88ca192ef102fe8",
+  "packSHA256": "81dc3ee1d470a7d285fd17cc95f0f5701675cfbe51a9003746663ff887faa5d7",
+  "workingFiles": [
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "kind": "file",
+      "oldHEADSHA256": "152806a609b662c373eedd382758f1298bf945883f0c467dc5595050f8f0fa29",
+      "workingSHA256": "9028752022b0e28a3d1f533c5ec4d0d85e6e9736b0c19b2c47c926cf3481e66a",
+      "newHEADSHA256": "152806a609b662c373eedd382758f1298bf945883f0c467dc5595050f8f0fa29",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": false,
+      "workingMode": 33188
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "kind": "file",
+      "oldHEADSHA256": "f2cd972c7366043028bbaea078291717ae363b288d29ecf242fd358103f7a9b1",
+      "workingSHA256": "2825bae8731c9c8674d746feb913ed890f880c4fc5ee65ff57f9d85171a9dc1a",
+      "newHEADSHA256": "f2cd972c7366043028bbaea078291717ae363b288d29ecf242fd358103f7a9b1",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": false,
+      "workingMode": 33188
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "kind": "file",
+      "oldHEADSHA256": "b126e18f8a228e2235ef8ef324a31f0b9b6e3384e6af0f82755e35c4bcccaeef",
+      "workingSHA256": "03a4c8fec52f59a8737e870364773c43b1de4e15a4b0ffe0195e3ff5dea18cfd",
+      "newHEADSHA256": "b126e18f8a228e2235ef8ef324a31f0b9b6e3384e6af0f82755e35c4bcccaeef",
+      "restoreWorkingAfterCheckout": true,
+      "matchesMaterializedNewHEAD": false,
+      "workingMode": 33188
+    }
+  ],
+  "workingArchiveSHA256": "c5fc64bc43c889e4b56306b847421830228c88754d89757841ba30c4816cf706",
+  "sourceHashes": {
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs": "aecc8c0ba732396a637a7d7eda8864f7bdc5b3acbe0894a640c5e9c2e8ac1cb9",
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-sdk-resolution.test.mjs": "958d0e0a71f47fa7677e412cd1a0ed40da43feb898b182df84e63256a05e5865",
+    "Scripts/Expo/prepare-ios-dependencies.mjs": "072c3432d299e4081d11d052b4bfe74d195e5775ace19362aaaea25652137dbb",
+    "Scripts/NativeScript/prepare-ios-dependencies.mjs": "b5114a3be1fc846e288128af08cef9f38b0cac8e34923780325c4edc2976ebd9",
+    "Scripts/Runtime/prepare-runtime-core.sh": "1ff99fabcbf8f40d515f3f1b944299286c1094a19520f9892a97f99cf8b64540",
+    "Scripts/Runtime/prepare-runtime-host.sh": "af0fda26d53a6b72b495a73e104835af176dccfc39cda2d5bcfffa3f7a04cbd6",
+    "Scripts/ProductSplit/run_paired_acceptance.py": "b27ca38423d3d0eb179f2b8bb7f25568d8ee9a7a70a36da7dd9e57e243ca004c",
+    "Scripts/MiniApps/miniapp.mjs": "1c256c00392c626a54ebee2abe3ededaa792c5bfa6dd9b6c5aceb89be84e5b30"
+  },
+  "toolchain": "Xcode 27.0\nBuild version 27A266a",
+  "reusedCompletedPhaseBoundary": "Final reviewed authoring module and regression are published. Prior platform, original resolved graph, foreground53 and metadata-tool inputs are unchanged; relocated CLI/lifecycle consumes the changed module and is invalidated. Normal native preparation retains unchanged engine caches while refreshing Host provenance, SDK and embedded archive. Native catalog/inputs and original paired52 execute anew.",
+  "runtimeCoreArtifactRunID": "42926628418",
+  "runtimeCoreLocalArchive": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-inputs/runtime-core/hanlin-runtime-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194.zip",
+  "newPlanSHA256": "3bb8675ff52d1a4b9d48915f968e22e44f1353e86425557349c8100a628abc89",
+  "controllerAttempt7SHA256": "9a18491c722db0bad448c9dd3dccb269eca9ab6a847f8d65a92734dd2270531a",
+  "controllerChange": "Owned attempt7 logs; existing verified local RuntimeCore input, run ID, all phase bodies, selectors and budgets retained. Inactive attempt metadata set to7; original changed Host lifecycle/CLI, native preparation/export/inputs and failed paired phase invalidated.",
+  "archivedPairedEvidence": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired-product-attempt6",
+  "nativeStarted": false
+}

@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "status": "VERIFIED_PREREQUISITE",
+  "source": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+  "observedAt": "2026-11-25T23:43:08.586704+00:00",
+  "originalBuildLog": "ai-build.log",
+  "originalBuildExitCode": 0,
+  "originalCommandUnchanged": true,
+  "sourceResource": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/AI_HLYTests/Fixtures/HostServicesProbe.bundle/ExpoSwiftUIProbeA.hanlinExpo",
+    "bytes": 325929,
+    "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20"
+  },
+  "builtResource": {
+    "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/HostServicesProbe.bundle/ExpoSwiftUIProbeA.hanlinExpo",
+    "bytes": 325929,
+    "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20"
+  },
+  "lookupOrder": [
+    "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/Fixtures/HostServicesProbe.bundle",
+    "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/HostServicesProbe.bundle"
+  ],
+  "boundary": "Actual original AI build completed; resource bytes verified before original main continues. No test result is inferred or supplied."
+}

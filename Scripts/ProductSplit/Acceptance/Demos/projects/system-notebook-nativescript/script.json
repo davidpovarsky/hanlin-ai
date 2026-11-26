@@ -1,0 +1,122 @@
+{
+  "name": "מחברת המערכת — NativeScript",
+  "version": "1.0.0",
+  "description": "דוגמה מעשית נפרדת: Spotlight, צילום ממשי, מקלדת מקורית והתראה עשירה עם המשך פעולה.",
+  "hanlinAppID": "hanlin.demo.system.nativescript",
+  "entry": "nativescript/app/bundle.mjs",
+  "runInApp": true,
+  "hanlinRuntime": "hanlin-nativescript",
+  "icon": "note.text",
+  "color": "#2563EB",
+  "capabilities": [
+    "storage",
+    "inter-app.share"
+  ],
+  "keywords": [
+    "מחברת",
+    "צילום",
+    "מקלדת",
+    "Spotlight"
+  ],
+  "actions": [
+    {
+      "id": "spotlight.open",
+      "title": "פתיחת מחברת מחיפוש",
+      "handler": "nativescript/app/bundle.mjs",
+      "capability": "inter-app.share"
+    },
+    {
+      "id": "capture.receive",
+      "title": "קבלת הצילומים שנשמרו",
+      "handler": "nativescript/app/bundle.mjs",
+      "capability": "inter-app.share"
+    },
+    {
+      "id": "notification.open",
+      "title": "המשך מתוך ההתראה",
+      "handler": "nativescript/app/bundle.mjs",
+      "capability": "inter-app.share"
+    }
+  ],
+  "entrypoints": [
+    {
+      "id": "search",
+      "kind": "spotlight",
+      "sourcePath": "nativescript/app/bundle.mjs",
+      "exportedSymbol": "spotlight.open"
+    },
+    {
+      "id": "photo",
+      "kind": "capture",
+      "sourcePath": "nativescript/app/bundle.mjs",
+      "exportedSymbol": "capture.receive"
+    },
+    {
+      "id": "keys",
+      "kind": "keyboard",
+      "sourcePath": "nativescript/app/bundle.mjs"
+    },
+    {
+      "id": "notice",
+      "kind": "notificationUI",
+      "sourcePath": "nativescript/app/bundle.mjs"
+    },
+    {
+      "id": "notice-action",
+      "kind": "appIntent",
+      "sourcePath": "nativescript/app/bundle.mjs",
+      "exportedSymbol": "notification.open"
+    }
+  ],
+  "nativePresentations": {
+    "keys": {
+      "engine": "scriptwidget",
+      "sourcePath": "native/keyboard.tsx",
+      "sourceFormat": "tsx",
+      "actions": [
+        {
+          "id": "keys.greeting",
+          "kind": "function",
+          "handler": "insertGreeting"
+        },
+        {
+          "id": "keys.thanks",
+          "kind": "function",
+          "handler": "insertThanks"
+        },
+        {
+          "id": "keys.delete",
+          "kind": "function",
+          "handler": "deleteLast"
+        },
+        {
+          "id": "keys.left",
+          "kind": "function",
+          "handler": "moveCursorLeft"
+        },
+        {
+          "id": "keys.next",
+          "kind": "function",
+          "handler": "nextKeyboard"
+        }
+      ]
+    },
+    "notice": {
+      "engine": "scriptwidget",
+      "sourcePath": "native/notification.tsx",
+      "sourceFormat": "tsx",
+      "actions": [
+        {
+          "id": "notice.open",
+          "kind": "function",
+          "handler": "continueInApp"
+        },
+        {
+          "id": "notice.dismiss",
+          "kind": "function",
+          "handler": "dismissNotice"
+        }
+      ]
+    }
+  }
+}

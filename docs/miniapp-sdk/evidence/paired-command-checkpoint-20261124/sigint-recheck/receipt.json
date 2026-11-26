@@ -1,0 +1,18 @@
+{
+  "status": "EXECUTED_PASS",
+  "command": [
+    "/usr/bin/python3",
+    "-B",
+    "Scripts/ProductSplit/test_run_paired_acceptance.py",
+    "PairedCommandEvidenceTests.test_keyboard_interrupt_keeps_child_cleanup_and_unfinished_receipt",
+    "-v"
+  ],
+  "exit_code": 0,
+  "elapsed_seconds": 0.5655308151617646,
+  "raw_log": "focused-test.log",
+  "raw_log_sha256": "ae0dbc15f41f894f0a49a6714a5968c0a1e97cd31f002d9f587222d5c0fb02e6",
+  "source_sha256": {
+    "Scripts/ProductSplit/run_paired_acceptance.py": "d98cee6156657bc6c8148b76e2a35b95b50e10a4785ef6e35c681c883ad746de",
+    "Scripts/ProductSplit/test_run_paired_acceptance.py": "a3051d6c566dc4816034fdd5a7d8f606c7c48209b30f4bfe605c92abe586e969"
+  }
+}

@@ -1,0 +1,362 @@
+//
+//  ScriptWidgetRuntimeFetch.swift
+//  ScriptWidget
+//
+//  Created by everettjf on 2020/12/11.
+//
+
+import Foundation
+import CoreFoundation
+import JavaScriptCore
+
+
+final class ScriptWidgetFetchManager: NSObject, URLSessionDataDelegate, URLSessionTaskDelegate {
+    static let allowedSchemes = Set(["https", "http"])
+    private struct Transfer {
+        var data = Data()
+        var response: URLResponse?
+        let completion: (Data?, URLResponse?, Error?) -> Void
+        let redirectValidator: ((URL) -> Bool)?
+    }
+    private let lock = NSLock()
+    private var transfers: [Int: Transfer] = [:]
+    private let configuration: URLSessionConfiguration
+
+    init(configuration: URLSessionConfiguration = .default) {
+        self.configuration = configuration.copy() as! URLSessionConfiguration
+        super.init()
+    }
+    private var storedSession: URLSession?
+    private var session: URLSession {
+        lock.lock()
+        defer { lock.unlock() }
+        if let storedSession { return storedSession }
+        let config = configuration
+        config.urlCache = nil
+        config.requestCachePolicy = .reloadIgnoringLocalCacheData
+        // One manager must own one session: task identifiers are session-local.
+        // Serializing initialization does not serialize request execution.
+        let created = URLSession(configuration: config, delegate: self, delegateQueue: nil)
+        storedSession = created
+        return created
+    }
+
+    func makeTask(httpMethod: String, url: URL, params: [AnyHashable : Any]?, redirectValidator: ((URL) -> Bool)? = nil, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
+
+        var request = URLRequest(url: url)
+        request.httpMethod = httpMethod
+        if let params = params {
+            if let headers = params["headers"] as? [AnyHashable : Any] {
+                for item in headers {
+                    if let key = item.key as? String, let value = item.value as? String {
+                        request.setValue(value, forHTTPHeaderField: key)
+                    }
+                }
+            }
+
+            if let body = params["body"] as? [AnyHashable : Any] {
+                if let bodyData = try? JSONSerialization.data(withJSONObject: body,options: []) {
+                    if let _ = request.allHTTPHeaderFields?["Content-Type"] {
+                        // nothing
+                    } else {
+                        // default for body
+                        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+                    }
+                    request.httpBody = bodyData
+                }
+            }
+
+            if let body = params["body"] as? String {
+                if let bodyData = body.data(using: .utf8) {
+                    request.httpBody = bodyData
+                }
+            }
+
+            if let timeout = params["timeoutInterval"] as? NSNumber {
+                request.timeoutInterval = timeout.doubleValue
+            }
+        }
+        return makeTask(request: request, redirectValidator: redirectValidator, completionHandler: completionHandler)
+    }
+
+    func makeTask(
+        request: URLRequest,
+        redirectValidator: ((URL) -> Bool)? = nil,
+        completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void
+    ) -> URLSessionDataTask {
+        let task = session.dataTask(with: request)
+        lock.lock()
+        transfers[task.taskIdentifier] = Transfer(completion: completionHandler, redirectValidator: redirectValidator)
+        lock.unlock()
+        return task
+    }
+
+    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse, completionHandler: @escaping (URLSession.ResponseDisposition) -> Void) {
+        lock.lock()
+        transfers[dataTask.taskIdentifier]?.response = response
+        lock.unlock()
+        completionHandler(.allow)
+    }
+
+    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
+        lock.lock()
+        guard var transfer = transfers[dataTask.taskIdentifier] else {
+            lock.unlock()
+            return
+        }
+        transfer.data.append(data)
+        transfers[dataTask.taskIdentifier] = transfer
+        lock.unlock()
+    }
+
+    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+        finish(taskIdentifier: task.taskIdentifier, error: error)
+    }
+
+    func urlSession(_ session: URLSession, task: URLSessionTask, willPerformHTTPRedirection response: HTTPURLResponse, newRequest request: URLRequest, completionHandler: @escaping (URLRequest?) -> Void) {
+        lock.lock()
+        let redirectValidator = transfers[task.taskIdentifier]?.redirectValidator
+        lock.unlock()
+        guard let url = request.url,
+              ScriptWidgetFetchPolicy.validationError(for: url) == nil,
+              redirectValidator?(url) ?? true else {
+            completionHandler(nil)
+            finish(taskIdentifier: task.taskIdentifier, error: resourceError("Redirect target is not allowed"))
+            return
+        }
+        completionHandler(request)
+    }
+
+    private func finish(taskIdentifier: Int, error: Error?) {
+        lock.lock()
+        let transfer = transfers.removeValue(forKey: taskIdentifier)
+        lock.unlock()
+        guard let transfer else { return }
+        transfer.completion(error == nil ? transfer.data : nil, transfer.response, error)
+    }
+
+    private func resourceError(_ message: String) -> Error {
+        NSError(domain: "ScriptWidgetFetch", code: 1, userInfo: [NSLocalizedDescriptionKey: message])
+    }
+}
+
+enum ScriptWidgetFetchPolicy {
+    static func validationError(forTimeout value: Any?) -> String? {
+        guard let value else { return nil }
+        guard let number = value as? NSNumber,
+              CFGetTypeID(number) != CFBooleanGetTypeID(),
+              number.doubleValue.isFinite, number.doubleValue > 0 else {
+            return "timeoutInterval must be a finite positive number of seconds"
+        }
+        return nil
+    }
+
+    static func validationError(for url: URL) -> String? {
+        guard let scheme = url.scheme?.lowercased(),
+              ScriptWidgetFetchManager.allowedSchemes.contains(scheme) else {
+            return "Only HTTP and HTTPS URLs are allowed"
+        }
+        guard let host = url.host, !host.isEmpty else { return "URL host is required" }
+        // Local services use the same HTTP(S) transport and package declarations.
+        return nil
+    }
+}
+
+enum ScriptWidgetNetworkPolicy {
+    static func allowsRedirect(_ url: URL, state: ScriptWidgetRunningState, pluginHosts: [String]? = nil) -> Bool {
+        guard state.isCurrentExecution, ScriptWidgetFetchPolicy.validationError(for: url) == nil,
+              packageAllows(url, package: state.package) else { return false }
+        if let pluginHosts {
+            guard url.scheme?.lowercased() == "https", let host = url.host?.lowercased() else { return false }
+            return self.host(host, matchesAny: pluginHosts)
+        }
+        return true
+    }
+    static func isValidDomainDeclaration(_ value: String) -> Bool {
+        if value == "*" { return true } // Host-generated legacy manifest preserves unrestricted network domains.
+        let normalized = value.lowercased()
+        return value == normalized && !normalized.contains("://") && !normalized.contains("/") && !normalized.contains(":")
+            && !normalized.hasPrefix(".") && !normalized.hasSuffix(".")
+            && normalized.range(of: "^[a-z0-9*.-]+$", options: .regularExpression) != nil
+            && (!normalized.contains("*") || normalized.hasPrefix("*."))
+    }
+
+    static func host(_ host: String, matchesAny declarations: [String]) -> Bool {
+        let value = host.lowercased()
+        return declarations.contains { declaration in
+            if declaration == "*" { return true }
+            let domain = declaration.lowercased()
+            if domain.hasPrefix("*.") {
+                let suffix = String(domain.dropFirst(2))
+                return value != suffix && value.hasSuffix("." + suffix)
+            }
+            return value == domain
+        }
+    }
+
+    static func packageAllows(_ url: URL, package: ScriptWidgetPackage) -> Bool {
+        guard let manifest = package.readManifest() else {
+            // Packages without widget.json are legacy-compatible. A present but
+            // malformed Package 2.0 manifest must fail closed.
+            return !package.hasManifest
+        }
+        guard manifest.permissions.contains(.network), let host = url.host else { return false }
+        return self.host(host, matchesAny: manifest.networkDomains)
+    }
+}
+
+
+let sharedFetchManager = ScriptWidgetFetchManager()
+
+enum ScriptWidgetPushRegistration {
+    static func register(token: Data, package: ScriptWidgetPackage) {
+        guard let manifest = package.readManifest(),
+              let push = manifest.pushUpdates,
+              let url = URL(string: push.registrationURL),
+              url.scheme?.lowercased() == "https",
+              ScriptWidgetFetchPolicy.validationError(for: url) == nil,
+              ScriptWidgetNetworkPolicy.packageAllows(url, package: package) else { return }
+
+        let payload: [String: String] = [
+            "token": token.map { String(format: "%02x", $0) }.joined(),
+            "packageID": manifest.id,
+            "channel": push.channel,
+        ]
+        guard let body = try? JSONSerialization.data(withJSONObject: payload), body.count <= 8 * 1_024 else { return }
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.httpBody = body
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        let task = sharedFetchManager.makeTask(
+            request: request,
+            redirectValidator: { redirectedURL in
+                redirectedURL.scheme?.lowercased() == "https" && ScriptWidgetNetworkPolicy.packageAllows(redirectedURL, package: package)
+            },
+            completionHandler: { _, _, _ in }
+        )
+        task.resume()
+    }
+}
+
+
+private func performScriptWidgetFetch(_ httpMethod: String, _ url: String, _ params: [AnyHashable: Any]?, metadata: Bool = false) -> ScriptWidgetRuntimePromise {
+    return ScriptWidgetRuntimePromise { (resolve, reject) in
+        guard let state = JSContext.current()?.scriptWidgetRunningState, state.isCurrentExecution else {
+            reject.call(withArguments: ["Execution session is no longer active"])
+            return
+        }
+
+        guard !state.isLiveActivityPresentation else {
+            reject.call(withArguments:["[live_activity_unavailable] Live Activity presentations cannot request network data; update their state from the app"])
+            return
+        }
+        let executionSession = state.executionSession
+        guard !state.isTimelineProjection else {
+            reject.call(withArguments: ["[timeline_read_only] Future entries cannot make live network requests; read a saved snapshot"])
+            return
+        }
+        guard let urlValue = URL(string: url) else {
+            reject.call(withArguments: ["\(url) is not url"])
+            return
+        }
+        if let validationError = ScriptWidgetFetchPolicy.validationError(forTimeout: params?["timeoutInterval"]) {
+            reject.call(withArguments: [validationError])
+            return
+        }
+        if let validationError = ScriptWidgetFetchPolicy.validationError(for: urlValue) {
+            reject.call(withArguments: [validationError])
+            return
+        }
+        guard ScriptWidgetNetworkPolicy.packageAllows(urlValue, package: state.package) else {
+            reject.call(withArguments: ["Network host is not declared in widget.json"])
+            return
+        }
+
+        var task: URLSessionDataTask!
+        task = state.fetchManager.makeTask(httpMethod: httpMethod, url: urlValue, params: params, redirectValidator: {
+            ScriptWidgetNetworkPolicy.allowsRedirect($0, state: state)
+        }) { (data, response, error) in
+            executionSession.complete(task)
+            guard state.isCurrentExecution else { return }
+            if let error = error {
+                reject.call(withArguments: [error.localizedDescription])
+            } else if let data = data {
+                if metadata {
+                    guard let http = response as? HTTPURLResponse,
+                          let body = params?["responseType"] as? String == "base64" ? data.base64EncodedString() : String(data: data, encoding: .utf8) else {
+                        reject.call(withArguments: ["Response is not HTTP or has invalid UTF-8"])
+                        return
+                    }
+                    let allowed = ["content-type", "cache-control", "expires", "last-modified", "date", "retry-after"]
+                    var headers: [String: String] = [:]
+                    for name in allowed {
+                        if let value = http.value(forHTTPHeaderField: name), value.utf8.count <= 2048 { headers[name] = value }
+                    }
+                    resolve.call(withArguments: [["status": http.statusCode, "body": body, "headers": headers]])
+                    return
+                }
+                if let responseType = params?["responseType"] as? String, responseType == "base64" {
+                    let base64 = data.base64EncodedString()
+                    resolve.call(withArguments: [base64])
+                } else if let string = String(data: data, encoding: String.Encoding.utf8) {
+                    resolve.call(withArguments: [string])
+                } else {
+                    reject.call(withArguments: ["\(urlValue) is empty"])
+                }
+            } else {
+                reject.call(withArguments: ["\(urlValue) is empty"])
+            }
+        }
+        guard state.isCurrentExecution, executionSession.register(task) else {
+            task.cancel()
+            reject.call(withArguments: ["Execution session is no longer active"])
+            return
+        }
+        task.resume()
+    }
+}
+
+
+let internal_fetch: @convention(block) (String, String, [AnyHashable: Any]?) -> ScriptWidgetRuntimePromise = { method, url, params in
+    performScriptWidgetFetch(method, url, params)
+}
+
+
+let custom_fetch:@convention(block) (String, [AnyHashable : Any]?)-> ScriptWidgetRuntimePromise = { (url,params) in
+    return internal_fetch("GET", url, params)
+}
+
+@objc protocol ScriptWidgetRuntimeHttpExports: JSExport {
+    static func get(_ url: String, _ params: [AnyHashable : Any]?)-> ScriptWidgetRuntimePromise
+    static func getResponse(_ url: String, _ params: [AnyHashable: Any]?) -> ScriptWidgetRuntimePromise
+    static func post(_ url: String, _ params: [AnyHashable : Any]?)-> ScriptWidgetRuntimePromise
+    static func put(_ url: String, _ params: [AnyHashable : Any]?)-> ScriptWidgetRuntimePromise
+    static func patch(_ url: String, _ params: [AnyHashable : Any]?)-> ScriptWidgetRuntimePromise
+    static func delete(_ url: String, _ params: [AnyHashable : Any]?)-> ScriptWidgetRuntimePromise
+}
+
+@objc public class ScriptWidgetRuntimeHttp: NSObject, ScriptWidgetRuntimeHttpExports {
+    static func get(_ url: String, _ params: [AnyHashable : Any]?) -> ScriptWidgetRuntimePromise {
+        return internal_fetch("GET", url, params)
+    }
+
+    static func getResponse(_ url: String, _ params: [AnyHashable: Any]?) -> ScriptWidgetRuntimePromise {
+        performScriptWidgetFetch("GET", url, params, metadata: true)
+    }
+
+    static func post(_ url: String, _ params: [AnyHashable : Any]?) -> ScriptWidgetRuntimePromise {
+        return internal_fetch("POST", url, params)
+    }
+
+    static func put(_ url: String, _ params: [AnyHashable : Any]?) -> ScriptWidgetRuntimePromise {
+        return internal_fetch("PUT", url, params)
+    }
+
+    static func patch(_ url: String, _ params: [AnyHashable : Any]?) -> ScriptWidgetRuntimePromise {
+        return internal_fetch("PATCH", url, params)
+    }
+
+    static func delete(_ url: String, _ params: [AnyHashable : Any]?) -> ScriptWidgetRuntimePromise {
+        return internal_fetch("DELETE", url, params)
+    }
+}

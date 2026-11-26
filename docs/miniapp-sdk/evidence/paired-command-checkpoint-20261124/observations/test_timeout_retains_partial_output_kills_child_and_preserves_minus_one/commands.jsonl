@@ -1,0 +1,2 @@
+{"argv": ["/usr/bin/python3", "-c", "import time; print('before-timeout', flush=True); time.sleep(30)"], "exit": -1, "seconds": 0.2104735691100359, "log": "timeout.log", "sha256": "a1e72e84ed3e2b0b8448096dd075ca1231356866e8f3f0005988c05ac2403394"}
+{"argv": ["/usr/bin/python3", "-c", "import time; print('before-timeout', flush=True); time.sleep(30)"], "exit": -1, "seconds": 0.2100774459540844, "log": "timeout-error.log", "sha256": "a1e72e84ed3e2b0b8448096dd075ca1231356866e8f3f0005988c05ac2403394"}

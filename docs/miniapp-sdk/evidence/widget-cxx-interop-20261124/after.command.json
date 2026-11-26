@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "python3",
+    "-m",
+    "unittest",
+    "Scripts.SDK.tests.test_widget_cxx_imports.WidgetCxxImportTests.test_real_widget_consumers_preserve_original_expo_cpp_import_contract"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124",
+  "startedAt": "2026-11-24T10:22:45.634963+00:00",
+  "exitCode": 0,
+  "scope": "Actual SwiftPM source/unified settings + real project producer/clone/idempotence only; no Apple compilation."
+}

@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "id": "ai27-diagnostic-v1",
+  "owner": "/root/native_execution",
+  "source": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+  "status": "FAILED",
+  "expectedTests": 27,
+  "controllerPID": 64780,
+  "activeBaselineSeconds": 14990.036745542038,
+  "allowanceSeconds": 2400,
+  "decisionSHA256": "15f6ca053ae5470e96a68dc0a874a16d34551e65831ddffdd58d61ce83654d86",
+  "original52Status": "FAILED_OR_INCOMPLETE",
+  "originalMini25": {
+    "passed": 22,
+    "failed": 3,
+    "skipped": 0
+  },
+  "nativeResult": "FAILED_OR_INCOMPLETE",
+  "resourceObservationAtLaunch": {
+    "observedAt": "2026-11-25T10:15:54.821578+00:00",
+    "freeBytes": 2127568896,
+    "df": "Filesystem   1024-blocks      Used Available Capacity iused    ifree %iused  Mounted on\n/dev/disk3s5   482797652 436835172   2077704   100% 6675986 20777040   24%   /System/Volumes/Data"
+  },
+  "startedAt": "2026-11-25T10:15:54.821879+00:00",
+  "argv": [
+    "/opt/homebrew/opt/python@3.12/bin/python3.12",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1.py",
+    "--decision",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/decision.json",
+    "--native-child"
+  ],
+  "phasePID": 64792,
+  "elapsedSeconds": 216.0478111669945,
+  "logBytes": 4345,
+  "error": "AssertionError: ",
+  "exitCode": 1,
+  "ownedProcessGroupAtCleanup": [],
+  "remainingOwnedProcessGroup": [],
+  "observedPhaseExitCode": 1,
+  "ownedSimulatorCleanup": {
+    "device": "50D2F667-196E-4382-A86A-802710579EA9",
+    "ownership": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/evidence/paired-product/created-simulator.txt",
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": "",
+    "observedState": "Shutdown",
+    "observedAt": "2026-11-25T10:19:30.124670+00:00"
+  },
+  "cleanupErrors": [],
+  "sourceErrors": [],
+  "finishedAt": "2026-11-25T10:19:30.869009+00:00",
+  "chargedSeconds": 216.0478111669945,
+  "cumulativeActiveSeconds": 15206.084556709033,
+  "allowanceExceededDuringCleanup": false,
+  "logSHA256": "9ef540f6bede8121ebde737bf1184a2f3d3b1ea19689229b0120e919fad73561",
+  "chargeCommitted": true,
+  "diagnosticLedgerSHA256": "2d2b7be234b068877e6b1a2ce80ed80e93d04fc884dbf1d832f1ffc5cda14780"
+}

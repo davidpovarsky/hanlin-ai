@@ -1,0 +1,25 @@
+{
+  "at": "2026-11-26T18:23:12.172948+00:00",
+  "status": "PREPARED_WAITING_FOR_FINAL_SDK",
+  "source": "462fe5c579e3fb3d6c394c8fd368faca8792bc6e",
+  "projectCount": 9,
+  "sourceFileCount": 103,
+  "allLocalKitSourcesMatchOracle": true,
+  "originalTools": [
+    {
+      "path": "Scripts/MiniApps/miniapp.mjs",
+      "bytes": 4101,
+      "sha256": "1c256c00392c626a54ebee2abe3ededaa792c5bfa6dd9b6c5aceb89be84e5b30",
+      "source": "462fe5c579e3fb3d6c394c8fd368faca8792bc6e"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+      "bytes": 61104,
+      "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+      "source": "462fe5c579e3fb3d6c394c8fd368faca8792bc6e"
+    }
+  ],
+  "sdkStaged": false,
+  "buildExecuted": false,
+  "canonicalOrSharedDependenciesModified": false
+}

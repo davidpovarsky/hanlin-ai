@@ -1,0 +1,326 @@
+{
+  "utc": "2026-11-24T17:59:03.447011+00:00",
+  "source": "ce49e30d69466e44b0aa26582beaa57ee7a91a9b",
+  "files": [
+    {
+      "path": "Scripts/NativeScript/build-host-services.mjs",
+      "bytes": 3753,
+      "sha256": "9389c754c2708ac1592352f9ec0b184f9a154a0a2471259104f2f64dab29726b"
+    },
+    {
+      "path": "Scripts/NativeScript/node_modules/.hanlin-miniapp-install.json",
+      "bytes": 977670,
+      "sha256": "487102e840b54dd7ea5a1aef9e1284d9d3de4d8108c7be904fe747cccc4ff872"
+    },
+    {
+      "path": "build/app-split-evidence/foreground/foreground-results.json",
+      "bytes": 24614,
+      "sha256": "18aa76b5b971e3aeaf7af8ea7809fe4246ae4aa435b695853c9375e97a843c69"
+    },
+    {
+      "path": "build/app-split-evidence/foreground/raw-origin/commands.jsonl",
+      "bytes": 21068,
+      "sha256": "735e2613a2c5b278729f10211bb563ab285b7e57dec87df611bc3ea8d43d7829"
+    },
+    {
+      "path": "build/app-split-evidence/foreground/raw-origin/contracts-provenance.json",
+      "bytes": 17349,
+      "sha256": "6dd1a3a746bbe54c3d8edddef89358b76f40f3ae1fcda464b60ca6a9ef08e523"
+    },
+    {
+      "path": "build/app-split-evidence/foreground/raw-origin/core-provenance.json",
+      "bytes": 6741,
+      "sha256": "8f2712aa10c85efb9b48145d1dae18e891e38cb108696d5defb2912a3c222a9f"
+    },
+    {
+      "path": "build/app-split-evidence/foreground/raw-origin/foreground-binary-provenance.json",
+      "bytes": 9183,
+      "sha256": "dfc991b53963aa20dde27c7e664f79ba3c2cb19977404fbfa5d496c57936113a"
+    },
+    {
+      "path": "build/app-split-evidence/foreground/raw-origin/manifest.json",
+      "bytes": 5370,
+      "sha256": "fff5f10e809771f45be103fd2d07aca7e4a4e154e9f4ff5bd00d474b7e4de3b4"
+    },
+    {
+      "path": "build/app-split-evidence/foreground/raw-origin/raw-001-toolchain.stderr.log",
+      "bytes": 30,
+      "sha256": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e"
+    },
+    {
+      "path": "build/app-split-evidence/foreground/raw-origin/raw-001-toolchain.stdout.log",
+      "bytes": 98,
+      "sha256": "04630ab8fa201f57c63c59730e638135e32584a97e16e004a417eb8ed283dc83"
+    },
+    {
+      "path": "build/app-split-evidence/foreground/raw-origin/raw-002-compile-contracts.stderr.log",
+      "bytes": 98,
+      "sha256": "04630ab8fa201f57c63c59730e638135e32584a97e16e004a417eb8ed283dc83"
+    },
+    {
+      "path": "build/app-split-evidence/foreground/raw-origin/raw-002-compile-contracts.stdout.log",
+      "bytes": 120517,
+      "sha256": "5883b2db0130d9d2deee4fab565c9071cc96ec28590c575f8a5af425f05ce0ec"
+    },
+    {
+      "path": "build/app-split-evidence/foreground/raw-origin/raw-003-compile-core.stderr.log",
+      "bytes": 98,
+      "sha256": "04630ab8fa201f57c63c59730e638135e32584a97e16e004a417eb8ed283dc83"
+    },
+    {
+      "path": "build/app-split-evidence/foreground/raw-origin/raw-003-compile-core.stdout.log",
+      "bytes": 7625,
+      "sha256": "66b47aa4614227fb7ad7b6f490d1ca7e2f406105279706dd005890bc604f711f"
+    },
+    {
+      "path": "build/app-split-evidence/foreground/raw-origin/raw-004-link-foreground.stderr.log",
+      "bytes": 98,
+      "sha256": "04630ab8fa201f57c63c59730e638135e32584a97e16e004a417eb8ed283dc83"
+    },
+    {
+      "path": "build/app-split-evidence/foreground/raw-origin/raw-004-link-foreground.stdout.log",
+      "bytes": 48241,
+      "sha256": "7e45722b3a27e238825569461adcc8620216bcf5c9148af5f4f03e80cce9aa42"
+    },
+    {
+      "path": "build/app-split-evidence/foreground/raw-origin/raw-005-tests-foreground.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "build/app-split-evidence/foreground/raw-origin/raw-005-tests-foreground.stdout.log",
+      "bytes": 2090,
+      "sha256": "c617624f4096a37fa8807b3c145449ce20cff0eeae45d1d760bfda13b3bae810"
+    },
+    {
+      "path": "build/app-split-evidence/foreground/raw-origin/raw-006-commit-base.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "build/app-split-evidence/foreground/raw-origin/raw-006-commit-base.stdout.log",
+      "bytes": 41,
+      "sha256": "2b56fb16a0d094082fba3f582dc83bec560b255f56c92de0d163fd73503378d8"
+    },
+    {
+      "path": "build/app-split-evidence/foreground/raw-origin/raw-007-working-tree.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "build/app-split-evidence/foreground/raw-origin/raw-007-working-tree.stdout.log",
+      "bytes": 1263,
+      "sha256": "992b08e364d5d290fd00f3110cf06cb2edfed1a15556acccf913d2a715b52faf"
+    },
+    {
+      "path": "build/app-split-evidence/miniapp-cli-relocation.log",
+      "bytes": 223,
+      "sha256": "1f217b1b6c35c8684fa9bfa875e76bb880c62c371f0dde4b6aec02d51639393b"
+    },
+    {
+      "path": "build/app-split-evidence/native-dependencies.log",
+      "bytes": 67105,
+      "sha256": "281d8ee1cfb371167c205d01d38493ca2c7f73c095d68ac79ba6ffedcb80cd1c"
+    },
+    {
+      "path": "build/app-split-evidence/package-lifecycle.log",
+      "bytes": 1448,
+      "sha256": "07f962742b189e51338084b11925bd5bfc05c3e967094fa48147be64b517788c"
+    },
+    {
+      "path": "build/app-split-evidence/upstream-inputs.patch",
+      "bytes": 20789,
+      "sha256": "8dba74dc69ac22e81dd0b058e1ef02f64042165f4cf0bc6875b30092f5c26c60"
+    },
+    {
+      "path": "build/app-split-evidence/upstream-resolution.json",
+      "bytes": 14914,
+      "sha256": "249c686978ca13877f40233dc32612c37ccd045f189131025ebb73edc1e32f23"
+    },
+    {
+      "path": "build/nativescript-metadata-tool/provenance.json",
+      "bytes": 935,
+      "sha256": "f83479c7a5cdf9014fb7b5f2bf8425ecf9809c4de9680666ca255706022b9696"
+    },
+    {
+      "path": "build/primary-control/admit_and_run.py",
+      "bytes": 2885,
+      "sha256": "2a9f75898dc0060143629e1c45b3b8eeb3c38c117ffc6973f24e9ed3afbbface"
+    },
+    {
+      "path": "build/primary-control/capacity-admission.json",
+      "bytes": 1919,
+      "sha256": "cd207ed7c8939a5e731d540295f403ad60e7aef70cd390edd51c218b97893a54"
+    },
+    {
+      "path": "build/primary-control/capacity-before-preparation.json",
+      "bytes": 4703,
+      "sha256": "85b3913438fccdd77f5a649ea91e2e666ab76547f0bec33fed4f9ddc35f323a9"
+    },
+    {
+      "path": "build/primary-control/capacity-observations.jsonl",
+      "bytes": 7894,
+      "sha256": "a95ea4c9d3348de5c603fa0b88118a16527eed580d55ef029b6f1cbb63464e5c"
+    },
+    {
+      "path": "build/primary-control/capacity-owner-chain.json",
+      "bytes": 1195,
+      "sha256": "3a3148b433c6f348dce4123b3eff3b8082f7c58fb953cb8fcc30cdf0b6f06e25"
+    },
+    {
+      "path": "build/primary-control/capacity-test-runners.json",
+      "bytes": 1993,
+      "sha256": "9c0b66c4c27fe13d8e677886b88c32d0e65c65a97e9170b405c2e835824a1503"
+    },
+    {
+      "path": "build/primary-control/controller-full.log",
+      "bytes": 3437,
+      "sha256": "a9f9217b1b4423024bd7bc5021286febd54c44645d073ccfe05b26ff1d643ecf"
+    },
+    {
+      "path": "build/primary-control/controller-full.pid",
+      "bytes": 6,
+      "sha256": "0c8a83761e9f77890bbfe41d7ef2a10e64f12aadfdbf12c610ff8d0b24c5a911"
+    },
+    {
+      "path": "build/primary-control/controller-light.log",
+      "bytes": 2147,
+      "sha256": "f8264ed6b136123380cd5a2f87cd303e2e2f62c963609bdfc64ba814238a05e0"
+    },
+    {
+      "path": "build/primary-control/controller-light.pid",
+      "bytes": 6,
+      "sha256": "68e59d423d224fea3c81e0aee8e0693bb3c69a6ee955346701c44312aa18c6ae"
+    },
+    {
+      "path": "build/primary-control/controller.py",
+      "bytes": 6168,
+      "sha256": "87455be68388c9ace71d6e18cbf4dbcfaa0b9a11506fd9ddece0abc4b1e92971"
+    },
+    {
+      "path": "build/primary-control/events.jsonl",
+      "bytes": 9392,
+      "sha256": "4bd9849cf44f5c01ea0526299e5075c4b9f92046fda8fc9291d6b769a1977d3d"
+    },
+    {
+      "path": "build/primary-control/github-env",
+      "bytes": 57,
+      "sha256": "5dbf89013980cc51e48cf587edb5a6f8424636c82cc543eb1876cb8a107b84cd"
+    },
+    {
+      "path": "build/primary-control/github-output",
+      "bytes": 149,
+      "sha256": "c036b20547d0d4b744764d7f3c3834721129367d54e88cd14c0273ae74067bf8"
+    },
+    {
+      "path": "build/primary-control/logs/host-proof.log",
+      "bytes": 141,
+      "sha256": "c04bbd4cd72764bb17f216c8909ee4043ea458d33686fb3f919aca213be801ed"
+    },
+    {
+      "path": "build/primary-control/logs/split-foreground.log",
+      "bytes": 214,
+      "sha256": "b9188ca35253124a0fd4bc95bf590cf6b68509f64c16a74203036a2ccc43d374"
+    },
+    {
+      "path": "build/primary-control/logs/split-host-lifecycle.log",
+      "bytes": 2336,
+      "sha256": "c4a13793987b1c28240de2e4d356b1f52c04748666294e4ec5a89323734cf9c1"
+    },
+    {
+      "path": "build/primary-control/logs/split-metadata.log",
+      "bytes": 4627,
+      "sha256": "e2f24a4284083b36e865bdde2c35e4f992b7e2588b6b3de1281a4f935e278b90"
+    },
+    {
+      "path": "build/primary-control/logs/split-native-preparation.log",
+      "bytes": 67105,
+      "sha256": "281d8ee1cfb371167c205d01d38493ca2c7f73c095d68ac79ba6ffedcb80cd1c"
+    },
+    {
+      "path": "build/primary-control/logs/split-platform.log",
+      "bytes": 113139,
+      "sha256": "6c3a558b135c82c30985a2655a25c93807e7aa46f9a7d5149d4e57738fd479fa"
+    },
+    {
+      "path": "build/primary-control/logs/split-upstreams.log",
+      "bytes": 7880,
+      "sha256": "6a508d26d367241f8533f09e5edbbab150f2d1a6af13c9693e0ba89f953c2cce"
+    },
+    {
+      "path": "build/primary-control/phases/host-proof.sh",
+      "bytes": 50,
+      "sha256": "f0f0bbd389a9307dd721135a391b23a20cd9d640f149838fb19fa1cf9daa8bcc"
+    },
+    {
+      "path": "build/primary-control/phases/split-foreground.sh",
+      "bytes": 713,
+      "sha256": "29e26e4ab82898091d69fadeae7245be79fe86294416919cb1ebb5bbee9ffc43"
+    },
+    {
+      "path": "build/primary-control/phases/split-host-lifecycle.sh",
+      "bytes": 1828,
+      "sha256": "956541d15f45f12b7777b8ebeb800fe14e1686db5fc7ceae397835547953d7bc"
+    },
+    {
+      "path": "build/primary-control/phases/split-inputs.sh",
+      "bytes": 373,
+      "sha256": "03a05318e9c17e6b2a3fc91dc40ee908b81ee204fb961cda64687179778621bc"
+    },
+    {
+      "path": "build/primary-control/phases/split-metadata.sh",
+      "bytes": 324,
+      "sha256": "242b75c7edfb94f90ab0cd5d2032af9e2bfda15141c8d98743074d999b10fc14"
+    },
+    {
+      "path": "build/primary-control/phases/split-native-artifacts.sh",
+      "bytes": 494,
+      "sha256": "eb0405f89f5da3d48e1591650d42e2f7a8ff8f86eebac9b82ded2e5c70cefebd"
+    },
+    {
+      "path": "build/primary-control/phases/split-native-preparation.sh",
+      "bytes": 1661,
+      "sha256": "47635289bc9238f28f65b6f72d4980b5cf0aa6def2cf146cd236261260f65a3e"
+    },
+    {
+      "path": "build/primary-control/phases/split-paired-acceptance.sh",
+      "bytes": 53,
+      "sha256": "f271e6f1b95bb261417cee5fc13104e41df44f8ec35d2ab565b1f6135191c0c8"
+    },
+    {
+      "path": "build/primary-control/phases/split-platform.sh",
+      "bytes": 1625,
+      "sha256": "7f1edd791bb43546b753d6834c0cd7b85f558f57883312892364110ad2cbfa4c"
+    },
+    {
+      "path": "build/primary-control/phases/split-restore-inputs.sh",
+      "bytes": 152,
+      "sha256": "f848273286ad9fdcecc9635ee01148c5f54b45230a5199938ef3d362a709f39a"
+    },
+    {
+      "path": "build/primary-control/phases/split-upstreams.sh",
+      "bytes": 518,
+      "sha256": "890c8ac2b02ff5a5909c71789e639e333cbc78c687797f2a060a7dd2591cfa84"
+    },
+    {
+      "path": "build/primary-control/plan.json",
+      "bytes": 11592,
+      "sha256": "52336107175c0d28cbda50ddb51eecdf5f83083228033f24393d9de8f8a38682"
+    },
+    {
+      "path": "build/primary-control/source-stage.json",
+      "bytes": 310,
+      "sha256": "f941ac318bb972368a536341021f433c4362b9066f50895c9ad26031297c64aa"
+    },
+    {
+      "path": "build/primary-control/state.json",
+      "bytes": 6040,
+      "sha256": "41bdc015cfacaee365e1bc230dec717f79d8476829591db90fa96a741c7f6d3d"
+    },
+    {
+      "path": "build/primary-control/step-summary.md",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

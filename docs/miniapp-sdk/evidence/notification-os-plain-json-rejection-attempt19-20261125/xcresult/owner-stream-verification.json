@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "status": "STREAM_TRANSFER_AND_FULL_MEMBER_VERIFICATION_PASS",
+  "observedAt": "2026-11-25T20:50:32.993257+00:00",
+  "elapsedSeconds": 16.484857234172523,
+  "archive": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-recovery-v1-xcresult-archive/NotificationOS.xcresult.tar.gz",
+    "bytes": 89006891,
+    "sha256": "07720ea7537ea3705c7baf8d41acd1e837c57948192af0e5dec06cca5413192c"
+  },
+  "sourceManifest": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-recovery-v1-xcresult-archive/source-manifest.json",
+    "bytes": 50661,
+    "sha256": "c0c677b985a2dd8e655b1b5243f00759d77bdb3317c3b111e48c11de0a7f3da8"
+  },
+  "sourcePath": "/Users/m1/builds/hanlin-notification-os-recovery-20261125/build/notification-os-recovery-v1/test/NotificationOS.xcresult",
+  "restorePath": "/Users/m1/builds/hanlin-notification-os-recovery-20261125/build/notification-os-recovery-v1/test/NotificationOS.xcresult",
+  "memberCount": 116,
+  "fileCount": 114,
+  "fileBytes": 89853430,
+  "metadataBoundary": "Exact ns timestamps and xattrs are retained in this authenticated manifest; tar timestamp representation may be coarser.",
+  "sourceRemoved": false,
+  "nativeOutcome": "FAILED",
+  "terminalState": {
+    "path": "/Users/m1/builds/hanlin-notification-os-recovery-20261125/build/notification-os-recovery-v1/state.json",
+    "bytes": 7476,
+    "sha256": "b28e10666a324436171352f6f7d821c1186f4d174a35ed90ec03ecb2aabefa74",
+    "status": "FAILED"
+  },
+  "allSourceXattrsEmpty": true
+}

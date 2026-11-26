@@ -1,0 +1,28 @@
+{
+  "status": "EXECUTED_FAILURE",
+  "runID": 45354885323,
+  "jobID": 138310132062,
+  "sourceCommit": "a12eb646aeb5c484f746c07ecffafc7d9f34f167",
+  "log": "mac-job-138310132062.txt",
+  "logBytes": 154013,
+  "logSHA256": "46e0faf1bf7a621e28efcaf008f1848f24e9d7ea02b7844c367fe1e783f4d466",
+  "total": 8,
+  "passed": 7,
+  "failed": 1,
+  "skipped": 0,
+  "passedTestRows": [
+    "\"Validates the embedded NativeScript SwiftUI plugin contract without changing ordinary Scripting\" passed after 0.067 seconds.",
+    "\"Expo import evaluates foreground app and multi-exposure support fail-closed\" passed after 0.067 seconds.",
+    "\"Unavailable native plugins fail before Expo and NativeScript import\" passed after 0.067 seconds.",
+    "\"Prepared NativeScript entry metadata uses the canonical bundle across sessions\" passed after 0.067 seconds.",
+    "\"Validates the embedded Expo SwiftUI plugin contract\" passed after 0.067 seconds.",
+    "\"Malformed and duplicate prepared entrypoints are visible import failures\" passed after 0.099 seconds.",
+    "\"Expo import main matches the manifest entry and cannot redirect launch elsewhere\" passed after 0.102 seconds."
+  ],
+  "failedTestRows": [
+    "\"Validates declared @nativescript/core dependency compatibility\" failed after 0.067 seconds with 1 issue."
+  ],
+  "suiteSummary": "Verify MiniApp import contracts / Compile and test isolated Scripting runtime\tUNKNOWN STEP\t2026-11-24T08:22:37.4206610Z \u2718 Test run with 8 tests in 1 suite failed after 0.103 seconds with 1 issue.",
+  "soleFailure": "HanlinScriptAnalyzerTests.swift:255: supportedPreview informational message expected the Core package version where the analyzer reports the iOS runtime version.",
+  "correctedNativeRerun": "NOT_RUN; root owns the next Apple dispatch."
+}

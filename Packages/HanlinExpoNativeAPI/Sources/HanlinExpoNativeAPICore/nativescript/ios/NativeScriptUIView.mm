@@ -1,3 +1,4 @@
+#import "HanlinExpoNativeAPIGate.h"
 #import "NativeScriptUIView.h"
 #import "NativeScriptUIKitHost.h"
 #import <objc/runtime.h>
@@ -292,11 +293,21 @@ static void NativeScriptSetDetachedChildrenOwner(UIView* view, NativeScriptUIVie
   NativeScriptDetachedChildrenTouchSentinel* _detachedTouchSentinel;
   NSInteger _hostMountRetryCount;
   NSString* _lastHostReadyKey;
+  NSString* _hanlinSessionID;
+}
+
+// Cache ownership while attached, so disposal after removal still addresses
+// the original VM. A host ID alone must never select another window's runtime.
+- (NSString*)hanlinSessionID {
+  if (_hanlinSessionID == nil) {
+    _hanlinSessionID = [[HanlinExpoNativeAPIGate sessionContextForView:self].sessionID copy];
+  }
+  return _hanlinSessionID;
 }
 
 - (void)dealloc {
   if (_hostId.length > 0) {
-    NativeScriptRunUIKitHostLifecycle(_hostId, @"dispose");
+    NativeScriptRunUIKitHostLifecycleForSession(_hostId, @"dispose", [self hanlinSessionID]);
   }
   [self detachViewController];
   [self detachDetachedChildrenTouchHandler];
@@ -319,6 +330,7 @@ static void NativeScriptSetDetachedChildrenOwner(UIView* view, NativeScriptUIVie
   [_debugName release];
   [_onHostReady release];
   [_lastHostReadyKey release];
+  [_hanlinSessionID release];
   [super dealloc];
 }
 
@@ -329,7 +341,7 @@ static void NativeScriptSetDetachedChildrenOwner(UIView* view, NativeScriptUIVie
 
   NSString* previousHostId = [_hostId copy];
   if (previousHostId.length > 0) {
-    NativeScriptRunUIKitHostLifecycle(previousHostId, @"dispose");
+    NativeScriptRunUIKitHostLifecycleForSession(previousHostId, @"dispose", [self hanlinSessionID]);
   }
   [previousHostId release];
 
@@ -548,7 +560,7 @@ static void NativeScriptSetDetachedChildrenOwner(UIView* view, NativeScriptUIVie
     return;
   }
 
-  NSDictionary<NSString*, NSString*>* handles = NativeScriptCreateUIKitHost(_hostId);
+  NSDictionary<NSString*, NSString*>* handles = NativeScriptCreateUIKitHostForSession(_hostId, [self hanlinSessionID]);
   if (handles != nil) {
     _hostMountRetryCount = 0;
     [self applyUIKitHostHandles:handles];
@@ -575,7 +587,7 @@ static void NativeScriptSetDetachedChildrenOwner(UIView* view, NativeScriptUIVie
   }
 
   [self mountUIKitHostIfNeeded];
-  [self applyUIKitHostHandles:NativeScriptRunUIKitHostLifecycle(_hostId, phase)];
+  [self applyUIKitHostHandles:NativeScriptRunUIKitHostLifecycleForSession(_hostId, phase, [self hanlinSessionID])];
 }
 
 - (void)setChildrenView:(UIView*)childrenView {

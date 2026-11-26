@@ -190,7 +190,9 @@ final class HanlinMiniAppHost {
     }
 
 
-    func swiftDestination(for item: HanlinMiniAppCatalogItem) throws -> SwiftDestination {
+    func swiftDestination(for item: HanlinMiniAppCatalogItem,
+                          sharedInput: HanlinValue? = nil,
+                          completeSharedRequest: (@MainActor @Sendable (HanlinValue) async throws -> Void)? = nil) throws -> SwiftDestination {
         guard !HanlinScriptingPlatform.shared.isTransferringProductData else {
             throw HanlinProductTransferError.busy
         }
@@ -214,7 +216,9 @@ final class HanlinMiniAppHost {
                 Task { @MainActor in
                     try? await HanlinScriptingPlatform.shared.refreshExtensionSnapshot()
                 }
-            }
+            },
+            sharedInput: sharedInput,
+            completeSharedRequest: completeSharedRequest
         )
         // A compiled view can launch its own Tasks. Dismissal does not prove
         // those writes finished; a later transfer requires a fresh process.

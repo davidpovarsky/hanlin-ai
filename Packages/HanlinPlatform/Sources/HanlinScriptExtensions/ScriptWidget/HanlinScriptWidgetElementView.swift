@@ -5,12 +5,15 @@ import HanlinPlatformContracts
 public struct HanlinScriptWidgetElementView: View {
     public let node: HanlinScriptWidgetPreparedNode
     public let context: HanlinWidgetActionContext
-    public init(node: HanlinScriptWidgetPreparedNode, context: HanlinWidgetActionContext) {
+    private let nativeActionBuilder: ((HanlinWidgetActionCommand, AnyView) -> AnyView)?
+    public init(node: HanlinScriptWidgetPreparedNode, context: HanlinWidgetActionContext,
+                nativeActionBuilder: ((HanlinWidgetActionCommand, AnyView) -> AnyView)? = nil) {
         self.node = node
         self.context = context
+        self.nativeActionBuilder = nativeActionBuilder
     }
     public var body: some View {
-        ScriptWidgetElementView(element: node.nativeElement(), context: ScriptWidgetElementContext(actionContext: context))
+        ScriptWidgetElementView(element: node.nativeElement(), context: ScriptWidgetElementContext(actionContext: context, nativeActionBuilder: nativeActionBuilder))
     }
 }
 

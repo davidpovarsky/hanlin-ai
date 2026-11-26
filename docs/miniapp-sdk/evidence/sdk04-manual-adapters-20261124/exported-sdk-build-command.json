@@ -1,0 +1,24 @@
+{
+  "argv": [
+    "/usr/local/bin/node",
+    "/dev/shm/hanlin-sdk-only-kit-45335292541/Scripts/MiniApps/miniapp.mjs",
+    "build",
+    "--sdk",
+    "/dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK",
+    "--engine",
+    "expo",
+    "--project",
+    "/mnt/development/projects/worktrees/hanlin-sdk04-manual-adapters-20261124/build/acceptance/sdk04-manual-adapters-sdk-project",
+    "--archive",
+    "/mnt/development/projects/worktrees/hanlin-sdk04-manual-adapters-20261124/build/acceptance/sdk04-manual-adapters/ManualAdapterProbe.hanlinExpo",
+    "--report",
+    "/mnt/development/projects/worktrees/hanlin-sdk04-manual-adapters-20261124/docs/miniapp-sdk/evidence/sdk04-manual-adapters-20261124/exported-sdk-build-report.json"
+  ],
+  "environmentOverrides": {
+    "TMPDIR": "/mnt/development/projects/worktrees/hanlin-sdk04-manual-adapters-20261124/build/acceptance/sdk04-manual-adapters/sdk-tmp"
+  },
+  "exitCode": 0,
+  "utc": "2026-11-24T08:08:29.442450+00:00",
+  "stdoutSHA256": "d1fd4b37a67b05a18cda3a471c6c30cd298ca84a0929eff849a51fde3820d8d7",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+}

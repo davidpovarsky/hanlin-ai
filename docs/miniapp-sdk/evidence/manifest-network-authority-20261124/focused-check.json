@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "node",
+    "--test",
+    "Scripts/Audit/Tests/manifest-contracts.test.mjs"
+  ],
+  "exitCode": 0,
+  "durationSeconds": 0.3234897833317518,
+  "nodeVersion": "v24.22.0",
+  "stdoutSHA256": "f6c42067520911bf34e62aaacb73ac72142c1aa7ee024f98f6eb89beaf670d01",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "executedAt": "2026-11-24T09:19:26.817039+00:00"
+}

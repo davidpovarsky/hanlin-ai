@@ -12,13 +12,17 @@ public struct HanlinExtensionHostConfiguration: Hashable, Sendable {
     public let widgetKind: String?
     public let notificationCategoryIdentifier: String?
     public let visionURL: URL?
+    /// Relative product storage below the shared App Group container.
+    public let storageNamespace: String?
 
     public init(appGroupIdentifier: String? = nil, widgetKind: String? = nil,
-                notificationCategoryIdentifier: String? = nil, visionURL: URL? = nil) {
+                notificationCategoryIdentifier: String? = nil, visionURL: URL? = nil,
+                storageNamespace: String? = nil) {
         self.appGroupIdentifier = appGroupIdentifier
         self.widgetKind = widgetKind
         self.notificationCategoryIdentifier = notificationCategoryIdentifier
         self.visionURL = visionURL
+        self.storageNamespace = storageNamespace
     }
 
     /// Explicit original-app policy. Other hosts supply their own configuration.
@@ -27,6 +31,33 @@ public struct HanlinExtensionHostConfiguration: Hashable, Sendable {
               widgetKind: hanlinWidgetKind,
               notificationCategoryIdentifier: "CHAVRUSA_REMINDER",
               visionURL: URL(string: "chavrusachat://openVisionView"))
+    }
+
+    public static var miniapps: Self {
+        .init(appGroupIdentifier: hanlinAppGroupIdentifier,
+              widgetKind: hanlinWidgetKind,
+              notificationCategoryIdentifier: "CHAVRUSA_REMINDER",
+              storageNamespace: "HanlinMiniApps/v1")
+    }
+
+    /// Both the host app and its extensions resolve the same product container.
+    /// No fallback into a sibling product's installed packages or receipts.
+    public func storageContainer(in appGroupContainer: URL, createIfNeeded: Bool = false) throws -> URL {
+        let container = appGroupContainer.resolvingSymlinksInPath().standardizedFileURL
+        guard let storageNamespace else { return container }
+        let parts = storageNamespace.split(separator: "/", omittingEmptySubsequences: false)
+        guard !parts.isEmpty, parts.allSatisfy({ !$0.isEmpty && $0 != "." && $0 != ".." }),
+              !storageNamespace.contains("\\"), !storageNamespace.contains("\0") else {
+            throw HanlinExtensionConfigurationError.invalidConfiguration
+        }
+        let product = container.appending(path: storageNamespace, directoryHint: .isDirectory)
+        guard product.resolvingSymlinksInPath().standardizedFileURL.path == product.standardizedFileURL.path else {
+            throw HanlinExtensionConfigurationError.invalidConfiguration
+        }
+        if createIfNeeded {
+            try FileManager.default.createDirectory(at: product, withIntermediateDirectories: true)
+        }
+        return product
     }
 
     /// Reads only the current executable's declared configuration. A missing or
@@ -62,8 +93,10 @@ public struct HanlinExtensionHostConfiguration: Hashable, Sendable {
             }
             vision = parsed
         } else { vision = nil }
+        let namespace = try string("StorageNamespace")
         self.init(appGroupIdentifier: group, widgetKind: kind,
-                  notificationCategoryIdentifier: category, visionURL: vision)
+                  notificationCategoryIdentifier: category, visionURL: vision, storageNamespace: namespace)
+        _ = try storageContainer(in: URL(filePath: "/"))
     }
 
     public func requireAppGroupIdentifier() throws -> String {

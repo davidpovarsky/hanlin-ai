@@ -118,19 +118,25 @@ public struct HanlinWidgetTimelineProvider: AppIntentTimelineProvider {
         case .systemExtraLarge: familyName = "systemExtraLarge"
         default: return .init(date: .now, presentation: .failure("Unsupported widget family"))
         }
-        let presentation = await Task.detached(priority: .userInitiated) {
-            do {
-                let store = try HanlinScriptExtensionStore()
-                let snapshot = try store.load()
-                let resolved = snapshot?.widgetEntityMigrations[id] ?? id
-                return HanlinWidgetPreparation.prepare(store: store, entityID: resolved, family: familyName)
-            } catch {
-                if let diag = HanlinScriptExtensionStore.latestDiagnostic {
-                    return HanlinPreparedWidget.failure("\(diag.userFacingHeadline) (\(diag.correlationID))")
+        let executionControl = HanlinScriptWidgetExecutionControl()
+        let presentation: HanlinPreparedWidget
+        do {
+            presentation = try await executionControl.perform {
+                do {
+                    let store = try HanlinScriptExtensionStore()
+                    let snapshot = try store.load()
+                    let resolved = snapshot?.widgetEntityMigrations[id] ?? id
+                    return HanlinWidgetPreparation.prepare(store: store, entityID: resolved, family: familyName, executionControl: executionControl)
+                } catch {
+                    if let diag = HanlinScriptExtensionStore.latestDiagnostic {
+                        return HanlinPreparedWidget.failure("\(diag.userFacingHeadline) (\(diag.correlationID))")
+                    }
+                    return HanlinPreparedWidget.failure("Widget storage failed")
                 }
-                return HanlinPreparedWidget.failure("Widget storage failed")
             }
-        }.value
+        } catch {
+            presentation = .failure(error.localizedDescription)
+        }
         return .init(date: .now, presentation: presentation)
     }
 }
@@ -171,51 +177,54 @@ public struct HanlinScriptingLiveActivityWidget: Widget {
 
     public var body: some WidgetConfiguration {
         ActivityConfiguration(for: HanlinGenericLiveActivityAttributes.self) { context in
-            HanlinLiveActivityLockScreenView(root: context.state.root)
+            HanlinLiveActivityLockScreenView(root: context.state.root, identity: context.attributes.actionIdentity)
                 .padding()
                 .activityBackgroundTint(Color.clear)
         } dynamicIsland: { context in
             DynamicIsland {
                 DynamicIslandExpandedRegion(.leading) {
-                    HanlinLiveActivityRegionView(root: context.state.root, region: .expandedLeading)
+                    HanlinLiveActivityRegionView(root: context.state.root, region: .expandedLeading, identity: context.attributes.actionIdentity)
                 }
                 DynamicIslandExpandedRegion(.trailing) {
-                    HanlinLiveActivityRegionView(root: context.state.root, region: .expandedTrailing)
+                    HanlinLiveActivityRegionView(root: context.state.root, region: .expandedTrailing, identity: context.attributes.actionIdentity)
                 }
                 DynamicIslandExpandedRegion(.center) {
-                    HanlinLiveActivityRegionView(root: context.state.root, region: .expandedCenter)
+                    HanlinLiveActivityRegionView(root: context.state.root, region: .expandedCenter, identity: context.attributes.actionIdentity)
                 }
                 DynamicIslandExpandedRegion(.bottom) {
-                    HanlinLiveActivityRegionView(root: context.state.root, region: .expandedBottom)
+                    HanlinLiveActivityRegionView(root: context.state.root, region: .expandedBottom, identity: context.attributes.actionIdentity)
                 }
             } compactLeading: {
-                HanlinLiveActivityRegionView(root: context.state.root, region: .compactLeading)
+                HanlinLiveActivityRegionView(root: context.state.root, region: .compactLeading, identity: context.attributes.actionIdentity)
             } compactTrailing: {
-                HanlinLiveActivityRegionView(root: context.state.root, region: .compactTrailing)
+                HanlinLiveActivityRegionView(root: context.state.root, region: .compactTrailing, identity: context.attributes.actionIdentity)
             } minimal: {
-                HanlinLiveActivityRegionView(root: context.state.root, region: .minimal)
+                HanlinLiveActivityRegionView(root: context.state.root, region: .minimal, identity: context.attributes.actionIdentity)
             }
         }
     }
 }
 
 public struct HanlinLiveActivityLockScreenView: View {
-    public init(root: HanlinScriptUINode) { self.root = root }
+    public init(root: HanlinScriptUINode, identity: HanlinScriptExtensionIdentity? = nil) {
+        self.root = root; self.identity = identity
+    }
 
     public let root: HanlinScriptUINode
+    public let identity: HanlinScriptExtensionIdentity?
 
     public var body: some View {
         if let layout = try? HanlinLiveActivityUILayout(root: root) {
-            HanlinExtensionNodeView(node: layout.content)
+            HanlinExtensionNodeView(node: layout.content, identity: identity, invocationSource: .liveActivity)
         } else {
-            HanlinExtensionNodeView(node: root)
+            HanlinExtensionNodeView(node: root, identity: identity, invocationSource: .liveActivity)
         }
     }
 }
 
 public struct HanlinLiveActivityRegionView: View {
-    public init(root: HanlinScriptUINode, region: Region) {
-        self.root = root; self.region = region
+    public init(root: HanlinScriptUINode, region: Region, identity: HanlinScriptExtensionIdentity? = nil) {
+        self.root = root; self.region = region; self.identity = identity
     }
 
     public enum Region: Sendable, CaseIterable {
@@ -230,11 +239,12 @@ public struct HanlinLiveActivityRegionView: View {
 
     public let root: HanlinScriptUINode
     public let region: Region
+    public let identity: HanlinScriptExtensionIdentity?
 
     @ViewBuilder
     public var body: some View {
         if let layout = try? HanlinLiveActivityUILayout(root: root), let node = node(in: layout) {
-            HanlinExtensionNodeView(node: node)
+            HanlinExtensionNodeView(node: node, identity: identity, invocationSource: .liveActivity)
         } else {
             EmptyView()
         }
@@ -279,6 +289,9 @@ public struct HanlinPreparedExpoNativeView: View {
     @ViewBuilder public var body: some View {
         if let object = node.toAny() as? [String: Any] {
             let child = HanlinExpoWidgetNative.render(node: object, resources: context.resources) { target, role, label in
+                if let intent = try? HanlinExpoWidgetsViewRenderer.hostActionIntent(target: target, context: context) {
+                    return AnyView(SwiftUI.Button(role: role, intent: intent) { label })
+                }
                 guard let intent = try? HanlinExpoWidgetsViewRenderer.actionIntent(target: target, context: context) else {
                     return AnyView(label.disabled(true).accessibilityHint(Text("Widget action is unavailable", bundle: HanlinLocalization.bundle)))
                 }
@@ -286,5 +299,76 @@ public struct HanlinPreparedExpoNativeView: View {
             }
             AnyView(child)
         } else { Text("Invalid prepared Expo widget", bundle: HanlinLocalization.bundle) }
+    }
+}
+
+public struct HanlinOriginalScriptWidgetLiveActivityWidget: Widget {
+    public init() {}
+    public var body: some WidgetConfiguration {
+        ActivityConfiguration(for: HanlinScriptWidgetLiveActivityAttributes.self) { context in
+            HanlinOriginalScriptWidgetActivityView(attributes: context.attributes, state: context.state)
+                .padding().activityBackgroundTint(Color.clear)
+        } dynamicIsland: { context in
+            DynamicIsland {
+                DynamicIslandExpandedRegion(.leading) {
+                    HanlinOriginalScriptWidgetActivityView(attributes: context.attributes, state: context.state, region: .expandedLeading)
+                }
+                DynamicIslandExpandedRegion(.trailing) {
+                    HanlinOriginalScriptWidgetActivityView(attributes: context.attributes, state: context.state, region: .expandedTrailing)
+                }
+                DynamicIslandExpandedRegion(.center) {
+                    HanlinOriginalScriptWidgetActivityView(attributes: context.attributes, state: context.state, region: .expandedCenter)
+                }
+                DynamicIslandExpandedRegion(.bottom) {
+                    HanlinOriginalScriptWidgetActivityView(attributes: context.attributes, state: context.state, region: .expandedBottom)
+                }
+            } compactLeading: {
+                HanlinOriginalScriptWidgetActivityView(attributes: context.attributes, state: context.state, region: .compactLeading)
+            } compactTrailing: {
+                HanlinOriginalScriptWidgetActivityView(attributes: context.attributes, state: context.state, region: .compactTrailing)
+            } minimal: {
+                HanlinOriginalScriptWidgetActivityView(attributes: context.attributes, state: context.state, region: .minimal)
+            }
+        }
+    }
+}
+
+/// Uses the actual original ScriptWidget renderer for every island region.
+public struct HanlinOriginalScriptWidgetActivityView: View {
+    public enum Region: CaseIterable, Sendable {
+        case expandedLeading, expandedTrailing, expandedCenter, expandedBottom
+        case compactLeading, compactTrailing, minimal
+    }
+    public let attributes: HanlinScriptWidgetLiveActivityAttributes
+    public let state: HanlinScriptWidgetLiveActivityAttributes.ContentState
+    public let region: Region?
+    public init(attributes: HanlinScriptWidgetLiveActivityAttributes,
+                state: HanlinScriptWidgetLiveActivityAttributes.ContentState, region: Region? = nil) {
+        self.attributes = attributes
+        self.state = state
+        self.region = region
+    }
+    @ViewBuilder public var body: some View {
+        if let store = try? HanlinScriptExtensionStore(),
+           let prepared = try? HanlinScriptWidgetLiveActivityPreparation.load(
+                store: store, attributes: attributes, state: state),
+           let node = node(in: prepared) {
+            HanlinScriptWidgetElementView(node: node, context: prepared.context)
+        } else if region == nil {
+            Text(state.title)
+        }
+    }
+    public func node(in prepared: HanlinScriptWidgetLiveActivitySnapshot) -> HanlinScriptWidgetPreparedNode? {
+        guard let region else { return prepared.node }
+        guard let island = prepared.dynamicIsland else { return nil }
+        switch region {
+        case .expandedLeading: return island.expandedLeading
+        case .expandedTrailing: return island.expandedTrailing
+        case .expandedCenter: return island.expandedCenter
+        case .expandedBottom: return island.expandedBottom
+        case .compactLeading: return island.compactLeading
+        case .compactTrailing: return island.compactTrailing
+        case .minimal: return island.minimal
+        }
     }
 }

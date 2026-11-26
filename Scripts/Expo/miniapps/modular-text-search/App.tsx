@@ -9,7 +9,7 @@ import {
 } from '@hanlin/expo-ui';
 import {
   navigationTitle, navigationBarTitleDisplayMode, listStyle, font,
-  foregroundStyle, lineLimit, pickerStyle, tag, disabled
+  foregroundStyle, lineLimit, pickerStyle, tag, disabled, accessibilityIdentifier
 } from '@hanlin/expo-ui/modifiers';
 import {
   getSearchEngine, listSearchEngines,
@@ -18,6 +18,7 @@ import {
 import { appendUniqueResults, groupSearchResults, versionLabel } from './src/logic/searchGrouping';
 import { tFactory, getQuickQueries, formatNumber, versionModeOptions } from './src/logic/localization';
 import { splitLooseList } from './src/logic/textUtils';
+import { normalizeEntrypointInput } from './src/logic/entrypointInput';
 
 type SearchOptions = Record<string, any>;
 type TextOptions = Record<string, any>;
@@ -174,15 +175,23 @@ function NativeSettings(props: {
   </Form>;
 }
 
-function NativeTextVersion({version, locale}: {version:any; locale:string}) {
+function NativeTextVersion({version, locale, entryID}: {version:any; locale:string; entryID:string}) {
   const t = tFactory(locale);
   const heading = version.versionTitleInHebrew || version.versionTitle || t('untitledVersion');
-  return <DisclosureGroup label={String(heading)}>
+  const versionID = `${entryID}:${String(version.id)}`;
+  return <DisclosureGroup>
+    <DisclosureGroup.Label>
+      <Text modifiers={[accessibilityIdentifier(`modular-loaded-version-${versionID}`)]}>
+        {String(heading)}
+      </Text>
+    </DisclosureGroup.Label>
     {version.language &&
       <LabeledContent label={t('language')}><Text>{version.language}</Text></LabeledContent>}
     {version.license &&
       <LabeledContent label="License"><Text>{version.license}</Text></LabeledContent>}
-    <Text>{plainText(version.text) || t('noVersionText')}</Text>
+    <Text modifiers={[accessibilityIdentifier(`modular-full-text-body-${versionID}`)]}>
+      {plainText(version.text) || t('noVersionText')}
+    </Text>
   </DisclosureGroup>;
 }
 
@@ -192,6 +201,7 @@ function NativeFullText({entry, locale, onLoad}: {
   const t = tFactory(locale);
   return <>
     <Button label={t('fullText')} systemImage="book.pages"
+      testID={`modular-full-text-load-${String(entry.id)}`}
       onPress={() => onLoad(entry)} modifiers={[disabled(!entry.ref)]}/>
   </>;
 }
@@ -233,7 +243,12 @@ function NativeResultDetail(props: {
       {entries.map((entry:any) => {
         const state = expanded[entry.id];
         const entryTitle = entry.version || entry.heRef || entry.ref || t('variantVersion');
-        return <DisclosureGroup key={String(entry.id)} label={String(entryTitle)}>
+        return <DisclosureGroup key={String(entry.id)}>
+          <DisclosureGroup.Label>
+            <Text modifiers={[accessibilityIdentifier(`modular-source-version-${String(entry.id)}`)]}>
+              {String(entryTitle)}
+            </Text>
+          </DisclosureGroup.Label>
           <NativeFullText entry={entry} locale={locale} onLoad={onLoadFullText}/>
           {state?.loading && <ProgressView/>}
           {state?.error && <Text modifiers={[foregroundStyle('red')]}>{state.error}</Text>}
@@ -243,7 +258,8 @@ function NativeResultDetail(props: {
             </Text>}
           {state?.data?.versions?.length > 0
             ? state.data.versions.map((version:any) =>
-                <NativeTextVersion key={String(version.id)} version={version} locale={locale}/>)
+                <NativeTextVersion key={String(version.id)} version={version} locale={locale}
+                  entryID={String(entry.id)}/>)
             : !state?.loading && state?.data &&
                 <Text>{t('noVersions')}</Text>}
         </DisclosureGroup>;
@@ -294,6 +310,13 @@ export default function App() {
   const [expanded,setExpanded] = useState<Record<string,TextLoaderState>>({});
   const searching = useRef(false);
   const loadingPage = useRef(false);
+  const actionSearch = useRef<(parameters: unknown) => Promise<{ query: string; total: number } | null>>(async () => null);
+  useEffect(() => {
+    let mounted = true;
+    void hostServices.actions.register({ search: ({ parameters }) => actionSearch.current(parameters) })
+      .catch(error => { if (mounted) setDiagnostic(String(error?.message ?? error)); });
+    return () => { mounted = false; };
+  }, []);
 
   const groups = useMemo(() => groupSearchResults(results),[results]);
   const suggestions = useMemo(() => getQuickQueries(locale),[locale]);
@@ -312,8 +335,11 @@ export default function App() {
     }
   },[engineId,query,searchOptions,filtersText,filterFieldsText,aggsText]);
 
-  async function search(value?:string) {
-    if(searching.current)return;
+  async function search(value?:string, invoked = false): Promise<{ query: string; total: number } | null> {
+    if (searching.current) {
+      if (invoked) throw new Error('A search is already running.');
+      return null;
+    }
     const q = String(value ?? query).trim();
     if(!q){
       setError(t('noQueryError'));
@@ -321,7 +347,8 @@ export default function App() {
       setResults([]);
       setSubmittedQuery('');
       setHasMore(false);
-      return;
+      if (invoked) throw new Error(t('noQueryError'));
+      return null;
     }
     searching.current = true;
     const options = effective(q,0);
@@ -342,17 +369,28 @@ export default function App() {
       setLastSearchOptions(options);
       setHasMore(incoming.length>0 && incoming.length<total);
       if(incoming.length===0)setError(t('noResultsError'));
+      return { query: q, total };
     } catch(e:any) {
       setError(e?.message || String(e));
       setResults([]);
       setMeta(null);
       setSubmittedQuery('');
       setHasMore(false);
+      if (invoked) throw e;
+      return null;
     } finally {
       searching.current = false;
       setIsLoading(false);
     }
   }
+
+  actionSearch.current = async parameters => {
+    const input = normalizeEntrypointInput(parameters);
+    if (input.locale) setLocale(input.locale);
+    setQuery(input.query);
+    setPath([]);
+    return search(input.query, true);
+  };
 
   async function loadMore() {
     if(searching.current||loadingPage.current||isLoading||isLoadingMore||
@@ -445,7 +483,7 @@ export default function App() {
   }
 
   return <View style={{flex:1}}>
-    <Host style={{flex:1}}
+    <Host key={locale} style={{flex:1}}
       layoutDirection={locale==='he'?'rightToLeft':'leftToRight'}>
       <NavigationStack path={path} onPathChange={setPath}
         modifiers={[navigationTitle(t('appTitle')),navigationBarTitleDisplayMode('large')]}>

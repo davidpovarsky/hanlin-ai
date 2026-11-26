@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/usr/local/bin/node",
+    "--test",
+    "--test-name-pattern=original ScriptWidget compiler|module closure does not|ordinary original ScriptWidget|ported attachment executes",
+    "Scripts/MiniApps/test-native-presentations.mjs"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-scriptwidget-original-limit-parity-20261124",
+  "exitCode": 0,
+  "seconds": 0.949,
+  "atUTC": "2026-11-24T08:36:47.551115+00:00"
+}

@@ -1,0 +1,1 @@
+{"archive":"/mnt/development/projects/worktrees/hanlin-generated-views-probe-20261124/docs/miniapp-sdk/evidence/generated-views-probe-20261124/public-build-artifact.zip","bytes":3021260,"sha256":"79ff7fe0261476d1cf7ea4198fd9b43985a77677dee73bdbfbf8a25f83a4dd0e","entryCount":25}

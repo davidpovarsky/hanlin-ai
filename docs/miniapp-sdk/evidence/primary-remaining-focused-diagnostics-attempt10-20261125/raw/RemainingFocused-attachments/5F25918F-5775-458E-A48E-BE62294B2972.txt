@@ -1,0 +1,334 @@
+Attributes: Application, 0x114d54b40, pid: 63770, label: 'Hanlin MiniApps'
+Element subtree:
+ →Application, 0x114d54b40, pid: 63770, label: 'Hanlin MiniApps'
+    Window (Main), 0x114d54c80, {{0.0, 0.0}, {1032.0, 1376.0}}
+      Other, 0x114d54dc0, {{0.0, 0.0}, {1032.0, 1376.0}}
+        Other, 0x114d54f00, {{0.0, 0.0}, {1032.0, 1376.0}}
+          Other, 0x114d55040, {{0.0, 0.0}, {1032.0, 1376.0}}
+            Other, 0x114d55180, {{0.0, 0.0}, {1032.0, 1376.0}}
+              Other, 0x114d552c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+                NavigationBar, 0x114d55400, {{0.0, 32.0}, {1032.0, 106.0}}, identifier: 'Apps'
+                  Other, 0x114d55540, {{14.0, 36.0}, {43.5, 36.0}}
+                    Other, 0x114d55680, {{14.0, 36.0}, {43.5, 36.0}}
+                      Button, 0x114d557c0, {{14.0, 36.0}, {43.5, 36.0}}, label: 'Edit'
+                  Button, 0x114d55900, {{73.5, 36.0}, {40.0, 36.0}}, identifier: 'hanlin-apps-torah-capture', label: 'לימוד מצילום'
+                  Button, 0x114d55a40, {{618.5, 36.0}, {37.0, 36.0}}, identifier: 'hanlin-apps-add', label: 'hanlin-apps-add'
+                  Other, 0x114d55b80, {{671.5, 36.0}, {41.0, 36.0}}
+                    Other, 0x114d55cc0, {{671.5, 36.0}, {41.0, 36.0}}
+                      Button, 0x114d55e00, {{671.5, 36.0}, {41.0, 36.0}}, identifier: 'miniapps-preferences', label: 'Edit MiniApps and windows'
+                  Button, 0x114d55f40, {{728.5, 36.0}, {37.5, 36.0}}, identifier: 'hanlin-miniapps-transfer', label: 'Transfer from Hanlin'
+                  SearchField, 0x114d56080, {{782.0, 32.0}, {240.0, 44.0}}, label: 'Search Apps', placeholderValue: 'Search Apps'
+                    Image, 0x114d561c0, {{794.0, 43.5}, {20.5, 20.0}}, identifier: 'magnifyingglass', label: 'Search'
+                  StaticText, 0x114d56300, {{20.0, 89.5}, {83.0, 41.0}}, label: 'Apps'
+                Other, 0x114d56440, {{0.0, 0.0}, {1032.0, 1376.0}}
+                  Other, 0x114d56580, {{0.0, 0.0}, {1032.0, 1376.0}}
+                    Other, 0x114d566c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+                      Other, 0x114d56800, {{0.0, 0.0}, {1032.0, 1376.0}}
+                        ScrollView, 0x114d56940, {{0.0, 0.0}, {1032.0, 1376.0}}, identifier: 'hanlin-apps-catalog'
+                          Other, 0x114d56a80, {{0.0, 0.0}, {1032.0, 1376.0}}
+                            Other, 0x114d56bc0, {{0.0, 0.0}, {1032.0, 126.0}}
+                          Other, 0x114d56d00, {{0.0, 0.0}, {1032.0, 1376.0}}
+                          Other, 0x114d56e40, {{0.0, 138.0}, {1032.0, 760.0}}
+                            Other, 0x114d56f80, {{23.5, 156.0}, {985.0, 724.0}}
+                              StaticText, 0x114d570c0, {{24.0, 156.0}, {54.0, 26.5}}, identifier: 'hanlin-miniapps-section-swift', label: 'Swift'
+                              Other, 0x114d57200, {{23.5, 210.0}, {985.0, 169.0}}
+                                Button, 0x114d57340, {{23.5, 210.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Swift Parity', label: 'Swift Parity'
+                                  Image, 0x114d57480, {{204.0, 231.0}, {30.5, 27.0}}, identifier: 'swift', label: 'Swift Programming Language Bird Logo'
+                                  StaticText, 0x114d575c0, {{42.0, 318.0}, {105.5, 24.0}}, label: 'Swift Parity'
+                                  StaticText, 0x114d57700, {{42.0, 346.0}, {139.0, 14.5}}, label: 'Native SwiftPM Mini App'
+                                Button, 0x114d57840, {{36.0, 222.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-hanlin.demo.swift-parity', label: 'App Actions'
+                                  Button, 0x114d57980, {{36.0, 222.5}, {38.0, 38.0}}
+                                    Image, 0x114d57ac0, {{47.0, 239.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                                Button, 0x114d57c00, {{274.5, 210.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Sefaria', label: 'Sefaria'
+                                  Image, 0x114d57d40, {{451.0, 231.0}, {34.0, 30.0}}, identifier: 'books.vertical.fill', label: 'Bookshelf'
+                                  StaticText, 0x114d57e80, {{293.0, 302.0}, {64.5, 24.0}}, label: 'Sefaria'
+                                  StaticText, 0x113587ac0, {{293.0, 330.0}, {132.0, 30.5}}, label: 'Search, read, save and revisit sources'
+                                Button, 0x113587480, {{287.0, 222.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-nativeapp.sefaria', label: 'App Actions'
+                                  Button, 0x114d5aa80, {{287.0, 222.5}, {38.0, 38.0}}
+                                    Image, 0x114d5abc0, {{298.0, 239.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                                Button, 0x114d5a800, {{525.5, 210.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Text Studio', label: 'Text Studio'
+                                  Image, 0x114d5a940, {{702.5, 231.0}, {33.0, 20.5}}, identifier: 'textformat.alt', label: 'Text Formatting'
+                                  StaticText, 0x114d5a580, {{544.0, 302.0}, {103.0, 24.0}}, label: 'Text Studio'
+                                  StaticText, 0x114d5a6c0, {{544.0, 330.0}, {168.5, 30.5}}, label: 'Write, inspect, transform and keep history'
+                                Button, 0x114d5a440, {{538.0, 222.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-nativeapp.textstudio', label: 'App Actions'
+                                  Button, 0x114d59b80, {{538.0, 222.5}, {38.0, 38.0}}
+                                    Image, 0x114d59f40, {{549.0, 239.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                                Button, 0x114d5a080, {{776.5, 210.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Wikipedia', label: 'Wikipedia'
+                                  Image, 0x114d5a1c0, {{960.0, 231.0}, {27.5, 27.5}}, identifier: 'globe.americas.fill', label: 'Globe Showing The Americas, Filled'
+                                  StaticText, 0x114d5a300, {{795.0, 302.0}, {90.5, 24.0}}, label: 'Wikipedia'
+                                  StaticText, 0x114d59cc0, {{795.0, 330.0}, {103.0, 30.5}}, label: 'Explore, save and revisit knowledge'
+                                Button, 0x114d59e00, {{789.0, 222.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-nativeapp.wikipedia', label: 'App Actions'
+                                  Button, 0x114d59a40, {{789.0, 222.5}, {38.0, 38.0}}
+                                    Image, 0x114d58f00, {{800.0, 239.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                              StaticText, 0x114d592c0, {{24.0, 406.5}, {127.5, 26.5}}, identifier: 'hanlin-miniapps-section-nativeScript', label: 'NativeScript'
+                              Other, 0x114d59400, {{23.5, 460.5}, {232.0, 169.0}}
+                                Button, 0x114d59540, {{23.5, 460.5}, {232.0, 169.0}}, identifier: 'hanlin-package-card-HanlinScript Parity', label: 'HanlinScript Parity'
+                                  StaticText, 0x114d59680, {{49.0, 483.0}, {29.5, 13.5}}, label: 'BETA'
+                                  Image, 0x114d59900, {{202.0, 481.5}, {31.5, 25.0}}, identifier: 'terminal.fill', label: 'Terminal Command Prompt, Filled'
+                                  StaticText, 0x114d597c0, {{42.0, 552.5}, {171.0, 24.0}}, label: 'HanlinScript Parity'
+                                  StaticText, 0x114d59040, {{42.0, 580.5}, {194.5, 30.5}}, label: 'Real HanlinScript parity MiniApp with deterministic Node, Python, JavaScript, and HTTPS execution.'
+                                Button, 0x114d59180, {{36.0, 473.0}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-hanlin.demo.script-parity', label: 'App Actions'
+                                  Button, 0x114d58dc0, {{36.0, 473.0}, {38.0, 38.0}}
+                                    Image, 0x114d58280, {{47.0, 490.0}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                              StaticText, 0x114d58640, {{24.0, 657.0}, {51.0, 26.5}}, identifier: 'hanlin-miniapps-section-expo', label: 'Expo'
+                              Other, 0x114d58780, {{23.5, 711.0}, {483.0, 169.0}}
+                                Button, 0x114d588c0, {{23.5, 711.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-חיפוש טקסטים מודולרי — Expo', label: 'חיפוש טקסטים מודולרי — Expo'
+                                  Image, 0x114d58a00, {{207.5, 732.0}, {26.5, 26.5}}, identifier: 'magnifyingglass', label: 'Search'
+                                  StaticText, 0x114d58c80, {{42.0, 803.0}, {195.0, 24.0}}, label: 'חיפוש טקסטים מודולרי — Expo'
+                                  StaticText, 0x114d58b40, {{42.0, 831.0}, {194.5, 30.5}}, label: 'Original native Expo search app, Share, interactive native Shortcuts snippets and editable Translation UI with original ScriptWidget services.'
+                                Button, 0x114d583c0, {{36.0, 723.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-script-470d111992ef6fd2dfdc24b6', label: 'App Actions'
+                                  Button, 0x114d58500, {{36.0, 723.5}, {38.0, 38.0}}
+                                    Image, 0x114d58140, {{47.0, 740.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                                Button, 0x114d58000, {{274.5, 711.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Departure Budget', label: 'Departure Budget'
+                                  Image, 0x114d4f980, {{458.0, 732.0}, {27.5, 27.5}}, identifier: 'clock', label: 'Clock'
+                                  StaticText, 0x114d4fac0, {{293.0, 803.0}, {164.5, 24.0}}, label: 'Departure Budget'
+                                  StaticText, 0x114d4fc00, {{293.0, 831.0}, {195.0, 30.5}}, label: 'Plan preparation, travel and arrival buffer with native SwiftUI controls.'
+                                Button, 0x114d4fd40, {{287.0, 723.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-script-a19fcce1a9ef912a9ef0721c', label: 'App Actions'
+                                  Button, 0x114d4e800, {{287.0, 723.5}, {38.0, 38.0}}
+                                    Image, 0x114d4e080, {{298.0, 740.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                          Other, 0x114d4e300, {{999.0, 86.0}, {30.0, 1260.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                            Other, 0x114d4e440, {{1026.0, 547.0}, {3.0, 796.0}}
+                          Other, 0x114d4e580, {{999.0, 86.0}, {30.0, 1260.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                            Other, 0x114d4e6c0, {{1026.0, 547.0}, {3.0, 796.0}}
+                Toolbar, 0x114d4e1c0, {{0.0, 0.0}, {1032.0, 1376.0}}, identifier: 'Toolbar', label: 'Toolbar'
+                  Other, 0x114d4d400, {{0.0, 0.0}, {1032.0, 1376.0}}
+      Other, 0x114d4d7c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+        Other, 0x114d4d900, {{0.0, 0.0}, {1032.0, 1376.0}}
+          Other, 0x114d4da40, {{0.0, 0.0}, {1032.0, 1376.0}}
+            Other, 0x114d4df40, {{0.0, 0.0}, {1032.0, 1376.0}}
+              NavigationBar, 0x114d4de00, {{0.0, 32.0}, {1032.0, 54.0}}, identifier: '_TtGC7SwiftUI32NavigationStackHosting'
+                Other, 0x114d4dcc0, {{951.0, 36.0}, {67.0, 36.0}}
+                  Other, 0x114d4db80, {{951.0, 36.0}, {67.0, 36.0}}
+                    Button, 0x114d4d540, {{951.0, 36.0}, {67.0, 36.0}}, identifier: 'hanlin-script-app-close', label: 'Close'
+              Other, 0x114d4d680, {{0.0, 0.0}, {1032.0, 1376.0}}
+                Other, 0x114d4e940, {{0.0, 0.0}, {1032.0, 1376.0}}
+                  Other, 0x114d4cf00, {{0.0, 0.0}, {1032.0, 1376.0}}
+                    Other, 0x114d4d040, {{0.0, 0.0}, {1032.0, 1376.0}}
+                      Other, 0x114d4d180, {{0.0, 86.0}, {1032.0, 1270.0}}
+                        Other, 0x114d4d2c0, {{0.0, 86.0}, {1032.0, 1270.0}}
+                          Other, 0x114d4cdc0, {{0.0, 86.0}, {1032.0, 1270.0}}
+                            Other, 0x114d4fe80, {{0.0, 86.0}, {1032.0, 1270.0}}
+                              Other, 0x1135ffc00, {{0.0, 86.0}, {1032.0, 1270.0}}
+                                Other, 0x1135ff980, {{0.0, 86.0}, {1032.0, 1270.0}}
+                                  Other, 0x1135ff700, {{0.0, 86.0}, {1032.0, 1270.0}}
+                                    CollectionView, 0x1135ff200, {{0.0, 86.0}, {1032.0, 1270.0}}
+                                      Other, 0x1135ff340, {{-20.0, -2454.0}, {1072.0, 2761.0}}
+                                      Cell, 0x1135ff480, {{20.0, 86.0}, {992.0, 40.5}}
+                                        Other, 0x1135ff5c0, {{20.0, 86.0}, {992.0, 40.5}}
+                                        Other, 0x1135ffd40, {{20.0, 86.0}, {992.0, 40.5}}
+                                          Other, 0x1135ffe80, {{20.0, 86.0}, {992.0, 40.5}}
+                                            Other, 0x1135ffac0, {{20.0, 86.0}, {992.0, 40.5}}
+                                              StaticText, 0x1135ff840, {{20.0, 86.0}, {992.0, 40.5}}, label: 'Departure Budget'
+                                      Cell, 0x1131ae6c0, {{20.0, 126.5}, {992.0, 150.5}}
+                                        Other, 0x1131aea80, {{20.0, 126.5}, {992.0, 150.5}}
+                                          Other, 0x1131ad900, {{20.0, 126.5}, {992.0, 150.5}}
+                                        Other, 0x1131ae580, {{20.0, 126.5}, {992.0, 150.5}}
+                                          Other, 0x1131ae940, {{20.0, 126.5}, {992.0, 150.5}}
+                                            Other, 0x1131ae1c0, {{20.0, 126.5}, {992.0, 150.5}}
+                                              StaticText, 0x114d61400, {{40.0, 141.5}, {70.0, 20.5}}, label: 'Leave by'
+                                              StaticText, 0x114d60dc0, {{40.0, 168.0}, {133.5, 41.0}}, label: '4:20 AM'
+                                              StaticText, 0x114d61540, {{40.0, 215.0}, {152.0, 20.5}}, label: 'November 25, 2026'
+                                              StaticText, 0x114d63200, {{40.0, 241.5}, {288.5, 20.5}}, label: '55 minutes reserved before the target'
+                                      Cell, 0x114d60780, {{20.0, 277.0}, {992.0, 30.0}}
+                                        Other, 0x114d60640, {{20.0, 277.0}, {992.0, 30.0}}
+                                        Other, 0x114d60c80, {{20.0, 277.0}, {992.0, 30.0}}
+                                          Other, 0x114d603c0, {{20.0, 277.0}, {992.0, 30.0}}
+                                            Other, 0x114d60500, {{20.0, 277.0}, {992.0, 30.0}}
+                                              StaticText, 0x114d60140, {{20.0, 277.0}, {992.0, 30.0}}, label: 'Set your target arrival, then work backwards.'
+                                      Other, 0x114d60000, {{-20.0, 307.0}, {1072.0, 332.0}}
+                                      Cell, 0x114d61680, {{20.0, 307.0}, {992.0, 40.5}}
+                                        Other, 0x114d617c0, {{20.0, 307.0}, {992.0, 40.5}}
+                                        Other, 0x114d61900, {{20.0, 307.0}, {992.0, 40.5}}
+                                          Other, 0x114d61a40, {{20.0, 307.0}, {992.0, 40.5}}
+                                            Other, 0x114d61b80, {{20.0, 307.0}, {992.0, 40.5}}
+                                              StaticText, 0x114d61cc0, {{20.0, 307.0}, {992.0, 40.5}}, label: 'Your arrival'
+                                      Cell, 0x114d61e00, {{20.0, 347.5}, {992.0, 66.0}}
+                                        Other, 0x114d630c0, {{20.0, 347.5}, {992.0, 66.0}}
+                                          Other, 0x114d61040, {{20.0, 347.5}, {992.0, 66.0}}
+                                        Other, 0x114d63980, {{20.0, 347.5}, {992.0, 66.0}}
+                                          Other, 0x114d63480, {{20.0, 347.5}, {992.0, 66.0}}
+                                            Other, 0x114d62f80, {{20.0, 347.5}, {992.0, 66.0}}
+                                              StaticText, 0x114d60b40, {{40.0, 370.2}, {157.0, 20.5}}, label: 'Target date and time'
+                                              DatePicker, 0x114d63340, {{773.5, 362.5}, {218.5, 36.0}}
+                                                Button, 0x114d60280, {{773.5, 362.5}, {218.5, 36.0}}, label: 'Date and Time Picker', value: 5:00 AM, Nov 25, 2...
+                                                  Button, 0x114d608c0, {{773.5, 362.5}, {127.5, 36.0}}, label: 'Nov 25, 2026'
+                                                  Button, 0x114d60a00, {{905.0, 362.5}, {87.0, 36.0}}, label: '5:00 AM'
+                                      Cell, 0x114d60f00, {{20.0, 413.5}, {992.0, 52.0}}
+                                        Other, 0x114d61180, {{20.0, 413.5}, {992.0, 52.0}}
+                                          Other, 0x114d612c0, {{20.0, 413.5}, {992.0, 52.0}}
+                                        Other, 0x1135883c0, {{20.0, 413.5}, {992.0, 52.0}}
+                                          Other, 0x113588140, {{20.0, 413.5}, {992.0, 52.0}}
+                                            Other, 0x113588000, {{20.0, 413.5}, {992.0, 52.0}}
+                                              Stepper, 0x113588780, {{40.0, 423.5}, {952.0, 32.0}}, label: 'Travel: 30 min', value: 30
+                                                Button, 0x113588280, {{898.0, 423.5}, {47.0, 32.0}}, identifier: 'Decrement', label: 'Travel: 30 min, Decrement', value: 30
+                                                Button, 0x113588a00, {{945.0, 423.5}, {47.0, 32.0}}, identifier: 'Increment', label: 'Travel: 30 min, Increment', value: 30
+                                              StaticText, 0x113588500, {{40.0, 429.2}, {107.0, 20.5}}, label: 'Travel: 30 min'
+                                      Other, 0x113588640, {{40.0, 412.5}, {952.0, 1.0}}
+                                      Cell, 0x1135888c0, {{20.0, 465.5}, {992.0, 52.0}}
+                                        Other, 0x114d85180, {{20.0, 465.5}, {992.0, 52.0}}
+                                          Other, 0x114d84c80, {{20.0, 465.5}, {992.0, 52.0}}
+                                        Other, 0x114d84f00, {{20.0, 465.5}, {992.0, 52.0}}
+                                          Other, 0x114d84500, {{20.0, 465.5}, {992.0, 52.0}}
+                                            Other, 0x114d84000, {{20.0, 465.5}, {992.0, 52.0}}
+                                              Stepper, 0x114d86300, {{40.0, 475.5}, {952.0, 32.0}}, label: 'Get ready: 15 min', value: 15
+                                                Button, 0x114d861c0, {{898.0, 475.5}, {47.0, 32.0}}, identifier: 'Decrement', label: 'Get ready: 15 min, Decrement', value: 15
+                                                Button, 0x114d86080, {{945.0, 475.5}, {47.0, 32.0}}, identifier: 'Increment', label: 'Get ready: 15 min, Increment', value: 15
+                                              StaticText, 0x114d85f40, {{40.0, 481.2}, {133.0, 20.5}}, label: 'Get ready: 15 min'
+                                      Other, 0x114d86440, {{40.0, 464.5}, {952.0, 1.0}}
+                                      Cell, 0x114d84780, {{20.0, 517.5}, {992.0, 52.0}}
+                                        Other, 0x114d852c0, {{20.0, 517.5}, {992.0, 52.0}}
+                                          Other, 0x114d85400, {{20.0, 517.5}, {992.0, 52.0}}
+                                        Other, 0x114d84640, {{20.0, 517.5}, {992.0, 52.0}}
+                                          Other, 0x114d86580, {{20.0, 517.5}, {992.0, 52.0}}
+                                            Other, 0x114d85680, {{20.0, 517.5}, {992.0, 52.0}}
+                                              Switch, 0x114d848c0, {{20.0, 517.5}, {992.0, 52.0}}, label: 'Arrive early', value: 1
+                                                StaticText, 0x114d84a00, {{40.0, 533.2}, {86.5, 20.5}}, label: 'Arrive early'
+                                                Switch, 0x114d84b40, {{931.0, 529.5}, {63.0, 28.0}}, value: 1
+                                      Other, 0x114d84dc0, {{40.0, 516.5}, {952.0, 1.0}}
+                                      Cell, 0x114d85040, {{20.0, 569.5}, {992.0, 52.0}}
+                                        Other, 0x114d85540, {{20.0, 569.5}, {992.0, 52.0}}
+                                          Other, 0x114ce4140, {{20.0, 569.5}, {992.0, 52.0}}
+                                        Other, 0x114ce4280, {{20.0, 569.5}, {992.0, 52.0}}
+                                          Other, 0x114ce43c0, {{20.0, 569.5}, {992.0, 52.0}}
+                                            Other, 0x114ce4500, {{20.0, 569.5}, {992.0, 52.0}}
+                                              Stepper, 0x114ce6440, {{40.0, 579.5}, {952.0, 32.0}}, label: 'Arrival buffer: 10 min', value: 10
+                                                Button, 0x114ce6580, {{898.0, 579.5}, {47.0, 32.0}}, identifier: 'Decrement', label: 'Arrival buffer: 10 min, Decrement', value: 10
+                                                Button, 0x114ce66c0, {{945.0, 579.5}, {47.0, 32.0}}, identifier: 'Increment', label: 'Arrival buffer: 10 min, Increment', value: 10
+                                              StaticText, 0x114ce7840, {{40.0, 585.2}, {157.5, 20.5}}, label: 'Arrival buffer: 10 min'
+                                      Other, 0x114ce7980, {{40.0, 568.5}, {952.0, 1.0}}
+                                      Other, 0x114ce7ac0, {{-20.0, 639.0}, {1072.0, 135.0}}
+                                      Cell, 0x114ce7c00, {{20.0, 639.0}, {992.0, 40.5}}
+                                        Other, 0x114ce7d40, {{20.0, 639.0}, {992.0, 40.5}}
+                                        Other, 0x114ce7e80, {{20.0, 639.0}, {992.0, 40.5}}
+                                          Other, 0x114ce6800, {{20.0, 639.0}, {992.0, 40.5}}
+                                            Other, 0x114ce7700, {{20.0, 639.0}, {992.0, 40.5}}
+                                              StaticText, 0x114ce7480, {{20.0, 639.0}, {992.0, 40.5}}, label: 'Quick starting points'
+                                      Cell, 0x114ce75c0, {{20.0, 679.5}, {992.0, 64.5}}
+                                        Other, 0x114ce7340, {{20.0, 679.5}, {992.0, 64.5}}
+                                          Other, 0x114ce6f80, {{20.0, 679.5}, {992.0, 64.5}}
+                                        Other, 0x114ce70c0, {{20.0, 679.5}, {992.0, 64.5}}
+                                          Other, 0x114ce7200, {{20.0, 679.5}, {992.0, 64.5}}
+                                            Other, 0x114ce6e40, {{20.0, 679.5}, {992.0, 64.5}}
+                                              Button, 0x114ce6d00, {{40.0, 694.5}, {64.5, 34.5}}, label: 'Local'
+                                              Button, 0x114ce6940, {{112.5, 694.5}, {54.5, 34.5}}, label: 'City'
+                                              Button, 0x114ce6a80, {{175.0, 694.5}, {92.0, 34.5}}, label: 'Long trip'
+                                      Cell, 0x114ce6bc0, {{20.0, 744.0}, {992.0, 30.0}}
+                                        Other, 0x1135f3c00, {{20.0, 744.0}, {992.0, 30.0}}
+                                        Other, 0x1135f3ac0, {{20.0, 744.0}, {992.0, 30.0}}
+                                          Other, 0x1135f3d40, {{20.0, 744.0}, {992.0, 30.0}}
+                                            Other, 0x1135f3e80, {{20.0, 744.0}, {992.0, 30.0}}
+                                              StaticText, 0x1130b0c80, {{20.0, 744.0}, {992.0, 30.0}}, label: 'Adjust these estimates to suit your journey.'
+                                      Other, 0x1130b08c0, {{-20.0, 774.0}, {1072.0, 370.0}}
+                                      Cell, 0x1130b0a00, {{20.0, 774.0}, {992.0, 40.5}}
+                                        Other, 0x1130b1400, {{20.0, 774.0}, {992.0, 40.5}}
+                                        Other, 0x1130b1540, {{20.0, 774.0}, {992.0, 40.5}}
+                                          Other, 0x1130b1680, {{20.0, 774.0}, {992.0, 40.5}}
+                                            Other, 0x1130b17c0, {{20.0, 774.0}, {992.0, 40.5}}
+                                              StaticText, 0x1130b2d00, {{20.0, 774.0}, {992.0, 40.5}}, label: 'Your timeline'
+                                      Cell, 0x1130b12c0, {{20.0, 814.5}, {992.0, 52.0}}
+                                        Other, 0x1130b2a80, {{20.0, 814.5}, {992.0, 52.0}}
+                                          Other, 0x1130b30c0, {{20.0, 814.5}, {992.0, 52.0}}
+                                        Other, 0x1130b2e40, {{20.0, 814.5}, {992.0, 52.0}}
+                                          Other, 0x1130b1cc0, {{20.0, 814.5}, {992.0, 52.0}}
+                                            Other, 0x1130b0b40, {{20.0, 814.5}, {992.0, 52.0}}
+                                              StaticText, 0x1130b1180, {{40.0, 830.2}, {142.5, 20.5}}, label: 'Start getting ready'
+                                              StaticText, 0x1130b1900, {{190.5, 830.2}, {63.0, 20.5}}, label: '4:05 AM'
+                                      Cell, 0x1130b3480, {{20.0, 866.5}, {992.0, 52.0}}
+                                        Other, 0x1130b35c0, {{20.0, 866.5}, {992.0, 52.0}}
+                                          Other, 0x1130b3700, {{20.0, 866.5}, {992.0, 52.0}}
+                                        Other, 0x114d50000, {{20.0, 866.5}, {992.0, 52.0}}
+                                          Other, 0x114d50140, {{20.0, 866.5}, {992.0, 52.0}}
+                                            Other, 0x114d50280, {{20.0, 866.5}, {992.0, 52.0}}
+                                              StaticText, 0x114d503c0, {{20.0, 866.5}, {992.0, 52.0}}, label: 'November 25, 2026'
+                                      Other, 0x114d50500, {{40.0, 865.5}, {952.0, 1.0}}
+                                      Cell, 0x114d50640, {{20.0, 918.5}, {992.0, 52.0}}
+                                        Other, 0x114d50780, {{20.0, 918.5}, {992.0, 52.0}}
+                                          Other, 0x114d508c0, {{20.0, 918.5}, {992.0, 52.0}}
+                                        Other, 0x114d50a00, {{20.0, 918.5}, {992.0, 52.0}}
+                                          Other, 0x114d50b40, {{20.0, 918.5}, {992.0, 52.0}}
+                                            Other, 0x114d50c80, {{20.0, 918.5}, {992.0, 52.0}}
+                                              StaticText, 0x114d50dc0, {{40.0, 934.2}, {44.5, 20.5}}, label: 'Leave'
+                                              StaticText, 0x114d50f00, {{92.5, 934.2}, {63.0, 20.5}}, label: '4:20 AM'
+                                      Other, 0x114d51040, {{40.0, 917.5}, {952.0, 1.0}}
+                                      Cell, 0x114d51180, {{20.0, 970.5}, {992.0, 52.0}}
+                                        Other, 0x114d512c0, {{20.0, 970.5}, {992.0, 52.0}}
+                                          Other, 0x114d51400, {{20.0, 970.5}, {992.0, 52.0}}
+                                        Other, 0x114d51540, {{20.0, 970.5}, {992.0, 52.0}}
+                                          Other, 0x114d51680, {{20.0, 970.5}, {992.0, 52.0}}
+                                            Other, 0x114d517c0, {{20.0, 970.5}, {992.0, 52.0}}
+                                              StaticText, 0x114d51900, {{40.0, 986.2}, {122.5, 20.5}}, label: 'Expected arrival'
+                                              StaticText, 0x114d51a40, {{170.5, 986.2}, {63.5, 20.5}}, label: '4:50 AM'
+                                      Other, 0x114d51b80, {{40.0, 969.5}, {952.0, 1.0}}
+                                      Cell, 0x114d51cc0, {{20.0, 1022.5}, {992.0, 52.0}}
+                                        Other, 0x114d51e00, {{20.0, 1022.5}, {992.0, 52.0}}
+                                          Other, 0x114d51f40, {{20.0, 1022.5}, {992.0, 52.0}}
+                                        Other, 0x114d52080, {{20.0, 1022.5}, {992.0, 52.0}}
+                                          Other, 0x114d521c0, {{20.0, 1022.5}, {992.0, 52.0}}
+                                            Other, 0x114d52300, {{20.0, 1022.5}, {992.0, 52.0}}
+                                              StaticText, 0x114d52440, {{20.0, 1022.5}, {992.0, 52.0}}, label: 'November 25, 2026'
+                                      Other, 0x114d52580, {{40.0, 1021.5}, {952.0, 1.0}}
+                                      Cell, 0x114d526c0, {{20.0, 1074.5}, {992.0, 52.0}}
+                                        Other, 0x114d52800, {{20.0, 1074.5}, {992.0, 52.0}}
+                                          Other, 0x114d52940, {{20.0, 1074.5}, {992.0, 52.0}}
+                                        Other, 0x114d52a80, {{20.0, 1074.5}, {992.0, 52.0}}
+                                          Other, 0x114d52bc0, {{20.0, 1074.5}, {992.0, 52.0}}
+                                            Other, 0x114d52d00, {{20.0, 1074.5}, {992.0, 52.0}}
+                                              StaticText, 0x114d52e40, {{20.0, 1074.5}, {992.0, 52.0}}, label: '10 minutes spare at your destination'
+                                      Other, 0x114d52f80, {{40.0, 1073.5}, {952.0, 1.0}}
+                                      Other, 0x114d530c0, {{-20.0, 1144.0}, {1072.0, 2860.5}}
+                                      Cell, 0x114d53200, {{20.0, 1144.0}, {992.0, 40.5}}
+                                        Other, 0x114d53340, {{20.0, 1144.0}, {992.0, 40.5}}
+                                        Other, 0x114d53480, {{20.0, 1144.0}, {992.0, 40.5}}
+                                          Other, 0x114d535c0, {{20.0, 1144.0}, {992.0, 40.5}}
+                                            Other, 0x114d53700, {{20.0, 1144.0}, {992.0, 40.5}}
+                                              StaticText, 0x114d53840, {{20.0, 1144.0}, {992.0, 40.5}}, label: 'Before you go · 0/3 ready'
+                                      Cell, 0x114d53980, {{20.0, 1184.5}, {992.0, 52.0}}
+                                        Other, 0x114d53ac0, {{20.0, 1184.5}, {992.0, 52.0}}
+                                          Other, 0x114d53c00, {{20.0, 1184.5}, {992.0, 52.0}}
+                                        Other, 0x114d53d40, {{20.0, 1184.5}, {992.0, 52.0}}
+                                          Other, 0x114d53e80, {{20.0, 1184.5}, {992.0, 52.0}}
+                                            Other, 0x114d6c000, {{20.0, 1184.5}, {992.0, 52.0}}
+                                              Switch, 0x114d6c140, {{20.0, 1184.5}, {992.0, 52.0}}, label: 'Keys and wallet', value: 0
+                                                StaticText, 0x114d6c280, {{40.0, 1200.2}, {118.0, 20.5}}, label: 'Keys and wallet'
+                                                Switch, 0x114d6c3c0, {{931.0, 1196.5}, {63.0, 28.0}}, value: 0
+                                      Cell, 0x114d6c500, {{20.0, 1236.5}, {992.0, 52.0}}
+                                        Other, 0x114d6c640, {{20.0, 1236.5}, {992.0, 52.0}}
+                                          Other, 0x114d6c780, {{20.0, 1236.5}, {992.0, 52.0}}
+                                        Other, 0x114d6c8c0, {{20.0, 1236.5}, {992.0, 52.0}}
+                                          Other, 0x114d6ca00, {{20.0, 1236.5}, {992.0, 52.0}}
+                                            Other, 0x114d6cb40, {{20.0, 1236.5}, {992.0, 52.0}}
+                                              Switch, 0x114d6cc80, {{20.0, 1236.5}, {992.0, 52.0}}, label: 'Ticket or address', value: 0
+                                                StaticText, 0x114d6cdc0, {{40.0, 1252.2}, {132.0, 20.5}}, label: 'Ticket or address'
+                                                Switch, 0x114d6cf00, {{931.0, 1248.5}, {63.0, 28.0}}, value: 0
+                                      Other, 0x114d6d040, {{40.0, 1235.5}, {952.0, 1.0}}
+                                      Cell, 0x114d6d180, {{20.0, 1288.5}, {992.0, 52.0}}
+                                        Other, 0x114d6d2c0, {{20.0, 1288.5}, {992.0, 52.0}}
+                                          Other, 0x114d6d400, {{20.0, 1288.5}, {992.0, 52.0}}
+                                        Other, 0x114d6d540, {{20.0, 1288.5}, {992.0, 52.0}}
+                                          Other, 0x114d6d680, {{20.0, 1288.5}, {992.0, 52.0}}
+                                            Other, 0x114d6d7c0, {{20.0, 1288.5}, {992.0, 52.0}}
+                                              Switch, 0x114d6d900, {{20.0, 1288.5}, {992.0, 52.0}}, label: 'Phone and charger', value: 0
+                                                StaticText, 0x114d6da40, {{40.0, 1304.2}, {144.5, 20.5}}, label: 'Phone and charger'
+                                                Switch, 0x114d6db80, {{931.0, 1300.5}, {63.0, 28.0}}, value: 0
+                                      Other, 0x114d6dcc0, {{40.0, 1287.5}, {952.0, 1.0}}
+                                      Cell, 0x114d6de00, {{20.0, 1340.5}, {992.0, 52.0}}
+                                        Other, 0x114d6df40, {{20.0, 1340.5}, {992.0, 52.0}}
+                                          Other, 0x114d6e080, {{20.0, 1340.5}, {992.0, 52.0}}
+                                        Other, 0x114d6e1c0, {{20.0, 1340.5}, {992.0, 52.0}}
+                                          Other, 0x114d6e300, {{20.0, 1340.5}, {992.0, 52.0}}
+                                            Other, 0x114d6e440, {{20.0, 1340.5}, {992.0, 52.0}}
+                                              Button, 0x114d6e580, {{20.0, 1340.5}, {992.0, 52.0}}, label: 'Clear checklist', Disabled
+                                      Other, 0x114d6e6c0, {{40.0, 1339.5}, {952.0, 1.0}}
+                                      Other, 0x114d6e800, {{999.0, 86.0}, {30.0, 1260.0}}, label: 'Vertical scroll bar, 2 pages', value: 0%
+                                        Other, 0x114d6e940, {{1026.0, 1336.0}, {3.0, 7.0}}
+                                      Other, 0x114d6ea80, {{999.0, 86.0}, {30.0, 1260.0}}, label: 'Vertical scroll bar, 2 pages', value: 0%
+                                        Other, 0x114d6ebc0, {{1026.0, 1336.0}, {3.0, 7.0}}
+              Toolbar, 0x114d6ed00, {{0.0, 0.0}, {1032.0, 1376.0}}, identifier: 'Toolbar', label: 'Toolbar'
+                Other, 0x114d6ee40, {{0.0, 0.0}, {1032.0, 1376.0}}
+Path to element:
+ →Application, 0x114d54b40, pid: 63770, label: 'Hanlin MiniApps'
+Query chain:
+ →Find: Target Application 'com.itorah.hanlinminiapps'
+  Output: {
+    Application, 0x114d6ef80, pid: 63770, label: 'Hanlin MiniApps'
+  }

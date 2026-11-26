@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "types": [
+      "react",
+      "react-native",
+      "@nativescript/react-native"
+    ]
+  },
+  "include": [
+    "index.ts",
+    "notebook.ts",
+    "native-notification.ts",
+    "App.tsx"
+  ],
+  "exclude": [
+    "native"
+  ]
+}

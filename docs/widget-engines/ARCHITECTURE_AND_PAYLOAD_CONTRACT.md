@@ -1,4 +1,16 @@
-# Pass 3 widget pipeline
+# Widget execution and payload contract
+
+## Current execution ownership
+
+Prepared ScriptWidget execution uses one caller-owned cancellation control with an optional monotonic deadline. A missing deadline means no imposed application invocation deadline; it is not represented by an infinite duration or an oversized numeric value. A selected deadline delivers cancellation independently of the JavaScript callback queue, so instrumented synchronous JavaScript can observe it before the completion waiter begins.
+
+The control follows timeline preparation, widget/control actions, native presentations and Live Activity preparation. Existing Swift task cancellation and view replacement/disappearance are forwarded to the execution owner. No additional WidgetKit or ActivityKit expiration callback or duration is assumed. Completion waiting, component resolution and frozen-value traversal observe the same cancellation state. Registered network tasks and provider handles are cancelled, completion waiters wake, and the JavaScript callback queue drains before the execution owner returns.
+
+HTTP(S) transport preserves its original Promise/result shapes, endpoint and credential semantics, and package declarations. It adds no fixed request-count, request-body or response-body ceiling. Caller-supplied finite positive request timeouts are independent of the optional execution deadline; otherwise the normal transport defaults apply. Local and private HTTP(S) hosts are supported. The original-source manifest records each adaptation so upstream refresh can merge it explicitly.
+
+These are source contracts. Native execution evidence must be tied to the source and SDK that actually ran. The following Pass 3 design and dated results are preserved as historical observations, including its former fixed deadlines and transfer limits; they are not current acceptance evidence. Current generated API and package contracts are linked from [the source inventory](SOURCE_AND_ABI_INVENTORY.md).
+
+## Historical Pass 3 widget pipeline
 
 The registered kind remains com.hanlin.scripting.widget in HanlinScriptingWidgets.appex. Three engines are selected by validated stored metadata: legacy, expo, scriptwidget. Missing engine in a historical v1 record means legacy; unknown declarations fail import. Corrupt v2 engine/payload records render an error.
 

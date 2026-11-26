@@ -1,0 +1,123 @@
+{
+  "sourceSessionSHA256": "1852f26c249d576bde1950abdf601b357a8f8659e870ab6ea6c8bd9a42271619",
+  "sessionIsComplete": false,
+  "scope": "Persisted historical observations, not current live process state",
+  "tools": [
+    {
+      "callID": "miniapp-find",
+      "toolName": "tool_search",
+      "status": "succeeded",
+      "outcome": "succeeded",
+      "executionStartedAt": "2026-11-25T13:34:39Z",
+      "executionCompletedAt": "2026-11-25T13:34:39Z",
+      "durationMilliseconds": 4,
+      "didTimeOut": false,
+      "wasCancelled": false
+    },
+    {
+      "callID": "miniapp-sdk",
+      "toolName": "get_miniapp_sdk",
+      "status": "succeeded",
+      "outcome": "succeeded",
+      "executionStartedAt": "2026-11-25T13:34:40Z",
+      "executionCompletedAt": "2026-11-25T13:34:40Z",
+      "durationMilliseconds": 279,
+      "didTimeOut": false,
+      "wasCancelled": false
+    },
+    {
+      "callID": "miniapp-sdk-read-0",
+      "toolName": "read_tool_result",
+      "status": "succeeded",
+      "outcome": "succeeded",
+      "executionStartedAt": "2026-11-25T13:34:42Z",
+      "executionCompletedAt": "2026-11-25T13:34:42Z",
+      "durationMilliseconds": 6,
+      "didTimeOut": false,
+      "wasCancelled": false
+    },
+    {
+      "callID": "miniapp-sdk-read-4096",
+      "toolName": "read_tool_result",
+      "status": "succeeded",
+      "outcome": "succeeded",
+      "executionStartedAt": "2026-11-25T13:34:44Z",
+      "executionCompletedAt": "2026-11-25T13:34:44Z",
+      "durationMilliseconds": 0,
+      "didTimeOut": false,
+      "wasCancelled": false
+    },
+    {
+      "callID": "miniapp-sdk-read-8192",
+      "toolName": "read_tool_result",
+      "status": "succeeded",
+      "outcome": "succeeded",
+      "executionStartedAt": "2026-11-25T13:34:46Z",
+      "executionCompletedAt": "2026-11-25T13:34:47Z",
+      "durationMilliseconds": 0,
+      "didTimeOut": false,
+      "wasCancelled": false
+    },
+    {
+      "callID": "miniapp-sdk-read-12288",
+      "toolName": "read_tool_result",
+      "status": "succeeded",
+      "outcome": "succeeded",
+      "executionStartedAt": "2026-11-25T13:34:49Z",
+      "executionCompletedAt": "2026-11-25T13:34:50Z",
+      "durationMilliseconds": 0,
+      "didTimeOut": false,
+      "wasCancelled": false
+    },
+    {
+      "callID": "miniapp-invalid",
+      "toolName": "validate_miniapp",
+      "status": "failed",
+      "outcome": "failed",
+      "executionStartedAt": "2026-11-25T13:34:53Z",
+      "executionCompletedAt": "2026-11-25T13:35:20Z",
+      "durationMilliseconds": 27321,
+      "didTimeOut": false,
+      "wasCancelled": false
+    },
+    {
+      "callID": "miniapp-invalid-read-0",
+      "toolName": "read_tool_result",
+      "status": "succeeded",
+      "outcome": "succeeded",
+      "executionStartedAt": "2026-11-25T13:35:24Z",
+      "executionCompletedAt": "2026-11-25T13:35:25Z",
+      "durationMilliseconds": 0,
+      "didTimeOut": false,
+      "wasCancelled": false
+    },
+    {
+      "callID": "miniapp-write",
+      "toolName": "write_miniapp",
+      "status": "succeeded",
+      "outcome": "succeeded",
+      "executionStartedAt": "2026-11-25T13:35:29Z",
+      "executionCompletedAt": "2026-11-25T13:35:30Z",
+      "durationMilliseconds": 11,
+      "didTimeOut": false,
+      "wasCancelled": false
+    },
+    {
+      "callID": "miniapp-valid",
+      "toolName": "validate_miniapp",
+      "status": "succeeded",
+      "outcome": "succeeded",
+      "executionStartedAt": "2026-11-25T13:35:36Z",
+      "executionCompletedAt": "2026-11-25T13:36:19Z",
+      "durationMilliseconds": 41486,
+      "didTimeOut": false,
+      "wasCancelled": false
+    },
+    {
+      "callID": "miniapp-build",
+      "toolName": "build_miniapp",
+      "status": "running",
+      "executionStartedAt": "2026-11-25T13:36:25Z"
+    }
+  ]
+}

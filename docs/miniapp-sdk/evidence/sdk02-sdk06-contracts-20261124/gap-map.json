@@ -1,0 +1,190 @@
+{
+  "schemaVersion": 1,
+  "baseSourceSHA": "4ea670e120a3217423bc73db68dab514c78079de",
+  "scope": "Only the remaining SDK02/SDK06 manifest/plugin/exposure/foreground-entry/original-permission proof seams.",
+  "noProductionChanges": true,
+  "gaps": [
+    {
+      "criterion": "SDK02 ambiguous manifest",
+      "status": "REUSED_VERIFIED_PASS",
+      "evidence": "archive-reuse.json",
+      "scope": "Actual current portable archive policy rejects multiple wrapper manifests and unrelated roots; retained source/script.json remains allowed."
+    },
+    {
+      "criterion": "SDK02 missing package manifest",
+      "status": "EXECUTED_PASS",
+      "source": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinArchivePolicy.swift:224-235",
+      "method": "HanlinArchiveDirectoryTests/realArchiveWithoutPackageManifestIsRejected",
+      "evidence": "missing-manifest-result.json",
+      "rawLog": "missing-manifest/archive-import-policy.txt",
+      "fixture": "missing-manifest/missing-manifest.zip",
+      "assertedResult": {
+        "isInstallable": false,
+        "manifestPath": null,
+        "code": "ambiguousManifest",
+        "severity": "error",
+        "entry": null,
+        "message": "Archive does not contain script.json."
+      },
+      "scope": "Actual ZIP central-directory count plus production ArchivePolicy over metadata of a real two-entry Expo-shaped ZIP lacking script.json. ZIPFoundation extraction, native install, and Apple execution are not claimed."
+    },
+    {
+      "criterion": "SDK02/SDK06 incompatible declared plugin and current/backward handling",
+      "status": "NEEDS_APPLE_EXECUTION",
+      "target": "HanlinScriptCompilerTests",
+      "methods": [
+        "nativeScriptSwiftUIContract",
+        "nativeScriptCoreContract",
+        "expoSwiftUIContract"
+      ],
+      "testSource": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift",
+      "scope": "Current/older supported inputs remain installable; future NativeScript/Expo plugin versions and future bridge version are rejected. Three stale expected-version messages have been bound to actual generated authority; no native test result is claimed."
+    },
+    {
+      "criterion": "SDK02 missing/uninstalled native plugin",
+      "status": "NEEDS_APPLE_EXECUTION",
+      "source": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
+      "testSource": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift",
+      "target": "HanlinScriptCompilerTests",
+      "methods": [
+        "unavailableModernNativePluginsFailBeforeImport"
+      ],
+      "engines": [
+        "hanlin-expo",
+        "hanlin-nativescript"
+      ],
+      "fixtureContract": "For each engine, the existing package helper stages real source files and decodes script.json. Current generated runtime version and an empty plugin map must be installable; changing only the plugin map to @hanlin-test/unavailable-native-plugin 1.0.0 must be rejected.",
+      "assertedNegativeFields": [
+        "canInstall=false",
+        "finding.state=unsupported",
+        "finding.severity=error",
+        "finding.sourcePath=engine package.json",
+        "finding.message contains requires @hanlin-test/unavailable-native-plugin 1.0.0"
+      ],
+      "diagnosticBoundary": "The actual Analyzer plugin finding supplies state, severity, sourcePath and message, but no stable code. No code is invented. This fixture does not create/extract a ZIP.",
+      "localCheck": "analyzer-test-syntax.json is syntax-only; it does not establish Apple typechecking or test execution."
+    },
+    {
+      "criterion": "SDK02 unsupported/invalid exposure declaration",
+      "status": "NEEDS_APPLE_EXECUTION",
+      "target": "HanlinScriptCompilerTests",
+      "methods": [
+        "expoMultiExposureMatrix",
+        "malformedPreparedEntrypointsFailWithStableDiagnostic"
+      ],
+      "scope": "Unsupported prepared exposure source and invalid/duplicate declarations, including excluded customHome, must produce visible pre-import findings."
+    },
+    {
+      "criterion": "SDK06 wrong foreground entry",
+      "status": "NEEDS_APPLE_EXECUTION",
+      "target": "HanlinScriptCompilerTests",
+      "methods": [
+        "expoMainMustMatchTheInspectedForegroundEntrypoint",
+        "nativeScriptPreparedEntrypointIsAlwaysTheCanonicalBundle"
+      ],
+      "scope": "Actual analyzer rejects prepared package main values that redirect outside the inspected foreground entry; Expo missing-main default remains valid. ScriptWidget widget entry_mismatch in the portable case is not relabeled as Expo/NativeScript foreground proof."
+    },
+    {
+      "criterion": "SDK06 original existing permission-contract mismatch",
+      "status": "EXECUTED_PASS",
+      "evidence": "original-permission-contract.json",
+      "rawLog": "original-permission-contract.tap.txt",
+      "selectedMethods": 2,
+      "scope": "Valid original ScriptWidget manifest has no diagnostics; removing storage permission from a toggle produces original control_storage with source location. Packaged original validator/schema and compiler6.0.3 were used. No OS-permission interaction, native prompt, grant gate or generic Expo/NativeScript permission claim."
+    }
+  ],
+  "appleExecutionPlan": {
+    "workflow": ".github/workflows/validate-scripting-runtime.yml",
+    "workflowSHA256": "395ea6430af04b1ca8c66386af45073a1b0abc4d0c6ed20a1c46b30854fe0016",
+    "dispatch": "Root-owned via registered validate-app-split.yml with paired_product_acceptance=true and paired_test_scope=miniapp_contracts. Direct callee preflight returned HTTP404; no dispatch occurred.",
+    "inputs": {
+      "runtime_job_foundation_only": false,
+      "force_clean_build": true,
+      "test_filter": "HanlinScriptAnalyzerTests/(expoMainMustMatchTheInspectedForegroundEntrypoint|nativeScriptPreparedEntrypointIsAlwaysTheCanonicalBundle|nativeScriptSwiftUIContract|nativeScriptCoreContract|expoSwiftUIContract|expoMultiExposureMatrix|malformedPreparedEntrypointsFailWithStableDiagnostic|unavailableModernNativePluginsFailBeforeImport)"
+    },
+    "expectedSelectedMethods": 8,
+    "module": "HanlinScriptCompilerTests",
+    "suite": "HanlinScriptAnalyzerTests",
+    "selectors": [
+      "HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/expoMainMustMatchTheInspectedForegroundEntrypoint",
+      "HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/nativeScriptPreparedEntrypointIsAlwaysTheCanonicalBundle",
+      "HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/nativeScriptSwiftUIContract",
+      "HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/nativeScriptCoreContract",
+      "HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/expoSwiftUIContract",
+      "HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/expoMultiExposureMatrix",
+      "HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/malformedPreparedEntrypointsFailWithStableDiagnostic",
+      "HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/unavailableModernNativePluginsFailBeforeImport"
+    ],
+    "actualCommand": [
+      "swift",
+      "test",
+      "--package-path",
+      "Packages/HanlinPlatform",
+      "--filter",
+      "HanlinScriptAnalyzerTests/(expoMainMustMatchTheInspectedForegroundEntrypoint|nativeScriptPreparedEntrypointIsAlwaysTheCanonicalBundle|nativeScriptSwiftUIContract|nativeScriptCoreContract|expoSwiftUIContract|expoMultiExposureMatrix|malformedPreparedEntrypointsFailWithStableDiagnostic|unavailableModernNativePluginsFailBeforeImport)"
+    ],
+    "host": "xcode-27 Mac runner; workflow selects newest installed Xcode27; package declares macOS26. This is Mac SwiftPM component execution, not iOS application UI acceptance.",
+    "timeoutMinutes": 20,
+    "targetMembership": {
+      "package": "Packages/HanlinPlatform/Package.swift:124-130",
+      "rootPackage": "Package.swift:312-316",
+      "AI_HLYSchemeContainsTarget": false,
+      "HanlinMiniAppsSchemeContainsTarget": false
+    },
+    "preparation": [
+      "Checks out the intended exact ref, selects Xcode, sets Node22.17.0 and resolves the isolated package dependencies.",
+      "Compiler Babel and original ScriptWidget support resources are tracked in this source.",
+      "The legacy metadata checks, JavaScriptCore bootstrap tests and explicit ScriptingApplicationRuntime build steps only run for test_filter exactly HanlinScriptingApplicationRuntimeTests; they do not run for this modern filter.",
+      "SwiftPM may build other package targets for discovery, but the selected execution is only the eight analyzer methods (seven existing plus one new).",
+      "force_clean_build=true bypasses .build restoration for this first source-correct proof; it does not change product or runtime behavior."
+    ],
+    "concurrency": {
+      "declaredInCalleeWorkflow": false,
+      "callerConcurrencyUnchanged": true,
+      "newScopeSuffix": "paired-miniapp_contracts",
+      "activeAuthoringScopeSuffix": "paired-miniapp_authoring",
+      "sameBranchGroupsDistinct": true,
+      "scope": "Registered caller retains its existing branch-plus-scope group and cancel-in-progress expression. Local reusable workflow has no additional group. No cancellation cause is inferred."
+    },
+    "receiptRequirements": [
+      "Do not treat swift test exit0 or the XCTest wrapper reporting0tests as sufficient.",
+      "Require the eight exact Swift Testing method/display-name pass rows, total8, failures0, cancellations0 and skips0.",
+      "This normal workflow branch has no upload-artifact step; retain the exact completed job raw log and source SHA as the receipt.",
+      "No selected execution result exists yet."
+    ],
+    "dispatchWorkflow": ".github/workflows/validate-app-split.yml",
+    "registeredWorkflowID": 419196373,
+    "dispatchInputs": {
+      "paired_product_acceptance": true,
+      "paired_test_scope": "miniapp_contracts"
+    },
+    "localReusableJob": "miniapp-contracts",
+    "localReusableReference": "./.github/workflows/validate-scripting-runtime.yml",
+    "routingEvidence": "../miniapp-contract-routing-20261124/source-validation.json",
+    "preflightEvidence": "../miniapp-contract-routing-20261124/root-preflight.json"
+  },
+  "historicalAnalyzerEvidence": {
+    "path": "docs/hanlin-platform/personal-runtime-completion/evidence/phase1-swift-test.log",
+    "sha256": "8a46ccbc1b8d76cf423d87d012b50a5b7676bcffac12beaad60e7042938123ec",
+    "observedPassLines": [
+      328,
+      338
+    ],
+    "reuseStatus": "NOT_REUSED",
+    "reason": "Historical plugin passes are present, but no exact current transitive input binding is established. Current generated Core/ExpoUI authorities differ from old literals in those tests; current-source execution is required."
+  },
+  "notRun": [
+    "Native/Apple tests",
+    "native gate9 polling or other CI requests",
+    "12 archive cases",
+    "completed module proof",
+    "13 Host authoring component cases",
+    "React/SwiftUI missing-modifier case outside this bounded follow-up"
+  ],
+  "currentMainGateBoundary": "The current app gate38 does not include HanlinScriptCompilerTests. Additional SDK-only UI methods planned by root do not automatically execute this separate package test target.",
+  "testOnlyChanges": [
+    "Three diagnostic expected-version bindings in HanlinScriptAnalyzerTests.swift at bbf5eeb71d62412242ddc54cf62c410cf3c7221d; all original assertions and fixtures otherwise unchanged.",
+    "One new modern Analyzer method tests unavailable native plugins in both Expo and NativeScript using current generated runtime versions and valid baseline fixtures.",
+    "One new real missing-manifest ZIP case plus optional --filter in the existing portable archive harness; the original twelve methods are not rerun."
+  ]
+}

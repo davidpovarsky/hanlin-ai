@@ -1,0 +1,537 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project AI_HLY.xcodeproj -destination "platform=iOS Simulator,id=E742FBCD-8FF0-4130-B143-7F8328637138" -parallel-testing-enabled NO -derivedDataPath /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete -clonedSourcePackagesDirPath /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/SourcePackages -skipPackagePluginValidation -skipMacroValidation CODE_SIGNING_ALLOWED=YES CODE_SIGNING_REQUIRED=YES CODE_SIGN_IDENTITY=- -collect-test-diagnostics never -scheme AI_HLY test-without-building -resultBundlePath /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/FocusedAI8.xcresult -test-timeouts-enabled YES -maximum-test-execution-time-allowance 600 "-only-testing:AI_HLYTests/PendingFirstTurnTests/importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings()" "-only-testing:AI_HLYTests/PendingFirstTurnTests/cancelledMiniAppRepairPreservesHomeDraft()" "-only-testing:AI_HLYTests/HanlinScriptingPlatformCompositionTests/malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic()" "-only-testing:AI_HLYTests/MiniAppAuthoringToolTests/originalSDKWriteValidateBuildAndRepair()" "-only-testing:AI_HLYTests/MiniAppAuthoringToolTests/sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource()" "-only-testing:AI_HLYTests/MiniAppAuthoringToolTests/originalExpoMetroBuildOnEmbeddedNode()" "-only-testing:AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests/actualActivityKitStartsUpdatesAndEndsTheOriginalProgram()" "-only-testing:AI_HLYUITests/MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport"
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGNING_ALLOWED = YES
+    CODE_SIGNING_REQUIRED = YES
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  SwiftStreamingMarkdown: https://github.com/davidpovarsky/hanlin-streaming-markdown @ 5cbb4b6
+  SwiftDraw: https://github.com/swhitty/SwiftDraw @ 0.21.0
+  mcp-swift-sdk: https://github.com/modelcontextprotocol/swift-sdk.git @ a0ae212
+  HanlinSDK: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete @ local
+  SWCompression: https://github.com/tsolomko/SWCompression.git @ c729f0b
+  MathJaxSwift: https://github.com/colinc86/MathJaxSwift @ 3.4.0
+  SwiftSoup: https://github.com/scinfu/SwiftSoup @ bba848d
+  NetworkImage: https://github.com/gonzalezreal/NetworkImage @ 6.0.1
+  swift-system: https://github.com/apple/swift-system.git @ 1.4.0
+  cmark-gfm: https://github.com/swiftlang/swift-cmark @ 0.9.0
+  Equatable: https://github.com/ordo-one/equatable @ 1.4.1
+  XMLCoder: https://github.com/maxdesiatov/XMLCoder.git @ 0.14.0
+  swift-log: https://github.com/apple/swift-log.git @ 96a2f8a
+  NativeScriptSDK: https://github.com/NativeScript/ios-spm.git @ 9.1.1
+  BitByteData: https://github.com/tsolomko/BitByteData @ 2.1.0
+  TreeSitterBash: https://github.com/tree-sitter/tree-sitter-bash @ a06c2e4
+  HighlightSwift: https://github.com/appstefan/highlightswift @ 99c431b
+  Yams: https://github.com/jpsim/Yams.git @ 6.2.2
+  SwiftyJSON: https://github.com/SwiftyJSON/SwiftyJSON.git @ 5.0.1
+  swift-json-schema: https://github.com/ajevans99/swift-json-schema @ 0.13.2
+  swift-argument-parser: https://github.com/apple/swift-argument-parser @ 1.8.2
+  RichTextKit: https://github.com/danielsaidi/RichTextKit.git @ 8aa44cf
+  CoreXLSX: https://github.com/CoreOffice/CoreXLSX @ 1391f38
+  swift-markdown-ui: https://github.com/gonzalezreal/MarkdownUI.git @ 5f61335
+  SwiftAISDK: https://github.com/davidpovarsky/swift-ai-sdk.git @ 07431ab
+  swift-syntax: https://github.com/swiftlang/swift-syntax.git @ 603.0.2
+  ZIPFoundation: https://github.com/weichsel/ZIPFoundation @ 0.9.19
+  swift-nio: https://github.com/apple/swift-nio.git @ 2.94.0
+  EventSource: https://github.com/mattt/eventsource.git @ 1.1.0
+  TreeSitter: https://github.com/tree-sitter/tree-sitter @ da6fe9b
+  LaTeXSwiftUI: https://github.com/colinc86/LaTeXSwiftUI @ c45e0fd
+  swift-atomics: https://github.com/apple/swift-atomics.git @ 1.3.0
+  SwiftUI-Shimmer: https://github.com/markiv/SwiftUI-Shimmer @ 1.5.1
+  swift-markdown: https://github.com/swiftlang/swift-markdown.git @ 0.7.3
+  LLM: https://github.com/eastriverlee/LLM.swift/ @ 4b25178
+  A2UISwiftCore: https://github.com/a2ui-project/a2ui @ 3ed9601
+  HTMLEntities: https://github.com/Kitura/swift-html-entities @ 4.0.1
+  SwiftTreeSitter: https://github.com/tree-sitter/swift-tree-sitter @ 08ef81e
+  swift-collections: https://github.com/apple/swift-collections.git @ 1.3.0
+  iosMath: https://github.com/junyan72/iosMath @ ba9ab77
+
+Writing result bundle at path:
+	/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/FocusedAI8.xcresult
+
+Resolve Package Graph
+
+Resolve Package Graph
+
+2026-11-25 12:33:04.042407+0100 AI_Hanlin[12173:5243751] [error] CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+2026-11-25 12:33:04.048400+0100 AI_Hanlin[12173:5243771] [error] CoreData: warning: CDCS OS-driven reindex (all items) requested for index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79
+CoreData: warning: CDCS OS-driven reindex (all items) requested for index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79
+2026-11-25 12:33:04.441809+0100 AI_Hanlin[12173:5243751] [error] CoreData: warning: CDCS storeRequiresFullReindex: fullReindex=1 reason=no framework-version metadata (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+CoreData: warning: CDCS storeRequiresFullReindex: fullReindex=1 reason=no framework-version metadata (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+2026-11-25 12:33:04.441918+0100 AI_Hanlin[12173:5243751] [error] CoreData: warning: CDCS starting full reimport (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+CoreData: warning: CDCS starting full reimport (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+2026-11-25 12:33:04.442300+0100 AI_Hanlin[12173:5243751] [error] CoreData: warning: CDCS full reimport baseline: allKnownItems=0 (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+CoreData: warning: CDCS full reimport baseline: allKnownItems=0 (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+CoreData: annotation: CDCS client state token write begin (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79): (null)
+CoreData: annotation: CDCS client state token write begin (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79): (null)
+CoreData: annotation: CDCS reimport gate ENTER (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+CoreData: annotation: CDCS client state token write begin (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79): (null)
+2026-11-25 12:33:05.019539+0100 AI_Hanlin[12173:5243133] [API] cannot add handler to 0 from 0 - dropping
+2026-11-25 12:33:05.019767+0100 AI_Hanlin[12173:5243133] [API] cannot add handler to 0 from 0 - dropping
+2026-11-25 12:33:05.054508+0100 AI_Hanlin[12173:5243133] [XPCErrors] non-launching port is incompatible with service identifier "com.apple.PointerUI.pointeruid.default-service"
+2026-11-25 12:33:05.055750+0100 AI_Hanlin[12173:5243133] HANLIN_EXPO_APP_DEFINES_LOADED
+2026-11-25 12:33:05.058830+0100 AI_Hanlin[12173:5243133] [API] cannot add handler to 0 from 0 - dropping
+2026-11-25 12:33:05.058898+0100 AI_Hanlin[12173:5243133] [API] cannot add handler to 0 from 0 - dropping
+2026-11-25 12:33:05.058989+0100 AI_Hanlin[12173:5243133] [API] cannot add handler to 0 from 0 - dropping
+2026-11-25 12:33:05.059038+0100 AI_Hanlin[12173:5243133] [API] cannot add handler to 0 from 0 - dropping
+2026-11-25 12:33:05.059089+0100 AI_Hanlin[12173:5243133] [API] cannot add handler to 0 from 0 - dropping
+新增系统模型：google/gemini-3-flash-preview_repeat_cherryin
+新增系统模型：qwen-flash
+新增系统模型：qwen-plus
+新增系统模型：qwen3-max
+新增系统模型：qwen-omni-flash
+新增系统模型：qwen3-vl-plus
+新增系统模型：qwen3-vl-flash
+新增系统模型：wanx2.1-t2i-turbo
+新增系统模型：wanx2.1-t2i-plus
+新增系统模型：qwen-image-plus
+新增系统模型：glm-4.7-flash
+新增系统模型：glm-4.6v-flash
+新增系统模型：glm-4.5-air
+新增系统模型：glm-4.5
+新增系统模型：glm-4.7
+新增系统模型：doubao-seed-1-8-251228
+新增系统模型：doubao-seed-1-6-lite-251015
+新增系统模型：doubao-seed-1-6-flash-250828
+新增系统模型：deepseek-chat
+新增系统模型：deepseek-reasoner
+新增系统模型：ernie-speed-128k
+新增系统模型：ernie-4.5-turbo-128k
+新增系统模型：ernie-4.5-turbo-vl-32k
+新增系统模型：ernie-x1-turbo-32k
+新增系统模型：hunyuan-lite
+新增系统模型：hunyuan-turbos-latest
+新增系统模型：hunyuan-t1-latest
+新增系统模型：hunyuan-vision
+新增系统模型：hunyuan-turbo-vision
+新增系统模型：yi-lightning
+新增系统模型：yi-vision-v2
+新增系统模型：kimi-k2-0905-preview
+新增系统模型：step-2-mini
+新增系统模型：step-3
+新增系统模型：lite
+新增系统模型：MiniMax-M2
+新增系统模型：Qwen/Qwen3-30B-A3B-Instruct-2507_repeat_sc
+新增系统模型：Qwen/Qwen3-8B_repeat_sc
+新增系统模型：Kwai-Kolors/Kolors_repeat_sc
+新增系统模型：Qwen/Qwen3-30B-A3B-Instruct-2507_repeat_ms
+新增系统模型：Qwen/Qwen3-30B-A3B-Thinking-2507_repeat_ms
+新增系统模型：GLM-4.7
+新增系统模型：kimi-k2-instruct
+新增系统模型：gpt-5.2
+新增系统模型：gpt-5-mini
+新增系统模型：gpt-5-nano
+新增系统模型：dall-e-3
+新增系统模型：gpt-image-1
+新增系统模型：gemini-3-flash-preview
+新增系统模型：gemini-3-pro-preview
+新增系统模型：claude-haiku-4-5
+新增系统模型：claude-sonnet-4-5
+新增系统模型：claude-opus-4-5
+新增系统模型：grok-4
+新增系统模型：grok-4-fast-non-reasoning
+新增系统模型：grok-4-fast-reasoning
+新增系统模型：grok-2-image
+新增系统模型：sonar
+新增系统模型：sonar-pro
+新增系统模型：anthropic/claude-opus-4.5_repeat_openrouter
+新增系统模型：google/gemini-3-pro-preview_repeat_openrouter
+新增系统模型：openai/gpt-5.2_repeat_openrouter
+新增系统模型：gpt-4o_repeat_n1n
+新增系统模型：claude-3-5-sonnet-20240620_repeat_n1n
+新增系统模型：gemini-1.5-pro-latest_repeat_n1n
+新增系统模型：mimo-v2-flash
+新增系统模型：LongCat-Flash-Chat
+新增系统模型：gemini-3-pro-preview_repeat_ai302
+新增系统模型：gemini-3-flash-preview_repeat_aihubmix
+新增系统模型：gemini-3-pro_repeat_poe
+新增系统模型：qwen3-max_repeat_iflow
+CoreData: annotation: CDCS dropping save (full reimport in progress, index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+CoreData: annotation: CDCS dropping save (full reimport in progress, index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+模型数据同步完成
+CoreData: annotation: CDCS dropping save (full reimport in progress, index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+API 密钥同步完成
+新增 SearchKey：AUTOMATIC_SEARCH_KEY
+新增 SearchKey：ZHIPUAI_SEARCH_KEY
+新增 SearchKey：BOCHAAI_SEARCH_KEY
+新增 SearchKey：LANGSEARCH_SEARCH_KEY
+新增 SearchKey：EXA_KEY
+新增 SearchKey：TAVILY_KEY
+新增 SearchKey：BRAVE_KEY
+新增 SearchKey：PERPLEXITY_KEY
+CoreData: annotation: CDCS dropping save (full reimport in progress, index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+SearchKeys 同步完成
+新增 ToolKey: APPLE_MAP_KEY
+新增 ToolKey: AMAP_MAP_KEY
+新增 ToolKey: GOOGLE_MAP_KEY
+新增 ToolKey: QWEATHER_KEY
+新增 ToolKey: OPENWEATHER_KEY
+CoreData: annotation: CDCS dropping save (full reimport in progress, index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+ToolKeys 同步完成
+新增默认 UserInfo
+CoreData: annotation: CDCS dropping save (full reimport in progress, index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+UserInfo 同步完成
+CoreData: annotation: CDCS dropping save (full reimport in progress, index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+PromptRepo 已插入预置数据
+孤立的 ChatMessages 清理完成
+孤立的 KnowledgeChunk 清理完成
+孤立数据清理保存成功
+Test Suite 'Selected tests' started at 2026-11-25 12:33:07.447.
+Test Suite 'AI_HLYTests.xctest' started at 2026-11-25 12:33:07.447.
+Test Suite 'AI_HLYTests.xctest' passed at 2026-11-25 12:33:07.447.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.000) seconds
+Test Suite 'Selected tests' passed at 2026-11-25 12:33:07.447.
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.000 (0.001) seconds
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64-apple-ios17.0-simulator
+◇ Suite "7A.6 PendingFirstTurnTests — Home First-Send State Machine & Cancellation" started.
+◇ Test "Imported MiniApp repair uses the mounted composer once and preserves Home and conversation settings" started.
+✔ Test "Imported MiniApp repair uses the mounted composer once and preserves Home and conversation settings" passed after 0.003 seconds.
+◇ Test "Cancelled MiniApp handoff preserves the unrelated Home draft and rejects a second in-flight repair" started.
+✔ Test "Cancelled MiniApp handoff preserves the unrelated Home draft and rejects a second in-flight repair" passed after 0.001 seconds.
+✔ Suite "7A.6 PendingFirstTurnTests — Home First-Send State Machine & Cancellation" passed after 0.005 seconds.
+◇ Suite HanlinOriginalScriptWidgetLiveActivityTests started.
+◇ Test actualActivityKitStartsUpdatesAndEndsTheOriginalProgram() started.
+Resolve Package Graph
+2026-11-25 12:33:07.851554+0100 AI_Hanlin[12173:5244082] [api] Updating content for activity C87D60BF-C125-4CEF-A326-CE96BB8596F0
+✔ Test actualActivityKitStartsUpdatesAndEndsTheOriginalProgram() passed after 0.463 seconds.
+✔ Suite HanlinOriginalScriptWidgetLiveActivityTests passed after 0.463 seconds.
+◇ Suite "Scripting Platform application services" started.
+◇ Test malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic() started.
+HANLIN_IMPORT_PACKAGE_STARTED: url=/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/F0EE35A7-752E-4DE3-9525-844169EBFCCE/tmp/platform-composition-AE31B319-71D7-46E4-AAFD-52841E2C4A12/invalid-miniapp.zip
+HANLIN_IMPORT_PACKAGE_CATCH_ERROR: unreadableArchive
+✔ Test malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic() passed after 0.049 seconds.
+✔ Suite "Scripting Platform application services" passed after 0.049 seconds.
+◇ Suite "MiniApp Authoring Tools" started.
+◇ Test "Original installed SDK writes, typechecks, repairs and builds a source-preserving archive" started.
+
+Resolve Package Graph
+CoreData: annotation: CDCS reimport gate EXIT (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+2026-11-25 12:33:13.699801+0100 AI_Hanlin[12173:5243751] [error] CoreData: warning: CDCS caught-up metadata stamped: importComplete=YES frameworkVersion=1629 (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+CoreData: warning: CDCS caught-up metadata stamped: importComplete=YES frameworkVersion=1629 (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+2026-11-25 12:33:13.699910+0100 AI_Hanlin[12173:5244088] [error] CoreData: warning: CDCS reindex committed caught-up client-state token (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+CoreData: warning: CDCS reindex committed caught-up client-state token (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+CoreData: annotation: CDCS client state token write begin (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79): <NSPersistentHistoryToken - {
+    "824037B6-19E9-4B87-9A97-7DA76C8F3E79" = 0;
+}>
+CoreData: annotation: CDCS client state token write begin (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79): <NSPersistentHistoryToken - {
+    "824037B6-19E9-4B87-9A97-7DA76C8F3E79" = 7;
+}>
+2026-11-25 12:33:13.703627+0100 AI_Hanlin[12173:5243751] [error] CoreData: warning: CDCS full reimport completed (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+CoreData: warning: CDCS full reimport completed (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+2026-11-25 12:33:13.703688+0100 AI_Hanlin[12173:5243751] [error] CoreData: warning: CDCS state transition: Initializing → Active (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+CoreData: warning: CDCS state transition: Initializing → Active (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+2026-11-25 12:33:13.703738+0100 AI_Hanlin[12173:5243751] [error] CoreData: warning: CDCS starting full reimport (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+CoreData: warning: CDCS starting full reimport (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+2026-11-25 12:33:13.703867+0100 AI_Hanlin[12173:5243751] [error] CoreData: warning: CDCS full reimport baseline: allKnownItems=0 (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+CoreData: warning: CDCS full reimport baseline: allKnownItems=0 (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+CoreData: annotation: CDCS client state token write begin (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79): (null)
+CoreData: annotation: CDCS client state token write begin (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79): (null)
+CoreData: annotation: CDCS reimport gate ENTER (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+CoreData: annotation: CDCS client state token write begin (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79): (null)
+
+CoreData: annotation: CDCS reimport gate EXIT (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+2026-11-25 12:33:14.849599+0100 AI_Hanlin[12173:5243771] [error] CoreData: warning: CDCS reindex committed caught-up client-state token (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+CoreData: warning: CDCS reindex committed caught-up client-state token (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+2026-11-25 12:33:14.849645+0100 AI_Hanlin[12173:5243751] [error] CoreData: warning: CDCS caught-up metadata stamped: importComplete=YES frameworkVersion=1629 (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+CoreData: warning: CDCS caught-up metadata stamped: importComplete=YES frameworkVersion=1629 (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+CoreData: annotation: CDCS client state token write begin (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79): <NSPersistentHistoryToken - {
+    "824037B6-19E9-4B87-9A97-7DA76C8F3E79" = 7;
+}>
+2026-11-25 12:33:14.850657+0100 AI_Hanlin[12173:5243751] [error] CoreData: warning: CDCS full reimport completed (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+CoreData: warning: CDCS full reimport completed (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+2026-11-25 12:33:14.850730+0100 AI_Hanlin[12173:5243751] [error] CoreData: warning: CDCS OS-driven reindex (all items) acknowledged for index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79
+CoreData: warning: CDCS OS-driven reindex (all items) acknowledged for index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79
+✔ Test "Original installed SDK writes, typechecks, repairs and builds a source-preserving archive" passed after 109.039 seconds.
+◇ Test "Source edits preserve unrelated files, target retained source and accept exact binary resources" started.
+✔ Test "Source edits preserve unrelated files, target retained source and accept exact binary resources" passed after 0.004 seconds.
+◇ Test "Original Expo Metro builds inside the embedded Node host and retains real image assets" started.
+Resolve Package Graph
+
+✔ Test "Original Expo Metro builds inside the embedded Node host and retains real image assets" passed after 28.086 seconds.
+✔ Suite "MiniApp Authoring Tools" passed after 137.131 seconds.
+✔ Test run with 7 tests in 4 suites passed after 137.649 seconds.
+Resolve Package Graph
+2026-11-25 12:35:26.724571+0100 AI_HLYUITests-Runner[16122:5258822] [Default] Running tests...
+2026-11-25 12:35:26.771410+0100 AI_HLYUITests-Runner[16122:5258822] [UIKit App Config] Update the Info.plist: Launch screens will soon be required.
+
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-25 12:35:30.201.
+Test Suite 'AI_HLYUITests.xctest' started at 2026-11-25 12:35:30.201.
+Test Suite 'MiniAppAuthoringUITests' started at 2026-11-25 12:35:30.201.
+Test Case '-[AI_HLYUITests.MiniAppAuthoringUITests testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport]' started.
+    t =     0.00s Start Test at 2026-11-25 12:35:30.204
+    t =     0.02s Set Up
+    t =     0.03s Open com.itorah.chavrusachat
+    t =     0.03s     Launch com.itorah.chavrusachat
+2026-11-25 12:35:30.462 xcodebuild[11587:5238754] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-25 12:35:30.463 xcodebuild[11587:5238754] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     0.47s         Setting up automation session
+Resolve Package Graph
+objc[16122]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.dmYYVr/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x10602c398) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.dmYYVr/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x106200310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+
+    t =     3.62s         Wait for com.itorah.chavrusachat to idle
+    t =     6.14s Waiting 45.0s for "hanlin-settings-tab" Button to exist
+    t =     7.22s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-settings-tab" Button`
+    t =     7.22s         Checking existence of `"hanlin-settings-tab" Button`
+    t =     7.36s Open com.itorah.hanlinminiapps
+    t =     7.36s     Launch com.itorah.hanlinminiapps
+2026-11-25 12:35:37.565 xcodebuild[11587:5238754] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-25 12:35:37.565 xcodebuild[11587:5238754] [MT] IDELaunchParametersSnapshot: no debugger version
+Resolve Package Graph
+
+    t =    12.59s         Setting up automation session
+    t =    15.49s         Wait for com.itorah.hanlinminiapps to idle
+<unknown>:0: warning: -[AI_HLYUITests.MiniAppAuthoringUITests testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport] : Update the Info.plist: Support for all orientations will soon be required.
+    t =    18.09s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-apps-add" Button`
+    t =    18.09s     Checking existence of `"hanlin-apps-add" Button`
+    t =    18.17s     Find the "hanlin-apps-add" Button
+    t =    18.22s     Find the "hanlin-apps-add" Button
+    t =    18.30s Tap "hanlin-apps-add" Button
+    t =    18.30s     Wait for com.itorah.hanlinminiapps to idle
+    t =    18.30s     Find the "hanlin-apps-add" Button
+    t =    18.34s     Check for interrupting elements affecting "hanlin-apps-add" Button
+    t =    18.41s         Wait for com.apple.springboard to idle
+    t =    18.43s     Synthesize event
+    t =    18.75s     Wait for com.itorah.hanlinminiapps to idle
+    t =    20.35s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-import-script-package" Button`
+    t =    20.35s     Checking existence of `"hanlin-import-script-package" Button`
+    t =    20.50s     Find the "hanlin-import-script-package" Button
+    t =    20.63s     Find the "hanlin-import-script-package" Button
+    t =    20.76s Tap "hanlin-import-script-package" Button
+    t =    20.76s     Wait for com.itorah.hanlinminiapps to idle
+    t =    20.76s     Find the "hanlin-import-script-package" Button
+    t =    20.89s     Check for interrupting elements affecting "hanlin-import-script-package" Button
+    t =    20.97s         Wait for com.apple.springboard to idle
+    t =    20.99s     Synthesize event
+    t =    21.28s     Wait for com.itorah.hanlinminiapps to idle
+    t =    21.72s Waiting 20.0s for "hanlin-package-import-list" Any to exist
+    t =    22.80s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-import-list" Any`
+    t =    22.80s         Checking existence of `"hanlin-package-import-list" Any`
+    t =    22.90s Checking existence of `"MiniAppTypeError" Button`
+    t =    23.04s Find the "MiniAppTypeError" Button
+    t =    23.19s Waiting 15.0s for "MiniAppTypeError" Button to exist
+    t =    24.26s     Checking `Expect predicate `existsNoRetry == 1` for object "MiniAppTypeError" Button`
+    t =    24.26s         Checking existence of `"MiniAppTypeError" Button`
+    t =    25.50s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "MiniAppTypeError" Button`
+    t =    25.50s     Checking existence of `"MiniAppTypeError" Button`
+    t =    25.66s     Find the "MiniAppTypeError" Button
+    t =    25.80s     Find the "MiniAppTypeError" Button
+    t =    25.94s Tap "MiniAppTypeError" Button
+    t =    25.94s     Wait for com.itorah.hanlinminiapps to idle
+    t =    25.94s     Find the "MiniAppTypeError" Button
+    t =    26.08s     Check for interrupting elements affecting "MiniAppTypeError" Button
+    t =    26.15s         Wait for com.apple.springboard to idle
+    t =    26.17s     Synthesize event
+    t =    26.46s     Wait for com.itorah.hanlinminiapps to idle
+    t =    26.47s Waiting 90.0s for "hanlin-import-diagnostics-sheet" Any to exist
+    t =    27.53s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    27.53s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    27.84s         Capturing element debug description
+    t =    28.48s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    28.48s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    28.78s         Capturing element debug description
+    t =    29.54s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    29.54s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    29.84s         Capturing element debug description
+    t =    30.48s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    30.48s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    30.78s         Capturing element debug description
+    t =    31.53s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    31.53s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    31.83s         Capturing element debug description
+    t =    32.48s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    32.48s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    32.79s         Capturing element debug description
+    t =    33.54s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    33.54s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    33.84s         Capturing element debug description
+    t =    34.48s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    34.48s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    34.78s         Capturing element debug description
+    t =    35.53s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    35.53s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    35.80s         Capturing element debug description
+    t =    36.55s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    36.55s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    36.86s         Capturing element debug description
+    t =    37.50s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    37.50s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    37.81s         Capturing element debug description
+    t =    38.55s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    38.55s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    38.87s         Capturing element debug description
+    t =    39.52s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    39.52s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    39.83s         Capturing element debug description
+    t =    40.47s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    40.48s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    40.78s         Capturing element debug description
+    t =    41.53s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    41.53s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    41.84s         Capturing element debug description
+    t =    42.47s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    42.48s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    42.78s         Capturing element debug description
+    t =    43.53s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    43.53s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    43.83s         Capturing element debug description
+    t =    44.47s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    44.48s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    44.79s         Capturing element debug description
+    t =    45.55s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    45.55s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    45.81s         Capturing element debug description
+    t =    46.55s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    46.55s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    46.80s         Capturing element debug description
+    t =    47.54s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    47.54s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    47.79s         Capturing element debug description
+    t =    48.54s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    48.54s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    48.82s         Capturing element debug description
+    t =    49.56s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    49.56s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    49.82s         Capturing element debug description
+    t =    50.47s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    50.47s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    50.72s         Capturing element debug description
+    t =    51.53s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    51.53s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    51.79s         Capturing element debug description
+    t =    52.54s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    52.54s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    52.79s         Capturing element debug description
+    t =    53.52s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    53.52s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    53.77s         Capturing element debug description
+    t =    54.52s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    54.52s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    54.78s         Capturing element debug description
+    t =    55.52s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    55.53s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    55.77s         Capturing element debug description
+    t =    56.49s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    56.49s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    56.74s         Capturing element debug description
+    t =    57.48s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    57.48s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    57.77s         Capturing element debug description
+    t =    58.52s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    58.52s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    58.77s         Capturing element debug description
+    t =    59.52s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    59.52s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    59.76s         Capturing element debug description
+    t =    60.50s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    60.50s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    60.79s         Capturing element debug description
+    t =    61.54s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    61.54s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    61.79s         Capturing element debug description
+    t =    62.54s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    62.54s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    62.79s         Capturing element debug description
+    t =    63.55s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    63.55s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    63.79s         Capturing element debug description
+    t =    64.54s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    64.54s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    64.79s         Capturing element debug description
+    t =    65.53s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    65.53s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    65.79s         Capturing element debug description
+    t =    66.54s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    66.54s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    66.79s         Capturing element debug description
+    t =    67.54s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    67.54s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    67.79s         Capturing element debug description
+    t =    68.52s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    68.52s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    68.77s         Capturing element debug description
+    t =    69.49s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    69.49s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    69.74s         Capturing element debug description
+    t =    70.56s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    70.56s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    70.81s         Capturing element debug description
+    t =    71.53s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    71.53s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    71.79s         Capturing element debug description
+    t =    72.51s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    72.51s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    72.77s         Capturing element debug description
+    t =    73.51s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    73.51s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    73.77s         Capturing element debug description
+    t =    74.51s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    74.51s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    74.77s         Capturing element debug description
+    t =    75.52s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    75.52s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    75.66s Checking existence of `Any (First Match)`
+    t =    75.85s Find the Any (First Match)
+    t =    76.11s Waiting 15.0s for "hanlin-import-diagnostic-2" StaticText to exist
+    t =    77.18s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostic-2" StaticText`
+    t =    77.18s         Checking existence of `"hanlin-import-diagnostic-2" StaticText`
+    t =    77.39s Checking existence of `"hanlin-import-diagnostic-2" StaticText`
+    t =    77.59s Find the Application 'com.itorah.hanlinminiapps'
+    t =    77.89s Added attachment named 'MiniApp original TypeScript diagnostics'
+    t =    77.89s Find the "hanlin-import-repair-agent" Button
+    t =    79.13s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-import-repair-agent" Button`
+    t =    79.13s     Checking existence of `"hanlin-import-repair-agent" Button`
+    t =    79.35s     Find the "hanlin-import-repair-agent" Button
+    t =    79.55s     Find the "hanlin-import-repair-agent" Button
+    t =    79.76s Tap "hanlin-import-repair-agent" Button
+    t =    79.76s     Wait for com.itorah.hanlinminiapps to idle
+    t =    79.76s     Find the "hanlin-import-repair-agent" Button
+    t =    79.96s     Check for interrupting elements affecting "hanlin-import-repair-agent" Button
+    t =    80.06s         Wait for com.apple.springboard to idle
+    t =    80.08s     Synthesize event
+    t =    80.38s     Wait for com.itorah.hanlinminiapps to idle
+    t =    81.11s Wait for com.itorah.chavrusachat to become Running Foreground
+    t =    81.11s Checking existence of `"MiniApp repair unavailable" Alert`
+<unknown>:0: warning: -[AI_HLYUITests.MiniAppAuthoringUITests testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport] :     AVAudioSession_iOS.mm:978   This method can lead to UI unresponsiveness if called on the main thread. Consider using the asynchronous activate/deactivate API instead for calls from the main thread.
+<unknown>:0: warning: -[AI_HLYUITests.MiniAppAuthoringUITests testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport] :            SessionCore.mm:631   This method can lead to UI unresponsiveness if called on the main thread while the audio session is active.
+    t =    82.28s Waiting 45.0s for StaticText (First Match) to exist
+    t =    83.35s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =    83.35s         Checking existence of `StaticText (First Match)`
+    t =    83.48s Wait for com.itorah.hanlinminiapps to become Running Foreground
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/AI_HLYUITests/MiniAppAuthoringUITests.swift:83: error: -[AI_HLYUITests.MiniAppAuthoringUITests testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport] : XCTAssertTrue failed
+    t =   263.63s Tear Down
+    t =   263.63s     Find the Target Application 'com.itorah.chavrusachat'
+    t =   263.93s     Added attachment named 'Hanlin AI authoring'
+    t =   263.93s     Requesting snapshot of accessibility hierarchy for app with pid 16141
+    t =   264.32s     Requesting snapshot of accessibility hierarchy for app with pid 16141
+    t =   264.49s     Added attachment named 'Hanlin AI authoring accessibility'
+    t =   264.49s     Terminate com.itorah.chavrusachat:16141
+    t =   265.57s     Terminate com.itorah.hanlinminiapps:16254
+Test Case '-[AI_HLYUITests.MiniAppAuthoringUITests testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport]' failed (266.718 seconds).
+Test Suite 'MiniAppAuthoringUITests' failed at 2026-11-25 12:39:56.922.
+	 Executed 1 test, with 1 failure (0 unexpected) in 266.718 (266.721) seconds
+Test Suite 'AI_HLYUITests.xctest' failed at 2026-11-25 12:39:56.923.
+	 Executed 1 test, with 1 failure (0 unexpected) in 266.718 (266.721) seconds
+Test Suite 'Selected tests' failed at 2026-11-25 12:39:56.923.
+	 Executed 1 test, with 1 failure (0 unexpected) in 266.718 (266.722) seconds
+2026-11-25 12:39:57.259 xcodebuild[11587:5238754] [MT] IDETestOperationsObserverDebug: 425.318 elapsed -- Testing started completed.
+2026-11-25 12:39:57.259 xcodebuild[11587:5238754] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-25 12:39:57.259 xcodebuild[11587:5238754] [MT] IDETestOperationsObserverDebug: 425.318 sec, +425.318 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/FocusedAI8.xcresult
+
+Failing tests:
+	MiniAppAuthoringUITests.testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport()
+
+** TEST EXECUTE FAILED **
+
+Testing started

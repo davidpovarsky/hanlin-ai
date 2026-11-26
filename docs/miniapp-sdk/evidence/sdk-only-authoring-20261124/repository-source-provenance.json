@@ -1,0 +1,101 @@
+{
+  "at": "2026-11-24T07:01:46.680221+00:00",
+  "author": "Fresh built-in agent with fork none; original SDK/docs/public CLI only",
+  "sdkManifestSHA256": "fa1e737ec63e640175cdb5c9dad51903cd86d50ae7b340ba5b8ec1ff4e408d85",
+  "publicErratumCommit": "729fdf04910e418d194d0a1a167f8fae94af46d1",
+  "projects": [
+    {
+      "sourceProject": "/dev/shm/hanlin-sdk-only-kit-45335292541/author-work/expo-departure-budget-main",
+      "repositoryProject": "Scripts/MiniApps/Examples/sdk-only-departure-budget",
+      "files": [
+        {
+          "path": "App.tsx",
+          "bytes": 4556,
+          "sha256": "b2cdbefb1cdfc9c392294692e0c2d4aec7f79176505f3fd4714585716920e0f6"
+        },
+        {
+          "path": "README.md",
+          "bytes": 636,
+          "sha256": "2e14a982ddb34ee47eeba68605d938f580c0706333d58756544037f05a32f192"
+        },
+        {
+          "path": "hanlin.authoring.json",
+          "bytes": 99,
+          "sha256": "23628daa17919961823da4ebc9a4166ab9e1d7a9b3ec2ff47fdc70d7b444bf94"
+        },
+        {
+          "path": "index.ts",
+          "bytes": 120,
+          "sha256": "f3532a443c0193cbb6866cb1a7474d0f5055917ffdc7f5e60efe35159e544d19"
+        },
+        {
+          "path": "model.ts",
+          "bytes": 809,
+          "sha256": "b1b7c165ad8bce614aaf59657750eb508ce867f2e03dedf76119cf76270e05eb"
+        },
+        {
+          "path": "package.json",
+          "bytes": 223,
+          "sha256": "eaca3101f64376e4a2f23475839757d2215fc565b8be582d5e40e0542c89734b"
+        },
+        {
+          "path": "script.json",
+          "bytes": 268,
+          "sha256": "fce829f1ede25e2a95377b3d270c36b974a342c61dd9d8038ae8682d26361a60"
+        },
+        {
+          "path": "tsconfig.json",
+          "bytes": 69,
+          "sha256": "48dc261d79c7417b5e10c2ab83bdce581d8be8f16b70e867789ae7b3f5c9eb59"
+        }
+      ]
+    },
+    {
+      "sourceProject": "/dev/shm/hanlin-sdk-only-kit-45335292541/author-work/nativescript-table-share",
+      "repositoryProject": "Scripts/MiniApps/Examples/sdk-only-table-share",
+      "files": [
+        {
+          "path": "README.md",
+          "bytes": 773,
+          "sha256": "2ca21af20c04538813dc2799b29d7b2e44525cd4c92b77ce985361b509a6951f"
+        },
+        {
+          "path": "hanlin.authoring.json",
+          "bytes": 107,
+          "sha256": "1bf949fb4ba1fd14481df380299652fe9b587aa5c30afdb6621fe23be6c02094"
+        },
+        {
+          "path": "index.ts",
+          "bytes": 4782,
+          "sha256": "afbfe5116695db1f0a2641a19e474493c3559f5c9f6e470bf0b72d500c9c461c"
+        },
+        {
+          "path": "model.ts",
+          "bytes": 1491,
+          "sha256": "f9fbaa39afdd00df325ada8177d0bb8213557672a9af7c54fc98936f00d95e9e"
+        },
+        {
+          "path": "package.json",
+          "bytes": 212,
+          "sha256": "1341e9a334dcd928fcdee84456d6069e5476a54440395e1bf1732c271836bccb"
+        },
+        {
+          "path": "script.json",
+          "bytes": 306,
+          "sha256": "1cd5129c60227b1ab53e2752e27b3acc29b73d8161de9495d46b2470393653f1"
+        },
+        {
+          "path": "tsconfig.json",
+          "bytes": 54,
+          "sha256": "b70b632b881af38c566610fa375116ee8172fc20ed495f58b0d0261f0226ac0f"
+        }
+      ]
+    }
+  ],
+  "nativeAcceptance": "PENDING; portable results and source-derived interaction plan do not establish actual installation or native UI.",
+  "originalExpoBoundary": "Original custom registration key and original documentation gap retained in the frozen original bundle. Current Expo project changes only index.ts as documented by the public erratum.",
+  "gitTracking": {
+    "verifiedSourceFileCount": 15,
+    "note": "Two authoring tsconfig.json inputs match the original hashes and are explicitly tracked despite the repository-wide generated-config ignore rule."
+  }
+}

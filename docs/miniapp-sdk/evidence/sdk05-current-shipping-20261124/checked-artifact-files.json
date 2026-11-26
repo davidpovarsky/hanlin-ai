@@ -1,0 +1,581 @@
+{
+  "sdkManifest": {
+    "path": "raw/miniapp-sdk.json.gz",
+    "bytes": 1301355,
+    "sha256": "73349ae31a43dd564e3628bdebb6bb489d61c684b2c3808318ea5b9e228daf0e",
+    "originalBytes": 5219260,
+    "originalSHA256": "1b66e9111586a764617a47fafe8f71ac677c14743fc1d0df79290e3ac994cebc",
+    "compression": "gzip",
+    "mtime": 0
+  },
+  "manifestFileCount": 25661,
+  "checkedFiles": [
+    {
+      "path": "docs/hanlin-expo-runtime.md",
+      "bytes": 18662,
+      "sha256": "14ba327519fd1b16c72f398eefcbbb4058eaf7682ba98f267807a5c462939808"
+    },
+    {
+      "path": "docs/hanlin-nativescript-guide.md",
+      "bytes": 17048,
+      "sha256": "5545b69b00e47508121c2d80a7b44241b854a7abad4019cc70696d6c0da8d1c6"
+    },
+    {
+      "path": "docs/miniapp-sdk/AUTHORING_WORKFLOW.md",
+      "bytes": 14228,
+      "sha256": "cbf07d75821695da68bddfdfc75fe7b98943ee89b67479afb717cd739383804f"
+    },
+    {
+      "path": "docs/miniapp-sdk/DURABLE_INVOCATION_DELIVERY_2026-11-13.md",
+      "bytes": 8559,
+      "sha256": "810922f08de982da10f4319454d7784ecd31c73d7e5d651d269be40d960d72bf"
+    },
+    {
+      "path": "docs/miniapp-sdk/EXAMPLES.md",
+      "bytes": 3722,
+      "sha256": "a17984f1d39f3f8ea73c9fe5be03eebec5884665a8fd18981639442ba1261e70"
+    },
+    {
+      "path": "docs/miniapp-sdk/EXPO_HOST_FACADE_CORRECTIONS_2026-11-13.md",
+      "bytes": 1730,
+      "sha256": "11f29f3c73015c955e5c63eddc7ccf264ac4489ce0fa927838ba1a364a225bc4"
+    },
+    {
+      "path": "docs/miniapp-sdk/EXPO_STRICT_TYPES_AND_FILE_WIRE_2026-11-14.md",
+      "bytes": 4391,
+      "sha256": "e1a48b1daa1020475feec68d3296a21ce063fef6b6354ee9f485d55f6988d98d"
+    },
+    {
+      "path": "docs/miniapp-sdk/EXPO_WIDGETS_ORIGINAL.md",
+      "bytes": 5669,
+      "sha256": "9862848b1833f255631c6be20b00fc2514d9855eac16cfb9fe63beb6325b236c"
+    },
+    {
+      "path": "docs/miniapp-sdk/HANDOFF_2026-11-15.md",
+      "bytes": 11689,
+      "sha256": "60e35d7e563685be98b83db8a19257bff008b53e00a1685d65c3a0484fa8391e"
+    },
+    {
+      "path": "docs/miniapp-sdk/IMPORT_REPAIR.md",
+      "bytes": 5178,
+      "sha256": "489d50e487708c860b023da81c5a1a960e124fee0c07f197ab8bdd98090590f2"
+    },
+    {
+      "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "bytes": 118561,
+      "sha256": "ad9c59d1962d516cd480de78cf5ee01fad11159cc0a73ee1a9cb3ea2f324b8a1"
+    },
+    {
+      "path": "docs/miniapp-sdk/METADATA_FRAMEWORK_DEDUP_2026-11-15.md",
+      "bytes": 3042,
+      "sha256": "5a40ec3f450ba1c7a5941b76df1bdc40aa972049e0130a70258cdbe7ab323c51"
+    },
+    {
+      "path": "docs/miniapp-sdk/MINIAPP_ACTION_LIFETIME_2026-11-13.md",
+      "bytes": 2622,
+      "sha256": "0392ccf073019a5a5260cf84b3967831b5916a992d61ae824a7f313e9dd8f234"
+    },
+    {
+      "path": "docs/miniapp-sdk/NATIVESCRIPT_RUNTIME_WIRE_2026-11-13.md",
+      "bytes": 14059,
+      "sha256": "da34a6f1432e7eaa5ee0c0f05a04a2451ba9e2d7f390fd87d134c45f89a12ce0"
+    },
+    {
+      "path": "docs/miniapp-sdk/NATIVESCRIPT_SDK_METADATA_2026-11-14.md",
+      "bytes": 4423,
+      "sha256": "493c6fc61e7fe5dc6b3ad3bd47c9cb5f80ccaded81be42b8e689ba57a1512bc5"
+    },
+    {
+      "path": "docs/miniapp-sdk/ORIGINAL_UPSTREAM_BUILD.md",
+      "bytes": 8523,
+      "sha256": "dbce13974c47d171dec19432a97b2cf56d4e42e3be78a32afff4dc0cd0eb5639"
+    },
+    {
+      "path": "docs/miniapp-sdk/OWNED_SHARE_INGRESS_2026-11-13.md",
+      "bytes": 9130,
+      "sha256": "b49fdab8b88cc5225480fd9b24a9213ba5437fb298b327db18069dc27aadc059"
+    },
+    {
+      "path": "docs/miniapp-sdk/PREPARED_PACKAGE_VERSION_CONTRACT_2026-11-13.md",
+      "bytes": 8281,
+      "sha256": "68b8ad713aa3177eeb4e3f5a03390f9e40f858fd14f55c50ac357931ddcdf349"
+    },
+    {
+      "path": "docs/miniapp-sdk/README.md",
+      "bytes": 15776,
+      "sha256": "4427f49e5b729658d95d98eb6cdbb84ea08f2e4d2e33d7b7c480192914346637"
+    },
+    {
+      "path": "docs/miniapp-sdk/SCRIPTWIDGET_AUTHORING.md",
+      "bytes": 9137,
+      "sha256": "1c9a43f36b5317c263868ac549567a31d08440e600d20b96fd7fef493e31fbca"
+    },
+    {
+      "path": "docs/miniapp-sdk/SCRIPTWIDGET_CONTROLS.md",
+      "bytes": 6418,
+      "sha256": "1a22bcd767f2747a6e522fae41c4ef245594ad43ecacf85bed768c1912f34064"
+    },
+    {
+      "path": "docs/miniapp-sdk/SKILL_RUNTIME_CONTRACT_2026-11-16.md",
+      "bytes": 6542,
+      "sha256": "4ed91dfebcb5c146338b570e1bed33357c2cc10ed3217112c9f2e67bdf901eb9"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "bytes": 147521,
+      "sha256": "f4e2bd0bead729e6a05c591947ee1cd7f13eaf85e3f1a193510f65ac83c95008"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "bytes": 21494,
+      "sha256": "8d9c979eedf51d8fd8a2f0535d616a3c03950d6b47f9cccb7fb1bb3a1b26487c"
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "bytes": 493311,
+      "sha256": "0fd0bc2eb8aa0ab33bfaa74a48c4e2ad3d743d682cbf3bcc059d7a17aacdd515"
+    },
+    {
+      "path": "examples/expo-hello-world/App.tsx",
+      "bytes": 478,
+      "sha256": "e0ec9b33bbe972668b0be87b6f8263faff0977e5bfea7654334c7f7f68b95531"
+    },
+    {
+      "path": "examples/expo-hello-world/README.md",
+      "bytes": 831,
+      "sha256": "367e2b77ec0d06230ed8b7a3756cc5ef6bd2b4328c2405977e383f8ecc52b403"
+    },
+    {
+      "path": "examples/expo-hello-world/hanlin.authoring.json",
+      "bytes": 99,
+      "sha256": "23628daa17919961823da4ebc9a4166ab9e1d7a9b3ec2ff47fdc70d7b444bf94"
+    },
+    {
+      "path": "examples/expo-hello-world/index.ts",
+      "bytes": 120,
+      "sha256": "f3532a443c0193cbb6866cb1a7474d0f5055917ffdc7f5e60efe35159e544d19"
+    },
+    {
+      "path": "examples/expo-hello-world/package.json",
+      "bytes": 223,
+      "sha256": "ce6b14d9dd58a68d245000b2d9997086754acba6b3213087e9531b59701cd9bc"
+    },
+    {
+      "path": "examples/expo-hello-world/script.json",
+      "bytes": 264,
+      "sha256": "308768a8274c3f58254c4f6daafa7b16a07f0c68dc519f17d3e5feae895dcafb"
+    },
+    {
+      "path": "examples/expo-hello-world/tsconfig.json",
+      "bytes": 53,
+      "sha256": "02e14c4b983c0f436d32ce0eb2f96309512a7d69774ed0c7d39ffa4175ccf7df"
+    },
+    {
+      "path": "examples/index.json",
+      "bytes": 1097,
+      "sha256": "614cd6b0171af22672f38829d71a140582235639cf60c53a14e2ce18a9b11967"
+    },
+    {
+      "path": "examples/nativescript-hello-world/README.md",
+      "bytes": 914,
+      "sha256": "aae06c1b3c963f8a6cf246ea52642d73f5e6ec237cfb19fc4737dd4072570e6a"
+    },
+    {
+      "path": "examples/nativescript-hello-world/hanlin.authoring.json",
+      "bytes": 107,
+      "sha256": "1bf949fb4ba1fd14481df380299652fe9b587aa5c30afdb6621fe23be6c02094"
+    },
+    {
+      "path": "examples/nativescript-hello-world/index.ts",
+      "bytes": 991,
+      "sha256": "bfb34d9b7ac0f50488468a5cf8200d55cefbb9d0d345d080bb652323a1df9bf6"
+    },
+    {
+      "path": "examples/nativescript-hello-world/package.json",
+      "bytes": 225,
+      "sha256": "ab65e0e388ac19daf337b29965fd030e6196faf90cee439c786de9e1c3f49cb6"
+    },
+    {
+      "path": "examples/nativescript-hello-world/script.json",
+      "bytes": 320,
+      "sha256": "521f9d8332544a7858dca222d635cf8530e13d72cfb4e2e62d4196acc3a249cb"
+    },
+    {
+      "path": "examples/nativescript-hello-world/tsconfig.json",
+      "bytes": 38,
+      "sha256": "c979f6e45b2a9c6151dbb12b4d9f04b76a5ce3822a270680ce479ee25f28e43e"
+    },
+    {
+      "path": "examples/sdk-only-departure-budget/App.tsx",
+      "bytes": 4556,
+      "sha256": "b2cdbefb1cdfc9c392294692e0c2d4aec7f79176505f3fd4714585716920e0f6"
+    },
+    {
+      "path": "examples/sdk-only-departure-budget/README.md",
+      "bytes": 636,
+      "sha256": "2e14a982ddb34ee47eeba68605d938f580c0706333d58756544037f05a32f192"
+    },
+    {
+      "path": "examples/sdk-only-departure-budget/hanlin.authoring.json",
+      "bytes": 99,
+      "sha256": "23628daa17919961823da4ebc9a4166ab9e1d7a9b3ec2ff47fdc70d7b444bf94"
+    },
+    {
+      "path": "examples/sdk-only-departure-budget/index.ts",
+      "bytes": 120,
+      "sha256": "f3532a443c0193cbb6866cb1a7474d0f5055917ffdc7f5e60efe35159e544d19"
+    },
+    {
+      "path": "examples/sdk-only-departure-budget/model.ts",
+      "bytes": 809,
+      "sha256": "b1b7c165ad8bce614aaf59657750eb508ce867f2e03dedf76119cf76270e05eb"
+    },
+    {
+      "path": "examples/sdk-only-departure-budget/package.json",
+      "bytes": 223,
+      "sha256": "eaca3101f64376e4a2f23475839757d2215fc565b8be582d5e40e0542c89734b"
+    },
+    {
+      "path": "examples/sdk-only-departure-budget/script.json",
+      "bytes": 268,
+      "sha256": "fce829f1ede25e2a95377b3d270c36b974a342c61dd9d8038ae8682d26361a60"
+    },
+    {
+      "path": "examples/sdk-only-departure-budget/tsconfig.json",
+      "bytes": 69,
+      "sha256": "48dc261d79c7417b5e10c2ab83bdce581d8be8f16b70e867789ae7b3f5c9eb59"
+    },
+    {
+      "path": "examples/sdk-only-table-share/README.md",
+      "bytes": 773,
+      "sha256": "2ca21af20c04538813dc2799b29d7b2e44525cd4c92b77ce985361b509a6951f"
+    },
+    {
+      "path": "examples/sdk-only-table-share/hanlin.authoring.json",
+      "bytes": 107,
+      "sha256": "1bf949fb4ba1fd14481df380299652fe9b587aa5c30afdb6621fe23be6c02094"
+    },
+    {
+      "path": "examples/sdk-only-table-share/index.ts",
+      "bytes": 4782,
+      "sha256": "afbfe5116695db1f0a2641a19e474493c3559f5c9f6e470bf0b72d500c9c461c"
+    },
+    {
+      "path": "examples/sdk-only-table-share/model.ts",
+      "bytes": 1491,
+      "sha256": "f9fbaa39afdd00df325ada8177d0bb8213557672a9af7c54fc98936f00d95e9e"
+    },
+    {
+      "path": "examples/sdk-only-table-share/package.json",
+      "bytes": 212,
+      "sha256": "1341e9a334dcd928fcdee84456d6069e5476a54440395e1bf1732c271836bccb"
+    },
+    {
+      "path": "examples/sdk-only-table-share/script.json",
+      "bytes": 306,
+      "sha256": "1cd5129c60227b1ab53e2752e27b3acc29b73d8161de9495d46b2470393653f1"
+    },
+    {
+      "path": "examples/sdk-only-table-share/tsconfig.json",
+      "bytes": 54,
+      "sha256": "b70b632b881af38c566610fa375116ee8172fc20ed495f58b0d0261f0226ac0f"
+    },
+    {
+      "path": "expo/node_modules/@babel/core/package.json",
+      "bytes": 2744,
+      "sha256": "6c2893db41b54a1c03ba68e676aa3ea987db9a5c9b9a3a3aa2e8d0d9a63066c4"
+    },
+    {
+      "path": "expo/node_modules/@expo/ui/package.json",
+      "bytes": 6032,
+      "sha256": "5332dd3b83612fcc7e30f50cb2e137f1e0051b6b2032b0d006f5840a13cf5281"
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-native-api/package.json",
+      "bytes": 430,
+      "sha256": "7a46122e4b3ca8e9fb1caa54bb7bdd0a6e4c56226b6c3bdded20e6134bb5909e"
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-native-api/src/index.ts",
+      "bytes": 1783,
+      "sha256": "000de857839c76e86a426123d4bce30f0b56854f7655d4021342b2d932b98390"
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/package.json",
+      "bytes": 457,
+      "sha256": "18dbddebb3c641742ca5f83d0492cec1cbbc7bb1affbefe641477b7481110568"
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/src/generated/bridge-manifest.ts",
+      "bytes": 39972,
+      "sha256": "a56c8a16334bfe76ebe6489fc1f018f25f28f7cadba6c1ef11a268e5336f3b37"
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/src/generated/modifiers.ts",
+      "bytes": 14525,
+      "sha256": "fee40e3a17dd3466ad2a97301e877501832f044968360684af8e473fe6055483"
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/src/generated/views.tsx",
+      "bytes": 2798,
+      "sha256": "7c3bf97da0a680dc80d1a1d19f915b67778e17f42021355c5d99ea4f99c85c74"
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/src/host-services.ts",
+      "bytes": 8965,
+      "sha256": "010488e8c6aae2635f67d45cefebb9fdb2d4f97af71161af011a83d626ad60e7"
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/src/index.ts",
+      "bytes": 185,
+      "sha256": "d0907d0fd364c9b0621f48099d98ece640ba25d8d40f53cb60aabb3b1dbd3922"
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/src/manual-components.tsx",
+      "bytes": 11311,
+      "sha256": "23315409689a8fb0f1a652a3d62428eade12822a4626224d0080046f08a80fe2"
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/src/miniapp-actions.ts",
+      "bytes": 2996,
+      "sha256": "d5d38fc209d8d8dedb2832ffd037e53d4eabd8b8c92320bd79e791fdfef2c607"
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/src/modifiers.ts",
+      "bytes": 472,
+      "sha256": "56b1efa29241c519d325682828e944becae6b516887908777661b3a574821782"
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/src/system-surfaces.ts",
+      "bytes": 3395,
+      "sha256": "3a2c4424ce074056ef76d62a4502fb16c389e10a46967fcde15835efde94543f"
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/tests/generated-views.test.mjs",
+      "bytes": 3522,
+      "sha256": "03c46a995205ca0b1730fc8aa26bac97771c1f4cd3951665c13f7c2fa2c046fa"
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/tests/host-services-publication.test.mjs",
+      "bytes": 3304,
+      "sha256": "84a995d298fd75a7959a63083fb6bdd0c3db65c16850d1571c456c32309ffb1e"
+    },
+    {
+      "path": "expo/node_modules/@hanlin/expo-ui/tests/miniapp-actions.test.mjs",
+      "bytes": 2053,
+      "sha256": "566e95d9b0ba53fdf576de2000c6e97707fb3b85e6fb014445f1c96546eea4bc"
+    },
+    {
+      "path": "expo/node_modules/@nativescript/react-native/package.json",
+      "bytes": 1834,
+      "sha256": "f9a2782902877c9d966fa81d37b09469a33b5dc8855a808fc47ec83e2fe86b9c"
+    },
+    {
+      "path": "expo/node_modules/@react-native-community/cli/package.json",
+      "bytes": 1541,
+      "sha256": "0d88a325a8e0139c7e3571debd6b170a85811b7016ac17736cc870deda8e5c35"
+    },
+    {
+      "path": "expo/node_modules/@react-native/codegen/package.json",
+      "bytes": 1562,
+      "sha256": "c0ffa28d0fe95aa8d5ff0fb011e773b6cdbfc49690ed3cc7f5d27d9c16bb7329"
+    },
+    {
+      "path": "expo/node_modules/@react-native/metro-config/package.json",
+      "bytes": 948,
+      "sha256": "f19e7fd81bbef1f026ace95bdb81280b06ea9ad474978e1b2bbeea9740e6d6a8"
+    },
+    {
+      "path": "expo/node_modules/@types/react/package.json",
+      "bytes": 6108,
+      "sha256": "505c0df4cd73d6a02c946bd9b81451584bd9c83ea72d75cff9b826efceaa19c2"
+    },
+    {
+      "path": "expo/node_modules/@typescript/old/lib/typescript.js",
+      "bytes": 9144216,
+      "sha256": "569177652966bd528c319171c7dd22860dbf72bde116cbc4f644f1d02bb12e39"
+    },
+    {
+      "path": "expo/node_modules/@typescript/old/package.json",
+      "bytes": 3527,
+      "sha256": "9332e97c30d3e53ed54910b89207ed657fb444066484df6e5b6965bf130865e9"
+    },
+    {
+      "path": "expo/node_modules/babel-preset-expo/package.json",
+      "bytes": 4348,
+      "sha256": "c32d700465a4bc29ad1bf79552b7060132049fc1311c3930dd58a58f824d1949"
+    },
+    {
+      "path": "expo/node_modules/esbuild/package.json",
+      "bytes": 1490,
+      "sha256": "cb7d5b1fe478f8cbaae566a86031b6fdf5f7d444354f35d1cb3cba9adf6d2935"
+    },
+    {
+      "path": "expo/node_modules/expo-brownfield/package.json",
+      "bytes": 2453,
+      "sha256": "99e2d9a35cb6c0cbf5f59ebad82fd790a913ffed39d629ea8ed0a9fb1f81d502"
+    },
+    {
+      "path": "expo/node_modules/expo-modules-core/package.json",
+      "bytes": 2845,
+      "sha256": "285de31be98571eea2a85f8eac1d30fce6a1474e2dc4b1772dd4465333762004"
+    },
+    {
+      "path": "expo/node_modules/expo-modules-jsi/package.json",
+      "bytes": 1687,
+      "sha256": "9a5e38bb71634e1cf9bfe8bc2c47ee8a46e0469a34043ca4f6138f4515557311"
+    },
+    {
+      "path": "expo/node_modules/expo-widgets/package.json",
+      "bytes": 1571,
+      "sha256": "645f89606fd11556371840926d3b07b7ec302a25ccc5709b6413ec508ec2f9ee"
+    },
+    {
+      "path": "expo/node_modules/expo/package.json",
+      "bytes": 8187,
+      "sha256": "d31ae95bbfa77080c46056d92209b2f613855ffc81f1de6f0df8e63bcb279e09"
+    },
+    {
+      "path": "expo/node_modules/react-native-worklets/package.json",
+      "bytes": 7265,
+      "sha256": "aa8f3e796568bedf9b72b8cac0b1935a2356a5cd5ba5bd7735e75e1bad7e9ead"
+    },
+    {
+      "path": "expo/node_modules/react-native/package.json",
+      "bytes": 6286,
+      "sha256": "3f2bf69ed883e97a295b1de43f5a2d75d112ab45495153360c2fb521023c7f3f"
+    },
+    {
+      "path": "expo/node_modules/react/package.json",
+      "bytes": 1242,
+      "sha256": "6e003e4e9ed25afa7fdd55613f8aa877cefa9b359d9c13f81ee704030248e24e"
+    },
+    {
+      "path": "expo/node_modules/typescript/lib/typescript.js",
+      "bytes": 45,
+      "sha256": "d3f3cd2b04b7f466f4484df921b744223f7bd1f3e353ec9110bdf52695b983d5"
+    },
+    {
+      "path": "expo/node_modules/typescript/package.json",
+      "bytes": 841,
+      "sha256": "d9b8fb53c67c947fece83bcb73fa8512227ea6a12b110e096fdab8ecdc02b655"
+    },
+    {
+      "path": "expo/tsconfig.json",
+      "bytes": 496,
+      "sha256": "9fee65dc117f318ddd7f55a52928e24db3c2e94f5b98dcc0e7d266801640ecea"
+    },
+    {
+      "path": "nativescript/node_modules/@hanlin/host-services/index.d.ts",
+      "bytes": 3985,
+      "sha256": "75f055c7067c2497b64f64714ca175fc09a323236e236b1d57621d4a07c3f7c1"
+    },
+    {
+      "path": "nativescript/node_modules/@hanlin/host-services/index.mjs",
+      "bytes": 4512,
+      "sha256": "c6cc15960daeb071fc5adc8daf3f041c3e990ee8ce285a0b6c945667763a7dc5"
+    },
+    {
+      "path": "nativescript/node_modules/@hanlin/host-services/package.json",
+      "bytes": 147,
+      "sha256": "ebe6634d2e019c9da759ac280c1269d721e2105681fdbc8a1796f464d0b9ee9e"
+    },
+    {
+      "path": "nativescript/node_modules/@hanlin/host-services/system-surfaces.d.ts",
+      "bytes": 3692,
+      "sha256": "04a07d066efe992bc4a421e7a8aadd5e555ac82478dcf4fc613703da3ca417f8"
+    },
+    {
+      "path": "nativescript/node_modules/@hanlin/host-services/system-surfaces.mjs",
+      "bytes": 159,
+      "sha256": "ff92a9423fcfa566d4e00546e7a8e9fb0c8b206a361911225c1f67dddba68d19"
+    },
+    {
+      "path": "nativescript/node_modules/@nativescript/core/package.json",
+      "bytes": 2152,
+      "sha256": "c9ee2195d3902aa8ab891d672e24140ffc01e1cb17d7be971e8938182fc5211b"
+    },
+    {
+      "path": "nativescript/node_modules/@nativescript/ios/package.json",
+      "bytes": 1482,
+      "sha256": "bbc55b3d0cc17d107b5bff330f33ec99c3b7d38c57aae4f23ceca8a2ca2e7bda"
+    },
+    {
+      "path": "nativescript/node_modules/@nativescript/swift-ui/package.json",
+      "bytes": 774,
+      "sha256": "57c8a6769bfe5fa3d18c147e45b83884a427aa9324a22bc24e152ce6d5423865"
+    },
+    {
+      "path": "nativescript/node_modules/@nativescript/types/package.json",
+      "bytes": 435,
+      "sha256": "2cccdbfe5224a25bb58d9648ade31272499a30da927162112276fb559df52b20"
+    },
+    {
+      "path": "nativescript/node_modules/@nativescript/vite/package.json",
+      "bytes": 6297,
+      "sha256": "f2ecf551a0c94fc26db1f9f5aef5cdde547a86c0e296b55c05c3d1c38f9cdffb"
+    },
+    {
+      "path": "nativescript/node_modules/typescript/lib/typescript.js",
+      "bytes": 9112572,
+      "sha256": "3ae902c92cc44dace175c0e69e13a4b0899f6983c6121d76b9ab8dd5795e7675"
+    },
+    {
+      "path": "nativescript/node_modules/typescript/package.json",
+      "bytes": 3620,
+      "sha256": "822ef7ca6452205657b6288b066481ecf508bfbf43455d715cf7d3ec457561e6"
+    },
+    {
+      "path": "nativescript/node_modules/vite/package.json",
+      "bytes": 5091,
+      "sha256": "36ee225a470be66379bdfb1f42d882867418771e3c43a45c4553e67da98665cc"
+    },
+    {
+      "path": "nativescript/tsconfig.json",
+      "bytes": 486,
+      "sha256": "0618a10c5d065ed7afa8c2e45163d8a55f6f41d87f479a40d917fee25275336c"
+    },
+    {
+      "path": "scriptwidget/host-globals.d.ts",
+      "bytes": 2528,
+      "sha256": "603148dada2fd81794f8bd2953e6da8aa3f4aaf8bed1176d50435c31b1136c7a"
+    },
+    {
+      "path": "scriptwidget/manifest-validation.mjs",
+      "bytes": 13070,
+      "sha256": "f84c8dfbe6c86a862c87c4bc6423b30003620fae4d1a7a826cd8c02ae4410289"
+    },
+    {
+      "path": "scriptwidget/native-api.json",
+      "bytes": 73769,
+      "sha256": "97c0827f21a5470fc08238d3477a5dd0328651d6d814249d165c5a6cd3872b09"
+    },
+    {
+      "path": "scriptwidget/original-api.d.ts",
+      "bytes": 20966,
+      "sha256": "e7212325aa3eb7a8e10cd00de34ab3b09ff4acb7259b296114c8f26672934a7c"
+    },
+    {
+      "path": "scriptwidget/service-types.d.ts",
+      "bytes": 6583,
+      "sha256": "51bd5d47d2190ebb8e0f8ddc5ab031b7007dcedaef1213de0c0ef4c4e7d7e446"
+    },
+    {
+      "path": "scriptwidget/tsconfig.json",
+      "bytes": 362,
+      "sha256": "7c3f30d1c5e0e38a5250930cc62aea4a47e1cfd9a9dbe5110f5796f0e6bf2e2b"
+    },
+    {
+      "path": "scriptwidget/widget-manifest.schema.json",
+      "bytes": 13230,
+      "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2"
+    }
+  ],
+  "checkedFileCount": 112,
+  "hostAuthoring": {
+    "path": "miniapp-authoring.mjs",
+    "sha256": "d89d2ed4337e56f95b5f4815987281048c68f05ac60f31ba5e2f7f97d7312856",
+    "matchesCurrentSource": true
+  },
+  "boundary": "Only needed SDK docs/examples/public facade/compiler/config members were read. Full archive extraction and a new full dependency-content audit were not performed."
+}

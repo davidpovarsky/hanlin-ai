@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "id": "notification-native-preparation-v2",
+  "allowanceSeconds": 1800,
+  "charges": [
+    {
+      "startedAt": "2026-11-25T21:47:17.425063+00:00",
+      "finishedAt": "2026-11-25T21:50:26.262338+00:00",
+      "seconds": 188.837976625,
+      "status": "FAILED"
+    },
+    {
+      "startedAt": "2026-11-25T22:01:28.732166+00:00",
+      "finishedAt": "2026-11-25T22:01:34.670411+00:00",
+      "seconds": 5.938364417001139,
+      "status": "FAILED"
+    }
+  ],
+  "totalChargedSeconds": 194.77634104200115,
+  "remainingAllowanceSeconds": 1605.2236589579989,
+  "priorLedger": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v1/ledger.json",
+    "bytes": 473,
+    "sha256": "416bd3cc78ef76fe48136427314ea59ec07d5f2873ccab4e84fa6bf65bf5d056"
+  },
+  "priorLedgersModified": false,
+  "restorationChargeRecordedSeparately": 54.375687207997544
+}

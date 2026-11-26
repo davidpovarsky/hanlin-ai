@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-24",
+  "firstParent": "cc7965e9007930784557f88596549c85a19cf2aa",
+  "ownerCrossAppHead": "58c7b3f3f289e7d9daf233d8804b7011255a90ce",
+  "ownerPR": "https://github.com/davidpovarsky/hanlin-ai/pull/18",
+  "ownerHeadObservedUpdatedAt": "2026-11-24T01:17:54Z",
+  "limitedExistingOwnerCorrection": {
+    "sourceCommit": "d6dd2e0d4aa5f99457aed1173da67f63ccafe400",
+    "scope": [
+      "MiniAppsExternalModalLifetimeUITests source build membership",
+      "Stable import Done accessibility ID and existing modal query",
+      "Existing native UI source membership verifier"
+    ],
+    "otherUnpublishedOwnerChanges": "Not integrated"
+  },
+  "resolution": [
+    "Preserve authoring import transfer URL admission before exact published cross-app x-callback URL admission",
+    "Preserve current HostServices/ExpoWidgets appContext bind/unbind and actual generated native host version constants",
+    "Unify source/product manifest entries without duplicate external session source or bridge products",
+    "Keep original session-owned UIKit/worklet and modifier generator changes; preserve current npm locks and original native dependency versions",
+    "Add new imported multiscene generator to existing native artifact source fingerprint",
+    "Use existing owner modal fixture in original group.com.itorah.shared and verify actual returned request/result; main paired product storage remains group.com.itorah.chavrusachat"
+  ],
+  "portableVerification": {
+    "sourceGraph": {
+      "status": "EXECUTED_PASS",
+      "cases": 19,
+      "log": "cross-merge-check-1.log"
+    },
+    "targetMembership": {
+      "status": "EXECUTED_PASS",
+      "log": "cross-merge-check-3.log",
+      "priorFailure": "Raw initial log retained: duplicate auto-merged source removed, no source omitted"
+    },
+    "originalNativeGenerationParity": {
+      "status": "EXECUTED_PASS",
+      "comparisons": 8,
+      "originalPackage": "@nativescript/react-native@9.1.2",
+      "log": "cross-generation-parity.log"
+    },
+    "generators": "Both --check passes retained in cross-merge-checks.json",
+    "selectors": "All11 selected existing MiniApps XCTest methods located in actual compiled source files"
+  },
+  "nativeAcceptance": {
+    "status": "NOT_RUN",
+    "AIExactExpectedCaseCount": 25,
+    "miniAppsExactExpectedCaseCount": 11,
+    "totalRequiredCaseCount": 36,
+    "addedOwnerCases": 6,
+    "fixtureScope": "Existing original ScriptUI shared-container nested modal regression; not two complete Expo/Hermes applications",
+    "historicalOwnershipEvidence": "All8 receipt source hashes match. Original12-case configured target pass retained as separate historical aggregate; no per-case xcresult or fresh execution claimed."
+  }
+}

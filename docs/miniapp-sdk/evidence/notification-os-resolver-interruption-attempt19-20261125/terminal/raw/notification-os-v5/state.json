@@ -1,0 +1,171 @@
+{
+  "schema": 1,
+  "id": "notification-os-v5",
+  "owner": "/root/native_execution",
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "status": "CLEANUP_INCOMPLETE",
+  "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines",
+  "expectedTests": 1,
+  "controllerPID": 7320,
+  "activeBaselineSeconds": 24674.060430753034,
+  "allowanceSeconds": 900,
+  "decisionSHA256": "ce8d33c24728872dcab36cf20d643f9b5d2b1e94ae312b144513824237a48aa5",
+  "remainingAllowanceSeconds": 533.4712310000032,
+  "priorOSChargedSeconds": 366.5287689999968,
+  "osContinuation": {
+    "records": {
+      "terminal": {
+        "path": "build/primary-control/notification-os-v1/state.json",
+        "bytes": 5104,
+        "sha256": "f2b15c99f3d9e131149722f3b6d4215eb4d9dcd07fa9440752fa120ee95415ea"
+      },
+      "ledger": {
+        "path": "build/primary-control/notification-os-v1/ledger.json",
+        "bytes": 839,
+        "sha256": "1eb53a953ac2e06396dbe0766ed2c68c03fc5ec493c649c9a9a98d6171098bf5"
+      },
+      "decision": {
+        "path": "build/primary-control/notification-os-v1/decision.json",
+        "bytes": 158863,
+        "sha256": "6c6daf1c44424cd0c7e68de78a6a46f8727cac01c392eda43c4ed97648109d88"
+      },
+      "containers": {
+        "path": "build/primary-control/notification-os-v1/execution-containers.json",
+        "bytes": 2350,
+        "sha256": "b96b00ec8665a2489c7a021b40c386424a9016e501b79348971b9e72cc2b58ed"
+      },
+      "primaryBefore": {
+        "path": "build/primary-control/notification-os-v1/primary-state-before.json",
+        "bytes": 124965,
+        "sha256": "783d3f71a3b6ac01271b68a22280e265062bc6642ba18de9bdd3dc4c4da78af2"
+      },
+      "currentContainers": {
+        "path": "build/primary-control/notification-os-v1-current-container-inputs.json",
+        "bytes": 7807,
+        "sha256": "9964effd96c281c26f8487c0f0ac0c5978cd8fbb6d1165858a127b6891f70f82"
+      },
+      "latestTerminal": {
+        "path": "build/primary-control/notification-os-v3/state.json",
+        "bytes": 5166,
+        "sha256": "5cd2fc85c3fb0c58e399f9aa5bbc33ab61e88bd48a4a5fd8b8fbc102b7023c17"
+      },
+      "latestLedger": {
+        "path": "build/primary-control/notification-os-v3/ledger.json",
+        "bytes": 1618,
+        "sha256": "daf72502217aab831e6cf60a662c444990cd14634db8840d254671ed7b83ae44"
+      },
+      "latestDecision": {
+        "path": "build/primary-control/notification-os-v3/decision.json",
+        "bytes": 165910,
+        "sha256": "0705ed2f72a5a17bcd82b9ce94e8eda8dc5e96eb368f921e438042a6b25716c8"
+      },
+      "latestContainers": {
+        "path": "build/primary-control/notification-os-v3/execution-containers.json",
+        "bytes": 2360,
+        "sha256": "3e1d47f48333f0aa89fca330d9b2e7c9f1c2189583d458cd024d414aafd00bea"
+      },
+      "latestPrimaryBefore": {
+        "path": "build/primary-control/notification-os-v3/primary-state-before.json",
+        "bytes": 125648,
+        "sha256": "1abe474150ca068f20234af7fd698cfd877173fcb65a22a7dd839ab3c02ca171"
+      }
+    },
+    "originalAllowanceSeconds": 900,
+    "priorChargedSeconds": 366.5287689999968,
+    "remainingAllowanceSeconds": 533.4712310000032
+  },
+  "original52Status": "EXECUTED_PASS",
+  "NS5Status": "EXECUTED_PASS",
+  "historicalProcessGroupExclusions": [],
+  "resourceObservationAtLaunch": {
+    "observedAt": "2026-11-25T19:41:38.894163+00:00",
+    "freeBytes": 7380934656,
+    "df": "Filesystem   1024-blocks      Used Available Capacity iused    ifree %iused  Mounted on\n/dev/disk3s5   482797652 430656284   7207944    99% 5793069 72079440    7%   /System/Volumes/Data"
+  },
+  "originalNode": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/node-v24.5.0-darwin-arm64/bin/node",
+    "sha256": "336b5b3ebc5deb86df842102b20b6e4761605b7a667823e68dda7761b91a161b",
+    "version": "24.5.0",
+    "bytes": 116870064,
+    "observedIdentity": {
+      "node": "24.5.0",
+      "platform": "darwin",
+      "architecture": "arm64"
+    }
+  },
+  "startedAt": "2026-11-25T19:41:38.894788+00:00",
+  "ownedProcessGroups": {
+    "setup": {
+      "pid": 7340,
+      "pgid": 7340,
+      "argv": [
+        "/opt/homebrew/opt/python@3.12/bin/python3.12",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v10.py",
+        "--decision",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v5/decision.json",
+        "--child",
+        "setup"
+      ]
+    },
+    "test": {
+      "pid": 7517,
+      "pgid": 7517,
+      "argv": [
+        "/opt/homebrew/opt/python@3.12/bin/python3.12",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v10.py",
+        "--decision",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v5/decision.json",
+        "--child",
+        "test"
+      ]
+    }
+  },
+  "containerLookupAttempts": 527,
+  "exchangeStartedAfter": 1795635706.43467,
+  "error": "InterruptedError: OS probe received signal 2",
+  "ownedGroupsAtCleanup": {
+    "setup": [],
+    "test": [
+      " 7517  7517 Ss  ",
+      " 7530  7517 S   "
+    ]
+  },
+  "observedExitCodes": {
+    "setup": 0
+  },
+  "remainingOwnedProcessGroups": {
+    "setup": []
+  },
+  "ownedSimulatorCleanup": {
+    "device": "E742FBCD-8FF0-4130-B143-7F8328637138",
+    "ownership": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/created-simulator.txt",
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": "",
+    "observedState": "Shutdown",
+    "observedAt": "2026-11-25T19:50:28.362195+00:00"
+  },
+  "cleanupErrors": [
+    "test group cleanup: [Errno 1] Operation not permitted"
+  ],
+  "sourceErrors": [],
+  "finishedAt": "2026-11-25T19:50:29.667663+00:00",
+  "elapsedSeconds": 530.7739816670073,
+  "chargedSeconds": 530.7739816670073,
+  "cumulativeActiveSeconds": 25204.83441242004,
+  "cumulativeOSProbeSeconds": 897.3027506670041,
+  "allowanceExceededDuringCleanup": false,
+  "processLogs": [
+    {
+      "path": "test.log",
+      "bytes": 2116,
+      "sha256": "6603910fbfa8f4fb61b53702032eaddd426e471dd1d686e6f4809ff56e184f1d"
+    },
+    {
+      "path": "setup.log",
+      "bytes": 1830,
+      "sha256": "40fbc70ff30b41c7787f4c4d422507baa40221d60d3e725be2098264f5378052"
+    }
+  ],
+  "chargeCommitted": true
+}

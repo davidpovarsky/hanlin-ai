@@ -318,6 +318,7 @@ public enum HanlinEntryPointKind: String, Codable, CaseIterable, Hashable, Senda
     case backgroundTask
     case spotlight
     case shareExtension
+    case capture
 }
 
 public struct HanlinEntryPointDescriptor: Codable, Hashable, Sendable {
@@ -770,6 +771,7 @@ public struct HanlinAppDescriptor: Codable, Identifiable, Hashable, Sendable {
             case .backgroundTask: .backgroundTask
             case .spotlight: .spotlight
             case .shareExtension: .shareExtension
+            case .capture: .capture
             }
             if seen.insert(exposure).inserted {
                 result.append(exposure)

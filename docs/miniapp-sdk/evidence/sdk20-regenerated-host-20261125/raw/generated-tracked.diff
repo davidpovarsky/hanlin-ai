@@ -1,0 +1,65 @@
+diff --git a/docs/miniapp-sdk/extension-reachability.json b/docs/miniapp-sdk/extension-reachability.json
+index 05635661..19738e3d 100644
+--- a/docs/miniapp-sdk/extension-reachability.json
++++ b/docs/miniapp-sdk/extension-reachability.json
+@@ -1,10 +1,8 @@
+ {
+   "schemaVersion": 1,
+-  "sourceCommit": "a2c8a1b1be746461272ba77254603304567c309d",
++  "sourceCommit": "dff3b45c99a57bf8fe8ec721db3fa1fafce7134b",
+   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
+-  "uncommittedSourcePaths": [
+-    "AI_HLY.xcodeproj/project.pbxproj"
+-  ],
++  "uncommittedSourcePaths": [],
+   "status": "IN_PROGRESS_SOURCE_AUDIT",
+   "sdkAuthority": "source-inventory.json",
+   "sdkSources": [
+@@ -733,7 +731,7 @@
+       "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationEvent.swift",
+       "line": 6,
+       "anchor": "public struct HanlinNotificationEvent",
+-      "sha256": "982bbdff39e2baeb944ab476bc16d8f826f36ca38e9a3e6a75e6efaeaf3b318b"
++      "sha256": "867613ea9cf2785e6eff3caad96c620a8c50d16fd22d266eeda899b7ab784f69"
+     },
+     "notificationQueue": {
+       "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationInvocation.swift",
+@@ -853,7 +851,7 @@
+       "file": "HanlinMiniAppsApp/HanlinMiniAppsApp.swift",
+       "line": 12,
+       "anchor": "@main",
+-      "sha256": "579a27ec799ea414cd1ae58533748e79840167fca9d8b849e8a0b3d9d55118c2"
++      "sha256": "f1489c1f8c4ca1039d4ffc5698b43a5e672ec586fb5b9393dc69f246f11de4c1"
+     },
+     "miniAppsWidgetBundle": {
+       "file": "HanlinMiniAppsExtensions/Widgets/HanlinMiniAppsWidgets.swift",
+diff --git a/docs/miniapp-sdk/extension-reachability.md b/docs/miniapp-sdk/extension-reachability.md
+index 1b0b882f..6aba2c4f 100644
+--- a/docs/miniapp-sdk/extension-reachability.md
++++ b/docs/miniapp-sdk/extension-reachability.md
+@@ -2,7 +2,7 @@
+ 
+ Status: **IN_PROGRESS — source audit only**.
+ 
+-Base commit: `a2c8a1b1be746461272ba77254603304567c309d`. Exact current file hashes and line anchors are in [the JSON matrix](extension-reachability.json).
++Base commit: `dff3b45c99a57bf8fe8ec721db3fa1fafce7134b`. Exact current file hashes and line anchors are in [the JSON matrix](extension-reachability.json).
+ Runtime/API/version authority is [source-inventory.json](source-inventory.json); this matrix consumes it rather than maintaining a second SDK contract.
+ 
+ The share, translation, widget and notification ingress categories × two native app engines × five canonical Host runtimes form 40 cells. Live Activity, Host AppIntent, Shortcuts and foreground add 40 more. These 80 cells describe Host-runtime passthrough, not all original widget, control or presentation capabilities.
+diff --git a/docs/miniapp-sdk/source-inventory.json b/docs/miniapp-sdk/source-inventory.json
+index 59a73fc3..fe9bad64 100644
+--- a/docs/miniapp-sdk/source-inventory.json
++++ b/docs/miniapp-sdk/source-inventory.json
+@@ -1,10 +1,6 @@
+ {
+-  "sourceCommit": "a2c8a1b1be746461272ba77254603304567c309d",
+-  "uncommittedSourcePaths": [
+-    "Package.swift",
+-    "Scripts/Expo/package-lock.json",
+-    "Scripts/Expo/package.json"
+-  ],
++  "sourceCommit": "dff3b45c99a57bf8fe8ec721db3fa1fafce7134b",
++  "uncommittedSourcePaths": [],
+   "schemaVersion": 1,
+   "auditParser": {
+     "package": "@typescript/typescript6",

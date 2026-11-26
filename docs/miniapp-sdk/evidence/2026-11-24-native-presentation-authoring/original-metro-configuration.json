@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "status": "EXECUTED_PASS",
+  "tests": 1,
+  "recordedAtUTC": "2026-11-24T00:25:19.324930+00:00",
+  "purpose": "A real missing dependency inside original Metro config must be reported, without a silent transformer fallback. The fixture reuses original installed dependency files and only replaces its own copied config.",
+  "log": "original-metro-configuration.log",
+  "logSHA256": "dbc8c1aca467eaf40596e9184b92dba7794704de80a3be5f13e54ebb8d3206fe",
+  "implementationSHA256": "3fe29fdb290fe3275c5156e038d2f8a5ee5e125b71dcb69a0a85c3a768ca55c9",
+  "sdkManifestSHA256": "4d798f5cd5734a2d25d933a4d421724a14222067b87540026d44448710426f51"
+}

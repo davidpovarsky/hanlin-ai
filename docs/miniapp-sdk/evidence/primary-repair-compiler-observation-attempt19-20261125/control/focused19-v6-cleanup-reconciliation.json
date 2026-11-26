@@ -1,0 +1,69 @@
+{
+  "schema": 1,
+  "status": "EXECUTED_RECONCILIATION_PASS",
+  "observedAt": "2026-11-25T13:54:06.456526+00:00",
+  "source": "958cf666da7be83b9b63e46e3013e3344fb31585",
+  "priorTerminal": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v6/state.json",
+    "bytes": 6001,
+    "sha256": "4ddca9a8b8bc061dc32e288a392b8ea1e36171617d120342106a7fe0cf8bb5a4"
+  },
+  "priorChild": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v6/native-result/state.json",
+    "bytes": 14766,
+    "sha256": "68715beec45e143bbf7cc46615aae1704348e6dba213760c970f47ffc8cd36c5"
+  },
+  "originalChildCleanupErrors": [
+    "Command '['ps', '-axo', 'pid=,ppid=,state=,command=']' timed out after 10 seconds"
+  ],
+  "originalOuterCleanupErrors": [],
+  "originalOuterCleanup": {
+    "device": "E742FBCD-8FF0-4130-B143-7F8328637138",
+    "ownership": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v6/native-result/paired-prefix/created-simulator.txt",
+    "ownershipSHA256": "df333300ba32a39a07bcd88aed5fc6bb5f0b51f738c521f6a0949dc54456a37e",
+    "exitCode": 149,
+    "stdout": "",
+    "stderr": "An error was encountered processing the command (domain=com.apple.CoreSimulator.SimError, code=405):\nUnable to shutdown device in current state: Shutdown\n",
+    "observedState": "Shutdown",
+    "observedAt": "2026-11-25T13:38:46.994514+00:00"
+  },
+  "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138",
+  "ownership": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v6/native-result/paired-prefix/created-simulator.txt",
+    "bytes": 37,
+    "sha256": "df333300ba32a39a07bcd88aed5fc6bb5f0b51f738c521f6a0949dc54456a37e"
+  },
+  "observedState": "Shutdown",
+  "remainingOwnedProcessGroup": [],
+  "remainingOwnedControllers": [],
+  "remainingOwnedRunners": [],
+  "processGroupObservation": {
+    "method": "killpg-zero-then-exact-group-candidates",
+    "pgid": 93013,
+    "exists": false
+  },
+  "historicControllerObservation": {
+    "argv": [
+      "/bin/ps",
+      "-p",
+      "92982,93013",
+      "-o",
+      "pid=,state=,command="
+    ],
+    "exitCode": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  "runnerCandidateObservation": {
+    "argv": [
+      "/usr/bin/pgrep",
+      "-f",
+      "/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/"
+    ],
+    "exitCode": 1,
+    "stdout": "",
+    "stderr": ""
+  },
+  "runnerTargetObservation": null,
+  "doesNotRewritePriorFailure": true
+}

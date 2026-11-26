@@ -14,9 +14,31 @@ struct HanlinAtomicScriptStoreTests {
         defer { fixture.remove() }
         let clock = FixedClock()
         let store = try HanlinAtomicScriptStore(root: fixture.storeRoot, now: { clock.date })
+        let firstManifest = HanlinScriptingManifest(
+            name: "Lifecycle Expo", version: "1.0.0", entry: "expo/app/bundle.js",
+            hanlinAppID: "fixture.lifecycle", hanlinRuntime: "hanlin-expo")
+        let secondManifest = HanlinScriptingManifest(
+            name: "Lifecycle NativeScript", version: "2.0.0", entry: "nativescript/app/bundle.mjs",
+            hanlinAppID: "fixture.lifecycle", hanlinRuntime: "hanlin-nativescript")
+        let firstEntrypoint = HanlinPackageEntrypointDescriptor(
+            id: "app", kind: .app, sourcePath: "expo/app/bundle.js",
+            supportedContexts: [.mainApplication], runtimePolicyID: "foreground-app-v1",
+            runtimeProfile: .hanlinExpo, artifactDigest: fixture.first.manifest.cacheFingerprint,
+            compatibility: .supported)
+        let secondEntrypoint = HanlinPackageEntrypointDescriptor(
+            id: "app", kind: .app, sourcePath: "nativescript/app/bundle.mjs",
+            supportedContexts: [.mainApplication], runtimePolicyID: "foreground-app-v1",
+            runtimeProfile: .hanlinNativeScript, artifactDigest: fixture.second.manifest.cacheFingerprint,
+            compatibility: .supported)
+        let firstPlan = try fixture.plan(
+            version: "1.0.0", sourceDigest: fixture.first.manifest.packageContentDigest,
+            entrypoints: [firstEntrypoint], manifest: firstManifest)
+        let secondPlan = try fixture.plan(
+            version: "2.0.0", sourceDigest: fixture.second.manifest.packageContentDigest,
+            entrypoints: [secondEntrypoint], manifest: secondManifest)
 
         let installed = try await store.install(
-            plan: fixture.plan(version: "1.0.0", sourceDigest: fixture.first.manifest.packageContentDigest),
+            plan: firstPlan,
             artifactDirectory: fixture.first.url,
             artifactManifest: fixture.first.manifest
         )
@@ -24,25 +46,109 @@ struct HanlinAtomicScriptStoreTests {
         #expect(installed.installedPackageID == fixture.installedID)
 
         let updated = try await store.update(
-            plan: fixture.plan(version: "2.0.0", sourceDigest: fixture.second.manifest.packageContentDigest),
+            plan: secondPlan,
             artifactDirectory: fixture.second.url,
             artifactManifest: fixture.second.manifest
         )
         #expect(updated.activeGeneration == 2)
         #expect(updated.installedPackageID == installed.installedPackageID)
         #expect(try await store.activeArtifactURL(for: fixture.installedID).lastPathComponent == "2")
+        let updatedSnapshot = try #require(await store.snapshots().first)
+        #expect(updatedSnapshot.entrypoints == [secondEntrypoint])
+        #expect(updatedSnapshot.manifest == secondManifest)
 
         let rolledBack = try await store.rollback(fixture.installedID, to: 1)
         #expect(rolledBack.activeGeneration == 1)
         #expect(rolledBack.version.rawValue == "1.0.0")
+        let rolledBackSnapshot = try #require(await store.snapshots().first)
+        #expect(rolledBackSnapshot.entrypoints == [firstEntrypoint])
+        #expect(rolledBackSnapshot.manifest == firstManifest)
+        #expect(try String(contentsOf: await store.activeArtifactURL(for: fixture.installedID)
+            .appending(path: "main.js"), encoding: .utf8) == "export default 1")
         try await store.setEnabled(false, for: fixture.installedID)
         let restored = try await HanlinAtomicScriptStore(root: fixture.storeRoot).restore()
         #expect(restored.count == 1)
         #expect(restored[0].enabled == false)
         #expect(restored[0].availableGenerations == [1, 2])
+        #expect(restored[0].entrypoints == [firstEntrypoint])
+        #expect(restored[0].manifest == firstManifest)
 
         try await store.uninstall(fixture.installedID)
         #expect(try await store.snapshots().isEmpty)
+        let reinstalled = try await store.install(
+            plan: firstPlan, artifactDirectory: fixture.first.url,
+            artifactManifest: fixture.first.manifest)
+        #expect(reinstalled.installedPackageID == installed.installedPackageID)
+        #expect(reinstalled.activeGeneration == 1)
+        let reopened = try await HanlinAtomicScriptStore(root: fixture.storeRoot).restore()
+        #expect(reopened.count == 1)
+        #expect(reopened[0].enabled)
+        #expect(reopened[0].availableGenerations == [1])
+        #expect(reopened[0].entrypoints == [firstEntrypoint])
+        #expect(reopened[0].manifest == firstManifest)
+
+        func legacyMetadata(_ generation: UInt64) throws -> URL {
+            let url = fixture.storeRoot.appending(
+                path: "packages/\(fixture.installedID.rawValue)/generations/\(generation)/generation.json")
+            var value = try #require(JSONSerialization.jsonObject(with: Data(contentsOf: url)) as? [String: Any])
+            value.removeValue(forKey: "entrypoints")
+            value.removeValue(forKey: "manifest")
+            try JSONSerialization.data(withJSONObject: value, options: [.sortedKeys])
+                .write(to: url, options: .atomic)
+            return url
+        }
+
+        // An already installed old-format active generation gains its exact
+        // snapshot before update, even when a later write replaces the backup.
+        _ = try legacyMetadata(1)
+        let legacyStore = try HanlinAtomicScriptStore(root: fixture.storeRoot)
+        _ = try await legacyStore.update(
+            plan: secondPlan, artifactDirectory: fixture.second.url,
+            artifactManifest: fixture.second.manifest)
+        try await legacyStore.setEnabled(false, for: fixture.installedID)
+        let legacyColdStore = try HanlinAtomicScriptStore(root: fixture.storeRoot)
+        _ = try await legacyColdStore.rollback(fixture.installedID, to: 1)
+        let legacyRestored = try #require(await legacyColdStore.snapshots().first)
+        #expect(legacyRestored.entrypoints == [firstEntrypoint])
+        #expect(legacyRestored.manifest == firstManifest)
+        #expect(!legacyRestored.enabled)
+
+        // A fully pre-snapshot update can recover V1 from the exact registry
+        // backup, while preserving departing V2 metadata for a later redo.
+        let third = try await legacyColdStore.update(
+            plan: secondPlan, artifactDirectory: fixture.second.url,
+            artifactManifest: fixture.second.manifest)
+        #expect(third.activeGeneration == 3)
+        _ = try legacyMetadata(1)
+        _ = try legacyMetadata(3)
+        let backupStore = try HanlinAtomicScriptStore(root: fixture.storeRoot)
+        _ = try await backupStore.rollback(fixture.installedID, to: 1)
+        let recoveredBackup = try #require(await backupStore.snapshots().first)
+        #expect(recoveredBackup.entrypoints == [firstEntrypoint])
+        #expect(recoveredBackup.manifest == firstManifest)
+        try await backupStore.setEnabled(false, for: fixture.installedID)
+        _ = try await backupStore.rollback(fixture.installedID, to: 3)
+        let redone = try #require(await backupStore.snapshots().first)
+        #expect(redone.entrypoints == [secondEntrypoint])
+        #expect(redone.manifest == secondManifest)
+
+        // Truly lost inactive descriptors cannot be fabricated from the current
+        // generation. The recoverable error must precede every registry write.
+        try await backupStore.setEnabled(false, for: fixture.installedID)
+        let lostMetadata = try legacyMetadata(1)
+        let metadataBefore = try Data(contentsOf: lostMetadata)
+        let primary = fixture.storeRoot.appending(path: "registry/catalog.json")
+        let backup = fixture.storeRoot.appending(path: "registry/catalog.backup.json")
+        let primaryBefore = try Data(contentsOf: primary)
+        let backupBefore = try Data(contentsOf: backup)
+        let snapshotsBefore = try await backupStore.snapshots()
+        await #expect(throws: HanlinAtomicScriptStoreError.generationMetadataUnavailable(1)) {
+            try await backupStore.rollback(fixture.installedID, to: 1)
+        }
+        #expect(try await backupStore.snapshots() == snapshotsBefore)
+        #expect(try Data(contentsOf: primary) == primaryBefore)
+        #expect(try Data(contentsOf: backup) == backupBefore)
+        #expect(try Data(contentsOf: lostMetadata) == metadataBefore)
     }
 
     @Test(
@@ -796,16 +902,19 @@ private struct Fixture {
         version: String,
         sourceDigest: String,
         requestedCapabilities: [HanlinCapabilityRequest] = [],
-        grantedCapabilities: [HanlinCapabilityID] = []
+        grantedCapabilities: [HanlinCapabilityID] = [],
+        entrypoints: [HanlinPackageEntrypointDescriptor]? = nil,
+        manifest: HanlinScriptingManifest? = nil
     ) throws -> HanlinInstallPlan {
         HanlinInstallPlan(
             installedPackageID: installedID,
             packageID: packageID,
             version: try #require(HanlinPackageVersion(rawValue: version)),
             sourceDigest: sourceDigest,
-            entrypoints: [entrypoint],
+            entrypoints: entrypoints ?? [entrypoint],
             requestedCapabilities: requestedCapabilities,
-            grantedCapabilities: grantedCapabilities
+            grantedCapabilities: grantedCapabilities,
+            manifest: manifest
         )
     }
 

@@ -1,0 +1,79 @@
+{
+  "schema": 1,
+  "observedAt": "2026-11-25T08:28:32.055872+00:00",
+  "source": "cffe7f75436aa2e37ec5d82891937965c0407d2d",
+  "files": [
+    {
+      "path": "Scripts/Expo/package.json",
+      "size": 1759,
+      "sha256": "e2b50fae013276229c78619bbbe0b63d8c29b00fefde3afeccea98af117aa206",
+      "matches": [
+        {
+          "line": 28,
+          "text": "    \"react-native-worklets\": \"0.13.0\","
+        },
+        {
+          "line": 44,
+          "text": "    \"react-native-worklets\": \"0.13.0\","
+        }
+      ]
+    },
+    {
+      "path": "Scripts/Expo/dependency-lock.json",
+      "size": 5375,
+      "sha256": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65",
+      "matches": []
+    },
+    {
+      "path": "Packages/HanlinExpoNativeAPI/Package.swift",
+      "size": 7069,
+      "sha256": "1bf2b967d85c4759f94f39330b1b435148a9d3956ec6b8e645cec7dd65bec83d",
+      "matches": [
+        {
+          "line": 50,
+          "text": "                    \"-DWORKLETS_VERSION=\\\"0.13.1\\\"\","
+        }
+      ]
+    },
+    {
+      "path": "Package.swift",
+      "size": 88332,
+      "sha256": "c58ad5f37b35c38e9199b1ad5641a4b38523d13542c75e90a34f862877409bb1",
+      "matches": [
+        {
+          "line": 172,
+          "text": "            cxxSettings: [.unsafeFlags([\"-std=gnu++20\", \"-fobjc-arc\", \"-DFOLLY_NO_CONFIG\", \"-DFOLLY_MOBILE=1\", \"-DFOLLY_USE_LIBCPP=1\", \"-DREACT_NATIVE_PRODUCTION=1\", \"-DRN_DEBUG_STRING_CONVERTIBLE=0\", \"-DWORKLETS_VERSION=\\\"0.13.1\\\"\", \"-Wno-quoted-include-in-framework-header\", \"-Wno-non-modular-include-in-framework-module\", \"-I\\(Context.packageDirectory)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWorklets/include\", \"-I\\(Context.packageDirectory)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWorklets/Common/cpp\", \"-I\\(Context.packageDirectory)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWorklets/apple\", \"-I\\(Context.packageDirectory)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWorklets/generated\", \"-I\\(Context.packageDirectory)/Packages/HanlinExpoNativeAPI/Sources/HanlinExpoWorklets/generated/rnworklets\", \"-F\\(Context.packageDirectory)/Packages/HanlinExpoNativeAPI/../HanlinExpoRuntime/Artifacts/ModularFrameworks\", \"-I\\(Context.packageDirectory)/Packages/HanlinExpoNativeAPI/../HanlinExpoRuntime/Artifacts/ReactModularHeaders\", \"-I\\(Context.packageDirectory)/Packages/HanlinExpoNativeAPI/../HanlinExpoRuntime/Artifacts/ModularFrameworks/react.framework/Headers\", \"-I\\(Context.pa"
+        }
+      ]
+    },
+    {
+      "path": "Scripts/Expo/node_modules/react-native-worklets/package.json",
+      "size": 7265,
+      "sha256": "aa8f3e796568bedf9b72b8cac0b1935a2356a5cd5ba5bd7735e75e1bad7e9ead",
+      "matches": [
+        {
+          "line": 3,
+          "text": "  \"version\": \"0.13.0\","
+        }
+      ]
+    }
+  ],
+  "logs": [
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v3/evidence/paired-product/mini-build.log",
+      "size": 610446,
+      "sha256": "6fbddd6bba37068ad43bc9a10efd24a33238551ede201c2b0ea66b931a1b8aaa",
+      "matchesCount": 0,
+      "matches": []
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v3/evidence/paired-product/ai-build.log",
+      "size": 1695138,
+      "sha256": "d320ae28446beebda311385e56fa8b450796775d265a09b6d846de8db8080e24",
+      "matchesCount": 0,
+      "matches": []
+    }
+  ],
+  "nativeCompilation": "READ_ONLY_RETAINED_OUTPUT",
+  "newExecution": false
+}

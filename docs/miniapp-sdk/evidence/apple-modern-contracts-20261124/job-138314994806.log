@@ -1,0 +1,942 @@
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	﻿2026-11-24T08:28:04.2274670Z Current runner version: '2.338.2'
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:04.2325250Z ##[group]Runner Image Provisioner
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:04.2325980Z Hosted Compute Agent
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:04.2326430Z Version: 20261103.629
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:04.2326870Z Commit: 15dbd9ccb5dbf34fae002b6ed1a2670f52df37bc
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:04.2327600Z Build Date: 2026-11-03T17:26:59Z
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:04.2328210Z Worker ID: {4e43b345-c606-40d4-90f7-b50f9b3140f0}
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:04.2328780Z Region: westus
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:04.2331060Z Cloud: MacCloud
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:04.2331500Z ##[endgroup]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:04.2332690Z ##[group]Operating System
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:04.2333160Z macOS
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:04.2333550Z 27.0.1
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:04.2333900Z 26A434
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:04.2334260Z ##[endgroup]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:04.2334640Z ##[group]Runner Image
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:04.2335060Z Image: xcode-27-arm64
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:04.2335480Z Version: 20261104.0337.1
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:04.2336440Z Included Software: https://github.com/actions/runner-images/blob/xcode-27-arm64/20261104.0337/images/macos/xcode-27-arm64-Readme.md
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:04.2339760Z Image Release: https://github.com/actions/runner-images/releases/tag/xcode-27-arm64%2F20261104.0337
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:04.2340530Z ##[endgroup]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:04.2341440Z ##[group]GITHUB_TOKEN Permissions
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:04.2343540Z Actions: read
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:04.2343990Z Contents: read
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:04.2344390Z Metadata: read
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:04.2344790Z ##[endgroup]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:04.2346680Z Secret source: Actions
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:04.2347360Z Cache mode: write
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:04.2347960Z Prepare workflow directory
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:04.3287900Z Prepare all required actions
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:04.3378700Z Getting action download info
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:04.8162640Z Download action repository 'davidpovarsky/github-automation@main' (SHA:61b34ae6d31e94afb6ceb8a836742275c495b0e2)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:05.6593930Z Download action repository 'actions/checkout@v7.0.1' (SHA:3d3c42e5aac5ba805825da76410c181273ba90b1)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:05.8528940Z Download action repository 'actions/setup-node@v7.1.0' (SHA:949feb2413d6458794dcd2491c4babbbce0c15c1)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:06.1301390Z Download action repository 'actions/cache@v6.1.0' (SHA:55cc8345863c7cc4c66a329aec7e433d2d1c52a9)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:06.6538710Z Uses: davidpovarsky/hanlin-ai/.github/workflows/validate-scripting-runtime.yml@refs/heads/codex/hanlin-miniapps-sdk-completion-20261123 (25b14790e5c79b8ddd821984ed97d37e6af0bfa4)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:06.6554670Z ##[group] Inputs
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:06.6557910Z   runtime_job_foundation_only: false
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:06.6559980Z   force_clean_build: true
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:06.6567550Z   test_filter: HanlinScriptAnalyzerTests/(expoMainMustMatchTheInspectedForegroundEntrypoint|nativeScriptPreparedEntrypointIsAlwaysTheCanonicalBundle|nativeScriptSwiftUIContract|nativeScriptCoreContract|expoSwiftUIContract|expoMultiExposureMatrix|malformedPreparedEntrypointsFailWithStableDiagnostic|unavailableModernNativePluginsFailBeforeImport)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:06.6573650Z   prepare_miniapps_registration: false
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:06.6574520Z   signed_release_archives: false
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:06.6575380Z   signing_preflight_only: false
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:06.6576190Z   audit_release_resources: false
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:06.6576910Z   paired_product_acceptance: true
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:06.6577670Z   runtime_bundle_artifact_run_id: 42926628418
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:06.6578570Z   native_test_scope: baseline
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:06.6579340Z   paired_test_scope: miniapp_contracts
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:06.6580140Z ##[endgroup]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:06.6581120Z Complete job name: Verify MiniApp import contracts / Compile and test isolated Scripting runtime
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:06.8093760Z ##[group]Run davidpovarsky/github-automation/live-refresh@main
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:06.8095050Z with:
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:06.8095630Z   event: refresh
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:06.8096570Z   device_id: ***
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:06.8097190Z   token: ***
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:06.8108070Z   github_token: ***
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:06.8112320Z env:
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:06.8114730Z   PACKAGE_PATH: Packages/HanlinPlatform
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:06.8119690Z ##[endgroup]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:08.7940750Z ##[group]Run set -euo pipefail
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:08.7941410Z ^[[36;1mset -euo pipefail^[[0m
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:08.7941920Z ^[[36;1mselected_xcode="$(find /Applications -maxdepth 1 -type d -name 'Xcode_27*.app' -print \^[[0m
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:08.7942590Z ^[[36;1m  | grep -E '/Xcode_27([._][0-9]+)*\.app$' \^[[0m
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:08.7943120Z ^[[36;1m  | sort -V \^[[0m
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:08.7943450Z ^[[36;1m  | tail -1)"^[[0m
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:08.7943860Z ^[[36;1mtest -n "$selected_xcode"^[[0m
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:08.7944250Z ^[[36;1mexport DEVELOPER_DIR="$selected_xcode/Contents/Developer"^[[0m
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:08.7944810Z ^[[36;1mecho "DEVELOPER_DIR=$DEVELOPER_DIR" >> "$GITHUB_ENV"^[[0m
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:08.7945710Z ^[[36;1mxcode_build="$(xcodebuild -version | sed -n '2s/^Build version //p')"^[[0m
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:08.7946340Z ^[[36;1mecho "build=$xcode_build" >> "$GITHUB_OUTPUT"^[[0m
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:08.7947220Z ^[[36;1mxcodebuild -version^[[0m
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:08.7947900Z ^[[36;1mswift --version^[[0m
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:08.8051290Z shell: /bin/bash --noprofile --norc -e -o pipefail {0}
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:08.8051810Z env:
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:08.8052240Z   PACKAGE_PATH: Packages/HanlinPlatform
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:08.8052660Z ##[endgroup]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:14.8189580Z Xcode 27.2
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:14.8273790Z Build version 27B52
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:22.0010240Z Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:22.0015450Z Target: arm64-apple-macosx27.0.0
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:22.0138780Z swift-driver version: 1.168.6 
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:22.0878610Z ##[group]Run davidpovarsky/github-automation/live-refresh@main
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:22.0879100Z with:
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:22.0882000Z   event: refresh
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:22.0882470Z   device_id: ***
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:22.0882650Z   token: ***
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:22.0884800Z   github_token: ***
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:22.0885010Z env:
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:22.0885180Z   PACKAGE_PATH: Packages/HanlinPlatform
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:22.0885740Z   DEVELOPER_DIR: /Applications/Xcode_27.2.app/Contents/Developer
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:22.0886030Z ##[endgroup]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:23.6123200Z ##[group]Run actions/checkout@v7.0.1
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:23.6124300Z with:
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:23.6124890Z   clean: true
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:23.6125540Z   fetch-depth: 1
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:23.6126200Z   repository: davidpovarsky/hanlin-ai
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:23.6132570Z   token: ***
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:23.6133150Z   ssh-strict: true
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:23.6133740Z   ssh-user: git
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:23.6134320Z   persist-credentials: true
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:23.6135390Z   sparse-checkout-cone-mode: true
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:23.6136320Z   fetch-tags: false
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:23.6137120Z   show-progress: true
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:23.6137740Z   lfs: false
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:23.6138490Z   submodules: false
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:23.6139540Z   set-safe-directory: true
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:23.6140170Z   allow-unsafe-pr-checkout: false
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:23.6140840Z env:
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:23.6141690Z   PACKAGE_PATH: Packages/HanlinPlatform
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:23.6142780Z   DEVELOPER_DIR: /Applications/Xcode_27.2.app/Contents/Developer
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:23.6143900Z ##[endgroup]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:23.8654360Z Syncing repository: davidpovarsky/hanlin-ai
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:23.8657410Z ##[group]Getting Git version info
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:23.8658000Z Working directory is '/Users/runner/work/hanlin-ai/hanlin-ai'
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:23.8658750Z [command]/opt/homebrew/bin/git version
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:23.9268440Z git version 2.56.0
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:23.9287270Z ##[endgroup]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:23.9306850Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/fabd591a-493c-4e7a-946d-0187d3dfa1bd/.gitconfig'
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:23.9339140Z Temporarily overriding HOME='/Users/runner/work/_temp/fabd591a-493c-4e7a-946d-0187d3dfa1bd' before making global git config changes
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:23.9341160Z Adding repository directory to the temporary git global config as a safe directory
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:23.9342800Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/hanlin-ai/hanlin-ai
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:23.9600400Z Deleting the contents of '/Users/runner/work/hanlin-ai/hanlin-ai'
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:23.9601730Z ##[group]Determining repository object format
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:23.9602540Z ##[endgroup]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:23.9603220Z ##[group]Initializing the repository
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:23.9603940Z [command]/opt/homebrew/bin/git init /Users/runner/work/hanlin-ai/hanlin-ai
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:24.0025490Z hint: Using 'master' as the name for the initial branch. This default branch name
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:24.0026430Z hint: will change to "main" in Git 3.0. To configure the initial branch name
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:24.0027110Z hint: to use in all of your new repositories, which will suppress this warning,
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:24.0027510Z hint: call:
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:24.0027870Z hint:
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:24.0028270Z hint: 	git config --global init.defaultBranch <name>
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:24.0028650Z hint:
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:24.0029040Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:24.0029650Z hint: 'development'. The just-created branch can be renamed via this command:
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:24.0030090Z hint:
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:24.0030410Z hint: 	git branch -m <name>
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:24.0030770Z hint:
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:24.0031080Z hint: Disable this message with "git config set advice.defaultBranchName false"
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:24.0041730Z Initialized empty Git repository in /Users/runner/work/hanlin-ai/hanlin-ai/.git/
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:24.0054270Z [command]/opt/homebrew/bin/git remote add origin https://github.com/davidpovarsky/hanlin-ai
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:24.0243430Z ##[endgroup]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:24.0244560Z ##[group]Disabling automatic garbage collection
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:24.0245450Z [command]/opt/homebrew/bin/git config --local gc.auto 0
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:24.0337090Z ##[endgroup]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:24.0337970Z ##[group]Setting up auth
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:24.0339490Z Removing SSH command configuration
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:24.0343010Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:24.0447090Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:24.2374090Z Removing HTTP extra header
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:24.2380990Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:24.2523340Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:24.4739260Z Removing includeIf entries pointing to credentials config files
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:24.4758720Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:24.4849130Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:24.6634920Z [command]/opt/homebrew/bin/git config --file /Users/runner/work/_temp/git-credentials-c34ff93f-d2f5-4ac3-86bd-274c85df7900.config http.https://github.com/.extraheader AUTHORIZATION: basic ***
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:24.6822210Z [command]/opt/homebrew/bin/git config --local includeIf.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git.path /Users/runner/work/_temp/git-credentials-c34ff93f-d2f5-4ac3-86bd-274c85df7900.config
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:24.6997660Z [command]/opt/homebrew/bin/git config --local includeIf.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git/worktrees/*.path /Users/runner/work/_temp/git-credentials-c34ff93f-d2f5-4ac3-86bd-274c85df7900.config
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:24.7134630Z [command]/opt/homebrew/bin/git config --local includeIf.gitdir:/github/workspace/.git.path /github/runner_temp/git-credentials-c34ff93f-d2f5-4ac3-86bd-274c85df7900.config
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:24.7294440Z [command]/opt/homebrew/bin/git config --local includeIf.gitdir:/github/workspace/.git/worktrees/*.path /github/runner_temp/git-credentials-c34ff93f-d2f5-4ac3-86bd-274c85df7900.config
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:24.7409090Z ##[endgroup]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:24.7409550Z ##[group]Fetching the repository
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:24.7410700Z [command]/opt/homebrew/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +25b14790e5c79b8ddd821984ed97d37e6af0bfa4:refs/remotes/origin/codex/hanlin-miniapps-sdk-completion-20261123
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:29.4286240Z From https://github.com/davidpovarsky/hanlin-ai
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:29.4395680Z  * [new ref]         25b14790e5c79b8ddd821984ed97d37e6af0bfa4 -> origin/codex/hanlin-miniapps-sdk-completion-20261123
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:29.4751670Z [command]/opt/homebrew/bin/git branch --list --remote origin/codex/hanlin-miniapps-sdk-completion-20261123
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:29.4813890Z   origin/codex/hanlin-miniapps-sdk-completion-20261123
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:29.5080990Z [command]/opt/homebrew/bin/git rev-parse refs/remotes/origin/codex/hanlin-miniapps-sdk-completion-20261123
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:29.5097990Z 25b14790e5c79b8ddd821984ed97d37e6af0bfa4
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:29.5432770Z ##[endgroup]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:29.5511990Z ##[group]Determining the checkout info
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:29.5532990Z ##[endgroup]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:29.5543610Z [command]/opt/homebrew/bin/git sparse-checkout disable
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:29.5561810Z [command]/opt/homebrew/bin/git config --local --unset-all extensions.worktreeConfig
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:29.5586630Z ##[group]Checking out the ref
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:29.5592830Z [command]/opt/homebrew/bin/git checkout --progress --force -B codex/hanlin-miniapps-sdk-completion-20261123 refs/remotes/origin/codex/hanlin-miniapps-sdk-completion-20261123
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:30.6599400Z Updating files:  28% (2588/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:30.6836940Z Updating files:  29% (2611/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:30.7087450Z Updating files:  30% (2701/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:30.7236920Z Updating files:  31% (2791/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:30.7457100Z Updating files:  32% (2881/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:30.8104270Z Updating files:  33% (2971/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:30.8455470Z Updating files:  34% (3062/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:30.9023180Z Updating files:  35% (3152/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:30.9441550Z Updating files:  36% (3242/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:30.9858890Z Updating files:  37% (3332/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:31.0378030Z Updating files:  38% (3422/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:31.0943790Z Updating files:  39% (3512/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:31.1691650Z Updating files:  40% (3602/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:31.1999870Z Updating files:  41% (3692/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:31.2326150Z Updating files:  42% (3782/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:31.2657380Z Updating files:  43% (3872/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:31.3450040Z Updating files:  44% (3962/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:31.3788960Z Updating files:  45% (4052/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:31.4216750Z Updating files:  46% (4142/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:31.4554290Z Updating files:  47% (4232/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:31.5007430Z Updating files:  48% (4322/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:31.5515610Z Updating files:  49% (4412/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:31.5918850Z Updating files:  50% (4502/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:31.6020680Z Updating files:  51% (4592/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:31.6327470Z Updating files:  51% (4595/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:31.6633590Z Updating files:  52% (4682/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:31.6816520Z Updating files:  53% (4772/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:31.7146270Z Updating files:  54% (4862/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:31.7456730Z Updating files:  55% (4952/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:31.7795030Z Updating files:  56% (5042/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:31.8075590Z Updating files:  57% (5132/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:31.8400020Z Updating files:  58% (5222/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:31.8673750Z Updating files:  59% (5312/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:31.8860400Z Updating files:  60% (5402/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:31.9173410Z Updating files:  61% (5492/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:31.9478030Z Updating files:  62% (5582/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:31.9685290Z Updating files:  63% (5672/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:32.0383460Z Updating files:  64% (5762/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:32.0650380Z Updating files:  65% (5852/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:32.1045510Z Updating files:  66% (5942/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:32.1332070Z Updating files:  67% (6033/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:32.1619300Z Updating files:  68% (6123/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:32.1872730Z Updating files:  69% (6213/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:32.2288660Z Updating files:  70% (6303/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:32.2746600Z Updating files:  71% (6393/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:32.3382800Z Updating files:  72% (6483/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:32.3817420Z Updating files:  73% (6573/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:32.4326470Z Updating files:  74% (6663/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:32.4654410Z Updating files:  75% (6753/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:32.5331910Z Updating files:  76% (6843/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:32.5751830Z Updating files:  77% (6933/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:32.5854330Z Updating files:  78% (7023/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:32.6056550Z Updating files:  78% (7058/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:32.7071940Z Updating files:  79% (7113/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:32.8323630Z Updating files:  80% (7203/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:32.8726550Z Updating files:  81% (7293/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:32.8928120Z Updating files:  82% (7383/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:32.9237080Z Updating files:  83% (7473/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:32.9649810Z Updating files:  84% (7563/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:32.9985570Z Updating files:  85% (7653/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:33.0197100Z Updating files:  86% (7743/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:33.0445130Z Updating files:  87% (7833/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:33.0703160Z Updating files:  88% (7923/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:33.0970090Z Updating files:  89% (8013/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:33.1300180Z Updating files:  90% (8103/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:33.1622850Z Updating files:  91% (8193/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:33.2519430Z Updating files:  92% (8283/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:33.2794960Z Updating files:  93% (8373/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:33.3095350Z Updating files:  94% (8463/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:33.3527040Z Updating files:  95% (8553/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:33.4194810Z Updating files:  96% (8643/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:33.4641090Z Updating files:  97% (8733/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:33.4882780Z Updating files:  98% (8823/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:33.5268410Z Updating files:  99% (8913/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:33.5269070Z Updating files: 100% (9003/9003)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:33.5269650Z Updating files: 100% (9003/9003), done.
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:33.6241490Z Switched to a new branch 'codex/hanlin-miniapps-sdk-completion-20261123'
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:33.6327230Z branch 'codex/hanlin-miniapps-sdk-completion-20261123' set up to track 'origin/codex/hanlin-miniapps-sdk-completion-20261123'.
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:33.6623750Z ##[endgroup]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:33.6891160Z [command]/opt/homebrew/bin/git log -1 --format=%H
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:33.6992700Z 25b14790e5c79b8ddd821984ed97d37e6af0bfa4
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:33.7535350Z ##[group]Run davidpovarsky/github-automation/live-refresh@main
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:33.7536290Z with:
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:33.7536580Z   event: refresh
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:33.7537550Z   device_id: ***
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:33.7537960Z   token: ***
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:33.7540400Z   github_token: ***
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:33.7540670Z env:
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:33.7540980Z   PACKAGE_PATH: Packages/HanlinPlatform
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:33.7541420Z   DEVELOPER_DIR: /Applications/Xcode_27.2.app/Contents/Developer
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:33.7541750Z ##[endgroup]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:35.0855370Z ##[group]Run actions/setup-node@v7.1.0
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:35.0855920Z with:
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:35.0856240Z   node-version: 22.17.0
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:35.0905060Z   check-latest: false
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:35.0911330Z   token: ***
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:35.0912910Z   package-manager-cache: true
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:35.0914560Z env:
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:35.0914970Z   PACKAGE_PATH: Packages/HanlinPlatform
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:35.0915920Z   DEVELOPER_DIR: /Applications/Xcode_27.2.app/Contents/Developer
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:35.0916450Z ##[endgroup]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:35.4300210Z Attempting to download 22.17.0...
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:36.3711620Z Acquiring 22.17.0 - arm64 from https://github.com/actions/node-versions/releases/download/22.17.0-15866718879/node-22.17.0-darwin-arm64.tar.gz
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:37.8378050Z Extracting ...
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:37.8902590Z [command]/usr/bin/tar xz --strip 1 -C /Users/runner/work/_temp/88694e78-3273-4b4c-8397-82a95c20e148 -f /Users/runner/work/_temp/9832aaba-dfd3-4051-ae73-af706272d912
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:40.6045010Z Adding to the cache ...
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:45.6767110Z ##[group]Environment details
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:46.9408790Z node: v22.17.0
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:46.9509440Z npm: 10.9.2
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:46.9557960Z yarn: 1.22.22
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:46.9558930Z ##[endgroup]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:46.9824360Z ##[group]Run davidpovarsky/github-automation/live-refresh@main
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:46.9824830Z with:
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:46.9825150Z   event: refresh
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:46.9825580Z   device_id: ***
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:46.9825810Z   token: ***
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:46.9828780Z   github_token: ***
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:46.9829280Z env:
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:46.9829640Z   PACKAGE_PATH: Packages/HanlinPlatform
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:46.9830210Z   DEVELOPER_DIR: /Applications/Xcode_27.2.app/Contents/Developer
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:46.9830690Z ##[endgroup]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:48.1345480Z ##[group]Run set -euo pipefail
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:48.1345910Z ^[[36;1mset -euo pipefail^[[0m
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:48.1346140Z ^[[36;1msource_hash="$({^[[0m
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:48.1346520Z ^[[36;1m  find \^[[0m
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:48.1346880Z ^[[36;1m    Packages/HanlinPlatform/Sources/HanlinScriptingApplicationRuntime \^[[0m
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:48.1347470Z ^[[36;1m    Packages/HanlinPlatform/Sources/HanlinMiniAppCore \^[[0m
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:48.1347950Z ^[[36;1m    Packages/HanlinPlatform/Sources/HanlinScriptUI \^[[0m
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:48.1348500Z ^[[36;1m    Packages/HanlinPlatform/Sources/HanlinScriptExtensions \^[[0m
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:48.1348990Z ^[[36;1m    Packages/HanlinPlatform/Sources/HanlinPlatformContracts \^[[0m
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:48.1349450Z ^[[36;1m    -type f -print0^[[0m
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:48.1349780Z ^[[36;1m  printf '%s\0' Packages/HanlinPlatform/Package.swift^[[0m
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:48.1350300Z ^[[36;1m  if [ -f Packages/HanlinPlatform/Package.resolved ]; then^[[0m
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:48.1350900Z ^[[36;1m    printf '%s\0' Packages/HanlinPlatform/Package.resolved^[[0m
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:48.1351230Z ^[[36;1m  fi^[[0m
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:48.1351650Z ^[[36;1m} | sort -z | xargs -0 shasum -a 256 | shasum -a 256 | awk '{print $1}')"^[[0m
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:48.1352120Z ^[[36;1mecho "source-hash=$source_hash" >> "$GITHUB_OUTPUT"^[[0m
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:48.1478590Z shell: /bin/bash --noprofile --norc -e -o pipefail {0}
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:48.1478970Z env:
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:48.1479320Z   PACKAGE_PATH: Packages/HanlinPlatform
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:48.1479840Z   DEVELOPER_DIR: /Applications/Xcode_27.2.app/Contents/Developer
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:48.1480280Z ##[endgroup]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:48.5723290Z ##[group]Run davidpovarsky/github-automation/live-refresh@main
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:48.5723670Z with:
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:48.5723850Z   event: refresh
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:48.5724120Z   device_id: ***
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:48.5724350Z   token: ***
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:48.5726380Z   github_token: ***
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:48.5726580Z env:
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:48.5726770Z   PACKAGE_PATH: Packages/HanlinPlatform
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:48.5727060Z   DEVELOPER_DIR: /Applications/Xcode_27.2.app/Contents/Developer
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:48.5727360Z ##[endgroup]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:49.6048430Z ##[group]Run davidpovarsky/github-automation/live-refresh@main
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:49.6048850Z with:
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:49.6049050Z   event: refresh
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:49.6049320Z   device_id: ***
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:49.6049500Z   token: ***
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:49.6051520Z   github_token: ***
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:49.6051670Z env:
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:49.6051840Z   PACKAGE_PATH: Packages/HanlinPlatform
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:49.6052120Z   DEVELOPER_DIR: /Applications/Xcode_27.2.app/Contents/Developer
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:49.6052410Z ##[endgroup]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:50.6810910Z ##[group]Run davidpovarsky/github-automation/live-refresh@main
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:50.6811340Z with:
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:50.6811500Z   event: refresh
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:50.6812290Z   device_id: ***
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:50.6812520Z   token: ***
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:50.6814640Z   github_token: ***
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:50.6814820Z env:
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:50.6814980Z   PACKAGE_PATH: Packages/HanlinPlatform
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:50.6815330Z   DEVELOPER_DIR: /Applications/Xcode_27.2.app/Contents/Developer
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:50.6815660Z ##[endgroup]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:51.9308310Z ##[group]Run swift package --package-path "$PACKAGE_PATH" resolve
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:51.9308960Z ^[[36;1mswift package --package-path "$PACKAGE_PATH" resolve^[[0m
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:51.9368880Z shell: /bin/bash --noprofile --norc -e -o pipefail {0}
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:51.9370200Z env:
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:51.9370870Z   PACKAGE_PATH: Packages/HanlinPlatform
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:51.9371820Z   DEVELOPER_DIR: /Applications/Xcode_27.2.app/Contents/Developer
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:28:51.9372770Z ##[endgroup]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:03.8140740Z Fetching https://github.com/davidpovarsky/swift-ai-sdk.git
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:04.6615930Z [1/13453] Fetching swift-ai-sdk
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:05.3611800Z Fetched https://github.com/davidpovarsky/swift-ai-sdk.git (1.55s)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:06.2078500Z Fetching https://github.com/SwiftyJSON/SwiftyJSON.git
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:06.2085170Z Fetching https://github.com/apple/swift-argument-parser
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:06.7092540Z [1/6320] Fetching swiftyjson
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:06.8307010Z [6321/25762] Fetching swiftyjson, swift-argument-parser
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:07.3792520Z Fetched https://github.com/SwiftyJSON/SwiftyJSON.git (1.17s)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:07.3796960Z Fetched https://github.com/apple/swift-argument-parser (1.17s)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:07.3923600Z Fetching https://github.com/weichsel/ZIPFoundation.git
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:07.8966380Z [1/7709] Fetching zipfoundation
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:08.3561020Z Fetched https://github.com/weichsel/ZIPFoundation.git (0.96s)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:08.3565110Z Computing version for https://github.com/apple/swift-argument-parser
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:09.0699360Z Computed https://github.com/apple/swift-argument-parser at 1.8.2 (2.89s)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:09.0701050Z Computing version for https://github.com/weichsel/ZIPFoundation.git
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:10.3832510Z warning: 'zipfoundation': /Package@swift-5.9.swift:23:61: warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:10.3931770Z 21 |     name: "ZIPFoundation",
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:10.4015500Z 22 |     platforms: [
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:10.4022020Z 23 |         .macOS(.v10_13), .iOS(.v12), .tvOS(.v12), .watchOS(.v4), .visionOS(.v1)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:10.4043600Z    |                                                             `- warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:10.4047380Z 24 |     ],
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:10.4050780Z 25 |     products: [
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:10.4051480Z 
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:10.4054450Z [#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:10.4098630Z Computed https://github.com/weichsel/ZIPFoundation.git at 0.9.19 (1.34s)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:10.4137710Z Computing version for https://github.com/SwiftyJSON/SwiftyJSON.git
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:16.6861240Z Computed https://github.com/SwiftyJSON/SwiftyJSON.git at 5.0.1 (6.28s)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:16.9594130Z Creating working copy for https://github.com/davidpovarsky/swift-ai-sdk.git
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:18.3604110Z Working copy of https://github.com/davidpovarsky/swift-ai-sdk.git resolved at 07431abccbfb151ca2dab67bca6cf86fcb2bd3b8
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:18.4504440Z Creating working copy for https://github.com/apple/swift-argument-parser
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:18.8830820Z Working copy of https://github.com/apple/swift-argument-parser resolved at 1.8.2
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:19.0467010Z Creating working copy for https://github.com/SwiftyJSON/SwiftyJSON.git
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:19.2391200Z Working copy of https://github.com/SwiftyJSON/SwiftyJSON.git resolved at 5.0.1
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:19.2955740Z Creating working copy for https://github.com/weichsel/ZIPFoundation.git
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:19.6174040Z Working copy of https://github.com/weichsel/ZIPFoundation.git resolved at 0.9.19
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:20.6373360Z warning: 'zipfoundation': /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/.build/checkouts/ZIPFoundation/Package@swift-5.9.swift:23:61: warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:20.6448120Z 21 |     name: "ZIPFoundation",
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:20.6550600Z 22 |     platforms: [
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:20.6655310Z 23 |         .macOS(.v10_13), .iOS(.v12), .tvOS(.v12), .watchOS(.v4), .visionOS(.v1)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:20.6762250Z    |                                                             `- warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:20.6863680Z 24 |     ],
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:20.6968020Z 25 |     products: [
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:20.7047150Z 
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:20.7058660Z [#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:21.7207330Z ##[group]Run davidpovarsky/github-automation/live-refresh@main
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:21.7208010Z with:
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:21.7208260Z   event: refresh
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:21.7211280Z   device_id: ***
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:21.7211900Z   token: ***
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:21.7226210Z   github_token: ***
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:21.7226400Z env:
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:21.7226760Z   PACKAGE_PATH: Packages/HanlinPlatform
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:21.7227230Z   DEVELOPER_DIR: /Applications/Xcode_27.2.app/Contents/Developer
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:21.7227660Z ##[endgroup]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:23.5707050Z ##[group]Run davidpovarsky/github-automation/live-refresh@main
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:23.5709210Z with:
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:23.5709780Z   event: refresh
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:23.5710280Z   device_id: ***
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:23.5710760Z   token: ***
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:23.5714460Z   github_token: ***
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:23.5715070Z env:
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:23.5715690Z   PACKAGE_PATH: Packages/HanlinPlatform
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:23.5716940Z   DEVELOPER_DIR: /Applications/Xcode_27.2.app/Contents/Developer
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:23.5717300Z ##[endgroup]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:24.7010320Z ##[group]Run set -euo pipefail
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:24.7011240Z ^[[36;1mset -euo pipefail^[[0m
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:24.7011980Z ^[[36;1mtest -n "$TEST_FILTER"^[[0m
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:24.7012760Z ^[[36;1mswift test --package-path "$PACKAGE_PATH" --filter "$TEST_FILTER"^[[0m
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:24.7615830Z shell: /bin/bash --noprofile --norc -e -o pipefail {0}
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:24.7616810Z env:
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:24.7617730Z   PACKAGE_PATH: Packages/HanlinPlatform
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:24.7618960Z   DEVELOPER_DIR: /Applications/Xcode_27.2.app/Contents/Developer
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:24.7623050Z   TEST_FILTER: HanlinScriptAnalyzerTests/(expoMainMustMatchTheInspectedForegroundEntrypoint|nativeScriptPreparedEntrypointIsAlwaysTheCanonicalBundle|nativeScriptSwiftUIContract|nativeScriptCoreContract|expoSwiftUIContract|expoMultiExposureMatrix|malformedPreparedEntrypointsFailWithStableDiagnostic|unavailableModernNativePluginsFailBeforeImport)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:24.7627360Z ##[endgroup]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:38.0260190Z warning: 'zipfoundation': /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/.build/checkouts/ZIPFoundation/Package@swift-5.9.swift:23:61: warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:38.0364000Z 21 |     name: "ZIPFoundation",
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:38.0402830Z 22 |     platforms: [
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:38.0410950Z 23 |         .macOS(.v10_13), .iOS(.v12), .tvOS(.v12), .watchOS(.v4), .visionOS(.v1)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:38.0417420Z    |                                                             `- warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:38.0418580Z 24 |     ],
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:38.0420180Z 25 |     products: [
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:38.0422550Z 
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:29:38.0426780Z [#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:17.6620750Z Building for debugging...
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:17.6621800Z [Computing dependencies]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:18.1541430Z [Provisioning 2 / 76]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:20.1658300Z [Pre-planning 1 / 1931]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:20.2630830Z [Planning 1 / 1931]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:20.3879930Z [Planning 446 / 1931]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:20.4617080Z [Planning 746 / 1931]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:20.5940620Z [Planning 1121 / 1931]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:20.6555100Z [Planning 1444 / 1931]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:20.7873930Z [Planning 1807 / 1931]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:21.3092820Z [Planning deferred tasks]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:21.5422130Z [Constructing 1 / 4256]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:21.5526240Z [Constructing 3023 / 4256]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:21.6338170Z [Starting]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:21.9751470Z [61 / 948] HanlinScriptingSDK
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:22.0663350Z [176 / 948] HanlinScriptContracts
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:22.1592830Z [288 / 948] AISDKZodAdapter
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:22.2918410Z [335 / 948] HanlinScriptServicesTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:22.3767310Z [410 / 948]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:22.5131970Z [427 / 948]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:22.6170860Z [437 / 948] HanlinPlatform_HanlinScriptingSDK
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:22.7167870Z [453 / 948]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:34.5320620Z [463 / 948]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:36.4557090Z [467 / 954] HanlinExtensionContracts
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:37.3090510Z [469 / 1013]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:37.3100270Z [470 / 1034]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:37.3953850Z [471 / 1038] EventSourceParser
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:37.5178640Z [473 / 1074]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:37.7065820Z [476 / 1074]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:37.8803540Z [482 / 1082]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:37.9780070Z [485 / 1082]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:38.0801640Z [487 / 1082]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:38.2349220Z [493 / 1082]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:38.3417970Z [496 / 1082]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:38.4444200Z [499 / 1082]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:38.5819990Z [502 / 1082]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:38.6835580Z [504 / 1082]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:38.7908760Z [508 / 1082]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:38.9412040Z [510 / 1082]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:39.0418870Z [515 / 1082]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:39.2059780Z [519 / 1082]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:39.3172330Z [523 / 1082]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:39.4533190Z [527 / 1082]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:40.0945940Z [530 / 1082]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:40.2400570Z [533 / 1082]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:40.3544570Z [537 / 1082]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:40.4462900Z [540 / 1082]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:40.6275270Z [543 / 1082]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:40.7411080Z [547 / 1082]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:40.8517690Z [549 / 1082]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:40.9879870Z [553 / 1082]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:41.0802070Z [555 / 1082]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:41.2454000Z [557 / 1082]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:41.4095330Z [559 / 1082]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:41.5583340Z [561 / 1082]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:41.7149760Z [562 / 1082]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:41.8160190Z [565 / 1082]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:41.9191330Z [567 / 1082]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:42.0606080Z [569 / 1082]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:42.3217020Z [570 / 1082]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:42.4151990Z [571 / 1082]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:42.8159590Z [573 / 1082]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:42.9874620Z [576 / 1082] SwiftyJSON
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:43.2680400Z [577 / 1082] EventSourceParser
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:43.3764720Z [580 / 1082] AISDKProvider
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:43.4799460Z [592 / 1082] HanlinExtensionContracts
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:43.6522780Z [593 / 1082] EventSourceParser
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:45.1838720Z [605 / 1082] ZIPFoundation-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:45.7221550Z [607 / 1082] AISDKProvider
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:51.0736740Z [619 / 1082] SwiftyJSON
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:51.3171140Z [621 / 1082] SwiftyJSON-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:52.8313610Z [622 / 1082] SwiftyJSON
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:56.9237710Z [624 / 1082] SwiftyJSON-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:57.4213920Z [626 / 1082] HanlinScriptWidgetOriginal
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:57.7200090Z [630 / 1082] EventSourceParser
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:58.1060240Z [632 / 1082] AISDKProvider
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:30:59.8250050Z [633 / 1082] EventSourceParser
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:01.7715690Z [635 / 1082] HanlinPlatformContracts
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:02.4581590Z [636 / 1082] AISDKZodAdapter
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:03.7504500Z [637 / 1082] AISDKProvider-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:03.8906240Z [638 / 1082]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:04.1012830Z [640 / 1082] SwiftyJSON
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:04.3255430Z [643 / 1082] HanlinPlatformContracts
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:09.4339380Z [646 / 1083]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:09.6754540Z [649 / 1148]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:09.8295470Z [650 / 1148]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:10.0067340Z [651 / 1148]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:10.1122690Z [653 / 1148]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:10.3086700Z [657 / 1148]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:10.4260660Z [659 / 1148]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:10.5405190Z [661 / 1148]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:10.7028580Z [663 / 1148]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:10.8633930Z [666 / 1148]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:10.9627520Z [668 / 1148]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:11.0859010Z [671 / 1148]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:11.2466050Z [673 / 1148]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:11.3817280Z [674 / 1148]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:11.5359930Z [676 / 1148]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:11.6630920Z [678 / 1148]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:11.8171180Z [680 / 1148]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:12.0371920Z [683 / 1148]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:12.1838380Z [684 / 1148]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:12.4349000Z [687 / 1148]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:12.6633590Z [689 / 1148]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:12.8371480Z [692 / 1148]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:12.9425830Z [693 / 1148]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:13.1278980Z [696 / 1148]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:13.2249990Z [697 / 1148]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:13.3525830Z [699 / 1148]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:13.4649120Z [700 / 1148]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:13.5837900Z [702 / 1148] AISDKProvider
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:13.8086110Z [705 / 1148]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:13.9145910Z [705 / 1148] AISDKProvider
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:14.3730410Z [707 / 1149] SwiftyJSON-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:14.5059240Z [709 / 1149]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:14.6598490Z [709 / 1149] SwiftyJSON-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:14.8695560Z [712 / 1156]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:15.1489700Z [716 / 1157] HanlinScriptContracts
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:15.6656560Z [717 / 1157] HanlinScriptWidgetOriginal
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:16.0373710Z [717 / 1157] HanlinScriptContracts
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:19.2206260Z [721 / 1191] HanlinScriptContracts
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:19.4708740Z [733 / 1191]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:19.6102930Z [734 / 1191]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:19.8054940Z [735 / 1191]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:19.9282910Z [736 / 1191]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:20.1069170Z [738 / 1191]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:20.2097760Z [739 / 1191]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:20.5074020Z [741 / 1191]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:20.6567160Z [742 / 1191]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:20.8668470Z [744 / 1191]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:21.1729040Z [745 / 1191]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:21.3086750Z [746 / 1191]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:22.2911470Z [749 / 1191]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:22.3887510Z [750 / 1191]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:22.5415740Z [751 / 1191]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:22.8100060Z [752 / 1191]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:23.0507310Z [753 / 1191]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:23.2573690Z [754 / 1191]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:23.3634500Z [755 / 1191]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:23.5979850Z [756 / 1191]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:23.8022820Z [757 / 1191]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:23.9259400Z [758 / 1191]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:25.5226020Z [759 / 1191]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:25.8103680Z [761 / 1191]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:26.0357480Z [761 / 1191] HanlinScriptWidgetOriginal
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:26.7600470Z [763 / 1191] HanlinScriptWidgetOriginal
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:36.5577720Z /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeMaps.swift:75:28: ^[[1;33mwarning: ^[[1;39m'CLGeocoder' was deprecated in macOS 26.0: Use MapKit^[[0;0m [#^[]8;;https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration^[\DeprecatedDeclaration^[]8;;^[\]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:36.5707910Z  ^[[0;36m73 |^[[0;0m                 return
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:36.5851350Z  ^[[0;36m74 |^[[0;0m             }
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:36.5967840Z  ^[[0;36m75 |^[[0;0m             let geocoder = CLGeocoder()
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:36.6073270Z     ^[[0;36m|^[[0;0m                            `- ^[[1;33mwarning: ^[[1;39m'CLGeocoder' was deprecated in macOS 26.0: Use MapKit^[[0;0m [#^[]8;;https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration^[\DeprecatedDeclaration^[]8;;^[\]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:36.6177440Z  ^[[0;36m76 |^[[0;0m             let cancellation = ScriptWidgetQueryCancellation(session: context.state.executionSession)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:36.6285570Z  ^[[0;36m77 |^[[0;0m             guard cancellation.install({ geocoder.cancelGeocode() }) else { throw ScriptWidgetSystemServiceError.unavailable }
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:36.6394550Z 
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:36.6498010Z /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeMaps.swift:77:51: ^[[1;33mwarning: ^[[1;39m'cancelGeocode()' was deprecated in macOS 26.0: Use MKGeocodingRequest^[[0;0m [#^[]8;;https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration^[\DeprecatedDeclaration^[]8;;^[\]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:36.6601940Z  ^[[0;36m75 |^[[0;0m             let geocoder = CLGeocoder()
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:36.6706120Z  ^[[0;36m76 |^[[0;0m             let cancellation = ScriptWidgetQueryCancellation(session: context.state.executionSession)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:36.6811370Z  ^[[0;36m77 |^[[0;0m             guard cancellation.install({ geocoder.cancelGeocode() }) else { throw ScriptWidgetSystemServiceError.unavailable }
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:36.6916960Z     ^[[0;36m|^[[0;0m                                                   `- ^[[1;33mwarning: ^[[1;39m'cancelGeocode()' was deprecated in macOS 26.0: Use MKGeocodingRequest^[[0;0m [#^[]8;;https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration^[\DeprecatedDeclaration^[]8;;^[\]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:36.7024780Z  ^[[0;36m78 |^[[0;0m             geocoder.reverseGeocodeLocation(CLLocation(latitude: value.coordinate.latitude, longitude: value.coordinate.longitude)) { places, error in
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:36.7129000Z  ^[[0;36m79 |^[[0;0m                 cancellation.complete()
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:36.7232130Z 
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:36.7346100Z /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeMaps.swift:78:22: ^[[1;33mwarning: ^[[1;39m'reverseGeocodeLocation(_:completionHandler:)' was deprecated in macOS 26.0: Use MKReverseGeocodingRequest^[[0;0m [#^[]8;;https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration^[\DeprecatedDeclaration^[]8;;^[\]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:36.7352870Z  ^[[0;36m76 |^[[0;0m             let cancellation = ScriptWidgetQueryCancellation(session: context.state.executionSession)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:36.7577440Z  ^[[0;36m77 |^[[0;0m             guard cancellation.install({ geocoder.cancelGeocode() }) else { throw ScriptWidgetSystemServiceError.unavailable }
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:36.7579200Z  ^[[0;36m78 |^[[0;0m             geocoder.reverseGeocodeLocation(CLLocation(latitude: value.coordinate.latitude, longitude: value.coordinate.longitude)) { places, error in
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:36.7701050Z     ^[[0;36m|^[[0;0m                      `- ^[[1;33mwarning: ^[[1;39m'reverseGeocodeLocation(_:completionHandler:)' was deprecated in macOS 26.0: Use MKReverseGeocodingRequest^[[0;0m [#^[]8;;https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration^[\DeprecatedDeclaration^[]8;;^[\]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:36.7805870Z  ^[[0;36m79 |^[[0;0m                 cancellation.complete()
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:36.7900080Z  ^[[0;36m80 |^[[0;0m                 guard error == nil else { finish(.failure(ScriptWidgetSystemServiceError.unavailable)); return }
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:36.7900900Z 
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:36.7901820Z [#DeprecatedDeclaration]: <https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration>
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:36.7903260Z [764 / 1191] HanlinMiniAppCore
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:36.7904250Z [765 / 1191] HanlinMiniAppCore
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:37.0285480Z [766 / 1191] HanlinMiniAppCore
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:37.2551570Z [771 / 1191] HanlinMiniAppCore
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:38.8351290Z [771 / 1191] HanlinWidgetCompiler
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:39.1344060Z [772 / 1191] HanlinMiniAppCore
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:40.0437800Z [773 / 1191] HanlinScriptStore
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:40.1718360Z [776 / 1191] HanlinScriptWidgetOriginal
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:41.4361220Z [777 / 1192]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:42.0047910Z [782 / 1193] HanlinScriptContracts
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:42.1392490Z [785 / 1193] HanlinPlatformContracts-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:42.2230940Z [788 / 1196] HanlinScriptingSDK
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:42.5328450Z [791 / 1229]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:42.6751740Z [794 / 1229] HanlinScriptingSDK
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:42.8037060Z [800 / 1229]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:42.9469150Z [803 / 1229]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:43.0571350Z [806 / 1229]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:43.1719840Z [807 / 1229]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:43.3159580Z [810 / 1229]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:43.4457800Z [814 / 1229]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:43.5553370Z [815 / 1229]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:43.6608600Z [816 / 1229]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:43.7866810Z [817 / 1229]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:44.0111490Z [820 / 1229]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:44.2140060Z [822 / 1229]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:44.3737830Z [826 / 1230]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:44.5794550Z [828 / 1230]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:45.5578230Z [831 / 1232] HanlinScriptRuntime
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:46.0854350Z [833 / 1240] HanlinScriptServices
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:46.1956500Z [835 / 1242] HanlinScriptRuntime
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:46.4209590Z [836 / 1242] HanlinScriptStore
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:46.8927930Z [857 / 1242] HanlinWidgetCompiler
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:47.3567890Z [859 / 1242] HanlinScriptStore
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:48.0105030Z [865 / 1242] HanlinWidgetCompiler
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:48.1818460Z [866 / 1242] HanlinScriptStoreTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:48.3258660Z [867 / 1242] HanlinScriptServicesTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:48.8110270Z [869 / 1242] HanlinWidgetCompiler
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:49.0523290Z [870 / 1242] HanlinScriptRuntimeTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:49.1580780Z [879 / 1244] HanlinPlatformContractsTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:50.0058080Z [881 / 1244] HanlinScriptRuntime
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:50.6162680Z [885 / 1254] AISDKZodAdapter
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:50.9409150Z [886 / 1254] AISDKZodAdapter
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:51.1048700Z [888 / 1254] AISDKZodAdapter
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:51.5462530Z [890 / 1254] AISDKZodAdapter
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:51.9099150Z [895 / 1254] HanlinPlatformContractsTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:52.2417010Z [897 / 1254] HanlinPlatformContractsTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:53.9204290Z [899 / 1254] HanlinPlatformContractsTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:54.0856880Z [904 / 1254] AISDKZodAdapter
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:54.3727430Z [904 / 1254] AISDKProviderUtils
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:54.6874480Z [905 / 1255]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:55.0054410Z [907 / 1256]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:55.3836710Z [909 / 1260] HanlinScriptDeviceServices
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:55.6385280Z [910 / 1260] HanlinScriptDeviceServices
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:55.9236200Z [911 / 1260] HanlinPlatformContractsTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:56.2292550Z [917 / 1260] HanlinScriptDeviceServices
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:56.4242810Z [918 / 1264] HanlinScriptDeviceServicesTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:56.7293270Z [919 / 1264] HanlinScriptDeviceServicesTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:56.8806890Z [920 / 1264] HanlinScriptDeviceServices
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:57.5806110Z [923 / 1264] HanlinScriptCompiler
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:58.4388100Z [931 / 1264] HanlinScriptDeviceServicesTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:58.5508340Z [934 / 1264] HanlinScriptingSDK
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:58.6910630Z [941 / 1265] HanlinScriptingSDK-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:58.7905280Z [946 / 1265] HanlinScriptContractsTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:58.8945830Z [949 / 1265] HanlinScriptServicesTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:59.0738120Z [950 / 1265] HanlinExtensionContracts-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:31:59.8378500Z [954 / 1266] HanlinScriptingSDKTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:00.1726750Z [957 / 1272] HanlinScriptingSDKTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:00.5057480Z [970 / 1272] HanlinScriptContractsTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:00.7429970Z [972 / 1272] HanlinScriptContractsTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:01.1975930Z [972 / 1272] HanlinScriptingSDKTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:01.7519530Z [975 / 1273] HanlinScriptingSDKTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:01.8705360Z [977 / 1277] HanlinScriptServicesTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:02.3748910Z [978 / 1277] HanlinScriptServicesTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:02.5950510Z [979 / 1277] HanlinScriptServicesTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:04.2885640Z [981 / 1277] HanlinPlatformContractsTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:04.6134620Z [987 / 1277] HanlinScriptServicesTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:05.0577940Z [989 / 1277] HanlinScriptServicesTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:05.2117110Z [992 / 1277] HanlinScriptWidgetOriginal
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:05.3181090Z [994 / 1277] HanlinScriptCompiler
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:05.7459740Z [1000 / 1279] AISDKProviderUtils
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:06.0778800Z [1000 / 1279] HanlinScriptServicesTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:06.2581140Z [1005 / 1279]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:06.5188730Z [1011 / 1282] HanlinScriptRuntimeTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:07.1967560Z [1014 / 1287] HanlinScriptRuntimeTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:07.3347420Z [1026 / 1287] AISDKProviderUtils
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:07.9545990Z [1027 / 1287] HanlinScriptRuntimeTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:09.0125810Z [1029 / 1287] HanlinScriptRuntimeTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:09.6258500Z [1029 / 1287] OpenAIProvider
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:09.7508560Z [1032 / 1288] OpenAIProvider
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:11.1688520Z [1032 / 1288]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:11.8675420Z [1035 / 1292] OpenAIProvider
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:14.8461120Z [1036 / 1292] OpenAIProvider
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:20.4711290Z [1037 / 1292] OpenAIProvider
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:20.5762240Z [1042 / 1292] OpenAIProvider
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:20.7229010Z [1047 / 1292] AISDKZodAdapter
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:21.4411600Z [1049 / 1293] OpenAICompatibleProvider
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:21.6365150Z [1051 / 1297] OpenAICompatibleProvider
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:22.3161940Z [1052 / 1297] OpenAICompatibleProvider
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:23.2467490Z [1053 / 1297] OpenAICompatibleProvider
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:24.8986530Z [1055 / 1297] OpenAICompatibleProvider
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:25.0212270Z [1060 / 1297]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:25.1171060Z [1064 / 1297] HanlinScriptStore-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:26.5447610Z [1066 / 1298] HanlinScriptStoreTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:26.6647120Z [1071 / 1302] HanlinScriptStoreTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:28.7064700Z [1073 / 1302] HanlinScriptStoreTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:29.4662010Z [1074 / 1302] HanlinScriptStoreTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:30.2560480Z [1080 / 1303] OpenAIProvider
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:30.3515300Z [1082 / 1303]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:30.6218040Z [1084 / 1303] HanlinPlatformContractsTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:30.7457180Z [1084 / 1303] HanlinMiniAppCore-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:31.2220410Z [1090 / 1304] HanlinScriptStore-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:31.4236810Z [1093 / 1308] HanlinScriptDeviceServicesTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:32.0460620Z [1094 / 1312] HanlinScriptDeviceServicesTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:32.2836640Z [1096 / 1312] HanlinScriptDeviceServicesTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:32.5990950Z [1107 / 1312] HanlinScriptDeviceServicesTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:33.9026150Z [1109 / 1312] HanlinMiniAppCoreTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:35.1848260Z [1110 / 1312] HanlinScriptDeviceServicesTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:35.7521780Z [1112 / 1312] HanlinScriptDeviceServicesTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:36.3539420Z [1112 / 1312]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:37.1230290Z [1115 / 1316] GatewayProvider
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:37.5484060Z [1116 / 1320] GoogleProvider
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:37.7919050Z [1117 / 1320] AnthropicProvider
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:38.4838390Z [1117 / 1324] AnthropicProvider
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:38.7280820Z [1119 / 1328] AnthropicProvider
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:39.3078380Z [1120 / 1328] GoogleProvider
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:39.9748130Z [1126 / 1328] HanlinScriptStoreTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:40.8718840Z [1127 / 1332] GoogleProvider
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:41.1023900Z [1134 / 1332] GatewayProvider
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:41.2076920Z [1140 / 1332] HanlinScriptStoreTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:41.7247090Z [1148 / 1332] AISDKJSONSchema
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:42.6717640Z [1150 / 1332] AISDKJSONSchema
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:42.8422900Z [1156 / 1332] GatewayProvider
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:45.0984860Z [1157 / 1332] AnthropicProvider
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:45.6292390Z [1158 / 1332] GoogleProvider
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:48.0883460Z [1161 / 1332] GoogleProvider
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:48.4904410Z [1162 / 1332] AnthropicProvider-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:48.6764790Z [1163 / 1332] SwiftAISDK
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:48.8771520Z [1164 / 1332] SwiftAISDK
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:48.9910780Z [1169 / 1333] HanlinExtensionContracts-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:49.0930860Z [1171 / 1333] HanlinScriptStoreTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:49.2266380Z [1173 / 1333]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:49.3426580Z [1177 / 1334] HanlinScriptCompilerTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:50.6797310Z [1177 / 1334] SwiftAISDK
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:51.5947700Z [1181 / 1345] SwiftAISDK
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:53.4627500Z [1182 / 1349] HanlinScriptCompilerTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:53.8764050Z [1183 / 1349] SwiftAISDK
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:54.2250650Z [1185 / 1349] SwiftAISDK
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:56.7500590Z [1192 / 1349] HanlinScriptCompilerTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:58.1823170Z [1196 / 1349] SwiftAISDK-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:32:58.7636330Z [1197 / 1349] SwiftAISDK-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:00.1568830Z [1200 / 1349] SwiftAISDK
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:02.2339870Z [1201 / 1349] SwiftAISDK
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:03.3845880Z [1202 / 1349] SwiftAISDK
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:05.9603230Z [1203 / 1349] HanlinScriptCompilerTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:06.2422190Z [1204 / 1349] HanlinScriptCompilerTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:08.0189320Z [1208 / 1349] HanlinScriptCompilerTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:08.5798850Z [1210 / 1349] HanlinScriptCompilerTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:08.6838210Z [1213 / 1349] HanlinScriptDeviceServicesTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:08.8808180Z [1214 / 1349]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:09.0883350Z [1215 / 1349]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:09.9343180Z [1217 / 1350]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:10.2181350Z [1219 / 1350] OpenAICompatibleProvider
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:10.3489150Z [1220 / 1350] OpenAIProvider
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:10.4498020Z [1221 / 1350] GatewayProvider
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:10.6820810Z [1223 / 1350] AISDKProviderUtils-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:10.9449260Z [1226 / 1354] SwiftAISDK
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:11.4255320Z [1228 / 1354] HanlinChatCore
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:12.1349260Z [1229 / 1354] HanlinChatCore
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:12.2499510Z [1232 / 1354] HanlinChatCore
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:12.3626200Z [1236 / 1354] HanlinScriptCompilerTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:13.7923670Z [1237 / 1354] HanlinChatCore
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:13.8867200Z [1238 / 1354] SwiftAISDK
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:14.1012190Z [1242 / 1355]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:14.7262680Z [1244 / 1355] HanlinChatCore
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:14.8279380Z [1246 / 1355] HanlinChatCore
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:15.0943340Z [1250 / 1356] HanlinChatCoreTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:15.6482690Z [1251 / 1356] HanlinChatCoreTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:15.9512730Z [1254 / 1360] HanlinChatCoreTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:17.5374290Z [1254 / 1365] HanlinChatCoreTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:18.0982990Z [1256 / 1365] HanlinChatCoreTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:19.1770930Z [1258 / 1365] HanlinChatCoreTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:20.5635910Z [1268 / 1365] HanlinChatCoreTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:29.2638240Z [1269 / 1365] HanlinScriptingApplicationRuntime
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:29.4607890Z [1270 / 1365] HanlinScriptExtensions
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:31.1898410Z [1271 / 1365] HanlinScriptingApplicationRuntime
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:31.4636290Z [1274 / 1365] HanlinScriptUI
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:33.3959190Z [1276 / 1366]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:34.0406040Z [1278 / 1370] HanlinScriptingApplicationRuntime
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:38.7007240Z [1278 / 1370] HanlinChatCoreTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:39.6231520Z [1280 / 1370] HanlinScriptingApplicationRuntime
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:39.7791750Z [1286 / 1370] HanlinScriptingApplicationRuntime
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:43.2901420Z [1289 / 1371]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:43.3927420Z [1291 / 1371]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:44.2235730Z [1293 / 1376] HanlinLegacyWidgetStoreFixture
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:44.6465460Z [1293 / 1376] HanlinChatCoreTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:45.3706170Z [1296 / 1376] HanlinScriptExtensions
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:46.9628780Z /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/Animation/ClockHandRotationEffect.swift:31:24: ^[[1;33mwarning: ^[[1;39mstatic property 'effectType' is not concurrency-safe because non-'Sendable' type '(any Decodable.Type)?' may have shared mutable state^[[0;0m [#^[]8;;https://docs.swift.org/compiler/documentation/diagnostics/mutable-global-variable^[\MutableGlobalVariable^[]8;;^[\]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:46.9735140Z  ^[[0;36m29 |^[[0;0m     /// True in the widget extension, where WidgetKit draws the elements.
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:46.9838120Z  ^[[0;36m30 |^[[0;0m     static let isWidgetExtension = Bundle.main.bundleURL.pathExtension == "appex"
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:46.9944780Z  ^[[0;36m31 |^[[0;0m     private static let effectType: (any Decodable.Type)? = {
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:47.0056540Z     ^[[0;36m|^[[0;0m                        |- ^[[1;33mwarning: ^[[1;39mstatic property 'effectType' is not concurrency-safe because non-'Sendable' type '(any Decodable.Type)?' may have shared mutable state^[[0;0m [#^[]8;;https://docs.swift.org/compiler/documentation/diagnostics/mutable-global-variable^[\MutableGlobalVariable^[]8;;^[\]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:47.0161680Z     ^[[0;36m|^[[0;0m                        |- ^[[1;39mnote: ^[[1;39madd '@MainActor' to make static property 'effectType' part of global actor 'MainActor'^[[0;0m
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:47.0167140Z     ^[[0;36m|^[[0;0m                        `- ^[[1;39mnote: ^[[1;39mdisable concurrency-safety checks if accesses are protected by an external synchronization mechanism^[[0;0m
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:47.0269000Z  ^[[0;36m32 |^[[0;0m         guard isWidgetExtension else { return nil }
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:47.0393970Z  ^[[0;36m33 |^[[0;0m         guard let type = _typeByName("9WidgetKit24_ClockHandRotationEffectV") as? any Decodable.Type else {
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:47.0496490Z 
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:47.0612520Z [#MutableGlobalVariable]: <https://docs.swift.org/compiler/documentation/diagnostics/mutable-global-variable>
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:47.0716660Z [1297 / 1379] HanlinLegacyWidgetStoreFixture
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:47.4423320Z [1298 / 1379] HanlinScriptExtensions
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:52.5177790Z [1310 / 1379] HanlinScriptExtensions-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:53.1556610Z /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/Animation/ClockHandRotationEffect.swift:31:24: ^[[1;33mwarning: ^[[1;39mstatic property 'effectType' is not concurrency-safe because non-'Sendable' type '(any Decodable.Type)?' may have shared mutable state^[[0;0m [#^[]8;;https://docs.swift.org/compiler/documentation/diagnostics/mutable-global-variable^[\MutableGlobalVariable^[]8;;^[\]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:53.1662000Z  ^[[0;36m29 |^[[0;0m     /// True in the widget extension, where WidgetKit draws the elements.
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:53.1764490Z  ^[[0;36m30 |^[[0;0m     static let isWidgetExtension = Bundle.main.bundleURL.pathExtension == "appex"
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:53.1867970Z  ^[[0;36m31 |^[[0;0m     private static let effectType: (any Decodable.Type)? = {
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:53.1973710Z     ^[[0;36m|^[[0;0m                        |- ^[[1;33mwarning: ^[[1;39mstatic property 'effectType' is not concurrency-safe because non-'Sendable' type '(any Decodable.Type)?' may have shared mutable state^[[0;0m [#^[]8;;https://docs.swift.org/compiler/documentation/diagnostics/mutable-global-variable^[\MutableGlobalVariable^[]8;;^[\]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:53.2080790Z     ^[[0;36m|^[[0;0m                        |- ^[[1;39mnote: ^[[1;39madd '@MainActor' to make static property 'effectType' part of global actor 'MainActor'^[[0;0m
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:53.2185800Z     ^[[0;36m|^[[0;0m                        `- ^[[1;39mnote: ^[[1;39mdisable concurrency-safety checks if accesses are protected by an external synchronization mechanism^[[0;0m
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:53.2292280Z  ^[[0;36m32 |^[[0;0m         guard isWidgetExtension else { return nil }
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:53.2394310Z  ^[[0;36m33 |^[[0;0m         guard let type = _typeByName("9WidgetKit24_ClockHandRotationEffectV") as? any Decodable.Type else {
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:53.2495480Z 
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:53.2597160Z [#MutableGlobalVariable]: <https://docs.swift.org/compiler/documentation/diagnostics/mutable-global-variable>
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:53.2699980Z [1311 / 1379] HanlinScriptExtensions-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:53.7740170Z [1312 / 1379] HanlinScriptExtensionsTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:54.0061840Z [1314 / 1379] HanlinScriptExtensionsTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:54.1238350Z [1317 / 1379] HanlinScriptUITests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:54.2278110Z [1319 / 1379]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:54.3762310Z [1322 / 1380] HanlinScriptUITests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:54.4599140Z [1325 / 1380]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:56.0373160Z [1328 / 1381] HanlinScriptUITests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:56.7128670Z [1333 / 1389] HanlinScriptingApplicationRuntimeTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:58.3706200Z [1344 / 1389] HanlinScriptingApplicationRuntimeTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:58.4975850Z [1346 / 1389] HanlinScriptingApplicationRuntimeTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:33:58.6922510Z [1347 / 1389] HanlinScriptingApplicationRuntimeTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:00.4482310Z [1349 / 1389] HanlinScriptUITests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:01.6472960Z [1350 / 1389] HanlinLegacyWidgetStoreFixture
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:02.8179650Z [1352 / 1389]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:02.8182920Z /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionStore.swift:226:16: ^[[1;33mwarning: ^[[1;39mvalue 'commit' was defined but never used; consider replacing with boolean test^[[0;0m [#^[]8;;https://docs.swift.org/compiler/documentation/diagnostics/no-usage^[\NoUsage^[]8;;^[\]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:02.8320140Z  ^[[0;36m224 |^[[0;0m         var summary = "Storage consistency verified."
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:02.8447620Z  ^[[0;36m225 |^[[0;0m 
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:02.8609430Z  ^[[0;36m226 |^[[0;0m         if let commit {
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:02.8738530Z      ^[[0;36m|^[[0;0m                `- ^[[1;33mwarning: ^[[1;39mvalue 'commit' was defined but never used; consider replacing with boolean test^[[0;0m [#^[]8;;https://docs.swift.org/compiler/documentation/diagnostics/no-usage^[\NoUsage^[]8;;^[\]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:02.8854850Z  ^[[0;36m227 |^[[0;0m             if let actual = actualRevPrefix, let expected = commitSnapPrefix, actual != expected {
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:02.8957890Z  ^[[0;36m228 |^[[0;0m                 failingStage = "checkedRevision"
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:02.9066540Z 
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:02.9168880Z [#NoUsage]: <https://docs.swift.org/compiler/documentation/diagnostics/no-usage>
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:02.9478130Z [1353 / 1389] HanlinScriptExtensions
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:03.1936130Z [1354 / 1389] HanlinScriptingApplicationRuntime-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:03.4542900Z [1355 / 1389] HanlinScriptingApplicationRuntime-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:03.5626040Z [1359 / 1389] HanlinScriptExtensions-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:03.9801160Z [1359 / 1389]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:04.1527240Z [1360 / 1390] HanlinScriptUITests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:04.2678540Z [1364 / 1390] HanlinScriptExtensionsTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:04.3840110Z [1369 / 1390] HanlinScriptExtensionsTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:04.8465850Z [1370 / 1390] HanlinScriptUITests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:05.1886250Z [1371 / 1390]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:06.8358430Z [1373 / 1390] HanlinScriptExtensionsTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:07.0417230Z [1377 / 1397]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:07.2636580Z [1378 / 1397]
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:08.4299950Z [1381 / 1397] HanlinScriptExtensionsTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:08.6682140Z [1381 / 1397] HanlinScriptingApplicationRuntimeTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:11.0528560Z [1383 / 1397] HanlinScriptExtensionsTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:11.3852410Z [1385 / 1397] HanlinScriptExtensionsTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:11.5452240Z [1389 / 1397] HanlinScriptExtensionsTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:11.6642270Z [1389 / 1397] HanlinScriptingApplicationRuntimeTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:21.0831660Z [1391 / 1397] HanlinScriptExtensionsTests-product/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift:1150:25: ^[[1;33mwarning: ^[[1;39m'#require(_:_:)' is redundant because 'NSBitmapImageRep(cgImage: image).representation(using: .png, properties: [:])' never equals 'nil' (from macro 'require')^[[0;0m
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:21.0935860Z ^[[0;36m1148 |^[[0;0m     let image = try #require(renderer.cgImage)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:21.1039160Z ^[[0;36m1149 |^[[0;0m     #expect(image.width == 360 && image.height == 320)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:21.1143630Z ^[[0;36m1150 |^[[0;0m     return try #require(^[[4;39mNSBitmapImageRep(cgImage: image).representation(using: .png, properties: [:])^[[0;0m)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:21.1252370Z      ^[[0;36m|^[[0;0m                         `- ^[[1;33mwarning: ^[[1;39m'#require(_:_:)' is redundant because 'NSBitmapImageRep(cgImage: image).representation(using: .png, properties: [:])' never equals 'nil' (from macro 'require')^[[0;0m
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:21.1427160Z ^[[0;36m1151 |^[[0;0m }
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:21.1433260Z ^[[0;36m1152 |^[[0;0m #endif
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:21.1535570Z 
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:22.9405500Z [1393 / 1397] HanlinScriptExtensionsTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:23.1301130Z [1394 / 1397] HanlinScriptExtensionsTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:23.3844130Z [1395 / 1397] HanlinScriptExtensionsTests-product
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:24.1299960Z Build complete! (248.42 sec)
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:31.0175970Z ◇ Test run started.
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:31.0184190Z ↳ Testing Library Version: 2403
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:31.0185190Z ↳ Target Platform: arm64e-apple-macos14.0
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:31.0186140Z ◇ Suite "Static Scripting analyzer" started.
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:31.0187200Z ◇ Test "Expo import evaluates foreground app and multi-exposure support fail-closed" started.
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:31.0188590Z ◇ Test "Validates the embedded Expo SwiftUI plugin contract" started.
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:31.0191800Z ◇ Test "Malformed and duplicate prepared entrypoints are visible import failures" started.
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:31.0195780Z ◇ Test "Prepared NativeScript entry metadata uses the canonical bundle across sessions" started.
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:31.0197350Z ◇ Test "Validates the embedded NativeScript SwiftUI plugin contract without changing ordinary Scripting" started.
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:31.0198350Z ◇ Test "Unavailable native plugins fail before Expo and NativeScript import" started.
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:31.0199600Z ◇ Test "Validates declared @nativescript/core dependency compatibility" started.
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:31.0200560Z ◇ Test "Expo import main matches the manifest entry and cannot redirect launch elsewhere" started.
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:31.0201780Z ✔ Test "Expo import evaluates foreground app and multi-exposure support fail-closed" passed after 0.056 seconds.
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:31.0202850Z ✔ Test "Validates the embedded Expo SwiftUI plugin contract" passed after 0.056 seconds.
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:31.0206220Z ✔ Test "Malformed and duplicate prepared entrypoints are visible import failures" passed after 0.056 seconds.
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:31.0207660Z ✔ Test "Validates the embedded NativeScript SwiftUI plugin contract without changing ordinary Scripting" passed after 0.056 seconds.
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:31.0209020Z ✔ Test "Validates declared @nativescript/core dependency compatibility" passed after 0.056 seconds.
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:31.0210240Z ✔ Test "Unavailable native plugins fail before Expo and NativeScript import" passed after 0.056 seconds.
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:31.0211440Z ✔ Test "Prepared NativeScript entry metadata uses the canonical bundle across sessions" passed after 0.058 seconds.
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:31.0212560Z ✔ Test "Expo import main matches the manifest entry and cannot redirect launch elsewhere" passed after 0.079 seconds.
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:31.0214510Z ✔ Suite "Static Scripting analyzer" passed after 0.079 seconds.
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:31.0215170Z ✔ Test run with 8 tests in 1 suite passed after 0.079 seconds.
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:31.0828520Z Post job cleanup.
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:31.9254690Z Post job cleanup.
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:32.1512290Z [command]/opt/homebrew/bin/git version
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:32.2213320Z git version 2.56.0
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:32.2243620Z Copying '/Users/runner/.gitconfig' to '/Users/runner/work/_temp/4e2c81d8-83f6-46f3-945c-289b36870538/.gitconfig'
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:32.2253100Z Temporarily overriding HOME='/Users/runner/work/_temp/4e2c81d8-83f6-46f3-945c-289b36870538' before making global git config changes
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:32.2254010Z Adding repository directory to the temporary git global config as a safe directory
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:32.2260080Z [command]/opt/homebrew/bin/git config --global --add safe.directory /Users/runner/work/hanlin-ai/hanlin-ai
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:32.2449760Z Removing SSH command configuration
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:32.2455910Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp core\.sshCommand
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:32.2557390Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:32.4806940Z Removing HTTP extra header
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:32.4814180Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:32.4969730Z [command]/opt/homebrew/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:32.7091140Z Removing includeIf entries pointing to credentials config files
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:32.7194670Z [command]/opt/homebrew/bin/git config --local --name-only --get-regexp ^includeIf\.gitdir:
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:32.7296870Z includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git.path
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:32.7397770Z includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git/worktrees/*.path
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:32.7499560Z includeif.gitdir:/github/workspace/.git.path
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:32.7600090Z includeif.gitdir:/github/workspace/.git/worktrees/*.path
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:32.7678690Z [command]/opt/homebrew/bin/git config --local --get-all includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git.path
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:32.7682740Z /Users/runner/work/_temp/git-credentials-c34ff93f-d2f5-4ac3-86bd-274c85df7900.config
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:32.7687760Z [command]/opt/homebrew/bin/git config --local --unset includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git.path \/Users\/runner\/work\/_temp\/git\-credentials\-c34ff93f\-d2f5\-4ac3\-86bd\-274c85df7900\.config
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:32.7694640Z [command]/opt/homebrew/bin/git config --local --get-all includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git/worktrees/*.path
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:32.7695690Z /Users/runner/work/_temp/git-credentials-c34ff93f-d2f5-4ac3-86bd-274c85df7900.config
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:32.7700710Z [command]/opt/homebrew/bin/git config --local --unset includeif.gitdir:/Users/runner/work/hanlin-ai/hanlin-ai/.git/worktrees/*.path \/Users\/runner\/work\/_temp\/git\-credentials\-c34ff93f\-d2f5\-4ac3\-86bd\-274c85df7900\.config
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:32.7705250Z [command]/opt/homebrew/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git.path
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:32.7804470Z /github/runner_temp/git-credentials-c34ff93f-d2f5-4ac3-86bd-274c85df7900.config
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:32.7822520Z [command]/opt/homebrew/bin/git config --local --unset includeif.gitdir:/github/workspace/.git.path \/github\/runner_temp\/git\-credentials\-c34ff93f\-d2f5\-4ac3\-86bd\-274c85df7900\.config
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:32.7997130Z [command]/opt/homebrew/bin/git config --local --get-all includeif.gitdir:/github/workspace/.git/worktrees/*.path
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:32.8089420Z /github/runner_temp/git-credentials-c34ff93f-d2f5-4ac3-86bd-274c85df7900.config
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:32.8110640Z [command]/opt/homebrew/bin/git config --local --unset includeif.gitdir:/github/workspace/.git/worktrees/*.path \/github\/runner_temp\/git\-credentials\-c34ff93f\-d2f5\-4ac3\-86bd\-274c85df7900\.config
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:32.8254690Z [command]/opt/homebrew/bin/git submodule foreach --recursive git config --local --show-origin --name-only --get-regexp remote.origin.url
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:33.1336110Z Removing credentials config '/Users/runner/work/_temp/git-credentials-c34ff93f-d2f5-4ac3-86bd-274c85df7900.config'
+Verify MiniApp import contracts / Compile and test isolated Scripting runtime	UNKNOWN STEP	2026-11-24T08:34:33.1858100Z Cleaning up orphan processes

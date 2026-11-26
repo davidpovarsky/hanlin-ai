@@ -1,0 +1,49 @@
+[
+  {
+    "argv": [
+      "/usr/local/bin/node",
+      "Scripts/Audit/audit-miniapp-sdk.mjs",
+      "--write"
+    ],
+    "startedAtUTC": "2026-11-24T12:57:02.533387+00:00",
+    "seconds": 0.6480188108980656,
+    "exit": 0,
+    "stdout": "Wrote source inventory: 93 sources, 176 local public exports; E2E not inferred.\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/usr/local/bin/node",
+      "Scripts/Audit/audit-miniapp-sdk.mjs",
+      "--check"
+    ],
+    "startedAtUTC": "2026-11-24T12:57:03.181620+00:00",
+    "seconds": 0.5138103179633617,
+    "exit": 0,
+    "stdout": "PASS: SDK source inventory matches 93 sources and 176 local public exports.\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "python3",
+      "Scripts/Audit/audit_miniapp_reachability.py"
+    ],
+    "startedAtUTC": "2026-11-24T12:57:03.696113+00:00",
+    "seconds": 2.477815307676792,
+    "exit": 0,
+    "stdout": "Wrote 80 canonical Host-runtime reachability cells plus separate original-library surface records; no physical/E2E pass inferred.\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "python3",
+      "Scripts/Audit/audit_miniapp_reachability.py",
+      "--check"
+    ],
+    "startedAtUTC": "2026-11-24T12:57:06.174184+00:00",
+    "seconds": 1.4357664277777076,
+    "exit": 0,
+    "stdout": "PASS: 80 unique source-backed reachability cells; no E2E pass inferred.\n",
+    "stderr": ""
+  }
+]

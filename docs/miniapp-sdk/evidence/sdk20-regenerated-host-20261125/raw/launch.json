@@ -1,0 +1,11 @@
+{
+  "schema": 1,
+  "script": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/run-original-preparation.py",
+  "bytes": 4814,
+  "sha256": "c36656a6d5a64f240c16a651dd9da61ae30ae8c74e9c9d37a56db8611c6de401",
+  "pid": 2105044,
+  "launchedAt": "2026-11-25T21:13:58.303852+00:00",
+  "state": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/state.json",
+  "log": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/preparation.log",
+  "commands": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/commands.jsonl"
+}

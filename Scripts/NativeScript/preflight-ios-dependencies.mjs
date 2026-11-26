@@ -10,8 +10,8 @@ const manifest = JSON.parse(await readFile(resolve(artifactsRoot, 'dependency-cl
 const dependencyLock = JSON.parse(await readFile(resolve(scriptRoot, 'dependency-lock.json'), 'utf8'));
 const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
 
-if (manifest.schemaVersion !== 2 || manifest.coreVersion !== '9.1.0' || manifest.iosRuntimeVersion !== '9.1.0') {
-  throw new Error('NativeScript dependency closure is not consistently pinned to 9.1.0');
+if (manifest.schemaVersion !== 2 || manifest.coreVersion !== dependencyLock.nativeScript.coreVersion || manifest.iosRuntimeVersion !== dependencyLock.nativeScript.iosRuntimeVersion) {
+  throw new Error('NativeScript dependency closure does not match the exact original Core/runtime build inputs');
 }
 if (manifest.swiftUIPlugin?.version !== dependencyLock.swiftUI.version
     || manifest.swiftUIPlugin?.integrity !== dependencyLock.swiftUI.integrity

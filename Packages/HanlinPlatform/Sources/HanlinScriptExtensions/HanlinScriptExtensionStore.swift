@@ -51,8 +51,6 @@ private final class HanlinWidgetDiagnosticBuffer: @unchecked Sendable {
 
 public struct HanlinScriptExtensionStore: Sendable {
     public static let appGroupIdentifier = HanlinExtensionHostConfiguration.hanlinAppGroupIdentifier
-    public static let maximumSnapshotBytes = 4 * 1_024 * 1_024
-    public static let maximumArtifactBytes = 3 * 1_024 * 1_024
     private static let logger = Logger(subsystem: "com.hanlin.ai", category: "WidgetStorage")
 
     public enum Recovery: String, Sendable {
@@ -84,6 +82,7 @@ public struct HanlinScriptExtensionStore: Sendable {
     }
 
     public let root: URL
+    private var persistsDiagnostics = true
 
     public init(root: URL) {
         self.root = Self.canonicalManagedRoot(for: root)
@@ -95,7 +94,11 @@ public struct HanlinScriptExtensionStore: Sendable {
     }
 
     public init(hostConfiguration: HanlinExtensionHostConfiguration) throws {
-        try self.init(appGroupIdentifier: hostConfiguration.requireAppGroupIdentifier())
+        guard let container = FileManager.default.containerURL(
+            forSecurityApplicationGroupIdentifier: try hostConfiguration.requireAppGroupIdentifier()
+        ) else { throw HanlinScriptExtensionStoreError.appGroupUnavailable }
+        let product = try hostConfiguration.storageContainer(in: container)
+        self.init(root: product.appending(path: "ScriptingExtensions", directoryHint: .isDirectory))
     }
 
     public init(appGroupIdentifier: String) throws {
@@ -148,6 +151,7 @@ public struct HanlinScriptExtensionStore: Sendable {
 
     public func recordDurableQueryDiagnostic(_ diagnostic: HanlinWidgetStorageDiagnostic) {
         Self.recordDiagnostic(diagnostic)
+        guard persistsDiagnostics else { return }
         do {
             let dir = root.appending(path: "diagnostics", directoryHint: .isDirectory)
             try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
@@ -159,6 +163,7 @@ public struct HanlinScriptExtensionStore: Sendable {
     }
 
     public func recordDurableConsistencyReport(_ report: HanlinStorageConsistencyReport) {
+        guard persistsDiagnostics else { return }
         do {
             let dir = root.appending(path: "diagnostics", directoryHint: .isDirectory)
             try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
@@ -312,6 +317,48 @@ public struct HanlinScriptExtensionStore: Sendable {
         try withLock { try loadUnlocked() }
     }
 
+
+    /// Read the last immutable committed publication without creating a shared
+    /// lock, repairing pending writes, materializing resources or saving a
+    /// diagnostic. A keyboard may read this container without Full Access.
+    /// Recovery remains the responsibility of the containing app.
+    public func loadReadOnly() throws -> HanlinScriptExtensionSnapshot? {
+        var reader = self
+        reader.persistsDiagnostics = false
+        return try reader.readCommittedSnapshotWithoutMutation()
+    }
+
+    private func readCommittedSnapshotWithoutMutation() throws -> HanlinScriptExtensionSnapshot? {
+        if let commit = try optionalDecode(Commit.self, at: commitURL) {
+            guard commit.version == 1 else { throw HanlinScriptExtensionStoreError.invalidCommit }
+            let snapshot = try decodeEnvelope(checkedRevision(commit.snapshotHash),
+                relativePath: "Revisions/committed.json")
+            guard try optionalDecode(Commit.self, at: commitURL) == commit else {
+                throw HanlinScriptExtensionStoreError.storageBusy
+            }
+            // The commit points at immutable bytes. A pending shadow or an old
+            // binary's v1 shadow must never overwrite this reader's native data.
+            return snapshot
+        }
+        if let pending = try optionalDecode(Pending.self, at: pendingURL) {
+            // First publication has not committed. Expose only the preceding
+            // verified shadow, if there was one; never admit its candidate.
+            guard let previous = pending.previousShadowHash else { return nil }
+            return try decodeEnvelope(checkedRevision(previous), relativePath: "Revisions/previous.json")
+        }
+        let snapshot: HanlinScriptExtensionSnapshot?
+        if FileManager.default.fileExists(atPath: snapshotV2URL.path) {
+            snapshot = try loadFile(at: snapshotV2URL)
+        } else {
+            snapshot = try loadFile(at: snapshotV1URL)
+        }
+        guard try optionalDecode(Commit.self, at: commitURL) == nil,
+              try optionalData(at: pendingURL) == nil else {
+            throw HanlinScriptExtensionStoreError.storageBusy
+        }
+        return snapshot
+    }
+
     /// One cross-process read/modify/commit boundary, shared by host and intents.
     /// The closure must be synchronous and must not re-enter this store.
     @discardableResult
@@ -326,7 +373,8 @@ public struct HanlinScriptExtensionStore: Sendable {
         }
     }
 
-    private func loadUnlocked() throws -> LoadResult {
+    // Internal queue admission shares this transaction; callers must hold withLock.
+    func loadUnlocked() throws -> LoadResult {
         var recovery: Recovery?
         let commit = try optionalDecode(Commit.self, at: commitURL)
         if let pending = try optionalDecode(Pending.self, at: pendingURL) {
@@ -392,7 +440,8 @@ public struct HanlinScriptExtensionStore: Sendable {
                 // executable cannot interpret native engines or their variants.
                 let restored = HanlinScriptExtensionSnapshot(schemaVersion: 1, generatedAt: snapshot.generatedAt,
                     widgets: snapshot.widgets, intentEntities: snapshot.intentEntities, liveActivities: snapshot.liveActivities,
-                    translationApps: snapshot.translationApps, widgetInstances: committed.widgetInstances,
+                    translationApps: snapshot.translationApps, nativePresentations: committed.nativePresentations,
+                    widgetInstances: committed.widgetInstances,
                     widgetStates: committed.widgetStates, widgetEntityMigrations: committed.widgetEntityMigrations,
                     inactiveWidgetInstallations: committed.inactiveWidgetInstallations)
                 return .init(snapshot: restored, recovery: .legacyWriterDetected)
@@ -410,24 +459,11 @@ public struct HanlinScriptExtensionStore: Sendable {
         try rejectSymlinks(to: url, phase: .storeLoad)
         guard FileManager.default.fileExists(atPath: url.path(percentEncoded: false)) else { return nil }
         let data = try Data(contentsOf: url, options: .mappedIfSafe)
-        guard data.count <= Self.maximumSnapshotBytes else {
-            let diag = HanlinWidgetStorageDiagnostic(
-                phase: .storeLoad,
-                decisionPoint: .snapshotDecode,
-                relativePath: url.lastPathComponent,
-                errorDomain: "HanlinScriptExtensionStoreError",
-                errorCode: 2,
-                summary: "File at \(url.lastPathComponent) exceeds maximum snapshot size (\(data.count) bytes)"
-            )
-            recordDurableQueryDiagnostic(diag)
-            throw HanlinScriptExtensionStoreError.snapshotTooLarge
-        }
         return try decodeEnvelope(data, relativePath: url.lastPathComponent)
     }
 
     private func decodeEnvelope(_ data: Data, relativePath: String = "snapshot") throws -> HanlinScriptExtensionSnapshot {
-        guard data.count <= Self.maximumSnapshotBytes,
-              let raw = try JSONSerialization.jsonObject(with: data) as? [String: Any],
+        guard let raw = try JSONSerialization.jsonObject(with: data) as? [String: Any],
               let rawSnapshot = raw["snapshot"],
               let expectedHash = raw["sha256"] as? String else {
             let diag = HanlinWidgetStorageDiagnostic(
@@ -598,7 +634,8 @@ public struct HanlinScriptExtensionStore: Sendable {
                 widgets: v1Widgets,
                 intentEntities: snapshot.intentEntities,
                 liveActivities: snapshot.liveActivities,
-                translationApps: snapshot.translationApps
+                translationApps: snapshot.translationApps,
+                nativePresentations: snapshot.nativePresentations
             )
         } else {
             shadow = snapshot
@@ -632,15 +669,12 @@ public struct HanlinScriptExtensionStore: Sendable {
             snapshot: snapshot
         )
         let data = try Self.encoded(envelope)
-        guard data.count <= Self.maximumSnapshotBytes else {
-            throw HanlinScriptExtensionStoreError.snapshotTooLarge
-        }
         return data
     }
 
     private func legacyEnvelopeData(_ snapshot: HanlinScriptExtensionSnapshot) throws -> Data {
         guard var raw = try JSONSerialization.jsonObject(with: Self.encoded(snapshot)) as? [String: Any] else { throw HanlinScriptExtensionStoreError.invalidEnvelope }
-        for key in ["widgetInstances", "widgetStates", "widgetEntityMigrations", "inactiveWidgetInstallations"] { raw.removeValue(forKey: key) }
+        for key in ["nativePresentations", "widgetInstances", "widgetStates", "widgetEntityMigrations", "inactiveWidgetInstallations"] { raw.removeValue(forKey: key) }
         func oldIdentity(_ value: Any?) -> Any? {
             guard var object = value as? [String: Any] else { return value }
             object.removeValue(forKey: "variantID")
@@ -662,7 +696,6 @@ public struct HanlinScriptExtensionStore: Sendable {
         raw["schemaVersion"] = 1
         let wire = try JSONSerialization.data(withJSONObject: raw, options: [.sortedKeys, .withoutEscapingSlashes])
         let data = try JSONSerialization.data(withJSONObject: ["schemaVersion": 1, "sha256": Self.digest(wire), "snapshot": raw], options: [.sortedKeys, .withoutEscapingSlashes])
-        guard data.count <= Self.maximumSnapshotBytes else { throw HanlinScriptExtensionStoreError.snapshotTooLarge }
         return data
     }
 
@@ -671,7 +704,6 @@ public struct HanlinScriptExtensionStore: Sendable {
         installedPackageID: HanlinInstalledPackageID,
         generation: UInt64
     ) throws -> (ref: String, sha256: String) {
-        guard data.count <= Self.maximumArtifactBytes else { throw HanlinScriptExtensionStoreError.artifactTooLarge }
         guard generation > 0 else {
             Self.recordDiagnostic(.init(
                 phase: .storeArtifact,
@@ -745,7 +777,7 @@ public struct HanlinScriptExtensionStore: Sendable {
         guard FileManager.default.fileExists(atPath: url.path(percentEncoded: false)) else {
             throw HanlinScriptExtensionStoreError.artifactMissing
         }
-        let values = try url.resourceValues(forKeys: [.fileSizeKey, .isRegularFileKey])
+        let values = try url.resourceValues(forKeys: [.isRegularFileKey])
         guard values.isRegularFile == true else {
             Self.recordDiagnostic(.init(
                 phase: .storeArtifact,
@@ -758,9 +790,7 @@ public struct HanlinScriptExtensionStore: Sendable {
             ))
             throw HanlinScriptExtensionStoreError.invalidArtifactReference
         }
-        guard (values.fileSize ?? Int.max) <= Self.maximumArtifactBytes else { throw HanlinScriptExtensionStoreError.artifactTooLarge }
         let data = try readArtifactWithoutSymlinks(ref: ref)
-        guard data.count <= Self.maximumArtifactBytes else { throw HanlinScriptExtensionStoreError.artifactTooLarge }
         guard Self.digest(data) == sha256 else {
             Self.recordDiagnostic(.init(
                 phase: .storeArtifact,
@@ -823,9 +853,9 @@ public struct HanlinScriptExtensionStore: Sendable {
         }
         var info = stat()
         guard fstat(descriptor, &info) == 0, info.st_mode & S_IFMT == S_IFREG,
-              info.st_size >= 0, info.st_size <= Self.maximumArtifactBytes else { throw HanlinScriptExtensionStoreError.artifactTooLarge }
+              info.st_size >= 0 else { throw HanlinScriptExtensionStoreError.invalidArtifactReference }
         let handle = FileHandle(fileDescriptor: descriptor, closeOnDealloc: false)
-        return try handle.read(upToCount: Self.maximumArtifactBytes + 1) ?? Data()
+        return try handle.readToEnd() ?? Data()
 #else
         throw HanlinScriptExtensionStoreError.appGroupUnavailable
 #endif
@@ -841,7 +871,6 @@ public struct HanlinScriptExtensionStore: Sendable {
     }
 
     public func materializeResources(_ files: [String: Data], identity: HanlinScriptExtensionIdentity) throws -> [String: URL] {
-        guard files.count <= 128 else { throw HanlinScriptExtensionStoreError.artifactTooLarge }
         var result: [String: URL] = [:]
         for (name, data) in files {
             let parts = name.split(separator: "/", omittingEmptySubsequences: false)
@@ -923,18 +952,6 @@ public struct HanlinScriptExtensionStore: Sendable {
             throw HanlinScriptExtensionStoreError.integrityMismatch
         }
         let data = try Data(contentsOf: url)
-        guard data.count <= Self.maximumSnapshotBytes else {
-            let diag = HanlinWidgetStorageDiagnostic(
-                phase: .storeLoad,
-                decisionPoint: .snapshotDecode,
-                relativePath: "Revisions/\(hash.prefix(12))...json",
-                errorDomain: "HanlinScriptExtensionStoreError",
-                errorCode: 2,
-                summary: "Stage: checkedRevision | Revision file exceeds maximum size (\(data.count) bytes)"
-            )
-            recordDurableQueryDiagnostic(diag)
-            throw HanlinScriptExtensionStoreError.snapshotTooLarge
-        }
         let computed = Self.digest(data)
         guard computed == hash else {
             let diag = HanlinWidgetStorageDiagnostic(
@@ -955,7 +972,6 @@ public struct HanlinScriptExtensionStore: Sendable {
         try rejectSymlinks(to: url, phase: .storeLoad)
         guard FileManager.default.fileExists(atPath: url.path(percentEncoded: false)) else { return nil }
         let data = try Data(contentsOf: url)
-        guard data.count <= Self.maximumSnapshotBytes else { throw HanlinScriptExtensionStoreError.snapshotTooLarge }
         return data
     }
 

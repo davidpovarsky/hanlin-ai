@@ -1,0 +1,21 @@
+{"at": "2026-11-25T15:31:42.244911+00:00", "event": "prepared", "startedAt": "2026-11-25T15:31:42.243836+00:00", "argv": ["/opt/homebrew/opt/python@3.12/bin/python3.12", "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-native-child-v9.py", "--source", "dc53a6c8ff1bb68bfbc52a64667e14ce688055b0", "--output", "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v9/native-result"]}
+{"at": "2026-11-25T15:31:42.251154+00:00", "event": "launched", "status": "RUNNING", "phasePID": 97692, "nativeResult": "RUNNING"}
+{"at": "2026-11-25T15:32:12.258226+00:00", "event": "heartbeat", "elapsedSeconds": 30.010238625007332, "logBytes": 2057}
+{"at": "2026-11-25T15:32:42.286843+00:00", "event": "heartbeat", "elapsedSeconds": 60.03973704199598, "logBytes": 2157}
+{"at": "2026-11-25T15:33:12.295723+00:00", "event": "heartbeat", "elapsedSeconds": 90.04977541700646, "logBytes": 2257}
+{"at": "2026-11-25T15:33:42.308358+00:00", "event": "heartbeat", "elapsedSeconds": 120.06200766700204, "logBytes": 2359}
+{"at": "2026-11-25T15:34:12.315692+00:00", "event": "heartbeat", "elapsedSeconds": 150.0711025000055, "logBytes": 2942}
+{"at": "2026-11-25T15:34:42.325686+00:00", "event": "heartbeat", "elapsedSeconds": 180.08043920800264, "logBytes": 3040}
+{"at": "2026-11-25T15:35:12.333562+00:00", "event": "heartbeat", "elapsedSeconds": 210.08815766700718, "logBytes": 3139}
+{"at": "2026-11-25T15:35:42.337662+00:00", "event": "heartbeat", "elapsedSeconds": 240.09198808300425, "logBytes": 3238}
+{"at": "2026-11-25T15:36:12.342844+00:00", "event": "heartbeat", "elapsedSeconds": 270.0981529580022, "logBytes": 3339}
+{"at": "2026-11-25T15:36:42.347998+00:00", "event": "heartbeat", "elapsedSeconds": 300.10328733299684, "logBytes": 7037}
+{"at": "2026-11-25T15:37:12.360651+00:00", "event": "heartbeat", "elapsedSeconds": 330.1152963330096, "logBytes": 9720}
+{"at": "2026-11-25T15:37:42.368867+00:00", "event": "heartbeat", "elapsedSeconds": 360.1234822499973, "logBytes": 9824}
+{"at": "2026-11-25T15:38:12.373521+00:00", "event": "heartbeat", "elapsedSeconds": 390.1298288329999, "logBytes": 9928}
+{"at": "2026-11-25T15:38:42.377499+00:00", "event": "heartbeat", "elapsedSeconds": 420.13167170800443, "logBytes": 10032}
+{"at": "2026-11-25T15:39:12.384450+00:00", "event": "heartbeat", "elapsedSeconds": 450.13990341700264, "logBytes": 10138}
+{"at": "2026-11-25T15:39:42.387653+00:00", "event": "heartbeat", "elapsedSeconds": 480.1434215830086, "logBytes": 10244}
+{"at": "2026-11-25T15:39:55.492260+00:00", "event": "actual_terminal", "status": "FOCUSED_FAILED", "nativeResult": "FAILED_OR_INCOMPLETE", "error": "AssertionError: ", "exitCode": 1}
+{"at": "2026-11-25T15:39:56.087143+00:00", "event": "charge_ready", "finishedAt": "2026-11-25T15:39:56.086370+00:00", "elapsedSeconds": 493.8438168749999, "chargedSeconds": 493.8438168749999, "cumulativeActiveSeconds": 19786.76009308604, "cumulativeFocusedSeconds": 4313.848320502002, "allowanceExceededDuringCleanup": false, "logBytes": 13243, "logSHA256": "fd51fbc5487d09cd0c33e2d94ad6387b710d4d3d9eb73f041f38f60068578d5c"}
+{"at": "2026-11-25T15:39:56.093301+00:00", "event": "finalized", "status": "FOCUSED_FAILED"}

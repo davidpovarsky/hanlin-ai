@@ -189,7 +189,7 @@ def generate(selected_products=None):
             targets.append(target(t,folder,local_products))
     app_deps=application_dependencies(local_products, deps)
     app_deps.extend([quoted("HanlinNodeBridge"),quoted("HanlinPythonBridge"),quoted("HanlinA2UI"),quoted("HanlinLocalization"),
-                     quoted("HanlinAgentActivityCore"),quoted("HanlinAgentActivityUI"),quoted("HanlinExtensionContracts"),quoted("HanlinWidgetUI"),quoted("HanlinMiniAppsUI")])
+                     quoted("HanlinAgentActivityCore"),quoted("HanlinAgentActivityUI"),quoted("HanlinExtensionContracts"),quoted("HanlinWidgetUI"),quoted("HanlinMiniAppsUI"),quoted("HanlinMiniAppsBridge"),quoted("HanlinMiniAppsPicker")])
     # Every original application Swift file remains a single authoritative
     # implementation. The executable only owns its tiny @main declaration.
     app_sources=sorted(p.relative_to(ROOT/"AI_HLY").as_posix()

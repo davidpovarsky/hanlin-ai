@@ -31,7 +31,7 @@ struct ExposureContractTests {
         #expect(result != nil)
         #expect(result?.isUserInterface == true)
         #expect(result?.supportsGenericHost == true)
-        #expect(result?.implementationState == .adapterOnly)
+        #expect(result?.implementationState == .genericHosted)
 
         // 4. WidgetKit
         let widget = HanlinExposureCatalog.classification(for: .widget)
@@ -46,14 +46,14 @@ struct ExposureContractTests {
         #expect(liveActivity?.requiresDedicatedExtensionTarget == true)
         #expect(liveActivity?.eligibility == .hybrid)
         #expect(liveActivity?.requiredInfoPlistKeys.contains("NSSupportsLiveActivities") == true)
-        #expect(liveActivity?.implementationState == .reserved)
+        #expect(liveActivity?.implementationState == .genericHosted)
 
         // 6. Controls
         let control = HanlinExposureCatalog.classification(for: .controlWidget)
         #expect(control != nil)
         #expect(control?.requiresDedicatedExtensionTarget == true)
         #expect(control?.eligibility == .hybrid)
-        #expect(control?.implementationState == .reserved)
+        #expect(control?.implementationState == .genericHosted)
 
         // 7. App Intents
         let appIntent = HanlinExposureCatalog.classification(for: .appIntent)
@@ -69,7 +69,7 @@ struct ExposureContractTests {
         // 9. Share Extension
         let share = HanlinExposureCatalog.classification(for: .shareExtension)
         #expect(share != nil)
-        #expect(share?.implementationState == .reserved)
+        #expect(share?.implementationState == .genericHosted)
 
         // 10. Background Task
         let bgTask = HanlinExposureCatalog.classification(for: .backgroundTask)

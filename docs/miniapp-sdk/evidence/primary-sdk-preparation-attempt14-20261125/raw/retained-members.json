@@ -1,0 +1,362 @@
+[
+  {
+    "source": "receipt.json",
+    "storedPath": "raw/handoff/receipt.json",
+    "storedBytes": 15008,
+    "storedSHA256": "57e4fba2ae918a08448b32561be51e3617adf9468f16488439898debae459fb2",
+    "originalBytes": 15008,
+    "originalSHA256": "57e4fba2ae918a08448b32561be51e3617adf9468f16488439898debae459fb2",
+    "encoding": "identity"
+  },
+  {
+    "source": "tracked-delta.json",
+    "storedPath": "raw/handoff/tracked-delta.json",
+    "storedBytes": 5248,
+    "storedSHA256": "2fd15d6e6bc91b52e6327306f9ff25a3da3d10efc8f09476462793fa8092acc5",
+    "originalBytes": 5248,
+    "originalSHA256": "2fd15d6e6bc91b52e6327306f9ff25a3da3d10efc8f09476462793fa8092acc5",
+    "encoding": "identity"
+  },
+  {
+    "source": "controller-state-at-capture.json",
+    "storedPath": "raw/handoff/controller-state-at-capture.json",
+    "storedBytes": 63438,
+    "storedSHA256": "15f53a0ab93a41609e89819acbd56f0b02ac05a19ee32a1a8f355bc31b45130c",
+    "originalBytes": 63438,
+    "originalSHA256": "15f53a0ab93a41609e89819acbd56f0b02ac05a19ee32a1a8f355bc31b45130c",
+    "encoding": "identity"
+  },
+  {
+    "source": "expo-asset-produced-bindings.json",
+    "storedPath": "raw/handoff/expo-asset-produced-bindings.json",
+    "storedBytes": 9116,
+    "storedSHA256": "299f617ecc8909c16d2a2776488181b5d399a25abed4f255f6b526f8b78ece52",
+    "originalBytes": 9116,
+    "originalSHA256": "299f617ecc8909c16d2a2776488181b5d399a25abed4f255f6b526f8b78ece52",
+    "encoding": "identity"
+  },
+  {
+    "source": "files/Package.swift",
+    "storedPath": "raw/handoff/files/Package.swift.gz",
+    "storedBytes": 11504,
+    "storedSHA256": "2cdd8fcddd80aeaa945c5734e833ab9a95fb0d0ee163037ce12164efdd0d1a43",
+    "originalBytes": 88332,
+    "originalSHA256": "c58ad5f37b35c38e9199b1ad5641a4b38523d13542c75e90a34f862877409bb1",
+    "encoding": "gzip"
+  },
+  {
+    "source": "files/AI_HLY.xcodeproj/project.pbxproj",
+    "storedPath": "raw/handoff/files/AI_HLY.xcodeproj/project.pbxproj.gz",
+    "storedBytes": 33508,
+    "storedSHA256": "ec49e1566490a5cfb71016bea915abd89acc051e5433b819fd0f6b4a3b49c5fd",
+    "originalBytes": 251761,
+    "originalSHA256": "71409346bb25cdc8fd5d1d3e8b7363549146e9038044360c93b659615c3b3b3d",
+    "encoding": "gzip"
+  },
+  {
+    "source": "files/docs/agent-sdk/unified-package-manifest.json",
+    "storedPath": "raw/handoff/files/docs/agent-sdk/unified-package-manifest.json",
+    "storedBytes": 3901,
+    "storedSHA256": "2dce00d3544b324ea9b2df5fa1a744a1bad534e2faa3e54c10195b4ce0a2e66f",
+    "originalBytes": 3901,
+    "originalSHA256": "2dce00d3544b324ea9b2df5fa1a744a1bad534e2faa3e54c10195b4ce0a2e66f",
+    "encoding": "identity"
+  },
+  {
+    "source": "files/build/primary-control/generation-attempt14/state.json",
+    "storedPath": "raw/handoff/files/build/primary-control/generation-attempt14/state.json",
+    "storedBytes": 3306,
+    "storedSHA256": "28f474759db1388b3c808694c9825920702315827fa8ff8a931ad7fc5c32b5fe",
+    "originalBytes": 3306,
+    "originalSHA256": "28f474759db1388b3c808694c9825920702315827fa8ff8a931ad7fc5c32b5fe",
+    "encoding": "identity"
+  },
+  {
+    "source": "files/build/primary-control/generation-attempt14/generated-source.patch",
+    "storedPath": "raw/handoff/files/build/primary-control/generation-attempt14/generated-source.patch.gz",
+    "storedBytes": 9509,
+    "storedSHA256": "67c52a9ea8459b2467e73d2cf60e783cb8d89af278d9a58001101f30cb2c2adb",
+    "originalBytes": 78331,
+    "originalSHA256": "8154eb6689fcfd37e79073eac36736f45df3bda845964b46ed39d22ab877d982",
+    "encoding": "gzip"
+  },
+  {
+    "source": "files/build/primary-control/generation-attempt14/1-generate_manifest.py.log",
+    "storedPath": "raw/handoff/files/build/primary-control/generation-attempt14/1-generate_manifest.py.log.gz",
+    "storedBytes": 1526,
+    "storedSHA256": "ecd26b5215c8b83b4245e4c2ff59a29d0703e7923b9e81ce15339c75ff36251e",
+    "originalBytes": 3605,
+    "originalSHA256": "eddd4ef7539f88d74f80e958861d9db7bee352562aa1df62f2e2225512c53980",
+    "encoding": "gzip"
+  },
+  {
+    "source": "files/build/primary-control/generation-attempt14/2-update_project.py.log",
+    "storedPath": "raw/handoff/files/build/primary-control/generation-attempt14/2-update_project.py.log.gz",
+    "storedBytes": 103,
+    "storedSHA256": "b44fe6e0a9fe538f4926f1682de104830f83fafbeb7a206b936ee8e8d9e48210",
+    "originalBytes": 88,
+    "originalSHA256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18",
+    "encoding": "gzip"
+  },
+  {
+    "source": "files/build/primary-control/generation-attempt14/3-verify_targets.py.log",
+    "storedPath": "raw/handoff/files/build/primary-control/generation-attempt14/3-verify_targets.py.log.gz",
+    "storedBytes": 596,
+    "storedSHA256": "0618405dacd7a0cb7c11b7547e2025d6f7b8ab3080feffd4e36da12324980745",
+    "originalBytes": 1438,
+    "originalSHA256": "4f49124a3b6c18a0b8c4540cb46c33b31c436deed0ad97c4084e189157ed9c8e",
+    "encoding": "gzip"
+  },
+  {
+    "source": "files/build/primary-control/generation-attempt14/4--lint.log",
+    "storedPath": "raw/handoff/files/build/primary-control/generation-attempt14/4--lint.log.gz",
+    "storedBytes": 126,
+    "storedSHA256": "889beecc9494db624bd1af17d822f5b7c1d621ab58bb3d060fb20e4e89bde2a2",
+    "originalBytes": 179,
+    "originalSHA256": "b019c7e18b5b8a4825f382e7c3a04552e29a406d658592b9f6105fe88a6fe18a",
+    "encoding": "gzip"
+  },
+  {
+    "source": "files/RuntimeDependencies.lock.json",
+    "storedPath": "raw/handoff/files/RuntimeDependencies.lock.json",
+    "storedBytes": 7925,
+    "storedSHA256": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a",
+    "originalBytes": 7925,
+    "originalSHA256": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a",
+    "encoding": "identity"
+  },
+  {
+    "source": "files/Scripts/Expo/package-lock.json",
+    "storedPath": "raw/handoff/files/Scripts/Expo/package-lock.json.gz",
+    "storedBytes": 75790,
+    "storedSHA256": "6f138b84b43884c0c582fcc281ce881dc83adbb94f2d75bcb2b4282fcf901d04",
+    "originalBytes": 336324,
+    "originalSHA256": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8",
+    "encoding": "gzip"
+  },
+  {
+    "source": "files/Scripts/Expo/package.json",
+    "storedPath": "raw/handoff/files/Scripts/Expo/package.json",
+    "storedBytes": 1759,
+    "storedSHA256": "e2b50fae013276229c78619bbbe0b63d8c29b00fefde3afeccea98af117aa206",
+    "originalBytes": 1759,
+    "originalSHA256": "e2b50fae013276229c78619bbbe0b63d8c29b00fefde3afeccea98af117aa206",
+    "encoding": "identity"
+  },
+  {
+    "source": "files/Scripts/Expo/dependency-lock.json",
+    "storedPath": "raw/handoff/files/Scripts/Expo/dependency-lock.json",
+    "storedBytes": 5375,
+    "storedSHA256": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65",
+    "originalBytes": 5375,
+    "originalSHA256": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65",
+    "encoding": "identity"
+  },
+  {
+    "source": "files/Scripts/MiniApps/upstream-resolution.json",
+    "storedPath": "raw/handoff/files/Scripts/MiniApps/upstream-resolution.json",
+    "storedBytes": 15092,
+    "storedSHA256": "e0c2944ea24c09330825dee58badedcec58606ba603ccdedc888abf1a63a13cb",
+    "originalBytes": 15092,
+    "originalSHA256": "e0c2944ea24c09330825dee58badedcec58606ba603ccdedc888abf1a63a13cb",
+    "encoding": "identity"
+  },
+  {
+    "source": "files/Scripts/NativeScript/package-lock.json",
+    "storedPath": "raw/handoff/files/Scripts/NativeScript/package-lock.json.gz",
+    "storedBytes": 22999,
+    "storedSHA256": "507a1568c8f21af385539f09d77b95b8dcf5954f4438861e5c63e36f1189dc0f",
+    "originalBytes": 110219,
+    "originalSHA256": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b",
+    "encoding": "gzip"
+  },
+  {
+    "source": "files/Scripts/NativeScript/package.json",
+    "storedPath": "raw/handoff/files/Scripts/NativeScript/package.json",
+    "storedBytes": 851,
+    "storedSHA256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b",
+    "originalBytes": 851,
+    "originalSHA256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b",
+    "encoding": "identity"
+  },
+  {
+    "source": "files/build/runtime-host/host-metadata.json",
+    "storedPath": "raw/handoff/files/build/runtime-host/host-metadata.json",
+    "storedBytes": 358,
+    "storedSHA256": "0f7eed258abb847a85612368900bf13280be475be7c124e11161f77a0c24ac52",
+    "originalBytes": 358,
+    "originalSHA256": "0f7eed258abb847a85612368900bf13280be475be7c124e11161f77a0c24ac52",
+    "encoding": "identity"
+  },
+  {
+    "source": "files/build/app-split-evidence-attempt14/miniapp-documentation-snippets.json",
+    "storedPath": "raw/handoff/files/build/app-split-evidence-attempt14/miniapp-documentation-snippets.json",
+    "storedBytes": 20207,
+    "storedSHA256": "c78bb44da34e04c95bc1692633a5c89e80c9f4b0a328acea3d99c69ba0eda23c",
+    "originalBytes": 20207,
+    "originalSHA256": "c78bb44da34e04c95bc1692633a5c89e80c9f4b0a328acea3d99c69ba0eda23c",
+    "encoding": "identity"
+  },
+  {
+    "source": "files/build/app-split-evidence-attempt14/prepared-native/native-artifacts.json",
+    "storedPath": "raw/handoff/files/build/app-split-evidence-attempt14/prepared-native/native-artifacts.json",
+    "storedBytes": 29897,
+    "storedSHA256": "e61def99f7e51e3753f0ab084b5c615ce6c86686c229c0ba2568b2e7a082d6a8",
+    "originalBytes": 29897,
+    "originalSHA256": "e61def99f7e51e3753f0ab084b5c615ce6c86686c229c0ba2568b2e7a082d6a8",
+    "encoding": "identity"
+  },
+  {
+    "source": "files/build/primary-control/logs-attempt14/split-native-preparation.log",
+    "storedPath": "raw/handoff/files/build/primary-control/logs-attempt14/split-native-preparation.log.gz",
+    "storedBytes": 10511,
+    "storedSHA256": "371a77286a767a710a65d48fc180b7444ba67517649259e3ec4d655b3d2c88ce",
+    "originalBytes": 32767,
+    "originalSHA256": "13d9ccdfe7d72c607225d6d788d9252777272dab6cfb50a236079f0bb7e1bace",
+    "encoding": "gzip"
+  },
+  {
+    "source": "files/build/primary-control/logs-attempt14/split-native-artifacts.log",
+    "storedPath": "raw/handoff/files/build/primary-control/logs-attempt14/split-native-artifacts.log.gz",
+    "storedBytes": 844,
+    "storedSHA256": "bc7c73d074184119d9b2d6e034dbb5fe13ee124efb2c0c81c81c84fb633222dc",
+    "originalBytes": 1604,
+    "originalSHA256": "6ba90756cd5ae1a7ee915af12e22160528b0ceb7d8065409f71ea5d5ffa96f27",
+    "encoding": "gzip"
+  },
+  {
+    "source": "files/build/primary-control/plan.json",
+    "storedPath": "raw/handoff/files/build/primary-control/plan.json",
+    "storedBytes": 13211,
+    "storedSHA256": "fe2364e9b8726d1f6add63067469aabeb0ef9b8e7df759e6fe00f7ee752c21e9",
+    "originalBytes": 13211,
+    "originalSHA256": "fe2364e9b8726d1f6add63067469aabeb0ef9b8e7df759e6fe00f7ee752c21e9",
+    "encoding": "identity"
+  },
+  {
+    "source": "files/build/primary-control/source-advance-b0cf26a6/receipt.json",
+    "storedPath": "raw/handoff/files/build/primary-control/source-advance-b0cf26a6/receipt.json.gz",
+    "storedBytes": 12140,
+    "storedSHA256": "96786d6550626693784d69be4162c84db6c023e5c8e54dc360c802fa2517c86a",
+    "originalBytes": 67577,
+    "originalSHA256": "b77a1627f2bbd6de5e8d0159b37272ac9c9df6bc5673ae9cbac94ad1f53ea2b5",
+    "encoding": "gzip"
+  },
+  {
+    "source": "files/build/primary-control/prefix-attempt14-resource-basis.json",
+    "storedPath": "raw/handoff/files/build/primary-control/prefix-attempt14-resource-basis.json",
+    "storedBytes": 970,
+    "storedSHA256": "f254102cfaef7bcf9fa26c83cca651a52112b19922d1e262dc6448cc09fdd86e",
+    "originalBytes": 970,
+    "originalSHA256": "f254102cfaef7bcf9fa26c83cca651a52112b19922d1e262dc6448cc09fdd86e",
+    "encoding": "identity"
+  },
+  {
+    "source": "files/build/acceptance/expo-type-declarations/corrections.json",
+    "storedPath": "raw/handoff/files/build/acceptance/expo-type-declarations/corrections.json",
+    "storedBytes": 3600,
+    "storedSHA256": "c5e5322a6177f36a713380134006d4beb3a0ebd275e435e66b7de93a4cb60f82",
+    "originalBytes": 3600,
+    "originalSHA256": "c5e5322a6177f36a713380134006d4beb3a0ebd275e435e66b7de93a4cb60f82",
+    "encoding": "identity"
+  },
+  {
+    "source": "files/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/.source-build-receipt.json",
+    "storedPath": "raw/handoff/files/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/.source-build-receipt.json",
+    "storedBytes": 1355,
+    "storedSHA256": "78a6b4b85330189dd162c09ae250cb280bf7dbe62608ca6438e6f3fabde6ee3b",
+    "originalBytes": 1355,
+    "originalSHA256": "78a6b4b85330189dd162c09ae250cb280bf7dbe62608ca6438e6f3fabde6ee3b",
+    "encoding": "identity"
+  },
+  {
+    "source": "files/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/.artifact-manifest.json",
+    "storedPath": "raw/handoff/files/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/.artifact-manifest.json",
+    "storedBytes": 226,
+    "storedSHA256": "80afcbce26c01da5a63f951e04c6fea5959d3b3a51271d6a24002c35c07ceb47",
+    "originalBytes": 226,
+    "originalSHA256": "80afcbce26c01da5a63f951e04c6fea5959d3b3a51271d6a24002c35c07ceb47",
+    "encoding": "identity"
+  },
+  {
+    "source": "files/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/Info.plist",
+    "storedPath": "raw/handoff/files/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/Info.plist",
+    "storedBytes": 1196,
+    "storedSHA256": "b239db0645c42fb07b6dd21e54c6012289f62593186b64b880c419d293da984d",
+    "originalBytes": 1196,
+    "originalSHA256": "b239db0645c42fb07b6dd21e54c6012289f62593186b64b880c419d293da984d",
+    "encoding": "identity"
+  },
+  {
+    "source": "files/build/miniapp-upstreams/expo-native-source/ios/Podfile.lock",
+    "storedPath": "raw/handoff/files/build/miniapp-upstreams/expo-native-source/ios/Podfile.lock.gz",
+    "storedBytes": 8723,
+    "storedSHA256": "1a4724b009336f6470d1c89f013c029ff89b1ac77f290986a37abf67f895e945",
+    "originalBytes": 76498,
+    "originalSHA256": "c012c6f8ee2ca782aea7788349d75a3a57e6e4be8d324037a8b9dce573e4d8e6",
+    "encoding": "gzip"
+  },
+  {
+    "source": "extracted-sdk/miniapp-sdk.json",
+    "storedPath": "raw/handoff/miniapp-sdk.json.gz",
+    "storedBytes": 1302483,
+    "storedSHA256": "002e204db5e708bc8042ff1633e8075224c6a86d51439332a30896269dd4a149",
+    "originalBytes": 5223957,
+    "originalSHA256": "039f061558cc53d51e929f07e2df222709ab078d8417af527bc448750bda5593",
+    "encoding": "gzip"
+  },
+  {
+    "source": "tracked-delta/AI_HLYUITests/Fixtures/ExpoSwiftUIProbe.hanlinExpo",
+    "storedPath": "raw/prepared-content/b81e8ecccb8e8495f203b51273787df1ab10d64d4236abfa061dc6cb9dd60b1c.hanlinExpo",
+    "storedBytes": 325823,
+    "storedSHA256": "b81e8ecccb8e8495f203b51273787df1ab10d64d4236abfa061dc6cb9dd60b1c",
+    "originalBytes": 325823,
+    "originalSHA256": "b81e8ecccb8e8495f203b51273787df1ab10d64d4236abfa061dc6cb9dd60b1c",
+    "encoding": "identity"
+  },
+  {
+    "source": "tracked-delta/AI_HLYUITests/Fixtures/ExpoSwiftUIProbeB.hanlinExpo",
+    "storedPath": "raw/prepared-content/cdf1b95be3e210621095a6269f9d17bf6cab11c6b7e6c6d8895265fcb8a4b84b.hanlinExpo",
+    "storedBytes": 325825,
+    "storedSHA256": "cdf1b95be3e210621095a6269f9d17bf6cab11c6b7e6c6d8895265fcb8a4b84b",
+    "originalBytes": 325825,
+    "originalSHA256": "cdf1b95be3e210621095a6269f9d17bf6cab11c6b7e6c6d8895265fcb8a4b84b",
+    "encoding": "identity"
+  },
+  {
+    "source": "tracked-delta/docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+    "storedPath": "raw/prepared-content/283c96260a51c095be32f262f9f77ba58bebc5372aa1af994176816c8fb5d538.md.gz",
+    "storedBytes": 10100,
+    "storedSHA256": "66c442939d019e0a41a8be0b1f61ecc904bb4be6ee21ef0460b645df42f59f7f",
+    "originalBytes": 118804,
+    "originalSHA256": "283c96260a51c095be32f262f9f77ba58bebc5372aa1af994176816c8fb5d538",
+    "encoding": "gzip"
+  },
+  {
+    "source": "tracked-delta/docs/miniapp-sdk/extension-reachability.json",
+    "storedPath": "raw/prepared-content/54e72317c384d85ca502d3ee5c93080fc438fd9e2dff1735b582eca4d445f8c7.json.gz",
+    "storedBytes": 16492,
+    "storedSHA256": "b73390a0e2252d813f0124aa458fdb2b2486a448fea5a4a0ef97896c4bcbc1c7",
+    "originalBytes": 153229,
+    "originalSHA256": "54e72317c384d85ca502d3ee5c93080fc438fd9e2dff1735b582eca4d445f8c7",
+    "encoding": "gzip"
+  },
+  {
+    "source": "tracked-delta/docs/miniapp-sdk/extension-reachability.md",
+    "storedPath": "raw/prepared-content/a132faaf5a40550b2c8a843f97a6f094d7c8f288cc9fba9d6c8d0090a38727ff.md",
+    "storedBytes": 23332,
+    "storedSHA256": "a132faaf5a40550b2c8a843f97a6f094d7c8f288cc9fba9d6c8d0090a38727ff",
+    "originalBytes": 23332,
+    "originalSHA256": "a132faaf5a40550b2c8a843f97a6f094d7c8f288cc9fba9d6c8d0090a38727ff",
+    "encoding": "identity"
+  },
+  {
+    "source": "tracked-delta/docs/miniapp-sdk/source-inventory.json",
+    "storedPath": "raw/prepared-content/b4752902d3097f4d1637585e1367e797187063351975e20ea8bfef459ee69baa.json.gz",
+    "storedBytes": 40639,
+    "storedSHA256": "f4fa7862a26466ed21eb5ac46302d620726ef6bbf3ccc6c222593c569a5e006e",
+    "originalBytes": 493798,
+    "originalSHA256": "b4752902d3097f4d1637585e1367e797187063351975e20ea8bfef459ee69baa",
+    "encoding": "gzip"
+  }
+]

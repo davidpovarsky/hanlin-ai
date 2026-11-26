@@ -1,0 +1,325 @@
+{
+  "schema": 1,
+  "owner": "/root/native_execution",
+  "source": "958cf666da7be83b9b63e46e3013e3344fb31585",
+  "tree": "8fead677f6da019ea032b6329adbceafbf745e7d",
+  "status": "FOCUSED_FAILED",
+  "startedAt": "2026-11-25T13:29:46.157030+00:00",
+  "pid": 93013,
+  "phase": null,
+  "original52": "NOT_RUN",
+  "original25": "NOT_RUN",
+  "original27": "NOT_RUN",
+  "scope": "Only original repair UI; previous ten focused passes are retained separately, not aggregated into original52.",
+  "selectors": {
+    "FocusedRepair1": [
+      "AI_HLYUITests/MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport"
+    ]
+  },
+  "groups": {
+    "FocusedRepair1": {
+      "status": "FAIL",
+      "startedAt": "2026-11-25T13:33:00.378093+00:00",
+      "selectors": [
+        "AI_HLYUITests/MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport"
+      ],
+      "expectedTests": 1,
+      "commandTimeoutSeconds": 2100,
+      "argv": [
+        "xcodebuild",
+        "-project",
+        "AI_HLY.xcodeproj",
+        "-destination",
+        "platform=iOS Simulator,id=E742FBCD-8FF0-4130-B143-7F8328637138",
+        "-parallel-testing-enabled",
+        "NO",
+        "-derivedDataPath",
+        "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete",
+        "-clonedSourcePackagesDirPath",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/SourcePackages",
+        "-skipPackagePluginValidation",
+        "-skipMacroValidation",
+        "CODE_SIGNING_ALLOWED=YES",
+        "CODE_SIGNING_REQUIRED=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "-collect-test-diagnostics",
+        "never",
+        "-scheme",
+        "AI_HLY",
+        "test-without-building",
+        "-resultBundlePath",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v6/native-result/paired-prefix/FocusedRepair1.xcresult",
+        "-test-timeouts-enabled",
+        "YES",
+        "-maximum-test-execution-time-allowance",
+        "600",
+        "-only-testing:AI_HLYUITests/MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport"
+      ],
+      "resultBundle": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v6/native-result/paired-prefix/FocusedRepair1.xcresult",
+      "exitCode": 65,
+      "finishedAt": "2026-11-25T13:37:50.359247+00:00",
+      "resultFinalized": true,
+      "error": "RuntimeError: Original runtime acceptance did not execute every selected case: FocusedRepair1",
+      "summarySHA256": "8d26c9cbed13474cd02924160a2a738c81de88944cc917cff7bdc777f9d7041e",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "deviceId": "E742FBCD-8FF0-4130-B143-7F8328637138",
+              "deviceName": "HanlinPaired-local",
+              "modelName": "iPad Pro 13-inch (M5)",
+              "osBuildNumber": "24A434",
+              "osVersion": "27.0",
+              "platform": "iOS Simulator"
+            },
+            "expectedFailures": 0,
+            "failedTests": 1,
+            "passedTests": 0,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "AI_HLY \u00b7 Built with macOS 27.0",
+        "expectedFailures": 0,
+        "failedTests": 1,
+        "finishTime": 1795613870.142,
+        "passedTests": 0,
+        "result": "Failed",
+        "runtimeWarnings": [
+          {
+            "issueType": "Runtime Warning",
+            "message": "           SessionCore.mm:631   This method can lead to UI unresponsiveness if called on the main thread while the audio session is active."
+          },
+          {
+            "issueType": "Runtime Warning",
+            "message": "    AVAudioSession_iOS.mm:978   This method can lead to UI unresponsiveness if called on the main thread. Consider using the asynchronous activate/deactivate API instead for calls from the main thread."
+          },
+          {
+            "issueType": "Runtime Warning",
+            "message": "Update the Info.plist: Support for all orientations will soon be required."
+          }
+        ],
+        "skippedTests": 0,
+        "startTime": 1795613599.618,
+        "statistics": [],
+        "testFailures": [
+          {
+            "failureText": "XCTAssertTrue failed",
+            "targetName": "AI_HLYUITests",
+            "testIdentifier": 1,
+            "testIdentifierString": "MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport()",
+            "testIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYUITests/MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport",
+            "testName": "testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport()"
+          }
+        ],
+        "title": "Test - AI_HLY",
+        "topInsights": [],
+        "totalTestCount": 1
+      },
+      "nodesSHA256": "65028c4e2308d574120580ebe40dbbb23685c454d6ae1e1363a07ba687a851e5",
+      "selectorVerifierSHA256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96",
+      "logSHA256": "b3ac1a201d261904b7a0b4ee951c6d95f4ac8adf2270e3f145c057466ff9c502"
+    }
+  },
+  "errors": [
+    "FocusedRepair1: Original runtime acceptance did not execute every selected case: FocusedRepair1"
+  ],
+  "sourceErrors": [],
+  "cleanupErrors": [
+    "Command '['ps', '-axo', 'pid=,ppid=,state=,command=']' timed out after 10 seconds"
+  ],
+  "originalRunnerSHA256": "a99b6194f8dd20bc30998ff2ad9e86ec219415a00615b250c65670f7dfcdba7d",
+  "sourceHashes": {
+    "AI_HLY/ChatView.swift": "d21659cdaa7d3e6141d4677d10ccaee067e7238ba8c4ccc2f689b63db4c41ffe",
+    "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift": "ea6c76e33bb4594931bb118ab713e2de2d85e561f0e40eb21d64d154c45f9c90",
+    "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift": "da0fa21f26b677f4d18f8e1972208b39e30401a127e9dd2a9643e0fe8d7ad17c",
+    "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoUIModule.swift": "3ad8217ce87005fab1fe3dc256e7d7680ced7c330f7cd9dc5561f1a5e5905e09",
+    "Packages/HanlinExpoUI/src/manual-components.tsx": "b95b387fce797a3c0ffe8c258e1fe0b411e76956e6cd50ae9235267f5b638da6",
+    "Scripts/ProductSplit/run_paired_acceptance.py": "a99b6194f8dd20bc30998ff2ad9e86ec219415a00615b250c65670f7dfcdba7d",
+    "Scripts/ProductSplit/test_run_paired_acceptance.py": "3791b4178c5cc49b64c38ead6f913284f29fc990c7223953aa74f2075f3771f1",
+    "Fixtures/ExpoSwiftUIProbe/ManualAdapterProbe.tsx": "c93a882be209437f388c5d67a9af6ef98ca5371db4aef084aaf7cd464ce42d57",
+    "AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift": "ac5c259fb195d09e641213f7fc33311db658bb3a52a58ee81e89ce6e7aa2a806",
+    "AI_HLYUITests/MiniAppAuthoringUITests.swift": "f60502af88a5e4b1166146cf5834e5d54eaa0451159b11f95ff26207f210fd72",
+    "Scripts/Expo/build-probe.mjs": "cdead47d9914543725e0e3160a14a13d91b31b2d584b737f0eb95c1b5539618c",
+    "AI_HLY/Downstream/ChatCore/HanlinAppHostIntegration.swift": "f09bd56c25571bbc897fb40327b424ddc67f0e9926e86b7bf8d674eeaa5ce216"
+  },
+  "hostArchiveSHA256": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc",
+  "recoveryInputSHA256": "df4a80f91795d16dbeb0c920249e3a4fbd9bd1888817ad5024c2a78fe70bb126",
+  "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138",
+  "miniBuildProducerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+  "SDKProducerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+  "reusedSetup": [
+    {
+      "status": "REUSED_AUTHENTICATED_OWNED_DEVICE",
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v1/native-result/paired-prefix/created-simulator.txt",
+        "sha256": "df333300ba32a39a07bcd88aed5fc6bb5f0b51f738c521f6a0949dc54456a37e",
+        "device": "E742FBCD-8FF0-4130-B143-7F8328637138",
+        "state": "Shutdown"
+      }
+    },
+    {
+      "status": "REUSED_EXECUTED_PASS",
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-mini-reuse-observation.json",
+        "sha256": "81dbdacfebf83dd80c2e5c108c3e8284e041f396ec7c8358e533fb5e564ef3da"
+      },
+      "producerSource": "a2c8a1b1be746461272ba77254603304567c309d"
+    }
+  ],
+  "checkpointReached": true,
+  "reusedManualProof": {
+    "authority": {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/native-result/state.json",
+      "bytes": 15799,
+      "sha256": "7cb9bda65b2cad09de873402d449aee0999fa88ad6b47d713514149afaea8d23"
+    },
+    "group": {
+      "status": "PASS",
+      "startedAt": "2026-11-25T12:43:32.359079+00:00",
+      "selectors": [
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters"
+      ],
+      "expectedTests": 1,
+      "commandTimeoutSeconds": 1260,
+      "argv": [
+        "xcodebuild",
+        "-project",
+        "AI_HLY.xcodeproj",
+        "-destination",
+        "platform=iOS Simulator,id=E742FBCD-8FF0-4130-B143-7F8328637138",
+        "-parallel-testing-enabled",
+        "NO",
+        "-derivedDataPath",
+        "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete",
+        "-clonedSourcePackagesDirPath",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/SourcePackages",
+        "-skipPackagePluginValidation",
+        "-skipMacroValidation",
+        "CODE_SIGNING_ALLOWED=YES",
+        "CODE_SIGNING_REQUIRED=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "-collect-test-diagnostics",
+        "never",
+        "-scheme",
+        "HanlinMiniApps",
+        "test-without-building",
+        "-resultBundlePath",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/native-result/paired-prefix/FocusedManual1.xcresult",
+        "-only-testing:HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters"
+      ],
+      "resultBundle": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/native-result/paired-prefix/FocusedManual1.xcresult",
+      "exitCode": 0,
+      "finishedAt": "2026-11-25T12:46:29.451077+00:00",
+      "resultFinalized": true,
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "deviceId": "E742FBCD-8FF0-4130-B143-7F8328637138",
+              "deviceName": "HanlinPaired-local",
+              "modelName": "iPad Pro 13-inch (M5)",
+              "osBuildNumber": "24A434",
+              "osVersion": "27.0",
+              "platform": "iOS Simulator"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 1,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "HanlinMiniApps \u00b7 Built with macOS 27.0",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1795610789.332,
+        "passedTests": 1,
+        "result": "Passed",
+        "runtimeWarnings": [
+          {
+            "issueType": "Runtime Warning",
+            "message": "Update the Info.plist: Support for all orientations will soon be required."
+          }
+        ],
+        "skippedTests": 0,
+        "startTime": 1795610629.671,
+        "statistics": [],
+        "testFailures": [],
+        "title": "Test - HanlinMiniApps",
+        "topInsights": [],
+        "totalTestCount": 1
+      },
+      "summarySHA256": "7b22c6f48bbbe6c203cc2ac73be5c7b5bfb4829bf92dd220b8325eb2c74785d8",
+      "nodesSHA256": "ba141f00c47e5676c6787006450ee9697030d4f4c12d220b23422a9a9742bec7",
+      "selectorVerifierSHA256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96",
+      "logSHA256": "786dc8528aa9489b5cb67bebf7ef84a58987330fee85b6e6ab8f6b9084416331"
+    },
+    "nativeAdapterRequests": [
+      {
+        "path": "/health",
+        "status": 200,
+        "bytes": 5,
+        "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+        "at": 1795610612.358176
+      },
+      {
+        "path": "/pixel.png",
+        "status": 200,
+        "bytes": 82,
+        "sha256": "7713482a5fab3ae135193484df75f4d0a7ce5c8ee50f6b5c33f7aacef5c5ea45",
+        "at": 1795610769.967628
+      },
+      {
+        "path": "/missing.png",
+        "status": 404,
+        "bytes": 30,
+        "sha256": "9cf62cb4815462ac71122a814d12bd6b5e2f030d14279b232b851b54fcd3e610",
+        "at": 1795610774.4943318
+      }
+    ]
+  },
+  "fixtureProduction": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/native-result/fixture-production.json",
+    "bytes": 6838,
+    "sha256": "b83ff708fb95153e2b362843b77b0a1b0d1a7e174a8dac776bf5c0621e820e4a",
+    "outputs": 13,
+    "status": "REUSED_ORIGINAL_PRODUCER_PASS"
+  },
+  "nativeAdapterProof": "Prior actual ManualInput PASS retained; no image test or server in this one-case continuation",
+  "observedAt": "2026-11-25T13:38:46.489718+00:00",
+  "elapsedSeconds": 540.294840292001,
+  "originalTestBuilds": "PASS_WITH_AUTHENTICATED_MINI_REUSE",
+  "builtInputBindings": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v6/native-result/built-input-bindings.json",
+    "sha256": "caa7d554eda20e6caaf02e053fdd0bb10bcc3afe65e3558504d699a2940222bc",
+    "count": 35
+  },
+  "app_group": {
+    "status": "EXECUTED_PASS",
+    "containers": {
+      "com.itorah.chavrusachat": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/EAE213D3-0A61-4500-9D46-E8F08D94D8F2",
+      "com.itorah.hanlinminiapps": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/EAE213D3-0A61-4500-9D46-E8F08D94D8F2"
+    }
+  },
+  "stagedInputs": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v6/native-result/staged-inputs.json",
+    "sha256": "fb48a2597fdb9b14a5023a63306d8fef8e93f8daa08e8ce10058475d30d38601"
+  },
+  "attachmentExports": [
+    {
+      "label": "FocusedRepair1",
+      "result": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v6/native-result/paired-prefix/FocusedRepair1.xcresult",
+      "exitCode": 0
+    }
+  ],
+  "finishedAt": "2026-11-25T13:38:46.489650+00:00"
+}

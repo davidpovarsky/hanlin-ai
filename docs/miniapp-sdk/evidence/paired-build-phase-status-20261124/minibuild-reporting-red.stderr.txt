@@ -1,0 +1,17 @@
+/usr/bin/python3 exit 65; inspect mini-build.log
+F
+======================================================================
+FAIL: test_failed_minibuild_records_execution_without_starting_ai_or_ui (Scripts.ProductSplit.test_run_paired_acceptance.PairedCommandEvidenceTests.test_failed_minibuild_records_execution_without_starting_ai_or_ui)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-paired-build-status-20261124/Scripts/ProductSplit/test_run_paired_acceptance.py", line 79, in test_failed_minibuild_records_execution_without_starting_ai_or_ui
+    self.assertEqual(receipt["build"], "EXECUTED_FAIL")
+AssertionError: 'NOT_RUN' != 'EXECUTED_FAIL'
+- NOT_RUN
++ EXECUTED_FAIL
+
+
+----------------------------------------------------------------------
+Ran 1 test in 0.039s
+
+FAILED (failures=1)

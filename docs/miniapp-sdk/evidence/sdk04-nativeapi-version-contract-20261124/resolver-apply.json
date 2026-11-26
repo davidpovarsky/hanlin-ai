@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/usr/local/bin/node",
+    "--input-type=module",
+    "--eval",
+    "import {readFile,writeFile} from 'node:fs/promises';\nimport {updatedNativeAPIFacadeVersions} from './Scripts/MiniApps/resolve-upstreams.mjs';\nconst file='Packages/HanlinExpoNativeAPIJS/src/index.ts';\nconst tooling=JSON.parse(await readFile('Scripts/Expo/package.json','utf8'));\nawait writeFile(file,updatedNativeAPIFacadeVersions(await readFile(file,'utf8'),{expo:tooling.dependencies}));\nconsole.log('Updated only public version constants from the existing resolved dependency graph.');\n"
+  ],
+  "exitCode": 0,
+  "beforeSHA256": "322eb6f4c97bcf28de34e95b3aa871a9d9431f8c3cb37d9603a1ee911fcfc0ae",
+  "afterSHA256": "000de857839c76e86a426123d4bce30f0b56854f7655d4021342b2d932b98390"
+}

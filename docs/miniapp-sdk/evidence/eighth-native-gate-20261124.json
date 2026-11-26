@@ -1,0 +1,349 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-24T06:46:38.460345+00:00",
+  "runID": 45335292541,
+  "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45335292541",
+  "checkoutSHA": "ee3b0ede43fcb4aac02def04d469eae542ba035b",
+  "jobID": 138245838421,
+  "result": "FAILURE",
+  "nativeApplicationAcceptance": "BUILD_FAILED; NOT_VERIFIED",
+  "nativeCasesSelected": 38,
+  "nativeCasesExecuted": 0,
+  "aiCasesSelected": 25,
+  "miniAppsCasesSelected": 13,
+  "ui": "NOT_RUN",
+  "aiApplicationBuild": "NOT_RUN",
+  "physicalDeviceAcceptance": "BLOCKED_EXTERNAL",
+  "physicalDeviceReason": "Available SentinelX connections expose only Linux and Windows; no accessible Mac/device execution environment.",
+  "artifact": {
+    "id": 14896535402,
+    "bytes": 334147108,
+    "sha256": "19ade9a357346edf6b516e20c4847adca2707254f18d221ee73e59c6bc246b3f",
+    "expectedSHA256": "19ade9a357346edf6b516e20c4847adca2707254f18d221ee73e59c6bc246b3f",
+    "verified": true
+  },
+  "actualHost": {
+    "tests": 166,
+    "pass": 165,
+    "fail": 0,
+    "skipped": 1,
+    "skippedCase": "actual Node job crosses 300 seconds with no hidden deadline",
+    "metadata": {
+      "nodeVersion": "v24.5.0",
+      "archiveSha256": "db8f8f82e6013f66b49325a1a0cd47ab7deb7799e2488b16248167df0876dbf4",
+      "sourceInputsHash": "a95cc1ba74b596ead5db4482c24639459b88ff75d0942bcb6e3f720c12bd8ca4",
+      "jitlessArchiveSmoke": "passed",
+      "npmInstall": "npm ci --omit=dev --ignore-scripts --workspaces=false --no-audit --no-fund",
+      "tests": "passed"
+    },
+    "logBytes": 2810658,
+    "logSHA256": "59f3d5236b40f787266e3c2ada9687b2295c4c322e5d467bc935da2bffedaeea"
+  },
+  "failure": {
+    "file": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift",
+    "line": 40,
+    "column": 15,
+    "message": "cannot find 'HanlinArchivePolicy' in scope",
+    "logLine": 49175,
+    "command": {
+      "argv": [
+        "xcodebuild",
+        "-project",
+        "AI_HLY.xcodeproj",
+        "-destination",
+        "platform=iOS Simulator,id=502E8287-119A-488E-9125-F63D98BE0464",
+        "-parallel-testing-enabled",
+        "NO",
+        "-derivedDataPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData",
+        "-clonedSourcePackagesDirPath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/SourcePackages",
+        "-skipPackagePluginValidation",
+        "-skipMacroValidation",
+        "CODE_SIGNING_ALLOWED=YES",
+        "CODE_SIGNING_REQUIRED=YES",
+        "CODE_SIGN_IDENTITY=-",
+        "-scheme",
+        "HanlinMiniApps",
+        "build-for-testing",
+        "-resultBundlePath",
+        "/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/paired-product/MiniBuild.xcresult"
+      ],
+      "exit": 65,
+      "seconds": 1493.534306292,
+      "log": "mini-build.log",
+      "sha256": "143d3591268ff9bb6fd35987eb28ff35962539d961c8187cb66bdfb2ca3e77e0"
+    },
+    "miniBuildLogBytes": 4476459,
+    "miniBuildLogSHA256": "143d3591268ff9bb6fd35987eb28ff35962539d961c8187cb66bdfb2ca3e77e0",
+    "timeoutSeconds": 2400,
+    "timedOut": false,
+    "cancelled": false,
+    "setupCommandsPassed": 11,
+    "commandID": "6e735fdd495b4977b60cd080b2393c49",
+    "pid": 87988,
+    "journalStatuses": {
+      "starting": 1,
+      "running": 46,
+      "completed": 1
+    },
+    "completionRecorded": true,
+    "observedReturncode": 65
+  },
+  "steps": [
+    {
+      "name": "Prepare existing native dependencies and Runtime host",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 13,
+      "started_at": "2026-11-24T05:46:56Z",
+      "completed_at": "2026-11-24T06:05:29Z"
+    },
+    {
+      "name": "Export exact prepared native artifacts for reuse",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 14,
+      "started_at": "2026-11-24T06:05:29Z",
+      "completed_at": "2026-11-24T06:06:19Z"
+    },
+    {
+      "name": "Exercise actual request, return, cancellation and transfer across both products",
+      "status": "completed",
+      "conclusion": "failure",
+      "number": 18,
+      "started_at": "2026-11-24T06:06:49Z",
+      "completed_at": "2026-11-24T06:33:37Z"
+    }
+  ],
+  "resolvedVersions": {
+    "expo": {
+      "expo": "58.0.26",
+      "@expo/ui": "58.0.29",
+      "expo-brownfield": "58.0.20",
+      "react": "19.3.0",
+      "react-native": "0.88.1",
+      "react-native-worklets": "0.13.0",
+      "expo-modules-core": "58.1.0",
+      "expo-modules-jsi": "58.0.23",
+      "expo-widgets": "58.0.29",
+      "@nativescript/react-native": "9.1.2",
+      "@types/react": "19.3.0",
+      "@react-native/codegen": "0.88.1",
+      "@react-native/metro-config": "0.88.1",
+      "babel-preset-expo": "58.0.26"
+    },
+    "nativescript": {
+      "@nativescript/core": "9.1.4",
+      "@nativescript/ios": "9.1.1",
+      "@nativescript/swift-ui": "4.0.2",
+      "@nativescript/types": "9.1.4",
+      "@nativescript/vite": "8.0.24"
+    },
+    "scriptwidget": {
+      "revision": "4da256d58247bbafb9a5cd443a285250b97b3c4b"
+    }
+  },
+  "resolverStageStatus": "applied-awaiting-native-build",
+  "resolverStageBoundary": "applied-awaiting-native-build is the resolver-stage status; subsequent native preparation and Host tests passed, application compilation failed.",
+  "exportedSDK": {
+    "hostArchiveSHA256": "db8f8f82e6013f66b49325a1a0cd47ab7deb7799e2488b16248167df0876dbf4",
+    "hostArchiveBytes": 81996421,
+    "sdkManifestMember": "MiniAppSDK/miniapp-sdk.json",
+    "sdkManifestSHA256": "fa1e737ec63e640175cdb5c9dad51903cd86d50ae7b340ba5b8ec1ff4e408d85",
+    "sdkInputSHA256": "4028f9fc58e1a9a95937ed7b4eb223c3caa2a94714bbbdaae4ddc7b0aa6de795",
+    "sdkFiles": 25791,
+    "sdkUncompressedBytes": 299773741,
+    "archiveUncompressedBytes": 356991190,
+    "firstMembers": [
+      "MiniAppSDK/docs/hanlin-expo-runtime.md",
+      "MiniAppSDK/docs/hanlin-nativescript-guide.md",
+      "MiniAppSDK/docs/miniapp-sdk/AUTHORING_WORKFLOW.md",
+      "MiniAppSDK/docs/miniapp-sdk/DURABLE_INVOCATION_DELIVERY_2026-11-13.md",
+      "MiniAppSDK/docs/miniapp-sdk/EXPO_HOST_FACADE_CORRECTIONS_2026-11-13.md",
+      "MiniAppSDK/docs/miniapp-sdk/EXPO_STRICT_TYPES_AND_FILE_WIRE_2026-11-14.md",
+      "MiniAppSDK/docs/miniapp-sdk/EXPO_WIDGETS_ORIGINAL.md",
+      "MiniAppSDK/docs/miniapp-sdk/HANDOFF_2026-11-15.md",
+      "MiniAppSDK/docs/miniapp-sdk/IMPORT_REPAIR.md",
+      "MiniAppSDK/docs/miniapp-sdk/METADATA_FRAMEWORK_DEDUP_2026-11-15.md",
+      "MiniAppSDK/docs/miniapp-sdk/MINIAPP_ACTION_LIFETIME_2026-11-13.md",
+      "MiniAppSDK/docs/miniapp-sdk/NATIVESCRIPT_RUNTIME_WIRE_2026-11-13.md"
+    ],
+    "engines": {
+      "expo": {
+        "typescript": {
+          "packageName": "@typescript/typescript6",
+          "packageVersion": "6.0.2",
+          "compilerVersion": "6.0.3"
+        },
+        "packageVersions": {
+          "@expo/ui": "58.0.29",
+          "@hanlin/expo-native-api": "1.0.0",
+          "@hanlin/expo-ui": "1.0.0",
+          "@nativescript/react-native": "9.1.2",
+          "expo": "58.0.26",
+          "expo-brownfield": "58.0.20",
+          "expo-modules-core": "58.1.0",
+          "expo-modules-jsi": "58.0.23",
+          "react": "19.3.0",
+          "react-native": "0.88.1",
+          "react-native-worklets": "0.13.0",
+          "expo-widgets": "58.0.29",
+          "@babel/core": "7.29.7",
+          "@react-native-community/cli": "20.2.0",
+          "@react-native/codegen": "0.88.1",
+          "@react-native/metro-config": "0.88.1",
+          "@types/react": "19.3.0",
+          "babel-preset-expo": "58.0.26",
+          "esbuild": "0.25.12",
+          "typescript": "6.0.2"
+        },
+        "hostContract": {
+          "runtimeVersion": "58.0.29",
+          "expoSDKVersion": "58.0.26",
+          "bridgeVersion": "3.0.0",
+          "nativeApiContractVersion": "1.0.0",
+          "nativeApiAbiIdentity": "rn0.88.1-hermes260318099.0.5",
+          "plugins": {
+            "@expo/ui": "58.0.29",
+            "expo-widgets": "58.0.29",
+            "@hanlin/expo-ui": "3.0.0",
+            "@nativescript/react-native": "9.1.2",
+            "react-native-worklets": "0.13.0"
+          }
+        },
+        "typeCheckingPolicy": {
+          "strictSource": true,
+          "checkOriginalDeclarationBodies": true,
+          "explanation": "Original declarations and source are checked."
+        }
+      },
+      "nativescript": {
+        "typescript": {
+          "packageName": "typescript",
+          "packageVersion": "5.9.3",
+          "compilerVersion": "5.9.3"
+        },
+        "packageVersions": {
+          "@nativescript/core": "9.1.4",
+          "@nativescript/swift-ui": "4.0.2",
+          "@nativescript/ios": "9.1.1",
+          "@nativescript/types": "9.1.4",
+          "@nativescript/vite": "8.0.24",
+          "typescript": "5.9.3",
+          "vite": "8.0.0",
+          "@hanlin/host-services": "1.0.0"
+        },
+        "hostContract": null,
+        "typeCheckingPolicy": {
+          "strictSource": true,
+          "checkOriginalDeclarationBodies": false,
+          "explanation": "Original NativeScript consumer mode: source is strict; original declaration bodies are not revalidated. Set skipLibCheck:false for SDK declaration diagnostics."
+        }
+      },
+      "scriptwidget": {
+        "typescript": {
+          "packageName": "@typescript/typescript6",
+          "packageVersion": "6.0.2",
+          "compilerVersion": "6.0.3"
+        },
+        "packageVersions": {
+          "everettjf/scriptwidget": "4da256d58247bbafb9a5cd443a285250b97b3c4b,68f04194f00222558c44d5a832e7617a96f62574"
+        },
+        "hostContract": null,
+        "typeCheckingPolicy": null
+      }
+    }
+  },
+  "freshAgentKit": {
+    "at": "2026-11-24T06:42:25.832155+00:00",
+    "runID": 45335292541,
+    "sourceCommit": "ee3b0ede43fcb4aac02def04d469eae542ba035b",
+    "hostArchiveSHA256": "db8f8f82e6013f66b49325a1a0cd47ab7deb7799e2488b16248167df0876dbf4",
+    "sdkManifestSHA256": "fa1e737ec63e640175cdb5c9dad51903cd86d50ae7b340ba5b8ec1ff4e408d85",
+    "sdkInputSHA256": "4028f9fc58e1a9a95937ed7b4eb223c3caa2a94714bbbdaae4ddc7b0aa6de795",
+    "verifiedSDKFiles": 25791,
+    "kit": "/dev/shm/hanlin-sdk-only-kit-45335292541",
+    "sdk": "/dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK",
+    "cli": "/dev/shm/hanlin-sdk-only-kit-45335292541/Scripts/MiniApps/miniapp.mjs",
+    "cliSHA256": "1c256c00392c626a54ebee2abe3ededaa792c5bfa6dd9b6c5aceb89be84e5b30",
+    "workspace": "/dev/shm/hanlin-sdk-only-kit-45335292541/author-work",
+    "node": "v24.22.0",
+    "nativeApplicationAcceptance": "BUILD_FAILED; no UI/device pass from this kit preparation"
+  },
+  "retainedXcresults": [
+    "MiniBuild.xcresult"
+  ],
+  "retainedAppIntentsMetadata": false,
+  "retainedUIAttachments": false,
+  "rawAcceptanceBoundary": "The original acceptance.json has status BUILD_FAILED but its initial build field remains NOT_RUN. The actual recorded xcodebuild exit65 and complete log prove an attempted failed build; no test execution is inferred from MiniBuild.xcresult.",
+  "fixPlan": "Move the unchanged pure path contract into HanlinPlatformContracts, forward existing HanlinArchivePolicy API and use the shared contract in HanlinWidgetCompiler; do not add a reverse compiler dependency. Focused existing archive checks and cross-module compilation are reviewed separately.",
+  "previousCancellationCause": "UNKNOWN; this observed compile failure does not retrospectively explain prior cancellations.",
+  "rawEvidence": [
+    {
+      "path": "docs/miniapp-sdk/evidence/eighth-native-gate-20261124/acceptance.json",
+      "bytes": 2011,
+      "sha256": "86d0b7867643d3b0f0fe5d67554bdf64e10f3e0a56a48e942752c4031c0cf714"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/eighth-native-gate-20261124/commands.jsonl",
+      "bytes": 4360,
+      "sha256": "8d7cf6147a16520c1a107bb2c2f231c3ecce859724a62cf24c1a296c9d3548d0"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/eighth-native-gate-20261124/command-events.jsonl",
+      "bytes": 67073,
+      "sha256": "365503f99daa39c73eab645dc3a3f55bc5029adb179cc069d5fa9082a8e6236b"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/eighth-native-gate-20261124/active-command.json",
+      "bytes": 513,
+      "sha256": "0f1f4aa9846cdfb44905b69ce3eecffc22a5cb2099e67b08e8c323e5072dca0a"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/eighth-native-gate-20261124/host-metadata.json",
+      "bytes": 358,
+      "sha256": "c1bb4febd1b2d4a3d939c60dc60da4e434987aa3360e03b179ec66723ffef38e"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/eighth-native-gate-20261124/upstream-resolution.json",
+      "bytes": 14914,
+      "sha256": "dd5fee6acb1df0534c727aa8d59ff752357e37ed3ba6c5fc87f1b8fbc2357cf5"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/eighth-native-gate-20261124/job-api.json",
+      "bytes": 7983,
+      "sha256": "8cf504ef6cf6b3d97eec34e5c68007d174a61fb0ff5774ad2b94e7d7257a117d"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/eighth-native-gate-20261124/dispatch.json",
+      "bytes": 785,
+      "sha256": "c5ee8affe92d3bbac53e01a01ef82a4d1f3c3e2fd2dcbbba21ad6ce279ca95a0"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/eighth-native-gate-20261124/exported-sdk-summary.json",
+      "bytes": 4132,
+      "sha256": "7261427a61b47f1f01a5e29f89862c5f6b3e67c91afcd774950d319d19f2c09b"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/eighth-native-gate-20261124/sdk-only-kit-preparation.json",
+      "bytes": 941,
+      "sha256": "5c4db8cfe79a1d76f4d03c843db62e063003a2eea0a704d287a34d4ff5c8762f"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/eighth-native-gate-20261124/artifact-download-receipt.json",
+      "bytes": 11604,
+      "sha256": "ecc5c795b5fc92e62b2e78b6908eeb5abce5acba8ebc5493158c3ebe5b3ad6f4"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/eighth-native-gate-20261124/mini-build-error-excerpt.log",
+      "bytes": 1182,
+      "sha256": "34556d379babddb10f17bf39a7f9e0ec8a5847354a9008ae1ab0b19a91f2d979"
+    },
+    {
+      "path": "docs/miniapp-sdk/evidence/eighth-native-gate-20261124/host-authoring-and-summary-excerpt.json",
+      "bytes": 1864123,
+      "sha256": "12555c2383131e16da5f02210d551821c8d23712b9686b3d1d5ab873995279c1"
+    }
+  ]
+}

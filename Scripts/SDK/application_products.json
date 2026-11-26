@@ -193,6 +193,18 @@
     {
       "product": "HanlinExtensionContracts",
       "package": "HanlinSDK"
+    },
+    {
+      "product": "HanlinTranslationUI",
+      "package": "HanlinSDK"
+    },
+    {
+      "product": "HanlinExpoWidgetsOriginal",
+      "package": "HanlinSDK"
+    },
+    {
+      "product": "HanlinCameraCaptureUI",
+      "package": "HanlinSDK"
     }
   ]
 }

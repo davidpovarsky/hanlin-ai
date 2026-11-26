@@ -1,0 +1,219 @@
+{
+  "schemaVersion": 1,
+  "recordedAt": "2026-11-24T03:18:48.225323+00:00",
+  "sourceCommit": "789949132fc4e9399425958c343571fbe8e420eb",
+  "run": {
+    "id": 45314033438,
+    "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45314033438",
+    "job": 138176418812,
+    "conclusion": "cancelled",
+    "cancelledStep": "Exercise actual request, return, cancellation and transfer across both products",
+    "cancelledAt": "2026-11-24T03:06:55Z",
+    "cause": "Not established. GitHub annotation only states The operation was canceled.",
+    "configuredJobTimeoutMinutes": 150
+  },
+  "actualMacPassed": {
+    "sourceResolution": true,
+    "nativeDependencyPreparation": true,
+    "runtimeHostPreparation": true,
+    "preparedNativeExport": true,
+    "packageLifecycle": {
+      "tests": 7,
+      "pass": 7,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "relocatedRealMiniAppCLI": {
+      "tests": 1,
+      "pass": 1,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "fullHostSuite": {
+      "tests": 166,
+      "pass": 165,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 1
+    },
+    "foreground": {
+      "status": "EXECUTED_PASS",
+      "count": 53,
+      "toolchain": "Apple Swift version 6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)\nTarget: arm64-apple-macosx27.0.0"
+    }
+  },
+  "pairedApplicationEvidence": {
+    "completedCommands": 11,
+    "allCompletedCommandExitsZero": true,
+    "lastCompletedCommand": [
+      "xcrun",
+      "simctl",
+      "bootstatus",
+      "8F62564C-34B3-4383-92A5-F558FEECA868",
+      "-b"
+    ],
+    "miniBuildLogBytes": 0,
+    "nativeAppCompilation": "NOT_VERIFIED",
+    "uiAcceptance": "NOT_RUN",
+    "selectedCases": 36,
+    "resultBundles": [],
+    "actualCompilerOrTestFailureFound": false,
+    "fallbackCaveat": "The original workflow fallback guesses preflight failure when no real paired receipt exists. That wording is not the diagnosed cause; all preparation steps succeeded and the run was cancelled."
+  },
+  "artifact": {
+    "id": 14886146053,
+    "name": "app-split-45314033438",
+    "size_in_bytes": 329704337,
+    "digest": "sha256:c939dad8e9a3bb1be0d9a4e7d28d5c2af3a93747fbae48bc768a54a538785d39",
+    "created_at": "2026-11-24T03:07:51Z",
+    "expires_at": "2026-12-08T03:07:08Z"
+  },
+  "retainedEvidence": [
+    {
+      "file": "hanlin-native-gate-45314033438.job.log",
+      "bytes": 3707840,
+      "sha256": "e9c91f89071465289bbb81710c407ba43142803bc532af57ecafe32f1e8e60b1"
+    },
+    {
+      "file": "app-split-evidence/acceptance.json",
+      "bytes": 231,
+      "sha256": "bdd0401fd80e1fcd64ef2838ed65ff123252f5337814236fca16e3d5c9c9b127"
+    },
+    {
+      "file": "app-split-evidence/native-dependencies.log",
+      "bytes": 2810705,
+      "sha256": "af60a0b62ffcb3185357818d23661fe56fe3206bcc129016459a5548a5ab1bdc"
+    },
+    {
+      "file": "app-split-evidence/package-lifecycle.log",
+      "bytes": 1413,
+      "sha256": "a04793adc42aab5a27df84216fd8baeab7c18c3af1751a682a085144694e1936"
+    },
+    {
+      "file": "app-split-evidence/miniapp-cli-relocation.log",
+      "bytes": 221,
+      "sha256": "221790ecb68fdb8522d49533b6cfa769353c28bb459ebee2514404f618c4ae5a"
+    },
+    {
+      "file": "app-split-evidence/prepared-native/native-artifacts.json",
+      "bytes": 28572,
+      "sha256": "ce4a25241cc3396d7c4b7b515fc7b9f4652d7f8878dec2cdbc49023b76b00a30"
+    },
+    {
+      "file": "app-split-evidence/upstream-resolution.json",
+      "bytes": 14914,
+      "sha256": "4912652310f4d82b9cda7827cc740583a7eec44e3f461850efcc2755eae6b0e4"
+    },
+    {
+      "file": "app-split-evidence/paired-product/commands.jsonl",
+      "bytes": 2399,
+      "sha256": "f6cc82b0ea13b9c53129b44fb4f0dee7302b9c05843a1a5e6d98808c9afe624c"
+    }
+  ],
+  "preparedArchiveVerification": {
+    "state": "prepared",
+    "count": 19,
+    "allArchiveSHA256MatchedCatalog": true,
+    "archives": [
+      {
+        "file": "app-split-evidence/prepared-native/ReactNativeHeaders.xcframework.zip",
+        "bytes": 2218062,
+        "sha256": "e8c0e6fecd700509179c1296775b02205d652f0e48e90d5c74d9e224539b6689"
+      },
+      {
+        "file": "app-split-evidence/prepared-native/React.xcframework.zip",
+        "bytes": 21787927,
+        "sha256": "21455661a3e37f44b8500874b46e5ef241e3d72c0074a7673f46b7efa0278735"
+      },
+      {
+        "file": "app-split-evidence/prepared-native/ReactNativeDependencies.xcframework.zip",
+        "bytes": 4839175,
+        "sha256": "6f191004f813fe736191f73aa1b1ffc9e92f16a1b8dd913d10ec0bae84456352"
+      },
+      {
+        "file": "app-split-evidence/prepared-native/hermesvm.xcframework.zip",
+        "bytes": 5310854,
+        "sha256": "6d6934e48546cf25e4ba402a53ff2d978d10c8b2f8acd479a2d7342768e01e33"
+      },
+      {
+        "file": "app-split-evidence/prepared-native/ExpoModulesJSI.xcframework.zip",
+        "bytes": 7973031,
+        "sha256": "61ed3cbbbc7416c720f7aaefa9c27478eadda61f883ef2d8922f5df3a22ae671"
+      },
+      {
+        "file": "app-split-evidence/prepared-native/ExpoModulesCore.xcframework.zip",
+        "bytes": 14697097,
+        "sha256": "8131a35bb147d9995c754d0e1ac73ca261d3b23291b9865675f92d28aa449d43"
+      },
+      {
+        "file": "app-split-evidence/prepared-native/ExpoModulesWorklets.xcframework.zip",
+        "bytes": 1060983,
+        "sha256": "86fb7de064885f6fef358e012b9040c7402e03f9e8a42c573a38b8c5823c84f6"
+      },
+      {
+        "file": "app-split-evidence/prepared-native/ExpoUI.xcframework.zip",
+        "bytes": 20072342,
+        "sha256": "6af98345e8534b79b3433414a7df994031148a397f094c4ef3e379fc5e7366b4"
+      },
+      {
+        "file": "app-split-evidence/prepared-native/ExpoBrownfield.xcframework.zip",
+        "bytes": 1177320,
+        "sha256": "1dca1e9cbc56851d418d3985e748637303c4a9a02e4e159ea7c68d622c960962"
+      },
+      {
+        "file": "app-split-evidence/prepared-native/Libffi.xcframework.zip",
+        "bytes": 52120,
+        "sha256": "6a50e1bc7fb52c15372278b54e721e4f22887a50ba7bdd9bf93bb6c3507795cf"
+      },
+      {
+        "file": "app-split-evidence/prepared-native/TNSWidgets.xcframework.zip",
+        "bytes": 5898178,
+        "sha256": "861178adca25cb37cbc9372566da3ab7bbb09ee81a552a667c78025b257f214e"
+      },
+      {
+        "file": "app-split-evidence/prepared-native/NSCWinterTC.xcframework.zip",
+        "bytes": 2843711,
+        "sha256": "2399fcd150e44cf6fff99beb2d3ddc483c6c527830d176293852f44378e83190"
+      },
+      {
+        "file": "app-split-evidence/prepared-native/NodeMobile.xcframework.zip",
+        "bytes": 35086561,
+        "sha256": "755769361a77d53ac930ff0b28526a6a9085619f15dc7bd169fcadcc3ee290fc"
+      },
+      {
+        "file": "app-split-evidence/prepared-native/Python.xcframework.zip",
+        "bytes": 38395469,
+        "sha256": "cd0978e95d2b68ac234cf2bad7d8ac83e4ed3afd6266bee402141e3ed9eb2d13"
+      },
+      {
+        "file": "app-split-evidence/prepared-native/HanlinExpoHeaderSupport.zip",
+        "bytes": 10675681,
+        "sha256": "90b3af259a3347adffb021f56e66ff82e926ea1e8668d5774b1d384650394c45"
+      },
+      {
+        "file": "app-split-evidence/prepared-native/HanlinExpoWidgetRuntimeSupport.zip",
+        "bytes": 40469,
+        "sha256": "0b43a5d047eb3d9b812c4e65c94753162808713afa27a8a5aba8984eac0b7b4b"
+      },
+      {
+        "file": "app-split-evidence/prepared-native/HanlinNativeScriptHostSupport.zip",
+        "bytes": 12837335,
+        "sha256": "3042808300c0e0abe07286d2d0ddb07facfff017b493ba13789a8f207604849f"
+      },
+      {
+        "file": "app-split-evidence/prepared-native/HanlinNodeHostSupport.zip",
+        "bytes": 76328453,
+        "sha256": "496840a2579b2ebd4a858d2295a29ce14258440a02c75a92a511d1399c5874ea"
+      },
+      {
+        "file": "app-split-evidence/prepared-native/HanlinPythonHostSupport.zip",
+        "bytes": 360,
+        "sha256": "9a69b3ab8a633dfa68df54bc94a780593372eec8305ca6df6962d4ff0aae89a8"
+      }
+    ],
+    "scope": "Checksums validate retained exports, not native app execution or published release acceptance."
+  },
+  "next": "Include committed modal-test cleanup6245ffef, correct cancellation fallback, push and repeat the actual36-case Apple gate. Do not mark app/UI passed."
+}

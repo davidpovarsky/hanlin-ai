@@ -1,0 +1,94 @@
+{
+  "owner": "/root/native_execution",
+  "source": "42e34eff615a6d599ddfd01ea9382d920b5f9a5c",
+  "status": "FAIL",
+  "pid": 45403,
+  "startedAt": "2026-11-25T04:07:44.028715+00:00",
+  "original52": "NOT_RUN",
+  "wrapperSHA256": "7438ab010cedebd87a3ac16b10617113b7d4c71a5b4e9d041d071f7897a68797",
+  "diagnosticState": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt13/state.json",
+  "sourceAdvance": {
+    "receipt": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/source-advance-42e34eff/receipt.json",
+    "sha256": "ec640dc02e01871b8954a48e0cae7f6ba6fc74a4bb60057005b88a9d1a8db724"
+  },
+  "resourceObservation": {
+    "observedAt": "2026-11-25T04:07:44.043414+00:00",
+    "df": "Filesystem   1024-blocks      Used Available Capacity iused     ifree %iused  Mounted on\n/dev/disk3s5   482797652 427797932  11114944    98% 5814200 111149440    5%   /System/Volumes/Data\n",
+    "freeBytes": 11381702656,
+    "estimatedIncrementalBytes": 6804774912,
+    "concurrentGrowthAndOSAllowanceBytes": 4294967296,
+    "basis": "Revised measured scope: current same-Modular device is5,731,033,088B by du; this is a conservative full-directory upper bound, not measured new physical allocation. APFS sharing is not assumed. Only changed UI test/source against reused SDK/native products, with0.5GiB incremental products and0.5GiB one-case evidence. Actual concurrent-growth/OS allowance4GiB remains explicit. Prior12.149GB estimate and all retirement receipts are preserved; no fixed free-space/CPU/load/job-count threshold.",
+    "decision": "ADMITTED"
+  },
+  "admittedAt": "2026-11-25T04:07:44.043993+00:00",
+  "argv": [
+    "/opt/homebrew/bin/python3.12",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt13.py",
+    "--source",
+    "42e34eff615a6d599ddfd01ea9382d920b5f9a5c",
+    "--output",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt13"
+  ],
+  "maximumActiveSeconds": 3153.017480835002,
+  "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt13.log",
+  "wrapperPID": 45406,
+  "elapsedSeconds": 414.61639858299895,
+  "logBytes": 18809,
+  "diskObservations": [
+    {
+      "observedAt": "2026-11-25T04:08:14.052452+00:00",
+      "freeBytes": 10770927616
+    },
+    {
+      "observedAt": "2026-11-25T04:08:44.073179+00:00",
+      "freeBytes": 9759641600
+    },
+    {
+      "observedAt": "2026-11-25T04:09:14.091637+00:00",
+      "freeBytes": 9246314496
+    },
+    {
+      "observedAt": "2026-11-25T04:09:44.097590+00:00",
+      "freeBytes": 8593588224
+    },
+    {
+      "observedAt": "2026-11-25T04:10:14.111701+00:00",
+      "freeBytes": 8455999488
+    },
+    {
+      "observedAt": "2026-11-25T04:10:44.124078+00:00",
+      "freeBytes": 7393685504
+    },
+    {
+      "observedAt": "2026-11-25T04:11:14.130687+00:00",
+      "freeBytes": 7029932032
+    },
+    {
+      "observedAt": "2026-11-25T04:11:44.143833+00:00",
+      "freeBytes": 7368548352
+    },
+    {
+      "observedAt": "2026-11-25T04:12:14.152844+00:00",
+      "freeBytes": 7272873984
+    },
+    {
+      "observedAt": "2026-11-25T04:12:44.166027+00:00",
+      "freeBytes": 6490226688
+    },
+    {
+      "observedAt": "2026-11-25T04:13:14.181147+00:00",
+      "freeBytes": 5643456512
+    },
+    {
+      "observedAt": "2026-11-25T04:13:44.187972+00:00",
+      "freeBytes": 5657169920
+    },
+    {
+      "observedAt": "2026-11-25T04:14:14.202514+00:00",
+      "freeBytes": 5349519360
+    }
+  ],
+  "exitCode": 1,
+  "finishedAt": "2026-11-25T04:14:38.661375+00:00",
+  "sourceRestored": true
+}

@@ -1,0 +1,9 @@
+{
+  "source": "cffe7f75436aa2e37ec5d82891937965c0407d2d",
+  "pid": 53834,
+  "startedAt": "2026-11-25T06:56:19.917886+00:00",
+  "scope": "affected original preparation/export/restore/inputs only; paired-v3 not launched",
+  "physicalFreeBytes": 15123529728,
+  "df": "Filesystem   1024-blocks      Used Available Capacity iused     ifree %iused  Mounted on\n/dev/disk3s5   482797652 424143804  14769072    97% 6285912 147690720    4%   /System/Volumes/Data\n",
+  "statePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/state.json"
+}

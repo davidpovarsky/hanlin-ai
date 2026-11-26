@@ -1,0 +1,582 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-25T00:56:18.825310+00:00",
+  "status": "ACTUAL_SDK_AND_PREPARATION_IDENTITIES_RECONCILED",
+  "executionSource": "1812bff50571c9907d15cd8b4bfbe4874be24756",
+  "executionSourceTree": "d06c5752c33c787df957a01d33461889cf5d7f4e",
+  "evidenceIntegrationBase": "1812bff50571c9907d15cd8b4bfbe4874be24756",
+  "snapshot": {
+    "root": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt9",
+    "receiptSHA256": "74663345cae2bb65b7de8b1eb6981bfeeb3319288de6b89a7f15bf8aa7ffb608",
+    "capturedAtUTC": "2026-11-25T00:37:54.446694+00:00",
+    "verifiedTransferMembers": 23
+  },
+  "archive": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt9/files/build/runtime-host/RuntimeHostResources.zip",
+    "bytes": 81813684,
+    "sha256": "3c94ebea1e314c280031ac475e2d42b63ebcf2dc2eb32d2c6e31905e3eda3240",
+    "manifestBytes": 5219389,
+    "manifestSHA256": "6fbba77d588e292b291864f0cae9e5eb5d602a4e2f208379ce1c331dedf412c9",
+    "inputSHA256": "4904d0a46e4c653587fa1503a059834e9b6f35eac821a286d5eb9e96b8a92011",
+    "sourceInputs": 222,
+    "actualSDKMembersVerified": 25661,
+    "actualSDKBytesVerified": 294393847,
+    "copyRetainedInGit": false
+  },
+  "comparison": {
+    "priorExecutionSource": "fd81d602d3b25f09162a659e1e0cf0582e91a93a",
+    "priorArchiveSHA256": "c4e85e967f873ffbe907990c5d9d612b5b6f95871b4e85c736ec0799f09cb1af",
+    "changedInputs": 11,
+    "unchangedInputs": 211,
+    "changedSDKMembers": 11,
+    "unchangedSDKMembers": 25650,
+    "outsideSDKHostChanged": 1,
+    "outsideSDKHostUnchanged": 3101,
+    "groups": {
+      "declarations": {
+        "members": 5210,
+        "unchanged": 5208,
+        "changed": [
+          "expo/node_modules/@types/react/index.d.ts",
+          "expo/node_modules/@types/react/ts5.0/index.d.ts"
+        ]
+      },
+      "examples": {
+        "members": 29,
+        "unchanged": 29,
+        "changed": []
+      },
+      "public-docs": {
+        "members": 25,
+        "unchanged": 21,
+        "changed": [
+          "docs/miniapp-sdk/extension-reachability.json",
+          "docs/miniapp-sdk/extension-reachability.md",
+          "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+          "docs/miniapp-sdk/source-inventory.json"
+        ]
+      },
+      "original-compiler-entrypoints": {
+        "members": 2,
+        "unchanged": 2,
+        "changed": []
+      }
+    }
+  },
+  "expo": {
+    "packageVersionKeys": 21,
+    "assetVersion": "58.0.21",
+    "reactTypesVersion": "19.3.1",
+    "assetPackageMembers": 109,
+    "assetPackageMembersByteUnchangedFromSDK7": true,
+    "assetResource": {
+      "packageJSON": "expo/node_modules/expo-asset/package.json",
+      "types": "expo/node_modules/expo-asset/build/index.d.ts"
+    },
+    "endpointCalledByInspector": false,
+    "report": "expo-asset-sdk-authority.json"
+  },
+  "declarationTransforms": {
+    "actualReceiptSHA256": "c5e5322a6177f36a713380134006d4beb3a0ebd275e435e66b7de93a4cb60f82",
+    "producerSHA256": "e32603c7fd4a24f2c5223155185e35bc59ad87455859cf3bf321a23a5e6f878e",
+    "pinnedFiles": 5,
+    "exactSubstitutions": 7,
+    "allFiveCorrectedBytesUnchangedFromSDK7": true,
+    "currentPackages": {
+      "react-native": "0.88.1",
+      "@nativescript/react-native": "9.1.2"
+    },
+    "report": "declaration-transforms-and-react-update.json",
+    "boundary": "Original package provenance plus explicit pre-existing declaration transformations; the separate React types19.3.1 update is original upstream content."
+  },
+  "preparedSource": {
+    "paths": 9,
+    "bytes": 1150910,
+    "contentChanges": 9,
+    "modeChanges": 0,
+    "ledgerSHA256": "d46ba9bfc67d9dc002defe61a624a1b4e0b1ec4543c138917a268928bd6d8234",
+    "canonicalBinding": {
+      "algorithm": "SHA256 of compact UTF-8 JSON rows sorted by path; keys path,beforeSHA256,afterSHA256,bytes,contentFrom",
+      "sha256": "651412fc7d95567ac27daa6c757bd3aa2f3cacaf6e50f85e6e96348073f64600"
+    },
+    "materializedByThisLane": false,
+    "reports": [
+      "prepared-source-delta.json",
+      "prepared-change-classification.json"
+    ]
+  },
+  "documentation": {
+    "status": "EXECUTED_PASS",
+    "projects": 4,
+    "diagnostics": 0,
+    "sourceFences": 14,
+    "jsonFences": 7,
+    "excludedNonAuthoringFences": 8,
+    "actualReportSHA256": "5dce747063a1ffcd7af752f6ee52980093cf140ab5ff1f371e7becfae2747460",
+    "report": "documentation-execution-binding.json"
+  },
+  "host": {
+    "moduleSHA256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9",
+    "sourceInputsHash": "224b846f2c966639d20861c63fed19da19528207cc2dee22fb06447411f9161d",
+    "actualTests": {
+      "tests": 170,
+      "pass": 169,
+      "fail": 0,
+      "skipped": 1
+    },
+    "testsShipped": false,
+    "report": "host-archive-binding.json"
+  },
+  "native": {
+    "requiredTargets": 15,
+    "missingTargets": 0,
+    "catalogSHA256": "c2c8a3624236d252ad82fd42db967cbf76902c54c89f8cfb39a0f7be77fb710b",
+    "producerContentSHA256": "9b3b714bf5a29ac92472e5ffe530ec0c2f6ebf79f65faa506ad0d7f8ce88e37b",
+    "sourceBuildReceiptSHA256": "78a6b4b85330189dd162c09ae250cb280bf7dbe62608ca6438e6f3fabde6ee3b",
+    "assetSourceBuildInputSHA256": "a85fc86c413d87679e62878cc4b7b512e925c36806a9b383daf095dab9c55159",
+    "assetOriginalTarballSHA256": "2bfbb115da9111702530e5df550eac7e2a074aa12b6297fcc332744767623126",
+    "assetExportedXCFramework": {
+      "archive": "ExpoAsset.xcframework.zip",
+      "bytes": 236835,
+      "checksum": "5786adf1e037e948ec74cc722bb4eb4f59089aad839e7abc8c254196c143d53e",
+      "installPath": "Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework",
+      "kind": "xcframework",
+      "libraries": [
+        {
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64/ExpoAsset.framework/ExpoAsset",
+          "binarySHA256": "bc4ec32879fe696af9246f6d2280c75f95ac7a136b712ba4e823d7e9c8e5c90e",
+          "identifier": "ios-arm64",
+          "platform": "ios",
+          "variant": null
+        },
+        {
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "ios-arm64_x86_64-simulator/ExpoAsset.framework/ExpoAsset",
+          "binarySHA256": "61fb7c7abb126eb34b1b7c5ce7cd99b6d0c0ba22bc1767f19da38a9a191bbd94",
+          "identifier": "ios-arm64_x86_64-simulator",
+          "platform": "ios",
+          "variant": "simulator"
+        }
+      ],
+      "root": "ExpoAsset.xcframework",
+      "target": "ExpoAsset",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/releases/download/sdk-native-v1-9b3b714bf5a29ac92472e5ffe530ec0c2f6ebf79f65faa506ad0d7f8ce88e37b/ExpoAsset.xcframework.zip"
+    },
+    "originalStagedToPreparedMembers": 23,
+    "existing14TargetBinaryRecordsUnchanged": true,
+    "reports": [
+      "native-catalog-binding.json",
+      "expo-asset-native-binding.json",
+      "prepared-change-classification.json"
+    ]
+  },
+  "executionCheckpoint": {
+    "attempt": 9,
+    "capturedAtUTC": "2026-11-25T00:37:54.446694+00:00",
+    "statusAtCapture": "PAUSED_AFTER_PHASE",
+    "phase": "split-inputs",
+    "nativePreparation": "EXECUTED_PASS",
+    "nativeExport": "EXECUTED_PASS",
+    "hostLifecyclePrefix": "REUSED_RECORDED_PASS_FROM_ATTEMPT8",
+    "priorAttempt8Preparation": "FAILED_2026-11-25T00:19:13.587171+00:00",
+    "consumerAndApplicationAcceptance": "NOT_ESTABLISHED_BY_THIS_SNAPSHOT",
+    "report": "execution-checkpoint.json"
+  },
+  "inspection": {
+    "summary": {
+      "status": "PASS",
+      "recordedAtUTC": "2026-11-25T00:47:50.510017+00:00",
+      "inspectionStartedAtUTC": "2026-11-25T00:47:46.624534+00:00",
+      "elapsedSeconds": 3.8855008454993367,
+      "source": "1812bff50571c9907d15cd8b4bfbe4874be24756",
+      "archiveSHA256": "3c94ebea1e314c280031ac475e2d42b63ebcf2dc2eb32d2c6e31905e3eda3240",
+      "manifestSHA256": "6fbba77d588e292b291864f0cae9e5eb5d602a4e2f208379ce1c331dedf412c9",
+      "inputSHA256": "4904d0a46e4c653587fa1503a059834e9b6f35eac821a286d5eb9e96b8a92011",
+      "actualSDKMembersVerified": 25661,
+      "actualSDKBytesVerified": 294393847,
+      "changedInputs": 11,
+      "unchangedInputs": 211,
+      "changedSDKMembers": 11,
+      "unchangedSDKMembers": 25650,
+      "changedOutsideSDKHostMembers": 1,
+      "unchangedOutsideSDKHostMembers": 3101,
+      "declarationGroups": {
+        "declarations": {
+          "members": 5210,
+          "unchanged": 5208,
+          "changed": [
+            "expo/node_modules/@types/react/index.d.ts",
+            "expo/node_modules/@types/react/ts5.0/index.d.ts"
+          ]
+        },
+        "examples": {
+          "members": 29,
+          "unchanged": 29,
+          "changed": []
+        },
+        "public-docs": {
+          "members": 25,
+          "unchanged": 21,
+          "changed": [
+            "docs/miniapp-sdk/extension-reachability.json",
+            "docs/miniapp-sdk/extension-reachability.md",
+            "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+            "docs/miniapp-sdk/source-inventory.json"
+          ]
+        },
+        "original-compiler-entrypoints": {
+          "members": 2,
+          "unchanged": 2,
+          "changed": []
+        }
+      },
+      "expoPackageVersionKeys": 21,
+      "expoAssetVersion": "58.0.21",
+      "reactTypesVersion": "19.3.1",
+      "pinnedDeclarationCorrections": 5,
+      "exactDeclarationSubstitutions": 7,
+      "documentProjects": 4,
+      "diagnostics": 0,
+      "nativeRequiredTargets": 15,
+      "missingTargets": 0,
+      "hostTests": {
+        "tests": 170,
+        "pass": 169,
+        "fail": 0,
+        "skipped": 1
+      },
+      "applicationAcceptance": "NOT_ESTABLISHED"
+    },
+    "transferInspector": "verify_transfer.py",
+    "sdkInspector": "inspect_sdk.py",
+    "classificationInspector": "classify_prepared.py",
+    "productGeneratorsRun": false,
+    "productCompilersOrTestsRun": false,
+    "nativeQueryOrBuildRun": false,
+    "archiveRepackedOrCopied": false
+  },
+  "boundaries": [
+    "Raw attempt8 terminal failure and attempt9 paused snapshot are immutable historical evidence; later observations are separate.",
+    "SDK/declaration/native preparation is not the52application cases, physical acceptance or screenshot proof.",
+    "Existing five declaration corrections are explicitly accounted; no claim that every original declaration byte is unmodified.",
+    "All files in this commit are evidence; production materialization is owned by root."
+  ],
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 11294,
+      "sha256": "71d2e0fcf2aad4342487cc9b8148576dac3703e2a7bb8cca823046489e5583d8"
+    },
+    {
+      "path": "classification-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "classification-stdout.txt",
+      "bytes": 207,
+      "sha256": "68a06b7b937d5ddf5e159f78bdb8c12581f1ccc8ff055dc5905f31e5f488c2c1"
+    },
+    {
+      "path": "classify_prepared.py",
+      "bytes": 6304,
+      "sha256": "a4fc44251eaef885430fa4de7411b647f05ac0ea00dac3418d00a5374794d91f"
+    },
+    {
+      "path": "compiler-identity-binding.json",
+      "bytes": 1231,
+      "sha256": "8e7c8faadcccfcfa3204e690e08098529af1999f887122dc35e8960987176368"
+    },
+    {
+      "path": "declaration-transforms-and-react-update.json",
+      "bytes": 14447,
+      "sha256": "d302c29d8e755f9c599e9c9c432458043aa4b0392925b1efe55cb32c08514425"
+    },
+    {
+      "path": "documentation-execution-binding.json",
+      "bytes": 5292,
+      "sha256": "01de860ac6d8269ca402301181b5957b5b0bd6df9297e447aaf3a304d1c468ce"
+    },
+    {
+      "path": "execution-checkpoint.json",
+      "bytes": 9024,
+      "sha256": "11cd2dfa04f909df52f9591e35b743fddf17999cdac84d2db717718a1fe8cd3f"
+    },
+    {
+      "path": "expo-asset-native-binding.json",
+      "bytes": 4029,
+      "sha256": "10e6d6c88df720d59bce086633e116a46d74aff0b841a26aab3db028c44181c9"
+    },
+    {
+      "path": "expo-asset-sdk-authority.json",
+      "bytes": 33597,
+      "sha256": "8795fd3639c5e12acefb732a572041c7d9c66c9707f227a1d85fb02fd054db20"
+    },
+    {
+      "path": "host-archive-binding.json",
+      "bytes": 1736,
+      "sha256": "0a0e50379903ba1ae62dea0f2b342856b3456472f5ab55b8378ddb83939f5a50"
+    },
+    {
+      "path": "host-member-comparison.json",
+      "bytes": 928201,
+      "sha256": "cb09d2a47b35e4558bc9e19f2ce96642c4b8cd3b896cec50c4ba4ad012141a57"
+    },
+    {
+      "path": "inspect_sdk.py",
+      "bytes": 29226,
+      "sha256": "0f2f621939ca609ca51db6a35f75c6ee0aaecb125268d631e3318c78b39de8bc"
+    },
+    {
+      "path": "inspection-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "inspection-stdout.txt",
+      "bytes": 1659,
+      "sha256": "974996bde9e0d02ba92389d1ddc7de27b61911480a5c5ed21a39471891f8d3b8"
+    },
+    {
+      "path": "inspection-summary.json",
+      "bytes": 1917,
+      "sha256": "9b15fd868bcf00a00374328d5ed4b91cf56540c54ac6abe1521e0777bcd941f2"
+    },
+    {
+      "path": "native-catalog-binding.json",
+      "bytes": 10161,
+      "sha256": "8fc6065773888df2b1c899df06a8baa1e173ef710aea4b1caceb9b7203cd1213"
+    },
+    {
+      "path": "prepared-change-classification.json",
+      "bytes": 11564,
+      "sha256": "4ed401d682702ad8daf8502a40cd55d3e5ee183fb37a9aa1113b533923029ab1"
+    },
+    {
+      "path": "prepared-provenance.diff",
+      "bytes": 58892,
+      "sha256": "642becc1d4018cafdbd0c152e19ed2988937740b056e0d7cf6212bb2bd2aff97"
+    },
+    {
+      "path": "prepared-source-delta.json",
+      "bytes": 78170,
+      "sha256": "145b9d14719ca9cf342bb4863c2d800d371d62f9cacf86bc6d95aff36b071b75"
+    },
+    {
+      "path": "raw/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "bytes": 9960,
+      "sha256": "610bcbb9a7f90c27e3bd3ecd3b1d139fe3ff72ed18086327d1d96c437de932f5"
+    },
+    {
+      "path": "raw/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/.artifact-manifest.json",
+      "bytes": 226,
+      "sha256": "80afcbce26c01da5a63f951e04c6fea5959d3b3a51271d6a24002c35c07ceb47"
+    },
+    {
+      "path": "raw/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/.source-build-receipt.json",
+      "bytes": 1355,
+      "sha256": "78a6b4b85330189dd162c09ae250cb280bf7dbe62608ca6438e6f3fabde6ee3b"
+    },
+    {
+      "path": "raw/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/Info.plist",
+      "bytes": 1196,
+      "sha256": "b239db0645c42fb07b6dd21e54c6012289f62593186b64b880c419d293da984d"
+    },
+    {
+      "path": "raw/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/original-runtime-receipt.json",
+      "bytes": 6085,
+      "sha256": "3d619674297acb22ae4d0a97f5e7d8a878b0eccbc3bfc49769cfdb5a05248a0b"
+    },
+    {
+      "path": "raw/RuntimeDependencies.lock.json",
+      "bytes": 7925,
+      "sha256": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a"
+    },
+    {
+      "path": "raw/Scripts/Expo/dependency-lock.json",
+      "bytes": 5375,
+      "sha256": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65"
+    },
+    {
+      "path": "raw/Scripts/Expo/package-lock.json",
+      "bytes": 336324,
+      "sha256": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8"
+    },
+    {
+      "path": "raw/Scripts/Expo/package.json",
+      "bytes": 1759,
+      "sha256": "e2b50fae013276229c78619bbbe0b63d8c29b00fefde3afeccea98af117aa206"
+    },
+    {
+      "path": "raw/Scripts/MiniApps/upstream-resolution.json",
+      "bytes": 15092,
+      "sha256": "e0c2944ea24c09330825dee58badedcec58606ba603ccdedc888abf1a63a13cb"
+    },
+    {
+      "path": "raw/Scripts/NativeScript/package-lock.json",
+      "bytes": 110219,
+      "sha256": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b"
+    },
+    {
+      "path": "raw/Scripts/NativeScript/package.json",
+      "bytes": 851,
+      "sha256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b"
+    },
+    {
+      "path": "raw/build/acceptance/expo-type-declarations/corrections.json",
+      "bytes": 3600,
+      "sha256": "c5e5322a6177f36a713380134006d4beb3a0ebd275e435e66b7de93a4cb60f82"
+    },
+    {
+      "path": "raw/build/app-split-evidence/miniapp-documentation-snippets.json",
+      "bytes": 20103,
+      "sha256": "5dce747063a1ffcd7af752f6ee52980093cf140ab5ff1f371e7becfae2747460"
+    },
+    {
+      "path": "raw/build/app-split-evidence/prepared-native/native-artifacts.json",
+      "bytes": 29897,
+      "sha256": "c2c8a3624236d252ad82fd42db967cbf76902c54c89f8cfb39a0f7be77fb710b"
+    },
+    {
+      "path": "raw/build/miniapp-upstreams/expo-native-source/ios/Podfile.lock",
+      "bytes": 76498,
+      "sha256": "c012c6f8ee2ca782aea7788349d75a3a57e6e4be8d324037a8b9dce573e4d8e6"
+    },
+    {
+      "path": "raw/build/primary-control/capacity-admission-attempt9.json",
+      "bytes": 2851,
+      "sha256": "6916bb7fa4fc087001d09f00e940fa9657d696f925dcc20f62aaf15452eb5980"
+    },
+    {
+      "path": "raw/build/primary-control/logs-attempt8/split-native-preparation.log.gz",
+      "bytes": 419589,
+      "sha256": "8f0dd8cd1536bd578186f0f93337d5f93b5d7304966f448360e07edd17eff462"
+    },
+    {
+      "path": "raw/build/primary-control/logs-attempt9/split-native-artifacts.log",
+      "bytes": 1604,
+      "sha256": "6ba90756cd5ae1a7ee915af12e22160528b0ceb7d8065409f71ea5d5ffa96f27"
+    },
+    {
+      "path": "raw/build/primary-control/logs-attempt9/split-native-preparation.log",
+      "bytes": 32702,
+      "sha256": "c991c2be959c41940445dc2bad2123f2782793ab4f6c8b56f862b2e7c70d5658"
+    },
+    {
+      "path": "raw/build/primary-control/plan.json",
+      "bytes": 12076,
+      "sha256": "769db2496c2960b2e3064ceb29f06795ccd4f1f1473f50cbdf0b352bcecd5d65"
+    },
+    {
+      "path": "raw/build/primary-control/source-advance-1812bff5/receipt.json",
+      "bytes": 6144,
+      "sha256": "aa4219c950de0a184fb0c0dce502feb9224ada501feef118890aca7164c8ecfe"
+    },
+    {
+      "path": "raw/build/primary-control/source-advance-2b327182/receipt.json",
+      "bytes": 7861,
+      "sha256": "55b6bce47a6ff59228c1558fab1178d9feabb41c10ea270fd0a74be04a3daaa1"
+    },
+    {
+      "path": "raw/build/runtime-host/host-metadata.json",
+      "bytes": 358,
+      "sha256": "21579e6ccd76b518940d4b6f4cf1ab469d97919c13fd993ac218af18af47b241"
+    },
+    {
+      "path": "raw/controller-state-at-capture.json",
+      "bytes": 35377,
+      "sha256": "0602ae1b4362df11262dbc039f6559d80850a8f070fd0acb030cdd7c2d3b1d73"
+    },
+    {
+      "path": "raw/docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "bytes": 118804,
+      "sha256": "768731f0c748276aeab4d34f57ad3ad89fd38aa30f562ff0cc9b5ad9a3767368"
+    },
+    {
+      "path": "raw/docs/miniapp-sdk/extension-reachability.json",
+      "bytes": 147521,
+      "sha256": "854dd9133f9de88d62912273c16d11df484c357fb8cd309826e13c1f98fa7885"
+    },
+    {
+      "path": "raw/docs/miniapp-sdk/extension-reachability.md",
+      "bytes": 21494,
+      "sha256": "39e0f358f0597cdcc890d716a2b3631a72e751b4096296bd0d35543d03639ba6"
+    },
+    {
+      "path": "raw/docs/miniapp-sdk/source-inventory.json",
+      "bytes": 493871,
+      "sha256": "104df0d315f5ddd5b8897e305d20d37c667dd43b6f7d788a3fc872692a13300e"
+    },
+    {
+      "path": "raw/expo-asset-produced-bindings.json",
+      "bytes": 9116,
+      "sha256": "299f617ecc8909c16d2a2776488181b5d399a25abed4f255f6b526f8b78ece52"
+    },
+    {
+      "path": "raw/miniapp-sdk.json.gz",
+      "bytes": 1301392,
+      "sha256": "67fe3e02f619a0b8cabf2f1c36c4d7b774d3b5f6f621549287852f734c8785c0"
+    },
+    {
+      "path": "raw/snapshot-receipt.json",
+      "bytes": 13139,
+      "sha256": "74663345cae2bb65b7de8b1eb6981bfeeb3319288de6b89a7f15bf8aa7ffb608"
+    },
+    {
+      "path": "raw/tracked-delta.json",
+      "bytes": 3722,
+      "sha256": "d46ba9bfc67d9dc002defe61a624a1b4e0b1ec4543c138917a268928bd6d8234"
+    },
+    {
+      "path": "retained-raw-files.json",
+      "bytes": 10590,
+      "sha256": "184c45dcc30264205348fff94ebad263198f66bc07d2a366816d8717e75a76d7"
+    },
+    {
+      "path": "sdk-reconciliation.json",
+      "bytes": 12255,
+      "sha256": "be67ec83b5654ac7295af4c912cd7ffb3366e19607b614c655bc91b833baa725"
+    },
+    {
+      "path": "sdk-source-binding.json",
+      "bytes": 74733,
+      "sha256": "16fafd82819f29179ab19633dbfee66782cf45142b6d374c7e6a8625d475616d"
+    },
+    {
+      "path": "shipped-provenance-binding.json",
+      "bytes": 158031,
+      "sha256": "70452ea6c8895c51627af8ecef4d65a9d6d5e930483e6f4a11391ee0b27a3a63"
+    },
+    {
+      "path": "transfer-inspection-stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "transfer-inspection-stdout.txt",
+      "bytes": 5593,
+      "sha256": "d13c79aabae79a2212759ad1a2bd06b81570c07084a1d6712beac9079608399a"
+    },
+    {
+      "path": "transfer-inspection-summary.json",
+      "bytes": 6365,
+      "sha256": "0d4060497d7f0d51bbe92e042ade4612ac58dfe3f5e7cbbeae1f9e8a075bd5d0"
+    },
+    {
+      "path": "transfer-verification.json",
+      "bytes": 10140,
+      "sha256": "77425bf2c0e63a69c5e66b9a81ac37cc0183b2cd718a73703c63011bff7b5a6d"
+    },
+    {
+      "path": "verify_transfer.py",
+      "bytes": 7054,
+      "sha256": "fcd5d96ade34f815f0c0ba7b433a751f3dc07b5ef3db97a54649f3f067b66ac8"
+    }
+  ]
+}

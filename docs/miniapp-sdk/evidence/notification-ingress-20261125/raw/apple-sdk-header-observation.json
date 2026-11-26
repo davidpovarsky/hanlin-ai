@@ -1,0 +1,28 @@
+{
+  "observedAt": "2026-11-25T04:26:44.783452+00:00",
+  "sdk": "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk",
+  "interfaces": [],
+  "files": [
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/System/Library/Frameworks/UserNotifications.framework/Headers/UNUserNotificationCenter.h",
+      "name": "UNUserNotificationCenter.h",
+      "bytes": 8450,
+      "sha256": "7e79a7672061ab07511f71aa9cd5b7883dc83107cfabfb100d32d758bae3d281",
+      "localPath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-sdk-original-20261125/0-UNUserNotificationCenter.h"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/System/Library/Frameworks/UserNotifications.framework/Headers/UNNotificationResponse.h",
+      "name": "UNNotificationResponse.h",
+      "bytes": 1463,
+      "sha256": "8144e989eac5165a0784495cf0353634e7d6c99e858f4c3dc3b5d948015d137e",
+      "localPath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-sdk-original-20261125/1-UNNotificationResponse.h"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk/System/Library/Frameworks/UserNotifications.framework/Headers/UNNotification.h",
+      "name": "UNNotification.h",
+      "bytes": 658,
+      "sha256": "352ed42e9da32bb6cc74ce359620eeb230274990e9abca68033e8560ec546eb9",
+      "localPath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-sdk-original-20261125/2-UNNotification.h"
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+Query chain:
+ →Find: Target Application 'com.itorah.chavrusachat'
+  ↪︎Find: Descendants matching type StaticText
+    ↪︎Find: Elements matching predicate 'label CONTAINS "[MiniApp repair "'
+      ↪︎Find: First Match

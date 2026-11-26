@@ -1,0 +1,38 @@
+[
+  {
+    "id": "G1",
+    "severity": "unresolved launch-contract documentation gap",
+    "resource": "docs/hanlin-expo-runtime.md",
+    "section": "7.2 (AppRegistry registration), compared with 4 (package contract)",
+    "finding": "The guide demonstrates AppRegistry.registerComponent('ExpoSwiftUIProbe', () => App) but does not explain how a custom registration key is associated with Hanlin package launch. The original authored source registers DepartureBudget. Generated script.json and package.json have no moduleName/componentName/appKey association.",
+    "handling": "Kept the original custom registration key unchanged. Both validation and build pass, but those public results do not establish which key the native host will select. Did not read internal host code or request an API recipe from the parent.",
+    "status": "UNRESOLVED; requires authoritative documentation or separate native acceptance. This is not proof of a launch failure."
+  },
+  {
+    "id": "G2",
+    "severity": "documentation ambiguity resolved for portable authoring",
+    "resource": "docs/hanlin-nativescript-guide.md",
+    "section": "5 (TypeScript configuration)",
+    "finding": "The standalone guide snippet names @nativescript/types-ios, while the actual exported SDK config names @nativescript/core/global-types and @nativescript/types.",
+    "handling": "Followed the newer authoring workflow: project tsconfig selects source files only, and the original SDK configuration supplies its actual global declarations. Did not infer that @nativescript/types-ios is missing; no dependency installation or compiler override was attempted.",
+    "status": "RESOLVED for these projects using exported SDK config and successful source validation."
+  },
+  {
+    "id": "G3",
+    "severity": "stale informational version",
+    "resource": "docs/hanlin-expo-runtime.md",
+    "section": "8.1 (Native API hybrid extension)",
+    "finding": "The guide mentions react-native-worklets@0.13.1, while this exact SDK manifest reports react-native-worklets@0.13.0.",
+    "handling": "Used exact manifest versions as instructed. The authored Expo app does not directly import worklets or the Native API extension.",
+    "status": "No build blocker encountered; documentation version discrepancy retained."
+  },
+  {
+    "id": "G4",
+    "severity": "legacy build example outside portable SDK workflow",
+    "resource": "docs/hanlin-expo-runtime.md",
+    "section": "7.3 (Building & Packaging)",
+    "finding": "The guide points to Scripts/Expo/build-probe.mjs for packaging, whereas PUBLIC_TRANSPORT.txt and AUTHORING_WORKFLOW.md provide the current SDK-only public miniapp CLI route.",
+    "handling": "Used only the supplied public miniapp CLI. Did not open build-probe.mjs or copy any fixture.",
+    "status": "RESOLVED for this acceptance via the explicit public transport/current authoring workflow."
+  }
+]

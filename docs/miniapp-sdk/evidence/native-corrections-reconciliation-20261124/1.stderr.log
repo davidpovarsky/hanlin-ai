@@ -1,0 +1,9 @@
+file:///mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Audit/miniapp-manifest-contracts.mjs:328
+  if (!Array.isArray(originalSources) || originalSources.length !== 2) throw new Error('Original widget provenance is missing.');
+                                                                             ^
+
+Error: Original widget provenance is missing.
+    at auditManifestContracts (file:///mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Audit/miniapp-manifest-contracts.mjs:328:78)
+    at async file:///mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Audit/audit-miniapp-sdk.mjs:154:26
+
+Node.js v24.22.0

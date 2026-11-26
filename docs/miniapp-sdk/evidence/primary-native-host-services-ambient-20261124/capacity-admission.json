@@ -1,0 +1,20 @@
+{
+  "owner": "/root/control_authoring",
+  "source": "ce49e30d69466e44b0aa26582beaa57ee7a91a9b",
+  "startedAt": "2026-11-24T17:44:24.213852+00:00",
+  "status": "ADMITTED_CONTROLLER_STARTED",
+  "pid": 51956,
+  "maximumWaitSeconds": 3500,
+  "observedAt": "2026-11-24T17:52:55.431733+00:00",
+  "elapsedSeconds": 511.2193028750007,
+  "blockers": [],
+  "admission": {
+    "toolchain": "Xcode 27.0\nBuild version 27A266a",
+    "sdk": "27.0",
+    "freeDiskBytes": 243968966656,
+    "memory": "Mach Virtual Memory Statistics: (page size of 16384 bytes)\nPages free:                                   126506.\nPages active:                                 301497.\nPages inactive:                               426470.\nPages speculative:                             17215.\nPages throttled:                                   0.\nPages wired down:                              99963.\nPages purgeable:                                1723.\n\"Translation faults\":                     1593990943.\nPages copy-on-write:                        19981300.\nPages zero filled:                        1241420082.\nPages reactivated:                          15917487.\nPages purged:                                1064661.\nFile-backed pages:                            668876.\nAnonymous pages:                               76306.\nPages stored in compressor:                    84199.\nPages occupied by compressor:                  43397.\nDecompressions:                              8072113.\nCompressions:                               15185652.\nPageins:                                    31030225.\nPageouts:                                      26193.\nSwapins:                                           0.\nSwapouts:                                        120.\n",
+    "uptime": "18:52  up  7:23, 0 users, load averages: 7.56 69.53 155.69"
+  },
+  "controllerPID": 54967,
+  "finishedAt": "2026-11-24T17:52:55.533415+00:00"
+}

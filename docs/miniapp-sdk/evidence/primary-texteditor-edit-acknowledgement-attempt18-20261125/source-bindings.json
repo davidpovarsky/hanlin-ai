@@ -1,0 +1,171 @@
+{
+  "schema": 1,
+  "baselineExecutionSource": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+  "lifecycleCorrectionCommit": "38785cff47b019f15a6304484b5a979406978a14",
+  "acknowledgementCorrectionCommit": "e16d37de564f13a86044c9e73bee1debce920820",
+  "bindings": [
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoUIModule.swift",
+      "role": "changed production",
+      "identities": [
+        {
+          "commit": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+          "bytes": 19417,
+          "sha256": "ccb46dbdf9bdcd03eea952c6699cec1f83d40822bc944bad57e69feb8815cf28",
+          "gitMode": "100644"
+        },
+        {
+          "commit": "38785cff47b019f15a6304484b5a979406978a14",
+          "bytes": 20533,
+          "sha256": "bd8c397a2227cfee6765b798c3bb0d453296df9ce02f4f6adb75d75dbf48ec3b",
+          "gitMode": "100644"
+        },
+        {
+          "commit": "e16d37de564f13a86044c9e73bee1debce920820",
+          "bytes": 21367,
+          "sha256": "3ad8217ce87005fab1fe3dc256e7d7680ced7c330f7cd9dc5561f1a5e5905e09",
+          "gitMode": "100644"
+        }
+      ]
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/manual-components.tsx",
+      "role": "changed production",
+      "identities": [
+        {
+          "commit": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+          "bytes": 11311,
+          "sha256": "23315409689a8fb0f1a652a3d62428eade12822a4626224d0080046f08a80fe2",
+          "gitMode": "100644"
+        },
+        {
+          "commit": "38785cff47b019f15a6304484b5a979406978a14",
+          "bytes": 11311,
+          "sha256": "23315409689a8fb0f1a652a3d62428eade12822a4626224d0080046f08a80fe2",
+          "gitMode": "100644"
+        },
+        {
+          "commit": "e16d37de564f13a86044c9e73bee1debce920820",
+          "bytes": 11834,
+          "sha256": "b95b387fce797a3c0ffe8c258e1fe0b411e76956e6cd50ae9235267f5b638da6",
+          "gitMode": "100644"
+        }
+      ]
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/GeneratedModifiersProbe.tsx",
+      "role": "unchanged fixture/test/producer",
+      "identities": [
+        {
+          "commit": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+          "bytes": 16879,
+          "sha256": "ea8594b03cf65e8b06a83faa25fd86e3cb7fa065ac6f0e3d5eea663198ad958e",
+          "gitMode": "100644"
+        },
+        {
+          "commit": "38785cff47b019f15a6304484b5a979406978a14",
+          "bytes": 16879,
+          "sha256": "ea8594b03cf65e8b06a83faa25fd86e3cb7fa065ac6f0e3d5eea663198ad958e",
+          "gitMode": "100644"
+        },
+        {
+          "commit": "e16d37de564f13a86044c9e73bee1debce920820",
+          "bytes": 16879,
+          "sha256": "ea8594b03cf65e8b06a83faa25fd86e3cb7fa065ac6f0e3d5eea663198ad958e",
+          "gitMode": "100644"
+        }
+      ]
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ManualAdapterProbe.tsx",
+      "role": "unchanged fixture/test/producer",
+      "identities": [
+        {
+          "commit": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+          "bytes": 11112,
+          "sha256": "4794f92fc158639b806c0f80bf74cf71775651ad2acd2c24c9462f9d810ff48e",
+          "gitMode": "100644"
+        },
+        {
+          "commit": "38785cff47b019f15a6304484b5a979406978a14",
+          "bytes": 11112,
+          "sha256": "4794f92fc158639b806c0f80bf74cf71775651ad2acd2c24c9462f9d810ff48e",
+          "gitMode": "100644"
+        },
+        {
+          "commit": "e16d37de564f13a86044c9e73bee1debce920820",
+          "bytes": 11112,
+          "sha256": "4794f92fc158639b806c0f80bf74cf71775651ad2acd2c24c9462f9d810ff48e",
+          "gitMode": "100644"
+        }
+      ]
+    },
+    {
+      "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "role": "unchanged fixture/test/producer",
+      "identities": [
+        {
+          "commit": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+          "bytes": 91512,
+          "sha256": "12d0d1c7a3a46044ccc00f995fb8cf0090058a373aca492b181c522238002537",
+          "gitMode": "100644"
+        },
+        {
+          "commit": "38785cff47b019f15a6304484b5a979406978a14",
+          "bytes": 91512,
+          "sha256": "12d0d1c7a3a46044ccc00f995fb8cf0090058a373aca492b181c522238002537",
+          "gitMode": "100644"
+        },
+        {
+          "commit": "e16d37de564f13a86044c9e73bee1debce920820",
+          "bytes": 91512,
+          "sha256": "12d0d1c7a3a46044ccc00f995fb8cf0090058a373aca492b181c522238002537",
+          "gitMode": "100644"
+        }
+      ]
+    },
+    {
+      "path": "Scripts/MiniApps/stage-sdk.mjs",
+      "role": "unchanged fixture/test/producer",
+      "identities": [
+        {
+          "commit": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+          "bytes": 22599,
+          "sha256": "f0d2b438ee79ac0973f8d261ecf626b2a94268e5140c6dcb67f48b07cabd1f25",
+          "gitMode": "100644"
+        },
+        {
+          "commit": "38785cff47b019f15a6304484b5a979406978a14",
+          "bytes": 22599,
+          "sha256": "f0d2b438ee79ac0973f8d261ecf626b2a94268e5140c6dcb67f48b07cabd1f25",
+          "gitMode": "100644"
+        },
+        {
+          "commit": "e16d37de564f13a86044c9e73bee1debce920820",
+          "bytes": 22599,
+          "sha256": "f0d2b438ee79ac0973f8d261ecf626b2a94268e5140c6dcb67f48b07cabd1f25",
+          "gitMode": "100644"
+        }
+      ]
+    }
+  ],
+  "priorEvidence": {
+    "commit": "abdb0eed018a83272a8e6a65c83add6d3e364433",
+    "path": "docs/miniapp-sdk/evidence/primary-texteditor-props-lifecycle-attempt18-20261125/receipt.json",
+    "sha256": "8923d2d3939f001c508d2eb0530cba4c53de448592d438d4bc5fe96317062765",
+    "preservedUnchanged": true
+  },
+  "sdkImpact": {
+    "status": "REQUIRES_FRESH_NORMAL_SDK_PREPARATION_AND_FIXTURE_BUILD",
+    "reason": "The JS wrapper is inside the existing Packages/HanlinExpoUI recursive source root; the changed native implementation also requires affected consumer compilation.",
+    "stageSDKSourceEvidence": [
+      {
+        "line": 154,
+        "text": "  for(const relative of ['Scripts/MiniApps','Packages/HanlinExpoUI','Packages/HanlinExpoNativeAPIJS',"
+      }
+    ],
+    "historicalSDK18HostSHA256": "ce240d8d4083a2babfa3827fd12f93e0ad469b45c5f7055a259fcb8babe1881f",
+    "historicalSDK18ManifestSHA256": "1ca059acbc56b0d8d33f3d678c5023fd5aff26c744ac1e5412c3b1663529dfcd",
+    "noProducerExecutionHere": true
+  }
+}

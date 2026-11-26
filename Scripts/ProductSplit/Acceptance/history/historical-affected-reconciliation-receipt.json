@@ -1,0 +1,89 @@
+{
+  "schema": 1,
+  "status": "ACTUAL_FAILED_EXECUTION_RECONCILED",
+  "createdAt": "2026-11-26T20:33:43.997721+00:00",
+  "source": "542714964a0f12a964651c2306d5f992ca13ae85",
+  "rawEvents": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/current-independent-swiftpm-terminal-v1/raw/current-source-swiftpm-v1/original/paired-product/affected-swiftpm-events.jsonl",
+    "bytes": 1281632,
+    "sha256": "a6c0c35691cd40e87889fe4230165d12bdf2d6b410c42fcad437f3c12adc0eb5"
+  },
+  "rawBytesRewritten": false,
+  "actualCommandExitCode": 1,
+  "plannedBefore": {
+    "definitions": 118,
+    "cases": 198
+  },
+  "actualCompleteSelection": {
+    "definitions": 120,
+    "cases": 200,
+    "explicitParameterCasePairs": 90,
+    "nonParameterizedFunctionLifecycles": 110,
+    "runPairs": 13,
+    "emptyRuns": 9,
+    "distinctDefinitionIDs": 120,
+    "duplicateDefinitionIDs": 0,
+    "discoveryOnlyDefinitions": 0,
+    "missingPreviouslyPlannedDefinitions": 0,
+    "issueEvents": 24,
+    "functionsWithIssues": 19,
+    "skipsOrCancellations": 0
+  },
+  "omissions": [
+    {
+      "function": "emittedExpoIntentCarriesVerifiedIdentityAndCallsSource()",
+      "source": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+      "line": 339,
+      "reason": "Existing @MainActor @Test declaration was omitted."
+    },
+    {
+      "function": "rootFragmentsPreserveOriginalElementAllowances()",
+      "source": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinScriptWidgetOriginalLimitParityTests.swift",
+      "line": 9,
+      "reason": "Existing suite extension in a second source file was omitted."
+    }
+  ],
+  "baselinePresence": {
+    "source": "c34dd6ae752b3ab3ebc001743fc62c72fc48a203",
+    "bothAlreadyPresent": true,
+    "primarySourceSHA256": "f79bb40cbfff82eb8631275fd70f99e2f527c5ee497b4cbb168602b6fbf81658",
+    "extensionSourceSHA256": "1bb84b5decffcd17ddf54d9283f6871e85f4dd83a4fc67fa95dcaa3ef00bf148"
+  },
+  "queue": {
+    "status": "EXECUTED_PASS",
+    "observedFunctions": 10,
+    "observedParameterInstances": 16,
+    "authority": {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/current-independent-swiftpm-terminal-v1/raw/current-source-swiftpm-v1/original/paired-product/widget-host-action-queue-review.json",
+      "bytes": 9638,
+      "sha256": "9cf56cae85b20a3a82eeee4d79c8b8bc4785cdab1f90e5d9c1e3142942ad2f8b"
+    }
+  },
+  "candidateInventory": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/current-swiftpm-abi-reconciliation-v1/affected-swiftpm-test-plan-v3-542.json",
+    "bytes": 100471,
+    "sha256": "68d2047c46f88d3d7f0e49a3ad2ffa5d34e6323d7608a56cc1462845c532c5c4"
+  },
+  "candidateVerifier": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/current-swiftpm-abi-reconciliation-v1/verify-affected-swift-testing-v3-542.py",
+    "bytes": 18040,
+    "sha256": "db6eb91de4177c1397bec37aabed28b9127d85098612a6b069bb149128ce75cb"
+  },
+  "candidateDiff": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/current-swiftpm-abi-reconciliation-v1/verify-affected-swift-testing-v3-542.diff",
+    "bytes": 14632,
+    "sha256": "02b2366aba5835bc01abde9e1ae59406d91dd0f055e8953af63e31d2f58f7b10"
+  },
+  "originalVerifierReplay": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/current-swiftpm-abi-reconciliation-v1/original-v2-failed-raw-review.json",
+    "bytes": 195964,
+    "sha256": "73bda59be0ee35fbb44b7ac5580fdc4a054dc22631057144731acd35ab80c767"
+  },
+  "correctedVerifierReplay": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/current-swiftpm-abi-reconciliation-v1/corrected-v3-failed-raw-review.json",
+    "bytes": 1937741,
+    "sha256": "1b4174fe5b0d78875cbf74e31b35f1861b0875b1a08910468021bcbc9586708a"
+  },
+  "currentSourceBinding": "PENDING_FINAL_ROOT_SOURCE_FIX",
+  "boundary": "Read-only classification of unchanged actual failed events. No current native retry, pass substitution, raw-event rewriting or coverage reduction."
+}

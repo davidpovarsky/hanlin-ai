@@ -1,0 +1,9 @@
+{
+  "package": "@expo/ui",
+  "version": "58.0.29",
+  "source": "/dev/shm/hanlin-sdk-only-kit-45335292541/AI_HLY/Downstream/RuntimeCore/Node/Host/MiniAppSDK/expo/node_modules/@expo/ui/src/swift-ui/modifiers/createModifier.ts",
+  "bytes": 1324,
+  "sha256": "64059a291095f349dd6976a883cdb5129cc7369b005ca4ecacfe0f42b2c9a5e2",
+  "observedImplementation": "createModifier returns the supplied $type plus supplied parameters; createModifierWithEventListener additionally retains the supplied callback.",
+  "boundary": "Original library source identity, not invocation of a mocked native bridge. Original library types are unchanged; the new probe adds no any casts or suppression."
+}

@@ -1,0 +1,8 @@
+{
+  "driver_returncode": -15,
+  "unfinished_command_id": "81f7a9b10e7549cbbb472cb03fb43a79",
+  "child_pid": 3476986,
+  "partial_output_survived": true,
+  "unfinished_command_retained_after_cleanup": true,
+  "completion_recorded_for_unfinished_command": false
+}

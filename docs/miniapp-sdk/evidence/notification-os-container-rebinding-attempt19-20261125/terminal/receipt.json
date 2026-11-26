@@ -1,0 +1,744 @@
+{
+  "schema": 1,
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "observedAt": "2026-11-25T18:51:44.073094+00:00",
+  "state": {
+    "schema": 1,
+    "id": "notification-os-v1",
+    "owner": "/root/native_execution",
+    "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+    "status": "FAILED",
+    "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines",
+    "expectedTests": 1,
+    "controllerPID": 52310,
+    "activeBaselineSeconds": 24307.531661753037,
+    "allowanceSeconds": 900,
+    "decisionSHA256": "6c6daf1c44424cd0c7e68de78a6a46f8727cac01c392eda43c4ed97648109d88",
+    "original52Status": "EXECUTED_PASS",
+    "NS5Status": "EXECUTED_PASS",
+    "historicalProcessGroupExclusions": [],
+    "resourceObservationAtLaunch": {
+      "observedAt": "2026-11-25T18:41:11.255937+00:00",
+      "freeBytes": 41900437504,
+      "df": "Filesystem   1024-blocks      Used Available Capacity iused     ifree %iused  Mounted on\n/dev/disk3s5   482797652 396945848  40918396    91% 5201541 409183960    1%   /System/Volumes/Data"
+    },
+    "originalNode": {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/node-v24.5.0-darwin-arm64/bin/node",
+      "sha256": "336b5b3ebc5deb86df842102b20b6e4761605b7a667823e68dda7761b91a161b",
+      "version": "24.5.0",
+      "bytes": 116870064,
+      "observedIdentity": {
+        "node": "24.5.0",
+        "platform": "darwin",
+        "architecture": "arm64"
+      }
+    },
+    "startedAt": "2026-11-25T18:41:11.256264+00:00",
+    "ownedProcessGroups": {
+      "setup": {
+        "pid": 52330,
+        "pgid": 52330,
+        "argv": [
+          "/opt/homebrew/opt/python@3.12/bin/python3.12",
+          "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v6.py",
+          "--decision",
+          "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/decision.json",
+          "--child",
+          "setup"
+        ]
+      },
+      "worker": {
+        "pid": 52632,
+        "pgid": 52632,
+        "argv": [
+          "/opt/homebrew/opt/python@3.12/bin/python3.12",
+          "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/CI/observe_notification_os_delivery.py",
+          "--device",
+          "E742FBCD-8FF0-4130-B143-7F8328637138",
+          "--runner-data",
+          "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/9B37C117-33C4-420A-89D1-1A9A16F75D4B",
+          "--app-data",
+          "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/C129E146-10B3-4B74-81C5-5D5FFF89DC38",
+          "--app-group",
+          "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/EAE213D3-0A61-4500-9D46-E8F08D94D8F2",
+          "--output",
+          "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/observation",
+          "--started-after",
+          "1795632096.088764",
+          "--timeout",
+          "650"
+        ]
+      },
+      "test": {
+        "pid": 52633,
+        "pgid": 52633,
+        "argv": [
+          "/opt/homebrew/opt/python@3.12/bin/python3.12",
+          "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v6.py",
+          "--decision",
+          "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/decision.json",
+          "--child",
+          "test"
+        ]
+      }
+    },
+    "executionContainersSHA256": "b96b00ec8665a2489c7a021b40c386424a9016e501b79348971b9e72cc2b58ed",
+    "exchangeStartedAfter": 1795632096.088764,
+    "workerPID": 52632,
+    "testPID": 52633,
+    "elapsedSeconds": 353.58866224999656,
+    "testExitCode": 1,
+    "workerExitCode": null,
+    "error": "RuntimeError: Original selected XCTest/verification failed",
+    "ownedGroupsAtCleanup": {
+      "setup": [],
+      "worker": [
+        "52632 52632 Ss  "
+      ],
+      "test": []
+    },
+    "observedExitCodes": {
+      "setup": 0,
+      "worker": -15,
+      "test": 1
+    },
+    "remainingOwnedProcessGroups": {
+      "setup": [],
+      "worker": [],
+      "test": []
+    },
+    "ownedSimulatorCleanup": {
+      "device": "E742FBCD-8FF0-4130-B143-7F8328637138",
+      "ownership": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/created-simulator.txt",
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "",
+      "observedState": "Shutdown",
+      "observedAt": "2026-11-25T18:47:03.973448+00:00"
+    },
+    "cleanupErrors": [],
+    "sourceErrors": [],
+    "finishedAt": "2026-11-25T18:47:04.843086+00:00",
+    "chargedSeconds": 353.58866224999656,
+    "cumulativeActiveSeconds": 24661.120324003034,
+    "allowanceExceededDuringCleanup": false,
+    "processLogs": [
+      {
+        "path": "test.log",
+        "bytes": 3653,
+        "sha256": "10d4c7949bae54de9edc936478dbfbf63a732adccd113dbfd73ef7ce4e064a33"
+      },
+      {
+        "path": "worker.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "setup.log",
+        "bytes": 1843,
+        "sha256": "4993b4129d78e14e5724fbfbfc72b133b7f6b8592a622c2ec5cc1c0be9cdfbb6"
+      }
+    ],
+    "chargeCommitted": true
+  },
+  "selectedAttachments": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "E742FBCD-8FF0-4130-B143-7F8328637138",
+      "deviceName": "HanlinPaired-local",
+      "exportedFileName": "7913D263-00B4-422B-AC66-E73E9DB0AFD7.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "companion-runtime-failure-accessibility_0_CACA6B68-9DB7-4339-9735-761BC3476C19.txt",
+      "timestamp": 1795632417.636
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "E742FBCD-8FF0-4130-B143-7F8328637138",
+      "deviceName": "HanlinPaired-local",
+      "exportedFileName": "DA86865E-3A87-4633-B9CF-9361D5059D4C.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "companion-runtime-failure_0_1939CA65-2B04-4AB9-BA31-E87793EE68F2.png",
+      "timestamp": 1795632417.08
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "E742FBCD-8FF0-4130-B143-7F8328637138",
+      "deviceName": "HanlinPaired-local",
+      "exportedFileName": "3EFAFBD5-5EC9-47FC-A900-BC13F2199A94.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "notification-original-authorization-result-accessibility_0_9E59FA2C-CA25-41A0-A31E-9FE5AFE0F7BA.txt",
+      "timestamp": 1795632250.122
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "E742FBCD-8FF0-4130-B143-7F8328637138",
+      "deviceName": "HanlinPaired-local",
+      "exportedFileName": "4DCE3B9C-07A8-42C1-800C-E07812199BBD.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "notification-original-authorization-result_0_6FB6569C-C283-4A4C-9B9B-0BE1488D2F86.png",
+      "timestamp": 1795632248.269
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "E742FBCD-8FF0-4130-B143-7F8328637138",
+      "deviceName": "HanlinPaired-local",
+      "exportedFileName": "5920E8B3-2F4D-4B6C-96ED-162AFD11CF64.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "notification-original-authorization-control-accessibility_0_49415AB0-4E7F-446D-8158-50D53149CA50.txt",
+      "timestamp": 1795632226.028
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "E742FBCD-8FF0-4130-B143-7F8328637138",
+      "deviceName": "HanlinPaired-local",
+      "exportedFileName": "C3F695C9-34CE-463D-B689-1F322C921F14.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "notification-original-authorization-control_0_BBF62839-266C-423F-9025-B32B251BD0F7.png",
+      "timestamp": 1795632224.632
+    }
+  ],
+  "observerOutputExists": true,
+  "observerOutputFileCount": 0,
+  "boundary": "Finalized original single UI failure before worker obtained fresh exchange. Source and product state read only; no push/receipt result inferred.",
+  "files": [
+    {
+      "path": "notification-os-v1/primary-state-before.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/primary-state-before.json",
+      "bytes": 124965,
+      "sha256": "783d3f71a3b6ac01271b68a22280e265062bc6642ba18de9bdd3dc4c4da78af2",
+      "storedBytes": 124965,
+      "storedSHA256": "783d3f71a3b6ac01271b68a22280e265062bc6642ba18de9bdd3dc4c4da78af2",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632071253515148"
+    },
+    {
+      "path": "notification-os-v1/state.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/state.json",
+      "bytes": 5104,
+      "sha256": "f2b15c99f3d9e131149722f3b6d4215eb4d9dcd07fa9440752fa120ee95415ea",
+      "storedBytes": 5104,
+      "storedSHA256": "f2b15c99f3d9e131149722f3b6d4215eb4d9dcd07fa9440752fa120ee95415ea",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632424846587735"
+    },
+    {
+      "path": "notification-os-v1/ns5Terminal-before.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/ns5Terminal-before.json",
+      "bytes": 3030,
+      "sha256": "8e20572d909c4d0908a0573685f4e87f80155988ed95c677f6ff3215533f15ab",
+      "storedBytes": 3030,
+      "storedSHA256": "8e20572d909c4d0908a0573685f4e87f80155988ed95c677f6ff3215533f15ab",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632071255292478"
+    },
+    {
+      "path": "notification-os-v1/test.log",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/test.log",
+      "bytes": 3653,
+      "sha256": "10d4c7949bae54de9edc936478dbfbf63a732adccd113dbfd73ef7ce4e064a33",
+      "storedBytes": 3653,
+      "storedSHA256": "10d4c7949bae54de9edc936478dbfbf63a732adccd113dbfd73ef7ce4e064a33",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632420308977332"
+    },
+    {
+      "path": "notification-os-v1/worker.log",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/worker.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 0,
+      "storedSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632096088909612"
+    },
+    {
+      "path": "notification-os-v1/setup.log",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/setup.log",
+      "bytes": 1843,
+      "sha256": "4993b4129d78e14e5724fbfbfc72b133b7f6b8592a622c2ec5cc1c0be9cdfbb6",
+      "storedBytes": 1843,
+      "storedSHA256": "4993b4129d78e14e5724fbfbfc72b133b7f6b8592a622c2ec5cc1c0be9cdfbb6",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632096072713642"
+    },
+    {
+      "path": "notification-os-v1/events.jsonl",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/events.jsonl",
+      "bytes": 3160,
+      "sha256": "b7dd86af44dd8e710cd4b489d418b96b1cb6406dedd507f87ba09b1880964cd9",
+      "storedBytes": 3160,
+      "storedSHA256": "b7dd86af44dd8e710cd4b489d418b96b1cb6406dedd507f87ba09b1880964cd9",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632424846751902"
+    },
+    {
+      "path": "notification-os-v1/pairedTerminal-before.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/pairedTerminal-before.json",
+      "bytes": 28524,
+      "sha256": "796a24bcc641e31409c7d9e68de2f95206264e0211952885aba61d8ca7ee8820",
+      "storedBytes": 28524,
+      "storedSHA256": "796a24bcc641e31409c7d9e68de2f95206264e0211952885aba61d8ca7ee8820",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632071254811937"
+    },
+    {
+      "path": "notification-os-v1/decision.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/decision.json",
+      "bytes": 158863,
+      "sha256": "6c6daf1c44424cd0c7e68de78a6a46f8727cac01c392eda43c4ed97648109d88",
+      "storedBytes": 158863,
+      "storedSHA256": "6c6daf1c44424cd0c7e68de78a6a46f8727cac01c392eda43c4ed97648109d88",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632071252884232"
+    },
+    {
+      "path": "notification-os-v1/execution-containers.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/execution-containers.json",
+      "bytes": 2350,
+      "sha256": "b96b00ec8665a2489c7a021b40c386424a9016e501b79348971b9e72cc2b58ed",
+      "storedBytes": 2350,
+      "storedSHA256": "b96b00ec8665a2489c7a021b40c386424a9016e501b79348971b9e72cc2b58ed",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632096075806928"
+    },
+    {
+      "path": "notification-os-v1/ledger.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/ledger.json",
+      "bytes": 839,
+      "sha256": "1eb53a953ac2e06396dbe0766ed2c68c03fc5ec493c649c9a9a98d6171098bf5",
+      "storedBytes": 839,
+      "storedSHA256": "1eb53a953ac2e06396dbe0766ed2c68c03fc5ec493c649c9a9a98d6171098bf5",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632424844355575"
+    },
+    {
+      "path": "notification-os-v1/companion-ledger-before.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/companion-ledger-before.json",
+      "bytes": 2144,
+      "sha256": "8b24d810f4a9e3f6d7a5e8440391cdb45c6a6cb0ed2e212d4e59aead0d699301",
+      "storedBytes": 2144,
+      "storedSHA256": "8b24d810f4a9e3f6d7a5e8440391cdb45c6a6cb0ed2e212d4e59aead0d699301",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632071254092647"
+    },
+    {
+      "path": "notification-os-v1/test/notification-os-summary.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/test/notification-os-summary.json",
+      "bytes": 1775,
+      "sha256": "8f39bf7d534da298fe663f813a95ee1bbaf5e36d3066af32d9464be398fe2c2f",
+      "storedBytes": 1775,
+      "storedSHA256": "8f39bf7d534da298fe663f813a95ee1bbaf5e36d3066af32d9464be398fe2c2f",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632420201174178"
+    },
+    {
+      "path": "notification-os-v1/test/active-command.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/test/active-command.json",
+      "bytes": 727,
+      "sha256": "5bc38e68e79709382f4057bc61b5bf6ca84dfcc80f4c3c096874ceaef2736a41",
+      "storedBytes": 727,
+      "storedSHA256": "5bc38e68e79709382f4057bc61b5bf6ca84dfcc80f4c3c096874ceaef2736a41",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632420305343384"
+    },
+    {
+      "path": "notification-os-v1/test/commands.jsonl",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/test/commands.jsonl",
+      "bytes": 2311,
+      "sha256": "00852ac6a25b466c5e3b6dafc36fa2b4ff93497daa67beea6db67a986f031b6c",
+      "storedBytes": 2311,
+      "storedSHA256": "00852ac6a25b466c5e3b6dafc36fa2b4ff93497daa67beea6db67a986f031b6c",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632420305032218"
+    },
+    {
+      "path": "notification-os-v1/test/selected-command.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/test/selected-command.json",
+      "bytes": 1287,
+      "sha256": "76d451e749782a95be5b938f4f72c5e12d2aed85ad604038735e9bce25d4af8a",
+      "storedBytes": 1287,
+      "storedSHA256": "76d451e749782a95be5b938f4f72c5e12d2aed85ad604038735e9bce25d4af8a",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632096204769269"
+    },
+    {
+      "path": "notification-os-v1/test/command-events.jsonl",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/test/command-events.jsonl",
+      "bytes": 21169,
+      "sha256": "e358d7df812f9a5c2e11b6e9def103e74c79f095226ef4293128dd3d1b914307",
+      "storedBytes": 21169,
+      "storedSHA256": "e358d7df812f9a5c2e11b6e9def103e74c79f095226ef4293128dd3d1b914307",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632420305172093"
+    },
+    {
+      "path": "notification-os-v1/test/notification-os-tests.log",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/test/notification-os-tests.log",
+      "bytes": 37180,
+      "sha256": "3ce897c4c3c0dd807078969be198bc78cea6c531a7751e199f0df0679ac1ba2e",
+      "storedBytes": 37180,
+      "storedSHA256": "3ce897c4c3c0dd807078969be198bc78cea6c531a7751e199f0df0679ac1ba2e",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632420003621570"
+    },
+    {
+      "path": "notification-os-v1/test/notification-os-selected-tests.log",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/test/notification-os-selected-tests.log",
+      "bytes": 57,
+      "sha256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96",
+      "storedBytes": 57,
+      "storedSHA256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632420296732450"
+    },
+    {
+      "path": "notification-os-v1/test/notification-os-nodes.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/test/notification-os-nodes.json",
+      "bytes": 2579,
+      "sha256": "66588df4bc698a01acbebd4591858e628e70b01c182e894c84c3f5eb5bb2727a",
+      "storedBytes": 2579,
+      "storedSHA256": "66588df4bc698a01acbebd4591858e628e70b01c182e894c84c3f5eb5bb2727a",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632420246465050"
+    },
+    {
+      "path": "notification-os-v1/setup/runnerData-container.txt",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/setup/runnerData-container.txt",
+      "bytes": 157,
+      "sha256": "9277731d2281fdede1610786c2893e7aa90dbeeaa56ec5f690af574a72dba5aa",
+      "storedBytes": 157,
+      "storedSHA256": "9277731d2281fdede1610786c2893e7aa90dbeeaa56ec5f690af574a72dba5aa",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632095435579090"
+    },
+    {
+      "path": "notification-os-v1/setup/active-command.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/setup/active-command.json",
+      "bytes": 491,
+      "sha256": "729ba905e240db64dfe3638a7e26f001710f75f22d09e23ba3b050ad886fe208",
+      "storedBytes": 491,
+      "storedSHA256": "729ba905e240db64dfe3638a7e26f001710f75f22d09e23ba3b050ad886fe208",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632096072490059"
+    },
+    {
+      "path": "notification-os-v1/setup/devices-before.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/setup/devices-before.json",
+      "bytes": 43604,
+      "sha256": "05823a4836bcda0fffa37211e0febff319a3cf19c16d93daa0179664bef06555",
+      "storedBytes": 43604,
+      "storedSHA256": "05823a4836bcda0fffa37211e0febff319a3cf19c16d93daa0179664bef06555",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632071660548257"
+    },
+    {
+      "path": "notification-os-v1/setup/commands.jsonl",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/setup/commands.jsonl",
+      "bytes": 1563,
+      "sha256": "c24ca2123e9eaf1a690470f21ed731051bbf52490d994776b5c970347504f071",
+      "storedBytes": 1563,
+      "storedSHA256": "c24ca2123e9eaf1a690470f21ed731051bbf52490d994776b5c970347504f071",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632096072044602"
+    },
+    {
+      "path": "notification-os-v1/setup/appData-container.txt",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/setup/appData-container.txt",
+      "bytes": 157,
+      "sha256": "de6552ab33503dd15c58d9a8cb4014c90cf33c34bd0529876de0eaabdc2bfb8b",
+      "storedBytes": 157,
+      "storedSHA256": "de6552ab33503dd15c58d9a8cb4014c90cf33c34bd0529876de0eaabdc2bfb8b",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632095734854360"
+    },
+    {
+      "path": "notification-os-v1/setup/command-events.jsonl",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/setup/command-events.jsonl",
+      "bytes": 7748,
+      "sha256": "a76162b9b0f83b6149023dc5a3f95e0f33760a3bb2893932a33d0ea91b9b8b61",
+      "storedBytes": 7748,
+      "storedSHA256": "a76162b9b0f83b6149023dc5a3f95e0f33760a3bb2893932a33d0ea91b9b8b61",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632096072300934"
+    },
+    {
+      "path": "notification-os-v1/setup/appGroup-container.txt",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/setup/appGroup-container.txt",
+      "bytes": 156,
+      "sha256": "299a40a53c5c2d262b361f5c7ac1b4d244ddfdd95d863790e62f65b31e7b1b87",
+      "storedBytes": 156,
+      "storedSHA256": "299a40a53c5c2d262b361f5c7ac1b4d244ddfdd95d863790e62f65b31e7b1b87",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632096016630206"
+    },
+    {
+      "path": "notification-os-v1/setup/bootstatus.log",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/setup/bootstatus.log",
+      "bytes": 689,
+      "sha256": "4f1cd14660813483d32c80411734c43f9a002709557cb634178fb73ccfb97c40",
+      "storedBytes": 689,
+      "storedSHA256": "4f1cd14660813483d32c80411734c43f9a002709557cb634178fb73ccfb97c40",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632094915602484"
+    },
+    {
+      "path": "notification-os-v1/setup/boot-owned.log",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/setup/boot-owned.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 0,
+      "storedSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632071697830270"
+    },
+    {
+      "path": "state.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/state.json",
+      "bytes": 125648,
+      "sha256": "1abe474150ca068f20234af7fd698cfd877173fcb65a22a7dd839ab3c02ca171",
+      "storedBytes": 125648,
+      "storedSHA256": "1abe474150ca068f20234af7fd698cfd877173fcb65a22a7dd839ab3c02ca171",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632424846122612"
+    },
+    {
+      "path": "plan.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/plan.json",
+      "bytes": 18768,
+      "sha256": "0f48ac183faabd8db7cb8cd37f37702f1e548e7c8862ffe539071a5b406b5e82",
+      "storedBytes": 18768,
+      "storedSHA256": "0f48ac183faabd8db7cb8cd37f37702f1e548e7c8862ffe539071a5b406b5e82",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795624932060972088"
+    },
+    {
+      "path": "notification-os-v1-decision.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1-decision.json",
+      "bytes": 158863,
+      "sha256": "6c6daf1c44424cd0c7e68de78a6a46f8727cac01c392eda43c4ed97648109d88",
+      "storedBytes": 158863,
+      "storedSHA256": "6c6daf1c44424cd0c7e68de78a6a46f8727cac01c392eda43c4ed97648109d88",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632069062824059"
+    },
+    {
+      "path": "notification-os-v1-seal-inputs.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1-seal-inputs.json",
+      "bytes": 7350,
+      "sha256": "21b654ac4c21988b212f8f67a11529e70daa23889567656ab0b779f9fbe25053",
+      "storedBytes": 7350,
+      "storedSHA256": "21b654ac4c21988b212f8f67a11529e70daa23889567656ab0b779f9fbe25053",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632069056395280"
+    },
+    {
+      "path": "notification-os-v1-decision-receipt.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1-decision-receipt.json",
+      "bytes": 1423,
+      "sha256": "639099b6e3c32f2b7df78996f744ce10e849e4f7f0a6238e7ffc73be7ecfff10",
+      "storedBytes": 1423,
+      "storedSHA256": "639099b6e3c32f2b7df78996f744ce10e849e4f7f0a6238e7ffc73be7ecfff10",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632069063530475"
+    },
+    {
+      "path": "notification-os-v1-launch.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1-launch.json",
+      "bytes": 1055,
+      "sha256": "a3ae7e1bcc64c188dff957a8c1b4600e59e809a3b0fb3726627258e667c23246",
+      "storedBytes": 1055,
+      "storedSHA256": "a3ae7e1bcc64c188dff957a8c1b4600e59e809a3b0fb3726627258e667c23246",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632069103307275"
+    },
+    {
+      "path": "notification-os-v1-launch.log",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1-launch.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 0,
+      "storedSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632069084658602"
+    },
+    {
+      "path": "notification-os-v1-attachments-export.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1-attachments-export.json",
+      "bytes": 10075,
+      "sha256": "33785f28b777b32ab9799c397740ed09a1fe9b368f39d7e89c4471a83a1165d3",
+      "storedBytes": 10075,
+      "storedSHA256": "33785f28b777b32ab9799c397740ed09a1fe9b368f39d7e89c4471a83a1165d3",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632660253860637"
+    },
+    {
+      "path": "notification-os-v6.py",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v6.py",
+      "bytes": 33265,
+      "sha256": "379008353af52593df805257d076ed13c1df93e13b9b39f76782738a8fff9535",
+      "storedBytes": 33265,
+      "storedSHA256": "379008353af52593df805257d076ed13c1df93e13b9b39f76782738a8fff9535",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795626893216702076"
+    },
+    {
+      "path": "seal-notification-os-decision-v4.py",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/seal-notification-os-decision-v4.py",
+      "bytes": 28082,
+      "sha256": "925016737f34363f451222c81a3d38e16a5e6abf12ee33315368e1018fd3bd63",
+      "storedBytes": 28082,
+      "storedSHA256": "925016737f34363f451222c81a3d38e16a5e6abf12ee33315368e1018fd3bd63",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795626893217443657"
+    },
+    {
+      "path": "companion-native-v1/ledger.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1/ledger.json",
+      "bytes": 2144,
+      "sha256": "8b24d810f4a9e3f6d7a5e8440391cdb45c6a6cb0ed2e212d4e59aead0d699301",
+      "storedBytes": 2144,
+      "storedSHA256": "8b24d810f4a9e3f6d7a5e8440391cdb45c6a6cb0ed2e212d4e59aead0d699301",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795631961237676450"
+    },
+    {
+      "path": "notification-os-v1-attachments/7913D263-00B4-422B-AC66-E73E9DB0AFD7.txt",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1-attachments/7913D263-00B4-422B-AC66-E73E9DB0AFD7.txt",
+      "bytes": 21616,
+      "sha256": "34e4a76eb69d11f1d30c491992dca3de76d8bb7c90997c8e3a6f936c6c1a119d",
+      "storedBytes": 21616,
+      "storedSHA256": "34e4a76eb69d11f1d30c491992dca3de76d8bb7c90997c8e3a6f936c6c1a119d",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632659927199301"
+    },
+    {
+      "path": "notification-os-v1-attachments/DA86865E-3A87-4633-B9CF-9361D5059D4C.png",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1-attachments/DA86865E-3A87-4633-B9CF-9361D5059D4C.png",
+      "bytes": 185804,
+      "sha256": "f89b459748a1f98da9ac78a9b1c3c8499b29054543e0d37e46d5e0e77bf785a1",
+      "storedBytes": 185804,
+      "storedSHA256": "f89b459748a1f98da9ac78a9b1c3c8499b29054543e0d37e46d5e0e77bf785a1",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632659931679664"
+    },
+    {
+      "path": "notification-os-v1-attachments/3EFAFBD5-5EC9-47FC-A900-BC13F2199A94.txt",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1-attachments/3EFAFBD5-5EC9-47FC-A900-BC13F2199A94.txt",
+      "bytes": 56213,
+      "sha256": "5cb92b9c1b5a63968e1c738b6626a60a94a21b0b91eb96976ff3a7bfe27c1a49",
+      "storedBytes": 56213,
+      "storedSHA256": "5cb92b9c1b5a63968e1c738b6626a60a94a21b0b91eb96976ff3a7bfe27c1a49",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632660011307285"
+    },
+    {
+      "path": "notification-os-v1-attachments/4DCE3B9C-07A8-42C1-800C-E07812199BBD.png",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1-attachments/4DCE3B9C-07A8-42C1-800C-E07812199BBD.png",
+      "bytes": 2522706,
+      "sha256": "7079ca1fd405b8b9da57dacc3cffcb3134a6e2c88b55dfe6bdc36a7181f65e54",
+      "storedBytes": 2522706,
+      "storedSHA256": "7079ca1fd405b8b9da57dacc3cffcb3134a6e2c88b55dfe6bdc36a7181f65e54",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632660015210024"
+    },
+    {
+      "path": "notification-os-v1-attachments/5920E8B3-2F4D-4B6C-96ED-162AFD11CF64.txt",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1-attachments/5920E8B3-2F4D-4B6C-96ED-162AFD11CF64.txt",
+      "bytes": 59015,
+      "sha256": "53b91a4692e526287782f6771694e75f2d9030a0f4bf9111ff85d77033cb08b7",
+      "storedBytes": 59015,
+      "storedSHA256": "53b91a4692e526287782f6771694e75f2d9030a0f4bf9111ff85d77033cb08b7",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632660037672589"
+    },
+    {
+      "path": "notification-os-v1-attachments/C3F695C9-34CE-463D-B689-1F322C921F14.png",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1-attachments/C3F695C9-34CE-463D-B689-1F322C921F14.png",
+      "bytes": 2465841,
+      "sha256": "9a45d79e75e7f46a263b2c9b0758f54055c234a2e8fa28befdf12196ed252963",
+      "storedBytes": 2465841,
+      "storedSHA256": "9a45d79e75e7f46a263b2c9b0758f54055c234a2e8fa28befdf12196ed252963",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632660041503954"
+    },
+    {
+      "path": "notification-os-v1-attachments/manifest.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1-attachments/manifest.json",
+      "bytes": 31507,
+      "sha256": "ff198ce5c3b122921e3865e5f80c60d4aa30427a0f0aeab562bb481886b5ccfc",
+      "storedBytes": 31507,
+      "storedSHA256": "ff198ce5c3b122921e3865e5f80c60d4aa30427a0f0aeab562bb481886b5ccfc",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795632660250169355"
+    },
+    {
+      "path": "source/Scripts/CI/observe_notification_os_delivery.py",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/CI/observe_notification_os_delivery.py",
+      "bytes": 18899,
+      "sha256": "f6cf4e040f592fa94ebf9fd813b6e03d125d5c7c32dc2d2a43f3b42cdb33d085",
+      "storedBytes": 18899,
+      "storedSHA256": "f6cf4e040f592fa94ebf9fd813b6e03d125d5c7c32dc2d2a43f3b42cdb33d085",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795587213620394324"
+    },
+    {
+      "path": "source/HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "bytes": 91719,
+      "sha256": "da0fa21f26b677f4d18f8e1972208b39e30401a127e9dd2a9643e0fe8d7ad17c",
+      "storedBytes": 91719,
+      "storedSHA256": "da0fa21f26b677f4d18f8e1972208b39e30401a127e9dd2a9643e0fe8d7ad17c",
+      "compression": "none",
+      "mode": 420,
+      "mtimeNs": "1795603101221545338"
+    }
+  ]
+}

@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "date": "2026-11-24",
+  "rootBase": "565ec85a5baeb05e4146fafefdfc0e5b0eaa457e",
+  "ownerSDKHead": "5c6aefa2670560447355dcb80799e40003282d70",
+  "ownerPR": "https://github.com/davidpovarsky/hanlin-ai/pull/17",
+  "ownerHeadObservedUpdatedAt": "2026-11-24T01:25:31Z",
+  "isolatedBranch": "codex/hanlin-miniapps-owner-integration-20261124",
+  "sourceResolution": [
+    "Preserve exact root application dependency list using canonical50-product seed, including HanlinTranslationUI and HanlinExpoWidgetsOriginal",
+    "Only thin HanlinApp and its hosted tests declare/link HanlinApplication; other executable and extension graph preserved",
+    "Executable Xcode target HanlinApp, original product AI_Hanlin.app, SDK implementation target AI_Hanlin",
+    "Retain current113-target/47-product original runtime graph, fresh tooling receipts and original npm manifests/locks",
+    "Preserve MiniApps APNs environment forwarding from renamed HanlinApp",
+    "Regenerate manifests and source ownership from actual merged source"
+  ],
+  "portableVerification": {
+    "hostLinkOwnership": {
+      "status": "EXECUTED_PASS",
+      "cases": 6,
+      "command": "python3 -m unittest discover -s Scripts/SDK/tests -p test_host_link_ownership.py -v",
+      "seconds": 2.29,
+      "capture": "SentinelX tool execution result, 2026-11-24"
+    },
+    "projectGraph": {
+      "status": "EXECUTED_PASS",
+      "cases": 19,
+      "execution": "17 passed initially;2 failed for stale old-link negative test and omitted sparse extension files, then2 exact affected cases passed after correction/materialization",
+      "logs": [
+        "sdk-merge-check-1.log",
+        "sdk-merge-check-2.log"
+      ]
+    },
+    "generators": "Both generate_manifest.py --check and update_project.py --check passed"
+  },
+  "nativeVerification": {
+    "status": "NOT_RUN",
+    "reason": "Root owns the separate Apple gate; source graph checks do not prove runtime image ownership",
+    "existingPostBuildDuplicateImageAnalyzer": "None found in Scripts/SDK, Scripts/CI or workflows; existing native_artifacts verifies prepared binary integrity, not runtime duplicate class loading"
+  },
+  "preservedOwnerEvidence": "Inherited raw Swift/Xcode fixture logs contain original whitespace; retained byte-for-byte instead of formatting authenticated native evidence."
+}

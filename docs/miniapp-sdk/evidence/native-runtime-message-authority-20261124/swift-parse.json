@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "/usr/local/bin/swiftc",
+    "-frontend",
+    "-parse",
+    "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift"
+  ],
+  "exitCode": 0,
+  "inputSHA256": "3f3b3565384b7e8a66948d6be67ee95f2f735f038dc69ea07d287e1c6a3cfca2",
+  "scope": "PARSE_ONLY; not Apple-framework typechecking or analyzer execution."
+}

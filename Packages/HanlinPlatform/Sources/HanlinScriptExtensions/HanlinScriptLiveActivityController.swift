@@ -21,12 +21,13 @@ public enum HanlinScriptLiveActivityController {
 
     public static func update(
         systemActivityID: String,
+        installedPackageID: String? = nil,
         state: HanlinGenericLiveActivityAttributes.ContentState,
         staleDate: Date? = nil,
         relevanceScore: Double = 0
     ) async -> Bool {
         guard let activity = Activity<HanlinGenericLiveActivityAttributes>.activities.first(
-            where: { $0.id == systemActivityID }
+            where: { $0.id == systemActivityID && (installedPackageID == nil || $0.attributes.installedPackageID == installedPackageID) }
         ) else { return false }
         await activity.update(ActivityContent(
             state: state,
@@ -38,11 +39,12 @@ public enum HanlinScriptLiveActivityController {
 
     public static func end(
         systemActivityID: String,
+        installedPackageID: String? = nil,
         finalState: HanlinGenericLiveActivityAttributes.ContentState,
         dismissTimeInterval: Double? = nil
     ) async -> Bool {
         guard let activity = Activity<HanlinGenericLiveActivityAttributes>.activities.first(
-            where: { $0.id == systemActivityID }
+            where: { $0.id == systemActivityID && (installedPackageID == nil || $0.attributes.installedPackageID == installedPackageID) }
         ) else { return false }
         let dismissalPolicy: ActivityUIDismissalPolicy = if let dismissTimeInterval {
             dismissTimeInterval <= 0
@@ -56,6 +58,19 @@ public enum HanlinScriptLiveActivityController {
             dismissalPolicy: dismissalPolicy
         )
         return true
+    }
+
+    public static func activityIDs(installedPackageID: String) -> [String] {
+        Activity<HanlinGenericLiveActivityAttributes>.activities
+            .filter { $0.attributes.installedPackageID == installedPackageID }.map(\.id)
+    }
+
+    public static func contentState(
+        systemActivityID: String, installedPackageID: String
+    ) -> HanlinGenericLiveActivityAttributes.ContentState? {
+        Activity<HanlinGenericLiveActivityAttributes>.activities.first {
+            $0.id == systemActivityID && $0.attributes.installedPackageID == installedPackageID
+        }?.content.state
     }
 
     public static var areActivitiesEnabled: Bool {

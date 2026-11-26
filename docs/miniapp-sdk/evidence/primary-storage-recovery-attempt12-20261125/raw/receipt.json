@@ -1,0 +1,94 @@
+{
+  "observedAt": "2026-11-25T04:08:58.452114+00:00",
+  "status": "OWNED_OBSOLETE_SIMULATORS_RETIRED_EVIDENCE_RETAINED",
+  "scope": "Only original owned attempts9,7,10,6,5 by exact UDIDs; official simctl retirement with fresh ownership/inactivity/retention checks. No source, SDK, raw results, shared caches or unknown-owner deletion. Latest11+12 retained.",
+  "sourceAtNextLaunch": "42e34eff615a6d599ddfd01ea9382d920b5f9a5c",
+  "measurementBoundary": "du candidate totals are directory footprints, not promised physical reclaim. Every actual before/afterdf retained. Revised bounded phase estimate is explicit; APFS sharing not assumed.",
+  "members": [
+    {
+      "path": "storage-recovery-attempt12/attempt10-candidate.json",
+      "bytes": 4921,
+      "sha256": "88a7ccb192bddf39e2f4f84e9d31bee069d182244525f336485991e9d9272d2d"
+    },
+    {
+      "path": "storage-recovery-attempt12/attempt10-retirement-intent.json",
+      "bytes": 1439,
+      "sha256": "02a517fcc8ed1e5123245bca934ceec5ad9435d4f381b4f6e9241f874f4ef4e6"
+    },
+    {
+      "path": "storage-recovery-attempt12/attempt10-retirement.json",
+      "bytes": 1943,
+      "sha256": "b3f9cb99c7153561a3a31f0714251ea6842d486a541aa6353ea94c864183b6e7"
+    },
+    {
+      "path": "storage-recovery-attempt12/attempt5-6-candidates.json",
+      "bytes": 5595,
+      "sha256": "f790f3e6f2559ff52d611fe8dbcb6751a7815848af2263db8c124e4657af09ba"
+    },
+    {
+      "path": "storage-recovery-attempt12/attempt5-retirement-intent.json",
+      "bytes": 853,
+      "sha256": "9c2ba635c50ac9dcbdd07ab4ccbc52bd09ecc3965d4174109a32e3b7ca1b8065"
+    },
+    {
+      "path": "storage-recovery-attempt12/attempt5-retirement.json",
+      "bytes": 1357,
+      "sha256": "87afe9f03dc68950b9bbb27777091e54319ccceb8b39d7c0c789abd3779dacb7"
+    },
+    {
+      "path": "storage-recovery-attempt12/attempt6-retirement-intent.json",
+      "bytes": 1115,
+      "sha256": "0e360bf6921457880fd049be546a144fb4fa48866236de4ae733c0cdcc24d9bc"
+    },
+    {
+      "path": "storage-recovery-attempt12/attempt6-retirement.json",
+      "bytes": 1619,
+      "sha256": "de0a79531e8065974b64d8cda24340be520cae12fc09c4e145a3a684c7d6f129"
+    },
+    {
+      "path": "storage-recovery-attempt12/attempt7-candidate.json",
+      "bytes": 4862,
+      "sha256": "a03edca23208b1dd59de468d84985a9df7246c65c5aa32735bc1f65749d2e423"
+    },
+    {
+      "path": "storage-recovery-attempt12/attempt7-retirement-intent.json",
+      "bytes": 1342,
+      "sha256": "cb61198bd9d552b5e8e33d18a2fe0cd052d7e2038870c5c67f4c9057108674dd"
+    },
+    {
+      "path": "storage-recovery-attempt12/attempt7-retirement.json",
+      "bytes": 1845,
+      "sha256": "17dc892d3bec574f8515a4e219caefd49c33f4634a73631b6fd1a2c5cd49db92"
+    },
+    {
+      "path": "storage-recovery-attempt12/attempt9-candidate.json",
+      "bytes": 5461,
+      "sha256": "f15da146c89397a417f9b292423fbb52d40fa075e69e9e097ce1df8c93bb3b99"
+    },
+    {
+      "path": "storage-recovery-attempt12/attempt9-retirement.json",
+      "bytes": 1239,
+      "sha256": "547657935d800931528c18c3e5f940f73c3a3ff1af3b591ac64fe3bb905fd6c9"
+    },
+    {
+      "path": "storage-recovery-attempt12/phase-space.jsonl",
+      "bytes": 664,
+      "sha256": "3136eba8f53dc814693c1212d01e6f90075d55612c914d31712ae1d66e5a2cf1"
+    },
+    {
+      "path": "attempt13-resource-basis.json",
+      "bytes": 1647,
+      "sha256": "b7a30d431d4898a596f25a97d95ee117b25b3d1c7c6df4d00df0b1eb703d2997"
+    },
+    {
+      "path": "focused-launch-attempt12.json",
+      "bytes": 1139,
+      "sha256": "8d615b9f36e076d8132ab386bedae8147ff49c22511fe1bc5f70e91c4657796a"
+    },
+    {
+      "path": "source-advance-42e34eff/receipt.json",
+      "bytes": 33605,
+      "sha256": "ec640dc02e01871b8954a48e0cae7f6ba6fc74a4bb60057005b88a9d1a8db724"
+    }
+  ]
+}

@@ -6,6 +6,8 @@ import { execSync } from 'node:child_process';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import https from 'node:https';
 import http from 'node:http';
+import { buildOriginalExpoSource } from './build-original-expo-source.mjs';
+import { buildOriginalWidgetRuntime } from './build-original-widget-runtime.mjs';
 
 const scriptRoot = resolve(import.meta.dirname);
 const repositoryRoot = resolve(scriptRoot, '..', '..');
@@ -295,6 +297,50 @@ export async function signAndVerifyXCFramework(
   }
 }
 
+// Keep the verified archive's original maps outside Clang's discoverable Headers
+// paths: the generated consumer projection deliberately removes those originals.
+const originalHeaderModulemapsName = '.original-header-modulemaps.json';
+
+export async function preserveOriginalReactNativeHeaderModulemaps(xcfPath, artifactSHA256) {
+  const recordPath = resolve(xcfPath, originalHeaderModulemapsName);
+  let previousText = null;
+  let previous = null;
+  try {
+    previousText = await readFile(recordPath, 'utf8');
+    previous = JSON.parse(previousText);
+  } catch (_) {}
+  const info = parseXCFrameworkInfoPlist(await readFile(resolve(xcfPath, 'Info.plist'), 'utf8'));
+  const libraries = info.AvailableLibraries.filter((lib) =>
+    lib.SupportedPlatform === 'ios' &&
+    (!lib.SupportedPlatformVariant || lib.SupportedPlatformVariant === 'simulator'));
+  if (libraries.length === 0) throw new Error('ReactNativeHeaders has no iOS modulemap source slices');
+  const sliceIDs = libraries.map((lib) => lib.LibraryIdentifier).sort();
+  const previousMatches = previous?.schemaVersion === 1 && previous.artifactSHA256 === artifactSHA256 &&
+    JSON.stringify(Object.keys(previous.slices ?? {}).sort()) === JSON.stringify(sliceIDs);
+  const slices = {};
+  for (const lib of libraries) {
+    const sourcePath = resolve(xcfPath, lib.LibraryIdentifier, lib.HeadersPath, 'module.modulemap');
+    let content;
+    if (existsSync(sourcePath)) {
+      content = await readFile(sourcePath, 'utf8');
+    } else {
+      const saved = previousMatches ? previous.slices[lib.LibraryIdentifier] : null;
+      if (!saved || saved.headersPath !== lib.HeadersPath || typeof saved.content !== 'string' ||
+          saved.sha256 !== sha256(Buffer.from(saved.content, 'utf8'))) {
+        throw new Error(`Missing or invalid original ReactNativeHeaders modulemap source for ${lib.LibraryIdentifier}`);
+      }
+      content = saved.content;
+    }
+    if (!/\bmodule\s+[A-Za-z0-9_]+\s*\{/.test(content)) {
+      throw new Error(`Invalid original ReactNativeHeaders modulemap for ${lib.LibraryIdentifier}`);
+    }
+    slices[lib.LibraryIdentifier] = { headersPath: lib.HeadersPath, sha256: sha256(Buffer.from(content, 'utf8')), content };
+  }
+  const nextText = JSON.stringify({ schemaVersion: 1, artifactSHA256, slices }, null, 2) + '\n';
+  if (nextText !== previousText) await writeFile(recordPath, nextText, 'utf8');
+  return slices;
+}
+
 async function downloadFile(url, destPath) {
   const curlBin = process.platform === 'win32' ? 'curl.exe' : 'curl';
   try {
@@ -384,6 +430,9 @@ async function prepare() {
           await rm(targetDir, { recursive: true, force: true });
         } else {
           try {
+            if (item.name === 'ReactNativeHeaders') {
+              await preserveOriginalReactNativeHeaderModulemaps(targetDir, item.sha256);
+            }
             await cleanBundleMetadataAndSignatures(targetDir);
             await pruneNonIOSSlicesFromXCFramework(targetDir);
             const broken = await findBrokenSymlinks(targetDir);
@@ -401,6 +450,12 @@ async function prepare() {
           }
           await rm(targetDir, { recursive: true, force: true });
         }
+      }
+      if (item.source === 'npm-source') {
+        if (process.platform !== 'darwin') throw new Error(`[HanlinExpo] ${item.name}@${item.version} is source-only; the current original native artifact must be built with Xcode. An older binary is not compatible.`);
+        if (!['ExpoUI', 'ExpoAsset', 'ExpoModulesJSI'].includes(item.name)) throw new Error(`[HanlinExpo] Missing original source producer for ${item.name}`);
+        console.log(`[HanlinExpo] ${item.name}@${item.version} will be built from its original installed sources.`);
+        continue;
       }
       console.log(`[HanlinExpo] Fetching ${item.name}...`);
       const downloadURL = item.tarball || item.url;
@@ -430,6 +485,9 @@ async function prepare() {
       }
       await cleanBundleMetadataAndSignatures(targetDir);
       await pruneNonIOSSlicesFromXCFramework(targetDir);
+      if (item.name === 'ReactNativeHeaders') {
+        await preserveOriginalReactNativeHeaderModulemaps(targetDir, item.sha256);
+      }
       await writeFile(
         manifestPath,
         JSON.stringify({ name: item.name, version: item.version, sha256: item.sha256, stagedAt: new Date().toISOString() }, null, 2),
@@ -437,6 +495,7 @@ async function prepare() {
       );
       console.log(`[HanlinExpo] Staged ${item.name} -> ${item.target}`);
     }
+    await buildOriginalExpoSource({ root: repositoryRoot });
     console.log('[HanlinExpo] All dependencies staged successfully.');
 
     async function stageModularHeaders() {
@@ -523,19 +582,19 @@ async function prepare() {
     async function stageModularFrameworks() {
       console.log('[HanlinExpo] Staging modular header frameworks in ModularFrameworks...');
       const modularFwsRoot = resolve(artifactsRoot, 'ModularFrameworks');
+      const slice = 'ios-arm64_x86_64-simulator';
+      const rnHeaders = resolve(artifactsRoot, 'ReactNativeHeaders.xcframework', slice, 'Headers');
+      const originalSources = await preserveOriginalReactNativeHeaderModulemaps(
+        resolve(artifactsRoot, 'ReactNativeHeaders.xcframework'),
+        lock.artifacts.find((item) => item.name === 'ReactNativeHeaders').sha256
+      );
+      const originalSource = originalSources[slice];
+      if (!originalSource) throw new Error(`Missing original ReactNativeHeaders modulemap source for ${slice}`);
+      // Validate the original authority before replacing an existing consumer projection.
       await rm(modularFwsRoot, { recursive: true, force: true });
       await mkdir(modularFwsRoot, { recursive: true });
 
-      const slice = 'ios-arm64_x86_64-simulator';
-      const rnHeaders = resolve(artifactsRoot, 'ReactNativeHeaders.xcframework', slice, 'Headers');
-      const mapPath = resolve(rnHeaders, 'module.modulemap');
-
-      if (!existsSync(mapPath)) {
-        console.warn('[HanlinExpo] Warning: ReactNativeHeaders module.modulemap not found');
-        return;
-      }
-
-      let content = await readFile(mapPath, 'utf8');
+      let content = originalSource.content;
       content = content.replace(
         /module ReactCommon \{[\s\S]*?\}/,
         `module ReactCommon {
@@ -1232,6 +1291,7 @@ template <typename CharTransformT = fnv1a_identity>
             ...process.env,
             PODS_ROOT: podsRoot,
             RN_ROOT: rnRoot,
+            REACT_NATIVE_PATH: rnRoot,
           },
           stdio: 'inherit'
         });
@@ -1243,6 +1303,19 @@ template <typename CharTransformT = fnv1a_identity>
         const targetJsiXcf = resolve(artifactsRoot, 'ExpoModulesJSI.xcframework');
         await rm(targetJsiXcf, { recursive: true, force: true });
         await cp(builtXCFramework, targetJsiXcf, { recursive: true, verbatimSymlinks: true });
+        const sourceItem = lock.artifacts.find(item => item.name === 'ExpoModulesJSI');
+        const sourceBuildReceipt = {
+          schemaVersion: 1,
+          name: sourceItem.name,
+          version: sourceItem.version,
+          sha256: sourceItem.sha256,
+          sourceBuildInputSHA256: sha256(await readFile(resolve(scriptRoot, 'package-lock.json'))),
+          producerSHA256: sha256(await readFile(buildScript)),
+          xcode: execSync('xcodebuild -version', { encoding: 'utf8' }).trim(),
+          nativeBuild: 'original expo-modules-jsi SwiftPM build-xcframework.sh',
+        };
+        await writeFile(resolve(targetJsiXcf, '.artifact-manifest.json'), JSON.stringify(sourceBuildReceipt, null, 2) + '\n');
+        await writeFile(resolve(targetJsiXcf, '.source-build-receipt.json'), JSON.stringify(sourceBuildReceipt, null, 2) + '\n');
         console.log('[HanlinExpo] ExpoModulesJSI.xcframework built and staged successfully.');
       }
     }
@@ -1282,6 +1355,8 @@ template <typename CharTransformT = fnv1a_identity>
         `[HanlinExpo] Normalized${process.platform === 'darwin' ? ', signed,' : ''} and verified ${basename(xcfPath)}`
       );
     }
+
+    await buildOriginalWidgetRuntime({root: repositoryRoot});
 
     const configXcconfigPath = resolve(repositoryRoot, 'Config.xcconfig');
     if (existsSync(configXcconfigPath)) {

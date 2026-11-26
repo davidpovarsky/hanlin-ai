@@ -310,6 +310,7 @@ export class NativeWindow extends WindowBase {
      * this window for the same reason — it is still this window's content.
      */
     _detach() {
+        this._surfaceGone = true;
         // Take a final reading while the surface can still answer and the root view is
         // still up: from here on these are what the window reports.
         this.orientation();

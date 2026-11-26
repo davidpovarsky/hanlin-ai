@@ -1,0 +1,1275 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project AI_HLY.xcodeproj -destination "platform=iOS Simulator,id=9DB610ED-23EB-451F-B74C-4C46438D25E8" -parallel-testing-enabled NO -derivedDataPath /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete -clonedSourcePackagesDirPath /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/SourcePackages -skipPackagePluginValidation -skipMacroValidation CODE_SIGNING_ALLOWED=YES CODE_SIGNING_REQUIRED=YES CODE_SIGN_IDENTITY=- -collect-test-diagnostics never -scheme HanlinMiniApps test-without-building -resultBundlePath /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt10/paired-prefix/RemainingFocused.xcresult "-only-testing:HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyExpoPackageImportsRendersAndHandlesEvents" "-only-testing:HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyNativeScriptPackageImportsRendersAndHandlesEvents" "-only-testing:HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText"
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGNING_ALLOWED = YES
+    CODE_SIGNING_REQUIRED = YES
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  swift-atomics: https://github.com/apple/swift-atomics.git @ 1.3.0
+  SwiftTreeSitter: https://github.com/tree-sitter/swift-tree-sitter @ 08ef81e
+  swift-markdown-ui: https://github.com/gonzalezreal/MarkdownUI.git @ 5f61335
+  swift-nio: https://github.com/apple/swift-nio.git @ 2.94.0
+  HanlinSDK: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete @ local
+  EventSource: https://github.com/mattt/eventsource.git @ 1.1.0
+  SwiftUI-Shimmer: https://github.com/markiv/SwiftUI-Shimmer @ 1.5.1
+  SwiftyJSON: https://github.com/SwiftyJSON/SwiftyJSON.git @ 5.0.1
+  RichTextKit: https://github.com/danielsaidi/RichTextKit.git @ 8aa44cf
+  SwiftAISDK: https://github.com/davidpovarsky/swift-ai-sdk.git @ 07431ab
+  swift-syntax: https://github.com/swiftlang/swift-syntax.git @ 603.0.2
+  XMLCoder: https://github.com/maxdesiatov/XMLCoder.git @ 0.14.0
+  SWCompression: https://github.com/tsolomko/SWCompression.git @ c729f0b
+  SwiftSoup: https://github.com/scinfu/SwiftSoup @ bba848d
+  TreeSitterBash: https://github.com/tree-sitter/tree-sitter-bash @ a06c2e4
+  Yams: https://github.com/jpsim/Yams.git @ 6.2.2
+  Equatable: https://github.com/ordo-one/equatable @ 1.4.1
+  SwiftDraw: https://github.com/swhitty/SwiftDraw @ 0.21.0
+  swift-collections: https://github.com/apple/swift-collections.git @ 1.3.0
+  HighlightSwift: https://github.com/appstefan/highlightswift @ 99c431b
+  TreeSitter: https://github.com/tree-sitter/tree-sitter @ da6fe9b
+  NativeScriptSDK: https://github.com/NativeScript/ios-spm.git @ 9.1.1
+  swift-json-schema: https://github.com/ajevans99/swift-json-schema @ 0.13.2
+  LaTeXSwiftUI: https://github.com/colinc86/LaTeXSwiftUI @ c45e0fd
+  LLM: https://github.com/eastriverlee/LLM.swift/ @ 4b25178
+  A2UISwiftCore: https://github.com/a2ui-project/a2ui @ 3ed9601
+  NetworkImage: https://github.com/gonzalezreal/NetworkImage @ 6.0.1
+  cmark-gfm: https://github.com/swiftlang/swift-cmark @ 0.9.0
+  SwiftStreamingMarkdown: https://github.com/davidpovarsky/hanlin-streaming-markdown @ 5cbb4b6
+  BitByteData: https://github.com/tsolomko/BitByteData @ 2.1.0
+  iosMath: https://github.com/junyan72/iosMath @ ba9ab77
+  swift-markdown: https://github.com/swiftlang/swift-markdown.git @ 0.7.3
+  mcp-swift-sdk: https://github.com/modelcontextprotocol/swift-sdk.git @ a0ae212
+  CoreXLSX: https://github.com/CoreOffice/CoreXLSX @ 1391f38
+  swift-log: https://github.com/apple/swift-log.git @ 96a2f8a
+  swift-system: https://github.com/apple/swift-system.git @ 1.4.0
+  swift-argument-parser: https://github.com/apple/swift-argument-parser @ 1.8.2
+  ZIPFoundation: https://github.com/weichsel/ZIPFoundation @ 0.9.19
+  HTMLEntities: https://github.com/Kitura/swift-html-entities @ 4.0.1
+  MathJaxSwift: https://github.com/colinc86/MathJaxSwift @ 3.4.0
+
+Writing result bundle at path:
+	/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt10/paired-prefix/RemainingFocused.xcresult
+
+Resolve Package Graph
+
+Resolve Package Graph
+2026-11-25 03:37:55.242314+0100 HanlinMiniAppsUITests-Runner[60159:3039576] [Default] Running tests...
+2026-11-25 03:37:55.313476+0100 HanlinMiniAppsUITests-Runner[60159:3039576] [UIKit App Config] Update the Info.plist: Launch screens will soon be required.
+
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-25 03:37:59.693.
+Test Suite 'HanlinMiniAppsUITests.xctest' started at 2026-11-25 03:37:59.695.
+Test Suite 'MiniAppsProductionRuntimeUITests' started at 2026-11-25 03:37:59.695.
+Test Case '-[HanlinMiniAppsUITests.MiniAppsProductionRuntimeUITests testStandaloneModularSearchLoadsActualSefariaText]' started.
+    t =     0.02s Start Test at 2026-11-25 03:37:59.711
+    t =     0.07s Set Up
+    t =     0.08s     Open com.itorah.hanlinminiapps
+    t =     0.08s         Launch com.itorah.hanlinminiapps
+2026-11-25 03:38:00.042 xcodebuild[59494:3037201] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-25 03:38:00.042 xcodebuild[59494:3037201] [MT] IDELaunchParametersSnapshot: no debugger version
+Resolve Package Graph
+objc[60159]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.dmYYVr/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x109d64398) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.dmYYVr/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x10a840310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+
+Resolve Package Graph
+    t =     9.16s             Setting up automation session
+    t =    12.91s             Wait for com.itorah.hanlinminiapps to idle
+<unknown>:0: warning: -[HanlinMiniAppsUITests.MiniAppsProductionRuntimeUITests testStandaloneModularSearchLoadsActualSefariaText] : Update the Info.plist: Support for all orientations will soon be required.
+
+    t =    14.92s Waiting 30.0s for "hanlin-apps-add" Button to exist
+    t =    15.99s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+    t =    15.99s         Checking existence of `"hanlin-apps-add" Button`
+    t =    16.10s Waiting 30.0s for "hanlin-apps-add" Button to exist
+    t =    17.17s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+    t =    17.17s         Checking existence of `"hanlin-apps-add" Button`
+    t =    17.23s Tap "hanlin-apps-add" Button
+    t =    17.23s     Wait for com.itorah.hanlinminiapps to idle
+    t =    17.24s     Find the "hanlin-apps-add" Button
+    t =    17.34s     Check for interrupting elements affecting "hanlin-apps-add" Button
+    t =    17.42s         Wait for com.apple.springboard to idle
+    t =    17.45s     Synthesize event
+    t =    17.79s     Wait for com.itorah.hanlinminiapps to idle
+    t =    18.34s Waiting 15.0s for "hanlin-import-script-package" Button to exist
+    t =    19.43s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-script-package" Button`
+    t =    19.43s         Checking existence of `"hanlin-import-script-package" Button`
+    t =    19.72s Tap "hanlin-import-script-package" Button
+    t =    19.72s     Wait for com.itorah.hanlinminiapps to idle
+    t =    19.73s     Find the "hanlin-import-script-package" Button
+    t =    19.95s     Check for interrupting elements affecting "hanlin-import-script-package" Button
+    t =    20.09s         Wait for com.apple.springboard to idle
+    t =    20.13s     Synthesize event
+    t =    20.46s     Wait for com.itorah.hanlinminiapps to idle
+    t =    20.88s Waiting 15.0s for "hanlin-package-import-list" CollectionView to exist
+    t =    21.98s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-import-list" CollectionView`
+    t =    21.98s         Checking existence of `"hanlin-package-import-list" CollectionView`
+    t =    22.08s Checking existence of `"ModularTextSearch" Button`
+    t =    22.29s Swipe up "hanlin-package-import-list" CollectionView
+    t =    22.29s     Wait for com.itorah.hanlinminiapps to idle
+    t =    22.29s     Find the "hanlin-package-import-list" CollectionView
+    t =    22.40s     Check for interrupting elements affecting "hanlin-package-import-list" CollectionView
+    t =    22.52s         Wait for com.apple.springboard to idle
+    t =    22.55s     Synthesize event
+    t =    23.03s     Wait for com.itorah.hanlinminiapps to idle
+    t =    23.60s Checking existence of `"ModularTextSearch" Button`
+    t =    23.77s Find the "ModularTextSearch" Button
+    t =    23.99s Waiting 15.0s for "ModularTextSearch" Button to exist
+    t =    25.11s     Checking `Expect predicate `existsNoRetry == 1` for object "ModularTextSearch" Button`
+    t =    25.11s         Checking existence of `"ModularTextSearch" Button`
+    t =    26.34s Find the "ModularTextSearch" Button
+    t =    26.94s Tap "ModularTextSearch" Button
+    t =    26.95s     Wait for com.itorah.hanlinminiapps to idle
+    t =    26.98s     Find the "ModularTextSearch" Button
+    t =    27.30s     Check for interrupting elements affecting "ModularTextSearch" Button
+    t =    27.59s         Wait for com.apple.springboard to idle
+    t =    27.80s     Synthesize event
+    t =    28.53s     Wait for com.itorah.hanlinminiapps to idle
+    t =    28.56s Checking existence of `"hanlin-package-install" Button`
+    t =    29.00s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    29.34s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    30.04s Checking existence of `"hanlin-package-install" Button`
+    t =    30.36s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    30.69s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    31.42s Checking existence of `"hanlin-package-install" Button`
+    t =    31.76s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    32.23s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    32.93s Checking existence of `"hanlin-package-install" Button`
+    t =    33.25s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    33.56s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    34.28s Checking existence of `"hanlin-package-install" Button`
+    t =    34.65s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    34.99s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    35.64s Checking existence of `"hanlin-package-install" Button`
+    t =    36.01s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    36.33s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    37.00s Checking existence of `"hanlin-package-install" Button`
+    t =    37.35s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    37.94s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    38.70s Checking existence of `"hanlin-package-install" Button`
+    t =    39.19s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    39.53s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    40.27s Checking existence of `"hanlin-package-install" Button`
+    t =    40.64s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    40.99s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    41.70s Checking existence of `"hanlin-package-install" Button`
+    t =    42.02s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    42.36s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    43.04s Checking existence of `"hanlin-package-install" Button`
+    t =    43.47s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    43.79s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    44.44s Checking existence of `"hanlin-package-install" Button`
+    t =    44.75s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    45.05s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    45.70s Checking existence of `"hanlin-package-install" Button`
+    t =    46.01s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    46.31s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    47.09s Checking existence of `"hanlin-package-install" Button`
+    t =    47.50s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    47.81s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    48.45s Checking existence of `"hanlin-package-install" Button`
+    t =    49.06s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    49.38s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    50.02s Checking existence of `"hanlin-package-install" Button`
+    t =    50.33s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    50.66s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    51.32s Checking existence of `"hanlin-package-install" Button`
+    t =    51.66s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    51.99s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    52.68s Checking existence of `"hanlin-package-install" Button`
+    t =    53.03s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    53.38s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    54.05s Checking existence of `"hanlin-package-install" Button`
+    t =    54.81s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    55.13s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    55.87s Checking existence of `"hanlin-package-install" Button`
+    t =    56.20s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    56.58s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    57.29s Checking existence of `"hanlin-package-install" Button`
+    t =    57.63s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    57.95s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    58.65s Checking existence of `"hanlin-package-install" Button`
+    t =    58.96s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    59.28s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    59.97s Checking existence of `"hanlin-package-install" Button`
+    t =    60.51s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    60.86s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    61.53s Checking existence of `"hanlin-package-install" Button`
+    t =    61.84s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    62.13s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    62.75s Checking existence of `"hanlin-package-install" Button`
+    t =    63.07s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    63.39s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    64.03s Checking existence of `"hanlin-package-install" Button`
+    t =    64.35s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    64.65s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    65.31s Checking existence of `"hanlin-package-install" Button`
+    t =    65.92s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    66.25s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    66.91s Checking existence of `"hanlin-package-install" Button`
+    t =    67.23s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    67.56s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    68.20s Checking existence of `"hanlin-package-install" Button`
+    t =    68.52s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    68.83s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    69.47s Checking existence of `"hanlin-package-install" Button`
+    t =    69.78s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    70.12s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    70.84s Checking existence of `"hanlin-package-install" Button`
+    t =    71.17s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    71.49s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    72.13s Checking existence of `"hanlin-package-install" Button`
+    t =    72.46s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    72.79s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    73.45s Checking existence of `"hanlin-package-install" Button`
+    t =    73.74s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    74.04s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    74.70s Checking existence of `"hanlin-package-install" Button`
+    t =    75.01s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    75.32s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    75.93s Checking existence of `"hanlin-package-install" Button`
+    t =    76.23s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    76.71s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    77.46s Checking existence of `"hanlin-package-install" Button`
+    t =    77.78s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    78.07s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    78.67s Checking existence of `"hanlin-package-install" Button`
+    t =    78.96s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    79.24s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    79.83s Checking existence of `"hanlin-package-install" Button`
+    t =    80.12s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    80.40s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    81.02s Checking existence of `"hanlin-package-install" Button`
+    t =    81.30s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    81.57s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    82.38s Checking existence of `"hanlin-package-install" Button`
+    t =    82.64s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    82.92s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    83.57s Checking existence of `"hanlin-package-install" Button`
+    t =    83.89s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    84.21s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    84.84s Checking existence of `"hanlin-package-install" Button`
+    t =    85.16s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    85.47s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    86.15s Checking existence of `"hanlin-package-install" Button`
+    t =    86.40s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    86.69s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    87.45s Checking existence of `"hanlin-package-install" Button`
+    t =    88.40s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    88.87s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    89.69s Checking existence of `"hanlin-package-install" Button`
+    t =    90.05s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    90.39s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+Resolve Package Graph
+    t =    91.31s Checking existence of `"hanlin-package-install" Button`
+    t =    91.78s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    93.96s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   100.98s Checking existence of `"hanlin-package-install" Button`
+    t =   101.34s Checking existence of `"hanlin-import-error-message" StaticText`
+
+Resolve Package Graph
+    t =   102.71s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   105.58s Checking existence of `"hanlin-package-install" Button`
+    t =   107.08s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   107.70s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+
+    t =   108.85s Checking existence of `"hanlin-package-install" Button`
+    t =   109.14s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   109.42s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   109.98s Checking existence of `"hanlin-package-install" Button`
+    t =   110.25s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   110.50s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   111.04s Checking existence of `"hanlin-package-install" Button`
+    t =   111.31s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   111.56s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   112.09s Checking existence of `"hanlin-package-install" Button`
+    t =   112.34s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   112.59s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   113.11s Checking existence of `"hanlin-package-install" Button`
+    t =   113.35s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   113.59s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   114.22s Checking existence of `"hanlin-package-install" Button`
+    t =   114.64s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   115.15s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   115.85s Checking existence of `"hanlin-package-install" Button`
+    t =   116.32s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   116.74s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   117.43s Checking existence of `"hanlin-package-install" Button`
+    t =   117.72s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   118.05s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   118.63s Checking existence of `"hanlin-package-install" Button`
+    t =   118.94s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   119.24s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   119.88s Checking existence of `"hanlin-package-install" Button`
+    t =   120.20s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   120.51s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   121.20s Checking existence of `"hanlin-package-install" Button`
+    t =   121.66s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   122.16s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   122.91s Checking existence of `"hanlin-package-install" Button`
+    t =   123.28s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   123.65s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   124.40s Checking existence of `"hanlin-package-install" Button`
+    t =   124.76s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   125.12s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   125.99s Checking existence of `"hanlin-package-install" Button`
+    t =   126.30s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   126.58s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   127.16s Checking existence of `"hanlin-package-install" Button`
+    t =   127.48s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   127.73s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   128.37s Checking existence of `"hanlin-package-install" Button`
+    t =   128.65s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   128.95s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   129.63s Checking existence of `"hanlin-package-install" Button`
+    t =   129.91s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   130.19s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   130.81s Checking existence of `"hanlin-package-install" Button`
+    t =   131.13s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   131.47s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   132.09s Checking existence of `"hanlin-package-install" Button`
+    t =   132.40s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   132.68s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   133.29s Checking existence of `"hanlin-package-install" Button`
+    t =   133.60s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   133.91s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   134.62s Checking existence of `"hanlin-package-install" Button`
+    t =   135.00s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   135.46s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   136.37s Checking existence of `"hanlin-package-install" Button`
+    t =   136.79s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   137.23s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   137.98s Checking existence of `"hanlin-package-install" Button`
+    t =   138.38s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   138.77s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   139.44s Checking existence of `"hanlin-package-install" Button`
+    t =   139.83s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   140.13s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   140.76s Checking existence of `"hanlin-package-install" Button`
+    t =   141.04s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   141.30s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   142.15s Checking existence of `"hanlin-package-install" Button`
+    t =   142.48s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   142.80s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   143.55s Checking existence of `"hanlin-package-install" Button`
+    t =   143.86s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   144.22s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   144.89s Checking existence of `"hanlin-package-install" Button`
+    t =   145.23s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   145.60s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   146.26s Checking existence of `"hanlin-package-install" Button`
+    t =   146.67s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   146.99s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   148.54s Checking existence of `"hanlin-package-install" Button`
+    t =   148.92s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   149.23s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   149.85s Checking existence of `"hanlin-package-install" Button`
+    t =   150.26s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   150.68s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   151.59s Checking existence of `"hanlin-package-install" Button`
+    t =   152.37s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   152.74s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   153.39s Checking existence of `"hanlin-package-install" Button`
+    t =   153.72s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   154.08s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   154.89s Checking existence of `"hanlin-package-install" Button`
+    t =   155.18s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   155.46s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   156.14s Checking existence of `"hanlin-package-install" Button`
+    t =   156.45s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   156.74s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   157.39s Checking existence of `"hanlin-package-install" Button`
+    t =   157.69s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   157.96s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   158.53s Checking existence of `"hanlin-package-install" Button`
+    t =   158.81s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   159.05s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   159.60s Checking existence of `"hanlin-package-install" Button`
+    t =   159.87s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   160.10s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   160.62s Checking existence of `"hanlin-package-install" Button`
+    t =   160.87s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   161.09s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   161.62s Checking existence of `"hanlin-package-install" Button`
+    t =   161.93s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   162.16s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   162.66s Checking existence of `"hanlin-package-install" Button`
+    t =   162.90s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   163.13s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   163.60s Checking existence of `"hanlin-package-install" Button`
+    t =   163.83s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   164.06s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   164.59s Checking existence of `"hanlin-package-install" Button`
+    t =   164.85s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   165.10s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   165.66s Checking existence of `"hanlin-package-install" Button`
+    t =   165.98s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   166.22s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   166.80s Checking existence of `"hanlin-package-install" Button`
+    t =   167.06s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   167.29s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   167.80s Checking existence of `"hanlin-package-install" Button`
+    t =   168.07s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   168.31s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   168.80s Checking existence of `"hanlin-package-install" Button`
+    t =   169.10s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   169.35s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   169.86s Checking existence of `"hanlin-package-install" Button`
+    t =   170.09s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   170.31s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   170.81s Checking existence of `"hanlin-package-install" Button`
+    t =   171.07s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   171.29s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   171.81s Checking existence of `"hanlin-package-install" Button`
+    t =   172.03s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   172.25s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   172.74s Checking existence of `"hanlin-package-install" Button`
+    t =   173.01s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   173.21s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   173.67s Checking existence of `"hanlin-package-install" Button`
+    t =   173.90s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   174.11s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   174.58s Checking existence of `"hanlin-package-install" Button`
+    t =   175.00s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   175.24s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   175.73s Checking existence of `"hanlin-package-install" Button`
+    t =   175.95s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   176.19s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   176.65s Checking existence of `"hanlin-package-install" Button`
+    t =   176.87s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   177.07s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   177.57s Checking existence of `"hanlin-package-install" Button`
+    t =   177.78s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   178.01s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   178.51s Checking existence of `"hanlin-package-install" Button`
+    t =   178.71s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   178.93s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   179.42s Checking existence of `"hanlin-package-install" Button`
+    t =   179.70s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   179.98s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   181.88s Checking existence of `"hanlin-package-install" Button`
+    t =   182.06s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   182.26s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   182.58s Checking existence of `"hanlin-package-install" Button`
+    t =   182.76s Checking existence of `"hanlin-approve-all-capabilities" Button`
+    t =   182.91s Find the "hanlin-package-install" Button
+    t =   183.16s Find the "hanlin-package-install" Button
+    t =   183.34s Find the "hanlin-package-install" Button
+    t =   183.55s Tap "hanlin-package-install" Button
+    t =   183.55s     Wait for com.itorah.hanlinminiapps to idle
+    t =   183.56s     Find the "hanlin-package-install" Button
+    t =   183.76s     Check for interrupting elements affecting "hanlin-package-install" Button
+    t =   184.05s         Wait for com.apple.springboard to idle
+    t =   184.31s     Synthesize event
+    t =   184.75s     Wait for com.itorah.hanlinminiapps to idle
+    t =   185.00s Checking existence of `"hanlin-package-install" Button`
+    t =   185.30s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   185.68s Checking existence of `"hanlin-package-install" Button`
+    t =   185.95s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   186.33s Checking existence of `"hanlin-package-install" Button`
+    t =   186.60s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   187.03s Checking existence of `"hanlin-package-install" Button`
+    t =   187.49s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =   187.71s Checking existence of `"hanlin-package-install" Button`
+    t =   187.98s Waiting 10.0s for "Done" Button to exist
+    t =   189.05s     Checking `Expect predicate `existsNoRetry == 1` for object "Done" Button`
+    t =   189.05s         Checking existence of `"Done" Button`
+    t =   189.13s Tap "Done" Button
+    t =   189.13s     Wait for com.itorah.hanlinminiapps to idle
+    t =   189.15s     Find the "Done" Button
+    t =   189.23s     Check for interrupting elements affecting "hanlin-package-import-done" Button
+    t =   189.35s         Wait for com.apple.springboard to idle
+    t =   189.38s     Synthesize event
+    t =   189.69s     Wait for com.itorah.hanlinminiapps to idle
+    t =   190.22s Waiting 10.0s for "hanlin-apps-add-done" Button to exist
+    t =   191.28s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add-done" Button`
+    t =   191.28s         Checking existence of `"hanlin-apps-add-done" Button`
+    t =   191.39s Tap "hanlin-apps-add-done" Button
+    t =   191.39s     Wait for com.itorah.hanlinminiapps to idle
+    t =   191.42s     Find the "hanlin-apps-add-done" Button
+    t =   191.56s     Check for interrupting elements affecting "hanlin-apps-add-done" Button
+    t =   191.76s         Wait for com.apple.springboard to idle
+    t =   191.88s     Synthesize event
+    t =   192.25s     Wait for com.itorah.hanlinminiapps to idle
+    t =   192.81s Waiting 30.0s for "hanlin-apps-add" Button to exist
+    t =   193.90s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+    t =   193.90s         Checking existence of `"hanlin-apps-add" Button`
+    t =   194.02s Find the Target Application 'com.itorah.hanlinminiapps'
+    t =   194.56s Added attachment named 'companion-import-ModularTextSearch'
+    t =   194.57s Requesting snapshot of accessibility hierarchy for app with pid 60442
+    t =   195.24s Requesting snapshot of accessibility hierarchy for app with pid 60442
+    t =   195.50s Added attachment named 'companion-import-ModularTextSearch-accessibility'
+    t =   195.50s Checking existence of `"hanlin-package-card-חיפוש טקסטים מודולרי — Expo" Button`
+    t =   195.69s Find the "hanlin-package-card-חיפוש טקסטים מודולרי — Expo" Button
+    t =   195.88s Waiting 30.0s for "hanlin-package-card-חיפוש טקסטים מודולרי — Expo" Button to exist
+    t =   196.96s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-card-חיפוש טקסטים מודולרי — Expo" Button`
+    t =   197.36s         Checking existence of `"hanlin-package-card-חיפוש טקסטים מודולרי — Expo" Button`
+    t =   197.77s Find the "hanlin-package-card-חיפוש טקסטים מודולרי — Expo" Button
+    t =   197.95s Tap "hanlin-package-card-חיפוש טקסטים מודולרי — Expo" Button
+    t =   197.95s     Wait for com.itorah.hanlinminiapps to idle
+    t =   197.96s     Find the "hanlin-package-card-חיפוש טקסטים מודולרי — Expo" Button
+    t =   198.10s     Check for interrupting elements affecting "hanlin-package-card-חיפוש טקסטים מודולרי — Expo" Button
+    t =   198.26s         Wait for com.apple.springboard to idle
+    t =   198.29s     Synthesize event
+    t =   198.77s     Wait for com.itorah.hanlinminiapps to idle
+    t =   199.86s Waiting 30.0s for "English" Button to exist
+    t =   200.90s     Checking `Expect predicate `existsNoRetry == 1` for object "English" Button`
+    t =   200.90s         Checking existence of `"English" Button`
+    t =   201.41s Tap "English" Button
+    t =   201.41s     Wait for com.itorah.hanlinminiapps to idle
+    t =   201.41s     Find the "English" Button
+    t =   201.64s     Check for interrupting elements affecting "English" Button
+    t =   201.78s         Wait for com.apple.springboard to idle
+    t =   201.82s     Synthesize event
+    t =   202.15s     Wait for com.itorah.hanlinminiapps to idle
+    t =   202.15s Waiting 10.0s for "Search now" Button to exist
+    t =   203.23s     Checking `Expect predicate `existsNoRetry == 1` for object "Search now" Button`
+    t =   203.23s         Checking existence of `"Search now" Button`
+    t =   203.47s Get all elements bound by index for: Descendants matching type SearchField
+    t =   203.59s Find the SearchField (Element at index 0)
+    t =   203.73s Get all elements bound by index for: Descendants matching type SearchField
+    t =   203.85s Find the SearchField (Element at index 0)
+    t =   203.99s Tap "Search a word, phrase, or source" SearchField
+    t =   203.99s     Wait for com.itorah.hanlinminiapps to idle
+    t =   204.00s     Find the "Search a word, phrase, or source" SearchField
+    t =   204.12s     Check for interrupting elements affecting "Search a word, phrase, or source" SearchField
+    t =   204.25s         Wait for com.apple.springboard to idle
+    t =   204.28s     Synthesize event
+    t =   204.60s     Wait for com.itorah.hanlinminiapps to idle
+    t =   208.73s Type 'In the beginning G...' into "Search a word, phrase, or source" SearchField
+    t =   208.73s     Wait for com.itorah.hanlinminiapps to idle
+    t =   208.79s     Find the "Search a word, phrase, or source" SearchField
+    t =   208.98s     Check for interrupting elements affecting "Search a word, phrase, or source" SearchField
+    t =   209.14s         Wait for com.apple.springboard to idle
+    t =   209.19s     Synthesize event
+    t =   209.89s     Wait for com.itorah.hanlinminiapps to idle
+    t =   209.93s Waiting 15.0s for "Native search submitted." StaticText to exist
+    t =   211.02s     Checking `Expect predicate `existsNoRetry == 1` for object "Native search submitted." StaticText`
+    t =   211.02s         Checking existence of `"Native search submitted." StaticText`
+    t =   211.66s Waiting 60.0s for StaticText (First Match) to exist
+    t =   212.70s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =   212.70s         Checking existence of `StaticText (First Match)`
+    t =   212.95s         Capturing element debug description
+    t =   213.67s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =   213.67s         Checking existence of `StaticText (First Match)`
+    t =   213.88s         Capturing element debug description
+    t =   214.71s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =   214.71s         Checking existence of `StaticText (First Match)`
+    t =   214.91s         Capturing element debug description
+    t =   215.66s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =   215.66s         Checking existence of `StaticText (First Match)`
+    t =   215.88s Get all elements bound by index for: Elements matching predicate 'label CONTAINS "
+" AND (NOT identifier BEGINSWITH "hanlin-")'
+    t =   216.03s Find the Button (Element at index 0)
+    t =   216.16s Get all elements bound by index for: Elements matching predicate 'label CONTAINS "
+" AND (NOT identifier BEGINSWITH "hanlin-")'
+    t =   216.30s Find the Button (Element at index 0)
+    t =   216.44s Find the "בראשית א׳:א׳
+In the beginning God created the heaven and the earth.
+7 more versions" Button
+    t =   216.57s Find the Target Application 'com.itorah.hanlinminiapps'
+    t =   216.88s Added attachment named 'modular-search-live-sefaria-results'
+    t =   216.88s Requesting snapshot of accessibility hierarchy for app with pid 60442
+    t =   217.82s Requesting snapshot of accessibility hierarchy for app with pid 60442
+    t =   218.06s Added attachment named 'modular-search-live-sefaria-results-accessibility'
+    t =   218.06s Tap "בראשית א׳:א׳
+In the beginning God created the heaven and the earth.
+7 more versions" Button
+    t =   218.06s     Wait for com.itorah.hanlinminiapps to idle
+    t =   218.07s     Find the "בראשית א׳:א׳
+In the beginning God created the heaven and the earth.
+7 more versions" Button
+    t =   218.20s     Check for interrupting elements affecting "בראשית א׳:א׳
+In the beginning God created the heaven and the earth.
+7 more versions" Button
+    t =   218.35s         Wait for com.apple.springboard to idle
+    t =   218.38s     Synthesize event
+    t =   218.70s     Wait for com.itorah.hanlinminiapps to idle
+    t =   219.25s Waiting 15.0s for Any (First Match) to exist
+    t =   220.28s     Checking `Expect predicate `existsNoRetry == 1` for object Any (First Match)`
+    t =   220.28s         Checking existence of `Any (First Match)`
+    t =   220.53s Get all elements bound by index for: Descendants matching type CollectionView
+    t =   220.66s Find the CollectionView (Element at index 0)
+    t =   220.85s Get all elements bound by index for: Descendants matching type Table
+    t =   221.09s Get all elements bound by index for: Descendants matching type CollectionView
+    t =   221.22s Find the CollectionView (Element at index 0)
+    t =   221.37s Get all elements bound by index for: Descendants matching type Table
+    t =   221.60s Get all elements bound by index for: Descendants matching type CollectionView
+    t =   221.72s Find the CollectionView (Element at index 0)
+    t =   221.87s Get all elements bound by index for: Descendants matching type Table
+    t =   222.09s Get all elements bound by index for: Descendants matching type CollectionView
+    t =   222.20s Find the CollectionView (Element at index 0)
+    t =   222.35s Get all elements bound by index for: Descendants matching type Table
+    t =   222.57s Get all elements bound by index for: Descendants matching type CollectionView
+    t =   222.70s Find the CollectionView (Element at index 0)
+    t =   222.84s Get all elements bound by index for: Descendants matching type Table
+    t =   223.08s Get all elements bound by index for: Descendants matching type CollectionView
+    t =   223.20s Find the CollectionView (Element at index 0)
+    t =   223.35s Get all elements bound by index for: Descendants matching type Table
+    t =   223.58s Get all elements bound by index for: Descendants matching type CollectionView
+    t =   223.70s Find the CollectionView (Element at index 0)
+    t =   223.84s Get all elements bound by index for: Descendants matching type Table
+    t =   224.07s Get all elements bound by index for: Descendants matching type CollectionView
+    t =   224.19s Find the CollectionView (Element at index 0)
+    t =   224.34s Get all elements bound by index for: Descendants matching type Table
+    t =   224.57s Get all elements bound by index for: Descendants matching type CollectionView
+    t =   224.70s Find the CollectionView (Element at index 0)
+    t =   224.84s Get all elements bound by index for: Descendants matching type Table
+    t =   225.08s Get all elements bound by index for: Descendants matching type CollectionView
+    t =   225.21s Find the CollectionView (Element at index 0)
+    t =   225.37s Get all elements bound by index for: Descendants matching type Table
+    t =   225.60s Get all elements bound by index for: Descendants matching type CollectionView
+    t =   225.72s Find the CollectionView (Element at index 0)
+    t =   225.92s Get all elements bound by index for: Descendants matching type Table
+    t =   226.15s Get all elements bound by index for: Descendants matching type CollectionView
+    t =   226.27s Find the CollectionView (Element at index 0)
+    t =   226.42s Get all elements bound by index for: Descendants matching type Table
+    t =   226.65s Get all elements bound by index for: Descendants matching type CollectionView
+    t =   226.77s Find the CollectionView (Element at index 0)
+    t =   226.94s Get all elements bound by index for: Descendants matching type Table
+    t =   227.17s Get all elements bound by index for: Descendants matching type CollectionView
+    t =   227.29s Find the CollectionView (Element at index 0)
+    t =   227.43s Get all elements bound by index for: Descendants matching type Table
+    t =   227.65s Get all elements bound by index for: Descendants matching type CollectionView
+    t =   227.77s Find the CollectionView (Element at index 0)
+    t =   227.92s Get all elements bound by index for: Descendants matching type Table
+    t =   228.16s Get all elements bound by index for: Descendants matching type CollectionView
+    t =   228.28s Find the CollectionView (Element at index 0)
+    t =   228.42s Get all elements bound by index for: Descendants matching type Table
+    t =   228.65s Get all elements bound by index for: Descendants matching type CollectionView
+    t =   228.77s Find the CollectionView (Element at index 0)
+    t =   228.92s Get all elements bound by index for: Descendants matching type Table
+    t =   229.16s Get all elements bound by index for: Descendants matching type CollectionView
+    t =   229.28s Find the CollectionView (Element at index 0)
+    t =   229.42s Get all elements bound by index for: Descendants matching type Table
+    t =   229.64s Get all elements bound by index for: Descendants matching type CollectionView
+    t =   229.75s Find the CollectionView (Element at index 0)
+    t =   229.89s Get all elements bound by index for: Descendants matching type Table
+    t =   230.11s Get all elements bound by index for: Descendants matching type CollectionView
+    t =   230.22s Find the CollectionView (Element at index 0)
+    t =   230.36s Get all elements bound by index for: Descendants matching type Table
+    t =   230.58s Get all elements bound by index for: Descendants matching type CollectionView
+    t =   230.70s Find the CollectionView (Element at index 0)
+    t =   230.91s Get all elements bound by index for: Descendants matching type Table
+    t =   231.13s Get all elements bound by index for: Descendants matching type CollectionView
+    t =   231.25s Find the CollectionView (Element at index 0)
+    t =   231.42s Get all elements bound by index for: Descendants matching type Table
+    t =   231.64s Get all elements bound by index for: Descendants matching type CollectionView
+    t =   231.76s Find the CollectionView (Element at index 0)
+    t =   231.90s Get all elements bound by index for: Descendants matching type Table
+    t =   232.12s Get all elements bound by index for: Descendants matching type CollectionView
+    t =   232.23s Find the CollectionView (Element at index 0)
+    t =   232.36s Get all elements bound by index for: Descendants matching type Table
+    t =   232.58s Get all elements bound by index for: Descendants matching type CollectionView
+    t =   232.70s Find the CollectionView (Element at index 0)
+    t =   232.83s Get all elements bound by index for: Descendants matching type Table
+    t =   233.06s Get all elements bound by index for: Descendants matching type CollectionView
+    t =   233.19s Find the CollectionView (Element at index 0)
+    t =   233.32s Get all elements bound by index for: Descendants matching type Table
+    t =   233.54s Get all elements bound by index for: Descendants matching type CollectionView
+    t =   233.65s Find the CollectionView (Element at index 0)
+    t =   233.79s Get all elements bound by index for: Descendants matching type Table
+    t =   234.00s Get all elements bound by index for: Descendants matching type CollectionView
+    t =   234.12s Find the CollectionView (Element at index 0)
+    t =   234.26s Get all elements bound by index for: Descendants matching type Table
+    t =   234.48s Get all elements bound by index for: Descendants matching type CollectionView
+    t =   234.60s Find the CollectionView (Element at index 0)
+    t =   234.74s Get all elements bound by index for: Descendants matching type Table
+    t =   234.97s Get all elements bound by index for: Descendants matching type CollectionView
+    t =   235.09s Find the CollectionView (Element at index 0)
+    t =   235.24s Get all elements bound by index for: Descendants matching type Table
+    t =   235.46s Get all elements bound by index for: Descendants matching type CollectionView
+    t =   235.59s Find the CollectionView (Element at index 0)
+    t =   235.72s Get all elements bound by index for: Descendants matching type Table
+    t =   235.95s Get all elements bound by index for: Descendants matching type CollectionView
+    t =   236.07s Find the CollectionView (Element at index 0)
+    t =   236.21s Get all elements bound by index for: Descendants matching type Table
+    t =   236.34s Find the Target Application 'com.itorah.hanlinminiapps'
+    t =   236.65s Added attachment named 'modular-search-native-detail'
+    t =   236.65s Requesting snapshot of accessibility hierarchy for app with pid 60442
+Resolve Package Graph
+    t =   237.60s Requesting snapshot of accessibility hierarchy for app with pid 60442
+    t =   237.88s Added attachment named 'modular-search-native-detail-accessibility'
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift:1184: error: -[HanlinMiniAppsUITests.MiniAppsProductionRuntimeUITests testStandaloneModularSearchLoadsActualSefariaText] : XCTAssertTrue failed - Native detail navigation must finish with an interactive list
+    t =   237.91s Tear Down
+    t =   237.91s     Find the Target Application 'com.itorah.hanlinminiapps'
+    t =   238.21s     Added attachment named 'companion-runtime-failure'
+    t =   238.21s     Requesting snapshot of accessibility hierarchy for app with pid 60442
+    t =   239.27s     Requesting snapshot of accessibility hierarchy for app with pid 60442
+    t =   239.58s     Added attachment named 'companion-runtime-failure-accessibility'
+    t =   239.58s     Terminate com.itorah.hanlinminiapps:60442
+Test Case '-[HanlinMiniAppsUITests.MiniAppsProductionRuntimeUITests testStandaloneModularSearchLoadsActualSefariaText]' failed (241.374 seconds).
+Test Case '-[HanlinMiniAppsUITests.MiniAppsProductionRuntimeUITests testStandaloneSDKOnlyExpoPackageImportsRendersAndHandlesEvents]' started.
+    t =     0.01s Start Test at 2026-11-25 03:42:01.092
+    t =     0.10s Set Up
+    t =     0.10s     Open com.itorah.hanlinminiapps
+    t =     0.10s         Launch com.itorah.hanlinminiapps
+2026-11-25 03:42:01.223 xcodebuild[59494:3037201] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-25 03:42:01.225 xcodebuild[59494:3037201] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.14s             Setting up automation session
+
+Resolve Package Graph
+    t =     7.57s             Wait for com.itorah.hanlinminiapps to idle
+<unknown>:0: warning: -[HanlinMiniAppsUITests.MiniAppsProductionRuntimeUITests testStandaloneSDKOnlyExpoPackageImportsRendersAndHandlesEvents] : Update the Info.plist: Support for all orientations will soon be required.
+    t =     9.52s Waiting 30.0s for "hanlin-apps-add" Button to exist
+    t =    10.56s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+
+    t =    10.56s         Checking existence of `"hanlin-apps-add" Button`
+    t =    10.67s Waiting 30.0s for "hanlin-apps-add" Button to exist
+    t =    11.68s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+    t =    11.68s         Checking existence of `"hanlin-apps-add" Button`
+    t =    11.74s Tap "hanlin-apps-add" Button
+    t =    11.74s     Wait for com.itorah.hanlinminiapps to idle
+    t =    11.74s     Find the "hanlin-apps-add" Button
+    t =    11.86s     Check for interrupting elements affecting "hanlin-apps-add" Button
+    t =    11.95s         Wait for com.apple.springboard to idle
+    t =    11.98s     Synthesize event
+    t =    12.32s     Wait for com.itorah.hanlinminiapps to idle
+    t =    12.89s Waiting 15.0s for "hanlin-import-script-package" Button to exist
+    t =    13.90s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-script-package" Button`
+    t =    13.90s         Checking existence of `"hanlin-import-script-package" Button`
+    t =    14.12s Tap "hanlin-import-script-package" Button
+    t =    14.12s     Wait for com.itorah.hanlinminiapps to idle
+    t =    14.13s     Find the "hanlin-import-script-package" Button
+    t =    14.35s     Check for interrupting elements affecting "hanlin-import-script-package" Button
+    t =    14.46s         Wait for com.apple.springboard to idle
+    t =    14.48s     Synthesize event
+    t =    14.80s     Wait for com.itorah.hanlinminiapps to idle
+    t =    15.24s Waiting 15.0s for "hanlin-package-import-list" CollectionView to exist
+    t =    16.26s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-import-list" CollectionView`
+    t =    16.26s         Checking existence of `"hanlin-package-import-list" CollectionView`
+    t =    16.35s Checking existence of `"SDKOnlyDepartureBudget" Button`
+    t =    16.54s Swipe up "hanlin-package-import-list" CollectionView
+    t =    16.54s     Wait for com.itorah.hanlinminiapps to idle
+    t =    16.55s     Find the "hanlin-package-import-list" CollectionView
+    t =    16.64s     Check for interrupting elements affecting "hanlin-package-import-list" CollectionView
+    t =    16.75s         Wait for com.apple.springboard to idle
+    t =    16.77s     Synthesize event
+    t =    17.24s     Wait for com.itorah.hanlinminiapps to idle
+    t =    17.81s Checking existence of `"SDKOnlyDepartureBudget" Button`
+    t =    17.97s Find the "SDKOnlyDepartureBudget" Button
+    t =    18.13s Waiting 15.0s for "SDKOnlyDepartureBudget" Button to exist
+    t =    19.14s     Checking `Expect predicate `existsNoRetry == 1` for object "SDKOnlyDepartureBudget" Button`
+    t =    19.14s         Checking existence of `"SDKOnlyDepartureBudget" Button`
+    t =    19.32s Find the "SDKOnlyDepartureBudget" Button
+    t =    19.54s Tap "SDKOnlyDepartureBudget" Button
+    t =    19.54s     Wait for com.itorah.hanlinminiapps to idle
+    t =    19.55s     Find the "SDKOnlyDepartureBudget" Button
+    t =    19.74s     Check for interrupting elements affecting "SDKOnlyDepartureBudget" Button
+    t =    19.86s         Wait for com.apple.springboard to idle
+    t =    19.90s     Synthesize event
+    t =    20.21s     Wait for com.itorah.hanlinminiapps to idle
+    t =    20.22s Checking existence of `"hanlin-package-install" Button`
+    t =    20.51s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    20.81s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    21.46s Checking existence of `"hanlin-package-install" Button`
+    t =    21.77s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    22.05s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    22.71s Checking existence of `"hanlin-package-install" Button`
+    t =    23.09s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    23.50s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+Resolve Package Graph
+    t =    25.39s Checking existence of `"hanlin-package-install" Button`
+    t =    25.76s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    26.28s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    28.21s Checking existence of `"hanlin-package-install" Button`
+    t =    28.90s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    29.39s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+
+    t =    30.49s Checking existence of `"hanlin-package-install" Button`
+    t =    30.83s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    31.22s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    31.93s Checking existence of `"hanlin-package-install" Button`
+    t =    32.21s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    32.53s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    33.15s Checking existence of `"hanlin-package-install" Button`
+    t =    33.48s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    33.86s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    34.49s Checking existence of `"hanlin-package-install" Button`
+    t =    34.74s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    35.05s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    35.73s Checking existence of `"hanlin-package-install" Button`
+    t =    36.12s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    36.43s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    37.11s Checking existence of `"hanlin-package-install" Button`
+    t =    37.44s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    37.75s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    38.37s Checking existence of `"hanlin-package-install" Button`
+    t =    38.74s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    39.06s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    39.80s Checking existence of `"hanlin-package-install" Button`
+    t =    40.16s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    40.47s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    41.09s Checking existence of `"hanlin-package-install" Button`
+    t =    41.48s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    41.85s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    42.53s Checking existence of `"hanlin-package-install" Button`
+    t =    42.83s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    43.18s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    43.78s Checking existence of `"hanlin-package-install" Button`
+    t =    44.09s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    44.41s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    45.14s Checking existence of `"hanlin-package-install" Button`
+    t =    45.57s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    46.08s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    46.69s Checking existence of `"hanlin-package-install" Button`
+    t =    47.02s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    47.25s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    47.66s Checking existence of `"hanlin-package-install" Button`
+    t =    47.85s Checking existence of `"hanlin-approve-all-capabilities" Button`
+    t =    47.96s Find the "hanlin-package-install" Button
+    t =    48.19s Find the "hanlin-package-install" Button
+    t =    48.40s Find the "hanlin-package-install" Button
+    t =    48.61s Tap "hanlin-package-install" Button
+    t =    48.61s     Wait for com.itorah.hanlinminiapps to idle
+    t =    48.61s     Find the "hanlin-package-install" Button
+    t =    48.81s     Check for interrupting elements affecting "hanlin-package-install" Button
+    t =    48.93s         Wait for com.apple.springboard to idle
+    t =    48.95s     Synthesize event
+    t =    49.26s     Wait for com.itorah.hanlinminiapps to idle
+    t =    49.26s Checking existence of `"hanlin-package-install" Button`
+    t =    49.51s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    49.82s Checking existence of `"hanlin-package-install" Button`
+    t =    50.12s Waiting 10.0s for "Done" Button to exist
+    t =    51.17s     Checking `Expect predicate `existsNoRetry == 1` for object "Done" Button`
+    t =    51.17s         Checking existence of `"Done" Button`
+    t =    51.25s Tap "Done" Button
+    t =    51.25s     Wait for com.itorah.hanlinminiapps to idle
+    t =    51.28s     Find the "Done" Button
+    t =    51.37s     Check for interrupting elements affecting "hanlin-package-import-done" Button
+    t =    51.53s         Wait for com.apple.springboard to idle
+    t =    51.56s     Synthesize event
+    t =    51.89s     Wait for com.itorah.hanlinminiapps to idle
+    t =    52.34s Waiting 10.0s for "hanlin-apps-add-done" Button to exist
+    t =    53.40s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add-done" Button`
+    t =    53.40s         Checking existence of `"hanlin-apps-add-done" Button`
+    t =    53.50s Tap "hanlin-apps-add-done" Button
+    t =    53.50s     Wait for com.itorah.hanlinminiapps to idle
+    t =    53.50s     Find the "hanlin-apps-add-done" Button
+    t =    53.61s     Check for interrupting elements affecting "hanlin-apps-add-done" Button
+    t =    53.73s         Wait for com.apple.springboard to idle
+    t =    53.75s     Synthesize event
+    t =    54.05s     Wait for com.itorah.hanlinminiapps to idle
+    t =    54.47s Waiting 30.0s for "hanlin-apps-add" Button to exist
+    t =    55.53s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+    t =    55.53s         Checking existence of `"hanlin-apps-add" Button`
+    t =    55.62s Find the Target Application 'com.itorah.hanlinminiapps'
+    t =    55.92s Added attachment named 'companion-import-SDKOnlyDepartureBudget'
+    t =    55.92s Requesting snapshot of accessibility hierarchy for app with pid 62921
+    t =    56.19s Requesting snapshot of accessibility hierarchy for app with pid 62921
+    t =    56.34s Added attachment named 'companion-import-SDKOnlyDepartureBudget-accessibility'
+    t =    56.34s Checking existence of `"hanlin-package-card-Departure Budget" Button`
+    t =    56.47s Find the "hanlin-package-card-Departure Budget" Button
+    t =    56.60s Waiting 30.0s for "hanlin-package-card-Departure Budget" Button to exist
+    t =    57.67s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-card-Departure Budget" Button`
+    t =    57.67s         Checking existence of `"hanlin-package-card-Departure Budget" Button`
+    t =    57.82s Find the "hanlin-package-card-Departure Budget" Button
+    t =    58.15s Tap "hanlin-package-card-Departure Budget" Button
+    t =    58.15s     Wait for com.itorah.hanlinminiapps to idle
+    t =    58.17s     Find the "hanlin-package-card-Departure Budget" Button
+    t =    58.31s     Check for interrupting elements affecting "hanlin-package-card-Departure Budget" Button
+    t =    58.42s         Wait for com.apple.springboard to idle
+    t =    58.44s     Synthesize event
+    t =    58.79s     Wait for com.itorah.hanlinminiapps to idle
+    t =    58.91s Waiting 30.0s for StaticText (First Match) to exist
+    t =    59.97s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =    59.97s         Checking existence of `StaticText (First Match)`
+    t =    60.24s Checking existence of `StaticText (First Match)`
+    t =    60.49s Find the StaticText (First Match)
+    t =    60.77s Checking existence of `"City" Button`
+    t =    61.05s Find the "City" Button
+    t =    61.35s Tap "City" Button
+    t =    61.35s     Wait for com.itorah.hanlinminiapps to idle
+    t =    61.36s     Find the "City" Button
+    t =    61.65s     Check for interrupting elements affecting "City" Button
+    t =    61.81s         Wait for com.apple.springboard to idle
+    t =    61.83s     Synthesize event
+    t =    62.14s     Wait for com.itorah.hanlinminiapps to idle
+    t =    62.15s Checking existence of `StaticText (First Match)`
+    t =    62.41s Find the StaticText (First Match)
+    t =    62.74s Checking existence of `"70 minutes reserved before the target" StaticText`
+    t =    64.74s Find the Target Application 'com.itorah.hanlinminiapps'
+    t =    65.50s Added attachment named 'SDK-only Expo native City result'
+    t =    65.50s Requesting snapshot of accessibility hierarchy for app with pid 62921
+    t =    66.93s Requesting snapshot of accessibility hierarchy for app with pid 62921
+    t =    67.21s Added attachment named 'SDK-only Expo native City result-accessibility'
+    t =    67.21s Checking existence of `"Local" Button`
+    t =    67.53s Find the "Local" Button
+    t =    67.84s Tap "Local" Button
+    t =    67.84s     Wait for com.itorah.hanlinminiapps to idle
+    t =    67.85s     Find the "Local" Button
+    t =    68.16s     Check for interrupting elements affecting "Local" Button
+    t =    68.32s         Wait for com.apple.springboard to idle
+    t =    68.40s     Synthesize event
+    t =    68.72s     Wait for com.itorah.hanlinminiapps to idle
+    t =    68.73s Checking existence of `StaticText (First Match)`
+    t =    68.98s Find the StaticText (First Match)
+    t =    69.24s Checking existence of `"35 minutes reserved before the target" StaticText`
+    t =    69.48s Find the Target Application 'com.itorah.hanlinminiapps'
+    t =    69.77s Added attachment named 'SDK-only Expo native Local result'
+    t =    69.77s Requesting snapshot of accessibility hierarchy for app with pid 62921
+    t =    70.47s Requesting snapshot of accessibility hierarchy for app with pid 62921
+    t =    70.71s Added attachment named 'SDK-only Expo native Local result-accessibility'
+    t =    70.71s Waiting 15.0s for "hanlin-script-app-close" Button to exist
+    t =    71.78s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-script-app-close" Button`
+    t =    71.78s         Checking existence of `"hanlin-script-app-close" Button`
+    t =    71.85s Find the "hanlin-script-app-close" Button
+    t =    71.93s Tap "hanlin-script-app-close" Button
+    t =    71.93s     Wait for com.itorah.hanlinminiapps to idle
+    t =    71.94s     Find the "hanlin-script-app-close" Button
+    t =    72.01s     Check for interrupting elements affecting "hanlin-script-app-close" Button
+    t =    72.15s         Wait for com.apple.springboard to idle
+    t =    72.17s     Synthesize event
+    t =    72.49s     Wait for com.itorah.hanlinminiapps to idle
+    t =    73.37s Waiting 15.0s for "hanlin-script-app-close" Button to not exist
+    t =    74.43s     Checking `Expect predicate `existsNoRetry == 0` for object "hanlin-script-app-close" Button`
+    t =    74.44s         Checking existence of `"hanlin-script-app-close" Button`
+    t =    74.59s Waiting 15.0s for "hanlin-apps-add" Button to exist
+    t =    75.63s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+    t =    75.63s         Checking existence of `"hanlin-apps-add" Button`
+    t =    75.69s Terminate com.itorah.hanlinminiapps:62921
+    t =    76.69s Open com.itorah.hanlinminiapps
+    t =    76.70s     Launch com.itorah.hanlinminiapps
+2026-11-25 03:43:17.802 xcodebuild[59494:3037201] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-25 03:43:17.802 xcodebuild[59494:3037201] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =    76.93s         Setting up automation session
+    t =    81.11s         Wait for com.itorah.hanlinminiapps to idle
+    t =    82.92s Waiting 30.0s for "hanlin-apps-add" Button to exist
+    t =    83.97s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+    t =    83.97s         Checking existence of `"hanlin-apps-add" Button`
+    t =    84.07s Checking existence of `"hanlin-package-card-Departure Budget" Button`
+    t =    84.19s Find the "hanlin-package-card-Departure Budget" Button
+    t =    84.29s Waiting 30.0s for "hanlin-package-card-Departure Budget" Button to exist
+    t =    85.33s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-card-Departure Budget" Button`
+    t =    85.34s         Checking existence of `"hanlin-package-card-Departure Budget" Button`
+    t =    85.43s Find the "hanlin-package-card-Departure Budget" Button
+    t =    85.52s Tap "hanlin-package-card-Departure Budget" Button
+    t =    85.52s     Wait for com.itorah.hanlinminiapps to idle
+    t =    85.52s     Find the "hanlin-package-card-Departure Budget" Button
+    t =    85.61s     Check for interrupting elements affecting "hanlin-package-card-Departure Budget" Button
+    t =    85.69s         Wait for com.apple.springboard to idle
+    t =    85.71s     Synthesize event
+    t =    86.02s     Wait for com.itorah.hanlinminiapps to idle
+    t =    86.12s Waiting 30.0s for "55 minutes reserved before the target" StaticText to exist
+    t =    87.15s     Checking `Expect predicate `existsNoRetry == 1` for object "55 minutes reserved before the target" StaticText`
+    t =    87.15s         Checking existence of `"55 minutes reserved before the target" StaticText`
+    t =    87.40s Find the Target Application 'com.itorah.hanlinminiapps'
+    t =    87.68s Added attachment named 'SDK-only Expo installed package relaunch'
+    t =    87.68s Requesting snapshot of accessibility hierarchy for app with pid 63770
+    t =    88.33s Requesting snapshot of accessibility hierarchy for app with pid 63770
+    t =    88.55s Added attachment named 'SDK-only Expo installed package relaunch-accessibility'
+    t =    88.55s Waiting 15.0s for "hanlin-script-app-close" Button to exist
+    t =    89.59s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-script-app-close" Button`
+    t =    89.59s         Checking existence of `"hanlin-script-app-close" Button`
+    t =    89.67s Find the "hanlin-script-app-close" Button
+    t =    89.76s Tap "hanlin-script-app-close" Button
+    t =    89.76s     Wait for com.itorah.hanlinminiapps to idle
+    t =    89.76s     Find the "hanlin-script-app-close" Button
+    t =    89.83s     Check for interrupting elements affecting "hanlin-script-app-close" Button
+    t =    89.95s         Wait for com.apple.springboard to idle
+    t =    89.98s     Synthesize event
+    t =    90.30s     Wait for com.itorah.hanlinminiapps to idle
+    t =    91.07s Waiting 15.0s for "hanlin-script-app-close" Button to not exist
+    t =    92.11s     Checking `Expect predicate `existsNoRetry == 0` for object "hanlin-script-app-close" Button`
+    t =    92.11s         Checking existence of `"hanlin-script-app-close" Button`
+    t =    92.25s Waiting 15.0s for "hanlin-apps-add" Button to exist
+    t =    93.30s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+    t =    93.30s         Checking existence of `"hanlin-apps-add" Button`
+    t =    93.37s Tear Down
+    t =    93.37s     Find the Target Application 'com.itorah.hanlinminiapps'
+    t =    93.63s     Added attachment named 'companion-runtime-failure'
+    t =    93.63s     Requesting snapshot of accessibility hierarchy for app with pid 63770
+    t =    93.88s     Requesting snapshot of accessibility hierarchy for app with pid 63770
+    t =    94.02s     Added attachment named 'companion-runtime-failure-accessibility'
+    t =    94.02s     Terminate com.itorah.hanlinminiapps:63770
+Test Case '-[HanlinMiniAppsUITests.MiniAppsProductionRuntimeUITests testStandaloneSDKOnlyExpoPackageImportsRendersAndHandlesEvents]' passed (95.161 seconds).
+Test Case '-[HanlinMiniAppsUITests.MiniAppsProductionRuntimeUITests testStandaloneSDKOnlyNativeScriptPackageImportsRendersAndHandlesEvents]' started.
+    t =     0.00s Start Test at 2026-11-25 03:43:36.250
+    t =     0.03s Set Up
+    t =     0.03s     Open com.itorah.hanlinminiapps
+    t =     0.03s         Launch com.itorah.hanlinminiapps
+2026-11-25 03:43:36.280 xcodebuild[59494:3037201] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-25 03:43:36.280 xcodebuild[59494:3037201] [MT] IDELaunchParametersSnapshot: no debugger version
+Resolve Package Graph
+    t =     0.24s             Setting up automation session
+    t =     3.57s             Wait for com.itorah.hanlinminiapps to idle
+
+<unknown>:0: warning: -[HanlinMiniAppsUITests.MiniAppsProductionRuntimeUITests testStandaloneSDKOnlyNativeScriptPackageImportsRendersAndHandlesEvents] : Update the Info.plist: Support for all orientations will soon be required.
+    t =     5.66s Waiting 30.0s for "hanlin-apps-add" Button to exist
+    t =     6.72s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+    t =     6.72s         Checking existence of `"hanlin-apps-add" Button`
+    t =     6.82s Waiting 30.0s for "hanlin-apps-add" Button to exist
+    t =     7.84s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+    t =     7.84s         Checking existence of `"hanlin-apps-add" Button`
+    t =     7.90s Tap "hanlin-apps-add" Button
+    t =     7.90s     Wait for com.itorah.hanlinminiapps to idle
+    t =     7.90s     Find the "hanlin-apps-add" Button
+    t =     8.02s     Check for interrupting elements affecting "hanlin-apps-add" Button
+    t =     8.11s         Wait for com.apple.springboard to idle
+    t =     8.14s     Synthesize event
+    t =     8.48s     Wait for com.itorah.hanlinminiapps to idle
+    t =     9.08s Waiting 15.0s for "hanlin-import-script-package" Button to exist
+    t =    10.15s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-script-package" Button`
+    t =    10.15s         Checking existence of `"hanlin-import-script-package" Button`
+    t =    10.43s Tap "hanlin-import-script-package" Button
+    t =    10.43s     Wait for com.itorah.hanlinminiapps to idle
+    t =    10.44s     Find the "hanlin-import-script-package" Button
+    t =    10.65s     Check for interrupting elements affecting "hanlin-import-script-package" Button
+    t =    10.77s         Wait for com.apple.springboard to idle
+    t =    10.79s     Synthesize event
+    t =    11.09s     Wait for com.itorah.hanlinminiapps to idle
+    t =    11.21s Waiting 15.0s for "hanlin-package-import-list" CollectionView to exist
+    t =    12.28s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-import-list" CollectionView`
+    t =    12.28s         Checking existence of `"hanlin-package-import-list" CollectionView`
+    t =    12.36s Checking existence of `"SDKOnlyTableShare" Button`
+    t =    12.51s Swipe up "hanlin-package-import-list" CollectionView
+    t =    12.51s     Wait for com.itorah.hanlinminiapps to idle
+    t =    12.52s     Find the "hanlin-package-import-list" CollectionView
+    t =    12.60s     Check for interrupting elements affecting "hanlin-package-import-list" CollectionView
+    t =    12.70s         Wait for com.apple.springboard to idle
+    t =    12.72s     Synthesize event
+    t =    13.17s     Wait for com.itorah.hanlinminiapps to idle
+    t =    13.73s Checking existence of `"SDKOnlyTableShare" Button`
+    t =    13.93s Find the "SDKOnlyTableShare" Button
+    t =    14.21s Waiting 15.0s for "SDKOnlyTableShare" Button to exist
+    t =    15.28s     Checking `Expect predicate `existsNoRetry == 1` for object "SDKOnlyTableShare" Button`
+    t =    15.28s         Checking existence of `"SDKOnlyTableShare" Button`
+    t =    15.44s Find the "SDKOnlyTableShare" Button
+    t =    15.62s Tap "SDKOnlyTableShare" Button
+    t =    15.62s     Wait for com.itorah.hanlinminiapps to idle
+    t =    15.63s     Find the "SDKOnlyTableShare" Button
+    t =    15.80s     Check for interrupting elements affecting "SDKOnlyTableShare" Button
+    t =    15.93s         Wait for com.apple.springboard to idle
+    t =    15.95s     Synthesize event
+    t =    16.25s     Wait for com.itorah.hanlinminiapps to idle
+    t =    16.26s Checking existence of `"hanlin-package-install" Button`
+    t =    16.55s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    16.81s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    17.38s Checking existence of `"hanlin-package-install" Button`
+    t =    17.67s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    17.95s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    18.50s Checking existence of `"hanlin-package-install" Button`
+    t =    18.80s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    19.06s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+Resolve Package Graph
+    t =    19.63s Checking existence of `"hanlin-package-install" Button`
+    t =    19.91s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    20.17s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    20.74s Checking existence of `"hanlin-package-install" Button`
+    t =    21.00s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    21.27s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    21.77s Checking existence of `"hanlin-package-install" Button`
+    t =    22.02s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    22.28s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+
+    t =    22.92s Checking existence of `"hanlin-package-install" Button`
+    t =    23.17s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    23.42s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    23.93s Checking existence of `"hanlin-package-install" Button`
+    t =    24.18s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    24.42s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    24.93s Checking existence of `"hanlin-package-install" Button`
+    t =    25.18s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    25.41s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    25.93s Checking existence of `"hanlin-package-install" Button`
+    t =    26.17s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    26.41s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    26.93s Checking existence of `"hanlin-package-install" Button`
+    t =    27.18s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    27.42s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    27.92s Checking existence of `"hanlin-package-install" Button`
+    t =    28.19s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    28.45s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    28.98s Checking existence of `"hanlin-package-install" Button`
+    t =    29.23s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    29.47s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    29.99s Checking existence of `"hanlin-package-install" Button`
+    t =    30.24s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    30.48s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    31.01s Checking existence of `"hanlin-package-install" Button`
+    t =    31.25s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    31.49s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    32.00s Checking existence of `"hanlin-package-install" Button`
+    t =    32.25s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    32.49s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    33.01s Checking existence of `"hanlin-package-install" Button`
+    t =    33.25s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    33.50s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    34.03s Checking existence of `"hanlin-package-install" Button`
+    t =    34.28s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    34.52s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    35.02s Checking existence of `"hanlin-package-install" Button`
+    t =    35.28s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    35.52s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    36.03s Checking existence of `"hanlin-package-install" Button`
+    t =    36.28s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    36.52s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    37.03s Checking existence of `"hanlin-package-install" Button`
+    t =    37.27s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    37.50s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    38.01s Checking existence of `"hanlin-package-install" Button`
+    t =    38.29s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    38.54s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    39.10s Checking existence of `"hanlin-package-install" Button`
+    t =    39.31s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    39.52s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    39.87s Checking existence of `"hanlin-package-install" Button`
+    t =    40.06s Checking existence of `"hanlin-approve-all-capabilities" Button`
+    t =    40.16s Find the "hanlin-package-install" Button
+    t =    40.37s Find the "hanlin-package-install" Button
+    t =    40.67s Find the "hanlin-package-install" Button
+    t =    40.92s Tap "hanlin-package-install" Button
+    t =    40.92s     Wait for com.itorah.hanlinminiapps to idle
+    t =    40.93s     Find the "hanlin-package-install" Button
+    t =    41.16s     Check for interrupting elements affecting "hanlin-package-install" Button
+    t =    41.28s         Wait for com.apple.springboard to idle
+    t =    41.33s     Synthesize event
+    t =    41.72s     Wait for com.itorah.hanlinminiapps to idle
+    t =    41.75s Checking existence of `"hanlin-package-install" Button`
+    t =    42.01s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    42.25s Checking existence of `"hanlin-package-install" Button`
+    t =    42.52s Waiting 10.0s for "Done" Button to exist
+    t =    43.54s     Checking `Expect predicate `existsNoRetry == 1` for object "Done" Button`
+    t =    43.54s         Checking existence of `"Done" Button`
+    t =    43.62s Tap "Done" Button
+    t =    43.62s     Wait for com.itorah.hanlinminiapps to idle
+    t =    43.62s     Find the "Done" Button
+    t =    43.69s     Check for interrupting elements affecting "hanlin-package-import-done" Button
+    t =    43.81s         Wait for com.apple.springboard to idle
+    t =    43.84s     Synthesize event
+    t =    44.15s     Wait for com.itorah.hanlinminiapps to idle
+    t =    44.49s Waiting 10.0s for "hanlin-apps-add-done" Button to exist
+    t =    45.58s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add-done" Button`
+    t =    45.58s         Checking existence of `"hanlin-apps-add-done" Button`
+    t =    45.67s Tap "hanlin-apps-add-done" Button
+    t =    45.67s     Wait for com.itorah.hanlinminiapps to idle
+    t =    45.67s     Find the "hanlin-apps-add-done" Button
+    t =    45.75s     Check for interrupting elements affecting "hanlin-apps-add-done" Button
+    t =    45.89s         Wait for com.apple.springboard to idle
+    t =    45.92s     Synthesize event
+    t =    46.23s     Wait for com.itorah.hanlinminiapps to idle
+    t =    46.85s Waiting 30.0s for "hanlin-apps-add" Button to exist
+    t =    47.92s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+    t =    47.92s         Checking existence of `"hanlin-apps-add" Button`
+    t =    47.98s Find the Target Application 'com.itorah.hanlinminiapps'
+    t =    48.32s Added attachment named 'companion-import-SDKOnlyTableShare'
+    t =    48.33s Requesting snapshot of accessibility hierarchy for app with pid 63974
+    t =    48.65s Requesting snapshot of accessibility hierarchy for app with pid 63974
+    t =    48.80s Added attachment named 'companion-import-SDKOnlyTableShare-accessibility'
+    t =    48.80s Checking existence of `"hanlin-package-card-Table Share" Button`
+    t =    48.89s Find the "hanlin-package-card-Table Share" Button
+    t =    48.99s Waiting 30.0s for "hanlin-package-card-Table Share" Button to exist
+    t =    50.04s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-card-Table Share" Button`
+    t =    50.04s         Checking existence of `"hanlin-package-card-Table Share" Button`
+    t =    50.13s Find the "hanlin-package-card-Table Share" Button
+    t =    50.24s Tap "hanlin-package-card-Table Share" Button
+    t =    50.24s     Wait for com.itorah.hanlinminiapps to idle
+    t =    50.24s     Find the "hanlin-package-card-Table Share" Button
+    t =    50.34s     Check for interrupting elements affecting "hanlin-package-card-Table Share" Button
+    t =    50.41s         Wait for com.apple.springboard to idle
+    t =    50.44s     Synthesize event
+    t =    50.74s     Wait for com.itorah.hanlinminiapps to idle
+    t =    52.10s Waiting 30.0s for StaticText (First Match) to exist
+    t =    53.16s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =    53.16s         Checking existence of `StaticText (First Match)`
+    t =    53.25s Checking existence of `StaticText (First Match)`
+    t =    53.34s Find the StaticText (First Match)
+    t =    53.44s Checking existence of `"$106.26 total" StaticText`
+    t =    53.53s Checking existence of `StaticText (First Match)`
+    t =    53.61s Find the StaticText (First Match)
+    t =    53.71s Checking existence of `"3 people pay $35.42 each." StaticText`
+    t =    53.80s Checking existence of `"+" Button`
+    t =    53.92s Find the "+" Button
+    t =    54.04s Tap "+" Button
+    t =    54.04s     Wait for com.itorah.hanlinminiapps to idle
+    t =    54.04s     Find the "+" Button
+    t =    54.16s     Check for interrupting elements affecting "+" Button
+    t =    54.25s         Wait for com.apple.springboard to idle
+    t =    54.27s     Synthesize event
+    t =    54.58s     Wait for com.itorah.hanlinminiapps to idle
+    t =    54.58s Checking existence of `StaticText (First Match)`
+    t =    54.68s Find the StaticText (First Match)
+    t =    54.78s Checking existence of `"2 pay $26.57; 2 pay $26.56." StaticText`
+    t =    54.88s Checking existence of `Switch (First Match)`
+    t =    54.99s Find the Switch (First Match)
+    t =    55.09s Find the "0" Switch
+    t =    55.17s Tap "0" Switch
+    t =    55.17s     Wait for com.itorah.hanlinminiapps to idle
+    t =    55.18s     Find the "0" Switch
+    t =    55.26s     Check for interrupting elements affecting "0" Switch
+    t =    55.36s         Wait for com.apple.springboard to idle
+    t =    55.38s     Synthesize event
+    t =    55.68s     Wait for com.itorah.hanlinminiapps to idle
+    t =    56.99s Checking existence of `StaticText (First Match)`
+    t =    57.08s Find the StaticText (First Match)
+    t =    57.18s Checking existence of `"4 people pay $27.00 each." StaticText`
+    t =    57.27s Checking existence of `StaticText (First Match)`
+    t =    57.35s Find the StaticText (First Match)
+    t =    57.45s Checking existence of `"Whole-dollar rounding collects $1.74 extra. Decide together where that goes." StaticText`
+    t =    57.53s Find the Target Application 'com.itorah.hanlinminiapps'
+    t =    57.76s Added attachment named 'SDK-only NativeScript native rounded result'
+    t =    57.76s Requesting snapshot of accessibility hierarchy for app with pid 63974
+    t =    58.09s Requesting snapshot of accessibility hierarchy for app with pid 63974
+    t =    58.24s Added attachment named 'SDK-only NativeScript native rounded result-accessibility'
+    t =    58.25s Checking existence of `"Reset to example bill" Button`
+    t =    58.33s Find the "Reset to example bill" Button
+    t =    58.43s Tap "Reset to example bill" Button
+    t =    58.43s     Wait for com.itorah.hanlinminiapps to idle
+    t =    58.43s     Find the "Reset to example bill" Button
+    t =    58.52s     Check for interrupting elements affecting "Reset to example bill" Button
+    t =    58.61s         Wait for com.apple.springboard to idle
+    t =    58.62s     Synthesize event
+    t =    58.92s     Wait for com.itorah.hanlinminiapps to idle
+    t =    58.92s Checking existence of `"3 people pay $35.42 each." StaticText`
+    t =    59.01s Find the "3 people pay $35.42 each." StaticText
+    t =    59.11s Checking existence of `"3 people pay $35.42 each." StaticText`
+    t =    59.19s Find the Target Application 'com.itorah.hanlinminiapps'
+    t =    59.42s Added attachment named 'SDK-only NativeScript native reset result'
+    t =    59.42s Requesting snapshot of accessibility hierarchy for app with pid 63974
+    t =    59.76s Requesting snapshot of accessibility hierarchy for app with pid 63974
+    t =    59.92s Added attachment named 'SDK-only NativeScript native reset result-accessibility'
+    t =    59.92s Waiting 15.0s for "hanlin-script-app-close" Button to exist
+    t =    60.95s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-script-app-close" Button`
+    t =    60.95s         Checking existence of `"hanlin-script-app-close" Button`
+    t =    61.02s Find the "hanlin-script-app-close" Button
+    t =    61.10s Tap "hanlin-script-app-close" Button
+    t =    61.10s     Wait for com.itorah.hanlinminiapps to idle
+    t =    61.10s     Find the "hanlin-script-app-close" Button
+    t =    61.16s     Check for interrupting elements affecting "hanlin-script-app-close" Button
+    t =    61.25s         Wait for com.apple.springboard to idle
+    t =    61.26s     Synthesize event
+    t =    61.57s     Wait for com.itorah.hanlinminiapps to idle
+    t =    62.34s Waiting 15.0s for "hanlin-script-app-close" Button to not exist
+    t =    63.39s     Checking `Expect predicate `existsNoRetry == 0` for object "hanlin-script-app-close" Button`
+    t =    63.39s         Checking existence of `"hanlin-script-app-close" Button`
+    t =    63.53s Waiting 15.0s for "hanlin-apps-add" Button to exist
+    t =    64.56s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+    t =    64.56s         Checking existence of `"hanlin-apps-add" Button`
+    t =    64.62s Tear Down
+    t =    64.62s     Find the Target Application 'com.itorah.hanlinminiapps'
+    t =    64.88s     Added attachment named 'companion-runtime-failure'
+    t =    64.88s     Requesting snapshot of accessibility hierarchy for app with pid 63974
+    t =    65.13s     Requesting snapshot of accessibility hierarchy for app with pid 63974
+    t =    65.27s     Added attachment named 'companion-runtime-failure-accessibility'
+    t =    65.27s     Terminate com.itorah.hanlinminiapps:63974
+Test Case '-[HanlinMiniAppsUITests.MiniAppsProductionRuntimeUITests testStandaloneSDKOnlyNativeScriptPackageImportsRendersAndHandlesEvents]' passed (66.491 seconds).
+Test Suite 'MiniAppsProductionRuntimeUITests' failed at 2026-11-25 03:44:42.741.
+	 Executed 3 tests, with 1 failure (0 unexpected) in 403.026 (403.045) seconds
+Test Suite 'HanlinMiniAppsUITests.xctest' failed at 2026-11-25 03:44:42.749.
+	 Executed 3 tests, with 1 failure (0 unexpected) in 403.026 (403.054) seconds
+Test Suite 'Selected tests' failed at 2026-11-25 03:44:42.749.
+	 Executed 3 tests, with 1 failure (0 unexpected) in 403.026 (403.056) seconds
+2026-11-25 03:44:43.081 xcodebuild[59494:3037201] [MT] IDETestOperationsObserverDebug: 409.613 elapsed -- Testing started completed.
+2026-11-25 03:44:43.081 xcodebuild[59494:3037201] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-25 03:44:43.081 xcodebuild[59494:3037201] [MT] IDETestOperationsObserverDebug: 409.613 sec, +409.613 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt10/paired-prefix/RemainingFocused.xcresult
+
+Failing tests:
+	MiniAppsProductionRuntimeUITests.testStandaloneModularSearchLoadsActualSefariaText()
+
+** TEST EXECUTE FAILED **
+
+Testing started

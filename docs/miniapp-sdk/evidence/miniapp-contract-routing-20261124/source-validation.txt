@@ -1,0 +1,13 @@
+{
+  "status": "SOURCE_CHECKS_PASS",
+  "dispatchInputs": 10,
+  "unchangedExistingModes": 160,
+  "newModeCombinations": 8,
+  "groupSuffixes": {
+    "miniapp_authoring": "paired-miniapp_authoring",
+    "miniapp_contracts": "paired-miniapp_contracts"
+  },
+  "expectedMethods": 8,
+  "calleeUnchanged": true,
+  "mainJobBodyByteIdentical": true
+}

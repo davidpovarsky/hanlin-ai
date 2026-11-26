@@ -1,0 +1,17 @@
+{
+  "source": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-tests.log",
+    "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-tests.log",
+    "bytes": 80898,
+    "sha256": "511a318946327a74f53e1ccf08956547bd9a9982712a24a8978aa1f56397fc1e",
+    "mode": "0o644",
+    "mtimeNs": "1795601965898984548"
+  },
+  "firstLine": 460,
+  "lastLine": 472,
+  "encoding": "utf-8",
+  "lineEndingsPreserved": true,
+  "exactExtractSHA256": "3013aa6ac7987dcb173daf7edbd56fe8e00c363a86b080cffbd5bd319da3e659",
+  "text": "◇ Suite HanlinOriginalScriptWidgetLiveActivityTests started.\n◇ Test originalRegionsPersistOutsideActivityContentAndActionsProduceFreshSnapshots() started.\n✔ Test originalRegionsPersistOutsideActivityContentAndActionsProduceFreshSnapshots() passed after 0.119 seconds.\n◇ Test inactiveWidgetCannotProduceOrLoadALiveActivitySnapshot() started.\n✔ Test inactiveWidgetCannotProduceOrLoadALiveActivitySnapshot() passed after 0.061 seconds.\n◇ Test actualActivityKitStartsUpdatesAndEndsTheOriginalProgram() started.\n2026-11-25 11:17:17.270733+0100 AI_Hanlin[65666:4951953] [api] Updating content for activity F67C7019-E99A-41C9-A8AC-970DEC2460D3\n\n✘ Test actualActivityKitStartsUpdatesAndEndsTheOriginalProgram() recorded an issue at HanlinOriginalScriptWidgetLiveActivityTests.swift:146:13: Expectation failed: activity.content.state.revision == 2\n↳ activity.content.state.revision == 2 → false\n↳   activity.content.state.revision → 1\n✘ Test actualActivityKitStartsUpdatesAndEndsTheOriginalProgram() failed after 0.341 seconds with 1 issue.\n✘ Suite HanlinOriginalScriptWidgetLiveActivityTests failed after 0.522 seconds with 1 issue.\n",
+  "boundary": "Derived exact contiguous original log excerpt; complete original log remains in the immutable packet."
+}

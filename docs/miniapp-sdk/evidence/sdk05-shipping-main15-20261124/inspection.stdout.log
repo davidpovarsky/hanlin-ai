@@ -1,0 +1,69 @@
+{
+  "status": "PASS_EXPECTED_PROVENANCE_DELTA",
+  "outerArtifact": {
+    "path": "/tmp/hanlin-native-gate-evidence-45412939674/app-split-45412939674.zip",
+    "artifactID": 14933389929,
+    "bytes": 333459051,
+    "sha256": "1c7b453087a1bb7d2e1a07fa2ec94898afc0e0b2dbee6f3ac2dc5d691c80d574"
+  },
+  "nested": {
+    "member": "runtime-host/RuntimeHostResources.zip",
+    "bytes": 81812095,
+    "sha256": "e5f72fd3c01dccc81c080e7469c0dbe7eb30052963363aa03e7272a2f15af806"
+  },
+  "sdk": {
+    "manifestSHA256": "ab7900fbb6009606800a7d4beda2bef2cee6ef8492928bea90ad5d0460abff8b",
+    "previousManifestSHA256": "17df84a3ea5121d8b6362a03d095114ff3ce7702ad605a97b91f21666480a7e6",
+    "manifestBytes": 5219260,
+    "manifestByteIdentical": false,
+    "inputSHA256": "91128b0831f2d90374bc7889acb9cbbd695d49187520ee23a7a75e3c2bcef6fc",
+    "computedInputSHA256": "91128b0831f2d90374bc7889acb9cbbd695d49187520ee23a7a75e3c2bcef6fc",
+    "previousInputSHA256": "2613c6ccdeb2ea17dd5268b5a0eb90f0f7e136f3c46e39faeb94c7fb0777848a",
+    "sourceInputs": 222,
+    "unchangedInputCount": 219,
+    "changedInputs": 3,
+    "fileRows": 25661,
+    "unchangedFileRows": 25658,
+    "changedFileRows": 3,
+    "sameOrderedPaths": true,
+    "engineMetadataIdentical": true,
+    "upstreamMetadataIdentical": true
+  },
+  "sourceApplicability": {
+    "priorSource": "cf9c18903c03264265557efb446207efa7226912",
+    "testedSource": "e2227ccdfe0c3111d1c17ef2b4bb1653ac24bb9c",
+    "laterEvidenceBase": "788354f8e9e863eb5e4c9007a8b58ea71d028b19",
+    "gitChangedInputPaths": [
+      "docs/miniapp-sdk/extension-reachability.json",
+      "docs/miniapp-sdk/extension-reachability.md",
+      "docs/miniapp-sdk/source-inventory.json"
+    ],
+    "postDispatchSDKInputPaths": [
+      "docs/miniapp-sdk/README.md",
+      "docs/miniapp-sdk/extension-reachability.json",
+      "docs/miniapp-sdk/extension-reachability.md"
+    ]
+  },
+  "reusedManifestRowCoverage": {
+    "docs": 25,
+    "unchangedDocs": 22,
+    "changedDocsFreshlyRead": 3,
+    "examplesIncludingIndex": 29,
+    "exampleRowsIdentical": true,
+    "declarations": 5210,
+    "declarationRowsIdentical": true
+  },
+  "snippet": {
+    "sha256": "595f1e77aa5b5c52417f238e185233ec0af477d78187325239502fa5b51d83bb",
+    "status": "EXECUTED_PASS",
+    "sourceBlocks": 14,
+    "jsonBlocks": 7,
+    "excluded": 8,
+    "projects": 4,
+    "diagnostics": 0,
+    "documentationIdentityRowsIdentical": true,
+    "checkerInputsIdentical": true,
+    "registrationIdentical": true
+  },
+  "boundary": "Only the nested manifest and exactly three changed documentation members were opened. Unchanged original member/type/example proof is reused by identical manifest records. Compare artifact to exact e222 source, not later README/reachability/test edits. No repeated 112-member inspection, compiler, tests, build, download, generator or native acceptance claim."
+}

@@ -1,0 +1,260 @@
+{
+  "schema": 1,
+  "id": "camera-isolated-conformance-probe-v1",
+  "source": "75c21bec8e709dc4f07f8fde36f1b350f118969e",
+  "startedAt": "2026-11-26T18:02:11.109386+00:00",
+  "status": "FAILED",
+  "commands": [
+    {
+      "role": "mini",
+      "kind": "original",
+      "argv": [
+        "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+        "-typecheck",
+        "-module-name",
+        "HanlinMiniAppsCameraCaptureHost",
+        "-Onone",
+        "-DDEBUG",
+        "-enable-upcoming-feature",
+        "InferIsolatedConformances",
+        "-enable-upcoming-feature",
+        "NonisolatedNonsendingByDefault",
+        "-enable-experimental-feature",
+        "DebugDescriptionMacro",
+        "-sdk",
+        "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk",
+        "-target",
+        "arm64-apple-ios27.0-simulator",
+        "-cxx-interoperability-mode=default",
+        "-g",
+        "-module-cache-path",
+        "/Users/m1/builds/hanlin-camera-conformance-probe-20261126-v1/ModuleCache",
+        "-application-extension",
+        "-enable-testing",
+        "-Xcc",
+        "-std=gnu++20",
+        "-Xcc",
+        "-D_LIBCPP_HARDENING_MODE=_LIBCPP_HARDENING_MODE_DEBUG",
+        "-swift-version",
+        "6",
+        "-I",
+        "/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/Build/Products/Debug-iphonesimulator",
+        "-F",
+        "/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/Build/Products/Debug-iphonesimulator/PackageFrameworks",
+        "-F",
+        "/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/Build/Products/Debug-iphonesimulator",
+        "-parse-as-library",
+        "-Xcc",
+        "-ivfsstatcache",
+        "-Xcc",
+        "/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/SDKStatCaches.noindex/iphonesimulator27.0-24A430-8dc58220667be655e1bcc261a7455254.sdkstatcache",
+        "-no-color-diagnostics",
+        "-validate-clang-modules-once",
+        "-Xcc",
+        "-fmodules-prune-interval=86400",
+        "-Xcc",
+        "-fmodules-prune-after=345600",
+        "-Xcc",
+        "-iquote",
+        "-Xcc",
+        "/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsCameraCapture.build/HanlinMiniAppsCameraCapture-generated-files.hmap",
+        "-Xcc",
+        "-I/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsCameraCapture.build/HanlinMiniAppsCameraCapture-own-target-headers.hmap",
+        "-Xcc",
+        "-I/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsCameraCapture.build/HanlinMiniAppsCameraCapture-all-non-framework-target-headers.hmap",
+        "-Xcc",
+        "-ivfsoverlay",
+        "-Xcc",
+        "/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/AI_HLY-0ebe45c35adf982d0a4475faf5bad8c0-VFS-iphonesimulator/all-product-headers.yaml",
+        "-Xcc",
+        "-iquote",
+        "-Xcc",
+        "/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsCameraCapture.build/HanlinMiniAppsCameraCapture-project-headers.hmap",
+        "-Xcc",
+        "-I/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/Build/Products/Debug-iphonesimulator/include",
+        "-Xcc",
+        "-I/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsCameraCapture.build/DerivedSources-normal/arm64",
+        "-Xcc",
+        "-I/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsCameraCapture.build/DerivedSources/arm64",
+        "-Xcc",
+        "-I/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsCameraCapture.build/DerivedSources",
+        "-Xcc",
+        "-DDEBUG=1",
+        "-working-directory",
+        "/Users/m1/builds/hanlin-current-entrypoints-20261126",
+        "-disable-cmo",
+        "/Users/m1/builds/hanlin-camera-conformance-probe-20261126-v1/mini-original.swift"
+      ],
+      "input": {
+        "path": "/Users/m1/builds/hanlin-camera-conformance-probe-20261126-v1/mini-original.swift",
+        "bytes": 546,
+        "sha256": "ca3d2d641c94e0ee4e9ca5fb9c57e299d620aee30d15dd08d629f9857b1bedb9"
+      },
+      "exitCode": 1,
+      "actualElapsedSeconds": 0.24370570899918675,
+      "stdout": {
+        "path": "/Users/m1/builds/hanlin-camera-conformance-probe-20261126-v1/mini-original.stdout.log",
+        "bytes": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      "stderr": {
+        "path": "/Users/m1/builds/hanlin-camera-conformance-probe-20261126-v1/mini-original.stderr.log",
+        "bytes": 104,
+        "sha256": "8968fa8f3b5dac74405e61ec1ecc4fe7af67ed9588f45b6a9b3b73fe8a1d1fb9"
+      },
+      "stdoutText": "",
+      "stderrText": "error: '-validate-clang-modules-once' cannot be specified if '-clang-build-session-file' is not present\n"
+    }
+  ],
+  "errors": [
+    {
+      "type": "AssertionError",
+      "message": "{'role': 'mini', 'kind': 'original', 'argv': ['/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc', '-typecheck', '-module-name', 'HanlinMiniAppsCameraCaptureHost', '-Onone', '-DDEBUG', '-enable-upcoming-feature', 'InferIsolatedConformances', '-enable-upcoming-feature', 'NonisolatedNonsendingByDefault', '-enable-experimental-feature', 'DebugDescriptionMacro', '-sdk', '/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk', '-target', 'arm64-apple-ios27.0-simulator', '-cxx-interoperability-mode=default', '-g', '-module-cache-path', '/Users/m1/builds/hanlin-camera-conformance-probe-20261126-v1/ModuleCache', '-application-extension', '-enable-testing', '-Xcc', '-std=gnu++20', '-Xcc', '-D_LIBCPP_HARDENING_MODE=_LIBCPP_HARDENING_MODE_DEBUG', '-swift-version', '6', '-I', '/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/Build/Products/Debug-iphonesimulator', '-F', '/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/Build/Products/Debug-iphonesimulator/PackageFrameworks', '-F', '/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/Build/Products/Debug-iphonesimulator', '-parse-as-library', '-Xcc', '-ivfsstatcache', '-Xcc', '/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/SDKStatCaches.noindex/iphonesimulator27.0-24A430-8dc58220667be655e1bcc261a7455254.sdkstatcache', '-no-color-diagnostics', '-validate-clang-modules-once', '-Xcc', '-fmodules-prune-interval=86400', '-Xcc', '-fmodules-prune-after=345600', '-Xcc', '-iquote', '-Xcc', '/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsCameraCapture.build/HanlinMiniAppsCameraCapture-generated-files.hmap', '-Xcc', '-I/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsCameraCapture.build/HanlinMiniAppsCameraCapture-own-target-headers.hmap', '-Xcc', '-I/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsCameraCapture.build/HanlinMiniAppsCameraCapture-all-non-framework-target-headers.hmap', '-Xcc', '-ivfsoverlay', '-Xcc', '/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/AI_HLY-0ebe45c35adf982d0a4475faf5bad8c0-VFS-iphonesimulator/all-product-headers.yaml', '-Xcc', '-iquote', '-Xcc', '/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsCameraCapture.build/HanlinMiniAppsCameraCapture-project-headers.hmap', '-Xcc', '-I/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/Build/Products/Debug-iphonesimulator/include', '-Xcc', '-I/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsCameraCapture.build/DerivedSources-normal/arm64', '-Xcc', '-I/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsCameraCapture.build/DerivedSources/arm64', '-Xcc', '-I/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsCameraCapture.build/DerivedSources', '-Xcc', '-DDEBUG=1', '-working-directory', '/Users/m1/builds/hanlin-current-entrypoints-20261126', '-disable-cmo', '/Users/m1/builds/hanlin-camera-conformance-probe-20261126-v1/mini-original.swift'], 'input': {'path': '/Users/m1/builds/hanlin-camera-conformance-probe-20261126-v1/mini-original.swift', 'bytes': 546, 'sha256': 'ca3d2d641c94e0ee4e9ca5fb9c57e299d620aee30d15dd08d629f9857b1bedb9'}, 'exitCode': 1, 'actualElapsedSeconds': 0.24370570899918675, 'stdout': {'path': '/Users/m1/builds/hanlin-camera-conformance-probe-20261126-v1/mini-original.stdout.log', 'bytes': 0, 'sha256': 'e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855'}, 'stderr': {'path': '/Users/m1/builds/hanlin-camera-conformance-probe-20261126-v1/mini-original.stderr.log', 'bytes': 104, 'sha256': '8968fa8f3b5dac74405e61ec1ecc4fe7af67ed9588f45b6a9b3b73fe8a1d1fb9'}, 'stdoutText': '', 'stderrText': \"error: '-validate-clang-modules-once' cannot be specified if '-clang-build-session-file' is not present\\n\"}"
+    }
+  ],
+  "priorCurrentValidationSeconds": 505.0227289169852,
+  "currentValidationCeilingSeconds": 10800,
+  "boundary": "Four isolated typechecks using actual failed driver semantics and emitted current camera module; only emission/output mode/cache/source/module-name arguments are redirected. Original and candidate for both wrappers; no canonical source edit or app rebuild.",
+  "sourceBefore": {
+    "head": "75c21bec8e709dc4f07f8fde36f1b350f118969e",
+    "tree": "9d27ce831871d385e06384b3ec60834aa32af75e",
+    "trackedDiff": ""
+  },
+  "resourceBefore": {
+    "availableBytes": 24242102272,
+    "newCachePlanningBytes": 1073741824,
+    "modestOSMarginBytes": 1073741824
+  },
+  "wrapperSourcesBefore": [
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.swift",
+      "bytes": 546,
+      "sha256": "ca3d2d641c94e0ee4e9ca5fb9c57e299d620aee30d15dd08d629f9857b1bedb9"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/ChavrusaChatCameraCapture/HanlinCameraCapture.swift",
+      "bytes": 539,
+      "sha256": "acd3a230843a63b83cba403dcb1388a4807c9234eadda34d5c393c08460cd52a"
+    }
+  ],
+  "reusedCameraModuleBefore": [
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/Build/Products/Debug-iphonesimulator/HanlinCameraCaptureUI.swiftmodule/arm64-apple-ios-simulator.abi.json",
+      "bytes": 149,
+      "sha256": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/Build/Products/Debug-iphonesimulator/HanlinCameraCaptureUI.swiftmodule/arm64-apple-ios-simulator.swiftdoc",
+      "bytes": 2584,
+      "sha256": "334bbcc312f725b808d9d47f2de5598b6301c2963fbf23b44bc35cba0d364920"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/Build/Products/Debug-iphonesimulator/HanlinCameraCaptureUI.swiftmodule/arm64-apple-ios-simulator.swiftmodule",
+      "bytes": 241368,
+      "sha256": "a68f1c86503d68ef8937fdc64521ce221046dc56ebdf0b68311e1a93e9fd7a6c"
+    }
+  ],
+  "compiler": {
+    "path": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc",
+    "bytes": 173118384,
+    "sha256": "84b410d8143298f90ab0b721d488dab90e2fdbf23577ae6186162832a1155cb7"
+  },
+  "compilerVersion": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0\n",
+  "inputFileList": [
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsCameraCapture.build/Objects-normal/arm64/HanlinMiniAppsCameraCapture.SwiftFileList",
+      "bytes": 126,
+      "sha256": "9604d6d243e3173b752b9707cb35e5c696b83e9a848cf471b4ce4cf67e4fed41",
+      "contents": "/Users/m1/builds/hanlin-current-entrypoints-20261126/HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.swift\n"
+    }
+  ],
+  "typecheckModeChanges": {
+    "removedOutputArguments": [
+      [
+        "@/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsCameraCapture.build/Objects-normal/arm64/HanlinMiniAppsCameraCapture.SwiftFileList"
+      ],
+      [
+        "-Xfrontend",
+        "-serialize-debugging-options"
+      ],
+      [
+        "-index-store-path",
+        "/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/Index.noindex/DataStore"
+      ],
+      [
+        "-emit-localized-strings"
+      ],
+      [
+        "-emit-localized-strings-path",
+        "/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsCameraCapture.build/Objects-normal/arm64"
+      ],
+      [
+        "-c"
+      ],
+      [
+        "-j10"
+      ],
+      [
+        "-enable-batch-mode"
+      ],
+      [
+        "-incremental"
+      ],
+      [
+        "-output-file-map",
+        "/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsCameraCapture.build/Objects-normal/arm64/HanlinMiniAppsCameraCapture-OutputFileMap.json"
+      ],
+      [
+        "-save-temps"
+      ],
+      [
+        "-emit-dependencies"
+      ],
+      [
+        "-emit-module"
+      ],
+      [
+        "-emit-module-path",
+        "/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsCameraCapture.build/Objects-normal/arm64/HanlinMiniAppsCameraCaptureHost.swiftmodule"
+      ],
+      [
+        "-serialize-diagnostics"
+      ],
+      [
+        "-clang-build-session-file",
+        "/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/ModuleCache.noindex/Session.modulevalidation"
+      ],
+      [
+        "-emit-const-values"
+      ],
+      [
+        "-const-gather-protocols-list",
+        "/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsCameraCapture.build/Objects-normal/arm64/HanlinMiniAppsCameraCapture_const_extract_protocols.json"
+      ],
+      [
+        "-emit-objc-header"
+      ],
+      [
+        "-emit-objc-header-path",
+        "/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniAppsCameraCapture.build/Objects-normal/arm64/HanlinMiniAppsCameraCaptureHost-Swift.h"
+      ],
+      [
+        "-experimental-emit-module-separately"
+      ]
+    ],
+    "moduleCache": "/Users/m1/builds/hanlin-camera-conformance-probe-20261126-v1/ModuleCache",
+    "sourceInputs": "one exact original or two-line patch candidate per invocation",
+    "moduleName": "actual target-specific shipping inventory name",
+    "added": [
+      "-typecheck"
+    ]
+  },
+  "defaultIsolationFlagPresent": false,
+  "finishedAt": "2026-11-26T18:02:12.729684+00:00",
+  "actualElapsedSeconds": 1.6203245419892482,
+  "combinedCurrentValidationChargedSeconds": 506.64305345897446,
+  "remainingCurrentValidationSeconds": 10293.356946541026,
+  "chargeClassification": "Necessary current-source compiler diagnosis, counted once in current validation scope.",
+  "availableBytesAfter": 24250482688,
+  "probeAllocatedBytes": 32768
+}

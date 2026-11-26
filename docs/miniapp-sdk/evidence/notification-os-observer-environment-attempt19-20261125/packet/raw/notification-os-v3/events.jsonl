@@ -1,0 +1,6 @@
+{"at": "2026-11-25T19:17:14.219706+00:00", "event": "prepared", "startedAt": "2026-11-25T19:17:14.219337+00:00"}
+{"at": "2026-11-25T19:17:14.229673+00:00", "event": "launched_setup", "status": "RUNNING"}
+{"at": "2026-11-25T19:17:22.087602+00:00", "event": "launched_test", "status": "RUNNING"}
+{"at": "2026-11-25T19:17:22.127886+00:00", "event": "actual_terminal", "status": "FAILED", "error": "KeyError: 'SPLIT_EVIDENCE'"}
+{"at": "2026-11-25T19:17:27.163387+00:00", "event": "charge_ready", "finishedAt": "2026-11-25T19:17:27.160829+00:00", "elapsedSeconds": 12.940106750000268, "chargedSeconds": 12.940106750000268, "cumulativeActiveSeconds": 24674.060430753034, "cumulativeOSProbeSeconds": 366.5287689999968, "allowanceExceededDuringCleanup": false, "processLogs": [{"path": "test.log", "bytes": 0, "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}, {"path": "setup.log", "bytes": 1842, "sha256": "d64ff78be24983c856387461b5b5cf5c1061568f381dbf3fa3ddbe3c518b4dc2"}]}
+{"at": "2026-11-25T19:17:27.167053+00:00", "event": "finalized", "status": "FAILED"}

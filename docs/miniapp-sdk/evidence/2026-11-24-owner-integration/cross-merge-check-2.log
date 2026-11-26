@@ -1,0 +1,7 @@
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-miniapps-owner-integration-20261124/Scripts/ProductSplit/verify_targets.py", line 159, in <module>
+    main()
+  File "/mnt/development/projects/worktrees/hanlin-miniapps-owner-integration-20261124/Scripts/ProductSplit/verify_targets.py", line 50, in main
+    assert len(sources) == len(set(sources)), "Duplicate shared sources"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: Duplicate shared sources

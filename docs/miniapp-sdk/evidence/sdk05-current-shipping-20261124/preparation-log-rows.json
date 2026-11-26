@@ -1,0 +1,18 @@
+{
+  "path": "raw/app-split-evidence/native-dependencies.log.gz",
+  "originalSHA256": "fc8105f0b3617d67b0c531750ad60b6a50b604ebe919eabe81b8451bfe1c5f84",
+  "rows": [
+    {
+      "line": 20853,
+      "text": "PASS: TypeScript6.0.3 strict UI declarations, zero valid diagnostics and 5 exact negative diagnostics."
+    },
+    {
+      "line": 20855,
+      "text": "PASS: TypeScript6.0.3 strict original Widgets declarations, zero valid diagnostics and 3 exact negative diagnostics."
+    },
+    {
+      "line": 20895,
+      "text": "{\"output\":\"/Users/runner/work/_temp/hanlin-runtime-host/MiniAppSDK\",\"inputSHA256\":\"ace5ee5e40a1c4c8c17c2a3744b24ac2793b237e5a2cc9d5dfd3c31959c82d6b\",\"files\":25661,\"engines\":[\"expo\",\"nativescript\",\"scriptwidget\"]}"
+    }
+  ]
+}

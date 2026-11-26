@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-11-25T10:55:53.935524+00:00",
+  "status": "EXACT_SDK_SUBSET_EXPORT_PASS",
+  "sourceProducer": "a2c8a1b1be746461272ba77254603304567c309d",
+  "sourceTree": "c3cfefa7775c91e2b2a9eaff980bbde6e681cc37",
+  "sourceSnapshot": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt19",
+  "snapshotReceiptSHA256": "037889771056c2ac5b5051d74156ce3fb65b0d257d2183b8b4630863257f4b9c",
+  "sourceHostArchive": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt19/files/build/runtime-host/RuntimeHostResources.zip",
+    "bytes": 81824721,
+    "sha256": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc"
+  },
+  "manifestSHA256": "4505c28495d8b6ecd1073254e0e395adcc898cc02dd1d40699591f51db4dee92",
+  "inputSHA256": "ba8f3f1f09054887eed62532fa1d5ca2ac3bd60e6aa99a98ab1035c7653882a2",
+  "export": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/user-deliverables-sdk19/Hanlin-MiniApp-SDK-2026-11-25.zip",
+    "bytes": 68726642,
+    "sha256": "1bf347311b9547054725f8674419a11b3c502a4994feb6dbd9283c3af7400210"
+  },
+  "members": 25670,
+  "uncompressedBytes": 299642745,
+  "method": "All MiniAppSDK/ ZIP records copied without decompression/recompression or renaming; central-directory offsets and EOCD rewritten for the subset. Every source/export member was independently decompressed and compared byte-for-byte and all 18 metadata attributes compared.",
+  "verifiedMembers": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/user-deliverables-sdk19/verified-members.json.gz",
+    "bytes": 1378763,
+    "sha256": "06bca3bbdfa0f71aa7c71f40f1ad2ebc234ad13afc1011f3deddd59a922270e5",
+    "rawBytes": 7257095,
+    "rawSHA256": "65fd67a1a50f1a27babcf038f294455d54241196baa3cf2aa190ac17fe4cac36"
+  },
+  "boundary": "SDK source/type/docs/examples export only. New consumer builds, focused3+8, full original52, NS5 and OS callback acceptance remain separately observed. Historical SDK18 unchanged."
+}

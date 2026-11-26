@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "observedAt": "2026-11-25T18:09:08.260637+00:00",
+  "source": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/native-result/paired-prefix/original-expo-probe.log",
+    "bytes": 1922,
+    "sha256": "8dc9382950955ae0512c91ffb3c9ecfddc17628e7c98f7062bd4969e6d122f22"
+  },
+  "copy": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk04-current-export-reconciliation/original-v5-expo-probe.log",
+    "bytes": 1922,
+    "sha256": "8dc9382950955ae0512c91ffb3c9ecfddc17628e7c98f7062bd4969e6d122f22"
+  },
+  "newProducerOrTestExecution": false
+}

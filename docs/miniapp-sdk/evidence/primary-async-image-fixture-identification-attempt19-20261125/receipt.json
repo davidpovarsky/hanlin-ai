@@ -1,0 +1,101 @@
+{
+  "schemaVersion": 1,
+  "kind": "BOUNDED_ACTUAL_FAILURE_AND_FIXTURE_ONLY_CORRECTION",
+  "sourceCommit": "0097bf0e142f61acd018762da2bcb09f366f78da",
+  "actualFailedConsumer": "62dfff9aebd0a272486c7770d4f77ba603d535ab",
+  "fileCount": 18,
+  "totalBytes": 380017,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 2262,
+      "sha256": "2c4d5c4d05475d2257e2d7dea827a372604db6561ac0b760b7a89720dacfeabb"
+    },
+    {
+      "path": "raw/mini/attachments/12090BFA-5C8A-4152-A511-8FBC64359057.png",
+      "bytes": 153774,
+      "sha256": "b124dca3ff78b856ddfad42efc894368f2b796d00b9b8d6cbd8df9fe1c59d47e"
+    },
+    {
+      "path": "raw/mini/attachments/9C9E0875-9BA0-4FDB-AA31-703B5FF76DFE.txt",
+      "bytes": 11313,
+      "sha256": "e9765a002f02f95f934470b03be135a1b39e4e0485a3957dd170e05dd4e707b8"
+    },
+    {
+      "path": "raw/mini/attachments/manifest.json",
+      "bytes": 51968,
+      "sha256": "fa7bc9055fa3da88af25f1fd760da889023f1b6dd0bbbf1d4caffcdde64d82ee"
+    },
+    {
+      "path": "raw/mini/packet-receipt.json",
+      "bytes": 4816,
+      "sha256": "93d9e057d0241d40332a2a59b32d04d0e5507399b5683eae10b321ca62e9392f"
+    },
+    {
+      "path": "raw/mini/raw/FocusedMini3-nodes.json",
+      "bytes": 4288,
+      "sha256": "4e3feaa687a6cd9f3625101166867c6fff705f33a205b3580f0e7ff5f27e7219"
+    },
+    {
+      "path": "raw/mini/raw/FocusedMini3-selected-tests.log",
+      "bytes": 57,
+      "sha256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96"
+    },
+    {
+      "path": "raw/mini/raw/FocusedMini3-summary.json",
+      "bytes": 2009,
+      "sha256": "134b3f1313f29a9fb84e14709b7800ac291614abc442e763653bd0bb0c91340a"
+    },
+    {
+      "path": "raw/mini/raw/FocusedMini3.log",
+      "bytes": 97762,
+      "sha256": "ef0a6ca469f7eea091ace70476493e7c956f593996a5e5b9cc682f472da76f95"
+    },
+    {
+      "path": "raw/mini/source/Fixtures/ExpoSwiftUIProbe/ManualAdapterProbe.tsx",
+      "bytes": 11112,
+      "sha256": "4794f92fc158639b806c0f80bf74cf71775651ad2acd2c24c9462f9d810ff48e"
+    },
+    {
+      "path": "raw/terminal/control/ledger.json",
+      "bytes": 1608,
+      "sha256": "ec1d8b41595201d0a64b86d714a0fbd049cfbc9339b8a494fff25875cf6d6898"
+    },
+    {
+      "path": "raw/terminal/control/state.json",
+      "bytes": 4862,
+      "sha256": "9e199031a41095f66c101962da3c1c4ad330e748a9ac2afc267aac71384c2a21"
+    },
+    {
+      "path": "raw/terminal/packet-receipt.json",
+      "bytes": 15192,
+      "sha256": "4ee9e4e8b1b9ca7f3286c164a2adb80b9bb644fc4bf83878f7cb5b655f318096"
+    },
+    {
+      "path": "raw/terminal/paired-prefix/FocusedAI8-nodes.json",
+      "bytes": 8337,
+      "sha256": "d02f32568bc52e7f15cc3f607bc140c504459ce965fe485b366fef3f9fbd8cea"
+    },
+    {
+      "path": "raw/terminal/paired-prefix/FocusedAI8-selected-tests.log",
+      "bytes": 57,
+      "sha256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96"
+    },
+    {
+      "path": "raw/terminal/paired-prefix/FocusedAI8-summary.json",
+      "bytes": 2134,
+      "sha256": "57a00b137065fb89803f597b637b48df33eaec8d5ecaf10765ab774362991515"
+    },
+    {
+      "path": "source-and-impact.json",
+      "bytes": 7277,
+      "sha256": "4b163c1ebb1cf98804095e9c2fb6a1f7b031d7fcd7b501cb72871914d31341e7"
+    },
+    {
+      "path": "source.patch",
+      "bytes": 1189,
+      "sha256": "c09ee103d0004e0a3a66b2cac6dc03e31ed320a8b930ef8ee0282a7bfae25e2f"
+    }
+  ],
+  "correctedNativeResult": "NOT_RUN"
+}

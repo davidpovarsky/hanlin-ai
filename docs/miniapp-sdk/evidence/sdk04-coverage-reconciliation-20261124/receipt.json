@@ -1,0 +1,313 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-24T10:10:59.322481+00:00",
+  "reviewer": "/root/sdk_only_author",
+  "scope": "Read-only reconciliation of original SDK04 DoD; independent of frozen SDK-only authorship. No full Apple SDK generator expansion.",
+  "sourceBase": "56539e07ba9a5ccf5853063c063948f95a8f946a",
+  "retainedCriteriaSnapshot": {
+    "commit": "22eaa6c1c93970b1ce916bc8b19c3022d9b6258f",
+    "path": "docs/miniapp-sdk/evidence/acceptance-criteria-map-20261124.json",
+    "sha256": "c0240a3d1ae2521c0c22d19488c89e21661e6e165c859dcb7defcd19517b30fb",
+    "exactSDK04Criterion": "DoD: תוכן .d.ts מדויק + tooling שמגלה drift, typecheck strict ו-Metro bundle, tests לכל public exported adapter, תיעוד מגבלות מכשיר."
+  },
+  "observedNativeStatus": {
+    "main42": {
+      "runID": 45365620977,
+      "url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45365620977",
+      "sourceCommit": "6d9a59bfc1bd1830a8d56e694c42b19c6bd7d468",
+      "jobID": 138346476075,
+      "scope": "miniapp_authoring",
+      "status": "IN_PROGRESS",
+      "selectedCases": 42,
+      "aiCases": 25,
+      "miniAppsCases": 17,
+      "dispatchReceipt": {
+        "path": "docs/miniapp-sdk/evidence/eleventh-native-gate-dispatch-20261124.json",
+        "sha256": "a8ce4e857f0d3ef7697b2ed8e82ed34317928a5311094c103d35342c2e534549"
+      },
+      "lastObservationRecordedAtUTC": "2026-11-24T10:00:12.531176+00:00",
+      "observedPhase": "Actual paired product build/test step active after successful original native dependencies and shipping SDK preparation/export.",
+      "caseStatus": "NO_COMPLETED_APP_CASE_RECEIPT_YET",
+      "boundary": "No native/UI PASS inferred from source preparation. New public-runtime metadata and followup adapter/HostServices changes after this source require their own focused execution."
+    },
+    "focused10": {
+      "selectionPath": "docs/miniapp-sdk/evidence/sdk04-focused-scope-20261124/selection.json",
+      "selectedNativeHostCases": [
+        "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure",
+        "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer"
+      ],
+      "selectedMiniAppsCases": [
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEditButtonEditsOriginalList",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEmptyViewReportsNativeLayout",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierAccessibilityAndGeometry",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierNativeContainerContexts",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoHostServicesUseRealStorageRuntimeAndWidgetPublication",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents"
+      ],
+      "expected": {
+        "nativeHost": 2,
+        "MiniAppsUI": 8,
+        "total": 10
+      },
+      "nativeExecution": "NOT_RUN; compile current fixture and production source before dispatch"
+    }
+  },
+  "coverageGroups": [
+    {
+      "group": "original Expo UI and modifiers forwarding",
+      "implementation": "Public barrels re-export the actual @expo/ui/swift-ui and modifier packages. Four same-name generated modifiers explicitly yield to upstream. These are original implementations, not33 or83 missing Hanlin bodies.",
+      "evidence": [
+        "docs/miniapp-sdk/evidence/2026-11-24-current-original-graph/evidence.json",
+        "docs/miniapp-sdk/evidence/sdk-only-authoring-20261124/native-acceptance-plan-current.json"
+      ],
+      "selected": [
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyExpoPackageImportsRendersAndHandlesEvents"
+      ],
+      "boundary": "Strict original declaration/Metro evidence is real; selected control/navigation/event behavior is not exhaustive original API semantics. Main42 pending; baseline rendered-controls case also selected in focused10."
+    },
+    {
+      "group": "13 manual Hanlin UI components",
+      "names": [
+        "TextEditor",
+        "Focused",
+        "Searchable",
+        "LazyVGrid",
+        "LazyHGrid",
+        "ViewThatFits",
+        "SafeAreaInset",
+        "Table",
+        "AsyncImage",
+        "Sheet",
+        "FullScreenCover",
+        "PopoverPresentation",
+        "Inspector"
+      ],
+      "evidence": [
+        "docs/miniapp-sdk/evidence/sdk04-manual-adapters-20261124/receipt.json"
+      ],
+      "selected": [
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualPresentationAdaptersAndDismissalEvents"
+      ],
+      "boundary": "Actual immutable exported SDK compiler6.0.3 validate/build PASS. Main42 native pending. Tests require actual text/focus/layout/candidate/selection/image/event results; controlled dismissal is a binding-transition event, not animation completion. FullScreenCover/Inspector do not certify every OS dismissal."
+    },
+    {
+      "group": "4 generated Hanlin views",
+      "names": [
+        "GroupBox",
+        "EditButton",
+        "EmptyView",
+        "DefaultDocumentGroupLaunchActions"
+      ],
+      "selected": [
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEditButtonEditsOriginalList",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEmptyViewReportsNativeLayout"
+      ],
+      "boundary": "Focused10 NOT_RUN. GroupBox slots, actual editable-list deletion, and original Host native layout callbacks have executable assertions. Document launch leaf is type-context-only and deliberately unmounted: existing embedded host has no DocumentGroupLaunchScene/DocumentLaunchView. No new scene required or claimed. GroupBox.children mismatch is concrete and assigned for repair."
+    },
+    {
+      "group": "83 effective locally generated public modifiers",
+      "declarations": 87,
+      "excludedUpstreamPrecedence": [
+        "navigationBarTitleDisplayMode",
+        "preferredColorScheme",
+        "presentationCornerRadius",
+        "sectionIndexLabel"
+      ],
+      "evidence": [
+        "docs/miniapp-sdk/evidence/generated-modifier-conformance-20261124/receipt.json",
+        "docs/miniapp-sdk/evidence/generated-modifier-conformance-20261124/source-conformance.json",
+        "docs/miniapp-sdk/evidence/generated-modifier-conformance-20261124/native-observation-plan.json"
+      ],
+      "selected": [
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierAccessibilityAndGeometry",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierNativeContainerContexts"
+      ],
+      "boundary": "All83 have real parameterized source calls matched to factory payload, native Record fields, registry keys and exact SwiftUI forwarding bodies. Parser/source evidence does not equal semantic compiler or native success. Combined original compiler/Metro pending at review. Focused10 tests native accessibility values, position/tracking geometry, hit-testing, submitScope, header/selection/swipe/search/navigation/inspector contexts. VoiceOver/speech/drag-drop, file dialogs, document scenes, window activation, preview metadata, system gesture/status/overlay, platform version and RTL semantics remain context-bound; onAppear does not prove them."
+    },
+    {
+      "group": "metadata and exported runtime identity",
+      "evidence": [
+        "docs/miniapp-sdk/evidence/expo-runtime-metadata-20261124/receipt.json",
+        "docs/miniapp-sdk/evidence/sdk04-nativeapi-version-contract-20261124/receipt.json"
+      ],
+      "selected": [
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata"
+      ],
+      "boundary": "Real stale public runtime metadata red1 then green6 portable authority checks; Worklets facade drift red1 then green6 separately. Native metadata comparison is pending focused10. Legacy multiRuntime NS9.1.0/Expo58.0.3 is confined to hanlin-script.json tools loader, which explicitly rejects both foreground UI profiles; modern sessions use current independent host versions. Frozen table left untouched."
+    },
+    {
+      "group": "33 NativeAPI upstream forwarding exports",
+      "count": 33,
+      "implementation": "Packages/HanlinExpoNativeAPIJS/src/index.ts exact named re-export from @nativescript/react-native; no replacement wrapper implementation.",
+      "evidence": [
+        "docs/miniapp-sdk/evidence/sdk04-nativeapi-version-contract-20261124/receipt.json",
+        "docs/miniapp-sdk/evidence/2026-11-24-owner-integration/cross-existing-ownership-receipt-check.json"
+      ],
+      "selected": [
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoNativeAPIUsesActualUIKitAndWorklets"
+      ],
+      "boundary": "Main42 pending. Actual selected UIKit UILabel/UISwitch target-action/UIViewController and UIDevice through runOnUI are bounded coverage. Historical ownership receipt has same recorded source but no retained per-case xcresult and uses worklet doubles; it is not two full current Expo apps or all33 semantic proof."
+    },
+    {
+      "group": "Expo HostServices and actions",
+      "evidence": [
+        "docs/miniapp-sdk/evidence/host-services-publication-20261124/receipt.json"
+      ],
+      "selected": [
+        "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure",
+        "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoHostServicesUseRealStorageRuntimeAndWidgetPublication"
+      ],
+      "boundary": "Focused10 pending. Facade codec red1/green1, operation linkage red2/green2 and Swift parse are not Apple execution. Native cases import real compiled fixture, invoke installed handlers, verify actual result/error acknowledgement and publication through cold store/original consumer. Modern publication commits exact session/install/generation/variant props; receipt has osRendered:null. Positional legacy publisher now reports published:false and remediation; legacy validation/storage unchanged."
+    },
+    {
+      "group": "NativeScript HostServices",
+      "implementation": "Scripts/NativeScript/host-services.ts captures one real session bridge; runtime, cross-app and ActivityKit calls reject missing/error/invalid receipts. It does not expose a widget publication facade.",
+      "selected": [
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch",
+        "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testInvalidationReleasesHandlersAndRejectsLateActions",
+        "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testBridgeInvalidationReleasesPendingCallbacksBeforeProviderCancellation"
+      ],
+      "boundary": "Main42 pending. Runtime nonce/private-storage/relaunch and lifetime tests are specific; no claim they execute every generic runtime variant or ActivityKit mutation. Missing callback is not converted into a successful receipt."
+    },
+    {
+      "group": "external MiniApp wrappers",
+      "implementation": "Expo miniapps.* delegates to owning external scene callback; NativeScript hanlin.cross-app does likewise. Context/attachments/complete/cancel use actual mailbox and installed session; complete/cancel receipt acknowledges saved result. Return-to-source is a separate best-effort operation.",
+      "selected": [
+        "HanlinMiniAppsTests/CrossAppInvocationTests/testCancelAndDisplayDoneReturnNoDocumentMutation",
+        "HanlinMiniAppsTests/CrossAppInvocationTests/testReusingValueWindowKeepsItsInvocationBindingCurrent",
+        "HanlinMiniAppsTests/CrossAppInvocationTests/testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained",
+        "HanlinMiniAppsTests/CrossAppInvocationTests/testActualIncomingRequestsCreateDistinctIPadScenes",
+        "HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests/testExternalInvocationSurvivesNestedFullScreenModal"
+      ],
+      "boundary": "Main42 pending. Native mailbox/scene/ownership cases do not automatically prove complete Expo/NativeScript JS invocation paths for each exported method. One actual lower-level unconditional return acknowledgement identified separately; saved complete/cancel receipts are truthful and will remain unchanged."
+    },
+    {
+      "group": "HostServices Live Activities versus original expo-widgets",
+      "implementation": "Both HostServices facades call invokeLiveActivity; controller uses actual Activity.request/update/end and installed owner filtering, real authorization and activity list. Unknown activity returns ok:false; OS failures throw. Original expo-widgets is a distinct original API.",
+      "selected": [
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoWidgetsUsesOriginalTimelinesAndLiveActivities",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoHostServicesUseRealStorageRuntimeAndWidgetPublication"
+      ],
+      "boundary": "Original expo-widgets A/B timeline/isolation and ActivityKit lifecycle are main42 pending. New focused HostServices probe reads enable/list only; it does not certify wrapper start/update/end. Those native routes are connected, not canned success, but OS/permission/lifecycle semantics remain unexecuted in this selected proof. Widget placement/SpringBoard/Dynamic Island/device presentation are not inferred."
+    }
+  ],
+  "productionFindings": [
+    {
+      "id": "private-miniapps-return-ack",
+      "path": "AI_HLY/Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift",
+      "lines": [
+        142,
+        145,
+        196,
+        205
+      ],
+      "fact": "perform(miniapps.return) returns constant ok:true even when returnToSource has no available callback/result or openSource returns false.",
+      "scope": "Misleading lower-level return acknowledgement; complete/cancel persisted-result receipt is separate and unchanged.",
+      "owner": "sdk_only_author",
+      "statusAtReview": "APPROVED_FOR_BOUNDED_FIX"
+    },
+    {
+      "id": "generated-groupbox-children",
+      "paths": [
+        "Packages/HanlinExpoUI/src/generated/views.tsx",
+        "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedViews.swift"
+      ],
+      "fact": "GroupBoxProps declares children, but explicit JSX slots override forwarded props.children; native body reads only content/label slots. A child-only typed GroupBox silently loses content.",
+      "owner": "control_authoring generator and mirrors; entrypoints existing selector",
+      "statusAtReview": "APPROVED_FOR_BOUNDED_FIX"
+    }
+  ],
+  "statusRecommendations": [
+    "Keep source/type/build/native/device statuses distinct for each group; counts of declarations, test selectors or native onAppear events never imply full semantic acceptance.",
+    "Keep current all-public-native-adapter coverage NOT_ESTABLISHED until actual selected results arrive; even then record exact contextual boundaries rather than a blanket all83/allupstream pass.",
+    "Classify direct original forwarding as source/identity/type contract coverage, not absent Hanlin implementation; do not invent wrapper tests for all original upstream callables.",
+    "Document saved-result acknowledgement separately from return-to-source open outcome; modern widget publication separately from OS rendering and original expo-widgets.",
+    "Do not update the frozen legacy multiRuntime table or add optional document/browser/window scenes to close this bounded current-SDK task."
+  ],
+  "sourceIdentities": [
+    {
+      "path": "Packages/HanlinExpoUI/src/index.ts",
+      "bytes": 185,
+      "sha256": "d0907d0fd364c9b0621f48099d98ece640ba25d8d40f53cb60aabb3b1dbd3922"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/modifiers.ts",
+      "bytes": 472,
+      "sha256": "56b1efa29241c519d325682828e944becae6b516887908777661b3a574821782"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/generated/views.tsx",
+      "bytes": 2685,
+      "sha256": "4c9170e65f2248556544092000d9a25cd4c25a2cc19ac393281dcbe7cd29281a"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedViews.swift",
+      "bytes": 3020,
+      "sha256": "838154d4e8a44b07eb312dee19df283b217842633c6dbeb84bc369edba77699e"
+    },
+    {
+      "path": "Packages/HanlinExpoNativeAPIJS/src/index.ts",
+      "bytes": 1783,
+      "sha256": "000de857839c76e86a426123d4bce30f0b56854f7655d4021342b2d932b98390"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/host-services.ts",
+      "bytes": 8965,
+      "sha256": "010488e8c6aae2635f67d45cefebb9fdb2d4f97af71161af011a83d626ad60e7"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/system-surfaces.ts",
+      "bytes": 3395,
+      "sha256": "3a2c4424ce074056ef76d62a4502fb16c389e10a46967fcde15835efde94543f"
+    },
+    {
+      "path": "Scripts/NativeScript/host-services.ts",
+      "bytes": 7450,
+      "sha256": "efe0a28483fa36dbb3745f380b2ddd1bc6348af3b12c41ef10f19c2dd9a486a6"
+    },
+    {
+      "path": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
+      "bytes": 22872,
+      "sha256": "e8da50eb4d076d995135132810444f16900a65d55edd901270a2af07132a57a3"
+    },
+    {
+      "path": "AI_HLY/Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift",
+      "bytes": 17112,
+      "sha256": "33429f2ec384c535f19764220295c96aefd16fff87890cd7a30c0472f8dcc377"
+    },
+    {
+      "path": "AI_HLY/Downstream/Scripting/HanlinScriptPackageLoader.swift",
+      "bytes": 4373,
+      "sha256": "084bede17f6b72f32a285d4e6158a1fbf514ec59a75d030147010d85c699d2bf"
+    },
+    {
+      "path": "AI_HLY/Downstream/Scripting/HanlinScriptingProviderRegistry.swift",
+      "bytes": 13265,
+      "sha256": "6fe94ff6f1b91ef4d937219f97bbc75787abd98b4060a346a871c15b5bfc1a7b"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinScriptContracts.swift",
+      "bytes": 24544,
+      "sha256": "e92224cd4a0a1b5ed8e49bd85881c647595337b95ccbb20e6a6684110977679c"
+    },
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "bytes": 46508,
+      "sha256": "bd1991f657e42bf7f3224ad5c504e972ccf7b97d397be9235038631f8ff3b870"
+    }
+  ],
+  "reviewActions": {
+    "editsToProductionOrTests": false,
+    "newTestsOrBuilds": false,
+    "ciQueriesOrDispatch": false,
+    "sourceReviewOnly": true
+  },
+  "nextActions": "Two concrete production fixes are assigned. Original combined SDK fixture validation/build is owned once by entrypoints, with actual diagnostics retained. Root owns focused native execution and evidence updates."
+}

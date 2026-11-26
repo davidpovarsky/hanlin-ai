@@ -1,0 +1,107 @@
+{
+  "handlerRegression": {
+    "id": "handler-registration",
+    "selectors": [
+      "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptActionDeclarationsPreserveRegisteredJavaScriptState()"
+    ],
+    "expectedCases": 1,
+    "commandCeilingSeconds": 600,
+    "maximumTestExecutionAllowanceSeconds": 600
+  },
+  "routeContractGroup": {
+    "id": "entrypoint-contracts",
+    "selectors": [
+      "AI_HLYTests/HanlinNativeWidgetRendererTests/testDeclaredWidgetHostActionsCompileAndKeepOriginalLocalActions"
+    ],
+    "expectedCases": 1,
+    "commandCeilingSeconds": 2100,
+    "maximumTestExecutionAllowanceSeconds": 600
+  },
+  "newHostedRegression": {
+    "id": "discovery-capture-hosted",
+    "selectors": [
+      "AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests/testInstalledCatalogDoesNotDependOnWidgetInstancesAndReconcilesIdentity",
+      "AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests/testCaptureCatalogRequiresAnActualUnambiguousPreparedAction",
+      "AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests/testCapturedBytesAreDurableBeforeSessionInvalidationAndRetryKeepsIdentity",
+      "AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests/testCaptureManifestRejectsForeignProductAndUnownedPath"
+    ],
+    "expectedCases": 4,
+    "commandCeilingSeconds": 1200,
+    "maximumTestExecutionAllowanceSeconds": 600
+  },
+  "assistantHostedRegression": {
+    "id": "assistant-hosted",
+    "selectors": [
+      "AI_HLYTests/HanlinPreparedAssistantToolAdapterTests/testBothPreparedEnginesReturnTheAwaitedTypedBrokerValue",
+      "AI_HLYTests/HanlinPreparedAssistantToolAdapterTests/testUpdatedDisabledAndRemovedInstallationsDoNotDispatchOldTools",
+      "AI_HLYTests/HanlinPreparedAssistantToolAdapterTests/testCaseCollidingActionNamesKeepDistinctRoutesAndOriginalDispatchSpelling",
+      "AI_HLYTests/HanlinPreparedAssistantToolAdapterTests/testHandlerErrorsAndMalformedArgumentsRemainFailures",
+      "AI_HLYTests/HanlinPreparedAssistantToolAdapterTests/testUnavailableMiniAppCatalogDoesNotThrowAwayOrdinarySources",
+      "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/installedExpoAssistantToolReturnsTheActualHermesHandlerResult()",
+      "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/installedNativeScriptAssistantToolReturnsTheActualJavaScriptHandlerResult()"
+    ],
+    "expectedCases": 7,
+    "commandCeilingSeconds": 1200,
+    "maximumTestExecutionAllowanceSeconds": 600
+  },
+  "schema": 1,
+  "originalRunnerSHA256": "a99b6194f8dd20bc30998ff2ad9e86ec219415a00615b250c65670f7dfcdba7d",
+  "queue": {
+    "sha256": "da939924b4de4bfab3a34a17e97d271cc355c641c48c69b0b5816a3395ce8ff6",
+    "bytes": 21154,
+    "planSHA256": "960a95dd9e04acc876a5e6c6a5d3377d789cbf48a9a064252f624d05be5aaa1d",
+    "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinWidgetHostActionTests.swift"
+  },
+  "sourceBindings": [
+    {
+      "path": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests.swift",
+      "bytes": 61699,
+      "sha256": "85efedee4ec94c5ecc4e727847401fda1ab72a66e7cf9ab2403f909f23a18210"
+    },
+    {
+      "path": "AI_HLYTests/HanlinNativeWidgetRendererTests.swift",
+      "bytes": 30658,
+      "sha256": "4a0203b369f3e05e24222217d88cbb58a971928a73748f8ff17555ba0193ccb7"
+    },
+    {
+      "path": "AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests.swift",
+      "bytes": 10281,
+      "sha256": "d1dc4a0a3869cda32748e332242e43ab231dd54c6dbfcdfe8f8270f463543047"
+    },
+    {
+      "path": "AI_HLYTests/HanlinPreparedAssistantToolAdapterTests.swift",
+      "bytes": 9764,
+      "sha256": "ae34fc508fd8646f8cb90cba9c8595c60e5e07309a64e53b8c3e88758e3f98f7"
+    },
+    {
+      "path": "Scripts/CI/verify_selected_tests.py",
+      "bytes": 2000,
+      "sha256": "4ae4a28934341461b364a9b83fb891ca214da64cf3046635278fb4e6837caad5"
+    },
+    {
+      "path": "Scripts/NativeScript/build-step-metadata-generator-wrapper.py",
+      "bytes": 12293,
+      "sha256": "577e4d58a3bebd29e379918938199aacff0a4c775cfb1c4923e1f7735686238c"
+    },
+    {
+      "path": "Scripts/CI/stage_a2ui_schemas.py",
+      "bytes": 4080,
+      "sha256": "dbd8d4f9ec21c113ba2dbb23c05959d10d0ded75ce7bfa302221a711d2bae8b1"
+    },
+    {
+      "path": "Scripts/SDK/native_artifacts.py",
+      "bytes": 40936,
+      "sha256": "6c11725c13a7ba9a47ac1c6e2e6056606ef9f5da4899b265daaf62e326f2574b"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/project_graph.py",
+      "bytes": 24055,
+      "sha256": "cbe2980cba84cd5c66f4c1c3ef3fc9ffd4c5b2bb5ec40bfd095e6bdcf85ea118"
+    },
+    {
+      "path": "Scripts/ProductSplit/extension_inventory.py",
+      "bytes": 3987,
+      "sha256": "cd7d0b98464b02856016a099d3cba1f961792fb9ace7cb5f3c8fad934dc281af"
+    }
+  ]
+}

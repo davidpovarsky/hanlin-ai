@@ -1,0 +1,101 @@
+{
+  "capturedAt": "2026-11-25T13:41:30.241580+00:00",
+  "appData": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/5478D077-32A2-4535-9113-318715D2635C",
+  "runtimeDirectories": [
+    {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/5478D077-32A2-4535-9113-318715D2635C/Library/Application Support/HanlinRuntime/v1/clients",
+      "children": [
+        "tools",
+        "agents"
+      ]
+    },
+    {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/5478D077-32A2-4535-9113-318715D2635C/Library/Application Support/HanlinRuntime/v1/staging",
+      "children": [
+        "mcp",
+        "tmp"
+      ]
+    },
+    {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/5478D077-32A2-4535-9113-318715D2635C/Library/Application Support/HanlinRuntime/v1/cache",
+      "children": [
+        "pypi",
+        "typescript",
+        "npm",
+        "xdg"
+      ]
+    },
+    {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/5478D077-32A2-4535-9113-318715D2635C/Library/Application Support/HanlinRuntime/v1/runtime",
+      "children": [
+        "home",
+        "python",
+        "npm-prefix",
+        "npmrc",
+        "node"
+      ]
+    },
+    {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/5478D077-32A2-4535-9113-318715D2635C/Library/Application Support/HanlinRuntime/v1/logs",
+      "children": [
+        "node-runtime.log"
+      ]
+    },
+    {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/5478D077-32A2-4535-9113-318715D2635C/Library/Application Support/HanlinRuntime/v1/packages",
+      "children": [
+        "node-global",
+        "python",
+        "mcp"
+      ]
+    },
+    {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/5478D077-32A2-4535-9113-318715D2635C/Library/Application Support/HanlinRuntime/v1/registry",
+      "children": [
+        "mcp"
+      ]
+    },
+    {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/5478D077-32A2-4535-9113-318715D2635C/Library/Application Support/HanlinRuntime/v1/jobs",
+      "children": [
+        "node"
+      ]
+    },
+    {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/5478D077-32A2-4535-9113-318715D2635C/Library/Application Support/HanlinRuntime/v1/tmp",
+      "children": []
+    }
+  ],
+  "members": [
+    {
+      "path": "agent-session-2026-11-25T13-34-37-55e04ec1.json",
+      "bytes": 1523780,
+      "sha256": "1852f26c249d576bde1950abdf601b357a8f8659e870ab6ea6c8bd9a42271619"
+    },
+    {
+      "path": "agent-session-2026-11-25T13-34-37-55e04ec1.txt",
+      "bytes": 1733195,
+      "sha256": "fa66736576214a4f9e6fa18815a6887285d6ca20e402da3686039ec09fd44e54"
+    },
+    {
+      "path": "agent-session-2026-11-25T13-34-37-55e04ec1-manifest.json",
+      "bytes": 895,
+      "sha256": "f6c0fb3206b630c0a525fe1fa8ec2f26c0653386b37bf37b2313dfd641d51a6d"
+    },
+    {
+      "path": "agent-session-2026-11-25T13-34-37-55e04ec1-stage-events.jsonl",
+      "bytes": 2992813,
+      "sha256": "45ade73b3423818c96fb335cc279fae724f6e5e626ac86770a00c195b175bd4e"
+    },
+    {
+      "path": "agent-session-2026-11-25T13-34-37-55e04ec1-stage-snapshots.json",
+      "bytes": 4166,
+      "sha256": "5449dfe2682ff24c9291d017f29139968520ab94dee96e8b42459e02a0f12071"
+    },
+    {
+      "path": "Hanlin-Chat-2026-11-25-143436.jsonl",
+      "bytes": 108048,
+      "sha256": "312aedace4a9131b115afb376da1bea16f511b346926c9428c51e8da73dfddd6"
+    }
+  ]
+}

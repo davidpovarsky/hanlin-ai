@@ -1,0 +1,35 @@
+{
+  "observedAt": "2026-11-25T08:11:16.157449+00:00",
+  "results": [
+    {
+      "app": "AI_Hanlin.app",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "Scripts/Runtime/validate_ios_system_resources.py",
+        "--repository-root",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete",
+        "--app",
+        "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app"
+      ],
+      "exit": 0,
+      "durationSeconds": 0.06954216600570362,
+      "stdout": "{\n  \"appPath\": \"/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app\",\n  \"approvedCommandCount\": 23,\n  \"approvedCommands\": [\n    \"awk\",\n    \"cat\",\n    \"cp\",\n    \"curl\",\n    \"grep\",\n    \"head\",\n    \"ln\",\n    \"ls\",\n    \"mkdir\",\n    \"mv\",\n    \"readlink\",\n    \"rm\",\n    \"rmdir\",\n    \"sed\",\n    \"sort\",\n    \"stat\",\n    \"tail\",\n    \"tar\",\n    \"touch\",\n    \"tr\",\n    \"uniq\",\n    \"unlink\",\n    \"wc\"\n  ],\n  \"commandDictionarySHA256\": \"bc70ee9fce71b624c9f80c55be93d8a7c7d67bd06d48902ebe9fef32a906173b\",\n  \"extraDictionarySHA256\": \"97704a8960b4facceef54397a08fb5d0a456247c3627359215aa2a27df22656c\",\n  \"unexpectedCommands\": []\n}\n",
+      "stderr": ""
+    },
+    {
+      "app": "HanlinMiniApps.app",
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "Scripts/Runtime/validate_ios_system_resources.py",
+        "--repository-root",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete",
+        "--app",
+        "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app"
+      ],
+      "exit": 1,
+      "durationSeconds": 0.055653500006883405,
+      "stdout": "",
+      "stderr": "Traceback (most recent call last):\n  File \"/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Runtime/validate_ios_system_resources.py\", line 198, in <module>\n    raise SystemExit(main())\n                     ^^^^^^\n  File \"/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Runtime/validate_ios_system_resources.py\", line 184, in main\n    result = validate_app_resources(\n             ^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Runtime/validate_ios_system_resources.py\", line 155, in validate_app_resources\n    app_command_raw, _ = validate_command_dictionary(app_command)\n                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Runtime/validate_ios_system_resources.py\", line 67, in validate_command_dictionary\n    value, raw = read_dictionary(path)\n                 ^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Runtime/validate_ios_system_resources.py\", line 55, in read_dictionary\n    raise ResourceValidationError(f\"Required plist is missing: {path}\")\nResourceValidationError: Required plist is missing: /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/commandDictionary.plist\n"
+    }
+  ]
+}

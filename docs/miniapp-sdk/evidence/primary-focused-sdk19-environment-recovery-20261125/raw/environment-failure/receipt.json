@@ -1,0 +1,85 @@
+{
+  "schema": 1,
+  "at": "2026-11-25T12:32:14.800201+00:00",
+  "source": "6c006c948f0a6f371f7fc68b90e393f43734f8dd",
+  "status": "FAILED_BEFORE_CASES",
+  "members": [
+    {
+      "path": "raw/focused19-v3/state.json",
+      "bytes": 4538,
+      "sha256": "fc722c1417dfcb5029336df1b27f06fd1ec636ae2bc5bcfc82a2258d4f894d25"
+    },
+    {
+      "path": "raw/focused19-v3/ledger.json",
+      "bytes": 2199,
+      "sha256": "c69a3001ec612c74afeaeafcbdf3e8fc2b0ea59fbb96bf18488a2ff641e76ebf"
+    },
+    {
+      "path": "raw/focused19-v3/decision.json",
+      "bytes": 67174,
+      "sha256": "e5317f244c6cf6cecb4b9a9c1b3043b1921fbe646d922f332d7bdcd103fea86a"
+    },
+    {
+      "path": "raw/focused19-v3/events.jsonl",
+      "bytes": 1403,
+      "sha256": "23437522d18f00b78e66fd6bd3ac9c2110798c40345e64d949426b5a8c068a26"
+    },
+    {
+      "path": "raw/focused19-v3/controller-child.log",
+      "bytes": 1842,
+      "sha256": "5c3085ba2ea41118eae72f8f33666d910d72dc64ca42f8a873f24b23ed8e755a"
+    },
+    {
+      "path": "raw/focused19-v3/native-result/state.json",
+      "bytes": 4238,
+      "sha256": "627355b9bb7c970106c2c5dee504937235d6d55e5782b2129b7427e3f1024e48"
+    },
+    {
+      "path": "raw/focused19-v3/native-result/paired-prefix/commands.jsonl",
+      "bytes": 656,
+      "sha256": "8ff163aaa5c1313964cf790afbc2ba0203257e8131a20533c9c5684ae32b47d5"
+    },
+    {
+      "path": "raw/focused19-v3/native-result/paired-prefix/command-events.jsonl",
+      "bytes": 3507,
+      "sha256": "fdd7146cc6788b3aed73fef7be2632df323db3b6fd433cb85a2549a9efc5f4eb"
+    },
+    {
+      "path": "raw/focused19-v3/native-result/paired-prefix/active-command.json",
+      "bytes": 393,
+      "sha256": "0718feaa1d1c51b29db10085382a3814116c68e327e6882ab04b988613d79e73"
+    },
+    {
+      "path": "raw/focused19-v3/native-result/paired-prefix/boot.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "raw/focused19-v3/native-result/paired-prefix/bootstatus.log",
+      "bytes": 597,
+      "sha256": "ee8305a7b2ea0207733aa6304d52bdf5e01ffb2118dff24dfe922719c312581f"
+    },
+    {
+      "path": "raw/focused19-v3/native-result/paired-prefix/original-expo-probe.log",
+      "bytes": 1731,
+      "sha256": "ab98064ae777bae26834eb567b7c2061d03d5ed9d6d4d760f699d962650670f5"
+    },
+    {
+      "path": "raw/focused19-v3/native-result/paired-prefix/created-simulator.txt",
+      "bytes": 37,
+      "sha256": "df333300ba32a39a07bcd88aed5fc6bb5f0b51f738c521f6a0949dc54456a37e"
+    },
+    {
+      "path": "raw/node245-restoration/receipt.json",
+      "bytes": 1529,
+      "sha256": "1b34ad8a2a392cebdfa34ee6a56da504e020189788f1d3bbdb440522e035ecc6"
+    },
+    {
+      "path": "raw/state.json",
+      "bytes": 114399,
+      "sha256": "2a07e871c02d8f23458995446c8267c4681f5b864c0485b260f41de08e73c2eb"
+    }
+  ],
+  "actualCharge": 39.67624695900304,
+  "reason": "Original probe declaration guard detected Node22.23.5 versus authenticated Node24.5.0; original runtime restored separately; no SDK/package mutation."
+}

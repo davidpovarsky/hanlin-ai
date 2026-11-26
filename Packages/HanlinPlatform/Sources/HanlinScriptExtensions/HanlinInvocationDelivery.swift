@@ -4,6 +4,9 @@ import HanlinPlatformContracts
 /// Delivery metadata for the existing identity/action/parameters envelope.
 /// These are provenance claims, not OS permissions or permission grants.
 public struct HanlinInvocationDelivery: Codable, Hashable, Sendable {
+    /// The existing canonical queue envelope lifetime, shared by typed ingress adapters.
+    public static let maximumLifetime: TimeInterval = 86_400
+
     public enum Source: String, Codable, Hashable, Sendable { case share, shortcuts, translation, widget, notification, foreground, appIntent, liveActivity }
     public enum ExpectedResult: String, Codable, Hashable, Sendable { case value, text, file, none }
     public let schemaVersion: UInt32
@@ -17,10 +20,13 @@ public struct HanlinInvocationDelivery: Codable, Hashable, Sendable {
     /// the installed action registration, never by an incoming extension alone.
     public let idempotent: Bool
     public let maximumAttempts: Int
+    /// Original widget generation/variant/program, retained for Host revalidation.
+    public let widgetOrigin: HanlinWidgetInvocationOrigin?
 
     public init(appID: HanlinAppID, source: Source, expiresAt: Date,
                 expectedResult: ExpectedResult = .value, userGesturePresent: Bool = false,
-                canPresentUI: Bool = false, idempotent: Bool = false, maximumAttempts: Int = 1) {
+                canPresentUI: Bool = false, idempotent: Bool = false, maximumAttempts: Int = 1,
+                widgetOrigin: HanlinWidgetInvocationOrigin? = nil) {
         self.schemaVersion = 1
         self.appID = appID
         self.source = source
@@ -30,6 +36,7 @@ public struct HanlinInvocationDelivery: Codable, Hashable, Sendable {
         self.canPresentUI = canPresentUI
         self.idempotent = idempotent
         self.maximumAttempts = maximumAttempts
+        self.widgetOrigin = widgetOrigin
     }
 }
 

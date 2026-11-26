@@ -31,6 +31,13 @@ public struct HanlinValueLimits: Codable, Hashable, Sendable {
     }
 
     public static let canonical = HanlinValueLimits()
+
+    /// Original MiniApp engines own their resource policy. JSON structure and
+    /// numeric validity are still checked without an extra host authoring quota.
+    public static let unbounded = HanlinValueLimits(
+        maximumDepth: .max, maximumObjectMembers: .max, maximumArrayItems: .max,
+        maximumStringBytes: .max, maximumKeyBytes: .max, maximumInlineDataBytes: .max,
+        maximumPayloadBytes: .max, maximumNodes: .max)
 }
 
 /// A JSON-style object whose key identity is the key's exact UTF-8 byte

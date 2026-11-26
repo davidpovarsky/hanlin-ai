@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "observedAt": "2026-11-25T20:09:58.914368+00:00",
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "scope": "read-only capacity; no test/build/deletion/uninstall",
+  "approvedOSBoundBytes": 5679053931,
+  "availableBytes": 3122991104,
+  "fits": false,
+  "df": {
+    "argv": [
+      "/bin/df",
+      "-k",
+      "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete"
+    ],
+    "exitCode": 0,
+    "stdout": "Filesystem   1024-blocks      Used Available Capacity iused    ifree %iused  Mounted on\n/dev/disk3s5   482797652 434814428   3049796   100% 5875978 30497960   16%   /System/Volumes/Data\n",
+    "stderr": ""
+  },
+  "ownedDirectories": [
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex",
+      "exists": false,
+      "isSymlink": false
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/ModuleCache.noindex",
+      "exists": false,
+      "isSymlink": false
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Index.noindex",
+      "exists": false,
+      "isSymlink": false
+    }
+  ],
+  "finishedAt": "2026-11-25T20:09:58.918813+00:00"
+}

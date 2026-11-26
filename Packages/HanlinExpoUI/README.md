@@ -40,3 +40,19 @@ overload parity is still unknown.
 Adding Apple APIs to the native bridge or regenerating against a newer SDK requires a new host build
 once. After that host is installed, MiniApps using that installed bridge surface remain dynamic TSX
 and do not require another host build.
+
+## Observed text-selection context
+
+On the iOS 27 simulator observed on 2026-11-25, applying
+textSelectionAffinity('downstream') to the original Expo TextField terminated
+inside SwiftUI.PlatformTextFieldCoordinator.update with an unrecognized
+setSelectionAffinity: selector. This is an observed failure of that native
+combination; a successful typecheck does not establish its runtime behavior.
+
+The public generated modifier still forwards the original SwiftUI API unchanged.
+The native fixture now exercises the modifier on a real TextEditor, following
+[Apple's documented example](https://developer.apple.com/documentation/swiftui/view/textselectionaffinity(_:)),
+and requires that editor and its text to appear. Verification of this corrected
+context remains pending. The original TextField typing, hit-testing and submit
+checks are retained separately; this change does not claim to fix the observed
+TextField crash.

@@ -1,5 +1,5 @@
 module.exports = {
-  presets: ['@react-native/babel-preset'],
+  presets: [['babel-preset-expo', { worklets: false }]],
   plugins: [
     '@nativescript/react-native/babel-plugin',
     ['react-native-worklets/plugin', { strictGlobal: true }],

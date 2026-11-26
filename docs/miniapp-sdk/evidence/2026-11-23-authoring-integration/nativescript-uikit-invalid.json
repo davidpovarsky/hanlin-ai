@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "engine": "nativescript",
+  "operation": "validate",
+  "succeeded": false,
+  "diagnostics": [
+    {
+      "code": "TS2339",
+      "category": "error",
+      "message": "Property 'hanlinMissingProperty' does not exist on type 'typeof UIView'.",
+      "file": "index.ts",
+      "line": 6,
+      "column": 44,
+      "endLine": 6,
+      "endColumn": 65
+    }
+  ],
+  "sourceRoot": "/dev/shm/hanlin-miniapp-integration-20261123/native-authoring",
+  "sdk": {
+    "packageVersions": {
+      "@nativescript/core": "9.1.0",
+      "@nativescript/swift-ui": "4.0.2",
+      "@nativescript/ios": "9.1.0",
+      "@nativescript/types": "9.1.0",
+      "@nativescript/vite": "8.0.0",
+      "typescript": "5.9.3",
+      "vite": "8.0.0",
+      "@hanlin/host-services": "1.0.0"
+    },
+    "manifestSHA256": "64f09368fc6af79651488ba27c6c5770f7b1e63a085b46ecf5a37fa49cbc0186",
+    "compilerVersion": "5.9.3"
+  },
+  "typecheck": {
+    "strict": true,
+    "skipLibCheck": true,
+    "dependencyDeclarationsChecked": false
+  }
+}

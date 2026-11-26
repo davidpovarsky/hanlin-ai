@@ -1,0 +1,19 @@
+v24.5.0
+1ec7ffe20def4025cec4d228b8432c9d9950d01ccdf5b076a3c4b92dd3a16a5c  /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/AI_HLY/Downstream/RuntimeCore/Node/Host/global-package-state.mjs
+c7d0fb58af6b07e61bfd235e01bdb9d11483254ed0601d4f9363b375c2e0f2f9  /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/package-lifecycle.test.mjs
+4a1f2ecaae83c3f68cb02b605c03323260bc4bbb32923865d5c654be5736c7b4  /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/AI_HLY/Downstream/RuntimeCore/Node/Host/package-lock.json
+✔ actual Arborist tree plans dependency phases, root project phases and skips unchanged build products (22.458541ms)
+✔ immutable package generations preserve old files, reject conflicting commits and retain published generations (8.807167ms)
+✔ root aliases expose the same physical legacy and published generation without mutating reads (5.175666ms)
+✔ competing commits through host root aliases preserve conflict rejection (2.881959ms)
+✔ reading a missing legacy host does not create directories or introduce a missing-path error (0.42125ms)
+✔ npm lifecycle environment retains user values and flattens RFC183 package metadata (0.805958ms)
+✔ actual registry extraction and Arborist dependency hooks publish atomically and preserve unchanged builds (407.409ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 643.521

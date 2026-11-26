@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "node",
+    "--check",
+    "Scripts/Expo/prepare-ios-dependencies.mjs"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-miniapps-host-services-20261124",
+  "node": "v24.22.0",
+  "exitCode": 0,
+  "elapsedSeconds": 0.11689902935177088,
+  "stdout": "",
+  "stderr": "",
+  "boundary": "JavaScript syntax check only; no native build or producer execution"
+}

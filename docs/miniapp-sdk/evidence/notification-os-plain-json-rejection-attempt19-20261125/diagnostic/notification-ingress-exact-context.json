@@ -1,0 +1,81 @@
+{
+  "schema": 1,
+  "sourcePath": "/Users/m1/builds/hanlin-notification-os-recovery-20261125/recovery/notification-os-recovery-v1-diagnostic-export/diagnostics/0_Test_Hanlin Notification OS Recovery 20261125_Diagnostics/HanlinMiniAppsUITests-4F5EDFF0-FC50-404D-B523-4A903EBC6CD6-Configuration-Test Scheme Action-Iteration-1/HanlinMiniAppsUITests-33B5B0A4-2810-468F-A386-58105A892662/StandardOutputAndStandardError-com.itorah.hanlinminiapps.txt",
+  "rawBytes": 36622902,
+  "rawSHA256": "54fe26ea01c60381f71f88d71f13e2c241b0d4a2e9095fe0222cf3c66c781511",
+  "range": [
+    316875,
+    316891
+  ],
+  "lines": [
+    {
+      "line": 316875,
+      "text": "            Toolbar, 0x126b883c0 <AX element pid: 47452, elementOrHash.elementID: 4618649600.486>"
+    },
+    {
+      "line": 316876,
+      "text": "              Other, 0x126b888c0 <AX element pid: 47452, elementOrHash.elementID: 4618658304.490>"
+    },
+    {
+      "line": 316877,
+      "text": "2026-11-25 21:45:48.809476+0100 HanlinMiniApps[47452:8412896] [Default] Query ↪︎ Descendants matching type Button"
+    },
+    {
+      "line": 316878,
+      "text": "    ↪︎ Elements matching predicate '\"Run Host Services Files\" IN identifiers' (First Match) found matching snapshots: {("
+    },
+    {
+      "line": 316879,
+      "text": "    Button, label: 'Run Host Services Files'"
+    },
+    {
+      "line": 316880,
+      "text": ")} (error: (null))"
+    },
+    {
+      "line": 316881,
+      "text": "2026-11-25 21:45:48.809654+0100 HanlinMiniApps[47452:8412896] [Default] Replying to query ↪︎ Descendants matching type Button"
+    },
+    {
+      "line": 316882,
+      "text": "    ↪︎ Elements matching predicate '\"Run Host Services Files\" IN identifiers' (First Match) with results: <XCTElementQueryResults: 0x1135c0e40> (error: (null))"
+    },
+    {
+      "line": 316883,
+      "text": "2026-11-25 21:45:49.322674+0100 HanlinMiniApps[47452:8412896] [NotificationIngress] notification_event_not_enqueued"
+    },
+    {
+      "line": 316884,
+      "text": "2026-11-25 21:46:59.667756+0100 HanlinMiniApps[47452:8414013] [Default] Received request to fetch matches for query:"
+    },
+    {
+      "line": 316885,
+      "text": "2026-11-25 21:46:59.667872+0100 HanlinMiniApps[47452:8415716] [Default] Evaluating query:"
+    },
+    {
+      "line": 316886,
+      "text": "2026-11-25 21:46:59.667917+0100 HanlinMiniApps[47452:8415716] [Default] Getting root element snapshot"
+    },
+    {
+      "line": 316887,
+      "text": "2026-11-25 21:46:59.667961+0100 HanlinMiniApps[47452:8415716] [Default] Getting snapshot for App element pid: 47452 for query"
+    },
+    {
+      "line": 316888,
+      "text": "2026-11-25 21:46:59.668015+0100 HanlinMiniApps[47452:8415716] [Default] Query requires iOS snapshot attributes ."
+    },
+    {
+      "line": 316889,
+      "text": "2026-11-25 21:46:59.668083+0100 HanlinMiniApps[47452:8415716] [Default] XCTPerformOnMainRunLoop[not MT]: about to CFRunLoopPerform"
+    },
+    {
+      "line": 316890,
+      "text": "2026-11-25 21:46:59.668127+0100 HanlinMiniApps[47452:8415716] [Default] XCTPerformOnMainRunLoop[not MT]: waiting with 30.00s responsiveness timeout"
+    },
+    {
+      "line": 316891,
+      "text": "2026-11-25 21:46:59.668130+0100 HanlinMiniApps[47452:8412671] [Default] XCTPerformOnMainRunLoop[MT]: inside CFRunLoopPerform"
+    }
+  ],
+  "boundary": "Verbatim existing xcresult-exported application stdout; no new app launch or log stream."
+}

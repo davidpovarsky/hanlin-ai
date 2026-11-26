@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "id": "affected-swiftpm",
+  "source": "542714964a0f12a964651c2306d5f992ca13ae85",
+  "status": "FAILED",
+  "startedAt": "2026-11-26T20:10:26.242457+00:00",
+  "argv": [
+    "xcrun",
+    "swift",
+    "test",
+    "--package-path",
+    "/Users/m1/builds/hanlin-current-entrypoints-20261126/Packages/HanlinPlatform",
+    "--scratch-path",
+    "/Users/m1/caches/DerivedData/hanlin-current-entrypoints-20261126/swiftpm-widget-host-actions",
+    "--enable-swift-testing",
+    "--no-parallel",
+    "--filter",
+    "(HanlinScriptAnalyzerTests|HanlinKeyboardNotificationPresentationTests|HanlinScriptExtensionStoreTests|HanlinDualWidgetEnginesTests|HanlinNotificationInvocationTests|HanlinOriginalScriptWidgetRenderingTests|ExposureContractTests|(manifestRoundTripsDeterministically|manifestSchemaResourceIsValidJSONAndUnknownFieldsAreTolerated|manifestRejectsUnsafePathsAndUnsupportedVersions|manifestRejectsDuplicateCanonicalIdentifiers|wireEnvelopeRoundTripsAndEnforcesRequestIdentity|wireEnvelopeRejectsUnknownVersionMalformedKindAndOversizedPayload|scriptingWireV2IsAdditiveAndRequiresExplicitV2Support)|(manifestSurfaceSchemaMatchesRuntimeContracts)|HanlinScriptMiniAppRegistrationTests|HanlinPreparedAssistantToolProjectionTests)",
+    "--event-stream-output-path",
+    "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-swiftpm-v1/original/paired-product/affected-swiftpm-events.jsonl",
+    "--event-stream-version",
+    "0"
+  ],
+  "commandCeilingSeconds": 1200,
+  "expectedDefinitions": 118,
+  "expectedCases": 198,
+  "proofs": [
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-swiftpm-v1/original/paired-product/affected-swiftpm-tests.log",
+      "bytes": 448363,
+      "sha256": "a1c630c88e6eeff5bd0f36c1faa88981f5f8e7ded515ea665259896408c4428a"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-swiftpm-v1/original/paired-product/affected-swiftpm-events.jsonl",
+      "bytes": 1281632,
+      "sha256": "a6c0c35691cd40e87889fe4230165d12bdf2d6b410c42fcad437f3c12adc0eb5"
+    }
+  ],
+  "commandExitCode": 1,
+  "error": {
+    "type": "AssertionError",
+    "message": "{'phase': 'affected-swiftpm', 'exitCode': 1}"
+  },
+  "finishedAt": "2026-11-26T20:10:44.321022+00:00"
+}

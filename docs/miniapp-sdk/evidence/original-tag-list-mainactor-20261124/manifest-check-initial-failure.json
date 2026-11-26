@@ -1,0 +1,11 @@
+{
+  "status": "FAILED_HARNESS_ASSERTION",
+  "operation": "Evidence packaging manifest-row comparison, before staging or commit.",
+  "reason": "The initial comparison incorrectly indexed provenance rows by local path, although the existing manifest intentionally permits several original records per Host adapter.",
+  "observed": "AssertionError: changed_rows == [target]",
+  "correction": "Compare unchanged ordered rows by index and full record; no production, manifest or test input changed for the corrected check.",
+  "duplicateLocalPaths": {
+    "Packages/HanlinExpoRuntime/Sources/HanlinExpoWidgetNative/HanlinExpoWidgetNative.swift": 2
+  },
+  "correctedResult": "Exactly one original row changed, only localSHA256 and adaptation; all other rows and top-level metadata remain equal."
+}

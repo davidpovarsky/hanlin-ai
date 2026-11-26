@@ -1,0 +1,102 @@
+{
+  "schema": 1,
+  "owner": "/root/native_execution",
+  "base": "cffe7f75436aa2e37ec5d82891937965c0407d2d",
+  "capturedAt": "2026-11-25T08:12:33.122007+00:00",
+  "finding": "Actual MiniApps application main bundle omits both canonical ios_system command dictionaries; AI has exact originals. Original engine initialization fails before shell execution.",
+  "change": "Existing project generator copies exact canonical raw files into MiniApps. Existing source graph and built product resource validation now cover both shipping apps. Original library, command catalog, API, permissions and test selectors are unchanged.",
+  "sources": [
+    {
+      "path": "Scripts/SDK/update_project.py",
+      "beforeSHA256": "1b5d810909953ec55914b9e706eeae6a5523ec31a80c60a8c05a920d346bf270",
+      "afterSHA256": "7977cbf986ff1cc41d1014c92de44faf0f4aa413bada4d1ff7f710ef35bb7166"
+    },
+    {
+      "path": "Scripts/Runtime/validate_ios_system_resources.py",
+      "beforeSHA256": "239eb92f6d2fd24431795994b76372604e397ba80f51618bcec2b5a0d060664b",
+      "afterSHA256": "8474f676aa8d071bf91f2028d636e7b14653d133ecbeb5804898cb48bb4c0cf5"
+    },
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "beforeSHA256": "6e3abbb16c9b55b048b69c2391784510d8c143c7ed00e760a73ecb903cdbb61d",
+      "afterSHA256": "afb171016503d06840cd5407b50ab92bb261ad7be982396efe096466c5b92c31"
+    },
+    {
+      "path": "Scripts/Runtime/Tests/test_ios_system_project_resources.py",
+      "beforeSHA256": "a83b28811fca3748fd00b9c5d4fa16358522e920de208b7c6668cfd221c869ff",
+      "afterSHA256": "13b7dd82643476739fe523ab2ebfd894b2b89020b2862bd4228669fdc84b2f53"
+    },
+    {
+      "path": "AI_HLY.xcodeproj/project.pbxproj",
+      "beforeSHA256": "24206ae0f0f66d3669cae5ccd4ffcff25ae582ec4620359a2becca7ad8e16780",
+      "afterSHA256": "0d94f6b2ba6fdc6cd8466309d911c5e79a3ea08a0d4c525ce7565a38d9e09c73"
+    }
+  ],
+  "members": [
+    {
+      "path": "raw/focused-regression.log",
+      "bytes": 2585,
+      "sha256": "17a99c44af715a3744026984f5b2a3a844a4fc74813e90ba7e29308562410037",
+      "origin": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/shell-resource-fix-proof/focused-regression.log"
+    },
+    {
+      "path": "raw/initial-regression-failed.log",
+      "bytes": 9138,
+      "sha256": "edb55aebd90b37edb23d6d8d91844b6d05827bb1717493ce1dfd7b1700c4e17a",
+      "origin": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/shell-resource-fix-proof/initial-regression-failed.log"
+    },
+    {
+      "path": "raw/focused-regression-receipt.json",
+      "bytes": 1730,
+      "sha256": "801a2c3f9a61869b724f4a85feb7b560f87101cca8e78cb4b2ec71c7aa4ba1f0",
+      "origin": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/shell-resource-fix-proof/receipt.json"
+    },
+    {
+      "path": "raw/built-main-dictionaries.json",
+      "bytes": 1151,
+      "sha256": "c2304346943e1e53a89d47da86fba3d2cec5ea1bd6e877e4f0fd34c890507a4c",
+      "origin": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/terminal-diagnostics-attempt17/diagnostics/built-main-dictionaries.json"
+    },
+    {
+      "path": "raw/actual-original-resource-guard.json",
+      "bytes": 3250,
+      "sha256": "68a271dda353727a02916848d6b4b8371c0e32cf9ade84c600ef44f6fc321fee",
+      "origin": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/terminal-diagnostics-attempt17-supplement/resource-guard-before-attempt17.json"
+    },
+    {
+      "path": "raw/actual-runtime-summary.json",
+      "bytes": 8853,
+      "sha256": "2f4439efadeb51fecb3844fa2b79bfa995cbf968565a980c7ff5bd5bc6374d3d",
+      "origin": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/terminal-packet-attempt17/raw/original-runtimes-summary.json"
+    }
+  ],
+  "portableRegression": {
+    "result": "PASS",
+    "tests": 12,
+    "failures": 0,
+    "skips": 0,
+    "raw": "raw/focused-regression.log",
+    "initialCandidateFailureRetained": true
+  },
+  "actualPreparedProject": {
+    "sourceSnapshotReceiptSHA256": "18b3f4d5b4d3da0b13f326eaa48c04de856bcbbd1fa58e055e9ade34de33df4b",
+    "beforeSHA256": "71409346bb25cdc8fd5d1d3e8b7363549146e9038044360c93b659615c3b3b3d",
+    "baselineError": "Xcode Copy Bundle Resources must contain exactly one commandDictionary.plist in HanlinMiniApps",
+    "projectedSHA256": "d44500e42754b3b167ed0a1d771a2ebcb8f195ad6f3196a215c1b9a8daea48e1",
+    "candidateValidation": "PASS",
+    "idempotence": "PASS",
+    "nativeGeneration": "NOT_RUN"
+  },
+  "nativeConsumerValidationAfterCorrection": "NOT_RUN",
+  "actualNativeBaseline": {
+    "miniApps": "FAILED_RESOURCE_MISSING",
+    "aiBuiltResourceValidation": "PASS",
+    "applicationSuite": {
+      "total": 25,
+      "pass": 16,
+      "fail": 9,
+      "skip": 0
+    },
+    "ai27": "NOT_RUN"
+  }
+}

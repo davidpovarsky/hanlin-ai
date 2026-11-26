@@ -1,0 +1,1009 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-25T18:49:15.040951+00:00",
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "tree": "f7a6596a1ef53d8d962ceb9f619460ffa19ee91e",
+  "original52Receipt": {
+    "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/receipt.json",
+    "bytes": 28097,
+    "sha256": "bc4cee646635399d243e90b2ba77d636522dd463d47fbd95657c7a4a8d3d7a14"
+  },
+  "ns5Receipt": {
+    "path": "docs/miniapp-sdk/evidence/nativescript-five-runtime-pass-attempt19-20261125/packet/receipt.json",
+    "bytes": 16094,
+    "sha256": "f0232a0473ad580c05e64daf35ab0ae46380b0815a2785a2d28cf15f0047ba68"
+  },
+  "groups": [
+    {
+      "group": "Mini25",
+      "passed": 25,
+      "failed": 0,
+      "skipped": 0,
+      "summary": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/OriginalRuntimes-summary.json",
+        "bytes": 3522,
+        "sha256": "8362539879032ba8a5dfe944fef09ad4769b9ea62cacbd42cc575119efcbddc2"
+      },
+      "nodes": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/OriginalRuntimes-nodes.json",
+        "bytes": 22889,
+        "sha256": "a9115dcb72398c1cf1a8bfa4ec9dd2b42273176befdbfa2be46354a0eb606878"
+      },
+      "selectorVerifier": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/OriginalRuntimes-selected-tests.log",
+        "bytes": 57,
+        "sha256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96"
+      },
+      "runtimeWarnings": [
+        {
+          "issueType": "Runtime Warning",
+          "message": "Update the Info.plist: Support for all orientations will soon be required."
+        },
+        {
+          "issueType": "Runtime Warning",
+          "message": "Update the Info.plist: Support for all orientations will soon be required."
+        },
+        {
+          "issueType": "Runtime Warning",
+          "message": "Update the Info.plist: Support for all orientations will soon be required."
+        },
+        {
+          "issueType": "Runtime Warning",
+          "message": "Update the Info.plist: Support for all orientations will soon be required."
+        },
+        {
+          "issueType": "Runtime Warning",
+          "message": "Update the Info.plist: Support for all orientations will soon be required."
+        },
+        {
+          "issueType": "Runtime Warning",
+          "message": "Update the Info.plist: Support for all orientations will soon be required."
+        },
+        {
+          "issueType": "Runtime Warning",
+          "message": "Update the Info.plist: Support for all orientations will soon be required."
+        },
+        {
+          "issueType": "Runtime Warning",
+          "message": "Update the Info.plist: Support for all orientations will soon be required."
+        },
+        {
+          "issueType": "Runtime Warning",
+          "message": "Update the Info.plist: Support for all orientations will soon be required."
+        },
+        {
+          "issueType": "Runtime Warning",
+          "message": "Update the Info.plist: Support for all orientations will soon be required."
+        },
+        {
+          "issueType": "Runtime Warning",
+          "message": "Update the Info.plist: Support for all orientations will soon be required."
+        },
+        {
+          "issueType": "Runtime Warning",
+          "message": "Update the Info.plist: Support for all orientations will soon be required."
+        },
+        {
+          "issueType": "Runtime Warning",
+          "message": "Update the Info.plist: Support for all orientations will soon be required."
+        },
+        {
+          "issueType": "Runtime Warning",
+          "message": "Update the Info.plist: Support for all orientations will soon be required."
+        },
+        {
+          "issueType": "Runtime Warning",
+          "message": "Update the Info.plist: Support for all orientations will soon be required."
+        },
+        {
+          "issueType": "Runtime Warning",
+          "message": "Update the Info.plist: Support for all orientations will soon be required."
+        },
+        {
+          "issueType": "Runtime Warning",
+          "message": "Update the Info.plist: Support for all orientations will soon be required."
+        }
+      ],
+      "devices": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "E742FBCD-8FF0-4130-B143-7F8328637138",
+            "deviceName": "HanlinPaired-local",
+            "modelName": "iPad Pro 13-inch (M5)",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 25,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ]
+    },
+    {
+      "group": "AI27",
+      "passed": 27,
+      "failed": 0,
+      "skipped": 0,
+      "summary": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/Paired-summary.json",
+        "bytes": 1979,
+        "sha256": "961704b8fa2ef947d5dc1e37984d0e9ed8904830e496a3ae34110ee5d34ef713"
+      },
+      "nodes": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/Paired-nodes.json",
+        "bytes": 22342,
+        "sha256": "d208e06cceaf65935d9eb7dc8e20ef640aea6a7488a70691392b9d3671c1e89f"
+      },
+      "selectorVerifier": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/Paired-selected-tests.log",
+        "bytes": 57,
+        "sha256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96"
+      },
+      "runtimeWarnings": [
+        {
+          "issueType": "Runtime Warning",
+          "message": "           SessionCore.mm:631   This method can lead to UI unresponsiveness if called on the main thread while the audio session is active."
+        },
+        {
+          "issueType": "Runtime Warning",
+          "message": "    AVAudioSession_iOS.mm:978   This method can lead to UI unresponsiveness if called on the main thread. Consider using the asynchronous activate/deactivate API instead for calls from the main thread."
+        },
+        {
+          "issueType": "Runtime Warning",
+          "message": "Update the Info.plist: Support for all orientations will soon be required."
+        },
+        {
+          "issueType": "Runtime Warning",
+          "message": "Update the Info.plist: Support for all orientations will soon be required."
+        }
+      ],
+      "devices": [
+        {
+          "device": {
+            "architecture": "arm64",
+            "deviceId": "E742FBCD-8FF0-4130-B143-7F8328637138",
+            "deviceName": "HanlinPaired-local",
+            "modelName": "iPad Pro 13-inch (M5)",
+            "osBuildNumber": "24A434",
+            "osVersion": "27.0",
+            "platform": "iOS Simulator"
+          },
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "passedTests": 27,
+          "skippedTests": 0,
+          "testPlanConfiguration": {
+            "configurationId": "1",
+            "configurationName": "Test Scheme Action"
+          }
+        }
+      ]
+    },
+    {
+      "group": "NativeScript5",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "summary": {
+        "path": "docs/miniapp-sdk/evidence/nativescript-five-runtime-pass-attempt19-20261125/packet/companion-native-v1-ns5/native-result/ns5-summary.json",
+        "bytes": 1006,
+        "sha256": "d874cc63dcedb20a62198d815aa4906d3002c2315377ae619587be2c54f31150"
+      },
+      "nodes": {
+        "path": "docs/miniapp-sdk/evidence/nativescript-five-runtime-pass-attempt19-20261125/packet/companion-native-v1-ns5/native-result/ns5-nodes.json",
+        "bytes": 1794,
+        "sha256": "642c3eae0437a60fd4fb5e92d1e49dbf9f52fee7524cc0010a2627c797a2c8ad"
+      },
+      "runtimeWarnings": [],
+      "receipt": {
+        "path": "docs/miniapp-sdk/evidence/nativescript-five-runtime-pass-attempt19-20261125/packet/receipt.json",
+        "bytes": 16094,
+        "sha256": "f0232a0473ad580c05e64daf35ab0ae46380b0815a2785a2d28cf15f0047ba68"
+      }
+    }
+  ],
+  "caseIndex": {
+    "HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests/testExternalInvocationSurvivesNestedFullScreenModal": {
+      "selector": "HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests/testExternalInvocationSurvivesNestedFullScreenModal",
+      "nodeIdentifier": "MiniAppsExternalModalLifetimeUITests/testExternalInvocationSurvivesNestedFullScreenModal()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests/testExternalInvocationSurvivesNestedFullScreenModal",
+      "result": "Passed",
+      "duration": "1m 30s",
+      "durationInSeconds": 90.33123707771301,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/OriginalRuntimes-nodes.json",
+        "bytes": 22889,
+        "sha256": "a9115dcb72398c1cf1a8bfa4ec9dd2b42273176befdbfa2be46354a0eb606878"
+      },
+      "group": "Mini25"
+    },
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEditButtonEditsOriginalList": {
+      "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEditButtonEditsOriginalList",
+      "nodeIdentifier": "MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEditButtonEditsOriginalList()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEditButtonEditsOriginalList",
+      "result": "Passed",
+      "duration": "1m 1s",
+      "durationInSeconds": 61.36976099014282,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/OriginalRuntimes-nodes.json",
+        "bytes": 22889,
+        "sha256": "a9115dcb72398c1cf1a8bfa4ec9dd2b42273176befdbfa2be46354a0eb606878"
+      },
+      "group": "Mini25"
+    },
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEmptyViewReportsNativeLayout": {
+      "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEmptyViewReportsNativeLayout",
+      "nodeIdentifier": "MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEmptyViewReportsNativeLayout()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEmptyViewReportsNativeLayout",
+      "result": "Passed",
+      "duration": "1m 8s",
+      "durationInSeconds": 68.93656599521637,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/OriginalRuntimes-nodes.json",
+        "bytes": 22889,
+        "sha256": "a9115dcb72398c1cf1a8bfa4ec9dd2b42273176befdbfa2be46354a0eb606878"
+      },
+      "group": "Mini25"
+    },
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata": {
+      "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata",
+      "nodeIdentifier": "MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata",
+      "result": "Passed",
+      "duration": "1m 31s",
+      "durationInSeconds": 91.4622210264206,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/OriginalRuntimes-nodes.json",
+        "bytes": 22889,
+        "sha256": "a9115dcb72398c1cf1a8bfa4ec9dd2b42273176befdbfa2be46354a0eb606878"
+      },
+      "group": "Mini25"
+    },
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierAccessibilityAndGeometry": {
+      "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierAccessibilityAndGeometry",
+      "nodeIdentifier": "MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierAccessibilityAndGeometry()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierAccessibilityAndGeometry",
+      "result": "Passed",
+      "duration": "1m 24s",
+      "durationInSeconds": 84.4638010263443,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/OriginalRuntimes-nodes.json",
+        "bytes": 22889,
+        "sha256": "a9115dcb72398c1cf1a8bfa4ec9dd2b42273176befdbfa2be46354a0eb606878"
+      },
+      "group": "Mini25"
+    },
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope": {
+      "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope",
+      "nodeIdentifier": "MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope",
+      "result": "Passed",
+      "duration": "1m 22s",
+      "durationInSeconds": 82.08928596973419,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/OriginalRuntimes-nodes.json",
+        "bytes": 22889,
+        "sha256": "a9115dcb72398c1cf1a8bfa4ec9dd2b42273176befdbfa2be46354a0eb606878"
+      },
+      "group": "Mini25"
+    },
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierNativeContainerContexts": {
+      "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierNativeContainerContexts",
+      "nodeIdentifier": "MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierNativeContainerContexts()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierNativeContainerContexts",
+      "result": "Passed",
+      "duration": "2m 15s",
+      "durationInSeconds": 135.39553701877594,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/OriginalRuntimes-nodes.json",
+        "bytes": 22889,
+        "sha256": "a9115dcb72398c1cf1a8bfa4ec9dd2b42273176befdbfa2be46354a0eb606878"
+      },
+      "group": "Mini25"
+    },
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoHostServicesUseRealStorageRuntimeAndWidgetPublication": {
+      "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoHostServicesUseRealStorageRuntimeAndWidgetPublication",
+      "nodeIdentifier": "MiniAppsProductionRuntimeUITests/testStandaloneExpoHostServicesUseRealStorageRuntimeAndWidgetPublication()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoHostServicesUseRealStorageRuntimeAndWidgetPublication",
+      "result": "Passed",
+      "duration": "1m 51s",
+      "durationInSeconds": 111.25782704353333,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/OriginalRuntimes-nodes.json",
+        "bytes": 22889,
+        "sha256": "a9115dcb72398c1cf1a8bfa4ec9dd2b42273176befdbfa2be46354a0eb606878"
+      },
+      "group": "Mini25"
+    },
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters": {
+      "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters",
+      "nodeIdentifier": "MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters",
+      "result": "Passed",
+      "duration": "3m 31s",
+      "durationInSeconds": 211.91668796539307,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/OriginalRuntimes-nodes.json",
+        "bytes": 22889,
+        "sha256": "a9115dcb72398c1cf1a8bfa4ec9dd2b42273176befdbfa2be46354a0eb606878"
+      },
+      "group": "Mini25"
+    },
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualPresentationAdaptersAndDismissalEvents": {
+      "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualPresentationAdaptersAndDismissalEvents",
+      "nodeIdentifier": "MiniAppsProductionRuntimeUITests/testStandaloneExpoManualPresentationAdaptersAndDismissalEvents()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualPresentationAdaptersAndDismissalEvents",
+      "result": "Passed",
+      "duration": "2m 50s",
+      "durationInSeconds": 170.54953801631927,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/OriginalRuntimes-nodes.json",
+        "bytes": 22889,
+        "sha256": "a9115dcb72398c1cf1a8bfa4ec9dd2b42273176befdbfa2be46354a0eb606878"
+      },
+      "group": "Mini25"
+    },
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoNativeAPIUsesActualUIKitAndWorklets": {
+      "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoNativeAPIUsesActualUIKitAndWorklets",
+      "nodeIdentifier": "MiniAppsProductionRuntimeUITests/testStandaloneExpoNativeAPIUsesActualUIKitAndWorklets()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoNativeAPIUsesActualUIKitAndWorklets",
+      "result": "Passed",
+      "duration": "58s",
+      "durationInSeconds": 58.352482080459595,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/OriginalRuntimes-nodes.json",
+        "bytes": 22889,
+        "sha256": "a9115dcb72398c1cf1a8bfa4ec9dd2b42273176befdbfa2be46354a0eb606878"
+      },
+      "group": "Mini25"
+    },
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents": {
+      "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents",
+      "nodeIdentifier": "MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents",
+      "result": "Passed",
+      "duration": "1m 35s",
+      "durationInSeconds": 95.95360803604126,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/OriginalRuntimes-nodes.json",
+        "bytes": 22889,
+        "sha256": "a9115dcb72398c1cf1a8bfa4ec9dd2b42273176befdbfa2be46354a0eb606878"
+      },
+      "group": "Mini25"
+    },
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoWidgetsUsesOriginalTimelinesAndLiveActivities": {
+      "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoWidgetsUsesOriginalTimelinesAndLiveActivities",
+      "nodeIdentifier": "MiniAppsProductionRuntimeUITests/testStandaloneExpoWidgetsUsesOriginalTimelinesAndLiveActivities()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoWidgetsUsesOriginalTimelinesAndLiveActivities",
+      "result": "Passed",
+      "duration": "1m 15s",
+      "durationInSeconds": 75.07669591903687,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/OriginalRuntimes-nodes.json",
+        "bytes": 22889,
+        "sha256": "a9115dcb72398c1cf1a8bfa4ec9dd2b42273176befdbfa2be46354a0eb606878"
+      },
+      "group": "Mini25"
+    },
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText": {
+      "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText",
+      "nodeIdentifier": "MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText",
+      "result": "Passed",
+      "duration": "1m 52s",
+      "durationInSeconds": 112.25354206562042,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/OriginalRuntimes-nodes.json",
+        "bytes": 22889,
+        "sha256": "a9115dcb72398c1cf1a8bfa4ec9dd2b42273176befdbfa2be46354a0eb606878"
+      },
+      "group": "Mini25"
+    },
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch": {
+      "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch",
+      "nodeIdentifier": "MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch",
+      "result": "Passed",
+      "duration": "1m 2s",
+      "durationInSeconds": 62.142464995384216,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/OriginalRuntimes-nodes.json",
+        "bytes": 22889,
+        "sha256": "a9115dcb72398c1cf1a8bfa4ec9dd2b42273176befdbfa2be46354a0eb606878"
+      },
+      "group": "Mini25"
+    },
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyExpoPackageImportsRendersAndHandlesEvents": {
+      "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyExpoPackageImportsRendersAndHandlesEvents",
+      "nodeIdentifier": "MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyExpoPackageImportsRendersAndHandlesEvents()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyExpoPackageImportsRendersAndHandlesEvents",
+      "result": "Passed",
+      "duration": "1m 46s",
+      "durationInSeconds": 106.47187995910645,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/OriginalRuntimes-nodes.json",
+        "bytes": 22889,
+        "sha256": "a9115dcb72398c1cf1a8bfa4ec9dd2b42273176befdbfa2be46354a0eb606878"
+      },
+      "group": "Mini25"
+    },
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyNativeScriptPackageImportsRendersAndHandlesEvents": {
+      "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyNativeScriptPackageImportsRendersAndHandlesEvents",
+      "nodeIdentifier": "MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyNativeScriptPackageImportsRendersAndHandlesEvents()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyNativeScriptPackageImportsRendersAndHandlesEvents",
+      "result": "Passed",
+      "duration": "2m 9s",
+      "durationInSeconds": 129.60575902462006,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/OriginalRuntimes-nodes.json",
+        "bytes": 22889,
+        "sha256": "a9115dcb72398c1cf1a8bfa4ec9dd2b42273176befdbfa2be46354a0eb606878"
+      },
+      "group": "Mini25"
+    },
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testActualIncomingRequestsCreateDistinctIPadScenes": {
+      "selector": "HanlinMiniAppsTests/CrossAppInvocationTests/testActualIncomingRequestsCreateDistinctIPadScenes",
+      "nodeIdentifier": "CrossAppInvocationTests/testActualIncomingRequestsCreateDistinctIPadScenes()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/CrossAppInvocationTests/testActualIncomingRequestsCreateDistinctIPadScenes",
+      "result": "Passed",
+      "duration": "2s",
+      "durationInSeconds": 2.440211057662964,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/OriginalRuntimes-nodes.json",
+        "bytes": 22889,
+        "sha256": "a9115dcb72398c1cf1a8bfa4ec9dd2b42273176befdbfa2be46354a0eb606878"
+      },
+      "group": "Mini25"
+    },
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testCancelAndDisplayDoneReturnNoDocumentMutation": {
+      "selector": "HanlinMiniAppsTests/CrossAppInvocationTests/testCancelAndDisplayDoneReturnNoDocumentMutation",
+      "nodeIdentifier": "CrossAppInvocationTests/testCancelAndDisplayDoneReturnNoDocumentMutation()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/CrossAppInvocationTests/testCancelAndDisplayDoneReturnNoDocumentMutation",
+      "result": "Passed",
+      "duration": "0,03s",
+      "durationInSeconds": 0.03016507625579834,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/OriginalRuntimes-nodes.json",
+        "bytes": 22889,
+        "sha256": "a9115dcb72398c1cf1a8bfa4ec9dd2b42273176befdbfa2be46354a0eb606878"
+      },
+      "group": "Mini25"
+    },
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained": {
+      "selector": "HanlinMiniAppsTests/CrossAppInvocationTests/testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained",
+      "nodeIdentifier": "CrossAppInvocationTests/testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/CrossAppInvocationTests/testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained",
+      "result": "Passed",
+      "duration": "0,0055s",
+      "durationInSeconds": 0.005529046058654785,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/OriginalRuntimes-nodes.json",
+        "bytes": 22889,
+        "sha256": "a9115dcb72398c1cf1a8bfa4ec9dd2b42273176befdbfa2be46354a0eb606878"
+      },
+      "group": "Mini25"
+    },
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testReusingValueWindowKeepsItsInvocationBindingCurrent": {
+      "selector": "HanlinMiniAppsTests/CrossAppInvocationTests/testReusingValueWindowKeepsItsInvocationBindingCurrent",
+      "nodeIdentifier": "CrossAppInvocationTests/testReusingValueWindowKeepsItsInvocationBindingCurrent()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/CrossAppInvocationTests/testReusingValueWindowKeepsItsInvocationBindingCurrent",
+      "result": "Passed",
+      "duration": "0,0005s",
+      "durationInSeconds": 0.0004980564117431641,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/OriginalRuntimes-nodes.json",
+        "bytes": 22889,
+        "sha256": "a9115dcb72398c1cf1a8bfa4ec9dd2b42273176befdbfa2be46354a0eb606878"
+      },
+      "group": "Mini25"
+    },
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testUnavailableCallbackRetainsResultForSourceRecovery": {
+      "selector": "HanlinMiniAppsTests/CrossAppInvocationTests/testUnavailableCallbackRetainsResultForSourceRecovery",
+      "nodeIdentifier": "CrossAppInvocationTests/testUnavailableCallbackRetainsResultForSourceRecovery()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/CrossAppInvocationTests/testUnavailableCallbackRetainsResultForSourceRecovery",
+      "result": "Passed",
+      "duration": "0,022s",
+      "durationInSeconds": 0.02223503589630127,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/OriginalRuntimes-nodes.json",
+        "bytes": 22889,
+        "sha256": "a9115dcb72398c1cf1a8bfa4ec9dd2b42273176befdbfa2be46354a0eb606878"
+      },
+      "group": "Mini25"
+    },
+    "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testBridgeInvalidationReleasesPendingCallbacksBeforeProviderCancellation": {
+      "selector": "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testBridgeInvalidationReleasesPendingCallbacksBeforeProviderCancellation",
+      "nodeIdentifier": "NativeScriptHostServicesLifetimeTests/testBridgeInvalidationReleasesPendingCallbacksBeforeProviderCancellation()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testBridgeInvalidationReleasesPendingCallbacksBeforeProviderCancellation",
+      "result": "Passed",
+      "duration": "0,00073s",
+      "durationInSeconds": 0.0007339715957641602,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/OriginalRuntimes-nodes.json",
+        "bytes": 22889,
+        "sha256": "a9115dcb72398c1cf1a8bfa4ec9dd2b42273176befdbfa2be46354a0eb606878"
+      },
+      "group": "Mini25"
+    },
+    "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testInvalidationReleasesHandlersAndRejectsLateActions": {
+      "selector": "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testInvalidationReleasesHandlersAndRejectsLateActions",
+      "nodeIdentifier": "NativeScriptHostServicesLifetimeTests/testInvalidationReleasesHandlersAndRejectsLateActions()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testInvalidationReleasesHandlersAndRejectsLateActions",
+      "result": "Passed",
+      "duration": "0,0086s",
+      "durationInSeconds": 0.008555054664611816,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/OriginalRuntimes-nodes.json",
+        "bytes": 22889,
+        "sha256": "a9115dcb72398c1cf1a8bfa4ec9dd2b42273176befdbfa2be46354a0eb606878"
+      },
+      "group": "Mini25"
+    },
+    "HanlinMiniAppsTests/NativeScriptWindowOwnershipTests/testUnrelatedAndLateWindowCleanupPreservesNativeScriptOwner": {
+      "selector": "HanlinMiniAppsTests/NativeScriptWindowOwnershipTests/testUnrelatedAndLateWindowCleanupPreservesNativeScriptOwner",
+      "nodeIdentifier": "NativeScriptWindowOwnershipTests/testUnrelatedAndLateWindowCleanupPreservesNativeScriptOwner()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/HanlinMiniAppsTests/NativeScriptWindowOwnershipTests/testUnrelatedAndLateWindowCleanupPreservesNativeScriptOwner",
+      "result": "Passed",
+      "duration": "0,0028s",
+      "durationInSeconds": 0.0027899742126464844,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/OriginalRuntimes-nodes.json",
+        "bytes": 22889,
+        "sha256": "a9115dcb72398c1cf1a8bfa4ec9dd2b42273176befdbfa2be46354a0eb606878"
+      },
+      "group": "Mini25"
+    },
+    "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure": {
+      "selector": "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure",
+      "nodeIdentifier": "HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure",
+      "result": "Passed",
+      "duration": "1s",
+      "durationInSeconds": 1.7860220670700073,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/Paired-nodes.json",
+        "bytes": 22342,
+        "sha256": "d208e06cceaf65935d9eb7dc8e20ef640aea6a7488a70691392b9d3671c1e89f"
+      },
+      "group": "AI27"
+    },
+    "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer": {
+      "selector": "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer",
+      "nodeIdentifier": "HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer",
+      "result": "Passed",
+      "duration": "0,75s",
+      "durationInSeconds": 0.7502270936965942,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/Paired-nodes.json",
+        "bytes": 22342,
+        "sha256": "d208e06cceaf65935d9eb7dc8e20ef640aea6a7488a70691392b9d3671c1e89f"
+      },
+      "group": "AI27"
+    },
+    "AI_HLYTests/HanlinNativePresentationTests/testExpoLayoutEntryUsesItsDeclaredFormatRegardlessOfFileExtension": {
+      "selector": "AI_HLYTests/HanlinNativePresentationTests/testExpoLayoutEntryUsesItsDeclaredFormatRegardlessOfFileExtension",
+      "nodeIdentifier": "HanlinNativePresentationTests/testExpoLayoutEntryUsesItsDeclaredFormatRegardlessOfFileExtension()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinNativePresentationTests/testExpoLayoutEntryUsesItsDeclaredFormatRegardlessOfFileExtension",
+      "result": "Passed",
+      "duration": "0,49s",
+      "durationInSeconds": 0.4880499839782715,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/Paired-nodes.json",
+        "bytes": 22342,
+        "sha256": "d208e06cceaf65935d9eb7dc8e20ef640aea6a7488a70691392b9d3671c1e89f"
+      },
+      "group": "AI27"
+    },
+    "AI_HLYTests/HanlinNativePresentationTests/testNativePresentationRejectsRemovedGenerationAndDifferentProductStore": {
+      "selector": "AI_HLYTests/HanlinNativePresentationTests/testNativePresentationRejectsRemovedGenerationAndDifferentProductStore",
+      "nodeIdentifier": "HanlinNativePresentationTests/testNativePresentationRejectsRemovedGenerationAndDifferentProductStore()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinNativePresentationTests/testNativePresentationRejectsRemovedGenerationAndDifferentProductStore",
+      "result": "Passed",
+      "duration": "0,26s",
+      "durationInSeconds": 0.259876012802124,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/Paired-nodes.json",
+        "bytes": 22342,
+        "sha256": "d208e06cceaf65935d9eb7dc8e20ef640aea6a7488a70691392b9d3671c1e89f"
+      },
+      "group": "AI27"
+    },
+    "AI_HLYTests/HanlinNativePresentationTests/testNativeSnippetHasIndependentDurableSessionsWithoutWidgetInstances": {
+      "selector": "AI_HLYTests/HanlinNativePresentationTests/testNativeSnippetHasIndependentDurableSessionsWithoutWidgetInstances",
+      "nodeIdentifier": "HanlinNativePresentationTests/testNativeSnippetHasIndependentDurableSessionsWithoutWidgetInstances()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinNativePresentationTests/testNativeSnippetHasIndependentDurableSessionsWithoutWidgetInstances",
+      "result": "Passed",
+      "duration": "0,54s",
+      "durationInSeconds": 0.5440030097961426,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/Paired-nodes.json",
+        "bytes": 22342,
+        "sha256": "d208e06cceaf65935d9eb7dc8e20ef640aea6a7488a70691392b9d3671c1e89f"
+      },
+      "group": "AI27"
+    },
+    "AI_HLYTests/HanlinNativePresentationTests/testOriginalDynamicIslandCapturesAllSevenNativeRegionsAndFunctionComponents": {
+      "selector": "AI_HLYTests/HanlinNativePresentationTests/testOriginalDynamicIslandCapturesAllSevenNativeRegionsAndFunctionComponents",
+      "nodeIdentifier": "HanlinNativePresentationTests/testOriginalDynamicIslandCapturesAllSevenNativeRegionsAndFunctionComponents()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinNativePresentationTests/testOriginalDynamicIslandCapturesAllSevenNativeRegionsAndFunctionComponents",
+      "result": "Passed",
+      "duration": "1s",
+      "durationInSeconds": 1.2783830165863037,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/Paired-nodes.json",
+        "bytes": 22342,
+        "sha256": "d208e06cceaf65935d9eb7dc8e20ef640aea6a7488a70691392b9d3671c1e89f"
+      },
+      "group": "AI27"
+    },
+    "AI_HLYTests/HanlinNativePresentationTests/testTranslationUsesOriginalAsyncAPIAndReturnsNativeFinishEffect": {
+      "selector": "AI_HLYTests/HanlinNativePresentationTests/testTranslationUsesOriginalAsyncAPIAndReturnsNativeFinishEffect",
+      "nodeIdentifier": "HanlinNativePresentationTests/testTranslationUsesOriginalAsyncAPIAndReturnsNativeFinishEffect()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinNativePresentationTests/testTranslationUsesOriginalAsyncAPIAndReturnsNativeFinishEffect",
+      "result": "Passed",
+      "duration": "0,28s",
+      "durationInSeconds": 0.2779198884963989,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/Paired-nodes.json",
+        "bytes": 22342,
+        "sha256": "d208e06cceaf65935d9eb7dc8e20ef640aea6a7488a70691392b9d3671c1e89f"
+      },
+      "group": "AI27"
+    },
+    "AI_HLYTests/HanlinMiniAppStorageCapacityTests/largeArtifactsResourcesAndSnapshotsRetainIntegrity": {
+      "selector": "AI_HLYTests/HanlinMiniAppStorageCapacityTests/largeArtifactsResourcesAndSnapshotsRetainIntegrity",
+      "nodeIdentifier": "HanlinMiniAppStorageCapacityTests/largeArtifactsResourcesAndSnapshotsRetainIntegrity()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppStorageCapacityTests/largeArtifactsResourcesAndSnapshotsRetainIntegrity()",
+      "result": "Passed",
+      "duration": "3s",
+      "durationInSeconds": 3.1462109088897705,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/Paired-nodes.json",
+        "bytes": 22342,
+        "sha256": "d208e06cceaf65935d9eb7dc8e20ef640aea6a7488a70691392b9d3671c1e89f"
+      },
+      "group": "AI27"
+    },
+    "AI_HLYTests/HanlinOriginalExpoWidgetTests/testOriginalWidgetRegistrationTimelineAndPickerKeepProductAndInstallationIdentity": {
+      "selector": "AI_HLYTests/HanlinOriginalExpoWidgetTests/testOriginalWidgetRegistrationTimelineAndPickerKeepProductAndInstallationIdentity",
+      "nodeIdentifier": "HanlinOriginalExpoWidgetTests/testOriginalWidgetRegistrationTimelineAndPickerKeepProductAndInstallationIdentity()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinOriginalExpoWidgetTests/testOriginalWidgetRegistrationTimelineAndPickerKeepProductAndInstallationIdentity",
+      "result": "Passed",
+      "duration": "0,08s",
+      "durationInSeconds": 0.08029389381408691,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/Paired-nodes.json",
+        "bytes": 22342,
+        "sha256": "d208e06cceaf65935d9eb7dc8e20ef640aea6a7488a70691392b9d3671c1e89f"
+      },
+      "group": "AI27"
+    },
+    "AI_HLYTests/PendingFirstTurnTests/importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings": {
+      "selector": "AI_HLYTests/PendingFirstTurnTests/importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings",
+      "nodeIdentifier": "PendingFirstTurnTests/importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/PendingFirstTurnTests/importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings()",
+      "result": "Passed",
+      "duration": "0,008s",
+      "durationInSeconds": 0.007994651794433594,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/Paired-nodes.json",
+        "bytes": 22342,
+        "sha256": "d208e06cceaf65935d9eb7dc8e20ef640aea6a7488a70691392b9d3671c1e89f"
+      },
+      "group": "AI27"
+    },
+    "AI_HLYTests/PendingFirstTurnTests/cancelledMiniAppRepairPreservesHomeDraft": {
+      "selector": "AI_HLYTests/PendingFirstTurnTests/cancelledMiniAppRepairPreservesHomeDraft",
+      "nodeIdentifier": "PendingFirstTurnTests/cancelledMiniAppRepairPreservesHomeDraft()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/PendingFirstTurnTests/cancelledMiniAppRepairPreservesHomeDraft()",
+      "result": "Passed",
+      "duration": "0,00031s",
+      "durationInSeconds": 0.000308990478515625,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/Paired-nodes.json",
+        "bytes": 22342,
+        "sha256": "d208e06cceaf65935d9eb7dc8e20ef640aea6a7488a70691392b9d3671c1e89f"
+      },
+      "group": "AI27"
+    },
+    "AI_HLYTests/HanlinOriginalScriptWidgetAPITests/originalNativeProvidersAreRegisteredAndExposeRealDeviceValues": {
+      "selector": "AI_HLYTests/HanlinOriginalScriptWidgetAPITests/originalNativeProvidersAreRegisteredAndExposeRealDeviceValues",
+      "nodeIdentifier": "HanlinOriginalScriptWidgetAPITests/originalNativeProvidersAreRegisteredAndExposeRealDeviceValues()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinOriginalScriptWidgetAPITests/originalNativeProvidersAreRegisteredAndExposeRealDeviceValues()",
+      "result": "Passed",
+      "duration": "0,096s",
+      "durationInSeconds": 0.09554100036621094,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/Paired-nodes.json",
+        "bytes": 22342,
+        "sha256": "d208e06cceaf65935d9eb7dc8e20ef640aea6a7488a70691392b9d3671c1e89f"
+      },
+      "group": "AI27"
+    },
+    "AI_HLYTests/HanlinOriginalScriptWidgetAPITests/originalAsyncDocumentsProviderSettlesBeforeRenderingAndStateCommit": {
+      "selector": "AI_HLYTests/HanlinOriginalScriptWidgetAPITests/originalAsyncDocumentsProviderSettlesBeforeRenderingAndStateCommit",
+      "nodeIdentifier": "HanlinOriginalScriptWidgetAPITests/originalAsyncDocumentsProviderSettlesBeforeRenderingAndStateCommit()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinOriginalScriptWidgetAPITests/originalAsyncDocumentsProviderSettlesBeforeRenderingAndStateCommit()",
+      "result": "Passed",
+      "duration": "0,3s",
+      "durationInSeconds": 0.3009769916534424,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/Paired-nodes.json",
+        "bytes": 22342,
+        "sha256": "d208e06cceaf65935d9eb7dc8e20ef640aea6a7488a70691392b9d3671c1e89f"
+      },
+      "group": "AI27"
+    },
+    "AI_HLYTests/HanlinOriginalScriptWidgetAPITests/upstreamPromiseRejectionIsCatchableWithoutUnsupportedAsyncFailure": {
+      "selector": "AI_HLYTests/HanlinOriginalScriptWidgetAPITests/upstreamPromiseRejectionIsCatchableWithoutUnsupportedAsyncFailure",
+      "nodeIdentifier": "HanlinOriginalScriptWidgetAPITests/upstreamPromiseRejectionIsCatchableWithoutUnsupportedAsyncFailure()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinOriginalScriptWidgetAPITests/upstreamPromiseRejectionIsCatchableWithoutUnsupportedAsyncFailure()",
+      "result": "Passed",
+      "duration": "0,15s",
+      "durationInSeconds": 0.15138030052185059,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/Paired-nodes.json",
+        "bytes": 22342,
+        "sha256": "d208e06cceaf65935d9eb7dc8e20ef640aea6a7488a70691392b9d3671c1e89f"
+      },
+      "group": "AI27"
+    },
+    "AI_HLYTests/HanlinOriginalScriptWidgetAPITests/originalStorageAndHanlinCompatibilityValuesShareOneTransaction": {
+      "selector": "AI_HLYTests/HanlinOriginalScriptWidgetAPITests/originalStorageAndHanlinCompatibilityValuesShareOneTransaction",
+      "nodeIdentifier": "HanlinOriginalScriptWidgetAPITests/originalStorageAndHanlinCompatibilityValuesShareOneTransaction()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinOriginalScriptWidgetAPITests/originalStorageAndHanlinCompatibilityValuesShareOneTransaction()",
+      "result": "Passed",
+      "duration": "0,17s",
+      "durationInSeconds": 0.16553521156311035,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/Paired-nodes.json",
+        "bytes": 22342,
+        "sha256": "d208e06cceaf65935d9eb7dc8e20ef640aea6a7488a70691392b9d3671c1e89f"
+      },
+      "group": "AI27"
+    },
+    "AI_HLYTests/HanlinOriginalScriptWidgetControlTests/originalControlsCompileAndRunNativeActionsWithoutRendering": {
+      "selector": "AI_HLYTests/HanlinOriginalScriptWidgetControlTests/originalControlsCompileAndRunNativeActionsWithoutRendering",
+      "nodeIdentifier": "HanlinOriginalScriptWidgetControlTests/originalControlsCompileAndRunNativeActionsWithoutRendering()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinOriginalScriptWidgetControlTests/originalControlsCompileAndRunNativeActionsWithoutRendering()",
+      "result": "Passed",
+      "duration": "0,82s",
+      "durationInSeconds": 0.8225772380828857,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/Paired-nodes.json",
+        "bytes": 22342,
+        "sha256": "d208e06cceaf65935d9eb7dc8e20ef640aea6a7488a70691392b9d3671c1e89f"
+      },
+      "group": "AI27"
+    },
+    "AI_HLYTests/HanlinOriginalScriptWidgetControlTests/controlSelectionPreservesProductInstallationAndGenerationOwnership": {
+      "selector": "AI_HLYTests/HanlinOriginalScriptWidgetControlTests/controlSelectionPreservesProductInstallationAndGenerationOwnership",
+      "nodeIdentifier": "HanlinOriginalScriptWidgetControlTests/controlSelectionPreservesProductInstallationAndGenerationOwnership()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinOriginalScriptWidgetControlTests/controlSelectionPreservesProductInstallationAndGenerationOwnership()",
+      "result": "Passed",
+      "duration": "0,35s",
+      "durationInSeconds": 0.34992408752441406,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/Paired-nodes.json",
+        "bytes": 22342,
+        "sha256": "d208e06cceaf65935d9eb7dc8e20ef640aea6a7488a70691392b9d3671c1e89f"
+      },
+      "group": "AI27"
+    },
+    "AI_HLYTests/HanlinOriginalScriptWidgetControlTests/originalControlEntitiesProvidersAndNativeIntentsUseThePublishedHostStore": {
+      "selector": "AI_HLYTests/HanlinOriginalScriptWidgetControlTests/originalControlEntitiesProvidersAndNativeIntentsUseThePublishedHostStore",
+      "nodeIdentifier": "HanlinOriginalScriptWidgetControlTests/originalControlEntitiesProvidersAndNativeIntentsUseThePublishedHostStore()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinOriginalScriptWidgetControlTests/originalControlEntitiesProvidersAndNativeIntentsUseThePublishedHostStore()",
+      "result": "Passed",
+      "duration": "0,61s",
+      "durationInSeconds": 0.6106100082397461,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/Paired-nodes.json",
+        "bytes": 22342,
+        "sha256": "d208e06cceaf65935d9eb7dc8e20ef640aea6a7488a70691392b9d3671c1e89f"
+      },
+      "group": "AI27"
+    },
+    "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests/originalRegionsPersistOutsideActivityContentAndActionsProduceFreshSnapshots": {
+      "selector": "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests/originalRegionsPersistOutsideActivityContentAndActionsProduceFreshSnapshots",
+      "nodeIdentifier": "HanlinOriginalScriptWidgetLiveActivityTests/originalRegionsPersistOutsideActivityContentAndActionsProduceFreshSnapshots()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests/originalRegionsPersistOutsideActivityContentAndActionsProduceFreshSnapshots()",
+      "result": "Passed",
+      "duration": "0,19s",
+      "durationInSeconds": 0.19048786163330078,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/Paired-nodes.json",
+        "bytes": 22342,
+        "sha256": "d208e06cceaf65935d9eb7dc8e20ef640aea6a7488a70691392b9d3671c1e89f"
+      },
+      "group": "AI27"
+    },
+    "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests/inactiveWidgetCannotProduceOrLoadALiveActivitySnapshot": {
+      "selector": "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests/inactiveWidgetCannotProduceOrLoadALiveActivitySnapshot",
+      "nodeIdentifier": "HanlinOriginalScriptWidgetLiveActivityTests/inactiveWidgetCannotProduceOrLoadALiveActivitySnapshot()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests/inactiveWidgetCannotProduceOrLoadALiveActivitySnapshot()",
+      "result": "Passed",
+      "duration": "0,13s",
+      "durationInSeconds": 0.13248896598815918,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/Paired-nodes.json",
+        "bytes": 22342,
+        "sha256": "d208e06cceaf65935d9eb7dc8e20ef640aea6a7488a70691392b9d3671c1e89f"
+      },
+      "group": "AI27"
+    },
+    "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests/actualActivityKitStartsUpdatesAndEndsTheOriginalProgram": {
+      "selector": "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests/actualActivityKitStartsUpdatesAndEndsTheOriginalProgram",
+      "nodeIdentifier": "HanlinOriginalScriptWidgetLiveActivityTests/actualActivityKitStartsUpdatesAndEndsTheOriginalProgram()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests/actualActivityKitStartsUpdatesAndEndsTheOriginalProgram()",
+      "result": "Passed",
+      "duration": "0,34s",
+      "durationInSeconds": 0.33791184425354004,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/Paired-nodes.json",
+        "bytes": 22342,
+        "sha256": "d208e06cceaf65935d9eb7dc8e20ef640aea6a7488a70691392b9d3671c1e89f"
+      },
+      "group": "AI27"
+    },
+    "AI_HLYTests/HanlinScriptingPlatformCompositionTests/malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic": {
+      "selector": "AI_HLYTests/HanlinScriptingPlatformCompositionTests/malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic",
+      "nodeIdentifier": "HanlinScriptingPlatformCompositionTests/malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinScriptingPlatformCompositionTests/malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic()",
+      "result": "Passed",
+      "duration": "0,054s",
+      "durationInSeconds": 0.054205894470214844,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/Paired-nodes.json",
+        "bytes": 22342,
+        "sha256": "d208e06cceaf65935d9eb7dc8e20ef640aea6a7488a70691392b9d3671c1e89f"
+      },
+      "group": "AI27"
+    },
+    "AI_HLYTests/MiniAppAuthoringToolTests/originalSDKWriteValidateBuildAndRepair": {
+      "selector": "AI_HLYTests/MiniAppAuthoringToolTests/originalSDKWriteValidateBuildAndRepair",
+      "nodeIdentifier": "MiniAppAuthoringToolTests/originalSDKWriteValidateBuildAndRepair()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/MiniAppAuthoringToolTests/originalSDKWriteValidateBuildAndRepair()",
+      "result": "Passed",
+      "duration": "7m 7s",
+      "durationInSeconds": 427.34488797187805,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/Paired-nodes.json",
+        "bytes": 22342,
+        "sha256": "d208e06cceaf65935d9eb7dc8e20ef640aea6a7488a70691392b9d3671c1e89f"
+      },
+      "group": "AI27"
+    },
+    "AI_HLYTests/MiniAppAuthoringToolTests/sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource": {
+      "selector": "AI_HLYTests/MiniAppAuthoringToolTests/sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource",
+      "nodeIdentifier": "MiniAppAuthoringToolTests/sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/MiniAppAuthoringToolTests/sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource()",
+      "result": "Passed",
+      "duration": "0,018s",
+      "durationInSeconds": 0.018444061279296875,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/Paired-nodes.json",
+        "bytes": 22342,
+        "sha256": "d208e06cceaf65935d9eb7dc8e20ef640aea6a7488a70691392b9d3671c1e89f"
+      },
+      "group": "AI27"
+    },
+    "AI_HLYTests/MiniAppAuthoringToolTests/originalExpoMetroBuildOnEmbeddedNode": {
+      "selector": "AI_HLYTests/MiniAppAuthoringToolTests/originalExpoMetroBuildOnEmbeddedNode",
+      "nodeIdentifier": "MiniAppAuthoringToolTests/originalExpoMetroBuildOnEmbeddedNode()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/MiniAppAuthoringToolTests/originalExpoMetroBuildOnEmbeddedNode()",
+      "result": "Passed",
+      "duration": "1m 53s",
+      "durationInSeconds": 113.3821542263031,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/Paired-nodes.json",
+        "bytes": 22342,
+        "sha256": "d208e06cceaf65935d9eb7dc8e20ef640aea6a7488a70691392b9d3671c1e89f"
+      },
+      "group": "AI27"
+    },
+    "AI_HLYUITests/MiniAppAuthoringUITests/testMalformedArchiveShowsOriginalImportDiagnostic": {
+      "selector": "AI_HLYUITests/MiniAppAuthoringUITests/testMalformedArchiveShowsOriginalImportDiagnostic",
+      "nodeIdentifier": "MiniAppAuthoringUITests/testMalformedArchiveShowsOriginalImportDiagnostic()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYUITests/MiniAppAuthoringUITests/testMalformedArchiveShowsOriginalImportDiagnostic",
+      "result": "Passed",
+      "duration": "3m 10s",
+      "durationInSeconds": 190.63211297988892,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/Paired-nodes.json",
+        "bytes": 22342,
+        "sha256": "d208e06cceaf65935d9eb7dc8e20ef640aea6a7488a70691392b9d3671c1e89f"
+      },
+      "group": "AI27"
+    },
+    "AI_HLYUITests/MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport": {
+      "selector": "AI_HLYUITests/MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport",
+      "nodeIdentifier": "MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYUITests/MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport",
+      "result": "Passed",
+      "duration": "4m 50s",
+      "durationInSeconds": 290.6924670934677,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/Paired-nodes.json",
+        "bytes": 22342,
+        "sha256": "d208e06cceaf65935d9eb7dc8e20ef640aea6a7488a70691392b9d3671c1e89f"
+      },
+      "group": "AI27"
+    },
+    "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualNativeScriptImportsTheGeneratedTypedFacadeAndCallsEveryEngine": {
+      "selector": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualNativeScriptImportsTheGeneratedTypedFacadeAndCallsEveryEngine",
+      "nodeIdentifier": "HanlinUnifiedHostServicesE2ETests/actualNativeScriptImportsTheGeneratedTypedFacadeAndCallsEveryEngine()",
+      "nodeIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualNativeScriptImportsTheGeneratedTypedFacadeAndCallsEveryEngine()",
+      "result": "Passed",
+      "duration": "20s",
+      "durationInSeconds": 20.16697406768799,
+      "resultFile": {
+        "path": "docs/miniapp-sdk/evidence/nativescript-five-runtime-pass-attempt19-20261125/packet/companion-native-v1-ns5/native-result/ns5-nodes.json",
+        "bytes": 1794,
+        "sha256": "642c3eae0437a60fd4fb5e92d1e49dbf9f52fee7524cc0010a2627c797a2c8ad"
+      },
+      "group": "NativeScript5"
+    }
+  },
+  "finalChild": {
+    "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/native-result/state.json",
+    "bytes": 39077,
+    "sha256": "786ea113ee8a47f8b8e8330ee2a3627be727c285f587ebd35afab9bfe2907baf"
+  },
+  "finalOuter": {
+    "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/paired52-continuation-v5/state.json",
+    "bytes": 28524,
+    "sha256": "796a24bcc641e31409c7d9e68de2f95206264e0211952885aba61d8ca7ee8820"
+  },
+  "original52FinishedAt": "2026-11-25T18:30:22.583701+00:00",
+  "originalTestBuilds": "REUSED_AUTHENTICATED_FOCUS_PRODUCTS",
+  "miniBuildProducerSource": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "aiBuildProducerSource": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "sdkProducerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+  "finalStagedInputsObservation": {
+    "status": "EXECUTED_PASS",
+    "receiptSHA256": "174f775acb85a304bcc1790f144a792fc6c56a101b988e1b536b5c7fd11f1d83"
+  },
+  "nativeAdapterAssets": {
+    "origin": "http://localhost:49173",
+    "source": "Fixtures/ExpoSwiftUIProbe/native-adapter-assets/pixel.png",
+    "bytes": 82,
+    "sha256": "7713482a5fab3ae135193484df75f4d0a7ce5c8ee50f6b5c33f7aacef5c5ea45",
+    "scope": "Exact PNG and real HTTP404 only; no mocked renderer, adapter or event.",
+    "requests": [
+      {
+        "path": "/health",
+        "status": 200,
+        "bytes": 5,
+        "sha256": "b24d6d33736ecd5604a4b17bc9c6481039fac362bb7df044ef1c10a2bfd21db6",
+        "at": 1795628355.955154
+      },
+      {
+        "path": "/pixel.png",
+        "status": 200,
+        "bytes": 82,
+        "sha256": "7713482a5fab3ae135193484df75f4d0a7ce5c8ee50f6b5c33f7aacef5c5ea45",
+        "at": 1795629358.106936
+      },
+      {
+        "path": "/missing.png",
+        "status": 404,
+        "bytes": 30,
+        "sha256": "9cf62cb4815462ac71122a814d12bd6b5e2f030d14279b232b851b54fcd3e610",
+        "at": 1795629363.13934
+      }
+    ],
+    "native_request_proof": "EXECUTED_PASS_RESOURCE_TRANSPORT"
+  },
+  "nativeAdapterAssetsJSONPointer": "/nativeAdapterAssets/requests",
+  "transportBoundary": "The final child retains actual HTTP response bytes/status/hash for its selected AsyncImage case. The earlier Mini25 intermediate state had an empty top-level nativeAdapterRequests; the nested asset requests are the authoritative capture. Final child also contains the populated top-level copy.",
+  "warningBoundary": "Original summaries are unchanged: Mini25 has 17 orientation warnings; AI27 has 4 warnings, including audio and orientation. NS5 summary has none. No globally warning-free claim."
+}

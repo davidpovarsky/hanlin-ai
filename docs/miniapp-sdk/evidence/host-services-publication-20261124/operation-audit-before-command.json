@@ -1,0 +1,8 @@
+{
+  "command": [
+    "node",
+    "--test",
+    "Scripts/Audit/Tests/expo-operation-contract.test.mjs"
+  ],
+  "exitCode": 1
+}

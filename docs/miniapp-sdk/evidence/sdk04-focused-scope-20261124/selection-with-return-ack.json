@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "createdAtUTC": "2026-11-24T10:14:07.870728+00:00",
+  "baseCommit": "56539e07ba9a5ccf5853063c063948f95a8f946a",
+  "scope": "miniapp_sdk04",
+  "selectedNativeHostCases": [
+    "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure",
+    "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer"
+  ],
+  "selectedMiniAppsCases": [
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEditButtonEditsOriginalList",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEmptyViewReportsNativeLayout",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierAccessibilityAndGeometry",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierNativeContainerContexts",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoHostServicesUseRealStorageRuntimeAndWidgetPublication",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testUnavailableCallbackRetainsResultForSourceRecovery"
+  ],
+  "expected": {
+    "nativeHost": 2,
+    "MiniAppsUI": 8,
+    "MiniAppsCallback": 1,
+    "total": 11
+  },
+  "scopePreservation": {
+    "allPreviousTestPlansIdentical": true,
+    "unchangedFunctions": [
+      "command",
+      "command_phase_status",
+      "record_build_phases",
+      "capture_app_intents_metadata",
+      "fixture_archive",
+      "authoring_fixtures",
+      "verify_native_result",
+      "start_native_adapter_assets"
+    ],
+    "commandExecutionAndJournalUnchanged": true,
+    "existingTimeoutsUnchanged": true,
+    "ownedIPadSimulator": true,
+    "freshNativeAndShippingSDKPreparation": true,
+    "newArtifactReuseBypass": false,
+    "existingAuthoring42SelectorsUnchanged": true
+  },
+  "workflowChanged": [
+    "Add explicit dispatch scope",
+    "Retain focused UI attachments through existing artifact upload"
+  ],
+  "nativeExecution": "NOT_RUN; compile current fixture and production source before dispatch",
+  "boundary": [
+    "Generated modifier context coverage does not prove all83 individual semantics",
+    "DefaultDocumentGroupLaunchActions requires genuine document container; unmounted in this scope",
+    "Widget consumer assertions do not imply WidgetKit OS rendered",
+    "No physical-device or release result"
+  ],
+  "sources": [
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "sha256": "d0cde2a13c9ee3d98d352d664655a187a0fc41946987206ffabf5731307c8aba"
+    },
+    {
+      "path": ".github/workflows/validate-app-split.yml",
+      "sha256": "dee16f5485c208a48ec2bfb931001ce55d388ff5cd7be4904456458a7e6e6f6b"
+    }
+  ],
+  "previousPlan": {
+    "path": "docs/miniapp-sdk/evidence/sdk04-focused-scope-20261124/selection.json",
+    "sha256": "6add53fd8f921f0a0dde7d60e39be9693dcced1053c0fced8a465844e8d8759a"
+  },
+  "reasonForAddedCase": "Actual private miniapps.return emitted ok:true despite no callback or openSource(false). Existing callback recovery case now checks truthful return outcome; saved complete/cancel receipts and actual UI opening behavior are preserved."
+}

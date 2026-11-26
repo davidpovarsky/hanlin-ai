@@ -1,0 +1,10 @@
+{
+  "name": "Expo Hello World",
+  "version": "1.0.0",
+  "description": "A minimal original Expo SwiftUI screen with a React state update.",
+  "entry": "bundle.js",
+  "runInApp": true,
+  "hanlinRuntime": "hanlin-expo",
+  "icon": "hand.wave",
+  "color": "#315ACB"
+}

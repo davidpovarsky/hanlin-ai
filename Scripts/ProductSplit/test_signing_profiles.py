@@ -105,6 +105,31 @@ class ProfileResolutionTests(unittest.TestCase):
         self.create.assert_called_once_with("original-bundle", "existing-cert", "Hanlin ai App Store 12345")
         self.assertIn("/v1/profiles/created", self.reads)
 
+    def test_native_operation_creates_profile_without_fabricated_github_run(self):
+        self.candidates["data"] = []
+        with patch.dict(os.environ, {"GITHUB_RUN_ID": "", "HANLIN_SIGNING_OPERATION_ID": "four-entrypoints-20261126"}):
+            _, facts = self.resolve()
+        self.create.assert_called_once_with("original-bundle", "existing-cert",
+                                           "Hanlin ai App Store four-entrypoints-20261126")
+        self.assertEqual(facts["operation"], {"kind": "native", "id": "four-entrypoints-20261126"})
+        self.assertEqual(facts["status"], "READY_RESOURCE")
+        self.assertIn("/v1/profiles/created", self.reads)
+
+    def test_invalid_native_operation_cannot_create_a_profile(self):
+        self.candidates["data"] = []
+        for value in ("../other", "two words", "x" * 81):
+            with self.subTest(value=value), patch.dict(os.environ, {"HANLIN_SIGNING_OPERATION_ID": value}):
+                with self.assertRaisesRegex(ValueError, "operation identifier"):
+                    self.resolve()
+        self.create.assert_not_called()
+
+    def test_missing_operation_cannot_create_a_profile(self):
+        self.candidates["data"] = []
+        with patch.dict(os.environ, {"GITHUB_RUN_ID": "", "HANLIN_SIGNING_OPERATION_ID": ""}):
+            with self.assertRaisesRegex(ValueError, "explicit signing operation"):
+                self.resolve()
+        self.create.assert_not_called()
+
     def test_created_profile_must_pass_the_same_entitlement_checks(self):
         self.candidates["data"] = []
         self.profiles["created"]["Entitlements"]["com.apple.security.application-groups"] = []

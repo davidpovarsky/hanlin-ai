@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 1,
+  "actualSource": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "sdkManifestSHA256": "4505c28495d8b6ecd1073254e0e395adcc898cc02dd1d40699591f51db4dee92",
+  "argv": [
+    "/usr/local/bin/node",
+    "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/docs/miniapp-sdk/evidence/generated-modifier-conformance-20261124/capture-source-conformance.cjs",
+    "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123",
+    "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only/kit/MiniAppSDK/expo/node_modules/typescript/lib/typescript.js"
+  ],
+  "startedAt": "2026-11-25T18:04:19.716206+00:00",
+  "seconds": 0.876081126742065,
+  "exitCode": 0,
+  "stdout": {
+    "path": "source-conformance-current.json",
+    "bytes": 95561,
+    "sha256": "ee6fd505a35889628adc801bf9028eae4c5e05e0081922da5aa5868f04175dd0"
+  },
+  "stderr": {
+    "path": "source-conformance-current.stderr.txt",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "boundary": "Original unchanged historical capture script executed against actual current d4a source and unchanged SDK19 parser. Its hard-coded baseSHA records historical script provenance; actual invocation source is above. This is source/registry/field conformance, not semantic validation or native behavior."
+}

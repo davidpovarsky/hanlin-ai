@@ -22,6 +22,16 @@ export * from '../properties';
 const PFLAG_FORCE_LAYOUT = 1;
 const PFLAG_MEASURED_DIMENSION_SET = 1 << 1;
 const PFLAG_LAYOUT_REQUIRED = 1 << 2;
+// Views whose requestLayout already climbed this turn; cleared by a microtask.
+let requestedThisTurn = null;
+function isAncestorChainLayoutRequested(view) {
+    for (let parent = view.parent; parent; parent = parent.parent) {
+        if (!parent.isLayoutRequested) {
+            return false;
+        }
+    }
+    return true;
+}
 export class View extends ViewCommon {
     constructor() {
         super(...arguments);
@@ -46,15 +56,27 @@ export class View extends ViewCommon {
         this._isTransformed = false;
     }
     requestLayout() {
+        // A layout pass in the same turn (e.g. layoutIfNeeded) can clear an ancestor that
+        // skipped this view, so only a fully flagged chain lets the native climb be skipped.
+        if (requestedThisTurn?.has(this) && this.isLayoutRequested && isAncestorChainLayoutRequested(this)) {
+            return;
+        }
         this._privateFlags |= PFLAG_FORCE_LAYOUT;
         super.requestLayout();
         const nativeView = this.nativeViewProtected;
         if (nativeView && nativeView.setNeedsLayout) {
             nativeView.setNeedsLayout();
         }
-        if (this.viewController && this.viewController.view !== nativeView) {
-            this.viewController.view.setNeedsLayout();
+        // Layout invalidation must not load controllers before UIApplicationMain.
+        const controllerView = this.viewController?.viewIfLoaded;
+        if (controllerView && controllerView !== nativeView) {
+            controllerView.setNeedsLayout();
         }
+        if (!requestedThisTurn) {
+            requestedThisTurn = new Set();
+            queueMicrotask(() => (requestedThisTurn = null));
+        }
+        requestedThisTurn.add(this);
     }
     measure(widthMeasureSpec, heightMeasureSpec) {
         const measureSpecsChanged = this._setCurrentMeasureSpecs(widthMeasureSpec, heightMeasureSpec);
@@ -821,6 +843,18 @@ export class View extends ViewCommon {
         const ownerController = this.viewController || IOSHelper.getParentWithViewController(this)?.viewController;
         IOSHelper.invalidateStatusBarAppearance(ownerController, `View.updateStatusBarStyle:${value}`);
     }
+    _childIndexToNativeChildIndex(index) {
+        if (typeof index !== 'number') {
+            return index;
+        }
+        // The glass effect view is a subview but not a child: it sits at subview
+        // 0, so every child's subview index is one past its child index.
+        const effectView = this._glassEffectView;
+        if (effectView && effectView.superview === this.nativeViewProtected) {
+            return index + 1;
+        }
+        return index;
+    }
     [iosGlassEffectProperty.setNative](value) {
         if (!this.nativeViewProtected || !supportsGlass()) {
             return;
@@ -1074,12 +1108,7 @@ export class CustomLayoutView extends ContainerView {
         const parentNativeView = this.nativeViewProtected;
         const childNativeView = child.nativeViewProtected;
         if (parentNativeView && childNativeView) {
-            if (typeof atIndex !== 'number' || atIndex >= parentNativeView.subviews.count) {
-                parentNativeView.addSubview(childNativeView);
-            }
-            else {
-                parentNativeView.insertSubviewAtIndex(childNativeView, atIndex);
-            }
+            IOSHelper.insertNativeSubview(parentNativeView, childNativeView, atIndex);
             // Add outer shadow layer manually as it belongs to parent layer tree (this is needed for reusable views)
             if (childNativeView.outerShadowContainerLayer && !childNativeView.outerShadowContainerLayer.superlayer) {
                 parentNativeView.layer.insertSublayerBelow(childNativeView.outerShadowContainerLayer, childNativeView.layer);

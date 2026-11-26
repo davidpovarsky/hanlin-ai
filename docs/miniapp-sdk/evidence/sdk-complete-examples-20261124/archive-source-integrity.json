@@ -1,0 +1,133 @@
+[
+  {
+    "engine": "expo",
+    "archive": "ExpoHelloWorld.hanlinExpo",
+    "sourceFiles": [
+      {
+        "path": "App.tsx",
+        "sha256": "e0ec9b33bbe972668b0be87b6f8263faff0977e5bfea7654334c7f7f68b95531",
+        "bytes": 478
+      },
+      {
+        "path": "README.md",
+        "sha256": "367e2b77ec0d06230ed8b7a3756cc5ef6bd2b4328c2405977e383f8ecc52b403",
+        "bytes": 831
+      },
+      {
+        "path": "hanlin.authoring.json",
+        "sha256": "23628daa17919961823da4ebc9a4166ab9e1d7a9b3ec2ff47fdc70d7b444bf94",
+        "bytes": 99
+      },
+      {
+        "path": "index.ts",
+        "sha256": "f3532a443c0193cbb6866cb1a7474d0f5055917ffdc7f5e60efe35159e544d19",
+        "bytes": 120
+      },
+      {
+        "path": "package.json",
+        "sha256": "ce6b14d9dd58a68d245000b2d9997086754acba6b3213087e9531b59701cd9bc",
+        "bytes": 223
+      },
+      {
+        "path": "script.json",
+        "sha256": "308768a8274c3f58254c4f6daafa7b16a07f0c68dc519f17d3e5feae895dcafb",
+        "bytes": 264
+      },
+      {
+        "path": "tsconfig.json",
+        "sha256": "02e14c4b983c0f436d32ce0eb2f96309512a7d69774ed0c7d39ffa4175ccf7df",
+        "bytes": 53
+      }
+    ],
+    "typecheck": {
+      "strict": true,
+      "checkJs": false,
+      "skipLibCheck": false,
+      "dependencyDeclarationsChecked": true
+    },
+    "diagnosticCount": 0,
+    "sdk": {
+      "packageVersions": {
+        "@expo/ui": "58.0.29",
+        "@hanlin/expo-native-api": "1.0.0",
+        "@hanlin/expo-ui": "1.0.0",
+        "@nativescript/react-native": "9.1.2",
+        "expo": "58.0.26",
+        "expo-brownfield": "58.0.20",
+        "expo-modules-core": "58.1.0",
+        "expo-modules-jsi": "58.0.23",
+        "react": "19.3.0",
+        "react-native": "0.88.1",
+        "react-native-worklets": "0.13.0",
+        "expo-widgets": "58.0.29",
+        "@babel/core": "7.29.7",
+        "@react-native-community/cli": "20.2.0",
+        "@react-native/codegen": "0.88.1",
+        "@react-native/metro-config": "0.88.1",
+        "@types/react": "19.3.0",
+        "babel-preset-expo": "58.0.26",
+        "esbuild": "0.25.12",
+        "typescript": "6.0.2"
+      },
+      "manifestSHA256": "fa1e737ec63e640175cdb5c9dad51903cd86d50ae7b340ba5b8ec1ff4e408d85",
+      "compilerVersion": "6.0.3"
+    }
+  },
+  {
+    "engine": "nativescript",
+    "archive": "NativeScriptHelloWorld.hanlinNativeScript",
+    "sourceFiles": [
+      {
+        "path": "README.md",
+        "sha256": "aae06c1b3c963f8a6cf246ea52642d73f5e6ec237cfb19fc4737dd4072570e6a",
+        "bytes": 914
+      },
+      {
+        "path": "hanlin.authoring.json",
+        "sha256": "1bf949fb4ba1fd14481df380299652fe9b587aa5c30afdb6621fe23be6c02094",
+        "bytes": 107
+      },
+      {
+        "path": "index.ts",
+        "sha256": "bfb34d9b7ac0f50488468a5cf8200d55cefbb9d0d345d080bb652323a1df9bf6",
+        "bytes": 991
+      },
+      {
+        "path": "package.json",
+        "sha256": "ab65e0e388ac19daf337b29965fd030e6196faf90cee439c786de9e1c3f49cb6",
+        "bytes": 225
+      },
+      {
+        "path": "script.json",
+        "sha256": "521f9d8332544a7858dca222d635cf8530e13d72cfb4e2e62d4196acc3a249cb",
+        "bytes": 320
+      },
+      {
+        "path": "tsconfig.json",
+        "sha256": "c979f6e45b2a9c6151dbb12b4d9f04b76a5ce3822a270680ce479ee25f28e43e",
+        "bytes": 38
+      }
+    ],
+    "typecheck": {
+      "strict": true,
+      "checkJs": false,
+      "skipLibCheck": true,
+      "dependencyDeclarationsChecked": false
+    },
+    "diagnosticCount": 0,
+    "sdk": {
+      "packageVersions": {
+        "@nativescript/core": "9.1.4",
+        "@nativescript/swift-ui": "4.0.2",
+        "@nativescript/ios": "9.1.1",
+        "@nativescript/types": "9.1.4",
+        "@nativescript/vite": "8.0.24",
+        "typescript": "5.9.3",
+        "vite": "8.0.0",
+        "@hanlin/host-services": "1.0.0"
+      },
+      "manifestSHA256": "fa1e737ec63e640175cdb5c9dad51903cd86d50ae7b340ba5b8ec1ff4e408d85",
+      "compilerVersion": "5.9.3"
+    }
+  }
+]

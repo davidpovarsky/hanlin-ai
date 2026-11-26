@@ -1,0 +1,12 @@
+{
+  "Packages/HanlinWidgetSDK/Package.swift": "970610b13278a21fad358fa9c6f19b15789c6c7cb219fc2984f2aa92298502e6",
+  "Package.swift": "24fdf091f56e1c6766730f9cb4eac5e2ce4925919a1e7cb52c020cf37fb54a16",
+  "Scripts/SDK/update_project.py": "c40c78d2f051d649060806e676fdd106c163a4f087a58b59e916fab5f1851bd7",
+  "Scripts/SDK/generate_manifest.py": "47ae0d5c34fa5c3baa870b4213a98c6999958f57c71f19a8be421fb6723182ec",
+  "AI_HLY.xcodeproj/project.pbxproj": "46611dfb1048b9e680e724caf086a1a99cd4a2885e1dcb88065d242fbdc9ea99",
+  "docs/agent-sdk/unified-package-manifest.json": "7105bf08ed7b4b5caa2ff159273989d0d58ecba46379821d56601c4047758ef6",
+  "Scripts/SDK/tests/test_widget_cxx_imports.py": "f1f478b84ffceac79b49005b8efe2b7fa62c9ff40679e09c237a1544f97979ad",
+  "Packages/HanlinExpoRuntime/Package.swift": "116a910cffe061ff3eea0e289402bc51769d3268daedc94ea5b1e043e6d109a4",
+  "Packages/HanlinWidgetSDK/Sources/HanlinWidgetUI/Exports.swift": "91f078504101bc03d386dbb8a0d5499296e83c47281b086f712c2a72f4c28ad1",
+  "Scripts/ProductSplit/miniapps_extensions.py": "2bd683a289c67492f998ea23eed39185643a193b04faec9783a2f1979d656d3d"
+}

@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-24T04:05:50.088411+00:00",
+  "baseCommit": "74b67ccba6d794b5314a6f5f7fd2663a09e8a94b",
+  "branch": "codex/hanlin-miniapps-intent-wiring-20261124",
+  "status": "SOURCE_VALIDATED",
+  "problem": "The existing entity-backed HanlinRunScriptActionIntent requests foreground execution, but MiniApps previously omitted its HanlinScriptingWidgets implementation and metadata package from the app while advertising it in the Widget extension.",
+  "changes": [
+    "The canonical SDK generator links the existing HanlinWidgetUI product into MiniApps.",
+    "The MiniApps root includes HanlinWidgetIntentsPackage, which recursively includes HanlinScriptExtensionIntentsPackage.",
+    "MiniApps receives the unchanged original HanlinAppIntents table; its Widget extension already received it from canonical extension cloning.",
+    "The paired runner captures actual built metadata after each successful app build, before subsequent builds/tests can fail."
+  ],
+  "appIntentsPackageChain": [
+    "HanlinMiniAppsIntents",
+    "HanlinWidgetIntentsPackage",
+    "HanlinScriptExtensionIntentsPackage"
+  ],
+  "primaryReferences": [
+    "https://developer.apple.com/documentation/appintents/appintentspackage",
+    "https://developer.apple.com/documentation/appintents/configuring-the-runtime-behavior-of-your-app-intents"
+  ],
+  "sourceSHA256": {
+    "AI_HLY.xcodeproj/project.pbxproj": "0b9db2d518db8ba0144a72b94fcccc88ca0980dadb828db5dfdcb396ac64c46d",
+    "HanlinMiniAppsApp/HanlinMiniAppsApp.swift": "d809d6a2e17fa989466c3c2a908884510d850d6a3070ddb691ab931af452a202",
+    "Scripts/CI/IntegrationValidation/miniapps_provider_sources.json": "286c788a4dc6bff94ddb76a7400b1e5f45831e49533d139fd4656f007bdc4213",
+    "Scripts/CI/IntegrationValidation/test_project_graph.py": "3348cfd093eaf723a182a60b7c14e3c379565bcf9718d5056c8423b06f0941e0",
+    "Scripts/ProductSplit/run_paired_acceptance.py": "8c2dbdc9f0bdff35c9faf16f0b6f7e04b188e1a8dc44b7b41833539026b64d57",
+    "Scripts/SDK/update_project.py": "5d24dba42cb6c0ed5fc32bb42cfb12fe0997ab25dd8e2254d13fa9bbe2772c0f",
+    "docs/product-split/target-membership.json": "cedb08a8d897ab3a3e18cc580b1c93594a493c0dc34d903a67eab944c4438729"
+  },
+  "unchangedOriginalSourceSHA256": {
+    "Packages/HanlinWidgetSDK/HostResources/HanlinAppIntents.xcstrings": "fa3c2ab48fdf7a4af6c4865c0502128a59b6415eb65a8506a59a6c281ca9a4ee",
+    "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinWidgetIntentsPackage.swift": "ea2ba57ce79d12ab516782df569229a774309c8f5a6bafd95afbc3622d118169",
+    "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingAppIntents.swift": "01cc756189febdb6287eeb73c7c4349b8e211da95e49c4e23b42f6271a024cba",
+    "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/ScriptWidgetControls/Original/ScriptWidgetSelectTimerIntent.swift": "f632bd5007e5036432815eb72641027934284ff52bf457817336076eca63cb8d",
+    "HanlinMiniAppsExtensions/Widgets/HanlinMiniAppsWidgets.swift": "252cc058240975857840220406b287aebc8111a963de6d1f20c5c208b9477e91",
+    "HanlinScriptingWidgets/HanlinScriptingWidgets.swift": "255babd7c6c72d7dfbc6ed6526dd17eabe38a60eed5763613a6bea0ba641f25b"
+  },
+  "checks": {
+    "canonicalProjectGeneration": "PASSED",
+    "canonicalProjectIdempotency": "PASSED",
+    "originalTableProjection": "PASSED",
+    "existingProjectGraphCases": {
+      "executed": 19,
+      "passed": 19,
+      "failed": 0
+    },
+    "targetSourceMembership": "SOURCE_VALIDATED",
+    "changedSwiftSyntax": "PASSED",
+    "pythonRunnerSyntax": "PASSED",
+    "metadataCaptureFilesystemCases": {
+      "passed": 3,
+      "scope": "Synthetic opaque files only; not Apple-produced metadata."
+    },
+    "nativeSelectorAndCommandAST": "UNCHANGED",
+    "nativeCaseCount": 36,
+    "diffCheck": "PASSED"
+  },
+  "initialCheckoutCorrection": "The first target-membership check lacked two unchanged sparse checkout inputs. After materializing RuntimeDependencies.lock.json and AI-HLY-Info.plist, only that check was rerun and passed; its original failure and final result are retained.",
+  "appleCompilation": "NOT_RUN",
+  "appleMetadataExtraction": "NOT_RUN",
+  "systemIntentDiscovery": "NOT_RUN",
+  "nativeIntentExecution": "NOT_RUN",
+  "metadataEvidenceOutput": "paired-product/app-intents-metadata/{App.app}/... and {App.app}.json",
+  "metadataEvidenceStates": [
+    "CAPTURED",
+    "NOT_PRESENT",
+    "APP_BUNDLE_MISSING",
+    "CAPTURE_ERROR"
+  ],
+  "metadataPresenceIsExecutionProof": false
+}

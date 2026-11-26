@@ -1,0 +1,1896 @@
+{
+  "baseSHA": "6d9a59bfc1bd1830a8d56e694c42b19c6bd7d468",
+  "compilerVersion": "6.0.3",
+  "scope": "TSX syntax and actual source identity/field binding only; semantic validation, Metro build and native observations are separate.",
+  "declaredFactories": 87,
+  "upstreamPrecedence": [
+    "navigationBarTitleDisplayMode",
+    "preferredColorScheme",
+    "presentationCornerRadius",
+    "sectionIndexLabel"
+  ],
+  "effectivePublicFactories": 83,
+  "matchedProbeFactories": 83,
+  "nativeAcceptance": "NOT_RUN",
+  "publicCLIValidation": "PENDING_COMBINED_ENTRYPOINT_LANE",
+  "sources": {
+    "Packages/HanlinExpoUI/src/generated/modifiers.ts": {
+      "sha256": "fee40e3a17dd3466ad2a97301e877501832f044968360684af8e473fe6055483",
+      "bytes": 14525
+    },
+    "Packages/HanlinExpoUI/src/modifiers.ts": {
+      "sha256": "56b1efa29241c519d325682828e944becae6b516887908777661b3a574821782",
+      "bytes": 472
+    },
+    "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedModifiers.swift": {
+      "sha256": "4ea7dbd64875d5ebad1e5731b72449b5a25ff4bd52cec5b2bc966bd93b322ae6",
+      "bytes": 56853
+    },
+    "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoModifierExtension.swift": {
+      "sha256": "3c6c2cd242ef018944c8f43767de2fe766de1ed8cbf71eb8db5433e260438e32",
+      "bytes": 1023
+    },
+    "Fixtures/ExpoSwiftUIProbe/GeneratedModifiersProbe.tsx": {
+      "sha256": "bdce03553d371310ca1cc07b53c0f9f3cb12b6b8638ff967dce43338918f18f7",
+      "bytes": 16519
+    }
+  },
+  "supportingPublicFactories": [
+    "accessibilityIdentifier",
+    "background",
+    "clipped",
+    "environment",
+    "fixedSize",
+    "font",
+    "foregroundStyle",
+    "frame",
+    "navigationTitle",
+    "onAppear",
+    "onGeometryChange",
+    "onSubmit",
+    "padding",
+    "resizable",
+    "sectionIndexLabel",
+    "submitLabel",
+    "tag",
+    "textInputAutocapitalization"
+  ],
+  "cases": [
+    {
+      "name": "accessibility",
+      "publicKey": "accessibility",
+      "parameterFields": [
+        "value"
+      ],
+      "examples": [
+        {
+          "context": "AccessibilityPanel",
+          "line": 36,
+          "call": "m.accessibility('Allowance ' + allowance)",
+          "arguments": [
+            "'Allowance ' + allowance"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedAccessibilityModifier",
+      "nativeRecordSHA256": "3cc87e973f4b8c67572f41b2c426637b41508636796d277722305e84dea44366",
+      "nativeForwarding": "public struct HanlinGeneratedAccessibilityModifier: ViewModifier, Record {\n    @Field public var value: String = \"\"\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.accessibility(value: SwiftUI.Text(value))\n    }\n}",
+      "evidence": "Observable native assertion authored; execution pending",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "accessibilityActivationPoint",
+      "publicKey": "accessibilityActivationPoint",
+      "parameterFields": [
+        "activationPoint",
+        "isEnabled"
+      ],
+      "examples": [
+        {
+          "context": "AccessibilityPanel",
+          "line": 37,
+          "call": "m.accessibilityActivationPoint(activationPoint, activationPoint.x > 0)",
+          "arguments": [
+            "activationPoint",
+            "activationPoint.x > 0"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedAccessibilityActivationPointModifier",
+      "nativeRecordSHA256": "6087131281552dadebdf5fe69e7c67824ca9975fff29bd66239c2b5b109284ea",
+      "nativeForwarding": "public struct HanlinGeneratedAccessibilityActivationPointModifier: ViewModifier, Record {\n    @Field public var activationPoint: HanlinGeneratedCGPointValue = HanlinGeneratedCGPointValue()\n    @Field public var isEnabled: Bool = false\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.accessibilityActivationPoint(activationPoint.swiftUIValue, isEnabled: isEnabled)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "Accessibility service/settings or drag/drop context is required for full effect; appearance and companion actions do not establish it."
+    },
+    {
+      "name": "accessibilityDirectTouch",
+      "publicKey": "accessibilityDirectTouch",
+      "parameterFields": [
+        "isDirectTouchArea",
+        "options"
+      ],
+      "examples": [
+        {
+          "context": "AccessibilityPanel",
+          "line": 49,
+          "call": "m.accessibilityDirectTouch(true, ['requiresActivation'])",
+          "arguments": [
+            "true",
+            "['requiresActivation']"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedAccessibilityDirectTouchModifier",
+      "nativeRecordSHA256": "a1d228dcc7021155c9f86c9c492c1fde74c844edd38b6074a763a204df164361",
+      "nativeForwarding": "public struct HanlinGeneratedAccessibilityDirectTouchModifier: ViewModifier, Record {\n    @Field public var isDirectTouchArea: Bool = true\n    @Field public var options: [HanlinGeneratedAccessibilityDirectTouchOptionsValue]? = nil\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.accessibilityDirectTouch(isDirectTouchArea, options: options.map { values in values.reduce(into: AccessibilityDirectTouchOptions()) { result, value in result.formUnion(value.swiftUIValue) } } ?? [])\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "Accessibility service/settings or drag/drop context is required for full effect; appearance and companion actions do not establish it."
+    },
+    {
+      "name": "accessibilityDragPoint",
+      "publicKey": "accessibilityDragPoint",
+      "parameterFields": [
+        "point",
+        "description",
+        "isEnabled"
+      ],
+      "examples": [
+        {
+          "context": "AccessibilityPanel",
+          "line": 53,
+          "call": "m.accessibilityDragPoint({ x: 0.25, y: 0.5 }, 'Move allowance item', true)",
+          "arguments": [
+            "{ x: 0.25, y: 0.5 }",
+            "'Move allowance item'",
+            "true"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedAccessibilityDragPointModifier",
+      "nativeRecordSHA256": "cc56c060021752ee2d2c756c908efeb94391b194db9886b4a8cbf0b9d29f2bf3",
+      "nativeForwarding": "public struct HanlinGeneratedAccessibilityDragPointModifier: ViewModifier, Record {\n    @Field public var point: HanlinGeneratedUnitPointValue = HanlinGeneratedUnitPointValue()\n    @Field public var description: String = \"\"\n    @Field public var isEnabled: Bool = false\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.accessibilityDragPoint(point.swiftUIValue, description: SwiftUI.Text(description), isEnabled: isEnabled)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "Accessibility service/settings or drag/drop context is required for full effect; appearance and companion actions do not establish it."
+    },
+    {
+      "name": "accessibilityDropPoint",
+      "publicKey": "accessibilityDropPoint",
+      "parameterFields": [
+        "point",
+        "description",
+        "isEnabled"
+      ],
+      "examples": [
+        {
+          "context": "AccessibilityPanel",
+          "line": 54,
+          "call": "m.accessibilityDropPoint({ x: 0.75, y: 0.5 }, 'Receive allowance item', true)",
+          "arguments": [
+            "{ x: 0.75, y: 0.5 }",
+            "'Receive allowance item'",
+            "true"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedAccessibilityDropPointModifier",
+      "nativeRecordSHA256": "ed18286292e2668ae9c98c86332327eecaad7dc0d3c5c178521b7768badd0cc9",
+      "nativeForwarding": "public struct HanlinGeneratedAccessibilityDropPointModifier: ViewModifier, Record {\n    @Field public var point: HanlinGeneratedUnitPointValue = HanlinGeneratedUnitPointValue()\n    @Field public var description: String = \"\"\n    @Field public var isEnabled: Bool = false\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.accessibilityDropPoint(point.swiftUIValue, description: SwiftUI.Text(description), isEnabled: isEnabled)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "Accessibility service/settings or drag/drop context is required for full effect; appearance and companion actions do not establish it."
+    },
+    {
+      "name": "accessibilityHeading",
+      "publicKey": "accessibilityHeading",
+      "parameterFields": [
+        "level"
+      ],
+      "examples": [
+        {
+          "context": "AccessibilityPanel",
+          "line": 34,
+          "call": "m.accessibilityHeading('h2')",
+          "arguments": [
+            "'h2'"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedAccessibilityHeadingModifier",
+      "nativeRecordSHA256": "7bf708ef4c0518a5c4bcbd1c6c7f06c5d4f47719df8cc45aaa80425321e923f1",
+      "nativeForwarding": "public struct HanlinGeneratedAccessibilityHeadingModifier: ViewModifier, Record {\n    @Field public var level: HanlinGeneratedAccessibilityHeadingLevelValue = .h1\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.accessibilityHeading(level.swiftUIValue)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "Accessibility service/settings or drag/drop context is required for full effect; appearance and companion actions do not establish it."
+    },
+    {
+      "name": "accessibilityRespondsToUserInteraction",
+      "publicKey": "accessibilityRespondsToUserInteraction",
+      "parameterFields": [
+        "respondsToUserInteraction",
+        "isEnabled"
+      ],
+      "examples": [
+        {
+          "context": "AccessibilityPanel",
+          "line": 50,
+          "call": "m.accessibilityRespondsToUserInteraction(true, true)",
+          "arguments": [
+            "true",
+            "true"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedAccessibilityRespondsToUserInteractionModifier",
+      "nativeRecordSHA256": "ec10e42afa7105717a34a544f45f3093a0ecc7242f23162c35039bd5819c80ac",
+      "nativeForwarding": "public struct HanlinGeneratedAccessibilityRespondsToUserInteractionModifier: ViewModifier, Record {\n    @Field public var respondsToUserInteraction: Bool = false\n    @Field public var isEnabled: Bool = false\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.accessibilityRespondsToUserInteraction(respondsToUserInteraction, isEnabled: isEnabled)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "Accessibility service/settings or drag/drop context is required for full effect; appearance and companion actions do not establish it."
+    },
+    {
+      "name": "accessibilityScrollStatus",
+      "publicKey": "accessibilityScrollStatus",
+      "parameterFields": [
+        "status",
+        "isEnabled"
+      ],
+      "examples": [
+        {
+          "context": "AccessibilityPanel",
+          "line": 57,
+          "call": "m.accessibilityScrollStatus('Allowance entries 1 through 4', true)",
+          "arguments": [
+            "'Allowance entries 1 through 4'",
+            "true"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedAccessibilityScrollStatusModifier",
+      "nativeRecordSHA256": "04c70813691c953b915a643884e5e1fac595bba4f47f9fcb88f951d34ec3bd0e",
+      "nativeForwarding": "public struct HanlinGeneratedAccessibilityScrollStatusModifier: ViewModifier, Record {\n    @Field public var status: String = \"\"\n    @Field public var isEnabled: Bool = true\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.accessibilityScrollStatus(SwiftUI.Text(status), isEnabled: isEnabled)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "Accessibility service/settings or drag/drop context is required for full effect; appearance and companion actions do not establish it."
+    },
+    {
+      "name": "accessibilitySortPriority",
+      "publicKey": "accessibilitySortPriority",
+      "parameterFields": [
+        "sortPriority"
+      ],
+      "examples": [
+        {
+          "context": "AccessibilityPanel",
+          "line": 34,
+          "call": "m.accessibilitySortPriority(3)",
+          "arguments": [
+            "3"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedAccessibilitySortPriorityModifier",
+      "nativeRecordSHA256": "1c3352c73ec4211570a1168c70b1024ff0e73ebd4550414ece42c042d70ecb97",
+      "nativeForwarding": "public struct HanlinGeneratedAccessibilitySortPriorityModifier: ViewModifier, Record {\n    @Field public var sortPriority: Double = 0\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.accessibilitySortPriority(sortPriority)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "Accessibility service/settings or drag/drop context is required for full effect; appearance and companion actions do not establish it."
+    },
+    {
+      "name": "allowsWindowActivationEvents",
+      "publicKey": "allowsWindowActivationEvents",
+      "parameterFields": [
+        "value"
+      ],
+      "examples": [
+        {
+          "context": "HostContextPanel",
+          "line": 240,
+          "call": "m.allowsWindowActivationEvents(false)",
+          "arguments": [
+            "false"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedAllowsWindowActivationEventsModifier",
+      "nativeRecordSHA256": "3feea377ad5c374ad30bb0eecf37b9cf7d6d77fe8e2a5cfcf525bfc5e9c856b7",
+      "nativeForwarding": "public struct HanlinGeneratedAllowsWindowActivationEventsModifier: ViewModifier, Record {\n    @Field public var value: Bool? = nil\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.allowsWindowActivationEvents(value)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "Requires an inactive native window receiving an activation event."
+    },
+    {
+      "name": "assistiveAccessNavigationIcon",
+      "publicKey": "assistiveAccessNavigationIcon",
+      "parameterFields": [
+        "systemImage"
+      ],
+      "examples": [
+        {
+          "context": "HostContextPanel",
+          "line": 253,
+          "call": "m.assistiveAccessNavigationIcon('doc.text')",
+          "arguments": [
+            "'doc.text'"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedAssistiveAccessNavigationIconModifier",
+      "nativeRecordSHA256": "582537d68c4a7e7d9527f097f3c873a8ad61f16a27d251d7080516e0a911cebf",
+      "nativeForwarding": "public struct HanlinGeneratedAssistiveAccessNavigationIconModifier: ViewModifier, Record {\n    @Field public var systemImage: String = \"\"\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.assistiveAccessNavigationIcon(systemImage: systemImage)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "Requires the actual Assistive Access system context."
+    },
+    {
+      "name": "backgroundExtensionEffect",
+      "publicKey": "backgroundExtensionEffect",
+      "parameterFields": [],
+      "examples": [
+        {
+          "context": "GeometryPanel",
+          "line": 86,
+          "call": "m.backgroundExtensionEffect()",
+          "arguments": []
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedBackgroundExtensionEffectModifier",
+      "nativeRecordSHA256": "47c6300e25517c8e893b148c4cff738c0eaf1a082ecc19e6c3aa6c33dea154ce",
+      "nativeForwarding": "public struct HanlinGeneratedBackgroundExtensionEffectModifier: ViewModifier, Record {\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.backgroundExtensionEffect()\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "defersSystemGestures",
+      "publicKey": "defersSystemGestures",
+      "parameterFields": [
+        "edges"
+      ],
+      "examples": [
+        {
+          "context": "HostContextPanel",
+          "line": 240,
+          "call": "m.defersSystemGestures(['bottom'])",
+          "arguments": [
+            "['bottom']"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedDefersSystemGesturesModifier",
+      "nativeRecordSHA256": "c525583a323bce1f8682fcc746a375aa581802df80030e61a837b43c13e37203",
+      "nativeForwarding": "public struct HanlinGeneratedDefersSystemGesturesModifier: ViewModifier, Record {\n    @Field public var edges: [HanlinGeneratedEdgeSetValue] = []\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.defersSystemGestures(on: edges.reduce(into: Edge.Set()) { result, value in result.formUnion(value.swiftUIValue) })\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "Requires observing OS edge gesture arbitration, not just an app tap."
+    },
+    {
+      "name": "disableAutocorrection",
+      "publicKey": "disableAutocorrection",
+      "parameterFields": [
+        "disable"
+      ],
+      "examples": [
+        {
+          "context": "InputPanel",
+          "line": 123,
+          "call": "m.disableAutocorrection(true)",
+          "arguments": [
+            "true"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedDisableAutocorrectionModifier",
+      "nativeRecordSHA256": "5e5c512672ea2bcef2ffc267cda4e2bd735f91c4c40005312ff5535979920fa5",
+      "nativeForwarding": "public struct HanlinGeneratedDisableAutocorrectionModifier: ViewModifier, Record {\n    @Field public var disable: Bool? = nil\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.disableAutocorrection(disable)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "documentLaunchSubtitle",
+      "publicKey": "documentLaunchSubtitle",
+      "parameterFields": [
+        "subtitle"
+      ],
+      "examples": [
+        {
+          "context": "HostContextPanel",
+          "line": 244,
+          "call": "m.documentLaunchSubtitle('Local draft documents')",
+          "arguments": [
+            "'Local draft documents'"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedDocumentLaunchSubtitleModifier",
+      "nativeRecordSHA256": "95f74693ccc5061652ac5ffab4d1785d4e5db50737ced489a6677df81889c2d6",
+      "nativeForwarding": "public struct HanlinGeneratedDocumentLaunchSubtitleModifier: ViewModifier, Record {\n    @Field public var subtitle: String = \"\"\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        if #available(iOS 27.0, *) {\n            content.documentLaunchSubtitle(SwiftUI.Text(subtitle))\n        } else {\n            content\n        }\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "Requires an actual host-owned document launch scene; embedded probe does not create one."
+    },
+    {
+      "name": "documentLaunchTitle",
+      "publicKey": "documentLaunchTitle",
+      "parameterFields": [
+        "title"
+      ],
+      "examples": [
+        {
+          "context": "HostContextPanel",
+          "line": 244,
+          "call": "m.documentLaunchTitle('Generated draft')",
+          "arguments": [
+            "'Generated draft'"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedDocumentLaunchTitleModifier",
+      "nativeRecordSHA256": "67885bfc650300675b28df2b2d6ee674913bdf0dbb2377f0d90617e49528c9a0",
+      "nativeForwarding": "public struct HanlinGeneratedDocumentLaunchTitleModifier: ViewModifier, Record {\n    @Field public var title: String = \"\"\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        if #available(iOS 27.0, *) {\n            content.documentLaunchTitle(SwiftUI.Text(title))\n        } else {\n            content\n        }\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "Requires an actual host-owned document launch scene; embedded probe does not create one."
+    },
+    {
+      "name": "fileDialogBrowserOptions",
+      "publicKey": "fileDialogBrowserOptions",
+      "parameterFields": [
+        "options"
+      ],
+      "examples": [
+        {
+          "context": "HostContextPanel",
+          "line": 245,
+          "call": "m.fileDialogBrowserOptions(['displayFileExtensions', 'enumeratePackages'])",
+          "arguments": [
+            "['displayFileExtensions', 'enumeratePackages']"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedFileDialogBrowserOptionsModifier",
+      "nativeRecordSHA256": "3a571b9aa518315763be905caf8344c6def5df9bd177bbb1313267910e3f1807",
+      "nativeForwarding": "public struct HanlinGeneratedFileDialogBrowserOptionsModifier: ViewModifier, Record {\n    @Field public var options: [HanlinGeneratedFileDialogBrowserOptionsValue] = []\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.fileDialogBrowserOptions(options.reduce(into: FileDialogBrowserOptions()) { result, value in result.formUnion(value.swiftUIValue) })\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "Requires a real SwiftUI file importer/exporter presenter; no such public presenter is created here."
+    },
+    {
+      "name": "fileDialogConfirmationLabel",
+      "publicKey": "fileDialogConfirmationLabel",
+      "parameterFields": [
+        "label"
+      ],
+      "examples": [
+        {
+          "context": "HostContextPanel",
+          "line": 245,
+          "call": "m.fileDialogConfirmationLabel('Import draft')",
+          "arguments": [
+            "'Import draft'"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedFileDialogConfirmationLabelModifier",
+      "nativeRecordSHA256": "c69938accd1a53844906e94dac15f8c3b030cd7162fb17f751039bb35475c9d9",
+      "nativeForwarding": "public struct HanlinGeneratedFileDialogConfirmationLabelModifier: ViewModifier, Record {\n    @Field public var label: String? = nil\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.fileDialogConfirmationLabel(label.map(SwiftUI.Text.init))\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "Requires a real SwiftUI file importer/exporter presenter; no such public presenter is created here."
+    },
+    {
+      "name": "fileDialogCustomizationID",
+      "publicKey": "fileDialogCustomizationID",
+      "parameterFields": [
+        "id"
+      ],
+      "examples": [
+        {
+          "context": "HostContextPanel",
+          "line": 246,
+          "call": "m.fileDialogCustomizationID('hanlin.generated-modifier-import')",
+          "arguments": [
+            "'hanlin.generated-modifier-import'"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedFileDialogCustomizationIDModifier",
+      "nativeRecordSHA256": "047be498cc68f73858a7021572a076c62d66af20ea0e3bd59c99f2643b5c89b5",
+      "nativeForwarding": "public struct HanlinGeneratedFileDialogCustomizationIDModifier: ViewModifier, Record {\n    @Field public var id: String = \"\"\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.fileDialogCustomizationID(id)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "Requires a real SwiftUI file importer/exporter presenter; no such public presenter is created here."
+    },
+    {
+      "name": "fileDialogImportsUnresolvedAliases",
+      "publicKey": "fileDialogImportsUnresolvedAliases",
+      "parameterFields": [
+        "imports"
+      ],
+      "examples": [
+        {
+          "context": "HostContextPanel",
+          "line": 246,
+          "call": "m.fileDialogImportsUnresolvedAliases(false)",
+          "arguments": [
+            "false"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedFileDialogImportsUnresolvedAliasesModifier",
+      "nativeRecordSHA256": "2dee835397f9ab76b293901fb2d3de4b5b91474bebba681ca437468b75547340",
+      "nativeForwarding": "public struct HanlinGeneratedFileDialogImportsUnresolvedAliasesModifier: ViewModifier, Record {\n    @Field public var imports: Bool = false\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.fileDialogImportsUnresolvedAliases(imports)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "Requires a real SwiftUI file importer/exporter presenter and alias input."
+    },
+    {
+      "name": "fileDialogMessage",
+      "publicKey": "fileDialogMessage",
+      "parameterFields": [
+        "message"
+      ],
+      "examples": [
+        {
+          "context": "HostContextPanel",
+          "line": 247,
+          "call": "m.fileDialogMessage('Choose a local draft')",
+          "arguments": [
+            "'Choose a local draft'"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedFileDialogMessageModifier",
+      "nativeRecordSHA256": "8e15dec0d2b801cbe5de2df1bfdade95026ecbaba44ea4940d659ebdc6034928",
+      "nativeForwarding": "public struct HanlinGeneratedFileDialogMessageModifier: ViewModifier, Record {\n    @Field public var message: String? = nil\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.fileDialogMessage(message.map(SwiftUI.Text.init))\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "Requires a real SwiftUI file importer/exporter presenter; no such public presenter is created here."
+    },
+    {
+      "name": "fileExporterFilenameLabel",
+      "publicKey": "fileExporterFilenameLabel",
+      "parameterFields": [
+        "label"
+      ],
+      "examples": [
+        {
+          "context": "HostContextPanel",
+          "line": 247,
+          "call": "m.fileExporterFilenameLabel('Draft filename')",
+          "arguments": [
+            "'Draft filename'"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedFileExporterFilenameLabelModifier",
+      "nativeRecordSHA256": "5432df785669d91c3c0d9c11913cda395e49d5ae66f1bd01b8e20f2203a5d623",
+      "nativeForwarding": "public struct HanlinGeneratedFileExporterFilenameLabelModifier: ViewModifier, Record {\n    @Field public var label: String? = nil\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.fileExporterFilenameLabel(label.map(SwiftUI.Text.init))\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "Requires a real SwiftUI file exporter presenter; no such public presenter is created here."
+    },
+    {
+      "name": "findDisabled",
+      "publicKey": "findDisabled",
+      "parameterFields": [
+        "isDisabled"
+      ],
+      "examples": [
+        {
+          "context": "InputPanel",
+          "line": 124,
+          "call": "m.findDisabled(true)",
+          "arguments": [
+            "true"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedFindDisabledModifier",
+      "nativeRecordSHA256": "2566bf7fc8073a30758824381ad89b53b91f49086cd42c7c00c88483783c7563",
+      "nativeForwarding": "public struct HanlinGeneratedFindDisabledModifier: ViewModifier, Record {\n    @Field public var isDisabled: Bool = true\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.findDisabled(isDisabled)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "flipsForRightToLeftLayoutDirection",
+      "publicKey": "flipsForRightToLeftLayoutDirection",
+      "parameterFields": [
+        "enabled"
+      ],
+      "examples": [
+        {
+          "context": "GeometryPanel",
+          "line": 80,
+          "call": "m.flipsForRightToLeftLayoutDirection(true)",
+          "arguments": [
+            "true"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedFlipsForRightToLeftLayoutDirectionModifier",
+      "nativeRecordSHA256": "b126f1884643dd5d403cbe7cd7ea9c113f408e19212be15d8e94e9421b0b41a2",
+      "nativeForwarding": "public struct HanlinGeneratedFlipsForRightToLeftLayoutDirectionModifier: ViewModifier, Record {\n    @Field public var enabled: Bool = false\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.flipsForRightToLeftLayoutDirection(enabled)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "Requires right-to-left layout context; locale does not alone establish layout direction."
+    },
+    {
+      "name": "focusEffectDisabled",
+      "publicKey": "focusEffectDisabled",
+      "parameterFields": [
+        "disabled"
+      ],
+      "examples": [
+        {
+          "context": "InputPanel",
+          "line": 115,
+          "call": "m.focusEffectDisabled(true)",
+          "arguments": [
+            "true"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedFocusEffectDisabledModifier",
+      "nativeRecordSHA256": "055e79993fbf1323462b354adf9737e06b9d8347a770258294b323a19cef37a9",
+      "nativeForwarding": "public struct HanlinGeneratedFocusEffectDisabledModifier: ViewModifier, Record {\n    @Field public var disabled: Bool = true\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.focusEffectDisabled(disabled)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "focusable",
+      "publicKey": "focusable",
+      "parameterFields": [
+        "isFocusable"
+      ],
+      "examples": [
+        {
+          "context": "InputPanel",
+          "line": 115,
+          "call": "m.focusable(true)",
+          "arguments": [
+            "true"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedFocusableModifier",
+      "nativeRecordSHA256": "f17998f626c3a1335f356310959861e6ba78f9c6fc48ced847ab9437c82dacf4",
+      "nativeForwarding": "public struct HanlinGeneratedFocusableModifier: ViewModifier, Record {\n    @Field public var isFocusable: Bool = true\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.focusable(isFocusable)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "help",
+      "publicKey": "help",
+      "parameterFields": [
+        "textKey"
+      ],
+      "examples": [
+        {
+          "context": "AccessibilityPanel",
+          "line": 45,
+          "call": "m.help('Current allowance, read as individual characters')",
+          "arguments": [
+            "'Current allowance, read as individual characters'"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedHelpModifier",
+      "nativeRecordSHA256": "cd3f964008f2d1c83c909a7785c09619cf06e3f9ce9b4e6b212e16089a7dcd16",
+      "nativeForwarding": "public struct HanlinGeneratedHelpModifier: ViewModifier, Record {\n    @Field public var textKey: String = \"\"\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.help(SwiftUI.LocalizedStringKey(textKey))\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "inspectorColumnWidth",
+      "publicKey": "inspectorColumnWidth",
+      "parameterFields": [
+        "min",
+        "ideal",
+        "max"
+      ],
+      "examples": [
+        {
+          "context": "InspectorPanel",
+          "line": 227,
+          "call": "m.inspectorColumnWidth(240, 280, 320)",
+          "arguments": [
+            "240",
+            "280",
+            "320"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedInspectorColumnWidthModifier",
+      "nativeRecordSHA256": "7559121d023fd410c68a83e91d327d53c8cc6d4628a77df27812ae1a62e9dc1e",
+      "nativeForwarding": "public struct HanlinGeneratedInspectorColumnWidthModifier: ViewModifier, Record {\n    @Field public var min: CGFloat? = nil\n    @Field public var ideal: CGFloat = 0\n    @Field public var max: CGFloat? = nil\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.inspectorColumnWidth(min: min, ideal: ideal, max: max)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "interactionActivityTrackingTag",
+      "publicKey": "interactionActivityTrackingTag",
+      "parameterFields": [
+        "tag"
+      ],
+      "examples": [
+        {
+          "context": "InputPanel",
+          "line": 116,
+          "call": "m.interactionActivityTrackingTag('generated-modifier-hit-target')",
+          "arguments": [
+            "'generated-modifier-hit-target'"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedInteractionActivityTrackingTagModifier",
+      "nativeRecordSHA256": "c3ccddc08c0a59d2fcca71c71f4d578cc3841552bc7d29522ed66017522b47b8",
+      "nativeForwarding": "public struct HanlinGeneratedInteractionActivityTrackingTagModifier: ViewModifier, Record {\n    @Field public var tag: String = \"\"\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.interactionActivityTrackingTag(tag)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "labelIconToTitleSpacing",
+      "publicKey": "labelIconToTitleSpacing",
+      "parameterFields": [
+        "value"
+      ],
+      "examples": [
+        {
+          "context": "GeometryPanel",
+          "line": 80,
+          "call": "m.labelIconToTitleSpacing(16)",
+          "arguments": [
+            "16"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedLabelIconToTitleSpacingModifier",
+      "nativeRecordSHA256": "91dc6377ee40170f73c13a337ffe7ec2050314b8c4b025440708f359b5a17200",
+      "nativeForwarding": "public struct HanlinGeneratedLabelIconToTitleSpacingModifier: ViewModifier, Record {\n    @Field public var value: CGFloat = 0\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.labelIconToTitleSpacing(value)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "labelReservedIconWidth",
+      "publicKey": "labelReservedIconWidth",
+      "parameterFields": [
+        "value"
+      ],
+      "examples": [
+        {
+          "context": "GeometryPanel",
+          "line": 80,
+          "call": "m.labelReservedIconWidth(42)",
+          "arguments": [
+            "42"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedLabelReservedIconWidthModifier",
+      "nativeRecordSHA256": "4961eb0eae5c1ac0823bf8eb04fcc884d11613316a49ac48db397b2eaadc0390",
+      "nativeForwarding": "public struct HanlinGeneratedLabelReservedIconWidthModifier: ViewModifier, Record {\n    @Field public var value: CGFloat = 0\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.labelReservedIconWidth(value)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "labelsVisibility",
+      "publicKey": "labelsVisibility",
+      "parameterFields": [
+        "visibility"
+      ],
+      "examples": [
+        {
+          "context": "InputPanel",
+          "line": 134,
+          "call": "m.labelsVisibility(showLabels ? 'visible' : 'hidden')",
+          "arguments": [
+            "showLabels ? 'visible' : 'hidden'"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedLabelsVisibilityModifier",
+      "nativeRecordSHA256": "e44cdafae0a0d5c2c257168a8a3b5e53497eb5bbba1f299f7216a83353415c3f",
+      "nativeForwarding": "public struct HanlinGeneratedLabelsVisibilityModifier: ViewModifier, Record {\n    @Field public var visibility: HanlinGeneratedVisibilityValue = .automatic\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.labelsVisibility(visibility.swiftUIValue)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "listSectionIndexVisibility",
+      "publicKey": "listSectionIndexVisibility",
+      "parameterFields": [
+        "visibility"
+      ],
+      "examples": [
+        {
+          "context": "ContainersPanel",
+          "line": 159,
+          "call": "m.listSectionIndexVisibility('visible')",
+          "arguments": [
+            "'visible'"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedListSectionIndexVisibilityModifier",
+      "nativeRecordSHA256": "e5297601a46c2b4824e93d806fa2ad189851fdbfc2ad1e90521d8a8e1bd35993",
+      "nativeForwarding": "public struct HanlinGeneratedListSectionIndexVisibilityModifier: ViewModifier, Record {\n    @Field public var visibility: HanlinGeneratedVisibilityValue = .automatic\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.listSectionIndexVisibility(visibility.swiftUIValue)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "listSectionSeparator",
+      "publicKey": "listSectionSeparator",
+      "parameterFields": [
+        "visibility",
+        "edges"
+      ],
+      "examples": [
+        {
+          "context": "ContainersPanel",
+          "line": 160,
+          "call": "m.listSectionSeparator('hidden', ['all'])",
+          "arguments": [
+            "'hidden'",
+            "['all']"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedListSectionSeparatorModifier",
+      "nativeRecordSHA256": "b95002fd87dad79650ee33662b997bf578e9f8de6102fb29ff8aa4bd09d1f3eb",
+      "nativeForwarding": "public struct HanlinGeneratedListSectionSeparatorModifier: ViewModifier, Record {\n    @Field public var visibility: HanlinGeneratedVisibilityValue = .automatic\n    @Field public var edges: [HanlinGeneratedVerticalEdgeSetValue]? = nil\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.listSectionSeparator(visibility.swiftUIValue, edges: edges.map { values in values.reduce(into: VerticalEdge.Set()) { result, value in result.formUnion(value.swiftUIValue) } } ?? .all)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "navigationBarBackButtonHidden",
+      "publicKey": "navigationBarBackButtonHidden",
+      "parameterFields": [
+        "hidesBackButton"
+      ],
+      "examples": [
+        {
+          "context": "NavigationPanel",
+          "line": 215,
+          "call": "m.navigationBarBackButtonHidden(hideBack)",
+          "arguments": [
+            "hideBack"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedNavigationBarBackButtonHiddenModifier",
+      "nativeRecordSHA256": "1e7a4281438e4c4cc28b355f34788a9634a4bc3416c2a546d12fa05e586688b6",
+      "nativeForwarding": "public struct HanlinGeneratedNavigationBarBackButtonHiddenModifier: ViewModifier, Record {\n    @Field public var hidesBackButton: Bool = true\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.navigationBarBackButtonHidden(hidesBackButton)\n    }\n}",
+      "evidence": "Observable native assertion authored; execution pending",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "navigationBarHidden",
+      "publicKey": "navigationBarHidden",
+      "parameterFields": [
+        "hidden"
+      ],
+      "examples": [
+        {
+          "context": "NavigationPanel",
+          "line": 206,
+          "call": "m.navigationBarHidden(hideBar)",
+          "arguments": [
+            "hideBar"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedNavigationBarHiddenModifier",
+      "nativeRecordSHA256": "a4dd9509c3b201a9b8304da7ceec5ccf6e16510dd4d544d8e7feaf2ee934f3aa",
+      "nativeForwarding": "public struct HanlinGeneratedNavigationBarHiddenModifier: ViewModifier, Record {\n    @Field public var hidden: Bool = false\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.navigationBarHidden(hidden)\n    }\n}",
+      "evidence": "Observable native assertion authored; execution pending",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "navigationBarTitle",
+      "publicKey": "navigationBarTitle",
+      "parameterFields": [
+        "title"
+      ],
+      "examples": [
+        {
+          "context": "NavigationPanel",
+          "line": 205,
+          "call": "m.navigationBarTitle('Generated native title')",
+          "arguments": [
+            "'Generated native title'"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedNavigationBarTitleModifier",
+      "nativeRecordSHA256": "00750d6d9d1a66ba928fcc449c64575c1baba0edcd7ca01d60e8b451bdba2865",
+      "nativeForwarding": "public struct HanlinGeneratedNavigationBarTitleModifier: ViewModifier, Record {\n    @Field public var title: String = \"\"\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.navigationBarTitle(SwiftUI.Text(title))\n    }\n}",
+      "evidence": "Observable native assertion authored; execution pending",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "navigationLinkIndicatorVisibility",
+      "publicKey": "navigationLinkIndicatorVisibility",
+      "parameterFields": [
+        "visibility"
+      ],
+      "examples": [
+        {
+          "context": "NavigationPanel",
+          "line": 207,
+          "call": "m.navigationLinkIndicatorVisibility('hidden')",
+          "arguments": [
+            "'hidden'"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedNavigationLinkIndicatorVisibilityModifier",
+      "nativeRecordSHA256": "9b1b990587c2aa6d2d0250a0e9de34c45f83ebc07f95e56a5fa42d2ab978ae5c",
+      "nativeForwarding": "public struct HanlinGeneratedNavigationLinkIndicatorVisibilityModifier: ViewModifier, Record {\n    @Field public var visibility: HanlinGeneratedVisibilityValue = .automatic\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.navigationLinkIndicatorVisibility(visibility.swiftUIValue)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "navigationSubtitle",
+      "publicKey": "navigationSubtitle",
+      "parameterFields": [
+        "subtitle"
+      ],
+      "examples": [
+        {
+          "context": "NavigationPanel",
+          "line": 205,
+          "call": "m.navigationSubtitle('Generated native subtitle')",
+          "arguments": [
+            "'Generated native subtitle'"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedNavigationSubtitleModifier",
+      "nativeRecordSHA256": "41db7b55ef27060ba31b9c0540076d094d14e8297ed1b53bf0f10278a1a2fadf",
+      "nativeForwarding": "public struct HanlinGeneratedNavigationSubtitleModifier: ViewModifier, Record {\n    @Field public var subtitle: String = \"\"\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.navigationSubtitle(SwiftUI.Text(subtitle))\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "persistentSystemOverlays",
+      "publicKey": "persistentSystemOverlays",
+      "parameterFields": [
+        "visibility"
+      ],
+      "examples": [
+        {
+          "context": "HostContextPanel",
+          "line": 241,
+          "call": "m.persistentSystemOverlays('visible')",
+          "arguments": [
+            "'visible'"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedPersistentSystemOverlaysModifier",
+      "nativeRecordSHA256": "459d16245d12bd9702ec6c62b48e77954b4462505fa9cae713e206e30f65bdde",
+      "nativeForwarding": "public struct HanlinGeneratedPersistentSystemOverlaysModifier: ViewModifier, Record {\n    @Field public var visibility: HanlinGeneratedVisibilityValue = .automatic\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.persistentSystemOverlays(visibility.swiftUIValue)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "System overlay presentation effect requires OS observation."
+    },
+    {
+      "name": "previewDisplayName",
+      "publicKey": "previewDisplayName",
+      "parameterFields": [
+        "value"
+      ],
+      "examples": [
+        {
+          "context": "HostContextPanel",
+          "line": 248,
+          "call": "m.previewDisplayName('Generated document settings')",
+          "arguments": [
+            "'Generated document settings'"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedPreviewDisplayNameModifier",
+      "nativeRecordSHA256": "718610bfa838029ffe20fa363f96e7a26db5c6b8afefbdf551777d57fa09ffde",
+      "nativeForwarding": "public struct HanlinGeneratedPreviewDisplayNameModifier: ViewModifier, Record {\n    @Field public var value: String? = nil\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.previewDisplayName(value)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "Preview-only metadata; running app UI cannot demonstrate Xcode preview naming."
+    },
+    {
+      "name": "replaceDisabled",
+      "publicKey": "replaceDisabled",
+      "parameterFields": [
+        "isDisabled"
+      ],
+      "examples": [
+        {
+          "context": "InputPanel",
+          "line": 124,
+          "call": "m.replaceDisabled(true)",
+          "arguments": [
+            "true"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedReplaceDisabledModifier",
+      "nativeRecordSHA256": "f11da44e669a4ee24531cdd3ee8395f16ea71635ea138e2f0c4036665cc5d8d0",
+      "nativeForwarding": "public struct HanlinGeneratedReplaceDisabledModifier: ViewModifier, Record {\n    @Field public var isDisabled: Bool = true\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.replaceDisabled(isDisabled)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "scenePadding",
+      "publicKey": "scenePadding",
+      "parameterFields": [
+        "edges"
+      ],
+      "examples": [
+        {
+          "context": "GeometryPanel",
+          "line": 86,
+          "call": "m.scenePadding(['horizontal'])",
+          "arguments": [
+            "['horizontal']"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedScenePaddingModifier",
+      "nativeRecordSHA256": "f57ac9211c65e5d46774fa39a32310064054e28aa4de79645686f2375eff3748",
+      "nativeForwarding": "public struct HanlinGeneratedScenePaddingModifier: ViewModifier, Record {\n    @Field public var edges: [HanlinGeneratedEdgeSetValue]? = nil\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.scenePadding(edges.map { values in values.reduce(into: Edge.Set()) { result, value in result.formUnion(value.swiftUIValue) } } ?? .all)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "scrollEdgeEffectHidden",
+      "publicKey": "scrollEdgeEffectHidden",
+      "parameterFields": [
+        "hidden",
+        "edges"
+      ],
+      "examples": [
+        {
+          "context": "ContainersPanel",
+          "line": 159,
+          "call": "m.scrollEdgeEffectHidden(true, ['top', 'bottom'])",
+          "arguments": [
+            "true",
+            "['top', 'bottom']"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedScrollEdgeEffectHiddenModifier",
+      "nativeRecordSHA256": "fe7fff7c01d3a153bb6f758f6e323a9127c715aa957c6e102c4f9d0b1a589273",
+      "nativeForwarding": "public struct HanlinGeneratedScrollEdgeEffectHiddenModifier: ViewModifier, Record {\n    @Field public var hidden: Bool = true\n    @Field public var edges: [HanlinGeneratedEdgeSetValue]? = nil\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.scrollEdgeEffectHidden(hidden, for: edges.map { values in values.reduce(into: Edge.Set()) { result, value in result.formUnion(value.swiftUIValue) } } ?? .all)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "scrollIndicatorsFlash",
+      "publicKey": "scrollIndicatorsFlash",
+      "parameterFields": [
+        "onAppear"
+      ],
+      "examples": [
+        {
+          "context": "ContainersPanel",
+          "line": 159,
+          "call": "m.scrollIndicatorsFlash(true)",
+          "arguments": [
+            "true"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedScrollIndicatorsFlashModifier",
+      "nativeRecordSHA256": "dc4b558ba479c168a2a80d1cf83df418beea177a349509dae2c00969560784df",
+      "nativeForwarding": "public struct HanlinGeneratedScrollIndicatorsFlashModifier: ViewModifier, Record {\n    @Field public var onAppear: Bool = false\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.scrollIndicatorsFlash(onAppear: onAppear)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "searchCompletion",
+      "publicKey": "searchCompletion",
+      "parameterFields": [
+        "completion"
+      ],
+      "examples": [
+        {
+          "context": "SearchPanel",
+          "line": 190,
+          "call": "m.searchCompletion('Isaiah')",
+          "arguments": [
+            "'Isaiah'"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedSearchCompletionModifier",
+      "nativeRecordSHA256": "361c629b365e03e487b4ddd38f8cf7ae3f0c62249b14573a25524371d42db0d0",
+      "nativeForwarding": "public struct HanlinGeneratedSearchCompletionModifier: ViewModifier, Record {\n    @Field public var completion: String = \"\"\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.searchCompletion(completion)\n    }\n}",
+      "evidence": "Observable native assertion authored; execution pending",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "searchSuggestions",
+      "publicKey": "searchSuggestions",
+      "parameterFields": [
+        "visibility",
+        "placements"
+      ],
+      "examples": [
+        {
+          "context": "SearchPanel",
+          "line": 189,
+          "call": "m.searchSuggestions('visible', ['content'])",
+          "arguments": [
+            "'visible'",
+            "['content']"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedSearchSuggestionsModifier",
+      "nativeRecordSHA256": "e183ab09bc07c3591e744a7b5813f9eb0c33041fe4ab8014c9aa26dfa6a66ef4",
+      "nativeForwarding": "public struct HanlinGeneratedSearchSuggestionsModifier: ViewModifier, Record {\n    @Field public var visibility: HanlinGeneratedVisibilityValue = .automatic\n    @Field public var placements: [HanlinGeneratedSearchSuggestionsPlacementSetValue] = []\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.searchSuggestions(visibility.swiftUIValue, for: placements.reduce(into: SearchSuggestionsPlacement.Set()) { result, value in result.formUnion(value.swiftUIValue) })\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "selectionDisabled",
+      "publicKey": "selectionDisabled",
+      "parameterFields": [
+        "isDisabled"
+      ],
+      "examples": [
+        {
+          "context": "ContainersPanel",
+          "line": 161,
+          "call": "m.selectionDisabled(!selectionAllowed)",
+          "arguments": [
+            "!selectionAllowed"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedSelectionDisabledModifier",
+      "nativeRecordSHA256": "7f541f6fc9901f4dc63a9f540481aa21e47b135b8e2de2ddc311eac88d9980cd",
+      "nativeForwarding": "public struct HanlinGeneratedSelectionDisabledModifier: ViewModifier, Record {\n    @Field public var isDisabled: Bool = true\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.selectionDisabled(isDisabled)\n    }\n}",
+      "evidence": "Observable native assertion authored; execution pending",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "sliderThumbVisibility",
+      "publicKey": "sliderThumbVisibility",
+      "parameterFields": [
+        "visibility"
+      ],
+      "examples": [
+        {
+          "context": "InputPanel",
+          "line": 133,
+          "call": "m.sliderThumbVisibility('visible')",
+          "arguments": [
+            "'visible'"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedSliderThumbVisibilityModifier",
+      "nativeRecordSHA256": "984a243d91badc56985b7c25c0775cbc0443edf1cfd30a580f52a8dfa60dadf5",
+      "nativeForwarding": "public struct HanlinGeneratedSliderThumbVisibilityModifier: ViewModifier, Record {\n    @Field public var visibility: HanlinGeneratedVisibilityValue = .automatic\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.sliderThumbVisibility(visibility.swiftUIValue)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "statusBar",
+      "publicKey": "statusBar",
+      "parameterFields": [
+        "hidden"
+      ],
+      "examples": [
+        {
+          "context": "HostContextPanel",
+          "line": 241,
+          "call": "m.statusBar(false)",
+          "arguments": [
+            "false"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedStatusBarModifier",
+      "nativeRecordSHA256": "c657cbef0fbe57271ffc619e9ec15886029487523a116d371cef189b757a5ef7",
+      "nativeForwarding": "public struct HanlinGeneratedStatusBarModifier: ViewModifier, Record {\n    @Field public var hidden: Bool = false\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.statusBar(hidden: hidden)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "Host/status-bar presentation effect requires OS observation."
+    },
+    {
+      "name": "statusBarHidden",
+      "publicKey": "statusBarHidden",
+      "parameterFields": [
+        "hidden"
+      ],
+      "examples": [
+        {
+          "context": "HostContextPanel",
+          "line": 241,
+          "call": "m.statusBarHidden(false)",
+          "arguments": [
+            "false"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedStatusBarHiddenModifier",
+      "nativeRecordSHA256": "872a09d111631a4e85322b9f17157569da08d77af16e5556ae77ec65938050d0",
+      "nativeForwarding": "public struct HanlinGeneratedStatusBarHiddenModifier: ViewModifier, Record {\n    @Field public var hidden: Bool = true\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.statusBarHidden(hidden)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "Host/status-bar presentation effect requires OS observation."
+    },
+    {
+      "name": "submitScope",
+      "publicKey": "submitScope",
+      "parameterFields": [
+        "isBlocking"
+      ],
+      "examples": [
+        {
+          "context": "InputPanel",
+          "line": 124,
+          "call": "m.submitScope(blockSubmit)",
+          "arguments": [
+            "blockSubmit"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedSubmitScopeModifier",
+      "nativeRecordSHA256": "2389c34c49cb41c90b7cb57d933fa3c12e65fbeb977e6e61dc9b449b38e17898",
+      "nativeForwarding": "public struct HanlinGeneratedSubmitScopeModifier: ViewModifier, Record {\n    @Field public var isBlocking: Bool = true\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.submitScope(isBlocking)\n    }\n}",
+      "evidence": "Observable native assertion authored; execution pending",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "swipeActionsContainer",
+      "publicKey": "swipeActionsContainer",
+      "parameterFields": [],
+      "examples": [
+        {
+          "context": "ContainersPanel",
+          "line": 167,
+          "call": "m.swipeActionsContainer()",
+          "arguments": []
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedSwipeActionsContainerModifier",
+      "nativeRecordSHA256": "0b55281bb7b4e178d9b3aec6694007ec09447077b0ce2702f4048e1b14c3b59b",
+      "nativeForwarding": "public struct HanlinGeneratedSwipeActionsContainerModifier: ViewModifier, Record {\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        if #available(iOS 27.0, *) {\n            content.swipeActionsContainer()\n        } else {\n            content\n        }\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "symbolEffectsRemoved",
+      "publicKey": "symbolEffectsRemoved",
+      "parameterFields": [
+        "isEnabled"
+      ],
+      "examples": [
+        {
+          "context": "GeometryPanel",
+          "line": 89,
+          "call": "m.symbolEffectsRemoved(true)",
+          "arguments": [
+            "true"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedSymbolEffectsRemovedModifier",
+      "nativeRecordSHA256": "75ec2d4b25730e836966978ab93c58111f5edb68e20bd26bb3c5979ac42b8b9a",
+      "nativeForwarding": "public struct HanlinGeneratedSymbolEffectsRemovedModifier: ViewModifier, Record {\n    @Field public var isEnabled: Bool = true\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.symbolEffectsRemoved(isEnabled)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "tableColumnHeaders",
+      "publicKey": "tableColumnHeaders",
+      "parameterFields": [
+        "visibility"
+      ],
+      "examples": [
+        {
+          "context": "ContainersPanel",
+          "line": 151,
+          "call": "m.tableColumnHeaders(headers ? 'visible' : 'hidden')",
+          "arguments": [
+            "headers ? 'visible' : 'hidden'"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedTableColumnHeadersModifier",
+      "nativeRecordSHA256": "572b94b4aa99af1d2215e4aedf2a27769db1cf0ea57fff65365b61a3bfe39b36",
+      "nativeForwarding": "public struct HanlinGeneratedTableColumnHeadersModifier: ViewModifier, Record {\n    @Field public var visibility: HanlinGeneratedVisibilityValue = .automatic\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.tableColumnHeaders(visibility.swiftUIValue)\n    }\n}",
+      "evidence": "Observable native assertion authored; execution pending",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "textInputFormattingControlVisibility",
+      "publicKey": "textInputFormattingControlVisibility",
+      "parameterFields": [
+        "visibility",
+        "placement"
+      ],
+      "examples": [
+        {
+          "context": "InputPanel",
+          "line": 125,
+          "call": "m.textInputFormattingControlVisibility('hidden', ['contextMenu', 'inputAssistant'])",
+          "arguments": [
+            "'hidden'",
+            "['contextMenu', 'inputAssistant']"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedTextInputFormattingControlVisibilityModifier",
+      "nativeRecordSHA256": "5a05a9dbe5967e6ad58eea551fe15cb706007c5dfdfd421fda2fe1d846521690",
+      "nativeForwarding": "public struct HanlinGeneratedTextInputFormattingControlVisibilityModifier: ViewModifier, Record {\n    @Field public var visibility: HanlinGeneratedVisibilityValue = .automatic\n    @Field public var placement: [HanlinGeneratedTextInputFormattingControlPlacementSetValue] = []\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.textInputFormattingControlVisibility(visibility.swiftUIValue, for: placement.reduce(into: TextInputFormattingControlPlacement.Set()) { result, value in result.formUnion(value.swiftUIValue) })\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "textSelectionAffinity",
+      "publicKey": "textSelectionAffinity",
+      "parameterFields": [
+        "affinity"
+      ],
+      "examples": [
+        {
+          "context": "InputPanel",
+          "line": 126,
+          "call": "m.textSelectionAffinity('downstream')",
+          "arguments": [
+            "'downstream'"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedTextSelectionAffinityModifier",
+      "nativeRecordSHA256": "05f4503bb3e86895ac4e4e4cf38b6e7ca5474c4747692b6f17cbe26d75c07a95",
+      "nativeForwarding": "public struct HanlinGeneratedTextSelectionAffinityModifier: ViewModifier, Record {\n    @Field public var affinity: HanlinGeneratedTextSelectionAffinityValue = .automatic\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.textSelectionAffinity(affinity.swiftUIValue)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "typeSelectEquivalent",
+      "publicKey": "typeSelectEquivalent",
+      "parameterFields": [
+        "text"
+      ],
+      "examples": [
+        {
+          "context": "ContainersPanel",
+          "line": 161,
+          "call": "m.typeSelectEquivalent('invoice')",
+          "arguments": [
+            "'invoice'"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedTypeSelectEquivalentModifier",
+      "nativeRecordSHA256": "a83e16914e9ed610263e539616cd7ececfa5a15fd1381e8d175f791660f1e90f",
+      "nativeForwarding": "public struct HanlinGeneratedTypeSelectEquivalentModifier: ViewModifier, Record {\n    @Field public var text: String? = nil\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.typeSelectEquivalent(text.map(SwiftUI.Text.init))\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "writingToolsAffordanceVisibility",
+      "publicKey": "writingToolsAffordanceVisibility",
+      "parameterFields": [
+        "visibility"
+      ],
+      "examples": [
+        {
+          "context": "InputPanel",
+          "line": 126,
+          "call": "m.writingToolsAffordanceVisibility('hidden')",
+          "arguments": [
+            "'hidden'"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedWritingToolsAffordanceVisibilityModifier",
+      "nativeRecordSHA256": "33dd8e0453ace87824f2ed658b562a36cc743995c600156397f5b21cc8bd300c",
+      "nativeForwarding": "public struct HanlinGeneratedWritingToolsAffordanceVisibilityModifier: ViewModifier, Record {\n    @Field public var visibility: HanlinGeneratedVisibilityValue = .automatic\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.writingToolsAffordanceVisibility(visibility.swiftUIValue)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "accessibilityIgnoresInvertColors",
+      "publicKey": "accessibilityIgnoresInvertColors",
+      "parameterFields": [
+        "active"
+      ],
+      "examples": [
+        {
+          "context": "AccessibilityPanel",
+          "line": 42,
+          "call": "m.accessibilityIgnoresInvertColors(true)",
+          "arguments": [
+            "true"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedAccessibilityIgnoresInvertColorsModifier",
+      "nativeRecordSHA256": "563fe4c3438c8f4d3c2500a88163aeed7315ccb6e59ea4758b457a87eea54fd4",
+      "nativeForwarding": "public struct HanlinGeneratedAccessibilityIgnoresInvertColorsModifier: ViewModifier, Record {\n    @Field public var active: Bool = true\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.accessibilityIgnoresInvertColors(active)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "Accessibility service/settings or drag/drop context is required for full effect; appearance and companion actions do not establish it."
+    },
+    {
+      "name": "accessibilityShowsLargeContentViewer",
+      "publicKey": "accessibilityShowsLargeContentViewer",
+      "parameterFields": [],
+      "examples": [
+        {
+          "context": "AccessibilityPanel",
+          "line": 42,
+          "call": "m.accessibilityShowsLargeContentViewer()",
+          "arguments": []
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedAccessibilityShowsLargeContentViewerModifier",
+      "nativeRecordSHA256": "32e9da8e2d15ab061a60452f0779dd9fffda0f899fc66090890b25b3f372cda3",
+      "nativeForwarding": "public struct HanlinGeneratedAccessibilityShowsLargeContentViewerModifier: ViewModifier, Record {\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.accessibilityShowsLargeContentViewer()\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "Accessibility service/settings or drag/drop context is required for full effect; appearance and companion actions do not establish it."
+    },
+    {
+      "name": "allowsHitTesting",
+      "publicKey": "allowsHitTesting",
+      "parameterFields": [
+        "enabled"
+      ],
+      "examples": [
+        {
+          "context": "InputPanel",
+          "line": 115,
+          "call": "m.allowsHitTesting(frontEnabled)",
+          "arguments": [
+            "frontEnabled"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedAllowsHitTestingModifier",
+      "nativeRecordSHA256": "73cead09dd6ea9e6e7fc8ca2dede6cfe3d5de2c78ad23832ca2353df1edea24a",
+      "nativeForwarding": "public struct HanlinGeneratedAllowsHitTestingModifier: ViewModifier, Record {\n    @Field public var enabled: Bool = false\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.allowsHitTesting(enabled)\n    }\n}",
+      "evidence": "Observable native assertion authored; execution pending",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "baselineOffset",
+      "publicKey": "baselineOffset",
+      "parameterFields": [
+        "baselineOffset"
+      ],
+      "examples": [
+        {
+          "context": "GeometryPanel",
+          "line": 77,
+          "call": "m.baselineOffset(8)",
+          "arguments": [
+            "8"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedBaselineOffsetModifier",
+      "nativeRecordSHA256": "e420eda372196bb638801531fbc2a814b596329d5977e87321fe0dd997d01527",
+      "nativeForwarding": "public struct HanlinGeneratedBaselineOffsetModifier: ViewModifier, Record {\n    @Field public var baselineOffset: CGFloat = 0\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.baselineOffset(baselineOffset)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "blendMode",
+      "publicKey": "blendMode",
+      "parameterFields": [
+        "blendMode"
+      ],
+      "examples": [
+        {
+          "context": "GeometryPanel",
+          "line": 88,
+          "call": "m.blendMode('screen')",
+          "arguments": [
+            "'screen'"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedBlendModeModifier",
+      "nativeRecordSHA256": "5c6c8e7ac51469f0f726329d008bafcdd54f128adb86c336d542455428875d9f",
+      "nativeForwarding": "public struct HanlinGeneratedBlendModeModifier: ViewModifier, Record {\n    @Field public var blendMode: HanlinGeneratedBlendModeValue = .color\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.blendMode(blendMode.swiftUIValue)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "colorScheme",
+      "publicKey": "colorScheme",
+      "parameterFields": [
+        "colorScheme"
+      ],
+      "examples": [
+        {
+          "context": "GeometryPanel",
+          "line": 85,
+          "call": "m.colorScheme('dark')",
+          "arguments": [
+            "'dark'"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedColorSchemeModifier",
+      "nativeRecordSHA256": "edec15a30e31b77562a80e9745323148d570f90fd4e117dacd8a288396220a55",
+      "nativeForwarding": "public struct HanlinGeneratedColorSchemeModifier: ViewModifier, Record {\n    @Field public var colorScheme: HanlinGeneratedColorSchemeValue = .dark\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.colorScheme(colorScheme.swiftUIValue)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "compositingGroup",
+      "publicKey": "compositingGroup",
+      "parameterFields": [],
+      "examples": [
+        {
+          "context": "GeometryPanel",
+          "line": 89,
+          "call": "m.compositingGroup()",
+          "arguments": []
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedCompositingGroupModifier",
+      "nativeRecordSHA256": "a2de1444d082612aea54fa74626950f05aa4658bcf59efc39932bc5fbcf97747",
+      "nativeForwarding": "public struct HanlinGeneratedCompositingGroupModifier: ViewModifier, Record {\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.compositingGroup()\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "containerCornerOffset",
+      "publicKey": "containerCornerOffset",
+      "parameterFields": [
+        "edges",
+        "sizeToFit"
+      ],
+      "examples": [
+        {
+          "context": "GeometryPanel",
+          "line": 86,
+          "call": "m.containerCornerOffset(['all'], true)",
+          "arguments": [
+            "['all']",
+            "true"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedContainerCornerOffsetModifier",
+      "nativeRecordSHA256": "fd4a5a415f466cf869ad08b6fcf233213127b2ac192d366c9c8f10265993169a",
+      "nativeForwarding": "public struct HanlinGeneratedContainerCornerOffsetModifier: ViewModifier, Record {\n    @Field public var edges: [HanlinGeneratedEdgeSetValue] = []\n    @Field public var sizeToFit: Bool = false\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.containerCornerOffset(edges.reduce(into: Edge.Set()) { result, value in result.formUnion(value.swiftUIValue) }, sizeToFit: sizeToFit)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "drawingGroup",
+      "publicKey": "drawingGroup",
+      "parameterFields": [
+        "opaque",
+        "colorMode"
+      ],
+      "examples": [
+        {
+          "context": "GeometryPanel",
+          "line": 89,
+          "call": "m.drawingGroup(false, 'linear')",
+          "arguments": [
+            "false",
+            "'linear'"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedDrawingGroupModifier",
+      "nativeRecordSHA256": "ce7e090e215236311479b1a8938febf5eb9617ff585b31f2758aa0c67fe41412",
+      "nativeForwarding": "public struct HanlinGeneratedDrawingGroupModifier: ViewModifier, Record {\n    @Field public var opaque: Bool = false\n    @Field public var colorMode: HanlinGeneratedColorRenderingModeValue = .nonLinear\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.drawingGroup(opaque: opaque, colorMode: colorMode.swiftUIValue)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "edgesIgnoringSafeArea",
+      "publicKey": "edgesIgnoringSafeArea",
+      "parameterFields": [
+        "edges"
+      ],
+      "examples": [
+        {
+          "context": "GeometryPanel",
+          "line": 92,
+          "call": "m.edgesIgnoringSafeArea(['horizontal'])",
+          "arguments": [
+            "['horizontal']"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedEdgesIgnoringSafeAreaModifier",
+      "nativeRecordSHA256": "b36fcec1939071e121fe6015ff1559245454095b6b52f3e4a89b2e9507c5e3a0",
+      "nativeForwarding": "public struct HanlinGeneratedEdgesIgnoringSafeAreaModifier: ViewModifier, Record {\n    @Field public var edges: [HanlinGeneratedEdgeSetValue] = []\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.edgesIgnoringSafeArea(edges.reduce(into: Edge.Set()) { result, value in result.formUnion(value.swiftUIValue) })\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "fontDesign",
+      "publicKey": "fontDesign",
+      "parameterFields": [
+        "design"
+      ],
+      "examples": [
+        {
+          "context": "GeometryPanel",
+          "line": 68,
+          "call": "m.fontDesign('monospaced')",
+          "arguments": [
+            "'monospaced'"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedFontDesignModifier",
+      "nativeRecordSHA256": "c8bc745def434ef1f9ecc715bd74bc6e187ed75c5f4729e19a1e59dcb5be32a4",
+      "nativeForwarding": "public struct HanlinGeneratedFontDesignModifier: ViewModifier, Record {\n    @Field public var design: HanlinGeneratedFontDesignValue? = nil\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.fontDesign(design?.swiftUIValue)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "hoverEffectDisabled",
+      "publicKey": "hoverEffectDisabled",
+      "parameterFields": [
+        "disabled"
+      ],
+      "examples": [
+        {
+          "context": "InputPanel",
+          "line": 116,
+          "call": "m.hoverEffectDisabled(true)",
+          "arguments": [
+            "true"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedHoverEffectDisabledModifier",
+      "nativeRecordSHA256": "b0e707483d040e545789efa8ed66475c5228db1db76bfd830bb069f2530331ef",
+      "nativeForwarding": "public struct HanlinGeneratedHoverEffectDisabledModifier: ViewModifier, Record {\n    @Field public var disabled: Bool = true\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.hoverEffectDisabled(disabled)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "ignoresSafeArea",
+      "publicKey": "ignoresSafeArea",
+      "parameterFields": [
+        "regions",
+        "edges"
+      ],
+      "examples": [
+        {
+          "context": "GeometryPanel",
+          "line": 93,
+          "call": "m.ignoresSafeArea(['container'], ['bottom'])",
+          "arguments": [
+            "['container']",
+            "['bottom']"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedIgnoresSafeAreaModifier",
+      "nativeRecordSHA256": "b91676a0683881885ef884af7d06dae5ec63cb27372724c6c94875dc5b53661f",
+      "nativeForwarding": "public struct HanlinGeneratedIgnoresSafeAreaModifier: ViewModifier, Record {\n    @Field public var regions: [HanlinGeneratedSafeAreaRegionsValue]? = nil\n    @Field public var edges: [HanlinGeneratedEdgeSetValue]? = nil\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.ignoresSafeArea(regions.map { values in values.reduce(into: SafeAreaRegions()) { result, value in result.formUnion(value.swiftUIValue) } } ?? .all, edges: edges.map { values in values.reduce(into: Edge.Set()) { result, value in result.formUnion(value.swiftUIValue) } } ?? .all)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "monospaced",
+      "publicKey": "monospaced",
+      "parameterFields": [
+        "isActive"
+      ],
+      "examples": [
+        {
+          "context": "GeometryPanel",
+          "line": 68,
+          "call": "m.monospaced(true)",
+          "arguments": [
+            "true"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedMonospacedModifier",
+      "nativeRecordSHA256": "ad738364f5f18517edb82b6b153ae69ade301877785dfe1d6711925ab6c21bc7",
+      "nativeForwarding": "public struct HanlinGeneratedMonospacedModifier: ViewModifier, Record {\n    @Field public var isActive: Bool = true\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.monospaced(isActive)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "onOpenURL",
+      "publicKey": "onOpenURL",
+      "parameterFields": [
+        "prefersInApp"
+      ],
+      "examples": [
+        {
+          "context": "HostContextPanel",
+          "line": 253,
+          "call": "m.onOpenURL(true)",
+          "arguments": [
+            "true"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedOnOpenURLModifier",
+      "nativeRecordSHA256": "72fa92c4960e089427610881472073f7b4385affa304ab468abdcd34c18b3b01",
+      "nativeForwarding": "public struct HanlinGeneratedOnOpenURLModifier: ViewModifier, Record {\n    @Field public var prefersInApp: Bool = false\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.onOpenURL(prefersInApp: prefersInApp)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "Applies the real URL preference to a Link; external URL handling is not invoked by this probe."
+    },
+    {
+      "name": "position",
+      "publicKey": "position",
+      "parameterFields": [
+        "position"
+      ],
+      "examples": [
+        {
+          "context": "GeometryPanel",
+          "line": 73,
+          "call": "m.position({ x: changed ? 180 : 60, y: 32 })",
+          "arguments": [
+            "{ x: changed ? 180 : 60, y: 32 }"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedPositionModifier",
+      "nativeRecordSHA256": "066e126e105d1b45ea86b8801363d0ee2bd64c0299c0ee67970ee27851544303",
+      "nativeForwarding": "public struct HanlinGeneratedPositionModifier: ViewModifier, Record {\n    @Field public var position: HanlinGeneratedCGPointValue = HanlinGeneratedCGPointValue()\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.position(position.swiftUIValue)\n    }\n}",
+      "evidence": "Observable native assertion authored; execution pending",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "safeAreaPadding",
+      "publicKey": "safeAreaPadding",
+      "parameterFields": [
+        "insets"
+      ],
+      "examples": [
+        {
+          "context": "GeometryPanel",
+          "line": 85,
+          "call": "m.safeAreaPadding({ top: 8, leading: 12, bottom: 4, trailing: 20 })",
+          "arguments": [
+            "{ top: 8, leading: 12, bottom: 4, trailing: 20 }"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedSafeAreaPaddingModifier",
+      "nativeRecordSHA256": "737d4362ba47399a633bbc7ac58bd16f2a44cd80e9b5207815bd373024479a88",
+      "nativeForwarding": "public struct HanlinGeneratedSafeAreaPaddingModifier: ViewModifier, Record {\n    @Field public var insets: HanlinGeneratedEdgeInsetsValue = HanlinGeneratedEdgeInsetsValue()\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.safeAreaPadding(insets.swiftUIValue)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "scaledToFill",
+      "publicKey": "scaledToFill",
+      "parameterFields": [],
+      "examples": [
+        {
+          "context": "GeometryPanel",
+          "line": 83,
+          "call": "m.scaledToFill()",
+          "arguments": []
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedScaledToFillModifier",
+      "nativeRecordSHA256": "cf2d23d989cfcc80059bdb2905f0babef1cf7f6f320560a68e1f3a993df03693",
+      "nativeForwarding": "public struct HanlinGeneratedScaledToFillModifier: ViewModifier, Record {\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.scaledToFill()\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "scaledToFit",
+      "publicKey": "scaledToFit",
+      "parameterFields": [],
+      "examples": [
+        {
+          "context": "GeometryPanel",
+          "line": 82,
+          "call": "m.scaledToFit()",
+          "arguments": []
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedScaledToFitModifier",
+      "nativeRecordSHA256": "37c47a11565bb3542e62890eb54c2dcbd050e0b4b72bf663f20a810d9b274e21",
+      "nativeForwarding": "public struct HanlinGeneratedScaledToFitModifier: ViewModifier, Record {\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.scaledToFit()\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    },
+    {
+      "name": "speechAdjustedPitch",
+      "publicKey": "speechAdjustedPitch",
+      "parameterFields": [
+        "value"
+      ],
+      "examples": [
+        {
+          "context": "AccessibilityPanel",
+          "line": 43,
+          "call": "m.speechAdjustedPitch(0.15)",
+          "arguments": [
+            "0.15"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedSpeechAdjustedPitchModifier",
+      "nativeRecordSHA256": "bfe5ca26dbe08326b103c8b09bf11b32792199ca5e17a37a74a741b66706c961",
+      "nativeForwarding": "public struct HanlinGeneratedSpeechAdjustedPitchModifier: ViewModifier, Record {\n    @Field public var value: Double = 0\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.speechAdjustedPitch(value)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "Accessibility service/settings or drag/drop context is required for full effect; appearance and companion actions do not establish it."
+    },
+    {
+      "name": "speechAlwaysIncludesPunctuation",
+      "publicKey": "speechAlwaysIncludesPunctuation",
+      "parameterFields": [
+        "value"
+      ],
+      "examples": [
+        {
+          "context": "AccessibilityPanel",
+          "line": 43,
+          "call": "m.speechAlwaysIncludesPunctuation(true)",
+          "arguments": [
+            "true"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedSpeechAlwaysIncludesPunctuationModifier",
+      "nativeRecordSHA256": "c4a306af81c87533286838f7ad48e4474f85049497e8262fbdd7c99f5202d474",
+      "nativeForwarding": "public struct HanlinGeneratedSpeechAlwaysIncludesPunctuationModifier: ViewModifier, Record {\n    @Field public var value: Bool = true\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.speechAlwaysIncludesPunctuation(value)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "Accessibility service/settings or drag/drop context is required for full effect; appearance and companion actions do not establish it."
+    },
+    {
+      "name": "speechAnnouncementsQueued",
+      "publicKey": "speechAnnouncementsQueued",
+      "parameterFields": [
+        "value"
+      ],
+      "examples": [
+        {
+          "context": "AccessibilityPanel",
+          "line": 44,
+          "call": "m.speechAnnouncementsQueued(true)",
+          "arguments": [
+            "true"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedSpeechAnnouncementsQueuedModifier",
+      "nativeRecordSHA256": "96002bb4b8f07ccb4598e03610dde5f306122bd96b54b80c9a5d3db9acf42847",
+      "nativeForwarding": "public struct HanlinGeneratedSpeechAnnouncementsQueuedModifier: ViewModifier, Record {\n    @Field public var value: Bool = true\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.speechAnnouncementsQueued(value)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "Accessibility service/settings or drag/drop context is required for full effect; appearance and companion actions do not establish it."
+    },
+    {
+      "name": "speechSpellsOutCharacters",
+      "publicKey": "speechSpellsOutCharacters",
+      "parameterFields": [
+        "value"
+      ],
+      "examples": [
+        {
+          "context": "AccessibilityPanel",
+          "line": 44,
+          "call": "m.speechSpellsOutCharacters(true)",
+          "arguments": [
+            "true"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedSpeechSpellsOutCharactersModifier",
+      "nativeRecordSHA256": "5631abe59db7872062b415260300936b20d44e4ba3360f5b78aeabbef2936df9",
+      "nativeForwarding": "public struct HanlinGeneratedSpeechSpellsOutCharactersModifier: ViewModifier, Record {\n    @Field public var value: Bool = true\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.speechSpellsOutCharacters(value)\n    }\n}",
+      "evidence": "Typed forwarding/native context application; individual OS effect not asserted",
+      "boundary": "Accessibility service/settings or drag/drop context is required for full effect; appearance and companion actions do not establish it."
+    },
+    {
+      "name": "tracking",
+      "publicKey": "tracking",
+      "parameterFields": [
+        "tracking"
+      ],
+      "examples": [
+        {
+          "context": "GeometryPanel",
+          "line": 68,
+          "call": "m.tracking(changed ? 6 : 0)",
+          "arguments": [
+            "changed ? 6 : 0"
+          ]
+        }
+      ],
+      "nativeRecord": "HanlinGeneratedTrackingModifier",
+      "nativeRecordSHA256": "3e7e7eec1d2ef731c723a94ddb1c61444c512f7192f1724ab826d8bad6ead6ca",
+      "nativeForwarding": "public struct HanlinGeneratedTrackingModifier: ViewModifier, Record {\n    @Field public var tracking: CGFloat = 0\n\n    public init() {}\n\n    public func body(content: Content) -> some View {\n        content.tracking(tracking)\n    }\n}",
+      "evidence": "Observable native assertion authored; execution pending",
+      "boundary": "A mounted panel is only context evidence; the exact adapter body and declared parameters are recorded separately."
+    }
+  ]
+}

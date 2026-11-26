@@ -1,0 +1,11 @@
+{
+  "sourceLogSHA256": "da2db9ad4721b6d46ce4fcc601a32946e3b045fa1be917026e7b10b940b2a648",
+  "sourceLogBytes": 1123351,
+  "firstLine": 3979,
+  "lastLine": 4003,
+  "extractSHA256": "1195577d47db61e5d3959539fc187ddcc8c4ac29be6cdc2741a56a72397f11c6",
+  "diagnostics": [
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift:114:19: error: passing closure as a 'sending' parameter risks causing data races between main actor-isolated code and concurrent execution of the closure [#RegionIsolation::SendingClosureRisksDataRace]",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift:120:51: error: sending 'updates' risks causing data races [#RegionIsolation::SendingRisksDataRace]"
+  ]
+}

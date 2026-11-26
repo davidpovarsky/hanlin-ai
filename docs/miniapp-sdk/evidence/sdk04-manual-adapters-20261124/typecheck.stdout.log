@@ -1,0 +1,2 @@
+Fixtures/ExpoSwiftUIProbe/ManualAdapterProbe.tsx(38,16): error TS2322: Type 'string' is not assignable to type 'ObservableState<string>'.
+  Type 'string' is not assignable to type 'SharedObject'.

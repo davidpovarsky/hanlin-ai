@@ -1,0 +1,148 @@
+{
+  "headers": [
+    {
+      "line": 92452,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExpoWidgetPublication.swift:26:36: error: cannot convert value of type '[String : HanlinValue]' to expected argument type 'HanlinObject<HanlinValue>'"
+    }
+  ],
+  "context": [
+    {
+      "line": 92447,
+      "text": "SwiftDriver\\ Compilation HanlinScriptingApplicationRuntime normal arm64 com.apple.xcode.tools.swift.compiler (in target 'HanlinScriptingApplicationRuntime' from project 'HanlinSDK')"
+    },
+    {
+      "line": 92448,
+      "text": "    cd /Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY.xcodeproj"
+    },
+    {
+      "line": 92449,
+      "text": "    builtin-Swift-Compilation -- /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swiftc -parse-as-library -module-name HanlinScriptingApplicationRuntime -Onone @/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptingApplicationRuntime-t.build/Objects-normal/arm64/HanlinScriptingApplicationRuntime.SwiftFileList -DSWIFT_PACKAGE -DDEBUG -DSWIFT_MODULE_RESOURCE_BUNDLE_UNAVAILABLE -DXcode -plugin-path /Applications/Xcode_27.2.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/swift/host/plugins/testing -enable-experimental-feature DebugDescriptionMacro -sdk /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk -target arm64-apple-ios27.0-simulator -g -module-cache-path /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/ModuleCache.noindex -Xfrontend -serialize-debugging-options -enable-testing -index-store-path /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Index.noindex/DataStore -Xcc -D_LIBCPP_HARDENING_MODE\\=_LIBCPP_HARDENING_MODE_DEBUG -swift-version 6 -I /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator -Isystem /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/lib -F /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/PackageFrameworks -F /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator -F /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Library/Frameworks -F /Applications/Xcode_27.2.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.2.sdk/Developer/Library/Frameworks -emit-localized-strings -emit-localized-strings-path /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptingApplicationRuntime-t.build/Objects-normal/arm64 -c -j3 -enable-batch-mode -incremental -Xcc -ivfsstatcache -Xcc /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/SDKStatCaches.noindex/iphonesimulator27.2-24B8118-9aa026f88bf9ed31cff8761912ac5bd1414ec6ff3c837c3a1760e1fb4ff3fe25.sdkstatcache -output-file-map /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptingApplicationRuntime-t.build/Objects-normal/arm64/HanlinScriptingApplicationRuntime-OutputFileMap.json -save-temps -no-color-diagnostics -explicit-module-build -module-cache-path /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/SwiftExplicitPrecompiledModules -clang-scanner-module-cache-path /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/ModuleCache.noindex -sdk-module-cache-path /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/SDKExplicitPrecompiledModules -emit-dependencies -emit-module -emit-module-path /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptingApplicationRuntime-t.build/Objects-normal/arm64/HanlinScriptingApplicationRuntime.swiftmodule -serialize-diagnostics -dependency-scan-serialize-diagnostics-path /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptingApplicationRuntime-t.build/Objects-normal/arm64/HanlinScriptingApplicationRuntime-dependency-scan.dia -validate-clang-modules-once -clang-build-session-file /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/ModuleCache.noindex/Session.modulevalidation -Xcc -fmodules-prune-interval\\=86400 -Xcc -fmodules-prune-after\\=345600 -package-name hanlin_ai -emit-const-values -const-gather-protocols-list /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptingApplicationRuntime-t.build/Objects-normal/arm64/HanlinScriptingApplicationRuntime_const_extract_protocols.json -Xcc -I/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Products/Debug-iphonesimulator/include -Xcc -I/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptingApplicationRuntime-t.build/DerivedSources-normal/arm64 -Xcc -I/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptingApplicationRuntime-t.build/DerivedSources/arm64 -Xcc -I/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptingApplicationRuntime-t.build/DerivedSources -Xcc -DSWIFT_PACKAGE -Xcc -DDEBUG\\=1 -emit-objc-header -emit-objc-header-path /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptingApplicationRuntime-t.build/Objects-normal/arm64/HanlinScriptingApplicationRuntime-Swift.h -working-directory /Users/runner/work/hanlin-ai/hanlin-ai/AI_HLY.xcodeproj -experimental-emit-module-separately -disable-cmo"
+    },
+    {
+      "line": 92450,
+      "text": ""
+    },
+    {
+      "line": 92451,
+      "text": "SwiftCompile normal arm64 Compiling\\ resource_bundle_accessor.swift,\\ HanlinExpoWidgetsDynamicView.swift,\\ HanlinExpoWidgetsRuntime.swift,\\ HanlinExpoWidgetsViewRenderer.swift,\\ HanlinCompactAgentContracts.swift,\\ HanlinExpoWidgetPublication.swift,\\ HanlinExtensionNodeView.swift,\\ HanlinGenericWidgetActionIntent.swift,\\ HanlinInvocationDelivery.swift,\\ HanlinInvocationExecutor.swift,\\ HanlinInvocationQueue.swift,\\ HanlinInvocationSnippet.swift,\\ HanlinKeychainCredentialStore.swift,\\ HanlinLiveActivityUILayout.swift,\\ HanlinManagedStateTransaction.swift,\\ HanlinMiniAppCardView.swift,\\ HanlinNativePresentation.swift,\\ HanlinPreparedWidget.swift,\\ HanlinScriptAppIntentBridge.swift,\\ HanlinScriptExtensionContracts.swift,\\ HanlinScriptExtensionStore.swift,\\ HanlinScriptLiveActivityController.swift,\\ HanlinScriptWidgetControls.swift,\\ HanlinScriptWidgetDynamicIsland.swift,\\ HanlinScriptWidgetLiveActivity.swift /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptExtensions-t.build/DerivedSources/resource_bundle_accessor.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ExpoWidgets/HanlinExpoWidgetsDynamicView.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ExpoWidgets/HanlinExpoWidgetsRuntime.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ExpoWidgets/HanlinExpoWidgetsViewRenderer.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinCompactAgentContracts.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExpoWidgetPublication.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExtensionNodeView.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinGenericWidgetActionIntent.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationDelivery.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationExecutor.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationSnippet.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinKeychainCredentialStore.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinLiveActivityUILayout.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinManagedStateTransaction.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinMiniAppCardView.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNativePresentation.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinPreparedWidget.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptAppIntentBridge.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionContracts.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionStore.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptLiveActivityController.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptWidgetControls.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptWidgetDynamicIsland.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptWidgetLiveActivity.swift (in target 'HanlinScriptExtensions' from project 'HanlinSDK')"
+    },
+    {
+      "line": 92452,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExpoWidgetPublication.swift:26:36: error: cannot convert value of type '[String : HanlinValue]' to expected argument type 'HanlinObject<HanlinValue>'"
+    },
+    {
+      "line": 92453,
+      "text": "24 |     ) throws -> HanlinExpoWidgetStateReceipt {"
+    },
+    {
+      "line": 92454,
+      "text": "25 |         // Validate actual JSON before entering the transaction; no host size budget."
+    },
+    {
+      "line": 92455,
+      "text": "26 |         _ = try HanlinValue.object(props).canonicalJSONData(limits: .unbounded)"
+    },
+    {
+      "line": 92456,
+      "text": "   |                                    `- error: cannot convert value of type '[String : HanlinValue]' to expected argument type 'HanlinObject<HanlinValue>'"
+    },
+    {
+      "line": 92457,
+      "text": "27 |         var receipt: HanlinExpoWidgetStateReceipt?"
+    },
+    {
+      "line": 92458,
+      "text": "28 |         try update { current in"
+    },
+    {
+      "line": 92459,
+      "text": ""
+    },
+    {
+      "line": 92460,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionStore.swift:226:16: warning: value 'commit' was defined but never used; consider replacing with boolean test [#NoUsage]"
+    }
+  ],
+  "lastLines": [
+    {
+      "line": 92579,
+      "text": ""
+    },
+    {
+      "line": 92580,
+      "text": "PruneExplicitPrecompiledModules /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/SDKExplicitPrecompiledModules"
+    },
+    {
+      "line": 92581,
+      "text": ""
+    },
+    {
+      "line": 92582,
+      "text": "PruneExplicitPrecompiledModules /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/ExplicitPrecompiledModules"
+    },
+    {
+      "line": 92583,
+      "text": ""
+    },
+    {
+      "line": 92584,
+      "text": "note: Run script build phase 'Process Python libraries' will be run during every build because the option to run the script phase \"Based on dependency analysis\" is unchecked. (in target 'HanlinMiniApps' from project 'AI_HLY')"
+    },
+    {
+      "line": 92585,
+      "text": "note: Run script build phase 'Generate NativeScript metadata' will be run during every build because the option to run the script phase \"Based on dependency analysis\" is unchecked. (in target 'HanlinMiniApps' from project 'AI_HLY')"
+    },
+    {
+      "line": 92586,
+      "text": ""
+    },
+    {
+      "line": 92587,
+      "text": "Result bundle written to path:"
+    },
+    {
+      "line": 92588,
+      "text": "\t/Users/runner/work/hanlin-ai/hanlin-ai/build/app-split-evidence/paired-product/MiniBuild.xcresult"
+    },
+    {
+      "line": 92589,
+      "text": ""
+    },
+    {
+      "line": 92590,
+      "text": "** TEST BUILD FAILED **"
+    },
+    {
+      "line": 92591,
+      "text": ""
+    },
+    {
+      "line": 92592,
+      "text": ""
+    },
+    {
+      "line": 92593,
+      "text": "The following build commands failed:"
+    },
+    {
+      "line": 92594,
+      "text": "\tSwiftCompile normal arm64 Compiling\\ resource_bundle_accessor.swift,\\ HanlinExpoWidgetsDynamicView.swift,\\ HanlinExpoWidgetsRuntime.swift,\\ HanlinExpoWidgetsViewRenderer.swift,\\ HanlinCompactAgentContracts.swift,\\ HanlinExpoWidgetPublication.swift,\\ HanlinExtensionNodeView.swift,\\ HanlinGenericWidgetActionIntent.swift,\\ HanlinInvocationDelivery.swift,\\ HanlinInvocationExecutor.swift,\\ HanlinInvocationQueue.swift,\\ HanlinInvocationSnippet.swift,\\ HanlinKeychainCredentialStore.swift,\\ HanlinLiveActivityUILayout.swift,\\ HanlinManagedStateTransaction.swift,\\ HanlinMiniAppCardView.swift,\\ HanlinNativePresentation.swift,\\ HanlinPreparedWidget.swift,\\ HanlinScriptAppIntentBridge.swift,\\ HanlinScriptExtensionContracts.swift,\\ HanlinScriptExtensionStore.swift,\\ HanlinScriptLiveActivityController.swift,\\ HanlinScriptWidgetControls.swift,\\ HanlinScriptWidgetDynamicIsland.swift,\\ HanlinScriptWidgetLiveActivity.swift /Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/HanlinSDK.build/Debug-iphonesimulator/HanlinScriptExtensions-t.build/DerivedSources/resource_bundle_accessor.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ExpoWidgets/HanlinExpoWidgetsDynamicView.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ExpoWidgets/HanlinExpoWidgetsRuntime.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ExpoWidgets/HanlinExpoWidgetsViewRenderer.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinCompactAgentContracts.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExpoWidgetPublication.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExtensionNodeView.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinGenericWidgetActionIntent.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationDelivery.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationExecutor.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationSnippet.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinKeychainCredentialStore.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinLiveActivityUILayout.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinManagedStateTransaction.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinMiniAppCardView.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNativePresentation.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinPreparedWidget.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptAppIntentBridge.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionContracts.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionStore.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptLiveActivityController.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptWidgetControls.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptWidgetDynamicIsland.swift /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptWidgetLiveActivity.swift (in target 'HanlinScriptExtensions' from project 'HanlinSDK')"
+    },
+    {
+      "line": 92595,
+      "text": "\tSwiftCompile normal arm64 /Users/runner/work/hanlin-ai/hanlin-ai/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExpoWidgetPublication.swift (in target 'HanlinScriptExtensions' from project 'HanlinSDK')"
+    },
+    {
+      "line": 92596,
+      "text": "\tBuilding project AI_HLY for testing with scheme HanlinMiniApps"
+    },
+    {
+      "line": 92597,
+      "text": "(3 failures)"
+    },
+    {
+      "line": 92598,
+      "text": "Resolve Package Graph"
+    }
+  ]
+}
