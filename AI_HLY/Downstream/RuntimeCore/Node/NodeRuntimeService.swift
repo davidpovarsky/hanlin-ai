@@ -641,6 +641,17 @@ actor NodeRuntimeService {
             workspace: fileLayout.workspace(client: .tools, identifier: "miniapp-authoring"))
     }
 
+    /// Original TypeScript completions, parameter help and documentation for an
+    /// unsaved editor buffer. Uses the same SDK resolution as validate/build.
+    func inspectMiniAppSource(project: URL, engine: String, file: String, source: String,
+                              position: Int, version: Int, completionName: String? = nil) async throws -> RuntimeJSONValue {
+        let workspace = try fileLayout.validatedWorkspace(project)
+        var body: [String: Any] = ["operation": "editor", "engine": engine, "projectRoot": workspace.path,
+                                  "file": file, "source": source, "position": position, "version": version]
+        if let completionName { body["completionName"] = completionName }
+        return try await runMiniAppAuthoring(RuntimeJSONValue.self, body: body, workspace: workspace)
+    }
+
     func authorMiniApp(operation: String, engine: String, project: URL) async throws -> HanlinMiniAppAuthoringReport {
         let workspace = try fileLayout.validatedWorkspace(project)
         return try await runMiniAppAuthoring(HanlinMiniAppAuthoringReport.self,

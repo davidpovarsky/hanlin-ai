@@ -177,7 +177,7 @@ async function packageConsistency(input) {
   return diagnostics;
 }
 
-async function parseProject(ts, input, sdkRoot, sdkEngine, fallbackConfig, useProjectConfig = true) {
+async function parseProject(ts, input, sdkRoot, sdkEngine, fallbackConfig, useProjectConfig = true, collectDiagnostics = true) {
   const basePath = sdkEngine.tsconfigPath ? child(sdkRoot, sdkEngine.tsconfigPath) : null;
   let base = {options: {}, errors: []};
   if (basePath) {
@@ -276,7 +276,7 @@ async function parseProject(ts, input, sdkRoot, sdkEngine, fallbackConfig, usePr
     ...(base.fileNames ?? []).filter(file => file.endsWith('.d.ts'))])];
   const program = ts.createProgram({rootNames, options, host: compilerHost, projectReferences: parsed.projectReferences});
   const diagnostics = [...base.errors, ...(sourceConfig.error ? [sourceConfig.error] : []),
-    ...parsed.errors, ...ts.getPreEmitDiagnostics(program)];
+    ...parsed.errors, ...(collectDiagnostics ? ts.getPreEmitDiagnostics(program) : [])];
   return {program, compilerHost, options, sdkOptions, toolingRoot, originalPackages,
     diagnostics: deduplicate(diagnostics.map(item => normalizedDiagnostic(ts, item, input.sourceRoot)))};
 }
@@ -842,6 +842,7 @@ async function buildScriptWidget(input, parsed, stage) {
 
 export async function runMiniAppOperation(request, {sdkRoot, compiler} = {}) {
   if (request.operation === 'sdk') return readMiniAppSDK(sdkRoot, request);
+  if (request.operation === 'editor') return inspectMiniAppSource(request, {sdkRoot, compiler});
   if (!['validate', 'build'].includes(request.operation)) throw new Error('Unknown MiniApp authoring operation.');
   let input;
   let stage;
@@ -906,5 +907,74 @@ export async function runMiniAppOperation(request, {sdkRoot, compiler} = {}) {
     return report;
   } finally {
     if (ownsStage && !report.succeeded) await fs.rm(stage, {recursive: true, force: true});
+  }
+}
+
+
+/** The editor and builds share the same original TypeScript SDK resolution. */
+export async function inspectMiniAppSource(request, {sdkRoot, compiler} = {}) {
+  const input = await projectInput(request);
+  const file = child(input.sourceRoot, request.file);
+  const actual = await fs.realpath(file);
+  if (!inside(input.sourceRoot, actual)) throw new Error('Editor file resolves outside its project.');
+  if (typeof request.source !== 'string' || !Number.isSafeInteger(request.position) ||
+      request.position < 0 || request.position > request.source.length) {
+    throw new Error('Editor source and a valid UTF-16 cursor position are required.');
+  }
+  const sdk = await readMiniAppSDK(sdkRoot, {engine: input.engine});
+  const descriptor = sdk.selectedEngine;
+  const ts = compiler ?? (descriptor.typescriptPath
+    ? (await import(pathToFileURL(child(sdk.sdkRoot, descriptor.typescriptPath)).href)).default
+    : (await import('typescript')).default);
+  if (!ts?.createLanguageService) throw new Error('The original TypeScript language service is unavailable.');
+  const parsed = await parseProject(ts, input, sdk.sdkRoot, descriptor, undefined, true, false);
+  const sameFile = name => path.resolve(name) === path.resolve(file);
+  const host = {
+    ...parsed.compilerHost,
+    getCompilationSettings: () => parsed.options,
+    getScriptFileNames: () => [...new Set([...parsed.program.getRootFileNames(), file])],
+    getScriptVersion: name => sameFile(name) ? String(request.version ?? 0) : '0',
+    getScriptSnapshot: name => {
+      const text = sameFile(name) ? request.source : parsed.compilerHost.readFile(name);
+      return text === undefined ? undefined : ts.ScriptSnapshot.fromString(text);
+    },
+    getCurrentDirectory: () => input.sourceRoot,
+    getDefaultLibFileName: options => ts.getDefaultLibFilePath(options),
+    readDirectory: ts.sys.readDirectory,
+    useCaseSensitiveFileNames: () => ts.sys.useCaseSensitiveFileNames
+  };
+  const service = ts.createLanguageService(host);
+  try {
+    const completions = service.getCompletionsAtPosition(file, request.position,
+      {includeCompletionsForModuleExports: false, includeCompletionsWithInsertText: true});
+    const requested = request.completionName && completions?.entries.find(entry => entry.name === request.completionName);
+    const details = requested ? service.getCompletionEntryDetails(file, request.position,
+      requested.name, {}, requested.source, {}, requested.data) : undefined;
+    const info = service.getQuickInfoAtPosition(file, Math.max(0, request.position - 1));
+    const signatures = service.getSignatureHelpItems(file, request.position, undefined);
+    const signature = signatures?.items[signatures.selectedItemIndex];
+    const display = parts => ts.displayPartsToString(parts ?? []);
+    const signatureText = signature ? display(signature.prefixDisplayParts) +
+      signature.parameters.map(parameter => display(parameter.displayParts)).join(display(signature.separatorDisplayParts)) +
+      display(signature.suffixDisplayParts) : '';
+    const documentation = details?.documentation ?? signature?.documentation ?? info?.documentation;
+    return {
+      schemaVersion: 1, version: request.version ?? 0, file: request.file,
+      compilerVersion: ts.version, manifestSHA256: sdk.manifestSHA256,
+      completions: (completions?.entries ?? []).map(entry => ({
+        name: entry.name, kind: entry.kind, sortText: entry.sortText, insertText: entry.isSnippet ? entry.name : (entry.insertText ?? entry.name),
+        ...(entry.replacementSpan ? {replacementStart: entry.replacementSpan.start, replacementLength: entry.replacementSpan.length} : {})
+      })),
+      display: display(details?.displayParts ?? info?.displayParts),
+      documentation: display(documentation),
+      signature: signatureText,
+      argumentIndex: signatures?.argumentIndex ?? null,
+      diagnostics: deduplicate([...service.getSyntacticDiagnostics(file), ...service.getSemanticDiagnostics(file)]
+        .map(diagnostic => normalizedDiagnostic(ts, diagnostic, input.sourceRoot))),
+      documentationURL: input.engine === 'expo' ? 'https://docs.expo.dev/'
+        : input.engine === 'nativescript' ? 'https://docs.nativescript.org/' : 'https://scriptwidget.app/'
+    };
+  } finally {
+    service.dispose();
   }
 }
