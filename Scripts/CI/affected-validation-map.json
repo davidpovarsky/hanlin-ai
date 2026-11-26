@@ -482,7 +482,8 @@
         "Scripts/Runtime/verify_runtime_reuse.py",
         "Scripts/MiniApps/AssistantExamples/**",
         "Scripts/MiniApps/assistant-tools.d.ts",
-        "Scripts/MiniApps/assistant-tools.schema.json"
+        "Scripts/MiniApps/assistant-tools.schema.json",
+        "Scripts/MiniApps/native-presentations.d.ts"
       ],
       "direct_validation_groups": [
         "runtimecore_host"
@@ -1860,6 +1861,27 @@
       "ui_suites": [
         "AI_HLYUITests/HanlinComposerCapabilitiesUITests",
         "AI_HLYUITests/HanlinSidebarNavigationUITests"
+      ],
+      "consumers": []
+    },
+    "original_widget_contracts": {
+      "description": "Original Expo and ScriptWidget native renderers, ActivityKit actions, shared widget fixture and typed authoring contract",
+      "patterns": [
+        "AI_HLYTests/HanlinNativeWidgetRendererTests.swift",
+        "AI_HLYTests/HanlinOriginalExpoWidgetTests.swift",
+        "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift",
+        "Fixtures/Widgets/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo",
+        "Fixtures/Widgets/SHA256.json",
+        "Scripts/Widgets/Tests/widget-types-consumer.ts"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests",
+        "runtimecore_host"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinNativeWidgetRendererTests",
+        "AI_HLYTests/HanlinOriginalExpoWidgetTests",
+        "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests"
       ],
       "consumers": []
     }

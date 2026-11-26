@@ -1,0 +1,25 @@
+{
+  "source": "33f0eb3195406e98139e29dd94819d14e51853bd",
+  "base": "c34dd6ae752b3ab3ebc001743fc62c72fc48a203",
+  "started_at": "2026-11-26T13:10:15.309462+00:00",
+  "duration_seconds": 50.115,
+  "exit_code": 1,
+  "command": [
+    "runuser",
+    "-u",
+    "chatgpt-agent",
+    "--",
+    "python3",
+    "/mnt/development/projects/worktrees/hanlin-two-wave-integration-20261126/Scripts/CI/plan_affected_validation.py",
+    "--repository",
+    "/mnt/development/projects/worktrees/hanlin-two-wave-integration-20261126",
+    "--base-sha",
+    "c34dd6ae752b3ab3ebc001743fc62c72fc48a203",
+    "--head-sha",
+    "33f0eb3195406e98139e29dd94819d14e51853bd",
+    "--json-output",
+    "/mnt/development/projects/worktrees/hanlin-two-wave-integration-20261126/build/two-wave-validation-33f0eb31/plan.json"
+  ],
+  "log": "/mnt/development/projects/worktrees/hanlin-two-wave-integration-20261126/build/two-wave-validation-33f0eb31/planner.log",
+  "plan": "/mnt/development/projects/worktrees/hanlin-two-wave-integration-20261126/build/two-wave-validation-33f0eb31/plan.json"
+}
