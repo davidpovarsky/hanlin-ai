@@ -514,11 +514,14 @@ private struct MiniAppScriptWidgetActivityControls: View {
 struct ScriptingApplicationContainerView: View {
     let platform: HanlinScriptingPlatform
     let ownsApplicationLifetime: Bool
+    private let onClose: (@MainActor () -> Void)?
     @Environment(\.dismiss) private var dismiss
 
-    init(platform: HanlinScriptingPlatform, ownsApplicationLifetime: Bool = true) {
+    init(platform: HanlinScriptingPlatform, ownsApplicationLifetime: Bool = true,
+         onClose: (@MainActor () -> Void)? = nil) {
         self.platform = platform
         self.ownsApplicationLifetime = ownsApplicationLifetime
+        self.onClose = onClose
     }
 
     var body: some View {
@@ -538,7 +541,8 @@ struct ScriptingApplicationContainerView: View {
                 if ownsApplicationLifetime {
                     ToolbarItem(placement: .topBarTrailing) {
                         Button(hanlin: "Close") {
-                            platform.dismissActiveApplication()
+                            if let onClose { onClose() }
+                            else { platform.dismissActiveApplication() }
                             dismiss()
                         }
                         .accessibilityIdentifier("hanlin-script-app-close")
@@ -558,7 +562,10 @@ struct ScriptingApplicationContainerView: View {
         .onDisappear {
             // An external invocation supplies its own close/return controls and
             // owns the runtime across this container's nested presentations.
-            if ownsApplicationLifetime { platform.dismissActiveApplication() }
+            if ownsApplicationLifetime {
+                if let onClose { onClose() }
+                else { platform.dismissActiveApplication() }
+            }
         }
     }
 }

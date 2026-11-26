@@ -37,6 +37,7 @@ private struct HanlinMiniAppSystemEntrypointsModifier: ViewModifier {
     @State private var cameraRequests = HanlinCameraCaptureRequests.shared
 
     func body(content: Content) -> some View {
+        let shortcutID = platform.shortcutPresentation?.id
         content
             .task {
                 windowIsActive = scenePhase == .active
@@ -57,7 +58,7 @@ private struct HanlinMiniAppSystemEntrypointsModifier: ViewModifier {
                 // When a package was already presented, camera and package share
                 // one cover. A finished capture switches its content in place.
                 Task {
-                    if old != nil, current == nil, platform.presentsForegroundAction {
+                    if old != nil, current == nil, platform.isForegroundPresentationVisible {
                         await captures.cameraDidDismiss(windowID: windowID)
                     }
                     // A camera request may finish loading after its former
@@ -79,10 +80,11 @@ private struct HanlinMiniAppSystemEntrypointsModifier: ViewModifier {
                 systemEntrypoints.updateWindowActivity(false, windowID: windowID, captures: captures)
             }
             .fullScreenCover(isPresented: Binding(
-                get: { (captures.cameraWindowID == windowID && captures.cameraPresentation != nil) || (platform.presentsForegroundAction && systemEntrypoints.presentationWindowID == windowID) },
+                get: { (captures.cameraWindowID == windowID && captures.cameraPresentation != nil) || (platform.isForegroundPresentationVisible && systemEntrypoints.presentationWindowID == windowID) },
                 set: {
                     if !$0, systemEntrypoints.presentationWindowID == windowID {
-                        platform.dismissActiveApplication()
+                        if let shortcutID { platform.dismissShortcutPresentation(shortcutID) }
+                        else { platform.dismissActiveApplication() }
                     }
                 }
             ), onDismiss: { Task { await captures.cameraDidDismiss(windowID: windowID); await admit() } }) {
@@ -94,7 +96,11 @@ private struct HanlinMiniAppSystemEntrypointsModifier: ViewModifier {
                         cancel: { captures.cancelApplicationCapture(directory: presentation.directory) })
                         .interactiveDismissDisabled()
                 } else {
-                    ScriptingApplicationContainerView(platform: platform)
+                    ScriptingApplicationContainerView(platform: platform.foregroundPresentationPlatform,
+                        onClose: {
+                            if let shortcutID { platform.dismissShortcutPresentation(shortcutID) }
+                            else { platform.dismissActiveApplication() }
+                        })
                 }
             }
             .sheet(isPresented: Binding(

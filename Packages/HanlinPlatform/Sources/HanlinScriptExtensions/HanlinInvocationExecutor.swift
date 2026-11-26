@@ -29,6 +29,23 @@ public actor HanlinInvocationExecutor {
         // No automatic replay is enabled here. A future registered action may
         // opt in only after its installed idempotency declaration is verified.
         guard let claim = try store.claim(invocationID) else { return try store.receipt(for: invocationID) }
+        return try await execute(claim, releaseUnstarted: true, handler: handler)
+    }
+
+    /// The dedicated intent and any ordinary foreground drain use the same
+    /// fenced lease. Exact retries retain their original command and receipt.
+    public func execute(_ command: HanlinScriptResumeCommand,
+                        handler: @escaping Handler) async throws -> HanlinInvocationReceipt? {
+        guard let claim = try store.enqueueAndClaim(command) else {
+            if let task = active[command.id] { return try await task.value }
+            return try store.receipt(for: command.id)
+        }
+        return try await execute(claim, releaseUnstarted: false, handler: handler)
+    }
+
+    private func execute(_ claim: HanlinInvocationClaim, releaseUnstarted: Bool,
+                         handler: @escaping Handler) async throws -> HanlinInvocationReceipt? {
+        let invocationID = claim.command.id
         let store = self.store
         let task = Task<HanlinInvocationReceipt?, Error> {
             do {
@@ -55,7 +72,13 @@ public actor HanlinInvocationExecutor {
             } catch is CancellationError {
                 try store.complete(claim, status: .cancelled)
             } catch is HanlinInvocationNotStarted {
-                try store.releaseUnstarted(claim)
+                if releaseUnstarted {
+                    try store.releaseUnstarted(claim)
+                } else {
+                    // A live intent returning an admission error must not leave
+                    // its action queued for execution after Shortcuts has ended.
+                    try store.complete(claim, status: .needsForeground, failure: .unavailableHost)
+                }
             } catch let error as HanlinInvocationDispatchError {
                 try store.complete(claim, status: error.status, failure: error.failure)
             } catch {

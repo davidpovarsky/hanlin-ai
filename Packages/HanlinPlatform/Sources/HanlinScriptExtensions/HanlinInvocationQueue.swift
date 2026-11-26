@@ -36,6 +36,34 @@ extension HanlinScriptExtensionStore {
         try writeCommand(.init(command))
     }
 
+    /// A live AppIntent owns its command before OS preparation can suspend.
+    /// Publish the original record with its lease in one write; a process loss
+    /// can never turn this admission into an unowned, replayable queued action.
+    public func enqueueAndClaim(_ command: HanlinScriptResumeCommand,
+                                now: Date = .now, leaseSeconds: TimeInterval = 30) throws -> HanlinInvocationClaim? {
+        try withLock {
+            try validateCommand(command)
+            let record: HanlinInvocationRecord
+            if let existing = try readCommand(command.id) {
+                guard try Self.encoded(existing.command) == Self.encoded(command) else {
+                    throw HanlinInvocationQueueError.duplicateIdentity
+                }
+                record = existing
+            } else {
+                record = .init(command)
+            }
+            guard let claim = try claimUnlocked(record, now: now, leaseSeconds: leaseSeconds,
+                                                registeredActionIsIdempotent: false) else { return nil }
+            // Return the exact persisted envelope, including the existing date
+            // encoding, just as claim(id:) does for a separately enqueued item.
+            guard let persisted = try readCommand(command.id),
+                  persisted.currentReceipt.leaseID == claim.leaseID else {
+                throw HanlinInvocationQueueError.staleLease
+            }
+            return .init(command: persisted.command, leaseID: claim.leaseID)
+        }
+    }
+
     public func pendingCommands(limit: Int = 64) throws -> [HanlinScriptResumeCommand] {
         try withLock {
             try commandURLs().map { try readCommandURL($0) }
@@ -95,36 +123,44 @@ extension HanlinScriptExtensionStore {
                       registeredActionIsIdempotent: Bool = false) throws -> HanlinInvocationClaim? {
         try withLock {
             guard leaseSeconds.isFinite, (1...60).contains(leaseSeconds) else { throw HanlinInvocationQueueError.invalidEnvelope }
-            guard var record = try readCommand(invocationID) else { throw HanlinInvocationQueueError.missingCommand }
-            var receipt = record.currentReceipt
-            guard !receipt.status.isTerminal else { return nil }
-            let expiresAt = record.invocation.delivery?.expiresAt ?? record.createdAt.addingTimeInterval(86_400)
-            if receipt.status == .running {
-                guard let expiry = receipt.leaseExpiresAt, expiry <= now else { return nil }
-                // Loss of a process does not prove its side effect did not run.
-                guard registeredActionIsIdempotent, record.invocation.delivery?.idempotent == true else {
-                    receipt.status = .deferred; receipt.failure = .interruptedOutcomeUnknown
-                    receipt.updatedAt = now; receipt.leaseID = nil; receipt.leaseExpiresAt = nil
-                    record.receipt = receipt; try writeCommand(record); return nil
-                }
-            }
-            if receipt.cancellationRequested || expiresAt <= now {
-                receipt.status = receipt.cancellationRequested ? .cancelled : .expired
+            guard let record = try readCommand(invocationID) else { throw HanlinInvocationQueueError.missingCommand }
+            return try claimUnlocked(record, now: now, leaseSeconds: leaseSeconds,
+                                     registeredActionIsIdempotent: registeredActionIsIdempotent)
+        }
+    }
+
+    private func claimUnlocked(_ original: HanlinInvocationRecord, now: Date, leaseSeconds: TimeInterval,
+                               registeredActionIsIdempotent: Bool) throws -> HanlinInvocationClaim? {
+        guard leaseSeconds.isFinite, (1...60).contains(leaseSeconds) else { throw HanlinInvocationQueueError.invalidEnvelope }
+        var record = original
+        var receipt = record.currentReceipt
+        guard !receipt.status.isTerminal else { return nil }
+        let expiresAt = record.invocation.delivery?.expiresAt ?? record.createdAt.addingTimeInterval(86_400)
+        if receipt.status == .running {
+            guard let expiry = receipt.leaseExpiresAt, expiry <= now else { return nil }
+            // Loss of a process does not prove its side effect did not run.
+            guard registeredActionIsIdempotent, record.invocation.delivery?.idempotent == true else {
+                receipt.status = .deferred; receipt.failure = .interruptedOutcomeUnknown
                 receipt.updatedAt = now; receipt.leaseID = nil; receipt.leaseExpiresAt = nil
                 record.receipt = receipt; try writeCommand(record); return nil
             }
-            let maximumAttempts = record.invocation.delivery?.maximumAttempts ?? 1
-            guard receipt.attempt < maximumAttempts else {
-                receipt.status = .failed; receipt.failure = .attemptsExhausted; receipt.updatedAt = now
-                receipt.leaseID = nil; receipt.leaseExpiresAt = nil
-                record.receipt = receipt; try writeCommand(record); return nil
-            }
-            let token = UUID()
-            receipt.status = .running; receipt.attempt += 1; receipt.updatedAt = now
-            receipt.leaseID = token; receipt.leaseExpiresAt = min(expiresAt, now.addingTimeInterval(leaseSeconds))
-            record.receipt = receipt; try writeCommand(record)
-            return .init(command: record.command, leaseID: token)
         }
+        if receipt.cancellationRequested || expiresAt <= now {
+            receipt.status = receipt.cancellationRequested ? .cancelled : .expired
+            receipt.updatedAt = now; receipt.leaseID = nil; receipt.leaseExpiresAt = nil
+            record.receipt = receipt; try writeCommand(record); return nil
+        }
+        let maximumAttempts = record.invocation.delivery?.maximumAttempts ?? 1
+        guard receipt.attempt < maximumAttempts else {
+            receipt.status = .failed; receipt.failure = .attemptsExhausted; receipt.updatedAt = now
+            receipt.leaseID = nil; receipt.leaseExpiresAt = nil
+            record.receipt = receipt; try writeCommand(record); return nil
+        }
+        let token = UUID()
+        receipt.status = .running; receipt.attempt += 1; receipt.updatedAt = now
+        receipt.leaseID = token; receipt.leaseExpiresAt = min(expiresAt, now.addingTimeInterval(leaseSeconds))
+        record.receipt = receipt; try writeCommand(record)
+        return .init(command: record.command, leaseID: token)
     }
 
     public func renew(_ claim: HanlinInvocationClaim, now: Date = .now, leaseSeconds: TimeInterval = 30) throws {
