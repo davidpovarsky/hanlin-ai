@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
-  "inputSHA256": "c1ee121030c85e703d92afeb7703ca916febf05a72f33bcb3a865b7cddd6978f",
-  "packageVersion": "58.0.29",
-  "packageLockSHA256": "3b31e1c8fd34145df900764a2cda013ab02ecea7f890c969ad5e0a92925d0dd8",
+  "inputSHA256": "55cd09398ed133c79ad37aca7e63aaeb01e1905a9fef40836b7ec597e108e3c6",
+  "packageVersion": "58.0.30",
+  "packageLockSHA256": "b4f10e5109d8f6c59a0a3f04d07f960b8377c2d90c1332b362821f66cec9f948",
   "babelSHA256": "62581fd5caf7b97cb36290093b7bbf7103e1c1b1300e0e11a1b3eaaf96c998ba",
   "producerSHA256": "5928bb12ed2fd2f6b2ecfeb6d8fc309d46e5837c58dcc4272d73af13434eb549",
   "nativeSources": [
@@ -116,7 +116,7 @@
     }
   ],
   "originalProducerSHA256": "2bc5c823a85da25c892563345adbbe36a33fa59d1146554382c5c2f5530dea73",
-  "bundleSHA256": "6ec4f91b442f8c387f2ea339f503b5a39082878811806cb58179236d06323aed",
+  "bundleSHA256": "b845ba11339bfcca48e75cdf0d80a553c3ca6cdf20ba38d9fb4082989def047b",
   "registrySHA256": "71c9d33ca106b100af05bbb627934736fc082bfcf2bb33c412ead9eb0c5840b5",
   "producer": "original expo-widgets/scripts/build-bundle.mjs and build-layout-registry.mjs; original Metro config/stubs/runtime"
 }
