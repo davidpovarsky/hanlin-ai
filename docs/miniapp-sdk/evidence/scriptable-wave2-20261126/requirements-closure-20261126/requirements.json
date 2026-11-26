@@ -123,7 +123,7 @@
         "Real Shortcuts Dictionary/List and file conversion where the public SDK permits, output chaining, invalid/empty/nested/Hebrew input and RTL.",
         "Actual Open When Run behavior, foreground/background delivery, saved action, Home Screen/deep-link and any supported result/snippet surface."
       ],
-      "conditionalBoundary": "The installed SDK lacks a generic Dictionary AppIntent parameter; typed JSON text/IntentFile is the documented supported route. Inline code was conditional on package architecture and policy, so no raw-JS bypass or second engine is required. .foreground(.dynamic) is present; the OS toggle remains an OS probe.",
+      "conditionalBoundary": "The installed SDK lacks a generic Dictionary AppIntent parameter; typed JSON text/IntentFile is the documented supported route. Inline code was conditional on package architecture and policy, so no raw-JS bypass or second engine is required. The integrated intent declares .background and .foreground(.immediate); the actual Open When Run UI and OS-selected delivery still require an original OS probe.",
       "newUnownedSourceProvenGap": false,
       "asanaGID": "1220917834527539",
       "asanaURL": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220917834527539",

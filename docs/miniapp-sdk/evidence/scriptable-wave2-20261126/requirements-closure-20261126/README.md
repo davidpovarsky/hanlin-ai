@@ -37,7 +37,7 @@ The source details and exact remaining criteria are in [requirements.json](requi
 
 **Device adaptation:** use applicable real destinations and qualify compact/expanded/windowed evidence honestly. The actual named device needs its own qualification; a relabeled generic simulator cannot provide it. Fix concrete clipping/navigation failures in the existing UI if observed.
 
-**Glass, Dictionary parameters and remote push:** these are constrained by the public widget/App Intents APIs or actual provisioning. The existing typed JSON text/IntentFile route reflects the inspected SDK. `.foreground(.dynamic)` is present, so Open When Run itself remains an OS probe. Remote push is required only when configured/provisioned. No unsupported capability is credited.
+**Glass, Dictionary parameters and remote push:** these are constrained by the public widget/App Intents APIs or actual provisioning. The existing typed JSON text/IntentFile route reflects the inspected SDK. The integrated intent declares `.background` and `.foreground(.immediate)`; the actual Open When Run UI and OS-selected delivery remain original OS probes. Remote push is required only when configured/provisioned. No unsupported capability is credited.
 
 ## Scope boundaries
 
