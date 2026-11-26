@@ -1,0 +1,253 @@
+{
+  "app": {
+    "bundleId": "io.anytype.app.NA6HPWARQ2",
+    "id": "6839398256",
+    "name": "Pinkha Notes",
+    "primaryLocale": "en-US",
+    "sku": "pinkha-ios"
+  },
+  "archive": false,
+  "betaGroups": {
+    "complete": true,
+    "records": []
+  },
+  "builds": {
+    "complete": true,
+    "records": []
+  },
+  "bundleId": {
+    "id": "KTRM7V4TCD",
+    "identifier": "io.anytype.app.NA6HPWARQ2",
+    "name": "Anytype",
+    "platform": "UNIVERSAL"
+  },
+  "capabilities": {
+    "complete": true,
+    "records": [
+      {
+        "id": "KTRM7V4TCD_IN_APP_PURCHASE",
+        "type": "IN_APP_PURCHASE"
+      },
+      {
+        "id": "KTRM7V4TCD_PUSH_NOTIFICATIONS",
+        "type": "PUSH_NOTIFICATIONS"
+      },
+      {
+        "id": "KTRM7V4TCD_USERNOTIFICATIONS_COMMUNICATION",
+        "type": "USERNOTIFICATIONS_COMMUNICATION"
+      },
+      {
+        "id": "KTRM7V4TCD_ASSOCIATED_DOMAINS",
+        "type": "ASSOCIATED_DOMAINS"
+      },
+      {
+        "id": "KTRM7V4TCD_APP_GROUPS",
+        "type": "APP_GROUPS"
+      }
+    ]
+  },
+  "controllerSHA256": "0cb9541c3d138be38c7dc36043345792b5b418224171aa17efb3156cd13e9c9f",
+  "distributionIdentity": {
+    "exitCode": 0,
+    "expectedIdentityPresent": true,
+    "expectedSHA1": "644940FCF25D1730DBD1BF7596AEBA7229E2B8FD",
+    "nonSecretOutputSHA256": "2646395d4de25af2e5dbfc51f2b16a70fba925cc6fdef4fe8f4ba0c820d262c2",
+    "team": "NA6HPWARQ2"
+  },
+  "finishedAtUTC": "2026-11-26T05:36:59.920691+00:00",
+  "mutations": [],
+  "originalAuditPreserved": true,
+  "originalAuditSHA256": "0c875db6508d32f06f3e86d4b8e75686e41952fd3c75dfffb3c6ab382426cbb4",
+  "physicalDevices": {
+    "allDeviceCount": 14,
+    "devices": [
+      {
+        "deviceType": "iPad",
+        "pairingState": "paired",
+        "platform": "iOS",
+        "provider": "com.apple.CoreSimulator.SimulatorCoreDevicePlugin",
+        "reality": "simulated",
+        "transportType": "sameMachine",
+        "visibilityClass": "simulators"
+      },
+      {
+        "deviceType": "iPhone",
+        "pairingState": "paired",
+        "platform": "iOS",
+        "provider": "com.apple.CoreSimulator.SimulatorCoreDevicePlugin",
+        "reality": "simulated",
+        "transportType": "sameMachine",
+        "visibilityClass": "simulators"
+      },
+      {
+        "deviceType": "iPad",
+        "pairingState": "paired",
+        "platform": "iOS",
+        "provider": "com.apple.CoreSimulator.SimulatorCoreDevicePlugin",
+        "reality": "simulated",
+        "transportType": "sameMachine",
+        "visibilityClass": "simulators"
+      },
+      {
+        "deviceType": "iPad",
+        "pairingState": "paired",
+        "platform": "iOS",
+        "provider": "com.apple.CoreSimulator.SimulatorCoreDevicePlugin",
+        "reality": "simulated",
+        "transportType": "sameMachine",
+        "visibilityClass": "simulators"
+      },
+      {
+        "deviceType": "iPad",
+        "pairingState": "paired",
+        "platform": "iOS",
+        "provider": "com.apple.CoreSimulator.SimulatorCoreDevicePlugin",
+        "reality": "simulated",
+        "transportType": "sameMachine",
+        "visibilityClass": "simulators"
+      },
+      {
+        "deviceType": "iPad",
+        "pairingState": "paired",
+        "platform": "iOS",
+        "provider": "com.apple.CoreSimulator.SimulatorCoreDevicePlugin",
+        "reality": "simulated",
+        "transportType": "sameMachine",
+        "visibilityClass": "simulators"
+      },
+      {
+        "deviceType": "iPhone",
+        "pairingState": "paired",
+        "platform": "iOS",
+        "provider": "com.apple.CoreSimulator.SimulatorCoreDevicePlugin",
+        "reality": "simulated",
+        "transportType": "sameMachine",
+        "visibilityClass": "simulators"
+      },
+      {
+        "deviceType": "iPad",
+        "pairingState": "paired",
+        "platform": "iOS",
+        "provider": "com.apple.CoreSimulator.SimulatorCoreDevicePlugin",
+        "reality": "simulated",
+        "transportType": "sameMachine",
+        "visibilityClass": "simulators"
+      },
+      {
+        "deviceType": "iPad",
+        "pairingState": "paired",
+        "platform": "iOS",
+        "provider": "com.apple.CoreSimulator.SimulatorCoreDevicePlugin",
+        "reality": "simulated",
+        "transportType": "sameMachine",
+        "visibilityClass": "simulators"
+      },
+      {
+        "deviceType": "iPad",
+        "pairingState": "paired",
+        "platform": "iOS",
+        "provider": "com.apple.CoreSimulator.SimulatorCoreDevicePlugin",
+        "reality": "simulated",
+        "transportType": "sameMachine",
+        "visibilityClass": "simulators"
+      },
+      {
+        "deviceType": "iPad",
+        "pairingState": "paired",
+        "platform": "iOS",
+        "provider": "com.apple.CoreSimulator.SimulatorCoreDevicePlugin",
+        "reality": "simulated",
+        "transportType": "sameMachine",
+        "visibilityClass": "simulators"
+      },
+      {
+        "deviceType": "iPad",
+        "pairingState": "paired",
+        "platform": "iOS",
+        "provider": "com.apple.CoreSimulator.SimulatorCoreDevicePlugin",
+        "reality": "simulated",
+        "transportType": "sameMachine",
+        "visibilityClass": "simulators"
+      },
+      {
+        "deviceType": "iPad",
+        "pairingState": "paired",
+        "platform": "iOS",
+        "provider": "com.apple.CoreSimulator.SimulatorCoreDevicePlugin",
+        "reality": "simulated",
+        "transportType": "sameMachine",
+        "visibilityClass": "simulators"
+      },
+      {
+        "deviceType": "iPhone",
+        "pairingState": "paired",
+        "platform": "iOS",
+        "provider": "com.apple.CoreSimulator.SimulatorCoreDevicePlugin",
+        "reality": "simulated",
+        "transportType": "sameMachine",
+        "visibilityClass": "simulators"
+      }
+    ],
+    "physicalCount": 0,
+    "simulatedCount": 14,
+    "testsRun": 0,
+    "unknownCount": 0
+  },
+  "physicalTests": "NOT_RUN",
+  "pinkhaAppInventory": {
+    "complete": true,
+    "matchingApps": [
+      {
+        "bundleId": "io.anytype.app.NA6HPWARQ2",
+        "id": "6839398256",
+        "name": "Pinkha Notes",
+        "sku": "pinkha-ios"
+      }
+    ],
+    "totalAppCount": 10
+  },
+  "profiles": {
+    "complete": true,
+    "records": [
+      {
+        "appStoreDistribution": true,
+        "cmsSHA256": "5a10c348ff0cde6927f5f9ca0bca419422a63e45fe3e1d6fa5819da8bbae4b55",
+        "decodeMethod": "OpenSSL CMS signature verification without certificate-chain trust verification",
+        "entitlements": {
+          "application-identifier": "NA6HPWARQ2.io.anytype.app.NA6HPWARQ2",
+          "aps-environment": "production",
+          "com.apple.developer.associated-domains": "*",
+          "com.apple.developer.team-identifier": "NA6HPWARQ2",
+          "com.apple.developer.usernotifications.communication": true,
+          "com.apple.security.application-groups": [
+            "group.io.anytype.app.NA6HPWARQ2",
+            "group.com.itorah.shared"
+          ],
+          "get-task-allow": false,
+          "keychain-access-groups": [
+            "NA6HPWARQ2.*",
+            "com.apple.token"
+          ]
+        },
+        "expirationDate": "2027-09-07T07:25:00.000+00:00",
+        "id": "9RF3H8H69R",
+        "multicastGranted": false,
+        "name": "iTorah Integration App Store Pinkha Main 20261126 4ce34f33",
+        "opensslCMSExitCode": 0,
+        "profileState": "ACTIVE",
+        "profileType": "IOS_APP_STORE",
+        "releaseCertificateChainValidation": "NOT_PERFORMED_BY_THIS_INVENTORY",
+        "securityCMSError": "security: cert import failed: Write permissions error.\nsecurity: problem decoding\n",
+        "securityCMSExitCode": 1,
+        "teamIdentifiers": [
+          "NA6HPWARQ2"
+        ],
+        "uuid": "0a466cdf-7a7e-4153-a179-f4ee2f61385d"
+      }
+    ]
+  },
+  "releaseIdentityNote": "Existing owner candidate; last explicit owner identity clarification remains recorded in Asana1220916510066561. This read-only audit does not select a new app or renew a profile.",
+  "startedAtUTC": "2026-11-26T05:36:54.996090+00:00",
+  "status": "READ_ONLY_RESOURCE_AUDIT_COMPLETED_NOT_RELEASE_ACCEPTANCE",
+  "upload": false
+}

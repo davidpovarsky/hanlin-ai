@@ -1,0 +1,39 @@
+[
+  {
+    "file": "otzaria-file-roundtrip-3d51363c-result.json",
+    "sha256": "030f24ce4702b697afa5924b2aef5ab844c43b001e947d4d4393d63606b2e2e2",
+    "bytes": 6729
+  },
+  {
+    "file": "anytype-signing-resource-audit-0537.json",
+    "sha256": "2b86ca202f33c45727db8961e7b80c51f47b32b88bdbf7196f4af91a75b04366",
+    "bytes": 8129
+  },
+  {
+    "file": "otzaria-a356-shared-sdk-build.exit",
+    "sha256": "979b894f2d91bf199766571d58024f020d1a44a417da5f48e1fa1cdf554a14f5",
+    "bytes": 3
+  },
+  {
+    "file": "reconciliation.json",
+    "sha256": "ac605f3485e1e50283c8129f2da6ec14ef13977af0380603c647a32482e98f8a",
+    "bytes": 19626
+  },
+  {
+    "file": "otzaria-a356-shared-sdk-build.log.gz",
+    "sha256": "2d2355598184b5ebf51feb608e95ac793da04a983a3d025c370e0bb3bb249e0a",
+    "bytes": 105171,
+    "uncompressedSHA256": "0da5b60ee982b8bf191e860ddf1b00b6de012bcbcc8742fc816318273ec60646",
+    "uncompressedBytes": 2676136
+  },
+  {
+    "file": "retained-sqlite-controller.py",
+    "sha256": "474c0abbd11477ffecb260add635d46ad0427eaa70bfd1c810be69f8d9ec170d",
+    "bytes": 6699
+  },
+  {
+    "file": "README.md",
+    "sha256": "a377e3a786f910ba2aa01fe37509996d9c6f4865adc0537b46b8ff1728419725",
+    "bytes": 5662
+  }
+]

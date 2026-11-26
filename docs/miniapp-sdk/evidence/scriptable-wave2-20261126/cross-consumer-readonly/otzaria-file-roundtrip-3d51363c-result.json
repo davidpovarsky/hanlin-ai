@@ -1,0 +1,104 @@
+{
+  "app_receipt": "d50bf6e15a7beb1d59b059a6acd44916ecf7fd360468bd6f6070110edcfaa93d",
+  "checkout": "f4a0f81805d25a8627b8db63389d0dc0e540050b",
+  "executed_app_checkout": "3d51363c8d3dba1c6fce8a5c6089290738f33436",
+  "original_test_delta": {
+    "app_host_diagnostics": "3d51363c8d3dba1c6fce8a5c6089290738f33436",
+    "canonical_workspace_on_OS_callback": true,
+    "checkout": "f4a0f81805d25a8627b8db63389d0dc0e540050b",
+    "fixture_launch_timeout_seconds": 245,
+    "native_sdk_overlay": {
+      "actual_xcode_command_sha256": "3e9d2fbfbce180bf6248a2831323341e6d67fb0b78ec28f82d1ab6f326df347e",
+      "actual_xcode_result": "/Users/m1/builds/otzaria-shared-agent1-20261126/miniapps-durable-archive-context-candidate/OriginalMiniAppsArchiveWitness.xcresult",
+      "appMainImageSha256": "cab0a3d244f3888988da584b2a922cb2be485372ef0fbddbca5c3af944b302b2",
+      "base_app_build_receipt_sha256": "8ee3d88d3cca174e57211f1ad40ac0c1e4699b8e69ba16f44d8b19c35f6f8555",
+      "candidate_framework_build_xcresult": "/Users/m1/builds/otzaria-shared-agent1-20261126/anytype-original-miniapps-file-upload-2eeee1b7/source/build/Native-MiniApps-File-Work/OriginalEditor.xcresult",
+      "candidate_framework_source_file_sha256": "c552e640984e46896d6ea32bdb67c25ac828523deccdf30ed5542218922f91ec",
+      "heart_source_sha": "b18e6733605deb4086ee95aa4cf755404746cf51",
+      "original_runtime": {
+        "AnytypeOriginalEditor": {
+          "same_load_contract": true,
+          "sha256": "adfef994181e9690458ced37fbb0f896dbf0e65a209e025407ad2cd403a988aa"
+        },
+        "ProtobufMessages": {
+          "same_load_contract": true,
+          "sha256": "f283c989b36113cc4c3749f49f2ddbf943aeda9c0f53825b1ff2556d865936a5"
+        }
+      },
+      "previous_sdk_runtime_sha": "e973cc7432419778f0342624a3b7052055fd270d",
+      "production_source_delta": "d1cea8e83f91d7e725d7dd04409162043da0e4ff",
+      "scope": "ACTUAL_MINIAPPS_INDEPENDENT_NARROW_IOS27_CONSUMER",
+      "sdk_source_sha": "9ebf4271954d375d1bffe4a310a772660eeb4ae0",
+      "source": "3d51363c8d3dba1c6fce8a5c6089290738f33436",
+      "swiftImageSha256": "8c875aee8c0a8693f7f06b784943e0f0c1e50880841bbcd50d94e78d9fe0ada4",
+      "testImageSha256": "7e02681c05679a714021cbe66b9fdc0011f6efe384c566d6936339b909e21176",
+      "unsigned_app_image_unchanged": true,
+      "xctestrunSha256": "e8074d3ac6336b468191ea466f66df6801df09f3c04dfeba3a819d27a0389277"
+    },
+    "new_original_app": {
+      "actual_xcode_command_sha256": "d7ccf18b7269b0f23499d6ceb8ea8a0d775f91a5fe2f2525a34f3deea121a3d7",
+      "actual_xcode_result": "/Users/m1/builds/otzaria-shared-agent1-20261126/live-original-9565-8e71775f/miniapps-editor-own-receipt-3c15e967/OriginalReaderBuild.xcresult",
+      "appMainImageSha256": "25e4372cde94aa0a04c269cb7cfb99355c25566d904f52381cff287d5d4bda4b",
+      "base_app_build_receipt_sha256": "8ee3d88d3cca174e57211f1ad40ac0c1e4699b8e69ba16f44d8b19c35f6f8555",
+      "heart_source_sha": "b18e6733605deb4086ee95aa4cf755404746cf51",
+      "original_runtime": {
+        "AnytypeOriginalEditor": {
+          "same_load_contract": true,
+          "sha256": "ff06fec0f16f3e11630c956029c09f81091df9784818382c64cb675154fd259e"
+        },
+        "ProtobufMessages": {
+          "same_load_contract": true,
+          "sha256": "f283c989b36113cc4c3749f49f2ddbf943aeda9c0f53825b1ff2556d865936a5"
+        }
+      },
+      "scope": "ACTUAL_MINIAPPS_INDEPENDENT_NARROW_IOS27_CONSUMER",
+      "sdk_source_sha": "e973cc7432419778f0342624a3b7052055fd270d",
+      "source": "61c7a50753f41add3e37746a7f040fe4d0ac0654",
+      "swiftImageSha256": "e5085bc4b947f9d58aa7dffce7c879184154898b4f05acb7dc8e749235235f16",
+      "testImageSha256": "7e02681c05679a714021cbe66b9fdc0011f6efe384c566d6936339b909e21176",
+      "unsigned_app_image_unchanged": true,
+      "xctestrunSha256": "e8074d3ac6336b468191ea466f66df6801df09f3c04dfeba3a819d27a0389277"
+    },
+    "new_xctest_build_result": "/Users/m1/builds/otzaria-shared-agent1-20261126/live-original-9565-8e71775f/miniapps-original-canonical-workspace/RichKeyboardUITestBuild.xcresult",
+    "runtime_overlay": {
+      "actual_apple_build_xcresult": "/Users/m1/builds/otzaria-shared-agent1-20261126/anytype-original-editor-manual-focus-b10eee28/source/build/Native-Saved-Notes-Work/OriginalEditor.xcresult",
+      "exact_app_code_sha256": "4211df27d4dd8781b3f27538171bbd8529d83563c41bd2c0e5b12a793b77e736",
+      "heart_source_sha": "b18e6733605deb4086ee95aa4cf755404746cf51",
+      "original_and_resigned_launcher_signature_free_sha256": "d713580cd3f4e58a26e1db8c1cd7c13104d3219f51ae4e00951fcb63bfe1b72f",
+      "original_launcher_signed_sha256": "d5d5ca51d581f385c366f7dcf444018723ae9b61c4a5d6c980829252c953e6fb",
+      "replaced_frameworks": {
+        "AnytypeOriginalEditor": {
+          "candidate_sha256": "ff06fec0f16f3e11630c956029c09f81091df9784818382c64cb675154fd259e",
+          "identical_load_contract": true,
+          "original_sha256": "6a880f580c428303e8c45c5e8968fddf0bfeeb67489f5e906ced840dceeca64e"
+        },
+        "ProtobufMessages": {
+          "candidate_sha256": "f283c989b36113cc4c3749f49f2ddbf943aeda9c0f53825b1ff2556d865936a5",
+          "identical_load_contract": true,
+          "original_sha256": "d3699997bf1aaabb7fe1436c2da841f1b883419a8af4eb931a0d01fab1426b18"
+        }
+      },
+      "resigned_launcher_signed_sha256": "e44d355cebe5a069a29a9489076c182dc992a2c28ec86f82a409d8973aeb987c",
+      "sdk_source_sha": "e973cc7432419778f0342624a3b7052055fd270d",
+      "status": "ACTUAL_APP_LINKED_WITH_EXACT_SAVED_EDITOR_AND_ORIGINAL_HEART"
+    },
+    "standalone_scope": "Original File Workshop callbacks with the actual save-confirmation action.",
+    "status": "EXACT_ORIGINAL_APP_CODE_WITH_TEST_AND_SAVED_EDITOR_SDK_OVERLAYS",
+    "test_binary_sha256": "ab0fac07c4fcf23438303a9b9df242865517e12e0dd0c7eab84a6c9f5b2e4bde",
+    "test_changed_files": [
+      "Maktabah-iOSUITests/MiniAppsAnnotationAcceptanceTests.swift"
+    ],
+    "test_checkout": "5f837db52c9bab3485223bf59c84d3a019b8d1b5",
+    "test_source_file_hashes": {
+      "FaithfulReaderUIAcceptanceTests.swift": "e5a5552863869b51fb55944a3249e129bb558e354bafe7cf54dee9d6ffca0dbd",
+      "MaktabahUITestBase.swift": "7d92066ce4ec3f38b0ff0042ca43a736f5eae21ce7339666e418ed8df0827424",
+      "MiniAppsAnnotationAcceptanceTests.swift": "72660d9d156da37c3b4f3c493fc4d490092e61f122d79fab9a523890ce384f6b"
+    },
+    "test_source_file_sha256": "72660d9d156da37c3b4f3c493fc4d490092e61f122d79fab9a523890ce384f6b"
+  },
+  "producer_source": "9565a9e4775901a4cee6f0402d7fd2978fab6612",
+  "release_or_device_test": false,
+  "scope": "files",
+  "selector": "MiniAppsAnnotationAcceptanceTests/testOriginalNativeFilesRoundTripAndReplayAfterColdReopen",
+  "status": "FAIL"
+}
