@@ -1,5 +1,5 @@
 {
-  "source_sha": "a30c8267c1f5ce2a122889b81dc9fffc0f295758",
+  "source_sha": "33f0eb3195406e98139e29dd94819d14e51853bd",
   "created_at": "2026-11-26T12:56:43.495534+00:00",
   "owner": "root full application native queue",
   "status": "PREPARED_NOT_EXECUTED_ON_CURRENT_SOURCE",
@@ -50,28 +50,43 @@
         "--evidence",
         "<same-owned-current-evidence>"
       ]
-    ]
+    ],
+    "inventory_source_sha": "a30c8267c1f5ce2a122889b81dc9fffc0f295758",
+    "inventory_test_hashes_equal_at_current_source": true
   },
   "composer": {
     "app_scope": {
       "classification": "VERIFY_REGRESSION",
       "original_plan_status": "EXECUTED_PASS",
       "selectors": [
-        "AI_HLYTests/HanlinComposerCapabilityIntegrationTests",
-        "AI_HLYTests/HanlinMiniAppAssistantToolTests",
-        "AI_HLYTests/SkillOpenClawPolicyTests/currentOriginalPolicyControlsLoadReadAndActualSDKContinuation",
-        "AI_HLYTests/HanlinMiniAppHostDiscoveryTests/preparedExpoActionExportsKeepTheirInstalledAppInTheCatalog"
-      ]
+        "AI_HLYTests/HanlinComposerCapabilityIntegrationTests/sentSDKRequestAndPersistedMessageKeepIndependentCapabilitySnapshots()",
+        "AI_HLYTests/HanlinComposerCapabilityIntegrationTests/mcpAttachmentChangesOnlyThisRequestAndResolvesCurrentAliases()",
+        "AI_HLYTests/HanlinComposerCapabilityIntegrationTests/nativeAndLegacySelectionsDispatchOriginalArgumentsWithIndependentConfiguration()",
+        "AI_HLYTests/HanlinComposerCapabilityIntegrationTests/explicitNativeRequestAdmitsADisabledToolWithoutEnablingItsPreferences()",
+        "AI_HLYTests/HanlinComposerCapabilityIntegrationTests/overlappingNativeAndMiniAppSelectionsRejectDifferentConfigurationsAtomically()",
+        "AI_HLYTests/HanlinComposerCapabilityIntegrationTests/selectedMapRegionOverridesModelCoordinatesAndNeverBecomesADefault()",
+        "AI_HLYTests/HanlinMiniAppAssistantToolTests/discoveryAndSelectionUseMetadataWithoutOpeningTheApp()",
+        "AI_HLYTests/HanlinMiniAppAssistantToolTests/originalArgumentsAndSnapshotConfigurationHaveSeparateAuthorities()",
+        "AI_HLYTests/HanlinMiniAppAssistantToolTests/staleSelectionAndOverlappingDifferentConfigurationsAreRejected()",
+        "AI_HLYTests/HanlinMiniAppAssistantToolTests/runtimeRootMustLoadTheDeclaredToolAndCannotFallBackToIndex()",
+        "AI_HLYTests/HanlinMiniAppAssistantToolTests/modernRenderersReceivePlainExactJavaScriptJSON()",
+        "AI_HLYTests/SkillOpenClawPolicyTests/currentOriginalPolicyControlsLoadReadAndActualSDKContinuation()",
+        "AI_HLYTests/HanlinMiniAppHostDiscoveryTests/preparedExpoActionExportsKeepTheirInstalledAppInTheCatalog()"
+      ],
+      "current_source_method_count": 13,
+      "current_source_invocation_count": 13
     },
     "native_engines": {
       "classification": "VERIFY_REGRESSION",
       "original_plan_status": "FAILED",
       "selectors": [
-        "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualNativeScriptAssistantUsesDedicatedSourceAndImmutableConfiguration",
-        "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualExpoAssistantUsesDedicatedSourceAndImmutableConfiguration",
-        "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptAssistantRepliesSettleOnceAndRejectMalformedJSON",
-        "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptAssistantCancellationAndInvalidationReleaseWaiters"
-      ]
+        "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualNativeScriptAssistantUsesDedicatedSourceAndImmutableConfiguration()",
+        "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualExpoAssistantUsesDedicatedSourceAndImmutableConfiguration()",
+        "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptAssistantRepliesSettleOnceAndRejectMalformedJSON()",
+        "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptAssistantCancellationAndInvalidationReleaseWaiters()"
+      ],
+      "current_source_method_count": 4,
+      "current_source_invocation_count": 4
     },
     "native_editor": {
       "classification": "VERIFY_REGRESSION",
@@ -83,7 +98,9 @@
       ],
       "original_expected_methods": 4,
       "original_expected_invocations": 5,
-      "parameterized_method": "markedTextOwnerSwitchPreservesCompositionAndAuthoritativeClear"
+      "parameterized_method": "markedTextOwnerSwitchPreservesCompositionAndAuthoritativeClear",
+      "current_source_method_count": 4,
+      "current_source_invocation_count": 5
     },
     "shared_sdk": {
       "classification": "REUSE_ACCEPTED",
@@ -132,5 +149,39 @@
     "Export exact test-node identities and every parameterized argument result; require expected selected invocations to run and pass.",
     "Keep d89ce38b native-engine and UI failures as historical failures; current fixes do not imply acceptance.",
     "Source manifests are from a30c8267; compare affected source closure for later source reuse."
-  ]
+  ],
+  "source_inventory": "paired-and-wave1-inventory-33f0eb31.json",
+  "paired_original": {
+    "miniapps_current_methods": 25,
+    "miniapps_current_invocations": 25,
+    "ai_current_methods": 29,
+    "ai_current_invocations": 29,
+    "ai_runner_declared_count": 27,
+    "maintenance_required": "Update miniapp_authoring expected count 25 to 27 and miniapp_complete expected count 27 to 29, including the existing selector contract test. Keep all original selectors/assertions; the two added original Expo widget methods explain the increase.",
+    "added_widget_selectors": [
+      "AI_HLYTests/HanlinOriginalExpoWidgetTests/testOriginalToggleUsesIntendedValuesAndAtomicTimelineThroughRealRuntime",
+      "AI_HLYTests/HanlinOriginalExpoWidgetTests/testOriginalExpoRetainsSuccessfulRenderOnlyForMatchingWidgetAndConfiguration"
+    ]
+  },
+  "chat_ui": {
+    "selectors": [
+      "AI_HLYUITests/AgentRuntimeConversationUITests/testUI02ClassicUserAndAssistantBubbleWithDirectActionButtons",
+      "AI_HLYUITests/AgentRuntimeConversationUITests/testUserBubbleLongPressKeepsNativeActionsAndOriginalMessage",
+      "AI_HLYUITests/AgentRuntimeConversationUITests/testHebrewNewChatAndNativeMessageActions",
+      "AI_HLYUITests/HanlinContextualTextToolsUITests/testOriginalTextToolsReceiveTheMessageWithoutReplacingTheConversation"
+    ],
+    "source_methods": 4,
+    "source_invocations_per_destination": 4
+  },
+  "studio_workspace": {
+    "selectors": [
+      "HanlinMiniAppsTests/MiniAppsDeveloperWorkspaceTests/savingRejectsAnotherWritersChangesAndRetainsBothDrafts()",
+      "HanlinMiniAppsTests/MiniAppsDeveloperWorkspaceTests/nestedMovesPreserveSourceAndFolderAppearanceWithoutReplacingDestination()",
+      "HanlinMiniAppsTests/MiniAppsDeveloperWorkspaceTests/boundariesAndExistingFilesCannotBeOverwrittenThroughCreation()",
+      "HanlinMiniAppsTests/MiniAppsDeveloperWorkspaceTests/exampleCopyKeepsOriginalAndIndependentVersions()"
+    ],
+    "source_methods": 4,
+    "source_invocations": 4,
+    "followup_project_tests": "Six additional native Project methods are introduced by owner e641105fdc7ac5b418c49b9a146c96cfccf0f078; they are outside this 33f0eb31 inventory and must be counted after integration."
+  }
 }

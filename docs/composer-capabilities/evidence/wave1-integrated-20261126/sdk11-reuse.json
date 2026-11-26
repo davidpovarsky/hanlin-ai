@@ -2,7 +2,7 @@
   "classification": "REUSE_ACCEPTED",
   "assessed_at": "2026-11-26T13:08:05.366400+00:00",
   "original_execution_source": "a3aae0b952b0518cb8c40ed4a511d4cffadab99f",
-  "target_source": "a30c8267c1f5ce2a122889b81dc9fffc0f295758",
+  "target_source": "33f0eb3195406e98139e29dd94819d14e51853bd",
   "new_test_execution": false,
   "retained_execution_receipt": "docs/composer-capabilities/evidence/sdk-ios-a3aae0b95/receipt.json",
   "retained_log_sha256": "e6f652f8ca70a8d67e0dc71616f811dfd0205f9549c7e6bfbac5835b5227f61c",
@@ -169,12 +169,14 @@
     "The draft initializer creates only NativeMultilineTextEditor.TextState. That complete value declaration is unchanged; the editor UIKit owner/focus methods changed elsewhere and are not invoked by the three metadata ownership tests.",
     "The custom panel test calls the unchanged provider, constructs Text and EnvironmentValues, and forwards a Binding; it does not mount the changed configuration/picker fields.",
     "The current original HanlinChatUI product and its canonical dependencies compiled and linked in the fresh native LauncherLab gate. The later two Shortcut contract additions compiled in the fresh complete PlatformContracts core gate; they do not participate in these eleven test bodies.",
-    "Original and current native receipts identify Xcode 27.0 / iOS 27.0 build 24A434. These bounded tests use Apple Foundation, SwiftUI, Observation and the unchanged contracts; no third-party Markdown, provider, Activity, shortcut or native bridge operation is invoked."
+    "The retained SDK receipt and current native receipt both identify iOS 27.0 build 24A434. The current gate records Xcode 27.0 and Apple Swift 6.4. These bounded tests use Apple Foundation, SwiftUI, Observation and the unchanged contracts; no third-party Markdown, provider, Activity, shortcut or native bridge operation is invoked."
   ],
   "scope": "Reuse only the eleven recorded SDK query/draft/custom-panel/numeric-state tests. No new SDK test execution, mounted focus UI, native editor/IME, application or full module behavior acceptance is inferred.",
   "remaining_gates": [
     "Original native editor four methods / five invocations on current app source",
     "Composer app scope and actual NativeScript/Expo engine acceptance",
     "Original Composer UI four iPhone and three iPad executions"
-  ]
+  ],
+  "source_comparison_checkpoint": "a30c8267c1f5ce2a122889b81dc9fffc0f295758",
+  "later_sdk_and_contract_source_delta": []
 }
