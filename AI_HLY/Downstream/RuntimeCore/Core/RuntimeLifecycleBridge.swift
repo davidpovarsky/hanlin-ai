@@ -33,7 +33,7 @@ enum RuntimeLifecycleBridge {
         let task = Task { @MainActor in
             try? await AppRuntimeCore.shared.prepareStorage()
             guard !isUnitTestHost else { return }
-#if targetEnvironment(simulator)
+#if targetEnvironment(simulator) && !HANLIN_ASSISTANT_CAPABILITIES_SDK
             let acceptance = ProcessInfo.processInfo.environment["HANLIN_RUNTIME_ACCEPTANCE"]
             if acceptance == "shell" {
                 await ShellRuntimeAcceptance.run()

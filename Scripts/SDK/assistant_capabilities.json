@@ -27,7 +27,9 @@
     "NativeAgentExtensions/ToolRuntime/NativeToolResult.swift",
     "NativeAgentExtensions/UI/NativeUIBlock.swift",
     "Downstream/AgentActivity/Evidence/AgentEvidenceItem.swift",
-    "Downstream/AgentActivity/ToolPresentation/ToolPresentationProfile.swift"
+    "Downstream/AgentActivity/ToolPresentation/ToolPresentationProfile.swift",
+    "Downstream/HostServices/Runtime/RuntimeAvailabilityStore.swift",
+    "Downstream/ChatPresentation/HanlinDesignCatalogBridge.swift"
   ],
   "products": [
     "HanlinSkillFormat",

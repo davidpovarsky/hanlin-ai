@@ -298,7 +298,7 @@ public final class HanlinSkillCatalog {
             skillEntries.removeValue(forKey: id)
         }
 
-        #if targetEnvironment(simulator)
+        #if targetEnvironment(simulator) && !HANLIN_ASSISTANT_CAPABILITIES_SDK
         if AgentRuntimeUIAcceptanceProvider.isSkillsEnabled {
             if let skillID = try? HanlinSkillID(validating: "acceptance_skill"),
                let descriptor = try? HanlinSkillDescriptor(

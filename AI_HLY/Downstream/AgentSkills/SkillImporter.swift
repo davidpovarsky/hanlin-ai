@@ -341,7 +341,13 @@ public final class SkillImporter: @unchecked Sendable {
         var request = URLRequest(url: httpsURL)
         request.httpMethod = "GET"
 
+        #if HANLIN_ASSISTANT_CAPABILITIES_SDK
+        // Embedding hosts inject any test transport through the existing public
+        // argument. The original app's fixture account is not a SDK dependency.
+        let config = sessionConfiguration ?? .default
+        #else
         let config = sessionConfiguration ?? AgentRuntimeUIAcceptanceProvider.makeSessionConfiguration()
+        #endif
         let downloader = BoundedStreamDownloader(maxBytes: limits.maximumArchiveBytes == .max ? nil : limits.maximumArchiveBytes,
             sessionConfiguration: config, progress: { update in downloadProgress?(update.receivedBytes, update.expectedBytes) })
         let (downloadedFile, response) = try await downloader.download(request: request)
