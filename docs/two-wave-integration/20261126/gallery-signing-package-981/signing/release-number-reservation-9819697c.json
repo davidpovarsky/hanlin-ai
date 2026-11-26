@@ -1,0 +1,28 @@
+{
+  "status": "LOCALLY_RESERVED_PENDING_NATIVE_AND_FINAL_SOURCE_QUALIFICATION",
+  "owner": "/root/mac_build_ops",
+  "qualifyingSource": "9819697c1792119a6a93b492d12abad7b3330c93",
+  "createdAt": "2026-11-26T18:27:24.587927+00:00",
+  "builds": [
+    {
+      "product": "ai",
+      "bundleID": "com.itorah.chavrusachat",
+      "appID": "6811910017",
+      "buildNumber": "149301",
+      "ASCStatus": "ABSENT_AT_READBACK",
+      "readAt": "2026-11-26T18:27:24.003676+00:00"
+    },
+    {
+      "product": "miniapps",
+      "bundleID": "com.itorah.hanlinminiapps",
+      "appID": "6836449016",
+      "buildNumber": "8401",
+      "ASCStatus": "ABSENT_AT_READBACK",
+      "readAt": "2026-11-26T18:27:24.585483+00:00"
+    }
+  ],
+  "queueReadback": "/Users/m1/builds/hanlin-two-wave-root-20261126/release-queue-readback-9819697c-r2.json",
+  "queueReadbackSHA256": "5259fa7be7542fe98d760e5e2f9b146e4de6da0de5e1095d555979a21bffb29a",
+  "protectedOtherOwnerBuild": "149201",
+  "scope": "Internal exact-number reservation after fresh ASC and bounded owned queue/process readback. No ASC reservation API, archive, upload, distribution, or final-source acceptance is claimed."
+}

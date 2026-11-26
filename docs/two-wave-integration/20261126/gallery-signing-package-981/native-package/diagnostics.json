@@ -1,0 +1,24 @@
+{
+  "source": "9819697c1792119a6a93b492d12abad7b3330c93",
+  "status": "FAILED_COMPILATION",
+  "exitCode": 65,
+  "testsExecuted": 0,
+  "errors": [
+    {
+      "line": 16576,
+      "diagnostic": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinWidgetLastSuccessfulRender.swift:83:57: error: cannot find 'HanlinWidgetProgramError' in scope",
+      "context": [
+        "",
+        "SwiftCompile normal arm64 Compiling\\ HanlinWidgetInstance.swift,\\ HanlinWidgetLastSuccessfulRender.swift,\\ HanlinScriptWidgetDynamicView.swift,\\ HanlinScriptWidgetElementView.swift,\\ HanlinScriptWidgetResources.swift,\\ HanlinScriptWidgetRuntime.swift,\\ HanlinScriptWidgetServicesView.swift,\\ ClockHandRotationEffect.swift /Users/m1/builds/hanlin-two-wave-root-20261126/source/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinWidgetInstance.swift /Users/m1/builds/hanlin-two-wave-root-20261126/source/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinWidgetLastSuccessfulRender.swift /Users/m1/builds/hanlin-two-wave-root-20261126/source/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetDynamicView.swift /Users/m1/builds/hanlin-two-wave-root-20261126/source/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetElementView.swift /Users/m1/builds/hanlin-two-wave-root-20261126/source/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetResources.swift /Users/m1/builds/hanlin-two-wave-root-20261126/source/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift /Users/m1/builds/hanlin-two-wave-root-20261126/source/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetServicesView.swift /Users/m1/builds/hanlin-two-wave-root-20261126/source/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/Animation/ClockHandRotationEffect.swift (in target 'HanlinScriptExtensions' from project 'HanlinPlatform')",
+        "/Users/m1/builds/hanlin-two-wave-root-20261126/source/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinWidgetLastSuccessfulRender.swift:83:57: error: cannot find 'HanlinWidgetProgramError' in scope",
+        "81 |             installedPackageID: widget.identity.installedPackageID, generation: widget.identity.generation)",
+        "82 |         let node = try JSONDecoder().decode(HanlinCachedWidgetNode.self, from: data)",
+        "83 |         guard node.engine == widget.engine else { throw HanlinWidgetProgramError.invalidProgram }",
+        "   |                                                         `- error: cannot find 'HanlinWidgetProgramError' in scope"
+      ]
+    }
+  ],
+  "resultBundle": "/Users/m1/builds/hanlin-two-wave-root-20261126/validation/platform-9819697c/build-r1/PlatformBuild.xcresult",
+  "logSHA256": "3e1876f17892a4f4d5b698d3b362e368816eab9180bf2baba31c64f98b6bd7ef",
+  "scope": "Original package build-for-testing failed on source diagnostics. No runtime test pass is claimed."
+}

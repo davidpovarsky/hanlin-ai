@@ -1,0 +1,417 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "9819697c1792119a6a93b492d12abad7b3330c93",
+  "inputSHA256": "bf1f6d6f9ed041287aab026b5f8dcf6c0e31b3571e7af459993dbd23534e4b73",
+  "sdkRoot": "/Users/m1/builds/hanlin-two-wave-root-20261126/fresh-sdk-9819697c-original-phases-r1/MiniAppSDK",
+  "nodeVersion": "v24.5.0",
+  "startedAt": "2026-11-26T18:29:54.539Z",
+  "passed": true,
+  "scope": "Ten fresh original runMiniAppOperation validate/build operations using current SDK examples and original locked toolchain. No Apple runtime or OS acceptance.",
+  "originalContract": "succeeded=true and strict user-source typing; original NativeScript skipLibCheck=true is preserved.",
+  "sdkManifestSHA256": "f7457404b4bab56dd74f460a3c50861b28ca52df11c9ab46e43244e0ccaf26f1",
+  "projects": [
+    {
+      "id": "nativescript-hello-world",
+      "engine": "nativescript",
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/fresh-sdk-9819697c-original-phases-r1/MiniAppSDK/examples/nativescript-hello-world",
+      "project": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/projects/nativescript-hello-world",
+      "reports": [
+        {
+          "operation": "validate",
+          "accepted": true,
+          "succeeded": true,
+          "reusedOriginalOperation": false,
+          "reportPath": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/nativescript-hello-world-validate.json",
+          "durationMilliseconds": 2088,
+          "compilerVersion": "5.9.3",
+          "packageVersions": {
+            "@nativescript/core": "9.1.4",
+            "@nativescript/swift-ui": "4.0.2",
+            "@nativescript/ios": "9.1.1",
+            "@nativescript/types": "9.1.4",
+            "@nativescript/vite": "8.0.24",
+            "typescript": "5.9.3",
+            "vite": "8.0.0",
+            "@hanlin/notification-events": "1.0.0",
+            "@hanlin/system-surfaces": "1.0.0",
+            "@hanlin/host-services": "1.0.0",
+            "@hanlin/assistant-tools": "1.0.0"
+          },
+          "typecheck": {
+            "strict": true,
+            "checkJs": false,
+            "skipLibCheck": true,
+            "dependencyDeclarationsChecked": false
+          },
+          "diagnostics": []
+        },
+        {
+          "operation": "build",
+          "accepted": true,
+          "succeeded": true,
+          "reusedOriginalOperation": false,
+          "reportPath": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/nativescript-hello-world-build.json",
+          "durationMilliseconds": 3672,
+          "compilerVersion": "5.9.3",
+          "packageVersions": {
+            "@nativescript/core": "9.1.4",
+            "@nativescript/swift-ui": "4.0.2",
+            "@nativescript/ios": "9.1.1",
+            "@nativescript/types": "9.1.4",
+            "@nativescript/vite": "8.0.24",
+            "typescript": "5.9.3",
+            "vite": "8.0.0",
+            "@hanlin/notification-events": "1.0.0",
+            "@hanlin/system-surfaces": "1.0.0",
+            "@hanlin/host-services": "1.0.0",
+            "@hanlin/assistant-tools": "1.0.0"
+          },
+          "typecheck": {
+            "strict": true,
+            "checkJs": false,
+            "skipLibCheck": true,
+            "dependencyDeclarationsChecked": false
+          },
+          "diagnostics": [],
+          "preparedPackagePath": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/packages/nativescript-hello-world"
+        }
+      ],
+      "retainedSourceFiles": 7,
+      "verifiedCompiledFiles": 7,
+      "entrypoint": "nativescript/app/bundle.mjs"
+    },
+    {
+      "id": "sdk-only-table-share",
+      "engine": "nativescript",
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/fresh-sdk-9819697c-original-phases-r1/MiniAppSDK/examples/sdk-only-table-share",
+      "project": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/projects/sdk-only-table-share",
+      "reports": [
+        {
+          "operation": "validate",
+          "accepted": true,
+          "succeeded": true,
+          "reusedOriginalOperation": false,
+          "reportPath": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/sdk-only-table-share-validate.json",
+          "durationMilliseconds": 1705,
+          "compilerVersion": "5.9.3",
+          "packageVersions": {
+            "@nativescript/core": "9.1.4",
+            "@nativescript/swift-ui": "4.0.2",
+            "@nativescript/ios": "9.1.1",
+            "@nativescript/types": "9.1.4",
+            "@nativescript/vite": "8.0.24",
+            "typescript": "5.9.3",
+            "vite": "8.0.0",
+            "@hanlin/notification-events": "1.0.0",
+            "@hanlin/system-surfaces": "1.0.0",
+            "@hanlin/host-services": "1.0.0",
+            "@hanlin/assistant-tools": "1.0.0"
+          },
+          "typecheck": {
+            "strict": true,
+            "checkJs": false,
+            "skipLibCheck": true,
+            "dependencyDeclarationsChecked": false
+          },
+          "diagnostics": []
+        },
+        {
+          "operation": "build",
+          "accepted": true,
+          "succeeded": true,
+          "reusedOriginalOperation": false,
+          "reportPath": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/sdk-only-table-share-build.json",
+          "durationMilliseconds": 3622,
+          "compilerVersion": "5.9.3",
+          "packageVersions": {
+            "@nativescript/core": "9.1.4",
+            "@nativescript/swift-ui": "4.0.2",
+            "@nativescript/ios": "9.1.1",
+            "@nativescript/types": "9.1.4",
+            "@nativescript/vite": "8.0.24",
+            "typescript": "5.9.3",
+            "vite": "8.0.0",
+            "@hanlin/notification-events": "1.0.0",
+            "@hanlin/system-surfaces": "1.0.0",
+            "@hanlin/host-services": "1.0.0",
+            "@hanlin/assistant-tools": "1.0.0"
+          },
+          "typecheck": {
+            "strict": true,
+            "checkJs": false,
+            "skipLibCheck": true,
+            "dependencyDeclarationsChecked": false
+          },
+          "diagnostics": [],
+          "preparedPackagePath": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/packages/sdk-only-table-share"
+        }
+      ],
+      "retainedSourceFiles": 7,
+      "verifiedCompiledFiles": 7,
+      "entrypoint": "nativescript/app/bundle.mjs"
+    },
+    {
+      "id": "nativescript-image-drawing",
+      "engine": "nativescript",
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/fresh-sdk-9819697c-original-phases-r1/MiniAppSDK/examples/nativescript-image-drawing",
+      "project": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/projects/nativescript-image-drawing",
+      "reports": [
+        {
+          "operation": "validate",
+          "accepted": true,
+          "succeeded": true,
+          "reusedOriginalOperation": false,
+          "reportPath": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/nativescript-image-drawing-validate.json",
+          "durationMilliseconds": 1980,
+          "compilerVersion": "5.9.3",
+          "packageVersions": {
+            "@nativescript/core": "9.1.4",
+            "@nativescript/swift-ui": "4.0.2",
+            "@nativescript/ios": "9.1.1",
+            "@nativescript/types": "9.1.4",
+            "@nativescript/vite": "8.0.24",
+            "typescript": "5.9.3",
+            "vite": "8.0.0",
+            "@hanlin/notification-events": "1.0.0",
+            "@hanlin/system-surfaces": "1.0.0",
+            "@hanlin/host-services": "1.0.0",
+            "@hanlin/assistant-tools": "1.0.0"
+          },
+          "typecheck": {
+            "strict": true,
+            "checkJs": false,
+            "skipLibCheck": true,
+            "dependencyDeclarationsChecked": false
+          },
+          "diagnostics": []
+        },
+        {
+          "operation": "build",
+          "accepted": true,
+          "succeeded": true,
+          "reusedOriginalOperation": false,
+          "reportPath": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/nativescript-image-drawing-build.json",
+          "durationMilliseconds": 4281,
+          "compilerVersion": "5.9.3",
+          "packageVersions": {
+            "@nativescript/core": "9.1.4",
+            "@nativescript/swift-ui": "4.0.2",
+            "@nativescript/ios": "9.1.1",
+            "@nativescript/types": "9.1.4",
+            "@nativescript/vite": "8.0.24",
+            "typescript": "5.9.3",
+            "vite": "8.0.0",
+            "@hanlin/notification-events": "1.0.0",
+            "@hanlin/system-surfaces": "1.0.0",
+            "@hanlin/host-services": "1.0.0",
+            "@hanlin/assistant-tools": "1.0.0"
+          },
+          "typecheck": {
+            "strict": true,
+            "checkJs": false,
+            "skipLibCheck": true,
+            "dependencyDeclarationsChecked": false
+          },
+          "diagnostics": [],
+          "preparedPackagePath": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/packages/nativescript-image-drawing"
+        }
+      ],
+      "retainedSourceFiles": 7,
+      "verifiedCompiledFiles": 7,
+      "entrypoint": "nativescript/app/bundle.mjs"
+    },
+    {
+      "id": "expo-hello-world",
+      "engine": "expo",
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/fresh-sdk-9819697c-original-phases-r1/MiniAppSDK/examples/expo-hello-world",
+      "project": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/projects/expo-hello-world",
+      "reports": [
+        {
+          "operation": "validate",
+          "accepted": true,
+          "succeeded": true,
+          "reusedOriginalOperation": false,
+          "reportPath": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/expo-hello-world-validate.json",
+          "durationMilliseconds": 1448,
+          "compilerVersion": "6.0.3",
+          "packageVersions": {
+            "@expo/ui": "58.0.29",
+            "@hanlin/expo-native-api": "1.0.0",
+            "@hanlin/expo-ui": "1.0.0",
+            "@nativescript/react-native": "9.1.2",
+            "expo": "58.0.26",
+            "expo-asset": "58.0.21",
+            "expo-brownfield": "58.0.20",
+            "expo-modules-core": "58.1.0",
+            "expo-modules-jsi": "58.0.23",
+            "react": "19.3.0",
+            "react-native": "0.88.1",
+            "react-native-worklets": "0.13.0",
+            "expo-widgets": "58.0.29",
+            "@babel/core": "7.29.7",
+            "@react-native-community/cli": "20.2.0",
+            "@react-native/codegen": "0.88.1",
+            "@react-native/metro-config": "0.88.1",
+            "@types/react": "19.3.3",
+            "babel-preset-expo": "58.0.26",
+            "esbuild": "0.25.12",
+            "typescript": "6.0.2",
+            "@hanlin/notification-events": "1.0.0",
+            "@hanlin/system-surfaces": "1.0.0",
+            "@hanlin/assistant-tools": "1.0.0"
+          },
+          "typecheck": {
+            "strict": true,
+            "checkJs": false,
+            "skipLibCheck": false,
+            "dependencyDeclarationsChecked": true
+          },
+          "diagnostics": []
+        },
+        {
+          "operation": "build",
+          "accepted": true,
+          "succeeded": true,
+          "reusedOriginalOperation": false,
+          "reportPath": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/expo-hello-world-build.json",
+          "durationMilliseconds": 9911,
+          "compilerVersion": "6.0.3",
+          "packageVersions": {
+            "@expo/ui": "58.0.29",
+            "@hanlin/expo-native-api": "1.0.0",
+            "@hanlin/expo-ui": "1.0.0",
+            "@nativescript/react-native": "9.1.2",
+            "expo": "58.0.26",
+            "expo-asset": "58.0.21",
+            "expo-brownfield": "58.0.20",
+            "expo-modules-core": "58.1.0",
+            "expo-modules-jsi": "58.0.23",
+            "react": "19.3.0",
+            "react-native": "0.88.1",
+            "react-native-worklets": "0.13.0",
+            "expo-widgets": "58.0.29",
+            "@babel/core": "7.29.7",
+            "@react-native-community/cli": "20.2.0",
+            "@react-native/codegen": "0.88.1",
+            "@react-native/metro-config": "0.88.1",
+            "@types/react": "19.3.3",
+            "babel-preset-expo": "58.0.26",
+            "esbuild": "0.25.12",
+            "typescript": "6.0.2",
+            "@hanlin/notification-events": "1.0.0",
+            "@hanlin/system-surfaces": "1.0.0",
+            "@hanlin/assistant-tools": "1.0.0"
+          },
+          "typecheck": {
+            "strict": true,
+            "checkJs": false,
+            "skipLibCheck": false,
+            "dependencyDeclarationsChecked": true
+          },
+          "diagnostics": [],
+          "preparedPackagePath": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/packages/expo-hello-world"
+        }
+      ],
+      "retainedSourceFiles": 8,
+      "verifiedCompiledFiles": 4,
+      "entrypoint": "bundle.js"
+    },
+    {
+      "id": "sdk-only-departure-budget",
+      "engine": "expo",
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/fresh-sdk-9819697c-original-phases-r1/MiniAppSDK/examples/sdk-only-departure-budget",
+      "project": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/projects/sdk-only-departure-budget",
+      "reports": [
+        {
+          "operation": "validate",
+          "accepted": true,
+          "succeeded": true,
+          "reusedOriginalOperation": false,
+          "reportPath": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/sdk-only-departure-budget-validate.json",
+          "durationMilliseconds": 1017,
+          "compilerVersion": "6.0.3",
+          "packageVersions": {
+            "@expo/ui": "58.0.29",
+            "@hanlin/expo-native-api": "1.0.0",
+            "@hanlin/expo-ui": "1.0.0",
+            "@nativescript/react-native": "9.1.2",
+            "expo": "58.0.26",
+            "expo-asset": "58.0.21",
+            "expo-brownfield": "58.0.20",
+            "expo-modules-core": "58.1.0",
+            "expo-modules-jsi": "58.0.23",
+            "react": "19.3.0",
+            "react-native": "0.88.1",
+            "react-native-worklets": "0.13.0",
+            "expo-widgets": "58.0.29",
+            "@babel/core": "7.29.7",
+            "@react-native-community/cli": "20.2.0",
+            "@react-native/codegen": "0.88.1",
+            "@react-native/metro-config": "0.88.1",
+            "@types/react": "19.3.3",
+            "babel-preset-expo": "58.0.26",
+            "esbuild": "0.25.12",
+            "typescript": "6.0.2",
+            "@hanlin/notification-events": "1.0.0",
+            "@hanlin/system-surfaces": "1.0.0",
+            "@hanlin/assistant-tools": "1.0.0"
+          },
+          "typecheck": {
+            "strict": true,
+            "checkJs": false,
+            "skipLibCheck": false,
+            "dependencyDeclarationsChecked": true
+          },
+          "diagnostics": []
+        },
+        {
+          "operation": "build",
+          "accepted": true,
+          "succeeded": true,
+          "reusedOriginalOperation": false,
+          "reportPath": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/sdk-only-departure-budget-build.json",
+          "durationMilliseconds": 8066,
+          "compilerVersion": "6.0.3",
+          "packageVersions": {
+            "@expo/ui": "58.0.29",
+            "@hanlin/expo-native-api": "1.0.0",
+            "@hanlin/expo-ui": "1.0.0",
+            "@nativescript/react-native": "9.1.2",
+            "expo": "58.0.26",
+            "expo-asset": "58.0.21",
+            "expo-brownfield": "58.0.20",
+            "expo-modules-core": "58.1.0",
+            "expo-modules-jsi": "58.0.23",
+            "react": "19.3.0",
+            "react-native": "0.88.1",
+            "react-native-worklets": "0.13.0",
+            "expo-widgets": "58.0.29",
+            "@babel/core": "7.29.7",
+            "@react-native-community/cli": "20.2.0",
+            "@react-native/codegen": "0.88.1",
+            "@react-native/metro-config": "0.88.1",
+            "@types/react": "19.3.3",
+            "babel-preset-expo": "58.0.26",
+            "esbuild": "0.25.12",
+            "typescript": "6.0.2",
+            "@hanlin/notification-events": "1.0.0",
+            "@hanlin/system-surfaces": "1.0.0",
+            "@hanlin/assistant-tools": "1.0.0"
+          },
+          "typecheck": {
+            "strict": true,
+            "checkJs": false,
+            "skipLibCheck": false,
+            "dependencyDeclarationsChecked": true
+          },
+          "diagnostics": [],
+          "preparedPackagePath": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/packages/sdk-only-departure-budget"
+        }
+      ],
+      "retainedSourceFiles": 8,
+      "verifiedCompiledFiles": 4,
+      "entrypoint": "bundle.js"
+    }
+  ],
+  "finishedAt": "2026-11-26T18:30:32.582Z"
+}

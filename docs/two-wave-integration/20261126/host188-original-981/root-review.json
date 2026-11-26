@@ -1,0 +1,20 @@
+{
+  "sourceCommit": "9819697c1792119a6a93b492d12abad7b3330c93",
+  "rootQualificationCommit": "91f3a1703ab840f98357bc4444516200a3f2ecb5",
+  "handoffVerifiedFiles": 25,
+  "allOriginalPhaseExitsZero": true,
+  "sdkSourceInputs": 392,
+  "sdkInputMismatches": [],
+  "testSourceInputs": 99,
+  "testInputMismatches": [],
+  "producerMatches": true,
+  "testCounts": {
+    "tests": 188,
+    "pass": 188,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "longJobMilliseconds": 305051.5775,
+  "appNative": "NOT_PROVEN_BY_HOST"
+}

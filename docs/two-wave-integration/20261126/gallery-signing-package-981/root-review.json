@@ -1,0 +1,9 @@
+{
+  "sourceCommit": "9819697c1792119a6a93b492d12abad7b3330c93",
+  "verifiedManifestFiles": 39,
+  "mismatches": [],
+  "archiveSHA256": "850062310763b7971cd62d997e833e9228bb0b40678ee8fe0b995f7b7e030d67",
+  "galleryScope": "Five original examples, ten original validate/build operations; native install/launch NOT_PROVEN",
+  "signingScope": "11/13 resources qualified; two existing App Group associations pending portal login; no archive/upload acceptance",
+  "packageScope": "981 original build-for-testing FAILED65; zero tests executed. Exact one-import fix ce835 queued separately."
+}
