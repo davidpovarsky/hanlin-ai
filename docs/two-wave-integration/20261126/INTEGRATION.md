@@ -29,3 +29,7 @@ Standalone MiniApps owns new shortcut/widget/runtime UI. Hanlin and consumers us
 - Seven original compiled Expo probes and seven test copies use current PR19 bundles. All manifest fields, missing-grant fixture and incompatible-version fixture remain unchanged; only bundle.js differed. This is provenance comparison, not test execution.
 - All526 application source members and both native window test references remain. The source-only project parser caught four identical duplicated object blocks introduced by automatic merge; removed the second copies and the parser passed.
 - Unified input hashes describe the actual staged package manifests; final canonical generation remains required.
+
+## Cache history reconciliation
+
+Merged original local cache head0d58bf1648788236dafc53c35618ad5dd5c22112. Mechanical comparison proved the merge adds only historical docs/evidence; every non-doc source file is unchanged from e09c596ad. The cache implementation was already present through the shared source composition. Prior native receipts retain their original tested-source scope; no duplicate cache implementation or new native PASS is claimed.

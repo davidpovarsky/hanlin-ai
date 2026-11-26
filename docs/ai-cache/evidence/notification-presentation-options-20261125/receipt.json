@@ -1,0 +1,16 @@
+{
+  "status": "SOURCE_REVIEWED_NATIVE_PENDING",
+  "atUTC": "2026-11-25T05:54:07.174139+00:00",
+  "base": "8266c1b6e8b2420a846daa079d4cbca01df19692",
+  "fix": "0311a002819104a2569b5cb7f5461715a2ee2959",
+  "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift",
+  "beforeSHA256": "3ffc6143a68699bcecd3e6d24af8d50c119886462e3495db476308ec11cecb20",
+  "afterSHA256": "8690dd60fb98da89ab4f289919fb3faf52306a2d8551703b873cbc03b9bd4efe",
+  "patchSHA256": "2444c86cacd1165e8e6383640bec9ee48a579fb4c064991c29101ccecc432bfc",
+  "mapping": "Native option-set identity; Int to UInt(bitPattern:) preserving all flags. Pure nonisolated static overloads. Original callbacks and ingress unchanged.",
+  "basis": "Actual App09 compiler callback Int diagnostic; original Xcode27 header NS_OPTIONS(NSUInteger); intentional original objcxx consumer settings.",
+  "review": "Root and native_bridge source/header review; diff --check PASS. Native compilation still pending.",
+  "testsExecuted": 0,
+  "assertionsChanged": false,
+  "dependenciesChanged": false
+}

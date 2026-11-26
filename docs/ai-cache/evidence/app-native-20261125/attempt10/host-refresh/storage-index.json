@@ -1,0 +1,77 @@
+{
+  "files": [
+    {
+      "original": "01-command.log",
+      "originalBytes": 20028,
+      "originalSHA256": "67a000cd44c75dfe45626eac461bf267190102083492517bc7a914a33489cdd8",
+      "stored": "01-command.log.gz",
+      "storedBytes": 7842,
+      "storedSHA256": "1f8c55f7adba125d24180841093dd405d7e4158a7ec368d9665ed094442f5bf2"
+    },
+    {
+      "original": "02-command.log",
+      "originalBytes": 0,
+      "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "stored": "02-command.log.gz",
+      "storedBytes": 20,
+      "storedSHA256": "f61f27bd17de546264aa58f40f3aafaac7021e0ef69c17f6b1b4cd7664a037ec"
+    },
+    {
+      "original": "03-command.log",
+      "originalBytes": 72,
+      "originalSHA256": "e0300c6a4ee73c2d65c9f67597ea4adcb0f6f627c0c7d1e9a7e3d1231d5441f0",
+      "stored": "03-command.log.gz",
+      "storedBytes": 86,
+      "storedSHA256": "d5e0de714c6e1392820b8d21e12290b9dcb4fd6b2bd735161c8634e9d90da358"
+    },
+    {
+      "original": "04-command.log",
+      "originalBytes": 3572,
+      "originalSHA256": "4ff42a8c94bade56b84e2d751b22728e48b68b8197d03340d8b26eeb90236ff3",
+      "stored": "04-command.log.gz",
+      "storedBytes": 1290,
+      "storedSHA256": "a3aa381063b3294489595282663ecb56940398cc0995cdcfa734b71834a4ef01"
+    },
+    {
+      "original": "acceptance-summary.json",
+      "originalBytes": 1909,
+      "originalSHA256": "f0a362c4e66f4495102c58ab8cab1ab6b2504abd4588cc8e89d1911845aee295",
+      "stored": "acceptance-summary.json",
+      "storedBytes": 1909,
+      "storedSHA256": "f0a362c4e66f4495102c58ab8cab1ab6b2504abd4588cc8e89d1911845aee295"
+    },
+    {
+      "original": "host-metadata.json",
+      "originalBytes": 358,
+      "originalSHA256": "e4aa01b64bfd1e5b25147eddee5a58ae2c749829785e4bf28cde84afd33b55bd",
+      "stored": "host-metadata.json",
+      "storedBytes": 358,
+      "storedSHA256": "e4aa01b64bfd1e5b25147eddee5a58ae2c749829785e4bf28cde84afd33b55bd"
+    },
+    {
+      "original": "original-generated.patch",
+      "originalBytes": 2626,
+      "originalSHA256": "7e56a20cf277b3c70837eb94ac2ef8c150dbf9ad6aa8655fa75d78b080ea6a1e",
+      "stored": "original-generated.patch.gz",
+      "storedBytes": 1069,
+      "storedSHA256": "ebd69444be888838c896df3927866d2a157fb57773cb22870123125cc28ec185"
+    },
+    {
+      "original": "receipt.json",
+      "originalBytes": 3702,
+      "originalSHA256": "bdcf2ea7f0d887203e44ea60bafff64bfb98f1c5fb207c671046be6b5f3f2981",
+      "stored": "receipt.json",
+      "storedBytes": 3702,
+      "storedSHA256": "bdcf2ea7f0d887203e44ea60bafff64bfb98f1c5fb207c671046be6b5f3f2981"
+    },
+    {
+      "original": "runtime-host.sha256",
+      "originalBytes": 91,
+      "originalSHA256": "06ecfc45ef35c448c3f68b19e22b1874b90217843132fd835e681110bc8dfac5",
+      "stored": "runtime-host.sha256",
+      "storedBytes": 91,
+      "storedSHA256": "06ecfc45ef35c448c3f68b19e22b1874b90217843132fd835e681110bc8dfac5"
+    }
+  ],
+  "compression": "Original raw logs and generated patch preserved with deterministic lossless gzip."
+}
