@@ -34,7 +34,6 @@ enum ComposerToolsSubroute: String, Hashable, Sendable {
     case toolsCatalog
     case skillsCenter
     case mcpServers
-    case runtimeCenter
 }
 
 enum ComposerModelSubroute: String, Hashable, Sendable {

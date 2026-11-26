@@ -1412,16 +1412,11 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertTrue(backBtn3.waitForExistence(timeout: 5))
         tapElement(backBtn3)
 
-        // 5. Open Runtime subpage and return
-        let runtimeRow = app.buttons["hanlin-tools-open-runtime"].firstMatch
-        XCTAssertTrue(runtimeRow.waitForExistence(timeout: 5), "Open runtime row must exist")
-        tapElement(runtimeRow)
-
-        let runtimePage = app.descendants(matching: .any)["hanlin-tools-runtime-page"].firstMatch
-        XCTAssertTrue(runtimePage.waitForExistence(timeout: 5), "Runtime subpage must appear")
-        let backBtn4 = app.buttons["hanlin-tools-subpage-back"].firstMatch
-        XCTAssertTrue(backBtn4.waitForExistence(timeout: 5))
-        tapElement(backBtn4)
+        // Engine lifecycle and package administration belong in advanced Settings.
+        // The ordinary tools drawer must not offer those technical destinations.
+        XCTAssertFalse(app.buttons["hanlin-tools-open-runtime"].exists)
+        XCTAssertFalse(app.buttons["hanlin-tools-open-full-runtime-center"].exists)
+        XCTAssertFalse(app.descendants(matching: .any)["hanlin-tools-runtime-page"].exists)
 
         // Close Tools popover
         tapElement(toolsDirect)
@@ -1753,9 +1748,10 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         tapElement(tools)
         let routes = [
             ("skills", "hanlin-tools-open-skills", "hanlin-tools-open-full-skill-center"),
-            ("mcp", "hanlin-tools-open-mcp", "hanlin-tools-open-full-mcp-settings"),
-            ("runtime", "hanlin-tools-open-runtime", "hanlin-tools-open-full-runtime-center")
+            ("mcp", "hanlin-tools-open-mcp", "hanlin-tools-open-full-mcp-settings")
         ]
+        XCTAssertFalse(app.buttons["hanlin-tools-open-runtime"].exists)
+        XCTAssertFalse(app.buttons["hanlin-tools-open-full-runtime-center"].exists)
         for (destination, routeID, linkID) in routes {
             let route = app.buttons[routeID].firstMatch
             XCTAssertTrue(route.waitForExistence(timeout: 5))

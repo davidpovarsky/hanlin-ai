@@ -873,7 +873,6 @@ struct ChatViewBottom: View {
                     case .tools(.some(.toolsCatalog)): return String(localized: "Tools", bundle: HanlinLocalization.bundle)
                     case .tools(.some(.skillsCenter)): return String(localized: "Skills", bundle: HanlinLocalization.bundle)
                     case .tools(.some(.mcpServers)): return String(localized: "MCP Servers", bundle: HanlinLocalization.bundle)
-                    case .tools(.some(.runtimeCenter)): return String(localized: "Runtimes", bundle: HanlinLocalization.bundle)
                     }
                 },
                 subtitle: { _ in String(localized: "Choose a capability and continue this conversation", bundle: HanlinLocalization.bundle) },
@@ -1110,7 +1109,7 @@ struct ChatViewBottom: View {
         case .creative: popupCoordinator.pushGeneralSubroute(.creative, reduceMotion: true)
         case .skills: popupCoordinator.pushToolsSubroute(.skillsCenter, reduceMotion: true)
         case .mcp: popupCoordinator.pushToolsSubroute(.mcpServers, reduceMotion: true)
-        case .runtimes: popupCoordinator.pushToolsSubroute(.runtimeCenter, reduceMotion: true)
+        case .runtimes: popupCoordinator.pushToolsSubroute(.toolsCatalog, reduceMotion: true)
         case .tools: break
         }
         isInputActive.wrappedValue = false

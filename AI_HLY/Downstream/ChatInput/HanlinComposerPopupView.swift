@@ -425,7 +425,7 @@ struct HanlinComposerGeneralActionsView: View {
                     } label: {
                         navigationRowLabel(
                             title: String(localized: "Tools, Skills & MCP", bundle: HanlinLocalization.bundle),
-                            subtitle: String(localized: "Manage native tools, agent skills, MCP and runtimes", bundle: HanlinLocalization.bundle),
+                            subtitle: String(localized: "Manage built-in tools, agent skills and MCP", bundle: HanlinLocalization.bundle),
                             systemImage: "hammer.circle.fill",
                             tint: .hanlinHLBrown
                         )
@@ -572,7 +572,7 @@ struct HanlinComposerGeneralActionsView: View {
                                     spacing: HanlinMorphStyle.cardSpacing)], spacing: HanlinMorphStyle.cardSpacing) {
             // Preserve the original PanelPage order; detached active chips
             // have a separate order and do not define this nine-card catalogue.
-            ForEach([HanlinDetachedCapability.search, .thinking, .creative, .tools, .skills, .mcp, .runtimes]) { item in
+            ForEach([HanlinDetachedCapability.search, .thinking, .creative, .tools, .skills, .mcp]) { item in
                 morphCapabilityTile(title: item.title, subtitle: item.subtitle, symbol: item.symbol,
                                     identifier: "tool-\(item.id)", enabled: enabledCapabilities.contains(item)) {
                     switch item {
@@ -588,7 +588,7 @@ struct HanlinComposerGeneralActionsView: View {
                         coordinator.pushToolsSubroute(.mcpServers, reduceMotion: true)
                     case .runtimes:
                         coordinator.switchFromGeneralToTools()
-                        coordinator.pushToolsSubroute(.runtimeCenter, reduceMotion: true)
+                        coordinator.pushToolsSubroute(.toolsCatalog, reduceMotion: true)
                     }
                 }
             }
@@ -1220,7 +1220,7 @@ struct HanlinComposerToolsRootView: View {
     }
 
     private enum ManagementDestination: String, Identifiable {
-        case skills, mcp, runtime
+        case skills, mcp
         var id: String { rawValue }
     }
 
@@ -1242,7 +1242,6 @@ struct HanlinComposerToolsRootView: View {
     @State private var selectionError: String?
     @State private var intentFeedback = HanlinMCPIntentFeedback()
     @State private var skillSearchText: String = ""
-    @State private var runtimeSnapshots: [RuntimeSnapshot] = []
     @State private var managementDestination: ManagementDestination?
 
     private typealias LiveContext = HanlinComposerRefreshContext
@@ -1288,8 +1287,6 @@ struct HanlinComposerToolsRootView: View {
                             skillsSubpage
                         case .mcpServers:
                             mcpServersSubpage
-                        case .runtimeCenter:
-                            runtimeSubpage
                         }
                     }
                     .onAppear {
@@ -1314,10 +1311,7 @@ struct HanlinComposerToolsRootView: View {
             .background(Color.clear)
             .accessibilityElement(children: .contain)
             .accessibilityIdentifier("hanlin-composer-tools-popover")
-            .sheet(item: $managementDestination, onDismiss: {
-                let request = liveContext
-                Task { await refreshRuntimeSnapshots(for: request) }
-            }) { destination in
+            .sheet(item: $managementDestination) { destination in
                 NavigationStack {
                     managementView(destination)
                         .toolbar {
@@ -1343,8 +1337,6 @@ struct HanlinComposerToolsRootView: View {
                                 skillsSubpage
                             case .mcpServers:
                                 mcpServersSubpage
-                            case .runtimeCenter:
-                                runtimeSubpage
                             }
                         }
                         .onAppear {
@@ -1382,7 +1374,6 @@ struct HanlinComposerToolsRootView: View {
         switch destination {
         case .skills: SkillCenterView()
         case .mcp: MCPServersSettingsView()
-        case .runtime: RuntimeCenterView()
         }
     }
 
@@ -1445,7 +1436,7 @@ struct HanlinComposerToolsRootView: View {
                     HStack(spacing: HanlinControlMetrics.rowSpacing) {
                         Image(systemName: "info.circle.fill")
                             .foregroundStyle(.orange)
-                        Text(String(format: String(localized: "The current model \"%@\" does not support tool calling. You can still browse and manage skills, MCP, and runtimes.", bundle: HanlinLocalization.bundle), capability.displayName))
+                        Text(String(format: String(localized: "The current model \"%@\" does not support tool calling. You can still browse and manage skills and MCP.", bundle: HanlinLocalization.bundle), capability.displayName))
                             .font(HanlinTypography.caption2)
                             .foregroundStyle(.secondary)
                             .lineLimit(2)
@@ -1457,7 +1448,7 @@ struct HanlinComposerToolsRootView: View {
 
                 Divider()
 
-                // 4 Domain Navigation Cards with V3.3 Two-Stage Zoom
+                // User-facing tool domains; engine diagnostics remain in Settings.
                 VStack(spacing: 5) {
                     // 1. Native Tools Catalog
                     Button {
@@ -1509,23 +1500,6 @@ struct HanlinComposerToolsRootView: View {
                     .matchedTransitionSource(id: "hanlin-tools-subroute-mcp", in: zoomNamespace)
                     .accessibilityIdentifier("hanlin-tools-open-mcp")
                     .accessibilityValue(enabledCapabilities.contains(.mcp) ? String(localized: "Enabled", bundle: HanlinLocalization.bundle) : String(localized: "Open settings", bundle: HanlinLocalization.bundle))
-
-                    // 4. Runtimes
-                    Button {
-                        coordinator.pushToolsSubroute(.runtimeCenter, reduceMotion: reduceMotion)
-                    } label: {
-                        domainCard(
-                            title: String(localized: "Local Runtimes (Runtimes)", bundle: HanlinLocalization.bundle),
-                            subtitle: runtimeStatusSummaryText,
-                            systemImage: "terminal.fill",
-                            tint: .hanlinHLIndigo,
-                            enabled: enabledCapabilities.contains(.runtimes)
-                        )
-                    }
-                    .buttonStyle(.plain)
-                    .matchedTransitionSource(id: "hanlin-tools-subroute-runtime", in: zoomNamespace)
-                    .accessibilityIdentifier("hanlin-tools-open-runtime")
-                    .accessibilityValue(enabledCapabilities.contains(.runtimes) ? String(localized: "Enabled", bundle: HanlinLocalization.bundle) : String(localized: "Open settings", bundle: HanlinLocalization.bundle))
                 }
             }
             .padding(.horizontal, HanlinControlMetrics.pageInset)
@@ -1796,14 +1770,12 @@ struct HanlinComposerToolsRootView: View {
                                     statusPill(String(localized: "Running", bundle: HanlinLocalization.bundle), active: isRunning)
                                     Spacer()
                                     Button(isRunning ? String(localized: "Restart", bundle: HanlinLocalization.bundle) : String(localized: "Start", bundle: HanlinLocalization.bundle)) {
-                                        let request = liveContext
                                         Task {
                                             if isRunning {
                                                 await mcpProvider.restart(server)
                                             } else {
                                                 await mcpProvider.start(server)
                                             }
-                                            await refreshRuntimeSnapshots(for: request)
                                         }
                                     }
                                     .font(HanlinTypography.caption2.weight(.semibold))
@@ -1849,81 +1821,6 @@ struct HanlinComposerToolsRootView: View {
         .accessibilityIdentifier("hanlin-tools-mcp-page")
     }
 
-    // MARK: - Subpage 4: Runtimes
-
-    private var runtimeSubpage: some View {
-        VStack(alignment: .leading, spacing: 0) {
-            if !embeddedInMorph { subpageHeader(title: String(localized: "Local Runtimes", bundle: HanlinLocalization.bundle)) }
-
-            HanlinComposerPageScroll(intrinsic: embeddedInMorph, showsIndicators: true) {
-                VStack(alignment: .leading, spacing: 8) {
-                    ForEach(runtimeSnapshots, id: \.kind) { snap in
-                        let isReady = (snap.state == .ready || snap.state == .executing)
-                        HStack(spacing: 10) {
-                            Circle()
-                                .fill(isReady ? Color.green : Color.secondary.opacity(0.5))
-                                .frame(width: 8, height: 8)
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text(snap.kind.rawValue)
-                                    .font(HanlinTypography.subheadline.weight(.medium))
-                                Text(snap.version ?? "On-demand")
-                                    .font(HanlinTypography.caption2)
-                                    .foregroundStyle(.secondary)
-                            }
-                            Spacer()
-                            Button(isReady ? String(localized: "Stop", bundle: HanlinLocalization.bundle) : String(localized: "Start", bundle: HanlinLocalization.bundle)) {
-                                let request = liveContext
-                                Task {
-                                    if isReady {
-                                        _ = try? await AppRuntimeCore.shared.stop(snap.kind)
-                                    } else {
-                                        _ = try? await AppRuntimeCore.shared.start(snap.kind)
-                                    }
-                                    await refreshRuntimeSnapshots(for: request)
-                                }
-                            }
-                            .font(HanlinTypography.caption.weight(.semibold))
-                            .padding(.horizontal, 10)
-                            .padding(.vertical, 4)
-                            .background(accentColor.opacity(0.12), in: Capsule())
-                        }
-                        .padding(10)
-                        .background(Color(.secondarySystemFill).opacity(0.6), in: RoundedRectangle(cornerRadius: HanlinControlMetrics.rowCornerRadius, style: .continuous))
-                    }
-
-                    managementLink(.runtime) {
-                        HStack {
-                            Label(String(localized: "Open Runtime & Package Manager", bundle: HanlinLocalization.bundle), systemImage: "terminal")
-                                .font(HanlinTypography.caption.weight(.semibold))
-                                .foregroundStyle(accentColor)
-                            Spacer()
-                            Image(systemName: "chevron.forward")
-                                .font(HanlinTypography.caption2)
-                                .foregroundStyle(.secondary)
-                        }
-                        .padding(10)
-                        .background(accentColor.opacity(0.1), in: RoundedRectangle(cornerRadius: HanlinControlMetrics.rowCornerRadius, style: .continuous))
-                    }
-                    .buttonStyle(.plain)
-                    .accessibilityIdentifier("hanlin-tools-open-full-runtime-center")
-                }
-                .padding(HanlinControlMetrics.pageInset)
-            }
-            .accessibilityElement(children: .contain)
-            .accessibilityIdentifier("hanlin-tools-runtime-page")
-
-            Color.clear
-                .frame(height: 1)
-                .allowsHitTesting(false)
-                .accessibilityElement(children: .ignore)
-                .accessibilityLabel(String(localized: "Local Runtimes", bundle: HanlinLocalization.bundle))
-                .accessibilityIdentifier("hanlin-tools-runtime-page")
-        }
-        .toolbar(.hidden, for: .navigationBar)
-        .accessibilityElement(children: .contain)
-        .accessibilityIdentifier("hanlin-tools-runtime-page")
-    }
-
     // MARK: - Live State Helpers
 
     private var enabledToolsCount: Int {
@@ -1955,11 +1852,6 @@ struct HanlinComposerToolsRootView: View {
         return String(format: String(localized: "Installed %lld · Selected in chat %lld · Running %lld", bundle: HanlinLocalization.bundle), installedCount, selectedMCPServerIDs.count, runningCount)
     }
 
-    private var runtimeStatusSummaryText: String {
-        let readyCount = runtimeSnapshots.filter { $0.state == .ready || $0.state == .executing }.count
-        return String(format: String(localized: "Node / TS / Python / JSC / Shell · Ready %lld/%lld", bundle: HanlinLocalization.bundle), readyCount, max(runtimeSnapshots.count, 5))
-    }
-
     private func refreshLiveState(for request: LiveContext) async {
         intentFeedback.setScope(MCPChatSelectionScope(chatID: request.chatID, temporary: request.temporary))
         if activeLiveContext?.chatID != request.chatID || activeLiveContext?.temporary != request.temporary {
@@ -1981,13 +1873,6 @@ struct HanlinComposerToolsRootView: View {
                 }
             }
         )
-        await refreshRuntimeSnapshots(for: request)
-    }
-
-    private func refreshRuntimeSnapshots(for request: LiveContext) async {
-        let snapshots = await AppRuntimeCore.shared.snapshots()
-        guard request.canPublish(current: activeLiveContext, currentSelectionRevision: mcpProvider.selectionRevision(chatID: request.chatID, temporary: request.temporary), isCancelled: Task.isCancelled) else { return }
-        runtimeSnapshots = snapshots
     }
 
     private func domainCard(
