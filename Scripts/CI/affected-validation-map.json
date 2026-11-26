@@ -483,7 +483,8 @@
         "Scripts/MiniApps/AssistantExamples/**",
         "Scripts/MiniApps/assistant-tools.d.ts",
         "Scripts/MiniApps/assistant-tools.schema.json",
-        "Scripts/MiniApps/native-presentations.d.ts"
+        "Scripts/MiniApps/native-presentations.d.ts",
+        "Scripts/MiniApps/Examples/**"
       ],
       "direct_validation_groups": [
         "runtimecore_host"

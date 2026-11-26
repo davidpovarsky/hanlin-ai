@@ -35,7 +35,7 @@ TEST_PLANS = {
         "AI_HLYTests/HanlinOriginalScriptWidgetControlTests",
         "AI_HLYTests/HanlinMiniAppStorageCapacityTests",
         "AI_HLYTests/HanlinOriginalExpoWidgetTests",
-        "AI_HLYUITests/MiniAppAuthoringUITests"], 25),
+        "AI_HLYUITests/MiniAppAuthoringUITests"], 27),
     "miniapp_sdk04": ([
         "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure",
         "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer"], 2),
@@ -50,7 +50,7 @@ TEST_PLANS = {
 # The earlier42 app cases never executed after the failed first product build.
 # Complete acceptance combines their exact plan with only the new current cases.
 TEST_PLANS["miniapp_complete"] = (
-    TEST_PLANS["miniapp_authoring"][0] + TEST_PLANS["miniapp_sdk04"][0], 27)
+    TEST_PLANS["miniapp_authoring"][0] + TEST_PLANS["miniapp_sdk04"][0], 29)
 SDK04_MINIAPPS_SELECTORS = (
     "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata",
     "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEditButtonEditsOriginalList",
@@ -65,6 +65,18 @@ SDK04_MINIAPPS_SELECTORS = (
 
 
 COMMAND_HEARTBEAT_SECONDS = 30
+
+
+def select_paired_runtime(runtimes, sdk, requested=None):
+    identifier = requested or "com.apple.CoreSimulator.SimRuntime.iOS-" + sdk.replace(".", "-")
+    if not identifier.startswith("com.apple.CoreSimulator.SimRuntime.iOS-"):
+        raise RuntimeError("Paired acceptance requires an exact iOS simulator runtime identifier")
+    matches = [runtime for runtime in runtimes
+        if runtime.get("identifier") == identifier and runtime.get("isAvailable")
+        and not runtime.get("isInternal")]
+    if len(matches) != 1:
+        raise RuntimeError("Requested paired iOS simulator runtime is unavailable or ambiguous: " + identifier)
+    return matches[0]
 
 
 def command(argv, name, timeout=60, allow_failure=False):
@@ -446,8 +458,14 @@ def main():
         if int(sdk.split(".")[0]) != 27:
             raise RuntimeError("Acceptance requires the installed stable iOS 27 SDK")
         _, raw = command(["xcrun", "simctl", "list", "runtimes", "-j"], "runtimes.json")
-        runtime = next(r for r in json.loads(raw)["runtimes"] if r.get("isAvailable")
-            and not r.get("isInternal") and r["identifier"].endswith("iOS-" + sdk.replace(".", "-")))
+        requested_runtime = os.environ.get("PAIRED_SIM_RUNTIME")
+        runtime = select_paired_runtime(json.loads(raw)["runtimes"], sdk, requested_runtime)
+        state["simulator_runtime_selection"] = {
+            "build_sdk_version": sdk,
+            "requested_runtime": requested_runtime,
+            "selected_runtime": runtime["identifier"],
+            "runtime_version": runtime.get("version"),
+        }
         _, raw = command(["xcrun", "simctl", "list", "devicetypes", "-j"], "device-types.json")
         supported = {item["identifier"] for item in runtime["supportedDeviceTypes"]}
         device_family = "iPad" if TEST_SCOPE in {"miniapp_authoring", "miniapp_sdk04", "miniapp_complete"} else "iPhone"
