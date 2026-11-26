@@ -328,7 +328,8 @@ public struct HanlinScriptExtensionStore: Sendable {
         }
     }
 
-    private func loadUnlocked() throws -> LoadResult {
+    // Internal queue admission shares this transaction; callers must hold withLock.
+    func loadUnlocked() throws -> LoadResult {
         var recovery: Recovery?
         let commit = try optionalDecode(Commit.self, at: commitURL)
         if let pending = try optionalDecode(Pending.self, at: pendingURL) {

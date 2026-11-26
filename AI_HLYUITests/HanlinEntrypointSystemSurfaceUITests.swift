@@ -1,0 +1,521 @@
+import Foundation
+import XCTest
+
+/// Genuine system surfaces, selected separately from the original 52 cases.
+/// The external observer only reads real installed state/receipts and writes
+/// coordination files in this XCTest runner's Documents directory.
+@MainActor
+final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
+    private enum Engine: String {
+        case expo, nativescript
+        var title: String { self == .expo ? "Surface Expo" : "Surface NativeScript" }
+        var archive: String { self == .expo ? "SurfaceExpo" : "SurfaceNativeScript" }
+        var appID: String { "hanlin.surface." + rawValue }
+        var actionLabel: String { self == .expo ? "Run Expo Surface" : "Run NativeScript Surface" }
+    }
+    private enum Surface: String { case widget, liveActivity, shortcuts, share, translation }
+    private struct ObservationFailure: Error, CustomStringConvertible {
+        let description: String
+    }
+
+    private let mini = XCUIApplication(bundleIdentifier: "com.itorah.hanlinminiapps")
+    private let springboard = XCUIApplication(bundleIdentifier: "com.apple.springboard")
+    private let shortcuts = XCUIApplication(bundleIdentifier: "com.apple.shortcuts")
+    private let files = XCUIApplication(bundleIdentifier: "com.apple.DocumentsApp")
+    private let safari = XCUIApplication(bundleIdentifier: "com.apple.mobilesafari")
+    private let settings = XCUIApplication(bundleIdentifier: "com.apple.Preferences")
+    private var deadline = Date.distantPast
+    private var exchange: URL?
+    private var runDirectory: URL?
+    private var record: [String: Any] = [:]
+
+    func testExpoPlacedWidgetInvokesAllFiveRuntimes() throws { try observe(.expo, .widget) }
+    func testNativeScriptPlacedWidgetInvokesAllFiveRuntimes() throws { try observe(.nativescript, .widget) }
+    func testExpoLiveActivityInvokesAllFiveRuntimes() throws { try observe(.expo, .liveActivity) }
+    func testNativeScriptLiveActivityInvokesAllFiveRuntimes() throws { try observe(.nativescript, .liveActivity) }
+    func testExpoShortcutInvokesAllFiveRuntimes() throws { try observe(.expo, .shortcuts) }
+    func testNativeScriptShortcutInvokesAllFiveRuntimes() throws { try observe(.nativescript, .shortcuts) }
+    func testExpoSystemShareInvokesAllFiveRuntimes() throws { try observe(.expo, .share) }
+    func testNativeScriptSystemShareInvokesAllFiveRuntimes() throws { try observe(.nativescript, .share) }
+    func testExpoSystemTranslationInvokesAllFiveRuntimes() throws { try observe(.expo, .translation) }
+    func testNativeScriptSystemTranslationInvokesAllFiveRuntimes() throws { try observe(.nativescript, .translation) }
+
+    private func observe(_ engine: Engine, _ surface: Surface) throws {
+        continueAfterFailure = false
+        executionTimeAllowance = 240
+        deadline = Date().addingTimeInterval(240)
+        let runID = UUID().uuidString.lowercased()
+        let documents = try XCTUnwrap(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first)
+        let root = documents.appendingPathComponent("HanlinSystemSurfaceObservation", isDirectory: true)
+        let directory = root.appendingPathComponent(runID, isDirectory: true)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        exchange = root
+        runDirectory = directory
+        record = ["schema": 1, "runID": runID, "engine": engine.rawValue,
+                  "surface": surface.rawValue, "fixtureAppID": engine.appID,
+                  "fixtureTitle": engine.title, "status": "RUNNING",
+                  "startedAt": timestamp(), "test": name, "phase": "preparing",
+                  "systemLaunchObserved": false]
+        try checkpoint("preparing")
+        defer {
+            capture(mini, "final-mini")
+            capture(springboard, "final-system")
+            record["finishedAt"] = timestamp()
+            try? writeJSON(record, filename: "case.json")
+            try? checkpoint("finished")
+        }
+
+        do {
+            mini.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+            mini.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+            mini.launch()
+            try openInstalledFixture(engine)
+            let status = mini.staticTexts.matching(NSPredicate(format: "label BEGINSWITH %@", "App ID:")).firstMatch
+            try require(wait(20) { status.exists && self.stateFields(status.label)["App ID"] == engine.appID },
+                        "The fixture did not expose its actual initial state.")
+            let previousStatus = status.label
+            let previousChallenge = stateFields(previousStatus)["Challenge"]
+            let prepare = mini.buttons["Prepare challenge"].firstMatch
+            try tap(prepare, "The real fixture must prepare its private challenge.")
+            try require(wait(20) {
+                guard status.exists else { return false }
+                let fields = self.stateFields(status.label)
+                guard let challenge = fields["Challenge"], !challenge.isEmpty,
+                      challenge != "not-prepared", challenge != previousChallenge else { return false }
+                return fields["App ID"] == engine.appID && fields["Counter"] == "0" && prepare.isEnabled
+            }, "Prepare challenge must finish its actual asynchronous state write with a new non-placeholder challenge and counter zero.")
+            let fields = stateFields(status.label)
+            let challenge = try XCTUnwrap(fields["Challenge"])
+            let counter = try XCTUnwrap(fields["Counter"].flatMap { Int($0) })
+            try require(fields["App ID"] == engine.appID && !challenge.isEmpty && challenge != "not-prepared" &&
+                        challenge != previousChallenge && counter == 0,
+                        "The visible fixture identity/challenge does not match the newly prepared state.")
+            record["visibleStateBeforePreparation"] = previousStatus
+            record["challenge"] = challenge
+            record["baselineCounter"] = counter
+            record["visibleStateBefore"] = status.label
+            capture(mini, "prepared-fixture")
+            try checkpoint("prepared")
+
+            // The observer resolves the real post-XCTest MCM containers and the
+            // installed published identity. It never installs a package or seeds
+            // a command, grant, receipt, result or queue on this test's behalf.
+            let identity = try response("identity.json", timeout: 20)
+            try require(identity["status"] as? String == "READY" &&
+                        identity["appID"] as? String == engine.appID,
+                        "The observer could not authenticate the actual installed target.")
+            record["installedIdentity"] = identity
+
+            switch surface {
+            case .widget: try runPlacedWidget(engine, identity: identity)
+            case .liveActivity: try runLiveActivity(engine, identity: identity)
+            case .shortcuts: try runShortcut(engine, identity: identity)
+            case .share: try runShare(engine, identity: identity)
+            case .translation: try runTranslation(engine, identity: identity)
+            }
+
+            record["systemLaunchObserved"] = true
+            try checkpoint("system-action-sent")
+            let completion = try response("completion.json", timeout: 100)
+            record["observerCompletion"] = completion
+            try require(completion["status"] as? String == "EXECUTED_PASS",
+                        "The actual system action did not produce the required correlated five-engine receipts: \(completion)")
+            try require(completion["challenge"] as? String == challenge &&
+                        completion["counter"] as? Int == counter + 1,
+                        "The result must belong to this fresh challenge and increment its actual state once.")
+            try require(completion["engines"] as? [String] == ["node", "typescript", "python", "javascript", "shell"],
+                        "The observer did not verify all five canonical runtimes.")
+            try require(completion["invocationID"] as? String != nil &&
+                        completion["receipt"] as? [String: Any] != nil,
+                        "A real durable invocation receipt is required.")
+            mini.activate()
+            if mini.buttons["Read last result"].firstMatch.waitForExistence(timeout: bounded(10)) {
+                try tap(mini.buttons["Read last result"].firstMatch, "Read the real persisted result.")
+            }
+            capture(mini, "actual-result")
+            record["status"] = "EXECUTED_PASS"
+        } catch let skipped as XCTSkip {
+            record["status"] = "BLOCKED"
+            record["reason"] = String(describing: skipped)
+            throw skipped
+        } catch {
+            record["status"] = "FAILED"
+            record["reason"] = String(describing: error)
+            throw error
+        }
+    }
+
+    private func stateFields(_ label: String) -> [String: String] {
+        var fields: [String: String] = [:]
+        for part in label.components(separatedBy: " | ") {
+            guard let range = part.range(of: ": ") else { return [:] }
+            let key = String(part[..<range.lowerBound])
+            guard fields[key] == nil else { return [:] }
+            fields[key] = String(part[range.upperBound...])
+        }
+        return fields
+    }
+
+    private func openInstalledFixture(_ engine: Engine) throws {
+        let close = mini.buttons["hanlin-script-app-close"].firstMatch
+        if close.exists && close.isHittable { close.tap() }
+        let manage = mini.buttons["hanlin-apps-add"].firstMatch
+        try require(manage.waitForExistence(timeout: bounded(25)), "The shipping MiniApps catalog is unavailable.")
+        let card = mini.buttons["hanlin-package-card-" + engine.title].firstMatch
+        if !card.exists {
+            try tap(manage, "Open the existing package importer.")
+            try tap(mini.buttons["hanlin-import-script-package"].firstMatch, "Open original package import.")
+            let list = mini.collectionViews["hanlin-package-import-list"].firstMatch
+            try require(list.waitForExistence(timeout: bounded(15)), "The original import list is unavailable.")
+            let archive = list.buttons[engine.archive].firstMatch
+            try reveal(archive, in: list, message: "The exact staged surface archive is absent.")
+            try tap(archive, "Import the exact surface archive.")
+            let install = mini.buttons["hanlin-package-install"].firstMatch
+            let importError = mini.descendants(matching: .any)["hanlin-import-error-message"].firstMatch
+            let diagnostics = mini.descendants(matching: .any)["hanlin-import-diagnostics-sheet"].firstMatch
+            try require(wait(120) { install.exists || importError.exists || diagnostics.exists },
+                        "Original strict package validation did not reach an actual outcome.")
+            capture(mini, "actual-import-preview")
+            try require(!importError.exists && !diagnostics.exists && install.exists,
+                        "The real compiler/importer rejected the new surface fixture.")
+            try tap(install, "Install through the original production preview.")
+            try require(wait(45) { !install.exists || importError.exists }, "The real installer did not finish.")
+            try require(!importError.exists, "The original installer reported a real error.")
+            try tap(mini.buttons["hanlin-package-import-done"].firstMatch, "Dismiss the completed package importer.")
+            try tap(mini.buttons["hanlin-apps-add-done"].firstMatch, "Return to the installed catalog.")
+        }
+        try reveal(card, in: mini, message: "The installed surface package card is absent.")
+        try tap(card, "Open the actual installed surface package.")
+        try require(mini.buttons["Prepare challenge"].firstMatch.waitForExistence(timeout: bounded(30)),
+                    "The actual surface package runtime UI did not load.")
+    }
+
+    private func runPlacedWidget(_ engine: Engine, identity: [String: Any]) throws {
+        if engine == .expo {
+            try tap(mini.buttons["Publish widget"].firstMatch, "Publish through the actual Expo Host API.")
+        } else {
+            try tap(mini.buttons["Widget setup"].firstMatch, "Inspect the original installed ScriptWidget setup.")
+        }
+        capture(mini, "widget-preparation")
+        try checkpoint("widget-published")
+        let publication = try response("widget.json", timeout: 15)
+        try require(publication["status"] as? String == "READY", "No actual current published widget is available.")
+        let widgetName = try XCTUnwrap(publication["configurationTitle"] as? String)
+        let entityName = try XCTUnwrap(publication["entityTitle"] as? String)
+
+        XCUIDevice.shared.press(.home)
+        let icon = springboard.icons["Hanlin MiniApps"].firstMatch
+        try reveal(icon, in: springboard, message: "The installed app icon is not observable on the owned Home Screen.", horizontal: true)
+        icon.press(forDuration: 1.2)
+        capture(springboard, "home-edit-menu")
+        try tap(firstButton(springboard, ["Edit Home Screen"]), "The actual Home Screen edit command is unavailable.")
+        if springboard.buttons["Edit"].firstMatch.exists { springboard.buttons["Edit"].firstMatch.tap() }
+        try tap(firstButton(springboard, ["Add Widget", "Add Widgets"]), "The actual system widget gallery could not be opened.")
+        capture(springboard, "widget-gallery")
+        let search = springboard.searchFields.firstMatch
+        try tap(search, "The functioning widget gallery must expose its search.")
+        search.typeText("Hanlin MiniApps")
+        let application = springboard.staticTexts["Hanlin MiniApps"].firstMatch
+        try require(application.waitForExistence(timeout: bounded(15)),
+                    "PRODUCT FAILED: our widget registration is missing from the functioning system gallery.")
+        try tap(application, "Select the real Hanlin MiniApps widget registration.")
+        let configuration = springboard.staticTexts[widgetName].firstMatch
+        try reveal(configuration, in: springboard, message: "PRODUCT FAILED: the declared widget configuration is absent.")
+        try tap(configuration, "Select the actual configuration.")
+        try tap(firstButton(springboard, ["Add Widget"]), "Place the real WidgetKit widget.")
+        if springboard.buttons["Done"].firstMatch.exists { springboard.buttons["Done"].firstMatch.tap() }
+        capture(springboard, "placed-widget")
+        let action = springboard.buttons[engine.actionLabel].firstMatch
+        if !action.exists {
+            let widget = springboard.descendants(matching: .any).matching(NSPredicate(format: "label CONTAINS %@", widgetName)).firstMatch
+            try require(widget.exists, "PRODUCT FAILED: the placed widget has no observable current content.")
+            widget.press(forDuration: 1.2)
+            try tap(firstButton(springboard, ["Edit Widget"]), "Configure the actual placed widget.")
+            let choice = springboard.buttons.matching(NSPredicate(format: "label CONTAINS %@", "Widget")).firstMatch
+            try tap(choice, "Select an installed widget entity.")
+            try tap(springboard.staticTexts[entityName].firstMatch, "Choose the exact published installed identity.")
+            if springboard.buttons["Done"].firstMatch.exists { springboard.buttons["Done"].firstMatch.tap() }
+            XCUIDevice.shared.press(.home)
+        }
+        capture(springboard, "widget-before-action")
+        try require(action.waitForExistence(timeout: bounded(15)),
+                    "PRODUCT FAILED: our declared Host action is missing from the placed widget.")
+        try checkpoint("before-system-action")
+        try tap(action, "Tap the genuine placed widget action.")
+    }
+
+    private func runLiveActivity(_ engine: Engine, identity: [String: Any]) throws {
+        try tap(mini.buttons["Start Live Activity"].firstMatch, "Start through the actual production ActivityKit route.")
+        capture(mini, "activity-start")
+        try checkpoint("activity-started")
+        let activity = try response("activity.json", timeout: 15)
+        if activity["status"] as? String == "UNAVAILABLE" {
+            try block("The actual OS ActivityKit authorization/capability is unavailable.", evidence: activity)
+        }
+        try require(activity["status"] as? String == "READY" &&
+                    !(activity["activityID"] as? String ?? "").isEmpty,
+                    "PRODUCT FAILED: a real ActivityKit instance was not created.")
+        record["activity"] = activity
+        XCUIDevice.shared.press(.home)
+        capture(springboard, "activity-home")
+        // Open the real Notification Centre/Lock Screen surface using a public
+        // XCTest gesture. No in-app preview or direct intent call is substituted.
+        let start = springboard.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.02))
+        let end = springboard.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.8))
+        start.press(forDuration: 0.1, thenDragTo: end)
+        capture(springboard, "activity-system-surface")
+        let action = springboard.buttons[engine.actionLabel].firstMatch
+        try require(action.waitForExistence(timeout: bounded(15)),
+                    "The real ActivityKit surface/action was not observed. Retained UI must distinguish a product failure from an unavailable system surface; this is not an assumed BLOCKED result.")
+        try checkpoint("before-system-action")
+        try tap(action, "Tap the actual Live Activity action.")
+    }
+
+    private func runShortcut(_ engine: Engine, identity: [String: Any]) throws {
+        try requireSystemApp("shortcuts", identity: identity)
+        shortcuts.launch()
+        capture(shortcuts, "shortcuts-start")
+        try tap(firstButton(shortcuts, ["Create Shortcut", "Add"]), "Create one actual system Shortcut.")
+        if shortcuts.buttons["Add Action"].firstMatch.exists { shortcuts.buttons["Add Action"].firstMatch.tap() }
+        let search = shortcuts.searchFields.firstMatch
+        try tap(search, "Search the real Shortcuts action gallery.")
+        search.typeText("Hanlin MiniApps")
+        let app = shortcuts.staticTexts["Hanlin MiniApps"].firstMatch
+        try require(app.waitForExistence(timeout: bounded(15)),
+                    "PRODUCT FAILED: our containing app is absent from the functioning Shortcuts gallery.")
+        try tap(app, "Open the app's actual indexed actions.")
+        try tap(shortcuts.staticTexts["Run Script Action"].firstMatch,
+                "PRODUCT FAILED: the original discoverable Run Script Action is absent.")
+        let parameters = [
+            ("Installed Package", try string(identity, "installedPackageID")),
+            ("Package", try string(identity, "packageID")),
+            ("Generation", String(try XCTUnwrap(identity["generation"] as? Int))),
+            ("Entrypoint", "surface-intent"), ("Action", "surface.run"),
+            ("Parameters", try jsonString(["surface": "shortcuts", "challenge": try string(record, "challenge")]))
+        ]
+        for (title, value) in parameters { try fillShortcutParameter(title, value: value) }
+        capture(shortcuts, "shortcut-configured")
+        try checkpoint("before-system-action")
+        try tap(firstButton(shortcuts, ["Run Shortcut", "Run"]), "Run through the actual Shortcuts application.")
+    }
+
+    private func runShare(_ engine: Engine, identity: [String: Any]) throws {
+        try requireSystemApp("files", identity: identity)
+        let folder = try string(identity, "shareInputFolder")
+        let names = try XCTUnwrap(identity["shareInputNames"] as? [String])
+        try require(!names.isEmpty, "The genuine file payload manifest is absent.")
+        files.launch()
+        if files.buttons["Browse"].firstMatch.exists { files.buttons["Browse"].firstMatch.tap() }
+        try tap(files.staticTexts["On My iPad"].firstMatch, "Use the actual Files local storage browser.")
+        try tap(files.staticTexts["Hanlin MiniApps"].firstMatch, "Open the containing app's normal Documents.")
+        try tap(files.staticTexts[folder].firstMatch, "Open the exact staged input folder.")
+        try tap(firstButton(files, ["Select"]), "Select the actual source items.")
+        for name in names {
+            let item = files.staticTexts[name].firstMatch
+            try reveal(item, in: files, message: "The exact original shared input is absent: " + name)
+            try tap(item, "Select actual shared input " + name)
+        }
+        try tap(firstButton(files, ["Share"]), "Open the real system Share sheet.")
+        capture(files, "system-share-sheet")
+        var target = files.buttons["Hanlin MiniApps"].firstMatch
+        if !target.exists {
+            try tap(firstButton(files, ["More"]), "Inspect the actual extension chooser.")
+            target = files.buttons["Hanlin MiniApps"].firstMatch
+        }
+        try require(target.waitForExistence(timeout: bounded(15)),
+                    "PRODUCT FAILED: our declared extension is absent from the functioning Share chooser.")
+        try tap(target, "Launch the real Share extension with the actual item providers.")
+        let saved = files.staticTexts.matching(NSPredicate(format: "label BEGINSWITH %@", "Saved for Hanlin")).firstMatch
+        try require(saved.waitForExistence(timeout: bounded(30)), "The actual Share extension did not retain the items.")
+        capture(files, "share-extension-saved")
+        try tap(firstButton(files, ["Done"]), "Finish the original Share extension.")
+        try checkpoint("share-batch-saved")
+        let batch = try response("share.json", timeout: 15)
+        try require(batch["status"] as? String == "READY", "No matching real shared batch was observed.")
+        let batchID = try string(batch, "batchID").lowercased()
+        record["shareBatch"] = batch
+        mini.activate()
+        let close = mini.buttons["hanlin-script-app-close"].firstMatch
+        if close.exists && close.isHittable { close.tap() }
+        try tap(mini.buttons["hanlin-apps-add"].firstMatch, "Open the existing MiniApps management screen.")
+        try tap(mini.buttons["Shared Items"].firstMatch, "Review the actual system-shared items.")
+        let chooser = mini.buttons["hanlin-share-choose-" + batchID].firstMatch
+        try reveal(chooser, in: mini, message: "The actual shared batch has no delivery control.")
+        try tap(chooser, "Choose an installed MiniApp action explicitly.")
+        let action = mini.buttons.matching(NSPredicate(format: "label CONTAINS %@", engine.title)).firstMatch
+        try require(action.waitForExistence(timeout: bounded(10)),
+                    "PRODUCT FAILED: this installed engine has no declared share action.")
+        capture(mini, "share-before-action")
+        try checkpoint("before-system-action")
+        try tap(action, "Submit the real shared batch to the installed action.")
+    }
+
+    private func runTranslation(_ engine: Engine, identity: [String: Any]) throws {
+        try requireSystemApp("safari", identity: identity)
+        settings.launch()
+        let search = settings.searchFields.firstMatch
+        if !search.exists { settings.swipeDown() }
+        try tap(search, "Find the actual system default-app settings.")
+        search.typeText("Default Apps")
+        try tap(settings.staticTexts["Default Apps"].firstMatch, "Inspect the real default-app chooser.")
+        let translation = settings.staticTexts["Translation"].firstMatch
+        for _ in 0..<5 {
+            if translation.exists && translation.isHittable { break }
+            settings.swipeUp()
+        }
+        capture(settings, "translation-provider-settings")
+        if !translation.exists && settings.navigationBars["Default Apps"].exists {
+            try block("The working system Default Apps settings expose no Translation capability on this Simulator.",
+                      evidence: ["settingsPage": "Default Apps", "translationRowObserved": false])
+        }
+        try tap(translation, "Choose the real Translation provider.")
+        capture(settings, "translation-provider-chooser")
+        let provider = settings.staticTexts["Hanlin MiniApps"].firstMatch
+        try require(provider.waitForExistence(timeout: bounded(10)),
+                    "PRODUCT FAILED: our declared provider is absent from the functioning Translation chooser.")
+        try tap(provider, "Select the original installed MiniApps Translation extension.")
+
+        let sourceURL = try XCTUnwrap(URL(string: try string(identity, "translationInputURL")))
+        try require(["http", "https"].contains(sourceURL.scheme ?? ""), "The text source must be a genuine Safari page.")
+        safari.open(sourceURL)
+        let sourceText = try string(identity, "translationInputText")
+        let text = safari.staticTexts[sourceText].firstMatch
+        try require(text.waitForExistence(timeout: bounded(20)), "The actual source page text did not load.")
+        text.press(forDuration: 1.2)
+        if safari.buttons["Select All"].firstMatch.exists { safari.buttons["Select All"].firstMatch.tap() }
+        capture(safari, "translation-source-selection")
+        try tap(firstButton(safari, ["Translate"]), "Invoke the genuine system Translate action on selected text.")
+        capture(safari, "translation-extension")
+        try tap(safari.buttons["Mini Apps"].firstMatch, "Open the existing provider's installed Mini Apps picker.")
+        try tap(safari.buttons[engine.title].firstMatch, "Select the actual installed Translation surface.")
+        capture(safari, "translation-before-action")
+        try checkpoint("before-system-action")
+        try tap(safari.buttons[engine.actionLabel].firstMatch, "Tap the actual provider's declared Host action.")
+    }
+
+    private func fillShortcutParameter(_ title: String, value: String) throws {
+        var field = shortcuts.textFields[title].firstMatch
+        if !field.exists {
+            if shortcuts.buttons["Show More"].firstMatch.exists { shortcuts.buttons["Show More"].firstMatch.tap() }
+            try tap(shortcuts.buttons[title].firstMatch, "Edit the real Shortcut parameter " + title)
+            field = shortcuts.textFields.firstMatch
+        }
+        try tap(field, "Type the actual installed identity into " + title)
+        if let previous = field.value as? String, !previous.isEmpty && previous != title {
+            field.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: previous.count))
+        }
+        field.typeText(value)
+        if shortcuts.buttons["Done"].firstMatch.exists { shortcuts.buttons["Done"].firstMatch.tap() }
+    }
+
+    private func requireSystemApp(_ key: String, identity: [String: Any]) throws {
+        let apps = try XCTUnwrap(identity["systemApps"] as? [String: Any])
+        let app = try XCTUnwrap(apps[key] as? [String: Any])
+        if app["available"] as? Bool == false {
+            try require(app["observation"] as? [String: Any] != nil,
+                        "An absent system app must have a concrete retained OS observation.")
+            try block("The required system application is absent from this Simulator: " + key, evidence: app)
+        }
+        try require(app["available"] as? Bool == true, "System application availability was not observed.")
+    }
+
+    private func block(_ reason: String, evidence: [String: Any]) throws -> Never {
+        record["blockerEvidence"] = evidence
+        capture(springboard, "blocked-system-surface")
+        throw XCTSkip("BLOCKED: " + reason)
+    }
+
+    private func response(_ filename: String, timeout: TimeInterval) throws -> [String: Any] {
+        let directory = try XCTUnwrap(runDirectory)
+        let file = directory.appendingPathComponent(filename)
+        try require(wait(timeout) { FileManager.default.fileExists(atPath: file.path) },
+                    "The read-only observer did not finish " + filename + " within this case's bound.")
+        let value = try XCTUnwrap(JSONSerialization.jsonObject(with: Data(contentsOf: file)) as? [String: Any])
+        try require(value["schema"] as? Int == 1 && value["runID"] as? String == record["runID"] as? String,
+                    "The observer response belongs to another case.")
+        return value
+    }
+
+    private func checkpoint(_ phase: String) throws {
+        record["phase"] = phase
+        record["observedAt"] = timestamp()
+        try writeJSON(record, filename: "request.json")
+        let root = try XCTUnwrap(exchange)
+        let active: [String: Any] = ["schema": 1, "runID": try string(record, "runID"),
+                                     "engine": try string(record, "engine"), "surface": try string(record, "surface"),
+                                     "startedAt": try string(record, "startedAt"), "phase": phase]
+        try JSONSerialization.data(withJSONObject: active, options: [.sortedKeys])
+            .write(to: root.appendingPathComponent("active.json"), options: .atomic)
+    }
+
+    private func writeJSON(_ value: [String: Any], filename: String) throws {
+        let directory = try XCTUnwrap(runDirectory)
+        try JSONSerialization.data(withJSONObject: value, options: [.prettyPrinted, .sortedKeys])
+            .write(to: directory.appendingPathComponent(filename), options: .atomic)
+    }
+
+    private func capture(_ app: XCUIApplication, _ label: String) {
+        guard let directory = runDirectory else { return }
+        let tree = app.state == .runningForeground ? app.debugDescription : "Observed application state: \(app.state.rawValue)"
+        let text = XCTAttachment(string: tree)
+        text.name = label + "-accessibility"; text.lifetime = .keepAlways; add(text)
+        try? Data(tree.utf8).write(to: directory.appendingPathComponent(label + "-accessibility.txt"), options: .atomic)
+        let screenshot = XCUIScreen.main.screenshot()
+        let image = XCTAttachment(screenshot: screenshot)
+        image.name = label; image.lifetime = .keepAlways; add(image)
+        try? screenshot.pngRepresentation.write(to: directory.appendingPathComponent(label + ".png"), options: .atomic)
+    }
+
+    private func firstButton(_ app: XCUIApplication, _ labels: [String]) -> XCUIElement {
+        for label in labels {
+            let candidate = app.buttons[label].firstMatch
+            if candidate.exists && candidate.isHittable { return candidate }
+        }
+        return app.buttons[labels[0]].firstMatch
+    }
+
+    private func reveal(_ element: XCUIElement, in container: XCUIElement,
+                        message: String, horizontal: Bool = false) throws {
+        for _ in 0..<6 {
+            if element.exists && element.isHittable { break }
+            if horizontal { container.swipeLeft() } else { container.swipeUp() }
+        }
+        try require(element.exists && element.isHittable, message)
+    }
+
+    private func tap(_ element: XCUIElement, _ message: String) throws {
+        try require(wait(12) { element.exists && element.isEnabled && element.isHittable }, message)
+        element.tap()
+    }
+
+    private func wait(_ seconds: TimeInterval, until condition: () -> Bool) -> Bool {
+        let end = Date().addingTimeInterval(bounded(seconds))
+        while Date() < end {
+            if condition() { return true }
+            RunLoop.current.run(until: Date().addingTimeInterval(0.1))
+        }
+        return condition()
+    }
+
+    private func bounded(_ seconds: TimeInterval) -> TimeInterval {
+        max(0, min(seconds, deadline.timeIntervalSinceNow))
+    }
+
+    private func require(_ condition: @autoclosure () -> Bool, _ message: String) throws {
+        guard condition() else { throw ObservationFailure(description: message) }
+    }
+
+    private func string(_ value: [String: Any], _ key: String) throws -> String {
+        let result = try XCTUnwrap(value[key] as? String, "Missing actual field: " + key)
+        try require(!result.isEmpty, "Empty actual field: " + key)
+        return result
+    }
+
+    private func jsonString(_ value: [String: Any]) throws -> String {
+        String(decoding: try JSONSerialization.data(withJSONObject: value, options: [.sortedKeys]), as: UTF8.self)
+    }
+
+    private func timestamp() -> String {
+        ISO8601DateFormatter().string(from: Date())
+    }
+}

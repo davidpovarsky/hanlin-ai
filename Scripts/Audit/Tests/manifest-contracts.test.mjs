@@ -36,7 +36,9 @@ test('all current manifest fields have source authorities and future reader/sche
   const script = family('script.json');
   assert.equal(script.decoderKnownKeys.length, 16);
   for (const key of ['entrypoints[].exportedSymbol', 'nativePresentations.*.input.submitTitle',
-    'hanlinWidget.actions[].stateKey', 'skills[].instructions.resource', 'actions[].entrypoint',
+    'hanlinWidget.actions[].stateKey', 'hanlinWidget.actions[].hostAction.entrypointID',
+    'hanlinWidget.actions[].hostAction.actionName', 'hanlinWidget.actions[].hostAction.parameters',
+    'skills[].instructions.resource', 'actions[].entrypoint',
     'remoteResource.autoUpdateInterval', 'contributors[].homepage'])
     assert(script.fields.some(item => item.field === key), 'Recognized nested field must be mapped: ' + key);
   assert.equal(script.fields.find(item => item.field === 'runInApp').status, 'partial');
@@ -80,6 +82,14 @@ test('all current manifest fields have source authorities and future reader/sche
   const changedNested = original.get(manifestSources.presentation).replaceAll('submitTitle', 'futureSubmitTitle');
   await assert.rejects(auditManifestContracts({source: reader(original, new Map([[manifestSources.presentation, changedNested]]))}),
     /Unmapped manifest field drift: HanlinNativePresentationInput/);
+  const hostParameters = script.fields.find(item => item.field === 'hanlinWidget.actions[].hostAction.parameters');
+  assert.equal(hostParameters.required, false);
+  assert.match(hostParameters.semantics, /ordinary JSON.*explicit null/);
+  assert.match(script.fields.find(item => item.field === 'nativePresentations.*.actions[].hostAction').semantics,
+    /Unsupported.*reject/);
+  const changedHostTarget = original.get(manifestSources.widgetProgram).replace('public let actionName: String', 'public let futureActionName: String');
+  await assert.rejects(auditManifestContracts({source: reader(original, new Map([[manifestSources.widgetProgram, changedHostTarget]]))}),
+    /Unmapped manifest field drift: HanlinWidgetHostAction/);
   const changedPackage = original.get(manifestSources.analyzer).replace('if let contractValue = packageJSON["hanlinNativeScript"]',
     '_ = packageJSON["futurePreparedContract"]\n        if let contractValue = packageJSON["hanlinNativeScript"]');
   await assert.rejects(auditManifestContracts({source: reader(original, new Map([[manifestSources.analyzer, changedPackage]]))}),

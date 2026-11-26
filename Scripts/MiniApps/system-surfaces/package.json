@@ -1,0 +1,7 @@
+{
+  "name": "@hanlin/system-surfaces",
+  "version": "1.0.0",
+  "private": true,
+  "types": "index.d.ts",
+  "description": "Hanlin declarations for native presentation metadata and widget or Live Activity Host actions."
+}

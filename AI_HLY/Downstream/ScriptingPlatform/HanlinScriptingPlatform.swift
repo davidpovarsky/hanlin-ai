@@ -254,6 +254,14 @@ final class HanlinScriptingPlatform {
             stagingRoot = nil
             bootstrapError = Self.safeMessage(error)
         }
+        registerWidgetHostActionContinuation()
+    }
+
+    private func registerWidgetHostActionContinuation() {
+        guard let extensionStore else { return }
+        HanlinWidgetHostActionContinuation.register(owner: self, storeRoot: extensionStore.root) { [weak self] in
+            await self?.resumePendingInvocations()
+        }
     }
 
     static func productTransferOutbox() throws -> URL {
@@ -446,6 +454,7 @@ final class HanlinScriptingPlatform {
                 let sharedStore = try initialization.makeExtensionStore()
                 extensionStore = sharedStore
                 invocationExecutor = HanlinInvocationExecutor(store: sharedStore)
+                registerWidgetHostActionContinuation()
             } catch {
                 Self.logger.error("Notification ingress retained until its App Group is available.")
                 return
@@ -1712,7 +1721,7 @@ final class HanlinScriptingPlatform {
                     let nativePresentation = try publishNativePresentation(entrypoint.id)
                     if entrypoint.runtimePolicyID == "native-presentation-v1", let nativePresentation {
                         intentEntities.append(.init(identity: identity, id: entrypoint.exportedSymbol ?? entrypoint.id,
-                            displayName: displayName, nativePresentation: nativePresentation))
+                            displayName: displayName, appID: package.appID, nativePresentation: nativePresentation))
                         continue
                     }
                     if entrypoint.runtimeProfile == .hanlinNativeScript || entrypoint.runtimeProfile == .hanlinExpo {
@@ -1738,8 +1747,21 @@ final class HanlinScriptingPlatform {
                         if nativePresentation != nil && actionIDs.isEmpty {
                             actionIDs.append((id: entrypoint.exportedSymbol ?? entrypoint.id, title: displayName))
                         }
+                        let declaredActions = try package.appDescriptor().actions
                         for item in actionIDs {
-                            intentEntities.append(.init(identity: identity, id: item.id, displayName: item.title, nativePresentation: nativePresentation))
+                            let matching = declaredActions.filter {
+                                $0.id.rawValue == item.id &&
+                                    (entrypoint.exportedSymbol == nil || entrypoint.exportedSymbol == $0.id.rawValue) &&
+                                    (entrypoint.runtimePolicyID != "prepared-foreground-action-v1" ||
+                                        $0.handler == entrypoint.sourcePath)
+                            }
+                            // Optional presentation does not replace a real registered action.
+                            // Presentation-only entries were published separately above.
+                            let hostActionHandler = matching.count == 1
+                                ? matching.first?.handler : nil
+                            intentEntities.append(.init(identity: identity, id: item.id, displayName: item.title,
+                                appID: package.appID, hostActionHandler: hostActionHandler,
+                                nativePresentation: nativePresentation))
                         }
                         continue
                     }
@@ -1806,7 +1828,7 @@ final class HanlinScriptingPlatform {
                             return session.appIntentRegistrations
                         }()
                         intentEntities.append(contentsOf: registrations.map {
-                            .init(identity: identity, id: $0.name, displayName: $0.name)
+                            .init(identity: identity, id: $0.name, displayName: $0.name, appID: package.appID)
                         })
                     }
                 }
@@ -1855,7 +1877,7 @@ final class HanlinScriptingPlatform {
                 if !provider.intentNames.isEmpty {
                     let identity = try provider.identity(entrypoint: intentEntrypoint)
                     intentEntities.append(contentsOf: provider.intentNames.map {
-                        .init(identity: identity, id: $0, displayName: $0)
+                        .init(identity: identity, id: $0, displayName: $0, appID: descriptor.id)
                     })
                 }
             }
@@ -2010,7 +2032,9 @@ final class HanlinScriptingPlatform {
             for command in pendingResumeCommands {
                 let expiresAt = command.invocation.delivery?.expiresAt
                     ?? command.createdAt.addingTimeInterval(86_400)
-                if expiresAt > .now, command.invocation.delivery?.source == .notification,
+                if expiresAt > .now,
+                   let source = command.invocation.delivery?.source,
+                   [.notification, .widget, .liveActivity].contains(source),
                    UIApplication.shared.applicationState != .active {
                     continue
                 }
@@ -2044,6 +2068,19 @@ final class HanlinScriptingPlatform {
         } while resumeDrainRequested
     }
 
+    private func validateForegroundHostAction(_ command: HanlinScriptResumeCommand) throws {
+        guard let source = command.invocation.delivery?.source,
+              source == .widget || source == .liveActivity else { return }
+        guard UIApplication.shared.applicationState == .active, let extensionStore else {
+            throw HanlinInvocationNotStarted()
+        }
+        if command.invocation.delivery?.widgetOrigin != nil || source == .widget {
+            try HanlinWidgetHostActionExecutor.validateCurrentOrigin(command, store: extensionStore)
+        } else {
+            try HanlinWidgetHostActionExecutor.validateLiveActivityTarget(command, store: extensionStore)
+        }
+    }
+
     func dispatchResumeCommand(_ command: HanlinScriptResumeCommand) async throws -> HanlinValue {
         guard !isTransferringProductData else { throw HanlinProductTransferError.busy }
         activeStoreOperations += 1
@@ -2055,6 +2092,7 @@ final class HanlinScriptingPlatform {
             try HanlinNotificationInvocation.validateTarget(command, packages: installedPackages,
                                                              hostIsActive: UIApplication.shared.applicationState == .active)
         }
+        try validateForegroundHostAction(command)
         if command.invocation.delivery?.source != .notification,
            let provider = CompiledMiniAppExposureRegistry.provider(packageID: identity.packageID) {
             guard let actionName = command.invocation.entityID,
@@ -2137,6 +2175,9 @@ final class HanlinScriptingPlatform {
                 }
             }
             await HanlinMiniAppHost.shared.refresh(installedPackages: installedPackages)
+            // Refresh/foreground launch can suspend; recheck the originating
+            // variant and published target before calling any package handler.
+            try validateForegroundHostAction(command)
             queuedNativeScriptAdmissions.insert(command.id)
             defer { queuedNativeScriptAdmissions.remove(command.id) }
             let response = try await HanlinMiniAppHost.shared.requestBroker.request(.init(

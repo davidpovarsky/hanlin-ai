@@ -241,6 +241,9 @@ public struct HanlinScriptIntentEntityRecord: Codable, Hashable, Sendable {
     public let id: String
     public let displayName: String
     public let subtitle: String?
+    public let appID: HanlinAppID?
+    /// Present only for an actual declared native action matched during publication.
+    public let hostActionHandler: String?
     public let nativePresentation: HanlinNativePresentationDescriptor?
 
     public init(
@@ -248,12 +251,16 @@ public struct HanlinScriptIntentEntityRecord: Codable, Hashable, Sendable {
         id: String,
         displayName: String,
         subtitle: String? = nil,
+        appID: HanlinAppID? = nil,
+        hostActionHandler: String? = nil,
         nativePresentation: HanlinNativePresentationDescriptor? = nil
     ) {
         self.identity = identity
         self.id = id
         self.displayName = displayName
         self.subtitle = subtitle
+        self.appID = appID
+        self.hostActionHandler = hostActionHandler
         self.nativePresentation = nativePresentation
     }
 }

@@ -6,16 +6,34 @@ import Darwin
 
 extension HanlinScriptExtensionStore {
     public func enqueue(_ command: HanlinScriptResumeCommand) throws {
+        try withLock { try enqueueUnlocked(command) }
+    }
+
+    /// Atomically validates the current published origin and retains the original
+    /// command's timestamps on an exact retry. No nested store lock is acquired.
+    func enqueueValidated(_ id: UUID,
+        makeCommand: (HanlinScriptExtensionSnapshot?, HanlinScriptResumeCommand?) throws -> HanlinScriptResumeCommand
+    ) throws -> HanlinScriptResumeCommand {
         try withLock {
-            try validateCommand(command)
-            if let existing = try readCommand(command.id) {
-                guard try Self.encoded(existing.command) == Self.encoded(command) else {
-                    throw HanlinInvocationQueueError.duplicateIdentity
-                }
-                return // A repeated delivery cannot clear a lease or receipt.
+            let command = try makeCommand(try loadUnlocked().snapshot, try readCommand(id)?.command)
+            guard command.id == id else { throw HanlinInvocationQueueError.invalidEnvelope }
+            try enqueueUnlocked(command)
+            guard let persisted = try readCommand(id)?.command else {
+                throw HanlinInvocationQueueError.missingCommand
             }
-            try writeCommand(.init(command))
+            return persisted
         }
+    }
+
+    private func enqueueUnlocked(_ command: HanlinScriptResumeCommand) throws {
+        try validateCommand(command)
+        if let existing = try readCommand(command.id) {
+            guard try Self.encoded(existing.command) == Self.encoded(command) else {
+                throw HanlinInvocationQueueError.duplicateIdentity
+            }
+            return // A repeated delivery cannot clear a lease or receipt.
+        }
+        try writeCommand(.init(command))
     }
 
     public func pendingCommands(limit: Int = 64) throws -> [HanlinScriptResumeCommand] {
