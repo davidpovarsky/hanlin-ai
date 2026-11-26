@@ -131,6 +131,7 @@ for (const file of [
   'Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoBridgeMetadata.swift',
   'AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeWireProtocol.swift',
   'Scripts/NativeScript/build-host-services.mjs',
+  'Scripts/NativeScript/host-service-actions.test.mjs',
   'Scripts/Expo/prepare-types.mjs',
   'Scripts/Expo/check-ui-type-contract.mjs',
   'Scripts/Expo/build-probe.mjs',
