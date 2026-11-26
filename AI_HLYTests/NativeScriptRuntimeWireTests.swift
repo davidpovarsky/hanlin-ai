@@ -3,6 +3,7 @@ import Foundation
 import HanlinNativeScriptCoreSupport
 import HanlinNativeScriptRuntime
 import HanlinPlatformContracts
+import HanlinMiniAppCore
 import Testing
 @testable import AI_Hanlin
 
@@ -83,6 +84,85 @@ extension HanlinUnifiedHostServicesE2ETests {
         #expect(results[2].stdout.contains("NS_VM_PYTHON"))
         #expect(results[3].value == .number(42))
         #expect(results[4].stdout.hasPrefix("/"))
+    }
+
+    @Test func nativeScriptActionDeclarationsPreserveRegisteredJavaScriptState() async throws {
+        let suffix = UUID().uuidString.lowercased()
+        let directory = FileManager.default.temporaryDirectory.appending(path: "ns-action-registration-\(suffix)")
+        let app = directory.appending(path: "app", directoryHint: .isDirectory)
+        try FileManager.default.createDirectory(at: app, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: directory) }
+        try Data(#"{"name":"ns-action-registration","type":"module","main":"bundle.mjs","hanlinRuntime":"hanlin-nativescript","dependencies":{"@nativescript/core":"9.1.4"}}"#.utf8)
+            .write(to: app.appending(path: "package.json"))
+        let key = "HanlinNativeActionRegistration_" + suffix
+        defer { UserDefaults.standard.removeObject(forKey: key) }
+        let script = """
+        try {
+          const bridge = HanlinNativeServicesBridge.activeSessionBridge();
+          if (!bridge) throw new Error('The real NativeScript session has no Host bridge');
+          let counter = 40;
+          const name = '\(key)';
+          bridge.registerRequestHandlerCapabilityHandler('registration.state', 'inter-app.share', (caller, json, reply) => {
+            counter += 1;
+            reply(JSON.stringify({source: 'registered-js-handler', caller, request: JSON.parse(json), counter, name}), null);
+          });
+          // Match the original parity fixture's late declaration after its JS handler.
+          HanlinNativeServicesBridge.registerActionCapability('registration.state', 'inter-app.share');
+          HanlinNativeServicesBridge.roundTripValueKey('registration.state', 'hostService.registerAction:inter-app.share');
+          HanlinNativeScriptCompatibility.roundTripValueKey('registration.state', 'hostService.registerAction:inter-app.share');
+          // Declaring an action without a handler must never manufacture a result.
+          HanlinNativeServicesBridge.registerActionCapability('registration.unhandled', 'inter-app.share');
+          HanlinNativeServicesBridge.roundTripValueKey('registration.unhandled', 'hostService.registerAction:inter-app.share');
+          HanlinNativeScriptCompatibility.roundTripValueKey('registration.unhandled', 'hostService.registerAction:inter-app.share');
+          NSUserDefaults.standardUserDefaults.setObjectForKey(JSON.stringify({ready: true}), '\(key)');
+        } catch (error) {
+          NSUserDefaults.standardUserDefaults.setObjectForKey(JSON.stringify({error: String(error)}), '\(key)');
+        }
+        """
+        try Data(script.utf8).write(to: app.appending(path: "bundle.mjs"))
+        let adapter = NativeScriptHostServicesAdapter(
+            appID: try HanlinAppID(validating: "ns-action-registration-\(suffix)"),
+            grantedCapabilities: ["inter-app.share"], canPresentUI: false)
+        HanlinNativeServicesBridge.register(adapter, forSessionID: adapter.sessionID)
+        defer { HanlinNativeServicesBridge.unregisterProvider(forSessionID: adapter.sessionID) }
+        let session = try HanlinNativeScriptSession(applicationRoot: app, sessionID: adapter.sessionID)
+        defer { session.shutdown() }
+        try session.start()
+        let deadline = ContinuousClock.now + .seconds(20)
+        while UserDefaults.standard.string(forKey: key) == nil {
+            try #require(ContinuousClock.now < deadline, "Actual NativeScript did not finish action registration")
+            try await Task.sleep(for: .milliseconds(25))
+        }
+        struct Registration: Decodable { let ready: Bool?; let error: String? }
+        let json = try #require(UserDefaults.standard.string(forKey: key))
+        let registration = try JSONDecoder().decode(Registration.self, from: Data(json.utf8))
+        #expect(registration.error == nil, "Actual NativeScript registration failed: \(registration.error ?? "none")")
+        try #require(registration.ready == true)
+        let action = try HanlinActionID(validating: "registration.state")
+        let capability = try HanlinCapabilityID(validating: "inter-app.share")
+        let caller = try HanlinAppID(validating: "hanlin.host")
+        let payload: HanlinValue = .object(["challenge": .string(suffix)])
+        for counter in [Int64(41), Int64(42)] {
+            let value = try await adapter.invokeRegisteredAction(action, capability: capability, caller: caller, payload: payload)
+            guard case .object(let result) = value else {
+                Issue.record("The actual JavaScript handler did not return its object result")
+                return
+            }
+            #expect(result["source"] == .string("registered-js-handler"))
+            #expect(result["caller"] == .string(caller.rawValue))
+            #expect(result["request"] == payload)
+            #expect(result["counter"] == .integer(counter))
+            #expect(result["name"] == .string(key))
+            #expect(result["status"] == nil)
+        }
+        let unhandled = try HanlinActionID(validating: "registration.unhandled")
+        #expect(!adapter.hasRegisteredAction(unhandled))
+        do {
+            _ = try await adapter.invokeRegisteredAction(unhandled, capability: capability, caller: caller, payload: payload)
+            Issue.record("A declaration without a JavaScript handler must not synthesize a successful reply")
+        } catch let error as HanlinMiniAppRequestError {
+            #expect(error == .routeNotFound)
+        }
     }
 
     @Test func actualNativeSDKGlobalAndPropertyShapesAreObservedWithoutInvokingUI() async throws {

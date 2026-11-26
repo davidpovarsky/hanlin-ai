@@ -639,28 +639,8 @@ static NSString *HanlinExecuteSyncWithTimeout(NSTimeInterval timeoutSeconds, Han
     if ([provider respondsToSelector:@selector(registerAction:capability:)]) {
         [(id)provider registerAction:action capability:capability];
     }
-    if ([provider respondsToSelector:@selector(registerRequestHandler:capability:handler:)]) {
-        [provider registerRequestHandler:action capability:capability handler:^(NSString *caller, NSString *payloadJSON, HanlinBridgeStringResultBlock reply) {
-            NSLog(@"[HanlinNativeServicesBridge] Action handler invoked for action=%@ caller=%@ payload=%@", action, caller, payloadJSON);
-            NSDictionary *reqDict = nil;
-            if (payloadJSON.length > 0) {
-                NSData *data = [payloadJSON dataUsingEncoding:NSUTF8StringEncoding];
-                if (data) {
-                    reqDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-                }
-            }
-            NSDictionary *replyDict = @{
-                @"source": @"hanlin.demo.script-parity",
-                @"action": action ?: @"",
-                @"caller": caller ?: @"",
-                @"request": reqDict ?: @{},
-                @"status": @"ok"
-            };
-            NSData *replyData = [NSJSONSerialization dataWithJSONObject:replyDict options:0 error:nil];
-            NSString *replyStr = replyData ? [[NSString alloc] initWithData:replyData encoding:NSUTF8StringEncoding] : @"{}";
-            if (reply) reply(replyStr, nil);
-        }];
-    }
+    // Declaration must not replace a mini app's explicitly registered handler.
+    // Only registerRequestHandler:capability:handler: supplies action results.
 }
 
 + (NSString *)roundTripValue:(NSString *)value key:(NSString *)key {
