@@ -1,0 +1,66 @@
+name: HanlinLauncherLab
+options:
+  createIntermediateGroups: true
+settings:
+  base:
+    SWIFT_VERSION: "6.0"
+    IPHONEOS_DEPLOYMENT_TARGET: "27.0"
+    TARGETED_DEVICE_FAMILY: "1,2"
+packages:
+  HanlinSDK:
+    path: ../..
+targets:
+  HanlinLauncherLab:
+    type: application
+    platform: iOS
+    deploymentTarget: "27.0"
+    sources:
+      - Sources
+    dependencies:
+      - package: HanlinSDK
+        product: HanlinChatPresentation
+      - package: HanlinSDK
+        product: HanlinPresentationKit
+      - package: HanlinSDK
+        product: HanlinChatUI
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: io.github.davidpovarsky.HanlinLauncherLab
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDisplayName: Hanlin Launcher Lab
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        MARKETING_VERSION: "1.0.3"
+        CURRENT_PROJECT_VERSION: "4"
+        CODE_SIGNING_ALLOWED: NO
+        CODE_SIGNING_REQUIRED: NO
+  HanlinLauncherLabTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - path: ../../Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/HanlinMessageInteractionTests.swift
+      - path: ../../Packages/HanlinPresentationSDK/Tests/HanlinChatPresentationTests/HanlinChatPresentationTests.swift
+    dependencies:
+      - target: HanlinLauncherLab
+      - package: HanlinSDK
+        product: HanlinChatUI
+      - package: HanlinSDK
+        product: HanlinChatPresentation
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: io.github.davidpovarsky.HanlinLauncherLabTests
+        GENERATE_INFOPLIST_FILE: YES
+        ENABLE_TESTABILITY: YES
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/HanlinLauncherLab.app/HanlinLauncherLab"
+        BUNDLE_LOADER: "$(TEST_HOST)"
+        CODE_SIGNING_ALLOWED: NO
+        CODE_SIGNING_REQUIRED: NO
+schemes:
+  HanlinLauncherLab:
+    build:
+      targets:
+        HanlinLauncherLab: all
+        HanlinLauncherLabTests: [test]
+    test:
+      targets:
+        - HanlinLauncherLabTests
+      gatherCoverageData: false

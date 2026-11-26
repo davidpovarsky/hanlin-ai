@@ -15,6 +15,10 @@
       "package": "HanlinSDK"
     },
     {
+      "product": "HanlinChatPresentation",
+      "package": "HanlinSDK"
+    },
+    {
       "product": "A2UISwiftCore",
       "package": "a2ui"
     },

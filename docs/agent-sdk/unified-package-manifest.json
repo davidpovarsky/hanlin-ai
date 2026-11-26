@@ -11,7 +11,7 @@
     "Packages/HanlinNativeScriptRuntime/Package.swift": "88a4926e884e6804246a7d077efed3837271886a9825585b1e561b4ce1576120",
     "Packages/HanlinParityMiniApp/Package.swift": "66025f0b1fb7db7db9b8a24426319b651858f3454295780ee807edd335cec90b",
     "Packages/HanlinPlatform/Package.swift": "78d7081d0e197c3e99746e5b3e476b41280fc5b32110035fab31a3e949cb4dab",
-    "Packages/HanlinPresentationSDK/Package.swift": "72d91889acd4745dbd5532c223ae1147387114517c4a16c434504666387c6f04",
+    "Packages/HanlinPresentationSDK/Package.swift": "951afd5b85422e7d6ed99cf497602e7122b988c1d956132bd9c00e04c695b4c3",
     "Packages/HanlinProductSplit/Package.swift": "31234398119e82e9895391040f281e9c9895c2cc73f962c12f1b37489e7f5e3a",
     "Packages/HanlinQuickJS/Package.swift": "3b3e64732c71724b027fd28236f635073d02a3c208cbd9060fafaf802a47480e",
     "Packages/HanlinSefariaMiniApp/Package.swift": "7ac94c46688313d32e03c2ffa3bb74c1f1dc00fc8b0b8b7322ae1286b918d50c",
@@ -21,7 +21,7 @@
     "Packages/HanlinWikipediaMiniApp/Package.swift": "01b8cc014f8a5e853b644947fd6684df56b65b37feb08ef23f410fb56c902d8e",
     "Packages/IOSSystemLite/Package.swift": "06c6721c4b59328ba4f78997c9a8b23330357db12d3a619207dc1bac8cb76bab",
     "Packages/TorahLibraryKit/Package.swift": "4423074f870fe146b8914dc275db77aedef4cc1b6c0b856dfad844b65c3a21d6",
-    "Scripts/SDK/application_products.json": "c301cb773e8044810f0575ded0dd0a040593b65246b578ebfad286f22827600a"
+    "Scripts/SDK/application_products.json": "3095d0418b7cc5baf05f6ac39c5961a687a163345952d5f4df67e9158707f68a"
   },
   "localPackageEdgesRemaining": 0,
   "products": [
@@ -60,6 +60,7 @@
     "HanlinPresentationKit",
     "HanlinRichUI",
     "HanlinChatUI",
+    "HanlinChatPresentation",
     "HanlinA2UI",
     "HanlinMiniAppsUI",
     "HanlinProductSplit",
@@ -76,5 +77,5 @@
   "schemaVersion": 1,
   "selectedProducts": null,
   "sourceOwnership": "one original source path per target",
-  "targets": 114
+  "targets": 116
 }

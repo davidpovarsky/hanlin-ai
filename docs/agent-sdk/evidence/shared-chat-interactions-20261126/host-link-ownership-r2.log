@@ -1,0 +1,14 @@
+..F...
+======================================================================
+FAIL: test_every_declared_host_product_remains_reachable_and_unknown_products_are_kept (test_host_link_ownership.HostLinkOwnershipTests.test_every_declared_host_product_remains_reachable_and_unknown_products_are_kept)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-wave1-shared-chat-actions-20261126/Scripts/SDK/tests/test_host_link_ownership.py", line 134, in test_every_declared_host_product_remains_reachable_and_unknown_products_are_kept
+    self.assertEqual({p["name"] for p in manifest["products"]}, expected_products)
+AssertionError: Items in the second set but not the first:
+'HanlinFixtureHost'
+
+----------------------------------------------------------------------
+Ran 6 tests in 5.426s
+
+FAILED (failures=1)

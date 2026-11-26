@@ -501,26 +501,7 @@ struct ChatBubbleView: View {
                 if !text.isEmpty {
                     HanlinUserMessageBubble(text: text, containerWidth: effectiveContainerWidth,
                                             temporaryRecord: temporaryRecord) {
-                        Button(action: {
-                            UIPasteboard.general.string = markdownToPlainText(text)
-                        }) {
-                            Label(hanlin: "复制内容", systemImage: "square.on.square")
-                        }
-                        Button(action: {
-                            isTextSelectionSheetPresented = true
-                        }) {
-                            Label(hanlin: "选择文本", systemImage: "text.redaction")
-                        }
-                        Button(action: {
-                            createAndSaveKnowledgeRecord(with: text)
-                        }) {
-                            Label(hanlin: "存为知识", systemImage: "backpack")
-                        }
-                        Button(action: {
-                            showDeleteConfirmation = true
-                        }) {
-                            Label(hanlin: "删除消息", systemImage: "trash")
-                        }
+                        HanlinMessageActionMenu(actions: originalMessageActions.userMenu)
                     }
                 }
             }
@@ -1498,187 +1479,37 @@ struct ChatBubbleView: View {
         }
     }
     
-    @ViewBuilder
     private func actionButtons() -> some View {
-        HStack(spacing: 8) {
-            // 复制按钮
-            Button(action: copyToClipboard) {
-                Image(systemName: isCopy ? "checkmark.circle" : "square.on.square")
-                    .font(HanlinTypography.fixed(size: size_15, weight: .medium))
-                    .foregroundColor(isCopy ? Color.hanlinHLGreen : .secondary)
-                    .frame(width: size_24, height: size_24)
-                    .clipShape(Circle())
-                    .scaleEffect(isCopy ? 1.2 : 1.0)
-                    .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isCopy)
-            }
-            .buttonStyle(PlainButtonStyle())
-            .accessibilityIdentifier("hanlin-action-copy")
-            .hanlinFeedback(.success, trigger: isSuccess)
-            
-            if isCopy {
-                Text("已复制", bundle: HanlinLocalization.bundle)
-                    .font(HanlinTypography.fixed(size: size_12, weight: .medium))
-                    .foregroundColor(.hanlinHLGreen)
-                    .transition(.opacity.combined(with: .move(edge: .leading)))
-            }
-            
-            // 选择文本
-            Button(action: {
-                isTextSelectionSheetPresented = true
-            }) {
-                Image(systemName: "text.redaction")
-                    .font(HanlinTypography.fixed(size: size_15, weight: .medium))
-                    .frame(width: size_24, height: size_24)
-                    .foregroundColor(.secondary)
-                    .clipShape(Circle())
-            }
-            .buttonStyle(PlainButtonStyle())
-            .accessibilityIdentifier("hanlin-action-select")
-            
-            // 语音朗读
-            Button(action: {
-                tts.setContextIfNeeded(modelContext)
-                tts.updateSelectedModel()
-                tts.setMessageId(id)
-                tts.toggleSpeech(text: text)
-            }) {
-                if tts.isAsking {
-                    ProgressView()
-                        .scaledToFit()
-                        .padding(2)
-                        .frame(width: size_24, height: size_24)
-                        .foregroundColor(.secondary)
-                        .clipShape(Circle())
-                        .tint(.hanlinHLBluefont)
-                } else {
-                    Image(systemName: tts.isSpeaking ? "pause.circle" : "waveform")
-                        .font(HanlinTypography.fixed(size: size_16, weight: .medium))
-                        .frame(width: size_24, height: size_24)
-                        .foregroundColor(tts.isSpeaking ? Color(.systemRed) : .secondary)
-                        .clipShape(Circle())
-                        .scaleEffect(tts.isSpeaking ? 1.2 : 1.0)
-                        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: tts.isSpeaking)
-                }
-            }
-            .buttonStyle(PlainButtonStyle())
-            .accessibilityIdentifier("hanlin-action-tts")
-            
-            if tts.isAsking {
-                Text("正在请求", bundle: HanlinLocalization.bundle)
-                    .font(HanlinTypography.fixed(size: size_12, weight: .medium))
-                    .foregroundColor(.hanlinHLBluefont)
-                    .transition(.opacity.combined(with: .move(edge: .leading)))
-            }
-            
-            // 翻译按钮
-            Button(action: translateText) {
-                if isTranslating {
-                    ProgressView()
-                        .scaledToFit()
-                        .padding(2)
-                        .frame(width: size_24, height: size_24)
-                        .foregroundColor(.secondary)
-                        .clipShape(Circle())
-                        .tint(.hanlinHLBluefont)
-                } else if translated {
-                    ZStack(alignment: .center) {
-                        Image(hanlinAsset: "translate")
-                            .resizable()
-                            .renderingMode(.template)
-                            .scaledToFit()
-                            .padding(2)
-                            .frame(width: size_20, height: size_20)
-                            .foregroundColor(.secondary)
-                            .clipShape(Circle())
-                        
-                        Image(systemName: "line.diagonal")
-                            .font(HanlinTypography.fixed(size: size_20))
-                            .frame(width: size_24, height: size_24)
-                            .foregroundColor(.hanlinHLRed)
-                            .rotationEffect(.degrees(90))
-                            .background(
-                                Circle()
-                                    .fill(Color(.systemBackground).opacity(0.5))
-                                    .frame(width: size_24, height: size_24)
-                            )
-                    }
-                } else {
-                    Image(hanlinAsset: "translate")
-                        .resizable()
-                        .renderingMode(.template)
-                        .scaledToFit()
-                        .padding(2)
-                        .frame(width: size_24, height: size_24)
-                        .foregroundColor(.secondary)
-                        .clipShape(Circle())
-                }
-            }
-            .disabled(isTranslating)
-            .buttonStyle(PlainButtonStyle())
-            .accessibilityIdentifier("hanlin-action-translate")
+        HanlinMessageActionBar(actions: originalMessageActions, state: originalMessageActionState)
             .alert(Text("翻译操作失败", bundle: HanlinLocalization.bundle), isPresented: $showErrorAlert) {
                 Button(hanlin: "确定", role: .cancel) {}
             } message: {
                 Text(errorMessage)
             }
-            
-            if isTranslating {
-                Text("正在翻译", bundle: HanlinLocalization.bundle)
-                    .font(HanlinTypography.fixed(size: size_12, weight: .medium))
-                    .foregroundColor(.hanlinHLBluefont)
-                    .transition(.opacity.combined(with: .move(edge: .leading)))
-            }
-            
-            Button { savePersonalExcerpt(text) } label: {
-                Image(systemName: isPersonallySaved ? "bookmark.fill" : "bookmark")
-                    .font(HanlinTypography.fixed(size: size_16, weight: .medium))
-                    .frame(width: size_24, height: size_24)
-                    .foregroundStyle(isPersonallySaved ? Color.hanlinHLBluefont : .secondary)
-            }
-            .disabled(excerptSource == nil)
-            .accessibilityLabel(String(localized: "Save for myself", bundle: HanlinLocalization.bundle))
-            .accessibilityIdentifier("hanlin-action-save-personal")
+    }
 
-            // 背包按钮
-            Button(action: {
-                createAndSaveKnowledgeRecord(with: text)
-            }) {
-                Image(systemName: "backpack")
-                    .font(HanlinTypography.fixed(size: size_14, weight: .medium))
-                    .frame(width: size_24, height: size_24)
-                    .foregroundColor(.secondary)
-                    .clipShape(Circle())
-            }
-            .buttonStyle(PlainButtonStyle())
-            .accessibilityIdentifier("hanlin-action-knowledge")
-            
-            if let onContinue {
-                Button(String(localized: "Continue", bundle: HanlinLocalization.bundle), systemImage: "arrow.right") { onContinue() }
-                    .font(HanlinTypography.caption)
-                    .disabled(isResponding)
-                    .accessibilityIdentifier("hanlin-action-continue")
-            }
+    private var originalMessageActionState: HanlinMessageActionState {
+        .init(isCopied: isCopy, copyFeedback: isSuccess,
+              isSpeechPreparing: tts.isAsking, isSpeaking: tts.isSpeaking,
+              isTranslating: isTranslating, isTranslated: translated,
+              isPersonallySaved: isPersonallySaved, canSavePersonal: excerptSource != nil,
+              isResponding: isResponding)
+    }
 
-            // 重新请求
-            if let retryAction = onRetry {
-                Button(action: retryAction) {
-                    Image(systemName: "arrow.trianglehead.2.clockwise.rotate.90")
-                        .font(HanlinTypography.fixed(size: size_15, weight: .medium))
-                        .frame(width: size_24, height: size_24)
-                        .foregroundColor(.secondary)
-                        .clipShape(Circle())
-                }
-                .buttonStyle(PlainButtonStyle())
-                .accessibilityIdentifier("hanlin-action-retry")
-            }
-        }
-        .accessibilityElement(children: .contain)
-        .accessibilityIdentifier("hanlin-action-buttons-row")
-        .padding(.leading, 5)
-        .animation(
-            .spring(response: 0.8, dampingFraction: 0.9, blendDuration: 0.5),
-            value: [isPersonallySaved, isTranslating, isCopy, tts.isAsking]
-        )
+    private var originalMessageActions: HanlinMessageActions {
+        .init(copy: copyToClipboard,
+              select: { isTextSelectionSheetPresented = true },
+              speech: {
+                  tts.setContextIfNeeded(modelContext)
+                  tts.updateSelectedModel()
+                  tts.setMessageId(id)
+                  tts.toggleSpeech(text: text)
+              },
+              translate: translateText,
+              savePersonal: { savePersonalExcerpt(text) },
+              saveKnowledge: { createAndSaveKnowledgeRecord(with: text) },
+              delete: onDelete == nil ? nil : { showDeleteConfirmation = true },
+              retry: onRetry, continueResponse: onContinue)
     }
 
     // MARK: - AI 助手消息内容
@@ -1735,31 +1566,7 @@ struct ChatBubbleView: View {
     }
 
     private var messagePreviewActions: [ChatMessagePreviewPresenter.Action] {
-        [
-            .init(id: "copy", title: String(localized: "复制内容", bundle: HanlinLocalization.bundle), symbol: "square.on.square") {
-                UIPasteboard.general.string = markdownToPlainText(text)
-            },
-            .init(id: "select", title: String(localized: "选择文本", bundle: HanlinLocalization.bundle), symbol: "text.redaction") {
-                isTextSelectionSheetPresented = true
-            },
-            .init(id: "speech", title: String(localized: "生成语音", bundle: HanlinLocalization.bundle), symbol: "waveform") {
-                tts.setContextIfNeeded(modelContext)
-                tts.updateSelectedModel()
-                tts.setMessageId(id)
-                tts.toggleSpeech(text: text)
-            },
-            .init(id: "translate", title: translated ? String(localized: "删除译文", bundle: HanlinLocalization.bundle) : String(localized: "翻译内容", bundle: HanlinLocalization.bundle),
-                  symbol: "character.bubble") { translateText() },
-            .init(id: "save-personal", title: String(localized: "Save for myself", bundle: HanlinLocalization.bundle), symbol: "bookmark") {
-                savePersonalExcerpt(text)
-            },
-            .init(id: "knowledge", title: String(localized: "存为知识", bundle: HanlinLocalization.bundle), symbol: "backpack") {
-                createAndSaveKnowledgeRecord(with: text)
-            },
-            .init(id: "delete", title: String(localized: "删除消息", bundle: HanlinLocalization.bundle), symbol: "trash", role: .destructive) {
-                showDeleteConfirmation = true
-            }
-        ]
+        originalMessageActions.assistantMenu(state: originalMessageActionState)
     }
 
     @ViewBuilder
@@ -2267,109 +2074,27 @@ struct ChatBubbleView: View {
 
     @ViewBuilder
     private func chatBubbleImage() -> some View {
-        VStack(alignment: .leading, spacing: 6) {
-            // 图片显示区域
-            if let images = images, !images.isEmpty {
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 6) {
-                        ForEach(images.indices, id: \.self) { index in
-                            Image(uiImage: images[index])
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 120, height: 120)
-                                .clipShape(RoundedRectangle(cornerRadius: 14))
-                                .contextMenu {
-                                    Button(action: {
-                                        // 复制图片
-                                        UIPasteboard.general.image = images[index]
-                                    }) {
-                                        Label(hanlin: "复制图片", systemImage: "square.on.square")
-                                    }
-                                    Button(action: {
-                                        // 保存图片到相册
-                                        UIImageWriteToSavedPhotosAlbum(images[index], nil, nil, nil)
-                                    }) {
-                                        Label(hanlin: "保存图片", systemImage: "square.and.arrow.down")
-                                    }
-                                }
-                                .onTapGesture {
-                                    selectedImage = images[index] // 记录当前选中的图片
-                                    isImageViewerPresented = true // 触发大图预览
-                                }
-                        }
-                    }
-                }
-                .frame(
-                    width: CGFloat(min(Double(images.count), 2.5) * 126 - 6),
-                    height: 120
-                )
-                .cornerRadius(14)
-            }
-        }
-        .padding(6)
-        .background(temporaryRecord ? .primary.opacity(0.9) : Color.hanlinHLBlue.opacity(0.9))
-        .clipShape(CustomCorners(topLeft: 20, topRight: 20, bottomLeft: 20, bottomRight: 5))
-        .sheet(isPresented: $isImageViewerPresented) { // 全屏预览大图
-            if let images = selectedImage {
-                ImageViewer(image: images, isPresented: $isImageViewerPresented)
-            }
-        }
+        sharedImageAttachments(isAssistant: false)
     }
-    
-    @ViewBuilder
+
     private func chatAssistantBubbleImage() -> some View {
-        VStack(alignment: .leading, spacing: 6) {
-            // 图片显示区域
-            if let images = images, !images.isEmpty {
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 8) {
-                        ForEach(images.indices, id: \.self) { index in
-                            Image(uiImage: images[index])
-                                .resizable()
-                                .scaledToFill()
-                                .frame(width: 200, height: 200)
-                                .clipShape(RoundedRectangle(cornerRadius: 14))
-                                .contextMenu {
-                                    Button(action: {
-                                        // 复制图片
-                                        UIPasteboard.general.image = images[index]
-                                    }) {
-                                        Label(hanlin: "复制图片", systemImage: "square.on.square")
-                                    }
-                                    Button(action: {
-                                        // 保存图片到相册
-                                        UIImageWriteToSavedPhotosAlbum(images[index], nil, nil, nil)
-                                    }) {
-                                        Label(hanlin: "保存图片", systemImage: "square.and.arrow.down")
-                                    }
-                                }
-                                .onTapGesture {
-                                    selectedImage = images[index] // 记录当前选中的图片
-                                    isImageViewerPresented = true // 触发大图预览
-                                }
-                        }
-                    }
-                }
-                .frame(
-                    width: CGFloat(min(Double(images.count), 2.5) * 206 - 6),
-                    height: 200
-                )
-                .cornerRadius(14)
-            }
-        }
-        .padding(6)
-        .overlay(
-            RoundedRectangle(cornerRadius: 20)
-                .stroke(Color.hanlinHLBluefont.opacity(0.3), lineWidth: 1)
-        )
-        .cornerRadius(20)
-        .sheet(isPresented: $isImageViewerPresented) { // 全屏预览大图
-            if let images = selectedImage {
-                ImageViewer(image: images, isPresented: $isImageViewerPresented)
-            }
-        }
+        sharedImageAttachments(isAssistant: true)
     }
-    
+
+    private func sharedImageAttachments(isAssistant: Bool) -> some View {
+        HanlinMessageImageAttachments(images: images ?? [], isAssistant: isAssistant,
+            temporaryRecord: temporaryRecord, onOpen: { image in
+                selectedImage = image
+                isImageViewerPresented = true
+            }, copyImage: { UIPasteboard.general.image = $0 },
+            saveImage: { UIImageWriteToSavedPhotosAlbum($0, nil, nil, nil) })
+            .sheet(isPresented: $isImageViewerPresented) {
+                if let image = selectedImage {
+                    ImageViewer(image: image, isPresented: $isImageViewerPresented)
+                }
+            }
+    }
+
     @ViewBuilder
     private func chatBubblePrompt() -> some View {
         VStack(alignment: .leading, spacing: 6) {
@@ -2412,101 +2137,15 @@ struct ChatBubbleView: View {
     }
     
     @ViewBuilder
-    private func chatBubbleDocument (for documents: [URL]?) -> some View {
-        VStack(alignment: .leading, spacing: 6) {
-            if let documents = documents, !documents.isEmpty {
-                VStack(spacing: 6) {
-                    ForEach(documents, id: \.self) { documentURL in
-                        HStack(spacing: 6) {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 8)
-                                    .fill(fileColor(for: documentURL.pathExtension))
-                                    .frame(width: 34, height: 34)
-                                
-                                Image(systemName: fileIcon(for: documentURL.pathExtension))
-                                    .renderingMode(.template)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(width: 24, height: 24)
-                                    .foregroundColor(.white)
-                            }
-                            
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text(documentURL.deletingPathExtension().lastPathComponent)
-                                    .font(HanlinTypography.caption)
-                                    .foregroundColor(.primary)
-                                    .lineLimit(1) // 限制为 1 行
-                                    .truncationMode(.tail) // 文字过长时显示省略号
-                                Text(documentURL.pathExtension.uppercased())
-                                    .font(HanlinTypography.caption2)
-                                    .foregroundColor(.primary)
-                                    .lineLimit(1) // 限制为 1 行
-                                    .truncationMode(.tail) // 文字过长时显示省略号
-                            }
-                        }
-                        .padding(8)
-                        .frame(width: 180, alignment: .leading)
-                        .background(Color(.systemBackground).opacity(0.9))
-                        .cornerRadius(14)
-                    }
-                }
-                .onTapGesture {
-                    showDocumentContent = true
-                }
-                .contextMenu {
-                    Button(action: {
-                        showDocumentContent = true
-                    }) {
-                        Label(hanlin: "文件文本", systemImage: "text.document")
-                    }
-                }
-                .cornerRadius(14)
-            }
+    private func chatBubbleDocument(for documents: [URL]?) -> some View {
+        HanlinMessageDocumentAttachments(documents: documents ?? [], temporaryRecord: temporaryRecord) {
+            showDocumentContent = true
         }
-        .padding(6)
-        .background(temporaryRecord ? .primary.opacity(0.8) : Color.hanlinHLBlue.opacity(0.8))
-        .clipShape(CustomCorners(topLeft: 20, topRight: 20, bottomLeft: 20, bottomRight: 5))
         .sheet(isPresented: $showDocumentContent) {
             FileContentViewer(content: (documentText ?? "暂无内容").trimmingCharacters(in: .whitespacesAndNewlines))
         }
     }
-    
-    // 文件颜色
-    private func fileColor(for fileExtension: String) -> Color {
-        switch fileExtension.lowercased() {
-        case "pdf":
-            return Color.hanlinHLRed.opacity(0.9)
-        case "doc", "docx":
-            return Color.hanlinHLBluefont.opacity(0.9)
-        case "ppt", "pptx":
-            return Color.hanlinHLOrange.opacity(0.9)
-        case "xls", "xlsx":
-            return Color.hanlinHLGreen.opacity(0.9)
-        case "txt", "md", "json":
-            return Color.hanlinHLBrown.opacity(0.9)
-        default:
-            return Color.hanlinHLBluefont.opacity(0.9)
-        }
-    }
-    
-    // 文件图标
-    private func fileIcon(for fileExtension: String) -> String {
-        switch fileExtension.lowercased() {
-        case "pdf":
-            return "text.rectangle.page"
-        case "doc", "docx":
-            return "doc.text"
-        case "ppt", "pptx":
-            return "richtext.page"
-        case "xls", "xlsx":
-            return "chart.bar.horizontal.page"
-        case "txt", "md", "json":
-            return "text.page"
-        default:
-            return "doc" // 其他默认文档
-        }
-    }
-    
+
     private func copyToClipboard() {
         UIPasteboard.general.string = markdownToPlainText(text)
         isCopy = true
@@ -2706,173 +2345,14 @@ extension URL: @retroactive Identifiable {
 struct ImageViewer: View {
     let image: UIImage
     @Binding var isPresented: Bool
-    @State private var isSaved: Bool = false    // 保存状态：true 表示保存成功
-    @State private var isCopied: Bool = false   // 复制状态：true 表示复制成功
-    
-    // 缩放相关状态
-    @State private var scale: CGFloat = 1.0
-    @State private var lastScale: CGFloat = 1.0
-    
-    // 平移相关状态
-    @State private var offset: CGSize = .zero
-    @State private var lastOffset: CGSize = .zero
 
     var body: some View {
-        ZStack {
-            Color.black.ignoresSafeArea()
-            
-            GeometryReader { geometry in
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFit()
-                    // 应用缩放和平移效果
-                    .scaleEffect(scale)
-                    .offset(offset)
-                    .frame(width: geometry.size.width, height: geometry.size.height)
-                    // 组合“捏合缩放”和“拖拽平移”手势
-                    .gesture(simultaneousGesture(in: geometry))
-                    // 单击图片关闭浏览
-                    .onTapGesture {
-                        isPresented = false
-                    }
-            }
-            
-            // 底部操作按钮区域
-            bottomButtons
-        }
-    }
-    
-    // 底部按钮视图
-    private var bottomButtons: some View {
-        VStack {
-            Spacer()
-            HStack(spacing: 6) {
-                Spacer()
-                
-                // 复制按钮：状态依据 isCopied 切换图标
-                Button(action: copyImageToClipboard) {
-                    Image(systemName: isCopied ? "checkmark.circle" : "square.on.square")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 24, height: 24)
-                        .bold()
-                        .foregroundColor(isCopied ? Color(.systemGreen) : .white)
-                        .padding(12)
-                        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isCopied)
-                }
-                .background(
-                    BlurView(style: .systemThinMaterial)
-                        .clipShape(Circle())
-                        .shadow(color: .hanlinHLBlue, radius: 1)
-                )
-                .clipShape(Circle())
-                .buttonStyle(.plain)
-                .hanlinFeedback(.success, trigger: isCopied)
-                
-                // 保存按钮：状态依据 isSaved 切换图标
-                Button(action: saveImageToPhotos) {
-                    Image(systemName: isSaved ? "checkmark.circle" : "arrow.down")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 24, height: 24)
-                        .bold()
-                        .foregroundColor(isSaved ? Color(.systemGreen) : .white)
-                        .padding(12)
-                        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isSaved)
-                }
-                .background(
-                    BlurView(style: .systemThinMaterial)
-                        .clipShape(Circle())
-                        .shadow(color: .hanlinHLBlue, radius: 1)
-                )
-                .clipShape(Circle())
-                .buttonStyle(.plain)
-                .hanlinFeedback(.success, trigger: isSaved)
-            }
-            .padding(.horizontal)
-        }
-        .padding()
-    }
-    
-    // 组合缩放与拖拽手势，并在拖拽时限制偏移范围
-    private func simultaneousGesture(in geometry: GeometryProxy) -> some Gesture {
-        let magnification = MagnificationGesture()
-            .onChanged { value in
-                self.scale = max(self.lastScale * value, 1.0)
-                // 缩放时调整 offset，确保不超出可拖动范围
-                self.offset = clampedOffset(proposed: self.lastOffset, in: geometry.size, scale: self.scale)
-            }
-            .onEnded { value in
-                self.lastScale = self.scale
-            }
-        
-        let drag = DragGesture()
-            .onChanged { value in
-                let proposed = CGSize(width: self.lastOffset.width + value.translation.width,
-                                      height: self.lastOffset.height + value.translation.height)
-                self.offset = clampedOffset(proposed: proposed, in: geometry.size, scale: self.scale)
-            }
-            .onEnded { _ in
-                self.lastOffset = self.offset
-            }
-        
-        return magnification.simultaneously(with: drag)
-    }
-    
-    // 根据当前容器尺寸与缩放比例，计算允许的平移边界，并返回经过限制后的 offset
-    private func clampedOffset(proposed: CGSize, in containerSize: CGSize, scale: CGFloat) -> CGSize {
-        // 检查图片尺寸是否有效，防止除零错误和 IOSurface 错误
-        guard image.size.width > 0 && image.size.height > 0 else {
-            return CGSize.zero
-        }
-
-        // 计算图片的宽高比
-        let imageAspect = image.size.width / image.size.height
-        let containerAspect = containerSize.width / containerSize.height
-        
-        // 计算 scaledToFit 后图片在容器中的显示尺寸
-        let displayedWidth: CGFloat
-        let displayedHeight: CGFloat
-        if imageAspect > containerAspect {
-            displayedWidth = containerSize.width
-            displayedHeight = containerSize.width / imageAspect
-        } else {
-            displayedHeight = containerSize.height
-            displayedWidth = containerSize.height * imageAspect
-        }
-        
-        // 乘以当前的缩放比例，得到最终图片尺寸
-        let finalWidth = displayedWidth * scale
-        let finalHeight = displayedHeight * scale
-        
-        // 计算平移边界，如果图片实际尺寸小于容器，则不可平移
-        let maxOffsetX = max((finalWidth - containerSize.width) / 2, 0)
-        let maxOffsetY = max((finalHeight - containerSize.height) / 2, 0)
-        
-        let clampedX = min(max(proposed.width, -maxOffsetX), maxOffsetX)
-        let clampedY = min(max(proposed.height, -maxOffsetY), maxOffsetY)
-        
-        return CGSize(width: clampedX, height: clampedY)
-    }
-    
-    // 保存图片到相册，点击后状态变为 true，2 秒后恢复
-    private func saveImageToPhotos() {
-        UIImageWriteToSavedPhotosAlbum(image, nil, nil, nil)
-        isSaved = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            withAnimation { isSaved = false }
-        }
-    }
-    
-    // 复制图片到剪贴板，点击后状态变为 true，2 秒后恢复
-    private func copyImageToClipboard() {
-        UIPasteboard.general.image = image
-        isCopied = true
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            withAnimation { isCopied = false }
-        }
+        HanlinImageViewer(image: image, isPresented: $isPresented,
+            saveImage: { UIImageWriteToSavedPhotosAlbum($0, nil, nil, nil) },
+            copyImage: { UIPasteboard.general.image = $0 })
     }
 }
+
 
 
 // MARK: 文件内容显示区域（带复制与存为知识操作）
@@ -2892,52 +2372,8 @@ struct FileContentViewer: View {
     private let buttonSize: CGFloat = 36
 
     var body: some View {
-        ZStack(alignment: .bottomTrailing) {
-            NavigationStack {
-                ScrollView {
-                    Text(content)
-                        .frame(maxWidth: .infinity, alignment: .topLeading) // 左上角对齐
-                        .padding()
-                        .textSelection(.enabled)
-                }
-                .navigationTitle(Text("文件文本", bundle: HanlinLocalization.bundle))
-                .navigationBarTitleDisplayMode(.inline)
-            }
-            
-            // 右下角按钮区域
-            HStack(spacing: 12) {
-                // 存为知识按钮：点击后图标从“backpack.circle”切换到“checkmark.circle”
-                Button(action: saveKnowledge) {
-                    Image(systemName: isSaved ? "checkmark" : "backpack")
-                        .font(HanlinTypography.fixed(size: size_16, weight: .medium))
-                        .foregroundColor(isSaved ? .hanlinHLGreen : .hanlinHLBluefont)
-                        .frame(width: buttonSize, height: buttonSize)
-                }
-                .background(
-                    BlurView(style: .systemUltraThinMaterial)
-                        .clipShape(Circle())
-                        .shadow(color: isSaved ? .hanlinHLGreen : .hanlinHLBlue, radius: 1)
-                )
-                .animation(.spring(response: 0.5, dampingFraction: 0.7), value: isSaved)
-                .hanlinFeedback(.success, trigger: isSaved)
-                
-                // 复制按钮：点击后图标从“rectangle.on.rectangle.circle”切换到“checkmark.circle”
-                Button(action: copyToClipboard) {
-                    Image(systemName: isCopy ? "checkmark" : "square.on.square")
-                        .font(HanlinTypography.fixed(size: size_16, weight: .medium))
-                        .foregroundColor(isCopy ? .hanlinHLGreen : .hanlinHLBluefont)
-                        .frame(width: buttonSize, height: buttonSize)
-                }
-                .background(
-                    BlurView(style: .systemUltraThinMaterial)
-                        .clipShape(Circle())
-                        .shadow(color: isCopy ? .hanlinHLGreen : .hanlinHLBlue, radius: 1)
-                )
-                .hanlinFeedback(.success, trigger: isCopy)
-                .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isCopy)
-            }
-            .padding()
-            .padding(.horizontal)
+        HanlinFileContentView(content: content, isCopied: isCopy, isSaved: isSaved,
+            saveKnowledge: saveKnowledge, copy: copyToClipboard)
             .sheet(isPresented: $isSheetPresented) {
                 if let record = recordToWrite {
                     NavigationStack {
@@ -2945,7 +2381,6 @@ struct FileContentViewer: View {
                     }
                 }
             }
-        }
         .alert(Text("保存失败", bundle: HanlinLocalization.bundle), isPresented: $showErrorAlert) {
             Button(hanlin: "确定", role: .cancel) {}
         } message: {
@@ -3296,16 +2731,7 @@ private func highlightPythonCode(_ code: String) -> NSAttributedString {
 
 // MARK: 选择文本组件（带复制、全选及存为知识操作）
 struct TextSelectionView: View {
-    private enum WritingTool: String, CaseIterable {
-        case translation, polish, summary
-        var title: String {
-            switch self {
-            case .translation: String(localized: "即时翻译", bundle: HanlinLocalization.bundle)
-            case .polish: String(localized: "即时润色", bundle: HanlinLocalization.bundle)
-            case .summary: String(localized: "即时摘要", bundle: HanlinLocalization.bundle)
-            }
-        }
-    }
+    private typealias WritingTool = HanlinWritingTool
     private struct WritingRequest: Identifiable {
         let id = UUID()
         let tool: WritingTool
@@ -3332,96 +2758,25 @@ struct TextSelectionView: View {
     private let buttonSize: CGFloat = 36
 
     var body: some View {
-        ZStack(alignment: .bottomTrailing) {
-            NavigationStack {
-                ChatMarkdownView(text: text,
-                    savePersonal: savePersonal,
-                    saveKnowledge: { selection in
-                        selectedText = selection
-                        saveKnowledge()
-                    }, documentSelectionMode: true,
-                    onSelectionChanged: { selection in
-                        let next = selection.text.isEmpty ? nil : selection.text
-                        if selectedText != next { selectedText = next }
-                    }, selectAllRequest: $shouldSelectAll)
-                    .environment(\.chatMarkdownDidRender, nil)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .navigationTitle(Text("选择文本", bundle: HanlinLocalization.bundle))
-                    .navigationBarTitleDisplayMode(.inline)
-                    .toolbar {
-                        ToolbarItem(placement: .confirmationAction) {
-                            Button(hanlin: "Done") { dismiss() }
-                                .accessibilityIdentifier("hanlin-text-selection-done")
-                        }
-                    }
-            }
-            
-            // Text utilities belong to the selected message, not permanent Home buttons.
-            HStack(spacing: 12) {
-                Menu {
-                    ForEach(WritingTool.allCases, id: \.rawValue) { tool in
-                        Button(tool.title) {
-                            let selection = selectedText.flatMap { $0.isEmpty ? nil : $0 } ?? text
-                            writingRequest = WritingRequest(tool: tool, text: selection)
-                        }
-                        .accessibilityIdentifier("hanlin-text-action-" + tool.rawValue)
-                    }
-                } label: {
-                    Image(systemName: "wand.and.stars")
-                        .font(HanlinTypography.fixed(size: size_16, weight: .medium))
-                        .frame(width: buttonSize, height: buttonSize)
+        HanlinMessageSelectionView(text: text, shouldSelectAll: $shouldSelectAll,
+            isCopied: isCopy, isSaved: isSaved,
+            writingActions: WritingTool.allCases.map { tool in
+                .init(id: tool.rawValue, title: tool.title, symbol: "wand.and.stars") {
+                    let selection = selectedText.flatMap { $0.isEmpty ? nil : $0 } ?? text
+                    writingRequest = WritingRequest(tool: tool, text: selection)
                 }
-                .accessibilityLabel(String(localized: "Text actions", bundle: HanlinLocalization.bundle))
-                .accessibilityIdentifier("hanlin-text-actions-menu")
-                .disabled(text.isEmpty)
-                // 全选按钮：点击后将 shouldSelectAll 置为 true
-                Button(action: {
-                    shouldSelectAll = true
-                }) {
-                    Image(systemName: "character.cursor.ibeam")
-                        .font(HanlinTypography.fixed(size: size_16, weight: .medium))
-                        .foregroundColor(.hanlinHLBluefont)
-                        .frame(width: buttonSize, height: buttonSize)
-                }
-                .background(
-                    BlurView(style: .systemThinMaterial)
-                        .clipShape(Circle())
-                        .shadow(color: .hanlinHLBlue, radius: 1)
-                )
-                .hanlinFeedback(.success, trigger: shouldSelectAll)
-                
-                // 存为知识按钮：点击后图标从“backpack.circle”切换到“checkmark.circle”
-                Button(action: saveKnowledge) {
-                    Image(systemName: isSaved ? "checkmark" : "backpack")
-                        .font(HanlinTypography.fixed(size: size_16, weight: .medium))
-                        .foregroundColor(isSaved ? .hanlinHLGreen : .hanlinHLBluefont)
-                        .frame(width: buttonSize, height: buttonSize)
-                }
-                .background(
-                    BlurView(style: .systemUltraThinMaterial)
-                        .clipShape(Circle())
-                        .shadow(color: isSaved ? .hanlinHLGreen : .hanlinHLBlue, radius: 1)
-                )
-                .animation(.spring(response: 0.5, dampingFraction: 0.7), value: isSaved)
-                .hanlinFeedback(.success, trigger: isSaved)
-                
-                // 复制按钮：点击后图标从“rectangle.on.rectangle.circle”切换到“checkmark.circle”
-                Button(action: copyToClipboard) {
-                    Image(systemName: isCopy ? "checkmark" : "square.on.square")
-                        .font(HanlinTypography.fixed(size: size_16, weight: .medium))
-                        .foregroundColor(isCopy ? .hanlinHLGreen : .hanlinHLBluefont)
-                        .frame(width: buttonSize, height: buttonSize)
-                }
-                .background(
-                    BlurView(style: .systemUltraThinMaterial)
-                        .clipShape(Circle())
-                        .shadow(color: isCopy ? .hanlinHLGreen : .hanlinHLBlue, radius: 1)
-                )
-                .hanlinFeedback(.success, trigger: isCopy)
-                .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isCopy)
-            }
-            .padding()
-            .padding(.horizontal)
+            }, saveKnowledge: saveKnowledge, copy: copyToClipboard) {
+            ChatMarkdownView(text: text,
+                savePersonal: savePersonal,
+                saveKnowledge: { selection in
+                    selectedText = selection
+                    saveKnowledge()
+                }, documentSelectionMode: true,
+                onSelectionChanged: { selection in
+                    let next = selection.text.isEmpty ? nil : selection.text
+                    if selectedText != next { selectedText = next }
+                }, selectAllRequest: $shouldSelectAll)
+                .environment(\.chatMarkdownDidRender, nil)
         }
         .sheet(isPresented: $isSheetPresented) {
             if let record = recordToWrite {

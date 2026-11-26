@@ -24,46 +24,22 @@ struct ChatMarkdownView: View {
     @Environment(\.chatSourceDestination) private var destination
     @Environment(\.chatMarkdownSelectionActivity) private var selectionActivity
     @Environment(\.chatMarkdownDidRender) private var markdownDidRender
-    @Environment(\.chatMessageLongPressPreview) private var messagePreview
     @State private var highlightedRequestID: UUID?
 
     var body: some View {
-        highlightedRenderer
-            .markdownDocumentSelectionMode(documentSelectionMode)
-            .markdownSelectAllRequest(selectAllRequest)
-            .markdownSelectionChanged(selectionChangedHandler)
-            .markdownLongPressPreview(longPressPreviewHandler)
-            .markdownEmbeddedBlockRenderer(embeddedBlockRenderer)
-            .frame(maxWidth: .infinity, alignment: .leading)
-    }
-
-    /// Keep independent opaque view boundaries so the Swift type checker does
-    /// not infer renderer callbacks and every selection modifier in one expression.
-    private var highlightedRenderer: some View {
-        linkedRenderer
-            .markdownSelectionHighlight(highlight)
-            .task(id: destination?.id) { await updateHighlightLifetime() }
-            .markdownSelectionActivity(selectionActivityHandler)
-    }
-
-    private var linkedRenderer: some View {
         let input = projectedDocument
-        let renderedText: String = input.text
-        let groups: [HanlinCitationGroup] = input.groups
-        let renderer: HanlinMarkdownView = HanlinMarkdownView(
-            text: renderedText,
-            imageConfig: imageConfig,
-            citationGroups: groups,
-            contextMenuItems: contextMenuItems,
-            onRendered: renderedHandler,
-            onSelectionAction: selectionActionHandler,
-            documentParts: input.parts
-        )
-        // The native paragraph retains its OpenURLAction. Keep its presenter
-        // with the renderer rather than an independently updating bubble.
-        return renderer
-            .modifier(ChatLinkPresentation(citationGroups: groups))
-            .markdownCodeBlockRenderer(Self.codeBlockRenderer)
+        HanlinMessageMarkdownView(text: input.text, imageConfig: imageConfig,
+            citationGroups: input.groups, contextMenuItems: contextMenuItems,
+            documentParts: input.parts, embeddedBlockRenderer: embeddedBlockRenderer,
+            onRendered: renderedHandler, onSelectionAction: selectionActionHandler,
+            onSelectionActivity: selectionActivityHandler,
+            onSelectionChanged: selectionChangedHandler,
+            onTrace: { event, fields in NativeToolTraceLogger.shared.log(event, fields) },
+            highlight: highlight, documentSelectionMode: documentSelectionMode,
+            selectAllRequest: selectAllRequest)
+            // The original host keeps its own navigation and persisted source policy.
+            .modifier(ChatLinkPresentation(citationGroups: input.groups))
+            .task(id: destination?.id) { await updateHighlightLifetime() }
     }
 
     /// Citation rewriting stays scoped to the original Markdown parts. The
@@ -112,25 +88,6 @@ struct ChatMarkdownView: View {
             onSelectionChanged?(ChatTextQuote(text: selection.text, renderedText: selection.renderedText,
                 range: selection.range, sourceBlockID: selection.sourceBlockID))
         }
-    }
-
-    private var longPressPreviewHandler: (@MainActor (UIView, CGPoint) -> Void)? {
-        guard !documentSelectionMode else { return nil }
-        return messagePreview
-    }
-
-    private static let codeBlockRenderer: MarkdownCodeBlockRenderer = { block in
-        guard block.isFenceClosed == true else { return nil }
-        let language = block.language?.trimmingCharacters(in: .whitespacesAndNewlines).lowercased()
-        let kind: String
-        switch language {
-        case "mermaid": kind = "mermaid"
-        case "diff", "patch": kind = "diff"
-        default: return nil
-        }
-        return AnyView(ChatCodeFenceView(blockID: block.id, kind: kind, source: block.code, onTrace: { event, fields in
-            NativeToolTraceLogger.shared.log(event, fields)
-        }))
     }
 
     private func updateHighlightLifetime() async {

@@ -1,0 +1,67 @@
+# Native Hanlin Launcher Lab
+
+The new HanlinChatPresentation product is part of the canonical HanlinPresentationSDK. Hosts keep their existing chat session, draft and stream owner. The product owns only native SwiftUI sheet/inspector presentation and Liquid Glass entry controls, with an optional native zoom transition.
+
+Use a host-owned HanlinChatPresentationController, with a HanlinChatPresentationConfiguration specifying [.sheet], [.inspector], or both. Attach hanlinChatPresentation(controller:labels:transition:chat:) once to the host root. Supply the existing Hanlin conversation view in its content closure, with a session owned outside that closure. Place HanlinLauncher(style:controller:draft:labels:transition:onQuickSubmit:) in a ToolbarItem, overlay or safe area. The quick-submit closure routes directly to the host's existing send action. The switch control is hidden if the policy permits just one mode. The native inspector retains system appearance and adaptive behavior; clear glass is a sheet setting.
+
+The example is an offline UI harness, not a provider integration: HanlinChatView, HanlinUserMessageBubble, HanlinAssistantMessageBubble, HanlinMarkdownView, HanlinMorphComposer, NativeMultilineTextEditor, and HanlinComposerDraft are actual HanlinChatUI components. The transcript and scripted stream are owned by the host and do not require a network or credentials. The three launcher styles, permitted modes, initial mode, RTL and optional zoom can be changed in the app.
+
+Target iOS/iPadOS 27. The new presentation API is iOS-only; the independent policy model compiles on macOS for tests. For a full consumer app, use the normal SDK SwiftPM product graph rather than copying sources.
+
+
+## 2026-11-25 device IPA evidence
+
+The new presentation module and demo host were compiled for arm64-apple-ios27.0 on Scaleway Mac, Xcode 27 (27A266a). The demo linked authentic HanlinChatUI, HanlinPresentationKit, HanlinLocalization, HanlinRichUI and their dependency artifacts from the existing ca6310219ca104d5db44c7fbbb64766eb6d78c19 device archive. Shell, user/assistant bubble, Morph composer, draft and Markdown source blobs match the d2d47489dcd70ae3f40389758fe5d78278b66f3e base; NativeMultilineTextEditor and HanlinAnimatedDisclosure donor sources differ. This is not a complete rebuilt current SDK graph or provider integration. Unsigned IPA SHA256: 46957f961b6016c10901d9512492894fe3e946dcd42b851d0cc983e235204b7b. Size: 18175432 bytes. Archive integrity, binary target and Info.plist checked. Physical iPad interaction acceptance is pending. The project.yml below describes a normal source consumer for independent validation; that full package-graph path was not executed for this IPA.
+
+## 1.0.1 — physical iPad feedback
+
+Native toolbar launchers use the system's own automatic toolbar styling (no nested GlassButtonStyle). Floating capsule uses sparkle and title only; no outbound arrow. All three entry styles are absent while the conversation is open or transferring between native Sheet and Inspector. The header close button is the only conversation-close entry. The demo removes the entire native ToolbarItem or floating overlay while the controller's showsLauncher is false. Quick composer retains its local collapse button before the conversation opens; drafts remain host-owned. Optional native zoom is retained as an experiment; because entry controls are removed while open, the system can fall back to the normal dismissal transition. Native geometry and animation still require a physical iPad check.
+
+Build 1.0.1 (2): the changed presentation module and demo host were freshly compiled and linked on the same Mac against the existing original chat SDK objects, as described above. IPA SHA256 28f99252c0e451ac604b7f36c6e4c8b11647e6b81beeacff6a4acbab338c9500; 18174367 bytes. Archive integrity, plist, arm64 and iOS 27 binary load command verified. No physical-device QA of the new visual fixes is claimed.
+
+## 1.0.2 — native zoom source regression repair
+
+Keep the original matchedTransitionSource and its native ToolbarItem/overlay mounted throughout the presentation. Conceal the launcher with opacity, disable hit testing and hide it from accessibility while the chat owns the presentation. Restore the visual destination during final zoom-sheet dismissal without making it interactive until closed. Do not change the native navigationTransition(.zoom), sheet/inspector presentation or the conversation UI. The host uses Apple's sharedBackgroundVisibility for the toolbar's own background and locks the launcher style until dismissal. Prior single-glass toolbar, arrow removal and hidden entry controls are retained. Device appearance, including actual native zoom motion, must be checked on iPad.
+
+## 1.0.3 — system horizontal size class
+
+Apple's inspector documentation explicitly describes a trailing column in regular horizontal size classes and an adaptive sheet in compact ones: https://developer.apple.com/documentation/swiftui/view/inspector(ispresented:content:) . Read the system trait from the presentation owner's @Environment(\\.horizontalSizeClass), not the sheet/inspector content or a pixel threshold. Only .regular permits Inspector; compact/unknown uses the existing Sheet and hides the switch. The same native dismissal handoff redirects an active or pending Inspector to Sheet. Restore the configured policy on regular width; keep an active Sheet for a dual-mode configuration, but restore Inspector for an inspector-only configuration. Session ownership, launcher source, native Zoom transition, sheet appearance and chat UI are unchanged. Physical iPad resize/appearance remains a device acceptance gate.
+
+
+## Shared message interactions and focused native validation
+
+The current host uses HanlinMessageActionBar, HanlinMessageActionMenu,
+HanlinMessagePreviewPresenter, HanlinMessageSelectionView and
+HanlinMessageMarkdownView from the same HanlinChatUI product used by Hanlin.
+Clipboard, text selection and deletion are real local host actions. Services
+not owned by this offline host have no menu entries. The production Hanlin
+adapter supplies its existing speech, translation, saved knowledge, personal
+save, retry and continuation services.
+
+The XcodeGen test target references the original SDK test source files in place;
+it does not copy source or substitute a second implementation. It contains the
+five new viewport/host-authority methods and the original launcher policy tests.
+Previously accepted unchanged policy evidence may be reused; filter to the two
+new suites when only the new interaction contract needs execution.
+
+For an isolated native validation copy, first use the original manifest
+generator's supported product selection. This narrows dependencies while keeping
+canonical implementation paths. Do not overwrite a working integration
+checkout's generated manifest merely to run this focused consumer.
+
+```sh
+python3 Scripts/SDK/generate_manifest.py --products HanlinChatPresentation HanlinPresentationKit HanlinChatUI
+xcodegen generate --spec Examples/HanlinLauncherLab/project.yml
+xcodebuild test \
+  -project Examples/HanlinLauncherLab/HanlinLauncherLab.xcodeproj \
+  -scheme HanlinLauncherLab \
+  -destination "${HANLIN_SIM_DESTINATION:?Select an available iOS simulator}" \
+  -derivedDataPath "${HANLIN_UI_DERIVED_DATA:?Use the assigned validation products directory}" \
+  -only-testing:HanlinLauncherLabTests/HanlinMessagePreviewMetricsTests \
+  -only-testing:HanlinLauncherLabTests/HanlinMessageActionTests \
+  CODE_SIGNING_ALLOWED=NO
+```
+
+The commands above are the validation route, not a recorded successful native
+run. Source checks, original evidence and remaining acceptance gates are in
+`docs/agent-sdk/evidence/shared-chat-interactions-20261126/`.
