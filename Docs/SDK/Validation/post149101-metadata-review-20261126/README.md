@@ -20,7 +20,7 @@ The original pure metadata decoder and its five existing tests are unchanged. Th
 
 Required Apple validation, not executed by this child:
 
-- AI_HanlinTests/HanlinConversationMetadataTests (16 tests: seven existing plus nine new persistence/concurrency/configuration regressions).
+- AI_HLYTests/HanlinConversationMetadataTests (16 tests: seven existing plus nine new persistence/concurrency/configuration regressions).
 - HanlinChatCoreTests/GeneratedConversationMetadataProviderTests (five intercepted real provider protocols plus three stream completion/cancellation/bounds tests).
 - HanlinChatCoreTests/ProviderRoutingTests, especially the parameterized Responses alias/host matrix.
 - Native app build/type checking; existing old-store upgrade check for the new metadataWasManuallyEdited = false field.
@@ -32,3 +32,11 @@ The LOCAL test validates configuration/file routing with an injected generation 
 Clear-history delayed completion; explicit same-placeholder rename; dedup across separate ModelContexts; manual edits from a separate ModelContext; requested model UUID overriding saved selection; valid preferred optimizer vs missing credentials and no post-request provider fallback; local file routing without API keys; edited source rejection; deterministic invalidated-old-job/new-job token race.
 
 Provider tests assert the native request path/body and one successful request for OpenAI, compatible, Anthropic, Gemini and Responses. Stream tests reject missing completion, truncation, oversized UTF-8 output and cancellation while excluding reasoning from JSON.
+
+## Final API review correction
+
+The agent engine deliberately exports the provider's raw completion reason when present. Metadata now reuses the existing HanlinChatStreamParser Anthropic/Gemini normalizers (made internal static) to accept end_turn / stop_sequence and STOP, while still rejecting length/content-filter/error termination. Existing SSE parsing behavior remains the same. Responses in the pinned provider exposes a nil raw reason on ordinary completion, so the engine supplies normalized stop; its max_output_tokens raw reason remains rejected.
+
+The stream fixture uses explicit inputTokens/outputTokens initializers because HanlinChatTokenUsage has two defaulted initializer overloads. The same eight provider test cases remain: one test with five protocol arguments plus three stream-policy tests. The successful stream-policy test now also covers the raw Anthropic and Google completion names and native Apple stop.
+
+An isolated SDK test target needs GeneratedConversationMetadataProviderTests.swift and the existing ProviderConformance/ProviderResponseFixtures.swift; it does not need StatefulProviderEmulator or the full conformance suite. Retain production HanlinChatCore and its existing package dependencies. Native execution remains root-owned and NOT_RUN here. The follow-up receipt is finish-reason-validation.json.

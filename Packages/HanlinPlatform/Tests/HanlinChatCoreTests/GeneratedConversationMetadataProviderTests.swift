@@ -75,8 +75,8 @@ struct GeneratedConversationMetadataProviderTests {
         let text = #"{"title":"Reading list","icon":"book"}"#
         let invalid: [[HanlinAISDKStreamEvent]] = [
             [.textDelta(text)],
-            [.textDelta(text), .finished(reason: "length", usage: .init())],
-            [.textDelta(String(repeating: "🙂", count: 1025)), .finished(reason: "stop", usage: .init())]
+            [.textDelta(text), .finished(reason: "length", usage: .init(inputTokens: 0, outputTokens: 0))],
+            [.textDelta(String(repeating: "🙂", count: 1025)), .finished(reason: "stop", usage: .init(inputTokens: 0, outputTokens: 0))]
         ]
         for events in invalid {
             do {
@@ -98,13 +98,20 @@ struct GeneratedConversationMetadataProviderTests {
     }
 
     @Test
-    func reasoningIsNotIncludedInTheMetadataJSON() async throws {
-        let metadata = try await HanlinConversationMetadata.decodeCompletedStream(stream([
-            .reasoningDelta("Provider-private reasoning is not JSON."),
-            .textDelta(#"{"title":"Reading "#),
-            .textDelta(#"list","icon":"book"}"#),
-            .finished(reason: "stop", usage: .init())]))
-        #expect(metadata.title == "Reading list" && metadata.icon == "book")
+    func reasoningIsNotIncludedAndNativeCompletionReasonsAreNormalized() async throws {
+        let completions: [(HanlinAISDKProviderKind, String)] = [
+            (.openAI, "stop"), (.anthropic, "end_turn"), (.anthropic, "stop_sequence"),
+            (.google, "STOP"), (.appleOnDevice, "stop")
+        ]
+        for (kind, reason) in completions {
+            let metadata = try await HanlinConversationMetadata.decodeCompletedStream(stream([
+                .reasoningDelta("Provider-private reasoning is not JSON."),
+                .textDelta(#"{"title":"Reading "#),
+                .textDelta(#"list","icon":"book"}"#),
+                .finished(reason: reason, usage: .init(inputTokens: 0, outputTokens: 0))]),
+                providerKind: kind)
+            #expect(metadata.title == "Reading list" && metadata.icon == "book")
+        }
     }
 
     private func stream(_ events: [HanlinAISDKStreamEvent]) -> AsyncThrowingStream<HanlinAISDKStreamEvent, Error> {
