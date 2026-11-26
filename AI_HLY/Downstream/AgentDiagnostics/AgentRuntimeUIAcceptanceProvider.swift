@@ -1,6 +1,6 @@
 import HanlinLocalization
 #if (DEBUG || HANLIN_TESTING) && targetEnvironment(simulator)
-import Darwin
+import notify
 #endif
 import Foundation
 import HanlinChatCore
