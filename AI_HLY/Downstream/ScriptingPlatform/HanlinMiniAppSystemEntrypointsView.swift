@@ -58,7 +58,7 @@ private struct HanlinMiniAppSystemEntrypointsModifier: ViewModifier {
                 // When a package was already presented, camera and package share
                 // one cover. A finished capture switches its content in place.
                 Task {
-                    if old != nil, current == nil, platform.foregroundPresentationPlatform.presentsForegroundAction {
+                    if old != nil, current == nil, platform.isForegroundPresentationVisible {
                         await captures.cameraDidDismiss(windowID: windowID)
                     }
                     // A camera request may finish loading after its former
@@ -80,7 +80,7 @@ private struct HanlinMiniAppSystemEntrypointsModifier: ViewModifier {
                 systemEntrypoints.updateWindowActivity(false, windowID: windowID, captures: captures)
             }
             .fullScreenCover(isPresented: Binding(
-                get: { (captures.cameraWindowID == windowID && captures.cameraPresentation != nil) || (platform.foregroundPresentationPlatform.presentsForegroundAction && systemEntrypoints.presentationWindowID == windowID) },
+                get: { (captures.cameraWindowID == windowID && captures.cameraPresentation != nil) || (platform.isForegroundPresentationVisible && systemEntrypoints.presentationWindowID == windowID) },
                 set: {
                     if !$0, systemEntrypoints.presentationWindowID == windowID {
                         if let shortcutID { platform.dismissShortcutPresentation(shortcutID) }

@@ -158,12 +158,19 @@ final class HanlinScriptingPlatform {
         let platform: HanlinScriptingPlatform
         let store: HanlinScriptExtensionStore
         var completed = false
+        var dismissalRequested = false
     }
     /// The existing foreground scene presents this invocation's original Host.
     /// Its provider/progress callbacks never replace a visible app's handler.
     private(set) var shortcutPresentation: ShortcutPresentation?
     var foregroundPresentationPlatform: HanlinScriptingPlatform {
         shortcutPresentation?.platform ?? self
+    }
+    var isForegroundPresentationVisible: Bool {
+        if let owned = shortcutPresentation {
+            return !owned.dismissalRequested && owned.platform.presentsForegroundAction
+        }
+        return presentsForegroundAction
     }
 
     func admitShortcutPresentation(_ platform: HanlinScriptingPlatform,
@@ -192,22 +199,28 @@ final class HanlinScriptingPlatform {
     }
 
     func dismissShortcutPresentation(_ invocationID: UUID, executionFinished: Bool = false) {
-        guard let owned = shortcutPresentation, owned.id == invocationID else { return }
+        guard var owned = shortcutPresentation, owned.id == invocationID else { return }
         // Keep an actual running result authoritative. The executor observes this
         // cancellation request, drains its work and records the terminal outcome.
         let receipt = try? owned.store.requestCancellation(invocationID)
-        shortcutPresentation = nil
+        owned.dismissalRequested = true
         owned.platform.presentsForegroundAction = false
         if executionFinished || owned.completed || receipt?.status.isTerminal == true {
+            shortcutPresentation = nil
             owned.platform.dismissActiveApplication()
+            Task { @MainActor [weak self] in try? await self?.processPendingResumeCommands() }
+        } else {
+            // Retain the hidden owner while cancellation drains. Explicit native
+            // teardown is still required after the executor returns; a provider
+            // must never depend on deinit to unregister its engine session.
+            shortcutPresentation = owned
         }
-        Task { @MainActor [weak self] in try? await self?.processPendingResumeCommands() }
     }
 
     func settleShortcutPresentation(_ receipt: HanlinInvocationReceipt) {
         guard var owned = shortcutPresentation, owned.id == receipt.invocationID,
               receipt.status.isTerminal else { return }
-        if receipt.status == .succeeded, owned.platform.presentsForegroundAction {
+        if receipt.status == .succeeded, !owned.dismissalRequested, owned.platform.presentsForegroundAction {
             owned.completed = true
             shortcutPresentation = owned
         } else {

@@ -296,6 +296,62 @@ final class NativeScriptShortcutConcurrencyTests: XCTestCase {
         }
     }
 
+    func testClosingRunningForegroundDrainsBeforeReleasingItsOwnedSession() async throws {
+        XCTAssertNil(HanlinNativeScriptSession.activeSessionIdentifier)
+        HanlinNativeScriptProductionBootstrap.prepareEmbeddedProviders()
+        let fixture = try await Fixture()
+        defer { fixture.remove() }
+        let observations = Observations()
+        let owner = fixture.platform(observations: observations, allowsPresentation: true)
+        let child = fixture.platform(observations: observations, allowsPresentation: true)
+        let store = fixture.extensions
+        let command = try fixture.command(fixture.first, nonce: "close-running", foreground: true)
+        defer {
+            owner.dismissShortcutPresentation(command.id, executionFinished: true)
+            child.dismissActiveApplication()
+        }
+        try await withThrowingTaskGroup(of: HanlinInvocationReceipt.self) { group in
+            group.addTask {
+                let receipt = try await HanlinInvocationExecutor(store: store).execute(command) { owned in
+                    try await owner.admitShortcutPresentation(child, command: owned, store: store)
+                    return try await child.executeClaimedShortcutCommand(owned)
+                }
+                guard let receipt else { throw Failure.invalidResult }
+                return receipt
+            }
+            defer { group.cancelAll() }
+            try await observations.wait(for: ["close-running"])
+            let controller = try XCTUnwrap(child.activeNativeScriptController)
+            let surface = try attach(controller)
+            defer {
+                surface.window.isHidden = true
+                surface.window.rootViewController = nil
+                surface.previousKey?.makeKey()
+            }
+            XCTAssertTrue(owner.isForegroundPresentationVisible)
+            XCTAssertEqual(HanlinNativeScriptWindowFactoryRegistry.openWindowCount(), 1)
+            owner.dismissShortcutPresentation(command.id)
+            let running = try XCTUnwrap(store.receipt(for: command.id))
+            XCTAssertEqual(running.status, .running)
+            XCTAssertTrue(running.cancellationRequested)
+            XCTAssertEqual(owner.shortcutPresentation?.id, command.id)
+            XCTAssertTrue(owner.shortcutPresentation?.dismissalRequested == true)
+            XCTAssertFalse(owner.isForegroundPresentationVisible)
+            XCTAssertTrue(child.activeNativeScriptController === controller)
+
+            let next = try await group.next()
+            let receipt = try XCTUnwrap(next)
+            XCTAssertEqual(receipt.status, .cancelled)
+            owner.settleShortcutPresentation(receipt)
+            XCTAssertNil(owner.shortcutPresentation)
+            XCTAssertNil(child.activeApplicationID)
+            XCTAssertNil(child.activeNativeScriptController)
+            XCTAssertNil(HanlinNativeScriptSession.activeSessionIdentifier)
+            XCTAssertEqual(HanlinNativeScriptWindowFactoryRegistry.openWindowCount(), 0)
+            XCTAssertEqual(try store.receipt(for: command.id), receipt)
+        }
+    }
+
     func testOccupiedForegroundRejectsOnlyTheNewShortcutAndPreservesLegacyIntentDrain() async throws {
         XCTAssertNil(HanlinNativeScriptSession.activeSessionIdentifier)
         HanlinNativeScriptProductionBootstrap.prepareEmbeddedProviders()
