@@ -626,7 +626,8 @@ final class AgentRuntimeConversationUITests: XCTestCase {
 
     private func exerciseUI03SearchMessageAndDeduplicatedCitations(hebrew: Bool) throws {
         continueAfterFailure = false
-        let app = launchAcceptanceApp(language: hebrew ? "he" : "en", locale: hebrew ? "he_IL" : "en_US")
+        let app = launchAcceptanceApp(language: hebrew ? "he" : "en", locale: hebrew ? "he_IL" : "en_US",
+                                      isolatedStore: true)
         let screenshotPrefix = hebrew ? "UI-03_HE_RTL" : "UI-03"
         let verificationSource = "print('UI03_LOCAL_RESULT_' + str(6 * 7))"
         openChat(in: app)
@@ -965,7 +966,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
     }
 
     func testUI04CollapsedProgressAndInspectorWithoutRawCoT() throws {
-        let app = launchAcceptanceApp()
+        let app = launchAcceptanceApp(isolatedStore: true)
         openChat(in: app)
         // UI03 intentionally remembers Python consent across conversations.
         // Start this consent journey through the original Settings revocation.
@@ -1910,13 +1911,18 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         return app
     }
 
-    private func launchAcceptanceApp(language: String = "en", locale: String = "en_US") -> XCUIApplication {
+    private func launchAcceptanceApp(language: String = "en", locale: String = "en_US",
+                                     isolatedStore: Bool = false) -> XCUIApplication {
         let app = XCUIApplication()
         app.launchArguments += ["-AppleLanguages", "(\(language))", "-AppleLocale", locale]
         app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
         app.launchEnvironment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] = "1"
         app.launchEnvironment["HANLIN_COMPACT_KEYBOARD_WITNESS"] = "1"
         app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
+        if isolatedStore {
+            // A fresh store cannot expose the previous case's rows before fixture seeding.
+            app.launchEnvironment["HANLIN_PHASE2_STORE_ID"] = UUID().uuidString
+        }
         app.launch()
         return app
     }
