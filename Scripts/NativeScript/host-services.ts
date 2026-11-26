@@ -72,7 +72,16 @@ export interface MiniAppSharing {
   writeAttachment(file: {base64: string; name?: string; typeIdentifier?: string}): Promise<MiniAppContent>;
 }
 
+/** One result-producing handler bound to the current package/window provider. */
+export interface MiniAppActionRequest {
+  readonly caller: string;
+  readonly parameters: RuntimeJSONValue;
+}
+export type MiniAppActionHandler = (request: MiniAppActionRequest) => RuntimeJSONValue | Promise<RuntimeJSONValue>;
+
 export interface NativeRuntimeBridge {
+  registerRequestHandlerCapabilityHandler(action: string, capability: string,
+    handler: (caller: string, payloadJSON: string, reply: (result: string | null, error: string | null) => void) => void): void;
   sendRequestActionCapabilityPayloadJSONCompletion(target: string, action: string, capability: string, payloadJSON: string, completion: (result: string | null, error: string | null) => void): void;
   executeRuntimeCompletion(payloadJSON: string, completion: (result: string | null, error: string | null) => void): string | null;
   cancelRuntime(requestID: string): boolean;
@@ -159,6 +168,22 @@ export function createHostServicesForBridge(bridge: NativeRuntimeBridge) {
     writeAttachment: file => share('miniapps.writeAttachment', file),
   };
   return {
+    /** Register synchronously inside the window factory. The Host validates the
+     * installed action/capability and releases this handler when that window closes. */
+    registerRequestHandler(action: string, capability: string, handler: MiniAppActionHandler): void {
+      boundBridge.registerRequestHandlerCapabilityHandler(action, capability, (caller, payloadJSON, reply) => {
+        void Promise.resolve().then(() => handler({
+          caller, parameters: JSON.parse(payloadJSON) as RuntimeJSONValue,
+        })).then(value => {
+          const encoded = JSON.stringify(value);
+          if (typeof encoded !== 'string') throw new Error('A MiniApp action must return a JSON value.');
+          return encoded;
+        }).then(
+          encoded => reply(encoded, null),
+          error => reply(null, error instanceof Error ? error.message : String(error)),
+        );
+      });
+    },
     assistant: createMiniAppAssistant(assistant),
     miniapps,
     liveActivities,
