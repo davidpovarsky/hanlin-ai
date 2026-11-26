@@ -1,0 +1,42 @@
+{
+  "schemaVersion": 1,
+  "atUTC": "2026-11-26T17:24:25.203245+00:00",
+  "source": "2a161ec3035c239cb21497f529c1c8f3d2ea92f0",
+  "classification": "PORTABLE_CONTRACT_AND_SYNTAX_VERIFIED",
+  "native": "NOT_RUN",
+  "contractSHA256": "169e270d596fa000ce9cb043fa55f765cda62fd6043df49eb3bad8e2e160e6e3",
+  "canonicalFileCount": 19,
+  "canonicalHashesMatchReviewedSource": true,
+  "identifierChecks": {
+    "hanlin-user-bubble": true,
+    "hanlin-assistant-bubble": true,
+    "hanlin-search-bubble": true,
+    "hanlin-info-bubble": true,
+    "hanlin-action-buttons-row": true,
+    "hanlin-code-block-row": true,
+    "hanlin-html-web-bubble": true
+  },
+  "appDelegationChecks": {
+    "HanlinUserMessageBubble(text:": true,
+    "HanlinAssistantMessageBubble(isResponding:": true,
+    "HanlinMessageActionBar(actions: originalMessageActions, state: originalMessageActionState)": true
+  },
+  "originalChatAndFileAndV33AssertionsUnchanged": true,
+  "contractOnlyChangeRoutesToOriginalGuard": true,
+  "contractOnlySelectedTests": [
+    "AI_HLYTests/ChatComposerSessionBridgeTests",
+    "AI_HLYTests/CompactChatRouteTests",
+    "AI_HLYTests/CompactRecentConversationsTests",
+    "AI_HLYTests/ComposerActionsParityTests",
+    "AI_HLYTests/ComposerRefreshIdentityTests",
+    "AI_HLYTests/ComposerSelectionRefreshTests",
+    "AI_HLYTests/HanlinComposerDrawerRouteTests",
+    "AI_HLYTests/ModelPopoverZoomOrderTests",
+    "AI_HLYTests/NativeComposerLineSizingTests",
+    "AI_HLYTests/OrganizerDockStateTests",
+    "AI_HLYTests/OriginalSourceNonRegressionTests",
+    "AI_HLYTests/PendingFirstTurnTests"
+  ],
+  "swiftFrontendParseExit": 0,
+  "sourceDiffCheckExit": 0
+}

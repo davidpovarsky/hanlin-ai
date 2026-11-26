@@ -966,7 +966,8 @@
       "description": "InteriorOrganizer V3.3 OrganizerDock source parity, compact workspace, and zoom unit tests",
       "patterns": [
         "AI_HLYTests/HanlinOrganizerDockParityTests.swift",
-        "AI_HLYTests/NativeComposerLineSizingTests.swift"
+        "AI_HLYTests/NativeComposerLineSizingTests.swift",
+        "docs/hanlin-dock-v33-source-parity/SOURCE_PRESERVATION_V2.json"
       ],
       "direct_validation_groups": [
         "app_unit_tests"
