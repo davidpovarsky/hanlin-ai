@@ -83,12 +83,14 @@ extension HanlinScriptExtensionSnapshot {
         widgets: [HanlinScriptWidgetSnapshot]? = nil,
         instances: [HanlinWidgetInstance]? = nil,
         states: [HanlinWidgetInstanceState]? = nil,
-        inactiveInstallations: [String]? = nil
+        inactiveInstallations: [String]? = nil,
+        lastSuccessfulRenders: [HanlinWidgetLastSuccessfulRender]? = nil
     ) -> Self {
         .init(schemaVersion: schemaVersion, generatedAt: .now, widgets: widgets ?? self.widgets,
               intentEntities: intentEntities, liveActivities: liveActivities, translationApps: translationApps,
               widgetInstances: instances ?? widgetInstances, widgetStates: states ?? widgetStates, widgetEntityMigrations: widgetEntityMigrations,
-              inactiveWidgetInstallations: inactiveInstallations ?? inactiveWidgetInstallations)
+              inactiveWidgetInstallations: inactiveInstallations ?? inactiveWidgetInstallations,
+              widgetLastSuccessfulRenders: lastSuccessfulRenders ?? widgetLastSuccessfulRenders)
     }
 
     /// Authoritative joined projection of selectable widget instances for system
@@ -294,7 +296,8 @@ extension HanlinScriptExtensionStore {
             return .init(schemaVersion: 2, generatedAt: .now, widgets: widgets, intentEntities: intentEntities,
                 liveActivities: current.liveActivities, translationApps: translationApps, widgetInstances: instances,
                 widgetStates: states, widgetEntityMigrations: migrations,
-                inactiveWidgetInstallations: current.inactiveWidgetInstallations.filter { raw in !activeIDs.union(activePresentationIDs).contains(where: { $0.rawValue == raw }) })
+                inactiveWidgetInstallations: current.inactiveWidgetInstallations.filter { raw in !activeIDs.union(activePresentationIDs).contains(where: { $0.rawValue == raw }) },
+                widgetLastSuccessfulRenders: current.widgetLastSuccessfulRenders.filter { retainedIDs.contains($0.identity.installedPackageID) })
         }
     }
 }

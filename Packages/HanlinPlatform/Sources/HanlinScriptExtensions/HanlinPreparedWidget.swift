@@ -132,23 +132,45 @@ public enum HanlinWidgetPreparation {
                     if case let .expo(descriptor) = widget.payload { return descriptor.props ?? [:] }
                     return [:]
                 }()
-                let node = try HanlinExpoWidgetsRuntime.shared.render(layout: program.javaScript,
-                    props: props.mapValues { $0.toAny() }, environment: environment.mapValues { $0.toAny() }).get()
-                prepared = .expo(node: try HanlinWidgetJSON.value(node), context: context)
+                let node: HanlinValue
+                do {
+                    let rendered = try HanlinExpoWidgetsRuntime.shared.render(layout: program.javaScript,
+                        props: props.mapValues { $0.toAny() }, environment: environment.mapValues { $0.toAny() }).get()
+                    node = try HanlinWidgetJSON.value(rendered)
+                } catch {
+                    guard let cached = try? store.lastSuccessfulWidgetNode(in: snapshot, widget: widget,
+                        instance: instance, programSHA256: digest), case let .expo(previous) = cached else { throw error }
+                    prepared = .expo(node: previous, context: context)
+                    return snapshot
+                }
+                prepared = .expo(node: node, context: context)
+                let record = try store.storeSuccessfulWidgetNode(.expo(node), widget: widget,
+                    instance: instance, programSHA256: digest)
+                return snapshot.retainingSuccessfulWidgetRender(record)
+            }
+            let result: HanlinScriptWidgetExecution
+            do {
+                result = try HanlinScriptWidgetRuntime.shared.run(program: program, values: state?.values ?? [:], environment: environment,
+                    nativeRoot: store.root.appendingPathComponent("ScriptWidgetOriginal/v1", isDirectory: true),
+                    nativeIdentity: try HanlinScriptWidgetRuntime.nativeIdentity(widget.identity, artifactSHA256: digest))
+            } catch {
+                guard let cached = try? store.lastSuccessfulWidgetNode(in: snapshot, widget: widget,
+                    instance: instance, programSHA256: digest), case let .scriptwidget(previous) = cached else { throw error }
+                prepared = .scriptwidget(node: previous, context: context)
                 return snapshot
             }
-            let result = try HanlinScriptWidgetRuntime.shared.run(program: program, values: state?.values ?? [:], environment: environment,
-                nativeRoot: store.root.appendingPathComponent("ScriptWidgetOriginal/v1", isDirectory: true),
-                nativeIdentity: try HanlinScriptWidgetRuntime.nativeIdentity(widget.identity, artifactSHA256: digest))
             prepared = .scriptwidget(node: result.node, context: context)
+            let record = try store.storeSuccessfulWidgetNode(.scriptwidget(result.node), widget: widget,
+                instance: instance, programSHA256: digest)
             // ScriptWidget scripts can populate typed storage during timeline
             // preparation too. Publish those writes in this same transaction;
             // a concurrent AppIntent cannot be overwritten by an old read.
-            guard result.values != (state?.values ?? [:]) else { return snapshot }
+            guard result.values != (state?.values ?? [:]) else { return snapshot.retainingSuccessfulWidgetRender(record) }
             guard (state?.revision ?? 0) < UInt64.max else { throw HanlinWidgetActionError.invalidState }
             let updated = HanlinWidgetInstanceState(identity: widget.identity, engine: widget.engine, artifactSHA256: digest,
                 revision: (state?.revision ?? 0) + 1, values: result.values, committedNonces: state?.committedNonces ?? [])
-            return snapshot.replacing(states: snapshot.widgetStates.filter { !($0.identity == widget.identity && $0.engine == widget.engine) } + [updated])
+            return snapshot.retainingSuccessfulWidgetRender(record,
+                states: snapshot.widgetStates.filter { !($0.identity == widget.identity && $0.engine == widget.engine) } + [updated])
           }
           return prepared
         } catch { return .failure("Widget preparation failed: \(error)") }
