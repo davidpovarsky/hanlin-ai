@@ -1,0 +1,273 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-26T19:17:40.964383+00:00",
+  "classification": "BOUNDED_REQUIREMENTS_SOURCE_REVIEW_NOT_NATIVE_OR_FEATURE_ACCEPTANCE",
+  "sourceRevision": "628dbe083a5ceffc28b026e5701cd8c71c8734ff",
+  "productRevision": "2491a58b79f534b986b2ea1c0050d35b8dd818f3",
+  "sourceTree": "6b093abd53b296418474b3abdafc51c74c4ea25e",
+  "originalHanlinCICandidate": "fba37e3636da21f897d6a86298b52f2149b462dd",
+  "sourceDeltaFromHanlinCICandidate": [
+    "HanlinMiniAppsApp/MiniAppsDeveloperStudio.swift",
+    "HanlinMiniAppsApp/MiniAppsDeveloperWorkspace.swift"
+  ],
+  "conclusion": "No additional unowned, source-proven implementation defect required by the actual01-10 notes was found in this bounded review. Known foreground, cloud-root and project-symbol corrections are integrated. All listed native/system/device gates remain open until their separate actual receipts; conditional provider probes may reveal a further required correction.",
+  "confirmedCorrections": [
+    {
+      "source": "e641105fdc7ac5b418c49b9a146c96cfccf0f078",
+      "scope": "Original Studio rename, stale results, corrupt drafts and sourceRoot correction"
+    },
+    {
+      "source": "74bd12a8c4694a3464386ba7e6fe74326cf4b4fa",
+      "scope": "Off-main cloud root resolution, cancellation/generation qualification, open-workspace retention"
+    },
+    {
+      "source": "a6eaf6ee77fbc0a48e9997b434dc28d2c15b916d",
+      "scope": "Final foreground owner/terminal outcome/draining-close and container callback review; includes prior559f/82673 fixes"
+    },
+    {
+      "source": "5a22ff65007e899af34ae36e2c8f4f30efb06e01",
+      "scope": "Saved project symbol now wins in existing row/style sheet; project default retained without metadata",
+      "verification": "Original unchanged8 portable workspace/cloud-root tests PASS; Swift parse and diff checks PASS. Native Studio inventory14 unchanged; not executed by this lane."
+    }
+  ],
+  "nativeStatus": "No native job or test rerun was launched for this requirements review. Follow root/Mac/CI actual receipts; source presence is not acceptance.",
+  "frozenBoundary": "Existing active Expo/NativeScript/authorized widget originals only; no reopening frozen Scripting-JSC/ScriptUI development paths, no second runtime, and no generic unbound broker capability credit.",
+  "items": [
+    {
+      "number": 1,
+      "topic": "Long Running and background Shortcuts",
+      "codeStatus": "IMPLEMENTED_SOURCE_NATIVE_AND_DEVICE_ACCEPTANCE_PENDING",
+      "sourceGroups": [
+        "S01",
+        "S02"
+      ],
+      "sourceFinding": "The standalone MiniApps intent uses the supported App Intents long-running contract, typed output, existing invocation record/lease and original Expo/NativeScript execution. Progress and cancellation reach the invocation-qualified provider. The final reviewed foreground owner remains retained until executor settlement.",
+      "remainingRequired": [
+        "Apple compilation and actual Shortcuts execution with real network/processing/file results and continuation to the next action.",
+        "Supported foreground/background, locked-screen, deadline/expiration, cancellation, retry and termination/recovery behavior on an actual physical device."
+      ],
+      "conditionalBoundary": "No unlimited execution, guaranteed BGTaskScheduler schedule or daemon is claimed.",
+      "newUnownedSourceProvenGap": false,
+      "asanaGID": "1220918048749109",
+      "asanaURL": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220918048749109",
+      "taskNotesSHA256": "f97f86862450f6a6f6e2cd236cc966f57af6a96773ee82bb7064b58ed87cfa50",
+      "taskModifiedAt": "2026-11-26T14:07:50.565Z"
+    },
+    {
+      "number": 2,
+      "topic": "Original interactive widget Toggle",
+      "codeStatus": "IMPLEMENTED_SOURCE_NATIVE_AND_SYSTEM_ACCEPTANCE_PENDING",
+      "sourceGroups": [
+        "S03"
+      ],
+      "sourceFinding": "The actual original Expo renderer handles ToggleView via SwiftUI.Toggle and WidgetSetValue, dispatches the intended Boolean to the original JavaScript handler and commits installation/generation/layout-qualified state. Prepared rendering uses the original supported action path.",
+      "remainingRequired": [
+        "Original Apple native regressions plus real Home Screen true/false taps without foregrounding the app.",
+        "Two independent configurations, repeated/concurrent interaction, cold launch, VoiceOver, disabled installation and callback rollback."
+      ],
+      "conditionalBoundary": "Portable bundle execution and source inspection are not SpringBoard or WidgetKit acceptance.",
+      "newUnownedSourceProvenGap": false,
+      "asanaGID": "1220917858139776",
+      "asanaURL": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220917858139776",
+      "taskNotesSHA256": "2a418851234f178ce27efc7d33605092c02e16ef948428b95651f99b43c6b75c",
+      "taskModifiedAt": "2026-11-26T13:11:01.902Z"
+    },
+    {
+      "number": 3,
+      "topic": "Extra Large Portrait and all widget families",
+      "codeStatus": "IMPLEMENTED_SOURCE_SUPPORTED_DESTINATION_ACCEPTANCE_PENDING",
+      "sourceGroups": [
+        "S03"
+      ],
+      "sourceFinding": "Both shipped widget configurations and shared program/TypeScript manifests include the eight public family identifiers, including systemExtraLargePortrait, with availability retained.",
+      "remainingRequired": [
+        "Actual supported picker/edit/configuration, rotation/resize, RTL and layout measurements for the applicable destinations."
+      ],
+      "conditionalBoundary": "A declared enum or successful compile does not establish that a particular device offers the family; do not display unsupported options.",
+      "newUnownedSourceProvenGap": false,
+      "asanaGID": "1220917858139477",
+      "asanaURL": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220917858139477",
+      "taskNotesSHA256": "bdcb6ca75d290eeb9c220a46b6928c2e1904b199c5bfa8d4a2f9faaa80ae9fd2",
+      "taskModifiedAt": "2026-11-26T01:07:01.069Z"
+    },
+    {
+      "number": 4,
+      "topic": "Transparency, material and rendering mode",
+      "codeStatus": "SUPPORTED_SOURCE_PATHS_PRESENT_CONDITIONAL_API_AND_SYSTEM_PROBES_OPEN",
+      "sourceGroups": [
+        "S03",
+        "S04"
+      ],
+      "sourceFinding": "Existing authored container backgrounds are preserved and widget configurations allow the system to remove container backgrounds. Rendering-mode and tint/image contracts remain in the original renderer.",
+      "remainingRequired": [
+        "Real widget screenshots over different wallpapers in light/dark/tinted modes, contrast and fallback checks."
+      ],
+      "conditionalBoundary": "A widget glassEffect or additional clear/system-backdrop capability is required only after the actual widget target/SDK supports it. Existing public container APIs do not prove every material effect; no wallpaper screenshot imitation or synthetic PASS.",
+      "newUnownedSourceProvenGap": false,
+      "asanaGID": "1220917858139672",
+      "asanaURL": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220917858139672",
+      "taskNotesSHA256": "9c06e5f0c3112e1b01b935517c02588c98c563db1884fea6fa4da03f1d610ad4",
+      "taskModifiedAt": "2026-11-26T01:07:01.141Z"
+    },
+    {
+      "number": 5,
+      "topic": "Typed Shortcuts, foreground and localization",
+      "codeStatus": "IMPLEMENTED_SOURCE_NATIVE_AND_OS_DELIVERY_ACCEPTANCE_PENDING",
+      "sourceGroups": [
+        "S01",
+        "S02",
+        "S10"
+      ],
+      "sourceFinding": "The codec preserves scalar/object/list/null/Int64 and files without double encoding. The standalone intent uses the OS-selected currentMode, original validated installed actions and per-invocation foreground ownership. The final source review found no additional blocker in queue admission, duplicate equality, lost-owner recovery or cleanup; localization metadata is retained.",
+      "remainingRequired": [
+        "Real Shortcuts Dictionary/List and file conversion where the public SDK permits, output chaining, invalid/empty/nested/Hebrew input and RTL.",
+        "Actual Open When Run behavior, foreground/background delivery, saved action, Home Screen/deep-link and any supported result/snippet surface."
+      ],
+      "conditionalBoundary": "The installed SDK lacks a generic Dictionary AppIntent parameter; typed JSON text/IntentFile is the documented supported route. Inline code was conditional on package architecture and policy, so no raw-JS bypass or second engine is required. .foreground(.dynamic) is present; the OS toggle remains an OS probe.",
+      "newUnownedSourceProvenGap": false,
+      "asanaGID": "1220917834527539",
+      "asanaURL": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220917834527539",
+      "taskNotesSHA256": "51b10ca852211ef8471b79b7d0d7bdbe0c57e4d345dcb11a1d86776e89484d12",
+      "taskModifiedAt": "2026-11-26T12:04:41.903Z"
+    },
+    {
+      "number": 6,
+      "topic": "Concurrent actions, windows and original engine ownership",
+      "codeStatus": "IMPLEMENTED_SOURCE_NATIVE_AND_OS_CONCURRENCY_ACCEPTANCE_PENDING",
+      "sourceGroups": [
+        "S02",
+        "S10"
+      ],
+      "sourceFinding": "The cooperating NativeScript windowFactory path opens scoped action sessions while a foreground window exists, refreshes persisted generation before admission and releases only its owned session. Foreground queue/lease changes retain hidden draining ownership until terminal settlement and prevent an old close or context load from replacing a newer owner.",
+      "remainingRequired": [
+        "Original native owner/concurrency regressions and real Expo↔Expo, NativeScript↔NativeScript and mixed-engine invocations with three or more invocation IDs.",
+        "Cold/warm launch, reverse completion, duplicate URL, timeout, restored windows and iPad/iPhone UI/state evidence."
+      ],
+      "conditionalBoundary": "Legacy unsupported NativeScript VM concurrency still rejects safely; no arbitrary VM isolation claim.",
+      "newUnownedSourceProvenGap": false,
+      "asanaGID": "1220917858139541",
+      "asanaURL": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220917858139541",
+      "taskNotesSHA256": "6924fd6a407926f440f18bca5418efa0551139e62bcd5b80419fd89cc3a5aab9",
+      "taskModifiedAt": "2026-11-26T14:22:04.370Z"
+    },
+    {
+      "number": 7,
+      "topic": "Live Activities and Dynamic Island",
+      "codeStatus": "IMPLEMENTED_SOURCE_ACTIVITYKIT_AND_SYSTEM_SURFACE_ACCEPTANCE_PENDING",
+      "sourceGroups": [
+        "S01",
+        "S06"
+      ],
+      "sourceFinding": "Original Expo and NativeScript host APIs remain mapped to start/list/update/end, with seven Dynamic Island regions. Existing per-activity serial execution guards update/end ordering while allowing independent activities.",
+      "remainingRequired": [
+        "Actual ActivityKit original tests, multiple IDs/state revisions, cancellation/restoration and disabled behavior.",
+        "Lock-screen and all applicable Dynamic Island system screenshots on supported hardware, including buttons and deep links."
+      ],
+      "conditionalBoundary": "Remote APNs token/events and pushes are a separate required gate only when configured and provisioned; layout-node inspection is not system UI proof.",
+      "newUnownedSourceProvenGap": false,
+      "asanaGID": "1220918048685221",
+      "asanaURL": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220918048685221",
+      "taskNotesSHA256": "6002b154cfdf3ea7d9058a1f2cc648549fcbbc733049904b47beb5eacdaf65ea",
+      "taskModifiedAt": "2026-11-26T13:11:01.904Z"
+    },
+    {
+      "number": 8,
+      "topic": "Widget components, Refresh and native layout",
+      "codeStatus": "IMPLEMENTED_SOURCE_NATIVE_AND_SYSTEM_INTERACTION_ACCEPTANCE_PENDING",
+      "sourceGroups": [
+        "S03"
+      ],
+      "sourceFinding": "The actual original renderer retains native Button, Progress, Gauge, Chart, stacks, links and images. widgetRefresh:true uses WidgetReload, prepared refresh uses the existing declared reload action, and the responsive interactive matrix fixture is generated through the original SDK.",
+      "remainingRequired": [
+        "Original renderer/fixture native cases plus actual install/publish/picker, independent instances/configurations and edge values.",
+        "Home Screen actions and refresh, supported-family screenshots and accessible layout."
+      ],
+      "conditionalBoundary": "The existing widget-wave2 README maps supported original components/modifiers and limits; ordinary in-app modifiers are not automatically widget capabilities and exact refresh timing is not promised.",
+      "newUnownedSourceProvenGap": false,
+      "asanaGID": "1220917943178136",
+      "asanaURL": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220917943178136",
+      "taskNotesSHA256": "67316c169d220a4e99011b38f1b3e84ec9e535ee74e4e9fb630fe6f37a7a2ed1",
+      "taskModifiedAt": "2026-11-26T01:07:01.035Z"
+    },
+    {
+      "number": 9,
+      "topic": "Last successful widget content and recovery",
+      "codeStatus": "IMPLEMENTED_SOURCE_NATIVE_AND_SYSTEM_FAILURE_RECOVERY_PENDING",
+      "sourceGroups": [
+        "S05"
+      ],
+      "sourceFinding": "Prepared rendering and the original Expo timeline path use their respective existing stores, identity/namespace/generation/layout checks, atomic content hashes and qualified last successful content. Corrupt or superseded records cannot silently adopt unrelated legacy state; inactive or changed identities cannot reuse stale content.",
+      "remainingRequired": [
+        "Original native LKG/atomic-state regressions and real before/after system widget failure and recovery evidence.",
+        "Two installations sharing a public name, preserved user configuration, restart, missing/corrupt data, no network, repeated refresh and disabled/uninstalled behavior."
+      ],
+      "conditionalBoundary": "The task requires OS-respecting recovery, not a guaranteed refresh schedule; cloud cases remain conditional on an actually supported provider/container.",
+      "newUnownedSourceProvenGap": false,
+      "asanaGID": "1220917858139353",
+      "asanaURL": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220917858139353",
+      "taskNotesSHA256": "9093486238ee460c5343d25f190ec358012824bec5adaf617791c0ceebf5253d",
+      "taskModifiedAt": "2026-11-26T12:20:12.931Z"
+    },
+    {
+      "number": 10,
+      "topic": "Studio, folders, gallery, drawing and adaptive UI",
+      "codeStatus": "KNOWN_SOURCE_DEFECTS_FIXED_NATIVE_UI_AND_CONDITIONAL_PROVIDER_ACCEPTANCE_PENDING",
+      "sourceGroups": [
+        "S07",
+        "S08",
+        "S09"
+      ],
+      "sourceFinding": "The original TypeScript authoring service supplies completion/signature/help, with existing logs, font/theme, coordinated files, nested moves and gallery copies. Reviewed fixes preserve selected-document identity, stale-operation qualification and corrupt-draft recovery.74bd moves ubiquity-root work off the main actor and keeps open workspaces/drafts;5a22 makes stored project symbols authoritative while preserving defaults. Drawing uses original UIKit/ScriptWidget primitives.",
+      "remainingRequired": [
+        "The existing14 native Studio invocations plus actual import/edit/save/rename/theme/font/symbol and independently editable gallery install/run flows.",
+        "Applicable compact/expanded/windowed layouts, rotation, large text, Hebrew/RTL and actual device-specific qualification.",
+        "Original native image cases and real drawing/large-image/invalid-dimension behavior.",
+        "Conditional signed iCloud access, remote placeholder/download visibility, no-data-loss conflict handling and system Files tag preservation/edit workflow."
+      ],
+      "conditionalBoundary": "NSURLTagNamesKey is unavailable on iOS in the inspected installed SDK. Use public system document UI; first verify an accessible authored-project URL. Placeholder support is not claimed merely from configured entitlements. A standalone What's New screen, alternate application icons or bespoke Duo screen is not an automatically approved Task10 feature.",
+      "newUnownedSourceProvenGap": false,
+      "asanaGID": "1220917894278244",
+      "asanaURL": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220917894278244",
+      "taskNotesSHA256": "242cf4970560365c1eae5126dc71373ac6bed05d7d6ee6f95ae780e845268cf0",
+      "taskModifiedAt": "2026-11-26T14:55:38.440Z"
+    }
+  ],
+  "conditionalRemedies": [
+    {
+      "item": "iCloud remote placeholders/download/conflicts",
+      "condition": "Verify signed entitlement/container access in the original installed app first. Source declares CloudDocuments/CloudKit but this does not prove access or remote listing.",
+      "remedyIfReproduced": "Use existing workspace coordination/draft ownership with public ubiquity metadata/download APIs; preserve selected editor identity and dirty contents. No placeholder capability is claimed by this review."
+    },
+    {
+      "item": "Files tags",
+      "condition": "Use an actually accessible authored-project URL in public system document/Files UI and test tag retention over coordinated replacement, import/edit/export.",
+      "remedyIfReproduced": "Expose only an explicit user-selected project copy through the existing import/export architecture when needed; do not expose the runtime tree, add an unrelated File Provider extension, parse opaque tag data as a generic contract or use API_UNAVAILABLE(ios) NSURLTagNamesKey."
+    },
+    {
+      "item": "Duo/layout adaptation",
+      "condition": "Use actual applicable destinations or qualify only measured compact/expanded sizes.",
+      "remedyIfReproduced": "Fix concrete clipping/navigation in the current UI; no bespoke screen is inferred."
+    },
+    {
+      "item": "Widget Glass and remote ActivityKit push",
+      "condition": "Public widget-target availability and configured/provisioned APNs respectively.",
+      "remedyIfReproduced": "Retain the original engine and report unsupported/disabled states honestly; do not convert unverified support into a release claim."
+    }
+  ],
+  "comparisonOnly": [
+    "Standalone What's New screen",
+    "Alternate application icons (vendor note concerns Settings row icons)",
+    "Unvalidated raw inline JavaScript / second runtime",
+    "Arbitrary NativeScript VM isolation"
+  ],
+  "evidencePaths": [
+    "docs/miniapp-sdk/evidence/scriptable-wave2-20261126/CAPABILITY_MATRIX.md",
+    "docs/miniapp-sdk/evidence/scriptable-wave2-20261126/closure-981-and-task10/scriptable10-scope.json",
+    "docs/miniapp-sdk/evidence/scriptable-wave2-20261126/studio-cloud-root-20261126/configuration-and-api-boundary.json",
+    "docs/miniapp-sdk/evidence/scriptable-wave2-20261126/studio-project-symbol-20261126/source-receipt.json",
+    "docs/miniapp-sdk/evidence/scriptable-wave2-20261126/studio-project-symbol-20261126/portable-test-receipt.json",
+    "docs/two-wave-integration/20261126/shortcut-foreground/independent-foreground-review-a6eaf6ee.json",
+    "docs/two-wave-integration/20261126/shortcut-foreground/native-selectors.json",
+    "docs/miniapps/evidence/widget-wave2-20261126/README.md"
+  ]
+}
