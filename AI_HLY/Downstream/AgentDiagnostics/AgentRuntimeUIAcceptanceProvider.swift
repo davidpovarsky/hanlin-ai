@@ -1255,7 +1255,7 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
                 }
                 var token: Int32 = 0
                 let name = "com.itorah.hanlin.ui-acceptance.activity." + identifier.uuidString
-                guard notify_register_check(name, &token) == NOTIFY_STATUS_OK else {
+                guard notify_register_check(name, &token) == UInt32(NOTIFY_STATUS_OK) else {
                     self.client?.urlProtocol(self, didFailWithError: URLError(.cannotConnectToHost))
                     return
                 }
@@ -1276,7 +1276,7 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
                         try Task.checkCancellation()
                         guard !self.isStopped else { throw CancellationError() }
                         var acknowledged: UInt64 = 0
-                        guard notify_get_state(checkpointToken, &acknowledged) == NOTIFY_STATUS_OK else {
+                        guard notify_get_state(checkpointToken, &acknowledged) == UInt32(NOTIFY_STATUS_OK) else {
                             throw URLError(.cannotParseResponse)
                         }
                         if acknowledged >= phase { return }

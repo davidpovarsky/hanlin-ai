@@ -887,15 +887,15 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         let checkpointName = "com.itorah.hanlin.ui-acceptance.activity." + checkpointNonce
         var checkpointToken: Int32 = 0
         let checkpointRegistration = notify_register_check(checkpointName, &checkpointToken)
-        XCTAssertEqual(checkpointRegistration, NOTIFY_STATUS_OK)
-        guard checkpointRegistration == NOTIFY_STATUS_OK else { return }
+        XCTAssertEqual(checkpointRegistration, UInt32(NOTIFY_STATUS_OK))
+        guard checkpointRegistration == UInt32(NOTIFY_STATUS_OK) else { return }
         defer { notify_cancel(checkpointToken) }
-        XCTAssertEqual(notify_set_state(checkpointToken, 0), NOTIFY_STATUS_OK)
+        XCTAssertEqual(notify_set_state(checkpointToken, 0), UInt32(NOTIFY_STATUS_OK))
         func acknowledgeCheckpoint(_ phase: UInt64) {
             var previous: UInt64 = 0
-            XCTAssertEqual(notify_get_state(checkpointToken, &previous), NOTIFY_STATUS_OK)
+            XCTAssertEqual(notify_get_state(checkpointToken, &previous), UInt32(NOTIFY_STATUS_OK))
             XCTAssertEqual(previous, phase - 1, "Fixture phases must advance in order")
-            XCTAssertEqual(notify_set_state(checkpointToken, phase), NOTIFY_STATUS_OK)
+            XCTAssertEqual(notify_set_state(checkpointToken, phase), UInt32(NOTIFY_STATUS_OK))
             print("HANLIN_ACTIVITY_FIXTURE_ACK=\(phase) uptime=\(ProcessInfo.processInfo.systemUptime)")
         }
         let app = XCUIApplication()
