@@ -15,8 +15,11 @@ else:
 def family_for_selectors(selectors: str) -> str:
     ui = [s.strip().removesuffix("()") for s in selectors.split(",") if s.strip().startswith("AI_HLYUITests/")]
     compact = "AI_HLYUITests/HanlinMorphComposerUITests/testCompact"
-    if any(s.startswith(compact) for s in ui):
-        if not all(s.startswith(compact) for s in ui):
+    sidebar = "AI_HLYUITests/HanlinSidebarNavigationUITests"
+    def requires_compact(selector):
+        return selector.startswith(compact) or selector == sidebar or selector.startswith(sidebar + "/")
+    if any(requires_compact(s) for s in ui):
+        if not all(requires_compact(s) for s in ui):
             raise ValueError("Compact original-app UI methods require a separate narrow-device run")
         return "iPhone"
     return "iPad"

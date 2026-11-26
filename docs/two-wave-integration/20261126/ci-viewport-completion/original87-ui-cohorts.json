@@ -1,0 +1,86 @@
+{
+  "schema_version": 1,
+  "requested_selectors": [
+    "AI_HLYUITests/AgentRuntimeConversationUITests",
+    "AI_HLYUITests/HanlinComposerCapabilitiesUITests",
+    "AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests",
+    "AI_HLYUITests/HanlinExpoProductionE2ETests",
+    "AI_HLYUITests/HanlinMorphComposerUITests",
+    "AI_HLYUITests/HanlinNativeA2UIChatUITests",
+    "AI_HLYUITests/HanlinNativeScriptProductionE2ETests",
+    "AI_HLYUITests/HanlinRuntimeInstallationUITests/testRuntimeCenterEmbeddedRuntimesSmokeAndReadiness",
+    "AI_HLYUITests/HanlinScriptUIProductionE2ETests",
+    "AI_HLYUITests/HanlinSidebarNavigationUITests"
+  ],
+  "expanded_selectors": [
+    "AI_HLYUITests/AgentRuntimeConversationUITests",
+    "AI_HLYUITests/HanlinComposerCapabilitiesUITests",
+    "AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests",
+    "AI_HLYUITests/HanlinExpoProductionE2ETests",
+    "AI_HLYUITests/HanlinMorphComposerUITests/testLargeTextLongDraftFitsWithKeyboardAndAfterPalette",
+    "AI_HLYUITests/HanlinMorphComposerUITests/testDismissModelPickerKeepsSelectedModelAndDraft",
+    "AI_HLYUITests/HanlinMorphComposerUITests/testRTLToolChipKeepsLongDraftAndAccessibleLabel",
+    "AI_HLYUITests/HanlinMorphComposerUITests/testEnabledToolsChipOpensSettingsAndContextMenuDisables",
+    "AI_HLYUITests/HanlinMorphComposerUITests/testCompactNavigationKeepsDraft",
+    "AI_HLYUITests/HanlinMorphComposerUITests/testWideNavigationKeepsDraft",
+    "AI_HLYUITests/HanlinMorphComposerUITests/testCompactLargeTextWithAttachment",
+    "AI_HLYUITests/HanlinMorphComposerUITests/testParameterOverlayDismissesOnComposerBackground",
+    "AI_HLYUITests/HanlinNativeA2UIChatUITests",
+    "AI_HLYUITests/HanlinNativeScriptProductionE2ETests",
+    "AI_HLYUITests/HanlinRuntimeInstallationUITests/testRuntimeCenterEmbeddedRuntimesSmokeAndReadiness",
+    "AI_HLYUITests/HanlinScriptUIProductionE2ETests",
+    "AI_HLYUITests/HanlinSidebarNavigationUITests/testHistorySeparatesPinnedAndTodayWithoutDuplicatingChats",
+    "AI_HLYUITests/HanlinSidebarNavigationUITests/testHistoryRevealKeepsDraftAndOriginalProfileRoute",
+    "AI_HLYUITests/HanlinSidebarNavigationUITests/testPhysicalDragsAndReactivationKeepGestureConfigurationCurrent",
+    "AI_HLYUITests/HanlinSidebarNavigationUITests/testSearchSelectionAndNativeBackPreserveSeparateDrafts",
+    "AI_HLYUITests/HanlinSidebarNavigationUITests/testNativeHistoryRowSwipeRemainsAvailable",
+    "AI_HLYUITests/HanlinSidebarNavigationUITests/testHebrewHistoryKeepsPhysicalRevealAndMirroredControls"
+  ],
+  "cohorts": [
+    {
+      "id": "wide",
+      "family": "iPad",
+      "selectors": [
+        "AI_HLYUITests/AgentRuntimeConversationUITests",
+        "AI_HLYUITests/HanlinComposerCapabilitiesUITests",
+        "AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests",
+        "AI_HLYUITests/HanlinExpoProductionE2ETests",
+        "AI_HLYUITests/HanlinMorphComposerUITests/testLargeTextLongDraftFitsWithKeyboardAndAfterPalette",
+        "AI_HLYUITests/HanlinMorphComposerUITests/testDismissModelPickerKeepsSelectedModelAndDraft",
+        "AI_HLYUITests/HanlinMorphComposerUITests/testRTLToolChipKeepsLongDraftAndAccessibleLabel",
+        "AI_HLYUITests/HanlinMorphComposerUITests/testEnabledToolsChipOpensSettingsAndContextMenuDisables",
+        "AI_HLYUITests/HanlinMorphComposerUITests/testWideNavigationKeepsDraft",
+        "AI_HLYUITests/HanlinMorphComposerUITests/testParameterOverlayDismissesOnComposerBackground",
+        "AI_HLYUITests/HanlinNativeA2UIChatUITests",
+        "AI_HLYUITests/HanlinNativeScriptProductionE2ETests",
+        "AI_HLYUITests/HanlinRuntimeInstallationUITests/testRuntimeCenterEmbeddedRuntimesSmokeAndReadiness",
+        "AI_HLYUITests/HanlinScriptUIProductionE2ETests"
+      ],
+      "skip_selectors": [],
+      "results_file": "08-nativescript-production-ui-test-results.json",
+      "result_bundle": "NativeScriptProductionE2EResult.xcresult",
+      "log_file": "08-nativescript-production-ui-tests.log"
+    },
+    {
+      "id": "compact",
+      "family": "iPhone",
+      "selectors": [
+        "AI_HLYUITests/HanlinMorphComposerUITests/testCompactNavigationKeepsDraft",
+        "AI_HLYUITests/HanlinMorphComposerUITests/testCompactLargeTextWithAttachment",
+        "AI_HLYUITests/HanlinSidebarNavigationUITests/testHistorySeparatesPinnedAndTodayWithoutDuplicatingChats",
+        "AI_HLYUITests/HanlinSidebarNavigationUITests/testHistoryRevealKeepsDraftAndOriginalProfileRoute",
+        "AI_HLYUITests/HanlinSidebarNavigationUITests/testPhysicalDragsAndReactivationKeepGestureConfigurationCurrent",
+        "AI_HLYUITests/HanlinSidebarNavigationUITests/testSearchSelectionAndNativeBackPreserveSeparateDrafts",
+        "AI_HLYUITests/HanlinSidebarNavigationUITests/testNativeHistoryRowSwipeRemainsAvailable",
+        "AI_HLYUITests/HanlinSidebarNavigationUITests/testHebrewHistoryKeepsPhysicalRevealAndMirroredControls"
+      ],
+      "skip_selectors": [],
+      "results_file": "08-compact-ui-test-results.json",
+      "result_bundle": "CompactUITestsResult.xcresult",
+      "log_file": "08-compact-ui-tests.log"
+    }
+  ],
+  "application_builds_planned": 1,
+  "boundary": "Original app UI only; does not satisfy paired-product acceptance",
+  "profile_sha256": "396026ec3818d35bc715156afa0a52fd20e16a523279021b225739e9ed99333a"
+}

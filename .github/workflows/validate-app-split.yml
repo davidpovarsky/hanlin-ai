@@ -360,6 +360,7 @@ jobs:
             miniapp_cli_root="$(mktemp -d "$RUNNER_TEMP/hanlin-cli-preflight.XXXXXX")"
             mkdir -p "$miniapp_cli_root/Tests"
             cp "$host_root/miniapp-authoring.mjs" "$miniapp_cli_root/"
+            cp "$host_root/miniapp-assistant-tools.mjs" "$miniapp_cli_root/"
             cp "$host_root/Tests/miniapp-authoring.test.mjs" "$miniapp_cli_root/Tests/"
             ln -s "$host_root/node_modules" "$miniapp_cli_root/node_modules"
             (cd "$miniapp_cli_root"

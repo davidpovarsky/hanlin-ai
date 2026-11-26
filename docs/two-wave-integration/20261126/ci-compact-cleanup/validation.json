@@ -1,0 +1,154 @@
+{
+  "base_sha": "42cd05172136bed9878b1033a63904bb3c17a99b",
+  "scope": "only the newly created ui-compact cohort; no native selector/assertion changes",
+  "unit_command": [
+    "/usr/bin/python3",
+    "-m",
+    "unittest",
+    "Scripts.CI.Tests.test_owned_simulator_receipts",
+    "-v"
+  ],
+  "unit_exit_code": 0,
+  "workflow_parse": "PASS",
+  "all_original_workflow_steps_equal": true,
+  "cleanup_bash_syntax": "PASS",
+  "cleanup_python_compile": "PASS",
+  "workflow_scenarios": [
+    {
+      "case": "never_booted",
+      "exit_code": 0,
+      "receipt": {
+        "schema_version": 1,
+        "scope": "ui-compact",
+        "status": "DELETED",
+        "commands": [
+          {
+            "command": [
+              "xcrun",
+              "simctl",
+              "shutdown",
+              "11111111-2222-3333-4444-555555555555"
+            ],
+            "exit_code": 149,
+            "timeout_seconds": 30.0,
+            "output": "09-cleanup-shutdown.log"
+          },
+          {
+            "command": [
+              "xcrun",
+              "simctl",
+              "delete",
+              "11111111-2222-3333-4444-555555555555"
+            ],
+            "exit_code": 0,
+            "timeout_seconds": 30.0,
+            "output": "09-cleanup-delete.log"
+          }
+        ],
+        "ownership": {
+          "simulator": "11111111-2222-3333-4444-555555555555",
+          "run_provider": "github",
+          "run_id": "44385752088",
+          "run_attempt": "2",
+          "selection_sha256": "01f09105b11cde10b04077c0facdade1a9b3cd87d463eb24c1e311e33b73b027"
+        }
+      },
+      "observed_commands": [
+        [
+          "xcrun",
+          "simctl",
+          "shutdown",
+          "11111111-2222-3333-4444-555555555555"
+        ],
+        [
+          "xcrun",
+          "simctl",
+          "delete",
+          "11111111-2222-3333-4444-555555555555"
+        ]
+      ]
+    },
+    {
+      "case": "wrong_uuid",
+      "exit_code": "Compact simulator cleanup refused: creation ownership is not verified",
+      "receipt": {
+        "schema_version": 1,
+        "scope": "ui-compact",
+        "status": "REFUSED_UNVERIFIED",
+        "commands": [],
+        "error": "Live credentials require this run's freshly created simulator"
+      },
+      "observed_commands": []
+    },
+    {
+      "case": "delete_timeout",
+      "exit_code": 1,
+      "receipt": {
+        "schema_version": 1,
+        "scope": "ui-compact",
+        "status": "DELETE_FAILED",
+        "commands": [
+          {
+            "command": [
+              "xcrun",
+              "simctl",
+              "shutdown",
+              "11111111-2222-3333-4444-555555555555"
+            ],
+            "exit_code": 149,
+            "timeout_seconds": 30.0,
+            "output": "09-cleanup-shutdown.log"
+          },
+          {
+            "command": [
+              "xcrun",
+              "simctl",
+              "delete",
+              "11111111-2222-3333-4444-555555555555"
+            ],
+            "exit_code": 124,
+            "timeout_seconds": 30.0,
+            "output": "09-cleanup-delete.log"
+          }
+        ],
+        "ownership": {
+          "simulator": "11111111-2222-3333-4444-555555555555",
+          "run_provider": "github",
+          "run_id": "44385752088",
+          "run_attempt": "2",
+          "selection_sha256": "01f09105b11cde10b04077c0facdade1a9b3cd87d463eb24c1e311e33b73b027"
+        }
+      },
+      "observed_commands": [
+        [
+          "xcrun",
+          "simctl",
+          "shutdown",
+          "11111111-2222-3333-4444-555555555555"
+        ],
+        [
+          "xcrun",
+          "simctl",
+          "delete",
+          "11111111-2222-3333-4444-555555555555"
+        ]
+      ]
+    }
+  ],
+  "preserved": {
+    "Scripts/CI/owned_simulator_receipts.py": {
+      "original_functions_byte_identical": 13,
+      "changed": []
+    },
+    "Scripts/CI/Tests/test_owned_simulator_receipts.py": {
+      "original_functions_byte_identical": 23,
+      "changed": []
+    }
+  },
+  "source_sha256": {
+    ".github/workflows/build-ios26-unsigned-ipa.yml": "d82289d5fc545302ad4ff45d447247b1c6ae82dd96e1b6dc4915d537fbf269ac",
+    "Scripts/CI/owned_simulator_receipts.py": "3491c9c855aefd6e2bb5f5640eee8559d63f03cf0cbd68ab5cb79cd986a246fd",
+    "Scripts/CI/Tests/test_owned_simulator_receipts.py": "51b0f17aaefb1585995fc2ce579c4848ee0553d4a72b12a23ce439de2e4a47b7"
+  },
+  "native_execution": "NOT_RUN; portable workflow guard/receipt checks only"
+}

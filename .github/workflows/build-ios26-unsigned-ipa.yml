@@ -2671,7 +2671,11 @@ jobs:
           APP_PATH="$(cat "$LOG_DIR/app-path.txt")"
           BUNDLE_ID="$(/usr/libexec/PlistBuddy -c 'Print CFBundleIdentifier' "$APP_PATH/Info.plist")"
           APP_EXECUTABLE="$(/usr/libexec/PlistBuddy -c 'Print CFBundleExecutable' "$APP_PATH/Info.plist")"
-          selection="$(python3 Scripts/CI/select_installed_simulator.py --output "$LOG_DIR/verified-simulator-environment.json" --selectors "${SIMULATOR_UI_FILTER:-}" --create-owned "Hanlin-Phase2-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" --tsv)"
+          ui_plan_selectors="${SIMULATOR_UI_FILTER:-}"
+          if [ "$RUN_FULL_VALIDATION" = "true" ]; then ui_plan_selectors="AI_HLYUITests"; fi
+          primary_ui_selectors="$(python3 Scripts/CI/ui_viewport_cohorts.py plan \
+            --selectors "$ui_plan_selectors" --output "$LOG_DIR/ui-viewport-plan.json" --primary)"
+          selection="$(python3 Scripts/CI/select_installed_simulator.py --output "$LOG_DIR/verified-simulator-environment.json" --selectors "$primary_ui_selectors" --create-owned "Hanlin-Phase2-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" --tsv)"
           IFS=$'\t' read -r SIMULATOR_UDID SIMULATOR_MODEL SIMULATOR_RUNTIME <<< "$selection"
           test -n "$SIMULATOR_UDID"
           printf '%s\n' "$SIMULATOR_UDID" > "$LOG_DIR/simulator-udid.txt"
@@ -2870,21 +2874,68 @@ jobs:
             fi
 
             if [ "$FAST_VALIDATION_ONLY" != "true" ] && { [ "$RUN_SIMULATOR_TARGETED_UI" = "true" ] || [ "$RUN_FULL_VALIDATION" = "true" ]; } && { [ -n "${SIMULATOR_UI_FILTER:-}" ] || [ "$RUN_FULL_VALIDATION" = "true" ]; }; then
-              rm -rf "$LOG_DIR/NativeScriptProductionE2EResult.xcresult"
+              original_ui_simulator="$SIMULATOR_UDID"
+              ui_xctestrun="$(python3 Scripts/CI/ui_viewport_cohorts.py products \
+                --derived-data "$DERIVED_DATA_PATH" --admitted-manifest "${unit_xctestrun:-}" \
+                --output "$LOG_DIR/ui-products-before-cohorts.json")"
+              python3 Scripts/CI/ui_viewport_cohorts.py rows --plan "$LOG_DIR/ui-viewport-plan.json" \
+                > "$LOG_DIR/ui-viewport-cohorts.tsv"
+              ui_cohort_index=0
+              while IFS=$'\t' read -r cohort_id cohort_family cohort_selectors cohort_skip cohort_results cohort_bundle cohort_log; do
+                if [ "$ui_cohort_index" -gt 0 ]; then
+                  cohort_directory="$LOG_DIR/ui-$cohort_id"
+                  mkdir -p "$cohort_directory"
+                  # Keep the original job identity and a separate UUID/ownership receipt.
+                  # The native create readback, not a shared name lookup, owns this device.
+                  selection="$(python3 Scripts/CI/select_installed_simulator.py \
+                    --output "$cohort_directory/verified-simulator-environment.json" \
+                    --selectors "$cohort_selectors" --family "$cohort_family" \
+                    --create-owned "Hanlin-Phase2-${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}" --tsv)"
+                  IFS=$'\t' read -r SIMULATOR_UDID _ _ <<< "$selection"
+                  printf '%s\n' "$SIMULATOR_UDID" > "$cohort_directory/simulator-udid.txt"
+                  python3 - "$SIMULATOR_UDID" "$cohort_directory" <<'PY'
+          from pathlib import Path
+          import sys
+          from Scripts.CI.stage_simulator_fixtures import BOOT_TIMEOUT_SECONDS, run_bounded
+          from Scripts.CI.owned_simulator_receipts import record_owned_boot
+          simulator, log = sys.argv[1], Path(sys.argv[2])
+          run_bounded(["xcrun", "simctl", "boot", simulator], timeout_seconds=15.0)
+          result = run_bounded(["xcrun", "simctl", "bootstatus", simulator, "-b"],
+                               timeout_seconds=BOOT_TIMEOUT_SECONDS)
+          (log / "bootstatus.log").write_text(result.stdout + result.stderr)
+          if result.returncode:
+              raise SystemExit("Owned compact simulator did not finish booting")
+          record_owned_boot(log, simulator, result)
+          PY
+                fi
+                if [ "$ui_cohort_index" -eq 0 ]; then
+                  cohort_native_log="08-nativescript-production.log"
+                  cohort_capture_status="08-nativescript-log-capture-status.txt"
+                  cohort_duration="08-nativescript-production-ui-tests-duration-seconds.txt"
+                else
+                  cohort_native_log="08-$cohort_id-production.log"
+                  cohort_capture_status="08-$cohort_id-log-capture-status.txt"
+                  cohort_duration="08-$cohort_id-ui-duration-seconds.txt"
+                fi
+                rm -rf "$LOG_DIR/$cohort_bundle"
               nativescript_e2e_started_at="$(date +%s)"
               set +e
               ui_test_args=()
-              IFS=',' read -ra UI_SUITES <<< "${SIMULATOR_UI_FILTER:-AI_HLYUITests}"
+              IFS=',' read -ra UI_SUITES <<< "$cohort_selectors"
               for suite in "${UI_SUITES[@]}"; do
                 suite="$(echo "$suite" | xargs)"
                 if [ -n "$suite" ]; then
                   ui_test_args+=("-only-testing:$suite")
                 fi
               done
+              if [ "$cohort_skip" != "-" ]; then
+                IFS=',' read -ra UI_SKIP_SUITES <<< "$cohort_skip"
+                for suite in "${UI_SKIP_SUITES[@]}"; do ui_test_args+=("-skip-testing:$suite"); done
+              fi
               # Preserve successful model motion evidence too, not just XCTest
               # failure recordings. Scope this capture to the explicitly selected test.
               model_video_pid=""
-              if [[ "${SIMULATOR_UI_FILTER:-}" == *"testModelPopover"* ]]; then
+              if [[ "$cohort_selectors" == *"testModelPopover"* ]]; then
                 python3 -c 'import json,time; print(json.dumps({"recording_requested_at": time.time()}))' \
                   > "$LOG_DIR/model-popover-video-time.json"
                 xcrun simctl io "$SIMULATOR_UDID" recordVideo --codec=h264 "$LOG_DIR/model-popover-motion.mp4" \
@@ -2903,24 +2954,20 @@ jobs:
               # The measured nine-phase ScriptUI install/relaunch/disable/uninstall
               # journey was still advancing at 371s when the old 300s cap killed
               # it. Keep this longer lifecycle obligation intact and bounded.
-              if [[ "${SIMULATOR_UI_FILTER:-}" == *"HanlinScriptUIProductionE2ETests"* ]] || [ "$RUN_FULL_VALIDATION" = "true" ]; then
+              if [[ "$cohort_selectors" == *"HanlinScriptUIProductionE2ETests"* ]] || [ "$RUN_FULL_VALIDATION" = "true" ]; then
                 ui_time_allowance=600
               fi
               xcodebuild test-without-building \
-              -project "$PROJECT_PATH" \
-              -scheme "$SCHEME_NAME" \
-              -configuration "$CONFIGURATION" \
+              -xctestrun "$ui_xctestrun" \
               -destination "platform=iOS Simulator,id=$SIMULATOR_UDID" \
-              -derivedDataPath "$DERIVED_DATA_PATH" \
-              -clonedSourcePackagesDirPath "$CLONED_PACKAGES_PATH" \
-              -resultBundlePath "$LOG_DIR/NativeScriptProductionE2EResult.xcresult" \
+              -resultBundlePath "$LOG_DIR/$cohort_bundle" \
               -skipPackagePluginValidation \
               -skipMacroValidation \
               -test-timeouts-enabled YES \
               -maximum-test-execution-time-allowance "$ui_time_allowance" \
               "${ui_test_args[@]}" \
-              2>&1 | tee "$LOG_DIR/08-nativescript-production-ui-tests.log"
-              nativescript_e2e_status="${PIPESTATUS[0]}"
+              2>&1 | tee "$LOG_DIR/$cohort_log"
+              cohort_test_status="${PIPESTATUS[0]}"
               if [ -n "$model_video_pid" ]; then
                 kill -INT "$model_video_pid" 2>/dev/null || true
                 wait "$model_video_pid" || true
@@ -2931,34 +2978,51 @@ jobs:
                 exit 1
               fi
               test_duration_seconds="$(( $(date +%s) - nativescript_e2e_started_at ))"
-              echo "$test_duration_seconds" > "$LOG_DIR/08-nativescript-production-ui-tests-duration-seconds.txt"
+              echo "$test_duration_seconds" > "$LOG_DIR/$cohort_duration"
               log_window_minutes=$(( (test_duration_seconds + 120) / 60 ))
               if [ "$log_window_minutes" -lt 5 ]; then
                 log_window_minutes=5
               fi
               # Preserve actual test results before optional simulator diagnostics.
               xcrun xcresulttool get test-results tests \
-                --path "$LOG_DIR/NativeScriptProductionE2EResult.xcresult" \
-                --format json 2>&1 | tee "$LOG_DIR/08-nativescript-production-ui-test-results.json" || true
-              python3 - "$SIMULATOR_UDID" "$APP_EXECUTABLE" "$log_window_minutes" <<'PY'
+                --path "$LOG_DIR/$cohort_bundle" \
+                --format json 2>&1 | tee "$LOG_DIR/$cohort_results" || true
+              python3 - "$SIMULATOR_UDID" "$APP_EXECUTABLE" "$log_window_minutes" "$cohort_native_log" "$cohort_capture_status" <<'PY'
           import os
           from pathlib import Path
           import sys
           from Scripts.CI.stage_simulator_fixtures import run_bounded
           result = run_bounded(["xcrun", "simctl", "spawn", sys.argv[1], "log", "show",
               "--style", "compact", "--last", sys.argv[3] + "m", "--predicate", "process == '" + sys.argv[2] + "'"], timeout_seconds=20.0)
-          Path(os.environ["LOG_DIR"], "08-nativescript-production.log").write_text(result.stdout + result.stderr, encoding="utf-8")
-          Path(os.environ["LOG_DIR"], "08-nativescript-log-capture-status.txt").write_text(str(result.returncode) + "\n", encoding="utf-8")
+          Path(os.environ["LOG_DIR"], sys.argv[4]).write_text(result.stdout + result.stderr, encoding="utf-8")
+          Path(os.environ["LOG_DIR"], sys.argv[5]).write_text(str(result.returncode) + "\n", encoding="utf-8")
           PY
               if ! python3 Scripts/CI/verify_selected_tests.py \
-                --results "$LOG_DIR/08-nativescript-production-ui-test-results.json" \
-                --selectors "${SIMULATOR_UI_FILTER:-AI_HLYUITests}"; then
+                --results "$LOG_DIR/$cohort_results" \
+                --selectors "$cohort_selectors"; then
+                cohort_test_status=65
+              fi
+              if [ "$cohort_test_status" -eq 0 ]; then
+                if ! python3 Scripts/CI/verify_nativescript_test_log.py \
+                  --log "$LOG_DIR/$cohort_native_log" \
+                  --selectors "$cohort_selectors"; then
+                  cohort_test_status=65
+                fi
+              fi
+              printf '%s\n' "$cohort_test_status" > "$LOG_DIR/08-$cohort_id-ui-exit-status.txt"
+              if [ "$cohort_test_status" -ne 0 ]; then nativescript_e2e_status="$cohort_test_status"; fi
+              ui_cohort_index=$(( ui_cohort_index + 1 ))
+              done < "$LOG_DIR/ui-viewport-cohorts.tsv"
+              SIMULATOR_UDID="$original_ui_simulator"
+              if ! python3 Scripts/CI/ui_viewport_cohorts.py products \
+                --derived-data "$DERIVED_DATA_PATH" --admitted-manifest "$ui_xctestrun" \
+                --output "$LOG_DIR/ui-products-after-cohorts.json" \
+                --match "$LOG_DIR/ui-products-before-cohorts.json" > "$LOG_DIR/ui-products-recheck.log"; then
                 nativescript_e2e_status=65
               fi
-              if [ "$nativescript_e2e_status" -eq 0 ]; then
-                python3 Scripts/CI/verify_nativescript_test_log.py \
-                  --log "$LOG_DIR/08-nativescript-production.log" \
-                  --selectors "${SIMULATOR_UI_FILTER:-AI_HLYUITests}"
+              if ! python3 Scripts/CI/ui_viewport_cohorts.py verify --plan "$LOG_DIR/ui-viewport-plan.json" \
+                --log-dir "$LOG_DIR" --output "$LOG_DIR/ui-viewport-coverage.json"; then
+                nativescript_e2e_status=65
               fi
             else
               printf '%s\n' "NativeScript production UI tests skipped by affected-validation router." > "$LOG_DIR/08-nativescript-production-ui-tests-skipped.txt"
@@ -3454,6 +3518,54 @@ jobs:
               fi
             done
           fi
+
+      - name: Clean up the owned compact UI simulator
+        if: ${{ always() }}
+        timeout-minutes: 2
+        run: |
+          if [ ! -d "$LOG_DIR/ui-compact" ]; then
+            exit 0
+          fi
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+          from Scripts.CI.owned_simulator_receipts import verify_owned_simulator_creation
+          from Scripts.CI.stage_simulator_fixtures import run_bounded
+
+          log = Path(os.environ["LOG_DIR"]) / "ui-compact"
+          path = log / "09-owned-simulator-cleanup.json"
+          receipt = {"schema_version": 1, "scope": "ui-compact",
+                     "status": "REFUSED_UNVERIFIED", "commands": []}
+          try:
+              owner = verify_owned_simulator_creation(
+                  log, os.environ.get("GITHUB_RUN_ID"), os.environ.get("GITHUB_RUN_ATTEMPT"))
+          except (OSError, ValueError, RuntimeError, KeyError, TypeError) as error:
+              receipt["error"] = str(error)
+              path.write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
+              raise SystemExit("Compact simulator cleanup refused: creation ownership is not verified")
+          receipt.update({"ownership": owner, "status": "CLEANING"})
+          path.write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
+          for operation in ("shutdown", "delete"):
+              command = ["xcrun", "simctl", operation, owner["simulator"]]
+              output = log / ("09-cleanup-" + operation + ".log")
+              try:
+                  result = run_bounded(command, timeout_seconds=30.0)
+                  output.write_text(result.stdout + result.stderr, encoding="utf-8")
+                  exit_code = result.returncode
+              except OSError as error:
+                  output.write_text(str(error) + "\n", encoding="utf-8")
+                  exit_code = 127
+              receipt["commands"].append({"command": command, "exit_code": exit_code,
+                                          "timeout_seconds": 30.0, "output": output.name})
+              path.write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
+          # An already-shutdown device may reject shutdown; retain that raw
+          # status while independently checking the exact owned UUID's delete.
+          deleted = receipt["commands"][-1]["exit_code"] == 0
+          receipt["status"] = "DELETED" if deleted else "DELETE_FAILED"
+          path.write_text(json.dumps(receipt, indent=2) + "\n", encoding="utf-8")
+          raise SystemExit(0 if deleted else 1)
+          PY
 
       - name: Upload simulator smoke evidence
         if: ${{ always() && !(inputs.target_validation_group == 'exact_test_selector' && inputs.exact_test_selector == 'AI_HLYUITests/AgentRuntimeConversationUITests/testLiveGeminiPythonConsentAndColdReopen') }}

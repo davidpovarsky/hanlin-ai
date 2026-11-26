@@ -141,6 +141,15 @@ def _selection(log, simulator, run_id, run_attempt, *, run_provider="github"):
                               identity["name"], run_provider=run_provider)
 
 
+def verify_owned_simulator_creation(log, run_id, run_attempt, *, run_provider="github"):
+    """Validate creation ownership for cleanup even if this device never booted."""
+    log = Path(log)
+    simulator = _uuid((log / "simulator-udid.txt").read_text(encoding="utf-8").strip())
+    _, digest = _selection(log, simulator, run_id, run_attempt, run_provider=run_provider)
+    return {"simulator": simulator, "run_provider": run_provider,
+            "run_id": run_id, "run_attempt": run_attempt, "selection_sha256": digest}
+
+
 def verify_owned_motion_creation(path, simulator, run_id, run_attempt, *, run_provider="github"):
     """Validate the original Motion create receipt before touching its UUID."""
     identity = motion_run_identity(run_id, run_attempt, run_provider)

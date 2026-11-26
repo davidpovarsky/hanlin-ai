@@ -1,0 +1,20 @@
+{
+  "command": [
+    "runuser",
+    "-u",
+    "chatgpt-agent",
+    "--",
+    "python3",
+    "-m",
+    "unittest",
+    "Scripts.CI.Tests.test_ui_viewport_cohorts",
+    "Scripts.CI.Tests.test_stable_xcode_selection.StableEnvironmentTests.test_compact_selectors_require_a_real_narrow_device_and_cannot_mix_wide_ui",
+    "Scripts.CI.Tests.test_stable_xcode_selection.StableEnvironmentTests.test_explicit_narrow_family_does_not_select_a_wide_ipad",
+    "Scripts.CI.Tests.test_stable_xcode_selection.StableEnvironmentTests.test_parallel_iphone_runtime_does_not_make_valid_ipad_selection_ambiguous",
+    "Scripts.CI.Tests.test_stable_xcode_selection.StableEnvironmentTests.test_owned_renamed_device_reuse_preserves_exact_hardware_runtime_and_identity",
+    "Scripts.CI.Tests.test_cache_and_ci_optimization"
+  ],
+  "exit": 0,
+  "stdout": "XCODE_CACHE_INPUTS capture files=1 directories=0 head=abc1234\nXCODE_CACHE_INPUTS restore status=complete restored=0 changed=1 missing=0 invalid=0 directoriesRestored=0 directoriesChanged=0 directoriesMissing=0 directoriesInvalid=0 head=abc1234\n[stage_modular_headers] Performing staging (force=False, inputs_hash=c02ecf74cc9164b2...)\n[stage_modular_headers] Completed staging in 0.0008s. 0 file(s) updated. Stamp written: c02ecf74cc9164b2...\n[stage_modular_headers] Exact stamp hit (c02ecf74cc9164b2...). Verified in 0.0003s. Staging skipped.\n[stage_modular_headers] Performing staging (force=False, inputs_hash=ac4192082ce64638...)\n[stage_modular_headers] Completed staging in 0.0005s. 0 file(s) updated. Stamp written: ac4192082ce64638...\n[stage_modular_headers] Performing staging (force=False, inputs_hash=dff0e0470c15abae...)\n[stage_modular_headers] Completed staging in 0.0008s. 0 file(s) updated. Stamp written: dff0e0470c15abae...\n[stage_simulator_fixtures] Verifying simulator boot state for SIM_UDID...\n[stage_simulator_fixtures] Verifying simulator boot state for SIM_UDID...\n[stage_simulator_fixtures] Installing TestApp.app...\n[stage_simulator_fixtures] Verifying simulator boot state for SIM_UDID...\n[stage_simulator_fixtures] Verifying simulator boot state for SIM_UDID...\n[stage_simulator_fixtures] Probing Files container (com.apple.DocumentsApp) with 5s timeout (optional)...\n[stage_simulator_fixtures] Successfully staged 1 fixtures into app container (0 into Files container).\n[stage_modular_headers] Performing staging (force=False, inputs_hash=c02ecf74cc9164b2...)\n[stage_modular_headers] Completed staging in 0.0157s. 33 file(s) updated. Stamp written: c02ecf74cc9164b2...\n[stage_modular_headers] Exact stamp hit (c02ecf74cc9164b2...). Verified in 0.0009s. Staging skipped.\n[stage_modular_headers] Performing staging (force=False, inputs_hash=c02ecf74cc9164b2...)\n[stage_modular_headers] Completed staging in 0.0154s. 32 file(s) updated. Stamp written: c02ecf74cc9164b2...\n[stage_modular_headers] Performing staging (force=False, inputs_hash=c02ecf74cc9164b2...)\n[stage_modular_headers] Completed staging in 0.0157s. 32 file(s) updated. Stamp written: c02ecf74cc9164b2...\n",
+  "stderr": ".....................[generate_performance_report] Error: Required measurements were incomplete.\n....................[stage_simulator_fixtures] Command execution timed out after 0.2s: /usr/bin/python3 -c import time; time.sleep(5)\n....[stage_simulator_fixtures] Fatal: Could not resolve app container for bundle com.test.app: No container\n.[stage_simulator_fixtures] Fatal: simctl install failed with code 1: Device not ready\n.[stage_simulator_fixtures] Fatal: Simulator bootstatus failed with code 1: Boot timed out\n....\n----------------------------------------------------------------------\nRan 51 tests in 0.767s\n\nOK\n"
+}
