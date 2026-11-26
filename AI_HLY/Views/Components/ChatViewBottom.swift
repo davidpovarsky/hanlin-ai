@@ -220,6 +220,34 @@ struct HanlinCanvasPresentation: Identifiable {
     }
 }
 
+/// The original control is shared by the transcript overlay and the canvas row.
+/// Its host must contain its hit region; drawing above a sibling composer with a
+/// negative offset can leave a visible, accessible button outside that host.
+struct HanlinFollowLatestButton: View {
+    let isTemporaryRecord: Bool
+    let action: () -> Void
+    @ScaledMetric(relativeTo: .body) private var fontSize: CGFloat = 16
+
+    var body: some View {
+        Button(action: action) {
+            Image(systemName: "arrow.down")
+                .font(HanlinTypography.fixed(size: fontSize, weight: .medium))
+                .foregroundColor(isTemporaryRecord ? .primary : .hanlinHLBluefont)
+                .frame(width: 36, height: 36)
+                .clipShape(Circle())
+                .background(
+                    GlassView(style: .systemUltraThinMaterial)
+                        .clipShape(Circle())
+                        .shadow(color: isTemporaryRecord ? .primary : .hanlinHLBlue, radius: 1)
+                )
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(Text("Scroll to latest message", bundle: HanlinLocalization.bundle))
+        .accessibilityIdentifier("hanlin-chat-follow-latest")
+        .transition(.move(edge: .bottom).combined(with: .opacity))
+    }
+}
+
 struct ChatViewBottom: View {
     var chatRecord: ChatRecords
     let modelTemp: [AllModels]
@@ -417,13 +445,6 @@ struct ChatViewBottom: View {
             // 多选模式工具栏 + 底部输入面板
             buildMultiSelectAndInputControls()
         }
-        .overlay(alignment: .topTrailing) {
-            if showScrollToBottomButton && chatRecord.canvas?.content.isEmpty != false && !isMultiSelectMode {
-                followLatestButton
-                    .padding(.trailing, 15)
-                    .offset(y: -(buttonHeight + 8))
-            }
-        }
         .sheet(item: $canvasPresentation) { presentation in
             AICanvasView(
                 canvas: Binding(
@@ -600,22 +621,9 @@ struct ChatViewBottom: View {
     }
 
     private var followLatestButton: some View {
-        Button(action: { needScrollToBottomButton.toggle() }) {
-            Image(systemName: "arrow.down")
-                .font(HanlinTypography.fixed(size: size_16, weight: .medium))
-                .foregroundColor(TemporaryRecord ? .primary : .hanlinHLBluefont)
-                .frame(width: buttonHeight, height: buttonHeight)
-                .clipShape(Circle())
-                .background(
-                    GlassView(style: .systemUltraThinMaterial)
-                        .clipShape(Circle())
-                        .shadow(color: TemporaryRecord ? .primary : .hanlinHLBlue, radius: 1)
-                )
+        HanlinFollowLatestButton(isTemporaryRecord: TemporaryRecord) {
+            needScrollToBottomButton.toggle()
         }
-        .buttonStyle(.plain)
-        .accessibilityLabel(Text("Scroll to latest message", bundle: HanlinLocalization.bundle))
-        .accessibilityIdentifier("hanlin-chat-follow-latest")
-        .transition(.move(edge: .bottom).combined(with: .opacity))
         .animation(.spring(response: 0.5, dampingFraction: 0.7), value: showScrollToBottomButton)
     }
 

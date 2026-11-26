@@ -190,6 +190,7 @@ struct ChatView: View {
         var conversationID: UUID?
         var initialSamples = 0
         var significantSamples = 0
+        var boundarySamples = 0
     }
     @State private var scrollGeometryDiagnostics = ScrollGeometryDiagnostics()
     #endif
@@ -486,6 +487,30 @@ struct ChatView: View {
         }
     }
 
+    private var floatingFollowLatestBottomInset: CGFloat {
+        // Compact workspaces give the transcript its own viewport (overlap 0).
+        // Overlaid composers and SDK hosts already provide their actual overlap.
+        let overlap = isExternalCompactComposerHost
+            ? (externalComposerBottomInset ?? externalDockHeight)
+            : measuredComposerHeight
+        return (overlap.isFinite ? max(0, overlap) : 0) + 8
+    }
+
+    private var floatingFollowLatestControl: some View {
+        Group {
+            if showScrollToBottomButton && chatRecord.canvas?.content.isEmpty != false && !isMultiSelectMode {
+                HanlinFollowLatestButton(isTemporaryRecord: TemporaryRecord) {
+                    needScrollToBottomButton.toggle()
+                }
+                .padding(.trailing, 15)
+                .padding(.bottom, floatingFollowLatestBottomInset)
+            }
+        }
+        // Animate this overlay only; its visibility cannot resize the composer
+        // or animate the transcript's lazy content measurements.
+        .animation(.spring(response: 0.5, dampingFraction: 0.7), value: showScrollToBottomButton)
+    }
+
     private var canonicalChatWorkspace: some View {
         Group {
             if surface == .composer {
@@ -495,6 +520,9 @@ struct ChatView: View {
                                showsComposerBackdrop: !isExternalCompactComposerHost) {
                     ScrollViewReader { scrollViewProxy in
                         buildScrollContent(scrollViewProxy).padding(.bottom, 6)
+                            .overlay(alignment: .bottomTrailing) {
+                                floatingFollowLatestControl
+                            }
                     }
                     // A reader may retain a pending scroll context until its native
                     // scroll view attaches. Never carry that context to another chat.
@@ -1130,6 +1158,7 @@ struct ChatView: View {
                 loadMoreMessages()
             }
             .onChange(of: needScrollToBottomButton) {
+                traceAutoFollowPosition("jump-request", significant: true)
                 cancelSourceScroll()
                 autoFollowController.resumeFollowing()
                 scheduleAutoFollow(using: scrollViewProxy, animated: true, force: true)
@@ -1323,8 +1352,14 @@ struct ChatView: View {
             diagnostics.conversationID = effectiveChatSessionID
             diagnostics.initialSamples = 0
             diagnostics.significantSamples = 0
+            diagnostics.boundarySamples = 0
         }
-        if significant {
+        // Fast gesture samples must not consume the evidence for an actual
+        // button request, admitted scroll, or settled native position.
+        if source != "geometry" {
+            guard diagnostics.boundarySamples < 48 else { return }
+            diagnostics.boundarySamples += 1
+        } else if significant {
             guard diagnostics.significantSamples < 64 else { return }
             diagnostics.significantSamples += 1
         } else {
