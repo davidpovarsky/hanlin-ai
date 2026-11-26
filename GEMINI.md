@@ -1,5 +1,7 @@
 # Antigravity Project Instructions
 
+The current Hanlin two-wave execution is governed by root `AGENTS.md` and the dated execution note in `docs/ai-team/TEAM.md`: the owner explicitly requested ChatGPT built-in agents. Apply the actual platform API and invocation identifiers; preserve evidence-based acceptance and existing authorization.
+
 This repository is configured for the persistent named AI team across Antigravity and Codex:
 - **איתן (eitan)**: Architecture
 - **נועם (noam)**: Engineering
@@ -8,6 +10,10 @@ This repository is configured for the persistent named AI team across Antigravit
 - **תומר (tomer)**: Integration & PRs
 - **יעל (yael)**: Research & Schemas
 - **דנה (dana)**: Security & Permissions
+
+## Two-Tier Execution Policy: NORMAL vs TEAM
+1. **NORMAL Mode (Default):** Standard single-session execution. The agent identifies the active role, loads its instructions from `.agents/roles/<role>.md` and `docs/ai-team/PROJECT_ASSIGNMENTS.md`, and executes directly without invoking subagents. Documented in Asana as `[<Role> | <Specialty>] [MAIN_SESSION]`.
+2. **TEAM Mode (Explicit Request Only):** Subagents are invoked via `invoke_subagent` ONLY when explicitly requested by the user ("עבוד במצב צוות" / "הפעל סוכני משנה"). Documented as `[<Role> | <Specialty>] [SUBAGENT]`.
 
 ## Required Context Loading
 For all substantive work, review:

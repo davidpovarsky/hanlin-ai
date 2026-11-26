@@ -1,0 +1,114 @@
+name: Dispatch RuntimeCore Dependency Updates
+run-name: Upstream dispatcher ${{ github.run_id }}
+
+on:
+  # The original producer owns the weekly schedule; this retained dispatcher is manual only.
+  workflow_dispatch:
+    inputs:
+      operation:
+        description: Operation in the original maintained updater
+        type: choice
+        options: [audit, renovate, candidate, failure-demo, swiftpm-candidate, swiftpm-pin-only, native-candidate]
+        default: audit
+      base_branch:
+        description: Original maintained branch or isolated acceptance base
+        type: choice
+        options: [codex/hanlin-product-completion-20261117, codex/upstream-acceptance-base-20261119-v3]
+        default: codex/hanlin-product-completion-20261117
+      candidate_pr:
+        description: Existing same-repository proposal for candidate operations
+        type: string
+        default: ''
+      package_name:
+        description: Optional scoped Renovate dependency; empty inventories all configured sources
+        type: string
+        default: ''
+      runtime_baseline_run_id:
+        description: Authenticated unchanged native binary origin
+        type: string
+        default: '42926628418'
+
+permissions:
+  contents: read
+  actions: write
+
+concurrency:
+  group: upstream-default-dispatcher
+  cancel-in-progress: false
+
+jobs:
+  dispatch:
+    if: github.repository == 'davidpovarsky/hanlin-ai' && github.ref_name == 'main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Dispatch the original updater with a correlated source receipt
+        env:
+          GH_TOKEN: ${{ github.token }}
+          REPOSITORY: ${{ github.repository }}
+          UPDATE_OPERATION: ${{ inputs.operation || 'renovate' }}
+          BASE_BRANCH: ${{ inputs.base_branch || 'codex/hanlin-product-completion-20261117' }}
+          CANDIDATE_PR: ${{ inputs.candidate_pr }}
+          PACKAGE_NAME: ${{ inputs.package_name }}
+          RUNTIME_BASELINE_RUN_ID: ${{ inputs.runtime_baseline_run_id || '42926628418' }}
+          DISPATCH_PARENT_RUN: ${{ github.run_id }}
+        shell: python
+        run: |
+          import base64, datetime, hashlib, json, os, pathlib, re, subprocess, time, uuid
+          repo=os.environ["REPOSITORY"]
+          operation=os.environ["UPDATE_OPERATION"]
+          base=os.environ["BASE_BRANCH"]
+          number=os.environ.get("CANDIDATE_PR","")
+          baseline=os.environ["RUNTIME_BASELINE_RUN_ID"]
+          package=os.environ.get("PACKAGE_NAME","")
+          allowed={"codex/hanlin-product-completion-20261117","codex/upstream-acceptance-base-20261119-v3"}
+          if repo!="davidpovarsky/hanlin-ai" or base not in allowed or not baseline.isdigit():
+              raise RuntimeError("Unrecognized original repository/base/native origin")
+          def api(path,body=None):
+              args=["gh","api","repos/"+repo+"/"+path]
+              if body is not None: args+=["--method","POST","--input","-"]
+              p=subprocess.run(args,input=None if body is None else json.dumps(body),text=True,capture_output=True,check=True,timeout=45)
+              return json.loads(p.stdout) if p.stdout.strip() else None
+          ref=base
+          if operation in {"candidate","failure-demo","swiftpm-candidate"}:
+              if not number.isdigit(): raise RuntimeError("Candidate operation requires a real PR")
+              pr=api("pulls/"+number)
+              if pr["state"]!="open" or pr["base"]["ref"]!=base or pr["head"]["repo"]["full_name"]!=repo:
+                  raise RuntimeError("Candidate must be an open original-repository proposal against the selected base")
+              ref=pr["head"]["ref"]
+          elif number:
+              raise RuntimeError("Unexpected PR for non-candidate operation")
+          from urllib.parse import quote
+          branch=api("branches/"+quote(ref,safe=""))
+          head=branch["commit"]["sha"]
+          workflow=api("contents/.github/workflows/check-runtime-dependency-updates.yml?ref="+head)
+          source=base64.b64decode(workflow["content"])
+          if b"upstream-host-accounting.mjs capture native-origin" not in source or b"dispatch_token:" not in source:
+              raise RuntimeError("Selected branch lacks the reviewed original schema2 producer")
+          token="dispatch-"+os.environ["DISPATCH_PARENT_RUN"]+"-"+uuid.uuid4().hex[:12]
+          inputs={"operation":operation,"candidate_pr":number,"runtime_baseline_run_id":baseline,"dispatch_token":token,"package_name":package}
+          output=pathlib.Path("upstream-dispatch");output.mkdir()
+          receipt={"schemaVersion":1,"repository":repo,"parentRun":os.environ["DISPATCH_PARENT_RUN"],"targetRef":ref,"expectedHead":head,"base":base,"operation":operation,"candidatePR":number or None,"workflowSHA256":hashlib.sha256(source).hexdigest(),"correlation":token,"dispatchedAt":datetime.datetime.now(datetime.timezone.utc).isoformat()}
+          (output/"receipt.json").write_text(json.dumps(receipt,indent=2)+"\n")
+          api("actions/workflows/check-runtime-dependency-updates.yml/dispatches",{"ref":ref,"inputs":inputs})
+          for attempt in range(8):
+              runs=api("actions/workflows/check-runtime-dependency-updates.yml/runs?event=workflow_dispatch&per_page=30")["workflow_runs"]
+              matches=[run for run in runs if token in run["display_title"]]
+              if len(matches)>1: raise RuntimeError("Ambiguous correlated run")
+              if matches:
+                  run=matches[0]
+                  receipt.update({"runID":run["id"],"runURL":run["html_url"],"actualHead":run["head_sha"],"sourceMatched":run["head_sha"]==head})
+                  (output/"receipt.json").write_text(json.dumps(receipt,indent=2)+"\n")
+                  if run["head_sha"]!=head: raise RuntimeError("Selected branch moved before dispatch")
+                  print(json.dumps(receipt));break
+              time.sleep(3)
+          else:
+              raise RuntimeError("Dispatch accepted but no uniquely correlated run observed")
+      - name: Retain actual dispatch identity
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: upstream-dispatch-${{ github.run_id }}
+          path: upstream-dispatch
+          if-no-files-found: error
+          retention-days: 14

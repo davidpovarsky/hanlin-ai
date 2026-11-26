@@ -1,0 +1,112 @@
+name: Lorvex Apple Provision App Store Profiles
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  provision:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Create five Apple Distribution profiles and verify App Group, iCloud and push capabilities
+        shell: bash
+        env:
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+        run: |
+          set -euo pipefail
+          python3 -m pip install -q 'PyJWT[crypto]==2.10.1'
+          python3 - <<'PY'
+          import os,base64,time,json,urllib.request,urllib.error,urllib.parse,subprocess,tempfile,plistlib,datetime
+          import jwt
+          now=int(time.time())
+          token=jwt.encode({"iss":os.environ["ASC_ISSUER_ID"],"iat":now-15,"exp":now+600,"aud":"appstoreconnect-v1"},
+           base64.b64decode(os.environ["ASC_KEY_P8"]).decode(),algorithm="ES256",headers={"kid":os.environ["ASC_KEY_ID"],"typ":"JWT"})
+          base="https://api.appstoreconnect.apple.com/v1"
+          team=os.environ["APPLE_TEAM_ID"]
+          certificateID="B8HSX5CPJ4"
+          group="group.com.itorah.lorvex"
+          expected={
+          "main":("com.itorah.lorvex","44897MNFYP"),
+          "widgets":("com.itorah.lorvex.widgets","LNJ7Q7R2BC"),
+          "focus":("com.itorah.lorvex.focusfilter","QFJ7MJ235U"),
+          "watch":("com.itorah.lorvex.watchkitapp","XPCW7KY3UB"),
+          "watchwidgets":("com.itorah.lorvex.watchkitapp.widgets","J5AG26MPN2")}
+          def call(method,path,obj=None):
+           request=urllib.request.Request(base+path,data=json.dumps(obj).encode() if obj is not None else None,method=method,
+            headers={"Authorization":"Bearer "+token,"Accept":"application/json","Content-Type":"application/json"})
+           try:
+            with urllib.request.urlopen(request,timeout=32) as response:return response.status,json.load(response)
+           except urllib.error.HTTPError as e:
+            raw=e.read(3072)
+            try:errors=[{"status":x.get("status"),"code":x.get("code"),"title":x.get("title"),"detail":str(x.get("detail",""))[:170]} for x in json.loads(raw).get("errors",[])]
+            except: errors=[]
+            print("APPLE_REQUEST_FAILED",method,path.split("?")[0],e.code,errors,flush=True)
+            return e.code,{"errors":errors}
+          rc,cert=call("GET","/certificates/"+certificateID)
+          if rc!=200:raise SystemExit("CERTIFICATE_NOT_AVAILABLE")
+          attrs=cert["data"]["attributes"]
+          if "DISTRIBUTION" not in attrs.get("certificateType",""):raise SystemExit("NOT_DISTRIBUTION_CERT")
+          print("CERTIFICATE_VERIFIED",certificateID,attrs.get("expirationDate"),flush=True)
+          rc,plist=call("GET","/profiles?"+urllib.parse.urlencode({"limit":"200"}))
+          if rc!=200:raise SystemExit("PROFILE_LIST_NOT_ACCESSIBLE")
+          by_name={p.get("attributes",{}).get("name"):p for p in plist.get("data",[])}
+          report={"profiles":[],"appGroup":group,"teamMatches":True,"allProvisionsValid":True}
+          for role,(bundle,bundleId) in expected.items():
+           name="Lorvex_AI_"+role.upper()+"_AppStore_20261123"
+           entry=by_name.get(name)
+           if entry and entry.get("attributes",{}).get("profileState")=="ACTIVE":
+            print("PROFILE_REUSED",role,name,entry["id"],flush=True)
+           else:
+            body={"data":{"type":"profiles","attributes":{"name":name,"profileType":"IOS_APP_STORE"},
+             "relationships":{"bundleId":{"data":{"type":"bundleIds","id":bundleId}},
+             "certificates":{"data":[{"type":"certificates","id":certificateID}]}}}}
+            code,data=call("POST","/profiles",body)
+            if code!=201:raise SystemExit("APPLE_PROFILE_CREATE_FAILED_"+role)
+            entry=data["data"]
+            print("PROFILE_CREATED",role,name,entry["id"],flush=True)
+           pid=entry["id"]
+           code,full=call("GET","/profiles/"+pid)
+           if code!=200:raise SystemExit("PROFILE_FETCH_FAILED_"+role)
+           attr=full["data"]["attributes"]
+           if attr.get("profileState")!="ACTIVE":raise SystemExit("PROFILE_NOT_ACTIVE_"+role)
+           content=base64.b64decode(attr.get("profileContent") or "")
+           if len(content)<1500:raise SystemExit("PROFILE_BYTES_INVALID_"+role)
+           with tempfile.NamedTemporaryFile(suffix=".mobileprovision") as f:
+            f.write(content);f.flush()
+            xml=subprocess.run(["openssl","cms","-verify","-noverify","-inform","DER","-in",f.name],capture_output=True,timeout=20)
+            if xml.returncode:
+             print("OPENSSL_DECODE_ERROR",xml.stderr.decode(errors="replace")[-350:])
+             raise SystemExit("PROFILE_CMS_INVALID_"+role)
+            profile=plistlib.loads(xml.stdout)
+           ent=profile.get("Entitlements",{})
+           actual_appid=ent.get("application-identifier") or ""
+           if actual_appid!=team+"."+bundle:raise SystemExit("APP_ID_PROFILE_MISMATCH_"+role)
+           groups=ent.get("com.apple.security.application-groups") or []
+           if group not in groups:raise SystemExit("APP_GROUP_PROFILE_MISSING_"+role)
+           if profile.get("TeamIdentifier",[""])[0]!=team:raise SystemExit("PROFILE_TEAM_MISMATCH_"+role)
+           if role=="main":
+            cloud=ent.get("com.apple.developer.icloud-container-identifiers") or []
+            if "iCloud.com.itorah.lorvex" not in cloud:raise SystemExit("CLOUDKIT_PROFILE_MISSING")
+            if ent.get("aps-environment")!="production":raise SystemExit("PUSH_PROFILE_MISSING")
+           if ent.get("get-task-allow")!=False:raise SystemExit("DISTRIBUTION_PROFILE_IS_DEVELOPMENT")
+            # No contents/credentials are logged or uploaded.
+           report["profiles"].append({"role":role,"bundleId":bundle,"profileName":name,"profileId":pid,
+            "uuid":profile.get("UUID"),"profileType":attr.get("profileType"),"profileState":attr.get("profileState"),
+            "expires":str(profile.get("ExpirationDate")),"appGroupValidated":True})
+           print("PROFILE_VALIDATED",role,bundle,"GROUP_MATCH",True,flush=True)
+          with open("lorvex-apple-profiles-manifest.json","w") as f:json.dump(report,f,indent=2)
+          print("PROFILE_TOTAL",len(report["profiles"]),flush=True)
+          if len(report["profiles"])!=5:raise SystemExit("PROFILES_INCOMPLETE")
+          PY
+      - name: Save non-secret profile verification manifest
+        uses: actions/upload-artifact@v4
+        with:
+          name: Lorvex-Apple-AppStore-Profiles-Verification
+          path: lorvex-apple-profiles-manifest.json
+          if-no-files-found: error

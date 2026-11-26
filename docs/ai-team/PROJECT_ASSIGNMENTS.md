@@ -7,9 +7,15 @@
 
 ---
 
-## Current completion authorization — 2026-11-18
+## Recorded completion authorization — 2026-11-18
 
 The current owner's direct authorization is recorded in ../../docs/continuation-20261117/OWNER_AUTHORIZATION_20261118.md. These old assignments are historical; one developer completes both phases without a new phase-start or frozen-file confirmation.
+
+## Current Hanlin execution — 2026-11-26
+
+Read the standing authorization and current two-wave execution in root `AGENTS.md`. The owner explicitly requested parallel work using ChatGPT's built-in agents and Asana milestone updates. The earlier November 18 single-developer continuation and historical requirements to start a particular external named team do not describe this run.
+
+The NORMAL/TEAM distinction below remains useful for truthful attribution. For this ChatGPT task, `invoke_subagent` denotes the available built-in `collaboration.spawn_agent` capability, not an external AI CLI; record its real agent/task identifier instead of inventing a conversation ID. The coordinating agent publishes Asana milestone updates from the agents' exact evidence. Existing owner authorization is applied without repeated confirmation; actual access controls, secret protection and all unfulfilled acceptance requirements remain in force.
 
 ## 1. Project Scope & Technical Boundaries
 - **Chat UI integration:** The owner has approved necessary changes to `AI_HLY/ChatView.swift`, `ChatViewBottom.swift`, `ChatViewComponents.swift`, and `ChatandFile.swift` for the current completion. Preserve the original components and verify affected behavior.
@@ -35,7 +41,8 @@ The current owner's direct authorization is recorded in ../../docs/continuation-
 
 ---
 
-## 3. Approval Gates
+## 3. Execution Attribution and Approval Gates
+- **Execution mode:** Distinguish `[MAIN_SESSION]` from actual `[SUBAGENT]` work and retain the real invocation identifier; apply the current explicit built-in ChatGPT team request from root `AGENTS.md`.
 - **Chat UI:** Necessary current-scope edits have explicit owner approval; visual and behavioral acceptance still require real evidence.
 - **Release & Merges:** Apply the current owner authorization and actual acceptance results; do not treat historical approval requests as a new stop after authorization has been granted.
 - **Physical Device:** Tasks with physical iPad requirements remain open until verified on hardware.
