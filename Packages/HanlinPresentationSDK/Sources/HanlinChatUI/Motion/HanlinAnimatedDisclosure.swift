@@ -48,9 +48,9 @@ public struct HanlinAnimatedDisclosure<Content: View>: View {
                     // A zero-height clip alone leaves retained selectable text in AX.
                     // Keep the existing measured subtree, hiding its render endpoint.
                     .modifier(ChatDisclosureContentVisibility(progress: progress))
-                    // The retained content needs its own accessibility container:
-                    // hiding the custom Layout leaves selectable text exposed.
-                    .accessibilityElement(children: .contain)
+                    // Suppress retained descendants at their own AX boundary.
+                    // Hiding the container alone leaves native-backed children exposed.
+                    .accessibilityElement(children: isExpanded ? .contain : .ignore)
                     // Do not override a nested disclosure's hidden state on expand.
                     .accessibilityHidden(true, isEnabled: !isExpanded)
                     .transition(.identity)
