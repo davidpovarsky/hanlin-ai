@@ -17,3 +17,9 @@ Publish the currently absent original runtime-core-v1-2ac91db28c0bee53ae53afae8e
 After publication, retrieve the release assets and recheck the exact ZIP checksum, provenance and required asset inventory. Leave runtime_bundle_artifact_run_id empty so the existing original prepare-runtime-core.sh release branch consumes the restored publication. Its native-input, archive, payload, provenance and embedded-smoke checks remain mandatory and unchanged. A rerun of the original90-case CI remains open until the real producer/consumer steps and native tests finish.
 
 Publication and CI dispatch are owned by the root coordinator and were not performed by this diagnostic lane. No runtime archive was repacked, no source or workflow was edited, and no new native job was started.
+
+## Publication and independent readback completed
+
+On2026-11-26 the root coordinator restored the original immutable release, explicitly targeting4784dd99c3e5892ef726e7a3cce6587eb7847997. All four original assets were uploaded unchanged, downloaded anew and checked against their retained byte lengths and SHA256 values. The original shasum command passed; the tag ref resolves to the exact producer source. A second independent GitHub API read returned release459793366, non-draft, with all four matching server digests. The historical runtime release was not promoted to the latest application release.
+
+See publication-readback.json. This completes artifact transport recovery. The final integrated-source90 native CI and application acceptance remain separate pending gates; no new runtime production, native smoke or app acceptance is inferred from publication.
