@@ -6,6 +6,7 @@ export const manifestSources = {
   versions: 'Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift',
   versionPolicy: 'Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPreparedRuntimeVersion.swift',
   registration: 'Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift',
+  assistantDeclaration: 'Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinPreparedAssistantToolDeclaration.swift',
   platform: 'AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift',
   presentation: 'Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinNativePresentationMetadata.swift',
   widgetCompiler: 'Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift',
@@ -110,7 +111,7 @@ const extraNotes = {
   exposures: ['string[]', 'Metadata: supportedExposures alias; no connected-executor proof.'],
   category: ['HanlinAppCategory', 'Metadata: recognized category, otherwise utilities.'],
   isBeta: ['boolean', 'Metadata: appearance flag, default false.'],
-  actions: ['object[]', 'Metadata: canonical actions; invalid IDs omitted; execution still needs installed declared handlers.'],
+  actions: ['object[]', 'Metadata: canonical actions; invalid IDs omitted by general registration. A selected prepared assistantTool action is strictly validated; execution needs its real registered handler.'],
   skills: ['object[]', 'Metadata: canonical skills; invalid IDs omitted; instructions and aliases below.'],
 };
 
@@ -139,7 +140,7 @@ export async function auditManifestContracts({source}) {
   addRecord(rows, r.manifest, 'HanlinScriptingRemoteResource', 'remoteResource.', {
     url: 'Metadata: required remote URL string.', autoUpdateInterval: 'Metadata: optional interval; decoding alone schedules no updates.',
     hash: 'Metadata: optional source hash, not publisher identity.'});
-  const consumers = [r.manifest, r.analyzer, r.registration, r.presentation, r.widgetCompiler, r.platform];
+  const consumers = [r.manifest, r.analyzer, r.registration, r.assistantDeclaration, r.presentation, r.widgetCompiler, r.platform];
   assertKeys(sorted(consumers.flatMap(record => reads(record, 'unknownFields')).filter(key => !knownKeys.includes(key))),
     Object.keys(extraNotes), 'script.json retained extension consumers');
   for (const [key, [type, note]] of Object.entries(extraNotes))
@@ -152,8 +153,8 @@ export async function auditManifestContracts({source}) {
   addDictionary(rows, prepared, 'fields', 'entrypoints[].', {
     id: ['string', true, 'Unique nonempty ID, excluding reserved app/widget.'],
     kind: [preparedKinds.join(' | '), true, 'Only these modern explicit kinds are accepted; engine-specific source requirements still apply.'],
-    sourcePath: ['string', true, 'Existing normalized package path; embeddedResult, keyboard, notificationUI, spotlight and capture use the discovered prepared foreground bundle. Keyboard and notificationUI have a separate compiled nativePresentations source.'],
-    exportedSymbol: ['string', false, 'Capture requires one declared prepared action ID with a handler targeting the same foreground bundle. Spotlight may omit it to open the app; if supplied, the same action contract applies. Other kinds retain their existing optional exported symbol.'],
+    sourcePath: ['string', true, 'Existing normalized package path; assistantTool, embeddedResult, keyboard, notificationUI, spotlight and capture use the discovered prepared foreground bundle. Keyboard and notificationUI have a separate compiled nativePresentations source.'],
+    exportedSymbol: ['string', false, 'Capture and assistantTool require one declared prepared action ID with a handler targeting the same foreground bundle. Spotlight may omit it to open the app; if supplied, the same action contract applies. Other kinds retain their existing optional exported symbol.'],
   });
   addRecord(rows, r.presentation, 'HanlinNativePresentationMetadata', 'nativePresentations.*.', {
     engine: 'Original expo/scriptwidget renderer; preparePresentation rejects legacy.',
@@ -191,7 +192,38 @@ export async function auditManifestContracts({source}) {
     capability: ['HanlinCapabilityID', false, 'Metadata: defaults/falls back to inter-app.share, without a new grant gate.'],
     handler: ['string', false, 'Metadata: preferred handler; installed source path matched directly or with source/ prefix.'],
     entrypoint: ['string', false, 'Metadata: handler alias.'],
+    inputSchema: ['JSON Schema document object', false, 'Decoded by the canonical schema contract, preserving keywords and dialect; omitted general-action input defaults to an empty draft-2020-12 schema. Required for a prepared assistantTool.'],
+    outputSchema: ['JSON Schema document object', false, 'Optional canonical output schema; may describe any JSON result, including scalar and array values. The document representation is an object.'],
   });
+  const assistantActionNotes = {
+    id: 'Exactly one declared action must match the entrypoint exportedSymbol, retaining its original case.',
+    title: 'Defaults to the exact action ID.',
+    summary: 'Preferred tool summary, then description, then title.',
+    description: 'Summary alias when summary is absent.',
+    capability: 'When supplied must be a valid canonical capability ID; defaults to inter-app.share.',
+    handler: 'Preferred handler; required directly or through entrypoint alias and must match the prepared foreground source.',
+    entrypoint: 'Handler alias when handler is absent; the same foreground-source requirement applies.',
+    inputSchema: 'Required schema document with explicit type object for canonical function-tool parameters.',
+    outputSchema: 'Optional schema document; scalar, array and object results are permitted.',
+  };
+  assertKeys(reads(r.assistantDeclaration, 'fields'), Object.keys(assistantActionNotes),
+    'prepared assistantTool action fields');
+  for (const [key, note] of Object.entries(assistantActionNotes)) {
+    const authority = ref(r.assistantDeclaration, 'fields["' + key + '"]');
+    const existing = rows.find(row => row.field === 'actions[].' + key);
+    if (existing) {
+      existing.sources.push(authority);
+      existing.semantics += ' For prepared assistantTool: ' + note;
+      if (key === 'inputSchema') existing.required = 'required for prepared assistantTool';
+    } else {
+      rows.push(field('actions[].' + key, 'string', false, note, [authority]));
+    }
+  }
+  assertKeys(reads(r.assistantDeclaration, 'inputMembers'), ['type'],
+    'prepared assistantTool input schema shape');
+  rows.push(field('actions[].inputSchema.type', '"object"', 'required for prepared assistantTool',
+    'Canonical function-tool parameters are named objects; other JSON Schema keywords retain their original meaning.',
+    [ref(r.assistantDeclaration, 'inputMembers["type"]')]));
   addDictionary(rows, r.registration, 'skillObj', 'skills[].', {
     id: ['HanlinSkillID', true, 'Metadata: valid ID required; invalid items omitted.'],
     title: ['string', false, 'Metadata: defaults to ID.'], summary: ['string', false, 'Metadata: preferred summary, then description, then title.'],
