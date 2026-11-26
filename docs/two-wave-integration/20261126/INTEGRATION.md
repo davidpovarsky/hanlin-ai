@@ -33,3 +33,7 @@ Standalone MiniApps owns new shortcut/widget/runtime UI. Hanlin and consumers us
 ## Cache history reconciliation
 
 Merged original local cache head0d58bf1648788236dafc53c35618ad5dd5c22112. Mechanical comparison proved the merge adds only historical docs/evidence; every non-doc source file is unchanged from e09c596ad. The cache implementation was already present through the shared source composition. Prior native receipts retain their original tested-source scope; no duplicate cache implementation or new native PASS is claimed.
+
+## Integrated shared Chat and Shortcuts
+
+POST744 merged in98a7279; original shared Chat/Launcher3f65 merged ina84ecd6; standalone Shortcuts7f2 merged ind5226769. Original NS invocation registry/session teardown and assistantServiceFactory retained while replacing the duplicate reply object with the shared completion helper. Canonical NativeScript generator PASS(TypeScript5.9.3). Canonical full SDK manifest regenerated:48 products,116 targets,526 application sources,20 input hashes. Three original assistant/widget integration tests passed together; original system-surface compiler case was rerun after materializing its missing tracked declaration. All four identities passed, not represented as one all-green suite. First full authoring attempt timed out after45s, not counted. Native/release gates remain separately tracked.

@@ -1,0 +1,17 @@
+{
+  "source": "d5226769faba122733817a1c85fbd11440abe781",
+  "exit": 0,
+  "seconds": 7.372577905654907,
+  "command": [
+    "runuser",
+    "-u",
+    "chatgpt-agent",
+    "--",
+    "node",
+    "--test",
+    "--test-name-pattern=exported system-surface",
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs"
+  ],
+  "logSHA256": "52b67245c0c11b3557933fdf33e6daf9ed0dafbdeffb0ed1ae67049ffe8fdd44",
+  "previousFailure": "Sparse worktree omitted tracked Scripts/MiniApps/native-presentations.d.ts; materialized original source without implementation or assertion change."
+}
