@@ -486,7 +486,8 @@
         "Scripts/MiniApps/assistant-tools.d.ts",
         "Scripts/MiniApps/assistant-tools.schema.json",
         "Scripts/MiniApps/native-presentations.d.ts",
-        "Scripts/MiniApps/Examples/**"
+        "Scripts/MiniApps/Examples/**",
+        "Scripts/MiniApps/scriptwidget/**"
       ],
       "direct_validation_groups": [
         "runtimecore_host"
@@ -1192,7 +1193,8 @@
         "Config.xcconfig.template",
         "ChavrusaChatNotificationService/**",
         "ChavrusaChatShare/**",
-        "ChavrusaChatTranslationProvider/**"
+        "ChavrusaChatTranslationProvider/**",
+        "HanlinMiniAppsExtensions/**"
       ],
       "direct_validation_groups": [
         "device_build",
@@ -1677,7 +1679,8 @@
         "Tests/ProductSplit/**",
         "AI_HLYTests/HanlinAppSplitOriginTests.swift",
         "AI_HLYUITests/HanlinPairedProductUITests.swift",
-        "Packages/HanlinMiniAppsBridge/**"
+        "Packages/HanlinMiniAppsBridge/**",
+        "HanlinMiniAppsExtensions/**"
       ],
       "direct_validation_groups": [
         "app_unit_tests"
@@ -1888,6 +1891,35 @@
         "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests"
       ],
       "consumers": []
+    },
+    "miniapps_system_entrypoints": {
+      "description": "Standalone MiniApps system publication, camera ownership, typed keyboard and notification surfaces; real OS and paired-product acceptance remain separate gates",
+      "patterns": [
+        "AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests.swift",
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift",
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppCaptureCoordinator.swift",
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppCaptureInbox.swift",
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSpotlightIndex.swift",
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSystemCatalog.swift",
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSystemEntrypointsView.swift",
+        "HanlinMiniAppsExtensions/Keyboard/**",
+        "HanlinMiniAppsExtensions/NotificationContent/**",
+        "HanlinMiniAppsExtensions/CameraCapture/**",
+        "HanlinMiniAppsExtensions/Widgets/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "prerequisites": [
+        "runtimecore_host"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests"
+      ],
+      "consumers": [
+        "platform_contracts",
+        "project_packaging"
+      ]
     }
   },
   "validation_groups": {
