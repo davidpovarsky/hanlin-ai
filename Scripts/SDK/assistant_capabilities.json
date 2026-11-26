@@ -29,7 +29,8 @@
     "Downstream/AgentActivity/Evidence/AgentEvidenceItem.swift",
     "Downstream/AgentActivity/ToolPresentation/ToolPresentationProfile.swift",
     "Downstream/HostServices/Runtime/RuntimeAvailabilityStore.swift",
-    "Downstream/ChatPresentation/HanlinDesignCatalogBridge.swift"
+    "Downstream/ChatPresentation/HanlinTypographyBridge.swift",
+    "Downstream/SDK/HanlinAssistantServices.swift"
   ],
   "products": [
     "HanlinSkillFormat",
