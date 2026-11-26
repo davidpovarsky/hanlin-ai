@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "13bfad937c9e61e0bea839fdf1f3b5b1e7652b69",
+  "sourceCommit": "84dd7c19332b5f964155f2ff477b9260dff5bd59",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
   "uncommittedSourcePaths": [],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
@@ -220,7 +220,7 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-      "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c"
+      "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinInstallContracts.swift",
@@ -248,7 +248,7 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinPreparedWidget.swift",
-      "sha256": "2031782a2d40e5a86846132122e72f1637b976caab6164858a8cc9d864aa9f7c"
+      "sha256": "1bf7298edbf4e6a2ef944a3633fbd2377e128aa883e042a7ac962d283e9376eb"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
@@ -268,7 +268,7 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift",
-      "sha256": "8a7bb65bffe0390ac719e33b0ece71e19b20e9be96841e422a3a4c37f09352b3"
+      "sha256": "33b17754b1298a7bb33c7e0d51632b5bd374c59edc6f897be3e38da26aa6d844"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift",
@@ -336,7 +336,7 @@
     },
     {
       "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-      "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2"
+      "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a"
     },
     {
       "path": "Scripts/NativeScript/Fixtures/HostServices/invalid.ts",
@@ -850,13 +850,13 @@
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinWidgetActionExecutor.swift",
       "line": 52,
       "anchor": "public static func perform(",
-      "sha256": "4b73c36b571659651fc1021092f35df8fd1e944d2f4da1fa03b11f7622baaa67"
+      "sha256": "e0e78d507890a09de14442003d2a000fdad83146086fea19a257eff9d6096c5e"
     },
     "widgetIntent": {
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinGenericWidgetActionIntent.swift",
       "line": 15,
       "anchor": "public func perform()",
-      "sha256": "77c001374367273d9088ca1987805c0051c07f0cfeabdd6b0b8b967c9b655fac"
+      "sha256": "69f57368d6a24702ac8a03833faf397a3c0132554f2bcc9fea17a705a1b68654"
     },
     "widgetHostDeclaration": {
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinWidgetProgram.swift",
@@ -1096,19 +1096,19 @@
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNativePresentation.swift",
       "line": 161,
       "anchor": "public enum HanlinNativePresentationExecutor",
-      "sha256": "a9e87935202eb8e512e9f230c0381aaa217f1626e50ca48a461ca3f34f2f0b36"
+      "sha256": "ca7075fc599298a1ac9503579a054e3b9360fa37549f4610ce9735eec1fa3e56"
     },
     "nativePresentationView": {
       "file": "Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/HanlinNativePresentationView.swift",
       "line": 47,
       "anchor": "public struct HanlinNativePresentationContentView",
-      "sha256": "27e9176daefc266973d251131eb2b02e419f6ce8de4f771d4633ff9ceaedf3ee"
+      "sha256": "8a4b4a159d22665bbb63fe49378579d8cfcc9fc2a795cf4b777c22deebe1d485"
     },
     "nativeSnippet": {
       "file": "Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/HanlinNativePresentationView.swift",
-      "line": 186,
+      "line": 193,
       "anchor": "public struct HanlinShowMiniAppSnippetIntent",
-      "sha256": "27e9176daefc266973d251131eb2b02e419f6ce8de4f771d4633ff9ceaedf3ee"
+      "sha256": "8a4b4a159d22665bbb63fe49378579d8cfcc9fc2a795cf4b777c22deebe1d485"
     },
     "nativeTranslation": {
       "file": "Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/TranslationProviderNativePresentationView.swift",
@@ -1132,19 +1132,19 @@
       "file": "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/ScriptWidgetControls/Original/ScriptWidgetSelectTimerIntent.swift",
       "line": 143,
       "anchor": "public struct ScriptWidgetButtonControlProvider",
-      "sha256": "f632bd5007e5036432815eb72641027934284ff52bf457817336076eca63cb8d"
+      "sha256": "5e63221fc6c2840a6bb9039355dee38857b0e540d2d17cb8e7a7c76f9bc48761"
     },
     "originalControlActions": {
       "file": "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/ScriptWidgetControls/Original/ScriptWidgetSelectTimerIntent.swift",
-      "line": 196,
+      "line": 199,
       "anchor": "HanlinScriptWidgetControlCatalog.perform(",
-      "sha256": "f632bd5007e5036432815eb72641027934284ff52bf457817336076eca63cb8d"
+      "sha256": "5e63221fc6c2840a6bb9039355dee38857b0e540d2d17cb8e7a7c76f9bc48761"
     },
     "controlCatalog": {
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptWidgetControls.swift",
       "line": 28,
       "anchor": "public enum HanlinScriptWidgetControlCatalog",
-      "sha256": "19b69515575e91d74c9215e0b0c68b8c67276f0dd00b183b0a7575dfbf68aa90"
+      "sha256": "9f0d60bc6744b41999c81d6e5a3f6ad7187c6bc8ee56dcf7c12faee08e9f2287"
     },
     "controlCompiler": {
       "file": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift",
@@ -1156,7 +1156,7 @@
       "file": "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json",
       "line": 3150,
       "anchor": "ScriptWidgetControls/Original/ScriptWidgetControlWidget.swift",
-      "sha256": "8bbe9acb8ec610861401134e8bddd9013c19d9ab9ced81eae4d97e3c99459b29"
+      "sha256": "cfb0032a80d40e00be81a71ff0df921593c823c1e2db128e0e01a23cd3302546"
     },
     "controlSourceRefresh": {
       "file": "Scripts/MiniApps/refresh-original-sources.mjs",
@@ -1166,15 +1166,15 @@
     },
     "scriptWidgetLiveActivity": {
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptWidgetLiveActivity.swift",
-      "line": 140,
+      "line": 144,
       "anchor": "public enum HanlinScriptWidgetLiveActivityController",
-      "sha256": "05e64cd225c0af6056f579b00c494378fd828957396e8bbc507f422ba464a8d4"
+      "sha256": "f40b60003098bf094772ee7720a9d5a0df043d10a6a03b5b4c6ddc2373749b91"
     },
     "scriptWidgetActivityRenderer": {
       "file": "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
-      "line": 299,
+      "line": 305,
       "anchor": "public struct HanlinOriginalScriptWidgetLiveActivityWidget",
-      "sha256": "cf301ab132ee3554e00a442c9629fc82a83f549ff2d93a86cecccf67d9b9e161"
+      "sha256": "86ef4f842fa168c50054f1dd29381a8cc9ffae5c161c3dd0d2828910d3a9ce64"
     },
     "originalExpoWidget": {
       "file": "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidget.swift",

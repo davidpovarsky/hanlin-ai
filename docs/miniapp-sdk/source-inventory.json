@@ -1,5 +1,5 @@
 {
-  "sourceCommit": "13bfad937c9e61e0bea839fdf1f3b5b1e7652b69",
+  "sourceCommit": "84dd7c19332b5f964155f2ff477b9260dff5bd59",
   "uncommittedSourcePaths": [],
   "schemaVersion": 1,
   "auditParser": {
@@ -1221,7 +1221,7 @@
       },
       "consumer": {
         "source": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinPreparedWidget.swift",
-        "sha256": "2031782a2d40e5a86846132122e72f1637b976caab6164858a8cc9d864aa9f7c"
+        "sha256": "1bf7298edbf4e6a2ef944a3633fbd2377e128aa883e042a7ac962d283e9376eb"
       },
       "status": "source authorities; installed JS/native/store/prepared-consumer execution is separate evidence",
       "osRendering": "not inferred from state commit or reload request"
@@ -6960,7 +6960,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+              "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4",
               "line": 238
             },
             {
@@ -7371,8 +7371,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
-              "line": 827
+              "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4",
+              "line": 825
             }
           ]
         },
@@ -7385,8 +7385,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
-              "line": 861
+              "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4",
+              "line": 859
             }
           ]
         },
@@ -7399,8 +7399,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
-              "line": 840
+              "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4",
+              "line": 838
             }
           ]
         },
@@ -7413,8 +7413,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
-              "line": 841
+              "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4",
+              "line": 839
             }
           ]
         },
@@ -7427,8 +7427,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
-              "line": 844
+              "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4",
+              "line": 842
             }
           ]
         },
@@ -7485,7 +7485,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+              "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4",
               "line": 181
             },
             {
@@ -8390,8 +8390,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
-              "line": 462
+              "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4",
+              "line": 460
             }
           ]
         },
@@ -8404,8 +8404,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
-              "line": 765
+              "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4",
+              "line": 763
             }
           ]
         },
@@ -8418,8 +8418,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
-              "line": 462
+              "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4",
+              "line": 460
             }
           ]
         },
@@ -8432,8 +8432,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
-              "line": 464
+              "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4",
+              "line": 462
             }
           ]
         },
@@ -8446,8 +8446,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
-              "line": 765
+              "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4",
+              "line": 763
             }
           ]
         },
@@ -8460,8 +8460,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
-              "line": 462
+              "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4",
+              "line": 460
             }
           ]
         },
@@ -8474,8 +8474,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
-              "line": 409
+              "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4",
+              "line": 407
             }
           ]
         },
@@ -8488,8 +8488,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
-              "line": 412
+              "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4",
+              "line": 410
             }
           ]
         },
@@ -8502,8 +8502,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
-              "line": 440
+              "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4",
+              "line": 438
             }
           ]
         },
@@ -8516,8 +8516,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
-              "line": 411
+              "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4",
+              "line": 409
             },
             {
               "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift",
@@ -8540,8 +8540,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
-              "line": 398
+              "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4",
+              "line": 396
             }
           ]
         },
@@ -8554,8 +8554,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
-              "line": 397
+              "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4",
+              "line": 395
             }
           ]
         },
@@ -8624,8 +8624,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
-              "line": 724
+              "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4",
+              "line": 722
             }
           ]
         },
@@ -8638,8 +8638,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
-              "line": 765
+              "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4",
+              "line": 763
             }
           ]
         },
@@ -8652,8 +8652,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
-              "line": 630
+              "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4",
+              "line": 628
             }
           ]
         },
@@ -8666,8 +8666,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
-              "line": 726
+              "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4",
+              "line": 724
             }
           ]
         },
@@ -8680,8 +8680,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
-              "line": 765
+              "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4",
+              "line": 763
             }
           ]
         },
@@ -8694,8 +8694,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
-              "line": 630
+              "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4",
+              "line": 628
             }
           ]
         },
@@ -8708,8 +8708,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
-              "line": 602
+              "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4",
+              "line": 600
             }
           ]
         },
@@ -8722,8 +8722,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
-              "line": 634
+              "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4",
+              "line": 632
             },
             {
               "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift",
@@ -8783,8 +8783,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
-              "line": 609
+              "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4",
+              "line": 607
             }
           ]
         },
@@ -8797,8 +8797,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
-              "line": 630
+              "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4",
+              "line": 628
             }
           ]
         },
@@ -8811,8 +8811,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
-              "line": 700
+              "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4",
+              "line": 698
             }
           ]
         },
@@ -8825,8 +8825,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
-              "line": 660
+              "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4",
+              "line": 658
             }
           ]
         },
@@ -8839,8 +8839,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
-              "line": 698
+              "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4",
+              "line": 696
             }
           ]
         },
@@ -8853,8 +8853,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
-              "line": 699
+              "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4",
+              "line": 697
             }
           ]
         },
@@ -8867,8 +8867,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
-              "line": 678
+              "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4",
+              "line": 676
             }
           ]
         },
@@ -8881,8 +8881,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
-              "line": 608
+              "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4",
+              "line": 606
             },
             {
               "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift",
@@ -8905,8 +8905,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
-              "line": 579
+              "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4",
+              "line": 577
             }
           ]
         },
@@ -8919,8 +8919,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
-              "line": 589
+              "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4",
+              "line": 587
             }
           ]
         },
@@ -9404,7 +9404,7 @@
             "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift",
             "upstream": "Shared/ScriptWidgetRuntime/Widget/API/ScriptWidgetRuntimeFetch.swift",
             "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
-            "sha256": "8a7bb65bffe0390ac719e33b0ece71e19b20e9be96841e422a3a4c37f09352b3"
+            "sha256": "33b17754b1298a7bb33c7e0d51632b5bd374c59edc6f897be3e38da26aa6d844"
           }
         ]
       },
@@ -9418,7 +9418,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageAction/properties/description"
             }
           ],
@@ -9444,7 +9444,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageAction/properties/function"
             }
           ],
@@ -9463,7 +9463,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageAction/properties/id"
             }
           ],
@@ -9482,7 +9482,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageAction/properties/systemImage"
             }
           ],
@@ -9501,7 +9501,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageAction/properties/title"
             }
           ],
@@ -9521,7 +9521,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageAuthor/properties/name"
             }
           ],
@@ -9538,7 +9538,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageAuthor/properties/url"
             }
           ],
@@ -9562,7 +9562,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageControl/allOf/0/oneOf/0/properties/action"
             }
           ],
@@ -9579,7 +9579,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageControl/allOf/0/oneOf/0/properties/actionID"
             }
           ],
@@ -9596,7 +9596,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageControl/allOf/0/oneOf/1/properties/action"
             }
           ],
@@ -9613,7 +9613,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageControl/allOf/0/oneOf/1/properties/actionID"
             }
           ],
@@ -9630,7 +9630,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageControl/allOf/1/else/properties/stateKey"
             }
           ],
@@ -9647,7 +9647,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageControl/allOf/1/if/properties/type"
             }
           ],
@@ -9664,7 +9664,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageControl/allOf/1/then/properties/stateKey"
             }
           ],
@@ -9682,7 +9682,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageControl/properties/action"
             }
           ],
@@ -9708,7 +9708,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageControl/properties/actionID"
             }
           ],
@@ -9732,7 +9732,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageControl/properties/id"
             }
           ],
@@ -9751,7 +9751,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageControl/properties/stateKey"
             }
           ],
@@ -9775,7 +9775,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageControl/properties/subtitle"
             }
           ],
@@ -9799,7 +9799,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageControl/properties/systemImage"
             }
           ],
@@ -9818,7 +9818,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageControl/properties/title"
             }
           ],
@@ -9838,7 +9838,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageControl/properties/type"
             }
           ],
@@ -9855,7 +9855,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageManifest/properties/actions"
             }
           ],
@@ -9884,7 +9884,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageManifest/properties/author"
             }
           ],
@@ -9908,7 +9908,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageManifest/properties/category"
             }
           ],
@@ -9932,7 +9932,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageManifest/properties/controls"
             }
           ],
@@ -9961,7 +9961,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageManifest/properties/description"
             }
           ],
@@ -9985,7 +9985,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageManifest/properties/entry"
             }
           ],
@@ -10004,7 +10004,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageManifest/properties/formatVersion"
             }
           ],
@@ -10023,7 +10023,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageManifest/properties/icon"
             }
           ],
@@ -10047,7 +10047,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageManifest/properties/id"
             }
           ],
@@ -10066,7 +10066,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageManifest/properties/license"
             }
           ],
@@ -10090,7 +10090,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageManifest/properties/minimumRuntimeVersion"
             }
           ],
@@ -10116,7 +10116,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageManifest/properties/name"
             }
           ],
@@ -10133,7 +10133,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageManifest/properties/networkDomains"
             }
           ],
@@ -10153,7 +10153,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageManifest/properties/permissions"
             }
           ],
@@ -10175,7 +10175,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageManifest/properties/plugins"
             }
           ],
@@ -10204,7 +10204,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageManifest/properties/preview"
             }
           ],
@@ -10228,7 +10228,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageManifest/properties/pushUpdates"
             }
           ],
@@ -10252,7 +10252,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageManifest/properties/runtimeVersion"
             }
           ],
@@ -10271,7 +10271,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageManifest/properties/supportedFamilies"
             }
           ],
@@ -10294,7 +10294,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageManifest/properties/tags"
             }
           ],
@@ -10323,7 +10323,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageManifest/properties/timeline"
             }
           ],
@@ -10347,7 +10347,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageManifest/properties/version"
             }
           ],
@@ -10366,7 +10366,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackagePushUpdates/properties/channel"
             }
           ],
@@ -10385,7 +10385,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackagePushUpdates/properties/registrationURL"
             }
           ],
@@ -10402,7 +10402,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageTimeline/properties/dailyTimes"
             }
           ],
@@ -10427,7 +10427,7 @@
           "sources": [
             {
               "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-              "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2",
+              "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a",
               "jsonPointer": "#/$defs/WidgetPackageTimeline/properties/timeZone"
             }
           ],
@@ -10544,8 +10544,8 @@
         },
         {
           "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift",
-          "sha256": "8a7bb65bffe0390ac719e33b0ece71e19b20e9be96841e422a3a4c37f09352b3",
-          "line": 184
+          "sha256": "33b17754b1298a7bb33c7e0d51632b5bd374c59edc6f897be3e38da26aa6d844",
+          "line": 175
         },
         {
           "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/HanlinOriginalScriptWidgetControls.swift",
@@ -14020,7 +14020,7 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-      "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c"
+      "sha256": "357b2ecaa18408c3bdab6499191f6140469d8e23a58ed2b04b0d621d0567eae4"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinInstallContracts.swift",
@@ -14048,7 +14048,7 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinPreparedWidget.swift",
-      "sha256": "2031782a2d40e5a86846132122e72f1637b976caab6164858a8cc9d864aa9f7c"
+      "sha256": "1bf7298edbf4e6a2ef944a3633fbd2377e128aa883e042a7ac962d283e9376eb"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
@@ -14068,7 +14068,7 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift",
-      "sha256": "8a7bb65bffe0390ac719e33b0ece71e19b20e9be96841e422a3a4c37f09352b3"
+      "sha256": "33b17754b1298a7bb33c7e0d51632b5bd374c59edc6f897be3e38da26aa6d844"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift",
@@ -14136,7 +14136,7 @@
     },
     {
       "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
-      "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2"
+      "sha256": "747dff1485ba59332462fbba09190290b925bdc0079e1b2ac86aed273cfd5d0a"
     },
     {
       "path": "Scripts/NativeScript/Fixtures/HostServices/invalid.ts",
