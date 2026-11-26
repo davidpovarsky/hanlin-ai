@@ -1,7 +1,7 @@
 """Bounded Xcode profile-discovery preflight, not product acceptance.
 
 All probe products remain in the existing private signing directory. Xcode builds
-and locally exports tiny applications using the source-declared original bundle/profile
+and locally exports tiny applications using the declared shipping bundle/profile
 identities. Nothing is uploaded, installed, or treated as a release artifact.
 """
 from __future__ import annotations
@@ -332,7 +332,7 @@ def _write_probe_project(directory):
    isa = XCBuildConfiguration; name = Release;
    buildSettings = {
     CODE_SIGN_STYLE = Manual; INFOPLIST_FILE = Info.plist; GENERATE_INFOPLIST_FILE = NO;
-    IPHONEOS_DEPLOYMENT_TARGET = 15.0; PRODUCT_NAME = "$(TARGET_NAME)";
+    IPHONEOS_DEPLOYMENT_TARGET = 27.0; PRODUCT_NAME = "$(TARGET_NAME)";
     SDKROOT = iphoneos; SUPPORTED_PLATFORMS = iphoneos; TARGETED_DEVICE_FAMILY = "1,2";
     SKIP_INSTALL = NO; ENABLE_BITCODE = NO;
    };

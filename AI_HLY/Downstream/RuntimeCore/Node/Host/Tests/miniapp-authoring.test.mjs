@@ -453,3 +453,62 @@ test('the exported system-surface declaration is checked by the real TypeScript 
     assert(!result.diagnostics.some(item => item.code === 'TS2307'), 'The exported original declaration must resolve.');
   }
 });
+
+test('prepared capture and Spotlight actions validate against each containing app engine', async t => {
+  for (const engine of ['nativescript', 'expo']) {
+    const f = await fixture(t, engine);
+    const file = path.join(f.project, 'script.json');
+    const source = engine === 'expo' ? 'bundle.js' : 'nativescript/app/bundle.mjs';
+    const script = JSON.parse(await fs.readFile(file));
+    script.entrypoints = [
+      {id: 'photo', kind: 'capture', sourcePath: source, exportedSymbol: 'capture.receive'},
+      {id: 'find', kind: 'spotlight', sourcePath: source}
+    ];
+    script.actions = [{id: 'capture.receive', handler: source}];
+    await fs.writeFile(file, JSON.stringify(script));
+    const report = await f.run('validate');
+    assert.equal(report.succeeded, true, JSON.stringify(report.diagnostics));
+  }
+});
+
+test('invalid prepared capture actions stop packaging with actionable source diagnostics', async t => {
+  const f = await fixture(t);
+  const file = path.join(f.project, 'script.json');
+  const original = JSON.parse(await fs.readFile(file));
+  original.entrypoints = [{id: 'photo', kind: 'capture', sourcePath: 'nativescript/app/bundle.mjs', exportedSymbol: 'capture.receive'}];
+  original.actions = [{id: 'capture.receive', handler: 'nativescript/app/bundle.mjs'}];
+  for (const [label, mutate] of [
+    ['missing exported action', s => { delete s.entrypoints[0].exportedSymbol; }],
+    ['undeclared action', s => { s.actions = []; }],
+    ['wrong handler', s => { s.actions[0].handler = 'other.js'; }],
+    ['duplicate action', s => { s.actions.push({...s.actions[0]}); }],
+    ['invalid action ID', s => { s.entrypoints[0].exportedSymbol = s.actions[0].id = 'wrong..id'; }],
+    ['Spotlight wrong action', s => { s.entrypoints[0].kind = 'spotlight'; s.actions[0].handler = 'other.js'; }]
+  ]) {
+    const script = structuredClone(original); mutate(script);
+    await fs.writeFile(file, JSON.stringify(script));
+    const report = await f.run('build');
+    assert.equal(report.succeeded, false, label);
+    assert.equal(report.preparedPackagePath, undefined, label);
+    assert(report.diagnostics.some(d => d.code === 'MINIAPP_SYSTEM_ACTION_INVALID' &&
+      d.file === 'script.json' && d.category === 'error' && d.remediation), label + ': ' + JSON.stringify(report));
+  }
+  await assert.rejects(fs.stat(path.join(f.project, '.hanlin-build')), {code: 'ENOENT'});
+});
+
+test('system native presentations require keyboard and notification source declarations', async t => {
+  const f = await fixture(t);
+  const file = path.join(f.project, 'script.json');
+  const script = JSON.parse(await fs.readFile(file));
+  script.entrypoints = [
+    {id: 'keys', kind: 'keyboard', sourcePath: 'nativescript/app/bundle.mjs'},
+    {id: 'notice', kind: 'notificationUI', sourcePath: 'nativescript/app/bundle.mjs'}
+  ];
+  await fs.writeFile(file, JSON.stringify(script));
+  const report = await f.run('build');
+  assert.equal(report.succeeded, false);
+  const diagnostics = report.diagnostics.filter(d => d.code === 'MINIAPP_SYSTEM_PRESENTATION_REQUIRED');
+  assert.equal(diagnostics.length, 2, JSON.stringify(report.diagnostics));
+  assert(diagnostics.every(d => d.file === 'script.json' && d.category === 'error'));
+  assert.equal(report.preparedPackagePath, undefined);
+});

@@ -77,6 +77,7 @@ async function stageSystemSurfaceTypes(root, destination, files, label) {
 
 export const sdkInputs = [
  'Scripts/CI/IntegrationValidation/project_graph.py',
+    'Scripts/ProductSplit/extension_inventory.py',
  'Scripts/Expo/package.json','Scripts/Expo/package-lock.json','Scripts/Expo/dependency-lock.json',
  'Scripts/Expo/babel.config.cjs','Scripts/Expo/metro.config.cjs','Scripts/Expo/prepare-types.mjs',
  'Scripts/Expo/build-original-widget-runtime.mjs','Scripts/Expo/sync-original-ui-exports.mjs',
@@ -86,6 +87,12 @@ export const sdkInputs = [
  'Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPI/HanlinExpoNativeAPIHostVersions.swift',
  'Packages/HanlinPlatform/Package.swift',
  'Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinIdentifiers.swift',
+ 'Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinDescriptors.swift',
+ 'Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinRuntimeProfiles.swift',
+ 'Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json',
+ 'Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinInstallContracts.swift',
+ 'Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift',
+ 'Packages/HanlinAppExtensionsSDK/Package.swift',
  'Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinWidgetProgram.swift',
  'Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinNativePresentationMetadata.swift',
  'Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift',
@@ -185,6 +192,9 @@ export async function inputReceipt(root=repositoryRoot) {
   for(const relative of ['Scripts/MiniApps','Packages/HanlinExpoUI','Packages/HanlinExpoNativeAPIJS',
     'Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services',
     'Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal',
+    'Packages/HanlinPlatform/Sources/HanlinScriptExtensions',
+    'Packages/HanlinAppExtensionsSDK/Sources',
+    'AI_HLY/Downstream/ScriptingPlatform',
     'Packages/HanlinExpoRuntime/Sources/ExpoWidgets',
     'Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift',
     'docs/miniapp-sdk','docs/hanlin-nativescript-guide.md','docs/hanlin-expo-runtime.md']) {

@@ -84,11 +84,11 @@ class MiniAppsLocalProfilesTests(unittest.TestCase):
             decode_content=self.decode, **kwargs)
         return result, facts
 
-    def test_all_five_original_roles_reuse_profiles_with_exact_prefix_matching(self):
+    def test_all_eight_owned_roles_reuse_profiles_with_exact_prefix_matching(self):
         result, facts = self.resolve()
-        self.assertEqual(len(result), 5)
+        self.assertEqual(len(result), 8)
         self.assertEqual({p["bundle"] for p in result}, {b for _, b, _, _ in self.roles})
-        self.assertEqual(len({p["uuid"] for p in result}), 5)
+        self.assertEqual(len({p["uuid"] for p in result}), 8)
         self.create.assert_not_called()
         for fact in facts:
             self.assertEqual(fact["status"], "READY_RESOURCE")
@@ -106,7 +106,9 @@ class MiniAppsLocalProfilesTests(unittest.TestCase):
         self.assertEqual(self.create.call_args.args[0], "miniapps_notification_service-bundle")
         self.assertIn("/v1/profiles/miniapps_notification_service-created",
                       [path for path, _ in self.reads])
-        self.assertEqual(facts[-1]["source"], "CREATED_AND_READ_BACK_APPLE_PROFILE")
+        created = next(fact for fact in facts if fact["role"] == "miniapps_notification_service")
+        self.assertEqual(created["source"], "CREATED_AND_READ_BACK_APPLE_PROFILE")
+        self.assertEqual(sum(fact["source"] == "CREATED_AND_READ_BACK_APPLE_PROFILE" for fact in facts), 1)
 
     def test_unassigned_extension_app_group_is_rejected_even_with_valid_main(self):
         role = "miniapps_share"

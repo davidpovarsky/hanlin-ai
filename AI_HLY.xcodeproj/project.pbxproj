@@ -848,6 +848,85 @@
 			isa = PBXBuildFile;
 			fileRef = A10000000000000000000063;
 		};
+		AC1900000000000000000063 = {
+			isa = PBXBuildFile;
+			productRef = AC1900000000000000000062;
+		};
+		AC1CED5DAE1E76828E6393FA = {
+			isa = PBXBuildFile;
+			fileRef = AC1CD38ECCBFC21EA49C84D4;
+		};
+		AC1C4E55820E68F0C491DE13 = {
+			isa = PBXBuildFile;
+			fileRef = AC1C45E40FFC20D42D6CB92B;
+		};
+		AC1C9788682F778A9EAC023D = {
+			isa = PBXBuildFile;
+			fileRef = AC1CEFD7CC40A6FF8EBBEDA0;
+		};
+		AC1CB6208C586041AF6D4ABF = {
+			isa = PBXBuildFile;
+			fileRef = AC1C66E1108C1E670D216E7A;
+		};
+		AC1CF7732DE6B950FC597415 = {
+			isa = PBXBuildFile;
+			fileRef = AC1C730C079EA94BD6887991;
+		};
+		AC1C77737A671B2C338F1C07 = {
+			isa = PBXBuildFile;
+			fileRef = AC1CDE04D87A479237C05C8E;
+		};
+		AC1A0413DFEAB7C80AD0169E = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "AC1900000000000000000062";
+		};
+		AC1A4C258A23CC3D8CFB687B = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "AC1900000000000000000060";
+		};
+		AC1AACDF4EB7AE0A653BB755 = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "AC1900000000000000000040";
+		};
+		AC1A4BDD87A0C736A208B0F5 = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "AC1A004C34E886F9789A91D4";
+			"settings" = {
+				"ATTRIBUTES" = (
+					"RemoveHeadersOnCopy",
+				);
+			};
+		};
+		AC1A411A28FDE788CD2B3BA2 = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "AC1900000000000000000061";
+		};
+		AC1A5F85AD62A9301B4501F3 = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "AC1900000000000000000040";
+		};
+		AC1A4885D309FDBB764BC584 = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "AC1ACF2CB9BDADCFFA5BFC33";
+			"settings" = {
+				"ATTRIBUTES" = (
+					"RemoveHeadersOnCopy",
+				);
+			};
+		};
+		AC1A49F7024032FF5375EC18 = {
+			"isa" = "PBXBuildFile";
+			"productRef" = "AC1900000000000000000062";
+		};
+		AC1ADFF474DC5D808173EA24 = {
+			"isa" = "PBXBuildFile";
+			"fileRef" = "AC1A925C7D8DF5F78A43A2F9";
+			"settings" = {
+				"ATTRIBUTES" = (
+					"RemoveHeadersOnCopy",
+				);
+			};
+		};
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -928,6 +1007,27 @@
 			"remoteGlobalIDString" = "AC1AB2E6EF07D8BD19B35EDC";
 			"remoteInfo" = "HanlinMiniAppsNotificationService";
 		};
+		AC1A5F58A86B56DB651C4218 = {
+			"isa" = "PBXContainerItemProxy";
+			"containerPortal" = "D7B6C3B92D50A55D004E3AD6";
+			"proxyType" = "1";
+			"remoteGlobalIDString" = "AC1A9D0BD4FE0767C06C27EC";
+			"remoteInfo" = "HanlinMiniAppsKeyboard";
+		};
+		AC1A2873CEBF9372F86ED6BC = {
+			"isa" = "PBXContainerItemProxy";
+			"containerPortal" = "D7B6C3B92D50A55D004E3AD6";
+			"proxyType" = "1";
+			"remoteGlobalIDString" = "AC1A7D240E2DB977937226A0";
+			"remoteInfo" = "HanlinMiniAppsNotificationContent";
+		};
+		AC1A54ADAEF2DB7998924AEF = {
+			"isa" = "PBXContainerItemProxy";
+			"containerPortal" = "D7B6C3B92D50A55D004E3AD6";
+			"proxyType" = "1";
+			"remoteGlobalIDString" = "AC1A7134E61D322FB5CC2B3A";
+			"remoteInfo" = "HanlinMiniAppsCameraCapture";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -983,6 +1083,8 @@
 				"AC1A4AE4C663668DDFD0F810",
 				"AC1AB4E42CBACB1F5D38A204",
 				"AC1A883326E8B07E1F5AEF41",
+				"AC1A4BDD87A0C736A208B0F5",
+				"AC1A4885D309FDBB764BC584",
 			);
 			"name" = "Embed MiniApps App Extensions";
 			"runOnlyForDeploymentPostprocessing" = "0";
@@ -994,6 +1096,7 @@
 			"dstSubfolderSpec" = "16";
 			"files" = (
 				"AC1A4542C7D84CCEE569F38F",
+				"AC1ADFF474DC5D808173EA24",
 			);
 			"name" = "Embed MiniApps ExtensionKit Extensions";
 			"runOnlyForDeploymentPostprocessing" = "0";
@@ -1662,6 +1765,63 @@
 			"path" = "HanlinMiniAppsNotificationService.appex";
 			"sourceTree" = "BUILT_PRODUCTS_DIR";
 		};
+		AC1CD38ECCBFC21EA49C84D4 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC1C45E40FFC20D42D6CB92B = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppCaptureCoordinator.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC1CEFD7CC40A6FF8EBBEDA0 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppCaptureInbox.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC1C66E1108C1E670D216E7A = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSpotlightIndex.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC1C730C079EA94BD6887991 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSystemCatalog.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC1CDE04D87A479237C05C8E = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSystemEntrypointsView.swift";
+			sourceTree = SOURCE_ROOT;
+		};
+		AC1A004C34E886F9789A91D4 = {
+			"isa" = "PBXFileReference";
+			"explicitFileType" = "wrapper.app-extension";
+			"includeInIndex" = "0";
+			"path" = "HanlinMiniAppsKeyboard.appex";
+			"sourceTree" = "BUILT_PRODUCTS_DIR";
+		};
+		AC1ACF2CB9BDADCFFA5BFC33 = {
+			"isa" = "PBXFileReference";
+			"explicitFileType" = "wrapper.app-extension";
+			"includeInIndex" = "0";
+			"path" = "HanlinMiniAppsNotificationContent.appex";
+			"sourceTree" = "BUILT_PRODUCTS_DIR";
+		};
+		AC1A925C7D8DF5F78A43A2F9 = {
+			"isa" = "PBXFileReference";
+			"explicitFileType" = "wrapper.extensionkit-extension";
+			"includeInIndex" = "0";
+			"path" = "HanlinMiniAppsCameraCapture.appex";
+			"sourceTree" = "BUILT_PRODUCTS_DIR";
+		};
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -2153,8 +2313,14 @@
 				"Downstream/Scripting/HanlinWorkerScriptingSessions.swift" ,
 				"Downstream/Scripting/README.md" ,
 				"Downstream/ScriptingPlatform/HanlinAppleDeviceSnapshotProvider.swift" ,
+				"Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift" ,
 				"Downstream/ScriptingPlatform/HanlinMiniAppAssistantAIService.swift" ,
 				"Downstream/ScriptingPlatform/HanlinMiniAppAssistantToolRuntime.swift" ,
+				"Downstream/ScriptingPlatform/HanlinMiniAppCaptureCoordinator.swift" ,
+				"Downstream/ScriptingPlatform/HanlinMiniAppCaptureInbox.swift" ,
+				"Downstream/ScriptingPlatform/HanlinMiniAppSpotlightIndex.swift" ,
+				"Downstream/ScriptingPlatform/HanlinMiniAppSystemCatalog.swift" ,
+				"Downstream/ScriptingPlatform/HanlinMiniAppSystemEntrypointsView.swift" ,
 				"Downstream/ScriptingPlatform/HanlinNodeMobileScriptingCompiler.swift" ,
 				"Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift" ,
 				"Downstream/ScriptingPlatform/HanlinScriptingApplicationRuntimeBridge.swift" ,
@@ -2356,6 +2522,30 @@
 			);
 			"target" = "AC1AB2E6EF07D8BD19B35EDC";
 		};
+		AC1A38C2CBF0EB3ECA0010C4 = {
+			"isa" = "PBXFileSystemSynchronizedBuildFileExceptionSet";
+			"membershipExceptions" = (
+				"Info.plist",
+				"HanlinMiniAppsKeyboard.entitlements",
+			);
+			"target" = "AC1A9D0BD4FE0767C06C27EC";
+		};
+		AC1AC4EF69FA4B761338875B = {
+			"isa" = "PBXFileSystemSynchronizedBuildFileExceptionSet";
+			"membershipExceptions" = (
+				"Info.plist",
+				"HanlinMiniAppsNotificationContent.entitlements",
+			);
+			"target" = "AC1A7D240E2DB977937226A0";
+		};
+		AC1A70D09DF905CBD552311D = {
+			"isa" = "PBXFileSystemSynchronizedBuildFileExceptionSet";
+			"membershipExceptions" = (
+				"Info.plist",
+				"HanlinMiniAppsCameraCapture.entitlements",
+			);
+			"target" = "AC1A7134E61D322FB5CC2B3A";
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -2445,6 +2635,30 @@
 				"AC1A9185B3B115E3031BE620",
 			);
 			"path" = "HanlinMiniAppsExtensions/Notification";
+			"sourceTree" = "<group>";
+		};
+		AC1A30ED03A568B5E7064298 = {
+			"isa" = "PBXFileSystemSynchronizedRootGroup";
+			"exceptions" = (
+				"AC1A38C2CBF0EB3ECA0010C4",
+			);
+			"path" = "HanlinMiniAppsExtensions/Keyboard";
+			"sourceTree" = "<group>";
+		};
+		AC1AFFBB562B6F443DCF2F7A = {
+			"isa" = "PBXFileSystemSynchronizedRootGroup";
+			"exceptions" = (
+				"AC1AC4EF69FA4B761338875B",
+			);
+			"path" = "HanlinMiniAppsExtensions/NotificationContent";
+			"sourceTree" = "<group>";
+		};
+		AC1AEDDEAE299E360927E6C1 = {
+			"isa" = "PBXFileSystemSynchronizedRootGroup";
+			"exceptions" = (
+				"AC1A70D09DF905CBD552311D",
+			);
+			"path" = "HanlinMiniAppsExtensions/CameraCapture";
 			"sourceTree" = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -2558,6 +2772,7 @@
 				"AC190000000000000000004A" ,
 				"AC1900000000000000000052" ,
 				"AC1900000000000000000055" ,
+				"AC1900000000000000000063" ,
 			);
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
@@ -2584,6 +2799,7 @@
 				"AC1A18E8388907D5BA70D589",
 				"AC1A81E995779F79D4F7E3A2",
 				"AC1A6C96CE3730871961A620",
+				"AC1A0413DFEAB7C80AD0169E",
 			);
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
@@ -2615,6 +2831,32 @@
 			"files" = (
 				"AC1A1B5D880F589211E7E2BC",
 				"AC1AF5C4112280B3C8D77673",
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1AFF68852ADD79AEFA895E = {
+			"isa" = "PBXFrameworksBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+				"AC1A4C258A23CC3D8CFB687B",
+				"AC1AACDF4EB7AE0A653BB755",
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1AC8F752185B795B36328A = {
+			"isa" = "PBXFrameworksBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+				"AC1A411A28FDE788CD2B3BA2",
+				"AC1A5F85AD62A9301B4501F3",
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1A23BEC927AC3475092B85 = {
+			"isa" = "PBXFrameworksBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+				"AC1A49F7024032FF5375EC18",
 			);
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
@@ -2669,6 +2911,9 @@
 				"AC1AEC849494086A29AC7660" ,
 				"AC1A33D68C4056BE0A7A2B08" ,
 				"AC1AE93E557E12AD64B8088E" ,
+				"AC1A30ED03A568B5E7064298" ,
+				"AC1AFFBB562B6F443DCF2F7A" ,
+				"AC1AEDDEAE299E360927E6C1" ,
 			);
 			"sourceTree" = "<group>";
 		};
@@ -2690,6 +2935,9 @@
 				"AC1A7440D7F7BFC2A59D0385" ,
 				"AC1AB2CB7B93EA577E6BCD07" ,
 				"AC1A4E112E2B27FFB777C17B" ,
+				"AC1A004C34E886F9789A91D4" ,
+				"AC1ACF2CB9BDADCFFA5BFC33" ,
+				"AC1A925C7D8DF5F78A43A2F9" ,
 			);
 			"name" = "Products";
 			"sourceTree" = "<group>";
@@ -2790,6 +3038,12 @@
 				"AC190000000000000000011A" ,
 				"AC190000000000000000011C" ,
 				"AC190000000000000000011E" ,
+				"AC1CD38ECCBFC21EA49C84D4" ,
+				"AC1C45E40FFC20D42D6CB92B" ,
+				"AC1CEFD7CC40A6FF8EBBEDA0" ,
+				"AC1C66E1108C1E670D216E7A" ,
+				"AC1C730C079EA94BD6887991" ,
+				"AC1CDE04D87A479237C05C8E" ,
 			);
 			"name" = "MiniApps Shared Implementation";
 			"sourceTree" = "<group>";
@@ -2974,6 +3228,9 @@
 				"AC1A00F8DB26183FED918108" ,
 				"AC1AEFFA16A846A91B66E76E" ,
 				"AC1AE5855A7557AAA5F678C1" ,
+				"AC1AE0B7B003B4FB5471D454" ,
+				"AC1A287A592C30582EA45898" ,
+				"AC1A74EC09673909838A13E6" ,
 			);
 			"fileSystemSynchronizedGroups" = ("F80000000000000000000003", );
 			"name" = "HanlinMiniApps";
@@ -3011,6 +3268,7 @@
 				"AC1900000000000000000043" ,
 				"AC1900000000000000000050" ,
 				"AC1900000000000000000044" ,
+				"AC1900000000000000000062" ,
 			);
 			"productName" = "HanlinMiniApps";
 			"productReference" = "F80000000000000000000002";
@@ -3064,6 +3322,7 @@
 				"AC1900000000000000000044",
 				"AC1900000000000000000040",
 				"AC1900000000000000000050",
+				"AC1900000000000000000062",
 			);
 			"productName" = "HanlinMiniAppsWidgets";
 			"productReference" = "AC1A06108AD498E0B09DC231";
@@ -3144,6 +3403,77 @@
 			"productName" = "HanlinMiniAppsNotificationService";
 			"productReference" = "AC1A4E112E2B27FFB777C17B";
 			"productType" = "com.apple.product-type.app-extension";
+		};
+		AC1A9D0BD4FE0767C06C27EC = {
+			"isa" = "PBXNativeTarget";
+			"buildConfigurationList" = "AC1A2E0CA63379BC8806978C";
+			"buildPhases" = (
+				"AC1A68E7DFF538BCE01FD9AC",
+				"AC1AFF68852ADD79AEFA895E",
+				"AC1A7B4D655D750157083ADD",
+			);
+			"buildRules" = (
+			);
+			"dependencies" = (
+			);
+			"fileSystemSynchronizedGroups" = (
+				"AC1A30ED03A568B5E7064298",
+			);
+			"name" = "HanlinMiniAppsKeyboard";
+			"packageProductDependencies" = (
+				"AC1900000000000000000060",
+				"AC1900000000000000000040",
+			);
+			"productName" = "HanlinMiniAppsKeyboard";
+			"productReference" = "AC1A004C34E886F9789A91D4";
+			"productType" = "com.apple.product-type.app-extension";
+		};
+		AC1A7D240E2DB977937226A0 = {
+			"isa" = "PBXNativeTarget";
+			"buildConfigurationList" = "AC1A1982D77C8FABE4402231";
+			"buildPhases" = (
+				"AC1A7B47631188DE32BD54E7",
+				"AC1AC8F752185B795B36328A",
+				"AC1A1ABF7430506A5DEA2EDD",
+			);
+			"buildRules" = (
+			);
+			"dependencies" = (
+			);
+			"fileSystemSynchronizedGroups" = (
+				"AC1AFFBB562B6F443DCF2F7A",
+			);
+			"name" = "HanlinMiniAppsNotificationContent";
+			"packageProductDependencies" = (
+				"AC1900000000000000000061",
+				"AC1900000000000000000040",
+			);
+			"productName" = "HanlinMiniAppsNotificationContent";
+			"productReference" = "AC1ACF2CB9BDADCFFA5BFC33";
+			"productType" = "com.apple.product-type.app-extension";
+		};
+		AC1A7134E61D322FB5CC2B3A = {
+			"isa" = "PBXNativeTarget";
+			"buildConfigurationList" = "AC1A5A8E0AC9A129F1D13AAE";
+			"buildPhases" = (
+				"AC1A63C6648916369008128F",
+				"AC1A23BEC927AC3475092B85",
+				"AC1A506072CDAB6460D3D53A",
+			);
+			"buildRules" = (
+			);
+			"dependencies" = (
+			);
+			"fileSystemSynchronizedGroups" = (
+				"AC1AEDDEAE299E360927E6C1",
+			);
+			"name" = "HanlinMiniAppsCameraCapture";
+			"packageProductDependencies" = (
+				"AC1900000000000000000062",
+			);
+			"productName" = "HanlinMiniAppsCameraCapture";
+			"productReference" = "AC1A925C7D8DF5F78A43A2F9";
+			"productType" = "com.apple.product-type.extensionkit-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -3228,6 +3558,9 @@
 				"AC1AF61019ACF70564084A0F" ,
 				"AC1AAB1214124A3513123C79" ,
 				"AC1AB2E6EF07D8BD19B35EDC" ,
+				"AC1A9D0BD4FE0767C06C27EC" ,
+				"AC1A7D240E2DB977937226A0" ,
+				"AC1A7134E61D322FB5CC2B3A" ,
 			);
 		};
 /* End PBXProject section */
@@ -3347,6 +3680,27 @@
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
 		AC1A200F83C701AE3CFCA82E = {
+			"isa" = "PBXResourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1A7B4D655D750157083ADD = {
+			"isa" = "PBXResourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1A1ABF7430506A5DEA2EDD = {
+			"isa" = "PBXResourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1A506072CDAB6460D3D53A = {
 			"isa" = "PBXResourcesBuildPhase";
 			"buildActionMask" = "2147483647";
 			"files" = (
@@ -3484,6 +3838,21 @@
 			"isa" = "PBXTargetDependency";
 			"target" = "AC1AB2E6EF07D8BD19B35EDC";
 			"targetProxy" = "AC1A954FBEE716202B86FF2F";
+		};
+		AC1AE0B7B003B4FB5471D454 = {
+			"isa" = "PBXTargetDependency";
+			"target" = "AC1A9D0BD4FE0767C06C27EC";
+			"targetProxy" = "AC1A5F58A86B56DB651C4218";
+		};
+		AC1A287A592C30582EA45898 = {
+			"isa" = "PBXTargetDependency";
+			"target" = "AC1A7D240E2DB977937226A0";
+			"targetProxy" = "AC1A2873CEBF9372F86ED6BC";
+		};
+		AC1A74EC09673909838A13E6 = {
+			"isa" = "PBXTargetDependency";
+			"target" = "AC1A7134E61D322FB5CC2B3A";
+			"targetProxy" = "AC1A54ADAEF2DB7998924AEF";
 		};
 /* End PBXTargetDependency section */
 
@@ -3623,6 +3992,12 @@
 				"AC190000000000000000011B" ,
 				"AC190000000000000000011D" ,
 				"AC190000000000000000011F" ,
+				"AC1CED5DAE1E76828E6393FA" ,
+				"AC1C4E55820E68F0C491DE13" ,
+				"AC1C9788682F778A9EAC023D" ,
+				"AC1CB6208C586041AF6D4ABF" ,
+				"AC1CF7732DE6B950FC597415" ,
+				"AC1C77737A671B2C338F1C07" ,
 			);
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
@@ -3667,6 +4042,27 @@
 			"runOnlyForDeploymentPostprocessing" = "0";
 		};
 		AC1A38D284DE915B7FC5EA13 = {
+			"isa" = "PBXSourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1A68E7DFF538BCE01FD9AC = {
+			"isa" = "PBXSourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1A7B47631188DE32BD54E7 = {
+			"isa" = "PBXSourcesBuildPhase";
+			"buildActionMask" = "2147483647";
+			"files" = (
+			);
+			"runOnlyForDeploymentPostprocessing" = "0";
+		};
+		AC1A63C6648916369008128F = {
 			"isa" = "PBXSourcesBuildPhase";
 			"buildActionMask" = "2147483647";
 			"files" = (
@@ -4727,6 +5123,174 @@
 			};
 			"name" = "Release";
 		};
+		AC1AE6E1B24E7E44199A92F9 = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"APPLICATION_EXTENSION_API_ONLY" = "YES";
+				"CODE_SIGN_ENTITLEMENTS" = "HanlinMiniAppsExtensions/Keyboard/HanlinMiniAppsKeyboard.entitlements";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"DEVELOPMENT_TEAM" = "NA6HPWARQ2";
+				"GENERATE_INFOPLIST_FILE" = "YES";
+				"INFOPLIST_FILE" = "HanlinMiniAppsExtensions/Keyboard/Info.plist";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "27.0";
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				"MARKETING_VERSION" = "0.1.0";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.itorah.hanlinminiapps.keyboard";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"SKIP_INSTALL" = "YES";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"SWIFT_APPROACHABLE_CONCURRENCY" = "YES";
+				"SWIFT_VERSION" = "6.0";
+				"TARGETED_DEVICE_FAMILY" = "1,2";
+				"PRODUCT_MODULE_NAME" = "HanlinMiniAppsKeyboardHost";
+			};
+			"name" = "Debug";
+		};
+		AC1AF0FE6C9B3E476DE1E0FA = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"APPLICATION_EXTENSION_API_ONLY" = "YES";
+				"CODE_SIGN_ENTITLEMENTS" = "HanlinMiniAppsExtensions/Keyboard/HanlinMiniAppsKeyboard.entitlements";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"DEVELOPMENT_TEAM" = "NA6HPWARQ2";
+				"GENERATE_INFOPLIST_FILE" = "YES";
+				"INFOPLIST_FILE" = "HanlinMiniAppsExtensions/Keyboard/Info.plist";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "27.0";
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				"MARKETING_VERSION" = "0.1.0";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.itorah.hanlinminiapps.keyboard";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"SKIP_INSTALL" = "YES";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"SWIFT_APPROACHABLE_CONCURRENCY" = "YES";
+				"SWIFT_VERSION" = "6.0";
+				"TARGETED_DEVICE_FAMILY" = "1,2";
+				"PRODUCT_MODULE_NAME" = "HanlinMiniAppsKeyboardHost";
+			};
+			"name" = "Release";
+		};
+		AC1A89F5A11CF54B1F6B12FA = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"APPLICATION_EXTENSION_API_ONLY" = "YES";
+				"CODE_SIGN_ENTITLEMENTS" = "HanlinMiniAppsExtensions/NotificationContent/HanlinMiniAppsNotificationContent.entitlements";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"DEVELOPMENT_TEAM" = "NA6HPWARQ2";
+				"GENERATE_INFOPLIST_FILE" = "YES";
+				"INFOPLIST_FILE" = "HanlinMiniAppsExtensions/NotificationContent/Info.plist";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "27.0";
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				"MARKETING_VERSION" = "0.1.0";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.itorah.hanlinminiapps.notification-content";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"SKIP_INSTALL" = "YES";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"SWIFT_APPROACHABLE_CONCURRENCY" = "YES";
+				"SWIFT_VERSION" = "6.0";
+				"TARGETED_DEVICE_FAMILY" = "1,2";
+				"PRODUCT_MODULE_NAME" = "HanlinMiniAppsNotificationContentHost";
+			};
+			"name" = "Debug";
+		};
+		AC1ACA59821E5875B98EBFA7 = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"APPLICATION_EXTENSION_API_ONLY" = "YES";
+				"CODE_SIGN_ENTITLEMENTS" = "HanlinMiniAppsExtensions/NotificationContent/HanlinMiniAppsNotificationContent.entitlements";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"DEVELOPMENT_TEAM" = "NA6HPWARQ2";
+				"GENERATE_INFOPLIST_FILE" = "YES";
+				"INFOPLIST_FILE" = "HanlinMiniAppsExtensions/NotificationContent/Info.plist";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "27.0";
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				"MARKETING_VERSION" = "0.1.0";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.itorah.hanlinminiapps.notification-content";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"SKIP_INSTALL" = "YES";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"SWIFT_APPROACHABLE_CONCURRENCY" = "YES";
+				"SWIFT_VERSION" = "6.0";
+				"TARGETED_DEVICE_FAMILY" = "1,2";
+				"PRODUCT_MODULE_NAME" = "HanlinMiniAppsNotificationContentHost";
+			};
+			"name" = "Release";
+		};
+		AC1A62FF682DBFB819C1C5DA = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"APPLICATION_EXTENSION_API_ONLY" = "YES";
+				"CODE_SIGN_ENTITLEMENTS" = "HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.entitlements";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"DEVELOPMENT_TEAM" = "NA6HPWARQ2";
+				"GENERATE_INFOPLIST_FILE" = "YES";
+				"INFOPLIST_FILE" = "HanlinMiniAppsExtensions/CameraCapture/Info.plist";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "27.0";
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				"MARKETING_VERSION" = "0.1.0";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.itorah.hanlinminiapps.camera-capture";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"SKIP_INSTALL" = "YES";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"SWIFT_APPROACHABLE_CONCURRENCY" = "YES";
+				"SWIFT_VERSION" = "6.0";
+				"TARGETED_DEVICE_FAMILY" = "1,2";
+				"PRODUCT_MODULE_NAME" = "HanlinMiniAppsCameraCaptureHost";
+			};
+			"name" = "Debug";
+		};
+		AC1A3713FA7252A25C7016D4 = {
+			"isa" = "XCBuildConfiguration";
+			"buildSettings" = {
+				"APPLICATION_EXTENSION_API_ONLY" = "YES";
+				"CODE_SIGN_ENTITLEMENTS" = "HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.entitlements";
+				"CODE_SIGN_STYLE" = "Automatic";
+				"CURRENT_PROJECT_VERSION" = "1";
+				"DEVELOPMENT_TEAM" = "NA6HPWARQ2";
+				"GENERATE_INFOPLIST_FILE" = "YES";
+				"INFOPLIST_FILE" = "HanlinMiniAppsExtensions/CameraCapture/Info.plist";
+				"IPHONEOS_DEPLOYMENT_TARGET" = "27.0";
+				"LD_RUNPATH_SEARCH_PATHS" = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				"MARKETING_VERSION" = "0.1.0";
+				"PRODUCT_BUNDLE_IDENTIFIER" = "com.itorah.hanlinminiapps.camera-capture";
+				"PRODUCT_NAME" = "$(TARGET_NAME)";
+				"SKIP_INSTALL" = "YES";
+				"SUPPORTED_PLATFORMS" = "iphoneos iphonesimulator";
+				"SWIFT_APPROACHABLE_CONCURRENCY" = "YES";
+				"SWIFT_VERSION" = "6.0";
+				"TARGETED_DEVICE_FAMILY" = "1,2";
+				"PRODUCT_MODULE_NAME" = "HanlinMiniAppsCameraCaptureHost";
+			};
+			"name" = "Release";
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -4852,6 +5416,33 @@
 			"buildConfigurations" = (
 				"AC1AECB5949F2A312BA8FBAA",
 				"AC1A55CB050528CAA62C349A",
+			);
+			"defaultConfigurationIsVisible" = "0";
+			"defaultConfigurationName" = "Release";
+		};
+		AC1A2E0CA63379BC8806978C = {
+			"isa" = "XCConfigurationList";
+			"buildConfigurations" = (
+				"AC1AE6E1B24E7E44199A92F9",
+				"AC1AF0FE6C9B3E476DE1E0FA",
+			);
+			"defaultConfigurationIsVisible" = "0";
+			"defaultConfigurationName" = "Release";
+		};
+		AC1A1982D77C8FABE4402231 = {
+			"isa" = "XCConfigurationList";
+			"buildConfigurations" = (
+				"AC1A89F5A11CF54B1F6B12FA",
+				"AC1ACA59821E5875B98EBFA7",
+			);
+			"defaultConfigurationIsVisible" = "0";
+			"defaultConfigurationName" = "Release";
+		};
+		AC1A5A8E0AC9A129F1D13AAE = {
+			"isa" = "XCConfigurationList";
+			"buildConfigurations" = (
+				"AC1A62FF682DBFB819C1C5DA",
+				"AC1A3713FA7252A25C7016D4",
 			);
 			"defaultConfigurationIsVisible" = "0";
 			"defaultConfigurationName" = "Release";
@@ -5206,6 +5797,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = AC1900000000000000000001;
 			productName = HanlinExpoWidgetsOriginal;
+		};
+		AC1900000000000000000060 = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC1900000000000000000001;
+			productName = HanlinKeyboardUI;
+		};
+		AC1900000000000000000061 = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC1900000000000000000001;
+			productName = HanlinNotificationContentUI;
+		};
+		AC1900000000000000000062 = {
+			isa = XCSwiftPackageProductDependency;
+			package = AC1900000000000000000001;
+			productName = HanlinCameraCaptureUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 

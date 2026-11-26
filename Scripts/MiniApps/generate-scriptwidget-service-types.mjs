@@ -149,7 +149,27 @@ export async function generateScriptWidgetServiceTypes({root = repositoryRoot, o
     if (!host.includes('expandSheet: __hanlinPresentationExpand') || !host.includes('finish: text => __hanlinPresentationFinish'))
       throw new Error('Native presentation command binding changed.');
     hostGlobalsInstalled.push('$presentation');
-    outputLines.push('declare const $presentation: {expandSheet(): void; finish(replacementText?: string | null): void};', '');
+    for (const [binding, name, signature] of [
+      ['keyboardEdit', '__hanlinKeyboardEdit', '(NSDictionary)->Void'],
+      ['notificationAction', '__hanlinNotificationAction', '(String)->Void'],
+    ]) {
+      if (!host.replace(/\s/g, '').includes('let' + binding + ':@convention(block)' + signature) ||
+          !host.includes('context.setObject(' + binding + ', forKeyedSubscript: "' + name + '"'))
+        throw new Error('Native system presentation binding changed: ' + name);
+    }
+    for (const operation of ['insertText', 'deleteBackward', 'adjustTextPosition', 'nextInputMode'])
+      if (!host.includes('operation: "' + operation + '"'))
+        throw new Error('Native keyboard command binding changed: ' + operation);
+    for (const action of ['openApp', 'dismiss'])
+      if (!host.includes('__hanlinNotificationAction("' + action + '")'))
+        throw new Error('Native notification command binding changed: ' + action);
+    outputLines.push(
+      'declare const $presentation: {',
+      '  expandSheet(): void;',
+      '  finish(replacementText?: string | null): void;',
+      '  keyboard: {insertText(text: string): void; deleteBackward(): void; adjustTextPosition(offset: number): void; nextInputMode(): void};',
+      '  notification: {openApp(): void; dismiss(): void};',
+      '};', '');
   }
   if (host.includes('actionParameters: HanlinValue') && host.includes('"parameters": actionParameters.toAny()'))
     outputLines.push('declare namespace JSX { interface GlobalProperties { actionParameters?: ScriptWidgetJSON; } }', '');

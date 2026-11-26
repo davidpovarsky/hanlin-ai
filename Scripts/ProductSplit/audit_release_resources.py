@@ -22,28 +22,16 @@ import urllib.request
 from miniapps_extensions import EXTENSIONS
 
 ROOT = Path(__file__).resolve().parents[2]
-ROLES = [
-    ("ai", "com.itorah.chavrusachat", "APPLE_MAIN_PROVISIONING_PROFILE_B64", "AI_HLY/AI_HLY.entitlements"),
-    ("miniapps", "com.itorah.hanlinminiapps", "APPLE_MINIAPPS_PROVISIONING_PROFILE_B64", "HanlinMiniAppsApp/HanlinMiniApps.entitlements"),
-    ("share", "com.itorah.chavrusachat.share", "APPLE_SHARE_PROVISIONING_PROFILE_B64", "ChavrusaChatShare/ChavrusaChatShare.entitlements"),
-    ("widgets", "com.itorah.chavrusachat.widgets", "APPLE_WIDGETS_PROVISIONING_PROFILE_B64", "HanlinScriptingWidgets/HanlinScriptingWidgets.entitlements"),
-    ("translation", "com.itorah.chavrusachat.translation-provider", "APPLE_TRANSLATION_PROVISIONING_PROFILE_B64", "ChavrusaChatTranslationProvider/ChavrusaChatTranslationProvider.entitlements"),
-    ("notification", "com.itorah.chavrusachat.notification-service", "APPLE_NOTIFICATION_SERVICE_PROVISIONING_PROFILE_B64", "ChavrusaChatNotificationService/ChavrusaChatNotificationService.entitlements"),
-]
-ROLES.extend(
-    ("miniapps_" + suffix.replace("-", "_"), "com.itorah.hanlinminiapps." + suffix,
-     "APPLE_MINIAPPS_" + suffix.replace("-", "_").upper() + "_PROVISIONING_PROFILE_B64",
-     "HanlinMiniAppsExtensions/" + folder + "/" + target + ".entitlements")
-    for target, _, folder, suffix in EXTENSIONS
-)
+from extension_inventory import ROLES, signing_targets_for_owner
 
 
 def product_roles(product):
     """Every original embedded extension belongs to exactly one application."""
     if product not in {"ai", "miniapps"}:
         raise ValueError("Unknown original product family")
-    return [row for row in ROLES
-            if (row[0] == "miniapps" or row[0].startswith("miniapps_")) == (product == "miniapps")]
+    targets = signing_targets_for_owner(product)
+    return [(target.role, target.bundle, target.profile_environment, target.entitlements)
+            for target in targets]
 
 
 def utc(value):

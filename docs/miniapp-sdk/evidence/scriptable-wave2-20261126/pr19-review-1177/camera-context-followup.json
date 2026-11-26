@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "atUTC": "2026-11-26T16:48:14.005003+00:00",
+  "parentSHA": "19cca5723115725bc3668a26ac5496e61e6dd299",
+  "independentReviewer": "/root/wave2_miniapps",
+  "finding": "A suspended camera appContext load outlives window A. After release a new request in B could start a second load and either continuation could overwrite the other's presentation.",
+  "resolution": "Keep one observed cameraContextLoading claim across window release. Do not consume a newer request while loading. Existing presentation transfers to an active window. Completion changes are observed by the scene to drain a pending request after success or failure.",
+  "productionBoundary": "Default consume and context callbacks still call the original HanlinCameraCaptureRequests and CameraCaptureIntent.appContext. Test controls only their asynchronous delivery; it invokes the actual coordinator and creates real owned directories.",
+  "newNativeSelector": "AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests/testCameraContextLoadRemainsSingleAcrossWindowReleaseAndNewRequest",
+  "nativeSuiteMethodCount": 8,
+  "existingSevenMethodsByteIdentical": true,
+  "files": [
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppCaptureCoordinator.swift",
+      "sha256": "8a4772d47f4e62a654d32b39b1671e8c4d6826620a5d7b0fda9f05dcfa6eac88"
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSystemEntrypointsView.swift",
+      "sha256": "c4e33436ed4718b944e680e593f92a23167e07ea0e5b787a933b759bd51786dd"
+    },
+    {
+      "path": "AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests.swift",
+      "sha256": "e3ad4863f2244103503be0a0abbaec3767336c40681452d2e0d020de912381d0"
+    }
+  ],
+  "validation": {
+    "gitDiffCheck": "PASS",
+    "Swift6_4_3LinuxFrontendParse": "3 changed files PASS; syntax only",
+    "AppleTypecheck": "NOT_RUN",
+    "nativeTestExecution": "NOT_RUN; integrated root queue owns it"
+  },
+  "motion": "No changes to frozen953 Motion production/test/controller closure"
+}

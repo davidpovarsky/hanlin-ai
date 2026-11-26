@@ -67,9 +67,9 @@ class ProfileResolutionTests(unittest.TestCase):
     def decode(self, encoded, directory):
         return ("fixture-cms-" + encoded).encode(), self.profiles[encoded]
 
-    def resolve(self):
+    def resolve(self, **kwargs):
         return resolve_profile("ai", BUNDLE, REQUIRED, CERTIFICATE_SHA, "existing-cert", TEAM, ".",
-                               get=self.get, create=self.create, decode_content=self.decode)
+                               get=self.get, create=self.create, decode_content=self.decode, **kwargs)
 
     def test_reuses_exact_compatible_profile_without_mutation(self):
         profile, facts = self.resolve()
@@ -104,6 +104,36 @@ class ProfileResolutionTests(unittest.TestCase):
         self.assertEqual(facts["status"], "READY_RESOURCE")
         self.create.assert_called_once_with("original-bundle", "existing-cert", "Hanlin ai App Store 12345")
         self.assertIn("/v1/profiles/created", self.reads)
+
+    def test_explicit_local_release_context_creates_profile_without_fabricated_github_run(self):
+        self.candidates["data"] = []
+        source_sha = "a" * 40
+        with patch.dict(os.environ, {"GITHUB_RUN_ID": ""}):
+            _, facts = self.resolve(local_source_sha=source_sha, local_build_number="8302")
+        self.create.assert_called_once_with("original-bundle", "existing-cert",
+                                           "Hanlin ai App Store Mac 8302 " + source_sha[:12])
+        self.assertEqual(facts["local_release_context"],
+                         {"provider": "local-mac", "source_sha": source_sha, "build_number": "8302"})
+        self.assertEqual(facts["status"], "READY_RESOURCE")
+        self.assertIn("/v1/profiles/created", self.reads)
+
+    def test_invalid_local_release_context_cannot_create_a_profile(self):
+        self.candidates["data"] = []
+        for source, build in (("../other", "8302"), ("two words", "8302"),
+                              ("x" * 81, "8302"), ("a" * 40, "0"), ("a" * 40, None)):
+            with self.subTest(source=source, build=build):
+                with self.assertRaisesRegex(ValueError, "Local Mac profile naming"):
+                    self.resolve(local_source_sha=source, local_build_number=build)
+        self.create.assert_not_called()
+        self.assertEqual(self.reads, [])
+
+    def test_generic_operation_tag_cannot_replace_a_concrete_release_context(self):
+        self.candidates["data"] = []
+        # The incoming generic tag is not the root's source SHA/build contract.
+        with patch.dict(os.environ, {"GITHUB_RUN_ID": "", "HANLIN_SIGNING_OPERATION_ID": "four-entrypoints-20261126"}):
+            with self.assertRaisesRegex(ValueError, "concrete original GitHub run"):
+                self.resolve()
+        self.create.assert_not_called()
 
     def test_created_profile_must_pass_the_same_entitlement_checks(self):
         self.candidates["data"] = []

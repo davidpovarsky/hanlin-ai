@@ -78,7 +78,13 @@
     "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsCatalogView.swift",
     "AI_HLY/NativeAppPlatform/BuiltinApps/BuiltinCanonicalRegistrations.swift",
     "AI_HLY/NativeAppPlatform/Support/NativeAppColor.swift",
-    "AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift"
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSystemCatalog.swift",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppCaptureCoordinator.swift",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSpotlightIndex.swift",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppCaptureInbox.swift",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSystemEntrypointsView.swift"
   ],
   "native_sources": [
     "AI_HLY/Downstream/RuntimeCore/Node/Native/NodeRunner.mm",
@@ -139,7 +145,8 @@
     "ZIPFoundation",
     "HanlinTranslationUI",
     "HanlinExpoWidgetsOriginal",
-    "HanlinWidgetUI"
+    "HanlinWidgetUI",
+    "HanlinCameraCaptureUI"
   ],
   "native_framework_refs": [
     "A10000000000000000000020",

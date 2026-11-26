@@ -469,6 +469,71 @@ final class HanlinScriptingPlatform {
             .appending(path: "packages/\(package.record.installedPackageID.rawValue)/generations/\(package.record.activeGeneration)", directoryHint: .isDirectory)
     }
 
+    /// System surfaces use the same installed action queue/receipts as existing
+    /// Host invocations. The locked process never executes a package or enqueues.
+    @discardableResult
+    func openSystemEntrypoint(
+        installedPackageID: HanlinInstalledPackageID, entrypointID: String, generation: UInt64,
+        parameters: HanlinValue, invocationID: UUID = UUID(), createdAt: Date = .now
+    ) async throws -> UUID? {
+        guard !isTransferringProductData, let store else { throw HanlinMiniAppSystemEntrypointError.unavailable }
+        try requireLaunchAdmission()
+        // Other app-owned store actors can commit while this platform is alive.
+        // Reload the persisted registry at admission, not only this actor's cache.
+        installedPackages = try await store.restore()
+        guard let package = installedPackages.first(where: { $0.record.installedPackageID == installedPackageID }),
+              package.enabled else { throw HanlinMiniAppSystemEntrypointError.unavailable }
+        guard package.record.activeGeneration == generation else { throw HanlinMiniAppSystemEntrypointError.staleGeneration }
+        guard let entry = package.entrypoints.first(where: { $0.id == entrypointID &&
+            ($0.kind == .spotlight || $0.kind == .capture) }),
+              entry.supportedContexts.contains(.mainApplication),
+              let app = package.entrypoints.first(where: { $0.kind == .app &&
+                  ($0.runtimeProfile == .hanlinExpo || $0.runtimeProfile == .hanlinNativeScript) }),
+              entry.runtimeProfile == app.runtimeProfile, entry.sourcePath == app.sourcePath else {
+            throw HanlinMiniAppSystemEntrypointError.unavailable
+        }
+        if let symbol = entry.exportedSymbol {
+            let actions = try package.appDescriptor().actions.filter { $0.id.rawValue == symbol }
+            guard actions.count == 1, actions[0].handler == entry.sourcePath,
+                  !actions[0].capabilities.isEmpty else { throw HanlinMiniAppSystemEntrypointError.invalidAction }
+            if activeApplicationID != installedPackageID {
+                await launch(installedPackageID)
+            }
+            guard activeApplicationID == installedPackageID,
+                  activeExpoController != nil || activeNativeScriptController != nil else {
+                throw HanlinMiniAppSystemEntrypointError.applicationUnavailable
+            }
+            let latest = try await store.restore()
+            guard latest.contains(where: { $0.record.installedPackageID == installedPackageID &&
+                $0.enabled && $0.record.activeGeneration == generation && $0.entrypoints.contains(entry) }) else {
+                throw HanlinMiniAppSystemEntrypointError.staleGeneration
+            }
+            presentsForegroundAction = true
+            let command = HanlinScriptResumeCommand(id: invocationID, createdAt: createdAt,
+                invocation: .init(identity: .init(installedPackageID: installedPackageID,
+                    packageID: package.record.packageID, generation: generation, entrypointID: entrypointID),
+                    entityID: symbol, parameters: parameters, continueInForeground: true))
+            // enqueue preserves the original command/lease/receipt on an exact retry.
+            try submitResumeCommand(command)
+            await resumePendingInvocations()
+            return command.id
+        }
+        guard entry.kind == .spotlight else { throw HanlinMiniAppSystemEntrypointError.invalidAction }
+        await launch(installedPackageID)
+        let latest = try await store.restore()
+        guard latest.contains(where: { $0.record.installedPackageID == installedPackageID &&
+            $0.enabled && $0.record.activeGeneration == generation && $0.entrypoints.contains(entry) }) else {
+            dismissActiveApplication()
+            throw HanlinMiniAppSystemEntrypointError.staleGeneration
+        }
+        guard activeApplicationID == installedPackageID,
+              activeExpoController != nil || activeNativeScriptController != nil else {
+            throw HanlinMiniAppSystemEntrypointError.applicationUnavailable
+        }
+        presentsForegroundAction = true
+        return nil
+    }
+
     func submitResumeCommand(_ command: HanlinScriptResumeCommand) throws {
         guard let extensionStore else { throw HanlinScriptExtensionStoreError.appGroupUnavailable }
         try extensionStore.enqueue(command)
@@ -1718,6 +1783,7 @@ final class HanlinScriptingPlatform {
         var widgets: [HanlinScriptWidgetSnapshot] = []
         var intentEntities: [HanlinScriptIntentEntityRecord] = []
         var translationApps: [HanlinScriptTranslationUISnapshot] = []
+        var nativePresentations: [HanlinNativePresentationSnapshot] = []
         var packageDiagnostics: [HanlinInstalledPackageID: HanlinWidgetStorageDiagnostic] = [:]
         var failedWidgetPackageIDs = Set<HanlinInstalledPackageID>()
 
@@ -1736,6 +1802,22 @@ final class HanlinScriptingPlatform {
                         installedPackageID: package.record.installedPackageID, generation: package.record.activeGeneration)
                     return .init(engine: declaration.engine, programRef: artifact.ref,
                         programSHA256: artifact.sha256, input: declaration.input)
+                }
+
+                // Keyboard and notification panels use the same compiled original
+                // native programs as snippets, without requiring a widget instance.
+                for entrypoint in package.entrypoints where [.keyboard, .notificationUI].contains(entrypoint.kind) {
+                    guard let descriptor = try publishNativePresentation(entrypoint.id) else {
+                        throw HanlinNativePresentationError.unavailable
+                    }
+                    let identity = HanlinScriptExtensionIdentity(
+                        installedPackageID: package.record.installedPackageID,
+                        packageID: package.record.packageID,
+                        generation: package.record.activeGeneration,
+                        entrypointID: entrypoint.id)
+                    nativePresentations.append(.init(identity: identity, displayName: displayName,
+                        kind: entrypoint.kind == .keyboard ? .keyboard : .notificationUI,
+                        nativePresentation: descriptor))
                 }
 
                 // Translation UI Discovery
@@ -2096,6 +2178,7 @@ final class HanlinScriptingPlatform {
                 widgets,
                 intentEntities: intentEntities,
                 translationApps: translationApps,
+                nativePresentations: nativePresentations,
                 installedPackageIDs: Set(installedPackages.map { $0.record.installedPackageID })
             )
         } catch {
@@ -2143,6 +2226,9 @@ final class HanlinScriptingPlatform {
             WidgetCenter.shared.reloadTimelines(ofKind: HanlinWidgetActionExecutor.widgetKind)
             ControlCenter.shared.reloadControls(ofKind: HanlinScriptWidgetControlCatalog.buttonKind)
             ControlCenter.shared.reloadControls(ofKind: HanlinScriptWidgetControlCatalog.toggleKind)
+        }
+        if HanlinMiniAppSystemEntrypoints.isAvailableForCurrentProduct {
+            await HanlinMiniAppSystemEntrypoints.shared.reconcile(packages: installedPackages, platform: self)
         }
         await publishCompactAgentConfig()
     }
@@ -2217,6 +2303,14 @@ final class HanlinScriptingPlatform {
                    let source = command.invocation.delivery?.source,
                    [.notification, .widget, .liveActivity].contains(source),
                    UIApplication.shared.applicationState != .active {
+                    continue
+                }
+                if let package = installedPackages.first(where: {
+                    $0.record.installedPackageID == command.invocation.identity.installedPackageID
+                }), package.entrypoints.contains(where: {
+                    $0.id == command.invocation.identity.entrypointID &&
+                        ($0.kind == .spotlight || $0.kind == .capture)
+                }), UIApplication.shared.applicationState != .active {
                     continue
                 }
                 // Leave unstarted work queued while the only NS VM is owned.
@@ -2300,7 +2394,7 @@ final class HanlinScriptingPlatform {
         guard command.invocation.delivery == nil || command.invocation.delivery?.appID == package.appID,
               let entrypoint = package.entrypoints.first(where: {
                   $0.id == identity.entrypointID && (command.invocation.delivery?.source == .share
-                      ? ($0.kind == .app || $0.kind == .share) : ($0.kind == .appIntent || $0.kind == .translationUI))
+                      ? ($0.kind == .app || $0.kind == .share) : ($0.kind == .appIntent || $0.kind == .translationUI || $0.kind == .spotlight || $0.kind == .capture))
               }),
               let actionName = command.invocation.entityID else {
             throw HanlinInvocationDispatchError(.failed, .unsupportedEntrypoint)
@@ -2324,9 +2418,14 @@ final class HanlinScriptingPlatform {
             if let symbol = entrypoint.exportedSymbol, symbol != actionID.rawValue {
                 throw HanlinInvocationDispatchError(.failed, .invalidTarget)
             }
-            if entrypoint.runtimePolicyID == "prepared-foreground-action-v1",
+            if (entrypoint.runtimePolicyID == "prepared-foreground-action-v1" ||
+                entrypoint.kind == .spotlight || entrypoint.kind == .capture),
                declaredAction.handler != entrypoint.sourcePath {
                 throw HanlinInvocationDispatchError(.failed, .invalidTarget)
+            }
+            if entrypoint.kind == .spotlight || entrypoint.kind == .capture {
+                guard command.invocation.continueInForeground,
+                      UIApplication.shared.applicationState == .active else { throw HanlinInvocationNotStarted() }
             }
             let parameters: HanlinValue
             let requestCapability: HanlinCapabilityID
@@ -2368,6 +2467,14 @@ final class HanlinScriptingPlatform {
             // Refresh/foreground launch can suspend; recheck the originating
             // variant and published target before calling any package handler.
             try validateForegroundHostAction(command)
+            if entrypoint.kind == .spotlight || entrypoint.kind == .capture {
+                let latest = try await store.restore()
+                guard latest.contains(where: { $0.record.installedPackageID == identity.installedPackageID &&
+                    $0.record.packageID == identity.packageID && $0.enabled &&
+                    $0.record.activeGeneration == identity.generation && $0.entrypoints.contains(entrypoint) }) else {
+                    throw HanlinInvocationDispatchError(.stale, .staleGeneration)
+                }
+            }
             queuedNativeScriptAdmissions.insert(command.id)
             defer { queuedNativeScriptAdmissions.remove(command.id) }
             let response = try await HanlinMiniAppHost.shared.requestBroker.request(.init(

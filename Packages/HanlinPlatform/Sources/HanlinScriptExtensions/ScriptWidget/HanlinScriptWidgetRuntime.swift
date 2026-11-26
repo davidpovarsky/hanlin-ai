@@ -185,12 +185,52 @@ public struct HanlinScriptWidgetRuntime: Sendable {
                 presentationEffect.finishRequested = true
                 presentationEffect.replacementText = text
             }
+            let keyboardEdit: @convention(block) (NSDictionary) -> Void = { value in
+                guard case let .object(presentation)? = environment["presentation"],
+                      presentation["kind"] == .string("keyboard") else {
+                    completion.finish(.failure(HanlinScriptWidgetError("Keyboard edits require a keyboard presentation")))
+                    return
+                }
+                do {
+                    let edit = try JSONDecoder().decode(HanlinKeyboardEdit.self,
+                        from: JSONSerialization.data(withJSONObject: value))
+                    try edit.validate()
+                    presentationEffect.keyboardEdits.append(edit)
+                } catch { completion.finish(.failure(error)) }
+            }
+            let notificationAction: @convention(block) (String) -> Void = { value in
+                guard case let .object(presentation)? = environment["presentation"],
+                      presentation["kind"] == .string("notificationUI"),
+                      let action = HanlinNotificationPresentationAction(rawValue: value) else {
+                    completion.finish(.failure(HanlinScriptWidgetError("Notification actions require a notification presentation")))
+                    return
+                }
+                presentationEffect.notificationAction = action
+            }
+            context.setObject(keyboardEdit, forKeyedSubscript: "__hanlinKeyboardEdit" as NSString)
+            context.setObject(notificationAction, forKeyedSubscript: "__hanlinNotificationAction" as NSString)
             context.setObject(expand, forKeyedSubscript: "__hanlinPresentationExpand" as NSString)
             context.setObject(finish, forKeyedSubscript: "__hanlinPresentationFinish" as NSString)
             context.evaluateScript("""
                 globalThis.$presentation = {
                   expandSheet: __hanlinPresentationExpand,
-                  finish: text => __hanlinPresentationFinish(text == null ? null : String(text))
+                  finish: text => __hanlinPresentationFinish(text == null ? null : String(text)),
+                  keyboard: {
+                    insertText(text) {
+                      if (typeof text !== "string") throw new TypeError("insertText requires a string");
+                      __hanlinKeyboardEdit({operation: "insertText", text});
+                    },
+                    deleteBackward: () => __hanlinKeyboardEdit({operation: "deleteBackward"}),
+                    adjustTextPosition(offset) {
+                      if (!Number.isSafeInteger(offset)) throw new TypeError("adjustTextPosition requires an integer");
+                      __hanlinKeyboardEdit({operation: "adjustTextPosition", offset});
+                    },
+                    nextInputMode: () => __hanlinKeyboardEdit({operation: "nextInputMode"})
+                  },
+                  notification: {
+                    openApp: () => __hanlinNotificationAction("openApp"),
+                    dismiss: () => __hanlinNotificationAction("dismiss")
+                  }
                 };
                 """)
             let render: @convention(block) (ScriptWidgetRuntimeElement) -> Void = { rendered = $0 }
@@ -256,7 +296,7 @@ public struct HanlinScriptWidgetRuntime: Sendable {
             rendered = nil
             dynamicRegions.removeAll()
             context.exceptionHandler = nil
-            for key in ["$render", "$dynamic_island", "$component", "$error", "$storage", "$presentation", "__hanlinPresentationExpand", "__hanlinPresentationFinish", "__hanlinFinishWidget", "__hanlinGetWidgetValue", "__hanlinSetWidgetValue"] {
+            for key in ["$render", "$dynamic_island", "$component", "$error", "$storage", "$presentation", "__hanlinPresentationExpand", "__hanlinPresentationFinish", "__hanlinKeyboardEdit", "__hanlinNotificationAction", "__hanlinFinishWidget", "__hanlinGetWidgetValue", "__hanlinSetWidgetValue"] {
                 context.setObject(nil, forKeyedSubscript: key as NSString)
             }
         }

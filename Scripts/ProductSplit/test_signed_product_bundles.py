@@ -68,7 +68,8 @@ class ExportedBundleTargetsTests(unittest.TestCase):
         self.bundle(app, identity)
         required = {row[1] for row in product_roles("miniapps")}
         expected = {identity, identity + ".widgets", identity + ".share",
-                    identity + ".translation-provider", identity + ".notification-service"}
+                    identity + ".translation-provider", identity + ".notification-service",
+                    identity + ".keyboard", identity + ".notification-content", identity + ".camera-capture"}
         self.assertEqual(required, expected)
         with self.assertRaisesRegex(RuntimeError, "missing="):
             exported_bundle_targets(app, required)
@@ -77,6 +78,9 @@ class ExportedBundleTargetsTests(unittest.TestCase):
             ("HanlinMiniAppsShare", "share", "PlugIns"),
             ("HanlinMiniAppsNotificationService", "notification-service", "PlugIns"),
             ("HanlinMiniAppsTranslationProvider", "translation-provider", "Extensions"),
+            ("HanlinMiniAppsKeyboard", "keyboard", "PlugIns"),
+            ("HanlinMiniAppsNotificationContent", "notification-content", "PlugIns"),
+            ("HanlinMiniAppsCameraCapture", "camera-capture", "Extensions"),
         ):
             self.bundle(app / container / (name + ".appex"), identity + "." + suffix)
         self.assertEqual(set(exported_bundle_targets(app, required)), expected)
@@ -85,7 +89,7 @@ class ExportedBundleTargetsTests(unittest.TestCase):
         ai = {row[1] for row in product_roles("ai")}
         miniapps = {row[1] for row in product_roles("miniapps")}
         self.assertEqual(ai, EXPECTED)
-        self.assertEqual(len(miniapps), 5)
+        self.assertEqual(len(miniapps), 8)
         self.assertFalse(ai & miniapps)
         with self.assertRaisesRegex(ValueError, "Unknown"):
             product_roles("unregistered-product")

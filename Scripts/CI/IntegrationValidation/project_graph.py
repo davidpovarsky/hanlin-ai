@@ -3,6 +3,10 @@ import re
 import json
 import hashlib
 from pathlib import Path
+import sys
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "ProductSplit"))
+from extension_inventory import EXTENSIONS, MINIAPPS_EXTENSIONS, NEW_EXTENSION_KEYS, SIGNING_TARGETS
 
 
 def parse_project(text):
@@ -61,26 +65,32 @@ def validate_miniapps_extension_targets(project):
     root = objects[project["rootObject"]]
     targets = {objects[key]["name"]: (key, objects[key]) for key in root["targets"]}
     mini = targets["HanlinMiniApps"][1]
-    specs = {
-        "HanlinMiniAppsWidgets": ("HanlinScriptingWidgets", "Widgets", "widgets"),
-        "HanlinMiniAppsShare": ("ChavrusaChatShare", "Share", "share"),
-        "HanlinMiniAppsTranslationProvider": ("ChavrusaChatTranslationProvider", "Translation", "translation-provider"),
-        "HanlinMiniAppsNotificationService": ("ChavrusaChatNotificationService", "Notification", "notification-service"),
-    }
     dependencies = mini.get("dependencies", [])
     assert all(objects.get(key, {}).get("isa") == "PBXTargetDependency" for key in dependencies), \
         "MiniApps must depend only on its own native extension targets"
     dependency_targets = {objects[key]["target"] for key in dependencies}
-    assert dependency_targets == {targets[name][0] for name in specs}, \
+    assert dependency_targets == {targets[spec.mini_target][0] for spec in EXTENSIONS}, \
         "MiniApps must depend only on its own native extension targets"
     expected_products = set()
-    for name, (original_name, folder, suffix) in specs.items():
+    for spec in EXTENSIONS:
+        name, folder, suffix = spec.mini_target, spec.mini_folder, spec.suffix
         target_id, target = targets[name]
-        original = targets[original_name][1]
+        original = targets[spec.template_target][1]
+        new_surface = spec.ai_target is None
         assert target["dependencies"] == []
         assert target["productType"] == original["productType"]
-        assert target["packageProductDependencies"] == original["packageProductDependencies"], \
-            "MiniApps extensions must link the original SDK closure"
+        products = target["packageProductDependencies"]
+        product_names = [objects[key]["productName"] for key in products]
+        if new_surface:
+            expected_names = [spec.sdk_product] + ([] if spec.key == "camera-capture"
+                                                  else ["HanlinExtensionContracts"])
+        else:
+            expected_names = [objects[key]["productName"] for key in original["packageProductDependencies"]]
+            if spec.key == "widgets":
+                expected_names.append("HanlinCameraCaptureUI")
+        assert product_names == expected_names, "MiniApps extensions must link the original SDK closure"
+        assert all(objects[objects[key]["package"]].get("relativePath") == "." for key in products), \
+            "MiniApps extensions must use the canonical shared SDK"
         groups = target["fileSystemSynchronizedGroups"]
         assert len(groups) == 1 and objects[groups[0]]["path"] == "HanlinMiniAppsExtensions/" + folder
         assert all(objects[key]["target"] == target_id for key in objects[groups[0]]["exceptions"])
@@ -89,7 +99,13 @@ def validate_miniapps_extension_targets(project):
         for phase_id, original_phase_id in zip(target["buildPhases"], original["buildPhases"], strict=True):
             phase, original_phase = objects[phase_id], objects[original_phase_id]
             assert phase["isa"] == original_phase["isa"]
-            assert [objects[k] for k in phase["files"]] == [objects[k] for k in original_phase["files"]], \
+            expected_files = [] if new_surface else [objects[k] for k in original_phase["files"]]
+            if phase["isa"] == "PBXFrameworksBuildPhase":
+                if new_surface:
+                    expected_files = [{"isa": "PBXBuildFile", "productRef": key} for key in products]
+                elif spec.key == "widgets":
+                    expected_files.append({"isa": "PBXBuildFile", "productRef": products[-1]})
+            assert [objects[k] for k in phase["files"]] == expected_files, \
                 "MiniApps extensions must compile and link the original SDK closure"
         for key in objects[target["buildConfigurationList"]]["buildConfigurations"]:
             settings = objects[key]["buildSettings"]
@@ -97,7 +113,7 @@ def validate_miniapps_extension_targets(project):
             assert settings["INFOPLIST_FILE"] == "HanlinMiniAppsExtensions/" + folder + "/Info.plist"
             assert settings["CODE_SIGN_ENTITLEMENTS"] == "HanlinMiniAppsExtensions/" + folder + "/" + name + ".entitlements"
             assert settings["CODE_SIGN_STYLE"] == "Automatic" and settings["DEVELOPMENT_TEAM"] == "NA6HPWARQ2"
-            assert "PROVISIONING_PROFILE_SPECIFIER" not in settings
+            assert not {"PROVISIONING_PROFILE_SPECIFIER", "PROVISIONING_PROFILE", "CODE_SIGN_IDENTITY"} & settings.keys()
             assert settings["IPHONEOS_DEPLOYMENT_TARGET"] == "27.0" and settings["SWIFT_VERSION"] == "6.0"
     embed_phases = {key for key in mini["buildPhases"] if
                     objects[key]["isa"] == "PBXCopyFilesBuildPhase" and
@@ -113,9 +129,94 @@ def validate_miniapps_extension_targets(project):
             build = objects[file_id]
             assert build["settings"]["ATTRIBUTES"] == ["RemoveHeadersOnCopy"]
             assert build["fileRef"] not in embedded
+            product_target = next(target for _, target in targets.values()
+                                  if target.get("productReference") == build["fileRef"])
+            assert product_target["productType"].endswith("extensionkit-extension") == extensionkit, \
+                "Each MiniApps extension must use its native embedding container"
             embedded.add(build["fileRef"])
     assert embedded == expected_products, "MiniApps must embed each own extension and no AI extension"
     return embed_phases
+
+
+def validate_shipping_extension_inventory(project):
+    """Fail closed on two apps, four legacy AI and seven MiniApps extensions."""
+    objects = project["objects"]
+    root = objects[project["rootObject"]]
+    targets = {objects[key]["name"]: (key, objects[key]) for key in root["targets"]}
+    shipping_types = {"com.apple.product-type.application", "com.apple.product-type.app-extension",
+                      "com.apple.product-type.extensionkit-extension"}
+    expected = {spec.target for spec in SIGNING_TARGETS}
+    actual = {name for name, (_, target) in targets.items() if target.get("productType") in shipping_types}
+    assert actual == expected and len(expected) == 13, \
+        "Shipping bundle inventory must contain both apps and eleven owned extensions"
+    for spec in SIGNING_TARGETS:
+        _, target = targets[spec.target]
+        for config_id in objects[target["buildConfigurationList"]]["buildConfigurations"]:
+            settings = objects[config_id]["buildSettings"]
+            assert settings["PRODUCT_BUNDLE_IDENTIFIER"] == spec.bundle
+            assert settings["CODE_SIGN_ENTITLEMENTS"] == spec.entitlements
+            assert settings["DEVELOPMENT_TEAM"] == "NA6HPWARQ2"
+    for app_name, names in (("HanlinApp", {s.ai_target for s in EXTENSIONS if s.ai_target is not None}),
+                            ("HanlinMiniApps", {s.mini_target for s in EXTENSIONS})):
+        _, app = targets[app_name]
+        assert {objects[key]["target"] for key in app["dependencies"]} == {targets[name][0] for name in names}, \
+            "Each app must depend on exactly its owned extensions"
+        expected_products = {targets[name][1]["productReference"] for name in names}
+        embedded = set()
+        phases = [objects[key] for key in app["buildPhases"]
+                  if objects[key]["isa"] == "PBXCopyFilesBuildPhase"
+                  and "Extensions" in objects[key].get("name", "")]
+        assert len(phases) == 2
+        for phase in phases:
+            extensionkit = "ExtensionKit" in phase["name"]
+            assert phase["dstPath"] == ("$(EXTENSIONS_FOLDER_PATH)" if extensionkit else "")
+            assert phase["dstSubfolderSpec"] == ("16" if extensionkit else "13")
+            for file_id in phase["files"]:
+                item = objects[file_id]
+                assert item["fileRef"] in expected_products and item["fileRef"] not in embedded
+                target = next(target for _, target in targets.values()
+                              if target.get("productReference") == item["fileRef"])
+                attributes = ["RemoveHeadersOnCopy"]
+                if app_name == "HanlinApp" and target["name"] in {
+                        "HanlinScriptingWidgets", "ChavrusaChatShare", "ChavrusaChatNotificationService"}:
+                    attributes.append("CodeSignOnCopy")
+                assert item["settings"]["ATTRIBUTES"] == attributes
+                assert target["productType"].endswith("extensionkit-extension") == extensionkit
+                embedded.add(item["fileRef"])
+        assert embedded == expected_products, "Each owned extension must be embedded once"
+    for spec in EXTENSIONS:
+        if spec.key not in NEW_EXTENSION_KEYS:
+            continue
+        target_id, target = targets[spec.mini_target]
+        directory = "HanlinMiniAppsExtensions/" + spec.mini_folder
+        wanted_type = ("com.apple.product-type.extensionkit-extension" if spec.key == "camera-capture"
+                       else "com.apple.product-type.app-extension")
+        assert spec.ai_target is None, "New system surfaces are MiniApps-owned"
+        assert target["productType"] == wanted_type and target["dependencies"] == []
+        groups = target["fileSystemSynchronizedGroups"]
+        assert len(groups) == 1 and objects[groups[0]]["path"] == directory
+        exceptions = [objects[key] for key in objects[groups[0]]["exceptions"]]
+        assert len(exceptions) == 1 and exceptions[0]["target"] == target_id
+        assert set(exceptions[0]["membershipExceptions"]) == {"Info.plist", spec.mini_target + ".entitlements"}
+        assert [objects[key]["isa"] for key in target["buildPhases"]] == [
+            "PBXSourcesBuildPhase", "PBXFrameworksBuildPhase", "PBXResourcesBuildPhase"]
+        for config_id in objects[target["buildConfigurationList"]]["buildConfigurations"]:
+            settings = objects[config_id]["buildSettings"]
+            assert settings["INFOPLIST_FILE"] == directory + "/Info.plist"
+            assert settings["GENERATE_INFOPLIST_FILE"] == "YES"
+            assert settings["APPLICATION_EXTENSION_API_ONLY"] == "YES"
+            assert settings["PRODUCT_MODULE_NAME"] == spec.mini_target + "Host"
+            assert settings["CODE_SIGN_STYLE"] == "Automatic"
+            assert not {"PROVISIONING_PROFILE_SPECIFIER", "PROVISIONING_PROFILE", "CODE_SIGN_IDENTITY"} & settings.keys()
+            assert settings["IPHONEOS_DEPLOYMENT_TARGET"] == "27.0" and settings["SWIFT_VERSION"] == "6.0"
+    for name in ("HanlinMiniApps", "HanlinMiniAppsWidgets", "HanlinMiniAppsCameraCapture"):
+        products = {objects[key]["productName"] for key in targets[name][1]["packageProductDependencies"]}
+        assert "HanlinCameraCaptureUI" in products, "Capture intents must be discoverable in each MiniApps app/widget/capture image"
+    legacy_widgets = targets["HanlinScriptingWidgets"][1]
+    assert "HanlinCameraCaptureUI" not in {
+        objects[key]["productName"] for key in legacy_widgets["packageProductDependencies"]
+    }, "New camera controls must remain in MiniApps Widgets"
+    return {"applications": 2, "extensions": 11, "shippingTargets": 13}
 
 
 def validate_graph(project, provider_manifest=None):
@@ -126,6 +227,7 @@ def validate_graph(project, provider_manifest=None):
     ai = next(target for target in targets if target["name"] == "HanlinApp")
     assert mini["productType"] == "com.apple.product-type.application"
     extension_phases = validate_miniapps_extension_targets(project)
+    validate_shipping_extension_inventory(project)
     groups = [objects[key]["path"] for key in mini["fileSystemSynchronizedGroups"]]
     assert groups == ["HanlinMiniAppsApp"], "MiniApps must not compile the AI source tree"
     assert "HanlinMiniAppsApp" not in [objects[key]["path"] for key in ai["fileSystemSynchronizedGroups"]]

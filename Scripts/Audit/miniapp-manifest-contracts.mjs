@@ -149,11 +149,14 @@ export async function auditManifestContracts({source}) {
     rows.push(field(key, type, false, note, consumers.filter(record => reads(record, 'unknownFields').includes(key))
       .map(record => ref(record, 'unknownFields["' + key + '"]'))));
   const prepared = between(r.analyzer, '    private static func preparedEntrypoints(', '    private func discoverEntrypoints(');
+  const preparedKindList = requireMatch(prepared, /\[([.\w,\s]+)\]\.contains\(kind\)/,
+    'prepared entrypoint kind list')[1];
+  const preparedKinds = [...preparedKindList.matchAll(/\.(\w+)/g)].map(match => match[1]);
   addDictionary(rows, prepared, 'fields', 'entrypoints[].', {
     id: ['string', true, 'Unique nonempty ID, excluding reserved app/widget.'],
-    kind: ['assistantTool | appIntent | embeddedResult | share | translationUI | liveActivity', true, 'Explicit kinds; assistantTool additionally requires a dedicated prepared program and declared action metadata.'],
-    sourcePath: ['string', true, 'Existing normalized package path; embeddedResult must use discovered foreground bundle.'],
-    exportedSymbol: ['string', false, 'Optional exported symbol; non-string/absent values resolve to nil.'],
+    kind: [preparedKinds.join(' | '), true, 'Only these modern explicit kinds are accepted; engine-specific source requirements still apply.'],
+    sourcePath: ['string', true, 'Existing normalized package path; embeddedResult, keyboard, notificationUI, spotlight and capture use the discovered prepared foreground bundle. Keyboard and notificationUI have a separate compiled nativePresentations source.'],
+    exportedSymbol: ['string', false, 'Capture requires one declared prepared action ID with a handler targeting the same foreground bundle. Spotlight may omit it to open the app; if supplied, the same action contract applies. Other kinds retain their existing optional exported symbol.'],
     assistantTool: ['HanlinAssistantToolDeclaration', 'required for assistantTool', 'Dedicated assistant action declaration, schemas and optional composer configuration.'],
   });
   addRecord(rows, r.assistantDeclaration, 'HanlinAssistantToolDeclaration', 'entrypoints[].assistantTool.', {

@@ -1,8 +1,35 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "a35694f73d07b161d6db5e8c150b7d905e883455",
+  "sourceCommit": "0bbd94866f10a5a64b8a1d401d14bcb06e7b4ddb",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
-  "uncommittedSourcePaths": [],
+  "uncommittedSourcePaths": [
+    "AI_HLY.xcodeproj/project.pbxproj",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppCaptureCoordinator.swift",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppCaptureInbox.swift",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSpotlightIndex.swift",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSystemCatalog.swift",
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+    "AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift",
+    "HanlinMiniAppsApp/HanlinMiniAppsApp.swift",
+    "HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.swift",
+    "HanlinMiniAppsExtensions/CameraCapture/Info.plist",
+    "HanlinMiniAppsExtensions/Keyboard/HanlinMiniAppsKeyboard.swift",
+    "HanlinMiniAppsExtensions/Keyboard/Info.plist",
+    "HanlinMiniAppsExtensions/NotificationContent/HanlinMiniAppsNotificationContent.swift",
+    "HanlinMiniAppsExtensions/NotificationContent/Info.plist",
+    "HanlinMiniAppsExtensions/Widgets/HanlinMiniAppsWidgets.swift",
+    "HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
+    "Packages/HanlinAppExtensionsSDK/Sources/HanlinCameraCaptureUI/HanlinCameraCaptureIntent.swift",
+    "Packages/HanlinAppExtensionsSDK/Sources/HanlinCameraCaptureUI/HanlinCameraCaptureView.swift",
+    "Packages/HanlinAppExtensionsSDK/Sources/HanlinCameraCaptureUI/HanlinCameraService.swift",
+    "Packages/HanlinAppExtensionsSDK/Sources/HanlinKeyboardUI/HanlinKeyboardInputViewController.swift",
+    "Packages/HanlinAppExtensionsSDK/Sources/HanlinNotificationContentUI/HanlinNotificationContentViewController.swift",
+    "Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/HanlinNativePresentationView.swift",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNativePresentation.swift",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationPresentation.swift",
+    "Scripts/Audit/audit_miniapp_reachability.py"
+  ],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
   "sdkAuthority": "source-inventory.json",
   "sdkSources": [
@@ -48,11 +75,11 @@
     },
     {
       "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-      "sha256": "ed6244894695eeb4b83aa41ea1f7523cda2d5db2059452b666fd21a099238a30"
+      "sha256": "cea114769522eaaaceee804b89b26549c2335b3ebca16037a64f97724f2e92fc"
     },
     {
       "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "sha256": "295fb1598cd4326f51f648f07b2af9a5cdc1f9080a0bf94cc80d731ddf7580de"
+      "sha256": "38445d96c657661ddc2eb68018b25c8439a6a267cb7be86ac040e6e123329ecb"
     },
     {
       "path": "Fixtures/ExpoNativeAPIProbe/tsconfig.json",
@@ -76,7 +103,7 @@
     },
     {
       "path": "Package.swift",
-      "sha256": "fd13345a08b388cbd2af35de7ccd9e7eda6c427e029ccd0dd6d80e6f64bb5c85"
+      "sha256": "fb08c64bd016c1d5f2c3d4c6665f5911d4d888b5486ab73479f6e35940c591bc"
     },
     {
       "path": "Packages/HanlinExpoNativeAPI/Package.swift",
@@ -203,6 +230,10 @@
       "sha256": "669bf8cd0d83fd17e8c9b6a07fdb4723d8c506ba1f6c5c8466d7796c24681c76"
     },
     {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptWindowSession.swift",
+      "sha256": "de1329ae3359e51f0c101083f76733712076a7689a059ea60241f51516c91f8e"
+    },
+    {
       "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.d.ts",
       "sha256": "76aabf4b05e37f3ec2108c26a69f32aaaa2d96661a66057997fa1cb1e165611b"
     },
@@ -236,7 +267,7 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-      "sha256": "2d0f3ced366774bac16af0bfaa29047f7a1cb2d413b9940515668c59bfc44d12"
+      "sha256": "2fed91226c1e8ebe152bc7445d97306897f95c1bfb75ed125d50af7e7bb55aaf"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift",
@@ -244,11 +275,11 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-      "sha256": "7ef7862a0b48c3c68494c377a824e04b9cd3a194360dfb32ff823a637b3dab83"
+      "sha256": "7e3a1ff682abef2b319a4c428c9da6a4069989872cdbab777479e2eced0d1306"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinInstallContracts.swift",
-      "sha256": "2fd21cd0df503042315302acd8c8fa1f754a53eac3ff37b0ff14d0693b9952a2"
+      "sha256": "b811c01bb354a8c8bf9e1dbe1a354bf2dd08cd822f82438661286cc5872b08e6"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinNativePresentationMetadata.swift",
@@ -300,7 +331,7 @@
     },
     {
       "path": "Scripts/Audit/audit-miniapp-sdk.mjs",
-      "sha256": "3aea9c2940a0fba0ca19362befac0843a78e9921010fa3691515edb92dffe058"
+      "sha256": "d896e6c51af5d499686343161e46291187f88dea747b20e0a01b0221e1c23f31"
     },
     {
       "path": "Scripts/Audit/miniapp-expo-operations.mjs",
@@ -308,7 +339,7 @@
     },
     {
       "path": "Scripts/Audit/miniapp-manifest-contracts.mjs",
-      "sha256": "f05ba24ac4190b885fbb3d548d37ce2e94f840a00bdc7cf97e4649359ecf3d69"
+      "sha256": "63a230ca13c7b7e1ae2c9c550dd575543439f41eed60807660e5311d8cd6cc6f"
     },
     {
       "path": "Scripts/Audit/miniapp-runtime-contract.mjs",
@@ -425,6 +456,9 @@
     "HanlinApp",
     "HanlinMiniApps",
     "HanlinMiniAppsBootstrapTests",
+    "HanlinMiniAppsCameraCapture",
+    "HanlinMiniAppsKeyboard",
+    "HanlinMiniAppsNotificationContent",
     "HanlinMiniAppsNotificationService",
     "HanlinMiniAppsShare",
     "HanlinMiniAppsTests",
@@ -592,18 +626,66 @@
       },
       "sha256": "0da89872d45b5e9b990de71c4f9c0855f1117f81cb1867a07aa3bfb8b6106254",
       "exportedSignatureVerified": false
+    },
+    "HanlinMiniAppsExtensions/Keyboard/HanlinMiniAppsKeyboard.entitlements": {
+      "declared": {
+        "com.apple.security.application-groups": [
+          "group.com.itorah.chavrusachat"
+        ]
+      },
+      "sha256": "6d7c2663c6e543380d18eccc7fc96cd1b0bfd3e1dae524aa59f9688abb49f8dd",
+      "exportedSignatureVerified": false
+    },
+    "HanlinMiniAppsExtensions/NotificationContent/HanlinMiniAppsNotificationContent.entitlements": {
+      "declared": {
+        "com.apple.security.application-groups": [
+          "group.com.itorah.chavrusachat"
+        ]
+      },
+      "sha256": "6d7c2663c6e543380d18eccc7fc96cd1b0bfd3e1dae524aa59f9688abb49f8dd",
+      "exportedSignatureVerified": false
+    },
+    "HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.entitlements": {
+      "declared": {},
+      "sha256": "97704a8960b4facceef54397a08fb5d0a456247c3627359215aa2a27df22656c",
+      "exportedSignatureVerified": false
     }
   },
   "optionalSurfaceSymbolScan": {
     "ControlWidget": [
+      "Packages/HanlinAppExtensionsSDK/Sources/HanlinCameraCaptureUI/HanlinCameraCaptureIntent.swift",
       "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinExposureContracts.swift",
       "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/ScriptWidgetControls/Original/ScriptWidgetControlWidget.swift"
     ],
-    "CSSearchableIndex": [],
+    "CSSearchableIndex": [
+      "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSpotlightIndex.swift"
+    ],
     "CoreSpotlight": [
+      "AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift",
+      "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSpotlightIndex.swift",
       "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinExposureContracts.swift"
+    ],
+    "IndexedEntity": [
+      "AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift"
+    ],
+    "UIInputViewController": [
+      "Packages/HanlinAppExtensionsSDK/Sources/HanlinKeyboardUI/HanlinKeyboardInputViewController.swift"
+    ],
+    "UNNotificationContentExtension": [
+      "Packages/HanlinAppExtensionsSDK/Sources/HanlinNotificationContentUI/HanlinNotificationContentViewController.swift"
+    ],
+    "CameraCaptureIntent": [
+      "Packages/HanlinAppExtensionsSDK/Sources/HanlinCameraCaptureUI/HanlinCameraCaptureContracts.swift",
+      "Packages/HanlinAppExtensionsSDK/Sources/HanlinCameraCaptureUI/HanlinCameraCaptureIntent.swift"
+    ],
+    "LockedCameraCaptureExtension": [
+      "HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.swift"
+    ],
+    "LockedCameraCaptureUIScene": [
+      "HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.swift"
     ]
   },
+  "optionalSurfaceSymbolScanBoundary": "Symbol discovery only; the exact sourceRefs and explicit routes establish wiring, never runtime execution.",
   "sourceRefs": {
     "shareWrite": {
       "file": "Packages/HanlinAppExtensionsSDK/Sources/HanlinShareExtensionUI/HanlinShareViewController.swift",
@@ -673,21 +755,21 @@
     },
     "resume": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 2196,
+      "line": 2282,
       "anchor": "private func processPendingResumeCommands()",
-      "sha256": "295fb1598cd4326f51f648f07b2af9a5cdc1f9080a0bf94cc80d731ddf7580de"
+      "sha256": "38445d96c657661ddc2eb68018b25c8439a6a267cb7be86ac040e6e123329ecb"
     },
     "headless": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 1346,
+      "line": 1411,
       "anchor": "func executeHeadlessAction(",
-      "sha256": "295fb1598cd4326f51f648f07b2af9a5cdc1f9080a0bf94cc80d731ddf7580de"
+      "sha256": "38445d96c657661ddc2eb68018b25c8439a6a267cb7be86ac040e6e123329ecb"
     },
     "expoActionDispatch": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 1388,
+      "line": 1453,
       "anchor": "return try await adapter.actionChannel.invoke(",
-      "sha256": "295fb1598cd4326f51f648f07b2af9a5cdc1f9080a0bf94cc80d731ddf7580de"
+      "sha256": "38445d96c657661ddc2eb68018b25c8439a6a267cb7be86ac040e6e123329ecb"
     },
     "nativeActionDispatch": {
       "file": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
@@ -697,15 +779,15 @@
     },
     "resumeDispatch": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 2265,
+      "line": 2359,
       "anchor": "func dispatchResumeCommand(",
-      "sha256": "295fb1598cd4326f51f648f07b2af9a5cdc1f9080a0bf94cc80d731ddf7580de"
+      "sha256": "38445d96c657661ddc2eb68018b25c8439a6a267cb7be86ac040e6e123329ecb"
     },
     "translationContinuation": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 1766,
+      "line": 1848,
       "anchor": "\"source\": .string(\"translationUI\")",
-      "sha256": "295fb1598cd4326f51f648f07b2af9a5cdc1f9080a0bf94cc80d731ddf7580de"
+      "sha256": "38445d96c657661ddc2eb68018b25c8439a6a267cb7be86ac040e6e123329ecb"
     },
     "translationAction": {
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExtensionNodeView.swift",
@@ -835,9 +917,9 @@
     },
     "notificationForeground": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 524,
+      "line": 589,
       "anchor": "func resumePendingInvocations(",
-      "sha256": "295fb1598cd4326f51f648f07b2af9a5cdc1f9080a0bf94cc80d731ddf7580de"
+      "sha256": "38445d96c657661ddc2eb68018b25c8439a6a267cb7be86ac040e6e123329ecb"
     },
     "requestBroker": {
       "file": "Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinMiniAppRequestBroker.swift",
@@ -919,27 +1001,27 @@
     },
     "projectTargets": {
       "file": "AI_HLY.xcodeproj/project.pbxproj",
-      "line": 2799,
+      "line": 3053,
       "anchor": "/* Begin PBXNativeTarget section */",
-      "sha256": "c5268b5b3c91dc0a3254a22a70cd330e3aad7d5061b36ff22267fa37856c82cc"
+      "sha256": "52bd71e97d08c1982fe0547d2b0c80374c373533d9abcaf885591adab87dccdb"
     },
     "audit": {
       "file": "Scripts/Audit/audit_miniapp_reachability.py",
       "line": 2,
       "anchor": "Curated source-backed extension matrix",
-      "sha256": "7ab16bd962c5b1f939e4363f96ad872c7acc34d35d7e8dff576f082011dba99c"
+      "sha256": "7a40825fc7a75926c3820bbfe54fb6b8e686b141e0d1007f17466654ddad0d43"
     },
     "miniAppsBootstrap": {
       "file": "HanlinMiniAppsApp/HanlinMiniAppsApp.swift",
-      "line": 12,
+      "line": 14,
       "anchor": "@main",
-      "sha256": "a8e3e9f46d14d843b5fbd14c5312f9d30d9fd324ae42684d345a7aa63cc4d2ee"
+      "sha256": "65792c17c4dd40c9893b441f746fd13bcd4c471c7c49dabdde1f7e5f7adf6e3b"
     },
     "miniAppsWidgetBundle": {
       "file": "HanlinMiniAppsExtensions/Widgets/HanlinMiniAppsWidgets.swift",
-      "line": 9,
+      "line": 10,
       "anchor": "struct HanlinMiniAppsWidgetBundle",
-      "sha256": "252cc058240975857840220406b287aebc8111a963de6d1f20c5c208b9477e91"
+      "sha256": "ee16856a19d7b83de544eb1e05cb8a4049750739eb38b0b7bf77fedef6ba4854"
     },
     "sharePrincipal": {
       "file": "ChavrusaChatShare/ShareViewController.swift",
@@ -967,21 +1049,21 @@
     },
     "nativePresentationExecutor": {
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNativePresentation.swift",
-      "line": 78,
+      "line": 161,
       "anchor": "public enum HanlinNativePresentationExecutor",
-      "sha256": "2d76c288588de9f7c0ac15d92fd22a576f3fadba64e7c5935f857849d05f0d70"
+      "sha256": "a9e87935202eb8e512e9f230c0381aaa217f1626e50ca48a461ca3f34f2f0b36"
     },
     "nativePresentationView": {
       "file": "Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/HanlinNativePresentationView.swift",
       "line": 47,
       "anchor": "public struct HanlinNativePresentationContentView",
-      "sha256": "768b08c9dacf4bb445368386833c3ff2c5c98fbe4581c85ee80c56aba09c0acd"
+      "sha256": "27e9176daefc266973d251131eb2b02e419f6ce8de4f771d4633ff9ceaedf3ee"
     },
     "nativeSnippet": {
       "file": "Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/HanlinNativePresentationView.swift",
-      "line": 182,
+      "line": 186,
       "anchor": "public struct HanlinShowMiniAppSnippetIntent",
-      "sha256": "768b08c9dacf4bb445368386833c3ff2c5c98fbe4581c85ee80c56aba09c0acd"
+      "sha256": "27e9176daefc266973d251131eb2b02e419f6ce8de4f771d4633ff9ceaedf3ee"
     },
     "nativeTranslation": {
       "file": "Packages/HanlinAppExtensionsSDK/Sources/HanlinTranslationUI/TranslationProviderNativePresentationView.swift",
@@ -1099,21 +1181,201 @@
     },
     "miniAppsControlButtonRegistration": {
       "file": "HanlinMiniAppsExtensions/Widgets/HanlinMiniAppsWidgets.swift",
-      "line": 16,
+      "line": 17,
       "anchor": "ScriptWidgetButtonControlWidget()",
-      "sha256": "252cc058240975857840220406b287aebc8111a963de6d1f20c5c208b9477e91"
+      "sha256": "ee16856a19d7b83de544eb1e05cb8a4049750739eb38b0b7bf77fedef6ba4854"
     },
     "miniAppsControlToggleRegistration": {
       "file": "HanlinMiniAppsExtensions/Widgets/HanlinMiniAppsWidgets.swift",
-      "line": 17,
+      "line": 18,
       "anchor": "ScriptWidgetControlWidget()",
-      "sha256": "252cc058240975857840220406b287aebc8111a963de6d1f20c5c208b9477e91"
+      "sha256": "ee16856a19d7b83de544eb1e05cb8a4049750739eb38b0b7bf77fedef6ba4854"
     },
     "currentScope": {
       "file": "docs/miniapp-sdk/README.md",
       "line": 82,
       "anchor": "## Entry points and native surfaces",
       "sha256": "490fcfd05965cbebb7334169bece0391481425e6c5d1b8cda41b8b5e1017f329"
+    },
+    "installedSystemCatalog": {
+      "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSystemCatalog.swift",
+      "line": 30,
+      "anchor": "enum HanlinMiniAppSystemCatalog",
+      "sha256": "2d98c0ad4f27a1da489a2a4ea295e42450e3c083b8e07bb5a617ed5d9da0290a"
+    },
+    "installedEntityQuery": {
+      "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift",
+      "line": 38,
+      "anchor": "public struct HanlinInstalledMiniAppQuery",
+      "sha256": "40ace8e3c451e344576f2187bb961bac73ced97e8a504a8e85d7395db28eaab7"
+    },
+    "systemProductBoundary": {
+      "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSpotlightIndex.swift",
+      "line": 27,
+      "anchor": "identifier == SplitAppStorageLayout.miniAppsBundleIdentifier",
+      "sha256": "d3fd4f9fad95573332cc436d8704ae4f3651ba6c83f7d4d3cb8093bde15874ac"
+    },
+    "spotlightOpen": {
+      "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift",
+      "line": 88,
+      "anchor": "public struct HanlinOpenInstalledMiniAppIntent: OpenIntent",
+      "sha256": "40ace8e3c451e344576f2187bb961bac73ced97e8a504a8e85d7395db28eaab7"
+    },
+    "spotlightIndex": {
+      "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSpotlightIndex.swift",
+      "line": 75,
+      "anchor": "try await index.indexAppEntities(",
+      "sha256": "d3fd4f9fad95573332cc436d8704ae4f3651ba6c83f7d4d3cb8093bde15874ac"
+    },
+    "spotlightRemove": {
+      "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSpotlightIndex.swift",
+      "line": 74,
+      "anchor": "try await index.deleteAppEntities(",
+      "sha256": "d3fd4f9fad95573332cc436d8704ae4f3651ba6c83f7d4d3cb8093bde15874ac"
+    },
+    "systemCatalogPublication": {
+      "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "line": 2231,
+      "anchor": "await HanlinMiniAppSystemEntrypoints.shared.reconcile(",
+      "sha256": "38445d96c657661ddc2eb68018b25c8439a6a267cb7be86ac040e6e123329ecb"
+    },
+    "nativePresentationPublication": {
+      "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "line": 2181,
+      "anchor": "nativePresentations: nativePresentations,",
+      "sha256": "38445d96c657661ddc2eb68018b25c8439a6a267cb7be86ac040e6e123329ecb"
+    },
+    "systemEntrypointOpen": {
+      "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "line": 475,
+      "anchor": "func openSystemEntrypoint(",
+      "sha256": "38445d96c657661ddc2eb68018b25c8439a6a267cb7be86ac040e6e123329ecb"
+    },
+    "systemEntrypointAdmission": {
+      "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "line": 2426,
+      "anchor": "if entrypoint.kind == .spotlight || entrypoint.kind == .capture {",
+      "sha256": "38445d96c657661ddc2eb68018b25c8439a6a267cb7be86ac040e6e123329ecb"
+    },
+    "cameraIntent": {
+      "file": "Packages/HanlinAppExtensionsSDK/Sources/HanlinCameraCaptureUI/HanlinCameraCaptureIntent.swift",
+      "line": 10,
+      "anchor": "public struct HanlinCameraCaptureIntent: CameraCaptureIntent",
+      "sha256": "42ac215d241c6b93ebe970b94f5e838d75a23039d230cc71e0cc6d5ad2437807"
+    },
+    "cameraControl": {
+      "file": "Packages/HanlinAppExtensionsSDK/Sources/HanlinCameraCaptureUI/HanlinCameraCaptureIntent.swift",
+      "line": 42,
+      "anchor": "ControlWidgetButton(action: HanlinCameraCaptureIntent())",
+      "sha256": "42ac215d241c6b93ebe970b94f5e838d75a23039d230cc71e0cc6d5ad2437807"
+    },
+    "cameraPhoto": {
+      "file": "Packages/HanlinAppExtensionsSDK/Sources/HanlinCameraCaptureUI/HanlinCameraService.swift",
+      "line": 80,
+      "anchor": "output.capturePhoto(with: settings, delegate: delegate)",
+      "sha256": "e02e5dce12f16369a0a02aea81ce9e9c0e8e386b85c637505a0bc6def2bc1fed"
+    },
+    "cameraHardwareEvent": {
+      "file": "Packages/HanlinAppExtensionsSDK/Sources/HanlinCameraCaptureUI/HanlinCameraCaptureView.swift",
+      "line": 189,
+      "anchor": "AVCaptureEventInteraction",
+      "sha256": "2608463d056209a00e9968ef840bf020762f4c8e26a884a80d6c5a8cf1e4830e"
+    },
+    "cameraHandoff": {
+      "file": "Packages/HanlinAppExtensionsSDK/Sources/HanlinCameraCaptureUI/HanlinCameraCaptureView.swift",
+      "line": 242,
+      "anchor": "try await session.openApplication(for: activity)",
+      "sha256": "2608463d056209a00e9968ef840bf020762f4c8e26a884a80d6c5a8cf1e4830e"
+    },
+    "cameraAppContext": {
+      "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppCaptureCoordinator.swift",
+      "line": 78,
+      "anchor": "try await HanlinCameraCaptureIntent.updateAppContext(target)",
+      "sha256": "8a4772d47f4e62a654d32b39b1671e8c4d6826620a5d7b0fda9f05dcfa6eac88"
+    },
+    "cameraSystemReceive": {
+      "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppCaptureCoordinator.swift",
+      "line": 161,
+      "anchor": "LockedCameraCaptureManager.shared.sessionContentUpdates",
+      "sha256": "8a4772d47f4e62a654d32b39b1671e8c4d6826620a5d7b0fda9f05dcfa6eac88"
+    },
+    "cameraDurableCopy": {
+      "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppCaptureInbox.swift",
+      "line": 25,
+      "anchor": "func receive(directory: URL) throws -> HanlinMiniAppCaptureRecord",
+      "sha256": "d79d5b5c8762d4b9cb509a4eaabf25aa2563157b940c5c57bfc8a8a90e1e4e16"
+    },
+    "cameraPackageCopy": {
+      "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppCaptureInbox.swift",
+      "line": 100,
+      "anchor": "func copyPhotos(for id: UUID, documents: URL) throws -> [URL]",
+      "sha256": "d79d5b5c8762d4b9cb509a4eaabf25aa2563157b940c5c57bfc8a8a90e1e4e16"
+    },
+    "cameraActionContinuation": {
+      "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppCaptureCoordinator.swift",
+      "line": 270,
+      "anchor": "invocationID: record.invocationID, createdAt: record.invocationCreatedAt",
+      "sha256": "8a4772d47f4e62a654d32b39b1671e8c4d6826620a5d7b0fda9f05dcfa6eac88"
+    },
+    "miniAppsCapturePrincipal": {
+      "file": "HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.swift",
+      "line": 7,
+      "anchor": "struct HanlinMiniAppsCameraCaptureExtension: LockedCameraCaptureExtension",
+      "sha256": "ee8a54ba3150ca5cdabc99f55f245e64c5b68087d8e7559a149575fba65cf448"
+    },
+    "miniAppsKeyboardPrincipal": {
+      "file": "HanlinMiniAppsExtensions/Keyboard/HanlinMiniAppsKeyboard.swift",
+      "line": 5,
+      "anchor": "final class HanlinMiniAppsKeyboard: HanlinKeyboardInputViewController",
+      "sha256": "785a18d619de3f670797241ff1f6dc0eefcc758febf55e5756b65734bdd20d0f"
+    },
+    "keyboardController": {
+      "file": "Packages/HanlinAppExtensionsSDK/Sources/HanlinKeyboardUI/HanlinKeyboardInputViewController.swift",
+      "line": 13,
+      "anchor": "open class HanlinKeyboardInputViewController: UIInputViewController",
+      "sha256": "06f183c4ae06064e310c8eec1947526651ff1f672b533448ff4e7db00aea9b7c"
+    },
+    "keyboardTextEdit": {
+      "file": "Packages/HanlinAppExtensionsSDK/Sources/HanlinKeyboardUI/HanlinKeyboardInputViewController.swift",
+      "line": 155,
+      "anchor": "case .insertText: textDocumentProxy.insertText(edit.text!)",
+      "sha256": "06f183c4ae06064e310c8eec1947526651ff1f672b533448ff4e7db00aea9b7c"
+    },
+    "keyboardLocalStorage": {
+      "file": "Packages/HanlinAppExtensionsSDK/Sources/HanlinKeyboardUI/HanlinKeyboardInputViewController.swift",
+      "line": 105,
+      "anchor": "self.model.storage = .extensionLocal(",
+      "sha256": "06f183c4ae06064e310c8eec1947526651ff1f672b533448ff4e7db00aea9b7c"
+    },
+    "miniAppsNotificationContentPrincipal": {
+      "file": "HanlinMiniAppsExtensions/NotificationContent/HanlinMiniAppsNotificationContent.swift",
+      "line": 5,
+      "anchor": "final class HanlinMiniAppsNotificationContent: HanlinNotificationContentViewController",
+      "sha256": "bf1dd8c97116fdbeda96d873c785a6b31bfc66be4de6828960e845882dbfecf5"
+    },
+    "notificationContentController": {
+      "file": "Packages/HanlinAppExtensionsSDK/Sources/HanlinNotificationContentUI/HanlinNotificationContentViewController.swift",
+      "line": 15,
+      "anchor": "open class HanlinNotificationContentViewController: UIViewController, UNNotificationContentExtension",
+      "sha256": "82c29170477e865e4ce610ecaa1381058e2e4f22bd4c8db2f501b238fd179a88"
+    },
+    "notificationContentAction": {
+      "file": "Packages/HanlinAppExtensionsSDK/Sources/HanlinNotificationContentUI/HanlinNotificationContentViewController.swift",
+      "line": 133,
+      "anchor": "extensionContext?.performNotificationDefaultAction()",
+      "sha256": "82c29170477e865e4ce610ecaa1381058e2e4f22bd4c8db2f501b238fd179a88"
+    },
+    "notificationPresentationPayload": {
+      "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationPresentation.swift",
+      "line": 7,
+      "anchor": "public struct HanlinNotificationPresentationPayload",
+      "sha256": "13e1bc6edb1892c5935e4cb66743b3f31a24c7ed30f49d10cecf07e79c5ac35c"
+    },
+    "notificationPresentationContinuation": {
+      "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationPresentation.swift",
+      "line": 78,
+      "anchor": "return try HanlinNotificationInvocation.enqueue(event, in: store, now: now)",
+      "sha256": "13e1bc6edb1892c5935e4cb66743b3f31a24c7ed30f49d10cecf07e79c5ac35c"
     },
     "ChavrusaChatShareInfo": {
       "file": "ChavrusaChatShare/Info.plist",
@@ -1162,6 +1424,24 @@
       "line": 3,
       "anchor": "<plist",
       "sha256": "b9b2e338be2912730274870fafb4d356951b1c164f78699c7a5c6d5d564df25a"
+    },
+    "HanlinMiniAppsKeyboardInfo": {
+      "file": "HanlinMiniAppsExtensions/Keyboard/Info.plist",
+      "line": 3,
+      "anchor": "<plist",
+      "sha256": "6238b81f0e6593356d1461b8c9842b3cec6759b4fe559e664f73db811d3da01c"
+    },
+    "HanlinMiniAppsNotificationContentInfo": {
+      "file": "HanlinMiniAppsExtensions/NotificationContent/Info.plist",
+      "line": 3,
+      "anchor": "<plist",
+      "sha256": "2f2277bb73d958bec242022227077ace6fa6b6ea2fd77c56a73d18e6b0222fbb"
+    },
+    "HanlinMiniAppsCameraCaptureInfo": {
+      "file": "HanlinMiniAppsExtensions/CameraCapture/Info.plist",
+      "line": 3,
+      "anchor": "<plist",
+      "sha256": "00cd0f32a7c53877e49d41e713f9dfec85137dc0043ad5934d531ccfe6657de5"
     }
   },
   "paths": {
@@ -1237,6 +1517,10 @@
       "refs": [
         "notification",
         "miniAppsNotificationPrincipal",
+        "notificationContentController",
+        "notificationPresentationPayload",
+        "notificationPresentationContinuation",
+        "notificationContentAction",
         "notificationEvent",
         "notificationQueue",
         "notificationTarget",
@@ -1249,7 +1533,7 @@
         "nativeActionDispatch",
         "expoActionDispatch"
       ],
-      "stop": "A versioned tagged event is durably queued in its product App Group. Mutable remote alerts use the shared service; both early application delegates handle actual local/remote foreground delivery and responses, and foreground recovery reads actual OS-delivered notifications. The live Host rechecks installation/generation and a declared Expo/NativeScript appIntent action, then persists its real result/error. No VM executes in the notification extension; OS delivery, locked storage, and surface-to-runtime cases still require actual attempt evidence.",
+      "stop": "A versioned tagged event is durably queued in its product App Group. Mutable remote alerts use the shared service; both early application delegates handle actual local/remote foreground delivery and responses, and foreground recovery reads actual OS-delivered notifications. The live Host rechecks installation/generation and a declared Expo/NativeScript appIntent action, then persists its real result/error. No React Native/NativeScript or canonical Host runtime executes in the notification extensions. Rich content separately renders its prepared original program locally and can enqueue the same validated event before forwarding the system action. OS delivery, locked storage, and surface-to-runtime cases still require actual attempt evidence.",
       "owner": "INT-05"
     },
     "liveActivity": {
@@ -1314,6 +1598,58 @@
       "stop": "Hanlin's typed installed-package action intent enqueues foreground continuation for NativeScript or Expo and wakes the existing Host after enqueue. ChavrusaChatShortcuts advertises alarm/notification phrases; the upstream ScriptWidget AppShortcutsProvider is not registered. Native snippets and original control intents are separate native UI/action surfaces.",
       "owner": "INT-02/INT-03"
     },
+    "spotlight": {
+      "target": "HanlinMiniApps / CoreSpotlight",
+      "refs": [
+        "systemProductBoundary",
+        "installedSystemCatalog",
+        "installedEntityQuery",
+        "spotlightIndex",
+        "spotlightRemove",
+        "spotlightOpen",
+        "systemCatalogPublication",
+        "systemEntrypointOpen",
+        "systemEntrypointAdmission",
+        "extensionQueue",
+        "extensionReceipts",
+        "resumeDispatch",
+        "requestBroker",
+        "headless",
+        "nativeActionDispatch",
+        "expoActionDispatch"
+      ],
+      "stop": "Only the standalone MiniApps product indexes declared enabled installed-package Spotlight entries, independently of widget instances, and reconciles metadata and removal on publication. The shared catalog remains reusable, while Hanlin does not publish these system entries. OpenIntent resolves the current installation/generation. An entry without an exported action opens its real prepared app; only a validated declared action queues a foreground continuation whose handler may call the five canonical Host runtimes. Spotlight search/tap and runtime receipt return to Spotlight are not established by source indexing.",
+      "owner": "INT-02/INT-03"
+    },
+    "capture": {
+      "target": "HanlinMiniAppsCameraCapture / HanlinMiniApps foreground Host",
+      "refs": [
+        "systemProductBoundary",
+        "miniAppsCapturePrincipal",
+        "cameraIntent",
+        "cameraControl",
+        "cameraPhoto",
+        "cameraHardwareEvent",
+        "cameraHandoff",
+        "cameraAppContext",
+        "cameraSystemReceive",
+        "cameraDurableCopy",
+        "cameraPackageCopy",
+        "cameraActionContinuation",
+        "installedSystemCatalog",
+        "systemEntrypointOpen",
+        "systemEntrypointAdmission",
+        "extensionQueue",
+        "extensionReceipts",
+        "resumeDispatch",
+        "requestBroker",
+        "headless",
+        "nativeActionDispatch",
+        "expoActionDispatch"
+      ],
+      "stop": "CameraCaptureIntent and its Control use the real locked-capture extension or foreground camera. AVFoundation writes JPEGs under sessionContentURL; openApplication hands off through the system. The app verifies and retains its own copy before system-session invalidation, copies photos into the selected package Documents area, then invokes the required declared action with installation/generation checks and a stable queue identity. The locked process has no App Group, network or package runtime. Canonical Host runtime calls happen only after foreground handoff; physical capture and complete receipt return to the ingress remain separate acceptance.",
+      "owner": "INT-02/INT-03"
+    },
     "foreground": {
       "target": "HanlinApp / HanlinMiniApps",
       "refs": [
@@ -1352,6 +1688,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared registered package handler can call its canonical Host facade",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -1385,6 +1722,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared registered package handler can call its canonical Host facade",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -1418,6 +1756,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared registered package handler can call its canonical Host facade",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -1451,6 +1790,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared registered package handler can call its canonical Host facade",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -1484,6 +1824,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared registered package handler can call its canonical Host facade",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -1517,6 +1858,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared registered package handler can call its canonical Host facade",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -1550,6 +1892,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared registered package handler can call its canonical Host facade",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -1583,6 +1926,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared registered package handler can call its canonical Host facade",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -1616,6 +1960,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared registered package handler can call its canonical Host facade",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -1649,6 +1994,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared registered package handler can call its canonical Host facade",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -1682,6 +2028,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Foreground package action continuation; original native presentations remain separate",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -1715,6 +2062,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Foreground package action continuation; original native presentations remain separate",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -1748,6 +2096,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Foreground package action continuation; original native presentations remain separate",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -1781,6 +2130,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Foreground package action continuation; original native presentations remain separate",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -1814,6 +2164,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Foreground package action continuation; original native presentations remain separate",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -1847,6 +2198,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Foreground package action continuation; original native presentations remain separate",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -1880,6 +2232,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Foreground package action continuation; original native presentations remain separate",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -1913,6 +2266,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Foreground package action continuation; original native presentations remain separate",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -1946,6 +2300,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Foreground package action continuation; original native presentations remain separate",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -1979,6 +2334,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Foreground package action continuation; original native presentations remain separate",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -2012,6 +2368,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "An explicit hostAction validates the current installed widget and registered target, then continues in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -2045,6 +2402,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "An explicit hostAction validates the current installed widget and registered target, then continues in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -2078,6 +2436,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "An explicit hostAction validates the current installed widget and registered target, then continues in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -2111,6 +2470,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "An explicit hostAction validates the current installed widget and registered target, then continues in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -2144,6 +2504,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "An explicit hostAction validates the current installed widget and registered target, then continues in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -2177,6 +2538,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "An explicit hostAction validates the current installed widget and registered target, then continues in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -2210,6 +2572,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "An explicit hostAction validates the current installed widget and registered target, then continues in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -2243,6 +2606,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "An explicit hostAction validates the current installed widget and registered target, then continues in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -2276,6 +2640,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "An explicit hostAction validates the current installed widget and registered target, then continues in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -2309,6 +2674,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "An explicit hostAction validates the current installed widget and registered target, then continues in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -2342,6 +2708,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Typed notification event resumes only a current installed action in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -2375,6 +2742,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Typed notification event resumes only a current installed action in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -2408,6 +2776,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Typed notification event resumes only a current installed action in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -2441,6 +2810,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Typed notification event resumes only a current installed action in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -2474,6 +2844,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Typed notification event resumes only a current installed action in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -2507,6 +2878,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Typed notification event resumes only a current installed action in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -2540,6 +2912,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Typed notification event resumes only a current installed action in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -2573,6 +2946,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Typed notification event resumes only a current installed action in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -2606,6 +2980,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Typed notification event resumes only a current installed action in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -2639,6 +3014,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Typed notification event resumes only a current installed action in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -2672,6 +3048,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared ScriptWidget hostAction or published native-node action continues in the foreground Host; original Expo callbacks stay separate",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -2705,6 +3082,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared ScriptWidget hostAction or published native-node action continues in the foreground Host; original Expo callbacks stay separate",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -2738,6 +3116,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared ScriptWidget hostAction or published native-node action continues in the foreground Host; original Expo callbacks stay separate",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -2771,6 +3150,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared ScriptWidget hostAction or published native-node action continues in the foreground Host; original Expo callbacks stay separate",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -2804,6 +3184,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared ScriptWidget hostAction or published native-node action continues in the foreground Host; original Expo callbacks stay separate",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -2837,6 +3218,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared ScriptWidget hostAction or published native-node action continues in the foreground Host; original Expo callbacks stay separate",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -2870,6 +3252,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared ScriptWidget hostAction or published native-node action continues in the foreground Host; original Expo callbacks stay separate",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -2903,6 +3286,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared ScriptWidget hostAction or published native-node action continues in the foreground Host; original Expo callbacks stay separate",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -2936,6 +3320,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared ScriptWidget hostAction or published native-node action continues in the foreground Host; original Expo callbacks stay separate",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -2969,6 +3354,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared ScriptWidget hostAction or published native-node action continues in the foreground Host; original Expo callbacks stay separate",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -3002,6 +3388,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared registered package handler can call its canonical Host facade",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -3035,6 +3422,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared registered package handler can call its canonical Host facade",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -3068,6 +3456,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared registered package handler can call its canonical Host facade",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -3101,6 +3490,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared registered package handler can call its canonical Host facade",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -3134,6 +3524,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared registered package handler can call its canonical Host facade",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -3167,6 +3558,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared registered package handler can call its canonical Host facade",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -3200,6 +3592,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared registered package handler can call its canonical Host facade",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -3233,6 +3626,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared registered package handler can call its canonical Host facade",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -3266,6 +3660,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared registered package handler can call its canonical Host facade",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -3299,6 +3694,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared registered package handler can call its canonical Host facade",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -3332,6 +3728,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared registered package handler can call its canonical Host facade",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -3365,6 +3762,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared registered package handler can call its canonical Host facade",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -3398,6 +3796,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared registered package handler can call its canonical Host facade",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -3431,6 +3830,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared registered package handler can call its canonical Host facade",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -3464,6 +3864,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared registered package handler can call its canonical Host facade",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -3497,6 +3898,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared registered package handler can call its canonical Host facade",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -3530,6 +3932,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared registered package handler can call its canonical Host facade",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -3563,6 +3966,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared registered package handler can call its canonical Host facade",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -3596,6 +4000,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared registered package handler can call its canonical Host facade",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -3629,6 +4034,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
       "durableActionReceiptInSource": true,
+      "receiptCondition": null,
       "routeCondition": "Declared registered package handler can call its canonical Host facade",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -3643,6 +4049,686 @@
       "permissions": [
         "Declared App Group is not exported-signature proof",
         "Actual service OS permission/availability still required"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "spotlight",
+      "engine": "hanlinNativeScript",
+      "runtime": "node",
+      "status": "partially-wired",
+      "path": "spotlight",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": true,
+      "receiptCondition": "Only the optional declared action uses the queue; plain Spotlight app-open has no action receipt",
+      "routeCondition": "Declared Spotlight action only; an entry without a symbol opens its prepared app without a runtime invocation",
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "The validated system entrypoint opens its actual prepared foreground controller before action dispatch"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "App-owned Spotlight index declaration is not system search/tap acceptance"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "spotlight",
+      "engine": "hanlinNativeScript",
+      "runtime": "typeScript",
+      "status": "partially-wired",
+      "path": "spotlight",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": true,
+      "receiptCondition": "Only the optional declared action uses the queue; plain Spotlight app-open has no action receipt",
+      "routeCondition": "Declared Spotlight action only; an entry without a symbol opens its prepared app without a runtime invocation",
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "The validated system entrypoint opens its actual prepared foreground controller before action dispatch"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "App-owned Spotlight index declaration is not system search/tap acceptance"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "spotlight",
+      "engine": "hanlinNativeScript",
+      "runtime": "localPython",
+      "status": "partially-wired",
+      "path": "spotlight",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": true,
+      "receiptCondition": "Only the optional declared action uses the queue; plain Spotlight app-open has no action receipt",
+      "routeCondition": "Declared Spotlight action only; an entry without a symbol opens its prepared app without a runtime invocation",
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "The validated system entrypoint opens its actual prepared foreground controller before action dispatch"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "App-owned Spotlight index declaration is not system search/tap acceptance"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "spotlight",
+      "engine": "hanlinNativeScript",
+      "runtime": "javaScriptCore",
+      "status": "partially-wired",
+      "path": "spotlight",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": true,
+      "receiptCondition": "Only the optional declared action uses the queue; plain Spotlight app-open has no action receipt",
+      "routeCondition": "Declared Spotlight action only; an entry without a symbol opens its prepared app without a runtime invocation",
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "The validated system entrypoint opens its actual prepared foreground controller before action dispatch"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "App-owned Spotlight index declaration is not system search/tap acceptance"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "spotlight",
+      "engine": "hanlinNativeScript",
+      "runtime": "shell",
+      "status": "partially-wired",
+      "path": "spotlight",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": true,
+      "receiptCondition": "Only the optional declared action uses the queue; plain Spotlight app-open has no action receipt",
+      "routeCondition": "Declared Spotlight action only; an entry without a symbol opens its prepared app without a runtime invocation",
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "The validated system entrypoint opens its actual prepared foreground controller before action dispatch"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "App-owned Spotlight index declaration is not system search/tap acceptance"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "spotlight",
+      "engine": "hanlinExpo",
+      "runtime": "node",
+      "status": "partially-wired",
+      "path": "spotlight",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": true,
+      "receiptCondition": "Only the optional declared action uses the queue; plain Spotlight app-open has no action receipt",
+      "routeCondition": "Declared Spotlight action only; an entry without a symbol opens its prepared app without a runtime invocation",
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "The validated system entrypoint opens its actual prepared foreground controller before action dispatch"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "App-owned Spotlight index declaration is not system search/tap acceptance"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "spotlight",
+      "engine": "hanlinExpo",
+      "runtime": "typeScript",
+      "status": "partially-wired",
+      "path": "spotlight",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": true,
+      "receiptCondition": "Only the optional declared action uses the queue; plain Spotlight app-open has no action receipt",
+      "routeCondition": "Declared Spotlight action only; an entry without a symbol opens its prepared app without a runtime invocation",
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "The validated system entrypoint opens its actual prepared foreground controller before action dispatch"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "App-owned Spotlight index declaration is not system search/tap acceptance"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "spotlight",
+      "engine": "hanlinExpo",
+      "runtime": "localPython",
+      "status": "partially-wired",
+      "path": "spotlight",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": true,
+      "receiptCondition": "Only the optional declared action uses the queue; plain Spotlight app-open has no action receipt",
+      "routeCondition": "Declared Spotlight action only; an entry without a symbol opens its prepared app without a runtime invocation",
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "The validated system entrypoint opens its actual prepared foreground controller before action dispatch"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "App-owned Spotlight index declaration is not system search/tap acceptance"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "spotlight",
+      "engine": "hanlinExpo",
+      "runtime": "javaScriptCore",
+      "status": "partially-wired",
+      "path": "spotlight",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": true,
+      "receiptCondition": "Only the optional declared action uses the queue; plain Spotlight app-open has no action receipt",
+      "routeCondition": "Declared Spotlight action only; an entry without a symbol opens its prepared app without a runtime invocation",
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "The validated system entrypoint opens its actual prepared foreground controller before action dispatch"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "App-owned Spotlight index declaration is not system search/tap acceptance"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "spotlight",
+      "engine": "hanlinExpo",
+      "runtime": "shell",
+      "status": "partially-wired",
+      "path": "spotlight",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": true,
+      "receiptCondition": "Only the optional declared action uses the queue; plain Spotlight app-open has no action receipt",
+      "routeCondition": "Declared Spotlight action only; an entry without a symbol opens its prepared app without a runtime invocation",
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "The validated system entrypoint opens its actual prepared foreground controller before action dispatch"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "App-owned Spotlight index declaration is not system search/tap acceptance"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "capture",
+      "engine": "hanlinNativeScript",
+      "runtime": "node",
+      "status": "partially-wired",
+      "path": "capture",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": true,
+      "receiptCondition": null,
+      "routeCondition": "Verified captured files hand off to the selected current foreground package action; no Host runtime in the locked process",
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "The validated system entrypoint opens its actual prepared foreground controller before action dispatch"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Locked capture uses system session storage and no App Group/network access",
+        "Camera authorization and supported physical hardware required",
+        "Extension declaration is not signed/device acceptance"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "capture",
+      "engine": "hanlinNativeScript",
+      "runtime": "typeScript",
+      "status": "partially-wired",
+      "path": "capture",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": true,
+      "receiptCondition": null,
+      "routeCondition": "Verified captured files hand off to the selected current foreground package action; no Host runtime in the locked process",
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "The validated system entrypoint opens its actual prepared foreground controller before action dispatch"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Locked capture uses system session storage and no App Group/network access",
+        "Camera authorization and supported physical hardware required",
+        "Extension declaration is not signed/device acceptance"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "capture",
+      "engine": "hanlinNativeScript",
+      "runtime": "localPython",
+      "status": "partially-wired",
+      "path": "capture",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": true,
+      "receiptCondition": null,
+      "routeCondition": "Verified captured files hand off to the selected current foreground package action; no Host runtime in the locked process",
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "The validated system entrypoint opens its actual prepared foreground controller before action dispatch"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Locked capture uses system session storage and no App Group/network access",
+        "Camera authorization and supported physical hardware required",
+        "Extension declaration is not signed/device acceptance"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "capture",
+      "engine": "hanlinNativeScript",
+      "runtime": "javaScriptCore",
+      "status": "partially-wired",
+      "path": "capture",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": true,
+      "receiptCondition": null,
+      "routeCondition": "Verified captured files hand off to the selected current foreground package action; no Host runtime in the locked process",
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "The validated system entrypoint opens its actual prepared foreground controller before action dispatch"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Locked capture uses system session storage and no App Group/network access",
+        "Camera authorization and supported physical hardware required",
+        "Extension declaration is not signed/device acceptance"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "capture",
+      "engine": "hanlinNativeScript",
+      "runtime": "shell",
+      "status": "partially-wired",
+      "path": "capture",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": true,
+      "receiptCondition": null,
+      "routeCondition": "Verified captured files hand off to the selected current foreground package action; no Host runtime in the locked process",
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "The validated system entrypoint opens its actual prepared foreground controller before action dispatch"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Locked capture uses system session storage and no App Group/network access",
+        "Camera authorization and supported physical hardware required",
+        "Extension declaration is not signed/device acceptance"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "capture",
+      "engine": "hanlinExpo",
+      "runtime": "node",
+      "status": "partially-wired",
+      "path": "capture",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": true,
+      "receiptCondition": null,
+      "routeCondition": "Verified captured files hand off to the selected current foreground package action; no Host runtime in the locked process",
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "The validated system entrypoint opens its actual prepared foreground controller before action dispatch"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Locked capture uses system session storage and no App Group/network access",
+        "Camera authorization and supported physical hardware required",
+        "Extension declaration is not signed/device acceptance"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "capture",
+      "engine": "hanlinExpo",
+      "runtime": "typeScript",
+      "status": "partially-wired",
+      "path": "capture",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": true,
+      "receiptCondition": null,
+      "routeCondition": "Verified captured files hand off to the selected current foreground package action; no Host runtime in the locked process",
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "The validated system entrypoint opens its actual prepared foreground controller before action dispatch"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Locked capture uses system session storage and no App Group/network access",
+        "Camera authorization and supported physical hardware required",
+        "Extension declaration is not signed/device acceptance"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "capture",
+      "engine": "hanlinExpo",
+      "runtime": "localPython",
+      "status": "partially-wired",
+      "path": "capture",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": true,
+      "receiptCondition": null,
+      "routeCondition": "Verified captured files hand off to the selected current foreground package action; no Host runtime in the locked process",
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "The validated system entrypoint opens its actual prepared foreground controller before action dispatch"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Locked capture uses system session storage and no App Group/network access",
+        "Camera authorization and supported physical hardware required",
+        "Extension declaration is not signed/device acceptance"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "capture",
+      "engine": "hanlinExpo",
+      "runtime": "javaScriptCore",
+      "status": "partially-wired",
+      "path": "capture",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": true,
+      "receiptCondition": null,
+      "routeCondition": "Verified captured files hand off to the selected current foreground package action; no Host runtime in the locked process",
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "The validated system entrypoint opens its actual prepared foreground controller before action dispatch"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Locked capture uses system session storage and no App Group/network access",
+        "Camera authorization and supported physical hardware required",
+        "Extension declaration is not signed/device acceptance"
+      ],
+      "followUp": "INT-02/INT-03"
+    },
+    {
+      "surface": "capture",
+      "engine": "hanlinExpo",
+      "runtime": "shell",
+      "status": "partially-wired",
+      "path": "capture",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": true,
+      "receiptCondition": null,
+      "routeCondition": "Verified captured files hand off to the selected current foreground package action; no Host runtime in the locked process",
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "The validated system entrypoint opens its actual prepared foreground controller before action dispatch"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Locked capture uses system session storage and no App Group/network access",
+        "Camera authorization and supported physical hardware required",
+        "Extension declaration is not signed/device acceptance"
       ],
       "followUp": "INT-02/INT-03"
     },
@@ -3662,6 +4748,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": true,
       "durableActionReceiptInSource": false,
+      "receiptCondition": null,
       "routeCondition": "Direct canonical Host facade call",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -3695,6 +4782,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": true,
       "durableActionReceiptInSource": false,
+      "receiptCondition": null,
       "routeCondition": "Direct canonical Host facade call",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -3728,6 +4816,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": true,
       "durableActionReceiptInSource": false,
+      "receiptCondition": null,
       "routeCondition": "Direct canonical Host facade call",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -3761,6 +4850,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": true,
       "durableActionReceiptInSource": false,
+      "receiptCondition": null,
       "routeCondition": "Direct canonical Host facade call",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -3794,6 +4884,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": true,
       "durableActionReceiptInSource": false,
+      "receiptCondition": null,
       "routeCondition": "Direct canonical Host facade call",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -3827,6 +4918,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": true,
       "durableActionReceiptInSource": false,
+      "receiptCondition": null,
       "routeCondition": "Direct canonical Host facade call",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -3860,6 +4952,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": true,
       "durableActionReceiptInSource": false,
+      "receiptCondition": null,
       "routeCondition": "Direct canonical Host facade call",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -3893,6 +4986,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": true,
       "durableActionReceiptInSource": false,
+      "receiptCondition": null,
       "routeCondition": "Direct canonical Host facade call",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -3926,6 +5020,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": true,
       "durableActionReceiptInSource": false,
+      "receiptCondition": null,
       "routeCondition": "Direct canonical Host facade call",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -3959,6 +5054,7 @@
       "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": true,
       "durableActionReceiptInSource": false,
+      "receiptCondition": null,
       "routeCondition": "Direct canonical Host facade call",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
@@ -4059,7 +5155,54 @@
       "onDeviceProof": null
     }
   },
-  "matrixScope": "Eight ingress categories by two native app engines by five canonical Host runtimes; not an inventory of all original widget/presentation APIs.",
+  "localPresentationSurfaces": {
+    "keyboard": {
+      "engines": [
+        "expo-widgets",
+        "scriptwidget"
+      ],
+      "target": "HanlinMiniAppsKeyboard",
+      "refs": [
+        "miniAppsKeyboardPrincipal",
+        "keyboardController",
+        "keyboardTextEdit",
+        "keyboardLocalStorage",
+        "nativePresentationExecutor",
+        "nativePresentationView",
+        "nativePresentationPublication"
+      ],
+      "sourceSupport": "A real UIInputViewController chooses a published installed-package keyboard presentation. The original prepared renderer receives document context; validated effects call textDocumentProxy insertion/deletion/cursor movement or the system next-keyboard API. Renderer/service mutable storage stays extension-local. This keyboard is not a React Native/NativeScript app VM or a canonical Host-runtime ingress.",
+      "canonicalHostContinuationPath": null,
+      "status": "source-wired",
+      "canonicalHostRuntimePassthroughEstablished": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null
+    },
+    "richNotification": {
+      "engines": [
+        "expo-widgets",
+        "scriptwidget"
+      ],
+      "target": "HanlinMiniAppsNotificationContent",
+      "refs": [
+        "miniAppsNotificationContentPrincipal",
+        "notificationContentController",
+        "notificationPresentationPayload",
+        "notificationPresentationContinuation",
+        "notificationContentAction",
+        "notificationQueue",
+        "nativePresentationExecutor",
+        "nativePresentationView"
+      ],
+      "sourceSupport": "A real UNNotificationContentExtension validates the published presentation identity/category and renders its original prepared program with extension-local mutable state. Matching installation/package/generation ties optional continuation to the existing notification event; the exact event is persisted before the system default action/response forwards to the foreground Host. A queued receipt is not execution completion. Ordinary notifications retain system content without a fabricated MiniApp.",
+      "canonicalHostContinuationPath": "notification",
+      "status": "source-wired",
+      "canonicalHostRuntimePassthroughEstablished": false,
+      "realSurfaceE2E": false,
+      "onDeviceProof": null
+    }
+  },
+  "matrixScope": "Ten ingress categories by two native app engines by five canonical Host runtimes (100 conditional source routes); original library rendering and keyboard/rich-notification presentation records are separate. Plain Spotlight app-open does not itself execute a runtime.",
   "sourceReadPolicy": "Current local bytes take precedence; only missing tracked files use exact HEAD blobs, including the Swift symbol scan.",
   "systemServices": {
     "authority": "source-inventory.json#/systemServices",
@@ -4072,7 +5215,8 @@
   },
   "acceptance": {
     "fourExtensionCategoriesByTwoEnginesByFiveRuntimes": 40,
-    "additionalSurfaceCells": 40,
+    "additionalSurfaceCells": 60,
+    "canonicalHostRuntimeCells": 100,
     "executedSurfaceE2EPasses": 0,
     "signedPhysicalAcceptance": "NOT_RUN"
   }

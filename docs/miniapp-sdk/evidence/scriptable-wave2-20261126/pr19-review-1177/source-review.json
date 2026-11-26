@@ -1,0 +1,109 @@
+{
+  "schemaVersion": 1,
+  "atUTC": "2026-11-26T16:38:15.357265+00:00",
+  "baseSHA": "1177dace25b823737ed4c4775bf2ac440f049d3e",
+  "scope": "Fresh persisted system-entrypoint admission and foreground window/camera ownership",
+  "classification": "FIX_SOURCE_CONFIRMED_NATIVE_PENDING",
+  "files": [
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppCaptureCoordinator.swift",
+      "baseBlob": "541413782d7eeca1954d58e20e13006088b1bd25",
+      "sha256": "02979fb07a829cbd7b02fce2b0c61cadaccd9cb61fc8ea7381d4c75160533f54"
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSystemEntrypointsView.swift",
+      "baseBlob": "0d31c03052cc7d3653ae0a83b63d57f3faab06a9",
+      "sha256": "2f2da71c463021953e28ca304e73563302cdf839de76b621e6e581a0d87b902b"
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "baseBlob": "cee85a4cef165fe8511a8d59d0cc512e59eb689e",
+      "sha256": "8f54f15d761028bd2f316b956cd88009a84a8fa77e48dd4187b1ff11ea48eb0b"
+    },
+    {
+      "path": "AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests.swift",
+      "baseBlob": "036cb5d695545b2aa2710f2ac6e164b3f183596a",
+      "sha256": "744c74f6a84c35d45d099c186ccbbf02fb1d0de4fd005a9db4fae3348a6f3399"
+    }
+  ],
+  "oldTestMethods": [
+    "testInstalledCatalogDoesNotDependOnWidgetInstancesAndReconcilesIdentity",
+    "testCaptureCatalogRequiresAnActualUnambiguousPreparedAction",
+    "testCapturedBytesAreDurableBeforeSessionInvalidationAndRetryKeepsIdentity",
+    "testCaptureManifestRejectsForeignProductAndUnownedPath"
+  ],
+  "newTestMethods": [
+    "testSystemEntrypointsReloadAnotherStoreBeforeGenerationAndEnabledAdmission",
+    "testInactiveSystemWindowReleasesPresentationWithoutTakingTheNewOwner",
+    "testUnrelatedAndLateCameraDismissalsPreserveOwnedCaptureAndPhotos"
+  ],
+  "originalTestSourcePreservedExceptAdditiveImportsAndMethods": true,
+  "parse": {
+    "kind": "Swift frontend syntax only, NOT Apple typecheck or native execution",
+    "toolchain": "Swift version 6.4.3 (swift-6.4.3-RELEASE)\nTarget: aarch64-unknown-linux-gnu",
+    "results": [
+      {
+        "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppCaptureCoordinator.swift",
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSystemEntrypointsView.swift",
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      },
+      {
+        "path": "AI_HLYTests/HanlinMiniAppDiscoveryAndCaptureTests.swift",
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    ]
+  },
+  "nativeStatus": "NOT_RUN; root owns final integrated native queue",
+  "reviewFindings": [
+    {
+      "issue": "New Spotlight/capture freshness guards read cached store registry",
+      "fix": "Reload real persisted registry at initial admission, both post-launch guards and pre-handler generation check",
+      "regression": "Two real store actors; install generation1, platform loads, second actor updates2 then disables; original openSystemEntrypoint rejects obsolete and disabled entries before runtime"
+    },
+    {
+      "issue": "First retained inactive window keeps presentation ownership",
+      "fix": "Use actual scene activity changes to release ownership; persistent State tracks foreground status across suspended admission and old callbacks cannot dismiss the new owner's runtime",
+      "regression": "Actual production updateWindowActivity transition with distinct retained windows"
+    },
+    {
+      "issue": "Unrelated/late cover dismissal clears another window's camera",
+      "fix": "cameraDidDismiss(windowID:) requires matching owner and no active camera presentation; retain presentation/directory for transfer",
+      "regression": "Actual coordinator and real JPEG/session writer, ownership transfer and reopen; photo bytes unchanged"
+    }
+  ],
+  "officialAPISemantics": [
+    {
+      "url": "https://developer.apple.com/documentation/uikit/configuring-open-access-for-a-custom-keyboard",
+      "finding": "Current documentation permits read-only shared group container without Full Access; local keyboard renderer design is consistent"
+    },
+    {
+      "url": "https://developer.apple.com/documentation/LockedCameraCapture/Creating-a-camera-experience-for-the-Lock-Screen",
+      "finding": "App/Control/capture extension share CameraCaptureIntent; capture extension uses own sessionContentURL, no App Group or network"
+    },
+    {
+      "url": "https://developer.apple.com/documentation/appintents/cameracaptureintent/updateappcontext(_:)",
+      "finding": "App context identifiers are sent using original public updateAppContext; 4KB system limit remains authoritative"
+    }
+  ],
+  "productBoundary": "Root separately owns limiting new3 shipping extensions/registration to MiniApps, with shared SDK/contracts retained",
+  "acceptanceLimitations": [
+    "Native Apple typecheck and7-method app-suite execution pending",
+    "No Spotlight OS search/tap, physical camera, system keyboard or notification UI success is claimed",
+    "No duplicate native job launched"
+  ]
+}

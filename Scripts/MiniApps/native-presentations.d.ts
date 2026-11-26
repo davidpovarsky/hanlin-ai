@@ -1,6 +1,7 @@
 /** Hanlin system-surface metadata. Runtime APIs/types come from the original engine SDK. */
 export type NativePresentationEngine = 'expo' | 'scriptwidget';
 export type NativePresentationSourceFormat = 'jsx' | 'tsx' | 'javascript' | 'expo-layout';
+export type NativePresentationKind = 'snippet' | 'translationUI' | 'keyboard' | 'notificationUI';
 /** Widget-local and native-panel actions execute in their original renderer. */
 export type NativePresentationAction =
   | { id: string; kind: 'function'; handler: string }
@@ -30,20 +31,114 @@ export interface NativePresentationDefinition {
   engine: NativePresentationEngine;
   sourcePath: string;
   sourceFormat: NativePresentationSourceFormat;
-  /** Panels use local actions; hostAction belongs to widgets and Live Activities. */
+  /** Panels use local original-engine actions. A notification continues its existing event envelope. */
   actions?: NativePresentationAction[];
   input?: { title: string; placeholder?: string; submitTitle: string };
 }
+/** An explicit exposure of an installed Expo or NativeScript package. */
+interface PreparedMiniAppEntrypointBase {
+  id: string;
+  /**
+   * keyboard/notificationUI/spotlight/capture reference the prepared foreground
+   * bundle here. Their nativePresentations entry separately points to compiled
+   * original-renderer UI source; the foreground bundle is not executed in a keyboard.
+   */
+  sourcePath: string;
+}
+/** Capture hands its saved files to one declared prepared action; Spotlight may only open the app. */
+export type PreparedMiniAppEntrypoint = PreparedMiniAppEntrypointBase & (
+  | {kind: 'capture'; exportedSymbol: string}
+  | {kind: 'appIntent' | 'embeddedResult' | 'share' | 'translationUI' | 'liveActivity'
+      | 'keyboard' | 'notificationUI' | 'spotlight'; exportedSymbol?: string}
+);
 export interface NativePresentationManifest {
-  /** Keys are explicitly declared appIntent or translationUI entrypoint IDs. */
+  entrypoints?: PreparedMiniAppEntrypoint[];
+  /** Keys are declared appIntent, translationUI, keyboard or notificationUI entrypoint IDs. */
   nativePresentations?: Record<string, NativePresentationDefinition>;
 }
-export interface NativePresentationEffect {
-  expandsSheet: boolean;
-  finishRequested: boolean;
-  replacementText?: string | null;
+export interface KeyboardPresentationContext {
+  documentContextBeforeInput?: string;
+  documentContextAfterInput?: string;
+  selectedText?: string;
+  /** Actual iOS setting. Reads of the installed shared catalog do not require Full Access. */
+  hasFullAccess: boolean;
 }
-/** Return this field from an original Expo Widgets callback to affect its translation panel. */
+export type KeyboardPresentationEdit =
+  | { operation: 'insertText'; text: string; offset?: never }
+  | { operation: 'deleteBackward' | 'nextInputMode'; text?: never; offset?: never }
+  | { operation: 'adjustTextPosition'; offset: number; text?: never };
+export interface NativePresentationContext {
+  kind: NativePresentationKind;
+  sessionID: string;
+  inputText: string;
+  parameters: WidgetActionJSON;
+  allowsReplacement: boolean;
+  /** Present in a keyboard. Offsets count characters, as UITextDocumentProxy specifies. */
+  keyboard?: KeyboardPresentationContext;
+}
+export interface NativePresentationEffect {
+  /** Defaults to false when omitted; retained for existing translation panels. */
+  expandsSheet?: boolean;
+  finishRequested?: boolean;
+  replacementText?: string | null;
+  /** Applied sequentially by the current keyboard's textDocumentProxy. */
+  keyboardEdits?: KeyboardPresentationEdit[];
+  /** openApp persists the notification's exact event, then performs its system default action. */
+  notificationAction?: 'openApp' | 'dismiss';
+}
+/** Return this field from an original Expo Widgets callback to affect its current surface. */
 export interface NativePresentationPropsEffect {
   __hanlinPresentationEffect: NativePresentationEffect;
+}
+export interface NativePresentationIdentity {
+  installedPackageID: string;
+  packageID: string;
+  generation: number;
+  entrypointID: string;
+  variantID?: string;
+}
+/** Plain JSON in userInfo["hanlin-miniapp-presentation"]. */
+export interface NotificationPresentationPayloadV1 {
+  schemaVersion: 1;
+  /** Identifies a declared notificationUI presentation in the current installed generation. */
+  identity: NativePresentationIdentity;
+  parameters?: WidgetActionJSON;
+}
+/**
+ * For foreground continuation, also supply the existing typed
+ * userInfo["hanlin-miniapp-event"]. Its action entrypoint may differ, but its
+ * installedPackageID/packageID/generation must match the presentation.
+ * Queue admission reports queued; only the actual Host records completion.
+ */
+export interface NotificationPresentationUserInfoV1 {
+  'hanlin-miniapp-presentation': NotificationPresentationPayloadV1;
+  [key: string]: unknown;
+}
+
+/** Files delivered by the native capture handoff are already copied into this package's Documents area. */
+export interface NativeCaptureFile {
+  id: string;
+  area: 'documents';
+  /** Relative path accepted by the existing Host.files API. */
+  path: `captures/${string}/${string}.jpg`;
+  contentType: 'public.jpeg';
+  mimeType: 'image/jpeg';
+  byteCount: number;
+  sha256: string;
+  width: number;
+  height: number;
+}
+/** Ordinary JSON passed to the action selected by a capture entrypoint's exportedSymbol. */
+export interface NativeCaptureInput {
+  source: 'lockedCamera' | 'applicationCamera';
+  sessionID: string;
+  installedPackageID: string;
+  packageID: string;
+  generation: number;
+  entrypointID: string;
+  files: NativeCaptureFile[];
+}
+/** Ordinary input for a Spotlight entrypoint which declares an action. */
+export interface NativeSpotlightInput {
+  source: 'spotlight';
 }

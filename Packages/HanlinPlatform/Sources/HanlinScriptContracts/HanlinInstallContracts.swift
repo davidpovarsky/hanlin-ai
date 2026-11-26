@@ -9,6 +9,8 @@ public enum HanlinPackageEntrypointKind: String, Codable, CaseIterable, Hashable
     case appIntent
     case liveActivity
     case translationUI
+    case keyboard
+    case notificationUI
     case spotlight
     case quickLook
     case share
@@ -27,9 +29,12 @@ extension HanlinPackageEntrypointKind {
         case .appIntent: return .appIntentBridge
         case .liveActivity: return .liveActivity
         case .translationUI: return .translationUI
+        case .keyboard: return .keyboard
+        case .notificationUI: return .notificationUI
+        case .capture: return .capture
         case .spotlight: return .spotlight
         case .share: return .shareExtension
-        case .quickLook, .capture, .safariExtension:
+        case .quickLook, .safariExtension:
             return nil
         }
     }
@@ -44,9 +49,12 @@ extension HanlinPackageEntrypointKind {
         case .appIntentBridge: self = .appIntent
         case .liveActivity: self = .liveActivity
         case .translationUI: self = .translationUI
+        case .keyboard: self = .keyboard
+        case .notificationUI: self = .notificationUI
+        case .capture: self = .capture
         case .spotlight: self = .spotlight
         case .shareExtension: self = .share
-        case .controlWidget, .notificationUI, .keyboard, .backgroundTask:
+        case .controlWidget, .backgroundTask:
             return nil
         }
     }
@@ -62,6 +70,8 @@ extension HanlinPackageEntrypointKind {
         case .appIntent: .appIntent
         case .liveActivity: .liveActivity
         case .translationUI: .translationUI
+        case .keyboard: .keyboard
+        case .notificationUI: .notificationUI
         case .spotlight: .spotlight
         case .quickLook: .quickLook
         case .share: .shareExtension
