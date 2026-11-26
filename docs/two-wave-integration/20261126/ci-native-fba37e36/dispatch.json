@@ -1,0 +1,15 @@
+{
+  "sourceCommit": "fba37e3636da21f897d6a86298b52f2149b462dd",
+  "workflow": "build-ios26-unsigned-ipa.yml",
+  "selectedCount": 90,
+  "unitSelectors": 80,
+  "uiSelectors": 10,
+  "originalPlan": "/mnt/development/projects/worktrees/hanlin-two-wave-integration-20261126/build/affected-routing-fba37e36/plan.json",
+  "runtimeArtifactRunInput": "EMPTY_USE_RESTORED_ORIGINAL_RELEASE",
+  "startedUTC": "2026-11-26T19:10:40.105625+00:00",
+  "status": "DISPATCH_ACCEPTED",
+  "exitCode": 0,
+  "stdout": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45881659486\n",
+  "stderr": "",
+  "runID": 45881659486
+}
