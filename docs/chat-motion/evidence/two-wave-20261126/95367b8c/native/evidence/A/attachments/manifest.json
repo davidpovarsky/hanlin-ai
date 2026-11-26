@@ -1,0 +1,98 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D",
+        "deviceName" : "Hanlin-Phase2-Motion-local-motion-dacb4ca5-20261126-1",
+        "exportedFileName" : "4200FA44-AEF2-40FB-8DF1-CDABA88CAEA4.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "v1_0_5022F90B-ACD4-4F93-A63B-249B43E179EC.none-closed-after20",
+        "timestamp" : 1795710814.454
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D",
+        "deviceName" : "Hanlin-Phase2-Motion-local-motion-dacb4ca5-20261126-1",
+        "exportedFileName" : "752E0C8F-9577-4928-937A-3D56602C2E9B.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "v1_0_259EC403-CC36-4CC6-A980-DE6C78472E63.none-expanded",
+        "timestamp" : 1795710758.523
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D",
+        "deviceName" : "Hanlin-Phase2-Motion-local-motion-dacb4ca5-20261126-1",
+        "exportedFileName" : "8FA21355-6D28-4650-A229-BE4390AA3BF9.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "v1_0_4A6EA0D3-340A-4F10-BB82-BA132E8BCC52.quiet-fade-closed-after20",
+        "timestamp" : 1795710750.555
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D",
+        "deviceName" : "Hanlin-Phase2-Motion-local-motion-dacb4ca5-20261126-1",
+        "exportedFileName" : "9FF5F986-8B50-4250-B261-6AE034B28F72.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "v1_0_3C2204D4-0731-44A6-BA3B-9531362CC087.quiet-fade-expanded",
+        "timestamp" : 1795710693.555
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D",
+        "deviceName" : "Hanlin-Phase2-Motion-local-motion-dacb4ca5-20261126-1",
+        "exportedFileName" : "C7C3D1A8-11D1-4C74-8B61-D25123F9F1F4.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "v1_0_B23C8C26-BF71-42E5-8D43-545EC59DA92B.gentle-squeeze-closed-after20",
+        "timestamp" : 1795710687.461
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D",
+        "deviceName" : "Hanlin-Phase2-Motion-local-motion-dacb4ca5-20261126-1",
+        "exportedFileName" : "BBAA5BAA-FF19-45E7-8FEA-45577F3F5089.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "v1_0_5942C328-19D4-40EF-8A35-61D9B28B26BE.gentle-squeeze-expanded",
+        "timestamp" : 1795710628.74
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D",
+        "deviceName" : "Hanlin-Phase2-Motion-local-motion-dacb4ca5-20261126-1",
+        "exportedFileName" : "2364B5F0-55BF-4142-B3D4-89D082FE4295.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "v1_0_854DCD76-1CAB-4858-9619-3C4BD7B834DE.height-reveal-closed-after20",
+        "timestamp" : 1795710622.675
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D",
+        "deviceName" : "Hanlin-Phase2-Motion-local-motion-dacb4ca5-20261126-1",
+        "exportedFileName" : "D567569D-74F0-4244-947C-9BC86F57FBC3.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "v1_0_8943FB95-3F24-460D-AD6D-F61B91C888BE.height-reveal-expanded",
+        "timestamp" : 1795710564.103
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D",
+        "deviceName" : "Hanlin-Phase2-Motion-local-motion-dacb4ca5-20261126-1",
+        "exportedFileName" : "51D58CFD-7D9A-4B14-984D-663CCE47670A.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "v1_0_44379C16-1324-4A4D-AB68-B3CD8FB964C5.relaxed-closed-after20",
+        "timestamp" : 1795710556.011
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D",
+        "deviceName" : "Hanlin-Phase2-Motion-local-motion-dacb4ca5-20261126-1",
+        "exportedFileName" : "CFBEC52A-329E-49E6-996A-8FBC8FD4877B.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "v1_0_2B10C62B-ED2D-4569-8578-DADF1A28182D.relaxed-expanded",
+        "timestamp" : 1795710494.983
+      }
+    ],
+    "testIdentifier" : "MotionUITests/testAAllFivePresetsTwentyCompleteCyclesEach()",
+    "testIdentifierURL" : "test://com.apple.xcode/ChatMotionProof/ChatMotionProofUITests/MotionUITests/testAAllFivePresetsTwentyCompleteCyclesEach"
+  }
+]

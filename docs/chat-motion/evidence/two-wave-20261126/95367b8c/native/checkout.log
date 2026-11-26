@@ -1,0 +1,2 @@
+Previous HEAD position was efb33bf0 fix(motion): suppress collapsed descendants at retained content boundary
+HEAD is now at 95367b8c fix(motion): restore retained native accessibility scope at completed collapse

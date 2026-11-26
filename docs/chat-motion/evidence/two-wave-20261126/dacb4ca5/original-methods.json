@@ -1,0 +1,17 @@
+[
+  {
+    "method": "testAAllFivePresetsTwentyCompleteCyclesEach",
+    "unchanged_from_c099": true,
+    "sha256": "40f98af259219638bc6e03d5f5e008276a839c1c4ea62a7704c121fc37475514"
+  },
+  {
+    "method": "testBRapidReversalPresetSwitchAndPersistence",
+    "unchanged_from_c099": true,
+    "sha256": "c4d375cdcb6b7c1f99de9d4931e050a8bf9240e8c7a77a0178d8c4d8267daa99"
+  },
+  {
+    "method": "testCReadableLongContentRTLTypeOrientationAndCompletion",
+    "unchanged_from_c099": true,
+    "sha256": "d3031b89b5cb0fe57955fc499c0454c6b57bf9725e35ba4fea24de8804ee82b7"
+  }
+]

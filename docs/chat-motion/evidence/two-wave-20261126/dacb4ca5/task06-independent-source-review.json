@@ -1,0 +1,20 @@
+{
+  "sourceSHA": "1a0f610a6ac369e221b32e90654d5500fae1692e",
+  "review": "Independent read-only source review",
+  "result": "NO_ADDITIONAL_BLOCKING_SOURCE_FINDING",
+  "nativeExecutionClaim": false,
+  "paths": [
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+    "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptWindowSession.swift",
+    "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift",
+    "HanlinMiniAppsTests/NativeScriptShortcutConcurrencyTests.swift"
+  ],
+  "findings": [
+    "MainActor serializes owner admission; no suspension between the final owner check and open.",
+    "Deferred owned session shutdown leaves other windows and their runtime owner alive.",
+    "Adapter cancellation completion is resolved once; late JS completion cannot overwrite it.",
+    "store.restore reloads the persisted generation before native admission; separate-actor regression is present.",
+    "The two actual-engine native methods remain pending the full app gate."
+  ]
+}

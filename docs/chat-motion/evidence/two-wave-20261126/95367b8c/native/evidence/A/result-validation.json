@@ -1,0 +1,33 @@
+{
+  "method": "testAAllFivePresetsTwentyCompleteCyclesEach",
+  "status": "EXECUTED_PASS",
+  "evidence": "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/A",
+  "testExit": 0,
+  "attachmentExportExit": 0,
+  "caseNodes": [
+    {
+      "nodeIdentifier": "MotionUITests/testAAllFivePresetsTwentyCompleteCyclesEach()",
+      "result": "Passed",
+      "duration": "5m 41s"
+    }
+  ],
+  "rawResult": {
+    "test_exit_code": 0,
+    "archive": "ARCHIVED",
+    "readability": "READABLE",
+    "diagnostics": [],
+    "archive_sha256": "4979dbd6d601d860d2d69272dc33990eaeeaafb1bca7dee110ade61129de525a",
+    "status": "FINALIZED_READABLE_ARCHIVED"
+  },
+  "video": {
+    "exit_code": 0,
+    "status": "CAPTURE_ATTEMPTED",
+    "maximum_recording_seconds": 120,
+    "scope": "first120s from an actual XCTest case event, not every preset or original app",
+    "stop_reason": "timer_120s",
+    "elapsed_seconds": 120.01,
+    "sigint_sent": true,
+    "timed_out_finalizing": false,
+    "output_bytes": 19881365
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "sourceSHA": "95367b8c06b166873dfab2143a8323a869085af2",
+  "baseSHA": "efb33bf0093981abdf882031ffe56c3044902968",
+  "scopeOrigin": "c0990aa0aead061f44c8b93f20255e7f341532c0",
+  "originalNativeScopeSHA256": "1b4402528eb36b11986afccad87bd34b22f0fd6cefdbfa92612e9a2e2482e550",
+  "nativeScopeByteIdenticalToHistorical": true,
+  "preservedBodies": [
+    "ChatDisclosureGeometry",
+    "HanlinMotionDisclosureStyle",
+    "ChatDisclosureLayout",
+    "current pure SwiftUI content visibility chain"
+  ],
+  "originalTestSHA256": "5f714f6ad4fc5db3abec22abc5e520f4bba94d5f66740f69673ed3d401665874",
+  "nativeAcceptance": "NOT_RUN",
+  "rationale": "Current actual originalB still exposes retained native AX after opacity and inner ignore; restore existing owned native graph detachment plus original generation-guarded animation completion, without recreating content or replacing current layout/presets."
+}

@@ -1,0 +1,435 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4F85EA13BEDB04A493773F40 /* HanlinChatUI in Frameworks */ = {isa = PBXBuildFile; productRef = 7DCEF51F799122FAEE0B3D46 /* HanlinChatUI */; };
+		D6F146F12A0B98CB1D5F6C63 /* App.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA9FC985453FF8EDD2A888A9 /* App.swift */; };
+		F565F3319F8F0C8AE6984481 /* MotionUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BEF66BD44C3FDEFAB1BD30F /* MotionUITests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D0362D5E7A7D239481B9DBBD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = F101DE84968F1B0843C4DDAE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 12287F80C343E5144439DDAF;
+			remoteInfo = ChatMotionProof;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		0BE34EFBDB95F9B66B3D9117 /* ChatMotionProofUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = ChatMotionProofUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		66A4441DBD4276D4A6ED471F /* HanlinSDK */ = {isa = PBXFileReference; lastKnownFileType = folder; name = HanlinSDK; path = Vendor/HanlinSDK; sourceTree = SOURCE_ROOT; };
+		7BEF66BD44C3FDEFAB1BD30F /* MotionUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotionUITests.swift; sourceTree = "<group>"; };
+		AA9FC985453FF8EDD2A888A9 /* App.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = App.swift; sourceTree = "<group>"; };
+		AED1BE1F8B1D35CF1AB46D1E /* ChatMotionProof.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = ChatMotionProof.app; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1A65F993C01A26FADFED2A6E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4F85EA13BEDB04A493773F40 /* HanlinChatUI in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3F537CDCDA2E9C12CD21E622 /* UITests */ = {
+			isa = PBXGroup;
+			children = (
+				7BEF66BD44C3FDEFAB1BD30F /* MotionUITests.swift */,
+			);
+			path = UITests;
+			sourceTree = "<group>";
+		};
+		B122828BDC6D7B668B352594 = {
+			isa = PBXGroup;
+			children = (
+				B4C73BE2485D86B1C159B9C4 /* App */,
+				EA63DFACD296F8B0E38D1020 /* Packages */,
+				3F537CDCDA2E9C12CD21E622 /* UITests */,
+				D5BB4DB50D8D495FEE250458 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		B4C73BE2485D86B1C159B9C4 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				AA9FC985453FF8EDD2A888A9 /* App.swift */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		D5BB4DB50D8D495FEE250458 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				AED1BE1F8B1D35CF1AB46D1E /* ChatMotionProof.app */,
+				0BE34EFBDB95F9B66B3D9117 /* ChatMotionProofUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EA63DFACD296F8B0E38D1020 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				66A4441DBD4276D4A6ED471F /* HanlinSDK */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		12287F80C343E5144439DDAF /* ChatMotionProof */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E7F27DB522F63FC950F3877F /* Build configuration list for PBXNativeTarget "ChatMotionProof" */;
+			buildPhases = (
+				1EF6A769368354FFA84A3523 /* Sources */,
+				1A65F993C01A26FADFED2A6E /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ChatMotionProof;
+			packageProductDependencies = (
+				7DCEF51F799122FAEE0B3D46 /* HanlinChatUI */,
+			);
+			productName = ChatMotionProof;
+			productReference = AED1BE1F8B1D35CF1AB46D1E /* ChatMotionProof.app */;
+			productType = "com.apple.product-type.application";
+		};
+		17178763649A89C892587486 /* ChatMotionProofUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1356617FFA86490471471243 /* Build configuration list for PBXNativeTarget "ChatMotionProofUITests" */;
+			buildPhases = (
+				C4C224B57884399036422C4A /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				537D84BB4519D40FEA96BFEF /* PBXTargetDependency */,
+			);
+			name = ChatMotionProofUITests;
+			packageProductDependencies = (
+			);
+			productName = ChatMotionProofUITests;
+			productReference = 0BE34EFBDB95F9B66B3D9117 /* ChatMotionProofUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		F101DE84968F1B0843C4DDAE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					17178763649A89C892587486 = {
+						TestTargetID = 12287F80C343E5144439DDAF;
+					};
+				};
+			};
+			buildConfigurationList = 49A8C8CD11D1E5A3A4B47726 /* Build configuration list for PBXProject "ChatMotionProof" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = B122828BDC6D7B668B352594;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				CB41C4A5F44C38F40EBE657C /* XCLocalSwiftPackageReference "Vendor/HanlinSDK" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = D5BB4DB50D8D495FEE250458 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				12287F80C343E5144439DDAF /* ChatMotionProof */,
+				17178763649A89C892587486 /* ChatMotionProofUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		1EF6A769368354FFA84A3523 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D6F146F12A0B98CB1D5F6C63 /* App.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C4C224B57884399036422C4A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F565F3319F8F0C8AE6984481 /* MotionUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		537D84BB4519D40FEA96BFEF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 12287F80C343E5144439DDAF /* ChatMotionProof */;
+			targetProxy = D0362D5E7A7D239481B9DBBD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0E99272187B826E92487291A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		50FDC65189B668B735839664 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "ai.hanlin.motion-proof.uitests";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ChatMotionProof;
+			};
+			name = Debug;
+		};
+		547A6D7E19006E274BEBE273 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "ai.hanlin.motion-proof.uitests";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = ChatMotionProof;
+			};
+			name = Release;
+		};
+		B2575AAFDB989D46DC8DE4AF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGNING_ALLOWED = NO;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 27.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 6.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BF9C3CDFA0275BBC065C2D07 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "ai.hanlin.motion-proof";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		E8E54039D08CE2B9CAA78A84 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = "";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "ai.hanlin.motion-proof";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1356617FFA86490471471243 /* Build configuration list for PBXNativeTarget "ChatMotionProofUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				50FDC65189B668B735839664 /* Debug */,
+				547A6D7E19006E274BEBE273 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		49A8C8CD11D1E5A3A4B47726 /* Build configuration list for PBXProject "ChatMotionProof" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B2575AAFDB989D46DC8DE4AF /* Debug */,
+				0E99272187B826E92487291A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E7F27DB522F63FC950F3877F /* Build configuration list for PBXNativeTarget "ChatMotionProof" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BF9C3CDFA0275BBC065C2D07 /* Debug */,
+				E8E54039D08CE2B9CAA78A84 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		CB41C4A5F44C38F40EBE657C /* XCLocalSwiftPackageReference "Vendor/HanlinSDK" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Vendor/HanlinSDK;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7DCEF51F799122FAEE0B3D46 /* HanlinChatUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = HanlinChatUI;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = F101DE84968F1B0843C4DDAE /* Project object */;
+}

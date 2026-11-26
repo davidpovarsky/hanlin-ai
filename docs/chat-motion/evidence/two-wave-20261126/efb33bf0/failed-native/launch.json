@@ -1,0 +1,8 @@
+{
+  "pid": 26390,
+  "startedUTC": "2026-11-26T15:52:27.173051+00:00",
+  "freeBytes": 8084500480,
+  "controllerSHA256": "ea594aaf2744501756b12122f21850e1b3da81fc39c594ad416e1e996a68fed3",
+  "sourceSHA": "efb33bf0093981abdf882031ffe56c3044902968",
+  "stagingCorrection": "Original shell runner required proof-inputs receipt copy before macro; previous attempt retained; original recorder unchanged"
+}

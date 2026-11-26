@@ -1,0 +1,44 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D",
+        "deviceName" : "Hanlin-Phase2-Motion-local-motion-dacb4ca5-20261126-1",
+        "exportedFileName" : "68BBFC87-A6C2-49F7-800B-6DDAD6F86556.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "reduce-motion-static_0_B993A0E8-1D39-49F9-9F1E-8EBD0EB70607.png",
+        "timestamp" : 1795709811.417
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D",
+        "deviceName" : "Hanlin-Phase2-Motion-local-motion-dacb4ca5-20261126-1",
+        "exportedFileName" : "C30D8BA6-2106-4CB0-A696-B26F0C4E962D.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "scroll-drag-from-toggle-receipt_0_E31C5CA0-0E10-4147-B40C-FFF2A51ADA03.txt",
+        "timestamp" : 1795709756.684
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D",
+        "deviceName" : "Hanlin-Phase2-Motion-local-motion-dacb4ca5-20261126-1",
+        "exportedFileName" : "B03EB029-E1CC-410E-8288-67258CB8720B.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "original-toggle-rapid-action-receipt_0_2CA83C18-E261-40C3-876B-655733EAB72F.txt",
+        "timestamp" : 1795709738.617
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D",
+        "deviceName" : "Hanlin-Phase2-Motion-local-motion-dacb4ca5-20261126-1",
+        "exportedFileName" : "79CA0BF2-C8E6-4D1A-AA19-C10A9F235D38.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "original-toggle-prewarm-baseline-receipt_0_00CEAB24-EC28-4589-BEA6-0607C75BD1B0.txt",
+        "timestamp" : 1795709738.056
+      }
+    ],
+    "testIdentifier" : "MotionUITests/testBRapidReversalPresetSwitchAndPersistence()",
+    "testIdentifierURL" : "test://com.apple.xcode/ChatMotionProof/ChatMotionProofUITests/MotionUITests/testBRapidReversalPresetSwitchAndPersistence"
+  }
+]
