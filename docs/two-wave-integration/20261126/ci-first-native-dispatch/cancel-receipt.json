@@ -1,0 +1,10 @@
+{
+  "run_id": 45855765676,
+  "source": "7d5c4bae7693bebafcc7890fd74f777b05311666",
+  "requestedAt": "2026-11-26T16:12:09.235930+00:00",
+  "exit": 0,
+  "stdout": "\u2713 Request to cancel workflow 45855765676 submitted.\n",
+  "stderr": "",
+  "reason": "Actual baseline clean-check failed due tracked Tools/tools path collision; original mixed UI suites require contradictory wide/compact viewports. Cancelled during declaration metadata preparation before application compile to correct source and device cohorts without wasting a full build.",
+  "applicationNativeResult": "NOT_RUN"
+}

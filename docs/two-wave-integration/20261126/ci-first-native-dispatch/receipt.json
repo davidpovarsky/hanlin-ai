@@ -1,0 +1,17 @@
+{
+  "sourceBefore": "7d5c4bae7693bebafcc7890fd74f777b05311666",
+  "runId": 45855765676,
+  "baselineJobId": 140033962037,
+  "actualBaselineResult": "FAIL_AT_CLEAN_CHECKOUT",
+  "actualChangedPath": "Tools/ai-team/ensure-team.ps1",
+  "canonicalPath": "tools/ai-team/ensure-team.ps1",
+  "canonicalBlobUnchanged": "6da00b7dac0c5a564aadcc2a5d22c1a7c4a6f543",
+  "removedDuplicatePath": "Tools/ai-team/ensure-team.ps1",
+  "removedBlobRetainedInGitHistory": "115378f0f48bea52647049b5ded2c209207a6784",
+  "trackedCasefoldCollisionCountAfter": 0,
+  "sourceDecision": "Retain the modern lowercase path already used by team documentation and merged main policy; remove only obsolete case-colliding duplicate. Original clean-check assertion remains unchanged.",
+  "applicationNativeResult": "NOT_RUN_CANCEL_REQUESTED_DURING_PREPARATION",
+  "followup": "Original mixed UI tests require wide iPad and compact iPhone cohorts; use original cases and one compiled product set.",
+  "rawBaselineLogSHA256": "89b5a8325508fa0803a551e894081014abbebc38945687401851bafb37411bbc",
+  "capturedAt": "2026-11-26T16:13:59.375724+00:00"
+}
