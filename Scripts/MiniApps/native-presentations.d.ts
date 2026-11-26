@@ -24,7 +24,7 @@ export interface WidgetProgramDefinition {
   abiVersion: 1;
   sourceFormat: NativePresentationSourceFormat;
   actions: WidgetAction[];
-  families: ('systemSmall' | 'systemMedium' | 'systemLarge' | 'systemExtraLarge')[];
+  families: ('systemSmall' | 'systemMedium' | 'systemLarge' | 'systemExtraLarge' | 'systemExtraLargePortrait' | 'accessoryCircular' | 'accessoryRectangular' | 'accessoryInline')[];
 }
 export interface NativePresentationDefinition {
   engine: NativePresentationEngine;

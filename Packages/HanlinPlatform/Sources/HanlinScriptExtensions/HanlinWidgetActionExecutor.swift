@@ -128,6 +128,7 @@ public enum HanlinWidgetActionExecutor {
                 case .expo:
                     guard action.kind == .expoCallback, command.target == action.id else { throw HanlinWidgetActionError.undeclaredAction }
                     environment["target"] = .string(command.target)
+                    environment["__hanlinToggleValue"] = command.desiredValue.map(HanlinValue.bool)
                     let result = try HanlinExpoWidgetsRuntime.shared.handlePress(layout: program.javaScript,
                         props: state.values.mapValues { $0.toAny() }, environment: environment.mapValues { $0.toAny() }).get()
                     guard let result else { throw HanlinWidgetActionError.noCallback }

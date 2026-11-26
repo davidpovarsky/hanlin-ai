@@ -86,7 +86,8 @@ let package = Package(
         .target(
             name: "ExpoWidgets",
             dependencies: ["ReactNativeHeaders", "React", "ReactNativeDependencies", "hermesvm",
-                           "ExpoModulesJSI", "ExpoModulesCore", "ExpoModulesWorklets", "ExpoUI"],
+                           "ExpoModulesJSI", "ExpoModulesCore", "ExpoModulesWorklets", "ExpoUI",
+                           .product(name: "HanlinScriptContracts", package: "HanlinPlatform")],
             path: "Sources/ExpoWidgets",
             resources: [.copy("Resources/ExpoWidgets.bundle")],
             swiftSettings: [.swiftLanguageMode(.v5),

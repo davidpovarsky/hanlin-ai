@@ -49,57 +49,11 @@ struct WidgetUserInteraction: AppIntent {
   }
 
   func perform() async throws -> some IntentResult {
-    guard let source else {
-      return .result()
-    }
-
-    guard let layout = WidgetsLayoutRegistry.layout(for: source) else {
-      return .result()
-    }
-    let timeline = WidgetsStorage.getArray(forKey: "__expo_widgets_\(source)_timeline")
-
-    guard let timeline,
-          let entryIndex,
-          timeline.indices.contains(entryIndex),
-          let entry = timeline[entryIndex] as? [String: Any],
-          let props = entry["props"] as? [String: Any],
-          let environmentData = environmentString?.data(using: .utf8),
-          var environment = try? JSONSerialization.jsonObject(with: environmentData) as? [String: Any] else {
-      return .result()
-    }
-    environment["target"] = target
-
-    let newProps: [String: Any]?
-    switch evaluateWidgetButtonPress(layout: layout, props: props, environment: environment) {
-    case .success(let result):
-      newProps = result
-    case .failure(let error):
-      print("[ExpoWidgets] Button press evaluation failed: \(error.message)")
-      newProps = nil
-    }
-
-    if let newProps {
-      var newEntry = entry
-      if let originalProps = entry["props"] as? [String: Any] {
-        newEntry["props"] = originalProps.merging(newProps) { _, new in new }
-      }
-      guard var newTimeline = timeline as? [[String: Any]] else {
-        return .result()
-      }
-      newTimeline[entryIndex] = newEntry
-      WidgetsStorage.set(newTimeline, forKey: "__expo_widgets_\(source)_timeline")
-    }
-
-    WidgetsEvents.shared.sendNotification(type: .userEvent, data: [
-      "source": source as Any,
-      "target": target as Any,
-      "timestamp": Int(Date().timeIntervalSince1970 * 1000)
-    ])
-
-    HanlinExpoWidgetsIntegration.reload(source)
-
+    try HanlinExpoWidgetState.performInteraction(source: source, target: target,
+      entryIndex: entryIndex, environmentString: environmentString)
     return .result()
   }
+
 }
 
 struct LiveActivityUserInteraction: LiveActivityIntent {

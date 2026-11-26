@@ -22,13 +22,13 @@ final class WidgetObject: SharedObject {
     if WidgetsStorage.getString(forKey: "__expo_widgets_\(name)_layout") == nil {
       throw UpdatedTimelineWithoutLayout(name)
     }
-    WidgetsStorage.set(entries.map { $0.toDictionary() }, forKey: "__expo_widgets_\(name)_timeline")
+    try HanlinExpoWidgetState.updateTimeline(entries.map { $0.toDictionary() }, name: name)
 
     self.reload()
   }
 
   func getTimeline() throws -> [WidgetsJSTimelineEntry] {
-    guard let entries = WidgetsStorage.getArray(forKey: "__expo_widgets_\(name)_timeline") as? [[String: Any]],
+    guard let entries = HanlinExpoWidgetState.timeline(name),
           let appContext else {
       return []
     }

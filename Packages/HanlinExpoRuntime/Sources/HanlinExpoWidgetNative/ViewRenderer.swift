@@ -7,6 +7,7 @@ import SwiftUI
 struct WidgetsViewRenderer {
   let name: String
   let buttonBuilder: (String, SwiftUI.ButtonRole?, AnyView) -> AnyView
+  let toggleBuilder: ((String, Bool, AnyView) -> AnyView)?
   let node: [String: Any]
   let context: AppContext
 
@@ -58,6 +59,14 @@ struct WidgetsViewRenderer {
       return renderWithModifiers(GaugeView.self, GaugeProps.self, updateProps: updateChildren)
     case "ChartView":
       return renderWithModifiers(ChartView.self, ChartProps.self)
+    case "ToggleView":
+      return renderWithModifiers(WidgetToggleView.self, ToggleProps.self) { props in
+        try updateChildren(props)
+        guard let target = props.target, !target.isEmpty else { throw NativeWidgetError.missingTarget }
+        let label = AnyView(WidgetButtonLabel(props: props))
+        props.nativeButton = toggleBuilder?(target, props.isOn, label)
+          ?? AnyView(SwiftUI.Toggle(isOn: .constant(props.isOn)) { label }.disabled(true))
+      }
     case "Button":
       return renderWithModifiers(WidgetButtonView.self, ButtonProps.self) { props in
         try updateChildren(props)
@@ -111,11 +120,11 @@ struct WidgetsViewRenderer {
       if let children = props["children"] as? [Any] {
         let validChildren = flattenChildNodes(children)
         initialProps.children = validChildren.map {
-          WidgetsViewRenderer(name: name, buttonBuilder: buttonBuilder, node: $0, context: context).render()
+          WidgetsViewRenderer(name: name, buttonBuilder: buttonBuilder, toggleBuilder: toggleBuilder, node: $0, context: context).render()
         }
       } else if let child = props["children"] as? [String: Any] {
         initialProps.children = [
-          WidgetsViewRenderer(name: name, buttonBuilder: buttonBuilder, node: child, context: context).render()
+          WidgetsViewRenderer(name: name, buttonBuilder: buttonBuilder, toggleBuilder: toggleBuilder, node: child, context: context).render()
         ]
       }
     }
