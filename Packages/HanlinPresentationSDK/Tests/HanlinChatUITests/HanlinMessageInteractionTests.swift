@@ -53,7 +53,8 @@ struct HanlinMessageActionTests {
         let actions = HanlinMessageActions(translate: {}, savePersonal: {})
         let unavailable = actions.assistantMenu(state: .init(isTranslating: true, canSavePersonal: false))
         #expect(unavailable.map(\.isEnabled) == [false, false])
-        #expect(actions.assistantMenu().allSatisfy(\.isEnabled))
+        let allDefaultActionsEnabled = actions.assistantMenu().allSatisfy(\.isEnabled)
+        #expect(allDefaultActionsEnabled)
         #expect(unavailable.map(\.id) == ["translate", "save-personal"])
     }
 }
