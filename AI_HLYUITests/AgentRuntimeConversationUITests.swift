@@ -1536,8 +1536,12 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertFalse(app.buttons["hanlin-tools-open-full-runtime-center"].exists)
         XCTAssertFalse(app.descendants(matching: .any)["hanlin-tools-runtime-page"].exists)
 
-        // Close Tools popover
-        tapElement(toolsDirect)
+        // The direct Tools shortcut opens its destination idempotently. Close
+        // the drawer through its existing native dismiss control.
+        let closeTools = app.buttons["composer-toolbar-close"].firstMatch
+        XCTAssertTrue(closeTools.waitForExistence(timeout: 5) && closeTools.isHittable,
+                      "The tools drawer's native close control must be reachable")
+        tapElement(closeTools)
         XCTAssertTrue(toolsPopover.waitForNonExistence(timeout: 5))
 
         attachScreenshot("UI-09_DirectToolsCatalogAndSkillsNavigation", in: app)
@@ -2409,7 +2413,9 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         if button.exists && button.isHittable { return button }
         // The 320-point iPad sidebar puts New Chat and Saved Messages in its
         // native overflow menu. The detail column has a different More button.
-        let overflow = app.navigationBars["Hanlin"].buttons["TopOverflowBarButtonItem"].firstMatch
+        let overflow = app.navigationBars["Hanlin"].buttons.matching(
+            NSPredicate(format: "identifier == 'TopOverflowBarButtonItem' OR identifier == 'OverflowBarButtonItem'")
+        ).firstMatch
         XCTAssertTrue(overflow.waitForExistence(timeout: 5) && overflow.isHittable,
                       "The sidebar's native overflow control must be reachable", file: file, line: line)
         if overflow.exists && overflow.isHittable { overflow.tap() }
@@ -2418,15 +2424,19 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         // UIKit's native overflow creates menu buttons with their visible
         // labels, without forwarding the original toolbar identifiers. Scope
         // the fallback to the single opened sidebar menu, never a global label.
+        // Match the app's explicit acceptance language and existing catalog,
+        // rather than the test runner's own locale.
+        let isHebrew = app.launchArguments.contains("(he)")
+        let savedMessagesTitle = isHebrew ? "הודעות שמורות" : "Saved messages"
         let actionTitle: String
         switch identifier {
-        case "hanlin-saved-messages-open": actionTitle = "Saved messages"
-        case "hanlin-new-chat-button": actionTitle = "New chat"
+        case "hanlin-saved-messages-open": actionTitle = savedMessagesTitle
+        case "hanlin-new-chat-button": actionTitle = isHebrew ? "צ׳אט חדש" : "New chat"
         default:
             XCTFail("No scoped overflow action is defined for \(identifier)", file: file, line: line)
             return button
         }
-        let overflowMenus = app.collectionViews.containing(.button, identifier: "Saved messages")
+        let overflowMenus = app.collectionViews.containing(.button, identifier: savedMessagesTitle)
         XCTAssertTrue(overflowMenus.firstMatch.waitForExistence(timeout: 5),
                       "The opened sidebar overflow must contain Saved messages", file: file, line: line)
         XCTAssertEqual(overflowMenus.count, 1,

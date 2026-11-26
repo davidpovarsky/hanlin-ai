@@ -520,21 +520,23 @@ struct ChatView: View {
             if surface == .composer {
                 canonicalComposer
             } else {
-                HanlinChatView(shell: resolvedChatShell,
-                               showsComposerBackdrop: !isExternalCompactComposerHost) {
-                    ScrollViewReader { scrollViewProxy in
+                ScrollViewReader { scrollViewProxy in
+                    HanlinChatView(shell: resolvedChatShell,
+                                   showsComposerBackdrop: !isExternalCompactComposerHost) {
                         buildScrollContent(scrollViewProxy).padding(.bottom, 6)
-                            .overlay(alignment: .bottomTrailing) {
-                                floatingFollowLatestControl(using: scrollViewProxy)
-                            }
+                    } composer: {
+                        canonicalComposer
                     }
-                    // A reader may retain a pending scroll context until its native
-                    // scroll view attaches. Never carry that context to another chat.
-                    // Keyboard, split-view resizing and activity updates keep this ID.
-                    .id(effectiveChatSessionID)
-                } composer: {
-                    canonicalComposer
+                    // Keep the floating control above the complete workspace,
+                    // including the overlaid composer used by wide layouts.
+                    .overlay(alignment: .bottomTrailing) {
+                        floatingFollowLatestControl(using: scrollViewProxy)
+                    }
                 }
+                // A reader may retain a pending scroll context until its native
+                // scroll view attaches. Never carry that context to another chat.
+                // Keyboard, split-view resizing and activity updates keep this ID.
+                .id(effectiveChatSessionID)
             }
         }
             .onGeometryChange(for: CGSize.self) { proxy in
