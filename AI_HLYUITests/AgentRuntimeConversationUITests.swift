@@ -175,17 +175,45 @@ final class AgentRuntimeConversationUITests: XCTestCase {
 
         let transcript = app.descendants(matching: .any)["hanlin-chat-transcript"].firstMatch
         let arrow = app.buttons["hanlin-chat-follow-latest"].firstMatch
-        let last = app.descendants(matching: .any).matching(NSPredicate(
-            format: "label == %@", "POST149101_SCROLL_LAST")).firstMatch
+        // The pinned markdown renderer exposes each paragraph as a native
+        // UITextView. Resolve its actual matches inside this transcript rather
+        // than an arbitrary first accessibility representation across the app.
+        let lastParagraphs = transcript.descendants(matching: .textView).matching(NSPredicate(
+            format: "label == %@ OR value == %@", "POST149101_SCROLL_LAST", "POST149101_SCROLL_LAST"))
         if UIDevice.current.userInterfaceIdiom == .phone {
             XCTAssertTrue(app.descendants(matching: .any)["hanlin-compact-chat-workspace"].firstMatch.exists,
                           "The phone regression must exercise the persistent external composer")
         }
         func assertAtBottom(_ stage: String) {
             let settled = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
-                last.exists && last.isHittable && !arrow.exists
+                let viewport = transcript.frame
+                let visibleLastParagraph = lastParagraphs.allElementsBoundByIndex.contains { paragraph in
+                    paragraph.exists && paragraph.isHittable &&
+                        !paragraph.frame.intersection(viewport).isEmpty
+                }
+                return visibleLastParagraph && !arrow.exists
             }, object: nil)
-            XCTAssertEqual(XCTWaiter.wait(for: [settled], timeout: 12), .completed,
+            let result = XCTWaiter.wait(for: [settled], timeout: 12)
+            if result != .completed {
+                attachScreenshot("follow-latest-bottom-failure-" + stage, in: app)
+                let matches = lastParagraphs.allElementsBoundByIndex
+                let candidates = matches.enumerated().map { index, paragraph in
+                    "candidate=\(index) type=\(paragraph.elementType) id=\(paragraph.identifier) " +
+                    "label=\(paragraph.label) value=\(String(describing: paragraph.value)) " +
+                    "exists=\(paragraph.exists) hittable=\(paragraph.isHittable) frame=\(paragraph.frame)"
+                }.joined(separator: "\n")
+                let arrowExists = arrow.exists
+                let details = XCTAttachment(string:
+                    "stage=\(stage) candidates=\(matches.count) transcriptExists=\(transcript.exists) " +
+                    "viewport=\(transcript.frame) arrowExists=\(arrowExists) " +
+                    "arrowHittable=\(arrowExists && arrow.isHittable) " +
+                    "arrowFrame=\(arrowExists ? arrow.frame : .zero)\n" +
+                    candidates + "\n" + transcript.debugDescription)
+                details.name = "follow-latest-bottom-accessibility-" + stage
+                details.lifetime = .keepAlways
+                add(details)
+            }
+            XCTAssertEqual(result, .completed,
                            "The final real message must be visible with no arrow at \(stage)")
         }
         XCTAssertTrue(transcript.waitForExistence(timeout: 15))
