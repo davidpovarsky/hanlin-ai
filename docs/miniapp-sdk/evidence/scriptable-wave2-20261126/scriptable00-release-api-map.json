@@ -161,7 +161,7 @@
       ],
       "api": "Studio has persisted system/light/dark editor theme selection and applies preferredColorScheme to that editor.",
       "status": "PROBE_UNKNOWN",
-      "gate": "Editor-local themes do not prove a global MiniApps Settings redesign or alternate application icon workflow. Those comparison items remain unmapped."
+      "gate": "Editor-local themes do not prove the complete MiniApps Settings-list theme/icon presentation. Settings-row icons still require source/UI comparison; an alternate application icon workflow is not a release criterion."
     },
     {
       "id": "v18-14",
@@ -285,9 +285,9 @@
         "S01",
         "S02"
       ],
-      "api": "The new standalone intent invokes an installed action in the background. The existing shared HanlinRunScriptActionIntent opens the app for an installed action; it is a different contract.",
+      "api": "The standalone intent invokes an installed action with supportedModes including .foreground(.dynamic). Its current command delivery still sets continueInForeground:false and canPresentUI:false. The existing shared HanlinRunScriptActionIntent is a separate foreground installed-action contract.",
       "status": "IMPLEMENT_GAP",
-      "gate": "The new intent has no inline-JavaScript parameter and explicitly disables UI presentation. Do not claim full combined Open When Run plus saved/inline-script compatibility."
+      "gate": "There is no inline-JavaScript input in the new intent. Actual system Open When Run/foreground-toggle presentation remains PROBE_UNKNOWN because dynamic foreground mode is already declared; a UI-permitted inline-script delivery contract is not established by that declaration."
     },
     {
       "id": "v182-04",
@@ -337,5 +337,13 @@
       "status": "PROBE_UNKNOWN",
       "gate": "Existing saved Shortcuts, widget previews and run-in-app migration need actual version-upgrade OS acceptance. Source identity logic does not prove vendor-equivalent compatibility."
     }
-  ]
+  ],
+  "documentationReviewCorrection": {
+    "atUTC": "2026-11-26T17:48:49.240426+00:00",
+    "reviewer": "Built-in agent /root/wave2_miniapps",
+    "scope": [
+      "Settings-list icons are not an alternate app icon requirement",
+      ".foreground(.dynamic) is present; OS foreground-toggle behavior remains a native probe"
+    ]
+  }
 }
