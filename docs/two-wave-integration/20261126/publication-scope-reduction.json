@@ -1,0 +1,10 @@
+{
+  "rejected_publication_source": "6d311cb933123af886fdf0a0a67abf81fb3c4482",
+  "actual_error": "Existing GitHub OAuth app lacks workflow scope for the newly introduced extra dispatcher workflow",
+  "resolution": "Omit the redundant additional executable workflow; preserve its exact reviewed bytes as a documentation archive. Existing full original updater retains its own manual dispatch and sole weekly schedule. No access-control bypass or credential change.",
+  "archived_path": "docs/integration/main-reconciliation-20261126/archived-dispatch-runtime-dependency-updates.yml",
+  "archived_sha256": "21b49f3adf04f1b6242e1deaa83d1f18d3a7bc79237cdd821633610b3ab59776",
+  "existing_producer_sha256": "98e0a82d986aa69149d8ef118260f3ce48c55a40ee38a3e450d407655843e05a",
+  "new_workflow_dispatched": false,
+  "at": "2026-11-26T14:01:16.931649+00:00"
+}
