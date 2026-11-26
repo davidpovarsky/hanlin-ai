@@ -1,8 +1,10 @@
 # Named AI Team Operating Contract
 
-## Current Hanlin execution — 2026-11-18
+## Current Hanlin execution — 2026-11-26
 
-The owner-authorized Phase 2/3 continuation uses one developer. Prior roles and handoffs below are historical and do not require starting or waiting for a separate manager or QA agent. See `docs/continuation-20261117/OWNER_AUTHORIZATION_20261118.md` in the repository root.
+Read the standing authorization and current two-wave execution in root `AGENTS.md`. The owner explicitly requested parallel work using ChatGPT's built-in agents and Asana milestone updates. The earlier November 18 single-developer continuation and historical requirements to start a particular external named team do not describe this run.
+
+The NORMAL/TEAM distinction below remains useful for truthful attribution. For this ChatGPT task, `invoke_subagent` denotes the available built-in `collaboration.spawn_agent` capability, not an external AI CLI; record its real agent/task identifier instead of inventing a conversation ID. The coordinating agent publishes Asana milestone updates from the agents' exact evidence. Existing owner authorization is applied without repeated confirmation; actual access controls, secret protection and all unfulfilled acceptance requirements remain in force.
 
 **Additive guidance only:** Existing repository `CLAUDE.md`, `PROJECT_AGENT_GUIDANCE.md`, `PROJECT_BOARD.md`, CI rules, security and release policies take precedence.
 
@@ -20,34 +22,62 @@ The owner-authorized Phase 2/3 continuation uses one developer. Prior roles and 
 
 The user is the owner and final approver. Role names are logical attribution labels, not provisioned Asana user accounts.
 
-## 2. Asana and GitHub Coordination
+## 2. מדיניות הפעלה דו-שלבית: זהות מקצועית מול אופן ביצוע (NORMAL מול TEAM)
+
+קיימת הפרדה מוחלטת בין **הזהות המקצועית** לבין **אופן הביצוע**:
+- **זהות מקצועית (Logical Agent Identity):** איתן, נועם, מיה, רוני, תומר, יעל ודנה. לכל תפקיד הגדרות, הוראות, אחריות והקשר מקצועי קבוע במסמכי `.agents/roles/<role>.md` ו-`docs/ai-team/PROJECT_ASSIGNMENTS.md`. הזהויות המקצועיות פעילות תמיד.
+
+### מצב ברירת מחדל: NORMAL (ביצוע ישיר בסשן הראשי)
+1. בכל שיחה חדשה, ברירת המחדל היא שיחה רגילה, **ללא הפעלת סוכני משנה** (`invoke_subagent` אינו מופעל).
+2. כאשר המשתמש מוסר משימה:
+   - הסוכן הראשי מזהה אוטומטית את הפרויקט הפעיל ואת התפקיד המקצועי המתאים ביותר.
+   - טוען את הוראות התפקיד מתוך `.agents/roles/<role>.md` ו-`docs/ai-team/PROJECT_ASSIGNMENTS.md`.
+   - בודק ב-Asana משימות והחלטות רלוונטיות לפי הצורך.
+   - מבצע בעצמו את העבודה בסשן הראשי, תוך יישום מלא של הוראות התפקיד המקצועי שנבחר.
+   - מתעד ב-Asana תחת הזהות המקצועית: `[<Role> | <Specialty>] [MAIN_SESSION]` (למשל `[מיה | UX] [MAIN_SESSION]`, `[נועם | DEV] [MAIN_SESSION]`).
+3. **איסור הפעלת סוכני משנה:** אין להפעיל `invoke_subagent` במצב NORMAL; מורכבות המשימה כשלעצמה אינה עילה להפעלת סוכן משנה.
+4. מעבר בין תפקידים שונים באותה שיחה מותר לפי שלבי העבודה (תכנון -> פיתוח -> בדיקות), תוך טעינת ההוראות המתאימות ותיעוד התפקיד הנכון.
+
+### מצב TEAM (הפעלת סוכני משנה אמיתיים — רק לפי בקשה מפורשת)
+1. סוכני משנה מופעלים אך ורק כשהמשתמש מבקש זאת בבירור (למשל: "עבוד במצב צוות", "הפעל סוכני משנה", "חלק את העבודה בין הסוכנים", "תן לנועם ולרוני לעבוד במקביל", "הפעל את מיה כסוכנת משנה").
+2. במצב זה:
+   - הסוכן הראשי פועל כמתאם.
+   - בוחר ומפעיל מתוכם באופן ממוקד את הסוכנים הרלוונטיים באמצעות `invoke_subagent` (ו-`define_subagent` במידת הצורך).
+   - כל סוכן משנה טוען את הוראותיו המקצועיות הקיימות.
+   - חלוקת עבודה במקביל או ברצף לפי תלויות.
+   - תוצאות ומסירות מתועדות ב-Asana תחת: `[<Role> | <Specialty>] [SUBAGENT]` בצירוף ראיות להפעלת הסוכן (Conversation ID).
+3. בקשה רגילה כגון "תן לנועם את המשימה" או "זה של מיה" מתייחסת לזהות המקצועית ולשיוך המשימה בלבד, ואינה מהווה בקשה להפעלת סוכן משנה אמיתי.
+
+## 3. Asana and GitHub Coordination
 
 - **GitHub:** Current Git commit and code are technical truth.
 - **Asana:** Hub for tasks, acceptance tracking, and team handoffs.
 - **Policy:** Follow `docs/ai-team/ASANA_POLICY.md`. Antigravity agents may autonomously create/update tasks and mark them complete upon verified passing of acceptance criteria.
 - **Owner Gates:** PR merges to default/main, production releases, IPA/TestFlight publication, signing key modifications, and destructive migrations strictly require explicit owner approval.
 
-## 3. Work Handoffs
+## 4. Work Handoffs
 
 Each substantive task transition must record:
 - Asana Task ID
 - Repository and branch
 - Commit SHA
 - Acting role and next reviewer
+- Execution Mode: `MAIN_SESSION` or `SUBAGENT` (with Conversation ID if subagent)
 - Scope and excluded changes
 - Concrete verification evidence (tests, CI runs, logs)
 - Blockers or risks
 
 Follow `docs/ai-team/TASK_HANDOFF_TEMPLATE.md` for handoff formatting.
 
-## 4. Verification Standards
+## 5. Verification Standards & QA Gate
 
-- The current single developer verifies the implementation with actual tests and retained evidence; the historical Roni handoff is not a prerequisite for this task.
+- In **NORMAL mode**, QA verification can be performed directly in the main session and recorded as `[רוני | QA] [MAIN_SESSION]`. It must NOT be claimed as an independent multi-agent verification. If acceptance criteria strictly require independent multi-agent verification not performed, the gate must remain open and report what is pending; do not auto-invoke subagents without user request.
+- In **TEAM mode**, Roni independently verifies every implementation before completion via real subagent invocation (`[רוני | QA] [SUBAGENT]`).
 - Distinguish strictly between: `EXECUTED_PASS`, `REUSED_VERIFIED_PASS`, `FAILED`, `NOT_RUN`, and `BLOCKED`.
 - Simulator or build-only success does NOT satisfy physical hardware requirements.
 - Never report fake or assumed passes.
 
-## 5. Platform Mapping
+## 6. Platform Mapping
 
 - **Antigravity:** Loads root `AGENTS.md`, `GEMINI.md`, `.agents/rules/*.md`, `.agents/agents/*.md`, `.agents/roles/*.md`, and `.agents/skills/*/SKILL.md`.
 - **Codex:** Reads root `AGENTS.md`, `.codex/agents/*.toml`, and shared `docs/ai-team/*.md`.

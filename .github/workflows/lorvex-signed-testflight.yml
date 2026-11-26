@@ -1,0 +1,316 @@
+name: Lorvex - Signed App Store IPA and TestFlight
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_ref:
+        description: Lorvex source ref or commit to sign
+        required: true
+        default: feat/hanlin-ipad-ipa-20261122
+        type: string
+      build_number:
+        description: Expected CFBundleVersion in all distributable bundles
+        required: true
+        default: "171"
+        type: string
+
+permissions:
+  contents: read
+
+concurrency:
+  group: lorvex-signed-testflight
+  cancel-in-progress: false
+
+jobs:
+  sign-export-upload:
+    runs-on: xcode-27
+    timeout-minutes: 120
+    env:
+      APPLE_TEAM_ID: ${{ secrets.APPLE_TEAM_ID }}
+      ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+      ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+      ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+      CERTIFICATE_B64: ${{ secrets.APPLE_CERTIFICATE_P12_B64 }}
+      CERTIFICATE_PASSWORD: ${{ secrets.APPLE_CERTIFICATE_PASSWORD }}
+      EXPECTED_BUILD: ${{ inputs.build_number }}
+      LORVEX_APP_ID: "6838139212"
+    steps:
+      - name: Checkout pinned Lorvex source from owner's fork
+        uses: actions/checkout@v4
+        with:
+          repository: davidpovarsky/lorvex
+          ref: ${{ inputs.source_ref }}
+          path: lorvex
+          clean: true
+          fetch-depth: 1
+
+      - name: Select Xcode 27 and install XcodeGen
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! xcodebuild -version | grep -q '^Xcode 27'; then
+            selected="$(find /Applications -maxdepth 1 -type d -name 'Xcode*27*.app' -print | sort -V | tail -1)"
+            test -n "$selected"
+            sudo xcode-select -s "$selected/Contents/Developer"
+          fi
+          xcodebuild -version | grep '^Xcode 27'
+          xcrun --sdk iphoneos --show-sdk-version
+          if ! command -v xcodegen >/dev/null; then brew install xcodegen; fi
+          xcodegen --version
+          echo "LORVEX_SHA=$(git -C lorvex rev-parse HEAD)" >> "$GITHUB_ENV"
+          echo "OUTPUT=$RUNNER_TEMP/lorvex-testflight" >> "$GITHUB_ENV"
+          mkdir -p "$RUNNER_TEMP/lorvex-testflight/logs"
+
+      - name: Prepare Apple API signing key and isolated keychain
+        shell: bash
+        run: |
+          set -euo pipefail
+          test -n "$APPLE_TEAM_ID"
+          test -n "$ASC_KEY_P8"
+          test -n "$ASC_KEY_ID"
+          test -n "$ASC_ISSUER_ID"
+          test -n "$CERTIFICATE_B64"
+          test -n "$CERTIFICATE_PASSWORD"
+          mkdir -p "$HOME/.appstoreconnect/private_keys" "$HOME/.private_keys"
+          key="$HOME/.appstoreconnect/private_keys/AuthKey_${ASC_KEY_ID}.p8"
+          printf '%s' "$ASC_KEY_P8" | base64 --decode > "$key"
+          chmod 600 "$key"
+          cp "$key" "$HOME/.private_keys/AuthKey_${ASC_KEY_ID}.p8"
+          echo "ASC_KEY_PATH=$key" >> "$GITHUB_ENV"
+
+          keychain="$RUNNER_TEMP/lorvex-signing.keychain-db"
+          keychain_password="$(openssl rand -hex 24)"
+          p12="$RUNNER_TEMP/lorvex-distribution.p12"
+          printf '%s' "$CERTIFICATE_B64" | base64 --decode > "$p12"
+          security create-keychain -p "$keychain_password" "$keychain"
+          security set-keychain-settings -lut 21600 "$keychain"
+          security unlock-keychain -p "$keychain_password" "$keychain"
+          security import "$p12" -P "$CERTIFICATE_PASSWORD" -A -f pkcs12 -k "$keychain"
+          security set-key-partition-list -S apple-tool:,apple:,codesign: -s -k "$keychain_password" "$keychain"
+          security list-keychains -d user -s "$keychain"
+          security default-keychain -d user -s "$keychain"
+          security find-identity -v -p codesigning "$keychain" | grep 'Apple Distribution'
+          echo "SIGNING_KEYCHAIN=$keychain" >> "$GITHUB_ENV"
+
+      - name: Download and validate all five Apple App Store profiles
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m venv "$RUNNER_TEMP/lorvex-asc-venv"
+          "$RUNNER_TEMP/lorvex-asc-venv/bin/pip" install -q 'PyJWT[crypto]==2.10.1'
+          "$RUNNER_TEMP/lorvex-asc-venv/bin/python" \
+            lorvex/apps/apple/script/ci_appstore_connect.py install-profiles
+
+      - name: Audit native source, schema freeze and provisioning mappings
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import pathlib,plistlib
+          root=pathlib.Path('lorvex/apps/apple/Config')
+          bundles={
+            'LorvexMobileApp':'com.itorah.lorvex',
+            'LorvexWidgets':'com.itorah.lorvex.widgets',
+            'LorvexFocusFilterExtension':'com.itorah.lorvex.focusfilter',
+            'LorvexWatchApp':'com.itorah.lorvex.watchkitapp',
+            'LorvexWatchComplication':'com.itorah.lorvex.watchkitapp.widgets'}
+          expected=int(__import__('os').environ['EXPECTED_BUILD'])
+          for name,bundle in bundles.items():
+            info=plistlib.loads((root/f'{name}-Info.plist').read_bytes())
+            assert info['CFBundleIdentifier'] in (bundle, '$(PRODUCT_BUNDLE_IDENTIFIER)'),name
+            assert info['CFBundleVersion'] in (str(expected),'$(CURRENT_PROJECT_VERSION)'),name
+            ent=plistlib.loads((root/f'{name if name != "LorvexMobileApp" else "LorvexMobileAppCloudKitAppStore"}.entitlements').read_bytes())
+            assert 'group.com.itorah.lorvex' in ent['com.apple.security.application-groups'],name
+            print('IDENTITY_AUDIT_PASS',name,bundle)
+          PY
+          cd lorvex
+          python3 apps/apple/script/verify_schema_freeze.py --release
+          python3 apps/apple/script/verify_migration_ladder.py
+          bash apps/apple/script/verify_schema_embed.sh
+
+      - name: Generate Lorvex Xcode project and resolve dependencies
+        shell: bash
+        run: |
+          set -euo pipefail
+          root="$GITHUB_WORKSPACE/lorvex/apps/apple"
+          dir="$OUTPUT/XcodeProject"
+          mkdir -p "$dir"
+          xcodegen --spec "$root/Config/XcodeGen/project.yml" \
+            --project "$dir" --project-root "$root" --quiet
+          echo "XCODE_PROJECT=$dir/LorvexAppleNative.xcodeproj" >> "$GITHUB_ENV"
+          set -o pipefail
+          xcodebuild -resolvePackageDependencies \
+            -project "$dir/LorvexAppleNative.xcodeproj" \
+            -scheme LorvexMobileApp 2>&1 | tee "$OUTPUT/logs/package-resolve.log"
+
+      - name: Verify five Release target identifiers and manual profile names
+        shell: bash
+        run: |
+          set -euo pipefail
+          check() {
+            local target="$1" identifier="$2" profile="$3"
+            local file="$OUTPUT/logs/settings-${target}.txt"
+            xcodebuild -project "$XCODE_PROJECT" -target "$target" \
+              -configuration Release -showBuildSettings > "$file"
+            grep -F "PRODUCT_BUNDLE_IDENTIFIER = $identifier" "$file"
+            grep -F "PROVISIONING_PROFILE_SPECIFIER = $profile" "$file"
+            grep -F "CODE_SIGN_STYLE = Manual" "$file"
+          }
+          check LorvexMobileApp com.itorah.lorvex Lorvex_AI_MAIN_AppStore_20261123
+          check LorvexWidgets com.itorah.lorvex.widgets Lorvex_AI_WIDGETS_AppStore_20261123
+          check LorvexFocusFilterExtension com.itorah.lorvex.focusfilter Lorvex_AI_FOCUS_AppStore_20261123
+          check LorvexWatchApp com.itorah.lorvex.watchkitapp Lorvex_AI_WATCH_AppStore_20261123
+          check LorvexWatchComplication com.itorah.lorvex.watchkitapp.widgets Lorvex_AI_WATCHWIDGETS_AppStore_20261123
+
+      - name: Archive signed iPad Release with all embedded extensions and Watch app
+        shell: bash
+        run: |
+          set -o pipefail
+          xcodebuild archive -project "$XCODE_PROJECT" -scheme LorvexMobileApp \
+            -configuration Release -destination 'generic/platform=iOS' \
+            -archivePath "$OUTPUT/Lorvex.xcarchive" \
+            -derivedDataPath "$OUTPUT/DerivedData" \
+            -skipPackagePluginValidation -skipMacroValidation \
+            DEVELOPMENT_TEAM="$APPLE_TEAM_ID" CODE_SIGN_STYLE=Manual \
+            CODE_SIGN_IDENTITY='Apple Distribution' \
+            CURRENT_PROJECT_VERSION="$EXPECTED_BUILD" \
+            -allowProvisioningUpdates \
+            -authenticationKeyID "$ASC_KEY_ID" \
+            -authenticationKeyIssuerID "$ASC_ISSUER_ID" \
+            -authenticationKeyPath "$ASC_KEY_PATH" \
+            2>&1 | tee "$OUTPUT/logs/archive.log"
+
+      - name: Verify complete signed application archive
+        shell: bash
+        run: |
+          set -euo pipefail
+          app="$(find "$OUTPUT/Lorvex.xcarchive/Products/Applications" \
+            -maxdepth 1 -name '*.app' -print -quit)"
+          test -d "$app"
+          codesign --verify --deep --strict --verbose=2 "$app"
+          python3 lorvex/apps/apple/script/verify_macho_closure.py "$app"
+          python3 - "$app" <<'PY'
+          import pathlib,plistlib,sys
+          app=pathlib.Path(sys.argv[1])
+          expected={
+            'com.itorah.lorvex','com.itorah.lorvex.widgets',
+            'com.itorah.lorvex.focusfilter',
+            'com.itorah.lorvex.watchkitapp',
+            'com.itorah.lorvex.watchkitapp.widgets'}
+          found={}
+          for info_path in app.rglob('Info.plist'):
+            if info_path.parent.suffix not in ('.app','.appex'):continue
+            data=plistlib.loads(info_path.read_bytes())
+            bundle=data.get('CFBundleIdentifier')
+            if bundle in expected:found[bundle]=info_path.parent
+          assert set(found)==expected,(found.keys(),expected)
+          for bundle,path in found.items():
+            print('SIGNED_ARCHIVE_BUNDLE',bundle,path.name)
+          PY
+
+      - name: Export fully signed App Store Connect IPA
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import plistlib,os,pathlib
+          options={
+            'method':'app-store-connect','destination':'export',
+            'signingStyle':'manual','signingCertificate':'Apple Distribution',
+            'teamID':os.environ['APPLE_TEAM_ID'],
+            'manageAppVersionAndBuildNumber':False,
+            'stripSwiftSymbols':True,'uploadSymbols':True,
+            'provisioningProfiles':{
+              'com.itorah.lorvex':'Lorvex_AI_MAIN_AppStore_20261123',
+              'com.itorah.lorvex.widgets':'Lorvex_AI_WIDGETS_AppStore_20261123',
+              'com.itorah.lorvex.focusfilter':'Lorvex_AI_FOCUS_AppStore_20261123',
+              'com.itorah.lorvex.watchkitapp':'Lorvex_AI_WATCH_AppStore_20261123',
+              'com.itorah.lorvex.watchkitapp.widgets':'Lorvex_AI_WATCHWIDGETS_AppStore_20261123'
+            }}
+          pathlib.Path(os.environ['OUTPUT'],'ExportOptions.plist').write_bytes(
+            plistlib.dumps(options))
+          print('EXPORT_OPTIONS_VALIDATED',len(options['provisioningProfiles']))
+          PY
+          plutil -lint "$OUTPUT/ExportOptions.plist"
+          mkdir -p "$OUTPUT/export"
+          set -o pipefail
+          xcodebuild -exportArchive -archivePath "$OUTPUT/Lorvex.xcarchive" \
+            -exportPath "$OUTPUT/export" \
+            -exportOptionsPlist "$OUTPUT/ExportOptions.plist" \
+            -allowProvisioningUpdates \
+            -authenticationKeyID "$ASC_KEY_ID" \
+            -authenticationKeyIssuerID "$ASC_ISSUER_ID" \
+            -authenticationKeyPath "$ASC_KEY_PATH" \
+            2>&1 | tee "$OUTPUT/logs/export.log"
+          ipa="$(find "$OUTPUT/export" -maxdepth 1 -name '*.ipa' -type f -print -quit)"
+          test -s "$ipa"
+          final="$OUTPUT/export/Lorvex-AI-1.0.0-${EXPECTED_BUILD}-signed-TestFlight.ipa"
+          mv "$ipa" "$final"
+          echo "IPA_PATH=$final" >> "$GITHUB_ENV"
+          shasum -a 256 "$final" | tee "$final.sha256"
+
+      - name: Validate codesign and provisioning of exported IPA
+        shell: bash
+        run: |
+          set -euo pipefail
+          dest="$OUTPUT/unpacked"
+          mkdir -p "$dest"
+          ditto -x -k "$IPA_PATH" "$dest"
+          app="$(find "$dest/Payload" -maxdepth 1 -type d -name '*.app' -print -quit)"
+          test -d "$app"
+          codesign --verify --deep --strict --verbose=2 "$app"
+          python3 lorvex/apps/apple/script/verify_macho_closure.py "$app"
+          python3 lorvex/apps/apple/script/verify_ios_ipa.py \
+            --platform ios --distribution-method app-store-connect "$app"
+
+      - name: Validate signed IPA with Apple transport
+        shell: bash
+        run: |
+          set -o pipefail
+          xcrun altool --validate-app -f "$IPA_PATH" -t ios \
+            --apiKey "$ASC_KEY_ID" --apiIssuer "$ASC_ISSUER_ID" \
+            2>&1 | tee "$OUTPUT/logs/apple-validate.log"
+
+      - name: Upload signed Lorvex to App Store Connect / TestFlight
+        shell: bash
+        run: |
+          set -o pipefail
+          xcrun altool --upload-app -f "$IPA_PATH" -t ios \
+            --apiKey "$ASC_KEY_ID" --apiIssuer "$ASC_ISSUER_ID" \
+            2>&1 | tee "$OUTPUT/logs/apple-upload.log"
+          echo "LORVEX_UPLOAD_ACCEPTED=1" >> "$GITHUB_ENV"
+
+      - name: Verify actual TestFlight build in Apple API
+        shell: bash
+        run: |
+          set -euo pipefail
+          "$RUNNER_TEMP/lorvex-asc-venv/bin/python" \
+            lorvex/apps/apple/script/ci_appstore_connect.py verify-upload \
+            --build "$EXPECTED_BUILD" --timeout-seconds 1100 \
+            2>&1 | tee "$OUTPUT/logs/testflight-verify.log"
+
+      - name: Publish signed IPA and non-sensitive evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: Lorvex-signed-TestFlight-${{ github.run_id }}
+          path: |
+            ${{ env.OUTPUT }}/export/*.ipa
+            ${{ env.OUTPUT }}/export/*.sha256
+            ${{ env.OUTPUT }}/logs/*.log
+            ${{ env.OUTPUT }}/logs/*.txt
+            ${{ env.RUNNER_TEMP }}/lorvex-signing-preflight.json
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: Remove temporary signing credentials
+        if: always()
+        shell: bash
+        run: |
+          set +e
+          if [[ -n "${SIGNING_KEYCHAIN:-}" ]]; then
+            security delete-keychain "$SIGNING_KEYCHAIN"
+          fi
+          rm -f "$RUNNER_TEMP/lorvex-distribution.p12"
+          rm -f "$HOME/.appstoreconnect/private_keys/AuthKey_${ASC_KEY_ID}.p8"
+          rm -f "$HOME/.private_keys/AuthKey_${ASC_KEY_ID}.p8"

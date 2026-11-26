@@ -1,0 +1,61 @@
+name: Lorvex TestFlight Tester Account Probe
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Read Apple user and beta group eligibility
+        env:
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -m pip install -q 'PyJWT[crypto]==2.10.1'
+          python3 - <<'PY'
+          import os,base64,time,json,urllib.parse,urllib.request,urllib.error,jwt
+          now=int(time.time());key=base64.b64decode(os.environ["ASC_KEY_P8"]).decode()
+          token=jwt.encode({"iss":os.environ["ASC_ISSUER_ID"],"iat":now-10,"exp":now+600,"aud":"appstoreconnect-v1"},
+           key,algorithm="ES256",headers={"kid":os.environ["ASC_KEY_ID"],"typ":"JWT"})
+          base="https://api.appstoreconnect.apple.com/v1/"
+          def get(resource,query={}):
+           url=base+resource
+           if query:url+="?"+urllib.parse.urlencode(query)
+           try:
+            request=urllib.request.Request(url,headers={"Authorization":"Bearer "+token,"Accept":"application/json"})
+            with urllib.request.urlopen(request,timeout=30) as response:return response.status,json.load(response)
+           except urllib.error.HTTPError as err:
+            data=err.read(3000)
+            try:errors=[{"code":v.get("code"),"title":v.get("title")} for v in json.loads(data).get("errors",[])]
+            except:errors=[]
+            print("API_ERROR",resource,err.code,errors,flush=True)
+            return err.code,{}
+          status,users=get("users",{"limit":"200"})
+          print("USERS_HTTP",status)
+          if status==200:
+           for v in users.get("data",[]):
+            a=v.get("attributes",{});email=a.get("username","") or a.get("email","")
+            print("ACCOUNT_USER",v.get("id"),email,"ROLES",a.get("roles",[]))
+          status,groups=get("betaGroups",{"filter[app]":"6838139212","limit":"200"})
+          print("BETA_GROUPS_HTTP",status)
+          if status==200:
+           for v in groups.get("data",[]):
+            a=v.get("attributes",{})
+            print("APP_BETA_GROUP",v.get("id"),a.get("name"),"INTERNAL",a.get("isInternalGroup"),"ALL_BUILDS",a.get("hasAccessToAllBuilds"))
+          status,testers=get("betaTesters",{"filter[email]":"davidpovarski1@gmail.com","limit":"200"})
+          print("TESTERS_HTTP",status)
+          if status==200:
+           for v in testers.get("data",[]):
+            a=v.get("attributes",{})
+            print("EXISTING_TESTER",v.get("id"),a.get("email"),a.get("state"),a.get("inviteType"))
+          status,builds=get("builds",{"filter[app]":"6838139212","limit":"40"})
+          print("TESTFLIGHT_BUILDS_HTTP",status,"COUNT",len(builds.get("data",[])) if status==200 else 0)
+          PY
