@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "629853b24331702b48dfa35f65229b2b0d372643",
+  "sourceCommit": "8eb6e54d003c0be82ea511a214b81a93a5a25f51",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
   "uncommittedSourcePaths": [],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
@@ -1282,15 +1282,15 @@
     },
     "capturePrincipal": {
       "file": "ChavrusaChatCameraCapture/HanlinCameraCapture.swift",
-      "line": 7,
+      "line": 8,
       "anchor": "struct HanlinCameraCaptureExtension: LockedCameraCaptureExtension",
-      "sha256": "0542e3379a3e610cdb7cc00c5007d5668293a81358079ce344edaadd87342b90"
+      "sha256": "acd3a230843a63b83cba403dcb1388a4807c9234eadda34d5c393c08460cd52a"
     },
     "miniAppsCapturePrincipal": {
       "file": "HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.swift",
-      "line": 7,
+      "line": 8,
       "anchor": "struct HanlinMiniAppsCameraCaptureExtension: LockedCameraCaptureExtension",
-      "sha256": "ee8a54ba3150ca5cdabc99f55f245e64c5b68087d8e7559a149575fba65cf448"
+      "sha256": "ca3d2d641c94e0ee4e9ca5fb9c57e299d620aee30d15dd08d629f9857b1bedb9"
     },
     "keyboardPrincipal": {
       "file": "ChavrusaChatKeyboard/HanlinKeyboard.swift",
