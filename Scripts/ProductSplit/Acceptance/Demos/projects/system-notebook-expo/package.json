@@ -1,0 +1,17 @@
+{
+  "name": "hanlin.demo.system.expo",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.ts",
+  "hanlinRuntime": "hanlin-expo",
+  "dependencies": {
+    "@hanlin/expo-ui": "1.0.0",
+    "@expo/ui": "58.0.29",
+    "expo": "58.0.26",
+    "react": "19.3.0",
+    "react-native": "0.88.1",
+    "@hanlin/system-surfaces": "1.0.0",
+    "@hanlin/notification-events": "1.0.0",
+    "@hanlin/expo-native-api": "1.0.0"
+  }
+}

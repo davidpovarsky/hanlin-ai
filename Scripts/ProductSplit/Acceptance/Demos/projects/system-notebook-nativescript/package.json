@@ -1,0 +1,13 @@
+{
+  "name": "hanlin.demo.system.nativescript",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.ts",
+  "hanlinRuntime": "hanlin-nativescript",
+  "type": "module",
+  "dependencies": {
+    "@nativescript/core": "9.1.4",
+    "@hanlin/system-surfaces": "1.0.0",
+    "@hanlin/notification-events": "1.0.0"
+  }
+}

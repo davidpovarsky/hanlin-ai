@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "strict": true
+  },
+  "include": [
+    "index.ts",
+    "notebook.ts",
+    "native-notification.ts"
+  ],
+  "exclude": [
+    "native"
+  ]
+}
