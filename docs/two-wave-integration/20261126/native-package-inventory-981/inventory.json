@@ -1,0 +1,711 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "9819697c1792119a6a93b492d12abad7b3330c93",
+  "recordedAtUTC": "2026-11-26T17:41:00.506416+00:00",
+  "status": "SOURCE_INVENTORY_ONLY_NATIVE_NOT_RUN",
+  "executionOwner": "/root/mac_build_ops",
+  "additive": {
+    "definitions": 32,
+    "expectedInvocations": 52,
+    "groups": [
+      {
+        "group": "prior35-shortcutCodec",
+        "target": "HanlinPlatformContractsTests",
+        "suite": null,
+        "sourceFile": "Packages/HanlinPlatform/Tests/HanlinPlatformContractsTests/HanlinShortcutValueCodecTests.swift",
+        "definitions": 4,
+        "expectedInvocations": 12,
+        "tests": [
+          {
+            "target": "HanlinPlatformContractsTests",
+            "suite": null,
+            "sourceFile": "Packages/HanlinPlatform/Tests/HanlinPlatformContractsTests/HanlinShortcutValueCodecTests.swift",
+            "sourceLine": 6,
+            "function": "shortcutDictionaryAndListRetainStructureAndExactNumbers",
+            "signature": "shortcutDictionaryAndListRetainStructureAndExactNumbers()",
+            "sourceDerivedIdentifier": "HanlinPlatformContractsTests/shortcutDictionaryAndListRetainStructureAndExactNumbers()",
+            "expectedInvocations": 1,
+            "parameterValues": null,
+            "note": null
+          },
+          {
+            "target": "HanlinPlatformContractsTests",
+            "suite": null,
+            "sourceFile": "Packages/HanlinPlatform/Tests/HanlinPlatformContractsTests/HanlinShortcutValueCodecTests.swift",
+            "sourceLine": 23,
+            "function": "shortcutJSONAcceptsScalarValuesWithoutDoubleEncoding",
+            "signature": "shortcutJSONAcceptsScalarValuesWithoutDoubleEncoding(_:)",
+            "sourceDerivedIdentifier": "HanlinPlatformContractsTests/shortcutJSONAcceptsScalarValuesWithoutDoubleEncoding(_:)",
+            "expectedInvocations": 5,
+            "parameterValues": [
+              "null",
+              "true",
+              "42",
+              "1.5",
+              "\"hello\""
+            ],
+            "note": null
+          },
+          {
+            "target": "HanlinPlatformContractsTests",
+            "suite": null,
+            "sourceFile": "Packages/HanlinPlatform/Tests/HanlinPlatformContractsTests/HanlinShortcutValueCodecTests.swift",
+            "sourceLine": 34,
+            "function": "shortcutJSONRejectsMalformedOrLossyInput",
+            "signature": "shortcutJSONRejectsMalformedOrLossyInput(_:)",
+            "sourceDerivedIdentifier": "HanlinPlatformContractsTests/shortcutJSONRejectsMalformedOrLossyInput(_:)",
+            "expectedInvocations": 5,
+            "parameterValues": [
+              "",
+              "[",
+              "{\"duplicate\":1,\"duplicate\":2}",
+              "9223372036854775808",
+              "NaN"
+            ],
+            "note": null
+          },
+          {
+            "target": "HanlinPlatformContractsTests",
+            "suite": null,
+            "sourceFile": "Packages/HanlinPlatform/Tests/HanlinPlatformContractsTests/HanlinShortcutValueCodecTests.swift",
+            "sourceLine": 41,
+            "function": "shortcutTextRemainsTextAndBinaryOutputRequiresAFile",
+            "signature": "shortcutTextRemainsTextAndBinaryOutputRequiresAFile()",
+            "sourceDerivedIdentifier": "HanlinPlatformContractsTests/shortcutTextRemainsTextAndBinaryOutputRequiresAFile()",
+            "expectedInvocations": 1,
+            "parameterValues": null,
+            "note": null
+          }
+        ]
+      },
+      {
+        "group": "prior35-actionCompletion",
+        "target": "HanlinMiniAppCoreTests",
+        "suite": null,
+        "sourceFile": "Packages/HanlinPlatform/Tests/HanlinMiniAppCoreTests/HanlinMiniAppActionCompletionTests.swift",
+        "definitions": 3,
+        "expectedInvocations": 3,
+        "tests": [
+          {
+            "target": "HanlinMiniAppCoreTests",
+            "suite": null,
+            "sourceFile": "Packages/HanlinPlatform/Tests/HanlinMiniAppCoreTests/HanlinMiniAppActionCompletionTests.swift",
+            "sourceLine": 7,
+            "function": "cancelledNativeActionDoesNotStartOrAcceptALateSuccess",
+            "signature": "cancelledNativeActionDoesNotStartOrAcceptALateSuccess()",
+            "sourceDerivedIdentifier": "HanlinMiniAppCoreTests/cancelledNativeActionDoesNotStartOrAcceptALateSuccess()",
+            "expectedInvocations": 1,
+            "parameterValues": null,
+            "note": null
+          },
+          {
+            "target": "HanlinMiniAppCoreTests",
+            "suite": null,
+            "sourceFile": "Packages/HanlinPlatform/Tests/HanlinMiniAppCoreTests/HanlinMiniAppActionCompletionTests.swift",
+            "sourceLine": 19,
+            "function": "nativeActionIgnoresDuplicateCallbacksAndLateCancellation",
+            "signature": "nativeActionIgnoresDuplicateCallbacksAndLateCancellation()",
+            "sourceDerivedIdentifier": "HanlinMiniAppCoreTests/nativeActionIgnoresDuplicateCallbacksAndLateCancellation()",
+            "expectedInvocations": 1,
+            "parameterValues": null,
+            "note": null
+          },
+          {
+            "target": "HanlinMiniAppCoreTests",
+            "suite": null,
+            "sourceFile": "Packages/HanlinPlatform/Tests/HanlinMiniAppCoreTests/HanlinMiniAppActionCompletionTests.swift",
+            "sourceLine": 31,
+            "function": "waitingNativeActionResolvesOnCancellation",
+            "signature": "waitingNativeActionResolvesOnCancellation()",
+            "sourceDerivedIdentifier": "HanlinMiniAppCoreTests/waitingNativeActionResolvesOnCancellation()",
+            "expectedInvocations": 1,
+            "parameterValues": null,
+            "note": null
+          }
+        ]
+      },
+      {
+        "group": "prior35-preparedLKG",
+        "target": "HanlinScriptExtensionsTests",
+        "suite": "HanlinWidgetLastSuccessfulRenderTests",
+        "sourceFile": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinWidgetLastSuccessfulRenderTests.swift",
+        "definitions": 4,
+        "expectedInvocations": 11,
+        "tests": [
+          {
+            "target": "HanlinScriptExtensionsTests",
+            "suite": "HanlinWidgetLastSuccessfulRenderTests",
+            "sourceFile": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinWidgetLastSuccessfulRenderTests.swift",
+            "sourceLine": 11,
+            "function": "failedRefreshRetainsVerifiedRenderAndDoesNotCommitStagedState",
+            "signature": "failedRefreshRetainsVerifiedRenderAndDoesNotCommitStagedState(engine:)",
+            "sourceDerivedIdentifier": "HanlinScriptExtensionsTests/HanlinWidgetLastSuccessfulRenderTests/failedRefreshRetainsVerifiedRenderAndDoesNotCommitStagedState(engine:)",
+            "expectedInvocations": 2,
+            "parameterValues": [
+              "expo",
+              "scriptwidget"
+            ],
+            "note": null
+          },
+          {
+            "target": "HanlinScriptExtensionsTests",
+            "suite": "HanlinWidgetLastSuccessfulRenderTests",
+            "sourceFile": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinWidgetLastSuccessfulRenderTests.swift",
+            "sourceLine": 35,
+            "function": "fallbackNeverRestoresRevokedOrMismatchedContent",
+            "signature": "fallbackNeverRestoresRevokedOrMismatchedContent(invalidation:)",
+            "sourceDerivedIdentifier": "HanlinScriptExtensionsTests/HanlinWidgetLastSuccessfulRenderTests/fallbackNeverRestoresRevokedOrMismatchedContent(invalidation:)",
+            "expectedInvocations": 7,
+            "parameterValues": [
+              "settings",
+              "inactive",
+              "removed",
+              "generation",
+              "program",
+              "family",
+              "expired"
+            ],
+            "note": null
+          },
+          {
+            "target": "HanlinScriptExtensionsTests",
+            "suite": "HanlinWidgetLastSuccessfulRenderTests",
+            "sourceFile": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinWidgetLastSuccessfulRenderTests.swift",
+            "sourceLine": 48,
+            "function": "corruptRenderBytesAreRejectedAndUninstallDropsCacheReferences",
+            "signature": "corruptRenderBytesAreRejectedAndUninstallDropsCacheReferences()",
+            "sourceDerivedIdentifier": "HanlinScriptExtensionsTests/HanlinWidgetLastSuccessfulRenderTests/corruptRenderBytesAreRejectedAndUninstallDropsCacheReferences()",
+            "expectedInvocations": 1,
+            "parameterValues": null,
+            "note": null
+          },
+          {
+            "target": "HanlinScriptExtensionsTests",
+            "suite": "HanlinWidgetLastSuccessfulRenderTests",
+            "sourceFile": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinWidgetLastSuccessfulRenderTests.swift",
+            "sourceLine": 63,
+            "function": "precedingSnapshotWithoutRenderMetadataDecodesAndCopiesPreserveMetadata",
+            "signature": "precedingSnapshotWithoutRenderMetadataDecodesAndCopiesPreserveMetadata()",
+            "sourceDerivedIdentifier": "HanlinScriptExtensionsTests/HanlinWidgetLastSuccessfulRenderTests/precedingSnapshotWithoutRenderMetadataDecodesAndCopiesPreserveMetadata()",
+            "expectedInvocations": 1,
+            "parameterValues": null,
+            "note": null
+          }
+        ]
+      },
+      {
+        "group": "prior35-originalImages",
+        "target": "HanlinScriptExtensionsTests",
+        "suite": "HanlinOriginalScriptWidgetImageTests",
+        "sourceFile": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinOriginalScriptWidgetImageTests.swift",
+        "definitions": 4,
+        "expectedInvocations": 9,
+        "tests": [
+          {
+            "target": "HanlinScriptExtensionsTests",
+            "suite": "HanlinOriginalScriptWidgetImageTests",
+            "sourceFile": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinOriginalScriptWidgetImageTests.swift",
+            "sourceLine": 17,
+            "function": "imageRotationKeepsTheOriginalSwiftUICenter",
+            "signature": "imageRotationKeepsTheOriginalSwiftUICenter(degrees:)",
+            "sourceDerivedIdentifier": "HanlinScriptExtensionsTests/HanlinOriginalScriptWidgetImageTests/imageRotationKeepsTheOriginalSwiftUICenter(degrees:)",
+            "expectedInvocations": 4,
+            "parameterValues": [
+              0.0,
+              45.0,
+              90.0,
+              180.0
+            ],
+            "note": null
+          },
+          {
+            "target": "HanlinScriptExtensionsTests",
+            "suite": "HanlinOriginalScriptWidgetImageTests",
+            "sourceFile": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinOriginalScriptWidgetImageTests.swift",
+            "sourceLine": 36,
+            "function": "invalidImageDimensionsAndTransformsNeverReachSwiftUI",
+            "signature": "invalidImageDimensionsAndTransformsNeverReachSwiftUI(attribute:)",
+            "sourceDerivedIdentifier": "HanlinScriptExtensionsTests/HanlinOriginalScriptWidgetImageTests/invalidImageDimensionsAndTransformsNeverReachSwiftUI(attribute:)",
+            "expectedInvocations": 3,
+            "parameterValues": [
+              "frame",
+              "rotation",
+              "ratio"
+            ],
+            "note": null
+          },
+          {
+            "target": "HanlinScriptExtensionsTests",
+            "suite": "HanlinOriginalScriptWidgetImageTests",
+            "sourceFile": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinOriginalScriptWidgetImageTests.swift",
+            "sourceLine": 63,
+            "function": "largeValidImagesUseTheOriginalBoundedDownsampler",
+            "signature": "largeValidImagesUseTheOriginalBoundedDownsampler()",
+            "sourceDerivedIdentifier": "HanlinScriptExtensionsTests/HanlinOriginalScriptWidgetImageTests/largeValidImagesUseTheOriginalBoundedDownsampler()",
+            "expectedInvocations": 1,
+            "parameterValues": null,
+            "note": null
+          },
+          {
+            "target": "HanlinScriptExtensionsTests",
+            "suite": "HanlinOriginalScriptWidgetImageTests",
+            "sourceFile": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinOriginalScriptWidgetImageTests.swift",
+            "sourceLine": 79,
+            "function": "oversizedAndMalformedImagesAreRejectedBeforeDisplay",
+            "signature": "oversizedAndMalformedImagesAreRejectedBeforeDisplay()",
+            "sourceDerivedIdentifier": "HanlinScriptExtensionsTests/HanlinOriginalScriptWidgetImageTests/oversizedAndMalformedImagesAreRejectedBeforeDisplay()",
+            "expectedInvocations": 1,
+            "parameterValues": null,
+            "note": null
+          }
+        ]
+      },
+      {
+        "group": "activityQueue",
+        "target": "HanlinScriptExtensionsTests",
+        "suite": "HanlinLiveActivityOperationQueueTests",
+        "sourceFile": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinLiveActivityOperationQueueTests.swift",
+        "definitions": 3,
+        "expectedInvocations": 3,
+        "tests": [
+          {
+            "target": "HanlinScriptExtensionsTests",
+            "suite": "HanlinLiveActivityOperationQueueTests",
+            "sourceFile": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinLiveActivityOperationQueueTests.swift",
+            "sourceLine": 7,
+            "function": "sameActivityNeverOverlapsAndFailureDoesNotBlockLaterWork",
+            "signature": "sameActivityNeverOverlapsAndFailureDoesNotBlockLaterWork()",
+            "sourceDerivedIdentifier": "HanlinScriptExtensionsTests/HanlinLiveActivityOperationQueueTests/sameActivityNeverOverlapsAndFailureDoesNotBlockLaterWork()",
+            "expectedInvocations": 1,
+            "parameterValues": null,
+            "note": null
+          },
+          {
+            "target": "HanlinScriptExtensionsTests",
+            "suite": "HanlinLiveActivityOperationQueueTests",
+            "sourceFile": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinLiveActivityOperationQueueTests.swift",
+            "sourceLine": 34,
+            "function": "differentActivityCanCompleteWhileFirstActivityIsSuspended",
+            "signature": "differentActivityCanCompleteWhileFirstActivityIsSuspended()",
+            "sourceDerivedIdentifier": "HanlinScriptExtensionsTests/HanlinLiveActivityOperationQueueTests/differentActivityCanCompleteWhileFirstActivityIsSuspended()",
+            "expectedInvocations": 1,
+            "parameterValues": null,
+            "note": null
+          },
+          {
+            "target": "HanlinScriptExtensionsTests",
+            "suite": "HanlinLiveActivityOperationQueueTests",
+            "sourceFile": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinLiveActivityOperationQueueTests.swift",
+            "sourceLine": 52,
+            "function": "canceledWaiterDoesNotRunOrCancelThePrecedingMutation",
+            "signature": "canceledWaiterDoesNotRunOrCancelThePrecedingMutation()",
+            "sourceDerivedIdentifier": "HanlinScriptExtensionsTests/HanlinLiveActivityOperationQueueTests/canceledWaiterDoesNotRunOrCancelThePrecedingMutation()",
+            "expectedInvocations": 1,
+            "parameterValues": null,
+            "note": null
+          }
+        ]
+      },
+      {
+        "group": "newKeyboardNotification",
+        "target": "HanlinScriptExtensionsTests",
+        "suite": "HanlinKeyboardNotificationPresentationTests",
+        "sourceFile": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests.swift",
+        "definitions": 9,
+        "expectedInvocations": 9,
+        "tests": [
+          {
+            "target": "HanlinScriptExtensionsTests",
+            "suite": "HanlinKeyboardNotificationPresentationTests",
+            "sourceFile": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests.swift",
+            "sourceLine": 10,
+            "function": "readOnlyCatalogDoesNotWriteEvenOnFailure",
+            "signature": "readOnlyCatalogDoesNotWriteEvenOnFailure()",
+            "sourceDerivedIdentifier": "HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests/readOnlyCatalogDoesNotWriteEvenOnFailure()",
+            "expectedInvocations": 1,
+            "parameterValues": null,
+            "note": null
+          },
+          {
+            "target": "HanlinScriptExtensionsTests",
+            "suite": "HanlinKeyboardNotificationPresentationTests",
+            "sourceFile": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests.swift",
+            "sourceLine": 26,
+            "function": "readOnlyCatalogUsesCommittedImmutableRevision",
+            "signature": "readOnlyCatalogUsesCommittedImmutableRevision()",
+            "sourceDerivedIdentifier": "HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests/readOnlyCatalogUsesCommittedImmutableRevision()",
+            "expectedInvocations": 1,
+            "parameterValues": null,
+            "note": null
+          },
+          {
+            "target": "HanlinScriptExtensionsTests",
+            "suite": "HanlinKeyboardNotificationPresentationTests",
+            "sourceFile": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests.swift",
+            "sourceLine": 46,
+            "function": "originalKeyboardExecutesLocallyAndDoesNotRepeatAnEdit",
+            "signature": "originalKeyboardExecutesLocallyAndDoesNotRepeatAnEdit()",
+            "sourceDerivedIdentifier": "HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests/originalKeyboardExecutesLocallyAndDoesNotRepeatAnEdit()",
+            "expectedInvocations": 1,
+            "parameterValues": null,
+            "note": null
+          },
+          {
+            "target": "HanlinScriptExtensionsTests",
+            "suite": "HanlinKeyboardNotificationPresentationTests",
+            "sourceFile": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests.swift",
+            "sourceLine": 101,
+            "function": "localModeRejectsSharedRoot",
+            "signature": "localModeRejectsSharedRoot()",
+            "sourceDerivedIdentifier": "HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests/localModeRejectsSharedRoot()",
+            "expectedInvocations": 1,
+            "parameterValues": null,
+            "note": null
+          },
+          {
+            "target": "HanlinScriptExtensionsTests",
+            "suite": "HanlinKeyboardNotificationPresentationTests",
+            "sourceFile": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests.swift",
+            "sourceLine": 117,
+            "function": "keyboardContextEncodingMatchesSDKShape",
+            "signature": "keyboardContextEncodingMatchesSDKShape()",
+            "sourceDerivedIdentifier": "HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests/keyboardContextEncodingMatchesSDKShape()",
+            "expectedInvocations": 1,
+            "parameterValues": null,
+            "note": null
+          },
+          {
+            "target": "HanlinScriptExtensionsTests",
+            "suite": "HanlinKeyboardNotificationPresentationTests",
+            "sourceFile": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests.swift",
+            "sourceLine": 131,
+            "function": "typedEffectsPreserveOldPanelsAndSurfaceBoundaries",
+            "signature": "typedEffectsPreserveOldPanelsAndSurfaceBoundaries()",
+            "sourceDerivedIdentifier": "HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests/typedEffectsPreserveOldPanelsAndSurfaceBoundaries()",
+            "expectedInvocations": 1,
+            "parameterValues": null,
+            "note": null
+          },
+          {
+            "target": "HanlinScriptExtensionsTests",
+            "suite": "HanlinKeyboardNotificationPresentationTests",
+            "sourceFile": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests.swift",
+            "sourceLine": 153,
+            "function": "notificationPayloadRoundTripAndTargetMatch",
+            "signature": "notificationPayloadRoundTripAndTargetMatch()",
+            "sourceDerivedIdentifier": "HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests/notificationPayloadRoundTripAndTargetMatch()",
+            "expectedInvocations": 1,
+            "parameterValues": null,
+            "note": null
+          },
+          {
+            "target": "HanlinScriptExtensionsTests",
+            "suite": "HanlinKeyboardNotificationPresentationTests",
+            "sourceFile": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests.swift",
+            "sourceLine": 174,
+            "function": "notificationContinuationUsesTheExistingReceipt",
+            "signature": "notificationContinuationUsesTheExistingReceipt()",
+            "sourceDerivedIdentifier": "HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests/notificationContinuationUsesTheExistingReceipt()",
+            "expectedInvocations": 1,
+            "parameterValues": null,
+            "note": null
+          },
+          {
+            "target": "HanlinScriptExtensionsTests",
+            "suite": "HanlinKeyboardNotificationPresentationTests",
+            "sourceFile": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests.swift",
+            "sourceLine": 194,
+            "function": "removedPresentationDoesNotEnqueue",
+            "signature": "removedPresentationDoesNotEnqueue()",
+            "sourceDerivedIdentifier": "HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests/removedPresentationDoesNotEnqueue()",
+            "expectedInvocations": 1,
+            "parameterValues": null,
+            "note": null
+          }
+        ]
+      },
+      {
+        "group": "newAnalyzer",
+        "target": "HanlinScriptCompilerTests",
+        "suite": "HanlinScriptAnalyzerTests",
+        "sourceFile": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift",
+        "definitions": 4,
+        "expectedInvocations": 4,
+        "tests": [
+          {
+            "target": "HanlinScriptCompilerTests",
+            "suite": "HanlinScriptAnalyzerTests",
+            "sourceFile": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift",
+            "sourceLine": 689,
+            "function": "preparedSystemEntrypointsCompileBothOriginalPanels",
+            "signature": "preparedSystemEntrypointsCompileBothOriginalPanels()",
+            "sourceDerivedIdentifier": "HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/preparedSystemEntrypointsCompileBothOriginalPanels()",
+            "expectedInvocations": 1,
+            "parameterValues": null,
+            "note": "Loops over two original app engines internally; one test invocation."
+          },
+          {
+            "target": "HanlinScriptCompilerTests",
+            "suite": "HanlinScriptAnalyzerTests",
+            "sourceFile": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift",
+            "sourceLine": 715,
+            "function": "systemPresentationsRequireTheirMatchingNativeSource",
+            "signature": "systemPresentationsRequireTheirMatchingNativeSource()",
+            "sourceDerivedIdentifier": "HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/systemPresentationsRequireTheirMatchingNativeSource()",
+            "expectedInvocations": 1,
+            "parameterValues": null,
+            "note": "Two engines and two diagnostic assertions are inside one invocation."
+          },
+          {
+            "target": "HanlinScriptCompilerTests",
+            "suite": "HanlinScriptAnalyzerTests",
+            "sourceFile": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift",
+            "sourceLine": 735,
+            "function": "preparedSystemEntrypointsRequireThePreparedForegroundBundle",
+            "signature": "preparedSystemEntrypointsRequireThePreparedForegroundBundle()",
+            "sourceDerivedIdentifier": "HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/preparedSystemEntrypointsRequireThePreparedForegroundBundle()",
+            "expectedInvocations": 1,
+            "parameterValues": null,
+            "note": "Four exposure kinds are an internal loop, not four parameterized invocations."
+          },
+          {
+            "target": "HanlinScriptCompilerTests",
+            "suite": "HanlinScriptAnalyzerTests",
+            "sourceFile": "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift",
+            "sourceLine": 752,
+            "function": "systemActionMetadataMustMatchThePreparedHandler",
+            "signature": "systemActionMetadataMustMatchThePreparedHandler()",
+            "sourceDerivedIdentifier": "HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/systemActionMetadataMustMatchThePreparedHandler()",
+            "expectedInvocations": 1,
+            "parameterValues": null,
+            "note": "Six invalid metadata variants are an internal loop, not six parameterized invocations."
+          }
+        ]
+      },
+      {
+        "group": "newManifest",
+        "target": "HanlinPlatformContractsTests",
+        "suite": null,
+        "sourceFile": "Packages/HanlinPlatform/Tests/HanlinPlatformContractsTests/ManifestSurfaceSchemaTests.swift",
+        "definitions": 1,
+        "expectedInvocations": 1,
+        "tests": [
+          {
+            "target": "HanlinPlatformContractsTests",
+            "suite": null,
+            "sourceFile": "Packages/HanlinPlatform/Tests/HanlinPlatformContractsTests/ManifestSurfaceSchemaTests.swift",
+            "sourceLine": 6,
+            "function": "manifestSurfaceSchemaMatchesRuntimeContracts",
+            "signature": "manifestSurfaceSchemaMatchesRuntimeContracts()",
+            "sourceDerivedIdentifier": "HanlinPlatformContractsTests/manifestSurfaceSchemaMatchesRuntimeContracts()",
+            "expectedInvocations": 1,
+            "parameterValues": null,
+            "note": null
+          }
+        ]
+      }
+    ]
+  },
+  "affectedOriginalCompatibility": {
+    "definitions": 6,
+    "expectedInvocations": 7,
+    "tests": [
+      {
+        "target": "HanlinScriptExtensionsTests",
+        "suite": "HanlinDualWidgetEnginesTests",
+        "sourceFile": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+        "sourceLine": 437,
+        "function": "actionAndPublicationPreserveUnrelatedCollections",
+        "signature": "actionAndPublicationPreserveUnrelatedCollections()",
+        "sourceDerivedIdentifier": "HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/actionAndPublicationPreserveUnrelatedCollections()",
+        "expectedInvocations": 1,
+        "parameterValues": null,
+        "note": "Existing publication/copy path must preserve translation, activity, intent and widget state collections."
+      },
+      {
+        "target": "HanlinScriptExtensionsTests",
+        "suite": "HanlinDualWidgetEnginesTests",
+        "sourceFile": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+        "sourceLine": 475,
+        "function": "actualHistoricalV1EncoderAndDowngradeReader",
+        "signature": "actualHistoricalV1EncoderAndDowngradeReader()",
+        "sourceDerivedIdentifier": "HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/actualHistoricalV1EncoderAndDowngradeReader()",
+        "expectedInvocations": 1,
+        "parameterValues": null,
+        "note": "Actual original v1 writer and current v2 recovery are affected by snapshot field preservation."
+      },
+      {
+        "target": "HanlinScriptExtensionsTests",
+        "suite": "HanlinDualWidgetEnginesTests",
+        "sourceFile": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+        "sourceLine": 495,
+        "function": "interruptedShadowPublicationRestoresExactCommittedRevision",
+        "signature": "interruptedShadowPublicationRestoresExactCommittedRevision()",
+        "sourceDerivedIdentifier": "HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/interruptedShadowPublicationRestoresExactCommittedRevision()",
+        "expectedInvocations": 1,
+        "parameterValues": null,
+        "note": "Read-only admission must coexist with the original containing-app recovery path."
+      },
+      {
+        "target": "HanlinScriptExtensionsTests",
+        "suite": "HanlinDualWidgetEnginesTests",
+        "sourceFile": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+        "sourceLine": 517,
+        "function": "corruptCommittedV2NeverFallsBackToGoodV1",
+        "signature": "corruptCommittedV2NeverFallsBackToGoodV1()",
+        "sourceDerivedIdentifier": "HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/corruptCommittedV2NeverFallsBackToGoodV1()",
+        "expectedInvocations": 1,
+        "parameterValues": null,
+        "note": "Retains fail-closed committed revision integrity rather than silently reading an older valid shadow."
+      },
+      {
+        "target": "HanlinScriptExtensionsTests",
+        "suite": "HanlinDualWidgetEnginesTests",
+        "sourceFile": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+        "sourceLine": 1002,
+        "function": "testPass7HistoricalV1StoreEnvelopeCompatibility",
+        "signature": "testPass7HistoricalV1StoreEnvelopeCompatibility(timestamp:)",
+        "sourceDerivedIdentifier": "HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/testPass7HistoricalV1StoreEnvelopeCompatibility(timestamp:)",
+        "expectedInvocations": 2,
+        "parameterValues": [
+          200.0,
+          1730826191.123456
+        ],
+        "note": "Retains real historical bytes, fractional timestamps, duplicate-key/tamper rejection."
+      },
+      {
+        "target": "HanlinScriptExtensionsTests",
+        "suite": "HanlinWidgetHostActionTests",
+        "sourceFile": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinWidgetHostActionTests.swift",
+        "sourceLine": 83,
+        "function": "optionalPresentationKeepsRealHandlerButPanelOnlyCannotQueue",
+        "signature": "optionalPresentationKeepsRealHandlerButPanelOnlyCannotQueue()",
+        "sourceDerivedIdentifier": "HanlinScriptExtensionsTests/HanlinWidgetHostActionTests/optionalPresentationKeepsRealHandlerButPanelOnlyCannotQueue()",
+        "expectedInvocations": 1,
+        "parameterValues": null,
+        "note": "Existing panel metadata must retain its actual foreground handler and must not invent an action for a panel-only entry."
+      }
+    ]
+  },
+  "combinedPackage": {
+    "definitions": 38,
+    "expectedInvocations": 59,
+    "sourceDerivedXcodeSelectors": [
+      "HanlinPlatformContractsTests/shortcutDictionaryAndListRetainStructureAndExactNumbers()",
+      "HanlinPlatformContractsTests/shortcutJSONAcceptsScalarValuesWithoutDoubleEncoding(_:)",
+      "HanlinPlatformContractsTests/shortcutJSONRejectsMalformedOrLossyInput(_:)",
+      "HanlinPlatformContractsTests/shortcutTextRemainsTextAndBinaryOutputRequiresAFile()",
+      "HanlinMiniAppCoreTests/cancelledNativeActionDoesNotStartOrAcceptALateSuccess()",
+      "HanlinMiniAppCoreTests/nativeActionIgnoresDuplicateCallbacksAndLateCancellation()",
+      "HanlinMiniAppCoreTests/waitingNativeActionResolvesOnCancellation()",
+      "HanlinScriptExtensionsTests/HanlinWidgetLastSuccessfulRenderTests",
+      "HanlinScriptExtensionsTests/HanlinOriginalScriptWidgetImageTests",
+      "HanlinScriptExtensionsTests/HanlinLiveActivityOperationQueueTests",
+      "HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests",
+      "HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/preparedSystemEntrypointsCompileBothOriginalPanels()",
+      "HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/systemPresentationsRequireTheirMatchingNativeSource()",
+      "HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/preparedSystemEntrypointsRequireThePreparedForegroundBundle()",
+      "HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/systemActionMetadataMustMatchThePreparedHandler()",
+      "HanlinPlatformContractsTests/manifestSurfaceSchemaMatchesRuntimeContracts()",
+      "HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/actionAndPublicationPreserveUnrelatedCollections()",
+      "HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/actualHistoricalV1EncoderAndDowngradeReader()",
+      "HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/interruptedShadowPublicationRestoresExactCommittedRevision()",
+      "HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/corruptCommittedV2NeverFallsBackToGoodV1()",
+      "HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/testPass7HistoricalV1StoreEnvelopeCompatibility(timestamp:)",
+      "HanlinScriptExtensionsTests/HanlinWidgetHostActionTests/optionalPresentationKeepsRealHandlerButPanelOnlyCannotQueue()"
+    ],
+    "argvOnlyTesting": [
+      "-only-testing:HanlinPlatformContractsTests/shortcutDictionaryAndListRetainStructureAndExactNumbers()",
+      "-only-testing:HanlinPlatformContractsTests/shortcutJSONAcceptsScalarValuesWithoutDoubleEncoding(_:)",
+      "-only-testing:HanlinPlatformContractsTests/shortcutJSONRejectsMalformedOrLossyInput(_:)",
+      "-only-testing:HanlinPlatformContractsTests/shortcutTextRemainsTextAndBinaryOutputRequiresAFile()",
+      "-only-testing:HanlinMiniAppCoreTests/cancelledNativeActionDoesNotStartOrAcceptALateSuccess()",
+      "-only-testing:HanlinMiniAppCoreTests/nativeActionIgnoresDuplicateCallbacksAndLateCancellation()",
+      "-only-testing:HanlinMiniAppCoreTests/waitingNativeActionResolvesOnCancellation()",
+      "-only-testing:HanlinScriptExtensionsTests/HanlinWidgetLastSuccessfulRenderTests",
+      "-only-testing:HanlinScriptExtensionsTests/HanlinOriginalScriptWidgetImageTests",
+      "-only-testing:HanlinScriptExtensionsTests/HanlinLiveActivityOperationQueueTests",
+      "-only-testing:HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests",
+      "-only-testing:HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/preparedSystemEntrypointsCompileBothOriginalPanels()",
+      "-only-testing:HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/systemPresentationsRequireTheirMatchingNativeSource()",
+      "-only-testing:HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/preparedSystemEntrypointsRequireThePreparedForegroundBundle()",
+      "-only-testing:HanlinScriptCompilerTests/HanlinScriptAnalyzerTests/systemActionMetadataMustMatchThePreparedHandler()",
+      "-only-testing:HanlinPlatformContractsTests/manifestSurfaceSchemaMatchesRuntimeContracts()",
+      "-only-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/actionAndPublicationPreserveUnrelatedCollections()",
+      "-only-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/actualHistoricalV1EncoderAndDowngradeReader()",
+      "-only-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/interruptedShadowPublicationRestoresExactCommittedRevision()",
+      "-only-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/corruptCommittedV2NeverFallsBackToGoodV1()",
+      "-only-testing:HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/testPass7HistoricalV1StoreEnvelopeCompatibility(timestamp:)",
+      "-only-testing:HanlinScriptExtensionsTests/HanlinWidgetHostActionTests/optionalPresentationKeepsRealHandlerButPanelOnlyCannotQueue()"
+    ],
+    "selectorAdmission": "These are exact source-derived Swift Testing identities (including parentheses/argument labels) and complete-suite selectors. The owned original Xcode run must enumerate/resolve them and reconcile every expected method and parameter case in its xcresult; no zero-test, omitted, failed, skipped or cancelled scope earns acceptance.",
+    "counting": "Count 32 additive function definitions and 52 invocations separately; internal Swift for-loops do not add native test cases. Do not double count parameterized parent nodes and their leaves."
+  },
+  "route": {
+    "workingDirectory": "Packages/HanlinPlatform",
+    "scheme": "HanlinPlatform-Package",
+    "schemeAuthority": ".github/workflows/build-ios26-unsigned-ipa.yml: generated package scheme discovery",
+    "configuration": "Debug",
+    "sdk": "iphonesimulator",
+    "destination": "platform=iOS Simulator,id=233DB080-C913-4EE6-BF3D-99659F5CD475",
+    "buildSettings": [
+      "CODE_SIGNING_ALLOWED=NO",
+      "SWIFT_STRICT_CONCURRENCY=complete"
+    ],
+    "execution": "Use original xcodebuild test on the package scheme, or build-for-testing followed by test-without-building using its same current-source original package xctestrun. Separate owner-reserved DerivedData and result bundle; no replacement Package.swift, copied test harness or new workflow.",
+    "existingWorkflowBoundary": "The existing Phase1 generic iOS Simulator/device steps invoke build, not test. swift test elsewhere runs the host platform; neither is proof of these iOS invocations."
+  },
+  "fixtures": {
+    "additive52": "Tests create their own temporary input/store/image data and use original package resources and engines; no second app, App Group signing, external server or replacement fixture is needed.",
+    "compatibility7": [
+      {
+        "source": "Fixtures/Widgets/Hanlin-Expo-Widget-Counter.hanlinExpo",
+        "sha256": "07bc97e06a1c4b638272dda7eeeb132e2b91499d5546cccfe7fbfd5bfc4cae0e",
+        "usedBy": "actionAndPublicationPreserveUnrelatedCollections",
+        "requirement": "Materialize this exact tracked original archive under the original checkout. Its existing fixtureURL resolves from the compiled #filePath; keep that source/fixture path available during simulator execution."
+      },
+      {
+        "source": "Packages/HanlinPlatform/Tests/Fixtures/LegacyWidgetStore",
+        "requirement": "Existing original package target HanlinLegacyWidgetStoreFixture compiles the historical encoder; retain its declared source files and package dependency."
+      }
+    ],
+    "imagePlatform": "On iOS the original image suite uses UIKit and SwiftUI. macOS AppKit or portable helper results do not establish those iOS render cases."
+  },
+  "separateExistingAppGate": {
+    "selector": "AI_HLYTests/HanlinNativePresentationTests",
+    "methods": [
+      "testNativeSnippetHasIndependentDurableSessionsWithoutWidgetInstances",
+      "testTranslationUsesOriginalAsyncAPIAndReturnsNativeFinishEffect",
+      "testOriginalDynamicIslandCapturesAllSevenNativeRegionsAndFunctionComponents",
+      "testNativePresentationRejectsRemovedGenerationAndDifferentProductStore",
+      "testExpoLayoutEntryUsesItsDeclaredFormatRegardlessOfFileExtension"
+    ],
+    "definitions": 5,
+    "expectedInvocations": 5,
+    "ownerRoute": "Original run_paired_acceptance.py miniapp_authoring / miniapp_complete includes the complete class. Keep this gate and its exact source requirements; do not count the five methods as package59 or schedule a duplicate if that paired phase executes.",
+    "activity": "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests remains a separate original ActivityKit/renderer gate (3 methods). The package ActivityQueue3 cannot substitute for actual ActivityKit."
+  },
+  "coverageLimit": "The existing original compatibility tests protect old behavior. Source inspection alone does not demonstrate that every newly added nativePresentations collection survives every historical writer transition; no additional unexecuted scenario is labeled covered.",
+  "sourceSHA256": {
+    ".github/workflows/build-ios26-unsigned-ipa.yml": "d82289d5fc545302ad4ff45d447247b1c6ae82dd96e1b6dc4915d537fbf269ac",
+    "AI_HLYTests/HanlinNativePresentationTests.swift": "200e2c5b9e02b38b2bebbdb91e222893d4622ee3fcaf06186a09c6eda33be182",
+    "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift": "ac03a18a83324a72c9e1a3044640232a5f2e78192617c220100e5575ddbbe9aa",
+    "Fixtures/Widgets/Hanlin-Expo-Widget-Counter.hanlinExpo": "07bc97e06a1c4b638272dda7eeeb132e2b91499d5546cccfe7fbfd5bfc4cae0e",
+    "Packages/HanlinPlatform/Package.swift": "78d7081d0e197c3e99746e5b3e476b41280fc5b32110035fab31a3e949cb4dab",
+    "Packages/HanlinPlatform/Tests/Fixtures/LegacyWidgetStore/HanlinScriptExtensionContracts.swift": "da5f1877fc9ce1a1f5b49e67429935c2514bb6b00e977302679107bc0413c28e",
+    "Packages/HanlinPlatform/Tests/Fixtures/LegacyWidgetStore/HanlinScriptExtensionStore.swift": "c44d53ad45e2b0b42ad2eb488cf971c814ca8ffa9a8acf415a369504d9944ab4",
+    "Packages/HanlinPlatform/Tests/Fixtures/LegacyWidgetStore/PROVENANCE.txt": "f25ad5faf038b5e38d4530e1c1d3d6dd1449fdf0be3b9a4061a1a1ec1d981487",
+    "Packages/HanlinPlatform/Tests/HanlinMiniAppCoreTests/HanlinMiniAppActionCompletionTests.swift": "9d38b90083c8d352f166a2f9a910e7047ffa8f9d55097df9557eaa83d8c3c931",
+    "Packages/HanlinPlatform/Tests/HanlinPlatformContractsTests/HanlinShortcutValueCodecTests.swift": "6659534680b3404010eefa45146a07aa3ae1cdf5d53273bfd3f756a2be5c2055",
+    "Packages/HanlinPlatform/Tests/HanlinPlatformContractsTests/ManifestSurfaceSchemaTests.swift": "2493e2df628c8cf4382df8e89e9775182807ad030bf2bfa92e7f02ac6d707d46",
+    "Packages/HanlinPlatform/Tests/HanlinScriptCompilerTests/HanlinScriptAnalyzerTests.swift": "686d302cc7a5cb3c365f884cadb4f41cec4ca7769ce9d089a55e4d5d3014ba58",
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift": "f79bb40cbfff82eb8631275fd70f99e2f527c5ee497b4cbb168602b6fbf81658",
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests.swift": "6100a9d5412b22cf5542abcd1872e56f5ac6d23e996380947e896d77a97b3d91",
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinLiveActivityOperationQueueTests.swift": "ef98466a38c9ac8798caa755309b8cfd1027dec2ee8a991ab3399d87f3923dce",
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinOriginalScriptWidgetImageTests.swift": "2f956189f3ee14b7dab4991ac9feb9a9e0b27e21fbf8ecf6fc9cb450ce241a1b",
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinWidgetHostActionTests.swift": "da939924b4de4bfab3a34a17e97d271cc355c641c48c69b0b5816a3395ce8ff6",
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinWidgetLastSuccessfulRenderTests.swift": "7b4298ae25d22f5aa400090dec9b06fc332472fc9bb9a3c0492b701125e6422e",
+    "Scripts/ProductSplit/run_paired_acceptance.py": "d1cc722f9fcbd712377df67afd4f9f85e353a73644cc843bd24d275391495cab"
+  },
+  "primaryReference": "https://developer.apple.com/documentation/xcode/running-tests-and-interpreting-results"
+}
