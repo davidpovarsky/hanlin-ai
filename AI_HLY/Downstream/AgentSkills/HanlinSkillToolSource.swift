@@ -15,7 +15,7 @@ public struct HanlinSkillToolReference: Identifiable, Sendable {
 
 @MainActor
 enum HanlinSkillToolSource {
-    static var provider: () -> [HanlinSkillToolReference] = productionTools
+    static var provider: @MainActor () -> [HanlinSkillToolReference] = productionTools
 
     private static func productionTools() -> [HanlinSkillToolReference] {
 #if HANLIN_ASSISTANT_CAPABILITIES_SDK
