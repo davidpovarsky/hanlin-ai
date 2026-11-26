@@ -1,0 +1,18 @@
+{
+  "schemaVersion": 1,
+  "reviewedChange": "a8caed1554c14ebc2369ac5c8cb302bf4e480466",
+  "verifiedMergedSource": "9819697c1792119a6a93b492d12abad7b3330c93",
+  "status": "INDEPENDENT_READ_ONLY_SOURCE_REVIEW_NO_BLOCKING_FINDING",
+  "contractSHA256": "169e270d596fa000ce9cb043fa55f765cda62fd6043df49eb3bad8e2e160e6e3",
+  "fileHashesVerified": 19,
+  "identifierOwnersVerified": 7,
+  "delegationsVerified": 3,
+  "findings": [
+    "Expected contract is frozen by a literal SHA before decoding; expected file hashes are not regenerated from files under test.",
+    "All nineteen normalized file lengths/hashes match the actual merged source; exact identifier owners and three real delegations match.",
+    "Original ChatandFile size/hash assertions remain verbatim; the historical reference assertions remain in the test.",
+    "Contract-only changes are explicitly mapped to original app unit acceptance.",
+    "The baseline migration documents approved extraction/cache lineage and does not claim a native behavior pass."
+  ],
+  "boundary": "Source-only independent review; neither Swift Testing execution nor full native Chat/UI acceptance was run by this lane."
+}
