@@ -434,8 +434,9 @@ struct ListView: View {
             chatRecordsSection
         }
         .listStyle(.sidebar)
+        .scrollContentBackground(.hidden)
         .background {
-            Color(uiColor: .secondarySystemGroupedBackground).ignoresSafeArea(.container)
+            Color.hanlinHLSidebarBackground.ignoresSafeArea(.container)
         }
         .searchable(text: $searchText, prompt: Text("搜索聊天与消息内容", bundle: HanlinLocalization.bundle))
         .onChange(of: searchText) {
@@ -460,8 +461,9 @@ struct ListView: View {
             chatRecordsSection
         }
         .listStyle(.sidebar)
+        .scrollContentBackground(.hidden)
         .background {
-            Color(uiColor: .secondarySystemGroupedBackground).ignoresSafeArea(.container)
+            Color.hanlinHLSidebarBackground.ignoresSafeArea(.container)
         }
         .searchable(text: $searchText, prompt: Text("搜索聊天与消息内容", bundle: HanlinLocalization.bundle))
         .onChange(of: searchText) {

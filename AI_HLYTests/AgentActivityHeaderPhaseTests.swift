@@ -71,11 +71,11 @@ struct AgentActivityHeaderPhaseTests {
             isCurrentMessage: true, hasActivityHeader: false, hasAnswerText: true))
     }
 
-    @Test func activeRunGapsRemainLiveWithoutInventingAnAnimatedLeaf() {
+    @Test func activeRunGapsKeepTheRootWithoutInventingAnAnimatedLeaf() {
         let phase = AgentActivityHeaderPhase.resolve(isRunActive: true, hasPendingApproval: false)
         #expect(phase == .working)
         #expect(AgentActivityShimmerOwner.resolve(isWorking: phase.showsShimmer,
-            isHierarchyExpanded: true, activePaths: []).isEmpty)
+            isHierarchyExpanded: true, activePaths: []) == [.root])
     }
 
     @Test func longDisplayableReasoningSurvivesStreamingCompletionAndColdRead() throws {
@@ -174,18 +174,24 @@ struct AgentActivityHeaderPhaseTests {
         #expect(!HanlinActivityDisclosureState(runID: UUID(), phase: .finished).isExpanded)
     }
 
-    @Test func shimmerMovesBetweenLeafAndNearestVisibleAncestor() {
+    @Test func thinkingRootRemainsVisibleBesideOnlyActualToolMotion() {
         typealias Owner = AgentActivityShimmerOwner
         let leaf = Owner.Path(activityID: "search", roundID: "round", isRoundExpanded: true)
         let closed = Owner.Path(activityID: "search", roundID: "round", isRoundExpanded: false)
         #expect(Owner.resolve(isWorking: true, isHierarchyExpanded: true,
-            activePaths: [leaf]) == [.activity("search")])
+            activePaths: [leaf]) == [.root, .activity("search")])
         #expect(Owner.resolve(isWorking: true, isHierarchyExpanded: true,
-            activePaths: [closed]) == [.round("round")])
+            activePaths: [closed]) == [.root, .round("round")])
         #expect(Owner.resolve(isWorking: true, isHierarchyExpanded: false,
             activePaths: [leaf]) == [.root])
         #expect(Owner.resolve(isWorking: false, isHierarchyExpanded: true,
             activePaths: [leaf]).isEmpty)
+        #expect(Owner.resolve(isWorking: true, isHierarchyExpanded: true,
+            activePaths: []) == [.root], "Thinking stays above reasoning text without a duplicate leaf")
+        #expect(Owner.resolve(isWorking: true, isHierarchyExpanded: false,
+            activePaths: []) == [.root], "The pre-output root remains visible when there are no details")
+        #expect(Owner.resolve(isWorking: false, isHierarchyExpanded: false,
+            activePaths: []).isEmpty, "History and approval wait must not animate")
     }
 
     @Test func internalPreparationDoesNotCreateToolActivityOrRewriteHistory() {

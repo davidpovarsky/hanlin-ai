@@ -1,0 +1,8 @@
+{
+  "status": "EXECUTED_PASS",
+  "returncode": 0,
+  "duration_seconds": 13.441,
+  "toolchain": "Swift version 6.4.3 (swift-6.4.3-RELEASE)\nTarget: aarch64-unknown-linux-gnu\n",
+  "log": "/mnt/development/agent-scratch/hanlin-post149101-activity-20261126/portable-checks.log",
+  "native_validation": "NOT_RUN"
+}

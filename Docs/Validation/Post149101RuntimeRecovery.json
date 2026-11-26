@@ -1,0 +1,71 @@
+{
+  "scope": "POST-149101 transient Node recovery and composer runtime management removal",
+  "baseSHA": "aa7b6fa862d54f2a0054e0dd6ffb20fe20efe702",
+  "recordedAt": "2026-11-26T10:43:45.279263+00:00",
+  "sourceSHA256": {
+    "AI_HLY/Downstream/ChatInput/HanlinComposerPopupCoordinator.swift": "9afe45277fbcd9e61c98f1e4a4147ee274af973b5872e34f4ecfc1479b025e0f",
+    "AI_HLY/Downstream/ChatInput/HanlinComposerPopupView.swift": "f2dca38ddbe6a785c7bbfd6a25a32bea08bfda645e6e484e0a95b00f297ed608",
+    "AI_HLY/Downstream/RuntimeCore/Node/NodeRuntimeService.swift": "31d775f1c87e2dabc4a23f5e8958709da3424623fb97643a151f9ce9ee17326f",
+    "AI_HLY/Downstream/RuntimeCore/UI/RuntimeCenterView.swift": "e592af7cce1692fee9e825ac51b4fc33d88bbf34aebe4806674d5067c0786807",
+    "AI_HLY/Views/Components/ChatViewBottom.swift": "972de0eb4633e782156789ab1a22a01e39dfc6eef7a06faa5dec8e796f78bb12",
+    "AI_HLYTests/RuntimeNativeInterruptionTests.swift": "30c356446aed26f7349c330d4706043c91158201685cdc960e183e3b809fe8c8",
+    "AI_HLYUITests/AgentRuntimeConversationUITests.swift": "339777d4954ef8f9b399d4beeb1e885a326ab17db1ce8842f869d7925d3efc3a",
+    "AI_HLYTests/NodeHostHealthRecoveryTests.swift": "c21fcb236e36c28d93aab8578f53f8b420ac14f9138d7a3c0df62a6870a1acbb"
+  },
+  "findings": [
+    "Authenticated idle command/job observations previously returned without clearing stale failed health state.",
+    "A health probe awaited across actor reentrancy could overwrite a newer successful authenticated response.",
+    "Technical runtime management routes are removed from the composer; advanced Settings and on-demand execution remain."
+  ],
+  "validation": [
+    {
+      "status": "EXECUTED_PASS",
+      "kind": "portable syntax",
+      "runner": "Oracle Linux aarch64 Swift 6.4.3",
+      "files": [
+        "AI_HLY/Downstream/ChatInput/HanlinComposerPopupCoordinator.swift",
+        "AI_HLY/Downstream/ChatInput/HanlinComposerPopupView.swift",
+        "AI_HLY/Downstream/RuntimeCore/Node/NodeRuntimeService.swift",
+        "AI_HLY/Downstream/RuntimeCore/UI/RuntimeCenterView.swift",
+        "AI_HLY/Views/Components/ChatViewBottom.swift",
+        "AI_HLYTests/RuntimeNativeInterruptionTests.swift",
+        "AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+        "AI_HLYTests/NodeHostHealthRecoveryTests.swift"
+      ],
+      "command": "swiftc -frontend -parse <file>",
+      "count": 8
+    },
+    {
+      "status": "EXECUTED_PASS",
+      "kind": "portable production reducer extraction",
+      "runner": "Oracle Linux aarch64 Swift 6.4.3 / Swift 6 mode",
+      "productionFragmentSHA256": "dbdaa760abccc6c512d8d00e0082a0f4cfd1c4108cc3866233492c2f08932b50",
+      "scenarios": [
+        "Idle failed host recovers to ready after successful observation",
+        "Active execution count survives recovery",
+        "Stale probe generation cannot overwrite a newer response",
+        "Confirmed process exit cannot be revived by a buffered response"
+      ],
+      "preconditions": 8,
+      "scopeLimit": "Extracted unchanged production types only. Does not prove Apple networking, native Node execution or SwiftUI behavior."
+    },
+    {
+      "status": "NOT_RUN",
+      "kind": "native test",
+      "tests": [
+        "AI_HLYTests/NodeHostHealthRecoveryTests",
+        "AI_HLYTests/RuntimeNativeInterruptionTests/actualNodeForegroundObservationKeepsTheHostAndDoesNotReplayAJob",
+        "AI_HLYUITests/AgentRuntimeConversationUITests/testUI09DirectToolsCatalogAndSkillsNavigation",
+        "AI_HLYUITests/AgentRuntimeConversationUITests/testCompactToolsManagementDestinationsPreserveDraft",
+        "AI_HLYUITests/AgentRuntimeConversationUITests/testWideToolsManagementDestinationsPreserveDraft"
+      ],
+      "reason": "Root integrator will run focused affected tests on the consolidated source with existing Mac runner."
+    }
+  ],
+  "reuse": [],
+  "behaviorLimits": [
+    "Actual native Node thread exit still requires app restart; a second in-process Node instance is unsupported.",
+    "Recovery never resubmits existing execution sources or commands; only observation and health GETs retry."
+  ],
+  "nativeObligations": "Validate actual foreground operation, same host/ID/output and submission-count=1; verify tools drawer and Settings runtime navigation on iPhone/iPad."
+}

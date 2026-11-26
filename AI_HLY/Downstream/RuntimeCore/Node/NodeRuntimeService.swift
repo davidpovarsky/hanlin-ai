@@ -86,6 +86,28 @@ enum NodeHostHealthFailure: String, Sendable {
     case protocolFailure
 }
 
+/// Authenticated responses from the command/job observer are also evidence that
+/// the same process-lifetime host is healthy. A late probe failure must not
+/// overwrite a newer successful observation made while that probe was suspended.
+struct NodeHostHealthObservation: Sendable {
+    private(set) var generation: UInt64 = 0
+
+    @discardableResult
+    mutating func receivedResponse(snapshot: inout RuntimeSnapshot, diagnostic: String) -> Bool {
+        guard snapshot.state != .appRestartRequired else { return false }
+        generation &+= 1
+        snapshot.state = snapshot.activeExecutionCount > 0 ? .executing : .ready
+        snapshot.lastErrorCode = nil
+        snapshot.healthCategory = nil
+        snapshot.lastDiagnostic = diagnostic
+        return true
+    }
+
+    func supersedesProbe(startedAt generation: UInt64) -> Bool {
+        self.generation != generation
+    }
+}
+
 struct RuntimeLifecycleContext: Encodable, Sendable {
     let packageName: String
     let packageVersion: String
@@ -116,6 +138,7 @@ actor NodeRuntimeService {
     private var nativeLaunchSucceeded = false
     private var launchTask: Task<RuntimeHostConnection, Error>?
     private var verificationTask: Task<RuntimeHostConnection, Error>?
+    private var healthObservation = NodeHostHealthObservation()
 
     init(fileLayout: RuntimeFileLayout = .default, environment: RuntimeEnvironmentStore? = nil, python: PythonRuntimeService? = nil, shell: ShellRuntimeService? = nil) {
         self.fileLayout = fileLayout
@@ -351,12 +374,20 @@ actor NodeRuntimeService {
         var delay = 25
         while true {
             try Task.checkCancellation()
-            do { return try await host.decode(type, path: path) }
+            let observationGeneration = healthObservation.generation
+            do {
+                let value = try await host.decode(type, path: path)
+                try recordHostResponse(host, diagnostic: "Node host observation reconnected; existing jobs and their output were retained.")
+                return value
+            }
             catch let error as URLError {
                 guard [.timedOut, .networkConnectionLost, .cannotConnectToHost, .notConnectedToInternet].contains(error.code),
                       !NodeRuntimeBridge.didExit else { throw error }
-                snapshotValue.healthCategory = NodeHostHealthFailure.transient.rawValue
-                snapshotValue.lastDiagnostic = "Reconnecting job observation; existing source and command side effects are retained without replay."
+                if !healthObservation.supersedesProbe(startedAt: observationGeneration) {
+                    snapshotValue.healthCategory = NodeHostHealthFailure.transient.rawValue
+                    snapshotValue.lastDiagnostic = "Reconnecting job observation; existing source and command side effects are retained without replay."
+                    notifySnapshotChanged()
+                }
                 // Observation may reconnect; source and command side effects are
                 // never resubmitted. Keep the command owner alive meanwhile.
                 try await Task.sleep(for: .milliseconds(delay))
@@ -747,13 +778,10 @@ actor NodeRuntimeService {
                     try? FileManager.default.removeItem(at: context.readyURL)
                     connection = host
                     startCommandPump(host)
-                    snapshotValue.state = .ready
                     snapshotValue.version = ready.nodeVersion
                     snapshotValue.source = "heylogin/nodejs-mobile"
                     snapshotValue.lastHealthCheck = .now
-                    snapshotValue.lastErrorCode = nil
-                    snapshotValue.healthCategory = nil
-                    snapshotValue.lastDiagnostic = "Embedded Node host connected and passed its health check."
+                    try recordHostResponse(host, diagnostic: "Embedded Node host connected and passed its health check.")
                     return host
                 } catch is CancellationError {
                     throw CancellationError()
@@ -772,6 +800,7 @@ actor NodeRuntimeService {
         snapshotValue.healthCategory = NodeHostHealthFailure.transient.rawValue
         snapshotValue.lastErrorCode = "node_host_not_ready"
         snapshotValue.lastDiagnostic = "Node was launched but its local host is not yet reachable; reconnection remains possible."
+        notifySnapshotChanged()
         throw lastFailure ?? RuntimeCoreError.runtimeFailure("Embedded Node host did not become ready before the bounded deadline.")
     }
 
@@ -782,6 +811,27 @@ actor NodeRuntimeService {
         snapshotValue.healthCategory = NodeHostHealthFailure.unreachable.rawValue
         snapshotValue.lastErrorCode = "node_process_exited"
         snapshotValue.lastDiagnostic = "The embedded Node thread returned; nodejs-mobile cannot start a second instance in this process."
+        notifySnapshotChanged()
+    }
+
+    private func recordHostResponse(_ host: RuntimeHostConnection, diagnostic: String) throws {
+        guard !NodeRuntimeBridge.didExit, snapshotValue.state != .appRestartRequired else {
+            markNodeExited()
+            throw RuntimeCoreError.appRestartRequired(.node)
+        }
+        let wasUnhealthy = snapshotValue.state != .ready && snapshotValue.state != .executing
+            || snapshotValue.lastErrorCode != nil || snapshotValue.healthCategory != nil
+        connection = host
+        // Preserve the last diagnostic during ordinary polling. Publish once on
+        // recovery rather than waking every UI observer for every idle GET.
+        let message = wasUnhealthy ? diagnostic : (snapshotValue.lastDiagnostic ?? diagnostic)
+        healthObservation.receivedResponse(snapshot: &snapshotValue, diagnostic: message)
+        if wasUnhealthy { notifySnapshotChanged() }
+    }
+
+    private func notifySnapshotChanged() {
+        NotificationCenter.default.post(name: RuntimeAvailabilityStore.didChangeNotification,
+                                        object: nil, userInfo: ["kind": RuntimeKind.node.rawValue])
     }
 
     private func verifyExistingConnection(
@@ -791,17 +841,14 @@ actor NodeRuntimeService {
         var lastFailure: Error?
         var category = NodeHostHealthFailure.transient
         for attempt in 1...3 {
+            let observationGeneration = healthObservation.generation
             do {
                 _ = try await existing.data(path: "/health", timeout: 3)
-                connection = existing
-                startCommandPump(existing)
-                snapshotValue.state = snapshotValue.activeExecutionCount > 0 ? .executing : .ready
-                snapshotValue.lastHealthCheck = .now
-                snapshotValue.lastErrorCode = nil
-                snapshotValue.healthCategory = nil
-                snapshotValue.lastDiagnostic = attempt == 1
+                try recordHostResponse(existing, diagnostic: attempt == 1
                     ? "Node host health check passed."
-                    : "Node host health check recovered on bounded retry \(attempt)."
+                    : "Node host health check recovered on bounded retry \(attempt).")
+                startCommandPump(existing)
+                snapshotValue.lastHealthCheck = .now
                 return existing
             } catch is CancellationError {
                 snapshotValue.healthCategory = NodeHostHealthFailure.cancelled.rawValue
@@ -812,8 +859,17 @@ actor NodeRuntimeService {
                 snapshotValue.lastDiagnostic = "Node host health check was cancelled; the existing connection was preserved."
                 throw CancellationError()
             } catch {
-                lastFailure = error
+                if NodeRuntimeBridge.didExit {
+                    markNodeExited()
+                    throw RuntimeCoreError.appRestartRequired(.node)
+                }
+                // A successful authenticated command/job GET during this probe
+                // proves the host recovered. Preserve that newer observation.
                 category = classifyHealthFailure(error)
+                if category == .transient, healthObservation.supersedesProbe(startedAt: observationGeneration) {
+                    return existing
+                }
+                lastFailure = error
                 snapshotValue.healthCategory = category.rawValue
                 snapshotValue.lastDiagnostic = "Node host health attempt \(attempt) failed (\(category.rawValue))."
                 if attempt < retryCount(for: category) {
@@ -835,14 +891,15 @@ actor NodeRuntimeService {
         snapshotValue.state = .failed
         snapshotValue.healthCategory = category.rawValue
         snapshotValue.lastErrorCode = "node_health_unreachable"
-        snapshotValue.lastDiagnostic = "The Node thread is still present, but its host did not answer. The next use will retry the connection."
+        snapshotValue.lastDiagnostic = "The Node thread is still present, but its host did not answer. Observation will reconnect automatically without rerunning commands."
+        notifySnapshotChanged()
         throw lastFailure ?? RuntimeCoreError.runtimeUnavailable(.node)
     }
 
     private func classifyHealthFailure(_ error: Error) -> NodeHostHealthFailure {
         if let urlError = error as? URLError {
             switch urlError.code {
-            case .timedOut, .networkConnectionLost, .cannotConnectToHost, .cannotFindHost:
+            case .timedOut, .networkConnectionLost, .cannotConnectToHost, .cannotFindHost, .notConnectedToInternet:
                 return .transient
             default:
                 return .unreachable

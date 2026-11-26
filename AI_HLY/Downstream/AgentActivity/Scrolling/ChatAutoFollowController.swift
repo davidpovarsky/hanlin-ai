@@ -4,4 +4,5 @@ import HanlinChatUI
 typealias ChatAutoFollowMode = HanlinChatUI.ChatAutoFollowMode
 typealias ChatAutoFollowState = HanlinChatUI.ChatAutoFollowState
 typealias ChatAutoFollowLayout = HanlinChatUI.ChatAutoFollowLayout
+typealias ChatAutoFollowPosition = HanlinChatUI.ChatAutoFollowPosition
 typealias ChatAutoFollowController = HanlinChatUI.ChatAutoFollowController

@@ -206,6 +206,32 @@ struct ChatScrollViewHandleTests {
         #expect(calls == 1)
     }
 
+    @Test func settledPositionReadsTheCurrentOffsetWithoutMutatingTheViewport() throws {
+        let conversationID = UUID()
+        let handle = ChatScrollViewHandle()
+        let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 800, height: 600))
+        let scrollView = UIScrollView(frame: window.bounds)
+        window.addSubview(scrollView)
+        scrollView.contentSize = CGSize(width: 800, height: 2_000)
+        scrollView.contentInset.bottom = 20
+        handle.activate(conversationID: conversationID)
+        handle.bind(scrollView, conversationID: conversationID)
+        let generation = handle.generation
+
+        scrollView.contentOffset.y = 600
+        let reading = try #require(handle.position(conversationID: conversationID))
+        #expect(reading.isNearBottom == false)
+        scrollView.contentOffset.y = 1_420
+        let bottom = try #require(handle.position(conversationID: conversationID))
+        #expect(bottom.isNearBottom == true)
+        #expect(handle.generation == generation)
+        #expect(scrollView.contentOffset.y == 1_420)
+        #expect(handle.position(conversationID: UUID()) == nil)
+
+        scrollView.removeFromSuperview()
+        #expect(handle.position(conversationID: conversationID) == nil)
+    }
+
     @Test func incomingBindingBeforeActivationDoesNotNeedAnotherBridgeCallback() throws {
         let previousConversation = UUID(), currentConversation = UUID()
         let handle = ChatScrollViewHandle()

@@ -1,0 +1,31 @@
+{
+  "base": "aa7b6fa862d54f2a0054e0dd6ffb20fe20efe702",
+  "task": "1220927011075841",
+  "status": "NEEDS_TEST",
+  "scope": "Portable production lifecycle, expanded/collapsed root ownership, real tool indicators, terminal/approval stop, manual disclosure persistence and motion preferences. SwiftUI/native preview and appearance are NOT_RUN here.",
+  "inputs": {
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityHeaderPhase.swift": "927de1e1a27618d73253b34cc3597e02d3ff41af60983c9182dd911760fcec79",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityVisibilityPolicy.swift": "a6f740e5b4f513eae994ef0e95f8f3c1ea4fa5c4c315a7817bac08eac50c31d6",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatMotionConfiguration.swift": "f69f4e098e0820eac6100f0536538b7496e55304e2226cc7b9cd7e71399dcb43",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift": "95abfc69467be6eb6ea07615e061eb411400336a8e18ff664a0a691b7d5e0880",
+    "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit/HanlinActivityDisclosureState.swift": "8876d867d6aed5771cd251cbaa2e6f9c5b4579218b26fa6cef19a1640d976b69",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Progress/ProgressSummarySanitizer.swift": "63f2388f52c5a9c7ee6996a5d5df8c3a34d4a4c3a336b39b99c0be299671c05b",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Diagnostics/AgentDiagnosticsRedactor.swift": "75f6d979a43af6b641d31685c353df0568816ba97bea8a98851c7c0e848c1dc3",
+    "Scripts/CI/AgentActivityHeaderChecks.swift": "a4a1d2e3592302ab6dc1d806dcbe4be25deafa2edd31ff9e8b60923c6a17412d"
+  },
+  "reuse": [],
+  "invalidated": [
+    "AgentActivityHeaderPhaseTests",
+    "AgentActivityHeaderChecks",
+    "testActivityAutoExpansionManualCollapseFinalCollapseAndColdReasoning"
+  ],
+  "new": [
+    "testUserBubbleLongPressKeepsNativeActionsAndOriginalMessage"
+  ],
+  "native_required": [
+    "Integrated iOS build",
+    "Activity lifecycle original app UI",
+    "Screen recording of actual user bubble context-menu lift",
+    "Light/dark and Hebrew/RTL visual inspection"
+  ]
+}

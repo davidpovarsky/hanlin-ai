@@ -1,0 +1,104 @@
+{
+  "time_utc": "2026-11-26T11:02:26.820628+00:00",
+  "base_commit": "827f764badba1ce51fbedba95ad597b52a44a22d",
+  "compiler": "Swift version 6.4.3 (swift-6.4.3-RELEASE)\nTarget: aarch64-unknown-linux-gnu",
+  "syntax_checks": [
+    {
+      "path": "AI_HLY/ChatView.swift",
+      "status": "EXECUTED_PASS",
+      "exit_code": 0,
+      "elapsed_seconds": 0.144,
+      "stdout": "",
+      "stderr": "",
+      "scope": "syntax-only; no typecheck/native execution"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinConversationMutation.swift",
+      "status": "EXECUTED_PASS",
+      "exit_code": 0,
+      "elapsed_seconds": 0.05,
+      "stdout": "",
+      "stderr": "",
+      "scope": "syntax-only; no typecheck/native execution"
+    },
+    {
+      "path": "AI_HLY/Downstream/SDK/HanlinConversationController.swift",
+      "status": "EXECUTED_PASS",
+      "exit_code": 0,
+      "elapsed_seconds": 0.053,
+      "stdout": "",
+      "stderr": "",
+      "scope": "syntax-only; no typecheck/native execution"
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/SystemOptimizer.swift",
+      "status": "EXECUTED_PASS",
+      "exit_code": 0,
+      "elapsed_seconds": 0.051,
+      "stdout": "",
+      "stderr": "",
+      "scope": "syntax-only; no typecheck/native execution"
+    },
+    {
+      "path": "AI_HLYTests/HanlinConversationMetadataTests.swift",
+      "status": "EXECUTED_PASS",
+      "exit_code": 0,
+      "elapsed_seconds": 0.05,
+      "stdout": "",
+      "stderr": "",
+      "scope": "syntax-only; no typecheck/native execution"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKProviderFactory.swift",
+      "status": "EXECUTED_PASS",
+      "exit_code": 0,
+      "elapsed_seconds": 0.05,
+      "stdout": "",
+      "stderr": "",
+      "scope": "syntax-only; no typecheck/native execution"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinConversationMetadataGenerator.swift",
+      "status": "EXECUTED_PASS",
+      "exit_code": 0,
+      "elapsed_seconds": 0.048,
+      "stdout": "",
+      "stderr": "",
+      "scope": "syntax-only; no typecheck/native execution"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/GeneratedConversationMetadataProviderTests.swift",
+      "status": "EXECUTED_PASS",
+      "exit_code": 0,
+      "elapsed_seconds": 0.05,
+      "stdout": "",
+      "stderr": "",
+      "scope": "syntax-only; no typecheck/native execution"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/ProviderRoutingTests.swift",
+      "status": "EXECUTED_PASS",
+      "exit_code": 0,
+      "elapsed_seconds": 0.049,
+      "stdout": "",
+      "stderr": "",
+      "scope": "syntax-only; no typecheck/native execution"
+    }
+  ],
+  "diff_check": "EXECUTED_PASS",
+  "native_unit_tests": "NOT_RUN; root consolidates Apple validation",
+  "shared_sdk_provider_tests": "NOT_RUN; root consolidates Apple validation",
+  "old_store_schema_upgrade": "NOT_RUN; root native 149101 upgrade validation required",
+  "unchanged_decoder_sha256": "0dda9c30798cc858919f9c1cce565352ba4ee0d8edf2626ec367ae73fd23cf2c",
+  "source_sha256": {
+    "AI_HLY/ChatView.swift": "725392bd62ea2d8dcce5a5ff61ea6443e4b7ef854e7136f50baa836cde40188b",
+    "AI_HLY/Downstream/ChatCore/HanlinConversationMutation.swift": "c9701c803393137e41d06626e8c82f99d3592fb3ae9d7fa847e4edbdb73ee845",
+    "AI_HLY/Downstream/SDK/HanlinConversationController.swift": "d48f3f0ad7e6af34d817501db2249d77592d4dab82f65b7e525c63e77b6fe9a9",
+    "AI_HLY/Services/ChatServices/SystemOptimizer.swift": "d8b808e86a50b75235e4b4b8a398023a09608bebaf3988132290a86c3880dcb1",
+    "AI_HLYTests/HanlinConversationMetadataTests.swift": "7f5955aa66477b64264251e8226f56efe274ff75a805089eba79a2b53cefcb11",
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKProviderFactory.swift": "2f5e262590f1cb3ff574c8c7e972f9fcf583caf7ab00946036171c503c0a7f4d",
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinConversationMetadataGenerator.swift": "ecd96e7f2486acddfe092044e475d969ae3935449186e46d96b943230c834f64",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/GeneratedConversationMetadataProviderTests.swift": "dec260ab777e8ea6b4f5215d16cbe6f2c0e9f0ec2d8df420e0a276994963657d",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/ProviderConformance/ProviderRoutingTests.swift": "a677ef4bd67158e477e5dfa744809710d62221ef481493dd8a49bf400fb38de3"
+  }
+}

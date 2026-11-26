@@ -1,0 +1,13 @@
+Building for debugging...
+[Pre-planning 1 / 94]
+[Planning deferred tasks]
+warning: no rule to process file '/mnt/development/agent-scratch/hanlin-post149101-activity-20261126/portable/Localization/Localizable.xcstrings' of type 'text.json.xcstrings' for architecture 'aarch64'
+[24 / 38] HanlinLocalization
+[30 / 42] HanlinLocalization
+[39 / 46] ActivityPolicyValidation-product
+[39 / 47] ActivityPolicyValidation-product
+[43 / 47] HanlinLocalization
+[44 / 47] ActivityPolicyValidation-product
+[48 / 48] ActivityPolicyValidation-product
+Build complete! (10.39 secs)
+PASS: 232 production activity lifetime, disclosure, summary and motion-policy checks

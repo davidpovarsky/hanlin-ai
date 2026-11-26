@@ -178,6 +178,35 @@ private struct RuntimeCard<Destination: View>: View {
     let smoke: () -> Void
     let destination: () -> Destination
 
+    private var isReconnecting: Bool {
+        snapshot.lastErrorCode == "node_health_unreachable"
+            && snapshot.healthCategory == NodeHostHealthFailure.transient.rawValue
+    }
+
+    private var recoveryMessage: String? {
+        switch snapshot.lastErrorCode {
+        case "node_health_unreachable":
+            "The connection was interrupted. It reconnects automatically without running your commands again."
+        case "node_host_not_ready":
+            "The runtime is still starting. It will reconnect when you use it again."
+        case "node_process_exited":
+            "The runtime stopped. Reopen the app to start it again; previous commands will not be run again."
+        default: nil
+        }
+    }
+
+    @ViewBuilder
+    private var runtimeDiagnostic: some View {
+        if let error = snapshot.lastErrorCode {
+            Text(error).font(HanlinTypography.caption).foregroundStyle(.red).textSelection(.enabled)
+        }
+        if let diagnostic = snapshot.lastDiagnostic {
+            Text(diagnostic).font(HanlinTypography.caption)
+                .foregroundStyle(snapshot.state == .failed || snapshot.state == .appRestartRequired ? .red : .secondary)
+                .textSelection(.enabled)
+        }
+    }
+
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
@@ -185,9 +214,9 @@ private struct RuntimeCard<Destination: View>: View {
                     .font(HanlinTypography.headline)
                     .accessibilityIdentifier("hanlin-runtime-card-\(kind.rawValue)")
                 Spacer()
-                Text(RuntimeL10n.string(snapshot.state.localizationKey))
+                Text(RuntimeL10n.string(isReconnecting ? "Reconnecting" : snapshot.state.localizationKey))
                     .font(HanlinTypography.caption)
-                    .foregroundStyle(snapshot.state.tint)
+                    .foregroundStyle(isReconnecting ? .orange : snapshot.state.tint)
                     .accessibilityIdentifier("hanlin-runtime-state-\(kind.rawValue)")
             }
             if snapshot.state == .stopped {
@@ -196,9 +225,16 @@ private struct RuntimeCard<Destination: View>: View {
             if let version = snapshot.version { LabeledContent(RuntimeL10n.string("Version"), value: version) }
             if let source = snapshot.source { LabeledContent(RuntimeL10n.string("Source"), value: source) }
             if let date = snapshot.lastHealthCheck { LabeledContent(RuntimeL10n.string("Last health check"), value: date.formatted(date: .abbreviated, time: .standard)) }
-            if let error = snapshot.lastErrorCode { Text(error).font(HanlinTypography.caption).foregroundStyle(.red).textSelection(.enabled) }
-            if let diagnostic = snapshot.lastDiagnostic {
-                Text(diagnostic).font(HanlinTypography.caption).foregroundStyle(snapshot.state == .failed || snapshot.state == .appRestartRequired ? .red : .secondary).textSelection(.enabled)
+            if let recoveryMessage {
+                Text(RuntimeL10n.string(recoveryMessage))
+                    .font(HanlinTypography.caption)
+                    .foregroundStyle(.secondary)
+                DisclosureGroup(RuntimeL10n.string("Technical details")) {
+                    runtimeDiagnostic
+                }
+                .font(HanlinTypography.caption)
+            } else {
+                runtimeDiagnostic
             }
             if let missingCommands = snapshot.missingCommands, !missingCommands.isEmpty {
                 Text(missingCommands.joined(separator: ", ")).font(HanlinTypography.caption2.monospaced()).foregroundStyle(.red).textSelection(.enabled)

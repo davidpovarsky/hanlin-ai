@@ -166,7 +166,7 @@ public final class HanlinChatStreamParser: @unchecked Sendable {
         if type == "message_delta",
            let delta = json["delta"] as? [String: Any],
            let stopReason = delta["stop_reason"] as? String {
-            event.finishReason = stopReason == "tool_use" ? "tool_calls" : anthropicFinishReason(stopReason)
+            event.finishReason = stopReason == "tool_use" ? "tool_calls" : Self.anthropicFinishReason(stopReason)
         }
 
         if type == "message_start",
@@ -190,7 +190,7 @@ public final class HanlinChatStreamParser: @unchecked Sendable {
         if let candidates = json["candidates"] as? [[String: Any]],
            let first = candidates.first {
             if let finishReason = first["finishReason"] as? String {
-                event.finishReason = geminiFinishReason(finishReason)
+                event.finishReason = Self.geminiFinishReason(finishReason)
                 if finishReason == "STOP" {
                     event.isDone = true
                 }
@@ -253,7 +253,7 @@ public final class HanlinChatStreamParser: @unchecked Sendable {
         )
     }
 
-    private func anthropicFinishReason(_ reason: String) -> String {
+    static func anthropicFinishReason(_ reason: String) -> String {
         switch reason {
         case "end_turn", "stop_sequence": "stop"
         case "max_tokens": "length"
@@ -261,7 +261,7 @@ public final class HanlinChatStreamParser: @unchecked Sendable {
         }
     }
 
-    private func geminiFinishReason(_ reason: String) -> String {
+    static func geminiFinishReason(_ reason: String) -> String {
         switch reason {
         case "STOP": "stop"
         case "MAX_TOKENS": "length"

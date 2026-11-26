@@ -45,6 +45,46 @@ print('main-finished', flush=True)
     }
 
     @Test(.timeLimit(.minutes(2)))
+    func actualNodeForegroundObservationKeepsTheHostAndDoesNotReplayAJob() async throws {
+        let core = AppRuntimeCore.shared
+        let workspace = try RuntimeFileLayout.default.workspace(client: .tools, identifier: "foreground-node-\(UUID().uuidString)")
+        defer { try? FileManager.default.removeItem(at: workspace) }
+        let originalHost = try await core.node.currentConnection()
+        let marker = workspace.appending(path: "foreground-returned")
+        let id = UUID()
+        let reporter: RuntimeJobProgress.Reporter = { snapshot in
+            guard snapshot.executionID == id, snapshot.stdoutBytes > 0, !snapshot.state.isTerminal else { return }
+            // Exercise the production foreground path while the same native job
+            // remains live. Its source is submitted once, before this callback.
+            await core.handleForegroundIfLaunched()
+            do {
+                let currentHost = try await core.node.currentConnection()
+                #expect(currentHost.baseURL == originalHost.baseURL)
+                try Data("observed".utf8).write(to: marker, options: .atomic)
+            } catch {
+                Issue.record("Foreground host observation failed: \(error)")
+            }
+        }
+        let result = try await RuntimeJobProgress.$reporter.withValue(reporter) {
+            try await core.node.executeJavaScript(RuntimeExecutionRequest(id: id, source: #"""
+                import {existsSync, readFileSync, writeFileSync} from 'node:fs';
+                const count = existsSync('submission-count') ? Number(readFileSync('submission-count', 'utf8')) : 0;
+                writeFileSync('submission-count', String(count + 1));
+                console.log('waiting-for-foreground');
+                while (!existsSync('foreground-returned')) await new Promise(resolve => setTimeout(resolve, 10));
+                console.log('same-job-completed');
+                """#, workspace: workspace, limits: .init(timeout: .seconds(20))), moduleKind: "esm")
+        }
+        #expect(result.exitCode == 0 && !result.wasCancelled && !result.didTimeOut)
+        #expect(result.stdout.contains("same-job-completed"))
+        #expect(try String(contentsOf: workspace.appending(path: "submission-count"), encoding: .utf8) == "1")
+        let journal = try await core.node.existingExecution(id: id)
+        #expect(journal?.state == .completed && journal?.executionID == id)
+        let recovered = await core.node.snapshot()
+        #expect(recovered.state == .ready && recovered.lastErrorCode == nil)
+    }
+
+    @Test(.timeLimit(.minutes(2)))
     func actualNodeInterruptionRetainsAuthenticatedJournalAndOutput() async throws {
         try await verify(kind: .node)
     }

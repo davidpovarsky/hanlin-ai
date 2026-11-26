@@ -1,0 +1,35 @@
+{
+  "time_utc": "2026-11-26T11:07:19.414877+00:00",
+  "base_commit": "b2d34a1b9ef7d59eb7377ce4216fbeb688d9789e",
+  "scope": "syntax-only plus source API review; native execution remains NOT_RUN",
+  "syntax_checks": [
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatStreamParser.swift",
+      "exit_code": 0,
+      "elapsed_seconds": 0.069,
+      "stderr": "",
+      "sha256": "85d2799987e5dcaa4dc781400646ab17d775b8ec944879a302c29771d0cd0b47"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinConversationMetadataGenerator.swift",
+      "exit_code": 0,
+      "elapsed_seconds": 0.047,
+      "stderr": "",
+      "sha256": "8818d90c65d9392f68e12e78f3d96f59ba434d4bdc4007dd16b78e9adf9316ec"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/GeneratedConversationMetadataProviderTests.swift",
+      "exit_code": 0,
+      "elapsed_seconds": 0.047,
+      "stderr": "",
+      "sha256": "c467230eca459eebe3561eba599936d2194310d9093710101ad74069dbeb2355"
+    }
+  ],
+  "diff_check": "EXECUTED_PASS",
+  "native_provider_cases": "NOT_RUN; root will run exactly 8 cases",
+  "pinned_dependency": "07431abccbfb151ca2dab67bca6cf86fcb2bd3b8",
+  "reviewed_dependency_sources": [
+    "https://raw.githubusercontent.com/davidpovarsky/swift-ai-sdk/07431abccbfb151ca2dab67bca6cf86fcb2bd3b8/Sources/OpenAIProvider/OpenAIResponsesFinishReason.swift",
+    "https://raw.githubusercontent.com/davidpovarsky/swift-ai-sdk/07431abccbfb151ca2dab67bca6cf86fcb2bd3b8/Sources/OpenAIProvider/OpenAIResponsesModel.swift"
+  ]
+}

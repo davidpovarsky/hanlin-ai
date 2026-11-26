@@ -1,6 +1,121 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "The runtime stopped. Reopen the app to start it again; previous commands will not be run again." : {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The runtime stopped. Reopen the app to start it again; previous commands will not be run again."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "המנוע נעצר. יש לפתוח מחדש את האפליקציה כדי להפעילו; הפקודות הקודמות לא יורצו שוב."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "运行时已停止。重新打开应用可再次启动；之前的命令不会再次运行。"
+          }
+        }
+      }
+    },
+    "The runtime is still starting. It will reconnect when you use it again." : {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The runtime is still starting. It will reconnect when you use it again."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "המנוע עדיין מופעל. החיבור יתחדש בשימוש הבא."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "运行时仍在启动。下次使用时将重新连接。"
+          }
+        }
+      }
+    },
+    "The connection was interrupted. It reconnects automatically without running your commands again." : {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The connection was interrupted. It reconnects automatically without running your commands again."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "החיבור נקטע. החיבור מתחדש אוטומטית, בלי להריץ שוב את הפקודות."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "连接已中断。系统会自动重新连接，不会再次运行你的命令。"
+          }
+        }
+      }
+    },
+    "Technical details" : {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Technical details"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פרטים טכניים"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "技术详情"
+          }
+        }
+      }
+    },
+    "Reconnecting" : {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reconnecting"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מתחבר מחדש"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正在重新连接"
+          }
+        }
+      }
+    },
     "Response stopped" : {
       "extractionState": "manual",
       "localizations": {
