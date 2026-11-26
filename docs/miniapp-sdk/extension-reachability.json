@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "8eb6e54d003c0be82ea511a214b81a93a5a25f51",
+  "sourceCommit": "13bfad937c9e61e0bea839fdf1f3b5b1e7652b69",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
   "uncommittedSourcePaths": [],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
@@ -44,11 +44,11 @@
     },
     {
       "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-      "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee"
+      "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33"
     },
     {
       "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "sha256": "9de7587fec3732ed052875c2ea6eb9a2cc73bb2422db83226451acf24d0fdaf4"
+      "sha256": "8d7f8e42c46a5f050e72da632bd82cb137d44f0200910ff9c9b016090c09a588"
     },
     {
       "path": "Fixtures/ExpoNativeAPIProbe/tsconfig.json",
@@ -60,11 +60,11 @@
     },
     {
       "path": "Generated/SwiftUIBridge/HanlinGeneratedViews.swift",
-      "sha256": "659364752ba7b69ef70d90f5aad061f391526cb8b6f135a47bf72f0f19b00e18"
+      "sha256": "554b58f429c99fb192ea91679ab5c9878d8c2e3a119332ffb30be947749248ed"
     },
     {
       "path": "Generated/SwiftUIBridge/bridge-manifest.ts",
-      "sha256": "a56c8a16334bfe76ebe6489fc1f018f25f28f7cadba6c1ef11a268e5336f3b37"
+      "sha256": "82ef4d88ee0b1b0ab25a375be6773f3681e69521dd28c58de14a37bb8edd62ed"
     },
     {
       "path": "Package.swift",
@@ -100,7 +100,7 @@
     },
     {
       "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedViews.swift",
-      "sha256": "659364752ba7b69ef70d90f5aad061f391526cb8b6f135a47bf72f0f19b00e18"
+      "sha256": "554b58f429c99fb192ea91679ab5c9878d8c2e3a119332ffb30be947749248ed"
     },
     {
       "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoBridgeMetadata.swift",
@@ -112,7 +112,7 @@
     },
     {
       "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoHostVersions.swift",
-      "sha256": "5c28d3e33ecd38d42ddf13e44ddaab9d277d8dfd9b2742bf6d14293675437a8c"
+      "sha256": "41a76f4f69b73551685d6581b8d36f589b510354b2ce3a3448a8732613e81f27"
     },
     {
       "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift",
@@ -124,11 +124,11 @@
     },
     {
       "path": "Packages/HanlinExpoUI/package.json",
-      "sha256": "18dbddebb3c641742ca5f83d0492cec1cbbc7bb1affbefe641477b7481110568"
+      "sha256": "a5650a228c827509c40eae3505670eff1ce5d9f3c6f082b73e3bc6f224e14b65"
     },
     {
       "path": "Packages/HanlinExpoUI/src/generated/bridge-manifest.ts",
-      "sha256": "a56c8a16334bfe76ebe6489fc1f018f25f28f7cadba6c1ef11a268e5336f3b37"
+      "sha256": "82ef4d88ee0b1b0ab25a375be6773f3681e69521dd28c58de14a37bb8edd62ed"
     },
     {
       "path": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
@@ -216,11 +216,11 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift",
-      "sha256": "8e99e562bacbe6354bc23caf6a1233930a1e0d61c3abe0444195dd36164f747d"
+      "sha256": "1e0c893a08f7cc214b3578682ecdaadde76c935b2c95c3b6b355bbe48997b2b6"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-      "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf"
+      "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinInstallContracts.swift",
@@ -233,6 +233,10 @@
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinPackageContracts.swift",
       "sha256": "226d7dbbd6ea1f5ec700fd1d957fbe29a2b96e4932afdc6e09388bce4589b751"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinPreparedAssistantToolDeclaration.swift",
+      "sha256": "7d19fdeb44909f29e7afce8d53b58e15e40a5b7c4be998e5d1c10924b2bd279a"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinWidgetProgram.swift",
@@ -248,7 +252,7 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-      "sha256": "7901c51ea32046e57ad49a41f7252b488941a2d6ede7bb0f0634e86fe8b634b2"
+      "sha256": "e23510cee3d2fd1d5d1150de11f5860f22f23ff979f8a15e12602078a281b5d9"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/HanlinOriginalScriptWidgetControls.swift",
@@ -284,7 +288,7 @@
     },
     {
       "path": "Scripts/Audit/miniapp-manifest-contracts.mjs",
-      "sha256": "b99c3bed792fe4b28560e963ac8e5a0b52a766c7711330b07308f2a354cf216f"
+      "sha256": "d0fae5c2d0348e0679214267162ca444fd11c4e12b2e582c89f8d03b5aae4f66"
     },
     {
       "path": "Scripts/Audit/miniapp-runtime-contract.mjs",
@@ -300,15 +304,15 @@
     },
     {
       "path": "Scripts/Expo/dependency-lock.json",
-      "sha256": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65"
+      "sha256": "c0f45be81e5e16a0877e967b273484cac25eb5de5c7679a5922f14aaf12e65ff"
     },
     {
       "path": "Scripts/Expo/package-lock.json",
-      "sha256": "b20d9bf2ff4850269f72f79ef4e5b1b274ab648226a0597f671fe59ebb5dcfce"
+      "sha256": "b4f10e5109d8f6c59a0a3f04d07f960b8377c2d90c1332b362821f66cec9f948"
     },
     {
       "path": "Scripts/Expo/package.json",
-      "sha256": "fe71727b4bb3a28f73238ed1381190ef6de3541af323efb1f443ed2a7c685563"
+      "sha256": "e3459dd3aca98733fb8cf671bf404cd8f971bc8fe356f3d5651bfab2c879e552"
     },
     {
       "path": "Scripts/Expo/prepare-types.mjs",
@@ -316,7 +320,7 @@
     },
     {
       "path": "Scripts/ExpoNativeAPI/dependency-lock.json",
-      "sha256": "08657d657c1f4efa36149075b632cfc75685fc1ca9af0397fc1168fe9253b768"
+      "sha256": "eeb81efba1009177fcea2282a4a6a30bcf1fd3ca72a9dc8db066982cf6663baf"
     },
     {
       "path": "Scripts/MiniApps/generate-scriptwidget-manifest.mjs",
@@ -376,7 +380,7 @@
     },
     {
       "path": "Tools/SwiftUIBridge/configuration.json",
-      "sha256": "a8711bcfc51ae85ee58cf8ebd5a5724c6a142994dcbe3d558e8644d9c48fda8a"
+      "sha256": "958202f128f4ee8cedd0736ec4d03f0df9b81db41728cf9b3cfb9315c2fda83b"
     },
     {
       "path": "Tools/SwiftUIBridge/expo-reviewed-capabilities.json",
@@ -726,19 +730,91 @@
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
       "line": 2103,
       "anchor": "private func processPendingResumeCommands()",
-      "sha256": "9de7587fec3732ed052875c2ea6eb9a2cc73bb2422db83226451acf24d0fdaf4"
+      "sha256": "8d7f8e42c46a5f050e72da632bd82cb137d44f0200910ff9c9b016090c09a588"
+    },
+    "assistantDeclaration": {
+      "file": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinPreparedAssistantToolDeclaration.swift",
+      "line": 6,
+      "anchor": "public struct HanlinPreparedAssistantToolDeclaration",
+      "sha256": "7d19fdeb44909f29e7afce8d53b58e15e40a5b7c4be998e5d1c10924b2bd279a"
+    },
+    "assistantProjection": {
+      "file": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+AssistantTools.swift",
+      "line": 46,
+      "anchor": "public func preparedAssistantTools()",
+      "sha256": "d0378488f65e16a3bce11e0cf43e181ee157bb779e7b988f5ae990f5cf2387e7"
+    },
+    "assistantAdapter": {
+      "file": "AI_HLY/Downstream/Scripting/HanlinScriptCanonicalAdapter.swift",
+      "line": 95,
+      "anchor": "struct HanlinPreparedAssistantToolAdapter",
+      "sha256": "8291a501294e9d60bc48df1eb0dfac72eb1feb37fad7a01384f3b6f83a71fc9f"
+    },
+    "assistantCanonicalSources": {
+      "file": "AI_HLY/Downstream/Scripting/HanlinScriptCanonicalAdapter.swift",
+      "line": 147,
+      "anchor": "func canonicalSources()",
+      "sha256": "8291a501294e9d60bc48df1eb0dfac72eb1feb37fad7a01384f3b6f83a71fc9f"
+    },
+    "assistantCatalog": {
+      "file": "AI_HLY/Downstream/MCP/ToolIntegration/AssistantToolBridge.swift",
+      "line": 246,
+      "anchor": ") + preparedCatalog.sources",
+      "sha256": "241c13e3f755aa1eb023460a1df4de355cb8548bbe463428987c88862c721964"
+    },
+    "assistantCatalogUnavailable": {
+      "file": "AI_HLY/Downstream/Scripting/HanlinScriptCanonicalAdapter.swift",
+      "line": 139,
+      "anchor": "NativeToolTraceLogger.shared.log(\"prepared_miniapp_tool_catalog_unavailable\"",
+      "sha256": "8291a501294e9d60bc48df1eb0dfac72eb1feb37fad7a01384f3b6f83a71fc9f"
+    },
+    "assistantProviderDispatch": {
+      "file": "AI_HLY/Downstream/MCP/ToolIntegration/AssistantToolBridge.swift",
+      "line": 393,
+      "anchor": "result = await preparedTools.execute(route: route, argumentsJSON: argumentsJSON)",
+      "sha256": "241c13e3f755aa1eb023460a1df4de355cb8548bbe463428987c88862c721964"
+    },
+    "assistantActualResult": {
+      "file": "AI_HLY/Downstream/Scripting/HanlinScriptCanonicalAdapter.swift",
+      "line": 172,
+      "anchor": "let value = try await dispatch(expected, HanlinValue(json: json))",
+      "sha256": "8291a501294e9d60bc48df1eb0dfac72eb1feb37fad7a01384f3b6f83a71fc9f"
+    },
+    "assistantForegroundDispatch": {
+      "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "line": 2182,
+      "anchor": "func executePreparedAssistantTool(",
+      "sha256": "8d7f8e42c46a5f050e72da632bd82cb137d44f0200910ff9c9b016090c09a588"
+    },
+    "assistantBrokerDispatch": {
+      "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "line": 2327,
+      "anchor": "let response = try await HanlinMiniAppHost.shared.requestBroker.request(",
+      "sha256": "8d7f8e42c46a5f050e72da632bd82cb137d44f0200910ff9c9b016090c09a588"
+    },
+    "assistantAuthoring": {
+      "file": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+      "line": 361,
+      "anchor": "function validatePreparedAssistantTools(input)",
+      "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33"
+    },
+    "assistantPublicTypes": {
+      "file": "Scripts/MiniApps/native-presentations.d.ts",
+      "line": 63,
+      "anchor": "export type PreparedAssistantToolAction",
+      "sha256": "8dbf2809da92847131fd9a9f391029830088325d11a7c4df7821cd1db0822fb1"
     },
     "headless": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
       "line": 1289,
       "anchor": "func executeHeadlessAction(",
-      "sha256": "9de7587fec3732ed052875c2ea6eb9a2cc73bb2422db83226451acf24d0fdaf4"
+      "sha256": "8d7f8e42c46a5f050e72da632bd82cb137d44f0200910ff9c9b016090c09a588"
     },
     "expoActionDispatch": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
       "line": 1331,
       "anchor": "return try await adapter.actionChannel.invoke(",
-      "sha256": "9de7587fec3732ed052875c2ea6eb9a2cc73bb2422db83226451acf24d0fdaf4"
+      "sha256": "8d7f8e42c46a5f050e72da632bd82cb137d44f0200910ff9c9b016090c09a588"
     },
     "nativeActionDispatch": {
       "file": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
@@ -748,15 +824,15 @@
     },
     "resumeDispatch": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 2174,
+      "line": 2202,
       "anchor": "func dispatchResumeCommand(",
-      "sha256": "9de7587fec3732ed052875c2ea6eb9a2cc73bb2422db83226451acf24d0fdaf4"
+      "sha256": "8d7f8e42c46a5f050e72da632bd82cb137d44f0200910ff9c9b016090c09a588"
     },
     "translationContinuation": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
       "line": 1671,
       "anchor": "\"source\": .string(\"translationUI\")",
-      "sha256": "9de7587fec3732ed052875c2ea6eb9a2cc73bb2422db83226451acf24d0fdaf4"
+      "sha256": "8d7f8e42c46a5f050e72da632bd82cb137d44f0200910ff9c9b016090c09a588"
     },
     "translationAction": {
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExtensionNodeView.swift",
@@ -888,7 +964,7 @@
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
       "line": 544,
       "anchor": "func resumePendingInvocations(",
-      "sha256": "9de7587fec3732ed052875c2ea6eb9a2cc73bb2422db83226451acf24d0fdaf4"
+      "sha256": "8d7f8e42c46a5f050e72da632bd82cb137d44f0200910ff9c9b016090c09a588"
     },
     "requestBroker": {
       "file": "Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinMiniAppRequestBroker.swift",
@@ -978,7 +1054,7 @@
       "file": "Scripts/Audit/audit_miniapp_reachability.py",
       "line": 2,
       "anchor": "Curated source-backed extension matrix",
-      "sha256": "1ad289315461f13234c191d9c762da288d23d53b2018f37ba1424e5a6141ce8c"
+      "sha256": "3812dd6addd231142646e91ba03c463f88802f7edc938341ec41dd765cea079f"
     },
     "miniAppsBootstrap": {
       "file": "HanlinMiniAppsApp/HanlinMiniAppsApp.swift",
@@ -1080,7 +1156,7 @@
       "file": "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json",
       "line": 3150,
       "anchor": "ScriptWidgetControls/Original/ScriptWidgetControlWidget.swift",
-      "sha256": "4d06d0dfaca462fc21257c8053d3250b7cc0e78c4d77b4eb2e98f64bf7cbe83b"
+      "sha256": "8bbe9acb8ec610861401134e8bddd9013c19d9ab9ced81eae4d97e3c99459b29"
     },
     "controlSourceRefresh": {
       "file": "Scripts/MiniApps/refresh-original-sources.mjs",
@@ -1200,25 +1276,25 @@
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
       "line": 2053,
       "anchor": "await HanlinMiniAppSystemEntrypoints.shared.reconcile(",
-      "sha256": "9de7587fec3732ed052875c2ea6eb9a2cc73bb2422db83226451acf24d0fdaf4"
+      "sha256": "8d7f8e42c46a5f050e72da632bd82cb137d44f0200910ff9c9b016090c09a588"
     },
     "nativePresentationPublication": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
       "line": 2004,
       "anchor": "nativePresentations: nativePresentations,",
-      "sha256": "9de7587fec3732ed052875c2ea6eb9a2cc73bb2422db83226451acf24d0fdaf4"
+      "sha256": "8d7f8e42c46a5f050e72da632bd82cb137d44f0200910ff9c9b016090c09a588"
     },
     "systemEntrypointOpen": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
       "line": 432,
       "anchor": "func openSystemEntrypoint(",
-      "sha256": "9de7587fec3732ed052875c2ea6eb9a2cc73bb2422db83226451acf24d0fdaf4"
+      "sha256": "8d7f8e42c46a5f050e72da632bd82cb137d44f0200910ff9c9b016090c09a588"
     },
     "systemEntrypointAdmission": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 2235,
-      "anchor": "if entrypoint.kind == .spotlight || entrypoint.kind == .capture {",
-      "sha256": "9de7587fec3732ed052875c2ea6eb9a2cc73bb2422db83226451acf24d0fdaf4"
+      "line": 2269,
+      "anchor": "if entrypoint.kind == .assistantTool || entrypoint.kind == .spotlight || entrypoint.kind == .capture {",
+      "sha256": "8d7f8e42c46a5f050e72da632bd82cb137d44f0200910ff9c9b016090c09a588"
     },
     "cameraIntent": {
       "file": "Packages/HanlinAppExtensionsSDK/Sources/HanlinCameraCaptureUI/HanlinCameraCaptureIntent.swift",
@@ -1283,14 +1359,14 @@
     "capturePrincipal": {
       "file": "ChavrusaChatCameraCapture/HanlinCameraCapture.swift",
       "line": 8,
-      "anchor": "struct HanlinCameraCaptureExtension: LockedCameraCaptureExtension",
-      "sha256": "acd3a230843a63b83cba403dcb1388a4807c9234eadda34d5c393c08460cd52a"
+      "anchor": "struct HanlinCameraCaptureExtension: @MainActor LockedCameraCaptureExtension",
+      "sha256": "77793d47d550d2a0c94f4a9bbe63e3ecfca908ae4deee64a66d0d62db0b38e7b"
     },
     "miniAppsCapturePrincipal": {
       "file": "HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.swift",
       "line": 8,
-      "anchor": "struct HanlinMiniAppsCameraCaptureExtension: LockedCameraCaptureExtension",
-      "sha256": "ca3d2d641c94e0ee4e9ca5fb9c57e299d620aee30d15dd08d629f9857b1bedb9"
+      "anchor": "struct HanlinMiniAppsCameraCaptureExtension: @MainActor LockedCameraCaptureExtension",
+      "sha256": "6c8bdb75e50a1958d717752610d697393aa7229f93fd73e8a26143f6f94f616e"
     },
     "keyboardPrincipal": {
       "file": "ChavrusaChatKeyboard/HanlinKeyboard.swift",
@@ -1647,6 +1723,30 @@
       ],
       "stop": "CameraCaptureIntent and its Control use the real locked-capture extension or foreground camera. AVFoundation writes JPEGs under sessionContentURL; openApplication hands off through the system. The app verifies and retains its own copy before system-session invalidation, copies photos into the selected package Documents area, then invokes the required declared action with installation/generation checks and a stable queue identity. The locked process has no App Group, network or package runtime. Canonical Host runtime calls happen only after foreground handoff; physical capture and complete receipt return to the ingress remain separate acceptance.",
       "owner": "INT-02/INT-03"
+    },
+    "assistantTool": {
+      "target": "HanlinApp assistant tool catalog / installed Expo or NativeScript foreground runtime",
+      "refs": [
+        "assistantDeclaration",
+        "assistantProjection",
+        "assistantAuthoring",
+        "assistantPublicTypes",
+        "assistantAdapter",
+        "assistantCanonicalSources",
+        "assistantCatalog",
+        "assistantCatalogUnavailable",
+        "assistantProviderDispatch",
+        "assistantActualResult",
+        "assistantForegroundDispatch",
+        "assistantBrokerDispatch",
+        "resumeDispatch",
+        "requestBroker",
+        "headless",
+        "nativeActionDispatch",
+        "expoActionDispatch"
+      ],
+      "stop": "A request-scoped canonical tool catalog includes explicit assistantTool entries from enabled installed prepared Expo/NativeScript apps. If prepared-package discovery or projection is unavailable, only that contribution is omitted with an explicit trace; the existing native, MCP and legacy catalogs remain intact. Each entry selects exactly one real foreground action and its canonical input/output schemas. The prepared route rechecks installation, generation and source/artifact identity before directly awaiting the existing native request broker and original registered handler. The assistant receives the real action value or error; this route does not enqueue a durable invocation and cannot substitute a legacy scripting handler. An authored handler may call the five canonical Host runtimes through its existing facade; provider selection, complete runtime receipt forwarding and native E2E are separate acceptance.",
+      "owner": "SDK-03/SDK-04/INT-03"
     },
     "foreground": {
       "target": "HanlinApp / HanlinMiniApps",
@@ -4731,6 +4831,346 @@
       "followUp": "INT-02/INT-03"
     },
     {
+      "surface": "assistantTool",
+      "engine": "hanlinNativeScript",
+      "runtime": "node",
+      "status": "partially-wired",
+      "path": "assistantTool",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "receiptCondition": "Direct awaited native action response; no durable invocation is enqueued",
+      "routeCondition": "Explicit installed prepared action in the AI host catalog; its real foreground handler may call the canonical Host facade",
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Actual awaited action JSON value/error returned to the assistant; a full RuntimeExecutionResult is returned only if the authored handler forwards it; no executed E2E proof",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "The active AI host validates the current prepared action and starts or reuses its actual foreground runtime before directly awaiting the handler"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Existing canonical tool and package action capability validation applies",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "SDK-03/SDK-04/INT-03"
+    },
+    {
+      "surface": "assistantTool",
+      "engine": "hanlinNativeScript",
+      "runtime": "typeScript",
+      "status": "partially-wired",
+      "path": "assistantTool",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "receiptCondition": "Direct awaited native action response; no durable invocation is enqueued",
+      "routeCondition": "Explicit installed prepared action in the AI host catalog; its real foreground handler may call the canonical Host facade",
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Actual awaited action JSON value/error returned to the assistant; a full RuntimeExecutionResult is returned only if the authored handler forwards it; no executed E2E proof",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "The active AI host validates the current prepared action and starts or reuses its actual foreground runtime before directly awaiting the handler"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Existing canonical tool and package action capability validation applies",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "SDK-03/SDK-04/INT-03"
+    },
+    {
+      "surface": "assistantTool",
+      "engine": "hanlinNativeScript",
+      "runtime": "localPython",
+      "status": "partially-wired",
+      "path": "assistantTool",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "receiptCondition": "Direct awaited native action response; no durable invocation is enqueued",
+      "routeCondition": "Explicit installed prepared action in the AI host catalog; its real foreground handler may call the canonical Host facade",
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Actual awaited action JSON value/error returned to the assistant; a full RuntimeExecutionResult is returned only if the authored handler forwards it; no executed E2E proof",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "The active AI host validates the current prepared action and starts or reuses its actual foreground runtime before directly awaiting the handler"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Existing canonical tool and package action capability validation applies",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "SDK-03/SDK-04/INT-03"
+    },
+    {
+      "surface": "assistantTool",
+      "engine": "hanlinNativeScript",
+      "runtime": "javaScriptCore",
+      "status": "partially-wired",
+      "path": "assistantTool",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "receiptCondition": "Direct awaited native action response; no durable invocation is enqueued",
+      "routeCondition": "Explicit installed prepared action in the AI host catalog; its real foreground handler may call the canonical Host facade",
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Actual awaited action JSON value/error returned to the assistant; a full RuntimeExecutionResult is returned only if the authored handler forwards it; no executed E2E proof",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "The active AI host validates the current prepared action and starts or reuses its actual foreground runtime before directly awaiting the handler"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Existing canonical tool and package action capability validation applies",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "SDK-03/SDK-04/INT-03"
+    },
+    {
+      "surface": "assistantTool",
+      "engine": "hanlinNativeScript",
+      "runtime": "shell",
+      "status": "partially-wired",
+      "path": "assistantTool",
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "receiptCondition": "Direct awaited native action response; no durable invocation is enqueued",
+      "routeCondition": "Explicit installed prepared action in the AI host catalog; its real foreground handler may call the canonical Host facade",
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Actual awaited action JSON value/error returned to the assistant; a full RuntimeExecutionResult is returned only if the authored handler forwards it; no executed E2E proof",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "The active AI host validates the current prepared action and starts or reuses its actual foreground runtime before directly awaiting the handler"
+      },
+      "engineVersionSource": "source-inventory.json#/nativeScript",
+      "permissions": [
+        "Existing canonical tool and package action capability validation applies",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "SDK-03/SDK-04/INT-03"
+    },
+    {
+      "surface": "assistantTool",
+      "engine": "hanlinExpo",
+      "runtime": "node",
+      "status": "partially-wired",
+      "path": "assistantTool",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "receiptCondition": "Direct awaited native action response; no durable invocation is enqueued",
+      "routeCondition": "Explicit installed prepared action in the AI host catalog; its real foreground handler may call the canonical Host facade",
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Actual awaited action JSON value/error returned to the assistant; a full RuntimeExecutionResult is returned only if the authored handler forwards it; no executed E2E proof",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "The active AI host validates the current prepared action and starts or reuses its actual foreground runtime before directly awaiting the handler"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Existing canonical tool and package action capability validation applies",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "SDK-03/SDK-04/INT-03"
+    },
+    {
+      "surface": "assistantTool",
+      "engine": "hanlinExpo",
+      "runtime": "typeScript",
+      "status": "partially-wired",
+      "path": "assistantTool",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "receiptCondition": "Direct awaited native action response; no durable invocation is enqueued",
+      "routeCondition": "Explicit installed prepared action in the AI host catalog; its real foreground handler may call the canonical Host facade",
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Actual awaited action JSON value/error returned to the assistant; a full RuntimeExecutionResult is returned only if the authored handler forwards it; no executed E2E proof",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "The active AI host validates the current prepared action and starts or reuses its actual foreground runtime before directly awaiting the handler"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Existing canonical tool and package action capability validation applies",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "SDK-03/SDK-04/INT-03"
+    },
+    {
+      "surface": "assistantTool",
+      "engine": "hanlinExpo",
+      "runtime": "localPython",
+      "status": "partially-wired",
+      "path": "assistantTool",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "receiptCondition": "Direct awaited native action response; no durable invocation is enqueued",
+      "routeCondition": "Explicit installed prepared action in the AI host catalog; its real foreground handler may call the canonical Host facade",
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Actual awaited action JSON value/error returned to the assistant; a full RuntimeExecutionResult is returned only if the authored handler forwards it; no executed E2E proof",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "The active AI host validates the current prepared action and starts or reuses its actual foreground runtime before directly awaiting the handler"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Existing canonical tool and package action capability validation applies",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "SDK-03/SDK-04/INT-03"
+    },
+    {
+      "surface": "assistantTool",
+      "engine": "hanlinExpo",
+      "runtime": "javaScriptCore",
+      "status": "partially-wired",
+      "path": "assistantTool",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "receiptCondition": "Direct awaited native action response; no durable invocation is enqueued",
+      "routeCondition": "Explicit installed prepared action in the AI host catalog; its real foreground handler may call the canonical Host facade",
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Actual awaited action JSON value/error returned to the assistant; a full RuntimeExecutionResult is returned only if the authored handler forwards it; no executed E2E proof",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "The active AI host validates the current prepared action and starts or reuses its actual foreground runtime before directly awaiting the handler"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Existing canonical tool and package action capability validation applies",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "SDK-03/SDK-04/INT-03"
+    },
+    {
+      "surface": "assistantTool",
+      "engine": "hanlinExpo",
+      "runtime": "shell",
+      "status": "partially-wired",
+      "path": "assistantTool",
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
+      "structuredReceiptReturnedToIngressInSource": false,
+      "durableActionReceiptInSource": false,
+      "receiptCondition": "Direct awaited native action response; no durable invocation is enqueued",
+      "routeCondition": "Explicit installed prepared action in the AI host catalog; its real foreground handler may call the canonical Host facade",
+      "realSurfaceE2E": false,
+      "onDeviceProof": null,
+      "resultBoundary": "Actual awaited action JSON value/error returned to the assistant; a full RuntimeExecutionResult is returned only if the authored handler forwards it; no executed E2E proof",
+      "callerContext": {
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "The active AI host validates the current prepared action and starts or reuses its actual foreground runtime before directly awaiting the handler"
+      },
+      "engineVersionSource": "source-inventory.json#/expo",
+      "permissions": [
+        "Existing canonical tool and package action capability validation applies",
+        "Actual service OS permission/availability still required"
+      ],
+      "followUp": "SDK-03/SDK-04/INT-03"
+    },
+    {
       "surface": "foreground",
       "engine": "hanlinNativeScript",
       "runtime": "node",
@@ -5202,7 +5642,7 @@
       "onDeviceProof": null
     }
   },
-  "matrixScope": "Ten ingress categories by two native app engines by five canonical Host runtimes (100 conditional source routes); original library rendering and keyboard/rich-notification presentation records are separate. Plain Spotlight app-open does not itself execute a runtime.",
+  "matrixScope": "Eleven ingress categories by two native app engines by five canonical Host runtimes (110 conditional source routes); original library rendering and keyboard/rich-notification presentation records are separate. Plain Spotlight app-open does not itself execute a runtime. Assistant tools directly await their prepared action result, without a durable queue receipt.",
   "sourceReadPolicy": "Current local bytes take precedence; only missing tracked files use exact HEAD blobs, including the Swift symbol scan.",
   "systemServices": {
     "authority": "source-inventory.json#/systemServices",
@@ -5215,8 +5655,8 @@
   },
   "acceptance": {
     "fourExtensionCategoriesByTwoEnginesByFiveRuntimes": 40,
-    "additionalSurfaceCells": 60,
-    "canonicalHostRuntimeCells": 100,
+    "additionalSurfaceCells": 70,
+    "canonicalHostRuntimeCells": 110,
     "executedSurfaceE2EPasses": 0,
     "signedPhysicalAcceptance": "NOT_RUN"
   }

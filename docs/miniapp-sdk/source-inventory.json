@@ -1,5 +1,5 @@
 {
-  "sourceCommit": "8eb6e54d003c0be82ea511a214b81a93a5a25f51",
+  "sourceCommit": "13bfad937c9e61e0bea839fdf1f3b5b1e7652b69",
   "uncommittedSourcePaths": [],
   "schemaVersion": 1,
   "auditParser": {
@@ -20,8 +20,8 @@
       "nativeScriptRuntimeVersion": "9.1.1",
       "nativeScriptCoreVersion": "9.1.4",
       "nativeScriptSwiftUIVersion": "4.0.2",
-      "expoSDKVersion": "58.0.26",
-      "expoUIVersion": "58.0.29",
+      "expoSDKVersion": "58.1.0",
+      "expoUIVersion": "58.0.30",
       "expoUIBridgeVersion": "3.0.0"
     },
     "versionSources": {
@@ -43,13 +43,13 @@
       "swiftUIVersion": "4.0.2"
     },
     "expoSession": {
-      "sdkVersion": "58.0.26",
-      "uiVersion": "58.0.29",
-      "runtimeVersion": "58.0.29",
+      "sdkVersion": "58.1.0",
+      "uiVersion": "58.0.30",
+      "runtimeVersion": "58.0.30",
       "bridgeVersion": "3.0.0"
     },
     "expoBridgeRuntimeMetadata": {
-      "runtimeVersion": "58.0.29",
+      "runtimeVersion": "58.0.30",
       "configuration": "Tools/SwiftUIBridge/configuration.json",
       "typescriptSources": [
         "Generated/SwiftUIBridge/bridge-manifest.ts",
@@ -69,6 +69,7 @@
     "minimumVersionSource": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPreparedRuntimeVersion.swift",
     "policy": "Released three-component semantic versions; historical ^/~ /=/v prefix expresses minimum metadata, not npm resolution. Core/Expo require the installed major and no newer version. NativeScript prepared runtime requires the installed iOS major/minor and no newer patch; Core and iOS versions are independent. Widget runtime/plugin exact pins remain authoritative. Public Expo runtime metadata follows the installed original UI graph across both generated mirrors; the reviewed Apple API coverage input and Hanlin bridge ABI remain independent.",
     "stableDiagnosticCodes": [
+      "MINIAPP_ASSISTANT_TOOL_INVALID",
       "MINIAPP_BRIDGE_VERSION_INVALID",
       "MINIAPP_BRIDGE_VERSION_MISMATCH",
       "MINIAPP_CORE_VERSION_MISMATCH",
@@ -1008,12 +1009,12 @@
   "expo": {
     "declaredAndLocked": {
       "expo": {
-        "declared": "58.0.26",
-        "locked": "58.0.26"
+        "declared": "58.1.0",
+        "locked": "58.1.0"
       },
       "@expo/ui": {
-        "declared": "58.0.29",
-        "locked": "58.0.29"
+        "declared": "58.0.30",
+        "locked": "58.0.30"
       },
       "react": {
         "declared": "19.3.0",
@@ -1024,12 +1025,12 @@
         "locked": "0.88.1"
       },
       "expo-modules-core": {
-        "declared": "58.1.0",
-        "locked": "58.1.0"
+        "declared": "58.2.0",
+        "locked": "58.2.0"
       },
       "expo-modules-jsi": {
-        "declared": "58.0.23",
-        "locked": "58.0.23"
+        "declared": "58.0.24",
+        "locked": "58.0.24"
       },
       "react-native-worklets": {
         "declared": "0.13.0",
@@ -1046,14 +1047,14 @@
         "base64-js": "1.5.1"
       },
       "peerDependencies": {
-        "@expo/ui": "58.0.29",
-        "expo": "58.0.26",
+        "@expo/ui": "58.0.30",
+        "expo": "58.1.0",
         "react": "19.3.0",
         "react-native": "0.88.1"
       },
       "generatedBridgeVersion": "3.0.0",
-      "generatedRuntimeContract": "58.0.29",
-      "expoUIVersion": "58.0.29",
+      "generatedRuntimeContract": "58.0.30",
+      "expoUIVersion": "58.0.30",
       "reviewedCoverageExpoUIVersion": "58.0.3",
       "upstreamViewCount": 68,
       "upstreamModifierCount": 157,
@@ -1259,7 +1260,7 @@
         "line": 2,
         "name": "HANLIN_EXPO_RUNTIME_VERSION",
         "kind": "variable",
-        "literalValue": "58.0.29"
+        "literalValue": "58.0.30"
       },
       {
         "source": "Packages/HanlinExpoUI/src/generated/bridge-manifest.ts",
@@ -6955,17 +6956,22 @@
           "type": "object[]",
           "required": false,
           "status": "partial",
-          "semantics": "Metadata: canonical actions; invalid IDs omitted; execution still needs installed declared handlers.",
+          "semantics": "Metadata: canonical actions; invalid IDs omitted by general registration. A selected prepared assistantTool action is strictly validated; execution needs its real registered handler.",
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf",
+              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
               "line": 238
             },
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "7901c51ea32046e57ad49a41f7252b488941a2d6ede7bb0f0634e86fe8b634b2",
+              "sha256": "e23510cee3d2fd1d5d1150de11f5860f22f23ff979f8a15e12602078a281b5d9",
               "line": 242
+            },
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinPreparedAssistantToolDeclaration.swift",
+              "sha256": "7d19fdeb44909f29e7afce8d53b58e15e40a5b7c4be998e5d1c10924b2bd279a",
+              "line": 23
             },
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift",
@@ -6979,12 +6985,31 @@
           "type": "HanlinCapabilityID",
           "required": false,
           "status": "partial",
-          "semantics": "Metadata: defaults/falls back to inter-app.share, without a new grant gate.",
+          "semantics": "Metadata: defaults/falls back to inter-app.share, without a new grant gate. For prepared assistantTool: When supplied must be a valid canonical capability ID; defaults to inter-app.share.",
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "7901c51ea32046e57ad49a41f7252b488941a2d6ede7bb0f0634e86fe8b634b2",
+              "sha256": "e23510cee3d2fd1d5d1150de11f5860f22f23ff979f8a15e12602078a281b5d9",
               "line": 253
+            },
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinPreparedAssistantToolDeclaration.swift",
+              "sha256": "7d19fdeb44909f29e7afce8d53b58e15e40a5b7c4be998e5d1c10924b2bd279a",
+              "line": 59
+            }
+          ]
+        },
+        {
+          "field": "actions[].description",
+          "type": "string",
+          "required": false,
+          "status": "supported",
+          "semantics": "Summary alias when summary is absent.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinPreparedAssistantToolDeclaration.swift",
+              "sha256": "7d19fdeb44909f29e7afce8d53b58e15e40a5b7c4be998e5d1c10924b2bd279a",
+              "line": 56
             }
           ]
         },
@@ -6993,12 +7018,17 @@
           "type": "string",
           "required": false,
           "status": "partial",
-          "semantics": "Metadata: handler alias.",
+          "semantics": "Metadata: handler alias. For prepared assistantTool: Handler alias when handler is absent; the same foreground-source requirement applies.",
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "7901c51ea32046e57ad49a41f7252b488941a2d6ede7bb0f0634e86fe8b634b2",
+              "sha256": "e23510cee3d2fd1d5d1150de11f5860f22f23ff979f8a15e12602078a281b5d9",
               "line": 261
+            },
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinPreparedAssistantToolDeclaration.swift",
+              "sha256": "7d19fdeb44909f29e7afce8d53b58e15e40a5b7c4be998e5d1c10924b2bd279a",
+              "line": 36
             }
           ]
         },
@@ -7007,12 +7037,17 @@
           "type": "string",
           "required": false,
           "status": "partial",
-          "semantics": "Metadata: preferred handler; installed source path matched directly or with source/ prefix.",
+          "semantics": "Metadata: preferred handler; installed source path matched directly or with source/ prefix. For prepared assistantTool: Preferred handler; required directly or through entrypoint alias and must match the prepared foreground source.",
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "7901c51ea32046e57ad49a41f7252b488941a2d6ede7bb0f0634e86fe8b634b2",
+              "sha256": "e23510cee3d2fd1d5d1150de11f5860f22f23ff979f8a15e12602078a281b5d9",
               "line": 260
+            },
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinPreparedAssistantToolDeclaration.swift",
+              "sha256": "7d19fdeb44909f29e7afce8d53b58e15e40a5b7c4be998e5d1c10924b2bd279a",
+              "line": 35
             }
           ]
         },
@@ -7021,12 +7056,83 @@
           "type": "HanlinActionID",
           "required": true,
           "status": "partial",
-          "semantics": "Metadata: valid ID required to create descriptor; invalid items omitted.",
+          "semantics": "Metadata: valid ID required to create descriptor; invalid items omitted. For prepared assistantTool: Exactly one declared action must match the entrypoint exportedSymbol, retaining its original case.",
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "7901c51ea32046e57ad49a41f7252b488941a2d6ede7bb0f0634e86fe8b634b2",
+              "sha256": "e23510cee3d2fd1d5d1150de11f5860f22f23ff979f8a15e12602078a281b5d9",
               "line": 246
+            },
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinPreparedAssistantToolDeclaration.swift",
+              "sha256": "7d19fdeb44909f29e7afce8d53b58e15e40a5b7c4be998e5d1c10924b2bd279a",
+              "line": 28
+            }
+          ]
+        },
+        {
+          "field": "actions[].inputSchema",
+          "type": "JSON Schema document object",
+          "required": "required for prepared assistantTool",
+          "status": "supported",
+          "semantics": "Decoded by the canonical schema contract, preserving keywords and dialect; omitted general-action input defaults to an empty draft-2020-12 schema. Required for a prepared assistantTool. For prepared assistantTool: Required schema document with explicit type object for canonical function-tool parameters.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
+              "sha256": "e23510cee3d2fd1d5d1150de11f5860f22f23ff979f8a15e12602078a281b5d9",
+              "line": 272
+            },
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinPreparedAssistantToolDeclaration.swift",
+              "sha256": "7d19fdeb44909f29e7afce8d53b58e15e40a5b7c4be998e5d1c10924b2bd279a",
+              "line": 40
+            }
+          ]
+        },
+        {
+          "field": "actions[].inputSchema.type",
+          "type": "\"object\"",
+          "required": "required for prepared assistantTool",
+          "status": "supported",
+          "semantics": "Canonical function-tool parameters are named objects; other JSON Schema keywords retain their original meaning.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinPreparedAssistantToolDeclaration.swift",
+              "sha256": "7d19fdeb44909f29e7afce8d53b58e15e40a5b7c4be998e5d1c10924b2bd279a",
+              "line": 42
+            }
+          ]
+        },
+        {
+          "field": "actions[].outputSchema",
+          "type": "JSON Schema document object",
+          "required": false,
+          "status": "supported",
+          "semantics": "Optional canonical output schema; may describe any JSON result, including scalar and array values. The document representation is an object. For prepared assistantTool: Optional schema document; scalar, array and object results are permitted.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
+              "sha256": "e23510cee3d2fd1d5d1150de11f5860f22f23ff979f8a15e12602078a281b5d9",
+              "line": 278
+            },
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinPreparedAssistantToolDeclaration.swift",
+              "sha256": "7d19fdeb44909f29e7afce8d53b58e15e40a5b7c4be998e5d1c10924b2bd279a",
+              "line": 47
+            }
+          ]
+        },
+        {
+          "field": "actions[].summary",
+          "type": "string",
+          "required": false,
+          "status": "supported",
+          "semantics": "Preferred tool summary, then description, then title.",
+          "sources": [
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinPreparedAssistantToolDeclaration.swift",
+              "sha256": "7d19fdeb44909f29e7afce8d53b58e15e40a5b7c4be998e5d1c10924b2bd279a",
+              "line": 55
             }
           ]
         },
@@ -7035,12 +7141,17 @@
           "type": "string",
           "required": false,
           "status": "partial",
-          "semantics": "Metadata: title defaults to ID.",
+          "semantics": "Metadata: title defaults to ID. For prepared assistantTool: Defaults to the exact action ID.",
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "7901c51ea32046e57ad49a41f7252b488941a2d6ede7bb0f0634e86fe8b634b2",
+              "sha256": "e23510cee3d2fd1d5d1150de11f5860f22f23ff979f8a15e12602078a281b5d9",
               "line": 249
+            },
+            {
+              "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinPreparedAssistantToolDeclaration.swift",
+              "sha256": "7d19fdeb44909f29e7afce8d53b58e15e40a5b7c4be998e5d1c10924b2bd279a",
+              "line": 52
             }
           ]
         },
@@ -7127,7 +7238,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "7901c51ea32046e57ad49a41f7252b488941a2d6ede7bb0f0634e86fe8b634b2",
+              "sha256": "e23510cee3d2fd1d5d1150de11f5860f22f23ff979f8a15e12602078a281b5d9",
               "line": 198
             }
           ]
@@ -7260,8 +7371,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf",
-              "line": 808
+              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+              "line": 827
             }
           ]
         },
@@ -7270,12 +7381,12 @@
           "type": "string",
           "required": false,
           "status": "supported",
-          "semantics": "Capture requires one declared prepared action ID with a handler targeting the same foreground bundle. Spotlight may omit it to open the app; if supplied, the same action contract applies. Other kinds retain their existing optional exported symbol.",
+          "semantics": "Capture and assistantTool require one declared prepared action ID with a handler targeting the same foreground bundle. Spotlight may omit it to open the app; if supplied, the same action contract applies. Other kinds retain their existing optional exported symbol.",
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf",
-              "line": 842
+              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+              "line": 861
             }
           ]
         },
@@ -7288,22 +7399,22 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf",
-              "line": 821
+              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+              "line": 840
             }
           ]
         },
         {
           "field": "entrypoints[].kind",
-          "type": "appIntent | embeddedResult | share | translationUI | liveActivity | keyboard | notificationUI | spotlight | capture",
+          "type": "appIntent | assistantTool | embeddedResult | share | translationUI | liveActivity | keyboard | notificationUI | spotlight | capture",
           "required": true,
           "status": "supported",
           "semantics": "Only these modern explicit kinds are accepted; engine-specific source requirements still apply.",
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf",
-              "line": 822
+              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+              "line": 841
             }
           ]
         },
@@ -7312,12 +7423,12 @@
           "type": "string",
           "required": true,
           "status": "supported",
-          "semantics": "Existing normalized package path; embeddedResult, keyboard, notificationUI, spotlight and capture use the discovered prepared foreground bundle. Keyboard and notificationUI have a separate compiled nativePresentations source.",
+          "semantics": "Existing normalized package path; assistantTool, embeddedResult, keyboard, notificationUI, spotlight and capture use the discovered prepared foreground bundle. Keyboard and notificationUI have a separate compiled nativePresentations source.",
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf",
-              "line": 825
+              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+              "line": 844
             }
           ]
         },
@@ -7330,7 +7441,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "7901c51ea32046e57ad49a41f7252b488941a2d6ede7bb0f0634e86fe8b634b2",
+              "sha256": "e23510cee3d2fd1d5d1150de11f5860f22f23ff979f8a15e12602078a281b5d9",
               "line": 66
             }
           ]
@@ -7374,7 +7485,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf",
+              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
               "line": 181
             },
             {
@@ -7618,12 +7729,12 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "7901c51ea32046e57ad49a41f7252b488941a2d6ede7bb0f0634e86fe8b634b2",
+              "sha256": "e23510cee3d2fd1d5d1150de11f5860f22f23ff979f8a15e12602078a281b5d9",
               "line": 207
             },
             {
               "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-              "sha256": "9de7587fec3732ed052875c2ea6eb9a2cc73bb2422db83226451acf24d0fdaf4",
+              "sha256": "8d7f8e42c46a5f050e72da632bd82cb137d44f0200910ff9c9b016090c09a588",
               "line": 1691
             }
           ]
@@ -7981,8 +8092,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "7901c51ea32046e57ad49a41f7252b488941a2d6ede7bb0f0634e86fe8b634b2",
-              "line": 287
+              "sha256": "e23510cee3d2fd1d5d1150de11f5860f22f23ff979f8a15e12602078a281b5d9",
+              "line": 296
             }
           ]
         },
@@ -7995,8 +8106,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "7901c51ea32046e57ad49a41f7252b488941a2d6ede7bb0f0634e86fe8b634b2",
-              "line": 299
+              "sha256": "e23510cee3d2fd1d5d1150de11f5860f22f23ff979f8a15e12602078a281b5d9",
+              "line": 308
             }
           ]
         },
@@ -8009,8 +8120,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "7901c51ea32046e57ad49a41f7252b488941a2d6ede7bb0f0634e86fe8b634b2",
-              "line": 333
+              "sha256": "e23510cee3d2fd1d5d1150de11f5860f22f23ff979f8a15e12602078a281b5d9",
+              "line": 342
             }
           ]
         },
@@ -8023,8 +8134,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "7901c51ea32046e57ad49a41f7252b488941a2d6ede7bb0f0634e86fe8b634b2",
-              "line": 291
+              "sha256": "e23510cee3d2fd1d5d1150de11f5860f22f23ff979f8a15e12602078a281b5d9",
+              "line": 300
             }
           ]
         },
@@ -8037,8 +8148,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "7901c51ea32046e57ad49a41f7252b488941a2d6ede7bb0f0634e86fe8b634b2",
-              "line": 308
+              "sha256": "e23510cee3d2fd1d5d1150de11f5860f22f23ff979f8a15e12602078a281b5d9",
+              "line": 317
             }
           ]
         },
@@ -8051,8 +8162,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "7901c51ea32046e57ad49a41f7252b488941a2d6ede7bb0f0634e86fe8b634b2",
-              "line": 312
+              "sha256": "e23510cee3d2fd1d5d1150de11f5860f22f23ff979f8a15e12602078a281b5d9",
+              "line": 321
             }
           ]
         },
@@ -8065,8 +8176,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "7901c51ea32046e57ad49a41f7252b488941a2d6ede7bb0f0634e86fe8b634b2",
-              "line": 315
+              "sha256": "e23510cee3d2fd1d5d1150de11f5860f22f23ff979f8a15e12602078a281b5d9",
+              "line": 324
             }
           ]
         },
@@ -8079,8 +8190,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "7901c51ea32046e57ad49a41f7252b488941a2d6ede7bb0f0634e86fe8b634b2",
-              "line": 315
+              "sha256": "e23510cee3d2fd1d5d1150de11f5860f22f23ff979f8a15e12602078a281b5d9",
+              "line": 324
             }
           ]
         },
@@ -8093,8 +8204,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "7901c51ea32046e57ad49a41f7252b488941a2d6ede7bb0f0634e86fe8b634b2",
-              "line": 326
+              "sha256": "e23510cee3d2fd1d5d1150de11f5860f22f23ff979f8a15e12602078a281b5d9",
+              "line": 335
             }
           ]
         },
@@ -8107,8 +8218,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "7901c51ea32046e57ad49a41f7252b488941a2d6ede7bb0f0634e86fe8b634b2",
-              "line": 340
+              "sha256": "e23510cee3d2fd1d5d1150de11f5860f22f23ff979f8a15e12602078a281b5d9",
+              "line": 349
             }
           ]
         },
@@ -8121,8 +8232,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "7901c51ea32046e57ad49a41f7252b488941a2d6ede7bb0f0634e86fe8b634b2",
-              "line": 340
+              "sha256": "e23510cee3d2fd1d5d1150de11f5860f22f23ff979f8a15e12602078a281b5d9",
+              "line": 349
             }
           ]
         },
@@ -8135,8 +8246,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "7901c51ea32046e57ad49a41f7252b488941a2d6ede7bb0f0634e86fe8b634b2",
-              "line": 319
+              "sha256": "e23510cee3d2fd1d5d1150de11f5860f22f23ff979f8a15e12602078a281b5d9",
+              "line": 328
             }
           ]
         },
@@ -8149,8 +8260,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "7901c51ea32046e57ad49a41f7252b488941a2d6ede7bb0f0634e86fe8b634b2",
-              "line": 298
+              "sha256": "e23510cee3d2fd1d5d1150de11f5860f22f23ff979f8a15e12602078a281b5d9",
+              "line": 307
             }
           ]
         },
@@ -8163,8 +8274,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "7901c51ea32046e57ad49a41f7252b488941a2d6ede7bb0f0634e86fe8b634b2",
-              "line": 294
+              "sha256": "e23510cee3d2fd1d5d1150de11f5860f22f23ff979f8a15e12602078a281b5d9",
+              "line": 303
             }
           ]
         },
@@ -8177,8 +8288,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "7901c51ea32046e57ad49a41f7252b488941a2d6ede7bb0f0634e86fe8b634b2",
-              "line": 333
+              "sha256": "e23510cee3d2fd1d5d1150de11f5860f22f23ff979f8a15e12602078a281b5d9",
+              "line": 342
             }
           ]
         },
@@ -8191,7 +8302,7 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-              "sha256": "7901c51ea32046e57ad49a41f7252b488941a2d6ede7bb0f0634e86fe8b634b2",
+              "sha256": "e23510cee3d2fd1d5d1150de11f5860f22f23ff979f8a15e12602078a281b5d9",
               "line": 66
             }
           ]
@@ -8244,7 +8355,7 @@
       "boundary": "Frozen Scripting compatibility is documented, not expanded. Metadata declarations are distinct from executable support and device acceptance.",
       "coverage": {
         "status": "COMPLETE_SOURCE_FIELD_ENUMERATION",
-        "fieldCount": 88,
+        "fieldCount": 93,
         "scope": "Current recognized reader/producer fields in listed sources; wildcard maps retain original ownership."
       }
     },
@@ -8265,8 +8376,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee",
-              "line": 722
+              "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+              "line": 764
             }
           ]
         },
@@ -8279,8 +8390,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf",
-              "line": 443
+              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+              "line": 462
             }
           ]
         },
@@ -8293,8 +8404,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf",
-              "line": 746
+              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+              "line": 765
             }
           ]
         },
@@ -8307,8 +8418,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf",
-              "line": 443
+              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+              "line": 462
             }
           ]
         },
@@ -8321,8 +8432,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf",
-              "line": 445
+              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+              "line": 464
             }
           ]
         },
@@ -8335,8 +8446,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf",
-              "line": 746
+              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+              "line": 765
             }
           ]
         },
@@ -8349,8 +8460,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf",
-              "line": 443
+              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+              "line": 462
             }
           ]
         },
@@ -8363,8 +8474,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf",
-              "line": 390
+              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+              "line": 409
             }
           ]
         },
@@ -8377,8 +8488,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf",
-              "line": 393
+              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+              "line": 412
             }
           ]
         },
@@ -8391,8 +8502,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf",
-              "line": 421
+              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+              "line": 440
             }
           ]
         },
@@ -8405,8 +8516,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf",
-              "line": 392
+              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+              "line": 411
             },
             {
               "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSession.swift",
@@ -8429,8 +8540,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf",
-              "line": 379
+              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+              "line": 398
             }
           ]
         },
@@ -8443,8 +8554,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf",
-              "line": 378
+              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+              "line": 397
             }
           ]
         },
@@ -8457,8 +8568,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee",
-              "line": 724
+              "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+              "line": 766
             }
           ]
         }
@@ -8471,7 +8582,7 @@
         },
         {
           "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift",
-          "sha256": "8e99e562bacbe6354bc23caf6a1233930a1e0d61c3abe0444195dd36164f747d",
+          "sha256": "1e0c893a08f7cc214b3578682ecdaadde76c935b2c95c3b6b355bbe48997b2b6",
           "line": 3
         }
       ],
@@ -8499,8 +8610,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee",
-              "line": 815
+              "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+              "line": 857
             }
           ]
         },
@@ -8513,8 +8624,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf",
-              "line": 705
+              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+              "line": 724
             }
           ]
         },
@@ -8527,8 +8638,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf",
-              "line": 746
+              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+              "line": 765
             }
           ]
         },
@@ -8541,8 +8652,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf",
-              "line": 611
+              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+              "line": 630
             }
           ]
         },
@@ -8555,8 +8666,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf",
-              "line": 707
+              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+              "line": 726
             }
           ]
         },
@@ -8569,8 +8680,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf",
-              "line": 746
+              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+              "line": 765
             }
           ]
         },
@@ -8583,8 +8694,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf",
-              "line": 611
+              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+              "line": 630
             }
           ]
         },
@@ -8597,8 +8708,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf",
-              "line": 583
+              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+              "line": 602
             }
           ]
         },
@@ -8611,8 +8722,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf",
-              "line": 615
+              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+              "line": 634
             },
             {
               "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift",
@@ -8630,8 +8741,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee",
-              "line": 812
+              "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+              "line": 854
             }
           ]
         },
@@ -8644,8 +8755,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee",
-              "line": 812
+              "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+              "line": 854
             }
           ]
         },
@@ -8658,8 +8769,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee",
-              "line": 812
+              "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+              "line": 854
             }
           ]
         },
@@ -8672,8 +8783,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf",
-              "line": 590
+              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+              "line": 609
             }
           ]
         },
@@ -8686,8 +8797,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf",
-              "line": 611
+              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+              "line": 630
             }
           ]
         },
@@ -8700,8 +8811,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf",
-              "line": 681
+              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+              "line": 700
             }
           ]
         },
@@ -8714,8 +8825,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf",
-              "line": 641
+              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+              "line": 660
             }
           ]
         },
@@ -8728,8 +8839,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf",
-              "line": 679
+              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+              "line": 698
             }
           ]
         },
@@ -8742,8 +8853,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf",
-              "line": 680
+              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+              "line": 699
             }
           ]
         },
@@ -8756,8 +8867,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf",
-              "line": 659
+              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+              "line": 678
             }
           ]
         },
@@ -8770,8 +8881,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf",
-              "line": 589
+              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+              "line": 608
             },
             {
               "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift",
@@ -8794,8 +8905,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf",
-              "line": 560
+              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+              "line": 579
             }
           ]
         },
@@ -8808,8 +8919,8 @@
           "sources": [
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-              "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf",
-              "line": 570
+              "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+              "line": 589
             }
           ]
         },
@@ -8836,7 +8947,7 @@
         },
         {
           "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift",
-          "sha256": "8e99e562bacbe6354bc23caf6a1233930a1e0d61c3abe0444195dd36164f747d",
+          "sha256": "1e0c893a08f7cc214b3578682ecdaadde76c935b2c95c3b6b355bbe48997b2b6",
           "line": 3
         }
       ],
@@ -8866,8 +8977,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee",
-              "line": 162
+              "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+              "line": 164
             }
           ]
         },
@@ -8880,8 +8991,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee",
-              "line": 162
+              "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+              "line": 164
             }
           ]
         },
@@ -8894,8 +9005,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee",
-              "line": 132
+              "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+              "line": 134
             }
           ]
         },
@@ -8908,8 +9019,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee",
-              "line": 136
+              "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+              "line": 138
             }
           ]
         },
@@ -8922,8 +9033,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee",
-              "line": 521
+              "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+              "line": 563
             }
           ]
         },
@@ -8936,8 +9047,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee",
-              "line": 109
+              "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+              "line": 111
             }
           ]
         },
@@ -8950,13 +9061,13 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee",
-              "line": 913
+              "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+              "line": 955
             },
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee",
-              "line": 884
+              "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+              "line": 926
             }
           ]
         },
@@ -8969,13 +9080,13 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee",
-              "line": 913
+              "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+              "line": 955
             },
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee",
-              "line": 884
+              "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+              "line": 926
             }
           ]
         },
@@ -8988,13 +9099,13 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee",
-              "line": 913
+              "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+              "line": 955
             },
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee",
-              "line": 884
+              "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+              "line": 926
             }
           ]
         },
@@ -9007,13 +9118,13 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee",
-              "line": 913
+              "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+              "line": 955
             },
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee",
-              "line": 884
+              "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+              "line": 926
             }
           ]
         },
@@ -9026,8 +9137,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee",
-              "line": 161
+              "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+              "line": 163
             }
           ]
         },
@@ -9040,8 +9151,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee",
-              "line": 161
+              "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+              "line": 163
             }
           ]
         },
@@ -9054,8 +9165,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee",
-              "line": 110
+              "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+              "line": 112
             }
           ]
         },
@@ -9068,8 +9179,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee",
-              "line": 193
+              "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+              "line": 195
             }
           ]
         }
@@ -9098,8 +9209,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee",
-              "line": 634
+              "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+              "line": 676
             }
           ]
         },
@@ -9112,8 +9223,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee",
-              "line": 634
+              "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+              "line": 676
             }
           ]
         },
@@ -9126,8 +9237,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee",
-              "line": 627
+              "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+              "line": 669
             }
           ]
         },
@@ -9140,8 +9251,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee",
-              "line": 627
+              "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+              "line": 669
             }
           ]
         },
@@ -9154,8 +9265,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee",
-              "line": 627
+              "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+              "line": 669
             }
           ]
         },
@@ -9168,8 +9279,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee",
-              "line": 635
+              "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+              "line": 677
             }
           ]
         },
@@ -9182,8 +9293,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee",
-              "line": 635
+              "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+              "line": 677
             }
           ]
         },
@@ -9196,8 +9307,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee",
-              "line": 634
+              "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+              "line": 676
             }
           ]
         },
@@ -9210,8 +9321,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee",
-              "line": 634
+              "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+              "line": 676
             }
           ]
         },
@@ -9224,8 +9335,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee",
-              "line": 636
+              "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+              "line": 678
             }
           ]
         },
@@ -9238,8 +9349,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee",
-              "line": 637
+              "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+              "line": 679
             }
           ]
         },
@@ -9252,8 +9363,8 @@
           "sources": [
             {
               "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-              "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee",
-              "line": 626
+              "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+              "line": 668
             }
           ]
         }
@@ -13625,7 +13736,7 @@
     "schemaVersion": 1,
     "status": "COMPLETE_SOURCE_FIELD_ENUMERATION",
     "nativeAcceptance": "NOT_INFERRED",
-    "fieldCount": 340,
+    "fieldCount": 345,
     "sourceContract": "Decoder keys, extension consumers, nested records, prepared package/authoring reads and schema properties are mapped. Added/removed recognized keys fail until mapped. Loaded source hashes participate in the existing inventory drift check.",
     "publicReference": "MANIFEST_REFERENCE.md"
   },
@@ -13733,11 +13844,11 @@
     },
     {
       "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-      "sha256": "69cc047888f8a8f35f13df6238ed696453c718ebe1287dfcb33f4a804f2c4dee"
+      "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33"
     },
     {
       "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "sha256": "9de7587fec3732ed052875c2ea6eb9a2cc73bb2422db83226451acf24d0fdaf4"
+      "sha256": "8d7f8e42c46a5f050e72da632bd82cb137d44f0200910ff9c9b016090c09a588"
     },
     {
       "path": "Fixtures/ExpoNativeAPIProbe/tsconfig.json",
@@ -13749,11 +13860,11 @@
     },
     {
       "path": "Generated/SwiftUIBridge/HanlinGeneratedViews.swift",
-      "sha256": "659364752ba7b69ef70d90f5aad061f391526cb8b6f135a47bf72f0f19b00e18"
+      "sha256": "554b58f429c99fb192ea91679ab5c9878d8c2e3a119332ffb30be947749248ed"
     },
     {
       "path": "Generated/SwiftUIBridge/bridge-manifest.ts",
-      "sha256": "a56c8a16334bfe76ebe6489fc1f018f25f28f7cadba6c1ef11a268e5336f3b37"
+      "sha256": "82ef4d88ee0b1b0ab25a375be6773f3681e69521dd28c58de14a37bb8edd62ed"
     },
     {
       "path": "Package.swift",
@@ -13789,7 +13900,7 @@
     },
     {
       "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedViews.swift",
-      "sha256": "659364752ba7b69ef70d90f5aad061f391526cb8b6f135a47bf72f0f19b00e18"
+      "sha256": "554b58f429c99fb192ea91679ab5c9878d8c2e3a119332ffb30be947749248ed"
     },
     {
       "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoBridgeMetadata.swift",
@@ -13801,7 +13912,7 @@
     },
     {
       "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoHostVersions.swift",
-      "sha256": "5c28d3e33ecd38d42ddf13e44ddaab9d277d8dfd9b2742bf6d14293675437a8c"
+      "sha256": "41a76f4f69b73551685d6581b8d36f589b510354b2ce3a3448a8732613e81f27"
     },
     {
       "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift",
@@ -13813,11 +13924,11 @@
     },
     {
       "path": "Packages/HanlinExpoUI/package.json",
-      "sha256": "18dbddebb3c641742ca5f83d0492cec1cbbc7bb1affbefe641477b7481110568"
+      "sha256": "a5650a228c827509c40eae3505670eff1ce5d9f3c6f082b73e3bc6f224e14b65"
     },
     {
       "path": "Packages/HanlinExpoUI/src/generated/bridge-manifest.ts",
-      "sha256": "a56c8a16334bfe76ebe6489fc1f018f25f28f7cadba6c1ef11a268e5336f3b37"
+      "sha256": "82ef4d88ee0b1b0ab25a375be6773f3681e69521dd28c58de14a37bb8edd62ed"
     },
     {
       "path": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
@@ -13905,11 +14016,11 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift",
-      "sha256": "8e99e562bacbe6354bc23caf6a1233930a1e0d61c3abe0444195dd36164f747d"
+      "sha256": "1e0c893a08f7cc214b3578682ecdaadde76c935b2c95c3b6b355bbe48997b2b6"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-      "sha256": "4c55d5a619ae04a77bb78394b18a93962f2bce10ae35294a366378f235cbc6cf"
+      "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinInstallContracts.swift",
@@ -13922,6 +14033,10 @@
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinPackageContracts.swift",
       "sha256": "226d7dbbd6ea1f5ec700fd1d957fbe29a2b96e4932afdc6e09388bce4589b751"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinPreparedAssistantToolDeclaration.swift",
+      "sha256": "7d19fdeb44909f29e7afce8d53b58e15e40a5b7c4be998e5d1c10924b2bd279a"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinWidgetProgram.swift",
@@ -13937,7 +14052,7 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-      "sha256": "7901c51ea32046e57ad49a41f7252b488941a2d6ede7bb0f0634e86fe8b634b2"
+      "sha256": "e23510cee3d2fd1d5d1150de11f5860f22f23ff979f8a15e12602078a281b5d9"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/HanlinOriginalScriptWidgetControls.swift",
@@ -13973,7 +14088,7 @@
     },
     {
       "path": "Scripts/Audit/miniapp-manifest-contracts.mjs",
-      "sha256": "b99c3bed792fe4b28560e963ac8e5a0b52a766c7711330b07308f2a354cf216f"
+      "sha256": "d0fae5c2d0348e0679214267162ca444fd11c4e12b2e582c89f8d03b5aae4f66"
     },
     {
       "path": "Scripts/Audit/miniapp-runtime-contract.mjs",
@@ -13989,15 +14104,15 @@
     },
     {
       "path": "Scripts/Expo/dependency-lock.json",
-      "sha256": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65"
+      "sha256": "c0f45be81e5e16a0877e967b273484cac25eb5de5c7679a5922f14aaf12e65ff"
     },
     {
       "path": "Scripts/Expo/package-lock.json",
-      "sha256": "b20d9bf2ff4850269f72f79ef4e5b1b274ab648226a0597f671fe59ebb5dcfce"
+      "sha256": "b4f10e5109d8f6c59a0a3f04d07f960b8377c2d90c1332b362821f66cec9f948"
     },
     {
       "path": "Scripts/Expo/package.json",
-      "sha256": "fe71727b4bb3a28f73238ed1381190ef6de3541af323efb1f443ed2a7c685563"
+      "sha256": "e3459dd3aca98733fb8cf671bf404cd8f971bc8fe356f3d5651bfab2c879e552"
     },
     {
       "path": "Scripts/Expo/prepare-types.mjs",
@@ -14005,7 +14120,7 @@
     },
     {
       "path": "Scripts/ExpoNativeAPI/dependency-lock.json",
-      "sha256": "08657d657c1f4efa36149075b632cfc75685fc1ca9af0397fc1168fe9253b768"
+      "sha256": "eeb81efba1009177fcea2282a4a6a30bcf1fd3ca72a9dc8db066982cf6663baf"
     },
     {
       "path": "Scripts/MiniApps/generate-scriptwidget-manifest.mjs",
@@ -14065,7 +14180,7 @@
     },
     {
       "path": "Tools/SwiftUIBridge/configuration.json",
-      "sha256": "a8711bcfc51ae85ee58cf8ebd5a5724c6a142994dcbe3d558e8644d9c48fda8a"
+      "sha256": "958202f128f4ee8cedd0736ec4d03f0df9b81db41728cf9b3cfb9315c2fda83b"
     },
     {
       "path": "Tools/SwiftUIBridge/expo-reviewed-capabilities.json",
