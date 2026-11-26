@@ -247,15 +247,24 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         input.tap(); input.typeText(draft)
         XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 5))
         assertAtBottom("keyboard and composer growth")
-        XCUIDevice.shared.orientation = .landscapeLeft
-        let landscape = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            // The original iPad target supports landscape; the iPhone target
+            // supports portrait and exercises viewport changes via its keyboard.
+            XCUIDevice.shared.orientation = .landscapeLeft
+            let landscape = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+                let frame = app.windows.firstMatch.frame
+                return frame.width > frame.height
+            }, object: nil)
+            XCTAssertEqual(XCTWaiter.wait(for: [landscape], timeout: 10), .completed)
+            assertAtBottom("rotated keyboard viewport")
+        } else {
             let frame = app.windows.firstMatch.frame
-            return frame.width > frame.height
-        }, object: nil)
-        XCTAssertEqual(XCTWaiter.wait(for: [landscape], timeout: 10), .completed)
-        assertAtBottom("rotated keyboard viewport")
+            XCTAssertLessThan(frame.width, frame.height, "The original iPhone interface remains portrait")
+        }
         XCTAssertEqual(chatInputElement(in: app).value as? String, draft)
-        attachScreenshot("follow-latest-bottom-keyboard-landscape", in: app)
+        attachScreenshot(UIDevice.current.userInterfaceIdiom == .pad
+                         ? "follow-latest-bottom-keyboard-landscape"
+                         : "follow-latest-bottom-keyboard-portrait", in: app)
         XCUIDevice.shared.orientation = .portrait
 
         // Leave an explicitly paused, long chat for an empty new one. An old
