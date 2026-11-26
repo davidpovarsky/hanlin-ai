@@ -21,6 +21,7 @@ public final class ExpoHostServicesAdapter: NSObject, @unchecked Sendable, Hanli
         installedPackageID: HanlinInstalledPackageID? = nil,
         grantedCapabilities: Set<String>,
         sessionID: String = UUID().uuidString.lowercased(),
+        canPresentUI: Bool = true,
         externalMiniAppOperation: HanlinMiniAppExternalOperation? = nil,
         preparedWidgetPublisher: PreparedWidgetPublisher? = nil
     ) {
@@ -35,7 +36,7 @@ public final class ExpoHostServicesAdapter: NSObject, @unchecked Sendable, Hanli
             origin: .scriptPackage,
             capabilities: grantedCapabilities,
             sessionID: validatedSessionID,
-            canPresentUI: true
+            canPresentUI: canPresentUI
         )
         super.init()
     }

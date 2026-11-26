@@ -1,0 +1,38 @@
+Building for debugging...
+[Computing dependencies]
+[Pre-planning 1 / 211]
+[Planning deferred tasks]
+[8 / 53] HanlinPlatformContracts
+[20 / 54] HanlinPlatformContracts
+[22 / 56] HanlinPlatformContracts
+[22 / 57] HanlinPlatformContracts
+[30 / 60] HanlinPlatformContractsTests-product
+[32 / 61] HanlinPlatformContractsTests-product
+[32 / 61] HanlinPlatformContracts
+[36 / 66] HanlinMiniAppCore
+[37 / 66] HanlinMiniAppCore
+[44 / 66] HanlinMiniAppCoreTests-product
+[48 / 72] HanlinPlatformContractsTests-test-runner
+[50 / 73] HanlinPlatformContractsTests-test-runner
+[53 / 70]
+[56 / 74] HanlinMiniAppCoreTests-product
+[58 / 74] HanlinMiniAppCoreTests-product
+[59 / 74] HanlinMiniAppCoreTests-product
+[64 / 75] HanlinMiniAppCoreTests-product
+[64 / 75] HanlinMiniAppCore
+[68 / 76] HanlinMiniAppCoreTests-product
+[72 / 79] HanlinMiniAppCoreTests-test-runner
+[76 / 79] HanlinMiniAppCoreTests-test-runner
+[79 / 80] HanlinMiniAppCoreTests-test-runner
+[80 / 80] HanlinMiniAppCoreTests-test-runner
+Build complete! (11.18 secs)
+◇ Test run started.
+↳ Testing Library Version: 6.4.3 (ba0861fb203553c)
+↳ Target Platform: aarch64-unknown-linux-gnu
+◇ Test nativeActionIgnoresDuplicateCallbacksAndLateCancellation() started.
+◇ Test waitingNativeActionResolvesOnCancellation() started.
+◇ Test cancelledNativeActionDoesNotStartOrAcceptALateSuccess() started.
+✔ Test nativeActionIgnoresDuplicateCallbacksAndLateCancellation() passed after 0.002 seconds.
+✔ Test waitingNativeActionResolvesOnCancellation() passed after 0.003 seconds.
+✔ Test cancelledNativeActionDoesNotStartOrAcceptALateSuccess() passed after 0.004 seconds.
+✔ Test run with 3 tests in 0 suites passed after 0.005 seconds.

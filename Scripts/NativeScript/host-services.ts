@@ -55,7 +55,14 @@ export interface MiniAppOutput {
   message?: string;
   metadata?: Record<string, string>;
 }
+export interface MiniAppShortcutProgress {
+  completedUnitCount: number;
+  totalUnitCount: number;
+  message?: string;
+}
 export interface MiniAppSharing {
+  /** Report actual completed work inside a long-running Shortcuts action. */
+  reportShortcutProgress(progress: MiniAppShortcutProgress): Promise<{ok: true}>;
   getContext(): Promise<MiniAppSharedContext>;
   complete(output: string | MiniAppOutput): Promise<{ok: true}>;
   cancel(): Promise<{ok: true}>;
@@ -119,6 +126,7 @@ export function createHostServices() {
     end: (activityID, request = {}) => surface('liveActivities.end', {...request, activityID}),
   };
   const miniapps: MiniAppSharing = {
+    reportShortcutProgress: progress => share('miniapps.shortcutProgress', progress),
     getContext: () => share('miniapps.context'),
     complete: async output => {
       const receipt = await share<{ok: true}>('miniapps.complete', output);

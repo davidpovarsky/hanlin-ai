@@ -477,42 +477,44 @@ public final class NativeScriptHostServicesAdapter: NSObject, @unchecked Sendabl
         payload: HanlinValue
     ) async throws -> HanlinValue {
         let payloadJSON = try Self.serializeUntaggedJSON(payload)
-        return try await withCheckedThrowingContinuation { continuation in
-            do {
-                // NativeScript handlers and VM teardown use the main actor.
-                // Resolve immediately before invocation, and keep the JS block
-                // inside this synchronous closure rather than across the await.
-                let invokeHandler: RegisteredActionHandler.InvokeFn = try lock.withLock {
-                    guard !runtimeRequestsInvalidated,
-                          let registration = registeredActionHandlers[action] else {
-                        throw HanlinMiniAppRequestError.routeNotFound
-                    }
-                    guard registration.capability == capability else {
-                        throw HanlinMiniAppRequestError.capabilityMismatch
-                    }
-                    return registration.invoke
-                }
-                invokeHandler(caller.rawValue, payloadJSON) { responseJSON, errorString in
-                    if let errorString {
-                        continuation.resume(throwing: NSError(
-                            domain: "HanlinMiniAppRequest",
-                            code: 1,
-                            userInfo: [NSLocalizedDescriptionKey: errorString]
-                        ))
-                    } else if let responseJSON {
-                        do {
-                            let value = try Self.decodeJSONPayload(responseJSON)
-                            continuation.resume(returning: value)
-                        } catch {
-                            continuation.resume(returning: .null)
+        let completion = HanlinMiniAppActionCompletion()
+        return try await withTaskCancellationHandler {
+            try Task.checkCancellation()
+            return try await withCheckedThrowingContinuation { continuation in
+                guard completion.install(continuation) else { return }
+                do {
+                    // The registered handler stays session-bound. Cancellation
+                    // releases its waiter; a later callback cannot resume twice.
+                    let invokeHandler: RegisteredActionHandler.InvokeFn = try lock.withLock {
+                        guard !runtimeRequestsInvalidated,
+                              let registration = registeredActionHandlers[action] else {
+                            throw HanlinMiniAppRequestError.routeNotFound
                         }
-                    } else {
-                        continuation.resume(returning: .null)
+                        guard registration.capability == capability else {
+                            throw HanlinMiniAppRequestError.capabilityMismatch
+                        }
+                        return registration.invoke
                     }
+                    try Task.checkCancellation()
+                    invokeHandler(caller.rawValue, payloadJSON) { responseJSON, errorString in
+                        if let errorString {
+                            completion.resolve(.failure(NSError(
+                                domain: "HanlinMiniAppRequest", code: 1,
+                                userInfo: [NSLocalizedDescriptionKey: errorString])))
+                        } else if let responseJSON {
+                            do { completion.resolve(.success(try Self.decodeJSONPayload(responseJSON))) }
+                            catch { completion.resolve(.failure(error)) }
+                        } else {
+                            completion.resolve(.success(.null))
+                        }
+                    }
+                } catch {
+                    completion.resolve(.failure(error))
                 }
-            } catch {
-                continuation.resume(throwing: error)
             }
+        } onCancel: {
+            completion.resolve(.failure(CancellationError()))
         }
+
     }
 }

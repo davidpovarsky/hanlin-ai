@@ -63,6 +63,14 @@ final class HanlinScriptingPlatform {
 
     static let shared = HanlinScriptingPlatform()
 
+    // The canonical broker still owns authorization. It returns an admitted
+    // invocation to the scene/session that submitted it, not a global current UI.
+    private static var invocationPlatforms: [UUID: HanlinScriptingPlatform] = [:]
+
+    static func platform(forInvocationID id: UUID) -> HanlinScriptingPlatform {
+        invocationPlatforms[id] ?? shared
+    }
+
     private(set) var activity: Activity = .idle
     private(set) var preview: HanlinImportPreview?
     private(set) var authoringReport: HanlinMiniAppAuthoringReport?
@@ -179,6 +187,8 @@ final class HanlinScriptingPlatform {
     private var applicationServices: (any HanlinScriptingApplicationServices)?
     private var applicationServicesGeneration = UUID()
     private let initialization: Initialization
+    private let actionPresentationAllowed: Bool
+    private let registersForegroundContinuation: Bool
     private let locationService = HanlinAppleLocationService()
     private let healthService = HanlinAppleHealthService()
     private let notificationService = HanlinAppleNotificationService()
@@ -187,8 +197,11 @@ final class HanlinScriptingPlatform {
     private let stagingRoot: URL?
     private static let logger = Logger(subsystem: "com.hanlin.ai", category: "ScriptPackageInstall")
 
-    init(rootOverride: URL? = nil, initialization: Initialization = .live) {
+    init(rootOverride: URL? = nil, initialization: Initialization = .live,
+         actionPresentationAllowed: Bool = true, registersForegroundContinuation: Bool = true) {
         self.initialization = initialization
+        self.actionPresentationAllowed = actionPresentationAllowed
+        self.registersForegroundContinuation = registersForegroundContinuation
         initialization.registerExpoDefines()
         do {
             let metadata = try HanlinScriptingSDK.metadata()
@@ -258,7 +271,7 @@ final class HanlinScriptingPlatform {
     }
 
     private func registerWidgetHostActionContinuation() {
-        guard let extensionStore else { return }
+        guard registersForegroundContinuation, let extensionStore else { return }
         HanlinWidgetHostActionContinuation.register(owner: self, storeRoot: extensionStore.root) { [weak self] in
             await self?.resumePendingInvocations()
         }
@@ -505,6 +518,45 @@ final class HanlinScriptingPlatform {
         } catch {
             Self.logger.error("Foreground invocation queue could not be read.")
         }
+    }
+
+    /// Direct Shortcuts delivery uses the existing durable queue and executor.
+    /// A session owned by this call cannot replace a visible MiniApp's controller
+    /// or seize the foreground widget drain. No unrelated queued action is run.
+    func executeShortcutCommand(_ command: HanlinScriptResumeCommand) async throws -> HanlinValue {
+        guard command.invocation.delivery?.source == .shortcuts,
+              command.invocation.delivery?.canPresentUI == false,
+              !command.invocation.continueInForeground,
+              !isTransferringProductData,
+              let store, let extensionStore, let invocationExecutor else {
+            throw HanlinInvocationDispatchError(.failed, .invalidEnvelope)
+        }
+        activeStoreOperations += 1
+        defer { activeStoreOperations -= 1 }
+        await HanlinHostCapabilityAuthority.shared.usePackageGrantStore(store)
+        installedPackages = try await store.restore()
+        // This new surface exposes only the two active package engines.
+        guard let package = installedPackages.first(where: {
+            $0.record.installedPackageID == command.invocation.identity.installedPackageID
+        }), package.entrypoints.contains(where: {
+            $0.id == command.invocation.identity.entrypointID
+                && [.hanlinExpo, .hanlinNativeScript].contains($0.runtimeProfile)
+        }) else { throw HanlinInvocationDispatchError(.failed, .unsupportedEntrypoint) }
+        try extensionStore.enqueue(command)
+        let receipt = try await invocationExecutor.execute(command.id) { [weak self] command in
+            guard let self else { throw HanlinInvocationDispatchError(.failed, .unavailableHost) }
+            return try await self.dispatchResumeCommand(command)
+        }
+        guard let receipt else { throw HanlinInvocationQueueError.missingCommand }
+        if receipt.status == .succeeded { return receipt.value ?? .null }
+        if receipt.status == .queued {
+            // An unavailable one-isolate runtime has not executed anything.
+            // Do not run it unexpectedly after Shortcuts reports an error.
+            _ = try extensionStore.requestCancellation(command.id)
+            throw HanlinInvocationDispatchError(.needsForeground, .unavailableHost)
+        }
+        if receipt.status == .cancelled { throw CancellationError() }
+        throw HanlinInvocationDispatchError(receipt.status, receipt.failure ?? .actionFailed)
     }
 
     func resumeReceipt(_ id: UUID) throws -> HanlinInvocationReceipt? {
@@ -1063,6 +1115,7 @@ final class HanlinScriptingPlatform {
                     installedPackageID: package.record.installedPackageID,
                     grantedCapabilities: Set(package.grantedCapabilities.map(\.rawValue)),
                     sessionID: sessionID,
+                    canPresentUI: actionPresentationAllowed,
                     externalMiniAppOperation: externalMiniAppOperation,
                     preparedWidgetPublisher: { [weak self] entrypointID, variantID, props in
                         guard let self else { throw HanlinWidgetActionError.inactiveInstance }
@@ -1257,7 +1310,7 @@ final class HanlinScriptingPlatform {
             if activeApplicationID != package.record.installedPackageID {
                 guard !isLaunching else { throw HanlinInvocationNotStarted() }
                 await launch(package.record.installedPackageID)
-                if activeApplicationID == package.record.installedPackageID, activeExpoController != nil {
+                if actionPresentationAllowed, activeApplicationID == package.record.installedPackageID, activeExpoController != nil {
                     presentsForegroundAction = true
                 }
             }
@@ -1348,7 +1401,8 @@ final class HanlinScriptingPlatform {
             installedPackageID: package.record.installedPackageID,
             grantedCapabilities: Set(package.grantedCapabilities.map(\.rawValue)),
             sessionID: session.sessionID,
-            canPresentUI: false
+            canPresentUI: false,
+            externalMiniAppOperation: externalMiniAppOperation
         )
 
         HanlinNativeServicesBridge.register(adapter, forSessionID: session.sessionID)
@@ -2032,6 +2086,12 @@ final class HanlinScriptingPlatform {
             for command in pendingResumeCommands {
                 let expiresAt = command.invocation.delivery?.expiresAt
                     ?? command.createdAt.addingTimeInterval(86_400)
+                // Background Shortcuts owns its live intent invocation. A UI
+                // foreground drain must never steal it or replay abandoned work.
+                // Expired commands still reach the queue's terminal transition.
+                if expiresAt > .now, command.invocation.delivery?.source == .shortcuts,
+                   command.invocation.delivery?.canPresentUI == false,
+                   !command.invocation.continueInForeground { continue }
                 if expiresAt > .now,
                    let source = command.invocation.delivery?.source,
                    [.notification, .widget, .liveActivity].contains(source),
@@ -2125,6 +2185,12 @@ final class HanlinScriptingPlatform {
             throw HanlinInvocationDispatchError(.failed, .unsupportedEntrypoint)
         }
         if entrypoint.runtimeProfile == .hanlinNativeScript || entrypoint.runtimeProfile == .hanlinExpo {
+            Self.invocationPlatforms[command.id] = self
+            defer {
+                if Self.invocationPlatforms[command.id] === self {
+                    Self.invocationPlatforms.removeValue(forKey: command.id)
+                }
+            }
             let cleanActionName = actionName.components(separatedBy: "::").last ?? actionName
             guard let targetID = (try? HanlinAppID(validating: package.manifest?.hanlinAppID ?? identity.packageID.rawValue))
                     ?? (try? HanlinAppID(validating: identity.packageID.rawValue)),
