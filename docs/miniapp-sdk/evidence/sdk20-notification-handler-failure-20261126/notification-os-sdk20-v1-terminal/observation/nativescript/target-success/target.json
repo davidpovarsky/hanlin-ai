@@ -1,0 +1,357 @@
+{
+  "appID": "hanlin.demo.script-parity",
+  "entity": {
+    "displayName": "Perform HanlinScript Parity Intent",
+    "id": "parity.intent",
+    "identity": {
+      "entrypointID": "appIntent",
+      "generation": 2,
+      "installedPackageID": "install-hanlin.demo.script-parity",
+      "packageID": "hanlin.demo.script-parity",
+      "variantID": "default"
+    }
+  },
+  "package": {
+    "enabled": true,
+    "entrypoints": [
+      {
+        "artifactDigest": "211b704b5faaad6e24d66e9277d230d51b445d41c5325cf230052ec19dd5b81d",
+        "compatibility": "partial",
+        "id": "app",
+        "kind": "app",
+        "requiredCapabilities": [
+          {
+            "capabilityID": "inter-app.share",
+            "purpose": "Declared in package manifest.",
+            "required": false,
+            "scope": {
+              "type": "object",
+              "value": []
+            }
+          },
+          {
+            "capabilityID": "javascript",
+            "purpose": "Declared in package manifest.",
+            "required": false,
+            "scope": {
+              "type": "object",
+              "value": []
+            }
+          },
+          {
+            "capabilityID": "network",
+            "purpose": "Declared in package manifest.",
+            "required": false,
+            "scope": {
+              "type": "object",
+              "value": []
+            }
+          },
+          {
+            "capabilityID": "node",
+            "purpose": "Declared in package manifest.",
+            "required": false,
+            "scope": {
+              "type": "object",
+              "value": []
+            }
+          },
+          {
+            "capabilityID": "python",
+            "purpose": "Declared in package manifest.",
+            "required": false,
+            "scope": {
+              "type": "object",
+              "value": []
+            }
+          },
+          {
+            "capabilityID": "storage",
+            "purpose": "Declared in package manifest.",
+            "required": false,
+            "scope": {
+              "type": "object",
+              "value": []
+            }
+          }
+        ],
+        "runtimePolicyID": "foreground-app-v1",
+        "runtimeProfile": "hanlin-nativescript",
+        "sourcePath": "source/nativescript/app/bundle.mjs",
+        "supportedContexts": [
+          "mainApplication"
+        ]
+      },
+      {
+        "artifactDigest": "211b704b5faaad6e24d66e9277d230d51b445d41c5325cf230052ec19dd5b81d",
+        "compatibility": "partial",
+        "id": "appIntent",
+        "kind": "appIntent",
+        "requiredCapabilities": [
+          {
+            "capabilityID": "inter-app.share",
+            "purpose": "Declared in package manifest.",
+            "required": false,
+            "scope": {
+              "type": "object",
+              "value": []
+            }
+          },
+          {
+            "capabilityID": "javascript",
+            "purpose": "Declared in package manifest.",
+            "required": false,
+            "scope": {
+              "type": "object",
+              "value": []
+            }
+          },
+          {
+            "capabilityID": "network",
+            "purpose": "Declared in package manifest.",
+            "required": false,
+            "scope": {
+              "type": "object",
+              "value": []
+            }
+          },
+          {
+            "capabilityID": "node",
+            "purpose": "Declared in package manifest.",
+            "required": false,
+            "scope": {
+              "type": "object",
+              "value": []
+            }
+          },
+          {
+            "capabilityID": "python",
+            "purpose": "Declared in package manifest.",
+            "required": false,
+            "scope": {
+              "type": "object",
+              "value": []
+            }
+          },
+          {
+            "capabilityID": "storage",
+            "purpose": "Declared in package manifest.",
+            "required": false,
+            "scope": {
+              "type": "object",
+              "value": []
+            }
+          }
+        ],
+        "runtimePolicyID": "app-intent-v1",
+        "runtimeProfile": "hanlin-nativescript",
+        "sourcePath": "source/intent.json",
+        "supportedContexts": [
+          "appIntent"
+        ]
+      },
+      {
+        "artifactDigest": "211b704b5faaad6e24d66e9277d230d51b445d41c5325cf230052ec19dd5b81d",
+        "compatibility": "partial",
+        "id": "translationUI",
+        "kind": "translationUI",
+        "requiredCapabilities": [
+          {
+            "capabilityID": "inter-app.share",
+            "purpose": "Declared in package manifest.",
+            "required": false,
+            "scope": {
+              "type": "object",
+              "value": []
+            }
+          },
+          {
+            "capabilityID": "javascript",
+            "purpose": "Declared in package manifest.",
+            "required": false,
+            "scope": {
+              "type": "object",
+              "value": []
+            }
+          },
+          {
+            "capabilityID": "network",
+            "purpose": "Declared in package manifest.",
+            "required": false,
+            "scope": {
+              "type": "object",
+              "value": []
+            }
+          },
+          {
+            "capabilityID": "node",
+            "purpose": "Declared in package manifest.",
+            "required": false,
+            "scope": {
+              "type": "object",
+              "value": []
+            }
+          },
+          {
+            "capabilityID": "python",
+            "purpose": "Declared in package manifest.",
+            "required": false,
+            "scope": {
+              "type": "object",
+              "value": []
+            }
+          },
+          {
+            "capabilityID": "storage",
+            "purpose": "Declared in package manifest.",
+            "required": false,
+            "scope": {
+              "type": "object",
+              "value": []
+            }
+          }
+        ],
+        "runtimePolicyID": "translation-ui-v1",
+        "runtimeProfile": "hanlin-nativescript",
+        "sourcePath": "source/translation.json",
+        "supportedContexts": [
+          "translationUI"
+        ]
+      },
+      {
+        "artifactDigest": "211b704b5faaad6e24d66e9277d230d51b445d41c5325cf230052ec19dd5b81d",
+        "compatibility": "partial",
+        "id": "widget",
+        "kind": "widget",
+        "requiredCapabilities": [
+          {
+            "capabilityID": "inter-app.share",
+            "purpose": "Declared in package manifest.",
+            "required": false,
+            "scope": {
+              "type": "object",
+              "value": []
+            }
+          },
+          {
+            "capabilityID": "javascript",
+            "purpose": "Declared in package manifest.",
+            "required": false,
+            "scope": {
+              "type": "object",
+              "value": []
+            }
+          },
+          {
+            "capabilityID": "network",
+            "purpose": "Declared in package manifest.",
+            "required": false,
+            "scope": {
+              "type": "object",
+              "value": []
+            }
+          },
+          {
+            "capabilityID": "node",
+            "purpose": "Declared in package manifest.",
+            "required": false,
+            "scope": {
+              "type": "object",
+              "value": []
+            }
+          },
+          {
+            "capabilityID": "python",
+            "purpose": "Declared in package manifest.",
+            "required": false,
+            "scope": {
+              "type": "object",
+              "value": []
+            }
+          },
+          {
+            "capabilityID": "storage",
+            "purpose": "Declared in package manifest.",
+            "required": false,
+            "scope": {
+              "type": "object",
+              "value": []
+            }
+          }
+        ],
+        "runtimePolicyID": "widget-v1",
+        "runtimeProfile": "hanlin-nativescript",
+        "sourcePath": "source/widget.json",
+        "supportedContexts": [
+          "widget"
+        ],
+        "widgetEngine": "legacy"
+      }
+    ],
+    "grantedCapabilities": [
+      "inter-app.share",
+      "javascript",
+      "network",
+      "node",
+      "python",
+      "storage"
+    ],
+    "manifest": {
+      "actions": [
+        {
+          "capability": "inter-app.share",
+          "handler": "nativescript/app/bundle.mjs",
+          "id": "share.value",
+          "title": "Share Parity Value"
+        },
+        {
+          "capability": "inter-app.share",
+          "handler": "nativescript/app/bundle.mjs",
+          "id": "parity.intent",
+          "title": "Perform HanlinScript Parity Intent"
+        }
+      ],
+      "capabilities": [
+        "storage",
+        "network",
+        "node",
+        "python",
+        "javascript",
+        "inter-app.share"
+      ],
+      "category": "developer",
+      "color": "#10B981",
+      "contributors": [],
+      "description": "Real HanlinScript parity MiniApp with deterministic Node, Python, JavaScript, and HTTPS execution.",
+      "entry": "nativescript/app/bundle.mjs",
+      "hanlinAppID": "hanlin.demo.script-parity",
+      "hanlinRuntime": "hanlin-nativescript",
+      "icon": "terminal.fill",
+      "intentInputTypes": [],
+      "isBeta": true,
+      "localizedDescriptions": {},
+      "localizedNames": {},
+      "name": "HanlinScript Parity",
+      "runInApp": true,
+      "supportedExposures": [
+        "translation_ui",
+        "widget",
+        "app_intent"
+      ],
+      "version": "1.0.0"
+    },
+    "record": {
+      "activeGeneration": 2,
+      "artifactDigest": "211b704b5faaad6e24d66e9277d230d51b445d41c5325cf230052ec19dd5b81d",
+      "installedAt": 1795651565412.3892,
+      "installedPackageID": "install-hanlin.demo.script-parity",
+      "packageID": "hanlin.demo.script-parity",
+      "schemaVersion": 1,
+      "sourceDigest": "2e48509336edba2b301490422102dbf25cb7f1b894430d52994febdc1c33c199",
+      "updatedAt": 1795653373532.237,
+      "version": "1.0.0"
+    }
+  },
+  "registrySHA256": "db801d2532abdf4254e6793fa46fffafb8ba387dad5b35d99c07387283d88a22",
+  "revisionSHA256": "4f8632b0ead4a4bceb99b024cf24f98421f4586c2d4b3d76ab5117f7116cc36c"
+}

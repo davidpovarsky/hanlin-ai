@@ -1,0 +1,8 @@
+Traceback (most recent call last):
+  File "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Scripts/CI/observe_notification_os_delivery.py", line 334, in main
+    completion["observations"] = observe(
+                                 ^^^^^^^^
+  File "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Scripts/CI/observe_notification_os_delivery.py", line 277, in observe
+    and isinstance(decoded["counter"], int) and not isinstance(decoded["counter"], bool)
+                   ~~~~~~~^^^^^^^^^^^
+KeyError: 'counter'

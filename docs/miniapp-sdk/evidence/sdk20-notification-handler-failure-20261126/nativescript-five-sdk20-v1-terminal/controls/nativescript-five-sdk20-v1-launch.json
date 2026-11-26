@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "id": "nativescript-five-sdk20-v1",
+  "dispatchedAt": "2026-11-26T00:23:30.101431+00:00",
+  "pid": 65630,
+  "argv": [
+    "/opt/homebrew/opt/python@3.12/libexec/bin/python3",
+    "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/nativescript-five-sdk20-v1.py",
+    "--decision",
+    "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/nativescript-five-sdk20-v1-decision.json"
+  ],
+  "source": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+  "files": [
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/nativescript-five-sdk20-v1.py",
+      "bytes": 24538,
+      "sha256": "4d5799c415f979feca1ef72da2aea071e7c1b9d803fc463e1002cd51d55d284c"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/nativescript-five-sdk20-v1-decision.json",
+      "bytes": 24233,
+      "sha256": "1b17c3e7d5327731eb62be2c2b98f8d9262c638fde0ce62091621f052177bea4"
+    }
+  ],
+  "output": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/nativescript-five-sdk20-v1",
+  "log": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/nativescript-five-sdk20-v1-launch.log",
+  "actualStatus": "DISPATCHED_NOT_YET_OBSERVED"
+}

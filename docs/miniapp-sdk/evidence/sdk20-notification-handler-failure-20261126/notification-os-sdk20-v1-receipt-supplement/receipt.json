@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "observedAt": "2026-11-26T00:40:44.540384+00:00",
+  "terminal": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-os-sdk20-v1/state.json",
+    "bytes": 12677,
+    "sha256": "1b497fd6b2f9c60eecbc6980b0ee89dc1917290d854f33cfa99ca67b7ee2d1b3"
+  },
+  "eventID": "92b8db9f-87f8-4e99-b1be-8a5e70066b67",
+  "requestedRecordPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/ED1C7CA0-C85E-41DF-918F-3C9C9033F73E/data/Containers/Shared/AppGroup/CA9195C2-C33E-4502-9BC4-1241ACB52501/HanlinMiniApps/v1/ScriptingExtensions/ResumeQueue/Receipts/92b8db9f-87f8-4e99-b1be-8a5e70066b67.json",
+  "recordExists": true,
+  "boundary": "Read-only exact existing receipt for the actual original NS notification UUID after clean terminal. No queue/receipt/source mutation, boot, event injection or retry.",
+  "files": [
+    {
+      "name": "app-group-metadata.plist",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/ED1C7CA0-C85E-41DF-918F-3C9C9033F73E/data/Containers/Shared/AppGroup/CA9195C2-C33E-4502-9BC4-1241ACB52501/.com.apple.mobile_container_manager.metadata.plist",
+      "bytes": 606,
+      "sha256": "f9b86637724431e1b7bc68a13e058889284d9035636ba890c29826b9c4cc0cd2",
+      "mtimeNs": "1795650207594577661",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-receipt-supplement/app-group-metadata.plist"
+    },
+    {
+      "name": "nativescript-actual-receipt.json",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/ED1C7CA0-C85E-41DF-918F-3C9C9033F73E/data/Containers/Shared/AppGroup/CA9195C2-C33E-4502-9BC4-1241ACB52501/HanlinMiniApps/v1/ScriptingExtensions/ResumeQueue/Receipts/92b8db9f-87f8-4e99-b1be-8a5e70066b67.json",
+      "bytes": 1595,
+      "sha256": "117b11837fb81b13024482e02be2eda01f7e6ed0b2cce93a4059febb81470af8",
+      "mtimeNs": "1795653383616288671",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-receipt-supplement/nativescript-actual-receipt.json"
+    }
+  ]
+}

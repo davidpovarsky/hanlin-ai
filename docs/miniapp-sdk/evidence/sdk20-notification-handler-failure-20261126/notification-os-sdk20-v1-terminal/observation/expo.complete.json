@@ -1,0 +1,402 @@
+{
+  "boundary": "Foreground simulator OS ingress and actual installed action receipts. No real APNs provider, service-extension invocation, background or physical-device result is inferred.",
+  "challenge": "notification-os-ff86a083-2ff7-4f74-a03d-e8f24bcc95bb",
+  "finishedAt": "2026-11-26T00:35:57.679265+00:00",
+  "observations": [
+    {
+      "decodedValue": {
+        "action": "hostServicesEcho",
+        "caller": "hanlin.host",
+        "computed": 42,
+        "id": "36B3947A-0D5F-49E9-8CAD-F629D0954C0D",
+        "parameters": {
+          "challenge": "notification-os-ff86a083-2ff7-4f74-a03d-e8f24bcc95bb",
+          "ordinal": 41,
+          "unicode": "שלום🙂"
+        },
+        "storageVerified": true
+      },
+      "duplicateCallbackIndependentlyObserved": null,
+      "kind": "success",
+      "push": {
+        "command": [
+          "xcrun",
+          "simctl",
+          "push",
+          "ED1C7CA0-C85E-41DF-918F-3C9C9033F73E",
+          "com.itorah.hanlinminiapps",
+          "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-os-sdk20-v1/observation/expo/success.apns"
+        ],
+        "elapsedSeconds": 0.21126562499557622,
+        "finishedAt": "2026-11-26T00:35:53.820777+00:00",
+        "returncode": 0,
+        "startedAt": "2026-11-26T00:35:53.609514+00:00",
+        "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutSHA256": "e9e8e05b56ea95010358548e736ff4fc26783439d5377a8a11542b68e92359ca"
+      },
+      "pushExitCode": 0,
+      "record": {
+        "createdAt": 1795653353608,
+        "deliverySchemaVersion": 1,
+        "id": "36B3947A-0D5F-49E9-8CAD-F629D0954C0D",
+        "invocation": {
+          "continueInForeground": true,
+          "delivery": {
+            "appID": "script-ec17057f5a2c82aaed6ab6ca",
+            "canPresentUI": false,
+            "expectedResult": "value",
+            "expiresAt": 1795653533608,
+            "idempotent": false,
+            "maximumAttempts": 1,
+            "schemaVersion": 1,
+            "source": "notification",
+            "userGesturePresent": false
+          },
+          "entityID": "hostServicesEcho",
+          "identity": {
+            "entrypointID": "hostServicesEcho",
+            "generation": 11,
+            "installedPackageID": "install-script-ec17057f5a2c82aaed6ab6ca",
+            "packageID": "script-ec17057f5a2c82aaed6ab6ca",
+            "variantID": "default"
+          },
+          "parameters": {
+            "type": "object",
+            "value": [
+              {
+                "key": "challenge",
+                "value": {
+                  "type": "string",
+                  "value": "notification-os-ff86a083-2ff7-4f74-a03d-e8f24bcc95bb"
+                }
+              },
+              {
+                "key": "ordinal",
+                "value": {
+                  "type": "integer",
+                  "value": "41"
+                }
+              },
+              {
+                "key": "unicode",
+                "value": {
+                  "type": "string",
+                  "value": "שלום🙂"
+                }
+              }
+            ]
+          }
+        },
+        "receipt": {
+          "attempt": 1,
+          "cancellationRequested": false,
+          "invocationID": "36B3947A-0D5F-49E9-8CAD-F629D0954C0D",
+          "status": "succeeded",
+          "updatedAt": 1795653353827.5881,
+          "value": {
+            "type": "object",
+            "value": [
+              {
+                "key": "action",
+                "value": {
+                  "type": "string",
+                  "value": "hostServicesEcho"
+                }
+              },
+              {
+                "key": "caller",
+                "value": {
+                  "type": "string",
+                  "value": "hanlin.host"
+                }
+              },
+              {
+                "key": "computed",
+                "value": {
+                  "type": "integer",
+                  "value": "42"
+                }
+              },
+              {
+                "key": "id",
+                "value": {
+                  "type": "string",
+                  "value": "36B3947A-0D5F-49E9-8CAD-F629D0954C0D"
+                }
+              },
+              {
+                "key": "parameters",
+                "value": {
+                  "type": "object",
+                  "value": [
+                    {
+                      "key": "challenge",
+                      "value": {
+                        "type": "string",
+                        "value": "notification-os-ff86a083-2ff7-4f74-a03d-e8f24bcc95bb"
+                      }
+                    },
+                    {
+                      "key": "ordinal",
+                      "value": {
+                        "type": "integer",
+                        "value": "41"
+                      }
+                    },
+                    {
+                      "key": "unicode",
+                      "value": {
+                        "type": "string",
+                        "value": "שלום🙂"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "key": "storageVerified",
+                "value": {
+                  "type": "bool",
+                  "value": true
+                }
+              }
+            ]
+          }
+        }
+      },
+      "recordPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/ED1C7CA0-C85E-41DF-918F-3C9C9033F73E/data/Containers/Shared/AppGroup/CA9195C2-C33E-4502-9BC4-1241ACB52501/HanlinMiniApps/v1/ScriptingExtensions/ResumeQueue/Receipts/36b3947a-0d5f-49e9-8cad-f629d0954c0d.json",
+      "recordSHA256": "bc467468c1bd20dc94ab3de17e3c5002ef27feff1e775d7ec3bd482000e709c6"
+    },
+    {
+      "decodedValue": {
+        "action": "hostServicesEcho",
+        "caller": "hanlin.host",
+        "computed": 42,
+        "id": "36B3947A-0D5F-49E9-8CAD-F629D0954C0D",
+        "parameters": {
+          "challenge": "notification-os-ff86a083-2ff7-4f74-a03d-e8f24bcc95bb",
+          "ordinal": 41,
+          "unicode": "שלום🙂"
+        },
+        "storageVerified": true
+      },
+      "duplicateCallbackIndependentlyObserved": false,
+      "kind": "duplicate",
+      "push": {
+        "command": [
+          "xcrun",
+          "simctl",
+          "push",
+          "ED1C7CA0-C85E-41DF-918F-3C9C9033F73E",
+          "com.itorah.hanlinminiapps",
+          "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-os-sdk20-v1/observation/expo/duplicate.apns"
+        ],
+        "elapsedSeconds": 0.1566362500016112,
+        "finishedAt": "2026-11-26T00:35:54.189327+00:00",
+        "returncode": 0,
+        "startedAt": "2026-11-26T00:35:54.032683+00:00",
+        "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutSHA256": "e9e8e05b56ea95010358548e736ff4fc26783439d5377a8a11542b68e92359ca"
+      },
+      "pushExitCode": 0,
+      "record": {
+        "createdAt": 1795653353608,
+        "deliverySchemaVersion": 1,
+        "id": "36B3947A-0D5F-49E9-8CAD-F629D0954C0D",
+        "invocation": {
+          "continueInForeground": true,
+          "delivery": {
+            "appID": "script-ec17057f5a2c82aaed6ab6ca",
+            "canPresentUI": false,
+            "expectedResult": "value",
+            "expiresAt": 1795653533608,
+            "idempotent": false,
+            "maximumAttempts": 1,
+            "schemaVersion": 1,
+            "source": "notification",
+            "userGesturePresent": false
+          },
+          "entityID": "hostServicesEcho",
+          "identity": {
+            "entrypointID": "hostServicesEcho",
+            "generation": 11,
+            "installedPackageID": "install-script-ec17057f5a2c82aaed6ab6ca",
+            "packageID": "script-ec17057f5a2c82aaed6ab6ca",
+            "variantID": "default"
+          },
+          "parameters": {
+            "type": "object",
+            "value": [
+              {
+                "key": "challenge",
+                "value": {
+                  "type": "string",
+                  "value": "notification-os-ff86a083-2ff7-4f74-a03d-e8f24bcc95bb"
+                }
+              },
+              {
+                "key": "ordinal",
+                "value": {
+                  "type": "integer",
+                  "value": "41"
+                }
+              },
+              {
+                "key": "unicode",
+                "value": {
+                  "type": "string",
+                  "value": "שלום🙂"
+                }
+              }
+            ]
+          }
+        },
+        "receipt": {
+          "attempt": 1,
+          "cancellationRequested": false,
+          "invocationID": "36B3947A-0D5F-49E9-8CAD-F629D0954C0D",
+          "status": "succeeded",
+          "updatedAt": 1795653353827.5881,
+          "value": {
+            "type": "object",
+            "value": [
+              {
+                "key": "action",
+                "value": {
+                  "type": "string",
+                  "value": "hostServicesEcho"
+                }
+              },
+              {
+                "key": "caller",
+                "value": {
+                  "type": "string",
+                  "value": "hanlin.host"
+                }
+              },
+              {
+                "key": "computed",
+                "value": {
+                  "type": "integer",
+                  "value": "42"
+                }
+              },
+              {
+                "key": "id",
+                "value": {
+                  "type": "string",
+                  "value": "36B3947A-0D5F-49E9-8CAD-F629D0954C0D"
+                }
+              },
+              {
+                "key": "parameters",
+                "value": {
+                  "type": "object",
+                  "value": [
+                    {
+                      "key": "challenge",
+                      "value": {
+                        "type": "string",
+                        "value": "notification-os-ff86a083-2ff7-4f74-a03d-e8f24bcc95bb"
+                      }
+                    },
+                    {
+                      "key": "ordinal",
+                      "value": {
+                        "type": "integer",
+                        "value": "41"
+                      }
+                    },
+                    {
+                      "key": "unicode",
+                      "value": {
+                        "type": "string",
+                        "value": "שלום🙂"
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "key": "storageVerified",
+                "value": {
+                  "type": "bool",
+                  "value": true
+                }
+              }
+            ]
+          }
+        }
+      },
+      "recordPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/ED1C7CA0-C85E-41DF-918F-3C9C9033F73E/data/Containers/Shared/AppGroup/CA9195C2-C33E-4502-9BC4-1241ACB52501/HanlinMiniApps/v1/ScriptingExtensions/ResumeQueue/Receipts/36b3947a-0d5f-49e9-8cad-f629d0954c0d.json",
+      "recordSHA256": "bc467468c1bd20dc94ab3de17e3c5002ef27feff1e775d7ec3bd482000e709c6"
+    },
+    {
+      "decodedValue": null,
+      "duplicateCallbackIndependentlyObserved": null,
+      "kind": "failure",
+      "push": {
+        "command": [
+          "xcrun",
+          "simctl",
+          "push",
+          "ED1C7CA0-C85E-41DF-918F-3C9C9033F73E",
+          "com.itorah.hanlinminiapps",
+          "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-os-sdk20-v1/observation/expo/failure.apns"
+        ],
+        "elapsedSeconds": 0.17372550000436604,
+        "finishedAt": "2026-11-26T00:35:57.468667+00:00",
+        "returncode": 0,
+        "startedAt": "2026-11-26T00:35:57.294951+00:00",
+        "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "stdoutSHA256": "e9e8e05b56ea95010358548e736ff4fc26783439d5377a8a11542b68e92359ca"
+      },
+      "pushExitCode": 0,
+      "record": {
+        "createdAt": 1795653357293,
+        "deliverySchemaVersion": 1,
+        "id": "47F9FCA1-313B-4F8E-B6CB-F61964268164",
+        "invocation": {
+          "continueInForeground": true,
+          "delivery": {
+            "appID": "script-ec17057f5a2c82aaed6ab6ca",
+            "canPresentUI": false,
+            "expectedResult": "value",
+            "expiresAt": 1795653537293,
+            "idempotent": false,
+            "maximumAttempts": 1,
+            "schemaVersion": 1,
+            "source": "notification",
+            "userGesturePresent": false
+          },
+          "entityID": "hostServicesFail",
+          "identity": {
+            "entrypointID": "hostServicesFail",
+            "generation": 11,
+            "installedPackageID": "install-script-ec17057f5a2c82aaed6ab6ca",
+            "packageID": "script-ec17057f5a2c82aaed6ab6ca",
+            "variantID": "default"
+          },
+          "parameters": {
+            "type": "null"
+          }
+        },
+        "receipt": {
+          "attempt": 1,
+          "cancellationRequested": false,
+          "failure": "actionFailed",
+          "invocationID": "47F9FCA1-313B-4F8E-B6CB-F61964268164",
+          "status": "failed",
+          "updatedAt": 1795653357485.4321
+        }
+      },
+      "recordPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/ED1C7CA0-C85E-41DF-918F-3C9C9033F73E/data/Containers/Shared/AppGroup/CA9195C2-C33E-4502-9BC4-1241ACB52501/HanlinMiniApps/v1/ScriptingExtensions/ResumeQueue/Receipts/47f9fca1-313b-4f8e-b6cb-f61964268164.json",
+      "recordSHA256": "6dc2ca9fc84af6ebece82e94b1c1d5327071e3cddd1db89db5792c2ed3391274"
+    }
+  ],
+  "runID": "d261a009-0195-48f1-81db-c0cd7047438e",
+  "runtime": "expo",
+  "status": "EXECUTED_PASS",
+  "transport": "simctl_push",
+  "version": 1
+}

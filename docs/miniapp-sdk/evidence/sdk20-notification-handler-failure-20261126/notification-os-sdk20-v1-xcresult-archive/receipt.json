@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "capturedAt": "2026-11-26T00:39:07.843845+00:00",
+  "terminal": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-os-sdk20-v1/state.json",
+    "bytes": 12677,
+    "sha256": "1b497fd6b2f9c60eecbc6980b0ee89dc1917290d854f33cfa99ca67b7ee2d1b3",
+    "status": "FAILED"
+  },
+  "roots": [
+    "NotificationOS.xcresult"
+  ],
+  "missing": [],
+  "archive": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-xcresult-archive/original-notification-result.tar.gz",
+    "bytes": 200519680,
+    "sha256": "61ba4f91ccdd86908d7f8ea9c86169932675f5ea9b5a53ca07ce0cfa2ec1322a"
+  },
+  "manifest": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-xcresult-archive/original-results-manifest.json",
+    "bytes": 50879,
+    "sha256": "190ea4b853a090c21e1a98d67a90dc2074b60c15206f55b8a9bb7aad8ee74ec2"
+  },
+  "verified": {
+    "members": 136,
+    "regularFiles": 134,
+    "rawFileBytes": 201369114,
+    "allSHA256AndSizesAndModesAndOwners": true
+  },
+  "restoreParent": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-os-sdk20-v1/test",
+  "boundary": "Read-only finalized original result bundles streamed over pinned SSH and independently verified member by member on Oracle. No Mac result was removed; no new test, export transformation or simulator operation."
+}

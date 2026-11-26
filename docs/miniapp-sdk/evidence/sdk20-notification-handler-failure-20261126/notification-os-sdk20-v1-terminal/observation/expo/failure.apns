@@ -1,0 +1,24 @@
+{
+  "aps": {
+    "alert": {
+      "body": "expo",
+      "title": "Hanlin notification probe"
+    }
+  },
+  "hanlin-miniapp-event": {
+    "actionID": "hostServicesFail",
+    "appID": "script-ec17057f5a2c82aaed6ab6ca",
+    "createdAtUnixMilliseconds": 1795653357293,
+    "expiresAtUnixMilliseconds": 1795653537293,
+    "id": "47f9fca1-313b-4f8e-b6cb-f61964268164",
+    "identity": {
+      "entrypointID": "hostServicesFail",
+      "generation": 11,
+      "installedPackageID": "install-script-ec17057f5a2c82aaed6ab6ca",
+      "packageID": "script-ec17057f5a2c82aaed6ab6ca",
+      "variantID": "default"
+    },
+    "parameters": null,
+    "schemaVersion": 1
+  }
+}

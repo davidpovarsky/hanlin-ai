@@ -1,0 +1,280 @@
+{
+  "schema": 1,
+  "id": "notification-os-sdk20-v1",
+  "owner": "/root/native_execution",
+  "source": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+  "compiledConsumerSource": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+  "SDKProducerSource": "dff3b45c99a57bf8fe8ec721db3fa1fafce7134b",
+  "status": "FAILED",
+  "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines",
+  "expectedTests": 1,
+  "controllerPID": 73039,
+  "allowanceSeconds": 900,
+  "decisionSHA256": "fbacbfb0a21b33de935d17dab14a2cdd0d7ba9588998b5f7977816a544897f0f",
+  "remainingAllowanceSeconds": 717.9473176670144,
+  "componentHistory": [
+    {
+      "id": "historical-native-aggregate",
+      "host": "primary-mac",
+      "seconds": 25438.734638920043,
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-history/historical-os-recovery-ledger.json",
+        "bytes": 3201,
+        "sha256": "cfa1ab524fe4c871268b2b364d3bf73dc0d5fd30bb1e584fa002a934771ac62f"
+      },
+      "accountingRelation": "Historical cumulativeActiveSeconds already includes original OS 897.3027506670041 and independent OS recovery 233.90022650000174. Preserve as one historical aggregate; do not add those children again. Not charged to this new 14400-second ledger."
+    },
+    {
+      "id": "focused-notification-wire-unit",
+      "host": "primary-mac",
+      "seconds": 86.5407380000106,
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-history/focused-wire-unit-state.json",
+        "bytes": 2488,
+        "sha256": "95d72c8829b026d2e61b08c037e0cc6a332c2ccd0cdb5ea13d391b174c7aef80"
+      },
+      "accountingRelation": "Separate measured focused unit execution after the historical aggregate. This timing authority is not a substitute for original whole-run acceptance and is not charged to this new ledger."
+    },
+    {
+      "id": "oracle-sdk20-original-preparation",
+      "host": "oracle-linux-arm64",
+      "seconds": 360.1092938221991,
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-history/oracle-sdk20-verification.json",
+        "bytes": 6485,
+        "sha256": "8c33bf22355ab2749f81c8abc5fa0b08ef8fe87fca78077512f35060d789f21d"
+      },
+      "accountingRelation": "Separate Oracle preparation on a different host; not included in historical Mac aggregate or this new Mac run. No combined cross-host total is asserted."
+    },
+    {
+      "id": "native-input-restoration",
+      "host": "primary-mac",
+      "seconds": 54.375687207997544,
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-wire-input-restoration-v1/state.json",
+        "bytes": 7747,
+        "sha256": "12322840e33a7d48464b484932f7546fb265b6defae1dbb2396039a25493cba9"
+      },
+      "accountingRelation": "Separate measured input restoration, recorded before native preparation and excluded from that preparation ledger and this new ledger."
+    },
+    {
+      "id": "native-dependency-preparation",
+      "host": "primary-mac",
+      "seconds": 303.8050289590028,
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/ledger.json",
+        "bytes": 1884,
+        "sha256": "26a4bc05363573082404f43e604678e8126c37afb9493096e2c8764993c92fdd"
+      },
+      "accountingRelation": "Includes exact failed v1 and v2 charges, measured CMake installation, and successful v3 phase. Do not add their child charges again; not charged to this new 14400-second whole-run ledger."
+    },
+    {
+      "id": "original-config-materialization",
+      "host": "primary-mac",
+      "seconds": 0.0022692089987685904,
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/config-materialization.json",
+        "bytes": 658,
+        "sha256": "d9647613e2110f4bba9afee6b552bf43dff84964e5bb08d16eb3225191a767c0"
+      },
+      "accountingRelation": "Separate exact original-workflow config materialization after native preparation; not included in that ledger or this new run."
+    },
+    {
+      "id": "paired52-sdk20-v1",
+      "seconds": 2501.629630375013,
+      "status": "FAILED",
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v1/ledger.json",
+        "bytes": 4713,
+        "sha256": "f62166616dc312aa689cc2543bbe1f0ca1c9e75d619c0061bccda4f1c488e75f"
+      },
+      "accountingRelation": "Actual earlier charge within the original14400 whole-run scope, retained once; not charged to this new companion ledger."
+    },
+    {
+      "id": "probe-fixture-sdk20-preparation-v1",
+      "seconds": 49.427906917000655,
+      "status": "SOURCE_CHANGED",
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/probe-fixture-sdk20-preparation-v1/ledger.json",
+        "bytes": 1331,
+        "sha256": "fd4e5beca04d71756853be1b9f0badb74f0d0d58bee6213782c22fac2782b4b1"
+      },
+      "originalProducerExitCode": 0,
+      "reconciliation": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/probe-fixture-sdk20-preparation-v1/hosted-git-predicate-reconciliation.json",
+        "bytes": 6858,
+        "sha256": "449cc069f7e23873b6da57e3af283ae0f135ac25d0d8677157e2d9978b1a0651"
+      },
+      "accountingRelation": "Actual earlier charge within the original14400 whole-run scope, retained once; not charged to this new companion ledger."
+    },
+    {
+      "id": "paired52-sdk20-v2",
+      "seconds": 2367.7255637079943,
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/ledger.json",
+        "bytes": 6158,
+        "sha256": "62fec27bb62ea8be73c70ce3386ab9382aedc82bb75aa4e91f3bde9f0e078ea8"
+      },
+      "accountingRelation": "Separate actual current original full52 run. Not charged again to this new companion ledger."
+    },
+    {
+      "id": "nativescript-five-sdk20-v1",
+      "seconds": 171.6645217910118,
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/nativescript-five-sdk20-v1/ledger.json",
+        "bytes": 6344,
+        "sha256": "d1c5e8a6e9a890bc319b6afc914d0b41e1038485c2b4f7c675bf44dc51085168"
+      },
+      "accountingRelation": "Separate actual current NativeScript five-runtime case. Not charged again to the new OS ledger."
+    }
+  ],
+  "historicalOSChargedSeconds": 897.3027506670041,
+  "historicalIndependentOSRecoverySeconds": 233.90022650000174,
+  "historicalAggregateSecondsIncludingBothOSScopes": 25438.734638920043,
+  "ownedSimulator": {
+    "dataPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/ED1C7CA0-C85E-41DF-918F-3C9C9033F73E/data",
+    "dataPathSize": 6085431296,
+    "logPath": "/Users/m1/Library/Logs/CoreSimulator/ED1C7CA0-C85E-41DF-918F-3C9C9033F73E",
+    "udid": "ED1C7CA0-C85E-41DF-918F-3C9C9033F73E",
+    "lastUsedAt": "2026-11-25T23:39:08Z",
+    "isAvailable": true,
+    "logPathSize": 323584,
+    "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5-16GB",
+    "state": "Shutdown",
+    "name": "HanlinPaired-paired52-sdk20-v2"
+  },
+  "currentPairedTerminal": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/state.json",
+    "bytes": 12578,
+    "sha256": "71a93134e5d50959d368d3bec2e10cde7f2214fab05606da702d75cd7da87b6b"
+  },
+  "currentNativeScriptTerminal": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/nativescript-five-sdk20-v1/state.json",
+    "bytes": 8233,
+    "sha256": "4400cba15a0d1412791c9da9cbf20897ddc99b2f056674a91197af32d6595361"
+  },
+  "directArtifactObservation": {
+    "kind": "UNCHANGED_PREBUILT_XCTESTRUN",
+    "xctestrun": {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/HanlinMiniApps_iphonesimulator27.0-arm64.xctestrun",
+      "bytes": 16737,
+      "sha256": "2d6b493aa93663d03e17a15722eab010326b260ccbbb454ed12077cae45cda96"
+    }
+  },
+  "resourceObservationAtLaunch": {
+    "observedAt": "2026-11-26T00:33:30.462986+00:00",
+    "freeBytes": 114844495872,
+    "df": "Filesystem   1024-blocks      Used Available Capacity iused      ifree %iused  Mounted on\n/dev/disk3s5   482797652 324662756 112152828    75% 4110405 1121528280    0%   /System/Volumes/Data"
+  },
+  "boundary": "New current-source OS observation only. Original full52 and NS-five results and all historical ledgers remain immutable.",
+  "startedAt": "2026-11-26T00:33:30.463832+00:00",
+  "ownedProcessGroups": {
+    "setup": {
+      "pid": 73103,
+      "pgid": 73103,
+      "argv": [
+        "/opt/homebrew/opt/python@3.12/bin/python3.12",
+        "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-os-sdk20-v1.py",
+        "--decision",
+        "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-os-sdk20-v1/decision.json",
+        "--child",
+        "setup"
+      ]
+    },
+    "test": {
+      "pid": 73717,
+      "pgid": 73717,
+      "argv": [
+        "/opt/homebrew/opt/python@3.12/bin/python3.12",
+        "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-os-sdk20-v1.py",
+        "--decision",
+        "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-os-sdk20-v1/decision.json",
+        "--child",
+        "test"
+      ]
+    },
+    "worker": {
+      "pid": 74393,
+      "pgid": 74393,
+      "argv": [
+        "/opt/homebrew/opt/python@3.12/bin/python3.12",
+        "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Scripts/CI/observe_notification_os_delivery.py",
+        "--device",
+        "ED1C7CA0-C85E-41DF-918F-3C9C9033F73E",
+        "--runner-data",
+        "/Users/m1/Library/Developer/CoreSimulator/Devices/ED1C7CA0-C85E-41DF-918F-3C9C9033F73E/data/Containers/Data/Application/E2F60B87-0360-435F-B6C8-E8E18C35B53C",
+        "--app-data",
+        "/Users/m1/Library/Developer/CoreSimulator/Devices/ED1C7CA0-C85E-41DF-918F-3C9C9033F73E/data/Containers/Data/Application/3227898D-8DB1-4E62-9183-08A37A4C4883",
+        "--app-group",
+        "/Users/m1/Library/Developer/CoreSimulator/Devices/ED1C7CA0-C85E-41DF-918F-3C9C9033F73E/data/Containers/Shared/AppGroup/CA9195C2-C33E-4502-9BC4-1241ACB52501",
+        "--output",
+        "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-os-sdk20-v1/observation",
+        "--started-after",
+        "1795653241.817298",
+        "--timeout",
+        "650"
+      ]
+    }
+  },
+  "elapsedSeconds": 182.05268233298557,
+  "executionContainersSHA256": "50f7d4524608c5bb0d36961dafe31b762052f03c3c133186c8d63b909e54ea03",
+  "reboundContainersSHA256": "d8dd06810dc8600fb99f99ea06e86a83b312f761c85fe738cdd133a042f28612",
+  "exchangeStartedAfter": 1795653241.817298,
+  "activeIdentity": {
+    "challenge": "notification-os-ff86a083-2ff7-4f74-a03d-e8f24bcc95bb",
+    "runID": "d261a009-0195-48f1-81db-c0cd7047438e",
+    "version": 1
+  },
+  "workerPID": 74393,
+  "testPID": 73717,
+  "testExitCode": 1,
+  "workerExitCode": 1,
+  "error": "RuntimeError: Original selected XCTest/verification failed",
+  "ownedGroupsAtCleanup": {
+    "setup": [],
+    "test": [],
+    "worker": []
+  },
+  "observedExitCodes": {
+    "setup": 0,
+    "test": 1,
+    "worker": 1
+  },
+  "remainingOwnedProcessGroups": {
+    "setup": [],
+    "test": [],
+    "worker": []
+  },
+  "ownedSimulatorCleanup": {
+    "device": "ED1C7CA0-C85E-41DF-918F-3C9C9033F73E",
+    "ownership": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/created-simulator.txt",
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": "",
+    "observedState": "Shutdown",
+    "observedAt": "2026-11-26T00:36:31.017708+00:00"
+  },
+  "cleanupErrors": [],
+  "sourceErrors": [],
+  "finishedAt": "2026-11-26T00:36:32.519148+00:00",
+  "chargedSeconds": 182.05268233298557,
+  "overrunSeconds": 0.0,
+  "processLogs": [
+    {
+      "path": "test.log",
+      "bytes": 2964,
+      "sha256": "1e32979f224fa24d146ae7cbd9abf9b5a65b645bab084260c69ee3ab512cd1bb"
+    },
+    {
+      "path": "worker.log",
+      "bytes": 628,
+      "sha256": "02964b9c91ea49409051f74e7e5319b5be8659ce621c1112838b4f7d68c69102"
+    },
+    {
+      "path": "setup.log",
+      "bytes": 2561,
+      "sha256": "fb1572dfa9fb6db5508231cc6abac1a5de1dbd6a886a6e021509aef1daa61b1e"
+    }
+  ],
+  "chargeCommitted": true
+}

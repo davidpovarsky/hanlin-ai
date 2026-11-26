@@ -1,0 +1,733 @@
+{
+  "schema": 1,
+  "at": "2026-11-26T01:05:00.678288+00:00",
+  "members": [
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/receipt.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/nativescript-five-sdk20-v1-terminal/receipt.json",
+      "bytes": 14082,
+      "sha256": "da3efa3484075bf73c7fd363228b0f94afdb23a7b2acdeb49cc55eedb2028c5e"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/decision.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/nativescript-five-sdk20-v1-terminal/decision.json",
+      "bytes": 24233,
+      "sha256": "1b17c3e7d5327731eb62be2c2b98f8d9262c638fde0ce62091621f052177bea4"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/execution-environment.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/nativescript-five-sdk20-v1-terminal/execution-environment.json",
+      "bytes": 917,
+      "sha256": "25aec12400438cb63d79af48e386e6a9cc81677d4afb19dcb5f906175dc91653"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/ledger.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/nativescript-five-sdk20-v1-terminal/ledger.json",
+      "bytes": 6344,
+      "sha256": "d1c5e8a6e9a890bc319b6afc914d0b41e1038485c2b4f7c675bf44dc51085168"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/native-child.log.gz",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/nativescript-five-sdk20-v1-terminal/native-child.log.gz",
+      "bytes": 357,
+      "sha256": "0ba626375dad4c93995c3b2fe3d4924f4fc64c5fbf4b30a1ac19f22bdee026fc"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/paired-state-before.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/nativescript-five-sdk20-v1-terminal/paired-state-before.json",
+      "bytes": 12578,
+      "sha256": "71a93134e5d50959d368d3bec2e10cde7f2214fab05606da702d75cd7da87b6b"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/state.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/nativescript-five-sdk20-v1-terminal/state.json",
+      "bytes": 8233,
+      "sha256": "4400cba15a0d1412791c9da9cbf20897ddc99b2f056674a91197af32d6595361"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/native-result/active-command.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/nativescript-five-sdk20-v1-terminal/native-result/active-command.json",
+      "bytes": 709,
+      "sha256": "270f28dfa3ddb0be3d161db3f46dfa96681fec19a6a631751aa4fa0128d7395d"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/native-result/boot-retained-owned-simulator.log.gz",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/nativescript-five-sdk20-v1-terminal/native-result/boot-retained-owned-simulator.log.gz",
+      "bytes": 20,
+      "sha256": "abfbb86f9f5ddfbd9fc1a72c43ab384702ce8bae86b60f3324748485e235e61e"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/native-result/bootstatus.log.gz",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/nativescript-five-sdk20-v1-terminal/native-result/bootstatus.log.gz",
+      "bytes": 283,
+      "sha256": "e0702438d624239351709f738d75188474eb3142a02a9f15e9b03997d639e407"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/native-result/command-events.jsonl.gz",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/nativescript-five-sdk20-v1-terminal/native-result/command-events.jsonl.gz",
+      "bytes": 1919,
+      "sha256": "a22677684f625f49dd1493c6dc33c1f4725d60b032af9a218b70cafade7ec44d"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/native-result/commands.jsonl.gz",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/nativescript-five-sdk20-v1-terminal/native-result/commands.jsonl.gz",
+      "bytes": 1200,
+      "sha256": "d6e7e18711e9794d90e73264a6aa0b32db43c07abec026de8354e52faaa32fe6"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/native-result/devices-before.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/nativescript-five-sdk20-v1-terminal/native-result/devices-before.json",
+      "bytes": 24611,
+      "sha256": "4f416c5027cc420411049ba2356ffadc3ba96eeaec281315c49b272eac2e0bc3"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/native-result/ns5-nodes.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/nativescript-five-sdk20-v1-terminal/native-result/ns5-nodes.json",
+      "bytes": 1806,
+      "sha256": "ef673322d637e8e6ac4553d3bfb434cc7731f7841ec2125cd5b544c3383e02b6"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/native-result/ns5-selected-tests.log.gz",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/nativescript-five-sdk20-v1-terminal/native-result/ns5-selected-tests.log.gz",
+      "bytes": 75,
+      "sha256": "640232ab2a02d5f6ef89211eba5cc0f82e226a0d760c715a6176a1e10c57ad1e"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/native-result/ns5-summary.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/nativescript-five-sdk20-v1-terminal/native-result/ns5-summary.json",
+      "bytes": 1018,
+      "sha256": "f57ce2e307494e5d61a57c3de41500676f22f6ee2c321b84c1a7b42b8abea137"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/native-result/ns5-tests.log.gz",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/nativescript-five-sdk20-v1-terminal/native-result/ns5-tests.log.gz",
+      "bytes": 3213,
+      "sha256": "6ae35e480c3aae3188ef5f12dd6fb4f5ef1c4a5e7d66f2952f2307bcbf832594"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/native-result/result-review.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/nativescript-five-sdk20-v1-terminal/native-result/result-review.json",
+      "bytes": 1927,
+      "sha256": "8201d12bb488be1d528515c4aad78c600a99871ac3bcd50beacc8e55b8d46da4"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/native-result/selected-command.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/nativescript-five-sdk20-v1-terminal/native-result/selected-command.json",
+      "bytes": 1446,
+      "sha256": "68dc1bf2e61e7fdf64fa28bd263310d2d2f60911dedad778d6bc1b8c3b338a4a"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/controls/nativescript-five-sdk20-v1.py",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/nativescript-five-sdk20-v1-terminal/controls/nativescript-five-sdk20-v1.py",
+      "bytes": 24538,
+      "sha256": "4d5799c415f979feca1ef72da2aea071e7c1b9d803fc463e1002cd51d55d284c"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/controls/nativescript-five-sdk20-v1-decision.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/nativescript-five-sdk20-v1-terminal/controls/nativescript-five-sdk20-v1-decision.json",
+      "bytes": 24233,
+      "sha256": "1b17c3e7d5327731eb62be2c2b98f8d9262c638fde0ce62091621f052177bea4"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/controls/nativescript-five-sdk20-v1-launch.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/nativescript-five-sdk20-v1-terminal/controls/nativescript-five-sdk20-v1-launch.json",
+      "bytes": 1253,
+      "sha256": "48e1e2c782e01a98b3bd6c1953544a196b03870890b86315b9b1e1877022b8eb"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/nativescript-five-sdk20-v1-terminal/controls/nativescript-five-sdk20-v1-launch.log.gz",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/nativescript-five-sdk20-v1-terminal/controls/nativescript-five-sdk20-v1-launch.log.gz",
+      "bytes": 20,
+      "sha256": "abfbb86f9f5ddfbd9fc1a72c43ab384702ce8bae86b60f3324748485e235e61e"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/receipt.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/receipt.json",
+      "bytes": 46210,
+      "sha256": "b0b9419ec8a58bc931176d9648a6f5625e775d599df945a8163a7f51d51f49c2"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/decision.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/decision.json",
+      "bytes": 28347,
+      "sha256": "fbacbfb0a21b33de935d17dab14a2cdd0d7ba9588998b5f7977816a544897f0f"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/events.jsonl.gz",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/events.jsonl.gz",
+      "bytes": 982,
+      "sha256": "bf4bae15eed04ddcccc8dfd8ec53f19dc9e5273583c297f1be2b9724c7c132a9"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/execution-containers-after-test.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/execution-containers-after-test.json",
+      "bytes": 5508,
+      "sha256": "d8dd06810dc8600fb99f99ea06e86a83b312f761c85fe738cdd133a042f28612"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/execution-containers.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/execution-containers.json",
+      "bytes": 7129,
+      "sha256": "50f7d4524608c5bb0d36961dafe31b762052f03c3c133186c8d63b909e54ea03"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/execution-environment.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/execution-environment.json",
+      "bytes": 1032,
+      "sha256": "0cff9a3fb9d3e2af2adfc12d7c74da292f92bed6a34bbf30d930828c7d57f42a"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/ledger.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/ledger.json",
+      "bytes": 7156,
+      "sha256": "3266c87de8512dd5a7cabfc68197173ffb52e8223034335dbb9c76cc6f350eb9"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/paired-state-before.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/paired-state-before.json",
+      "bytes": 12578,
+      "sha256": "71a93134e5d50959d368d3bec2e10cde7f2214fab05606da702d75cd7da87b6b"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/setup.log.gz",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/setup.log.gz",
+      "bytes": 354,
+      "sha256": "d2bc1f0a3c7ea13c4e523a80f4e8da2f86d5f688636ac0a2c8bf1b213c2912d9"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/state.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/state.json",
+      "bytes": 12677,
+      "sha256": "1b497fd6b2f9c60eecbc6980b0ee89dc1917290d854f33cfa99ca67b7ee2d1b3"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/test.log.gz",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/test.log.gz",
+      "bytes": 643,
+      "sha256": "9f237598197f48597c7ac7ad13455660d33433d4f755068e14eeca71e0f96edd"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/worker.log.gz",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/worker.log.gz",
+      "bytes": 302,
+      "sha256": "76d0bd5d1081b9b70bfdf65ff3bbdb24726e99b3d7244afa60a5d095963f6465"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/setup/HanlinMiniApps.app-install.log.gz",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/setup/HanlinMiniApps.app-install.log.gz",
+      "bytes": 20,
+      "sha256": "abfbb86f9f5ddfbd9fc1a72c43ab384702ce8bae86b60f3324748485e235e61e"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/setup/HanlinMiniAppsUITests-Runner.app-install.log.gz",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/setup/HanlinMiniAppsUITests-Runner.app-install.log.gz",
+      "bytes": 20,
+      "sha256": "abfbb86f9f5ddfbd9fc1a72c43ab384702ce8bae86b60f3324748485e235e61e"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/setup/active-command.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/setup/active-command.json",
+      "bytes": 491,
+      "sha256": "051e704e4d0954e750212f2ee149d8fa061fa4b1f4dd1e341bef5ea8bb13bebb"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/setup/appData-container.txt",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/setup/appData-container.txt",
+      "bytes": 157,
+      "sha256": "bd6c2c53d23fb251a1ac59c6d313154e02878a8bbd4fea2a06bced5f0b752ab6"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/setup/appGroup-container.txt",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/setup/appGroup-container.txt",
+      "bytes": 156,
+      "sha256": "2c5b0c327eded140b0c9bac74d2061f6ac10c683252f4692aa58134be067d4b9"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/setup/boot-owned.log.gz",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/setup/boot-owned.log.gz",
+      "bytes": 20,
+      "sha256": "abfbb86f9f5ddfbd9fc1a72c43ab384702ce8bae86b60f3324748485e235e61e"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/setup/bootstatus.log.gz",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/setup/bootstatus.log.gz",
+      "bytes": 268,
+      "sha256": "164818addb88c02175a83c2ca90883904ed76a6538f1c459e16ac2b40469b0f0"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/setup/command-events.jsonl.gz",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/setup/command-events.jsonl.gz",
+      "bytes": 1473,
+      "sha256": "e74a9a7bc520b7ba00ae274ea825a90d4de45ccd1c23da628e653b14c3033e2d"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/setup/commands.jsonl.gz",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/setup/commands.jsonl.gz",
+      "bytes": 790,
+      "sha256": "691fdc380e0c8ccdac0ef406e8d1cf46dbc91e31c76ac33e1eeb16f4e78514f2"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/setup/devices-before.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/setup/devices-before.json",
+      "bytes": 25224,
+      "sha256": "65894837140e68608ca4aee87b808cb29b04e000eb9e07fd00c3b7bfb543d370"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/setup/runnerData-container.txt",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/setup/runnerData-container.txt",
+      "bytes": 157,
+      "sha256": "fb4cd5c2c7f232f4a49ca982f13cdbffcc4b0c46eb5e4dfa1bfb8a2ec57bc352"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/test/active-command.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/test/active-command.json",
+      "bytes": 726,
+      "sha256": "9d7f697ee43b3695b3be0d1fc5c83d981f0e171e882413ad5d7b8a51dc3da238"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/test/command-events.jsonl.gz",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/test/command-events.jsonl.gz",
+      "bytes": 1348,
+      "sha256": "4d26ecff4cc59df73d0ab4e47a27c65424b5441830ff99dda94700724d24b84c"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/test/commands.jsonl.gz",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/test/commands.jsonl.gz",
+      "bytes": 815,
+      "sha256": "700f6c1c7e8f2515ccc9e4508584b9423bd03f7fd2f7fe2e5f701e5e50ff306f"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/test/notification-os-nodes.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/test/notification-os-nodes.json",
+      "bytes": 2607,
+      "sha256": "42341095421434c386bbcba315e2d6fa2bae1d70a8041248963059b3b58cb27e"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/test/notification-os-selected-tests.log.gz",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/test/notification-os-selected-tests.log.gz",
+      "bytes": 75,
+      "sha256": "640232ab2a02d5f6ef89211eba5cc0f82e226a0d760c715a6176a1e10c57ad1e"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/test/notification-os-summary.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/test/notification-os-summary.json",
+      "bytes": 1800,
+      "sha256": "e01ff101f23d2d0540d7552367fd3cd98d45675cd17d0c915b0020a936595f94"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/test/notification-os-tests.log.gz",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/test/notification-os-tests.log.gz",
+      "bytes": 5460,
+      "sha256": "3571d128bb91dbf521e8f5246e431a9f82bb9210fe4cfefe3611c53499851560"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/test/selected-command.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/test/selected-command.json",
+      "bytes": 1317,
+      "sha256": "3e978617cb9977dd2b2b00702bf841ca0fa8df444ed14eac419c78e979079a5d"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/active.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/active.json",
+      "bytes": 141,
+      "sha256": "24d9df50d9148dcf73754735c3deec26b8c01ed2e2308f43cf6cfa1998d3cc6b"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/expo/duplicate-push.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/expo/duplicate-push.json",
+      "bytes": 602,
+      "sha256": "468d8b9ec61b6d1e0e2dd03a0184272b09495a1eccf7438bf43c8aff0ca38235"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/expo/duplicate-push.stderr",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/expo/duplicate-push.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/expo/duplicate-push.stdout",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/expo/duplicate-push.stdout",
+      "bytes": 49,
+      "sha256": "e9e8e05b56ea95010358548e736ff4fc26783439d5377a8a11542b68e92359ca"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/expo/duplicate-record.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/expo/duplicate-record.json",
+      "bytes": 1704,
+      "sha256": "bc467468c1bd20dc94ab3de17e3c5002ef27feff1e775d7ec3bd482000e709c6"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/expo/duplicate.apns",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/expo/duplicate.apns",
+      "bytes": 791,
+      "sha256": "d7fb9eb55de3e481298bbc09cab3a2e6e0ee2c9c90a932ba88fb00a29e6e4d95"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/expo/failure-push.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/expo/failure-push.json",
+      "bytes": 601,
+      "sha256": "dc80f4107cb1e86f975035ee3736a32dc6c5a9bf59cbd2b66fb9d0e65d13a6d3"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/expo/failure-push.stderr",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/expo/failure-push.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/expo/failure-push.stdout",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/expo/failure-push.stdout",
+      "bytes": 49,
+      "sha256": "e9e8e05b56ea95010358548e736ff4fc26783439d5377a8a11542b68e92359ca"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/expo/failure-record.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/expo/failure-record.json",
+      "bytes": 810,
+      "sha256": "6dc2ca9fc84af6ebece82e94b1c1d5327071e3cddd1db89db5792c2ed3391274"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/expo/failure.apns",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/expo/failure.apns",
+      "bytes": 660,
+      "sha256": "61849ff332ffa27e31f22f16c0d3e4028487b5f14db1527fc7d1c6de0e951719"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/expo/success-push.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/expo/success-push.json",
+      "bytes": 601,
+      "sha256": "5820608ec2c7fbbca907aee24ed7215c1ffc4c0117f90e2c73c7bbf4f673e74b"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/expo/success-push.stderr",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/expo/success-push.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/expo/success-push.stdout",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/expo/success-push.stdout",
+      "bytes": 49,
+      "sha256": "e9e8e05b56ea95010358548e736ff4fc26783439d5377a8a11542b68e92359ca"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/expo/success-record.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/expo/success-record.json",
+      "bytes": 1704,
+      "sha256": "bc467468c1bd20dc94ab3de17e3c5002ef27feff1e775d7ec3bd482000e709c6"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/expo/success.apns",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/expo/success.apns",
+      "bytes": 791,
+      "sha256": "d7fb9eb55de3e481298bbc09cab3a2e6e0ee2c9c90a932ba88fb00a29e6e4d95"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/expo/target-failure/commit.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/expo/target-failure/commit.json",
+      "bytes": 175,
+      "sha256": "be778b882ecbb508bd424a80cd1497a3b88203f85c39dea62506e398844f2f76"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/expo/target-failure/registry.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/expo/target-failure/registry.json",
+      "bytes": 25757,
+      "sha256": "344f7951e14b774edf909c76a09b6c95772c49b3ed03641440bdbb1eaf59c6cb"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/expo/target-failure/revision.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/expo/target-failure/revision.json",
+      "bytes": 21519,
+      "sha256": "f3abb62f7fa36ca322b6f377a0aa2bd5e1c77b1a9ea90726b05617a6860da76f"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/expo/target-failure/target.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/expo/target-failure/target.json",
+      "bytes": 8223,
+      "sha256": "f9aad56f83412fb736b17b12563e7b37f235e515d7439f568fb0a79e7bfa6a2c"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/expo/target-failure-readiness.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/expo/target-failure-readiness.json",
+      "bytes": 165,
+      "sha256": "c9c5419fc7234c21e67b2700eb54c30b94a78bedfd48db6add00f907ef55366d"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/expo/target-success/commit.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/expo/target-success/commit.json",
+      "bytes": 175,
+      "sha256": "be778b882ecbb508bd424a80cd1497a3b88203f85c39dea62506e398844f2f76"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/expo/target-success/registry.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/expo/target-success/registry.json",
+      "bytes": 25757,
+      "sha256": "344f7951e14b774edf909c76a09b6c95772c49b3ed03641440bdbb1eaf59c6cb"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/expo/target-success/revision.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/expo/target-success/revision.json",
+      "bytes": 21519,
+      "sha256": "f3abb62f7fa36ca322b6f377a0aa2bd5e1c77b1a9ea90726b05617a6860da76f"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/expo/target-success/target.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/expo/target-success/target.json",
+      "bytes": 8225,
+      "sha256": "f04c1f041d1565e44e1fbb19596e7e1c45e46532130c1370301d04518d0bd9d1"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/expo/target-success-readiness.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/expo/target-success-readiness.json",
+      "bytes": 164,
+      "sha256": "bc689f745b2abd65a7e94f70d4b15ba44b4ca6d63b5cf100ce23643fe7114b1b"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/expo.complete.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/expo.complete.json",
+      "bytes": 13895,
+      "sha256": "147503bc579d4873ddeed70715db1ff64abee0dcfb95b74c7ec3d5bfbd1f14bf"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/expo.request.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/expo.request.json",
+      "bytes": 203,
+      "sha256": "cdf1abb217f198fbd4d5f9dd06131bf338a6973549cb6358dd685fd3b2a9b0ae"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/nativescript/success-push.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/nativescript/success-push.json",
+      "bytes": 609,
+      "sha256": "c5947c908d935157f538ea978ef4704c252c3481e69598637921a004943e4704"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/nativescript/success-push.stderr",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/nativescript/success-push.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/nativescript/success-push.stdout",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/nativescript/success-push.stdout",
+      "bytes": 49,
+      "sha256": "e9e8e05b56ea95010358548e736ff4fc26783439d5377a8a11542b68e92359ca"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/nativescript/success.apns",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/nativescript/success.apns",
+      "bytes": 770,
+      "sha256": "b987a0a02c0e4f98de6f246ec923dab363cbfca03f855ff41a7b755c24e8d105"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/nativescript/target-success/commit.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/nativescript/target-success/commit.json",
+      "bytes": 175,
+      "sha256": "621e03f3978ef58fded1bfdd9f58b12ff478da812b463898e7e5ce20e965aeb1"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/nativescript/target-success/registry.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/nativescript/target-success/registry.json",
+      "bytes": 25757,
+      "sha256": "db801d2532abdf4254e6793fa46fffafb8ba387dad5b35d99c07387283d88a22"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/nativescript/target-success/revision.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/nativescript/target-success/revision.json",
+      "bytes": 21553,
+      "sha256": "4f8632b0ead4a4bceb99b024cf24f98421f4586c2d4b3d76ab5117f7116cc36c"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/nativescript/target-success/target.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/nativescript/target-success/target.json",
+      "bytes": 10291,
+      "sha256": "f4e1c02f097afd16019b162dc8173099b8ed407b51b1127f0d673c406230bc6c"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/nativescript/target-success-readiness.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/nativescript/target-success-readiness.json",
+      "bytes": 164,
+      "sha256": "153258ea5aea2de1b6b605099d57de78fab640bf0108130337964ece12360ab4"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/nativescript-failure.txt",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/nativescript-failure.txt",
+      "bytes": 529,
+      "sha256": "4d84509af2f9cab3699a597148532a36dc20c1a949cdfcdd65e0b2e63ef94444"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/nativescript.complete.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/nativescript.complete.json",
+      "bytes": 299,
+      "sha256": "1fb6c20aa634f913aca46c25f81a6853c6e260ae5562efe466bf9b07d7087307"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/observation/nativescript.request.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/observation/nativescript.request.json",
+      "bytes": 210,
+      "sha256": "6d3f70627bdc67358bcaeaba0d5185890bdab505254785aa2b66a99f472363ab"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/controls/notification-os-sdk20-v1.py",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/controls/notification-os-sdk20-v1.py",
+      "bytes": 40608,
+      "sha256": "2a1f865d99a8375748ce6bcced038cdf6642ed5556b2247361ec74ed3a00b3f7"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/controls/notification-os-sdk20-v1-decision.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/controls/notification-os-sdk20-v1-decision.json",
+      "bytes": 28347,
+      "sha256": "fbacbfb0a21b33de935d17dab14a2cdd0d7ba9588998b5f7977816a544897f0f"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/controls/notification-os-sdk20-v1-launch.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/controls/notification-os-sdk20-v1-launch.json",
+      "bytes": 1239,
+      "sha256": "995a1db34b580e591bf8d75d267550dc76ef553803cb816b3c4fbdcad81a451c"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-terminal/controls/notification-os-sdk20-v1-launch.log.gz",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-terminal/controls/notification-os-sdk20-v1-launch.log.gz",
+      "bytes": 483,
+      "sha256": "b1bb88489e1d20aff325ee48fb403537487f54f57c8f5f959428b7fe74902d06"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-receipt-supplement/receipt.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-receipt-supplement/receipt.json",
+      "bytes": 2108,
+      "sha256": "5dcad62d0e4390973f97ff353a8d6394b3e2e8d9892792b4bb9e79a0dc765472"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-receipt-supplement/app-group-metadata.plist",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-receipt-supplement/app-group-metadata.plist",
+      "bytes": 606,
+      "sha256": "f9b86637724431e1b7bc68a13e058889284d9035636ba890c29826b9c4cc0cd2"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-receipt-supplement/nativescript-actual-receipt.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-receipt-supplement/nativescript-actual-receipt.json",
+      "bytes": 1595,
+      "sha256": "117b11837fb81b13024482e02be2eda01f7e6ed0b2cce93a4059febb81470af8"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-handler-registration-fix/before/AI_HLYTests/NativeScriptRuntimeWireTests.swift",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-handler-registration-fix/before/AI_HLYTests/NativeScriptRuntimeWireTests.swift",
+      "bytes": 17996,
+      "sha256": "4ac7ed256f861133e3b84eda85d1f5df659317477c6a42c637a42a59def46835"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-handler-registration-fix/before/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-handler-registration-fix/before/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m",
+      "bytes": 37015,
+      "sha256": "e36a9d2ba06dd7878d17df7c9e8f17df8952ac67f087c0a43174742c1c0ebe0c"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-handler-registration-fix/candidate/AI_HLYTests/NativeScriptRuntimeWireTests.swift",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-handler-registration-fix/candidate/AI_HLYTests/NativeScriptRuntimeWireTests.swift",
+      "bytes": 23501,
+      "sha256": "35356d95d7fb0e8e7a6ed707d4f89afcb1832cf03366c950b86e14fc5aae31e6"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-handler-registration-fix/candidate/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-handler-registration-fix/candidate/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m",
+      "bytes": 35889,
+      "sha256": "28909ea2c10145989c4605613f0ac6cc0185a5b34397bab70f8253291a004b3d"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-handler-registration-fix/handler-registration-fix.diff",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-handler-registration-fix/handler-registration-fix.diff",
+      "bytes": 8727,
+      "sha256": "fa4414b936bbf6ec14a0ae489078d028b91f08ff72378ec352a9966183898ab4"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-handler-registration-fix/receipt.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-handler-registration-fix/receipt.json",
+      "bytes": 3679,
+      "sha256": "dcfec35d82b9b77cf576df139f296c7db33025927b28645947a314a5af00f3d3"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-handler-registration-fix/source-impact.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-handler-registration-fix/source-impact.json",
+      "bytes": 861,
+      "sha256": "216f496b5ae7ae46d4e0e30bdd0d2d72c33815d890a2cd7a418f8466f471dafa"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-handler-registration-fix-v2/before/AI_HLYTests/NativeScriptRuntimeWireTests.swift",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-handler-registration-fix-v2/before/AI_HLYTests/NativeScriptRuntimeWireTests.swift",
+      "bytes": 17996,
+      "sha256": "4ac7ed256f861133e3b84eda85d1f5df659317477c6a42c637a42a59def46835"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-handler-registration-fix-v2/before/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-handler-registration-fix-v2/before/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m",
+      "bytes": 37015,
+      "sha256": "e36a9d2ba06dd7878d17df7c9e8f17df8952ac67f087c0a43174742c1c0ebe0c"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-handler-registration-fix-v2/candidate/AI_HLYTests/NativeScriptRuntimeWireTests.swift",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-handler-registration-fix-v2/candidate/AI_HLYTests/NativeScriptRuntimeWireTests.swift",
+      "bytes": 23501,
+      "sha256": "c184923313576d396bbf3ee44759a42905145990011352383ca9935f134597db"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-handler-registration-fix-v2/candidate/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-handler-registration-fix-v2/candidate/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m",
+      "bytes": 35889,
+      "sha256": "28909ea2c10145989c4605613f0ac6cc0185a5b34397bab70f8253291a004b3d"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-handler-registration-fix-v2/candidate-v1-to-v2.diff",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-handler-registration-fix-v2/candidate-v1-to-v2.diff",
+      "bytes": 924,
+      "sha256": "e2d2f767ea31ca9075f687e7f4afb7bc1940284696ea480881db44c1ebd9df40"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-handler-registration-fix-v2/handler-registration-fix.diff",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-handler-registration-fix-v2/handler-registration-fix.diff",
+      "bytes": 8727,
+      "sha256": "2d7acfdf0a77075b355367e2d7a048923eefe246d4094e264c5554ebb31964fe"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-handler-registration-fix-v2/receipt.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-handler-registration-fix-v2/receipt.json",
+      "bytes": 4796,
+      "sha256": "ea8041576f2e062e51e9424b7a3e747a2a03f240b9194869c6d3716aeb4170dc"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-handler-registration-fix-v2/source-impact.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-handler-registration-fix-v2/source-impact.json",
+      "bytes": 861,
+      "sha256": "216f496b5ae7ae46d4e0e30bdd0d2d72c33815d890a2cd7a418f8466f471dafa"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-xcresult-archive/receipt.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-xcresult-archive/receipt.json",
+      "bytes": 1445,
+      "sha256": "260c98c126e54f3f1a877fdf67ca01aed59d2bc453ec7e89095be9c91e5783c0"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-sdk20-v1-xcresult-archive/original-results-manifest.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/notification-os-sdk20-v1-xcresult-archive/original-results-manifest.json",
+      "bytes": 50879,
+      "sha256": "190ea4b853a090c21e1a98d67a90dc2074b60c15206f55b8a9bb7aad8ee74ec2"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/root-sdk20-os-v1-failure-verification.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/root-sdk20-os-v1-failure-verification.json",
+      "bytes": 1694,
+      "sha256": "a2dfa91ca61ac6adfeaad0a6b7cd865bdd7e41f721500db5f11b3af49596936b"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/root-handler-fix-source-commit.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/root-handler-fix-source-commit.json",
+      "bytes": 1983,
+      "sha256": "fb6601f164096474047852ab1598d0db146609bee78eec7c0d4a234031a538a8"
+    },
+    {
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/root-handler-fix-source-push.json",
+      "repositoryPath": "docs/miniapp-sdk/evidence/sdk20-notification-handler-failure-20261126/root-handler-fix-source-push.json",
+      "bytes": 537,
+      "sha256": "244ceff2fb9119aca41454be63d3e6e8940a230c4eda4b1c405b380ec510428c"
+    }
+  ],
+  "copiedCount": 121
+}
