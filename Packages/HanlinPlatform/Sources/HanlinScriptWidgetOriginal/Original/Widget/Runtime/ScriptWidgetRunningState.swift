@@ -21,12 +21,8 @@ enum ScriptWidgetExecutionCancellation: String, Equatable {
     case completed
 }
 
-final class ScriptWidgetExecutionSession {
-    static let maximumConcurrentNetworkRequests = 8
-    static let maximumTotalNetworkRequests = 32
-
-    static let maximumDataQueries = 8
-
+/// Cross-queue cancellation is synchronized by lock; callbacks run after unlock.
+final class ScriptWidgetExecutionSession: @unchecked Sendable {
     let id = UUID()
     let callbackQueue = DispatchQueue(label: "ScriptWidget.ExecutionCallbacks", qos: .userInitiated)
     private let lock = NSLock()
@@ -46,7 +42,7 @@ final class ScriptWidgetExecutionSession {
     func registerDataQuery() -> Bool {
         lock.lock()
         defer { lock.unlock() }
-        guard cancellation == nil, totalDataQueries < Self.maximumDataQueries else { return false }
+        guard cancellation == nil else { return false }
         totalDataQueries += 1
         return true
     }
@@ -54,9 +50,7 @@ final class ScriptWidgetExecutionSession {
     func register(_ task: URLSessionTask) -> Bool {
         lock.lock()
         defer { lock.unlock() }
-        guard cancellation == nil,
-              tasks.count + serviceNetworkRequests.count < Self.maximumConcurrentNetworkRequests,
-              totalNetworkRequests < Self.maximumTotalNetworkRequests else { return false }
+        guard cancellation == nil else { return false }
         tasks[ObjectIdentifier(task)] = task
         totalNetworkRequests += 1
         return true
@@ -64,8 +58,7 @@ final class ScriptWidgetExecutionSession {
 
     func registerServiceNetworkRequest() -> UUID? {
         lock.lock(); defer { lock.unlock() }
-        guard cancellation == nil, tasks.count + serviceNetworkRequests.count < Self.maximumConcurrentNetworkRequests,
-              totalNetworkRequests < Self.maximumTotalNetworkRequests else { return nil }
+        guard cancellation == nil else { return nil }
         let id = UUID(); serviceNetworkRequests.insert(id); totalNetworkRequests += 1; return id
     }
 
@@ -82,7 +75,7 @@ final class ScriptWidgetExecutionSession {
     /// Native read queries share the execution's cancellation lifetime.
     func registerCancellation(_ handler: @escaping () -> Void) -> UUID? {
         lock.lock(); defer { lock.unlock() }
-        guard cancellation == nil, cancellationHandlers.count < Self.maximumDataQueries else { return nil }
+        guard cancellation == nil else { return nil }
         let id = UUID()
         cancellationHandlers[id] = handler
         return id

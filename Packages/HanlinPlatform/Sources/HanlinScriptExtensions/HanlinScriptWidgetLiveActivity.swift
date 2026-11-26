@@ -42,10 +42,12 @@ public struct HanlinScriptWidgetLiveActivityAttributes: Codable, Hashable, Senda
 public enum HanlinScriptWidgetLiveActivityPreparation {
     public static func prepare(store: HanlinScriptExtensionStore, entityID: String,
                                family: String, values: [String: HanlinValue] = [:],
-                               revision: UInt64, title: String) throws
+                               revision: UInt64, title: String, executionControl: HanlinScriptWidgetExecutionControl = .init()) throws
         -> (attributes: HanlinScriptWidgetLiveActivityAttributes, state: HanlinScriptWidgetLiveActivityAttributes.ContentState) {
         var output: (HanlinScriptWidgetLiveActivityAttributes, HanlinScriptWidgetLiveActivityAttributes.ContentState)?
+        try executionControl.checkCancellation()
         try store.update { current in
+            try executionControl.checkCancellation()
             guard let current,
                   let instance = current.widgetInstances.first(where: {
                       $0.entityID == entityID && $0.engine == .scriptwidget
@@ -72,17 +74,19 @@ public enum HanlinScriptWidgetLiveActivityPreparation {
             let execution = try HanlinScriptWidgetRuntime.shared.run(
                 program: program, values: stateValues, environment: environment,
                 nativeRoot: store.root.appendingPathComponent("ScriptWidgetOriginal/v1", isDirectory: true),
-                nativeIdentity: try HanlinScriptWidgetRuntime.nativeIdentity(identity, artifactSHA256: digest))
+                nativeIdentity: try HanlinScriptWidgetRuntime.nativeIdentity(identity, artifactSHA256: digest), executionControl: executionControl)
             let resources = try store.materializeResources(program.resources, identity: identity)
             let context = HanlinWidgetActionContext(identity: identity, engine: .scriptwidget,
                 artifactSHA256: digest, family: family, environment: environment,
                 actions: program.actions, resources: resources)
             let prepared = HanlinScriptWidgetLiveActivitySnapshot(node: execution.node,
                 dynamicIsland: execution.dynamicIsland, context: context)
+            try executionControl.checkCancellation()
             let artifact = try store.storeArtifact(data: JSONEncoder().encode(prepared),
                 installedPackageID: identity.installedPackageID, generation: identity.generation)
             output = (.init(identity: identity, entityID: entityID, family: family),
                       .init(revision: revision, title: title, snapshotRef: artifact.ref, snapshotSHA256: artifact.sha256))
+            try executionControl.checkCancellation()
             guard execution.values != (old?.values ?? [:]) else { return current }
             guard (old?.revision ?? 0) < UInt64.max else { throw HanlinWidgetActionError.invalidState }
             let state = HanlinWidgetInstanceState(identity: identity, engine: .scriptwidget,
@@ -141,10 +145,11 @@ public enum HanlinScriptWidgetLiveActivityController {
     public static func start(store: HanlinScriptExtensionStore, entityID: String, family: String,
                              title: String, values: [String: HanlinValue] = [:],
                              staleDate: Date? = nil, relevanceScore: Double = 0) async throws -> String {
-        let prepared = try await Task.detached(priority: .userInitiated) {
+        let executionControl = HanlinScriptWidgetExecutionControl()
+        let prepared = try await executionControl.perform {
             try HanlinScriptWidgetLiveActivityPreparation.prepare(store: store,
-                entityID: entityID, family: family, values: values, revision: 1, title: title)
-        }.value
+                entityID: entityID, family: family, values: values, revision: 1, title: title, executionControl: executionControl)
+        }
         try Task.checkCancellation()
         return try await MainActor.run {
             _ = try HanlinScriptWidgetLiveActivityPreparation.load(
@@ -175,11 +180,12 @@ public enum HanlinScriptWidgetLiveActivityController {
         let attributes = activity.attributes
         let previous = activity.content.state
         guard previous.revision < UInt64.max else { throw HanlinWidgetActionError.invalidState }
-        let prepared = try await Task.detached(priority: .userInitiated) {
+        let executionControl = HanlinScriptWidgetExecutionControl()
+        let prepared = try await executionControl.perform {
             try HanlinScriptWidgetLiveActivityPreparation.prepare(store: store,
                 entityID: attributes.entityID, family: attributes.family, values: values,
-                revision: previous.revision + 1, title: title ?? previous.title)
-        }.value
+                revision: previous.revision + 1, title: title ?? previous.title, executionControl: executionControl)
+        }
         try Task.checkCancellation()
         guard prepared.attributes == attributes else { throw HanlinWidgetActionError.inactiveInstance }
         _ = try HanlinScriptWidgetLiveActivityPreparation.load(store: store, attributes: attributes, state: prepared.state)
@@ -198,11 +204,12 @@ public enum HanlinScriptWidgetLiveActivityController {
             guard finalState.revision < UInt64.max else { throw HanlinWidgetActionError.invalidState }
             let attributes = activity.attributes
             let previous = finalState
-            let prepared = try await Task.detached(priority: .userInitiated) {
+            let executionControl = HanlinScriptWidgetExecutionControl()
+            let prepared = try await executionControl.perform {
                 try HanlinScriptWidgetLiveActivityPreparation.prepare(store: store,
                     entityID: attributes.entityID, family: attributes.family, values: values,
-                    revision: previous.revision + 1, title: title ?? previous.title)
-            }.value
+                    revision: previous.revision + 1, title: title ?? previous.title, executionControl: executionControl)
+            }
             try Task.checkCancellation()
             guard prepared.attributes == attributes else { throw HanlinWidgetActionError.inactiveInstance }
             _ = try HanlinScriptWidgetLiveActivityPreparation.load(store: store, attributes: attributes, state: prepared.state)

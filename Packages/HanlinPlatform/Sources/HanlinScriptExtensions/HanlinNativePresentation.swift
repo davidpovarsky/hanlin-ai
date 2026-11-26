@@ -192,7 +192,9 @@ public enum HanlinNativePresentationExecutor {
     public static func prepare(_ request: HanlinNativePresentationRequest,
                                store: HanlinScriptExtensionStore,
                                action: HanlinWidgetActionCommand? = nil,
-                               storage: HanlinNativePresentationStorage = .shared) throws -> HanlinNativePresentationExecution {
+                               storage: HanlinNativePresentationStorage = .shared,
+                               executionControl: HanlinScriptWidgetExecutionControl = .init()) throws -> HanlinNativePresentationExecution {
+        try executionControl.checkCancellation()
         _ = try HanlinInstalledPackageID(validating: request.identity.installedPackageID.rawValue)
         _ = try HanlinPackageID(validating: request.identity.packageID.rawValue)
         guard request.identity.generation > 0,
@@ -205,7 +207,7 @@ public enum HanlinNativePresentationExecutor {
                 guard let snapshot = try store.loadUnlocked().snapshot else {
                     throw HanlinNativePresentationError.unavailable
                 }
-                return try execute(request, catalog: snapshot, catalogStore: store, stateStore: store, action: action)
+                return try execute(request, catalog: snapshot, catalogStore: store, stateStore: store, action: action, executionControl: executionControl)
             }
         case let .extensionLocal(root):
             let local = HanlinScriptExtensionStore(root: root)
@@ -221,7 +223,7 @@ public enum HanlinNativePresentationExecutor {
                     throw HanlinNativePresentationError.unavailable
                 }
                 let before = try descriptor(for: request, in: snapshot)
-                let result = try execute(request, catalog: snapshot, catalogStore: store, stateStore: local, action: action)
+                let result = try execute(request, catalog: snapshot, catalogStore: store, stateStore: local, action: action, executionControl: executionControl)
                 // A host may disable, remove or replace a package while its
                 // original runtime is working. Never deliver that stale effect.
                 guard let current = try store.loadReadOnly(),
@@ -237,7 +239,8 @@ public enum HanlinNativePresentationExecutor {
                                 catalog: HanlinScriptExtensionSnapshot,
                                 catalogStore: HanlinScriptExtensionStore,
                                 stateStore: HanlinScriptExtensionStore,
-                                action: HanlinWidgetActionCommand?) throws -> HanlinNativePresentationExecution {
+                                action: HanlinWidgetActionCommand?, executionControl: HanlinScriptWidgetExecutionControl) throws -> HanlinNativePresentationExecution {
+        try executionControl.checkCancellation()
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.sortedKeys, .withoutEscapingSlashes]
         // Changing keyboard text context updates the render/action input, not
@@ -335,7 +338,7 @@ public enum HanlinNativePresentationExecutor {
                 actionValue: action?.desiredValue, actionParameters: action?.parameters ?? .null,
                 nativeRoot: stateStore.root.appendingPathComponent("ScriptWidgetOriginal/v1", isDirectory: true),
                 nativeIdentity: try HanlinScriptWidgetRuntime.nativeIdentity(request.identity,
-                    artifactSHA256: descriptor.programSHA256) + ":" + request.sessionID.uuidString)
+                    artifactSHA256: descriptor.programSHA256) + ":" + request.sessionID.uuidString, executionControl: executionControl)
             state.values = result.values
             effect = result.presentationEffect
             prepared = .scriptwidget(node: result.node, context: context)
@@ -352,6 +355,7 @@ public enum HanlinNativePresentationExecutor {
         }
         let encodedState = try encoder.encode(state)
         try FileManager.default.createDirectory(at: stateURL.deletingLastPathComponent(), withIntermediateDirectories: true)
+        try executionControl.checkCancellation()
         try encodedState.write(to: stateURL, options: .atomic)
         return .init(prepared: prepared, effect: effect, revision: state.revision)
     }

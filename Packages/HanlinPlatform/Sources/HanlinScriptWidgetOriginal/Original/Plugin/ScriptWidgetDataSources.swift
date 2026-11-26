@@ -381,7 +381,6 @@ enum DataSourcePluginExecutor {
         let (data, response) = try await session.data(for: prepared.request)
         guard let http = response as? HTTPURLResponse else { throw DataSourcePluginError.network("Data source returned an invalid response.") }
         guard (200..<300).contains(http.statusCode) else { throw DataSourcePluginError.network("Data source returned HTTP \(http.statusCode).") }
-        guard data.count <= ScriptWidgetFetchManager.maximumResponseBytes else { throw DataSourcePluginError.network("Data source response exceeds 2 MiB.") }
         return .init(request: prepared.request, statusCode: http.statusCode, data: data, duration: start.duration(to: .now).timeInterval)
     }
 }
@@ -416,7 +415,7 @@ enum DataSourcePluginExecutor {
                     } else if let text = String(data: data, encoding: .utf8) { resolve.call(withArguments: [text]) }
                     else { reject.call(withArguments: ["Data source returned non-UTF-8 text"]) }
                 }
-                guard state.isCurrentExecution, state.executionSession.register(task) else { task.cancel(); reject.call(withArguments: ["Network request budget exceeded"]); return }
+                guard state.isCurrentExecution, state.executionSession.register(task) else { task.cancel(); reject.call(withArguments: ["Execution session is no longer active"]); return }
                 task.resume()
             } catch { reject.call(withArguments: [error.localizedDescription]) }
         }

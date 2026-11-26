@@ -101,7 +101,7 @@ struct ScriptWidgetServiceRequestPlan: CustomStringConvertible, CustomDebugStrin
         guard now.timeIntervalSince1970.isFinite, credential.issuedAt <= now.addingTimeInterval(60),
               credential.expiresAt.map({ $0 > now.addingTimeInterval(15) }) ?? true else { throw ScriptWidgetServiceError.expiredAuthorization }
         var request = URLRequest(url: URL(string: "https://" + operation.service.apiHost + operation.path)!)
-        request.httpMethod = operation.method; request.timeoutInterval = 5; request.cachePolicy = .reloadIgnoringLocalCacheData
+        request.httpMethod = operation.method; request.cachePolicy = .reloadIgnoringLocalCacheData
         request.httpShouldHandleCookies = false
         request.setValue("Bearer " + credential.accessToken, forHTTPHeaderField: "Authorization")
         request.setValue("ScriptWidget", forHTTPHeaderField: "User-Agent")

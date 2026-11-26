@@ -53,6 +53,7 @@ public struct HanlinNativePresentationContentView: View {
     @State private var isLoading = false
     @State private var executingRequest: HanlinNativePresentationRequest?
     @State private var executionID: UUID?
+    @State private var executionControl: HanlinScriptWidgetExecutionControl?
     @State private var error: String?
 
     public init(request: HanlinNativePresentationRequest, store: HanlinScriptExtensionStore,
@@ -96,13 +97,21 @@ public struct HanlinNativePresentationContentView: View {
             }
         }
         .task(id: request) { await execute() }
+        .onDisappear { executionControl?.cancel() }
     }
 
     @MainActor private func execute(_ command: HanlinWidgetActionCommand? = nil) async {
         let currentRequest = request
         // A new .task(id:) must replace an in-flight older request. Blocking it
         // on a shared loading flag otherwise drops the user's new input.
-        guard !isLoading || executingRequest != currentRequest else { return }
+        if isLoading, executingRequest == currentRequest {
+            guard let active = executionControl else { return }
+            do { try active.checkCancellation(); return }
+            catch { /* A disappeared/cancelled presentation may start again. */ }
+        }
+        executionControl?.cancel()
+        let control = HanlinScriptWidgetExecutionControl()
+        executionControl = control
         let currentExecution = UUID()
         executionID = currentExecution
         executingRequest = currentRequest
@@ -111,6 +120,7 @@ public struct HanlinNativePresentationContentView: View {
         if command == nil { prepared = nil }
         defer {
             if executionID == currentExecution {
+                executionControl = nil
                 executionID = nil
                 executingRequest = nil
                 isLoading = false
@@ -118,21 +128,18 @@ public struct HanlinNativePresentationContentView: View {
         }
         let currentStore = store
         let currentStorage = storage
-        let worker = Task.detached(priority: .userInitiated) {
-            try Task.checkCancellation()
-            return try HanlinNativePresentationExecutor.prepare(currentRequest, store: currentStore, action: command, storage: currentStorage)
-        }
         do {
-            let result = try await withTaskCancellationHandler {
-                try await worker.value
-            } onCancel: {
-                worker.cancel()
+            let result = try await control.perform {
+                try HanlinNativePresentationExecutor.prepare(currentRequest, store: currentStore, action: command,
+                    storage: currentStorage, executionControl: control)
             }
             try Task.checkCancellation()
             guard executionID == currentExecution else { return }
             prepared = result.prepared
             onEffect(result.effect)
         } catch is CancellationError {
+            return
+        } catch let reason as HanlinScriptWidgetExecutionControl.Interruption where reason == .cancelled {
             return
         } catch {
             guard !Task.isCancelled, executionID == currentExecution else { return }
@@ -215,9 +222,10 @@ public struct HanlinNativePresentationSnippetIntent: SnippetIntent {
 
     @MainActor public func perform() async throws -> some IntentResult & ShowsSnippetView {
         let request = try JSONDecoder().decode(HanlinNativePresentationRequest.self, from: Data(requestJSON.utf8))
-        let result = try await Task.detached(priority: .userInitiated) {
-            try HanlinNativePresentationExecutor.prepare(request, store: .init())
-        }.value
+        let control = HanlinScriptWidgetExecutionControl()
+        let result = try await control.perform {
+            try HanlinNativePresentationExecutor.prepare(request, store: .init(), executionControl: control)
+        }
         return .result(view: ScrollView {
             HanlinNativePresentationView(prepared: result.prepared) { command, role, label in
                 if let desired = command.desiredValue,
@@ -253,7 +261,11 @@ public struct HanlinNativePresentationActionIntent: AppIntent {
         guard let request = command.context.presentation, request.kind == .snippet else {
             throw HanlinNativePresentationError.invalidRequest
         }
-        _ = try HanlinNativePresentationExecutor.prepare(request, store: .init(), action: command)
+        let control = HanlinScriptWidgetExecutionControl()
+        let invocation = command
+        _ = try await control.perform {
+            try HanlinNativePresentationExecutor.prepare(request, store: .init(), action: invocation, executionControl: control)
+        }
         return .result(snippetIntent: try HanlinNativePresentationSnippetIntent(request: request))
     }
 }
@@ -278,7 +290,11 @@ public struct HanlinNativePresentationToggleIntent: SetValueIntent {
             throw HanlinNativePresentationError.invalidRequest
         }
         command.desiredValue = value
-        _ = try HanlinNativePresentationExecutor.prepare(request, store: .init(), action: command)
+        let control = HanlinScriptWidgetExecutionControl()
+        let invocation = command
+        _ = try await control.perform {
+            try HanlinNativePresentationExecutor.prepare(request, store: .init(), action: invocation, executionControl: control)
+        }
         return .result(snippetIntent: try HanlinNativePresentationSnippetIntent(request: request))
     }
 }

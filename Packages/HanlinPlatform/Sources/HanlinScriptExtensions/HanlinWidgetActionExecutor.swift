@@ -49,7 +49,8 @@ public struct HanlinWidgetActionReceipt: Sendable {
 public enum HanlinWidgetActionExecutor {
     public static let widgetKind = HanlinExtensionHostConfiguration.hanlinWidgetKind
 
-    public static func perform(_ command: HanlinWidgetActionCommand, store: HanlinScriptExtensionStore) throws -> HanlinWidgetActionReceipt {
+    public static func perform(_ command: HanlinWidgetActionCommand, store: HanlinScriptExtensionStore, executionControl: HanlinScriptWidgetExecutionControl = .init()) throws -> HanlinWidgetActionReceipt {
+        try executionControl.checkCancellation()
         let context = command.context
         let identity = context.identity
         // Even decoded wire identities are validated here, before file or state writes.
@@ -65,6 +66,7 @@ public enum HanlinWidgetActionExecutor {
         let nonce = command.nonce.isEmpty ? UUID().uuidString : command.nonce
         var receipt = HanlinWidgetActionReceipt(revision: 0, applied: false)
         try store.update { current in
+            try executionControl.checkCancellation()
             guard let current,
                   !current.inactiveWidgetInstallations.contains(identity.installedPackageID.rawValue),
                   current.widgetInstances.contains(where: { $0.identity == identity && $0.engine == context.engine }),
@@ -146,16 +148,17 @@ public enum HanlinWidgetActionExecutor {
                         state.values = try HanlinScriptWidgetRuntime.shared.performAction(
                             program: program, values: state.values, environment: environment,
                             actionID: action.id, actionValue: command.desiredValue,
-                            nativeRoot: nativeRoot, nativeIdentity: nativeIdentity)
+                            nativeRoot: nativeRoot, nativeIdentity: nativeIdentity, executionControl: executionControl)
                     } else {
                         let execution = try HanlinScriptWidgetRuntime.shared.run(program: program, values: state.values,
                             environment: environment, actionID: action.handler == nil ? nil : action.id,
-                            actionValue: command.desiredValue, nativeRoot: nativeRoot, nativeIdentity: nativeIdentity)
+                            actionValue: command.desiredValue, nativeRoot: nativeRoot, nativeIdentity: nativeIdentity, executionControl: executionControl)
                         state.values = execution.values
                     }
                 case .legacy: throw HanlinWidgetActionError.invalidIdentity
                 }
             }
+            try executionControl.checkCancellation()
             guard state.revision < UInt64.max else { throw HanlinWidgetActionError.invalidState }
             state.revision += 1
             state.committedNonces = Array((state.committedNonces + [nonce]).suffix(128))

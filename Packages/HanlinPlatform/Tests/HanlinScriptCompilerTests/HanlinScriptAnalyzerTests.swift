@@ -49,7 +49,8 @@ struct HanlinScriptAnalyzerTests {
             if !expected { #expect(preview.findings.contains { $0.code == "MINIAPP_EXPO_VERSION_MISMATCH" }) }
         }
         for (version, expected) in ["9.1.0": true, "^9.0.0": true, "9.10.0": false, "^9.999.0": false,
-                                    "9.1.invalid": false, "9.1.1": false, "*": false, "latest": false] {
+                                    "9.1.invalid": false, "9.1.1": true, "9.1.4": true, "9.1.5": false,
+                                    "*": false, "latest": false] {
             let prepared = try JSONSerialization.data(withJSONObject: ["name": "fixture", "main": "bundle.mjs", "hanlinRuntime": "hanlin-nativescript",
                 "dependencies": ["@nativescript/core": version]])
             let fixture = try package(files: [

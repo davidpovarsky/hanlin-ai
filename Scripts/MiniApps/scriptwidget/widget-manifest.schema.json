@@ -537,7 +537,7 @@
         "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift",
         "upstream": "Shared/ScriptWidgetRuntime/Widget/API/ScriptWidgetRuntimeFetch.swift",
         "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
-        "sha256": "8a7bb65bffe0390ac719e33b0ece71e19b20e9be96841e422a3a4c37f09352b3"
+        "sha256": "33b17754b1298a7bb33c7e0d51632b5bd374c59edc6f897be3e38da26aa6d844"
       }
     ]
   }

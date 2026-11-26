@@ -193,7 +193,12 @@ public struct RunScriptWidgetControlIntent: AppIntent {
     public func perform() async throws -> some IntentResult {
         let host = try HanlinExtensionHostConfiguration.load()
         let store = try HanlinScriptExtensionStore(hostConfiguration: host)
-        let execution = try HanlinScriptWidgetControlCatalog.perform(identifier: controlID, type: .button, store: store)
+        let executionControl = HanlinScriptWidgetExecutionControl()
+        let identifier = controlID
+        let execution = try await executionControl.perform {
+            try HanlinScriptWidgetControlCatalog.perform(identifier: identifier, type: .button, store: store,
+                executionControl: executionControl)
+        }
         try await HanlinScriptWidgetLiveActivityController.refresh(store: store, identity: execution.identity)
         ControlCenter.shared.reloadControls(ofKind: HanlinScriptWidgetControlCatalog.buttonKind)
         ControlCenter.shared.reloadControls(ofKind: HanlinScriptWidgetControlCatalog.toggleKind)
@@ -219,8 +224,12 @@ public struct SetScriptWidgetControlValueIntent: SetValueIntent {
     public func perform() async throws -> some IntentResult {
         let host = try HanlinExtensionHostConfiguration.load()
         let store = try HanlinScriptExtensionStore(hostConfiguration: host)
-        let execution = try HanlinScriptWidgetControlCatalog.perform(identifier: controlID, type: .toggle,
-            value: value, store: store)
+        let executionControl = HanlinScriptWidgetExecutionControl()
+        let identifier = controlID, desiredValue = value
+        let execution = try await executionControl.perform {
+            try HanlinScriptWidgetControlCatalog.perform(identifier: identifier, type: .toggle,
+                value: desiredValue, store: store, executionControl: executionControl)
+        }
         try await HanlinScriptWidgetLiveActivityController.refresh(store: store, identity: execution.identity)
         ControlCenter.shared.reloadControls(ofKind: HanlinScriptWidgetControlCatalog.buttonKind)
         ControlCenter.shared.reloadControls(ofKind: HanlinScriptWidgetControlCatalog.toggleKind)

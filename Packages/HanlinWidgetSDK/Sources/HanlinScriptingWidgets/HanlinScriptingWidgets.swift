@@ -118,19 +118,25 @@ public struct HanlinWidgetTimelineProvider: AppIntentTimelineProvider {
         case .systemExtraLarge: familyName = "systemExtraLarge"
         default: return .init(date: .now, presentation: .failure("Unsupported widget family"))
         }
-        let presentation = await Task.detached(priority: .userInitiated) {
-            do {
-                let store = try HanlinScriptExtensionStore()
-                let snapshot = try store.load()
-                let resolved = snapshot?.widgetEntityMigrations[id] ?? id
-                return HanlinWidgetPreparation.prepare(store: store, entityID: resolved, family: familyName)
-            } catch {
-                if let diag = HanlinScriptExtensionStore.latestDiagnostic {
-                    return HanlinPreparedWidget.failure("\(diag.userFacingHeadline) (\(diag.correlationID))")
+        let executionControl = HanlinScriptWidgetExecutionControl()
+        let presentation: HanlinPreparedWidget
+        do {
+            presentation = try await executionControl.perform {
+                do {
+                    let store = try HanlinScriptExtensionStore()
+                    let snapshot = try store.load()
+                    let resolved = snapshot?.widgetEntityMigrations[id] ?? id
+                    return HanlinWidgetPreparation.prepare(store: store, entityID: resolved, family: familyName, executionControl: executionControl)
+                } catch {
+                    if let diag = HanlinScriptExtensionStore.latestDiagnostic {
+                        return HanlinPreparedWidget.failure("\(diag.userFacingHeadline) (\(diag.correlationID))")
+                    }
+                    return HanlinPreparedWidget.failure("Widget storage failed")
                 }
-                return HanlinPreparedWidget.failure("Widget storage failed")
             }
-        }.value
+        } catch {
+            presentation = .failure(error.localizedDescription)
+        }
         return .init(date: .now, presentation: presentation)
     }
 }

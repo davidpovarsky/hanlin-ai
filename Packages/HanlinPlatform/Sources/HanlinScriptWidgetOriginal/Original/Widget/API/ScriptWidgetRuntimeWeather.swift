@@ -56,7 +56,7 @@ struct ScriptWidgetWeatherOptions {
                 if result["isStale"] as? Bool == false { finish(.success(result)); return }
             }
             var task: URLSessionDataTask!
-            task = context.state.fetchManager.makeTask(httpMethod: "GET", url: value.url, params: ["headers": ["User-Agent": "ScriptWidget/27.1 https://github.com/everettjf/scriptwidget"], "timeoutInterval": 3], redirectValidator: { ScriptWidgetNetworkPolicy.allowsRedirect($0, state: context.state) }) { data, response, error in
+            task = context.state.fetchManager.makeTask(httpMethod: "GET", url: value.url, params: ["headers": ["User-Agent": "ScriptWidget/27.1 https://github.com/everettjf/scriptwidget"]], redirectValidator: { ScriptWidgetNetworkPolicy.allowsRedirect($0, state: context.state) }) { data, response, error in
                 context.state.executionSession.complete(task)
                 do {
                     try context.validate()

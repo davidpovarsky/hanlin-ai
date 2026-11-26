@@ -6,12 +6,11 @@
 //
 
 import Foundation
+import CoreFoundation
 import JavaScriptCore
 
 
 final class ScriptWidgetFetchManager: NSObject, URLSessionDataDelegate, URLSessionTaskDelegate {
-    static let maximumResponseBytes = 2 * 1_024 * 1_024
-    static let maximumRequestBodyBytes = 1 * 1_024 * 1_024
     static let allowedSchemes = Set(["https", "http"])
     private struct Transfer {
         var data = Data()
@@ -27,14 +26,20 @@ final class ScriptWidgetFetchManager: NSObject, URLSessionDataDelegate, URLSessi
         self.configuration = configuration.copy() as! URLSessionConfiguration
         super.init()
     }
-    private lazy var session: URLSession = {
+    private var storedSession: URLSession?
+    private var session: URLSession {
+        lock.lock()
+        defer { lock.unlock() }
+        if let storedSession { return storedSession }
         let config = configuration
-        config.timeoutIntervalForRequest = 5.0
-        config.timeoutIntervalForResource = 10.0
         config.urlCache = nil
         config.requestCachePolicy = .reloadIgnoringLocalCacheData
-        return URLSession(configuration: config, delegate: self, delegateQueue: nil)
-    }()
+        // One manager must own one session: task identifiers are session-local.
+        // Serializing initialization does not serialize request execution.
+        let created = URLSession(configuration: config, delegate: self, delegateQueue: nil)
+        storedSession = created
+        return created
+    }
 
     func makeTask(httpMethod: String, url: URL, params: [AnyHashable : Any]?, redirectValidator: ((URL) -> Bool)? = nil, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
 
@@ -67,10 +72,9 @@ final class ScriptWidgetFetchManager: NSObject, URLSessionDataDelegate, URLSessi
                 }
             }
 
-            request.timeoutInterval = ScriptWidgetFetchPolicy.normalizedTimeout(params["timeoutInterval"] as? Double)
-        }
-        if let body = request.httpBody, body.count > Self.maximumRequestBodyBytes {
-            request.httpBody = nil
+            if let timeout = params["timeoutInterval"] as? NSNumber {
+                request.timeoutInterval = timeout.doubleValue
+            }
         }
         return makeTask(request: request, redirectValidator: redirectValidator, completionHandler: completionHandler)
     }
@@ -88,11 +92,6 @@ final class ScriptWidgetFetchManager: NSObject, URLSessionDataDelegate, URLSessi
     }
 
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse, completionHandler: @escaping (URLSession.ResponseDisposition) -> Void) {
-        guard response.expectedContentLength <= 0 || response.expectedContentLength <= Self.maximumResponseBytes else {
-            completionHandler(.cancel)
-            finish(taskIdentifier: dataTask.taskIdentifier, error: resourceError("Response exceeds the \(Self.maximumResponseBytes)-byte limit"))
-            return
-        }
         lock.lock()
         transfers[dataTask.taskIdentifier]?.response = response
         lock.unlock()
@@ -103,13 +102,6 @@ final class ScriptWidgetFetchManager: NSObject, URLSessionDataDelegate, URLSessi
         lock.lock()
         guard var transfer = transfers[dataTask.taskIdentifier] else {
             lock.unlock()
-            return
-        }
-        guard ScriptWidgetFetchPolicy.canAppend(currentBytes: transfer.data.count, incomingBytes: data.count) else {
-            transfers.removeValue(forKey: dataTask.taskIdentifier)
-            lock.unlock()
-            dataTask.cancel()
-            transfer.completion(nil, transfer.response, resourceError("Response exceeds the \(Self.maximumResponseBytes)-byte limit"))
             return
         }
         transfer.data.append(data)
@@ -149,12 +141,14 @@ final class ScriptWidgetFetchManager: NSObject, URLSessionDataDelegate, URLSessi
 }
 
 enum ScriptWidgetFetchPolicy {
-    static func normalizedTimeout(_ value: Double?) -> TimeInterval {
-        min(10, max(1, value ?? 5))
-    }
-
-    static func canAppend(currentBytes: Int, incomingBytes: Int, limit: Int = ScriptWidgetFetchManager.maximumResponseBytes) -> Bool {
-        currentBytes >= 0 && incomingBytes >= 0 && currentBytes <= limit - min(incomingBytes, limit + 1)
+    static func validationError(forTimeout value: Any?) -> String? {
+        guard let value else { return nil }
+        guard let number = value as? NSNumber,
+              CFGetTypeID(number) != CFBooleanGetTypeID(),
+              number.doubleValue.isFinite, number.doubleValue > 0 else {
+            return "timeoutInterval must be a finite positive number of seconds"
+        }
+        return nil
     }
 
     static func validationError(for url: URL) -> String? {
@@ -162,12 +156,9 @@ enum ScriptWidgetFetchPolicy {
               ScriptWidgetFetchManager.allowedSchemes.contains(scheme) else {
             return "Only HTTP and HTTPS URLs are allowed"
         }
-        guard let host = url.host?.lowercased(), !host.isEmpty else { return "URL host is required" }
-        let blocked = host == "localhost" || host == "::1" || host.hasSuffix(".local") ||
-            host.hasPrefix("127.") || host.hasPrefix("10.") || host.hasPrefix("192.168.") ||
-            (host.split(separator: ".").count == 4 && host.split(separator: ".").first == "172" &&
-             (16...31).contains(Int(host.split(separator: ".")[1]) ?? -1))
-        return blocked ? "Local and private network hosts are not allowed" : nil
+        guard let host = url.host, !host.isEmpty else { return "URL host is required" }
+        // Local services use the same HTTP(S) transport and package declarations.
+        return nil
     }
 }
 
@@ -235,7 +226,6 @@ enum ScriptWidgetPushRegistration {
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.httpBody = body
-        request.timeoutInterval = 5
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         let task = sharedFetchManager.makeTask(
             request: request,
@@ -269,6 +259,10 @@ private func performScriptWidgetFetch(_ httpMethod: String, _ url: String, _ par
             reject.call(withArguments: ["\(url) is not url"])
             return
         }
+        if let validationError = ScriptWidgetFetchPolicy.validationError(forTimeout: params?["timeoutInterval"]) {
+            reject.call(withArguments: [validationError])
+            return
+        }
         if let validationError = ScriptWidgetFetchPolicy.validationError(for: urlValue) {
             reject.call(withArguments: [validationError])
             return
@@ -287,10 +281,6 @@ private func performScriptWidgetFetch(_ httpMethod: String, _ url: String, _ par
             if let error = error {
                 reject.call(withArguments: [error.localizedDescription])
             } else if let data = data {
-                guard data.count <= ScriptWidgetFetchManager.maximumResponseBytes else {
-                    reject.call(withArguments: ["Response exceeds the 2097152-byte limit"])
-                    return
-                }
                 if metadata {
                     guard let http = response as? HTTPURLResponse,
                           let body = params?["responseType"] as? String == "base64" ? data.base64EncodedString() : String(data: data, encoding: .utf8) else {
@@ -319,7 +309,7 @@ private func performScriptWidgetFetch(_ httpMethod: String, _ url: String, _ par
         }
         guard state.isCurrentExecution, executionSession.register(task) else {
             task.cancel()
-            reject.call(withArguments: ["Network request budget exceeded"])
+            reject.call(withArguments: ["Execution session is no longer active"])
             return
         }
         task.resume()

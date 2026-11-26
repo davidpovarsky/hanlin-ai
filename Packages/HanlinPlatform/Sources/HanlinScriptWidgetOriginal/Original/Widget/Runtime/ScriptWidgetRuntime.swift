@@ -115,7 +115,7 @@ enum ScriptWidgetRuntimeContract {
                 "elementNodes": maximumElementNodes,
                 "elementDepth": maximumElementDepth,
                 "propsPerElement": maximumPropsPerElement,
-                "systemDataQueries": ScriptWidgetExecutionSession.maximumDataQueries,
+                "systemDataQueries": NSNull(),
             ],
         ]
     }
@@ -535,7 +535,7 @@ class ScriptWidgetRuntime {
         performanceTrace?.increment("library.moment.loaded")
     }
 
-    func installBaseAPIs() {
+    func installBaseAPIs(runtimeDescriptor: [String: Any]? = nil) {
         let install = { [self] in
             runtimeContext["Promise"] = ScriptWidgetRuntimePromise.self
             runtimeContext["fetch"] = unsafeBitCast(custom_fetch, to: JSValue.self)
@@ -563,7 +563,7 @@ class ScriptWidgetRuntime {
             runtimeContext["$health"] = ScriptWidgetRuntimeHealth.self
             runtimeContext["$location"] = ScriptWidgetRuntimeLocation.self
             runtimeContext["$storage"] = ScriptWidgetRuntimeStorage.self
-            runtimeContext["$runtime"] = ScriptWidgetRuntimeContract.javascriptDescriptor
+            runtimeContext["$runtime"] = runtimeDescriptor ?? ScriptWidgetRuntimeContract.javascriptDescriptor
             runtimeContext["$dataSource"] = ScriptWidgetRuntimeDataSource.self
 
             let parseXML: @convention(block) (String) -> String = { source in

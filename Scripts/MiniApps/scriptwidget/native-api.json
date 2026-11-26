@@ -1681,7 +1681,7 @@
   "sources": [
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift",
-      "sha256": "fa62de1025c7ae06406794e9c397e3f64ed0e32a8fb0fc3584e43fa2e28bd066"
+      "sha256": "116b7dd61a683ab96852044c787283befd9173e2dbacb4f41cffba59fd346da5"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetCloudJSON.swift",
@@ -1689,7 +1689,7 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Plugin/ScriptWidgetDataSources.swift",
-      "sha256": "6d5a062de80aeae763087c66b0f31910af63190821942d55d39f782f62095607"
+      "sha256": "d430223eb01d352e8a617c8ee21fb39c6a8211756f7d9028b9d426b884fa9d09"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeAlarms.swift",
@@ -1725,7 +1725,7 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift",
-      "sha256": "8a7bb65bffe0390ac719e33b0ece71e19b20e9be96841e422a3a4c37f09352b3"
+      "sha256": "33b17754b1298a7bb33c7e0d51632b5bd374c59edc6f897be3e38da26aa6d844"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFile.swift",
@@ -1789,11 +1789,11 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeWeather.swift",
-      "sha256": "beb2d479aadf532c827b31eacd1ec68d80586d409133acedaa1616384fc7aae8"
+      "sha256": "2f93ea5190ecfb1d05daeb75a8a483a8323dcdaa797833b4b97e35489859ab6c"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetServiceAccessPolicy.swift",
-      "sha256": "2952863b469cc93e9fbe545290f6210ef53f0c085aab67111aa63b8b332b01b0"
+      "sha256": "2fc60fe3b8dee13e444d2a4529776c7cc8c17adc82814ef2b9a253c4f4130a90"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetServiceAccountsView.swift",
@@ -1813,7 +1813,7 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetServiceTransport.swift",
-      "sha256": "1312ac317ead67b8fa32bc581350c6c8b293fe1724b56d680f853cecc5452b3d"
+      "sha256": "98d869b47e59266096df70169c45337b7bc7b2fa14877ba8151778ec0e0fd518"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetStorageFiles.swift",
@@ -1833,7 +1833,7 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRuntime.swift",
-      "sha256": "15a60ffc1a6171dde86fa442a7a51764fd073eee4f615e329b6593dc5cf9b34a"
+      "sha256": "f5e078895fcceaa2c675f32b8a2785fbd8a4c6f8eacd059ed1b0e9e12adc7f84"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Resources/support.bundle/util.js",
@@ -1841,7 +1841,7 @@
     },
     {
       "path": "Scripts/MiniApps/scriptwidget/host-globals.d.ts",
-      "sha256": "603148dada2fd81794f8bd2953e6da8aa3f4aaf8bed1176d50435c31b1136c7a"
+      "sha256": "f8298759ba905ae21a5b8b8aca983529c7976fd44f0e5b53a33a9eeaa7418c13"
     }
   ],
   "originalCatalog": {

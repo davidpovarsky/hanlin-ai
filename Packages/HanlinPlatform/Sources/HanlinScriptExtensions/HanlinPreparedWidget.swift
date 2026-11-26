@@ -92,10 +92,12 @@ extension HanlinScriptExtensionStore {
 }
 
 public enum HanlinWidgetPreparation {
-    public static func prepare(store: HanlinScriptExtensionStore, entityID: String, family: String) -> HanlinPreparedWidget {
+    public static func prepare(store: HanlinScriptExtensionStore, entityID: String, family: String, executionControl: HanlinScriptWidgetExecutionControl = .init()) -> HanlinPreparedWidget {
         do {
+          try executionControl.checkCancellation()
           var prepared = HanlinPreparedWidget.failure("Widget preparation did not finish")
           try store.update { snapshot in
+            try executionControl.checkCancellation()
             guard let snapshot,
                   let widget = snapshot.widgets.first(where: { widget in
                       HanlinWidgetInstance(identity: widget.identity, engine: widget.engine, displayName: widget.displayName).entityID == entityID
@@ -139,11 +141,12 @@ public enum HanlinWidgetPreparation {
             }
             let result = try HanlinScriptWidgetRuntime.shared.run(program: program, values: state?.values ?? [:], environment: environment,
                 nativeRoot: store.root.appendingPathComponent("ScriptWidgetOriginal/v1", isDirectory: true),
-                nativeIdentity: try HanlinScriptWidgetRuntime.nativeIdentity(widget.identity, artifactSHA256: digest))
+                nativeIdentity: try HanlinScriptWidgetRuntime.nativeIdentity(widget.identity, artifactSHA256: digest), executionControl: executionControl)
             prepared = .scriptwidget(node: result.node, context: context)
             // ScriptWidget scripts can populate typed storage during timeline
             // preparation too. Publish those writes in this same transaction;
             // a concurrent AppIntent cannot be overwritten by an old read.
+            try executionControl.checkCancellation()
             guard result.values != (state?.values ?? [:]) else { return snapshot }
             guard (state?.revision ?? 0) < UInt64.max else { throw HanlinWidgetActionError.invalidState }
             let updated = HanlinWidgetInstanceState(identity: widget.identity, engine: widget.engine, artifactSHA256: digest,

@@ -77,7 +77,10 @@ struct HanlinKeyboardNotificationPresentationTests {
         let prepared = try HanlinNativePresentationExecutor.prepare(firstRequest, store: store,
             storage: .extensionLocal(root: local))
         let firstContext = try context(prepared)
-        #expect(firstContext.resources["keyboard.txt"]?.path.hasPrefix(local.path) == true)
+        let resource = try #require(firstContext.resources["keyboard.txt"])
+        let localPath = local.resolvingSymlinksInPath().standardizedFileURL.path
+        #expect(resource.resolvingSymlinksInPath().standardizedFileURL.path.hasPrefix(localPath + "/"))
+        #expect(try Data(contentsOf: resource) == Data("שלום".utf8))
         let command = HanlinWidgetActionCommand(context: firstContext, actionID: "insert", nonce: UUID().uuidString)
         let first = try HanlinNativePresentationExecutor.prepare(firstRequest, store: store, action: command,
             storage: .extensionLocal(root: local))

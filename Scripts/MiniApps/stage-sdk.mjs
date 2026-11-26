@@ -99,6 +99,8 @@ export const sdkInputs = [
  'AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift',
  'Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift',
  'Packages/HanlinAppExtensionsSDK/Package.swift',
+ 'Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingWidgets.swift',
+ 'Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/ScriptWidgetControls/Original/ScriptWidgetSelectTimerIntent.swift',
  'Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinWidgetProgram.swift',
  'Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinNativePresentationMetadata.swift',
  'Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift',

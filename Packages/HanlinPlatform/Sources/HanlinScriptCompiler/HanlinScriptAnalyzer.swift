@@ -387,10 +387,8 @@ public struct HanlinScriptAnalyzer: Sendable {
             ))
             return
         }
-        let packageJSONPath = URL(filePath: entrypoint.sourcePath)
-            .deletingLastPathComponent()
-            .appending(path: "package.json")
-            .relativePath
+        let packageDirectory = entrypoint.sourcePath.split(separator: "/").dropLast().joined(separator: "/")
+        let packageJSONPath = packageDirectory.isEmpty ? "package.json" : packageDirectory + "/package.json"
         guard let packageJSONData = files[packageJSONPath],
               let packageJSON = try? JSONSerialization.jsonObject(with: packageJSONData) as? [String: Any],
               URL(filePath: entrypoint.sourcePath).lastPathComponent == "bundle.mjs",

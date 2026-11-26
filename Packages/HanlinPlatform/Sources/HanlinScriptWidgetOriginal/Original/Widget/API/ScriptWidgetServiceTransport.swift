@@ -42,9 +42,8 @@ final class ScriptWidgetServiceRequestHandle: @unchecked Sendable, CustomStringC
 }
 
 /// Each request uses its own ephemeral session and a serial delegate lane.
-/// Streaming bounds apply before appending bytes, including chunked bodies.
+/// The request owner and URLSession control lifetime; native response types remain validated.
 final class ScriptWidgetServiceURLTransport: ScriptWidgetServiceHTTPTransport {
-    static let maximumResponseBytes = 128 * 1024
     private let protocolClasses: [AnyClass]?
     init() { protocolClasses = nil }
     #if DEBUG || SCRIPTWIDGET_SERVICE_STANDALONE_TESTS
@@ -57,7 +56,6 @@ final class ScriptWidgetServiceURLTransport: ScriptWidgetServiceHTTPTransport {
         let configuration = URLSessionConfiguration.ephemeral
         configuration.urlCache = nil; configuration.urlCredentialStorage = nil; configuration.httpCookieStorage = nil
         configuration.httpShouldSetCookies = false; configuration.requestCachePolicy = .reloadIgnoringLocalCacheData
-        configuration.timeoutIntervalForRequest = 5; configuration.timeoutIntervalForResource = 6
         if let protocolClasses { configuration.protocolClasses = protocolClasses }
         let lane = OperationQueue(); lane.maxConcurrentOperationCount = 1; lane.name = "ScriptWidget.ServiceHTTP"
         let session = URLSession(configuration: configuration, delegate: worker, delegateQueue: lane)
@@ -111,9 +109,6 @@ final class ScriptWidgetServiceURLTransport: ScriptWidgetServiceHTTPTransport {
         }
         func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
             guard !completed else { return }
-            guard data.count <= ScriptWidgetServiceURLTransport.maximumResponseBytes - body.count else {
-                finish(.failure(.unavailable)); return
-            }
             body.append(data)
         }
         func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
@@ -127,7 +122,6 @@ final class ScriptWidgetServiceURLTransport: ScriptWidgetServiceHTTPTransport {
 
 enum ScriptWidgetServiceResponseDecoder {
     static func validateHTTP(status: Int, contentType: String?, expectedBytes: Int64, rateLimited: Bool = false) throws {
-        guard expectedBytes <= ScriptWidgetServiceURLTransport.maximumResponseBytes else { throw ScriptWidgetServiceError.unavailable }
         if status == 401 { throw ScriptWidgetServiceError.expiredAuthorization }
         if status == 429 || (status == 403 && rateLimited) { throw ScriptWidgetServiceError.rateLimited }
         if status == 403 { throw ScriptWidgetServiceError.permissionDenied }
@@ -178,7 +172,6 @@ enum ScriptWidgetServiceResponseDecoder {
         guard !operation.isWrite, operation.service == credential.service else { throw ScriptWidgetServiceError.unsupportedOperation }
         try credential.validate()
         let data = response.body
-        guard data.count <= ScriptWidgetServiceURLTransport.maximumResponseBytes else { throw ScriptWidgetServiceError.unavailable }
         guard response.status == 200 else { throw ScriptWidgetServiceError.unavailable }
         guard let object = try? JSONSerialization.jsonObject(with: data) as? [String: Any] else { throw ScriptWidgetServiceError.unavailable }
         let fields = Fields(object, secrets: [credential.accessToken, credential.refreshToken].compactMap { $0 })

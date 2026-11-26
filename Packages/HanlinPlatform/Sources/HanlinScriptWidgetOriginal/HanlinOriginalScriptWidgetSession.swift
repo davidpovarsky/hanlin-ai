@@ -12,9 +12,12 @@ public struct HanlinOriginalScriptWidgetFailure: Error, LocalizedError {
 /// share the upstream serial callback lane; the native caller waits outside it.
 public final class HanlinOriginalScriptWidgetSession {
     private let runtime: ScriptWidgetRuntime
+    private let executionSession: ScriptWidgetExecutionSession
     private let transaction: HanlinOriginalScriptWidgetTransaction
     private let snapshot: ScriptWidgetExecutionSnapshot
     let installedPackage: ScriptWidgetPackage
+    private let executionControl: HanlinScriptWidgetExecutionControl
+    private var cancellationRegistration: UUID?
 
     public static func supportScript(_ name: String) -> String? { ScriptManager.readBundleFile(bundle: "support", fileName: name) }
 
@@ -37,6 +40,8 @@ public final class HanlinOriginalScriptWidgetSession {
             throw HanlinOriginalScriptWidgetFailure(error.localizedDescription)
         }
     }
+    /// Historical direct-upstream timeout, retained for source compatibility.
+    /// Hanlin execution lifetime is controlled by HanlinScriptWidgetExecutionControl.
     public static var executionTimeout: TimeInterval {
         switch ScriptWidgetRuntimeContract.executionTimeout {
         case let .seconds(value): return Double(value)
@@ -51,23 +56,48 @@ public final class HanlinOriginalScriptWidgetSession {
     public init(context: JSContext, root: URL, identity: String,
                 preparedJavaScript: String, files: [String: Data],
                 values: [String: Any], environment: [String: String],
-                isUserInitiatedAction: Bool) throws {
+                isUserInitiatedAction: Bool, executionControl: HanlinScriptWidgetExecutionControl = .init()) throws {
+        try executionControl.checkCancellation()
+        self.executionControl = executionControl
         let prepared = try Self.prepare(root: root, identity: identity, javaScript: preparedJavaScript, files: files, values: values)
         self.transaction = prepared.transaction
         self.snapshot = prepared.snapshot
         self.installedPackage = prepared.package
-        self.runtime = ScriptWidgetRuntime(package: prepared.snapshot.package,
+        let runtime = ScriptWidgetRuntime(package: prepared.snapshot.package,
             environments: environment, executionSnapshot: prepared.snapshot,
             isUserInitiatedAction: isUserInitiatedAction, hostContext: context)
+        self.runtime = runtime
+        guard let session = runtime.runningState?.executionSession else {
+            throw HanlinOriginalScriptWidgetFailure("ScriptWidget execution session is unavailable")
+        }
+        self.executionSession = session
+        // Capture the synchronized session once. Deadline delivery must not
+        // retrieve associated state from JavaScriptCore on the timer's lane.
+        cancellationRegistration = executionControl.onCancellation { [weak session] reason in
+            session?.cancel(reason == .deadlineExceeded ? .timeout : .explicit)
+        }
     }
 
+    deinit { executionControl.removeCancellationHandler(cancellationRegistration) }
+
     public func onJavaScriptQueue<T>(_ work: () throws -> T) rethrows -> T {
-        try runtime.runningState!.executionSession.callbackQueue.sync(execute: work)
+        try executionSession.callbackQueue.sync(execute: work)
     }
 
     /// Registers the upstream classes, including real EventKit, HealthKit,
     /// Contacts, HomeKit, Photos, Location, Music, storage and URLSession APIs.
-    public func installAPIs() { runtime.installBaseAPIs() }
+    public func installAPIs() {
+        var descriptor = ScriptWidgetRuntimeContract.javascriptDescriptor
+        var limits = descriptor["limits"] as! [String: Any]
+        if let deadline = executionControl.deadline {
+            let remaining = ContinuousClock.now.duration(to: deadline).components
+            limits["executionMilliseconds"] = max(0, Double(remaining.seconds) * 1_000 + Double(remaining.attoseconds) / 1_000_000_000_000_000)
+        } else {
+            limits["executionMilliseconds"] = NSNull()
+        }
+        descriptor["limits"] = limits
+        runtime.installBaseAPIs(runtimeDescriptor: descriptor)
+    }
 
     public func values() throws -> [String: Any] { try transaction.exportValues() }
     public func value(forKey key: String) throws -> Any? {
@@ -78,8 +108,8 @@ public final class HanlinOriginalScriptWidgetSession {
         try snapshot.validateIdentity()
         try transaction.setExportedValue(value, forKey: key)
     }
-    public func finish() { runtime.runningState?.executionSession.finish() }
-    public func cancel() { runtime.cancel(.explicit) }
+    public func finish() { executionSession.finish() }
+    public func cancel() { executionSession.cancel(.explicit) }
 
     /// Original storage installation and generation binding. Every supplied
     /// identity comes from the installed Hanlin artifact under its store lock.

@@ -64,7 +64,7 @@ export async function generateScriptWidgetServiceTypes({root = repositoryRoot, o
   // Result nullability and native validation rules reside here in addition to protocols.
   await read(originalRoot + '/Common/ScriptWidgetCloudJSON.swift');
   const {methods: catalog, provenance} = await catalogAt(root);
-  const installStart = runtime.indexOf('func installBaseAPIs()');
+  const installStart = runtime.search(/\bfunc\s+installBaseAPIs\s*\(/);
   const installEnd = runtime.indexOf('private func packagePreflightError', installStart);
   if (installStart < 0 || installEnd < 0) throw new Error('Original native API installation function was not found.');
   const bindings = new Map([...runtime.slice(installStart, installEnd)

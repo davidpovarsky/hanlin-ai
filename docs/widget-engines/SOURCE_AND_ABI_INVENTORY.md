@@ -1,4 +1,16 @@
-# Pass 3 source and ABI closure
+# Widget source and API inventory
+
+## Current source contract
+
+The installed SDK's generated `Scripts/MiniApps/scriptwidget/native-api.json` and `widget-manifest.schema.json` describe the current ScriptWidget APIs and manifest fields. `UPSTREAM_SOURCE_MANIFEST.json` binds original repositories, revisions and blobs to the compiled local files and records Hanlin adaptations. The generated [SDK manifest reference](../miniapp-sdk/MANIFEST_REFERENCE.md) and [extension reachability](../miniapp-sdk/extension-reachability.md) describe the current authoring and entrypoint contracts.
+
+The prepared ScriptWidget HTTP route permits local and private HTTP(S) services through the same package network declarations as other hosts. Fetch, data-source and service-profile requests have no imposed application request-count or body/response-size ceiling. A supplied finite positive HTTP timeout is honored without the former one-to-ten-second clamp; an omitted timeout uses the transport's ordinary platform behavior. These changes are recorded adaptations of the pinned original ScriptWidget source.
+
+Prepared execution has caller-owned cancellation and an optional monotonic deadline. The default imposes no five-second invocation deadline. The same control covers execution, completion waiting and frozen-value preparation; actual task and view owners forward cancellation to registered network/provider work. Cancellation remains cooperative for JavaScript and does not claim interruption of every native built-in. Platform lifecycle behavior remains the platform's responsibility.
+
+The dated Pass 3 tables and runs below are retained historical evidence. They do not describe the current API inventory or current application limits and do not certify the later source changes.
+
+## Historical Pass 3 source and ABI closure
 
 | Path / symbol | Actual implementation | Verification |
 |---|---|---|
@@ -11,7 +23,7 @@
 
 See UPSTREAM_SOURCE_MANIFEST.json for every copied file/blob and local hash. Compiler resource and source fragments are attributed separately from complete copied files. Mixed subtree is DEFERRED_OPTIONAL; no ScriptWidgetSubtree surrogate is advertised.
 
-## ScriptWidget API context
+### Historical ScriptWidget API context
 
 | API | Actual bounded extension contract | Executed evidence / limit |
 |---|---|---|

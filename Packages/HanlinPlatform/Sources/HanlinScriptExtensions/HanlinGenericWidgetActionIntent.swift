@@ -18,7 +18,11 @@ public struct HanlinGenericWidgetActionIntent: AppIntent {
         let host = try HanlinExtensionHostConfiguration.load()
         let kind = try host.requireWidgetKind()
         let store = try HanlinScriptExtensionStore(hostConfiguration: host)
-        _ = try HanlinWidgetActionExecutor.perform(command, store: store)
+        let executionControl = HanlinScriptWidgetExecutionControl()
+        let invocation = command
+        _ = try await executionControl.perform {
+            try HanlinWidgetActionExecutor.perform(invocation, store: store, executionControl: executionControl)
+        }
 #if os(iOS)
         if command.context.engine == .scriptwidget {
             try await HanlinScriptWidgetLiveActivityController.refresh(store: store, identity: command.context.identity)
@@ -51,7 +55,11 @@ public struct HanlinSetWidgetValueIntent: SetValueIntent {
         let host = try HanlinExtensionHostConfiguration.load()
         let kind = try host.requireWidgetKind()
         let store = try HanlinScriptExtensionStore(hostConfiguration: host)
-        _ = try HanlinWidgetActionExecutor.perform(command, store: store)
+        let executionControl = HanlinScriptWidgetExecutionControl()
+        let invocation = command
+        _ = try await executionControl.perform {
+            try HanlinWidgetActionExecutor.perform(invocation, store: store, executionControl: executionControl)
+        }
 #if os(iOS)
         if command.context.engine == .scriptwidget {
             try await HanlinScriptWidgetLiveActivityController.refresh(store: store, identity: command.context.identity)

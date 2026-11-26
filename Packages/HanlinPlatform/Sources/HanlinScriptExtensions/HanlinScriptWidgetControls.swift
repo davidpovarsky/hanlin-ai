@@ -70,7 +70,9 @@ public enum HanlinScriptWidgetControlCatalog {
     }
 
     public static func perform(identifier: String, type: HanlinScriptWidgetControlKind, value: Bool? = nil,
-                               nonce: String = "", store: HanlinScriptExtensionStore) throws -> HanlinScriptWidgetControlExecution {
+                               nonce: String = "", store: HanlinScriptExtensionStore,
+                               executionControl: HanlinScriptWidgetExecutionControl = .init()) throws -> HanlinScriptWidgetControlExecution {
+        try executionControl.checkCancellation()
         guard let control = try resolve(identifier: identifier, type: type, store: store) else {
             throw HanlinWidgetActionError.inactiveInstance
         }
@@ -78,7 +80,7 @@ public enum HanlinScriptWidgetControlCatalog {
         if type == .button && value != nil { throw HanlinWidgetActionError.undeclaredAction }
         let command = HanlinWidgetActionCommand(context: control.context, actionID: control.actionID,
             nonce: nonce, desiredValue: value, controlID: control.controlID)
-        let receipt = try HanlinWidgetActionExecutor.perform(command, store: store)
+        let receipt = try HanlinWidgetActionExecutor.perform(command, store: store, executionControl: executionControl)
         return .init(identity: control.context.identity, receipt: receipt)
     }
 

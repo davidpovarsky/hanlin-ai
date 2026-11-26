@@ -4,6 +4,8 @@ import HanlinScriptContracts
 import JavaScriptCore
 @preconcurrency import HanlinScriptWidgetOriginal
 
+public typealias HanlinScriptWidgetExecutionControl = HanlinScriptWidgetOriginal.HanlinScriptWidgetExecutionControl
+
 public struct HanlinScriptWidgetError: Error, LocalizedError, Sendable {
     public let message: String
     public init(_ message: String) { self.message = message }
@@ -41,10 +43,10 @@ public struct HanlinScriptWidgetRuntime: Sendable {
     public func run(program: HanlinWidgetProgram, values: [String: HanlinValue],
                     environment: [String: HanlinValue], actionID: String? = nil,
                     actionValue: Bool? = nil, actionParameters: HanlinValue = .null, nativeRoot: URL? = nil,
-                    nativeIdentity: String? = nil) throws -> HanlinScriptWidgetExecution {
+                    nativeIdentity: String? = nil, executionControl: HanlinScriptWidgetExecutionControl = .init()) throws -> HanlinScriptWidgetExecution {
         let result = try evaluate(program: program, values: values, environment: environment,
             actionID: actionID, actionValue: actionValue, actionParameters: actionParameters,
-            nativeRoot: nativeRoot, nativeIdentity: nativeIdentity, requiresRender: true)
+            nativeRoot: nativeRoot, nativeIdentity: nativeIdentity, requiresRender: true, executionControl: executionControl)
         guard let node = result.node else {
             throw HanlinScriptWidgetError("The script did not call $render or $dynamic_island")
         }
@@ -57,17 +59,18 @@ public struct HanlinScriptWidgetRuntime: Sendable {
     public func performAction(program: HanlinWidgetProgram, values: [String: HanlinValue],
                               environment: [String: HanlinValue], actionID: String,
                               actionValue: Bool? = nil, nativeRoot: URL,
-                              nativeIdentity: String) throws -> [String: HanlinValue] {
+                              nativeIdentity: String, executionControl: HanlinScriptWidgetExecutionControl = .init()) throws -> [String: HanlinValue] {
         try evaluate(program: program, values: values, environment: environment,
             actionID: actionID, actionValue: actionValue, actionParameters: .null,
-            nativeRoot: nativeRoot, nativeIdentity: nativeIdentity, requiresRender: false).values
+            nativeRoot: nativeRoot, nativeIdentity: nativeIdentity, requiresRender: false, executionControl: executionControl).values
     }
 
     private func evaluate(program: HanlinWidgetProgram, values: [String: HanlinValue],
                           environment: [String: HanlinValue], actionID: String?,
                           actionValue: Bool?, actionParameters: HanlinValue,
                           nativeRoot: URL?, nativeIdentity: String?,
-                          requiresRender: Bool) throws -> HanlinScriptWidgetEvaluation {
+                          requiresRender: Bool, executionControl: HanlinScriptWidgetExecutionControl) throws -> HanlinScriptWidgetEvaluation {
+        try executionControl.checkCancellation()
         try program.validate(engine: .scriptwidget)
         try HanlinOriginalScriptWidgetSession.validatePreparedJavaScript(program.javaScript)
         guard let context = JSContext(), let util = Self.resource("util.js") else {
@@ -87,13 +90,18 @@ public struct HanlinScriptWidgetRuntime: Sendable {
             environment: environment.mapValues { value in
                 if case let .string(text) = value { return text }
                 return (try? String(data: value.jsonValue().canonicalJSONData(limits: .unbounded), encoding: .utf8)) ?? ""
-            }, isUserInitiatedAction: actionID != nil || actionValue != nil)
+            }, isUserInitiatedAction: actionID != nil || actionValue != nil, executionControl: executionControl)
         let completion = HanlinScriptWidgetCompletion()
-        let deadline = ContinuousClock.now.advanced(by: .seconds(HanlinOriginalScriptWidgetSession.executionTimeout))
+        let cancellationRegistration = executionControl.onCancellation { reason in
+            completion.finish(.failure(reason))
+        }
+        defer { executionControl.removeCancellationHandler(cancellationRegistration) }
         var rendered: ScriptWidgetRuntimeElement?
         var presentationEffect = HanlinNativePresentationEffect()
         var dynamicRegions: [String: ScriptWidgetRuntimeElement] = [:]
         native.onJavaScriptQueue {
+            do { try executionControl.checkCancellation() }
+            catch { completion.finish(.failure(error)); return }
             native.installAPIs()
             context.setObject(ScriptWidgetRuntimeElement.self, forKeyedSubscript: "$element" as NSString)
             // Original $component is a registration diagnostic; function JSX
@@ -249,7 +257,7 @@ public struct HanlinScriptWidgetRuntime: Sendable {
                     return
                 }
                 do {
-                    var budget = FreezeBudget(deadline: deadline)
+                    var budget = FreezeBudget(executionControl: executionControl)
                     var active: Set<ObjectIdentifier> = []
                     var frozen: HanlinScriptWidgetPreparedNode?
                     if requiresRender, let rendered {
@@ -288,7 +296,7 @@ public struct HanlinScriptWidgetRuntime: Sendable {
             context.evaluateScript(program.javaScript)
             context.evaluateScript("$main().then(__hanlinFinishWidget,function(e){$error(String(e));});")
         }
-        let result = completion.wait(until: deadline)
+        let result = completion.wait(executionControl: executionControl)
         native.cancel()
         // Drain prior native callbacks before releasing the context/package.
         native.onJavaScriptQueue {
@@ -300,15 +308,14 @@ public struct HanlinScriptWidgetRuntime: Sendable {
                 context.setObject(nil, forKeyedSubscript: key as NSString)
             }
         }
+        try executionControl.checkCancellation()
         return try result.get()
     }
 
     private struct FreezeBudget {
-        let deadline: ContinuousClock.Instant
+        let executionControl: HanlinScriptWidgetExecutionControl
         var nodes = 0
-        func checkTime() throws {
-            guard ContinuousClock.now < deadline else { throw HanlinScriptWidgetError("Widget execution budget exceeded") }
-        }
+        func checkTime() throws { try executionControl.checkCancellation() }
         mutating func node() throws {
             try checkTime()
             guard nodes < HanlinOriginalScriptWidgetSession.maximumElementNodes else {
@@ -432,10 +439,12 @@ private final class HanlinScriptWidgetCompletion: @unchecked Sendable {
         lock.unlock()
         signal.signal()
     }
-    func wait(until deadline: ContinuousClock.Instant) -> Result<HanlinScriptWidgetEvaluation, Error> {
-        while ContinuousClock.now < deadline {
+    func wait(executionControl: HanlinScriptWidgetExecutionControl) -> Result<HanlinScriptWidgetEvaluation, Error> {
+        while true {
             lock.lock(); let current = result; lock.unlock()
             if let current { return current }
+            do { try executionControl.checkCancellation() }
+            catch { return .failure(error) }
             if Thread.isMainThread {
                 // Apple providers deliver UI authorization and some system
                 // snapshots on the main run loop. Keep that real loop live.
@@ -444,7 +453,5 @@ private final class HanlinScriptWidgetCompletion: @unchecked Sendable {
                 _ = signal.wait(timeout: .now() + .milliseconds(10))
             }
         }
-        lock.lock(); defer { lock.unlock() }
-        return result ?? .failure(HanlinScriptWidgetError("ScriptWidget native execution timed out."))
     }
 }

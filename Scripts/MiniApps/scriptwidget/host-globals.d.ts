@@ -39,5 +39,7 @@ declare function $type_of_object(value: unknown): "undefined" | "object" | "bool
 declare const $xml: { parse(source: string): ScriptWidgetXMLNode };
 declare const $runtime: {
   readonly apiVersion: string;
-  readonly limits: Readonly<{sourceBytes: number; transpiledBytes: number; executionMilliseconds: number; elementNodes: number; elementDepth: number; propsPerElement: number; systemDataQueries: number}>;
+  // null means no host-imposed ceiling. A caller deadline reports the remaining
+  // milliseconds when the runtime is installed; the OS/caller still owns lifetime.
+  readonly limits: Readonly<{sourceBytes: number; transpiledBytes: number; executionMilliseconds: number | null; elementNodes: number; elementDepth: number; propsPerElement: number; systemDataQueries: number | null}>;
 };

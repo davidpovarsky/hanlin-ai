@@ -674,7 +674,7 @@ public struct HanlinScriptExtensionStore: Sendable {
 
     private func legacyEnvelopeData(_ snapshot: HanlinScriptExtensionSnapshot) throws -> Data {
         guard var raw = try JSONSerialization.jsonObject(with: Self.encoded(snapshot)) as? [String: Any] else { throw HanlinScriptExtensionStoreError.invalidEnvelope }
-        for key in ["widgetInstances", "widgetStates", "widgetEntityMigrations", "inactiveWidgetInstallations"] { raw.removeValue(forKey: key) }
+        for key in ["nativePresentations", "widgetInstances", "widgetStates", "widgetEntityMigrations", "inactiveWidgetInstallations"] { raw.removeValue(forKey: key) }
         func oldIdentity(_ value: Any?) -> Any? {
             guard var object = value as? [String: Any] else { return value }
             object.removeValue(forKey: "variantID")
