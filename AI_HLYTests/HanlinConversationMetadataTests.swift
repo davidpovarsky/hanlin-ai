@@ -192,11 +192,12 @@ struct HanlinConversationMetadataTests {
         let newUser = ChatMessages(role: "user", text: "A reading list", record: record)
         context.insert(newUser)
         try context.save()
-        #expect(try await HanlinConversationAutoMetadata.generateIfNeeded(
+        let newUpdated = try await HanlinConversationAutoMetadata.generateIfNeeded(
             for: record, messages: record.messages ?? [], in: context) { history in
                 #expect(!history.contains("travel") && history.contains("reading"))
                 return try HanlinConversationMetadata(title: "Reading list", icon: "book")
-            })
+            }
+        #expect(newUpdated)
         let reopened = try #require(ModelContext(container).fetch(FetchDescriptor<ChatRecords>()).first)
         #expect(reopened.name == "Reading list" && reopened.icon == "book")
     }
@@ -326,8 +327,8 @@ struct HanlinConversationMetadataTests {
     func fallbackUsesTheActualRequestModelInsteadOfSavedSelection() async throws {
         let container = try container()
         let context = container.mainContext
-        let selected = AllModels(name: "saved-model", position: 0, company: "SAVED_FIXTURE")
-        let requested = AllModels(name: "requested-model", position: 1, company: "REQUEST_FIXTURE")
+        let selected = AllModels(name: "saved-model", displayName: "Saved fixture", position: 0, company: "SAVED_FIXTURE")
+        let requested = AllModels(name: "requested-model", displayName: "Requested fixture", position: 1, company: "REQUEST_FIXTURE")
         context.insert(selected)
         context.insert(requested)
         context.insert(APIKeys(company: "REQUEST_FIXTURE", key: "synthetic-fixture",
@@ -363,8 +364,8 @@ struct HanlinConversationMetadataTests {
     func configuredOptimizerWinsAndMissingCredentialsFallbackBeforeOneGeneration() async throws {
         let container = try container()
         let context = container.mainContext
-        let preferred = AllModels(name: "preferred", position: 0, company: "PREFERRED_FIXTURE")
-        let current = AllModels(name: "current", position: 1, company: "CURRENT_FIXTURE")
+        let preferred = AllModels(name: "preferred", displayName: "Preferred fixture", position: 0, company: "PREFERRED_FIXTURE")
+        let current = AllModels(name: "current", displayName: "Current fixture", position: 1, company: "CURRENT_FIXTURE")
         let missing = APIKeys(company: "PREFERRED_FIXTURE", requestURL: "https://preferred.invalid/v1/responses",
             isHidden: false, apiType: .openAIResponse)
         context.insert(preferred)
@@ -405,7 +406,7 @@ struct HanlinConversationMetadataTests {
         let modelURL = getModelDirectory().appendingPathComponent(name + ".gguf")
         try Data().write(to: modelURL)
         defer { try? FileManager.default.removeItem(at: modelURL) }
-        let local = AllModels(name: name, position: 0, company: "LOCAL")
+        let local = AllModels(name: name, displayName: "Local fixture", position: 0, company: "LOCAL")
         context.insert(local)
         try context.save()
         var requests = 0
