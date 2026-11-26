@@ -1,6 +1,6 @@
 import type {WidgetToggleProps, WidgetRefreshButtonProps, HanlinWidgetFamily} from "../../../Packages/HanlinExpoUI/src/widget-types";
 const toggle: WidgetToggleProps<{enabled:boolean}> = {isOn:false,target:"enabled",label:"Enabled",onIsOnChange:value=>({enabled:value})};
-const refresh: WidgetRefreshButtonProps = {label:"Refresh",widgetRefresh:true};
+const refresh: WidgetRefreshButtonProps = {label:"Refresh",widgetRefresh:true,target:"refresh"};
 const portrait: HanlinWidgetFamily = "systemExtraLargePortrait";
 // @ts-expect-error a native Toggle must carry a Boolean
 const bad: WidgetToggleProps<object> = {isOn:"true", target:"x", onIsOnChange:v=>({})};

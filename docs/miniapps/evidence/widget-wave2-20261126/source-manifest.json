@@ -90,8 +90,8 @@
       "bytes": 3491
     },
     "Packages/HanlinExpoUI/src/widget-types.ts": {
-      "sha256": "0b95a154aa990b55273c3d69d2db95bf11ff88437993014e9d32f958d991d525",
-      "bytes": 1349
+      "sha256": "d319693684e39548153e7c09deebda20101c2b6c924d574a3204b5edc9bcc2b6",
+      "bytes": 1439
     },
     "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinExpoWidgetInteractions.swift": {
       "sha256": "b021f04ed6dfff4b8191d14c9d2749fc9169033f9d6b3255bc23dd9aa9ad3604",
@@ -146,8 +146,8 @@
       "bytes": 6217
     },
     "Scripts/Widgets/Tests/widget-types-consumer.ts": {
-      "sha256": "a4801bd6b1020efd6f157f12032ac393f6452f9f0d65ba27fe753fdf4b90e4c3",
-      "bytes": 675
+      "sha256": "5874f446725465e9984fd7c3d81aadbcb4d1d6a814a97d914f8bb91ec8d56319",
+      "bytes": 692
     },
     "Scripts/Widgets/samples.mjs": {
       "sha256": "6d57baad5c835595624e5f913153a045353a90a077b2cfdc888dd22420d5f07c",
