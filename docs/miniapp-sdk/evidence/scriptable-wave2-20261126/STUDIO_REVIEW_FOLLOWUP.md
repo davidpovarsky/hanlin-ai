@@ -27,3 +27,7 @@ The original workspace source and the original Node editor operation are unchang
 Swift frontend syntax parse of the three changed Studio app files and the new test file passed on Oracle Swift 6.4.3. This is syntax only, not Apple typecheck or test execution. Root/mac_build_ops own exact integrated HanlinMiniApps compilation and the native test selection.
 
 Run alongside the existing 4 MiniAppsDeveloperWorkspaceTests cases. The complete Studio affected native selection is therefore 10 cases, including the two original authoring integration scenarios.
+
+## Independent follow-up review
+
+The same built-in reviewer spot-checked e641105fdc7ac5b418c49b9a146c96cfccf0f078 and confirmed the three reported fixes plus sourceRoot correction in source, with no further blocker in that bounded review. It independently confirmed 4 method definitions / 6 invocations. This is source-review evidence, not native execution.
