@@ -22,8 +22,8 @@ struct HanlinWidgetHostActionTests {
         #expect((try JSONSerialization.jsonObject(with: JSONEncoder().encode(omitted)) as? [String: Any])?["parameters"] == nil)
     }
 
-    @Test(arguments: [HanlinWidgetEngine.expo, .scriptwidget])
-    func currentOriginQueuesExactDeclaredTargetAndRetainsNull(engine: HanlinWidgetEngine) throws {
+    @Test(arguments: [HanlinPlatformContracts.HanlinWidgetEngine.expo, .scriptwidget])
+    func currentOriginQueuesExactDeclaredTargetAndRetainsNull(engine: HanlinPlatformContracts.HanlinWidgetEngine) throws {
         let fixture = try HostActionFixture(engine: engine, parameters: .null)
         defer { fixture.remove() }
         let queued = try HanlinWidgetHostActionExecutor.enqueue(fixture.command(), store: fixture.store)
