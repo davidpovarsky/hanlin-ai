@@ -228,12 +228,7 @@ public nonisolated struct HanlinAgentActivityView: View, Equatable {
                         }
                     } else {
                         if !legacyReasoning.isEmpty {
-                            Text(legacyReasoning)
-                                .font(HanlinTypography.footnote)
-                                .foregroundStyle(.secondary)
-                                .textSelection(.enabled)
-                                .fixedSize(horizontal: false, vertical: true)
-                                .accessibilityIdentifier("hanlin-reasoning-expanded-text")
+                            ReasoningDisplayText(text: legacyReasoning)
                         }
                         if !legacyToolContent.isEmpty {
                             DisclosureGroup(isExpanded: $legacyDetailsExpanded) {
@@ -285,13 +280,35 @@ public nonisolated struct HanlinAgentActivityView: View, Equatable {
                     .accessibilityIdentifier("hanlin-reasoning-live-status")
             }
             if !summary.isEmpty {
-                Text(summary)
-                    .font(HanlinTypography.footnote)
-                    .foregroundStyle(.secondary)
-                    .textSelection(.enabled)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .accessibilityIdentifier("hanlin-reasoning-expanded-text")
+                ReasoningDisplayText(text: summary)
             }
+        }
+    }
+
+    /// Read visibility inside the disclosure branch. Keep the text's natural
+    /// height for animation while hiding its leaf; tool and consent state stays
+    /// mounted in the surrounding hierarchy.
+    nonisolated private struct ReasoningDisplayText: View {
+        let text: String
+        @Environment(\.hanlinActivityBranchVisible) private var branchIsVisible
+
+        @MainActor
+        var body: some View {
+            if branchIsVisible {
+                selectableText
+            } else {
+                selectableText.hidden()
+            }
+        }
+
+        @MainActor
+        private var selectableText: some View {
+            Text(text)
+                .font(HanlinTypography.footnote)
+                .foregroundStyle(.secondary)
+                .textSelection(.enabled)
+                .fixedSize(horizontal: false, vertical: true)
+                .accessibilityIdentifier("hanlin-reasoning-expanded-text")
         }
     }
 
