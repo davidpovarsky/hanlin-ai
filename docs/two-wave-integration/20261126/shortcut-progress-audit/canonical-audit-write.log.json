@@ -1,0 +1,7 @@
+{
+  "originalPath": "/tmp/hanlin-progress-audit-20261126-x3ohgx1p/canonical-audit-write.log",
+  "bytes": 81,
+  "sha256": "f278a98d7c8d4cd0d335dc9b9ea04d8c78293a1f515ab1fb7349d1758ff1c87d",
+  "encoding": "utf-8",
+  "text": "Wrote source inventory: 102 sources, 200 local public exports; E2E not inferred.\n"
+}

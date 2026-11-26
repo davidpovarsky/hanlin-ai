@@ -1,0 +1,31 @@
+{
+  "sourceCommit": "d84fc98a96cd554bbc67613f96dedd8e380e7f97",
+  "runs": [
+    {
+      "command": [
+        "node",
+        "Scripts/Audit/audit-miniapp-sdk.mjs",
+        "--write",
+        "--typescript-module",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-recovery-20261125/Scripts/Expo/node_modules/typescript/lib/typescript.js"
+      ],
+      "returncode": 0,
+      "seconds": 0.6293968539685011,
+      "log": "/tmp/hanlin-progress-audit-20261126-x3ohgx1p/canonical-audit-write.log",
+      "output": "Wrote source inventory: 102 sources, 200 local public exports; E2E not inferred.\n"
+    },
+    {
+      "command": [
+        "node",
+        "Scripts/Audit/audit-miniapp-sdk.mjs",
+        "--check",
+        "--typescript-module",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-recovery-20261125/Scripts/Expo/node_modules/typescript/lib/typescript.js"
+      ],
+      "returncode": 0,
+      "seconds": 0.5701061971485615,
+      "log": "/tmp/hanlin-progress-audit-20261126-x3ohgx1p/canonical-audit-check.log",
+      "output": "PASS: SDK source inventory matches 102 sources and 200 local public exports.\n"
+    }
+  ]
+}
