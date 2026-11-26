@@ -731,7 +731,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
     // MARK: - P0 Source-First Classic Restoration & Full Agent Acceptance (UI-01 .. UI-08)
 
     func testUI01UnifiedHistoryPinSearchSwitchDraftPreservation() throws {
-        let app = launchAcceptanceApp()
+        let app = launchAcceptanceApp(isolatedStore: true)
         openChat(in: app)
         let identity = app.staticTexts["hanlin-phase2-chat-id"].firstMatch
         XCTAssertTrue(identity.waitForExistence(timeout: 10))
