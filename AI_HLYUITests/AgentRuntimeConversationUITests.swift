@@ -265,12 +265,51 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         attachScreenshot(UIDevice.current.userInterfaceIdiom == .pad
                          ? "follow-latest-bottom-keyboard-landscape"
                          : "follow-latest-bottom-keyboard-portrait", in: app)
-        XCUIDevice.shared.orientation = .portrait
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            XCUIDevice.shared.orientation = .portrait
+            let portrait = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+                let frame = app.windows.firstMatch.frame
+                return frame.width > 0 && frame.width < frame.height
+            }, object: nil)
+            XCTAssertEqual(XCTWaiter.wait(for: [portrait], timeout: 10), .completed,
+                           "Derive gesture coordinates only after the supported portrait viewport returns")
+        }
 
         // Leave an explicitly paused, long chat for an empty new one. An old
         // endpoint or invalidated layout cannot carry its arrow into that chat.
-        transcript.swipeDown()
-        transcript.swipeDown()
+        // With the keyboard open, the transcript AX frame extends behind the
+        // navigation bar. A default swipe can begin in that bar and never scroll.
+        for _ in 0..<2 {
+            let window = app.windows.firstMatch
+            let windowFrame = window.frame
+            let viewport = transcript.frame.intersection(windowFrame)
+            var top = viewport.minY
+            var bottom = viewport.maxY
+            for bar in app.navigationBars.allElementsBoundByIndex where bar.exists && bar.isHittable {
+                let overlap = viewport.intersection(bar.frame)
+                if !overlap.isEmpty { top = max(top, overlap.maxY) }
+            }
+            let composer = app.descendants(matching: .any)["hanlin-composer-surface"].firstMatch
+            for obstruction in [composer, app.keyboards.firstMatch] where obstruction.exists {
+                let overlap = viewport.intersection(obstruction.frame)
+                if !overlap.isEmpty { bottom = min(bottom, overlap.minY) }
+            }
+            top += 12
+            bottom -= 12
+            guard !viewport.isEmpty, viewport.width > 40, bottom - top >= 120 else {
+                XCTFail("No visible transcript area for a history drag: viewport=\(viewport) top=\(top) bottom=\(bottom)")
+                return
+            }
+            // Recompute after each real drag because it may dismiss the keyboard.
+            let origin = window.coordinate(withNormalizedOffset: .zero)
+            let start = origin.withOffset(CGVector(
+                dx: viewport.midX - windowFrame.minX,
+                dy: top + (bottom - top) * 0.2 - windowFrame.minY))
+            let end = origin.withOffset(CGVector(
+                dx: viewport.midX - windowFrame.minX,
+                dy: top + (bottom - top) * 0.8 - windowFrame.minY))
+            start.press(forDuration: 0.05, thenDragTo: end)
+        }
         XCTAssertTrue(arrow.waitForExistence(timeout: 8))
         let identity = app.staticTexts["hanlin-phase2-chat-id"].firstMatch
         XCTAssertTrue(identity.waitForExistence(timeout: 5))
