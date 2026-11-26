@@ -950,7 +950,9 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         revokeRememberedToolPermissions(in: app)
 
         sendPrompt("PROMPT_UI04_REASONING_INSPECTOR", in: app)
-        approveOriginalToolRequest(["source": "print(6 * 7)"], in: app)
+        // Local Python uses the original Host's remembered scope, like UI03.
+        // Provider-only approvals use the helper's one-use default instead.
+        approveOriginalToolRequest(["source": "print(6 * 7)"], in: app, remembersDecision: true)
 
         let finalAnswer = app.descendants(matching: .any).matching(
             NSPredicate(format: "label CONTAINS 'UI04_REASONING_COMPLETE'")
