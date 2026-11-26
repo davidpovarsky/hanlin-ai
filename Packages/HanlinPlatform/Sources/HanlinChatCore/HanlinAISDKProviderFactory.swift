@@ -34,12 +34,16 @@ public enum HanlinAISDKProviderFactory {
 
         if company == "APPLE" || apiType == "apple-on-device" {
             kind = .appleOnDevice
+        } else if ["openai-response", "openai-responses", "openairesponse", "openai-chatgpt-plan"].contains(apiType) {
+            // The saved app dialect is singular "OpenAI-Response"; explicit
+            // Responses endpoints remain Responses when hosted by a custom proxy.
+            kind = .openAIResponses
         } else if company == "ANTHROPIC" || apiType.contains("anthropic") {
             kind = .anthropic
         } else if company == "GOOGLE" || company == "GEMINI" || apiType.contains("gemini") {
             kind = .google
         } else if company == "OPENAI" && !isOpenAICompatibleHost(configuration.endpoint.host) {
-            kind = ["openai-responses", "openai-chatgpt-plan"].contains(apiType) ? .openAIResponses : .openAI
+            kind = .openAI
         } else {
             kind = .openAICompatible
         }

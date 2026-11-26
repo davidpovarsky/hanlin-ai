@@ -7,6 +7,8 @@
 
 import Foundation
 import HanlinChatCore
+import HanlinAgentCore
+@preconcurrency import LLM
 import PhotosUI
 import SwiftData
 
@@ -20,15 +22,15 @@ class SystemOptimizer {
     /// 封装从数据库查询 API 配置和模型信息
     /// - Parameter isVisual: 是否为视觉（多模态）模型
     /// - Returns: (模型名称, 模型所属厂商, API Key, 请求 URL, 支持可控思考)
-    private func fetchAPIConfig(isVisual: Bool, modelNameOverride: String? = nil) throws -> (modelName: String, company: String, apiKey: String, url: URL, supportReasoningChange: Bool) {
+    private func fetchAPIConfig(isVisual: Bool) throws -> (modelName: String, company: String, apiKey: String, url: URL, supportReasoningChange: Bool) {
         print("[SystemOptimizer] 开始获取API配置，isVisual: \(isVisual)")
         let userFetchDescriptor = FetchDescriptor<UserInfo>()
         let user = try context.fetch(userFetchDescriptor).first
         
         let defaultModel = isVisual ? "glm-4v-flash_hanlin" : "glm-4.5-flash_hanlin"
-        let optimizationModelName = modelNameOverride ?? (isVisual
+        let optimizationModelName = isVisual
             ? (user?.optimizationVisualModel ?? defaultModel)
-            : (user?.optimizationTextModel ?? defaultModel))
+            : (user?.optimizationTextModel ?? defaultModel)
         print("[SystemOptimizer] 使用模型：\(optimizationModelName)")
 
         // 查询模型信息，获取厂商
@@ -975,79 +977,131 @@ class SystemOptimizer {
     }
     
     // MARK: - Automatic conversation metadata
+    enum MetadataTarget: Sendable {
+        case sdk(HanlinChatModelConfiguration)
+        case local(modelID: String, modelURL: URL)
+    }
+
+    /// Only configuration failures may select the actual chat model. A failed
+    /// provider request is never replayed against another provider.
     @MainActor
-    func autoChatMetadata(historyMessage: String, fallbackModelName: String? = nil,
-                          transport: (URLRequest) async throws -> (Data, URLResponse) = {
-                              try await URLSession.shared.data(for: $0)
-                          }) async throws -> HanlinConversationMetadata {
-        let apiConfig: (modelName: String, company: String, apiKey: String, url: URL, supportReasoningChange: Bool)
-        do {
-            apiConfig = try fetchAPIConfig(isVisual: false)
-        } catch {
-            guard let fallbackModelName else { throw error }
-            apiConfig = try fetchAPIConfig(isVisual: false, modelNameOverride: fallbackModelName)
-        }
-        let optimizationModelName = restoreBaseModelName(from: apiConfig.modelName)
-        var messages: [[String: Any]] = [
-            ["role": "system", "content": HanlinConversationMetadataPolicy.instruction(
-                languageTag: Locale.preferredLanguages.first ?? "en")],
-            ["role": "user", "content": historyMessage]
-        ]
-
-        var requestBody: [String: Any] = [
-            "model": optimizationModelName,
-            "messages": messages,
-            "temperature": 0.3,
-            "stream": false
-        ]
-
-        applyThinkingParametersIfNeeded(
-            supportReasoningChange: apiConfig.supportReasoningChange,
-            company: apiConfig.company,
-            requestBody: &requestBody,
-            messages: &messages
-        )
-        
-        var request = URLRequest(url: apiConfig.url, timeoutInterval: 30)
-        request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.setValue("Bearer \(apiConfig.apiKey)", forHTTPHeaderField: "Authorization")
-        request.httpBody = try JSONSerialization.data(withJSONObject: requestBody, options: [])
-        
-        let (data, response) = try await transport(request)
-        
-        guard let httpResponse = response as? HTTPURLResponse else {
-            throw NSError(domain: "NetworkError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "无法获取HTTP响应"])
-        }
-
-        guard 200...299 ~= httpResponse.statusCode else {
-            // 尝试获取详细错误信息
-            var errorDetail = ""
-            if let errorData = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
-                if let error = errorData["error"] as? [String: Any],
-                   let message = error["message"] as? String {
-                    errorDetail = message
-                } else if let message = errorData["message"] as? String {
-                    errorDetail = message
-                } else if let errorString = String(data: data, encoding: .utf8) {
-                    errorDetail = errorString
-                }
+    func metadataTarget(fallbackModelID: UUID? = nil,
+                        fallbackModelName: String? = nil) throws -> MetadataTarget {
+        let models = try context.fetch(FetchDescriptor<AllModels>())
+        let preference = try context.fetch(FetchDescriptor<UserInfo>()).first?
+            .optimizationTextModel.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        if !preference.isEmpty {
+            let preferred = models.filter { $0.name == preference }
+            if preferred.count == 1, let target = try? metadataTarget(for: preferred[0]) {
+                return target
             }
-            throw NSError(domain: "NetworkError", code: httpResponse.statusCode,
-                          userInfo: [NSLocalizedDescriptionKey: "请求错误 (状态码: \(httpResponse.statusCode)): \(errorDetail)"])
         }
-        
-        guard let jsonObject = try JSONSerialization.jsonObject(with: data, options: [])
-                as? [String: Any],
-              let choices = jsonObject["choices"] as? [[String: Any]],
-              let optimizedPrompt = choices.first?["message"] as? [String: Any],
-              let optimizedContent = optimizedPrompt["content"] as? String else {
-            throw NSError(domain: "ParsingError", code: -1,
-                          userInfo: [NSLocalizedDescriptionKey: "解析 API 响应失败"])
+        let candidates: [AllModels]
+        if let fallbackModelID { candidates = models.filter { $0.id == fallbackModelID } }
+        else if let fallbackModelName { candidates = models.filter { $0.name == fallbackModelName } }
+        else { candidates = [] }
+        guard candidates.count == 1 else { throw HanlinChatError.notConfigured }
+        return try metadataTarget(for: candidates[0])
+    }
+
+    @MainActor
+    private func metadataTarget(for model: AllModels) throws -> MetadataTarget {
+        guard !model.isHidden, model.supportsTextGen,
+              let name = model.name, !name.isEmpty,
+              let company = model.company, !company.isEmpty else {
+            throw HanlinChatError.notConfigured
         }
-        
-        return try HanlinConversationMetadata.decode(optimizedContent)
+        if HanlinAppleModelCatalogAdapter.isNative(model) {
+            return .sdk(try HanlinAppleModelCatalogAdapter.configuration(for: model, maxTokens: 2048))
+        }
+        if company.uppercased() == "LOCAL" {
+            guard let path = getLocalModelPath(for: name) else { throw HanlinChatError.notConfigured }
+            return .local(modelID: name, modelURL: URL(fileURLWithPath: path))
+        }
+        // A malformed Apple row cannot become a network provider.
+        guard company.uppercased() != "APPLE" else { throw HanlinChatError.notConfigured }
+        let provider = try HanlinApplicationModelAccess(context: context).provider(company)
+        guard !provider.isHidden,
+              let key = provider.resolvedKey, !key.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty,
+              let rawURL = provider.requestURL, let endpoint = URL(string: rawURL),
+              ["http", "https"].contains(endpoint.scheme?.lowercased() ?? ""), endpoint.host != nil else {
+            throw HanlinChatError.notConfigured
+        }
+        return .sdk(HanlinChatModelConfiguration(modelID: name, displayName: model.displayName,
+            company: company, apiType: provider.apiType.rawValue, endpoint: endpoint, apiKey: key,
+            maxTokens: 2048, supportsReasoning: false, supportsToolUse: false))
+    }
+
+    @MainActor
+    func autoChatMetadata(
+        historyMessage: String, fallbackModelID: UUID? = nil, fallbackModelName: String? = nil,
+        generate: (@MainActor (MetadataTarget, String, String) async throws -> HanlinConversationMetadata)? = nil
+    ) async throws -> HanlinConversationMetadata {
+        try Task.checkCancellation()
+        let target = try metadataTarget(fallbackModelID: fallbackModelID, fallbackModelName: fallbackModelName)
+        let history = String(historyMessage.prefix(12000))
+        let language = Locale.preferredLanguages.first ?? "en"
+        if let generate { return try await generate(target, history, language) }
+        switch target {
+        case .sdk(let configuration):
+            let engine: HanlinAISDKAgentEngine
+            if HanlinAISDKProviderFactory.descriptor(for: configuration).kind == .appleOnDevice {
+                engine = try HanlinAppleOnDeviceProvider.makeEngine(configuration: configuration)
+            } else {
+                let session = URLSessionConfiguration.ephemeral
+                session.timeoutIntervalForRequest = 30
+                session.timeoutIntervalForResource = 30
+                engine = try HanlinAISDKAgentEngine(configuration: configuration,
+                    fetch: HanlinAISDKProviderFactory.makeFetch(sessionConfiguration: session))
+            }
+            let generation = Task {
+                try await HanlinConversationMetadata.generate(using: engine,
+                    historyMessage: history, languageTag: language)
+            }
+            let deadline = Task {
+                do { try await Task.sleep(for: .seconds(30)); generation.cancel() }
+                catch { }
+            }
+            defer { deadline.cancel() }
+            return try await withTaskCancellationHandler {
+                try await generation.value
+            } onCancel: {
+                generation.cancel()
+            }
+        case .local(_, let modelURL):
+            // Reuse the existing LLM driver and stream adapter, after the primary
+            // turn has released it. Local content never enters a remote fallback.
+            guard let llm = LLM(from: modelURL,
+                template: .chatML(HanlinConversationMetadataPolicy.instruction(languageTag: language)),
+                topP: 0.9, temp: 0.3, maxTokenCount: 2048) else {
+                throw HanlinChatError.notConfigured
+            }
+            let driver = LocalLLMStreamDriver(llm)
+            var expired = false
+            let deadline = Task { @MainActor in
+                do { try await Task.sleep(for: .seconds(30)); expired = true; driver.stop() }
+                catch { }
+            }
+            defer { deadline.cancel() }
+            var text = ""
+            var outputTooLarge = false
+            await withTaskCancellationHandler {
+                await LocalLLMStreamingAdapter.consume(driver: driver, prompt: history) { delta in
+                    guard !Task.isCancelled, !expired else { return false }
+                    guard delta.utf8.count <= 4096 - text.utf8.count else {
+                        outputTooLarge = true
+                        return false
+                    }
+                    text += delta
+                    return true
+                }
+            } onCancel: {
+                Task { @MainActor in driver.stop() }
+            }
+            try Task.checkCancellation()
+            guard !expired, !outputTooLarge else { throw HanlinConversationMetadata.ResponseError.invalidResponse }
+            return try HanlinConversationMetadata.decode(text)
+        }
     }
     
     // MARK: 自动生成智能体设定

@@ -1727,9 +1727,9 @@ struct ChatView: View {
     }
 
     // MARK: - Shared automatic conversation metadata
-    private func autoGenerateTitleIfNeeded() {
+    private func autoGenerateTitleIfNeeded(fallbackModelID: UUID?) {
         HanlinConversationAutoMetadata.schedule(for: chatRecord, messages: chatTemps,
-            in: context, temporary: TemporaryRecord)
+            in: context, temporary: TemporaryRecord, fallbackModelID: fallbackModelID)
     }
 
     // 处理消息发送
@@ -1792,8 +1792,6 @@ struct ChatView: View {
                 if let userMessage = userMessage, !isObserving, !isRetry {
                     chatTemps.append(userMessage)
                     context.insert(userMessage)
-                    // 异步自动命名（不阻塞主对话）
-                    autoGenerateTitleIfNeeded()
                 }
                 if continuationText == nil {
                     message = ""
@@ -1979,6 +1977,11 @@ struct ChatView: View {
                     activeAgentCoordinator = nil
                     activeAgentMessage = nil
                     activeTurnProjection = nil
+                    if turnProjection.completionStatus == "completed", !turnLease.isRevoked, !Task.isCancelled {
+                        // Release the primary model before background metadata, especially LOCAL.
+                        turnLease.release()
+                        autoGenerateTitleIfNeeded(fallbackModelID: requestModelID)
+                    }
                 }
                 
             } catch {

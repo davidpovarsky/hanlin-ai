@@ -58,11 +58,13 @@ enum HanlinConversationMutation {
                        in context: ModelContext, temporary: Bool = false) throws -> ChatMessages? {
         guard !title.isEmpty else { throw HanlinConversationMutationError.emptyTitle }
         try requireOriginal(record, in: context, temporary: temporary)
-        guard record.name != title else { return nil }
+        let titleChanged = record.name != title
+        guard titleChanged || !record.metadataWasManuallyEdited else { return nil }
+        HanlinConversationAutoMetadata.invalidate(record, in: context)
         let ephemeral = temporary && record.modelContext == nil
         var announcement: ChatMessages?
         try saveMetadata(record, in: context, temporary: temporary) {
-            if announceChange {
+            if announceChange && titleChanged {
                 let text = String(format: String(localized: "Conversation renamed to %@",
                     bundle: HanlinLocalization.bundle), title)
                 let message = ChatMessages(role: "information", text: text,
@@ -132,6 +134,7 @@ enum HanlinConversationMutation {
     static func delete(_ record: ChatRecords, in context: ModelContext, temporary: Bool = false) throws {
         try requireOriginal(record, in: context, temporary: temporary)
         let id = record.id!
+        HanlinConversationAutoMetadata.invalidate(record, in: context)
         HanlinConversationRunLease.revoke(container: context.container, conversationID: id)
         if temporary && record.modelContext == nil {
             record.messages = []
@@ -172,6 +175,7 @@ enum HanlinConversationMutation {
             store = HanlinAppConversationStore(context: context, conversation: record,
                 namespace: namespace, conversationID: id, temporary: temporary)
         }
+        HanlinConversationAutoMetadata.invalidate(record, in: context)
         HanlinConversationRunLease.revoke(container: context.container, conversationID: id)
         let replacement = try store.clearHistory(replacementText: replacementText ?? originalClearedText)
         publish(id, originalRow: ObjectIdentifier(record), kind: .historyCleared, messageID: replacement.id, in: context.container)
@@ -190,14 +194,41 @@ enum HanlinConversationMutation {
 /// UI and headless SDK requests use the same bounded, deduplicated metadata job.
 @MainActor
 enum HanlinConversationAutoMetadata {
-    private static var inFlight: Set<ObjectIdentifier> = []
+    private struct Key: Hashable {
+        let container: ObjectIdentifier
+        let conversationID: UUID
+    }
+
+    private struct Source: Equatable {
+        let id: UUID
+        let text: String?
+        let imageText: String?
+        let documentText: String?
+
+        init(_ message: ChatMessages) {
+            id = message.id
+            text = message.text
+            imageText = message.images_text
+            documentText = message.document_text
+        }
+    }
+
+    // SwiftData can return different objects for one row in separate contexts.
+    // The token also prevents an invalidated job's defer from removing a newer job.
+    private static var inFlight: [Key: UUID] = [:]
+
+    static func invalidate(_ record: ChatRecords, in context: ModelContext) {
+        guard let id = record.id else { return }
+        inFlight.removeValue(forKey: Key(container: ObjectIdentifier(context.container), conversationID: id))
+    }
 
     static func schedule(for record: ChatRecords, messages: [ChatMessages],
-                         in context: ModelContext, temporary: Bool = false) {
+                         in context: ModelContext, temporary: Bool = false,
+                         fallbackModelID: UUID? = nil) {
         Task { @MainActor in
             do {
                 _ = try await generateIfNeeded(for: record, messages: messages,
-                    in: context, temporary: temporary)
+                    in: context, temporary: temporary, fallbackModelID: fallbackModelID)
             } catch {
                 // Metadata must not fail or replay the chat request. Do not log
                 // provider bodies, conversation content or credentials here.
@@ -206,10 +237,24 @@ enum HanlinConversationAutoMetadata {
         }
     }
 
+    /// The actual request ID wins over the saved list index, which a headless
+    /// request can intentionally override and which the user may change mid-turn.
+    static func fallbackModel(for record: ChatRecords, messages: [ChatMessages],
+                              requestedID: UUID?, in context: ModelContext) throws -> AllModels? {
+        let models = try context.fetch(FetchDescriptor<AllModels>(
+            sortBy: [SortDescriptor(\AllModels.position, order: .forward)]))
+        if let requestedID { return models.first { $0.id == requestedID } }
+        if let requestName = messages.last(where: { $0.role == "user" })?.modelName {
+            let matching = models.filter { $0.name == requestName }
+            if matching.count == 1 { return matching[0] }
+        }
+        return record.useModel.flatMap { models.indices.contains($0) ? models[$0] : nil }
+    }
+
     @discardableResult
     static func generateIfNeeded(
         for record: ChatRecords, messages: [ChatMessages], in context: ModelContext,
-        temporary: Bool = false,
+        temporary: Bool = false, fallbackModelID: UUID? = nil,
         generate: (@MainActor (String) async throws -> HanlinConversationMetadata)? = nil
     ) async throws -> Bool {
         guard !record.metadataWasManuallyEdited,
@@ -221,22 +266,43 @@ enum HanlinConversationAutoMetadata {
         }.joined(separator: "\n").trimmingCharacters(in: .whitespacesAndNewlines)
         guard !history.isEmpty else { return false }
         try HanlinConversationMutation.requireOriginal(record, in: context, temporary: temporary)
-        let key = ObjectIdentifier(record)
-        guard inFlight.insert(key).inserted else { return false }
-        defer { inFlight.remove(key) }
+        let key = Key(container: ObjectIdentifier(context.container), conversationID: record.id!)
+        guard inFlight[key] == nil else { return false }
+        let token = UUID()
+        inFlight[key] = token
+        defer { if inFlight[key] == token { inFlight.removeValue(forKey: key) } }
+        let ephemeral = temporary && record.modelContext == nil
+        if !ephemeral && context.hasChanges { try context.save() }
         let expected = HanlinConversationMutation.MetadataSnapshot(record)
+        let sources = users.map(Source.init)
         let metadata: HanlinConversationMetadata
         if let generate {
             metadata = try await generate(String(history.prefix(12000)))
         } else {
-            let models = try context.fetch(FetchDescriptor<AllModels>(
-                sortBy: [SortDescriptor(\AllModels.position, order: .forward)]))
-            let fallbackName = record.useModel.flatMap { models.indices.contains($0) ? models[$0].name : nil }
+            let fallback = try fallbackModel(for: record, messages: messages,
+                requestedID: fallbackModelID, in: context)
             metadata = try await SystemOptimizer(context: context).autoChatMetadata(
-                historyMessage: String(history.prefix(12000)), fallbackModelName: fallbackName)
+                historyMessage: String(history.prefix(12000)), fallbackModelID: fallback?.id)
         }
         try Task.checkCancellation()
+        try HanlinConversationMutation.requireOriginal(record, in: context, temporary: temporary)
+        guard inFlight[key] == token, sourcesAreCurrent(sources, in: record) else { return false }
+        if !ephemeral {
+            // A second ModelContext may have cleared/renamed the same durable row.
+            // Read it once at the synchronous apply boundary, without creating rows.
+            let verification = ModelContext(context.container)
+            let id = key.conversationID
+            let rows = try verification.fetch(FetchDescriptor<ChatRecords>(predicate: #Predicate { $0.id == id }))
+            guard rows.count == 1, let stored = rows.first else { throw HanlinHostError.staleContext }
+            guard HanlinConversationMutation.MetadataSnapshot(stored) == expected,
+                  sourcesAreCurrent(sources, in: stored) else { return false }
+        }
         return try HanlinConversationMutation.applyGeneratedMetadata(metadata, to: record,
             expected: expected, in: context, temporary: temporary)
+    }
+
+    private static func sourcesAreCurrent(_ sources: [Source], in record: ChatRecords) -> Bool {
+        let current = (record.messages ?? []).filter { $0.role == "user" && !$0.isDeleted }.map(Source.init)
+        return sources.allSatisfy { current.contains($0) }
     }
 }

@@ -29,25 +29,20 @@ struct ProviderRoutingTests {
         #expect(desc.headers.isEmpty)
     }
 
-    @Test("OpenAI-Response routing characterization (Section 6 mandatory test)")
-    func testOpenAIResponseRoutingCharacterization() {
-        // Characterization finding:
-        // APIType "openAIResponse" / "openai-response" pointing to api.openai.com
-        // currently routes through the OpenAI Chat completions provider because
-        // HanlinAISDKProviderFactory resolves company == "OPENAI" to .openAI,
-        // and normalizeBaseURL trims /responses.
-        // It does NOT yet route to a dedicated Responses API adapter.
-        let config = HanlinChatModelConfiguration(
-            modelID: "gpt-4o",
-            displayName: "GPT-4o",
-            company: "OpenAI",
-            apiType: "openAIResponse",
-            endpoint: "https://api.openai.com/v1/responses",
-            credential: "sk-test"
-        )
-        let desc = HanlinAISDKProviderFactory.descriptor(for: config)
-        #expect(desc.kind == .openAI, "Characterization finding: openAIResponse routes to .openAI chatModel rather than dedicated Responses adapter.")
-        #expect(desc.baseURL.absoluteString == "https://api.openai.com/v1")
+    @Test("Saved Responses dialects select Responses on official and custom hosts",
+          arguments: ["OpenAI-Response", "openai-responses", "openAIResponse", "openai-chatgpt-plan"])
+    func testOpenAIResponseRouting(apiType: String) {
+        for (company, endpoint) in [
+            ("OPENAI", "https://api.openai.com/v1/responses"),
+            ("OPENAI", "https://proxy.invalid/v1/responses"),
+            ("Custom provider", "https://proxy.invalid/v1/responses")
+        ] {
+            let config = HanlinChatModelConfiguration(modelID: "fixture-model", company: company,
+                apiType: apiType, endpoint: endpoint, credential: "synthetic-fixture")
+            let descriptor = HanlinAISDKProviderFactory.descriptor(for: config)
+            #expect(descriptor.kind == .openAIResponses)
+            #expect(descriptor.baseURL.path == "/v1")
+        }
     }
 
     @Test("OpenAI with custom host routes to openAICompatible")
