@@ -458,3 +458,129 @@ test('system native presentations require keyboard and notification source decla
   assert(diagnostics.every(d => d.file === 'script.json' && d.category === 'error'));
   assert.equal(report.preparedPackagePath, undefined);
 });
+
+async function preparedAssistantToolManifest(f, engine) {
+  const file = path.join(f.project, 'script.json');
+  const script = JSON.parse(await fs.readFile(file));
+  const sourcePath = engine === 'expo' ? 'bundle.js' : 'nativescript/app/bundle.mjs';
+  script.entrypoints = [{id: 'summarize', kind: 'assistantTool', sourcePath, exportedSymbol: 'text.Summarize'}];
+  script.actions = [{
+    id: 'text.Summarize', title: 'Summarize text', summary: 'Return the requested summary.',
+    description: 'The explicit summary wins over this description.', handler: sourcePath,
+    inputSchema: {$schema: 'https://json-schema.org/draft/2020-12/schema', type: 'object',
+      $defs: {text: {type: 'string'}}, properties: {text: {$ref: '#/$defs/text'}}, required: ['text']},
+    outputSchema: {$schema: 'http://json-schema.org/draft-07/schema#', type: 'object',
+      properties: {summary: {type: 'string'}}, required: ['summary']}
+  }];
+  await fs.writeFile(file, JSON.stringify(script));
+  return script;
+}
+
+test('prepared assistant tools preserve action schemas and validate both containing app engines', async t => {
+  for (const engine of ['nativescript', 'expo']) {
+    const f = await fixture(t, engine);
+    const script = await preparedAssistantToolManifest(f, engine);
+    // Preserve the existing handler-preferred alias semantics.
+    script.actions[0].entrypoint = 'unused-alias.js';
+    await fs.writeFile(path.join(f.project, 'script.json'), JSON.stringify(script));
+    const report = await f.run(engine === 'nativescript' ? 'build' : 'validate');
+    assert.equal(report.succeeded, true, JSON.stringify(report.diagnostics));
+    assert.equal(report.typecheck.strict, true);
+    if (report.preparedPackagePath) {
+      const prepared = JSON.parse(await fs.readFile(path.join(report.preparedPackagePath, 'script.json')));
+      assert.deepEqual(prepared.actions, script.actions);
+      assert.deepEqual(prepared.entrypoints, script.entrypoints);
+      assert.equal(prepared.entry, script.entrypoints[0].sourcePath);
+      assert.equal((await fs.stat(path.join(report.preparedPackagePath, prepared.entry))).isFile(), true);
+    }
+    // Parameters follow the canonical function-tool object contract; results do not.
+    for (const outputSchema of [{type: 'string'}, {type: 'array', items: {type: 'number'}}]) {
+      script.actions[0] = {id: 'text.Summarize', entrypoint: script.entrypoints[0].sourcePath,
+        inputSchema: {type: 'object'}, outputSchema};
+      await fs.writeFile(path.join(f.project, 'script.json'), JSON.stringify(script));
+      const alias = await f.run('validate');
+      assert.equal(alias.succeeded, true, JSON.stringify(alias.diagnostics));
+    }
+  }
+});
+
+test('invalid prepared assistant tools reject missing or ambiguous actions and schemas before packaging', async t => {
+  for (const engine of ['nativescript', 'expo']) {
+    const f = await fixture(t, engine);
+    const original = await preparedAssistantToolManifest(f, engine);
+    for (const [label, mutate] of [
+      ['missing symbol', s => { delete s.entrypoints[0].exportedSymbol; }],
+      ['unknown action', s => { s.entrypoints[0].exportedSymbol = 'unknown.Action'; }],
+      ['duplicate action', s => { s.actions.push({...s.actions[0]}); }],
+      ['duplicate entrypoint', s => { s.entrypoints.push({...s.entrypoints[0]}); }],
+      ['missing handler', s => { delete s.actions[0].handler; }],
+      ['wrong handler', s => { s.actions[0].handler = 'other.js'; }],
+      ['nonforeground source', s => { s.entrypoints[0].sourcePath = s.actions[0].handler = 'other.js'; }],
+      ['missing input schema', s => { delete s.actions[0].inputSchema; }],
+      ['missing parameter object type', s => { s.actions[0].inputSchema = {}; }],
+      ['scalar parameters', s => { s.actions[0].inputSchema = {type: 'string'}; }],
+      ['array parameters', s => { s.actions[0].inputSchema = {type: 'array', items: {type: 'string'}}; }],
+      ['array input schema', s => { s.actions[0].inputSchema = []; }],
+      ['null input schema', s => { s.actions[0].inputSchema = null; }],
+      ['boolean output schema', s => { s.actions[0].outputSchema = false; }],
+      ['null output schema', s => { s.actions[0].outputSchema = null; }]
+    ]) {
+      const script = structuredClone(original); mutate(script);
+      await fs.writeFile(path.join(f.project, 'script.json'), JSON.stringify(script));
+      const report = await f.run('build');
+      assert.equal(report.succeeded, false, engine + ': ' + label);
+      assert.equal(report.preparedPackagePath, undefined, label);
+      assert(report.diagnostics.some(d => d.code === 'MINIAPP_ASSISTANT_TOOL_INVALID'
+        && d.file === 'script.json' && d.category === 'error' && d.remediation), label + ': ' + JSON.stringify(report));
+    }
+    await assert.rejects(fs.stat(path.join(f.project, '.hanlin-build')), {code: 'ENOENT'});
+  }
+});
+
+test('prepared assistant tool guide and public declarations use the real strict TypeScript compiler', async t => {
+  const f = await fixture(t);
+  const repository = process.env.HANLIN_MINIAPP_REPOSITORY_ROOT
+    ?? fileURLToPath(new URL('../../../../../../', import.meta.url));
+  const directory = path.join(f.sdk, 'original/node_modules/@hanlin/system-surfaces');
+  await fs.mkdir(directory, {recursive: true});
+  await fs.copyFile(path.join(repository, 'Scripts/MiniApps/native-presentations.d.ts'), path.join(directory, 'index.d.ts'));
+  await fs.copyFile(path.join(repository, 'Scripts/MiniApps/system-surfaces/package.json'), path.join(directory, 'package.json'));
+  const manifestPath = path.join(f.sdk, 'miniapp-sdk.json');
+  const manifest = JSON.parse(await fs.readFile(manifestPath));
+  manifest.engines.nativescript.packageVersions['@hanlin/system-surfaces'] = '1.0.0';
+  await fs.writeFile(manifestPath, JSON.stringify(manifest));
+  const guide = await fs.readFile(path.join(repository, 'docs/miniapp-sdk/SYSTEM_SURFACE_ACTIONS.md'), 'utf8');
+  const startMarker = '<!-- assistant-tool-authoring-example:start -->';
+  const endMarker = '<!-- assistant-tool-authoring-example:end -->';
+  assert.equal(guide.split(startMarker).length, 2);
+  assert.equal(guide.split(endMarker).length, 2);
+  const section = guide.split(startMarker)[1].split(endMarker)[0];
+  const fence = String.fromCharCode(96).repeat(3);
+  const source = section.split(fence + 'ts\n')[1]?.split(fence)[0];
+  assert(source && source.trim(), 'The shipped authoring example must be present.');
+  const resultSchemas = [
+    'export const scalarResult: PreparedAssistantToolAction = {id:"text.Scalar",handler:"bundle.js",inputSchema:{type:"object"},outputSchema:{type:"string"}};',
+    'export const arrayResult: PreparedAssistantToolAction = {id:"text.Array",handler:"bundle.js",inputSchema:{type:"object"},outputSchema:{type:"array",items:{type:"number"}}};'
+  ].join('\n');
+  await fs.writeFile(f.entry, source + '\n' + resultSchemas + '\n');
+  const valid = await f.run('validate');
+  assert.equal(valid.succeeded, true, JSON.stringify(valid.diagnostics));
+  assert.equal(valid.typecheck.strict, true);
+  assert.equal(valid.typecheck.skipLibCheck, false);
+  const imports = 'import type {PreparedMiniAppEntrypoint, PreparedAssistantToolAction} from "@hanlin/system-surfaces";\n';
+  for (const invalid of [
+    'export const entry: PreparedMiniAppEntrypoint = {id:"tool",kind:"assistantTool",sourcePath:"bundle.js"};',
+    'export const action: PreparedAssistantToolAction = {id:"text.Summarize",handler:"bundle.js"};',
+    'export const action: PreparedAssistantToolAction = {id:"text.Summarize",handler:"bundle.js",inputSchema:[]};',
+    'export const action: PreparedAssistantToolAction = {id:"text.Summarize",inputSchema:{type:"object"}};',
+    'export const action: PreparedAssistantToolAction = {id:"text.Summarize",handler:"bundle.js",inputSchema:{}};',
+    'export const action: PreparedAssistantToolAction = {id:"text.Summarize",handler:"bundle.js",inputSchema:{type:"string"}};',
+    'export const action: PreparedAssistantToolAction = {id:"text.Summarize",handler:"bundle.js",inputSchema:{type:"array",items:{type:"string"}}};'
+  ]) {
+    await fs.writeFile(f.entry, imports + invalid + '\n');
+    const result = await f.run('validate');
+    assert.equal(result.succeeded, false, invalid);
+    assert(result.diagnostics.some(d => ['TS2322', 'TS2741'].includes(d.code)), JSON.stringify(result.diagnostics));
+    assert(!result.diagnostics.some(d => d.code === 'TS2307'), 'The actual public declarations must resolve.');
+  }
+});

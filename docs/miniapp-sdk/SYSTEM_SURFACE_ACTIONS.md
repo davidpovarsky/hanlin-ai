@@ -57,6 +57,49 @@ A widget action has one unique ID. A Host action must not also declare a local `
 
 The SDK and native application must be built from matching source inputs. Updating a declaration file in the repository without staging a new SDK does not update the agent's environment. `stage-sdk.mjs` includes the exact contract, compiler, queue and intent source identities in the SDK input fingerprint, and the original Host preparation workflow runs the authoring tests and produces the archive. See [original upstream build](ORIGINAL_UPSTREAM_BUILD.md) for upstream version resolution and maintained source reconciliation.
 
+## Assistant tools in prepared app packages
+
+An installed Expo or NativeScript package can expose an existing action to the AI host with an explicit `assistantTool` entrypoint. Its required `exportedSymbol` is the exact, case-sensitive `actions[].id`; it is not a separate JavaScript file or a request to use the frozen Scripting engine. Both the entrypoint and the selected action must resolve to the actual prepared foreground file: `bundle.js` for the Expo authoring builder, or `nativescript/app/bundle.mjs` for the NativeScript authoring builder.
+
+This typed NativeScript metadata example is compiled automatically from this documentation. Put `assistantEntrypoint` in the package's existing `entrypoints` array and `assistantAction` in `actions`. For Expo, change both prepared file paths to `bundle.js`.
+
+<!-- assistant-tool-authoring-example:start -->
+```ts
+import type { PreparedAssistantToolAction, PreparedMiniAppEntrypoint } from "@hanlin/system-surfaces";
+
+export const assistantAction: PreparedAssistantToolAction = {
+  id: "text.Summarize",
+  title: "Summarize text",
+  summary: "Return a summary of the supplied text.",
+  handler: "nativescript/app/bundle.mjs",
+  inputSchema: {
+    type: "object",
+    properties: { text: { type: "string" } },
+    required: ["text"]
+  },
+  outputSchema: {
+    type: "object",
+    properties: { summary: { type: "string" } },
+    required: ["summary"]
+  }
+};
+export const assistantEntrypoint: PreparedMiniAppEntrypoint = {
+  id: "summarize",
+  kind: "assistantTool",
+  sourcePath: "nativescript/app/bundle.mjs",
+  exportedSymbol: "text.Summarize"
+};
+```
+<!-- assistant-tool-authoring-example:end -->
+
+Register the real handler during the package's original foreground initialization, using the existing action/request bridge for that engine. Metadata alone does not register a callback. The action receives the tool's actual JSON arguments and returns its actual JSON result through the awaited Host request broker. A missing handler, execution failure or unavailable current package is an error, not a fabricated successful tool response.
+
+`inputSchema` is required and must be a JSON Schema document with `type: "object"`, because the existing canonical function-tool protocol takes named object parameters. Optional `outputSchema` is also a JSON Schema document, but it may describe any JSON result: a string, number, array, object or other JSON value. This document representation does not restrict the returned value to an object. All other schema keywords remain available. The canonical decoder preserves the declared `$schema`; if omitted, it uses its existing draft-2020-12 default. The action's title defaults to its ID; summary uses `summary`, then `description`, then title. `handler` remains preferred over the existing `entrypoint` alias.
+
+The current installed package, enabled state, generation, entrypoint and prepared source digest are checked before dispatch. The registered tool reaches the original Expo or NativeScript action handler; a changed or removed installation cannot silently fall back to the legacy engine. Its return value and failure are the actual awaited result. The authoring validator reports missing/ambiguous action references, incorrect foreground paths and missing or incompatible parameter schemas as `MINIAPP_ASSISTANT_TOOL_INVALID` in `script.json`; this uses the existing diagnostic Sheet and repair flow. Native decoding of schema documents uses the existing canonical schema contract.
+
+The portable metadata/type tests prove declarations and source checks only. They do not establish that an AI provider selected the tool or that the current iOS app completed the handler. Those require separate native acceptance evidence.
+
 ## Keyboard, notification content, Spotlight and capture
 
 The foreground package keeps its original Expo or NativeScript entrypoint and runtime. Its declared system entrypoints refer to that prepared foreground bundle: normally `bundle.js` for Expo or `nativescript/app/bundle.mjs` for NativeScript. A native presentation has its own original-renderer source in `nativePresentations`; that source is separate from the foreground bundle.

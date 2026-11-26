@@ -2171,6 +2171,34 @@ final class HanlinScriptingPlatform {
         }
     }
 
+    /// Fresh installed metadata only. Listing AI tools does not drain unrelated
+    /// invocation queues or execute any package.
+    func preparedAssistantToolPackages() async throws -> [HanlinStoredPackageSnapshot] {
+        guard !isTransferringProductData else { throw HanlinProductTransferError.busy }
+        guard let store else { throw HanlinInvocationDispatchError(.needsForeground, .unavailableHost) }
+        return try await store.restore()
+    }
+
+    func executePreparedAssistantTool(
+        _ binding: HanlinPreparedAssistantTool, parameters: HanlinValue
+    ) async throws -> HanlinValue {
+        try requireLaunchAdmission()
+        guard case .object = parameters else { throw HanlinPreparedAssistantToolError.invalidArguments }
+        let packages = try await preparedAssistantToolPackages()
+        guard let package = packages.first(where: { $0.record.installedPackageID == binding.installedPackageID }),
+              try package.preparedAssistantTools().contains(binding) else {
+            throw HanlinPreparedAssistantToolError.staleInstallation
+        }
+        let command = HanlinScriptResumeCommand(invocation: .init(
+            identity: .init(installedPackageID: binding.installedPackageID,
+                packageID: binding.packageID, generation: binding.generation,
+                entrypointID: binding.entrypoint.id),
+            entityID: binding.actionID.rawValue, parameters: parameters, continueInForeground: true))
+        // This awaits the native action's actual response. No durable queue
+        // receipt or legacy scripting registration is substituted for completion.
+        return try await dispatchResumeCommand(command)
+    }
+
     func dispatchResumeCommand(_ command: HanlinScriptResumeCommand) async throws -> HanlinValue {
         guard !isTransferringProductData else { throw HanlinProductTransferError.busy }
         activeStoreOperations += 1
@@ -2209,7 +2237,7 @@ final class HanlinScriptingPlatform {
         guard command.invocation.delivery == nil || command.invocation.delivery?.appID == package.appID,
               let entrypoint = package.entrypoints.first(where: {
                   $0.id == identity.entrypointID && (command.invocation.delivery?.source == .share
-                      ? ($0.kind == .app || $0.kind == .share) : ($0.kind == .appIntent || $0.kind == .translationUI || $0.kind == .spotlight || $0.kind == .capture))
+                      ? ($0.kind == .app || $0.kind == .share) : ($0.kind == .appIntent || $0.kind == .assistantTool || $0.kind == .translationUI || $0.kind == .spotlight || $0.kind == .capture))
               }),
               let actionName = command.invocation.entityID else {
             throw HanlinInvocationDispatchError(.failed, .unsupportedEntrypoint)
@@ -2224,6 +2252,12 @@ final class HanlinScriptingPlatform {
                   let capability = declaredAction.capabilities.first ?? (try? HanlinCapabilityID(validating: "inter-app.share")) else {
                 throw HanlinInvocationDispatchError(.failed, .invalidTarget)
             }
+            if entrypoint.kind == .assistantTool {
+                guard actionName == actionID.rawValue,
+                      try package.preparedAssistantTools().contains(where: {
+                          $0.entrypoint == entrypoint && $0.actionID == actionID
+                      }) else { throw HanlinPreparedAssistantToolError.invalidDeclaration }
+            }
             if let symbol = entrypoint.exportedSymbol, symbol != actionID.rawValue {
                 throw HanlinInvocationDispatchError(.failed, .invalidTarget)
             }
@@ -2232,7 +2266,7 @@ final class HanlinScriptingPlatform {
                declaredAction.handler != entrypoint.sourcePath {
                 throw HanlinInvocationDispatchError(.failed, .invalidTarget)
             }
-            if entrypoint.kind == .spotlight || entrypoint.kind == .capture {
+            if entrypoint.kind == .assistantTool || entrypoint.kind == .spotlight || entrypoint.kind == .capture {
                 guard command.invocation.continueInForeground,
                       UIApplication.shared.applicationState == .active else { throw HanlinInvocationNotStarted() }
             }
@@ -2273,11 +2307,18 @@ final class HanlinScriptingPlatform {
             // Refresh/foreground launch can suspend; recheck the originating
             // variant and published target before calling any package handler.
             try validateForegroundHostAction(command)
-            if entrypoint.kind == .spotlight || entrypoint.kind == .capture {
-                let latest = try await store.snapshots()
+            if entrypoint.kind == .assistantTool || entrypoint.kind == .spotlight || entrypoint.kind == .capture {
+                let latest = if entrypoint.kind == .assistantTool {
+                    try await store.restore()
+                } else {
+                    try await store.snapshots()
+                }
                 guard latest.contains(where: { $0.record.installedPackageID == identity.installedPackageID &&
                     $0.record.packageID == identity.packageID && $0.enabled &&
-                    $0.record.activeGeneration == identity.generation && $0.entrypoints.contains(entrypoint) }) else {
+                    $0.record.activeGeneration == identity.generation &&
+                    $0.record.sourceDigest == package.record.sourceDigest &&
+                    $0.record.artifactDigest == package.record.artifactDigest &&
+                    $0.entrypoints.contains(entrypoint) }) else {
                     throw HanlinInvocationDispatchError(.stale, .staleGeneration)
                 }
             }
@@ -2289,6 +2330,7 @@ final class HanlinScriptingPlatform {
             WidgetCenter.shared.reloadTimelines(ofKind: "com.hanlin.scripting.widget")
             return response.value
         }
+        guard entrypoint.kind != .assistantTool else { throw HanlinPreparedAssistantToolError.invalidDeclaration }
         let artifactRoot = try await store.activeArtifactURL(for: identity.installedPackageID)
         let compiledPath = try Self.compiledPath(for: entrypoint.sourcePath)
         let program = try String(contentsOf: artifactRoot.appending(path: compiledPath, directoryHint: .notDirectory), encoding: .utf8)

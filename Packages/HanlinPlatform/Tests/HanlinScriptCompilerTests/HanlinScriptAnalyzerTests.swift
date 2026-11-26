@@ -680,6 +680,123 @@ struct HanlinScriptAnalyzerTests {
         }
     }
 
+    @Test("Both prepared engines admit typed assistant tools without a second approval")
+    func preparedAssistantToolsUseTheDeclaredNativeAction() throws {
+        for runtime in ["hanlin-expo", "hanlin-nativescript"] {
+            let fixture = try assistantToolPackage(runtime: runtime)
+            defer { try? FileManager.default.removeItem(at: fixture.stagingRoot) }
+            let preview = try HanlinScriptAnalyzer(inventory: .init(
+                baselineID: "fixture", baselineDigest: String(repeating: "a", count: 64), symbols: [])).analyze(fixture)
+            #expect(preview.canInstall)
+            let tool = try #require(preview.entrypoints.first { $0.kind == .assistantTool })
+            #expect(tool.exportedSymbol == "LookupText")
+            #expect(tool.runtimePolicyID == "prepared-foreground-action-v1")
+            #expect(tool.runtimeProfile.rawValue == runtime)
+            #expect(preview.requestedCapabilities.contains { $0.capabilityID.rawValue == "inter-app.share" && !$0.required })
+        }
+    }
+
+    @Test("Prepared assistant tools reject missing, ambiguous and unrelated action contracts")
+    func preparedAssistantToolsRejectBrokenActionContracts() throws {
+        let invalid: [(String, (inout [String: Any], inout [String: Any]) -> Void)] = [
+            ("symbol", { entry, _ in entry.removeValue(forKey: "exportedSymbol") }),
+            ("action", { _, manifest in manifest["actions"] = [] as [[String: Any]] }),
+            ("duplicate", { _, manifest in
+                let action = (manifest["actions"] as! [[String: Any]])[0]
+                manifest["actions"] = [action, action]
+            }),
+            ("handler", { _, manifest in
+                var actions = manifest["actions"] as! [[String: Any]]
+                actions[0]["handler"] = "other.js"; manifest["actions"] = actions
+            }),
+            ("schema missing", { _, manifest in
+                var actions = manifest["actions"] as! [[String: Any]]
+                actions[0].removeValue(forKey: "inputSchema"); manifest["actions"] = actions
+            }),
+            ("schema not object", { _, manifest in
+                var actions = manifest["actions"] as! [[String: Any]]
+                actions[0]["inputSchema"] = true; manifest["actions"] = actions
+            }),
+            ("input missing object type", { _, manifest in
+                var actions = manifest["actions"] as! [[String: Any]]
+                actions[0]["inputSchema"] = [:] as [String: Any]; manifest["actions"] = actions
+            }),
+            ("input describes scalar", { _, manifest in
+                var actions = manifest["actions"] as! [[String: Any]]
+                actions[0]["inputSchema"] = ["type": "string"]; manifest["actions"] = actions
+            }),
+            ("input describes array", { _, manifest in
+                var actions = manifest["actions"] as! [[String: Any]]
+                actions[0]["inputSchema"] = ["type": "array"]; manifest["actions"] = actions
+            }),
+            ("output not object", { _, manifest in
+                var actions = manifest["actions"] as! [[String: Any]]
+                actions[0]["outputSchema"] = ["invalid"] as [String]; manifest["actions"] = actions
+            }),
+            ("nonforeground", { entry, manifest in
+                entry["sourcePath"] = "other.js"
+                var actions = manifest["actions"] as! [[String: Any]]
+                actions[0]["handler"] = "other.js"; manifest["actions"] = actions
+            }),
+        ]
+        for runtime in ["hanlin-expo", "hanlin-nativescript"] {
+            for (label, alter) in invalid {
+                let fixture = try assistantToolPackage(runtime: runtime, alter: alter)
+                defer { try? FileManager.default.removeItem(at: fixture.stagingRoot) }
+                let preview = try HanlinScriptAnalyzer(inventory: .init(
+                    baselineID: "fixture", baselineDigest: String(repeating: "a", count: 64), symbols: [])).analyze(fixture)
+                #expect(!preview.canInstall, "\(runtime): \(label)")
+                #expect(preview.findings.contains {
+                    ["MINIAPP_ASSISTANT_TOOL_INVALID", "MINIAPP_ENTRYPOINT_DECLARATION_INVALID"].contains($0.code ?? "")
+                })
+            }
+        }
+    }
+
+    @Test("Assistant tool result schemas may describe scalar or array values")
+    func preparedAssistantToolResultSchemasRemainUnrestricted() throws {
+        for runtime in ["hanlin-expo", "hanlin-nativescript"] {
+            for resultType in ["string", "array"] {
+                let fixture = try assistantToolPackage(runtime: runtime) { _, manifest in
+                    var actions = manifest["actions"] as! [[String: Any]]
+                    actions[0]["outputSchema"] = ["type": resultType]
+                    manifest["actions"] = actions
+                }
+                defer { try? FileManager.default.removeItem(at: fixture.stagingRoot) }
+                let preview = try HanlinScriptAnalyzer(inventory: .init(
+                    baselineID: "fixture", baselineDigest: String(repeating: "a", count: 64),
+                    symbols: [])).analyze(fixture)
+                #expect(preview.canInstall)
+            }
+        }
+    }
+
+    private func assistantToolPackage(
+        runtime: String,
+        alter: (inout [String: Any], inout [String: Any]) -> Void = { _, _ in }
+    ) throws -> HanlinStagedPackage {
+        let nativeScript = runtime == "hanlin-nativescript"
+        let path = nativeScript ? "nativescript/app/bundle.mjs" : "bundle.js"
+        var entry: [String: Any] = ["id": "assistant.lookup", "kind": "assistantTool",
+                                   "sourcePath": path, "exportedSymbol": "LookupText"]
+        var manifest: [String: Any] = [
+            "name": "Prepared assistant fixture", "version": "1.0.0", "entry": path, "hanlinRuntime": runtime,
+            "actions": [["id": "LookupText", "title": "Look up text", "description": "Find the requested text",
+                         "handler": path, "inputSchema": ["type": "object", "properties": ["query": ["type": "string"]]],
+                         "outputSchema": ["type": "object"]]]
+        ]
+        alter(&entry, &manifest)
+        manifest["entrypoints"] = [entry]
+        let metadata: [String: Any] = ["name": "fixture", "main": nativeScript ? "bundle.mjs" : "bundle.js",
+                                       "hanlinRuntime": runtime]
+        return try package(files: [
+            "script.json": String(decoding: JSONSerialization.data(withJSONObject: manifest), as: UTF8.self),
+            path: "console.log('prepared fixture');", "other.js": "console.log('not the app');",
+            nativeScript ? "nativescript/app/package.json" : "package.json":
+                String(decoding: JSONSerialization.data(withJSONObject: metadata), as: UTF8.self)
+        ])
+    }
+
     private func package(files: [String: String]) throws -> HanlinStagedPackage {
         let root = FileManager.default.temporaryDirectory.appending(
             path: "hanlin-analyzer-tests-\(UUID().uuidString.lowercased())",

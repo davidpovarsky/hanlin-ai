@@ -6,6 +6,8 @@ import { createRequire } from 'node:module';
 import { pathToFileURL } from 'node:url';
 
 const engines = new Set(['expo', 'nativescript', 'scriptwidget']);
+// These are the actual foreground files emitted by the two original app builders.
+const preparedAppEntryPaths = Object.freeze({expo: 'bundle.js', nativescript: 'nativescript/app/bundle.mjs'});
 const ignoredDirectories = new Set(['node_modules', '.git', '.hanlin-build', '.hanlin-authoring']);
 const slash = value => value.split(path.sep).join('/');
 const packageName = name => name.startsWith('.') || path.isAbsolute(name) ? null
@@ -348,6 +350,46 @@ function validateWidgetHostActions(input) {
       ? 'source/' + handler : handler;
     if (typeof entry.sourcePath !== 'string' || !entry.sourcePath || resolved !== entry.sourcePath) {
       reject('The registered action handler must match the prepared appIntent sourcePath.'); continue;
+    }
+  }
+  return diagnostics;
+}
+
+// A prepared assistant tool selects one existing registered action, not a
+// separate script engine or an inferred action. Schemas retain their JSON Schema
+// keywords/dialect; the native canonical schema decoder remains authoritative.
+function validatePreparedAssistantTools(input) {
+  const diagnostics = [];
+  const object = value => value !== null && typeof value === 'object' && !Array.isArray(value);
+  const entries = Array.isArray(input.script.entrypoints) ? input.script.entrypoints : [];
+  const actions = Array.isArray(input.script.actions) ? input.script.actions : [];
+  const foreground = preparedAppEntryPaths[input.engine];
+  for (const entry of entries.filter(item => object(item) && item.kind === 'assistantTool')) {
+    const reject = message => diagnostics.push(finding('MINIAPP_ASSISTANT_TOOL_INVALID',
+      'assistantTool entrypoint ' + String(entry.id) + ': ' + message, 'script.json',
+      'Set exportedSymbol to one actions[].id, target the actual prepared foreground bundle with its handler or entrypoint alias, and declare inputSchema with type: object.'));
+    if (!foreground || typeof entry.id !== 'string' || !entry.id ||
+        entries.filter(item => object(item) && item.id === entry.id).length !== 1) {
+      reject('Each assistantTool entrypoint requires a unique ID in an Expo or NativeScript app.'); continue;
+    }
+    const name = entry.exportedSymbol;
+    if (typeof name !== 'string' || name.length > 255 || !/^[A-Za-z0-9]+(?:[._-][A-Za-z0-9]+)*$/.test(name)) {
+      reject('exportedSymbol must contain the exact declared action ID.'); continue;
+    }
+    const matches = actions.filter(item => object(item) && item.id === name);
+    if (matches.length !== 1) {
+      reject('The action ID must identify exactly one actions declaration.'); continue;
+    }
+    const action = matches[0];
+    const handler = typeof action.handler === 'string' ? action.handler
+      : typeof action.entrypoint === 'string' ? action.entrypoint : null;
+    if (entry.sourcePath !== foreground ||
+        !(handler === entry.sourcePath || handler !== null && 'source/' + handler === entry.sourcePath)) {
+      reject('The selected action handler and sourcePath must resolve to this app builder\'s prepared foreground file.'); continue;
+    }
+    if (!object(action.inputSchema) || action.inputSchema.type !== 'object' ||
+        (Object.hasOwn(action, 'outputSchema') && !object(action.outputSchema))) {
+      reject('inputSchema must be a JSON Schema document with type: object for tool parameters; outputSchema, when present, must be a schema document object and may describe any JSON result.');
     }
   }
   return diagnostics;
@@ -731,7 +773,7 @@ async function buildNativeScript(ts, input, parsed, stage, sdkEngine) {
   // the original module resources as well for the foreground NativeScript app.
   if (input.widgetEngine === 'scriptwidget') await copyResources(input, stage);
   await writeJSON(path.join(stage, 'script.json'), {...input.script,
-    entry: 'nativescript/app/bundle.mjs', runInApp: true, hanlinRuntime: 'hanlin-nativescript'});
+    entry: preparedAppEntryPaths.nativescript, runInApp: true, hanlinRuntime: 'hanlin-nativescript'});
   return emitted.diagnostics.map(item => normalizedDiagnostic(ts, item, input.sourceRoot));
 }
 
@@ -802,7 +844,7 @@ async function buildExpo(input, parsed, stage, sdkEngine) {
   }
   await fs.rm(path.join(stage, '.metro-cache'), {recursive: true, force: true});
   await copyResources(input, stage);
-  await writeJSON(path.join(stage, 'script.json'), {...input.script, entry: 'bundle.js', runInApp: true, hanlinRuntime: 'hanlin-expo'});
+  await writeJSON(path.join(stage, 'script.json'), {...input.script, entry: preparedAppEntryPaths.expo, runInApp: true, hanlinRuntime: 'hanlin-expo'});
   const contract = sdkEngine.hostContract;
   const dependencies = Object.fromEntries(Object.entries(input.pkg.dependencies ?? {}).map(([name, version]) =>
     [name, sdkEngine.packageVersions?.[name] ?? version]));
@@ -890,7 +932,7 @@ export async function runMiniAppOperation(request, {sdkRoot, compiler} = {}) {
       dependencyDeclarationsChecked: parsed.options.skipLibCheck !== true};
     const native = await validateNativePresentations(input, sdk, compiler);
     report.diagnostics = [...originalManifest.diagnostics, ...parsed.diagnostics, ...native.diagnostics,
-      ...validateWidgetHostActions(input), ...await packageConsistency(input)];
+      ...validateWidgetHostActions(input), ...validatePreparedAssistantTools(input), ...await packageConsistency(input)];
     if (report.diagnostics.some(item => item.category === 'error')) return report;
     if (request.operation === 'validate') { report.succeeded = true; return report; }
     stage = request.outputDirectory ? path.resolve(request.outputDirectory)

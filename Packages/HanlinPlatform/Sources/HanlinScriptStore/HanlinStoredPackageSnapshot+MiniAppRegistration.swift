@@ -268,17 +268,26 @@ extension HanlinStoredPackageSnapshot: HanlinMiniAppRegistration {
                     }()
                     let titleVal = (try? LocalizedValue(["en": titleStr]))
                         ?? (try! LocalizedValue(["en": actionIDStr]))
-                    if let schema = try? HanlinJSONSchemaDocument(dialect: .draft2020_12, root: .object([:])) {
-                        packageActions.append(HanlinActionDescriptor(
-                            id: actionID,
-                            title: titleVal,
-                            inputSchema: schema,
-                            outputSchema: nil,
-                            capabilities: [capID],
-                            handler: handler,
-                            risk: .read
-                        ))
+                    let schema: HanlinJSONSchemaDocument
+                    if let input = actionObj["inputSchema"] {
+                        schema = try HanlinJSONSchemaDocument.decodeCanonicalJSON(
+                            input.canonicalJSONData(), defaultDialect: .draft2020_12)
+                    } else {
+                        schema = try HanlinJSONSchemaDocument(dialect: .draft2020_12, root: .object([:]))
                     }
+                    let outputSchema = try actionObj["outputSchema"].map {
+                        try HanlinJSONSchemaDocument.decodeCanonicalJSON(
+                            $0.canonicalJSONData(), defaultDialect: .draft2020_12)
+                    }
+                    packageActions.append(HanlinActionDescriptor(
+                        id: actionID,
+                        title: titleVal,
+                        inputSchema: schema,
+                        outputSchema: outputSchema,
+                        capabilities: [capID],
+                        handler: handler,
+                        risk: .read
+                    ))
                 }
             }
         }

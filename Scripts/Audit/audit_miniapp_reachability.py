@@ -100,6 +100,18 @@ def build() -> dict:
     ref("extensionReceipts", "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationDelivery.swift", "public struct HanlinInvocationReceipt")
     ref("extensionExecutor", "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationExecutor.swift", "public actor HanlinInvocationExecutor")
     ref("resume", "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift", "private func processPendingResumeCommands()")
+    ref("assistantDeclaration", "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinPreparedAssistantToolDeclaration.swift", "public struct HanlinPreparedAssistantToolDeclaration")
+    ref("assistantProjection", "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+AssistantTools.swift", "public func preparedAssistantTools()")
+    ref("assistantAdapter", "AI_HLY/Downstream/Scripting/HanlinScriptCanonicalAdapter.swift", "struct HanlinPreparedAssistantToolAdapter")
+    ref("assistantCanonicalSources", "AI_HLY/Downstream/Scripting/HanlinScriptCanonicalAdapter.swift", "func canonicalSources()")
+    ref("assistantCatalog", "AI_HLY/Downstream/MCP/ToolIntegration/AssistantToolBridge.swift", ") + preparedCatalog.sources")
+    ref("assistantCatalogUnavailable", "AI_HLY/Downstream/Scripting/HanlinScriptCanonicalAdapter.swift", 'NativeToolTraceLogger.shared.log("prepared_miniapp_tool_catalog_unavailable"')
+    ref("assistantProviderDispatch", "AI_HLY/Downstream/MCP/ToolIntegration/AssistantToolBridge.swift", "result = await preparedTools.execute(route: route, argumentsJSON: argumentsJSON)")
+    ref("assistantActualResult", "AI_HLY/Downstream/Scripting/HanlinScriptCanonicalAdapter.swift", "let value = try await dispatch(expected, HanlinValue(json: json))")
+    ref("assistantForegroundDispatch", "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift", "func executePreparedAssistantTool(")
+    ref("assistantBrokerDispatch", "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift", "let response = try await HanlinMiniAppHost.shared.requestBroker.request(")
+    ref("assistantAuthoring", "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs", "function validatePreparedAssistantTools(input)")
+    ref("assistantPublicTypes", "Scripts/MiniApps/native-presentations.d.ts", "export type PreparedAssistantToolAction")
     ref("headless", "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift", "func executeHeadlessAction(")
     ref("expoActionDispatch", "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift", "return try await adapter.actionChannel.invoke(")
     ref("nativeActionDispatch", "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift", "func invokeRegisteredAction(")
@@ -181,7 +193,7 @@ def build() -> dict:
     ref("systemCatalogPublication", "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift", "await HanlinMiniAppSystemEntrypoints.shared.reconcile(")
     ref("nativePresentationPublication", "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift", "nativePresentations: nativePresentations,")
     ref("systemEntrypointOpen", "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift", "func openSystemEntrypoint(")
-    ref("systemEntrypointAdmission", "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift", "if entrypoint.kind == .spotlight || entrypoint.kind == .capture {")
+    ref("systemEntrypointAdmission", "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift", "if entrypoint.kind == .assistantTool || entrypoint.kind == .spotlight || entrypoint.kind == .capture {")
     ref("cameraIntent", "Packages/HanlinAppExtensionsSDK/Sources/HanlinCameraCaptureUI/HanlinCameraCaptureIntent.swift", "public struct HanlinCameraCaptureIntent: CameraCaptureIntent")
     ref("cameraControl", "Packages/HanlinAppExtensionsSDK/Sources/HanlinCameraCaptureUI/HanlinCameraCaptureIntent.swift", "ControlWidgetButton(action: HanlinCameraCaptureIntent())")
     ref("cameraPhoto", "Packages/HanlinAppExtensionsSDK/Sources/HanlinCameraCaptureUI/HanlinCameraService.swift", "output.capturePhoto(with: settings, delegate: delegate)")
@@ -273,6 +285,9 @@ def build() -> dict:
                       "stop": "Each product indexes declared enabled installed-package Spotlight entries, independently of widget instances, and reconciles metadata and removal on publication. OpenIntent resolves the current installation/generation. An entry without an exported action opens its real prepared app; only a validated declared action queues a foreground continuation whose handler may call the five canonical Host runtimes. Spotlight search/tap and runtime receipt return to Spotlight are not established by source indexing.", "owner": "INT-02/INT-03"},
         "capture": {"target": "ChavrusaChatCameraCapture / HanlinMiniAppsCameraCapture / both foreground Hosts", "refs": ["capturePrincipal", "miniAppsCapturePrincipal", "cameraIntent", "cameraControl", "cameraPhoto", "cameraHardwareEvent", "cameraHandoff", "cameraAppContext", "cameraSystemReceive", "cameraDurableCopy", "cameraPackageCopy", "cameraActionContinuation", "installedSystemCatalog", "systemEntrypointOpen", "systemEntrypointAdmission", "extensionQueue", "extensionReceipts", "resumeDispatch", "requestBroker", "headless", "nativeActionDispatch", "expoActionDispatch"],
                     "stop": "CameraCaptureIntent and its Control use the real locked-capture extension or foreground camera. AVFoundation writes JPEGs under sessionContentURL; openApplication hands off through the system. The app verifies and retains its own copy before system-session invalidation, copies photos into the selected package Documents area, then invokes the required declared action with installation/generation checks and a stable queue identity. The locked process has no App Group, network or package runtime. Canonical Host runtime calls happen only after foreground handoff; physical capture and complete receipt return to the ingress remain separate acceptance.", "owner": "INT-02/INT-03"},
+        "assistantTool": {"target": "HanlinApp assistant tool catalog / installed Expo or NativeScript foreground runtime",
+                          "refs": ["assistantDeclaration", "assistantProjection", "assistantAuthoring", "assistantPublicTypes", "assistantAdapter", "assistantCanonicalSources", "assistantCatalog", "assistantCatalogUnavailable", "assistantProviderDispatch", "assistantActualResult", "assistantForegroundDispatch", "assistantBrokerDispatch", "resumeDispatch", "requestBroker", "headless", "nativeActionDispatch", "expoActionDispatch"],
+                          "stop": "A request-scoped canonical tool catalog includes explicit assistantTool entries from enabled installed prepared Expo/NativeScript apps. If prepared-package discovery or projection is unavailable, only that contribution is omitted with an explicit trace; the existing native, MCP and legacy catalogs remain intact. Each entry selects exactly one real foreground action and its canonical input/output schemas. The prepared route rechecks installation, generation and source/artifact identity before directly awaiting the existing native request broker and original registered handler. The assistant receives the real action value or error; this route does not enqueue a durable invocation and cannot substitute a legacy scripting handler. An authored handler may call the five canonical Host runtimes through its existing facade; provider selection, complete runtime receipt forwarding and native E2E are separate acceptance.", "owner": "SDK-03/SDK-04/INT-03"},
         "foreground": {"target": "HanlinApp / HanlinMiniApps", "refs": ["appBootstrap", "miniAppsBootstrap", "nativeBridge", "nativeAdapter", "nativeRuntimeDispatch", "nativeSession", "expoFacade", "expoModule", "expoAdapter", "expoRuntimeDispatch", "runtimeWire", "runtimeBroker", "callerContext"],
                        "stop": "NativeScript generic async and Expo facades reach the shared canonical JSON/full RuntimeExecutionResult route. NativeScript captures its bound bridge and session-owned cancellation; legacy strings retain their historical boundary. This generator records source wiring and imports no native or physical acceptance verdict.", "owner": "INT-03/INT-06/SDK-03/SDK-04"},
     }
@@ -309,7 +324,7 @@ def build() -> dict:
     for surface, route in paths.items():
         for engine in ENGINES:
             for runtime in RUNTIMES:
-                wired = surface in ["foreground", "share", "translation", "widget", "notification", "liveActivity", "hostAppIntent", "shortcuts", "spotlight", "capture"]
+                wired = surface in ["foreground", "share", "translation", "widget", "notification", "liveActivity", "hostAppIntent", "shortcuts", "spotlight", "capture", "assistantTool"]
                 structured_receipt = wired and surface == "foreground"
                 rows.append({"surface": surface, "engine": engine, "runtime": runtime,
                     "status": "not-tested" if structured_receipt else "partially-wired" if wired else "disconnected", "path": surface,
@@ -317,30 +332,35 @@ def build() -> dict:
                                     else ["nativeFacade", "nativeBridge", "nativeAdapter", "runtimeWire", "runtimeBroker"]) if wired else [],
                     "sourcePathReachesCanonicalExecutor": wired,
                     "structuredReceiptReturnedToIngressInSource": structured_receipt,
-                    "durableActionReceiptInSource": wired and surface != "foreground",
-                    "receiptCondition": "Only the optional declared action uses the queue; plain Spotlight app-open has no action receipt" if surface == "spotlight" else None,
+                    "durableActionReceiptInSource": wired and surface not in ["foreground", "assistantTool"],
+                    "receiptCondition": "Only the optional declared action uses the queue; plain Spotlight app-open has no action receipt" if surface == "spotlight" else
+                                         "Direct awaited native action response; no durable invocation is enqueued" if surface == "assistantTool" else None,
                     "routeCondition": "An explicit hostAction validates the current installed widget and registered target, then continues in the foreground Host" if surface == "widget" else
                                       "Declared ScriptWidget hostAction or published native-node action continues in the foreground Host; original Expo callbacks stay separate" if surface == "liveActivity" else
                                       "Typed notification event resumes only a current installed action in the foreground Host" if surface == "notification" else
                                       "Declared Spotlight action only; an entry without a symbol opens its prepared app without a runtime invocation" if surface == "spotlight" else
                                       "Verified captured files hand off to the selected current foreground package action; no Host runtime in the locked process" if surface == "capture" else
+                                      "Explicit installed prepared action in the AI host catalog; its real foreground handler may call the canonical Host facade" if surface == "assistantTool" else
                                       "Foreground package action continuation; original native presentations remain separate" if surface == "translation" else
                                       "Declared registered package handler can call its canonical Host facade" if wired and surface != "foreground" else
                                       "Direct canonical Host facade call" if wired else "No canonical Host runtime route established",
                     "realSurfaceE2E": False, "onDeviceProof": None,
                     "resultBoundary": "Typed RuntimeExecutionResult in generic foreground facade; per-surface E2E missing" if structured_receipt else
+                                      "Actual awaited action JSON value/error returned to the assistant; a full RuntimeExecutionResult is returned only if the authored handler forwards it; no executed E2E proof" if surface == "assistantTool" else
                                       "Durable action receipt; runtime receipt readback to ingress incomplete" if wired else "No connected canonical-runtime receipt",
-                    "callerContext": {"hostAdapterReachable": wired, "canPresentUI": True if wired and (engine == "hanlinExpo" or surface in ["foreground", "spotlight", "capture"]) else None,
+                    "callerContext": {"hostAdapterReachable": wired, "canPresentUI": True if wired and (engine == "hanlinExpo" or surface in ["foreground", "spotlight", "capture", "assistantTool"]) else None,
                         "userGesturePresent": False if wired else None,
                         "note": "The validated system entrypoint opens its actual prepared foreground controller before action dispatch" if surface in ["spotlight", "capture"] else
-                                "NativeScript uses the existing foreground context when available; a new headless provider sets canPresentUI=false. Foreground continuation depends on the declared app handler." if wired and surface != "foreground" and engine == "hanlinNativeScript" else
+                                "The active AI host validates the current prepared action and starts or reuses its actual foreground runtime before directly awaiting the handler" if surface == "assistantTool" else
+                                 "NativeScript uses the existing foreground context when available; a new headless provider sets canPresentUI=false. Foreground continuation depends on the declared app handler." if wired and surface != "foreground" and engine == "hanlinNativeScript" else
                                 "Host-bound package/session identity" if wired else "No canonical Host call context is connected from this ingress"},
                     "engineVersionSource": "source-inventory.json#/" + ("expo" if engine == "hanlinExpo" else "nativeScript"),
                     "permissions": (["Locked capture uses system session storage and no App Group/network access", "Camera authorization and supported physical hardware required", "Extension declaration is not signed/device acceptance"] if surface == "capture" else
                                     ["App-owned Spotlight index declaration is not system search/tap acceptance"] if surface == "spotlight" else
+                                    ["Existing canonical tool and package action capability validation applies", "Actual service OS permission/availability still required"] if surface == "assistantTool" else
                                     ["Declared App Group is not exported-signature proof", "Actual service OS permission/availability still required"]),
                     "followUp": route["owner"]})
-    if len(rows) != 100 or len({(r['surface'], r['engine'], r['runtime']) for r in rows}) != 100:
+    if len(rows) != 110 or len({(r['surface'], r['engine'], r['runtime']) for r in rows}) != 110:
         raise ValueError("Incomplete or duplicate matrix")
     changed = subprocess.check_output(["git", "status", "--porcelain", "--untracked-files=all"], cwd=ROOT, text=True, encoding="utf-8").splitlines()
     changed_paths = {line[3:].replace("\\", "/") for line in changed if line}
@@ -354,12 +374,12 @@ def build() -> dict:
         "optionalSurfaceSymbolScanBoundary": "Symbol discovery only; the exact sourceRefs and explicit routes establish wiring, never runtime execution.",
         "sourceRefs": refs, "paths": paths, "matrix": rows, "originalLibrarySurfaces": original_surfaces,
         "localPresentationSurfaces": local_presentations,
-        "matrixScope": "Ten ingress categories by two native app engines by five canonical Host runtimes (100 conditional source routes); original library rendering and keyboard/rich-notification presentation records are separate. Plain Spotlight app-open does not itself execute a runtime.",
+        "matrixScope": "Eleven ingress categories by two native app engines by five canonical Host runtimes (110 conditional source routes); original library rendering and keyboard/rich-notification presentation records are separate. Plain Spotlight app-open does not itself execute a runtime. Assistant tools directly await their prepared action result, without a durable queue receipt.",
         "sourceReadPolicy": "Current local bytes take precedence; only missing tracked files use exact HEAD blobs, including the Swift symbol scan.",
         "systemServices": {"authority": "source-inventory.json#/systemServices",
             "publicBindingStatus": {e: "No generic HanlinSystemServicesBroker facade in the inspected Host adapter. Original native SDK APIs and ScriptWidget service providers are separate API paths; this does not classify them as absent." for e in ENGINES},
             "availabilityIsNotGrantMetadata": True, "devicePermissionChecksExecuted": False},
-        "acceptance": {"fourExtensionCategoriesByTwoEnginesByFiveRuntimes": 40, "additionalSurfaceCells": 60, "canonicalHostRuntimeCells": 100,
+        "acceptance": {"fourExtensionCategoriesByTwoEnginesByFiveRuntimes": 40, "additionalSurfaceCells": 70, "canonicalHostRuntimeCells": 110,
             "executedSurfaceE2EPasses": 0, "signedPhysicalAcceptance": "NOT_RUN"}}
 
 
@@ -367,7 +387,7 @@ def markdown(value: dict) -> str:
     lines = ["# NativeScript / Expo extension reachability", "", "Status: **IN_PROGRESS — source audit only**.", "",
         f"Base commit: `{value['sourceCommit']}`. Exact current file hashes and line anchors are in [the JSON matrix](extension-reachability.json).",
         "Runtime/API/version authority is [source-inventory.json](source-inventory.json); this matrix consumes it rather than maintaining a second SDK contract.", "",
-        "The share, translation, widget and notification ingress categories × two native app engines × five canonical Host runtimes form 40 cells. Live Activity, Host AppIntent, Shortcuts, Spotlight, camera capture and foreground add 60 more. These 100 cells describe conditional Host-runtime passthrough, not all original widget, control or presentation capabilities. Spotlight without a declared action only opens its prepared app; camera capture reaches a Host handler after the system handoff.",
+        "The share, translation, widget and notification ingress categories × two native app engines × five canonical Host runtimes form 40 cells. Live Activity, Host AppIntent, Shortcuts, Spotlight, camera capture, prepared assistant tools and foreground add 70 more. These 110 cells describe conditional Host-runtime passthrough, not all original widget, control or presentation capabilities. Spotlight without a declared action only opens its prepared app; camera capture reaches a Host handler after the system handoff. Prepared assistant tools expose actual installed actions through the AI host catalog and directly await the original native handler response.",
         "A declared bridge, rendered snapshot, queued command or widget-local callback is not a complete ingress → executor → returned receipt proof. No signed physical or per-surface E2E pass is inferred.", "",
         "| Surface | Engine | Node | TS | Python | JSC | Shell |", "|---|---|---|---|---|---|---|"]
     for surface in value["paths"]:
@@ -381,7 +401,7 @@ def markdown(value: dict) -> str:
             ref = value["sourceRefs"][key]
             links.append(f"[{key}](../../{ref['file']}#L{ref['line']})")
         lines += [f"- **{surface}** ({route['target']}): {route['stop']} Follow-up: {route['owner']}. Sources: " + ", ".join(links) + "."]
-    lines += ["", "## Original library surfaces outside the 100 cells", ""]
+    lines += ["", "## Original library surfaces outside the 110 cells", ""]
     for surface, route in value["originalLibrarySurfaces"].items():
         links = []
         for key in route["refs"]:
@@ -406,6 +426,7 @@ def markdown(value: dict) -> str:
         "- Original ScriptWidget button/toggle Control Widgets are implemented in both existing Widget extensions and recorded above. They are not Node/Shell passthrough rows. The separate installed-package Spotlight catalog, IndexedEntity/OpenIntent and actual index/update/removal calls are source-anchored above; optional symbol occurrences alone do not prove a route.",
         "- ResumeQueue delivery metadata, leases, deduplication, cancellation and durable receipts are source-backed paths. Their historical and current executed evidence belongs to the corresponding acceptance run, not this generator. No automatic canonical Host engine launch inside an extension is inferred.",
         "- The two locked-camera ExtensionKit wrappers, real AVFoundation capture and app handoff are source-anchored. The locked process uses no App Group/network access; package actions execute in the foreground Host after verified file transfer. Camera permission, hardware, system launch and signed/device acceptance are not inferred from those declarations.",
+        "- Prepared assistant tools use the existing canonical AI tool catalog, then the installed-package request broker and original Expo/NativeScript registered action. Input parameters follow the canonical object contract; output schemas can describe any JSON value. Their actual action response is awaited directly, not a queued receipt or an inferred provider-selected/runtime/device PASS.",
         "- Legacy Scripting/ScriptUI development remains frozen. No custom home entrypoint or upstream ScriptWidget AppShortcutsProvider registration is added. Keyboard/rich-notification UI uses separate prepared original presentations, not an extension-hosted React Native/NativeScript VM.", "",
         "## Verification", "", "Run the SDK source audit first, then `py -3 Scripts/Audit/audit_miniapp_reachability.py --check`. Both fail on source drift; runtime execution is not part of this audit.",
         "Task completion and native acceptance are tracked separately. This generated map reports current source routes and does not set task status or establish final acceptance.", ""]
@@ -430,11 +451,11 @@ def main() -> None:
         value["sourceCommit"] = recorded_commit
         if (OUT / "extension-reachability.md").read_text(encoding="utf-8") != markdown(value):
             raise SystemExit("Reachability Markdown differs from the versioned matrix.")
-        print("PASS: 100 unique source-backed reachability cells; no E2E pass inferred.")
+        print("PASS: 110 unique source-backed reachability cells; no E2E pass inferred.")
     else:
         output.write_text(json.dumps(value, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n")
         (OUT / "extension-reachability.md").write_text(markdown(value), encoding="utf-8", newline="\n")
-        print("Wrote 100 canonical Host-runtime reachability cells plus separate original-library and local-presentation records; no physical/E2E pass inferred.")
+        print("Wrote 110 canonical Host-runtime reachability cells plus separate original-library and local-presentation records; no physical/E2E pass inferred.")
 
 
 if __name__ == "__main__":

@@ -39,17 +39,43 @@ export interface NativePresentationDefinition {
 interface PreparedMiniAppEntrypointBase {
   id: string;
   /**
-   * keyboard/notificationUI/spotlight/capture reference the prepared foreground
-   * bundle here. Their nativePresentations entry separately points to compiled
-   * original-renderer UI source; the foreground bundle is not executed in a keyboard.
+   * keyboard/notificationUI/spotlight/capture/assistantTool reference the prepared foreground
+   * bundle here. Only keyboard/notificationUI use a separately declared
+   * nativePresentations entry pointing to original-renderer UI source.
+   * Assistant tools do not require a presentation. The foreground bundle
+   * is not executed in a keyboard.
    */
   sourcePath: string;
 }
-/** Capture hands its saved files to one declared prepared action; Spotlight may only open the app. */
+/** Capture and assistantTool select one declared prepared action; Spotlight may only open the app. */
 export type PreparedMiniAppEntrypoint = PreparedMiniAppEntrypointBase & (
-  | {kind: 'capture'; exportedSymbol: string}
+  | {kind: 'capture' | 'assistantTool'; exportedSymbol: string}
   | {kind: 'appIntent' | 'embeddedResult' | 'share' | 'translationUI' | 'liveActivity'
       | 'keyboard' | 'notificationUI' | 'spotlight'; exportedSymbol?: string}
+);
+/** The actual canonical schema contract has an object root; JSON Schema keywords and dialect are preserved. */
+export type PreparedActionSchema = { [keyword: string]: WidgetActionJSON };
+/**
+ * Metadata for one action selected by a prepared assistantTool entrypoint.
+ * This does not register its JavaScript handler. The native loader validates
+ * the cross-reference and decodes the actual schemas before registering a tool.
+ */
+export type PreparedAssistantToolAction = {
+  id: string;
+  /** Defaults to id. */
+  title?: string;
+  /** Summary takes precedence over description, then defaults to the title. */
+  summary?: string;
+  description?: string;
+  capability?: string;
+  /** Canonical function-tool parameters are objects. Other schema keywords remain available. */
+  inputSchema: PreparedActionSchema & { type: 'object' };
+  /** A schema document which may describe any JSON result, including scalars and arrays. */
+  outputSchema?: PreparedActionSchema;
+} & (
+  /** handler is preferred when both names are present. */
+  | {handler: string; entrypoint?: string}
+  | {handler?: never; entrypoint: string}
 );
 export interface NativePresentationManifest {
   entrypoints?: PreparedMiniAppEntrypoint[];

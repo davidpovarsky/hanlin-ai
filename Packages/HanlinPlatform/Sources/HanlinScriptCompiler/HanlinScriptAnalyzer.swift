@@ -257,7 +257,26 @@ public struct HanlinScriptAnalyzer: Sendable {
             }
         }
 
+        var assistantActions: [HanlinPreparedAssistantToolDeclaration] = []
+        for entrypoint in entrypoints where entrypoint.kind == .assistantTool &&
+            [.hanlinExpo, .hanlinNativeScript].contains(entrypoint.runtimeProfile) {
+            do {
+                assistantActions.append(try HanlinPreparedAssistantToolDeclaration(
+                    manifest: package.manifest, entrypoint: entrypoint, entrypoints: entrypoints))
+            } catch {
+                findings.append(.init(state: .unsupported, severity: .error, sourcePath: "script.json",
+                    message: "Invalid prepared assistantTool '\(entrypoint.id)': \(error.localizedDescription)",
+                    code: "MINIAPP_ASSISTANT_TOOL_INVALID"))
+            }
+        }
+
         var capabilities: [HanlinCapabilityID: HanlinCapabilityRequest] = [:]
+        for action in assistantActions {
+            for capability in action.action.capabilities {
+                capabilities[capability] = .init(capabilityID: capability, required: false,
+                    purpose: "Declared prepared assistant tool action.")
+            }
+        }
         for declaredCapability in package.manifest.declaredCapabilities {
             let purpose = declaredCapability.rawValue == "ios-native-api"
                 ? "Broad native Objective-C/UIKit and JSI access."
@@ -502,7 +521,7 @@ public struct HanlinScriptAnalyzer: Sendable {
                     sourcePath: candidate.sourcePath,
                     message: "Expo widget exposure '\(candidate.sourcePath)' is supported via host services bridge."
                 ))
-            case .appIntent, .share, .spotlight, .capture:
+            case .appIntent, .share, .spotlight, .capture, .assistantTool:
                 let prepared = appEntrypoints.first?.sourcePath == candidate.sourcePath
                 findings.append(.init(state: prepared ? .supported : .unsupported,
                     severity: prepared ? .information : .error, sourcePath: candidate.sourcePath,
@@ -821,13 +840,13 @@ public struct HanlinScriptAnalyzer: Sendable {
                   case let .string(id)? = fields["id"], !id.isEmpty,
                   case let .string(rawKind)? = fields["kind"],
                   let kind = HanlinPackageEntrypointKind(rawValue: rawKind),
-                  [.appIntent, .embeddedResult, .share, .translationUI, .liveActivity, .keyboard, .notificationUI, .spotlight, .capture].contains(kind),
+                  [.appIntent, .assistantTool, .embeddedResult, .share, .translationUI, .liveActivity, .keyboard, .notificationUI, .spotlight, .capture].contains(kind),
                   case let .string(path)? = fields["sourcePath"],
                   HanlinArchivePolicy.normalizedRelativePath(path) == path, files[path] != nil,
-                  (![.embeddedResult, .keyboard, .notificationUI, .spotlight, .capture].contains(kind) || discovered.contains(where: { $0.kind == .app && $0.sourcePath == path })),
+                  (![.assistantTool, .embeddedResult, .keyboard, .notificationUI, .spotlight, .capture].contains(kind) || discovered.contains(where: { $0.kind == .app && $0.sourcePath == path })),
                   identifiers.insert(id).inserted, id != "app", id != "widget" else {
                 findings.append(.init(state: .unsupported, severity: .error, sourcePath: "script.json",
-                    message: "entrypoints[\(index)] requires a unique id, supported kind (appIntent, embeddedResult, share, translationUI, liveActivity, keyboard, notificationUI, spotlight, capture), and existing package-relative sourcePath. Embedded results and the four system exposures must reference the prepared foreground app bundle.",
+                    message: "entrypoints[\(index)] requires a unique id, supported kind (appIntent, assistantTool, embeddedResult, share, translationUI, liveActivity, keyboard, notificationUI, spotlight, capture), and existing package-relative sourcePath. Assistant tools, embedded results and the four system exposures must reference the prepared foreground app bundle.",
                     code: "MINIAPP_ENTRYPOINT_DECLARATION_INVALID"))
                 continue
             }
