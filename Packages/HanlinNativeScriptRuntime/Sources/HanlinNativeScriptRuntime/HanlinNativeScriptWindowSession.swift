@@ -17,6 +17,10 @@ public final class HanlinNativeScriptWindowSession {
     public let containerController: UIViewController
     public private(set) var isActive = true
 
+    /// The original main VM may accept another cooperating entry while this
+    /// owner is alive. A legacy application never appears as a window owner.
+    public static var activeRuntimeSessionIdentifier: String? { activeOwner?.session.sessionID }
+
     public static func supportsWindowFactory(applicationRoot: URL) throws -> Bool {
         let data = try Data(contentsOf: applicationRoot.appendingPathComponent("package.json"))
         let metadata = try JSONSerialization.jsonObject(with: data) as? [String: Any]

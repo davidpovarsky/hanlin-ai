@@ -1401,17 +1401,18 @@ final class HanlinScriptingPlatform {
             )
         }
 
-        guard !hasNativeScriptApplicationSession, HanlinNativeScriptSession.activeSessionIdentifier == nil,
+        guard !hasNativeScriptApplicationSession,
               !isExecutingHeadlessNativeScriptAction, !isLaunching else {
-            // NativeScript iOS currently supports one runtime isolate per process.
+            // A platform never lends its foreground provider to another action.
             if let invocationID, queuedNativeScriptAdmissions.contains(invocationID) {
                 throw HanlinInvocationNotStarted()
             }
             throw HanlinMiniAppRequestError.unauthorized
         }
 
-        // Reserve admission before the first suspension point. A second caller
-        // cannot observe a free VM while this caller resolves its owned files.
+        // Reserve this platform before the first suspension point. Independent
+        // Shortcuts platforms may still join the original cooperating-window VM.
+        // Global legacy/runtime admission is rechecked immediately before start.
         isExecutingHeadlessNativeScriptAction = true
         defer {
             isExecutingHeadlessNativeScriptAction = false
@@ -1431,6 +1432,9 @@ final class HanlinScriptingPlatform {
             throw HanlinMiniAppRequestError.routeNotFound
         }
 
+        let applicationRoot = handlerURL.deletingLastPathComponent()
+        let usesWindowFactory = try HanlinNativeScriptWindowSession.supportsWindowFactory(
+            applicationRoot: applicationRoot)
         let appID = targetAppID
         let container = try await HanlinMiniAppDataStore(root: HanlinMiniAppDataStore.applicationSupportRoot())
             .container(for: appID)
@@ -1440,7 +1444,9 @@ final class HanlinScriptingPlatform {
         let docsDirStr = container.documents.path(percentEncoded: false)
         let cacheDirStr = container.cache.path(percentEncoded: false)
 
-        let currentPackages = try await store.snapshots()
+        // Another scene or Shortcut owns a different store actor. Refresh the
+        // persisted registry instead of trusting this actor's earlier snapshot.
+        let currentPackages = try await store.restore()
         guard let current = currentPackages.first(where: { $0.record.installedPackageID == package.record.installedPackageID }),
               current.enabled, current.record.activeGeneration == package.record.activeGeneration else {
             throw HanlinInvocationDispatchError(.stale, .staleGeneration)
@@ -1456,9 +1462,54 @@ final class HanlinScriptingPlatform {
             "HANLIN_ACTION_ID": action.rawValue
         ]
 
+        try Task.checkCancellation()
+        let activeRuntimeID = HanlinNativeScriptSession.activeSessionIdentifier
+        guard activeRuntimeID == nil || (usesWindowFactory
+            && HanlinNativeScriptWindowSession.activeRuntimeSessionIdentifier == activeRuntimeID) else {
+            // Legacy whole-application entries still own the single upstream VM.
+            // Do not leave a rejected Shortcut queued for unexpected later replay.
+            if let invocationID, queuedNativeScriptAdmissions.contains(invocationID) {
+                throw HanlinInvocationNotStarted()
+            }
+            throw HanlinMiniAppRequestError.unauthorized
+        }
+
         needsFreshProcessForTransfer = true
+        if usesWindowFactory {
+            var windowAdapter: NativeScriptHostServicesAdapter?
+            let session = try HanlinNativeScriptWindowSession.open(
+                applicationRoot: applicationRoot, environment: env
+            ) { sessionID in
+                let adapter = NativeScriptHostServicesAdapter(
+                    appID: appID,
+                    installedPackageID: package.record.installedPackageID,
+                    grantedCapabilities: Set(package.grantedCapabilities.map(\.rawValue)),
+                    sessionID: sessionID,
+                    isolatesWindowStorage: true,
+                    canPresentUI: false,
+                    externalMiniAppOperation: self.externalMiniAppOperation,
+                    assistantServiceFactory: self.assistantServiceFactory
+                )
+                windowAdapter = adapter
+                return adapter
+            }
+            // The container stays unattached. Closing this owned action invalidates
+            // only its bridge, handlers and callbacks; other windows retain the VM.
+            defer { session.shutdown() }
+            guard let adapter = windowAdapter else {
+                throw HanlinMiniAppRequestError.routeNotFound
+            }
+            await Task.yield()
+            try Task.checkCancellation()
+            guard adapter.allRegisteredActionIDs.contains(action) else {
+                throw HanlinMiniAppRequestError.routeNotFound
+            }
+            return try await adapter.invokeRegisteredAction(
+                action, capability: capability, caller: caller, payload: payload)
+        }
+
         let session = try HanlinNativeScriptSession(
-            applicationRoot: handlerURL.deletingLastPathComponent(),
+            applicationRoot: applicationRoot,
             environment: env,
             sessionID: UUID().uuidString.lowercased()
         )
@@ -1475,12 +1526,14 @@ final class HanlinScriptingPlatform {
 
         HanlinNativeServicesBridge.register(adapter, forSessionID: session.sessionID)
         defer {
-            session.shutdown()
+            // Release JS-owned callbacks before the legacy VM is stopped.
             HanlinNativeServicesBridge.unregisterProvider(forSessionID: session.sessionID)
+            session.shutdown()
         }
 
         try session.start()
         await Task.yield()
+        try Task.checkCancellation()
 
         guard adapter.allRegisteredActionIDs.contains(action) else {
             throw HanlinMiniAppRequestError.routeNotFound
