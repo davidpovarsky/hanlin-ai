@@ -77,7 +77,7 @@ public struct HanlinMessageSelectionView<Document: View>: View {
                         .clipShape(Circle())
                         .shadow(color: .hanlinHLBlue, radius: 1)
                 )
-                .hanlinFeedback(.success, trigger: shouldSelectAll)
+                .modifier(HanlinFeedbackModifier(.success, trigger: shouldSelectAll))
 
                 // 存为知识按钮：点击后图标从“backpack.circle”切换到“checkmark.circle”
                 if let saveKnowledge {
@@ -93,7 +93,7 @@ public struct HanlinMessageSelectionView<Document: View>: View {
                         .shadow(color: isSaved ? .hanlinHLGreen : .hanlinHLBlue, radius: 1)
                 )
                 .animation(.spring(response: 0.5, dampingFraction: 0.7), value: isSaved)
-                .hanlinFeedback(.success, trigger: isSaved)
+                .modifier(HanlinFeedbackModifier(.success, trigger: isSaved))
 
                 }
 
@@ -110,7 +110,7 @@ public struct HanlinMessageSelectionView<Document: View>: View {
                         .clipShape(Circle())
                         .shadow(color: isCopy ? .hanlinHLGreen : .hanlinHLBlue, radius: 1)
                 )
-                .hanlinFeedback(.success, trigger: isCopy)
+                .modifier(HanlinFeedbackModifier(.success, trigger: isCopy))
                 .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isCopy)
                 }
             }

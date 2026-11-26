@@ -76,7 +76,7 @@ public struct HanlinImageViewer: View {
                 )
                 .clipShape(Circle())
                 .buttonStyle(.plain)
-                .hanlinFeedback(.success, trigger: isCopied)
+                .modifier(HanlinFeedbackModifier(.success, trigger: isCopied))
 
                 }
 
@@ -99,7 +99,7 @@ public struct HanlinImageViewer: View {
                 )
                 .clipShape(Circle())
                 .buttonStyle(.plain)
-                .hanlinFeedback(.success, trigger: isSaved)
+                .modifier(HanlinFeedbackModifier(.success, trigger: isSaved))
                 }
             }
             .padding(.horizontal)

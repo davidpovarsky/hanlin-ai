@@ -44,7 +44,7 @@ public struct HanlinMessageActionBar: View {
             }
             .buttonStyle(PlainButtonStyle())
             .accessibilityIdentifier("hanlin-action-copy")
-            .hanlinFeedback(.success, trigger: isSuccess)
+            .modifier(HanlinFeedbackModifier(.success, trigger: isSuccess))
 
             if isCopy {
                 Text("已复制", bundle: HanlinLocalization.bundle)
