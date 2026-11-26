@@ -24,6 +24,7 @@
     ".codex/**",
     ".agents/**",
     "Tools/ai-team/**",
+    "tools/ai-team/ensure-team.ps1",
     "Docs/SDK/HanlinMessageBubblePreservation.json",
     "Docs/SDK/HanlinNavigationIntegration20261123.json",
     "Docs/SDK/HanlinMCPPublicModelVerification20261123.json",
@@ -382,7 +383,8 @@
         "Scripts/NativeScript/metadata_public_headers.py",
         ".github/actions/prepare-nativescript-metadata-tool/**",
         "Scripts/NativeScript/host-services.ts",
-        "Scripts/NativeScript/build-host-services.mjs"
+        "Scripts/NativeScript/build-host-services.mjs",
+        "Scripts/NativeScript/host-service-actions.test.mjs"
       ],
       "direct_validation_groups": [
         "nativescript_dependencies"
