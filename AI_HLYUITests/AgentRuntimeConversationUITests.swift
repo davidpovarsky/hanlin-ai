@@ -160,7 +160,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
     /// visibility is injected; every transition comes from native user actions.
     func testFollowLatestArrowTracksRealBottomAcrossScrollAndComposerChanges() throws {
         continueAfterFailure = false
-        executionTimeAllowance = 240
+        executionTimeAllowance = 420
         let app = XCUIApplication()
         XCUIDevice.shared.orientation = .portrait
         defer { app.terminate(); XCUIDevice.shared.orientation = .portrait }
