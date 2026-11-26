@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "source": "a6eaf6ee77fbc0a48e9997b434dc28d2c15b916d",
+  "nativeStatus": "NOT_RUN",
+  "addedDefinitions": 12,
+  "addedInvocations": 14,
+  "affectedDefinitions": 28,
+  "affectedInvocations": 30,
+  "suites": [
+    {
+      "scheme": "HanlinPlatform-Package",
+      "selector": "HanlinScriptExtensionsTests/HanlinInvocationQueueTests",
+      "definitions": 19,
+      "invocations": 19,
+      "originalDefinitions": 14,
+      "addedMethods": [
+        "atomicOwnedAdmissionHasOneLeaseAndPreservesExactRetriesAndConflicts",
+        "lostOwnedAdmissionIsDeferredAndCannotReplayAfterAProcessRestart",
+        "ownedExecutorKeepsForegroundDrainsOutAndReturnsTheOriginalReceiptOnRetry",
+        "ownedAdmissionFailureIsTerminalWhileLegacyQueuedAdmissionRemainsRetryable",
+        "ownedCancellationDrainsTheActualHandlerBeforeKeepingItsTerminalReceipt"
+      ]
+    },
+    {
+      "scheme": "HanlinMiniApps",
+      "selector": "HanlinMiniAppsTests/NativeScriptShortcutConcurrencyTests",
+      "definitions": 5,
+      "invocations": 5,
+      "originalDefinitions": 2,
+      "addedMethods": [
+        "testForegroundShortcutUsesItsOwnedProviderAndReceiptWithoutReplacingTheOwnerHandler",
+        "testOccupiedForegroundRejectsOnlyTheNewShortcutAndPreservesLegacyIntentDrain",
+        "testClosingRunningForegroundDrainsBeforeReleasingItsOwnedSession"
+      ]
+    },
+    {
+      "scheme": "HanlinMiniApps",
+      "selector": "HanlinMiniAppsTests/MiniAppsShortcutIntentTests",
+      "definitions": 4,
+      "invocations": 6,
+      "originalDefinitions": 0,
+      "parameterized": {
+        "newAndLegacyIntentTitlesLoadTheirActualHostTranslations": [
+          "en",
+          "he",
+          "zh-Hans"
+        ]
+      },
+      "singleCaseMethods": [
+        "closedAndCancelledProgressCannotAffectAnotherInvocation",
+        "onlyTheMatchingTerminalReceiptSuppliesTheShortcutValue",
+        "successfulForegroundActionWithoutASurfaceSettlesWithoutCancellation"
+      ]
+    }
+  ],
+  "requiredOriginalSetup": [
+    "Original HanlinPlatform-Package iOS route, pins and fixtures; native owner schedules",
+    "Canonical HanlinMiniApps test-host generation includes MiniAppsShortcutIntentTests.swift",
+    "Original NativeScript prepared runtime and fixtures; no engine replacement or custom harness"
+  ],
+  "prior59PackageInventoryIsSeparate": true,
+  "productTotals": {
+    "package": {
+      "definitions": 19,
+      "invocations": 19,
+      "addedDefinitions": 5,
+      "addedInvocations": 5
+    },
+    "MiniApps": {
+      "definitions": 9,
+      "invocations": 11,
+      "addedDefinitions": 7,
+      "addedInvocations": 9
+    },
+    "Hanlin": {
+      "newDefinitions": 0,
+      "newInvocations": 0,
+      "existingAffectedPlannerRequired": true
+    }
+  }
+}

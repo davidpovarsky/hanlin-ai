@@ -1,0 +1,13 @@
+{
+  "source": "a6eaf6ee77fbc0a48e9997b434dc28d2c15b916d",
+  "scope": "Linux Swift syntax only; Apple typecheck/runtime NOT_RUN",
+  "checks": [
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift",
+      "sha256": "b35644d9aa1abd6002f1d00e4c6c009d80ad63eb0b445cd002c96c49f91a6207",
+      "exitCode": 0,
+      "output": ""
+    }
+  ],
+  "passed": true
+}

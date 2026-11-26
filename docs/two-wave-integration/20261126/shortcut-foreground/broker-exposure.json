@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "inspectedSource": "9819697c1792119a6a93b492d12abad7b3330c93",
+  "broker": {
+    "path": "AI_HLY/Downstream/HostServices/System/HanlinSystemServicesBroker.swift",
+    "sha256": "575951b9056255d1708c414959464c24d2947b973426a5edd5005825fa5fd316",
+    "declaredMethods": [
+      "fetchContacts",
+      "requestCameraAccess",
+      "requestMicrophoneAccess",
+      "recognizeSpeech",
+      "translateText",
+      "fetchWeather",
+      "readKeychainItem",
+      "authenticateUser",
+      "fetchCloudStatus",
+      "presentShareSheet",
+      "searchMap",
+      "recognizeTextInDocument",
+      "requestCalendarAccess",
+      "requestReminderAccess",
+      "requestHealthAccess",
+      "requestLocationAccess",
+      "requestNotificationAccess"
+    ]
+  },
+  "sourceInventory": {
+    "source": "AI_HLY/Downstream/HostServices/System/HanlinSystemServicesBroker.swift",
+    "declaredMethods": [
+      "fetchContacts",
+      "requestCameraAccess",
+      "requestMicrophoneAccess",
+      "recognizeSpeech",
+      "translateText",
+      "fetchWeather",
+      "readKeychainItem",
+      "authenticateUser",
+      "fetchCloudStatus",
+      "presentShareSheet",
+      "searchMap",
+      "recognizeTextInDocument",
+      "requestCalendarAccess",
+      "requestReminderAccess",
+      "requestHealthAccess",
+      "requestLocationAccess",
+      "requestNotificationAccess"
+    ],
+    "status": "declarations do not prove NS/Expo public bindings, iOS availability, OS permission or canPresentUI"
+  },
+  "extensionReachability": {
+    "authority": "source-inventory.json#/systemServices",
+    "publicBindingStatus": {
+      "hanlinNativeScript": "No generic HanlinSystemServicesBroker facade in the inspected Host adapter. Original native SDK APIs and ScriptWidget service providers are separate API paths; this does not classify them as absent.",
+      "hanlinExpo": "No generic HanlinSystemServicesBroker facade in the inspected Host adapter. Original native SDK APIs and ScriptWidget service providers are separate API paths; this does not classify them as absent."
+    },
+    "availabilityIsNotGrantMetadata": true,
+    "devicePermissionChecksExecuted": false
+  },
+  "actualStaged981SDKBytesInspected": false,
+  "runtimeCapabilityClaim": "No generic17-method facade advertised by source-derived stage-sdk engine capability descriptors; original NativeScript and ScriptWidget services remain separate paths."
+}

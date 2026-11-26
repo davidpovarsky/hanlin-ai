@@ -1,0 +1,6 @@
+{
+  "encoding": "UTF-8",
+  "rawOutputSHA256": "e28495b4fed232d9f89edd5522ade256cddfcb58ec6e06572ddbc67bca7d2025",
+  "exitCode": 0,
+  "output": "test_selected_widget_and_application_table_is_installed_and_updates_from_pin (Scripts.SDK.tests.test_app_intents_install.AppIntentsHostResourceInstallTests.test_selected_widget_and_application_table_is_installed_and_updates_from_pin) ... ok\ntest_unselected_table_is_absent_and_stale_selected_projection_is_rejected (Scripts.SDK.tests.test_app_intents_install.AppIntentsHostResourceInstallTests.test_unselected_table_is_absent_and_stale_selected_projection_is_rejected) ... ok\n\n----------------------------------------------------------------------\nRan 2 tests in 6.058s\n\nOK\n"
+}
