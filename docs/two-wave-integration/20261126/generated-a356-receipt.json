@@ -1,0 +1,27 @@
+{
+  "source": "a35694f73d07b161d6db5e8c150b7d905e883455",
+  "capturedAt": "2026-11-26T15:58:22.785726+00:00",
+  "canonicalGenerationAndAudits": "PASS",
+  "currentSDKInputHash": "32c2ed6254af86c5264b93f641d28ef6046dc8e69c43fa18d536cb514f54cf6c",
+  "currentHostSourceInputHash": "0b2425df7d3b1fdb2f0d89036deb065adc2e4b22a47ba26bd0fcffffa561a9a2",
+  "nodeVersion": "v24.5.0",
+  "files": {
+    "docs/miniapp-sdk/source-inventory.json": {
+      "bytes": 567097,
+      "sha256": "8ed4cb80e62977be4997d6e318dfc140ad65c25f1a1d6b4c000bd12e459ad19e"
+    },
+    "docs/miniapp-sdk/MANIFEST_REFERENCE.md": {
+      "bytes": 145017,
+      "sha256": "8810d52ef8d58eee622296d7d7d240080d052d757d3f5b7b30347acd4c796612"
+    },
+    "docs/miniapp-sdk/extension-reachability.json": {
+      "bytes": 164576,
+      "sha256": "81f454af8cbc2ead5361793472e01ff2b3e002815336d8c4cc826c2ec5acd745"
+    },
+    "docs/miniapp-sdk/extension-reachability.md": {
+      "bytes": 27011,
+      "sha256": "1014345126c3e200f3a1167b97bd8ddbae20dff1f3dcba69b8f5ad8ab8b66ac6"
+    }
+  },
+  "boundary": "Exact generated audit documents after original current-source generation and audit PASS. Complete Host resume remains independent; no full Host/app native/release PASS claimed."
+}
