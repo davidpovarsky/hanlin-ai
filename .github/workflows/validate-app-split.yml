@@ -13,6 +13,11 @@ on:
         type: boolean
         required: false
         default: false
+      unsigned_release_archives:
+        description: Create exact unsigned original product archives for export with the existing Mac identity
+        type: boolean
+        required: false
+        default: false
       signing_preflight_only:
         description: With signed_release_archives, run bounded original-profile discovery and entitlement signing probes only
         type: boolean
@@ -33,8 +38,10 @@ on:
         required: false
         default: ''
       runtime_bundle_artifact_run_id:
+        description: Exact native artifact run, or empty for the lock-pinned immutable RuntimeCore release
         type: string
-        required: true
+        required: false
+        default: ''
       paired_product_acceptance:
         type: boolean
         required: false
@@ -58,6 +65,11 @@ on:
         default: false
       signed_release_archives:
         description: Archive original products and export locally using the existing distribution identity
+        type: boolean
+        required: false
+        default: false
+      unsigned_release_archives:
+        description: Create exact unsigned original product archives for export with the existing Mac identity
         type: boolean
         required: false
         default: false
@@ -87,10 +99,10 @@ on:
         required: false
         default: ''
       runtime_bundle_artifact_run_id:
-        description: Existing successful checksum-pinned RuntimeCore candidate
+        description: Exact native artifact run, or empty for the lock-pinned immutable RuntimeCore release
         type: string
-        default: '42926628418'
-        required: true
+        default: ''
+        required: false
 
       native_test_scope:
         description: Original standalone storage/UI or actual NativeScript and Expo companion controls
@@ -108,7 +120,7 @@ on:
 concurrency:
   # Separate acceptance scopes use distinct job checkouts and owned simulators.
   # A paired run must not cancel standalone storage/UI evidence still being collected.
-  group: standalone-miniapps-${{ github.ref }}-${{ inputs.prepare_miniapps_registration && 'registration' || inputs.audit_release_resources && 'release-audit' || inputs.signing_preflight_only && 'signing-preflight' || inputs.signed_release_archives && 'signed-archives' || inputs.paired_product_acceptance && format('paired-{0}', inputs.paired_test_scope || 'cross_product') || format('standalone-{0}', inputs.native_test_scope || 'baseline') }}
+  group: standalone-miniapps-${{ github.ref }}-${{ inputs.prepare_miniapps_registration && 'registration' || inputs.audit_release_resources && 'release-audit' || inputs.signing_preflight_only && 'signing-preflight' || inputs.signed_release_archives && 'signed-archives' || inputs.unsigned_release_archives && format('unsigned-{0}', inputs.paired_test_scope || 'standalone') || inputs.paired_product_acceptance && format('paired-{0}', inputs.paired_test_scope || 'cross_product') || format('standalone-{0}', inputs.native_test_scope || 'baseline') }}
   cancel-in-progress: ${{ !inputs.prepare_miniapps_registration }}
 
 permissions:
@@ -213,7 +225,8 @@ jobs:
     runs-on: xcode-27
     # Paired: observed ~23 min prep + 60/30 min builds + 20/35 min tests + 6 min generator;
     # the remaining 36 min cover simulator setup, metadata and evidence/cache uploads.
-    timeout-minutes: ${{ inputs.signed_release_archives && 150 || inputs.paired_product_acceptance && 210 || 90 }}
+    # Optional unsigned archives retain the original two 55-minute archive bounds after acceptance.
+    timeout-minutes: ${{ inputs.unsigned_release_archives && 330 || inputs.signed_release_archives && 150 || inputs.paired_product_acceptance && 210 || 90 }}
     env:
       SPLIT_EVIDENCE: ${{ github.workspace }}/build/app-split-evidence
       GH_TOKEN: ${{ github.token }}
@@ -223,11 +236,34 @@ jobs:
       PAIRED_PROOF_REUSE_REQUIRED: ${{ inputs.paired_product_acceptance && inputs.host_proof_run_id != '' && inputs.foreground_proof_run_id != '' }}
       SPLIT_DERIVED_DATA: ${{ github.workspace }}/build/AppSplitDerivedData
       SPLIT_NATIVE_TEST_SCOPE: ${{ inputs.native_test_scope || 'baseline' }}
+      HANLIN_RUN_LONG_JOBS: '1'
     steps:
       - uses: actions/checkout@v7.0.1
       - uses: actions/setup-node@v7.1.0
         with:
           node-version: '24.5.0'
+      - uses: actions/setup-python@v7.1.0
+        with:
+          python-version: '3.12'
+      - name: Validate archive transfer and current full producer scope
+        shell: bash
+        env:
+          UNSIGNED_RELEASE_ARCHIVES: ${{ inputs.unsigned_release_archives }}
+          SIGNED_RELEASE_ARCHIVES: ${{ inputs.signed_release_archives }}
+          PAIRED_PRODUCT_ACCEPTANCE: ${{ inputs.paired_product_acceptance }}
+          PAIRED_TEST_SCOPE: ${{ inputs.paired_test_scope }}
+        run: |
+          set -euo pipefail
+          if [ "$UNSIGNED_RELEASE_ARCHIVES" = 'true' ]; then
+            test "$SIGNED_RELEASE_ARCHIVES" != 'true'
+            test "$PAIRED_PRODUCT_ACCEPTANCE" = 'true'
+            test "$PAIRED_TEST_SCOPE" = 'miniapp_complete'
+          fi
+          if [ "$PAIRED_PRODUCT_ACCEPTANCE" = 'true' ] && [ "$PAIRED_TEST_SCOPE" = 'miniapp_complete' ]; then
+            # The historical 153-case proof is not the current complete Darwin producer.
+            test -z "$HOST_PROOF_RUN_ID"
+            test -z "$FOREGROUND_PROOF_RUN_ID"
+          fi
       - name: Validate requested signing preflight scope
         if: ${{ inputs.signing_preflight_only }}
         shell: bash
@@ -262,6 +298,7 @@ jobs:
             command -v maestro && maestro --version || true
           } > "$SPLIT_EVIDENCE/preflight.log" 2>&1
           cat "$SPLIT_EVIDENCE/preflight.log"
+          python3 -c 'import sys; assert sys.version_info >= (3, 12), "Python 3.12+ is required for verified archive transfer"'
           test "$(df -Pk . | awk 'NR==2 {print $4}')" -gt 15000000
           test "$(xcrun --sdk iphonesimulator --show-sdk-version | cut -d. -f1)" -ge 27
           echo "arch=$(uname -m)" >> "$GITHUB_OUTPUT"
@@ -416,6 +453,107 @@ jobs:
           python3 Scripts/SDK/native_artifacts.py verify --catalog "$SPLIT_EVIDENCE/prepared-native/native-artifacts.json" --assets "$SPLIT_EVIDENCE/prepared-native"
           cp Scripts/MiniApps/upstream-resolution.json "$SPLIT_EVIDENCE/prepared-native/upstream-resolution.json"
           cp "$SPLIT_EVIDENCE/upstream-inputs.patch" "$SPLIT_EVIDENCE/prepared-native/upstream-inputs.patch"
+      - name: Retain exact Darwin Host and embedded SDK producer identity
+        id: split-host-sdk-producer
+        if: ${{ always() && !inputs.signing_preflight_only && hashFiles('build/runtime-host/host-metadata.json') != '' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          node Scripts/MiniApps/stage-sdk.mjs --fingerprint > "$SPLIT_EVIDENCE/host-sdk-inputs.json"
+          git diff --binary HEAD > "$SPLIT_EVIDENCE/producer-source.patch"
+          python3 - <<'PY'
+          import hashlib, json, os, pathlib, subprocess, zipfile
+          root = pathlib.Path.cwd()
+          out = pathlib.Path(os.environ['SPLIT_EVIDENCE'])
+          def sha(path):
+              with path.open('rb') as stream:
+                  return hashlib.file_digest(stream, 'sha256').hexdigest()
+          def record(path):
+              return {'path': path.relative_to(root).as_posix(), 'sha256': sha(path), 'bytes': path.stat().st_size}
+          host = root / 'build/runtime-host/RuntimeHostResources.zip'
+          shipping = root / 'AI_HLY/RuntimeHostResources.zip'
+          metadata_path = root / 'build/runtime-host/host-metadata.json'
+          metadata = json.loads(metadata_path.read_text())
+          node = json.loads(subprocess.check_output(
+              ['node', '-p', 'JSON.stringify({versions:process.versions,platform:process.platform,arch:process.arch})'], text=True))
+          assert node['platform'] == 'darwin' and os.environ['HANLIN_RUN_LONG_JOBS'] == '1'
+          assert metadata['tests'] == 'passed' and metadata['jitlessArchiveSmoke'] == 'passed'
+          assert metadata['archiveSha256'] == sha(host) == sha(shipping)
+          fingerprint = subprocess.check_output([
+              'python3', 'Scripts/Runtime/runtime_host_archive.py', 'fingerprint',
+              '--source-root', str(root / 'AI_HLY/Downstream/RuntimeCore/Node/Host'),
+              '--node-fingerprint', json.dumps(node)], text=True).strip()
+          assert metadata['sourceInputsHash'] == fingerprint
+          subprocess.run(['python3', 'Scripts/Runtime/runtime_host_archive.py', 'validate', str(host),
+                          '--source-root', str(root / 'AI_HLY/Downstream/RuntimeCore/Node/Host')], check=True)
+          with zipfile.ZipFile(host) as archive:
+              manifest_bytes = archive.read('MiniAppSDK/miniapp-sdk.json')
+          manifest_path = out / 'miniapp-sdk.json'
+          manifest_path.write_bytes(manifest_bytes)
+          manifest = json.loads(manifest_bytes)
+          inputs_path = out / 'host-sdk-inputs.json'
+          inputs = json.loads(inputs_path.read_text())
+          assert manifest['inputSHA256'] == inputs['sha256'] and manifest['sourceInputs'] == inputs['files']
+          catalog_path = out / 'prepared-native/native-artifacts.json'
+          catalog = json.loads(catalog_path.read_text()) if catalog_path.is_file() else None
+          source = subprocess.check_output(['git', 'rev-parse', 'HEAD'], text=True).strip()
+          assert source == os.environ['GITHUB_SHA']
+          receipt = {
+              'schemaVersion': 1, 'status': 'VERIFIED_HOST_SDK', 'sourceCommit': source,
+              'sourceTree': subprocess.check_output(['git', 'rev-parse', 'HEAD^{tree}'], text=True).strip(),
+              'repository': os.environ['GITHUB_REPOSITORY'], 'runID': os.environ['GITHUB_RUN_ID'],
+              'runAttempt': os.environ['GITHUB_RUN_ATTEMPT'], 'node': node, 'longJobs': True,
+              'hostArchive': record(host), 'shippingHostArchive': record(shipping),
+              'hostMetadata': {**record(metadata_path), 'sourceInputsHash': fingerprint},
+              'sdkManifest': {**record(manifest_path), 'inputSHA256': manifest['inputSHA256'],
+                              'sourceInputCount': len(manifest['sourceInputs'])},
+              'sdkInputs': {**record(inputs_path), 'inputSHA256': inputs['sha256']},
+              'sourcePatch': record(out / 'producer-source.patch'),
+              'nativeCatalog': {**record(catalog_path), 'inputSHA256': catalog['inputSHA256']} if catalog else None,
+              'log': record(out / 'native-dependencies.log'),
+          }
+          (out / 'host-sdk-producer.json').write_text(json.dumps(receipt, indent=2) + '\n')
+          PY
+      - name: Upload exact Darwin Host SDK and prepared native provenance immediately
+        if: ${{ always() && !inputs.signing_preflight_only && hashFiles('build/runtime-host/RuntimeHostResources.zip') != '' }}
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: darwin-host-sdk-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            build/runtime-host/RuntimeHostResources.zip
+            build/runtime-host/host-metadata.json
+            build/runtime-host/runtime-host.sha256
+            build/app-split-evidence/host-sdk-producer.json
+            build/app-split-evidence/host-sdk-inputs.json
+            build/app-split-evidence/miniapp-sdk.json
+            build/app-split-evidence/producer-source.patch
+            build/app-split-evidence/native-dependencies.log
+            build/app-split-evidence/upstream-resolution.json
+            build/app-split-evidence/upstream-inputs.patch
+            build/app-split-evidence/prepared-native
+          if-no-files-found: error
+          retention-days: 14
+      - name: Build all nine original examples with this exact Darwin SDK
+        id: split-current-demos
+        if: ${{ inputs.paired_product_acceptance && inputs.paired_test_scope == 'miniapp_complete' && !inputs.signed_release_archives }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 Scripts/ProductSplit/run_current_demos.py \
+            --producer-receipt "$SPLIT_EVIDENCE/host-sdk-producer.json" \
+            --output "$SPLIT_EVIDENCE/current-demos"
+      - name: Upload nine-example reports and original package outputs immediately
+        if: ${{ always() && inputs.paired_product_acceptance && inputs.paired_test_scope == 'miniapp_complete' && !inputs.signed_release_archives }}
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: current-miniapp-examples-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            build/app-split-evidence/current-demos/state.json
+            build/app-split-evidence/current-demos/source-baseline.json
+            build/app-split-evidence/current-demos/evidence
+            build/app-split-evidence/current-demos/artifacts
+          if-no-files-found: ignore
+          retention-days: 14
       - name: Restore verified input timestamps for incremental compilation
         if: ${{ !inputs.signing_preflight_only }}
         continue-on-error: true
@@ -432,7 +570,7 @@ jobs:
             --directory-root . AI_HLY AI_HLYTests AI_HLYUITests HanlinMiniAppsApp HanlinMiniAppsUITests HanlinMiniAppsTests Packages AI_HLY.xcodeproj Vendor Config.xcconfig RuntimeDependencies.lock.json
       - name: Execute actual standalone target XCUITests
         id: split-native-acceptance
-        if: ${{ !inputs.paired_product_acceptance && !inputs.signed_release_archives }}
+        if: ${{ !inputs.paired_product_acceptance && !inputs.signed_release_archives && !inputs.unsigned_release_archives }}
         shell: bash
         run: python3 Scripts/ProductSplit/run_native_acceptance.py
       - name: Exercise actual request, return, cancellation and transfer across both products
@@ -441,7 +579,31 @@ jobs:
         shell: bash
         env:
           PAIRED_TEST_SCOPE: ${{ inputs.paired_test_scope || 'cross_product' }}
-        run: python3 Scripts/ProductSplit/run_paired_acceptance.py
+        run: |
+          set -euo pipefail
+          if [ "$PAIRED_TEST_SCOPE" = 'miniapp_complete' ]; then
+            python3 Scripts/ProductSplit/run_current_acceptance.py
+          else
+            python3 Scripts/ProductSplit/run_paired_acceptance.py
+          fi
+      - name: Create exact unsigned original product archives for existing Mac export
+        id: split-unsigned-archives
+        if: ${{ inputs.unsigned_release_archives }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 Scripts/ProductSplit/prepare_signed_products.py --archive-only \
+            --producer-receipt "$SPLIT_EVIDENCE/host-sdk-producer.json" \
+            --archive-output "$SPLIT_EVIDENCE/unsigned-archives"
+      - name: Upload unsigned archives and exact transfer receipts immediately
+        if: ${{ always() && inputs.unsigned_release_archives }}
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: unsigned-products-${{ github.run_id }}-${{ github.run_attempt }}
+          path: build/app-split-evidence/unsigned-archives
+          if-no-files-found: ignore
+          compression-level: 0
+          retention-days: 14
       - name: Prepare isolated signing inspection dependencies
         id: split-signing-dependencies
         if: ${{ inputs.signed_release_archives }}
@@ -467,6 +629,7 @@ jobs:
         shell: bash
         env:
           SPLIT_WORKFLOW_CANCELLED: ${{ job.status == 'cancelled' }}
+          SPLIT_CURRENT_COMPLETE_REQUESTED: ${{ inputs.paired_product_acceptance && inputs.paired_test_scope == 'miniapp_complete' && !inputs.signed_release_archives }}
           SPLIT_STEP_OUTCOMES: >-
             {"platform": "${{ steps.split-platform.outcome }}",
              "upstreams": "${{ steps.split-upstreams.outcome }}",
@@ -476,14 +639,33 @@ jobs:
              "metadata": "${{ steps.split-metadata.outcome }}",
              "native_preparation": "${{ steps.split-native-preparation.outcome }}",
              "native_artifacts": "${{ steps.split-native-artifacts.outcome }}",
+             "host_sdk_producer": "${{ steps.split-host-sdk-producer.outcome }}",
+             "current_demos": "${{ steps.split-current-demos.outcome }}",
+             "unsigned_archives": "${{ steps.split-unsigned-archives.outcome }}",
              "standalone_acceptance": "${{ steps.split-native-acceptance.outcome }}",
              "paired_acceptance": "${{ steps.split-paired-acceptance.outcome }}",
              "signing_dependencies": "${{ steps.split-signing-dependencies.outcome }}",
              "signed_archives": "${{ steps.split-signed-archives.outcome }}"}
         run: |
           mkdir -p "$SPLIT_EVIDENCE"
-          if [ -f "$SPLIT_EVIDENCE/paired-product/acceptance.json" ]; then
-            cp "$SPLIT_EVIDENCE/paired-product/acceptance.json" "$SPLIT_EVIDENCE/acceptance.json"
+          if [ -f "$SPLIT_EVIDENCE/current-native/state.json" ]; then
+            cp "$SPLIT_EVIDENCE/current-native/state.json" "$SPLIT_EVIDENCE/acceptance.json"
+          elif [ -f "$SPLIT_EVIDENCE/paired-product/acceptance.json" ]; then
+            if [ "$SPLIT_CURRENT_COMPLETE_REQUESTED" = 'true' ]; then
+              python3 - <<'PY'
+          import json, os, pathlib
+          out = pathlib.Path(os.environ['SPLIT_EVIDENCE'])
+          (out / 'acceptance.json').write_text(json.dumps({
+              'status': 'CURRENT_ACCEPTANCE_INCOMPLETE',
+              'reason': 'No complete current-group result; original paired result is retained separately.',
+              'original_paired_result': 'paired-product/acceptance.json',
+              'source': os.environ['GITHUB_SHA'],
+              'run_id': os.environ['GITHUB_RUN_ID'],
+          }, indent=2) + '\n')
+          PY
+            else
+              cp "$SPLIT_EVIDENCE/paired-product/acceptance.json" "$SPLIT_EVIDENCE/acceptance.json"
+            fi
           fi
           if [ ! -f "$SPLIT_EVIDENCE/acceptance.json" ]; then
             python3 - <<'PY'
