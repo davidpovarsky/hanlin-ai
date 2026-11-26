@@ -30,9 +30,10 @@ final class HanlinNativeWidgetRendererTests: XCTestCase {
         var manifest: [String: Any] = ["name": "Widget Host target", "version": "1.0.0", "entry": "bundle.js",
             "hanlinRuntime": "hanlin-expo", "widgetEngine": "expo", "hanlinWidget": metadata,
             "entrypoints": [declaration], "actions": [["id": "run.all", "handler": "bundle.js"]]]
+        let expoUIVersion = HanlinMiniAppHostVersions.expoUIVersion
         let files: [String: Data] = ["bundle.js": Data("console.log('declared handler source');".utf8),
             "other.js": Data("console.log('unrelated source');".utf8),
-            "package.json": Data(#"{"name":"host-target","main":"bundle.js","hanlinRuntime":"hanlin-expo"}"#.utf8),
+            "package.json": Data(#"{"name":"host-target","main":"bundle.js","hanlinRuntime":"hanlin-expo","hanlinExpo":{"runtimeVersion":"\#(expoUIVersion)","plugins":{"@expo/ui":"\#(expoUIVersion)"}}}"#.utf8),
             "widget.json": Data(#"(props) => ({type:'Button',props:{target:'host-run',label:'Continue in app'}})"#.utf8)]
         let analyzer = HanlinScriptAnalyzer(inventory: .init(baselineID: "widget-host-target",
             baselineDigest: String(repeating: "a", count: 64), symbols: []))
