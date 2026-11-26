@@ -45,6 +45,9 @@ public struct HanlinAnimatedDisclosure<Content: View>: View {
         ChatDisclosureLayout(progress: progress, spacing: spacing) {
             if mounted {
                 VStack(alignment: .leading, spacing: 6, content: content)
+                    // A zero-height clip alone leaves retained selectable text in AX.
+                    // Keep the existing measured subtree, hiding its render endpoint.
+                    .modifier(ChatDisclosureContentVisibility(progress: progress))
                     // The retained content needs its own accessibility container:
                     // hiding the custom Layout leaves selectable text exposed.
                     .accessibilityElement(children: .contain)
