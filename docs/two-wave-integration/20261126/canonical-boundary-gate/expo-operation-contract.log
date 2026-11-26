@@ -1,0 +1,12 @@
+✔ actual Expo grouped cases and explicitly connected external cases cover the typed facade (14.706046ms)
+✔ a delegated prefix cannot hide a missing operation or a disconnected callback (11.843869ms)
+✔ the connected assistant factory is explicit without relaxing other constructor arguments (8.44321ms)
+✔ Shortcuts progress requires its actual validated callback and owned headless dispatch (4.791268ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 137.098403
