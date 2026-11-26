@@ -1,0 +1,55 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "2EFAD83F-45A2-4A8B-B326-16B83BC56DA9",
+        "deviceName" : "Hanlin Notification OS Recovery 20261125",
+        "modelName" : "iPad Pro 13-inch (M5)",
+        "osBuildNumber" : "24A434",
+        "osVersion" : "27.0",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 1,
+      "passedTests" : 0,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "HanlinMiniApps · Built with macOS 27.0",
+  "expectedFailures" : 0,
+  "failedTests" : 1,
+  "finishTime" : 1795639622.009,
+  "passedTests" : 0,
+  "result" : "Failed",
+  "runtimeWarnings" : [
+    {
+      "issueType" : "Runtime Warning",
+      "message" : "Update the Info.plist: Support for all orientations will soon be required."
+    }
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1795639442.672,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "XCTAssertEqual failed: (\"Optional(\"FAILED\")\") is not equal to (\"Optional(\"EXECUTED_PASS\")\") - No actual terminal OS-ingress receipt",
+      "targetName" : "HanlinMiniAppsUITests",
+      "testIdentifier" : 1,
+      "testIdentifierString" : "MiniAppsProductionRuntimeUITests/testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines()",
+      "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines",
+      "testName" : "testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines()"
+    }
+  ],
+  "title" : "Test - HanlinMiniApps",
+  "topInsights" : [
+
+  ],
+  "totalTestCount" : 1
+}

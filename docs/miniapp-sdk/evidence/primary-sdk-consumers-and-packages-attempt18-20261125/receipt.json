@@ -1,0 +1,127 @@
+{
+  "schemaVersion": 1,
+  "kind": "EVIDENCE_ONLY_SDK18_CONSUMER_AND_PRODUCER_IDENTITY_CHECKPOINT",
+  "createdAt": "2026-11-25T09:41:55.758430+00:00",
+  "source": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+  "parentEvidenceCommit": "34137ff4a20b98fa65221a714ae4892cf80f09fe",
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 4180,
+      "sha256": "4e5bd27e01fe750b35dc22cff74f096463099a4233c5512f290589846d65ea07"
+    },
+    {
+      "path": "package-members.json",
+      "bytes": 22112,
+      "sha256": "e68e42cd9d1df7b201d1bc1517b03094ebcbd3f1a720d53afc798a83a59d6ea3"
+    },
+    {
+      "path": "raw-consumers/AI_Hanlin.app/NotificationService-Info.plist",
+      "bytes": 1220,
+      "sha256": "cf22dfcabc37e0108e7d7a24ed8f7566d0934e60290d16e8427b2370532ae32c"
+    },
+    {
+      "path": "raw-consumers/AI_Hanlin.app/notification-codesign.stderr",
+      "bytes": 1145,
+      "sha256": "f8767154099e0c2e966f5c50ad211bd81b790d9bdb75eff6f72ec0b3654c6fce"
+    },
+    {
+      "path": "raw-consumers/AI_Hanlin.app/notification-codesign.stdout",
+      "bytes": 184,
+      "sha256": "00491886daae07a5296c8bad50f116bf006b0004d7bf7338ad46669fbd903a4a"
+    },
+    {
+      "path": "raw-consumers/HanlinMiniApps.app/NotificationService-Info.plist",
+      "bytes": 1278,
+      "sha256": "176d667ec09408832340ae438a7e26886a9f080625c445c3f192850a7b9a467b"
+    },
+    {
+      "path": "raw-consumers/HanlinMiniApps.app/notification-codesign.stderr",
+      "bytes": 1156,
+      "sha256": "ccc754895ae9a52b5a0fbaddcb40d80eee2619a44ab16fcbb7842154e0800e3d"
+    },
+    {
+      "path": "raw-consumers/HanlinMiniApps.app/notification-codesign.stdout",
+      "bytes": 184,
+      "sha256": "00491886daae07a5296c8bad50f116bf006b0004d7bf7338ad46669fbd903a4a"
+    },
+    {
+      "path": "raw-consumers/WorkletsVersion.o",
+      "bytes": 199440,
+      "sha256": "7132ad932d55d3cde0061cdd6cff0cb00a68a2a762a26116d7ea5bcd90e94a90"
+    },
+    {
+      "path": "raw-consumers/com.itorah.chavrusachat-ios-system-resources.json",
+      "bytes": 680,
+      "sha256": "ab76dbb178d86e4445750bd93ee2d859bbe967a97ae73850cae4feac66d6ddec"
+    },
+    {
+      "path": "raw-consumers/com.itorah.hanlinminiapps-ios-system-resources.json",
+      "bytes": 685,
+      "sha256": "66a64f501a56bdfb7b708dc49ca33b825f1f6351f69fa38bb087d0f0bea93848"
+    },
+    {
+      "path": "raw-consumers/receipt.json",
+      "bytes": 18529,
+      "sha256": "20350c7e3d9f4d97491aead8dd511177ee9fb2e703fd657368e289b254d92bf1"
+    },
+    {
+      "path": "raw-consumers/transfer-index.json",
+      "bytes": 2302,
+      "sha256": "a89f8e8ba7de1e8219e79711b1b49bce70986b52678fc6e4f07769cf6f3fb081"
+    },
+    {
+      "path": "raw-consumers/worklets-common-args.resp",
+      "bytes": 3030,
+      "sha256": "a5e0da230d3c8dac3f83e69c514be9b81473c53d9cefff4b55d5fd0fddb26d55"
+    },
+    {
+      "path": "raw-producer/authoring-fixture-provenance.json",
+      "bytes": 4314,
+      "sha256": "b94ef3067173e7a6c03e19e5794b8d235576b766d86ced036f363ea2abd8915f"
+    },
+    {
+      "path": "raw-producer/modular-search-build.json",
+      "bytes": 1666,
+      "sha256": "69c3d593ceb7cc3179b09a0982b18a4cc8318fd283b2c6d64726dec7e889e5b2"
+    },
+    {
+      "path": "raw-producer/receipt.json",
+      "bytes": 8231,
+      "sha256": "a9a9a05eb3ebddcdaba5b62986a2215887fcba24aaea02df926430ed7992761f"
+    },
+    {
+      "path": "raw-producer/sample-package-hashes.json",
+      "bytes": 443,
+      "sha256": "c36db5557738c60953737bf35d911e63de67536f788003e5fc3af29aa0fbc0da"
+    },
+    {
+      "path": "raw-producer/sdk-only-departure-budget-build.json",
+      "bytes": 1691,
+      "sha256": "ba8a2d88f4747140820ddfc4bd62adb00be95ac0f63c28fd6c46823b2226c531"
+    },
+    {
+      "path": "raw-producer/sdk-only-package-provenance.json",
+      "bytes": 2573,
+      "sha256": "e52b3af044de89facf9944e206a1f034e613347db7a7055ff88e798ed19b925c"
+    },
+    {
+      "path": "raw-producer/sdk-only-table-share-build.json",
+      "bytes": 1235,
+      "sha256": "d06a443e981cef572c2593ba91cda1eee9f8038b0785abe65e57c96a7fc703c9"
+    },
+    {
+      "path": "retained-package-archives.json",
+      "bytes": 3033,
+      "sha256": "f19a73c394d5ec26d975033be89534a6d7440abacac60d36fb9335ae3444ee81"
+    },
+    {
+      "path": "verification.json",
+      "bytes": 39322,
+      "sha256": "a2cc0e4ce6bf2302a395b1af368e79b1ac74313fc3d44853a288b13529a9f357"
+    }
+  ],
+  "memberCount": 23,
+  "memberBytes": 318633,
+  "productionChanges": false
+}

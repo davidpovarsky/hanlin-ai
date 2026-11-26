@@ -1,0 +1,1918 @@
+{
+  "schema": 1,
+  "id": "paired52-continuation-v2",
+  "owner": "/root/native_execution",
+  "scope": "miniapp_complete",
+  "expectedCases": 52,
+  "allowanceSeconds": 4361.568010207993,
+  "originalTotalPairedAllowanceSeconds": 4500,
+  "priorContinuationChargedSeconds": 138.4319897920068,
+  "priorContinuationStateSHA256": "9297e6f13487e3b21874f65ac7d1fc66f7a1617d790201d42c59b09b6dd3d1ba",
+  "authorization": {
+    "by": "/root",
+    "scope": "one original paired52 continuation",
+    "basis": "Final46225 consumer/source GO with actualSDK15 producerc259; remaining allowance of original4500 after the immutable failedv1 charge explicitly authorized; preserve original12600 plan and every historical charge. Original25/27 commands1200/2100, cases420/300/600 unchanged. Modular rechecked inside52, no extra focus."
+  },
+  "root": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete",
+  "outputDirectory": "build/primary-control/paired52-continuation-v2",
+  "source": "46225e5af9aa253c8aa3b7d0d6ce2f282c88e7ad",
+  "sourceTree": "85eb294debb1d8e89f197636106bcd9563a02e4c",
+  "planSHA256": "ecf1958863cebca15adbbcaeb05d4dac75547563eba1f3dd4e9da1d5937a7948",
+  "primaryStateSHA256": "51869651c9275965677a966bb9738fb8150b7186247eaae72983d23e238e3242",
+  "activeBaselineSeconds": 10699.598554166998,
+  "preparedTrackedDiffSHA256": "e0dc168fa2042acec17510c564bc30dd96ae96b1608407b954d127660cd54026",
+  "phaseScriptSHA256": "f271e6f1b95bb261417cee5fc13104e41df44f8ec35d2ab565b1f6135191c0c8",
+  "prerequisites": [
+    {
+      "id": "split-platform",
+      "recordSHA256": "a76d056ff6c1f8e73bdbb4e2443ee3d249d32be2cac83d036d7a56b9d19d39b1"
+    },
+    {
+      "id": "split-upstreams",
+      "recordSHA256": "ccc1b70d2ef68a134ee9690786440a7e54dc29bc24d4c9a40a0589e4713f7668"
+    },
+    {
+      "id": "host-proof",
+      "recordSHA256": "1500e6070828cb1453aeb3e8d46da3e0ec59c09372c474a57aecfefd2c2bebec"
+    },
+    {
+      "id": "split-foreground",
+      "recordSHA256": "3e16adef462a30b531f2967e1e9f5b3469c54657afb5f5e1775b12f2a8528e3b"
+    },
+    {
+      "id": "split-host-lifecycle",
+      "recordSHA256": "44a710e453aac12f29fcb8f134ad37dd3537d8f6088d6d728dd6aa0bd668b5f3"
+    },
+    {
+      "id": "split-metadata",
+      "recordSHA256": "5f442211e1d35327e0131cab394be0af4aa1bca8ebdf080a962d1b5c08ee5294"
+    },
+    {
+      "id": "split-native-preparation",
+      "recordSHA256": "d42c1b5b0c7c798dd89ad6ecb88cf67f65b71cb861919f4635313caab62c90bd"
+    },
+    {
+      "id": "split-native-artifacts",
+      "recordSHA256": "d4cf3675ec5a8682d5ce5735ab876297262d37adffd8212a4dd8b0113f25a02d"
+    },
+    {
+      "id": "split-restore-inputs",
+      "recordSHA256": "b8ed649f39cfc4b526d74aac7a87d483466407e5cf57f7a65450f50435f34bf5"
+    },
+    {
+      "id": "split-inputs",
+      "recordSHA256": "90c037ff81dc0a549c6d80bf5466585c2e42fa9ff874d0bef0f60f8b6881348d"
+    }
+  ],
+  "requiredFiles": [
+    {
+      "path": "AI_HLY.xcodeproj/project.pbxproj",
+      "bytes": 251761,
+      "sha256": "71409346bb25cdc8fd5d1d3e8b7363549146e9038044360c93b659615c3b3b3d"
+    },
+    {
+      "path": "AI_HLY/AI_HLY.swift",
+      "bytes": 1057,
+      "sha256": "68e1f6a51fdc9bf9a313c5fea760085844d3980fd54a937075b2e3ca42879bd7"
+    },
+    {
+      "path": "AI_HLY/Downstream/SDK/HanlinApplicationLifecycle.swift",
+      "bytes": 2574,
+      "sha256": "21a90a9a6c0f6684394e41403705aedade0f6fd8c0c9a8fe9331fed70c27e18e"
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift",
+      "bytes": 3078,
+      "sha256": "eacf5e748287603ef4e6796d2f2d0016b7563aa5de62bca4478a693d2b82eb83"
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "bytes": 156844,
+      "sha256": "0bd52a056289803eb8fa01c45e681df8b3e2f9ac4ac9639fb59577c8624f4efc"
+    },
+    {
+      "path": "AI_HLY/RuntimeHostResources.zip",
+      "bytes": 81823833,
+      "sha256": "602669f4d915cb3dd216ad14cb07a23f4da3885ef0fadf772ea3c6f2d1f06e0d"
+    },
+    {
+      "path": "AI_HLYTests/A2UIFixtures/form.jsonl",
+      "bytes": 762,
+      "sha256": "c3f9f393341162f541321eb3c8462e111724d0f62d0cebc2f418f0967de5891d"
+    },
+    {
+      "path": "AI_HLYTests/A2UIFixtures/invalid-components.jsonl",
+      "bytes": 571,
+      "sha256": "e761c8070080e37bea0e22c5ed7a19d6424ff4237a214d9c4b0ace0cce51eba3"
+    },
+    {
+      "path": "AI_HLYTests/A2UIFixtures/malformed.txt",
+      "bytes": 37,
+      "sha256": "5471e5d32b13c8a0bcee95f767fb9580fda7fa47ee0e7a4c124bcb3498fe77da"
+    },
+    {
+      "path": "AI_HLYTests/A2UIFixtures/rtl.jsonl",
+      "bytes": 764,
+      "sha256": "2e0ce205c2351e8a6baa0ecb184667ecab82e8d73a4c5172dfefa938c4664705"
+    },
+    {
+      "path": "AI_HLYTests/A2UIFixtures/unknown-function.jsonl",
+      "bytes": 395,
+      "sha256": "058f52de611a570b1a4db5116ea31a3f6fa01ab061d971249e6f51bb2041e63f"
+    },
+    {
+      "path": "AI_HLYTests/A2UIFixtures/unknown.jsonl",
+      "bytes": 126,
+      "sha256": "14218c93f9e8b4a9b2b05f27f57de89a4a53617f115fe303c9c06f6ef37eb4da"
+    },
+    {
+      "path": "AI_HLYTests/A2UIFixtures/update.jsonl",
+      "bytes": 219,
+      "sha256": "4ac7c02500a3d797f72b9184a181534949767b75547dd62ca354c1a20b0233a5"
+    },
+    {
+      "path": "AI_HLYTests/A2UITests.swift",
+      "bytes": 74011,
+      "sha256": "c66ab3fbd7e6087208336737c8ea6dcfa28c26c3215cdfc9ffe0d00fb6774f89"
+    },
+    {
+      "path": "AI_HLYTests/AgentActivityHeaderPhaseTests.swift",
+      "bytes": 15711,
+      "sha256": "b05aea3e3b2a17d0f45872f7a30475713968b6fd9255fae3907cb231bd143bf7"
+    },
+    {
+      "path": "AI_HLYTests/AgentDiagnosticsExportTests.swift",
+      "bytes": 6080,
+      "sha256": "3b289e3999f1043a6688c1766b3d58cd45c95122e496848e505c80fa4f521c19"
+    },
+    {
+      "path": "AI_HLYTests/AgentDiagnosticsJournalTests.swift",
+      "bytes": 8485,
+      "sha256": "473c08c7f8ae8ae92e614fe69e0f7f815770cecc937fe289980132714eef57f8"
+    },
+    {
+      "path": "AI_HLYTests/AgentDiagnosticsRawReviewTests.swift",
+      "bytes": 9753,
+      "sha256": "ed2fb00f70ed4f34c05b0a284ba7a6eae9a824b43c8cebb4b52a8512709a32e2"
+    },
+    {
+      "path": "AI_HLYTests/AgentDiagnosticsRecorderPersistenceTests.swift",
+      "bytes": 2700,
+      "sha256": "29e457b115a5310adc1efba83ec78c33bce81a4a2d90e1966c01b067e711603d"
+    },
+    {
+      "path": "AI_HLYTests/AgentDiagnosticsSessionPersistenceTests.swift",
+      "bytes": 6225,
+      "sha256": "7cced6f7bda1500404ea2b650f3f178ba59c8fb6f5281e9c2d211959abe15c5c"
+    },
+    {
+      "path": "AI_HLYTests/AgentRoundPresentationTests.swift",
+      "bytes": 35344,
+      "sha256": "9d10254f721147bd29b862ed7999cff0a4a19a1283cf23fc377d91542b151ff9"
+    },
+    {
+      "path": "AI_HLYTests/AgentRunReadCacheTests.swift",
+      "bytes": 3654,
+      "sha256": "c9c51606c6739229b2aecc00a85df426a3c8d961c1ca2afda763e366f7bca675"
+    },
+    {
+      "path": "AI_HLYTests/AgentRuntimeConversationAcceptanceTests.swift",
+      "bytes": 41713,
+      "sha256": "e7c228e765582a867f27f7dfa54a55d5e1eefb1d3bafe48fe290da76feca7377"
+    },
+    {
+      "path": "AI_HLYTests/AgentSkillsExposureTests.swift",
+      "bytes": 19573,
+      "sha256": "8148c2808bd2023990921fd6fb60d21424f27568d6d6a8db2a9b4c082898f58c"
+    },
+    {
+      "path": "AI_HLYTests/AppleLocalProvidersTests.swift",
+      "bytes": 8497,
+      "sha256": "13c7eaac0dab7c3c73930f0c3c061ec07fdc2add99b05728dc571df830bb9d92"
+    },
+    {
+      "path": "AI_HLYTests/AutomaticWebSearchTests.swift",
+      "bytes": 20031,
+      "sha256": "d5d5fbde79d5f2e41464f125e080f2562ada06fb6eb91d7945cc342465d03d86"
+    },
+    {
+      "path": "AI_HLYTests/CalendarToolTests.swift",
+      "bytes": 8658,
+      "sha256": "10e2b95d046e55089073f9095822ee8df8cee977b9f524648914889d0cb106da"
+    },
+    {
+      "path": "AI_HLYTests/CanonicalAdapterTests.swift",
+      "bytes": 25347,
+      "sha256": "b64c87594610d2e04e7db43c774462f61a7161b044a1660bc0655a8d52607841"
+    },
+    {
+      "path": "AI_HLYTests/CanonicalMiniAppIntegrationTests.swift",
+      "bytes": 20524,
+      "sha256": "ee010ba3e5d192d9609de9bbe912706d7173dfada50b80dce83bbb621dd9eb52"
+    },
+    {
+      "path": "AI_HLYTests/CanonicalShadowCoordinatorTests.swift",
+      "bytes": 12526,
+      "sha256": "70195a35b846b5162a56736649689709eb44f59dac968be99bc35ec569220402"
+    },
+    {
+      "path": "AI_HLYTests/CanonicalToolAuthorityTests.swift",
+      "bytes": 20802,
+      "sha256": "2a54a4764eea2dd9c1c8d6580a22171309b28b8a23b1fc204fca5f5439915acf"
+    },
+    {
+      "path": "AI_HLYTests/ChatAutoFollowTests.swift",
+      "bytes": 12402,
+      "sha256": "c36ac17d0ac2503376ac757cfdaf1b5e4022cc473d8aa8ecc1a5a1968b37b03a"
+    },
+    {
+      "path": "AI_HLYTests/ChatCanonicalPresentationSurvivalTests.swift",
+      "bytes": 14203,
+      "sha256": "3fe797b05de9a8876a07b0e11757d71f5229871374b5b943e54c5fb8f514fc68"
+    },
+    {
+      "path": "AI_HLYTests/ChatCodeFenceTests.swift",
+      "bytes": 7136,
+      "sha256": "0a441d9eb856ee5b7b5c87dd09872d280b81b842801a12367ce6ec4f75ac8fce"
+    },
+    {
+      "path": "AI_HLYTests/ChatPresentationTests.swift",
+      "bytes": 21235,
+      "sha256": "6540c94c86d790efe9d0394f8b68596cd1687e0c04d7efde6f16003e6a7bd5a6"
+    },
+    {
+      "path": "AI_HLYTests/ChatScrollViewHandleTests.swift",
+      "bytes": 11609,
+      "sha256": "ec51b892bd3cd3d8db5bb1fb2480a687159916d871a2918668f49efa7e8b306f"
+    },
+    {
+      "path": "AI_HLYTests/ClassicChatRestorationTests.swift",
+      "bytes": 82380,
+      "sha256": "ea69488b7f6b03d119fc6072798791d4671762f92d1d379688b9e06c18536c77"
+    },
+    {
+      "path": "AI_HLYTests/CurrentLocationToolTests.swift",
+      "bytes": 7394,
+      "sha256": "ec0bff66f8bea7b6296622975ccb4f24d46d24cd47a33737b716b26f637069fb"
+    },
+    {
+      "path": "AI_HLYTests/EmbeddedResultResolverTests.swift",
+      "bytes": 19938,
+      "sha256": "062c9330b578b2aef7bd5632e99b410b7169b7526cfa176c639bce21ca9312f7"
+    },
+    {
+      "path": "AI_HLYTests/ExpoPreparedEntrypointTests.swift",
+      "bytes": 4029,
+      "sha256": "ee8bc32b3ba6b4413796ca952d6658d51902ab4e1042193a8140fabadac54ea2"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/HostServicesProbe.bundle/README.txt",
+      "bytes": 280,
+      "sha256": "f8f3ac6577959ffb7e847e94227bc53129ef5d33409824249fb733cb0853a4d8"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/README.md",
+      "bytes": 4434,
+      "sha256": "58960d55d3cc65e1b8298101d53fdcc464db5492831de1bf3a3be7dcc20252d4"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/corpus.json",
+      "bytes": 24210,
+      "sha256": "d280d4c87a4068484ae5e046a667391d3c2b22026f630539efb81ff440995114"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/hanlin/cairo-genizah-research/SKILL.md",
+      "bytes": 524,
+      "sha256": "428e11f5959d05e5ac271586a2757ee1250dffb5364f13f58ec4d85197660b92"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/hanlin/cairo-genizah-research/scripts/browse.py",
+      "bytes": 794,
+      "sha256": "fe33872736b7a997b79d66bd4cc748922dd479dd131f7f9882bc0976b0b9e253"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/hanlin/cairo-genizah-research/scripts/search.py",
+      "bytes": 969,
+      "sha256": "56377797dc055b71a1d5e99be86df3bdd25de99c177bc6ff9183e2db2f7045b3"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/hanlin/torah-photo-study/SKILL.md",
+      "bytes": 1928,
+      "sha256": "59da09661c62ab7b77453c7293b7fe515e145ed8cf43c0bc0ea2fa7e2af374c1"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/hanlin/torah-photo-study/agents/openai.yaml",
+      "bytes": 710,
+      "sha256": "84371855f48d805b87a142f8aac7ee7f7b2b843541bff44d23832d6808a2205a"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/hanlin/torah-photo-study/hanlin.json",
+      "bytes": 590,
+      "sha256": "54e159944e256434b65823a166c8eb902b7fc6889a9d7fe94cf5b9030e3d5b96"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/hanlin/torah-photo-study/references/identity-and-ambiguity.md",
+      "bytes": 730,
+      "sha256": "5b31d809da55f895e13f9db03df03c39e80b30beeeeecc0e637c1f92623bf2d5"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/hanlin/torah-photo-study/references/privacy-and-providers.md",
+      "bytes": 469,
+      "sha256": "c073e004596dd1550753f2cce2834b99e805e293ac0bbc29f81a96a98c424e80"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/hanlin/torah-photo-study/references/tools-and-results.md",
+      "bytes": 763,
+      "sha256": "9c1e3ff17c8ad95645f790b57cf1e0014d68ec7e2a75c2bbb4fa46e554771886"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/hanlin/yochai-study/SKILL.md",
+      "bytes": 439,
+      "sha256": "a95cd08bd9a3427f2e63380faf1048467fb35bd8c906489762410c168b27374c"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/licenses/Hanlin-MIT.txt",
+      "bytes": 1064,
+      "sha256": "2bdf2973d798073b983a9068a8e328400068c18d962e2059bfcde4042129f294"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/licenses/OpenClaw-MIT.txt",
+      "bytes": 1076,
+      "sha256": "9efd316ecf1c4c60f6fd5d26433142fff2b6794d7d328e9bc6179b29bf9c82a4"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/apple-notes/SKILL.md",
+      "bytes": 1979,
+      "sha256": "d280e7ffffeb182172da7afad23528ef9f73ee4905ab88ebb124046aa6e6aed7"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/apple-reminders/SKILL.md",
+      "bytes": 3039,
+      "sha256": "08413d063e71c7ad7e4691e81a1063b455b816957ce7898576c2653542e8303d"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/control-ui/SKILL.md",
+      "bytes": 7268,
+      "sha256": "aa54d5df5f8097fd3d2afeb0901502772919b226075d78b7fd9e5b12c25e0aea"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/control-ui/references/dashboards.md",
+      "bytes": 4921,
+      "sha256": "615ec9849acf53325a2552553951ff90fff71efdc1ca24d0128533a0835e07bf"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/control-ui/references/hosting.md",
+      "bytes": 4843,
+      "sha256": "e1a5045eb73101e2daeeeac489d25ee95399c35d6a499789b5fa38a607006fd6"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/diagram-maker/SKILL.md",
+      "bytes": 2357,
+      "sha256": "6195e03fcb04a1a68c4af72165e0c85efcd2719af79380d82e42996ea89ad74a"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/diagram-maker/references/excalidraw-patterns.md",
+      "bytes": 1394,
+      "sha256": "6fc8799815adc1ef0171f25f59431e7e60bfa072ad570a60c335383bd872bf56"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/diagram-maker/references/svg-template.md",
+      "bytes": 1930,
+      "sha256": "3a8b47dbaeb341377a4999ff227f088a3a7fe2bee7b1353929f11a1f30b20c71"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/github/SKILL.md",
+      "bytes": 5852,
+      "sha256": "04d13709b66a75f73774d47c1fb8446669623c8326c2d0af4e7d01017e2f29dc"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/gog/SKILL.md",
+      "bytes": 6679,
+      "sha256": "d54a8e52b1e00bb5d33b46915fd549f8b792ef3a383fe40e92b195d11d2d5255"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/healthcheck/SKILL.md",
+      "bytes": 2909,
+      "sha256": "b41044aeb25afe95daa5c8ef6f2d6b8d197f6a0b113b0888deaa4dd69e42b59b"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/himalaya/SKILL.md",
+      "bytes": 1693,
+      "sha256": "040f5f7304ec39c20e1ea61ed1fabc05108eb16820516ffd8c09b29528e188bb"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/himalaya/references/configuration.md",
+      "bytes": 4084,
+      "sha256": "a1838b3f370abef2c6c45226115158aee095623701a4ffb48ea633bce14ccf0f"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/himalaya/references/message-composition.md",
+      "bytes": 3799,
+      "sha256": "84d889972f5f4243d891405b83e67bddc7e835b2c4e434efd77fdc6bca9fe307"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/meme-maker/SKILL.md",
+      "bytes": 2566,
+      "sha256": "682db7cba34a3d3ca791f7cccaee9488810c731d6622d8886a9bcca77c59d2f3"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/meme-maker/references/templates.json",
+      "bytes": 13128,
+      "sha256": "414847dc28da8556bdd9a3ddf350f3d859d4668ecc237c1889b289d42d2879b8"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/meme-maker/scripts/meme.mjs",
+      "bytes": 13362,
+      "sha256": "6211a37d19d90498b01fc31302506af0c0021e9949038054e1f7c34e71c4e1fd"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/model-usage/SKILL.md",
+      "bytes": 2550,
+      "sha256": "f4e40f006365acc5f519a55f4efacb6c722788026792e498fcf46dc1a0f0c1d1"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/model-usage/references/codexbar-cli.md",
+      "bytes": 1299,
+      "sha256": "58e57a7bf1359ed32b1fe80c7285e75f88127e82db6b0dbab2ec4dda6ffaca42"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/model-usage/scripts/model_usage.py",
+      "bytes": 11490,
+      "sha256": "cd13c65d9d10faaff20bdf40d5f45f6d26a29dacc3e13d8a1e481a3a8a0f4874"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/model-usage/scripts/test_model_usage.py",
+      "bytes": 5218,
+      "sha256": "1bc6fceb436d836532e6901edb6eb473a68a16eda25f45f94322d99beea4a3b2"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/node-connect/SKILL.md",
+      "bytes": 6553,
+      "sha256": "334c20d3973238ba44a8b5885f0f6adf50342f5324940e1880bd75f61b86bfda"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/node-inspect-debugger/SKILL.md",
+      "bytes": 3576,
+      "sha256": "50d2f6828eaf4bbf7ccbaec5af928f9af978e93b7c679b0f3c8afe2a80ab7d52"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/notion/SKILL.md",
+      "bytes": 3867,
+      "sha256": "d45e2c1270d58c7878c13467ab27780530de2af89fb8b307c662b5d4859dc555"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/openai-whisper-api/SKILL.md",
+      "bytes": 2073,
+      "sha256": "afff70c706a9bae250b046b741e9930340ca87cc1689a82d4415dd4d6b45bfa1"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/openai-whisper-api/scripts/transcribe.sh",
+      "bytes": 3214,
+      "sha256": "7840f2628e2e5d878434419592a8cfc5fbfcf2f560cc1511085387e38e429c78"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/python-debugpy/SKILL.md",
+      "bytes": 2530,
+      "sha256": "dd4600a228fcdce153e4e318c2b8644e6f7f3964826958e89b5bae90db4877d3"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/skill-creator/SKILL.md",
+      "bytes": 2301,
+      "sha256": "7da0631cb21fbd87630b5dbeb48010f66776c28e396c276235f5d245903fa6ed"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/skill-creator/license.txt",
+      "bytes": 11358,
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/skill-creator/scripts/package_skill.py",
+      "bytes": 4703,
+      "sha256": "fa2f7ba4915464221cd71c7048e6eb71a920cf94c793332b4172d2ac353dd65a"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/skill-creator/scripts/quick_validate.py",
+      "bytes": 5419,
+      "sha256": "580ccffbd9d4370bc35bca22c551da0353424e248d7499e8cd578eaec67dfd75"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/skill-creator/scripts/test_package_skill.py",
+      "bytes": 7771,
+      "sha256": "806e5a5dbca711b9f30dded0b4bc31dc233b85a0ab301caabdd36900d5db9788"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/skill-creator/scripts/test_quick_validate.py",
+      "bytes": 4533,
+      "sha256": "349258a18c0130f0bf11dd60d361abffa493e426355bc14df4d1d3fc09a46f8a"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/tmux/SKILL.md",
+      "bytes": 2564,
+      "sha256": "8aeaa6f3dfe06d58e09721778b8c9e654bcbd47590f26f442c4dc87c9349c572"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/tmux/scripts/find-sessions.sh",
+      "bytes": 2983,
+      "sha256": "8df6ac8e5824b0fa4d791235bd944ce86b0d12dcbf98af7abeb6d6de50e96823"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/tmux/scripts/wait-for-text.sh",
+      "bytes": 2294,
+      "sha256": "b7efb785d3f2a4f1194e2ae18d7191135ad5a2fff4f08e6a4c7ad8412f3a7309"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/trello/SKILL.md",
+      "bytes": 2956,
+      "sha256": "dc524f73bd87b8089d061187bb26add41101ee82e288a1597a2d7b89fd934222"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/visualize/SKILL.md",
+      "bytes": 9412,
+      "sha256": "94259bbb4d06ab0927d540780c2ef095c6bfe17cbb7248ce485c82656290338a"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/weather/SKILL.md",
+      "bytes": 2905,
+      "sha256": "62ab4821aa873949d1c1091836be1659a42b32caadce4bd145f5505a1ceaeec1"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/RuntimeNetworkFixtures.bundle/probe.mjs",
+      "bytes": 6680,
+      "sha256": "8ae9d02c1296b8f3a55c248d03b4a4bb2cf5e7538e36dc1327cbf55e0490143d"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/RuntimeNetworkFixtures.bundle/tls-fixture.json",
+      "bytes": 4332,
+      "sha256": "2dd234ef6f9429ab93c2a78c082fb0297e3949877508876f5c49b19d71ea9464"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/MalformedManifest/malformed-hanlin-script.json",
+      "bytes": 86,
+      "sha256": "c6cbc6e96072ce9114705a9ac43ac8662566f6dfc488d402b7f28ecd4f70538e"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/PhysicalIPad/smart-eating-normalized.zip",
+      "bytes": 60683,
+      "sha256": "c8ee66e4e5e6a06a884b2a1d7b552d51691cb824f245e4cca238bc44d1509d57"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus/InvalidBareImport/compiler-acceptance.json",
+      "bytes": 65,
+      "sha256": "654e70c2806e03d4c0db70331cd9897d847bdfb71d559be6798a550ba7b947a6"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus/InvalidBareImport/index.ts",
+      "bytes": 52,
+      "sha256": "017221a547c4877f3fde48b972953c05bc6a28e246a2bd65b87056a50c256518"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus/InvalidBareImport/script.json",
+      "bytes": 101,
+      "sha256": "3baee7cb79306d17c32b46e804f1f102d21152c5390abe58a5e1ba1e2d3d1496"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus/InvalidDOMGlobal/compiler-acceptance.json",
+      "bytes": 65,
+      "sha256": "e5b5f67d2ddfc1b91593d8400dd8197faf6bc9db927864bc2abcc52a061f8f1d"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus/InvalidDOMGlobal/index.ts",
+      "bytes": 52,
+      "sha256": "02cb971d58b615dcbcf7960cf04dc6fc5d35ee1389d7d10afe3864172b3b0a63"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus/InvalidDOMGlobal/script.json",
+      "bytes": 100,
+      "sha256": "8620bc68e0e5369d0de9befe4e237a8205341d7a8aa3a6f2754ccc263f00d0eb"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus/InvalidScriptingAPI/compiler-acceptance.json",
+      "bytes": 65,
+      "sha256": "61c34a1b9d35309c24548724333b961ac3ed175c4c78ba6ef5b57d6060f9ddd0"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus/InvalidScriptingAPI/index.ts",
+      "bytes": 45,
+      "sha256": "70635d852acf94c3fbfa73e6cc7a7f10bb83cf5355ae1ef2ba7b2615facd5664"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus/InvalidScriptingAPI/script.json",
+      "bytes": 103,
+      "sha256": "0ccf5bc6cf90c960ed74ff47a103a40ac1290769a8d88fb1a50570c560999a80"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus/ValidScriptUI/compiler-acceptance.json",
+      "bytes": 28,
+      "sha256": "0286c328aadb599c3239f8abf2a4663c842afb777126447cfc9f6164c353de63"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus/ValidScriptUI/index.tsx",
+      "bytes": 323,
+      "sha256": "ee9dd547d385f2079d007d295b87db80e1ae7d8e18d442990c540ffcde54fb75"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus/ValidScriptUI/script.json",
+      "bytes": 106,
+      "sha256": "b3796e9176d76ded5598209abbe367358d8103efc04693d83e4202f38700a823"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus/ValidStorageModules/compiler-acceptance.json",
+      "bytes": 28,
+      "sha256": "0286c328aadb599c3239f8abf2a4663c842afb777126447cfc9f6164c353de63"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus/ValidStorageModules/index.ts",
+      "bytes": 462,
+      "sha256": "ff5ec870af09184cc854b9c7c4e95ddf1354b4b6395d763fe2cb6483df24d7ae"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus/ValidStorageModules/payload.json",
+      "bytes": 17,
+      "sha256": "7dc24029c919d7d6fbcc60c9ef21d0b4285bf9a1677dbca85723f4fd1cb4dcb3"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus/ValidStorageModules/script.json",
+      "bytes": 112,
+      "sha256": "ded9c93f7662240513443b91804dbf0c00dd2a1930eaea5b681d83a87e631608"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus/ValidStorageModules/value.ts",
+      "bytes": 87,
+      "sha256": "88c207ed5d09c43e9813f4339f66db15d66589030f7dd1d98f92977ae076fbd3"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ValidEcho/assistant_tool.js",
+      "bytes": 139,
+      "sha256": "358693a21ddd782326cfab9d8e4b0f4492019e58dece483e7b51c91112b73465"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ValidEcho/assistant_tool.ts",
+      "bytes": 178,
+      "sha256": "13769047e962847dd557f4613c60c6406eba19e51f3d041cc4b2e8ef9f8cf945"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ValidEcho/fixture-definition.json",
+      "bytes": 822,
+      "sha256": "72824c62b9cfda62243855c1880ae84d520b88936a8ea4e189b1ebaf9a137f69"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ValidEcho/hanlin-script.json",
+      "bytes": 7519,
+      "sha256": "a042c5e243ab49893ac19ff9f587c1d96b7fefc408de66fe3f575545f1de3992"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Expo-Widget-Counter.hanlinExpo",
+      "bytes": 1148,
+      "sha256": "07bc97e06a1c4b638272dda7eeeb132e2b91499d5546cccfe7fbfd5bfc4cae0e"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Expo-Widget-Visuals.hanlinExpo",
+      "bytes": 1281,
+      "sha256": "2584982f4077b022860a1197c62d3bc85fdaa454e907e6749cd5734e7886cb68"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Mixed-Native-Widget.hanlinExpo",
+      "bytes": 999,
+      "sha256": "7dc83c351a276573bf8fc8591b1be081401433247a656306d54fb9c16cda0d2e"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-ScriptWidget-Actions.scripting",
+      "bytes": 825,
+      "sha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-ScriptWidget-Dashboard.scripting",
+      "bytes": 968,
+      "sha256": "478cd567e9731cc7342aefa9024ea498edf8d12d340cc5c558484e60a210dace"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Widget-Invalid-Cases.hanlinExpo",
+      "bytes": 948,
+      "sha256": "077a6ea43342877550f495b1bb885a3c93d8d6c60389459bf55ff05d2db5982c"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Widget-Legacy-Regression.scripting",
+      "bytes": 444,
+      "sha256": "787bf97e48164d7b9021c64bfa7122e48131a82b388efc3bad26c58276f4bb2f"
+    },
+    {
+      "path": "AI_HLYTests/FoundationJSONShadowAdapterTests.swift",
+      "bytes": 3278,
+      "sha256": "29722de80749716197288e3c9733755f0885ad40fdac123c0b5ad3418f8f7720"
+    },
+    {
+      "path": "AI_HLYTests/HanlinA2UIProductPerformanceTests.swift",
+      "bytes": 34160,
+      "sha256": "8f6246f6314eb99051ae1869b7ae947b267b7a90ab327309909a6dc2455ad99e"
+    },
+    {
+      "path": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "bytes": 176347,
+      "sha256": "9ee86ec88ce723c8257cef8a26ff46865408ec3b50568314875a5608c7ddfc0a"
+    },
+    {
+      "path": "AI_HLYTests/HanlinAppSplitOriginTests.swift",
+      "bytes": 37351,
+      "sha256": "476b3a6cca2635a68dc2436f2aba261a5f32633a268d4e163edc0cb0c75277a0"
+    },
+    {
+      "path": "AI_HLYTests/HanlinApplicationEmbeddingTests.swift",
+      "bytes": 28114,
+      "sha256": "d647361dbef8f576f18e13fc852df7f61b7d06a7f5757e5b29bfd503aafc4463"
+    },
+    {
+      "path": "AI_HLYTests/HanlinApplicationSystemIntegrationTests.swift",
+      "bytes": 4839,
+      "sha256": "617d5472d978fde04ca74400267cb1bb92244b84fbe224545896bddb26bfa802"
+    },
+    {
+      "path": "AI_HLYTests/HanlinAutonomousRuntimeTests.swift",
+      "bytes": 11329,
+      "sha256": "4e6901c09632350692b7ce63d8dcf12155e459a2706660f1b8773b1a5438004f"
+    },
+    {
+      "path": "AI_HLYTests/HanlinCapabilityObservationTests.swift",
+      "bytes": 35519,
+      "sha256": "207b4bb7e2821ff0b3e563dde4131922fceb25c2d6b4142084e1461586a95ac4"
+    },
+    {
+      "path": "AI_HLYTests/HanlinConversationProjectionTests.swift",
+      "bytes": 4125,
+      "sha256": "5689f0ed337357edaabe99cb7fa1ea0c9d7d9792614a39c5dd6ff56e8f5d2da6"
+    },
+    {
+      "path": "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests.swift",
+      "bytes": 18534,
+      "sha256": "b9d463b6fdddd37feb857a077d739ea87ff668be7f2e28b57c8bd557609ec0f0"
+    },
+    {
+      "path": "AI_HLYTests/HanlinMCPEmbeddingTests.swift",
+      "bytes": 17029,
+      "sha256": "2774f4a60882be0a8eec456f8e6e75ede049981c58f412931311c1db509f6592"
+    },
+    {
+      "path": "AI_HLYTests/HanlinMiniAppHostDiscoveryTests.swift",
+      "bytes": 4744,
+      "sha256": "d3ab83d384c6f9b7dca925498137a98acd1e12c1b6b3931520406a0c7d7f694d"
+    },
+    {
+      "path": "AI_HLYTests/HanlinMiniAppStorageCapacityTests.swift",
+      "bytes": 5236,
+      "sha256": "95ea844181b906f5449dab7129646b7e8144d71abba7894be62b9681c6d8227d"
+    },
+    {
+      "path": "AI_HLYTests/HanlinModelDisplayNameTests.swift",
+      "bytes": 1554,
+      "sha256": "e8a0ce9249d6093a7b53d6a167feadd2292e191ac317fa9c34750f58013a7106"
+    },
+    {
+      "path": "AI_HLYTests/HanlinModelHostingEnvironmentTests.swift",
+      "bytes": 2221,
+      "sha256": "f9067e859f9a2eae3ab6bc5e43b91e5bba70e7721a807e8e020cdfe4db6b9e19"
+    },
+    {
+      "path": "AI_HLYTests/HanlinMorphComposerTests.swift",
+      "bytes": 12852,
+      "sha256": "df872008bd19d06f88664d7d7aa6e3671a1e2d779c58eb2d964962637ecac113"
+    },
+    {
+      "path": "AI_HLYTests/HanlinNativePresentationTests.swift",
+      "bytes": 14928,
+      "sha256": "200e2c5b9e02b38b2bebbdb91e222893d4622ee3fcaf06186a09c6eda33be182"
+    },
+    {
+      "path": "AI_HLYTests/HanlinNativeWidgetRendererTests.swift",
+      "bytes": 20498,
+      "sha256": "c43cd512bb45c120fd06f2903b80c1092220efd1ed85045b9513c88a13c055f6"
+    },
+    {
+      "path": "AI_HLYTests/HanlinOrganizerDockParityTests.swift",
+      "bytes": 94119,
+      "sha256": "5dc4ca52a85f45daf9640834b0a224df902b6648e72437b9bd4ceb64a7491f3a"
+    },
+    {
+      "path": "AI_HLYTests/HanlinOriginalExpoWidgetTests.swift",
+      "bytes": 10070,
+      "sha256": "4ffadc5573c5fc69e2b1276e5f86cb69a84eb4466f7c819085ba7f0e72b23860"
+    },
+    {
+      "path": "AI_HLYTests/HanlinOriginalScriptWidgetAPITests.swift",
+      "bytes": 5423,
+      "sha256": "7a0bf25e1cb46c63c194efe6d7bc16b878726231aee54b9bbd1653b18d86cbf2"
+    },
+    {
+      "path": "AI_HLYTests/HanlinOriginalScriptWidgetControlTests.swift",
+      "bytes": 13937,
+      "sha256": "b07a43b29328d069577c96af025bda496b5b216d38099f3b9297b93294bf9e46"
+    },
+    {
+      "path": "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift",
+      "bytes": 11136,
+      "sha256": "3f41a14d9754cb24e74cb5656b8975485459259bc27acc08a4f845d5675446ec"
+    },
+    {
+      "path": "AI_HLYTests/HanlinRemoteMediaURLTests.swift",
+      "bytes": 8428,
+      "sha256": "8d529ef1da665e792f9e56b92f746659eb26be6c790765c6f233b81016247059"
+    },
+    {
+      "path": "AI_HLYTests/HanlinRuntimePerformanceTests.swift",
+      "bytes": 19793,
+      "sha256": "9d468eac221e77a177874ef36d20a420786d01c6e5603302497d89eb69d24dcc"
+    },
+    {
+      "path": "AI_HLYTests/HanlinScriptingAssistantProviderAdapterTests.swift",
+      "bytes": 2583,
+      "sha256": "d3e463bbd242a66ce66dee6717305eb49946f0c28f63efcc8f2d78d6cbfafba3"
+    },
+    {
+      "path": "AI_HLYTests/HanlinScriptingPlatformCompositionTests.swift",
+      "bytes": 10722,
+      "sha256": "6d71ccfbb6018696de27ccaf014162ee470f8148c5fd30733e5bf5d89e2763e9"
+    },
+    {
+      "path": "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+      "bytes": 65018,
+      "sha256": "3d0c2c64592ad17c3a4fb08ca7635422c01a5d69fd4eb7e6b2bff44282cbbee1"
+    },
+    {
+      "path": "AI_HLYTests/HanlinToolApprovalStoreTests.swift",
+      "bytes": 3891,
+      "sha256": "559cb492cbccb54d416fa69652c45ecb1b318e137dc8774c3d0cfd0a6f49b8ee"
+    },
+    {
+      "path": "AI_HLYTests/HanlinUnifiedHostServicesAgentAcceptanceTests.swift",
+      "bytes": 22456,
+      "sha256": "d4517561e390d4563f15caab1164ce61ce8fb948ca127030acef0698227b2f67"
+    },
+    {
+      "path": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests.swift",
+      "bytes": 61699,
+      "sha256": "85efedee4ec94c5ecc4e727847401fda1ab72a66e7cf9ab2403f909f23a18210"
+    },
+    {
+      "path": "AI_HLYTests/HanlinUnifiedHostServicesTests.swift",
+      "bytes": 19346,
+      "sha256": "06fe315a62c65ee644f1a5f3caa2dc70722f4b3c0ed32c1b210c38ef5e7232a9"
+    },
+    {
+      "path": "AI_HLYTests/LegacyToolMigrationTests.swift",
+      "bytes": 8007,
+      "sha256": "8cf6e3e632175467f0388add08da82214f1032285061ed51e11babf8f55de460"
+    },
+    {
+      "path": "AI_HLYTests/MCPPackageGenerationTests.swift",
+      "bytes": 4372,
+      "sha256": "e833bdaf1fc51d29cba14c0e37563dad1201f09fdb6e00584446527a46b683e7"
+    },
+    {
+      "path": "AI_HLYTests/MaintainedSkillCorpusTests.swift",
+      "bytes": 33117,
+      "sha256": "61e928643550af3ce6c70b7a7e6077aad02960ff1bed931893c3ab3d50eb3cb4"
+    },
+    {
+      "path": "AI_HLYTests/MasterScenarioSemanticAcceptanceTests.swift",
+      "bytes": 96997,
+      "sha256": "e08e557055a4c9c81750817a5dc754b5a872a13bfff26029b48eea7475b23272"
+    },
+    {
+      "path": "AI_HLYTests/MiniAppAuthoringToolTests.swift",
+      "bytes": 9383,
+      "sha256": "e516af0f7ecfa920cbb4e226224934fdbb389bbd43b063cdfaacd1a2d909f750"
+    },
+    {
+      "path": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "bytes": 30527,
+      "sha256": "6eb5c1a7f623dac590311d3040c6c0f81cdbb6baec98fdd943d6617151d0f248"
+    },
+    {
+      "path": "AI_HLYTests/NativeScriptEnvironmentOwnershipTests.swift",
+      "bytes": 4292,
+      "sha256": "1444d7ec786b3a9a0688b37058187dd02fb88006ced60e8c641cbc3d72dc8578"
+    },
+    {
+      "path": "AI_HLYTests/NativeScriptRuntimeWireTests.swift",
+      "bytes": 17996,
+      "sha256": "4ac7ed256f861133e3b84eda85d1f5df659317477c6a42c637a42a59def46835"
+    },
+    {
+      "path": "AI_HLYTests/NativeScriptShareDeliveryTests.swift",
+      "bytes": 7290,
+      "sha256": "6aa9c15d739096aaf8ec7f0e929cbde37996de50a8a9178288d3cd2e9812a4ad"
+    },
+    {
+      "path": "AI_HLYTests/NativeScriptSharedModuleLinksTests.swift",
+      "bytes": 4435,
+      "sha256": "ac912366f4be2987454daceeb03c1251b42ddaeaf7f6d3519893ab2eb1061862"
+    },
+    {
+      "path": "AI_HLYTests/PreparedRuntimeVersionGateTests.swift",
+      "bytes": 5491,
+      "sha256": "79cfebe73c25cd7e2490a1192b1a9432156eacd48a1cf75aa94644ba7f1c490c"
+    },
+    {
+      "path": "AI_HLYTests/ProductionSystemSkillsTests.swift",
+      "bytes": 20364,
+      "sha256": "b028cd3fbb3884d028f300e7b744a1a5a35efbfef4780bc71889cfc2c11b82d3"
+    },
+    {
+      "path": "AI_HLYTests/ProviderConformance/ProductionConformanceFixtures.swift",
+      "bytes": 22318,
+      "sha256": "9b3683401bc264206e006ebe9983174b0db1404aefec55e49c2c2086808a3135"
+    },
+    {
+      "path": "AI_HLYTests/ProviderConformance/ProductionConformanceURLProtocol.swift",
+      "bytes": 6616,
+      "sha256": "2e2754247e8ace05f94a22cd02143bee5c105f61a06ce8b0a71dab314518e34c"
+    },
+    {
+      "path": "AI_HLYTests/ProviderConformance/ProductionProviderConformanceTests.swift",
+      "bytes": 50804,
+      "sha256": "c218cc146bdc18bb6ccf7094508285c9894f8617caa716b29fd0bed0c99ff839"
+    },
+    {
+      "path": "AI_HLYTests/ProviderModelCatalogTests.swift",
+      "bytes": 1372,
+      "sha256": "fc30c9c4da9503c032ae51744db5249561f820feb37e2082920570277af0263f"
+    },
+    {
+      "path": "AI_HLYTests/RuntimeAutonomyV3Tests.swift",
+      "bytes": 93441,
+      "sha256": "b72a5d8ec0c51144e864776a2e1d4537cbfd0e28e27074b47280af5b108fba7d"
+    },
+    {
+      "path": "AI_HLYTests/RuntimeExecutionInputArtifactTests.swift",
+      "bytes": 2375,
+      "sha256": "d31065ba2cafceb03c25f2a9bbf845ecbd0c41e8dfdf61fa60be5f1645ffa50c"
+    },
+    {
+      "path": "AI_HLYTests/RuntimeFetchConformanceTests.swift",
+      "bytes": 3046,
+      "sha256": "d62bb6da535e456830dfb3d2fe7d6da6add9403d1f55e59f17085a198aa7a002"
+    },
+    {
+      "path": "AI_HLYTests/RuntimeJavaScriptCoreTests.swift",
+      "bytes": 7773,
+      "sha256": "e0034017f45e08dee2c9df2c5332bb4691a61045518280309e6caa5b5e4744d7"
+    },
+    {
+      "path": "AI_HLYTests/RuntimeJobInterruptionTests.swift",
+      "bytes": 6555,
+      "sha256": "638e0be8e4483f455e5a6de3438fe660c0bf77c67a6735024874df331c2c7406"
+    },
+    {
+      "path": "AI_HLYTests/RuntimeNativeInterruptionTests.swift",
+      "bytes": 8808,
+      "sha256": "64838b626833e0f8a1780f33d9057220e86e0e26f2c967416afc171f35252974"
+    },
+    {
+      "path": "AI_HLYTests/RuntimePackageAcceptanceTests.swift",
+      "bytes": 11484,
+      "sha256": "4ad441f2cbfbeb58fbd60d8e987d66566b8316f2dda3378d4e7471fa646b2595"
+    },
+    {
+      "path": "AI_HLYTests/RuntimeToolContractTests.swift",
+      "bytes": 18661,
+      "sha256": "ee5062ddf4f386a488014aae5d20f6a74ae45eaf7d02ff076a6fdf91933da8d8"
+    },
+    {
+      "path": "AI_HLYTests/RuntimeUserOperationTests.swift",
+      "bytes": 5489,
+      "sha256": "00b4e836d4e848dae19ae3e757657b733c3eafe6b645a538f1b1995828a94151"
+    },
+    {
+      "path": "AI_HLYTests/ScriptingCanonicalAuthorityTests.swift",
+      "bytes": 10632,
+      "sha256": "b204ff4a6325b967669e1ea0574f4f4979643799522d59ca32d483fc74840932"
+    },
+    {
+      "path": "AI_HLYTests/ShareInboxHostIntegrationTests.swift",
+      "bytes": 6963,
+      "sha256": "c6ba09129bdab7fadcae8ac02468081332a8f7296a656a84df650b78e8db0195"
+    },
+    {
+      "path": "AI_HLYTests/SkillImportPresentationStateTests.swift",
+      "bytes": 5463,
+      "sha256": "b231f1233dc5210a5994835a0ee674c299fa879861aaa1583e7e88d4588a85f1"
+    },
+    {
+      "path": "AI_HLYTests/SkillOpenClawPolicyTests.swift",
+      "bytes": 11916,
+      "sha256": "fed5ad40f59184120508d1be60fd9b0c722353bb6db3c6abff29c5ea810726e1"
+    },
+    {
+      "path": "AI_HLYTests/SkillRuntimeProductTests.swift",
+      "bytes": 27717,
+      "sha256": "06471d3f79c83ac8aa95feeeabcdd071be0c96dc8bfe2da92d47bf4850087714"
+    },
+    {
+      "path": "AI_HLYTests/SkillStoreAndImportTests.swift",
+      "bytes": 54653,
+      "sha256": "d88842e5e9262196d7a4c287c0dd3457f8d82d057e8b32155058142acfcdf75d"
+    },
+    {
+      "path": "AI_HLYTests/VoiceRecordingLifecycleTests.swift",
+      "bytes": 36989,
+      "sha256": "6140722d3090e41c7465601624a0fa389509c91bd23054e9a91bd80c0fe4c7c1"
+    },
+    {
+      "path": "AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+      "bytes": 129338,
+      "sha256": "3d9755248a7ac026c2d2a0293d744d45e3c7454c9bd154a7a35e91d65175454a"
+    },
+    {
+      "path": "AI_HLYUITests/AgentSkillsEmbeddedResultsUITests.swift",
+      "bytes": 8400,
+      "sha256": "177a097e99b72ab6817064345956ec7a7bc5eea9d147d57175929bb6398d142f"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/A2UIGalleryLinkReplay.jsonl",
+      "bytes": 1581,
+      "sha256": "ac189f8a2f0b20e0c3c501ab627152f5b254ee5ce0cdb7a6d60340248226f1d2"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/A2UIReplayMedia.jsonl",
+      "bytes": 760,
+      "sha256": "1f0fbb0926011673b95bfae719babede6bc138119559156543b81a97acc5cb1e"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoNativeAPIMalformed.hanlinExpo",
+      "bytes": 280,
+      "sha256": "6061e8c26fdbcbbfe20fa7d8abc2a6a8ee63d0f665046583b96fcefd5d6ad301"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeA.hanlinExpo",
+      "bytes": 1403247,
+      "sha256": "f065d0fffd837c9346caac0326d3e19620a25a6516ba175cb4ae8d3360d879ba"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeB.hanlinExpo",
+      "bytes": 1403239,
+      "sha256": "e0a8612e4d08bb198f5b48ea3e0fd5355c73e9f9a32215e7481f0d64dce6a7b3"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeIncompatible.hanlinExpo",
+      "bytes": 1403254,
+      "sha256": "39fa0b492bb18ef50a774ccb5a7c5a5501f240a3a7b4053f9d4531f843236b1b"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeMissingGrant.hanlinExpo",
+      "bytes": 1403252,
+      "sha256": "5b5ef66c91204f4268b07ce2e3864922cc203acd3d0ad2fe5df3b80f2071fe38"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIMalformed.hanlinExpo",
+      "bytes": 274,
+      "sha256": "a2115ad2fc9395154e793c15fc0c42fffb056e7b259b6c63852b7b61531313e4"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbe.hanlinExpo",
+      "bytes": 325823,
+      "sha256": "b81e8ecccb8e8495f203b51273787df1ab10d64d4236abfa061dc6cb9dd60b1c"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
+      "bytes": 325823,
+      "sha256": "b81e8ecccb8e8495f203b51273787df1ab10d64d4236abfa061dc6cb9dd60b1c"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeB.hanlinExpo",
+      "bytes": 325825,
+      "sha256": "cdf1b95be3e210621095a6269f9d17bf6cab11c6b7e6c6d8895265fcb8a4b84b"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoWidgetsProbeA.hanlinExpo",
+      "bytes": 302853,
+      "sha256": "26f1309c3851a6c5af30b24ce62d94b9dd28501b0075673ffdfadb53bd800eee"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoWidgetsProbeB.hanlinExpo",
+      "bytes": 302853,
+      "sha256": "af76fc6c37297bddc7e70bc2499694edb92d5d6ee18a51a584dca9feca8e0385"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-Expo-Widget-Counter.hanlinExpo",
+      "bytes": 1148,
+      "sha256": "07bc97e06a1c4b638272dda7eeeb132e2b91499d5546cccfe7fbfd5bfc4cae0e"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-Expo-Widget-Visuals.hanlinExpo",
+      "bytes": 1281,
+      "sha256": "2584982f4077b022860a1197c62d3bc85fdaa454e907e6749cd5734e7886cb68"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-Mixed-Native-Widget.hanlinExpo",
+      "bytes": 999,
+      "sha256": "7dc83c351a276573bf8fc8591b1be081401433247a656306d54fb9c16cda0d2e"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-ScriptWidget-Actions.scripting",
+      "bytes": 825,
+      "sha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-ScriptWidget-Dashboard.scripting",
+      "bytes": 968,
+      "sha256": "478cd567e9731cc7342aefa9024ea498edf8d12d340cc5c558484e60a210dace"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-Widget-Invalid-Cases.hanlinExpo",
+      "bytes": 948,
+      "sha256": "077a6ea43342877550f495b1bb885a3c93d8d6c60389459bf55ff05d2db5982c"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-Widget-Legacy-Regression.scripting",
+      "bytes": 444,
+      "sha256": "787bf97e48164d7b9021c64bfa7122e48131a82b388efc3bad26c58276f4bb2f"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/HanlinScriptUIAppB.scripting",
+      "bytes": 645,
+      "sha256": "7da83f8648cc42bcc9b4ab60f925c336b05dc1f0a6f18a9df09c60e4b80b9222"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/HanlinScriptUIMalformed.scripting",
+      "bytes": 204,
+      "sha256": "71c46b327a251c777066cf588a9d6fd7ea8639be43a5bbb5eedb7c5400f608c5"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/HanlinScriptUIValid.scripting",
+      "bytes": 648,
+      "sha256": "b0bdeb5f5c21c152632c2275ad01d69a5e5dd769f95a83208a53857ab7961ff4"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinCanvasRuntimeUITests.swift",
+      "bytes": 5492,
+      "sha256": "e0472eaa60b295c9c55372c50ae661ee843446805227829fe9051cc3ef9f03c8"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinContextualTextToolsUITests.swift",
+      "bytes": 2584,
+      "sha256": "b28d1744dc4a3b590f1437da97f92450802a667f278411e54cc0e299f063e8e6"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests.swift",
+      "bytes": 25636,
+      "sha256": "476612f6384b2d96b12a2de2b210b1a1d30a74ae9755059c4d507d7f40271d44"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinExpoProductionE2ETests.swift",
+      "bytes": 52288,
+      "sha256": "f1448ad05a503f71c1e7324f8b67064ab4ab22b9bf3f13f0a5f58816c14e2dee"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinHelpUITests.swift",
+      "bytes": 2751,
+      "sha256": "12c74a81b630f0621c90d96bfbe42c8fb791aa892fcec8e5a239b2a972247b51"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinMorphComposerUITests.swift",
+      "bytes": 21718,
+      "sha256": "46622c7813446f3467fcea823b19200044855ee1739652ea9deb0d6f1de893c8"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+      "bytes": 20950,
+      "sha256": "11b3cb74033aa95a3a37521ee013a1e05245b4a01a0e974bb147a0e259e70edc"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinNativeScriptProductionE2ETests.swift",
+      "bytes": 40272,
+      "sha256": "cdeafe5daa8938bf56a8931807d6d88d6d4e510681ee0bb3b8e7b7c11219cf0c"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinPairedProductUITests.swift",
+      "bytes": 27744,
+      "sha256": "4c578e22ccd2b7e6ade0346ac91b20e9a4b92c28d3f42d0bbdc0fd1881636832"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinPrimaryNavigationSmokeUITests.swift",
+      "bytes": 5838,
+      "sha256": "ccd16287060dde45114798bef06f1dfecdfb2801dcc97e3ef6d51962ae197e72"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests.swift",
+      "bytes": 5790,
+      "sha256": "da45f1088d03261357a42bb6ea0fbfeccd1b2fe8a4eecba8f782c5c54c7edc6e"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinRuntimeInstallationUITests.swift",
+      "bytes": 32579,
+      "sha256": "107589b347ee49aa86207365dd9b9e1710fcbedb056fbf4f61bfc93efef4e332"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinScriptUIProductionE2ETests.swift",
+      "bytes": 29566,
+      "sha256": "d974ba0cf471e8e1ce6150ba14ead70bf0c6e59f7c181fb52a805d9705e5b338"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinShareInboxUITests.swift",
+      "bytes": 10253,
+      "sha256": "5a82f3b1c3bea03b857f1743be9122cefcac82b1fd3c8df4d9bff4df44315875"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinSimulatorAcceptanceUITests.swift",
+      "bytes": 6217,
+      "sha256": "6f5316f859282b6cee33502975ae3a324ffa145db0ea9e78f81e4da45834c9fc"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinSkillCenterUITests.swift",
+      "bytes": 52843,
+      "sha256": "f28f973a72bb12c0b669cb4d69a7ce1939158e86a3715ca8cd779085bacfb7fc"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinUIPerformanceUITests.swift",
+      "bytes": 31322,
+      "sha256": "5a45d7679dc37f85b5941a8570b0f6d6ef22112cafc8034527d357d2a779b63f"
+    },
+    {
+      "path": "AI_HLYUITests/MiniAppAuthoringUITests.swift",
+      "bytes": 7453,
+      "sha256": "f60502af88a5e4b1166146cf5834e5d54eaa0451159b11f95ff26207f210fd72"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/App.tsx",
+      "bytes": 6633,
+      "sha256": "9539992cda271d40cdee1deef1afefdb27531c253db811f3b09b0e55f9fd036e"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIMalformed.hanlinExpo",
+      "bytes": 280,
+      "sha256": "6061e8c26fdbcbbfe20fa7d8abc2a6a8ee63d0f665046583b96fcefd5d6ad301"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeA.hanlinExpo",
+      "bytes": 1403247,
+      "sha256": "f065d0fffd837c9346caac0326d3e19620a25a6516ba175cb4ae8d3360d879ba"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeB.hanlinExpo",
+      "bytes": 1403239,
+      "sha256": "e0a8612e4d08bb198f5b48ea3e0fd5355c73e9f9a32215e7481f0d64dce6a7b3"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeIncompatible.hanlinExpo",
+      "bytes": 1403254,
+      "sha256": "39fa0b492bb18ef50a774ccb5a7c5a5501f240a3a7b4053f9d4531f843236b1b"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeMissingGrant.hanlinExpo",
+      "bytes": 1403252,
+      "sha256": "5b5ef66c91204f4268b07ce2e3864922cc203acd3d0ad2fe5df3b80f2071fe38"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/index.ts",
+      "bytes": 404,
+      "sha256": "a0a0f38324e5fd1100c9cbbb399a51873c811fd727c60e98a4836d10bd7d200c"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/package.json",
+      "bytes": 739,
+      "sha256": "26af91566f2f81a618d2c0858dc2770e610d95894742c749a0a654bd56a8724b"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/script.json",
+      "bytes": 268,
+      "sha256": "bffa95d7caf7b69b0bfe74354bb4c40b8ed580c0bc255b847df17b63fe76ef2f"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/tsconfig.json",
+      "bytes": 1663,
+      "sha256": "2ef0da47a48f9f41136b957deeadb8337f3e663502e430a38dadbb16ab933ed0"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/variant-a.ts",
+      "bytes": 287,
+      "sha256": "dde1cf43fd182f483e8dead8225dec8edae1226c401b8387d0c09c46484dbdfa"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/variant-b.ts",
+      "bytes": 287,
+      "sha256": "507f52ebc75d04bdaa47ce206501140eecdfed8e7127b952acdb8af08aae6120"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/App.tsx",
+      "bytes": 17788,
+      "sha256": "199f024921e35fbedca737045e342b75cf903b37e6692be5faf524a19a8e91ca"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIMalformed.hanlinExpo",
+      "bytes": 274,
+      "sha256": "a2115ad2fc9395154e793c15fc0c42fffb056e7b259b6c63852b7b61531313e4"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbe.hanlinExpo",
+      "bytes": 325823,
+      "sha256": "b81e8ecccb8e8495f203b51273787df1ab10d64d4236abfa061dc6cb9dd60b1c"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeA.hanlinExpo",
+      "bytes": 325823,
+      "sha256": "b81e8ecccb8e8495f203b51273787df1ab10d64d4236abfa061dc6cb9dd60b1c"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeB.hanlinExpo",
+      "bytes": 325825,
+      "sha256": "cdf1b95be3e210621095a6269f9d17bf6cab11c6b7e6c6d8895265fcb8a4b84b"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/GeneratedModifiersProbe.tsx",
+      "bytes": 16669,
+      "sha256": "3b20939a057885bd2293fc65080bfdb28b51ecaa68adab8a26298e8fd251ea1d"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/GeneratedViewsProbe.tsx",
+      "bytes": 7237,
+      "sha256": "c3be93227141ac5d52ed52d02272eb631b6923d76fb66c4d02b024bb09ef3878"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/HostServicesProbe.tsx",
+      "bytes": 9422,
+      "sha256": "d0791fba83acabe38ee0bd1d63a128540c7be2976de774a157f19dac97f7376f"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ManualAdapterProbe.tsx",
+      "bytes": 11112,
+      "sha256": "4794f92fc158639b806c0f80bf74cf71775651ad2acd2c24c9462f9d810ff48e"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/index.ts",
+      "bytes": 402,
+      "sha256": "f31cbcd820fca2a4df6a5f2730e16d5b69b3646c75b5218e811af9ff0c830b59"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/native-adapter-assets/pixel.png",
+      "bytes": 82,
+      "sha256": "7713482a5fab3ae135193484df75f4d0a7ce5c8ee50f6b5c33f7aacef5c5ea45"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/package.json",
+      "bytes": 444,
+      "sha256": "7234c13c597bc7c71862cc1562ba3b4c68cea4528e1c8fa20bd512eb7d2510e7"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/script.json",
+      "bytes": 1639,
+      "sha256": "12d5c8abf129dbe22ea6a4a2e8746de2c2224261ec11cf386943626674a63fbf"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/tsconfig.json",
+      "bytes": 1144,
+      "sha256": "1b682272df710c0d8b97b3fcde9c795204e28e287e6e7ba9b1850112e92854f4"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/variant-a.ts",
+      "bytes": 288,
+      "sha256": "98a563ae71b1621c65dab5f494b055ec9bf8a401eef1ecd3771e2b1059e5eda6"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/variant-b.ts",
+      "bytes": 288,
+      "sha256": "12bdc8a3c40cbf87890d527abb9343af94b575342e256f0c5040e900ff465394"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/widget.tsx",
+      "bytes": 1299,
+      "sha256": "aa7271e38789ccecff5e284f1a3846f17af1da56dc4152c7a3bc174989a86119"
+    },
+    {
+      "path": "Fixtures/ExpoWidgetsProbe/App.tsx",
+      "bytes": 4555,
+      "sha256": "5a1e3323d027532126c6fd84a957190ff126aede7fb306282c0992675e2a964e"
+    },
+    {
+      "path": "Fixtures/ExpoWidgetsProbe/ExpoWidgetsProbeA.hanlinExpo",
+      "bytes": 302853,
+      "sha256": "26f1309c3851a6c5af30b24ce62d94b9dd28501b0075673ffdfadb53bd800eee"
+    },
+    {
+      "path": "Fixtures/ExpoWidgetsProbe/ExpoWidgetsProbeB.hanlinExpo",
+      "bytes": 302853,
+      "sha256": "af76fc6c37297bddc7e70bc2499694edb92d5d6ee18a51a584dca9feca8e0385"
+    },
+    {
+      "path": "Fixtures/ExpoWidgetsProbe/package.json",
+      "bytes": 508,
+      "sha256": "3b187b9ab9e15bee695998de543fbdb8a327c3bfe237a6f9819e5456bb12b66b"
+    },
+    {
+      "path": "Fixtures/ExpoWidgetsProbe/script.json",
+      "bytes": 250,
+      "sha256": "30a7204c4dd257f78b8c172e9ad5c016422bd404bfabd475ba6386e098d52f3e"
+    },
+    {
+      "path": "Fixtures/ExpoWidgetsProbe/tsconfig.json",
+      "bytes": 1273,
+      "sha256": "7d00b63f943708524087cae769f53cd9bade8e8e3d0746c8f1c85230aec8faf6"
+    },
+    {
+      "path": "Fixtures/ExpoWidgetsProbe/variant-a.ts",
+      "bytes": 187,
+      "sha256": "724787c0ea6dd55d89af918a98c4cd60920fa20cff65e402035d821d0d500290"
+    },
+    {
+      "path": "Fixtures/ExpoWidgetsProbe/variant-b.ts",
+      "bytes": 187,
+      "sha256": "022ae25761977cb49b5d77b6ed0300aeb1ddffd621d37054eecd81266bf1662d"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-Expo-Widget-Counter.hanlinExpo",
+      "bytes": 1148,
+      "sha256": "07bc97e06a1c4b638272dda7eeeb132e2b91499d5546cccfe7fbfd5bfc4cae0e"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-Expo-Widget-Visuals.hanlinExpo",
+      "bytes": 1281,
+      "sha256": "2584982f4077b022860a1197c62d3bc85fdaa454e907e6749cd5734e7886cb68"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-Mixed-Native-Widget.hanlinExpo",
+      "bytes": 999,
+      "sha256": "7dc83c351a276573bf8fc8591b1be081401433247a656306d54fb9c16cda0d2e"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-ScriptWidget-Actions.scripting",
+      "bytes": 825,
+      "sha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-ScriptWidget-Dashboard.scripting",
+      "bytes": 968,
+      "sha256": "478cd567e9731cc7342aefa9024ea498edf8d12d340cc5c558484e60a210dace"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-Widget-Invalid-Cases.hanlinExpo",
+      "bytes": 948,
+      "sha256": "077a6ea43342877550f495b1bb885a3c93d8d6c60389459bf55ff05d2db5982c"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-Widget-Legacy-Regression.scripting",
+      "bytes": 444,
+      "sha256": "787bf97e48164d7b9021c64bfa7122e48131a82b388efc3bad26c58276f4bb2f"
+    },
+    {
+      "path": "Fixtures/Widgets/SHA256.json",
+      "bytes": 3702,
+      "sha256": "4964eeee90ef13fc28a6f059bfdd4d6316cdd0c60cdc151de192ff6f49d6208c"
+    },
+    {
+      "path": "HanlinMiniAppsApp/HanlinMiniAppsApp.swift",
+      "bytes": 10778,
+      "sha256": "579a27ec799ea414cd1ae58533748e79840167fca9d8b849e8a0b3d9d55118c2"
+    },
+    {
+      "path": "HanlinMiniAppsExtensions/Notification/HanlinMiniAppsNotificationService.entitlements",
+      "bytes": 349,
+      "sha256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc"
+    },
+    {
+      "path": "HanlinMiniAppsExtensions/Notification/Info.plist",
+      "bytes": 1442,
+      "sha256": "9f1fc3aa8ef55f957f6b14151c982c7ee3b006783d08c1de77d4a05a634ee6e4"
+    },
+    {
+      "path": "HanlinMiniAppsExtensions/Notification/NotificationService.swift",
+      "bytes": 235,
+      "sha256": "82f906b9759f275e52db99a9354642546f0b4f9f89437c4c9031e92460e627a9"
+    },
+    {
+      "path": "HanlinMiniAppsTests/CrossAppInvocationTests.swift",
+      "bytes": 11524,
+      "sha256": "22f91c12d0953f0d1e08ee1a1157bd595a6da01adb85ac8a104c069c4073b936"
+    },
+    {
+      "path": "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests.swift",
+      "bytes": 8275,
+      "sha256": "fac1a7336a3b233a18015f56df18fe615c04f56064029af2d292a7f8ea9d4386"
+    },
+    {
+      "path": "HanlinMiniAppsTests/NativeScriptMainRunLoopCallbackTests.swift",
+      "bytes": 6258,
+      "sha256": "ad4b516db151867a80413646be9dfed9313f3f356d972c112fdf0f0d5806fd99"
+    },
+    {
+      "path": "HanlinMiniAppsTests/NativeScriptWindowOwnershipTests.swift",
+      "bytes": 3489,
+      "sha256": "54458a7424737807a43d3c0f0b4a3009a951c37343c40cdb17ca0fbe238cbff8"
+    },
+    {
+      "path": "HanlinMiniAppsTests/SplitAppStorageLayoutTests.swift",
+      "bytes": 10102,
+      "sha256": "92b4bcab25a77556847a408763a409268dd74ff0bf6b4de61738468903735383"
+    },
+    {
+      "path": "HanlinMiniAppsTests/SplitMailboxTests.swift",
+      "bytes": 16856,
+      "sha256": "f8dff9a2b9da80711f6d25fa022e5ad5fa7000452701a934cbf5cebefa0fde60"
+    },
+    {
+      "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "bytes": 90363,
+      "sha256": "0fe914bfd7b913ba2cb84002df8302582d4d66f0aafbff1ea3c73a976b696a38"
+    },
+    {
+      "path": "HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests.swift",
+      "bytes": 3198,
+      "sha256": "b81efd791fabe9c857750e10465226e4326b5a745f03238563575af503877493"
+    },
+    {
+      "path": "HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests.swift",
+      "bytes": 5432,
+      "sha256": "762f3c7c10aa4ce6e7d2bd661265fb022ff9cc255d6438c3b96b27fe85a08189"
+    },
+    {
+      "path": "Package.swift",
+      "bytes": 88332,
+      "sha256": "c58ad5f37b35c38e9199b1ad5641a4b38523d13542c75e90a34f862877409bb1"
+    },
+    {
+      "path": "Packages/HanlinAppExtensionsSDK/Package.swift",
+      "bytes": 1944,
+      "sha256": "23056fa7df2e2aca75c3195452085a42151aa113f54370aeceb5a07df269d9bc"
+    },
+    {
+      "path": "Packages/HanlinAppExtensionsSDK/Sources/HanlinNotificationExtension/HanlinNotificationService.swift",
+      "bytes": 4713,
+      "sha256": "fd2568e373da3dfdd2c35a2f0138f02cf46d7e6bd67c70b4d38109718b39480e"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationDelivery.swift",
+      "bytes": 4555,
+      "sha256": "b029004be2138cb11ef6221ab7b2c64489ec05b8e22ead565b822da1a946431f"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift",
+      "bytes": 15384,
+      "sha256": "b9671f1d78db83f6786320a68878d01852d5a81a3383866cb26a5e52a87da5ff"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationEvent.swift",
+      "bytes": 5280,
+      "sha256": "982bbdff39e2baeb944ab476bc16d8f826f36ca38e9a3e6a75e6efaeaf3b318b"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationInvocation.swift",
+      "bytes": 4618,
+      "sha256": "210a1266c9b276cd0865bf9238faec73c8caaf464329a22b2c470f71f6f76706"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinNotificationInvocationTests.swift",
+      "bytes": 16840,
+      "sha256": "918dac76ba987164dfc80ea47ff3365d4a4fa42cecc87ee36db863721c9e1667"
+    },
+    {
+      "path": "Scripts/Audit/audit_miniapp_reachability.py",
+      "bytes": 37443,
+      "sha256": "39b24956ef354e6adb3ed918ebc8ea067645c462b73bbbfea82f46d7ccd6224e"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/miniapps_provider_sources.json",
+      "bytes": 9957,
+      "sha256": "56c217fd7bdda512e88bc90f64595336e9621ca0f29b202b31a2b175884d7952"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/project_graph.py",
+      "bytes": 18232,
+      "sha256": "fc46f1e5266f054794811a0756fa51677a291b0533f816f1342a5d42f9ba85b8"
+    },
+    {
+      "path": "Scripts/CI/observe_notification_os_delivery.py",
+      "bytes": 18899,
+      "sha256": "f6cf4e040f592fa94ebf9fd813b6e03d125d5c7c32dc2d2a43f3b42cdb33d085"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/App.tsx",
+      "bytes": 26038,
+      "sha256": "ac62c2f394dceedb422c0fbe05d4182afba07e1bf78fb15828d3f936d212ae8a"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/README.md",
+      "bytes": 7058,
+      "sha256": "8ceff65d4f7248d58389792f86032bbf74f7228b566ed0e77d02b08e6d93e6ce"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/build.ps1",
+      "bytes": 1682,
+      "sha256": "394476bb932e3608709fe455af351585fc692d4255acd2f6dc41a1471a7fcd1f"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/dist/ModularTextSearch.hanlinExpo",
+      "bytes": 347474,
+      "sha256": "27e5524cea612c9270b880f89ebcefcb267bff3b72e702a0a415d3d8795a87e8"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/hanlin.authoring.json",
+      "bytes": 134,
+      "sha256": "e2cd4f27d796b5ba5888348e9f3e10af45195d383fcb5f5946f94b9d05763030"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/index.ts",
+      "bytes": 214,
+      "sha256": "00e02d45f2f2a702f611c680663da217bfca69cd375b1dfe9f8f14562f9fb3e0"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/native/original-source-proof.json",
+      "bytes": 3455,
+      "sha256": "f3622f772c9437a79db1d46d750e5e151818bc7ce44b5abc7729aa6527833765"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/native/search.tsx",
+      "bytes": 9790,
+      "sha256": "e1e94967febb0f8aea8be64296e9ad384b7f65d29f7744d7cd39dcfcf775a15b"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/native/src/engines/preferences.js",
+      "bytes": 775,
+      "sha256": "124ed5937e1a69f51657d8c9bc58b7326269bc2ea77510fc9a6fafece5cb43ac"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/native/src/engines/registry.js",
+      "bytes": 1317,
+      "sha256": "9be4d34fecd98447cb94585be1b5bd589a5a0cbe47c726905a398bfd3d4a09cb"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/native/src/engines/sefaria/client.js",
+      "bytes": 4889,
+      "sha256": "c2221c450bf897c69f2796e3a9867384abc0fefa3d29f18e59a2bd24c64dfd2f"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/native/src/engines/sefaria/constants.js",
+      "bytes": 1177,
+      "sha256": "f6dc8d774ac727b25c3ff278f514ee6f6d0ddd9b74541c9c96d3fec246f7601d"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/native/src/engines/sefaria/engine.js",
+      "bytes": 1607,
+      "sha256": "0fe3b94e5ef58a668990270761336ed5fe200a7472fe853a5e614b1ad64929c3"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/native/src/engines/sefaria/searchPayload.js",
+      "bytes": 3132,
+      "sha256": "6e4c77c4248d0d1ae84d6172bd184a1d61594250517a545dae53fb09723b85c5"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/native/src/intent/snippetDefaults.js",
+      "bytes": 1648,
+      "sha256": "82b15d94edeeda146e04a90a6fa35e44cfbbff891acdbd0bfc3ab3f4cf212809"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/native/src/intent/snippetViewModel.js",
+      "bytes": 4531,
+      "sha256": "22853b612b79dfe8e3d13822417cf7d63ba55144c29111bf9be533adb6a68787"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/native/src/logic/localization.js",
+      "bytes": 9792,
+      "sha256": "d3469b6512a6b9cf02d87ac0fa348b8d29bae0f21443f85af11965db3e98d873"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/native/src/logic/searchGrouping.js",
+      "bytes": 1475,
+      "sha256": "d7f8fe70f0355878624c2faa356f9cad88032cd7068aa7cef5763dd239af0424"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/native/src/logic/textUtils.js",
+      "bytes": 2060,
+      "sha256": "23a5ed4e316acf547ff7505002e10d451f559b56f957cb45ada6e9da324453e0"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/native/tsconfig.json",
+      "bytes": 348,
+      "sha256": "04f9897c1e27a4f1bfb0b948d70c482618c84961a61567447ef110ea43dcce93"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/package.json",
+      "bytes": 739,
+      "sha256": "81664c98d9d9e5e26d5206e96fddb5ace83c6bc810d3f8d4b91585b21ab79dbb"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/script.json",
+      "bytes": 3042,
+      "sha256": "c5412f79281a38363bab23697f85d0af24ad735f93a9b30ebac076ff3b6820c2"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/src/engines/preferences.js",
+      "bytes": 796,
+      "sha256": "38e699d09b942887b84c200c7b07467f3b28f092f3385d9ba9f756a6fc6f6896"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/src/engines/registry.js",
+      "bytes": 1317,
+      "sha256": "9be4d34fecd98447cb94585be1b5bd589a5a0cbe47c726905a398bfd3d4a09cb"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/src/engines/sefaria/client.js",
+      "bytes": 3987,
+      "sha256": "8d2b61f6eaf6cadf286ea3f97379b009c344badcbea52c06d5a6fc437cb6ba85"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/src/engines/sefaria/constants.js",
+      "bytes": 1177,
+      "sha256": "f6dc8d774ac727b25c3ff278f514ee6f6d0ddd9b74541c9c96d3fec246f7601d"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/src/engines/sefaria/engine.js",
+      "bytes": 1607,
+      "sha256": "0fe3b94e5ef58a668990270761336ed5fe200a7472fe853a5e614b1ad64929c3"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/src/engines/sefaria/nativeTransport.js",
+      "bytes": 4734,
+      "sha256": "d82632b3803c352ea3f4f71aadb6365472e0aa819ef1fad459648e62436d90b5"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/src/engines/sefaria/searchPayload.js",
+      "bytes": 3132,
+      "sha256": "6e4c77c4248d0d1ae84d6172bd184a1d61594250517a545dae53fb09723b85c5"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/src/logic/entrypointInput.js",
+      "bytes": 952,
+      "sha256": "08329ca5f219ba893cbcb796009fb47000f2ef07fa1e213acb3b15a4004a18c5"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/src/logic/localization.js",
+      "bytes": 9792,
+      "sha256": "d3469b6512a6b9cf02d87ac0fa348b8d29bae0f21443f85af11965db3e98d873"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/src/logic/searchGrouping.js",
+      "bytes": 1475,
+      "sha256": "d7f8fe70f0355878624c2faa356f9cad88032cd7068aa7cef5763dd239af0424"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/src/logic/textUtils.js",
+      "bytes": 2060,
+      "sha256": "23a5ed4e316acf547ff7505002e10d451f559b56f957cb45ada6e9da324453e0"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/tests/native-transport.integration.cjs",
+      "bytes": 4414,
+      "sha256": "2cfc69a1c9f6ac2865971c2494f65ec90aa9c28c507b8709cae16e7e88ce4ae0"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/tests/ui-regression.test.cjs",
+      "bytes": 3571,
+      "sha256": "79f9d4d532ec77e0a393757f6636f6a73737c39c21801931124ede0ef7e5a884"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/tsconfig.json",
+      "bytes": 446,
+      "sha256": "55a7c670ed7cbb03772ab431e18904fe7a66b801541bd4c6133e87a26685ae8e"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/expo-hello-world/notification-event.ts",
+      "bytes": 650,
+      "sha256": "3faaf31c55f30954b8c3a74cce95d0461bdef531269bcd7832a886be4ac390de"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/expo-hello-world/tsconfig.json",
+      "bytes": 82,
+      "sha256": "989df0a97a5ac05cb6b26df1d7f2d18896e2627da8ac72d4d35e66a60da84b19"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/nativescript-hello-world/notification-event.ts",
+      "bytes": 650,
+      "sha256": "3faaf31c55f30954b8c3a74cce95d0461bdef531269bcd7832a886be4ac390de"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/nativescript-hello-world/tsconfig.json",
+      "bytes": 67,
+      "sha256": "089155f616dd73ff0bebb1469f21fda41c51ad93c7b7db83d2745fa5e88ce0e5"
+    },
+    {
+      "path": "Scripts/MiniApps/Tests/notification-events.test.mjs",
+      "bytes": 3470,
+      "sha256": "b4c7753bbcd8ebfc757a54b9c4783bc40280125f982c48fe12e953097e853d80"
+    },
+    {
+      "path": "Scripts/MiniApps/notification-events/index.d.ts",
+      "bytes": 1306,
+      "sha256": "1fca542efed873474b4541f09945af3db035b570c691be63982a3ddf9ae2f837"
+    },
+    {
+      "path": "Scripts/MiniApps/notification-events/package.json",
+      "bytes": 134,
+      "sha256": "b6ec9ece2d15d32b029e720cd5dde983a681cba511e807cd5766862d79ef8456"
+    },
+    {
+      "path": "Scripts/MiniApps/stage-sdk.mjs",
+      "bytes": 22545,
+      "sha256": "1c23351919756510899c02f4f8b9ce305f4d31edeed49110b6b3d310e51b3d10"
+    },
+    {
+      "path": "Scripts/ProductSplit/miniapps_extensions.py",
+      "bytes": 7897,
+      "sha256": "09d86c238e3f315268b1e849fc82c6c689a2428c4ef682d86cf889c599eb9242"
+    },
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "bytes": 47460,
+      "sha256": "6e3abbb16c9b55b048b69c2391784510d8c143c7ed00e760a73ecb903cdbb61d"
+    },
+    {
+      "path": "Scripts/SDK/update_project.py",
+      "bytes": 24445,
+      "sha256": "1b5d810909953ec55914b9e706eeae6a5523ec31a80c60a8c05a920d346bf270"
+    },
+    {
+      "path": "build/app-split-evidence-attempt15/miniapp-documentation-snippets.json",
+      "bytes": 20207,
+      "sha256": "42cde57db8fa16129cffa4c3eabe4f1741177c89f990f851dbfd34e56fe54cbf"
+    },
+    {
+      "path": "build/app-split-evidence-attempt15/prepared-native/native-artifacts.json",
+      "bytes": 29897,
+      "sha256": "da03a275ca44aea313bc2519f17209b078b3f0fc96b2ad844014375a53a7974a"
+    },
+    {
+      "path": "build/primary-control/generation-attempt14/state.json",
+      "bytes": 3306,
+      "sha256": "28f474759db1388b3c808694c9825920702315827fa8ff8a931ad7fc5c32b5fe"
+    },
+    {
+      "path": "build/runtime-host/host-metadata.json",
+      "bytes": 358,
+      "sha256": "f415f94e5da783dbc1170ca78089a2b4f8817be6ab3c1c5aeb022ba34fa23f36"
+    },
+    {
+      "path": "docs/agent-sdk/unified-package-manifest.json",
+      "bytes": 3901,
+      "sha256": "2dce00d3544b324ea9b2df5fa1a744a1bad534e2faa3e54c10195b4ce0a2e66f"
+    },
+    {
+      "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "bytes": 118804,
+      "sha256": "283c96260a51c095be32f262f9f77ba58bebc5372aa1af994176816c8fb5d538"
+    },
+    {
+      "path": "docs/miniapp-sdk/NOTIFICATION_EVENTS.md",
+      "bytes": 8433,
+      "sha256": "d027d20f9b95087ec7adcfb290ee7f4dab7ee057d623a81c87eeb561e321998f"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "bytes": 153229,
+      "sha256": "25003ece56c9c4b6093f3e1b7ebbe5df38af6b3fa9a3c825f927363e361af1b5"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "bytes": 23332,
+      "sha256": "7f36a7e3b3def224bddccb3f447152645d171841c2b8ccc6ebe86eb7acc810e9"
+    },
+    {
+      "path": "docs/miniapp-sdk/notification-event.schema.json",
+      "bytes": 2615,
+      "sha256": "519d0ffaf9bb70368de9f2772d141082cef5feefe77d7a2117495f5a19ad7699"
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "bytes": 493798,
+      "sha256": "1eb0f6f00994274baef6159806ad6397c81587278130f276d64a85a0158f143c"
+    },
+    {
+      "path": "docs/product-split/target-membership.json",
+      "bytes": 8770,
+      "sha256": "20b6f6efecede2ee7ef476e7854cb5fedd7db07868a99e84930ee03eb9bbe699"
+    }
+  ],
+  "resourceAssessment": {
+    "decision": "FITS_MEASURED_NEXT_PHASE",
+    "observedAt": "2026-11-25T06:30:38.563739+00:00",
+    "freeBytes": 16573911040,
+    "df": "Filesystem   1024-blocks      Used Available Capacity iused     ifree %iused  Mounted on\n/dev/disk3s5   482797652 422727416  16185460    97% 6039962 161854600    4%   /System/Volumes/Data\n",
+    "estimatedIncrementalBytes": 8788129718,
+    "concurrentAndOSAllowanceBytes": 750000000,
+    "components": {
+      "freshBootTreeConservativeAllocationBytes": 2566631424,
+      "bothProductsAndTestRunnersConservativeInstallAllocationBytes": 2448330752,
+      "twoActualHostExtractionsUncompressedBytes": 713728054,
+      "changedSwiftAndTestIncrementalBuildTransientAllowanceBytes": 750000000,
+      "twoResultBundlesAllowanceFromLargestRetainedOriginalResultBytes": 2309439488
+    },
+    "basis": {
+      "sourceObservation": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-resource-observation-attempt16.json",
+      "sourceObservationSHA256": "0a94e60992af147d4c0bc151db44e58461204a7c42be77dcb1d2a8b262202693",
+      "hostArchiveSHA256": "602669f4d915cb3dd216ad14cb07a23f4da3885ef0fadf772ea3c6f2d1f06e0d",
+      "bounds": "Existing per-tree allocated sizes conservatively bound fresh boot and app copies; shared APFS extents can make physical increments smaller. No measured clone saving is assumed. ZIP member total gives actual uncompressed Host content. Both native engine artifacts and expensive Xcode cache are reused; only changed Swift/test/extension consumers rebuild. Two result allowances use the largest retained original result, including its diagnostic overhead. This is one scoped next-phase estimate, not a general free-space target.",
+      "concurrentGlobalGrowth": "Global df moved independently during light phases; it is not attributed to our phase. Sample every30seconds under the controller. Prior aggregate6.032GB decline remains in retained old decision but is not used as an own-phase quota."
+    },
+    "freshAtDecision": "2026-11-25T06:30:39.882369+00:00",
+    "freshFreeBytes": 16573890560,
+    "freshDF": "Filesystem   1024-blocks      Used Available Capacity iused     ifree %iused  Mounted on\n/dev/disk3s5   482797652 422727436  16185440    97% 6039963 161854400    4%   /System/Volumes/Data\n"
+  },
+  "controllerSHA256": "bdb5a868c0005807d0f91f52faae464943f444e1b89b57a85f66788f35566f33",
+  "originalPlanMaximumActiveSeconds": 12600,
+  "separateAdditionalCeilingFromActualLaunch": 4361.568010207993,
+  "companion1200NotIncluded": true,
+  "osNotificationProbe900NotIncluded": true,
+  "generationReceiptSHA256": "28f474759db1388b3c808694c9825920702315827fa8ff8a931ad7fc5c32b5fe",
+  "sdk": {
+    "producerSource": "c259b72243ccb62188f24e551648544bc57cc7c1",
+    "sourceInputCount": 234,
+    "archiveSHA256": "602669f4d915cb3dd216ad14cb07a23f4da3885ef0fadf772ea3c6f2d1f06e0d",
+    "manifestSHA256": "580fee9e709aa8cd57fafb961a50538c244abc30228952231b8dbe68f00ce2f7",
+    "inputSHA256": "6b1347a88bcd22ddc077f150be3e62f4f1e825160ba42a10911446ba9d17a71f"
+  },
+  "sealedAt": "2026-11-25T06:30:40.037895+00:00"
+}

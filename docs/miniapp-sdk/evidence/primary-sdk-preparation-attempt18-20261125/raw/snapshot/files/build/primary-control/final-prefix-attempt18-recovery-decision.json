@@ -1,0 +1,151 @@
+{
+  "schema": 1,
+  "owner": "/root/native_execution",
+  "id": "final-prefix-continuation-attempt18-recovery",
+  "root": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete",
+  "source": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+  "sourceTree": "3e18683d6b88c3d49abdb1f256aad1e73d9f52c4",
+  "authorization": {
+    "by": "/root",
+    "scope": "Reviewed recovery within original separate600 prefix grant; exact prior31.645607708996977 failure retained; original upstream and generation passes reused by exact inputs; unchanged original preparation/export/input commands."
+  },
+  "allowanceSeconds": 568.354392291003,
+  "originalPlanMaximumActiveSeconds": 12600,
+  "activeBaselineSeconds": 12907.536914916043,
+  "primaryStateSHA256": "2bb98f8c8246743af6e81bdf6c7dbbf65161f43c251198611a7cd627c4ecd6cf",
+  "planSHA256": "310d9f24be539df99ceadc6c50632861c2c4583661468cfaa17af54f417a52dd",
+  "sourceAdvanceReceiptSHA256": "d3ce33482ab26b3b68ec414755124539efbf44ea4ad67b14bd76b0fe9eae2069",
+  "requiredFiles": [
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/GeneratedModifiersProbe.tsx",
+      "sha256": "ea8594b03cf65e8b06a83faa25fd86e3cb7fa065ac6f0e3d5eea663198ad958e"
+    },
+    {
+      "path": "Generated/SwiftUIBridge/HanlinGeneratedViews.swift",
+      "sha256": "659364752ba7b69ef70d90f5aad061f391526cb8b6f135a47bf72f0f19b00e18"
+    },
+    {
+      "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "sha256": "12d0d1c7a3a46044ccc00f995fb8cf0090058a373aca492b181c522238002537"
+    },
+    {
+      "path": "HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests.swift",
+      "sha256": "76bd2441ee618b5d0cc6db88902f5985408a7b77842b6724fa991cee4c24ef83"
+    },
+    {
+      "path": "Packages/HanlinExpoNativeAPI/Package.swift",
+      "sha256": "c5fd18fa28a1842be0351053d978cc55b752546dc798c663f0dedabfdbefc28c"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedViews.swift",
+      "sha256": "659364752ba7b69ef70d90f5aad061f391526cb8b6f135a47bf72f0f19b00e18"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoUIModule.swift",
+      "sha256": "ccb46dbdf9bdcd03eea952c6699cec1f83d40822bc944bad57e69feb8815cf28"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/README.md",
+      "sha256": "4e2965ada75bf9bd6bdf6ffb4ebcfe4a06ba49888bb04e803086e358a2a481df"
+    },
+    {
+      "path": "Packages/HanlinSwiftUIBridgeGenerator/Sources/HanlinSwiftUIBridgeCore/OutputGenerator.swift",
+      "sha256": "9468d0da401cbe55a4f041918c107ecc2b676159ee0f6d309d26de7d19750cd8"
+    },
+    {
+      "path": "Scripts/Audit/Tests/runtime-version-contract.test.mjs",
+      "sha256": "42536f15ecc821f3f71b86ed6d662634c7929c8413bf1295ddadf5b09e0f16b5"
+    },
+    {
+      "path": "Scripts/Audit/miniapp-runtime-contract.mjs",
+      "sha256": "8682bb4d11fb38ebaeddc4543745916b313c341da26075791b929726fe630fa7"
+    },
+    {
+      "path": "Scripts/MiniApps/resolve-upstreams.mjs",
+      "sha256": "4e2c12f497d312db93132f69741b783f6e31b1f2604dd852129f3c61109d7428"
+    },
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "sha256": "014a10ca33badfc036a3713d4715423a361c6c9fea2e76c24411b5725ac2719f"
+    },
+    {
+      "path": "Scripts/Runtime/Tests/test_ios_system_project_resources.py",
+      "sha256": "13b7dd82643476739fe523ab2ebfd894b2b89020b2862bd4228669fdc84b2f53"
+    },
+    {
+      "path": "Scripts/Runtime/validate_ios_system_resources.py",
+      "sha256": "8474f676aa8d071bf91f2028d636e7b14653d133ecbeb5804898cb48bb4c0cf5"
+    },
+    {
+      "path": "Scripts/SDK/update_project.py",
+      "sha256": "7977cbf986ff1cc41d1014c92de44faf0f4aa413bada4d1ff7f710ef35bb7166"
+    },
+    {
+      "path": "Scripts/SDK/generate_manifest.py",
+      "sha256": "47ae0d5c34fa5c3baa870b4213a98c6999958f57c71f19a8be421fb6723182ec"
+    },
+    {
+      "path": "Scripts/ProductSplit/verify_targets.py",
+      "sha256": "51afe8636b570c3ba411cf077b21bc71b947b82bb61cff6d1841b0ae5075eba4"
+    },
+    {
+      "path": "Package.swift",
+      "sha256": "392ece3430f8e61eb28afdaa925adf006b1a3dbf82a233568c2c279ab768e53b"
+    },
+    {
+      "path": "AI_HLY.xcodeproj/project.pbxproj",
+      "sha256": "a80e2947b4dedf0ce95b326cf44b0efac613b7b044058e3afc3fccb870cb0087"
+    },
+    {
+      "path": "AI_HLY/RuntimeHostResources.zip",
+      "sha256": "4c71d23f55391e0b7eb87073bea65bec8b323d6f688214b60e49b9600c80e857"
+    },
+    {
+      "path": "build/primary-inputs/runtime-core/hanlin-runtime-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194.zip",
+      "sha256": "196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/miniapps_provider_sources.json",
+      "sha256": "818ea10dd85bd0b36449dfe93138fd52c438341d8c5864836ebab6a28a188078"
+    },
+    {
+      "path": "docs/product-split/target-membership.json",
+      "sha256": "799388c58d92d5edfbe4dcd5ff5d79d66ac6c297217dc0a93bcf4dc9583c761f"
+    },
+    {
+      "path": "docs/agent-sdk/unified-package-manifest.json",
+      "sha256": "dd14c80e4223465e6a600f93c153c0f4c80a290b28520dfb8aa65d33f1862e4d"
+    }
+  ],
+  "stepOrder": [
+    "verify-targets",
+    "lint-generated-project",
+    "runtime-version-contract8",
+    "split-native-preparation",
+    "split-native-artifacts",
+    "split-restore-inputs",
+    "split-inputs"
+  ],
+  "resourceAssessment": {
+    "decision": "FITS_MEASURED_PREFIX",
+    "observedAt": "2026-11-25T09:07:02.351911+00:00",
+    "df": "Filesystem   1024-blocks      Used Available Capacity iused    ifree %iused  Mounted on\n/dev/disk3s5   482797652 431687760   7225116    99% 6579591 72251160    8%   /System/Volumes/Data\n",
+    "observedFreeBytes": 7398518784,
+    "estimatedIncrementalBytes": 1250000000,
+    "concurrentAndOSAllowanceBytes": 400000000,
+    "basis": {
+      "existingHostArchiveBytes": 81823972,
+      "actualExpandedHostBytes": 356864478,
+      "maximumSimultaneousHostWorkAndVerificationBytes": 713728956,
+      "native15ExportAfterHostTemporaryCleanup": true,
+      "originalFrameworkMetadataAndDerivedDataReuse": true,
+      "newSimulatorOrAppBuildInThisPrefix": false
+    },
+    "scope": "This is the cached prefix only; full paired build/new simulator receive a separate fresh assessment."
+  },
+  "recordedAt": "2026-11-25T09:07:02.228284+00:00",
+  "originalPrefixAllowanceSeconds": 600,
+  "priorPrefixStateSHA256": "03d3bad3d8306b42e539de5606001fc44cc1d3366bb80068a239dbe66c328d1b",
+  "priorPrefixChargedSeconds": 31.645607708996977,
+  "reusedGenerationSource": "1d5e598614f2bc7c689f34f5d7b364f67e1d5ae1"
+}

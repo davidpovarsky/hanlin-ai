@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "baseSource": "dff3b45c99a57bf8fe8ec721db3fa1fafce7134b",
+  "rows": [
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "beforeBytes": 153644,
+      "beforeSHA256": "84849e4928f42f1b417ad1136c62329e94f7ea9a46f22667177fe6180155b977",
+      "afterBytes": 153602,
+      "afterSHA256": "6fd8aded2b668bb8559b6a685eea3cceaa68595f389a91e13ad85a76a9f1f93d",
+      "payload": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/generated-source/docs/miniapp-sdk/extension-reachability.json",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "beforeBytes": 23332,
+      "beforeSHA256": "3742686d8b088e8c6afcc6b473b2ffa2cf342dae0723ed1365b265d72e120d27",
+      "afterBytes": 23332,
+      "afterSHA256": "6730f12db379df1d0238ca3a003f87aa2e7cb15f3f92e630d7cb72ea5cf988d3",
+      "payload": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/generated-source/docs/miniapp-sdk/extension-reachability.md",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "beforeBytes": 494020,
+      "beforeSHA256": "de8326436f4ecb7f03c7c28e913f00ef3dc6fa331c1c8a7f355406cd9f0c81ea",
+      "afterBytes": 493926,
+      "afterSHA256": "f1373dcc97544c8b3e0f88d1628195252c89c8d999d76dbd0123646c0511baf5",
+      "payload": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/generated-source/docs/miniapp-sdk/source-inventory.json",
+      "mode": "100644"
+    }
+  ]
+}

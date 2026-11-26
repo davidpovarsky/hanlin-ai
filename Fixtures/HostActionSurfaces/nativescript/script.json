@@ -1,0 +1,75 @@
+{
+  "name": "Surface NativeScript",
+  "version": "1.0.0",
+  "description": "Dedicated real system-surface proof: current installed action, fresh private challenge/state, and complete real receipts from all five Host runtimes.",
+  "hanlinAppID": "hanlin.surface.nativescript",
+  "entry": "nativescript/app/bundle.mjs",
+  "runInApp": true,
+  "hanlinRuntime": "hanlin-nativescript",
+  "widgetEngine": "scriptwidget",
+  "icon": "hand.tap",
+  "color": "#2455B2",
+  "capabilities": [
+    "storage",
+    "node",
+    "python",
+    "javascript",
+    "inter-app.share",
+    "live-activity"
+  ],
+  "actions": [
+    {
+      "id": "surface.run",
+      "title": "Run Surface NativeScript in all five runtimes",
+      "handler": "nativescript/app/bundle.mjs",
+      "capability": "inter-app.share"
+    }
+  ],
+  "entrypoints": [
+    {
+      "id": "surface-intent",
+      "kind": "appIntent",
+      "sourcePath": "nativescript/app/bundle.mjs",
+      "exportedSymbol": "surface.run"
+    },
+    {
+      "id": "surface-share",
+      "kind": "share",
+      "sourcePath": "nativescript/app/bundle.mjs",
+      "exportedSymbol": "surface.run"
+    },
+    {
+      "id": "surface-translation",
+      "kind": "translationUI",
+      "sourcePath": "nativescript/app/bundle.mjs",
+      "exportedSymbol": "surface.run"
+    }
+  ],
+  "intentInputTypes": [
+    "Text",
+    "URLs"
+  ],
+  "hanlinWidget": {
+    "abiVersion": 1,
+    "sourceFormat": "jsx",
+    "families": [
+      "systemSmall",
+      "systemMedium",
+      "systemLarge"
+    ],
+    "actions": [
+      {
+        "id": "surface-host-run",
+        "kind": "hostAction",
+        "hostAction": {
+          "entrypointID": "surface-intent",
+          "actionName": "surface.run",
+          "parameters": {
+            "surface": "widget",
+            "fixture": "hanlin.surface.nativescript"
+          }
+        }
+      }
+    ]
+  }
+}

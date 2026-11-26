@@ -6,10 +6,13 @@ import SwiftUI
 public struct HanlinExtensionNodeView: View {
     private let node: HanlinScriptUINode
     private let identity: HanlinScriptExtensionIdentity?
+    private let invocationSource: HanlinInvocationDelivery.Source
 
-    public init(node: HanlinScriptUINode, identity: HanlinScriptExtensionIdentity? = nil) {
+    public init(node: HanlinScriptUINode, identity: HanlinScriptExtensionIdentity? = nil,
+                invocationSource: HanlinInvocationDelivery.Source = .appIntent) {
         self.node = node
         self.identity = identity
+        self.invocationSource = invocationSource
     }
 
     @ViewBuilder
@@ -50,7 +53,13 @@ public struct HanlinExtensionNodeView: View {
         case .slider:
             ProgressView(value: number("value"), total: number("max") ?? 1)
         case .button:
-            if let intent = scriptActionIntent {
+            if invocationSource == .liveActivity {
+                if let intent = liveActivityActionIntent {
+                    Button(intent: intent) { children }
+                } else {
+                    Label("Action unavailable", systemImage: "exclamationmark.triangle")
+                }
+            } else if let intent = scriptActionIntent {
                 Button(intent: intent) { children }
             } else {
                 VStack { children }
@@ -83,8 +92,17 @@ public struct HanlinExtensionNodeView: View {
     @ViewBuilder
     private var children: some View {
         ForEach(Array(node.children.enumerated()), id: \.offset) { _, child in
-            HanlinExtensionNodeView(node: child, identity: identity)
+            HanlinExtensionNodeView(node: child, identity: identity, invocationSource: invocationSource)
         }
+    }
+
+    private var liveActivityActionIntent: HanlinLiveActivityHostActionIntent? {
+        guard let identity,
+              case let .object(descriptor)? = node.properties["intent"],
+              descriptor["__hanlinAppIntent"] == .bool(true),
+              case let .string(name)? = descriptor["name"] else { return nil }
+        return try? .init(identity: identity, actionName: name,
+                          parameters: descriptor["parameters"] ?? .object([:]))
     }
 
     private var scriptActionIntent: HanlinInvokeScriptActionIntent? {

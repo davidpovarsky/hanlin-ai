@@ -1,0 +1,9 @@
+# Actual notification delegate compiler correction
+
+The original paired run on `46225e5a` stopped before every application test: MiniApps build exited65 after155.83498575seconds; AI build and all52cases were NOT_RUN. Swift6.4 crashed while lowering the previous delegate optional async presentation call. The earlier typecheck-only signature probe was valid for conformance, but did not execute SIL or IR generation.
+
+The focused actual SDK27/arm64 simulator/Swift6/C++ interoperability proof compiles complete presentation, response and settings delegate witnesses and their Objective-C selectors to an object with warnings treated as errors. Baseline reproduces a compiler crash. The first callback candidate establishes the imported presentation callback argument is Int. Forwarding that Int reaches a separate IR-generation crash in the unchanged optional async response thunk. Bridging both prior calls through the original Objective-C completion overloads produces a67,376-byte Mach-O object, exit0 and zero diagnostics.
+
+The production change preserves our async callbacks, awaited notification ingress, dismiss filtering, previous-delegate retention, settings forwarding and raw presentation value. Exact selector guards preserve0/Void when a prior optional method is absent. No Task, timer, replacement runtime or test assertion is added. This compiler-isolation proof does not claim OS delivery or full application success; original consumer builds and all52tests remain required.
+
+All original failed logs/states and intermediate candidates are retained. The one large build log is stored with deterministic lossless gzip; the receipt binds both stored and original bytes. The focused proof active charge1.3208997070178157seconds is recorded for the original monotonic ledger, separately from paired4500 and companion1200 allowances.

@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 1,
+  "kind": "ACTUAL_NATIVE_NOTIFICATION_PACKAGE_COMPANION",
+  "recordedAt": "2026-11-25T06:06:13.018056+00:00",
+  "sourceCommit": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
+  "originalReceiptSHA256": "0bb547feb1c3d6e7138ee6e1d225ba4a644cf204ff56bdc11b54bd177eeb196d",
+  "originalFileCount": 16,
+  "originalFileBytes": 199381,
+  "status": "EXECUTED_PASS",
+  "testFunctions": 8,
+  "parameterInstances": 9,
+  "failed": 0,
+  "skipped": 0,
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 2023,
+      "sha256": "3a423f1a00655c2f899cc7d31ce129164e801f5fa2f36cca27d74956c201558f"
+    },
+    {
+      "path": "raw/raw/Packages/HanlinPlatform/Package.swift",
+      "bytes": 10347,
+      "sha256": "864210a4e3d3a77c375c3211095467e876f41352e5f25bcf72730353d77d6981"
+    },
+    {
+      "path": "raw/raw/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationEvent.swift",
+      "bytes": 5280,
+      "sha256": "982bbdff39e2baeb944ab476bc16d8f826f36ca38e9a3e6a75e6efaeaf3b318b"
+    },
+    {
+      "path": "raw/raw/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationInvocation.swift",
+      "bytes": 4618,
+      "sha256": "210a1266c9b276cd0865bf9238faec73c8caaf464329a22b2c470f71f6f76706"
+    },
+    {
+      "path": "raw/raw/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinNotificationInvocationTests.swift",
+      "bytes": 16840,
+      "sha256": "918dac76ba987164dfc80ea47ff3365d4a4fa42cecc87ee36db863721c9e1667"
+    },
+    {
+      "path": "raw/raw/build/primary-control/companion-native-v1/decision.json",
+      "bytes": 1830,
+      "sha256": "e4c47637ab828da11bdbd3ba9dc6bc2453dbf9c0214e6640949bd3138de563b3"
+    },
+    {
+      "path": "raw/raw/build/primary-control/companion-native-v1/ledger.json",
+      "bytes": 1332,
+      "sha256": "0601f21cbf3d2433dec7e5ce7fb66806555bcca6e4577e92b94f265c7a255068"
+    },
+    {
+      "path": "raw/raw/build/primary-control/companion-native-v1/notification-package/primary-state-before.json.gz",
+      "bytes": 9509,
+      "sha256": "9842178faabcf1afe4154133cfdfe8c61ba53f5c03137c6e224f9f9e668053a8"
+    },
+    {
+      "path": "raw/raw/build/primary-control/companion-native-v1/notification-package/result-review.json",
+      "bytes": 1308,
+      "sha256": "4396672e8dd3fe2546d89d108c2e57eeb98a48f386171a93bee5e0322ee98999"
+    },
+    {
+      "path": "raw/raw/build/primary-control/companion-native-v1/notification-package/state.json",
+      "bytes": 872,
+      "sha256": "d8aff42e0c8e45d3ed4fed37ca33da932e7da3c2f74cc1b3a837464666ddfc22"
+    },
+    {
+      "path": "raw/raw/build/primary-control/companion-native-v1/notification-package/swift-notification-suite.log.gz",
+      "bytes": 1996,
+      "sha256": "5fe0b3c1b9e66f97cfbd1c4ad365b7f4b037bbc699008114ad27c0db26465a5d"
+    },
+    {
+      "path": "raw/raw/build/primary-control/companion-notification-v1.py",
+      "bytes": 6564,
+      "sha256": "1b50935c72c5795ba81f1f2e543ef1593df9ea84bce4e174cd81744003c1111a"
+    },
+    {
+      "path": "raw/raw/build/primary-control/paired52-continuation-v1-decision.json.gz",
+      "bytes": 21562,
+      "sha256": "0f9fc6d417c1adcc9beec0ff266b0d591821d29e36886fcaf848700e0a138ec5"
+    },
+    {
+      "path": "raw/raw/build/primary-control/paired52-continuation-v1-launch.json",
+      "bytes": 400,
+      "sha256": "19d039c3c5f5ef5668d9e7dfa59697127b6352fd6f50bb0bf91003a6f9749f62"
+    },
+    {
+      "path": "raw/raw/build/primary-control/paired52-resource-rejection-attempt14-052857.json",
+      "bytes": 511,
+      "sha256": "6d903ff93ec231db20c5aafb7a3ba68fa81a0e5c7d843c4cfeff24b7df8aaebb"
+    },
+    {
+      "path": "raw/raw/build/primary-control/storage-retirement-attempt14-device12.json",
+      "bytes": 2269,
+      "sha256": "86635606becc5678e315fdcd65cbf0d115915160768334d82b2f7b22162682f0"
+    },
+    {
+      "path": "raw/raw/build/primary-control/storage-retirement-attempt14-device13.json",
+      "bytes": 2060,
+      "sha256": "f34f73769833adcce826d5f3df50dd928a2639a351e2e7949ad418e17f99e2d5"
+    },
+    {
+      "path": "raw/receipt.json",
+      "bytes": 5150,
+      "sha256": "0bb547feb1c3d6e7138ee6e1d225ba4a644cf204ff56bdc11b54bd177eeb196d"
+    },
+    {
+      "path": "retained-members.json",
+      "bytes": 7721,
+      "sha256": "d135b6ad577518773481fc8b860725f4b5de42f3a73bc7219b799d20263c60bc"
+    },
+    {
+      "path": "verification.json",
+      "bytes": 3383,
+      "sha256": "af9c28ee0bb2b0d037929446a94df99bd31e337269f1030cb979035c349d52ed"
+    }
+  ],
+  "memberCount": 20,
+  "memberBytes": 105575,
+  "boundary": "Canonical queue package tests only. Initial paired STARTING is superseded by separately retained actual build failure; original52 and OS delivery are not passed by this companion."
+}

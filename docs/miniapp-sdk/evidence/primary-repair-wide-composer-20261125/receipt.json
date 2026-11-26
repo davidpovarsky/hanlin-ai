@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "kind": "ACTUAL_SELECTED_FAILURE_AND_REVIEWED_SOURCE_CORRECTION",
+  "recordedAt": "2026-11-25T10:33:39.575194+00:00",
+  "owner": "/root/status_reporting",
+  "source": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+  "candidateSource": "b1029dfb868fa690720ea8690c8a740f031bb827",
+  "producerReceiptSHA256": "4de255af777d3cdaedbae706651c13bf16af748f175d63dc7db19c81f1f28baa",
+  "actualDiagnostic": {
+    "executed": 21,
+    "passed": 19,
+    "failed": 2,
+    "skipped": 0,
+    "selectedMethodsAbsent": 6,
+    "status": "FAILED_DIAGNOSTIC_NOT_ORIGINAL52"
+  },
+  "selectedRepairFailure": "MiniAppAuthoringUITests.swift:79 original composer request persistence",
+  "candidateNativeStatus": "NOT_RUN",
+  "newMacQueries": 0,
+  "newCompilersGeneratorsOrTests": 0,
+  "outsideSDKInputs": true,
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 4739,
+      "sha256": "0f9ec8555ae15ce83d9203f2078ab360f7f4ade816cae59351f9e211668306ae"
+    },
+    {
+      "path": "raw/ai27-summary.json",
+      "bytes": 2929,
+      "sha256": "7abe74639707e83dc1cb5927ffb823a437943f21671bfbba61c7955976eb33b4"
+    },
+    {
+      "path": "raw/repair-wide-chat-accessibility.txt",
+      "bytes": 19790,
+      "sha256": "354d3f77c500d44e2e95983d4806c8f7e8b3264e3f027b216733c6da9ba12dc2"
+    },
+    {
+      "path": "raw/repair-wide-chat.png",
+      "bytes": 280620,
+      "sha256": "49b6b84f35d29635090be12aa1e377683d699c5a24a5598db58796d1c0605afc"
+    },
+    {
+      "path": "selected-producer-members.json",
+      "bytes": 2203,
+      "sha256": "f8c265abe6f4d3844c2d63407653e1dcb985e01733ddbbdb4b7412a570780047"
+    },
+    {
+      "path": "source-bindings.json",
+      "bytes": 2371,
+      "sha256": "2407c52310a963c3c1b5b3a151dc8fae2578fa0584ef6f9e3561f8e8adcaa97a"
+    },
+    {
+      "path": "source-change.patch",
+      "bytes": 2507,
+      "sha256": "2261eb4d3f3df6785a9c2a2fd17192964595cad32054affdc254b447868e773f"
+    }
+  ],
+  "boundary": "Selected original attachments/summary and exact Git source diff only; no full120-member duplication, task closure, native success, installed identity or original52 acceptance inferred."
+}

@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "engine": "expo",
+  "operation": "build",
+  "succeeded": true,
+  "diagnostics": [],
+  "sourceRoot": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/MiniApps/Examples/sdk-only-departure-budget",
+  "sdk": {
+    "packageVersions": {
+      "@expo/ui": "58.0.29",
+      "@hanlin/expo-native-api": "1.0.0",
+      "@hanlin/expo-ui": "1.0.0",
+      "@nativescript/react-native": "9.1.2",
+      "expo": "58.0.26",
+      "expo-asset": "58.0.21",
+      "expo-brownfield": "58.0.20",
+      "expo-modules-core": "58.1.0",
+      "expo-modules-jsi": "58.0.23",
+      "react": "19.3.0",
+      "react-native": "0.88.1",
+      "react-native-worklets": "0.13.0",
+      "expo-widgets": "58.0.29",
+      "@babel/core": "7.29.7",
+      "@react-native-community/cli": "20.2.0",
+      "@react-native/codegen": "0.88.1",
+      "@react-native/metro-config": "0.88.1",
+      "@types/react": "19.3.2",
+      "babel-preset-expo": "58.0.26",
+      "esbuild": "0.25.12",
+      "typescript": "6.0.2",
+      "@hanlin/notification-events": "1.0.0"
+    },
+    "manifestSHA256": "4505c28495d8b6ecd1073254e0e395adcc898cc02dd1d40699591f51db4dee92",
+    "compilerVersion": "6.0.3"
+  },
+  "typecheck": {
+    "strict": true,
+    "checkJs": false,
+    "skipLibCheck": false,
+    "dependencyDeclarationsChecked": true
+  },
+  "preparedPackagePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/MiniApps/Examples/sdk-only-departure-budget/.hanlin-build/5277b1f1-e712-4844-b704-1a405b0d436d/package",
+  "archivePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/native-result/paired-prefix/SDKOnlyDepartureBudget.hanlinExpo"
+}

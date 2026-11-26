@@ -1,0 +1,104 @@
+{
+  "observedAt": "2026-11-25T14:40:49.511981+00:00",
+  "source": "7bf0c2fdc2f7168d6b98dda66f443ae032fe1c11",
+  "documentsRoot": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CC71A7B-CA1D-4092-BEFF-F8D387125DC4/Documents",
+  "priorObservation": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v3-reuse-observation.json",
+    "sha256": "e46e61d307f6b5fe4186e9bddf9faa83bd126b6d3e914d0cbb57feaaaeda1956"
+  },
+  "unchanged": [
+    {
+      "name": "ExpoNativeAPIProbeA.hanlinExpo",
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/104F3F6D-3297-4AE3-8C10-84FE7345109C/Documents/ExpoNativeAPIProbeA.hanlinExpo",
+      "bytes": 1403392,
+      "sha256": "c050720db91ffb2c32a9723d8b42a960f126cfed3192e14ccd67a1a8472d93c6",
+      "mode": "0o644"
+    },
+    {
+      "name": "ExpoWidgetsProbeA.hanlinExpo",
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/104F3F6D-3297-4AE3-8C10-84FE7345109C/Documents/ExpoWidgetsProbeA.hanlinExpo",
+      "bytes": 302853,
+      "sha256": "26f1309c3851a6c5af30b24ce62d94b9dd28501b0075673ffdfadb53bd800eee",
+      "mode": "0o644"
+    },
+    {
+      "name": "ExpoWidgetsProbeB.hanlinExpo",
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/104F3F6D-3297-4AE3-8C10-84FE7345109C/Documents/ExpoWidgetsProbeB.hanlinExpo",
+      "bytes": 302853,
+      "sha256": "af76fc6c37297bddc7e70bc2499694edb92d5d6ee18a51a584dca9feca8e0385",
+      "mode": "0o644"
+    },
+    {
+      "name": "InvalidMiniApp.zip",
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/104F3F6D-3297-4AE3-8C10-84FE7345109C/Documents/InvalidMiniApp.zip",
+      "bytes": 53,
+      "sha256": "f3b130defe72d6067c0af6f52a1badc66a2a422634d010860ff9cb035506618d",
+      "mode": "0o644"
+    },
+    {
+      "name": "MiniAppTypeError.hanlinNativeScript",
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/104F3F6D-3297-4AE3-8C10-84FE7345109C/Documents/MiniAppTypeError.hanlinNativeScript",
+      "bytes": 4399,
+      "sha256": "9a2a14be4ad24565bad66a98fc53522229de903acfb8a41b3df18006e81b51c9",
+      "mode": "0o644"
+    },
+    {
+      "name": "MiniAppsExternalModal.zip",
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/104F3F6D-3297-4AE3-8C10-84FE7345109C/Documents/MiniAppsExternalModal.zip",
+      "bytes": 1221,
+      "sha256": "5e9b0eadbcb91e8a01c2c993be6f50356bf94c345940ec86bae25ce3c2127ba1",
+      "mode": "0o644"
+    },
+    {
+      "name": "ModularTextSearch.hanlinExpo",
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/104F3F6D-3297-4AE3-8C10-84FE7345109C/Documents/ModularTextSearch.hanlinExpo",
+      "bytes": 2203953,
+      "sha256": "40ade14cf7ebcaa96d0f7bf71757d92a243236f682227c9683ebf06bc8255f6f",
+      "mode": "0o644"
+    },
+    {
+      "name": "SDKOnlyDepartureBudget.hanlinExpo",
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/104F3F6D-3297-4AE3-8C10-84FE7345109C/Documents/SDKOnlyDepartureBudget.hanlinExpo",
+      "bytes": 1956567,
+      "sha256": "dda4e3b1536426156d2695209736186f4d804895f0a04fb3741bbe24c5a4df1f",
+      "mode": "0o644"
+    },
+    {
+      "name": "SDKOnlyTableShare.hanlinNativeScript",
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/104F3F6D-3297-4AE3-8C10-84FE7345109C/Documents/SDKOnlyTableShare.hanlinNativeScript",
+      "bytes": 12933,
+      "sha256": "4d817ba5dd1c84fce5c0ae4b3d281929520dfaebbbe1dd41465d1ebe6305c4b3",
+      "mode": "0o644"
+    },
+    {
+      "name": "hanlin-script-parity.hanlinNativeScript",
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/104F3F6D-3297-4AE3-8C10-84FE7345109C/Documents/hanlin-script-parity.hanlinNativeScript",
+      "bytes": 7512,
+      "sha256": "2e48509336edba2b301490422102dbf25cb7f1b894430d52994febdc1c33c199",
+      "mode": "0o644"
+    }
+  ],
+  "replacement": {
+    "name": "ExpoSwiftUIProbeA.hanlinExpo",
+    "before": {
+      "name": "ExpoSwiftUIProbeA.hanlinExpo",
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/104F3F6D-3297-4AE3-8C10-84FE7345109C/Documents/ExpoSwiftUIProbeA.hanlinExpo",
+      "bytes": 325934,
+      "sha256": "6475c3f5d37620ad5882040c2906924df4cf2dd9f627e17a47d360a58ced5b4b",
+      "mode": "0o644"
+    },
+    "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
+    "after": {
+      "bytes": 325929,
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20"
+    },
+    "retainedPrevious": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/native-result/paired-prefix/previous-ExpoSwiftUIProbeA.hanlinExpo"
+  },
+  "status": "REUSED_VERIFIED_EXACT",
+  "authority": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v7/native-result/staged-inputs.json",
+    "bytes": 5833,
+    "sha256": "f30becc670e67684e8a1399f6c3662ad7fc887e247482eba7854c8cd7b6203bf"
+  },
+  "mutationPerformed": false
+}

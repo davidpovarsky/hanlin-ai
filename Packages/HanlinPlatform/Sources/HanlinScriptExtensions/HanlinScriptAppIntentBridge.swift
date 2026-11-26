@@ -6,7 +6,10 @@ import HanlinPlatformContracts
 public struct HanlinInvokeScriptActionIntent: AppIntent {
     public static let title: LocalizedStringResource = "Run Script Action"
     public static let description = IntentDescription("Runs an action supplied by an installed Script package.")
-    public static let openAppWhenRun = true
+    public static var supportedModes: IntentModes { .foreground(.immediate) }
+#if os(iOS)
+    public static var allowedExecutionTargets: IntentExecutionTargets { .main }
+#endif
 
     @Parameter(title: "Installed Package")
     public var installedPackageID: String
@@ -63,7 +66,9 @@ public struct HanlinInvokeScriptActionIntent: AppIntent {
             parameters: parameters,
             continueInForeground: true
         ))
-        try HanlinScriptExtensionStore().enqueue(command)
+        let store = try HanlinScriptExtensionStore()
+        try store.enqueue(command)
+        await HanlinWidgetHostActionContinuation.resume(storeRoot: store.root)
         return .result(value: command.id.uuidString, snippetIntent: HanlinInvocationSnippetIntent(invocationID: command.id))
     }
 

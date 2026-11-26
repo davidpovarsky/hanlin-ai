@@ -1,0 +1,60 @@
+{
+  "manifestSHA256": "fd112a4ec8e52d214193a8b459aa3b90937f7a2b3436f4f898cd40e427cde68a",
+  "testIdentifier": "MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport()",
+  "testIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYUITests/MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport",
+  "files": [
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "E742FBCD-8FF0-4130-B143-7F8328637138",
+      "deviceName": "HanlinPaired-local",
+      "exportedFileName": "7AB37F25-35FB-4B19-A6B8-7A5E75338714.txt",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Hanlin AI authoring accessibility_0_B91373D0-0874-45AE-BDD9-520AE79157BE.txt",
+      "timestamp": 1795631412.18,
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/Paired-attachments/7AB37F25-35FB-4B19-A6B8-7A5E75338714.txt",
+      "bytes": 27650,
+      "sha256": "b040fff25d68621cb4f14d776dda580716e560494f645f5d683b08d81a8f852e"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "E742FBCD-8FF0-4130-B143-7F8328637138",
+      "deviceName": "HanlinPaired-local",
+      "exportedFileName": "01C70670-F4BB-4B4D-9C2B-5750A14A9018.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "Hanlin AI authoring_0_D0CBB7F4-8B96-4CB4-A764-5FF81086D0AD.png",
+      "timestamp": 1795631411.446,
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/Paired-attachments/01C70670-F4BB-4B4D-9C2B-5750A14A9018.png",
+      "bytes": 779729,
+      "sha256": "4fb40c285ca83a504b1e5c33607527c9b4a62425b7c57383fae7b3bbd436e16a"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "E742FBCD-8FF0-4130-B143-7F8328637138",
+      "deviceName": "HanlinPaired-local",
+      "exportedFileName": "630F42A1-7F1D-4D05-B802-56FCCBBCC8BA.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "MiniApp repaired native result_0_E54414A2-55E1-44FB-A2F7-3D5CEFECF259.png",
+      "timestamp": 1795631405.252,
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/Paired-attachments/630F42A1-7F1D-4D05-B802-56FCCBBCC8BA.png",
+      "bytes": 111172,
+      "sha256": "3a82e7ef190f4e94c03722f7615ba04f80a0c7821a24724d0cf201ec4951ba7a"
+    },
+    {
+      "configurationName": "Test Scheme Action",
+      "deviceId": "E742FBCD-8FF0-4130-B143-7F8328637138",
+      "deviceName": "HanlinPaired-local",
+      "exportedFileName": "44AE029D-E51F-4377-A1DD-D392335EA6D8.png",
+      "isAssociatedWithFailure": false,
+      "suggestedHumanReadableName": "MiniApp original TypeScript diagnostics_0_4DDE6FF7-294C-456E-A405-54C007705836.png",
+      "timestamp": 1795631201.691,
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/Paired-attachments/44AE029D-E51F-4377-A1DD-D392335EA6D8.png",
+      "bytes": 2196171,
+      "sha256": "a71e636be2be982ad5eb22687ec7b5928b06ce967d16dacb88b30f170849d44f"
+    }
+  ],
+  "observedAt": "2026-11-25T18:39:19.490232+00:00",
+  "schema": 1,
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "original52": "EXECUTED_PASS",
+  "newUICapture": false
+}

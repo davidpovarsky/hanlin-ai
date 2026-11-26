@@ -1,0 +1,380 @@
+{
+  "schemaVersion": 1,
+  "observedAt": "2026-11-25T11:00:40.873510+00:00",
+  "source": "a2c8a1b1be746461272ba77254603304567c309d",
+  "documentationProjects": [
+    {
+      "name": "expo-guide",
+      "engine": "expo",
+      "succeeded": true,
+      "diagnosticCount": 0,
+      "compilerVersion": "6.0.3",
+      "typecheck": {
+        "strict": true,
+        "checkJs": false,
+        "skipLibCheck": false,
+        "dependencyDeclarationsChecked": true
+      }
+    },
+    {
+      "name": "nativescript-guide",
+      "engine": "nativescript",
+      "succeeded": true,
+      "diagnosticCount": 0,
+      "compilerVersion": "5.9.3",
+      "typecheck": {
+        "strict": true,
+        "checkJs": true,
+        "skipLibCheck": true,
+        "dependencyDeclarationsChecked": false
+      }
+    },
+    {
+      "name": "scriptwidget-guide",
+      "engine": "scriptwidget",
+      "succeeded": true,
+      "diagnosticCount": 0,
+      "compilerVersion": "6.0.3",
+      "typecheck": {
+        "strict": true,
+        "checkJs": true,
+        "skipLibCheck": false,
+        "dependencyDeclarationsChecked": true
+      }
+    },
+    {
+      "name": "scriptwidget-controls",
+      "engine": "scriptwidget",
+      "succeeded": true,
+      "diagnosticCount": 0,
+      "compilerVersion": "6.0.3",
+      "typecheck": {
+        "strict": true,
+        "checkJs": true,
+        "skipLibCheck": false,
+        "dependencyDeclarationsChecked": true
+      }
+    }
+  ],
+  "documentationBoundary": "Actual four original documentation projects were compiled by the native producer. These are guide snippets, not the separate SDK-only UI example acceptance. The original NativeScript policy retains skipLibCheck=true; this record does not claim all dependency declarations were compiler-checked. No compiler rerun by reconciler.",
+  "preparedFixtureArchives": [
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeA.hanlinExpo",
+      "bytes": 1403392,
+      "sha256": "c050720db91ffb2c32a9723d8b42a960f126cfed3192e14ccd67a1a8472d93c6",
+      "sameAsSDK18Prepared": false,
+      "members": 3,
+      "descriptorName": "Hanlin Expo Native API Probe A",
+      "descriptorVersion": "1.0.0"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeB.hanlinExpo",
+      "bytes": 1403384,
+      "sha256": "794c7a2237c32166a4cd36a4d1088b585f4057073454b17684bee938f5c665ad",
+      "sameAsSDK18Prepared": false,
+      "members": 3,
+      "descriptorName": "Hanlin Expo Native API Probe B",
+      "descriptorVersion": "1.0.0"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeIncompatible.hanlinExpo",
+      "bytes": 1403399,
+      "sha256": "c83750124f42597209a9bbadd1b85f9cfe51128b6b6d7781f16a0cb274cc4e27",
+      "sameAsSDK18Prepared": false,
+      "members": 3,
+      "descriptorName": "Hanlin Expo Native API Probe A",
+      "descriptorVersion": "1.0.0"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeMissingGrant.hanlinExpo",
+      "bytes": 1403397,
+      "sha256": "9bf9cd16e84d7c1c097fab3b2da04aaf0441f814f30852f1e9a0e40ebf506ba7",
+      "sameAsSDK18Prepared": false,
+      "members": 3,
+      "descriptorName": "Hanlin Expo Native API Probe (Missing Grant)",
+      "descriptorVersion": "1.0.0"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbe.hanlinExpo",
+      "bytes": 325934,
+      "sha256": "6475c3f5d37620ad5882040c2906924df4cf2dd9f627e17a47d360a58ced5b4b",
+      "sameAsSDK18Prepared": false,
+      "members": 4,
+      "descriptorName": "Expo SwiftUI Probe A",
+      "descriptorVersion": "1.0.0"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
+      "bytes": 325934,
+      "sha256": "6475c3f5d37620ad5882040c2906924df4cf2dd9f627e17a47d360a58ced5b4b",
+      "sameAsSDK18Prepared": false,
+      "members": 4,
+      "descriptorName": "Expo SwiftUI Probe A",
+      "descriptorVersion": "1.0.0"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeB.hanlinExpo",
+      "bytes": 325935,
+      "sha256": "6131172f65aaeab7f14063324ea605835d8eef099d56ef32f708e2a449228a08",
+      "sameAsSDK18Prepared": false,
+      "members": 4,
+      "descriptorName": "Expo SwiftUI Probe B",
+      "descriptorVersion": "1.0.0"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeA.hanlinExpo",
+      "bytes": 1403392,
+      "sha256": "c050720db91ffb2c32a9723d8b42a960f126cfed3192e14ccd67a1a8472d93c6",
+      "sameAsSDK18Prepared": false,
+      "members": 3,
+      "descriptorName": "Hanlin Expo Native API Probe A",
+      "descriptorVersion": "1.0.0"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeB.hanlinExpo",
+      "bytes": 1403384,
+      "sha256": "794c7a2237c32166a4cd36a4d1088b585f4057073454b17684bee938f5c665ad",
+      "sameAsSDK18Prepared": false,
+      "members": 3,
+      "descriptorName": "Hanlin Expo Native API Probe B",
+      "descriptorVersion": "1.0.0"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeIncompatible.hanlinExpo",
+      "bytes": 1403399,
+      "sha256": "c83750124f42597209a9bbadd1b85f9cfe51128b6b6d7781f16a0cb274cc4e27",
+      "sameAsSDK18Prepared": false,
+      "members": 3,
+      "descriptorName": "Hanlin Expo Native API Probe A",
+      "descriptorVersion": "1.0.0"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeMissingGrant.hanlinExpo",
+      "bytes": 1403397,
+      "sha256": "9bf9cd16e84d7c1c097fab3b2da04aaf0441f814f30852f1e9a0e40ebf506ba7",
+      "sameAsSDK18Prepared": false,
+      "members": 3,
+      "descriptorName": "Hanlin Expo Native API Probe (Missing Grant)",
+      "descriptorVersion": "1.0.0"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbe.hanlinExpo",
+      "bytes": 325934,
+      "sha256": "6475c3f5d37620ad5882040c2906924df4cf2dd9f627e17a47d360a58ced5b4b",
+      "sameAsSDK18Prepared": false,
+      "members": 4,
+      "descriptorName": "Expo SwiftUI Probe A",
+      "descriptorVersion": "1.0.0"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeA.hanlinExpo",
+      "bytes": 325934,
+      "sha256": "6475c3f5d37620ad5882040c2906924df4cf2dd9f627e17a47d360a58ced5b4b",
+      "sameAsSDK18Prepared": false,
+      "members": 4,
+      "descriptorName": "Expo SwiftUI Probe A",
+      "descriptorVersion": "1.0.0"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeB.hanlinExpo",
+      "bytes": 325935,
+      "sha256": "6131172f65aaeab7f14063324ea605835d8eef099d56ef32f708e2a449228a08",
+      "sameAsSDK18Prepared": false,
+      "members": 4,
+      "descriptorName": "Expo SwiftUI Probe B",
+      "descriptorVersion": "1.0.0"
+    }
+  ],
+  "logicalFixturePairs": 7,
+  "newPreparedPathsVsSDK18": [
+    "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeA.hanlinExpo",
+    "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeB.hanlinExpo",
+    "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeIncompatible.hanlinExpo",
+    "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeMissingGrant.hanlinExpo",
+    "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeA.hanlinExpo",
+    "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeB.hanlinExpo",
+    "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeIncompatible.hanlinExpo",
+    "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeMissingGrant.hanlinExpo"
+  ],
+  "declarationCorrections": [
+    {
+      "package": "react-native",
+      "file": "Libraries/Animated/nodes/AnimatedProps.d.ts",
+      "originalSHA256": "0dde4c5442c332f01cb8f830ead7965b64996dca6b9bcc3a280806f48b8d3f21",
+      "correctedSHA256": "aed96d9f0b4b196eb342fdc5c0e952025cdcbb894179360d00319bc9c2b37b4c",
+      "source": "Libraries/Animated/nodes/AnimatedProps.js",
+      "sourceSHA256": "d860011a3cde601ef237ffb40eef05c68cb3b15bc3c25e2fead8db751f1167de",
+      "reason": "Flow explicitly permits an optional nullable style. The TS index signature must admit that named property.",
+      "shippedMember": "MiniAppSDK/expo/node_modules/react-native/types_generated/Libraries/Animated/nodes/AnimatedProps.d.ts",
+      "shippedCorrectedBytesVerified": true,
+      "originalImplementationSourcePackaged": true,
+      "packagedImplementationMember": "MiniAppSDK/expo/node_modules/react-native/Libraries/Animated/nodes/AnimatedProps.js"
+    },
+    {
+      "package": "react-native",
+      "file": "Libraries/Lists/VirtualizedList.d.ts",
+      "originalSHA256": "90335722e3f37fbca6dc2dc699efac7ebf2f8866a9cfddce21a3dd6bb9e9a92a",
+      "correctedSHA256": "51500c381dc135aba8268f7af110fb2cc657a0db9c823ec8555f0b9231de0272",
+      "source": "Libraries/Lists/VirtualizedList.js",
+      "sourceSHA256": "94d0e1f682f3422648451be3070a68a6e69eeddce7bed4c43cc3124e89565b5e",
+      "reason": "The exported value is the actual class constructor. Infer its instance without the unrelated React static lifecycle generic constraint.",
+      "shippedMember": "MiniAppSDK/expo/node_modules/react-native/types_generated/Libraries/Lists/VirtualizedList.d.ts",
+      "shippedCorrectedBytesVerified": true,
+      "originalImplementationSourcePackaged": true,
+      "packagedImplementationMember": "MiniAppSDK/expo/node_modules/react-native/Libraries/Lists/VirtualizedList.js"
+    },
+    {
+      "package": "react-native",
+      "file": "src/private/webapis/dom/nodes/ReadOnlyNode.d.ts",
+      "originalSHA256": "b0599260380ad18e7b783d712990bdf0cfba1346719bb8273fbaf06ed5a61bae",
+      "correctedSHA256": "9f09899132976f3110b403314e07e1a0157459e9f2194259df42094e4114dbaf",
+      "source": "src/private/webapis/dom/nodes/ReactNativeDocument.js",
+      "sourceSHA256": "dcafb922a27f7dac28f3d6079af34c90dfb047ea42f519d6a45fc16a671a4394",
+      "reason": "The abstract base throws; the concrete Document getter really returns null. Preserve that actual subclass behavior in the base return type.",
+      "shippedMember": "MiniAppSDK/expo/node_modules/react-native/types_generated/src/private/webapis/dom/nodes/ReadOnlyNode.d.ts",
+      "shippedCorrectedBytesVerified": true,
+      "originalImplementationSourcePackaged": true,
+      "packagedImplementationMember": "MiniAppSDK/expo/node_modules/react-native/src/private/webapis/dom/nodes/ReactNativeDocument.js"
+    },
+    {
+      "package": "@nativescript/react-native",
+      "file": "Runtime.d.ts",
+      "originalSHA256": "f28f211c956653fe859b9fc30a3765afb8902aa3d505248e28e3991fe32d1ca1",
+      "correctedSHA256": "0ec1d58c4bc38f66f8ff77bf03240c304f5e74b5ac17b923de8976f45a68f0cc",
+      "source": "native-api/ffi/objc/shared/bridge/Install.mm",
+      "sourceSHA256": "f8c156b7ea87e6eed0e7aa9a5af1816bacb40332a68038ac521e191e15510e83",
+      "reason": "Actual Install.mm installs constants first and does not overwrite conflicting globals with struct constructors. Keep struct field types and actual constants; do not advertise new timezone()/new dyld_shared_cache_ranges().",
+      "shippedMember": "MiniAppSDK/expo/node_modules/@nativescript/react-native/types/ios/Runtime.d.ts",
+      "shippedCorrectedBytesVerified": true,
+      "originalImplementationSourcePackaged": false,
+      "packagedImplementationMember": null
+    },
+    {
+      "package": "@nativescript/react-native",
+      "file": "UIKit.d.ts",
+      "originalSHA256": "6ad19868e345469b507442f2666ca55ba69a5a98915e09459739e43246469638",
+      "correctedSHA256": "fde14e711cf6a496d48ba026cc022808df3bce202eec8a0d5521efc72f23d837",
+      "source": "native-api/ffi/objc/shared/bridge/host_objects/Object.mm",
+      "sourceSHA256": "fbc95bc22a5115453f944a408183ca2a64e3338954ba8ca4b2b045146afe7348",
+      "reason": "Apple exposes the ObjC description selector, but the actual JS host object explicitly resolves description to a string before method lookup. Match that JS boundary and inherited NSObject property.",
+      "shippedMember": "MiniAppSDK/expo/node_modules/@nativescript/react-native/types/ios/UIKit.d.ts",
+      "shippedCorrectedBytesVerified": true,
+      "originalImplementationSourcePackaged": false,
+      "packagedImplementationMember": null
+    }
+  ],
+  "typeCorrectionBoundary": "Five existing deterministic declaration-only repairs are preserved and individually bound. Original React Native0.88.1/native-api9.1.2 package and source identities remain explicit. Three original implementation JS members were independently byte-bound here; two native implementation sources are identified by the unchanged producer correction receipt and prior source audit, not shipped as SDK JS. Broader Hanlin wrappers/adaptations retain separate provenance.",
+  "nativeCatalog": {
+    "source": "a2c8a1b1be746461272ba77254603304567c309d",
+    "requiredTargets": [
+      "ReactNativeHeaders",
+      "React",
+      "ReactNativeDependencies",
+      "hermesvm",
+      "ExpoModulesJSI",
+      "ExpoModulesCore",
+      "ExpoModulesWorklets",
+      "ExpoUI",
+      "ExpoAsset",
+      "ExpoBrownfield",
+      "Libffi",
+      "TNSWidgets",
+      "NSCWinterTC",
+      "NodeMobile",
+      "Python"
+    ],
+    "missingTargets": [],
+    "scope": "full",
+    "boundary": "15 original native framework targets. The separately generated MiniApps notification app-extension target is not a sixteenth vendor artifact."
+  },
+  "expoAsset": {
+    "inputSHA256": "4939d8a43c4a36e9373396d26fbf46f12c30eff34ee57f486dc1a07acb0c4d83",
+    "package": {
+      "name": "expo-asset",
+      "version": "58.0.21",
+      "sha256": "2bfbb115da9111702530e5df550eac7e2a074aa12b6297fcc332744767623126",
+      "integrity": "sha512-qaJmuTtswggXdBQfiUdpxrVGM7l+tH8iEDHwVDMuxyCF/kAau8sUGVuWrDKYNW4yAx7Z8ncgsT8s27pXjRH5GA=="
+    },
+    "stagedToPreparedMembers": 23,
+    "receiptOnlyBoundary": "Independent validation of the retained byte-equivalence receipt and its hashes; no new reading/rebuilding of Mac framework binaries."
+  },
+  "generatedSourceInventory": {
+    "sourceCommit": "a2c8a1b1be746461272ba77254603304567c309d",
+    "status": "IN_PROGRESS_SOURCE_AUDIT",
+    "scope": "Existing NativeScript + Expo SDK source and original ScriptWidget package fields; no Scripting-JSC development",
+    "sources": 94,
+    "nativeTextEditorBinding": "3ad8217ce87005fab1fe3dc256e7d7680ced7c330f7cd9dc5561f1a5e5905e09",
+    "boundary": "The native TextEditor is bound independently by actual source/canonical Git; the narrower API inventory is not a full app source list."
+  },
+  "reachability": {
+    "sourceCommit": "a2c8a1b1be746461272ba77254603304567c309d",
+    "status": "IN_PROGRESS_SOURCE_AUDIT",
+    "targetsDeclaredInProject": [
+      "AI_HLYTests",
+      "AI_HLYUITests",
+      "ChavrusaChatNotificationService",
+      "ChavrusaChatShare",
+      "ChavrusaChatTranslationProvider",
+      "HanlinApp",
+      "HanlinMiniApps",
+      "HanlinMiniAppsBootstrapTests",
+      "HanlinMiniAppsNotificationService",
+      "HanlinMiniAppsShare",
+      "HanlinMiniAppsTests",
+      "HanlinMiniAppsTranslationProvider",
+      "HanlinMiniAppsUITests",
+      "HanlinMiniAppsWidgets",
+      "HanlinScriptingWidgets"
+    ],
+    "matrixCount": 80,
+    "acceptance": {
+      "fourExtensionCategoriesByTwoEnginesByFiveRuntimes": 40,
+      "additionalSurfaceCells": 40,
+      "executedSurfaceE2EPasses": 0,
+      "signedPhysicalAcceptance": "NOT_RUN"
+    }
+  },
+  "sdkExamples": {
+    "expo": [
+      {
+        "id": "expo-hello-world",
+        "engine": "expo",
+        "level": "hello-world",
+        "title": "Expo Hello World",
+        "directory": "expo-hello-world",
+        "path": "examples/expo-hello-world",
+        "entry": "index.ts"
+      },
+      {
+        "id": "sdk-only-departure-budget",
+        "engine": "expo",
+        "level": "complete-app",
+        "title": "Departure Budget",
+        "directory": "sdk-only-departure-budget",
+        "path": "examples/sdk-only-departure-budget",
+        "entry": "index.ts"
+      }
+    ],
+    "nativescript": [
+      {
+        "id": "nativescript-hello-world",
+        "engine": "nativescript",
+        "level": "hello-world",
+        "title": "NativeScript Hello World",
+        "directory": "nativescript-hello-world",
+        "path": "examples/nativescript-hello-world",
+        "entry": "index.ts"
+      },
+      {
+        "id": "sdk-only-table-share",
+        "engine": "nativescript",
+        "level": "complete-app",
+        "title": "Table Share",
+        "directory": "sdk-only-table-share",
+        "path": "examples/sdk-only-table-share",
+        "entry": "index.ts"
+      }
+    ]
+  },
+  "typeScriptIdentityNote": "The Expo original package wrapper reports6.0.2 while its locked actual compiler API reports6.0.3; the previously sealed original wrapper/alias provenance applies unchanged. NativeScript compiler5.9.3. No compiler bytes changed in SDK19."
+}

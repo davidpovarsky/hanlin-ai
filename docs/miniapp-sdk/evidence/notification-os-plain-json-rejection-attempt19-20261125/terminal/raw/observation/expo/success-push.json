@@ -1,0 +1,16 @@
+{
+  "command": [
+    "xcrun",
+    "simctl",
+    "push",
+    "2EFAD83F-45A2-4A8B-B326-16B83BC56DA9",
+    "com.itorah.hanlinminiapps",
+    "/Users/m1/builds/hanlin-notification-os-recovery-20261125/build/notification-os-recovery-v1/observation/expo/success.apns"
+  ],
+  "elapsedSeconds": 0.3231514579965733,
+  "finishedAt": "2026-11-25T20:45:49.326637+00:00",
+  "returncode": 0,
+  "startedAt": "2026-11-25T20:45:49.003486+00:00",
+  "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stdoutSHA256": "e9e8e05b56ea95010358548e736ff4fc26783439d5377a8a11542b68e92359ca"
+}

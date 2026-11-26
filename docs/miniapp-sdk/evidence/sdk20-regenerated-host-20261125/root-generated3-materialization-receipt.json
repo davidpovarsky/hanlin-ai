@@ -1,0 +1,102 @@
+{
+  "schema": 1,
+  "status": "EXACT_SDK20_GENERATED_BINDINGS_MATERIALIZED",
+  "createdAt": "2026-11-25T21:25:59.483494+00:00",
+  "beforeHead": "d51cc546579e466f97e996bd185fead2e64f0413",
+  "head": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+  "tree": "c0f027896b1edd67ea824c48b2b3bbf7c4e5e73a",
+  "SDKProducer": "dff3b45c99a57bf8fe8ec721db3fa1fafce7134b",
+  "generatedFiles": [
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "beforeBytes": 153644,
+      "beforeSHA256": "84849e4928f42f1b417ad1136c62329e94f7ea9a46f22667177fe6180155b977",
+      "afterBytes": 153602,
+      "afterSHA256": "6fd8aded2b668bb8559b6a685eea3cceaa68595f389a91e13ad85a76a9f1f93d",
+      "payload": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/generated-source/docs/miniapp-sdk/extension-reachability.json",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "beforeBytes": 23332,
+      "beforeSHA256": "3742686d8b088e8c6afcc6b473b2ffa2cf342dae0723ed1365b265d72e120d27",
+      "afterBytes": 23332,
+      "afterSHA256": "6730f12db379df1d0238ca3a003f87aa2e7cb15f3f92e630d7cb72ea5cf988d3",
+      "payload": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/generated-source/docs/miniapp-sdk/extension-reachability.md",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "beforeBytes": 494020,
+      "beforeSHA256": "de8326436f4ecb7f03c7c28e913f00ef3dc6fa331c1c8a7f355406cd9f0c81ea",
+      "afterBytes": 493926,
+      "afterSHA256": "f1373dcc97544c8b3e0f88d1628195252c89c8d999d76dbd0123646c0511baf5",
+      "payload": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/generated-source/docs/miniapp-sdk/source-inventory.json",
+      "mode": "100644"
+    }
+  ],
+  "runtimeDeltaFromProducer": [],
+  "SDKManifestSHA256": "6f11ed8da3df18627f05932d47b5b68dec54eb26ac396151a21cbc8c3e65800e",
+  "HostArchiveSHA256": "ed18d93a88a1020bc2140417cea3847daf3d03472cdd4769d9a5ac4e44f48a22",
+  "protectedBefore": {
+    "AGENTS.md": {
+      "mode": 33188,
+      "inode": 6230605,
+      "device": 2064,
+      "uid": 0,
+      "gid": 1002,
+      "mtime_ns": 1795519460975321880,
+      "bytes": 13886,
+      "sha256": "f27d4554d8dda88996d1511b361e8b8e5520cb08e8198c5fbc7816b1fbc9aa9f"
+    },
+    "Scripts/Expo/node_modules": {
+      "mode": 41471,
+      "inode": 6347703,
+      "device": 2064,
+      "uid": 0,
+      "gid": 1002,
+      "mtime_ns": 1795479960656971300,
+      "link": "/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules"
+    },
+    "Scripts/NativeScript/node_modules": {
+      "mode": 41471,
+      "inode": 6347709,
+      "device": 2064,
+      "uid": 0,
+      "gid": 1002,
+      "mtime_ns": 1795472668515606156,
+      "link": "/dev/shm/hanlin-nativescript-sdk-20261123/node_modules"
+    }
+  },
+  "protectedAfter": {
+    "AGENTS.md": {
+      "mode": 33188,
+      "inode": 6230605,
+      "device": 2064,
+      "uid": 0,
+      "gid": 1002,
+      "mtime_ns": 1795519460975321880,
+      "bytes": 13886,
+      "sha256": "f27d4554d8dda88996d1511b361e8b8e5520cb08e8198c5fbc7816b1fbc9aa9f"
+    },
+    "Scripts/Expo/node_modules": {
+      "mode": 41471,
+      "inode": 6347703,
+      "device": 2064,
+      "uid": 0,
+      "gid": 1002,
+      "mtime_ns": 1795479960656971300,
+      "link": "/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules"
+    },
+    "Scripts/NativeScript/node_modules": {
+      "mode": 41471,
+      "inode": 6347709,
+      "device": 2064,
+      "uid": 0,
+      "gid": 1002,
+      "mtime_ns": 1795472668515606156,
+      "link": "/dev/shm/hanlin-nativescript-sdk-20261123/node_modules"
+    }
+  },
+  "indexEmpty": true
+}

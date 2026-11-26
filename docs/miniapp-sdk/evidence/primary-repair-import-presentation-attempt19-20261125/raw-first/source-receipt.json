@@ -1,0 +1,1082 @@
+{
+  "capturedAt": "2026-11-25T14:50:53.283818+00:00",
+  "source": "7bf0c2fdc2f7168d6b98dda66f443ae032fe1c11",
+  "stateSHA256": "67b563ebb5623d62b12970225a3644a81af55a8667090296de5fdc0db37541cc",
+  "chargedSeconds": 735.968727458996,
+  "cumulativeActiveSeconds": 19292.91627621104,
+  "failureContext": [
+    {
+      "line": 610,
+      "text": "    t =   460.06s         Find: Elements matching predicate '\"Search Apps\" IN identifiers'"
+    },
+    {
+      "line": 611,
+      "text": "    t =   460.06s         Requesting snapshot of accessibility hierarchy for app with pid 51414"
+    },
+    {
+      "line": 612,
+      "text": "    t =   460.22s         Find: Descendants matching type SearchField"
+    },
+    {
+      "line": 613,
+      "text": "    t =   460.22s         Requesting snapshot of accessibility hierarchy for app with pid 51414"
+    },
+    {
+      "line": 614,
+      "text": "    t =   461.34s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object \"Search Apps\" SearchField`"
+    },
+    {
+      "line": 615,
+      "text": "    t =   461.34s     Checking existence of `\"Search Apps\" SearchField`"
+    },
+    {
+      "line": 616,
+      "text": "    t =   461.39s     Find the \"Search Apps\" SearchField"
+    },
+    {
+      "line": 617,
+      "text": "    t =   461.44s     Find the \"Search Apps\" SearchField"
+    },
+    {
+      "line": 618,
+      "text": "    t =   461.51s     Capturing element debug description"
+    },
+    {
+      "line": 619,
+      "text": "    t =   461.59s         Requesting snapshot of accessibility hierarchy for app with pid 51414"
+    },
+    {
+      "line": 620,
+      "text": "    t =   461.76s         Requesting snapshot of accessibility hierarchy for app with pid 51414"
+    },
+    {
+      "line": 621,
+      "text": "    t =   462.05s         Find: Descendants matching type SearchField"
+    },
+    {
+      "line": 622,
+      "text": "    t =   462.05s         Find: Elements matching predicate '\"Search Apps\" IN identifiers'"
+    },
+    {
+      "line": 623,
+      "text": "    t =   462.06s         Requesting snapshot of accessibility hierarchy for app with pid 51414"
+    },
+    {
+      "line": 624,
+      "text": "    t =   462.23s         Find: Descendants matching type SearchField"
+    },
+    {
+      "line": 625,
+      "text": "    t =   462.24s         Requesting snapshot of accessibility hierarchy for app with pid 51414"
+    },
+    {
+      "line": 626,
+      "text": "    t =   463.35s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object \"Search Apps\" SearchField`"
+    },
+    {
+      "line": 627,
+      "text": "    t =   463.35s     Checking existence of `\"Search Apps\" SearchField`"
+    },
+    {
+      "line": 628,
+      "text": "    t =   463.39s     Find the \"Search Apps\" SearchField"
+    },
+    {
+      "line": 629,
+      "text": "    t =   463.43s     Find the \"Search Apps\" SearchField"
+    },
+    {
+      "line": 630,
+      "text": "    t =   463.49s     Capturing element debug description"
+    },
+    {
+      "line": 631,
+      "text": "    t =   463.59s         Requesting snapshot of accessibility hierarchy for app with pid 51414"
+    },
+    {
+      "line": 632,
+      "text": "    t =   463.59s         Requesting snapshot of accessibility hierarchy for app with pid 51414"
+    },
+    {
+      "line": 633,
+      "text": "    t =   463.59s         Requesting snapshot of accessibility hierarchy for app with pid 51414"
+    },
+    {
+      "line": 634,
+      "text": "    t =   463.59s         Requesting snapshot of accessibility hierarchy for app with pid 51414"
+    },
+    {
+      "line": 635,
+      "text": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/AI_HLYUITests/MiniAppAuthoringUITests.swift:110: error: -[AI_HLYUITests.MiniAppAuthoringUITests testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport] : XCTAssertEqual failed: (\"XCTWaiterResult(rawValue: 2)\") is not equal to (\"XCTWaiterResult(rawValue: 1)\")"
+    },
+    {
+      "line": 636,
+      "text": "    t =   464.08s Tear Down"
+    },
+    {
+      "line": 637,
+      "text": "    t =   464.08s     Terminate com.itorah.chavrusachat:50854"
+    },
+    {
+      "line": 638,
+      "text": "    t =   465.17s     Find the Application 'com.itorah.hanlinminiapps'"
+    },
+    {
+      "line": 639,
+      "text": "    t =   465.47s     Added attachment named 'MiniApps authoring'"
+    },
+    {
+      "line": 640,
+      "text": "    t =   465.47s     Requesting snapshot of accessibility hierarchy for app with pid 51414"
+    },
+    {
+      "line": 641,
+      "text": "    t =   466.05s     Requesting snapshot of accessibility hierarchy for app with pid 51414"
+    },
+    {
+      "line": 642,
+      "text": "    t =   466.21s     Added attachment named 'MiniApps authoring accessibility'"
+    },
+    {
+      "line": 643,
+      "text": "    t =   466.21s     Terminate com.itorah.hanlinminiapps:51414"
+    },
+    {
+      "line": 644,
+      "text": "Test Case '-[AI_HLYUITests.MiniAppAuthoringUITests testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport]' failed (467.930 seconds)."
+    },
+    {
+      "line": 645,
+      "text": "Test Suite 'MiniAppAuthoringUITests' failed at 2026-11-25 15:49:16.144."
+    },
+    {
+      "line": 646,
+      "text": "\t Executed 1 test, with 1 failure (0 unexpected) in 467.930 (467.986) seconds"
+    }
+  ],
+  "accessibility": [
+    {
+      "path": "native-result/FocusedRepair1-attachments/CD3C56B0-B9DB-4ED5-87F3-24D57C95726F.txt",
+      "bytes": 1642,
+      "sha256": "cc931b3f39f6e35c3df0e9922d76eef9aed46319c33afd8ff92891ad1b7a1722",
+      "matches": []
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/2A2BF171-1151-4AFF-ABEC-24808A6C0E1E.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/A57ABB9C-5F7A-44A2-8734-4DAFA1DC24DF.txt",
+      "bytes": 1642,
+      "sha256": "701258414cee65adaaf9f36ef2296b3b86119ada4a904a7d56f3af89f1e4921d",
+      "matches": []
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/59C151A0-7A17-425F-84D2-1055D9F79E13.txt",
+      "bytes": 26217,
+      "sha256": "5d97d7e300c8b51d2c5d22549af9f2091028edd69b92b989127719d748aaafba",
+      "matches": []
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/EE31DA67-BB55-444F-A050-29581A0DAFD0.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/7E464618-C355-453D-8A30-882A13E61219.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/B7297B74-7038-4808-8B6F-8428E09AFBDF.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/4CFAFE8C-9366-4F37-A407-3EDC7AE69F10.txt",
+      "bytes": 1642,
+      "sha256": "f44644d7b64119b5036cd736ce4a9e99b2cd681aa7470250afaa89fd7810cc55",
+      "matches": []
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/5E8D6367-6337-4F74-BB4E-E1D901766BA1.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/52924899-2D99-46F6-BEEB-B1FD9CF25EC5.txt",
+      "bytes": 1642,
+      "sha256": "7e8fa853b10d8f097528832d8247b5d44a3532d71926f4d4c110b170a96dc145",
+      "matches": []
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/FC8BEB34-0749-461A-A01D-2C89BC1C5BEB.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/F6BB1D7C-5886-4B36-8238-5DB24F6F335B.txt",
+      "bytes": 1642,
+      "sha256": "95e294162fc0ba1bbe4682dbc5a4c348e926664f49092369005e6f6639ed0723",
+      "matches": []
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/4A26E632-B2D3-44C6-A7B6-AC32B017AD3C.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/6760704C-56A4-4A6E-A39C-C674E9814635.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/3C0453D3-61DE-4A7F-A1D1-47F99859EABA.txt",
+      "bytes": 1642,
+      "sha256": "a037ee364f7466555d8c60ff5ba5c0b598e2942aff6b73ce281eab757a5d98cc",
+      "matches": []
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/3F8575EF-C87D-4157-B08B-B3FB50122C81.txt",
+      "bytes": 1642,
+      "sha256": "a4e6de217ce88f7fc7e58a2dea0550159202227dc016d1ea7faaad1afee22db8",
+      "matches": []
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/08292AAD-B6FB-41C8-AF12-1291FE26FB57.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/8EA47DAC-D6A2-4314-8448-F8403F9367A3.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/4A218568-0330-40B2-95E2-29361DFD440C.txt",
+      "bytes": 1642,
+      "sha256": "ddd545360961fb138f2f612175432f8e11908b2348eb9d56357e9ab264fd677a",
+      "matches": []
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/D044A39C-982C-422A-8578-FDD42EACFA74.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/413E58AA-75A3-4702-81EA-B7528A71EB86.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/20C75232-63D1-48F8-8C0F-4BC599AE309F.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/944F2808-8F47-4389-B6F9-CC07BC21F570.txt",
+      "bytes": 1642,
+      "sha256": "1983fe8811ee2b39474759df7a1020cf3925c6ee3a020db8f1695b63c6b16752",
+      "matches": []
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/5EA668C0-65C2-46C7-AF6B-F04F47A04E5F.txt",
+      "bytes": 1642,
+      "sha256": "08fb40a836080fa3a4b9884a316343adae2c8e142f9478d9b0c383d78ecd35ec",
+      "matches": []
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/8D076355-299C-4830-B17C-32E3F0FC37AF.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/EC5F3748-9DDD-44B6-8788-79596031167A.txt",
+      "bytes": 1642,
+      "sha256": "4a1c230fdcffaede221223c67a2d512f3d0f5c168a19235a75022f7d68c6dda3",
+      "matches": []
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/B29684C2-91A3-4911-A734-FBD39A97CF55.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/B2B85892-ED89-41DC-A090-A2752313A0F0.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/9FAB487D-2B2E-4D92-9804-071D815B6125.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/3FC2A153-8E0A-498A-B35A-6C030AD007D7.txt",
+      "bytes": 1642,
+      "sha256": "1b510b4512b9981d13aa4a310362206588fbde4c4e8a5b0f7f31323a63025b63",
+      "matches": []
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/6F04A867-3850-457D-9A60-314349763088.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/9C26418D-E318-4537-AEF1-CFB59D941220.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/EA0B981E-7D97-47C8-A6E7-2BE3A737E23C.txt",
+      "bytes": 1642,
+      "sha256": "19ae5461bcfd95c5aa56e7398bcbfc5eb2d20ba5bc40a4dc95d3cefb0e2d0ca9",
+      "matches": []
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/04DA6C54-D8A2-4DA0-8EC1-E69C405F43D9.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/60193A40-20B6-41EC-BE55-1626B8740E61.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/5D55CA3B-F6CF-4870-9DEE-CF9FC7A4635D.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/534F1ED5-DC1E-4C52-9045-E62AA5DA518F.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/DBCF4DBC-2A8E-4573-825B-781F2C7104B1.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/EDA94E84-CCF6-459A-B42F-47A018F4003E.txt",
+      "bytes": 1642,
+      "sha256": "bd965494071e303d7412d9e12a575b4e6830ec01afcc4bb161a92b3009b1bcf2",
+      "matches": []
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/E23BCE53-5A61-45C8-8A58-CDF5EB6CAB3C.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/288AC27E-50BA-4890-94C7-22619E7E4AE6.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/AC429907-8531-4FE4-90D6-BB00BDFF262F.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/E667BCAB-87EC-4865-BA2B-8D1BF412F1AF.txt",
+      "bytes": 1642,
+      "sha256": "0495e4433a86987a563327d2055f4af2033e182699fd09994c5167d39de06958",
+      "matches": []
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/5D16C120-DCE1-466E-BE92-390795CCD3D5.txt",
+      "bytes": 1642,
+      "sha256": "2254623bafd5934a9d051245e7b9bad3322f76b93732f748bacf43f44932055b",
+      "matches": []
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/D6A86025-733A-474A-B503-A38A3372E6B8.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/9D4F8734-70D8-4BC5-83B2-12D3984FAAA2.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/98813AC9-5BF3-49B3-A12C-A0C4520243F6.txt",
+      "bytes": 1642,
+      "sha256": "cc0e959b6f04dc854a94c155ea8ced9ab4ef956a373ce2785f99841407cbabbe",
+      "matches": []
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/01CF3B08-D3CE-4A8D-9AD3-C120029F376C.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/85FF7DFF-F853-44E7-BEED-47EB5C504061.txt",
+      "bytes": 1127,
+      "sha256": "a77017e076a29aa77c7646b5f5d6ea2f2dda15ba6ee3e29b00b21c50008a1a2a",
+      "matches": []
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/CFD06A50-8951-4CBF-9E78-E33B5464C752.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/24DE0C46-9097-47D3-9B14-DFB1D9E729FB.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/8BEF08DF-40BD-46AA-ADC2-3DCE5B2E0D2C.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/25EA6D02-D7A7-432A-8465-68D5BCAFB29D.txt",
+      "bytes": 1642,
+      "sha256": "5ba8e4336e03cfcec138dfe9a601fff0d740fcb7ee7eee19ddebbbcbb9db8397",
+      "matches": []
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/DCEBACF9-280D-4608-9116-8BFFAA3BF697.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/D7E99711-596C-4BBE-A97B-AAC95EF76F6E.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/D2DAFB7F-D20E-453A-876D-8831485F5662.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/BB6630E5-8DF7-4BF8-8D98-1E02A9242329.txt",
+      "bytes": 1642,
+      "sha256": "8576d4d98e3ba9e754066eacbfbd09a168a59ebd433c2770ae022ec7d9c89eab",
+      "matches": []
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/E99ECF10-CD47-49E6-9689-E713FAC2BE33.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/B408A734-923F-4877-A8F4-8DAFCAADBEC7.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/82416120-1D01-4BF6-A9B3-09B8394B0F2E.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/A4D05678-7B45-449D-AA2F-2D7F3C094DD7.txt",
+      "bytes": 1642,
+      "sha256": "dbfbae8439dbe6f6880d65a37699f4ac4fe9fab9239658ffb4ec1faca87d6235",
+      "matches": []
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/EC3D5806-E659-48A3-BC07-FD4F2946492D.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "matches": [
+        "    \u21aa\ufe0eFind: Elements matching predicate '\"hanlin-import-diagnostics-sheet\" IN identifiers'"
+      ]
+    }
+  ],
+  "attachmentBoundary": "Existing exported txt/png/json retained here; full xcresult and other attachments remain at original owned Mac paths.",
+  "members": [
+    {
+      "path": "state.json",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/state.json",
+      "bytes": 7841,
+      "sha256": "67b563ebb5623d62b12970225a3644a81af55a8667090296de5fdc0db37541cc"
+    },
+    {
+      "path": "ledger.json",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/ledger.json",
+      "bytes": 5001,
+      "sha256": "b6a1ca5c24d248c8f249e5e05f65b515bfd542c2716ebbf74e28bbc3853196a0"
+    },
+    {
+      "path": "decision.json",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/decision.json",
+      "bytes": 84965,
+      "sha256": "7c16a01c08f9ebfe7ac34844afcf1008e8be97975449c7424c3640bbeeab640f"
+    },
+    {
+      "path": "native-result/state.json",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/state.json",
+      "bytes": 16296,
+      "sha256": "a99bebccbfe4f0edcbe1d319ac954b82be1264584cdf0194cd330ee533b5af5e"
+    },
+    {
+      "path": "native-result/built-input-bindings.json",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/built-input-bindings.json",
+      "bytes": 11843,
+      "sha256": "c09fe3337da9e9d0f869560cb22cde7c969d5d22713dcdf61f3a495a3abd8173"
+    },
+    {
+      "path": "native-result/staged-inputs.json",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/staged-inputs.json",
+      "bytes": 5833,
+      "sha256": "c9b2b3c790b4014807bbfd5e37a9ba70cb6b04744597d3ad9120bdcd0923655e"
+    },
+    {
+      "path": "native-result/paired-prefix/commands.jsonl",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/paired-prefix/commands.jsonl",
+      "bytes": 7846,
+      "sha256": "bbf6d39f888dddaf00f44f698308585685c3e92d8b79bbf49b7c98a9c8ea0ac9"
+    },
+    {
+      "path": "native-result/paired-prefix/command-events.jsonl",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/paired-prefix/command-events.jsonl",
+      "bytes": 57862,
+      "sha256": "82d9880144e1535c2fcc4f26b19eb495b459e0fc0a3d3b4fd4b0f2c9287b100f"
+    },
+    {
+      "path": "native-result/paired-prefix/FocusedRepair1.log",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/paired-prefix/FocusedRepair1.log",
+      "bytes": 53113,
+      "sha256": "c7709ffcb552c9b7598152766d377e90a54fa19eaa2400e24e5cae7595cd01ed"
+    },
+    {
+      "path": "native-result/paired-prefix/FocusedRepair1-summary.json",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/paired-prefix/FocusedRepair1-summary.json",
+      "bytes": 2221,
+      "sha256": "bbbc8169a1cb1925144a9e15409694212f2826736f62b7b128cdaf1c7426f54d"
+    },
+    {
+      "path": "native-result/paired-prefix/FocusedRepair1-nodes.json",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/paired-prefix/FocusedRepair1-nodes.json",
+      "bytes": 2457,
+      "sha256": "a3e976da66aab2d93bda541efc6e6c351e3fe97ed601caafb7c722a0c32e40b1"
+    },
+    {
+      "path": "native-result/paired-prefix/FocusedRepair1-selected-tests.log",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/paired-prefix/FocusedRepair1-selected-tests.log",
+      "bytes": 57,
+      "sha256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96"
+    },
+    {
+      "path": "native-result/paired-prefix/FocusedRepair1-attachments-export.log",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/paired-prefix/FocusedRepair1-attachments-export.log",
+      "bytes": 18667,
+      "sha256": "a9f1dd56141a54818541582dc0f4630518eda084a0ca5f33921513d08a14cf13"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/CD3C56B0-B9DB-4ED5-87F3-24D57C95726F.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/CD3C56B0-B9DB-4ED5-87F3-24D57C95726F.txt",
+      "bytes": 1642,
+      "sha256": "cc931b3f39f6e35c3df0e9922d76eef9aed46319c33afd8ff92891ad1b7a1722"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/2A2BF171-1151-4AFF-ABEC-24808A6C0E1E.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/2A2BF171-1151-4AFF-ABEC-24808A6C0E1E.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/A57ABB9C-5F7A-44A2-8734-4DAFA1DC24DF.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/A57ABB9C-5F7A-44A2-8734-4DAFA1DC24DF.txt",
+      "bytes": 1642,
+      "sha256": "701258414cee65adaaf9f36ef2296b3b86119ada4a904a7d56f3af89f1e4921d"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/59C151A0-7A17-425F-84D2-1055D9F79E13.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/59C151A0-7A17-425F-84D2-1055D9F79E13.txt",
+      "bytes": 26217,
+      "sha256": "5d97d7e300c8b51d2c5d22549af9f2091028edd69b92b989127719d748aaafba"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/EE31DA67-BB55-444F-A050-29581A0DAFD0.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/EE31DA67-BB55-444F-A050-29581A0DAFD0.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/7E464618-C355-453D-8A30-882A13E61219.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/7E464618-C355-453D-8A30-882A13E61219.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/B7297B74-7038-4808-8B6F-8428E09AFBDF.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/B7297B74-7038-4808-8B6F-8428E09AFBDF.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/4CFAFE8C-9366-4F37-A407-3EDC7AE69F10.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/4CFAFE8C-9366-4F37-A407-3EDC7AE69F10.txt",
+      "bytes": 1642,
+      "sha256": "f44644d7b64119b5036cd736ce4a9e99b2cd681aa7470250afaa89fd7810cc55"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/5E8D6367-6337-4F74-BB4E-E1D901766BA1.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/5E8D6367-6337-4F74-BB4E-E1D901766BA1.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/52924899-2D99-46F6-BEEB-B1FD9CF25EC5.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/52924899-2D99-46F6-BEEB-B1FD9CF25EC5.txt",
+      "bytes": 1642,
+      "sha256": "7e8fa853b10d8f097528832d8247b5d44a3532d71926f4d4c110b170a96dc145"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/FC8BEB34-0749-461A-A01D-2C89BC1C5BEB.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/FC8BEB34-0749-461A-A01D-2C89BC1C5BEB.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/F6BB1D7C-5886-4B36-8238-5DB24F6F335B.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/F6BB1D7C-5886-4B36-8238-5DB24F6F335B.txt",
+      "bytes": 1642,
+      "sha256": "95e294162fc0ba1bbe4682dbc5a4c348e926664f49092369005e6f6639ed0723"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/4A26E632-B2D3-44C6-A7B6-AC32B017AD3C.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/4A26E632-B2D3-44C6-A7B6-AC32B017AD3C.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/6760704C-56A4-4A6E-A39C-C674E9814635.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/6760704C-56A4-4A6E-A39C-C674E9814635.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/3C0453D3-61DE-4A7F-A1D1-47F99859EABA.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/3C0453D3-61DE-4A7F-A1D1-47F99859EABA.txt",
+      "bytes": 1642,
+      "sha256": "a037ee364f7466555d8c60ff5ba5c0b598e2942aff6b73ce281eab757a5d98cc"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/3F8575EF-C87D-4157-B08B-B3FB50122C81.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/3F8575EF-C87D-4157-B08B-B3FB50122C81.txt",
+      "bytes": 1642,
+      "sha256": "a4e6de217ce88f7fc7e58a2dea0550159202227dc016d1ea7faaad1afee22db8"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/08292AAD-B6FB-41C8-AF12-1291FE26FB57.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/08292AAD-B6FB-41C8-AF12-1291FE26FB57.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/02386859-DA1F-4E19-BA08-A47BFAFD8720.png",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/02386859-DA1F-4E19-BA08-A47BFAFD8720.png",
+      "bytes": 1349782,
+      "sha256": "3f245c5a2acbda063f91df845078e2a0da5446be55ca2156e0fbd4c632a2a0cf"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/8EA47DAC-D6A2-4314-8448-F8403F9367A3.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/8EA47DAC-D6A2-4314-8448-F8403F9367A3.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/4A218568-0330-40B2-95E2-29361DFD440C.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/4A218568-0330-40B2-95E2-29361DFD440C.txt",
+      "bytes": 1642,
+      "sha256": "ddd545360961fb138f2f612175432f8e11908b2348eb9d56357e9ab264fd677a"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/D044A39C-982C-422A-8578-FDD42EACFA74.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/D044A39C-982C-422A-8578-FDD42EACFA74.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/413E58AA-75A3-4702-81EA-B7528A71EB86.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/413E58AA-75A3-4702-81EA-B7528A71EB86.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/20C75232-63D1-48F8-8C0F-4BC599AE309F.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/20C75232-63D1-48F8-8C0F-4BC599AE309F.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/944F2808-8F47-4389-B6F9-CC07BC21F570.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/944F2808-8F47-4389-B6F9-CC07BC21F570.txt",
+      "bytes": 1642,
+      "sha256": "1983fe8811ee2b39474759df7a1020cf3925c6ee3a020db8f1695b63c6b16752"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/5EA668C0-65C2-46C7-AF6B-F04F47A04E5F.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/5EA668C0-65C2-46C7-AF6B-F04F47A04E5F.txt",
+      "bytes": 1642,
+      "sha256": "08fb40a836080fa3a4b9884a316343adae2c8e142f9478d9b0c383d78ecd35ec"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/8D076355-299C-4830-B17C-32E3F0FC37AF.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/8D076355-299C-4830-B17C-32E3F0FC37AF.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/EC5F3748-9DDD-44B6-8788-79596031167A.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/EC5F3748-9DDD-44B6-8788-79596031167A.txt",
+      "bytes": 1642,
+      "sha256": "4a1c230fdcffaede221223c67a2d512f3d0f5c168a19235a75022f7d68c6dda3"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/B29684C2-91A3-4911-A734-FBD39A97CF55.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/B29684C2-91A3-4911-A734-FBD39A97CF55.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/B2B85892-ED89-41DC-A090-A2752313A0F0.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/B2B85892-ED89-41DC-A090-A2752313A0F0.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/9FAB487D-2B2E-4D92-9804-071D815B6125.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/9FAB487D-2B2E-4D92-9804-071D815B6125.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/3FC2A153-8E0A-498A-B35A-6C030AD007D7.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/3FC2A153-8E0A-498A-B35A-6C030AD007D7.txt",
+      "bytes": 1642,
+      "sha256": "1b510b4512b9981d13aa4a310362206588fbde4c4e8a5b0f7f31323a63025b63"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/6F04A867-3850-457D-9A60-314349763088.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/6F04A867-3850-457D-9A60-314349763088.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/9C26418D-E318-4537-AEF1-CFB59D941220.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/9C26418D-E318-4537-AEF1-CFB59D941220.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/EA0B981E-7D97-47C8-A6E7-2BE3A737E23C.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/EA0B981E-7D97-47C8-A6E7-2BE3A737E23C.txt",
+      "bytes": 1642,
+      "sha256": "19ae5461bcfd95c5aa56e7398bcbfc5eb2d20ba5bc40a4dc95d3cefb0e2d0ca9"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/04DA6C54-D8A2-4DA0-8EC1-E69C405F43D9.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/04DA6C54-D8A2-4DA0-8EC1-E69C405F43D9.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/60193A40-20B6-41EC-BE55-1626B8740E61.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/60193A40-20B6-41EC-BE55-1626B8740E61.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/5D55CA3B-F6CF-4870-9DEE-CF9FC7A4635D.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/5D55CA3B-F6CF-4870-9DEE-CF9FC7A4635D.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/534F1ED5-DC1E-4C52-9045-E62AA5DA518F.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/534F1ED5-DC1E-4C52-9045-E62AA5DA518F.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/DBCF4DBC-2A8E-4573-825B-781F2C7104B1.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/DBCF4DBC-2A8E-4573-825B-781F2C7104B1.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/EDA94E84-CCF6-459A-B42F-47A018F4003E.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/EDA94E84-CCF6-459A-B42F-47A018F4003E.txt",
+      "bytes": 1642,
+      "sha256": "bd965494071e303d7412d9e12a575b4e6830ec01afcc4bb161a92b3009b1bcf2"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/manifest.json",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/manifest.json",
+      "bytes": 61636,
+      "sha256": "57cf0f372cac0b61fa3390722ffed78e2d69ff1b2f1a0e7e1c38ea4096b6c13c"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/0C9928FD-06DC-46CE-962F-351DF9D4B80C.png",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/0C9928FD-06DC-46CE-962F-351DF9D4B80C.png",
+      "bytes": 1274945,
+      "sha256": "98383575203e1482783003b0fab680c0186f4474574cfc8d81a4bdef4d2bcfa2"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/E23BCE53-5A61-45C8-8A58-CDF5EB6CAB3C.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/E23BCE53-5A61-45C8-8A58-CDF5EB6CAB3C.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/288AC27E-50BA-4890-94C7-22619E7E4AE6.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/288AC27E-50BA-4890-94C7-22619E7E4AE6.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/AC429907-8531-4FE4-90D6-BB00BDFF262F.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/AC429907-8531-4FE4-90D6-BB00BDFF262F.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/E667BCAB-87EC-4865-BA2B-8D1BF412F1AF.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/E667BCAB-87EC-4865-BA2B-8D1BF412F1AF.txt",
+      "bytes": 1642,
+      "sha256": "0495e4433a86987a563327d2055f4af2033e182699fd09994c5167d39de06958"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/5D16C120-DCE1-466E-BE92-390795CCD3D5.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/5D16C120-DCE1-466E-BE92-390795CCD3D5.txt",
+      "bytes": 1642,
+      "sha256": "2254623bafd5934a9d051245e7b9bad3322f76b93732f748bacf43f44932055b"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/D6A86025-733A-474A-B503-A38A3372E6B8.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/D6A86025-733A-474A-B503-A38A3372E6B8.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/9D4F8734-70D8-4BC5-83B2-12D3984FAAA2.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/9D4F8734-70D8-4BC5-83B2-12D3984FAAA2.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/98813AC9-5BF3-49B3-A12C-A0C4520243F6.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/98813AC9-5BF3-49B3-A12C-A0C4520243F6.txt",
+      "bytes": 1642,
+      "sha256": "cc0e959b6f04dc854a94c155ea8ced9ab4ef956a373ce2785f99841407cbabbe"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/01CF3B08-D3CE-4A8D-9AD3-C120029F376C.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/01CF3B08-D3CE-4A8D-9AD3-C120029F376C.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/85FF7DFF-F853-44E7-BEED-47EB5C504061.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/85FF7DFF-F853-44E7-BEED-47EB5C504061.txt",
+      "bytes": 1127,
+      "sha256": "a77017e076a29aa77c7646b5f5d6ea2f2dda15ba6ee3e29b00b21c50008a1a2a"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/CFD06A50-8951-4CBF-9E78-E33B5464C752.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/CFD06A50-8951-4CBF-9E78-E33B5464C752.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/24DE0C46-9097-47D3-9B14-DFB1D9E729FB.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/24DE0C46-9097-47D3-9B14-DFB1D9E729FB.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/8BEF08DF-40BD-46AA-ADC2-3DCE5B2E0D2C.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/8BEF08DF-40BD-46AA-ADC2-3DCE5B2E0D2C.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/25EA6D02-D7A7-432A-8465-68D5BCAFB29D.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/25EA6D02-D7A7-432A-8465-68D5BCAFB29D.txt",
+      "bytes": 1642,
+      "sha256": "5ba8e4336e03cfcec138dfe9a601fff0d740fcb7ee7eee19ddebbbcbb9db8397"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/DCEBACF9-280D-4608-9116-8BFFAA3BF697.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/DCEBACF9-280D-4608-9116-8BFFAA3BF697.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/D7E99711-596C-4BBE-A97B-AAC95EF76F6E.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/D7E99711-596C-4BBE-A97B-AAC95EF76F6E.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/D2DAFB7F-D20E-453A-876D-8831485F5662.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/D2DAFB7F-D20E-453A-876D-8831485F5662.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/BB6630E5-8DF7-4BF8-8D98-1E02A9242329.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/BB6630E5-8DF7-4BF8-8D98-1E02A9242329.txt",
+      "bytes": 1642,
+      "sha256": "8576d4d98e3ba9e754066eacbfbd09a168a59ebd433c2770ae022ec7d9c89eab"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/E99ECF10-CD47-49E6-9689-E713FAC2BE33.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/E99ECF10-CD47-49E6-9689-E713FAC2BE33.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/B408A734-923F-4877-A8F4-8DAFCAADBEC7.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/B408A734-923F-4877-A8F4-8DAFCAADBEC7.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/82416120-1D01-4BF6-A9B3-09B8394B0F2E.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/82416120-1D01-4BF6-A9B3-09B8394B0F2E.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/A4D05678-7B45-449D-AA2F-2D7F3C094DD7.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/A4D05678-7B45-449D-AA2F-2D7F3C094DD7.txt",
+      "bytes": 1642,
+      "sha256": "dbfbae8439dbe6f6880d65a37699f4ac4fe9fab9239658ffb4ec1faca87d6235"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/EC3D5806-E659-48A3-BC07-FD4F2946492D.txt",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/FocusedRepair1-attachments/EC3D5806-E659-48A3-BC07-FD4F2946492D.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    }
+  ]
+}

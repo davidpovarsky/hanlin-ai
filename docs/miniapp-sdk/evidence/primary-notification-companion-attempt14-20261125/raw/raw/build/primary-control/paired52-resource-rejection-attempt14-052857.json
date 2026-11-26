@@ -1,0 +1,12 @@
+{
+  "status": "BLOCKED_BEFORE_DECISION_OR_LAUNCH",
+  "observedAt": "2026-11-25T05:28:57.169151+00:00",
+  "freeBytes": 6543593472,
+  "estimatedIncrementalBytes": 7032183296,
+  "concurrentAndOSAllowanceBytes": 1500000000,
+  "observedPriorPhasePhysicalDeclineBytes": 6032183296,
+  "original52": "NOT_RUN",
+  "noNativeProcessStarted": true,
+  "source": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
+  "boundary": "Exact values from the actual failed pre-dispatch assertion; primary ledger/source were not mutated."
+}

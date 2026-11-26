@@ -1,0 +1,23 @@
+{"at": "2026-11-25T19:41:38.895726+00:00", "event": "prepared", "startedAt": "2026-11-25T19:41:38.894788+00:00"}
+{"at": "2026-11-25T19:41:38.905833+00:00", "event": "launched_setup", "status": "RUNNING"}
+{"at": "2026-11-25T19:41:46.439064+00:00", "event": "launched_test", "status": "RUNNING"}
+{"at": "2026-11-25T19:42:17.300362+00:00", "event": "waiting_for_fresh_test_runner", "containerLookupAttempts": 17, "exchangeStartedAfter": 1795635706.43467}
+{"at": "2026-11-25T19:42:48.004882+00:00", "event": "waiting_for_fresh_test_runner", "containerLookupAttempts": 51, "exchangeStartedAfter": 1795635706.43467}
+{"at": "2026-11-25T19:43:18.129759+00:00", "event": "waiting_for_fresh_test_runner", "containerLookupAttempts": 85, "exchangeStartedAfter": 1795635706.43467}
+{"at": "2026-11-25T19:43:49.046021+00:00", "event": "waiting_for_fresh_test_runner", "containerLookupAttempts": 109, "exchangeStartedAfter": 1795635706.43467}
+{"at": "2026-11-25T19:44:19.351684+00:00", "event": "waiting_for_fresh_test_runner", "containerLookupAttempts": 140, "exchangeStartedAfter": 1795635706.43467}
+{"at": "2026-11-25T19:44:49.382986+00:00", "event": "waiting_for_fresh_test_runner", "containerLookupAttempts": 170, "exchangeStartedAfter": 1795635706.43467}
+{"at": "2026-11-25T19:45:19.917225+00:00", "event": "waiting_for_fresh_test_runner", "containerLookupAttempts": 194, "exchangeStartedAfter": 1795635706.43467}
+{"at": "2026-11-25T19:45:50.163690+00:00", "event": "waiting_for_fresh_test_runner", "containerLookupAttempts": 221, "exchangeStartedAfter": 1795635706.43467}
+{"at": "2026-11-25T19:46:20.487317+00:00", "event": "waiting_for_fresh_test_runner", "containerLookupAttempts": 251, "exchangeStartedAfter": 1795635706.43467}
+{"at": "2026-11-25T19:46:51.018660+00:00", "event": "waiting_for_fresh_test_runner", "containerLookupAttempts": 281, "exchangeStartedAfter": 1795635706.43467}
+{"at": "2026-11-25T19:47:21.712833+00:00", "event": "waiting_for_fresh_test_runner", "containerLookupAttempts": 313, "exchangeStartedAfter": 1795635706.43467}
+{"at": "2026-11-25T19:47:51.830957+00:00", "event": "waiting_for_fresh_test_runner", "containerLookupAttempts": 353, "exchangeStartedAfter": 1795635706.43467}
+{"at": "2026-11-25T19:48:22.408291+00:00", "event": "waiting_for_fresh_test_runner", "containerLookupAttempts": 396, "exchangeStartedAfter": 1795635706.43467}
+{"at": "2026-11-25T19:48:52.823719+00:00", "event": "waiting_for_fresh_test_runner", "containerLookupAttempts": 436, "exchangeStartedAfter": 1795635706.43467}
+{"at": "2026-11-25T19:49:22.954998+00:00", "event": "waiting_for_fresh_test_runner", "containerLookupAttempts": 466, "exchangeStartedAfter": 1795635706.43467}
+{"at": "2026-11-25T19:49:53.565351+00:00", "event": "waiting_for_fresh_test_runner", "containerLookupAttempts": 494, "exchangeStartedAfter": 1795635706.43467}
+{"at": "2026-11-25T19:50:23.575905+00:00", "event": "waiting_for_fresh_test_runner", "containerLookupAttempts": 527, "exchangeStartedAfter": 1795635706.43467}
+{"at": "2026-11-25T19:50:24.542887+00:00", "event": "actual_terminal", "status": "FAILED", "error": "InterruptedError: OS probe received signal 2"}
+{"at": "2026-11-25T19:50:29.668368+00:00", "event": "charge_ready", "finishedAt": "2026-11-25T19:50:29.667663+00:00", "elapsedSeconds": 530.7739816670073, "chargedSeconds": 530.7739816670073, "cumulativeActiveSeconds": 25204.83441242004, "cumulativeOSProbeSeconds": 897.3027506670041, "allowanceExceededDuringCleanup": false, "processLogs": [{"path": "test.log", "bytes": 2116, "sha256": "6603910fbfa8f4fb61b53702032eaddd426e471dd1d686e6f4809ff56e184f1d"}, {"path": "setup.log", "bytes": 1830, "sha256": "40fbc70ff30b41c7787f4c4d422507baa40221d60d3e725be2098264f5378052"}]}
+{"at": "2026-11-25T19:50:29.677857+00:00", "event": "finalized", "status": "CLEANUP_INCOMPLETE"}

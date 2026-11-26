@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "kind": "IMMUTABLE_CONSUMER_BINDING_RECONCILIATION",
+  "status": "RECORDED_CONSUMER_AND_EXTENSION_IDENTITIES_RECONCILED",
+  "source": "cffe7f75436aa2e37ec5d82891937965c0407d2d",
+  "originalPacket": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/consumer-binding-attempt17-v2",
+  "originalReceiptSHA256": "578d19b0d0fbcdbfdf501fcb141017343d10b974533358a54b52e78bd1043805",
+  "implementationSupplementSHA256": "76030b931282685471fef114be869ce37f9ca47f0d48db4ec54e0a0818931635",
+  "storedMembers": [
+    {
+      "path": "README.md",
+      "bytes": 1944,
+      "sha256": "4930162788036d3c6a83adbccd225d00eeee929e6d524cf5ac4a0d62b037ebba"
+    },
+    {
+      "path": "raw/AI_Hanlin.app/NotificationService-Info.plist",
+      "bytes": 1220,
+      "sha256": "cf22dfcabc37e0108e7d7a24ed8f7566d0934e60290d16e8427b2370532ae32c"
+    },
+    {
+      "path": "raw/AI_Hanlin.app/notification-codesign.stderr",
+      "bytes": 1145,
+      "sha256": "4de7f482954c3cb9346cdabeb51cc908dc7cd274f1fc4912ea37fec9e043733d"
+    },
+    {
+      "path": "raw/AI_Hanlin.app/notification-codesign.stdout",
+      "bytes": 184,
+      "sha256": "00491886daae07a5296c8bad50f116bf006b0004d7bf7338ad46669fbd903a4a"
+    },
+    {
+      "path": "raw/HanlinMiniApps.app/NotificationService-Info.plist",
+      "bytes": 1278,
+      "sha256": "176d667ec09408832340ae438a7e26886a9f080625c445c3f192850a7b9a467b"
+    },
+    {
+      "path": "raw/HanlinMiniApps.app/notification-codesign.stderr",
+      "bytes": 1156,
+      "sha256": "86cbd036bd097a043c7f83664dd1bb7e1920dba86da814f32da5acac41f5349d"
+    },
+    {
+      "path": "raw/HanlinMiniApps.app/notification-codesign.stdout",
+      "bytes": 184,
+      "sha256": "00491886daae07a5296c8bad50f116bf006b0004d7bf7338ad46669fbd903a4a"
+    },
+    {
+      "path": "raw/notification-runtime-images.json",
+      "bytes": 1399,
+      "sha256": "76030b931282685471fef114be869ce37f9ca47f0d48db4ec54e0a0818931635"
+    },
+    {
+      "path": "raw/producer-receipt.json",
+      "bytes": 13863,
+      "sha256": "578d19b0d0fbcdbfdf501fcb141017343d10b974533358a54b52e78bd1043805"
+    },
+    {
+      "path": "reconciliation.json",
+      "bytes": 21507,
+      "sha256": "1887021093b24f2867fc0f0f2931808ca4dc6c404c68295e7c27ddb71623907c"
+    }
+  ],
+  "storedMemberCount": 10,
+  "storedBytes": 43880,
+  "boundary": "Actual retained consumer/extension observations and source comparison only. Original52/NS5/OS remain separate."
+}

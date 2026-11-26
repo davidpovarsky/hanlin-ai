@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/opt/homebrew/opt/python@3.12/bin/python3.12",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/seal-ns5-decision-v4.py"
+  ],
+  "startedAt": "2026-11-25T18:37:36.377788+00:00",
+  "finishedAt": "2026-11-25T18:37:37.764728+00:00",
+  "seconds": 1.3868209579959512,
+  "exitCode": 0,
+  "stdout": "{\"schema\": 1, \"status\": \"SEALED_NOT_LAUNCHED\", \"source\": \"d4a0b115b106d4250ea40ad66153d5156847a07c\", \"sourceTree\": \"f7a6596a1ef53d8d962ceb9f619460ffa19ee91e\", \"decision\": {\"path\": \"build/primary-control/companion-native-v1-ns5-decision.json\", \"bytes\": 157442, \"sha256\": \"331f71fbbdb88ff1de29ef41ce9c001d196a68f5ce72af6816be2314f3ebc4a9\"}, \"sealer\": {\"path\": \"build/primary-control/seal-ns5-decision-v4.py\", \"bytes\": 25735, \"sha256\": \"bbb071cacc24c136da576cb48c172b3e8bbf352ce9e4978be82dd1bea01f3dd7\"}, \"controller\": {\"path\": \"build/primary-control/companion-ns5-v6.py\", \"sha256\": \"e1e8855b85be3fe99c9fe34c040b4ec73937d3a818994b6f4c56385aae7c6b69\"}, \"sealedAt\": \"2026-11-25T18:37:37.760191+00:00\", \"fieldCount\": 30, \"productRows\": 44, \"originalProductRows\": 35, \"stagedInputCount\": 11, \"inputObservation\": {\"path\": \"build/primary-control/companion-native-v1-ns5-seal-inputs.json\", \"bytes\": 7114, \"sha256\": \"898a97cf9f26da92aff280313f4573919f52fa7c4bde1a586c40f780582733c2\"}, \"activeBaselineSeconds\": 24205.119291294035, \"allowanceSeconds\": 1173.8627963749896, \"actualPairedStatus\": \"EXECUTED_PASS\", \"phaseExecution\": \"NOT_RUN\", \"SDKProducerSource\": \"a2c8a1b1be746461272ba77254603304567c309d\", \"miniBuildProducerSource\": \"d4a0b115b106d4250ea40ad66153d5156847a07c\", \"aiBuildProducerSource\": \"d4a0b115b106d4250ea40ad66153d5156847a07c\"}\n",
+  "stderr": ""
+}

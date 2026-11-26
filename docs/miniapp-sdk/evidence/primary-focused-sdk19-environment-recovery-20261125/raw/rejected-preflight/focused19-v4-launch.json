@@ -1,0 +1,31 @@
+{
+  "schema": 1,
+  "observedAt": "2026-11-25T12:33:04.850141+00:00",
+  "source": "6c006c948f0a6f371f7fc68b90e393f43734f8dd",
+  "producerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+  "decision": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v4-decision.json",
+  "decisionSHA256": "e8ada819b562484a9834662c33d2452d77c49eeb314f66e29469ae582c24a603",
+  "controller": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-recovery-controller-v4.py",
+  "controllerSHA256": "b0796a73342a8e65568661e402a43f1a70e923b6aa0fbf62b56ef3c88e223d15",
+  "pid": 42265,
+  "allowanceSeconds": 2216.4666162489884,
+  "activeBaselineSeconds": 16856.44515633505,
+  "resourceAssessment": {
+    "decision": "FITS_MEASURED_NEXT_PHASE",
+    "observedAt": "2026-11-25T12:33:04.831325+00:00",
+    "observedFreeBytes": 117748330496,
+    "df": "Filesystem   1024-blocks      Used Available Capacity iused      ifree %iused  Mounted on\n/dev/disk3s5   482797652 323924272 114988604    74% 5032662 1149886040    0%   /System/Volumes/Data\n",
+    "estimatedIncrementalBytes": 4848846634,
+    "concurrentAndOSAllowanceBytes": 400000000,
+    "components": {
+      "retainedOwnedBootDeviceAdditionalBytes": 0,
+      "conservativeBothAppsAndUIRunnersInstallBytes": 2505814016,
+      "conservativeHostRecreationBytes": 713731370,
+      "twoTimesActualFull25ResultAndExportBytes": 629301248,
+      "incrementalCompilerLinkAndResourceTemporaryBytes": 1000000000
+    },
+    "basis": "Same authenticated E742 retained and Shutdown; its existing device allocation is not counted as new. Original measured two-app/runner bytes conservatively bound affected AI reinstall and XCTest installation, with two Host recreations reserved even though prior caches are retained. Fresh two-group results and incremental compiler/link/Metro temporary space are bounded separately. Actual Mini products are reused. No APFS clone savings assumed or globaldf change attributed to this phase.",
+    "boundary": "Original probe producer, affected AI build/install, one authenticated ProbeA replacement and original ManualInput+repairUI only. Other9 focused passes preserved separately; original52/companions remain separate."
+  },
+  "original52": "UNCHANGED_NOT_PROMOTED"
+}

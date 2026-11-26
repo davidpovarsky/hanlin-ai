@@ -1,0 +1,200 @@
+{
+  "schema": 1,
+  "status": "STAGED_AND_HASH_VERIFIED",
+  "observedAt": "2026-11-25T21:30:49.455374+00:00",
+  "productionSource": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+  "SDKProducerSource": "dff3b45c99a57bf8fe8ec721db3fa1fafce7134b",
+  "command": [
+    "/usr/bin/python3",
+    "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only/payload/export-standalone-toolchain.py",
+    "--repository",
+    "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123",
+    "--source",
+    "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+    "--sdk-source",
+    "dff3b45c99a57bf8fe8ec721db3fa1fafce7134b",
+    "--sdk-zip",
+    "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/MiniAppSDK20.zip",
+    "--expected-sdk-sha256",
+    "c1c181182d1e47db1f7977a284cea507397dc47e9170645b019dbdec5ab858ca",
+    "--expected-manifest-sha256",
+    "6f11ed8da3df18627f05932d47b5b68dec54eb26ac396151a21cbc8c3e65800e",
+    "--output",
+    "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only-sdk20/kit"
+  ],
+  "SDKFileCountIncludingManifest": 25682,
+  "productionFiles": [
+    {
+      "path": "kit/Scripts/MiniApps/miniapp.mjs",
+      "bytes": 4101,
+      "sha256": "1c256c00392c626a54ebee2abe3ededaa792c5bfa6dd9b6c5aceb89be84e5b30",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+      "bytes": 50327,
+      "sha256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9",
+      "mode": "0o644"
+    }
+  ],
+  "fixtureFiles": [
+    {
+      "path": "kit/workspace/expo-hello-world/App.tsx",
+      "bytes": 478,
+      "sha256": "e0ec9b33bbe972668b0be87b6f8263faff0977e5bfea7654334c7f7f68b95531",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/expo-hello-world/README.md",
+      "bytes": 831,
+      "sha256": "367e2b77ec0d06230ed8b7a3756cc5ef6bd2b4328c2405977e383f8ecc52b403",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/expo-hello-world/hanlin.authoring.json",
+      "bytes": 99,
+      "sha256": "23628daa17919961823da4ebc9a4166ab9e1d7a9b3ec2ff47fdc70d7b444bf94",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/expo-hello-world/index.ts",
+      "bytes": 120,
+      "sha256": "f3532a443c0193cbb6866cb1a7474d0f5055917ffdc7f5e60efe35159e544d19",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/expo-hello-world/notification-event.ts",
+      "bytes": 650,
+      "sha256": "3faaf31c55f30954b8c3a74cce95d0461bdef531269bcd7832a886be4ac390de",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/expo-hello-world/package.json",
+      "bytes": 223,
+      "sha256": "ce6b14d9dd58a68d245000b2d9997086754acba6b3213087e9531b59701cd9bc",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/expo-hello-world/script.json",
+      "bytes": 264,
+      "sha256": "308768a8274c3f58254c4f6daafa7b16a07f0c68dc519f17d3e5feae895dcafb",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/expo-hello-world/tsconfig.json",
+      "bytes": 82,
+      "sha256": "989df0a97a5ac05cb6b26df1d7f2d18896e2627da8ac72d4d35e66a60da84b19",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/nativescript-hello-world/README.md",
+      "bytes": 914,
+      "sha256": "aae06c1b3c963f8a6cf246ea52642d73f5e6ec237cfb19fc4737dd4072570e6a",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/nativescript-hello-world/hanlin.authoring.json",
+      "bytes": 107,
+      "sha256": "1bf949fb4ba1fd14481df380299652fe9b587aa5c30afdb6621fe23be6c02094",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/nativescript-hello-world/index.ts",
+      "bytes": 991,
+      "sha256": "bfb34d9b7ac0f50488468a5cf8200d55cefbb9d0d345d080bb652323a1df9bf6",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/nativescript-hello-world/notification-event.ts",
+      "bytes": 650,
+      "sha256": "3faaf31c55f30954b8c3a74cce95d0461bdef531269bcd7832a886be4ac390de",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/nativescript-hello-world/package.json",
+      "bytes": 225,
+      "sha256": "ab65e0e388ac19daf337b29965fd030e6196faf90cee439c786de9e1c3f49cb6",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/nativescript-hello-world/script.json",
+      "bytes": 320,
+      "sha256": "521f9d8332544a7858dca222d635cf8530e13d72cfb4e2e62d4196acc3a249cb",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/nativescript-hello-world/tsconfig.json",
+      "bytes": 67,
+      "sha256": "089155f616dd73ff0bebb1469f21fda41c51ad93c7b7db83d2745fa5e88ce0e5",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/nativescript-type-error/README.md",
+      "bytes": 914,
+      "sha256": "aae06c1b3c963f8a6cf246ea52642d73f5e6ec237cfb19fc4737dd4072570e6a",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/nativescript-type-error/hanlin.authoring.json",
+      "bytes": 107,
+      "sha256": "1bf949fb4ba1fd14481df380299652fe9b587aa5c30afdb6621fe23be6c02094",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/nativescript-type-error/index.ts",
+      "bytes": 1063,
+      "sha256": "2a252e2317feeb876cb935c0890f841cb108e9fb7973784675437d4d7d968cfe",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/nativescript-type-error/notification-event.ts",
+      "bytes": 650,
+      "sha256": "3faaf31c55f30954b8c3a74cce95d0461bdef531269bcd7832a886be4ac390de",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/nativescript-type-error/package.json",
+      "bytes": 225,
+      "sha256": "ab65e0e388ac19daf337b29965fd030e6196faf90cee439c786de9e1c3f49cb6",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/nativescript-type-error/script.json",
+      "bytes": 320,
+      "sha256": "521f9d8332544a7858dca222d635cf8530e13d72cfb4e2e62d4196acc3a249cb",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/workspace/nativescript-type-error/tsconfig.json",
+      "bytes": 67,
+      "sha256": "089155f616dd73ff0bebb1469f21fda41c51ad93c7b7db83d2745fa5e88ce0e5",
+      "mode": "0o644"
+    }
+  ],
+  "SDKArchiveSHA256": "c1c181182d1e47db1f7977a284cea507397dc47e9170645b019dbdec5ab858ca",
+  "SDKManifestSHA256": "6f11ed8da3df18627f05932d47b5b68dec54eb26ac396151a21cbc8c3e65800e",
+  "versions": {
+    "node": {
+      "path": "/usr/local/bin/node",
+      "version": "v24.22.0",
+      "sha256": "719a43d185f3b6a59d8fcbba1ff06b93c75f76fb0bb9916f81d33921615d4cb5"
+    },
+    "python": {
+      "path": "/usr/bin/python3",
+      "version": "Python 3.12.3",
+      "sha256": "c86f21d0da9290ece2d7d49a3f7ed52aed59cb029abdf0ea25c79634f6cbe960"
+    },
+    "strace": {
+      "path": "/usr/bin/strace",
+      "version": "strace -- version 6.8",
+      "sha256": "33b3ea325915f1213dc477d80e0f0b2b09ffeff5e81d98b25a35320fbcbcaf42"
+    }
+  },
+  "exportReceipt": {
+    "path": "kit/toolchain-export-receipt.json",
+    "bytes": 5456907,
+    "sha256": "31b2f5fd7c6dcc54fbc298b262fc1fb16345104e329eff6c94fb1b660ee50025",
+    "mode": "0o644"
+  },
+  "sourceOrSDKRegenerated": false
+}

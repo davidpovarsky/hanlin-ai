@@ -1,0 +1,25 @@
+{
+  "schema": 1,
+  "accessedAt": "2026-11-25T10:30:15.788538+00:00",
+  "sources": [
+    {
+      "url": "https://developer.apple.com/documentation/activitykit/activity/contentupdates-swift.property",
+      "title": "Activity.contentUpdates",
+      "retrieval": "Official Apple text retrieved by the two configured search engines",
+      "supports": "The original API offers an asynchronous sequence for observing changes in Live Activity content."
+    },
+    {
+      "url": "https://developer.apple.com/documentation/activitykit/displaying-live-data-with-live-activities",
+      "title": "Displaying live data with Live Activities — Keep track of updates",
+      "retrieval": "Official Apple text retrieved via search",
+      "supports": "Apple directs clients to the corresponding sequence to observe updates and synchronize app data with ActivityKit."
+    },
+    {
+      "url": "https://developer.apple.com/documentation/activitykit/activity/update(_:)",
+      "title": "Activity.update(_:)",
+      "retrieval": "Official Apple text retrieved via search",
+      "supports": "Original async API updates a Live Activity; the retrieved page does not state that all content property observations are synchronously published when the await returns."
+    }
+  ],
+  "boundary": "No inferred exact SDK cancellation guarantee or new compiler verification. Existing original compiled call sites establish baseline API usage; the candidate must compile/run with the actual installed toolchain."
+}

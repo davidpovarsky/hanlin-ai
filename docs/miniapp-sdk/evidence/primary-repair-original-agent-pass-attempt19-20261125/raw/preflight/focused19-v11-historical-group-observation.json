@@ -1,0 +1,182 @@
+{
+  "schema": 1,
+  "observedAt": "2026-11-25T16:53:46.326241+00:00",
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "decisionSHA256": "eb1af82f6ccb1bb00a0f61b80f16ee6cef3099f0b7519ea8aa32afd781c9d6ea",
+  "rejectedControllerPID": 76108,
+  "rows": [
+    {
+      "terminal": {
+        "path": "build/primary-control/paired52-continuation-v4/state.json",
+        "sha256": "439cd234a138a0e37f895345d2580df2ec70f5272e7e25534c6428bec94968ac"
+      },
+      "originalSource": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+      "finishedAt": "2026-11-25T09:50:23.121500+00:00",
+      "phasePID": 41945,
+      "historicalControllerPID": 41938,
+      "equalsCurrentRejectedControllerPID": false,
+      "priorRemainingOwnedProcessGroup": [],
+      "currentGroupExists": false
+    },
+    {
+      "terminal": {
+        "path": "build/primary-control/ai27-diagnostic-v1/state.json",
+        "sha256": "9ce14c6e9b7370652b2658c681f7c0b8810235eece6c77d77883ab90f6dc4626"
+      },
+      "originalSource": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+      "finishedAt": "2026-11-25T10:19:30.869009+00:00",
+      "phasePID": 64792,
+      "historicalControllerPID": 64780,
+      "equalsCurrentRejectedControllerPID": false,
+      "priorRemainingOwnedProcessGroup": [],
+      "currentGroupExists": false
+    },
+    {
+      "terminal": {
+        "path": "build/primary-control/focused19-v1/state.json",
+        "sha256": "a7ae2d21b27503b71939ff72670333a7e05736e47e999801f52e6ee6c1520dd6"
+      },
+      "originalSource": "a2c8a1b1be746461272ba77254603304567c309d",
+      "finishedAt": "2026-11-25T11:09:21.948746+00:00",
+      "phasePID": 88350,
+      "historicalControllerPID": 88335,
+      "equalsCurrentRejectedControllerPID": false,
+      "priorRemainingOwnedProcessGroup": [],
+      "currentGroupExists": false
+    },
+    {
+      "terminal": {
+        "path": "build/primary-control/focused19-v2/state.json",
+        "sha256": "9e199031a41095f66c101962da3c1c4ad330e748a9ac2afc267aac71384c2a21"
+      },
+      "originalSource": "62dfff9aebd0a272486c7770d4f77ba603d535ab",
+      "finishedAt": "2026-11-25T11:40:02.198798+00:00",
+      "phasePID": 4246,
+      "historicalControllerPID": 4207,
+      "equalsCurrentRejectedControllerPID": false,
+      "priorRemainingOwnedProcessGroup": [],
+      "currentGroupExists": false
+    },
+    {
+      "terminal": {
+        "path": "build/primary-control/focused19-v3/state.json",
+        "sha256": "fc722c1417dfcb5029336df1b27f06fd1ec636ae2bc5bcfc82a2258d4f894d25"
+      },
+      "originalSource": "6c006c948f0a6f371f7fc68b90e393f43734f8dd",
+      "finishedAt": "2026-11-25T12:23:01.973504+00:00",
+      "phasePID": 38317,
+      "historicalControllerPID": 38290,
+      "equalsCurrentRejectedControllerPID": false,
+      "priorRemainingOwnedProcessGroup": [],
+      "currentGroupExists": false
+    },
+    {
+      "terminal": {
+        "path": "build/primary-control/focused19-v5/state.json",
+        "sha256": "a4cfa1c2803d9bd6df5353e0818ec412d51d4d6ae138385842341a9eeb574186"
+      },
+      "originalSource": "6c006c948f0a6f371f7fc68b90e393f43734f8dd",
+      "finishedAt": "2026-11-25T12:51:42.581602+00:00",
+      "phasePID": 44325,
+      "historicalControllerPID": 44298,
+      "equalsCurrentRejectedControllerPID": false,
+      "priorRemainingOwnedProcessGroup": [],
+      "currentGroupExists": true,
+      "pgrep": {
+        "exit": 0,
+        "stdout": "44325\n",
+        "stderr": ""
+      },
+      "targetedIdentity": {
+        "argv": [
+          "/bin/ps",
+          "-p",
+          "44325",
+          "-o",
+          "pid=,pgid=,state=,lstart=,comm="
+        ],
+        "exit": 0,
+        "stdout": "44325 44325 Ss   Wed Nov 25 17:19:11 2026     /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.3CDVUO/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/People.framework/peopled\n",
+        "stderr": ""
+      },
+      "targetedArgv": {
+        "argv": [
+          "/bin/ps",
+          "-p",
+          "44325",
+          "-o",
+          "pid=,pgid=,state=,command="
+        ],
+        "exit": 0,
+        "stdout": "44325 44325 Ss   /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.3CDVUO/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/People.framework/peopled\n",
+        "stderr": ""
+      }
+    },
+    {
+      "terminal": {
+        "path": "build/primary-control/focused19-v6/state.json",
+        "sha256": "4ddca9a8b8bc061dc32e288a392b8ea1e36171617d120342106a7fe0cf8bb5a4"
+      },
+      "originalSource": "958cf666da7be83b9b63e46e3013e3344fb31585",
+      "finishedAt": "2026-11-25T13:38:47.216771+00:00",
+      "phasePID": 93013,
+      "historicalControllerPID": 92982,
+      "equalsCurrentRejectedControllerPID": false,
+      "priorRemainingOwnedProcessGroup": [],
+      "currentGroupExists": false
+    },
+    {
+      "terminal": {
+        "path": "build/primary-control/focused19-v7/state.json",
+        "sha256": "b5910e3c415ba2fd73dac642483dc10314fc9d6c798d66049e4353013d89c971"
+      },
+      "originalSource": "f6bb035f2828ec24a683bb2f5f1dddb27143dc4a",
+      "finishedAt": "2026-11-25T14:08:57.660334+00:00",
+      "phasePID": 15318,
+      "historicalControllerPID": 15295,
+      "equalsCurrentRejectedControllerPID": false,
+      "priorRemainingOwnedProcessGroup": [],
+      "currentGroupExists": false
+    },
+    {
+      "terminal": {
+        "path": "build/primary-control/focused19-v8/state.json",
+        "sha256": "67b563ebb5623d62b12970225a3644a81af55a8667090296de5fdc0db37541cc"
+      },
+      "originalSource": "7bf0c2fdc2f7168d6b98dda66f443ae032fe1c11",
+      "finishedAt": "2026-11-25T14:49:24.573586+00:00",
+      "phasePID": 43211,
+      "historicalControllerPID": 43183,
+      "equalsCurrentRejectedControllerPID": false,
+      "priorRemainingOwnedProcessGroup": [],
+      "currentGroupExists": false
+    },
+    {
+      "terminal": {
+        "path": "build/primary-control/focused19-v9/state.json",
+        "sha256": "33340d4bb32a7d89d48a1e10a112c8bc210e51370b7a41809f1cab9cf98e0b4e"
+      },
+      "originalSource": "dc53a6c8ff1bb68bfbc52a64667e14ce688055b0",
+      "finishedAt": "2026-11-25T15:39:56.086370+00:00",
+      "phasePID": 97692,
+      "historicalControllerPID": 97669,
+      "equalsCurrentRejectedControllerPID": false,
+      "priorRemainingOwnedProcessGroup": [],
+      "currentGroupExists": false
+    },
+    {
+      "terminal": {
+        "path": "build/primary-control/focused19-v10/state.json",
+        "sha256": "dabb6291f9cf251526c229c42affed69b15cf6bae7702acb57bcff0a62bcee79"
+      },
+      "originalSource": "4cde88df07a2f3cd86cc99ad87786c79ae207390",
+      "finishedAt": "2026-11-25T16:24:36.534019+00:00",
+      "phasePID": 39112,
+      "historicalControllerPID": 39072,
+      "equalsCurrentRejectedControllerPID": false,
+      "priorRemainingOwnedProcessGroup": [],
+      "currentGroupExists": false
+    }
+  ],
+  "boundary": "Read-only exact historical PGID existence plus targeted current process identity. No signal other than existence probe0 and no termination or new native execution."
+}

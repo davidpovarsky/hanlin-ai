@@ -209,9 +209,9 @@ public struct HanlinLiveActivityLockScreenView: View {
 
     public var body: some View {
         if let layout = try? HanlinLiveActivityUILayout(root: root) {
-            HanlinExtensionNodeView(node: layout.content, identity: identity)
+            HanlinExtensionNodeView(node: layout.content, identity: identity, invocationSource: .liveActivity)
         } else {
-            HanlinExtensionNodeView(node: root, identity: identity)
+            HanlinExtensionNodeView(node: root, identity: identity, invocationSource: .liveActivity)
         }
     }
 }
@@ -238,7 +238,7 @@ public struct HanlinLiveActivityRegionView: View {
     @ViewBuilder
     public var body: some View {
         if let layout = try? HanlinLiveActivityUILayout(root: root), let node = node(in: layout) {
-            HanlinExtensionNodeView(node: node, identity: identity)
+            HanlinExtensionNodeView(node: node, identity: identity, invocationSource: .liveActivity)
         } else {
             EmptyView()
         }
@@ -283,6 +283,9 @@ public struct HanlinPreparedExpoNativeView: View {
     @ViewBuilder public var body: some View {
         if let object = node.toAny() as? [String: Any] {
             let child = HanlinExpoWidgetNative.render(node: object, resources: context.resources) { target, role, label in
+                if let intent = try? HanlinExpoWidgetsViewRenderer.hostActionIntent(target: target, context: context) {
+                    return AnyView(SwiftUI.Button(role: role, intent: intent) { label })
+                }
                 guard let intent = try? HanlinExpoWidgetsViewRenderer.actionIntent(target: target, context: context) else {
                     return AnyView(label.disabled(true).accessibilityHint(Text("Widget action is unavailable", bundle: HanlinLocalization.bundle)))
                 }

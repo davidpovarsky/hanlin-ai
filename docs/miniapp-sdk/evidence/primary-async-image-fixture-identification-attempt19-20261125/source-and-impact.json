@@ -1,0 +1,142 @@
+{
+  "schema": 1,
+  "observedAt": "2026-11-25T11:44:48.373892+00:00",
+  "sourceCommit": "0097bf0e142f61acd018762da2bcb09f366f78da",
+  "parent": "62dfff9aebd0a272486c7770d4f77ba603d535ab",
+  "path": "Fixtures/ExpoSwiftUIProbe/ManualAdapterProbe.tsx",
+  "before": {
+    "bytes": 11112,
+    "sha256": "4794f92fc158639b806c0f80bf74cf71775651ad2acd2c24c9462f9d810ff48e"
+  },
+  "after": {
+    "bytes": 11097,
+    "sha256": "c93a882be209437f388c5d67a9af6ef98ca5371db4aef084aaf7cd464ce42d57"
+  },
+  "scope": "Only remove unused accessibilityLabel import and use existing accessibilityIdentifier for AsyncImage identification. Existing identifier string, frame, placeholders, callbacks and all test assertions remain identical.",
+  "unchangedSource": {
+    "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift": "da0fa21f26b677f4d18f8e1972208b39e30401a127e9dd2a9643e0fe8d7ad17c",
+    "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoUIModule.swift": "3ad8217ce87005fab1fe3dc256e7d7680ced7c330f7cd9dc5561f1a5e5905e09",
+    "Packages/HanlinExpoUI/src/manual-components.tsx": "b95b387fce797a3c0ffe8c258e1fe0b411e76956e6cd50ae9235267f5b638da6"
+  },
+  "sdkImpact": {
+    "manifestPath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt19/extracted-sdk/miniapp-sdk.json",
+    "manifestSHA256": "4505c28495d8b6ecd1073254e0e395adcc898cc02dd1d40699591f51db4dee92",
+    "sourceInputCount": 235,
+    "changedPathInSourceInputs": false,
+    "SDKPreparationRequired": false,
+    "requiredOriginalRegeneration": "Rebuild the existing original Expo SwiftUI probe archives before the affected runtime check; native owner coordinates this.",
+    "sdkProducerSource": "a2c8a1b1be746461272ba77254603304567c309d"
+  },
+  "originalAPIEvidence": {
+    "package": "@expo/ui",
+    "version": "58.0.29",
+    "sourceMember": "MiniAppSDK/expo/node_modules/@expo/ui/src/swift-ui/modifiers/index.ts",
+    "sourceSHA256": "dedd0bd33f560f4c9d56589400b2a2faa9c67bf7ab962e0a5186312ba4c920e6",
+    "sourceLines": [
+      1021,
+      1022
+    ],
+    "declarationMember": "MiniAppSDK/expo/node_modules/@expo/ui/build/swift-ui/modifiers/index.d.ts",
+    "declarationSHA256": "31151f3ee5006c02413b85dfe233a857facaa9b004bc8c95150de7aa19c3b6a3",
+    "declarationLine": 769,
+    "signature": "accessibilityIdentifier: (identifier: string) => ModifierConfig"
+  },
+  "rawSelection": [
+    {
+      "sourcePacket": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-mini-first-packet",
+      "originalPath": "attachments/12090BFA-5C8A-4152-A511-8FBC64359057.png",
+      "storedPath": "raw/mini/attachments/12090BFA-5C8A-4152-A511-8FBC64359057.png",
+      "bytes": 153774,
+      "sha256": "b124dca3ff78b856ddfad42efc894368f2b796d00b9b8d6cbd8df9fe1c59d47e"
+    },
+    {
+      "sourcePacket": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-mini-first-packet",
+      "originalPath": "attachments/9C9E0875-9BA0-4FDB-AA31-703B5FF76DFE.txt",
+      "storedPath": "raw/mini/attachments/9C9E0875-9BA0-4FDB-AA31-703B5FF76DFE.txt",
+      "bytes": 11313,
+      "sha256": "e9765a002f02f95f934470b03be135a1b39e4e0485a3957dd170e05dd4e707b8"
+    },
+    {
+      "sourcePacket": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-mini-first-packet",
+      "originalPath": "attachments/manifest.json",
+      "storedPath": "raw/mini/attachments/manifest.json",
+      "bytes": 51968,
+      "sha256": "fa7bc9055fa3da88af25f1fd760da889023f1b6dd0bbbf1d4caffcdde64d82ee"
+    },
+    {
+      "sourcePacket": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-mini-first-packet",
+      "originalPath": "raw/FocusedMini3-summary.json",
+      "storedPath": "raw/mini/raw/FocusedMini3-summary.json",
+      "bytes": 2009,
+      "sha256": "134b3f1313f29a9fb84e14709b7800ac291614abc442e763653bd0bb0c91340a"
+    },
+    {
+      "sourcePacket": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-mini-first-packet",
+      "originalPath": "raw/FocusedMini3-nodes.json",
+      "storedPath": "raw/mini/raw/FocusedMini3-nodes.json",
+      "bytes": 4288,
+      "sha256": "4e3feaa687a6cd9f3625101166867c6fff705f33a205b3580f0e7ff5f27e7219"
+    },
+    {
+      "sourcePacket": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-mini-first-packet",
+      "originalPath": "raw/FocusedMini3-selected-tests.log",
+      "storedPath": "raw/mini/raw/FocusedMini3-selected-tests.log",
+      "bytes": 57,
+      "sha256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96"
+    },
+    {
+      "sourcePacket": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-mini-first-packet",
+      "originalPath": "raw/FocusedMini3.log",
+      "storedPath": "raw/mini/raw/FocusedMini3.log",
+      "bytes": 97762,
+      "sha256": "ef0a6ca469f7eea091ace70476493e7c956f593996a5e5b9cc682f472da76f95"
+    },
+    {
+      "sourcePacket": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-mini-first-packet",
+      "originalPath": "source/Fixtures/ExpoSwiftUIProbe/ManualAdapterProbe.tsx",
+      "storedPath": "raw/mini/source/Fixtures/ExpoSwiftUIProbe/ManualAdapterProbe.tsx",
+      "bytes": 11112,
+      "sha256": "4794f92fc158639b806c0f80bf74cf71775651ad2acd2c24c9462f9d810ff48e"
+    },
+    {
+      "sourcePacket": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-recovery-terminal-packet",
+      "originalPath": "control/state.json",
+      "storedPath": "raw/terminal/control/state.json",
+      "bytes": 4862,
+      "sha256": "9e199031a41095f66c101962da3c1c4ad330e748a9ac2afc267aac71384c2a21"
+    },
+    {
+      "sourcePacket": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-recovery-terminal-packet",
+      "originalPath": "control/ledger.json",
+      "storedPath": "raw/terminal/control/ledger.json",
+      "bytes": 1608,
+      "sha256": "ec1d8b41595201d0a64b86d714a0fbd049cfbc9339b8a494fff25875cf6d6898"
+    },
+    {
+      "sourcePacket": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-recovery-terminal-packet",
+      "originalPath": "paired-prefix/FocusedAI8-summary.json",
+      "storedPath": "raw/terminal/paired-prefix/FocusedAI8-summary.json",
+      "bytes": 2134,
+      "sha256": "57a00b137065fb89803f597b637b48df33eaec8d5ecaf10765ab774362991515"
+    },
+    {
+      "sourcePacket": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-recovery-terminal-packet",
+      "originalPath": "paired-prefix/FocusedAI8-nodes.json",
+      "storedPath": "raw/terminal/paired-prefix/FocusedAI8-nodes.json",
+      "bytes": 8337,
+      "sha256": "d02f32568bc52e7f15cc3f607bc140c504459ce965fe485b366fef3f9fbd8cea"
+    },
+    {
+      "sourcePacket": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-recovery-terminal-packet",
+      "originalPath": "paired-prefix/FocusedAI8-selected-tests.log",
+      "storedPath": "raw/terminal/paired-prefix/FocusedAI8-selected-tests.log",
+      "bytes": 57,
+      "sha256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96"
+    }
+  ],
+  "validation": {
+    "diffCheck": "PASS",
+    "compiler": "NOT_RUN",
+    "nativeCorrectedCase": "NOT_RUN"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "status": "DELETED",
+  "authorization": "Explicit root scoped retirement authorization for obsolete13 if measured needed, after12.",
+  "owner": "/root/native_execution",
+  "udid": "1F3AB83E-F409-4B71-BD56-4669DB61627A",
+  "attempt": 13,
+  "sourceStateSHA256": "b39416969043959f686be1718097b79399ea599c103f9103eb7669098a70c279",
+  "createdMarker": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt13/paired-prefix/created-simulator.txt",
+  "deviceState": "Shutdown",
+  "noMatchingProcesses": true,
+  "noOpenFiles": true,
+  "retainedRawResults": [
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt13/paired-prefix/AIBuild.xcresult",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt13/paired-prefix/ModularFocusedDiagnostic.xcresult",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-diagnostics-attempt13/paired-prefix/MiniBuild.xcresult"
+  ],
+  "sealedEvidence": "Attempt13 full packet is verified in root b0; all control/logs/raw xcresults remain outside device.",
+  "before": {
+    "observedAt": "2026-11-25T05:29:53.736030+00:00",
+    "freeBytes": 5180628992,
+    "raw": "Filesystem   1024-blocks      Used Available Capacity iused    ifree %iused  Mounted on\n/dev/disk3s5   482797652 433853668   5059208    99% 6112995 50592080   11%   /System/Volumes/Data\n"
+  },
+  "measuredRequiredBytes": 8532183296,
+  "logicalSizeNotAssumedReclaimed": true,
+  "command": [
+    "xcrun",
+    "simctl",
+    "delete",
+    "1F3AB83E-F409-4B71-BD56-4669DB61627A"
+  ],
+  "exitCode": 0,
+  "stdout": "",
+  "stderr": "",
+  "after": {
+    "observedAt": "2026-11-25T05:29:53.903448+00:00",
+    "freeBytes": 5179334656,
+    "raw": "Filesystem   1024-blocks      Used Available Capacity iused    ifree %iused  Mounted on\n/dev/disk3s5   482797652 433854932   5057944    99% 6113004 50579440   11%   /System/Volumes/Data\n"
+  },
+  "deviceDirectoryStillExists": false
+}

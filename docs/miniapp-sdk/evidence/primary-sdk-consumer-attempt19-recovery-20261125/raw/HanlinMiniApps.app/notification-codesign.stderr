@@ -1,0 +1,26 @@
+Executable=/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsNotificationService.appex/HanlinMiniAppsNotificationService
+Identifier=com.itorah.hanlinminiapps.notification-service
+Format=bundle with Mach-O thin (arm64)
+CodeDirectory v=20400 size=455 flags=0x2(adhoc) hashes=3+7 location=embedded
+VersionPlatform=7
+VersionMin=1769472
+VersionSDK=1769472
+Hash type=sha256 size=32
+CandidateCDHash sha256=f3237b833071786b0a2541f946ab6c59e5f5fde1
+CandidateCDHashFull sha256=f3237b833071786b0a2541f946ab6c59e5f5fde12f95f8f99aa7a386760d38c4
+Hash choices=sha256
+CMSDigest=f3237b833071786b0a2541f946ab6c59e5f5fde12f95f8f99aa7a386760d38c4
+CMSDigestType=2
+Executable Segment base=0
+Executable Segment limit=16384
+Executable Segment flags=0x1
+Page size=16384
+CDHash=f3237b833071786b0a2541f946ab6c59e5f5fde1
+Signature=adhoc
+Info.plist entries=23
+TeamIdentifier=not set
+Sealed Resources version=2 rules=10 files=44
+Internal requirements count=0 size=12
+warning: Specifying ':' in the path is deprecated and will not work in a future release
+Total signatures=1
+Chosen signature=1

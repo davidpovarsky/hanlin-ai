@@ -1,0 +1,53 @@
+{
+  "diagnostics" : [
+    {
+      "category" : "information",
+      "code" : "PACKAGE_COMPATIBILITY",
+      "file" : "nativescript\/app\/bundle.mjs",
+      "message" : "Prepared NativeScript application structure is valid."
+    },
+    {
+      "category" : "information",
+      "code" : "PACKAGE_COMPATIBILITY",
+      "file" : "nativescript\/app\/package.json",
+      "message" : "NativeScript core @nativescript\/core 9.1.4 is supported by embedded runtime 9.1.1."
+    },
+    {
+      "category" : "error",
+      "code" : "TS2322",
+      "column" : 14,
+      "endColumn" : 20,
+      "endLine" : 1,
+      "file" : "index.ts",
+      "line" : 1,
+      "message" : "Type 'string' is not assignable to type 'number'."
+    },
+    {
+      "category" : "error",
+      "code" : "MINIAPP_SOURCE_CHANGED",
+      "file" : "index.ts",
+      "message" : "The package no longer matches its recorded build: index.ts",
+      "remediation" : "Repair and validate the source project, then build a fresh archive before importing."
+    }
+  ],
+  "engine" : "nativescript",
+  "operation" : "import",
+  "schemaVersion" : 1,
+  "sdk" : {
+    "compilerVersion" : "5.9.3",
+    "manifestSHA256" : "4505c28495d8b6ecd1073254e0e395adcc898cc02dd1d40699591f51db4dee92",
+    "packageVersions" : {
+      "@hanlin\/host-services" : "1.0.0",
+      "@hanlin\/notification-events" : "1.0.0",
+      "@nativescript\/core" : "9.1.4",
+      "@nativescript\/ios" : "9.1.1",
+      "@nativescript\/swift-ui" : "4.0.2",
+      "@nativescript\/types" : "9.1.4",
+      "@nativescript\/vite" : "8.0.24",
+      "typescript" : "5.9.3",
+      "vite" : "8.0.0"
+    }
+  },
+  "sourceRoot" : "\/Users\/m1\/Library\/Developer\/CoreSimulator\/Devices\/E742FBCD-8FF0-4130-B143-7F8328637138\/data\/Containers\/Data\/Application\/EE3BAC56-0810-440C-A35F-FDD70ACDBC75\/Library\/Application Support\/Hanlin\/ScriptingPlatform\/ImportStaging\/scripting-import-af1c75af-b70f-4ce8-8723-db346acd4a46\/extracted\/source",
+  "succeeded" : false
+}

@@ -1,0 +1,153 @@
+{
+  "source": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+  "capturedAt": "2026-11-25T09:32:05.139470+00:00",
+  "simulator": "50D2F667-196E-4382-A86A-802710579EA9",
+  "actualDataContainer": "/Users/m1/Library/Developer/CoreSimulator/Devices/50D2F667-196E-4382-A86A-802710579EA9/data/Containers/Data/Application/7D00ECAA-EBDA-4382-9DD3-CBA0AF6558DB",
+  "producerCommands": [
+    {
+      "argv": [
+        "node",
+        "Scripts/ProductSplit/prepare_authoring_fixture.mjs",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/evidence/paired-product/original-authoring-sdk/MiniAppSDK",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/evidence/paired-product/authoring-fixture"
+      ],
+      "exit": 0,
+      "seconds": 5.811959917002241,
+      "log": "authoring-fixture-build.log",
+      "sha256": "ed6608743dafa4ff7e51ea4967c87b54a682bc2b0486a4560a4b71ed68a4b8dd"
+    },
+    {
+      "argv": [
+        "node",
+        "Scripts/MiniApps/miniapp.mjs",
+        "build",
+        "--sdk",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/evidence/paired-product/original-authoring-sdk/MiniAppSDK",
+        "--engine",
+        "expo",
+        "--project",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/Expo/miniapps/modular-text-search",
+        "--archive",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/evidence/paired-product/ModularTextSearch.hanlinExpo",
+        "--report",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/evidence/paired-product/modular-search-build.json"
+      ],
+      "exit": 0,
+      "seconds": 14.337888416004716,
+      "log": "modular-search-build.log",
+      "sha256": "69c3d593ceb7cc3179b09a0982b18a4cc8318fd283b2c6d64726dec7e889e5b2"
+    },
+    {
+      "argv": [
+        "node",
+        "Scripts/MiniApps/miniapp.mjs",
+        "build",
+        "--sdk",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/evidence/paired-product/original-authoring-sdk/MiniAppSDK",
+        "--engine",
+        "expo",
+        "--project",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/MiniApps/Examples/sdk-only-departure-budget",
+        "--archive",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/evidence/paired-product/SDKOnlyDepartureBudget.hanlinExpo",
+        "--report",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/evidence/paired-product/sdk-only-departure-budget-build.json"
+      ],
+      "exit": 0,
+      "seconds": 7.8003620840027,
+      "log": "sdk-only-departure-budget-build.log",
+      "sha256": "ba8a2d88f4747140820ddfc4bd62adb00be95ac0f63c28fd6c46823b2226c531"
+    },
+    {
+      "argv": [
+        "node",
+        "Scripts/MiniApps/miniapp.mjs",
+        "build",
+        "--sdk",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/evidence/paired-product/original-authoring-sdk/MiniAppSDK",
+        "--engine",
+        "nativescript",
+        "--project",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/MiniApps/Examples/sdk-only-table-share",
+        "--archive",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/evidence/paired-product/SDKOnlyTableShare.hanlinNativeScript",
+        "--report",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/evidence/paired-product/sdk-only-table-share-build.json"
+      ],
+      "exit": 0,
+      "seconds": 3.80132116698951,
+      "log": "sdk-only-table-share-build.log",
+      "sha256": "d06a443e981cef572c2593ba91cda1eee9f8038b0785abe65e57c96a7fc703c9"
+    }
+  ],
+  "sdkArchiveSHA256": "ce240d8d4083a2babfa3827fd12f93e0ad469b45c5f7055a259fcb8babe1881f",
+  "files": [
+    {
+      "path": "ModularTextSearch.hanlinExpo",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/evidence/paired-product/ModularTextSearch.hanlinExpo",
+      "bytes": 2203502,
+      "sha256": "3476c670b551dcf2b8d1df5642d18470876feb1bbd0eecb0c1b7dacf8e0673f0"
+    },
+    {
+      "path": "modular-search-build.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/evidence/paired-product/modular-search-build.json",
+      "bytes": 1666,
+      "sha256": "69c3d593ceb7cc3179b09a0982b18a4cc8318fd283b2c6d64726dec7e889e5b2"
+    },
+    {
+      "path": "SDKOnlyDepartureBudget.hanlinExpo",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/evidence/paired-product/SDKOnlyDepartureBudget.hanlinExpo",
+      "bytes": 1956755,
+      "sha256": "50dc3fd2cb47f9ec0959ad23911ac110b8f0c7b9dc99da60cc282905e88d82de"
+    },
+    {
+      "path": "sdk-only-departure-budget-build.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/evidence/paired-product/sdk-only-departure-budget-build.json",
+      "bytes": 1691,
+      "sha256": "ba8a2d88f4747140820ddfc4bd62adb00be95ac0f63c28fd6c46823b2226c531"
+    },
+    {
+      "path": "SDKOnlyTableShare.hanlinNativeScript",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/evidence/paired-product/SDKOnlyTableShare.hanlinNativeScript",
+      "bytes": 12933,
+      "sha256": "718ecbcc4c7e365e8f737c25b60f16b7017eec6f6533e1574c70edb9c068e0e3"
+    },
+    {
+      "path": "sdk-only-table-share-build.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/evidence/paired-product/sdk-only-table-share-build.json",
+      "bytes": 1235,
+      "sha256": "d06a443e981cef572c2593ba91cda1eee9f8038b0785abe65e57c96a7fc703c9"
+    },
+    {
+      "path": "sdk-only-package-provenance.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/evidence/paired-product/sdk-only-package-provenance.json",
+      "bytes": 2573,
+      "sha256": "e52b3af044de89facf9944e206a1f034e613347db7a7055ff88e798ed19b925c"
+    },
+    {
+      "path": "sample-package-hashes.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/evidence/paired-product/sample-package-hashes.json",
+      "bytes": 443,
+      "sha256": "c36db5557738c60953737bf35d911e63de67536f788003e5fc3af29aa0fbc0da"
+    },
+    {
+      "path": "authoring-fixture-provenance.json",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/evidence/paired-product/authoring-fixture-provenance.json",
+      "bytes": 4314,
+      "sha256": "b94ef3067173e7a6c03e19e5794b8d235576b766d86ced036f363ea2abd8915f"
+    },
+    {
+      "path": "NativeScriptAuthoringExample.hanlinNativeScript",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/evidence/paired-product/NativeScriptAuthoringExample.hanlinNativeScript",
+      "bytes": 4400,
+      "sha256": "ef3b5b14f120e4327685eb9b69e0a9f6614f785d90ff3d567c7b567d0b39f5bd"
+    },
+    {
+      "path": "MiniAppTypeError.hanlinNativeScript",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/50D2F667-196E-4382-A86A-802710579EA9/data/Containers/Data/Application/7D00ECAA-EBDA-4382-9DD3-CBA0AF6558DB/Documents/MiniAppTypeError.hanlinNativeScript",
+      "bytes": 4400,
+      "sha256": "c5006389c6b1e09209d173ccad8f6397cb06c8cfaf7a395233827822c1b181a9"
+    }
+  ],
+  "boundary": "Exact existing original paired fixture outputs and staged source-bearing type-error input, copied read-only. No extra build or acceptance is inferred."
+}

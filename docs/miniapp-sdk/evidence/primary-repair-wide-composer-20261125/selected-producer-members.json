@@ -1,0 +1,39 @@
+{
+  "schemaVersion": 1,
+  "producerReceiptPath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/ai27-terminal-packet-attempt18/receipt.json",
+  "producerReceiptSHA256": "4de255af777d3cdaedbae706651c13bf16af748f175d63dc7db19c81f1f28baa",
+  "producerCapturedAt": "2026-11-25T10:22:05.443174+00:00",
+  "source": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+  "status": "FAILED_DIAGNOSTIC_NOT_ORIGINAL52",
+  "fullProducerMemberCount": 120,
+  "selectedMembers": [
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/95A62B58-1063-4E32-B8C2-1109A0729B37.png",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/95A62B58-1063-4E32-B8C2-1109A0729B37.png",
+      "bytes": 280620,
+      "sha256": "49b6b84f35d29635090be12aa1e377683d699c5a24a5598db58796d1c0605afc",
+      "mode": "0o644",
+      "mtimeNs": "1795601966305922134",
+      "retainedPath": "raw/repair-wide-chat.png"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/97B30FBE-AB40-491A-9831-A3BF59DA91F5.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/97B30FBE-AB40-491A-9831-A3BF59DA91F5.txt",
+      "bytes": 19790,
+      "sha256": "354d3f77c500d44e2e95983d4806c8f7e8b3264e3f027b216733c6da9ba12dc2",
+      "mode": "0o644",
+      "mtimeNs": "1795601966305673884",
+      "retainedPath": "raw/repair-wide-chat-accessibility.txt"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-summary.json",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-summary.json",
+      "bytes": 2929,
+      "sha256": "7abe74639707e83dc1cb5927ffb823a437943f21671bfbba61c7955976eb33b4",
+      "mode": "0o644",
+      "mtimeNs": "1795601966099001539",
+      "retainedPath": "raw/ai27-summary.json"
+    }
+  ],
+  "boundary": "Selected raw bytes verified; original mode/time recorded. No whole-packet verification or corrected native run implied."
+}

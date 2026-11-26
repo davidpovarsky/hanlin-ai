@@ -1,0 +1,7 @@
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-sil-proof-attempt16/Candidate.swift:18:72: error: value of type 'Int' has no member 'rawValue'
+16 |         return await withCheckedContinuation { continuation in
+17 |             previous.userNotificationCenter?(center, willPresent: notification, withCompletionHandler: { options in
+18 |                 continuation.resume(returning: Int(bitPattern: options.rawValue))
+   |                                                                        `- error: value of type 'Int' has no member 'rawValue'
+19 |             })
+20 |         }

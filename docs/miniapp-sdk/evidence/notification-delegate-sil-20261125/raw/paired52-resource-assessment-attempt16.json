@@ -1,0 +1,22 @@
+{
+  "decision": "FITS_MEASURED_NEXT_PHASE",
+  "observedAt": "2026-11-25T06:30:38.563739+00:00",
+  "freeBytes": 16573911040,
+  "df": "Filesystem   1024-blocks      Used Available Capacity iused     ifree %iused  Mounted on\n/dev/disk3s5   482797652 422727416  16185460    97% 6039962 161854600    4%   /System/Volumes/Data\n",
+  "estimatedIncrementalBytes": 8788129718,
+  "concurrentAndOSAllowanceBytes": 750000000,
+  "components": {
+    "freshBootTreeConservativeAllocationBytes": 2566631424,
+    "bothProductsAndTestRunnersConservativeInstallAllocationBytes": 2448330752,
+    "twoActualHostExtractionsUncompressedBytes": 713728054,
+    "changedSwiftAndTestIncrementalBuildTransientAllowanceBytes": 750000000,
+    "twoResultBundlesAllowanceFromLargestRetainedOriginalResultBytes": 2309439488
+  },
+  "basis": {
+    "sourceObservation": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-resource-observation-attempt16.json",
+    "sourceObservationSHA256": "0a94e60992af147d4c0bc151db44e58461204a7c42be77dcb1d2a8b262202693",
+    "hostArchiveSHA256": "602669f4d915cb3dd216ad14cb07a23f4da3885ef0fadf772ea3c6f2d1f06e0d",
+    "bounds": "Existing per-tree allocated sizes conservatively bound fresh boot and app copies; shared APFS extents can make physical increments smaller. No measured clone saving is assumed. ZIP member total gives actual uncompressed Host content. Both native engine artifacts and expensive Xcode cache are reused; only changed Swift/test/extension consumers rebuild. Two result allowances use the largest retained original result, including its diagnostic overhead. This is one scoped next-phase estimate, not a general free-space target.",
+    "concurrentGlobalGrowth": "Global df moved independently during light phases; it is not attributed to our phase. Sample every30seconds under the controller. Prior aggregate6.032GB decline remains in retained old decision but is not used as an own-phase quota."
+  }
+}

@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 1,
+  "kind": "actual-original-agent-repair-pass",
+  "createdAt": "2026-11-25T17:40:57.255032+00:00",
+  "evidenceCarrierBase": "e2c6b379fcaa9f3927c77c35a1fa4731c04e6744",
+  "captureBoundary": "Immutable V11 capture; original52, NativeScript five-runtime and OS notification continuations were pending at capture. Later results belong to separate evidence.",
+  "consumer": {
+    "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+    "tree": "f7a6596a1ef53d8d962ceb9f619460ffa19ee91e",
+    "preparedPayloadCount": 25,
+    "preparedTrackedDiffSHA256": "8eebad41405fad444ff058766f02cbeaf3d3181022ff04b586f090482b1b4e9d",
+    "preparedPayloadAuthority": "raw/focused19-v11-repair-first-packet/decision.json",
+    "miniBuildProducerSource": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+    "aiBuildProducerSource": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+    "originalTestBuilds": "PASS"
+  },
+  "sdk": {
+    "producerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+    "sourceInputCount": 235,
+    "archiveSHA256": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc",
+    "manifestSHA256": "4505c28495d8b6ecd1073254e0e395adcc898cc02dd1d40699591f51db4dee92",
+    "inputSHA256": "ba8f3f1f09054887eed62532fa1d5ca2ac3bd60e6aa99a98ab1035c7653882a2"
+  },
+  "acceptance": {
+    "selector": "AI_HLYUITests/MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport",
+    "status": "FOCUSED_PASS",
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "driverExitCode": 0,
+    "runtimeWarnings": [
+      {
+        "issueType": "Runtime Warning",
+        "message": "           SessionCore.mm:631   This method can lead to UI unresponsiveness if called on the main thread while the audio session is active."
+      },
+      {
+        "issueType": "Runtime Warning",
+        "message": "    AVAudioSession_iOS.mm:978   This method can lead to UI unresponsiveness if called on the main thread. Consider using the asynchronous activate/deactivate API instead for calls from the main thread."
+      },
+      {
+        "issueType": "Runtime Warning",
+        "message": "Update the Info.plist: Support for all orientations will soon be required."
+      }
+    ],
+    "original52": "NOT_RUN_AT_CAPTURE",
+    "nativeScriptFiveRuntime": "PENDING_AT_CAPTURE",
+    "notificationOS": "PENDING_AT_CAPTURE",
+    "physicalAcceptance": "NOT_RUN"
+  },
+  "actualInstallation": {
+    "transferID": "92c4747f-f222-4e51-942b-be752be84819",
+    "requestAtUTC": "2026-11-25T17:15:31.279005+00:00",
+    "installedAtUTC": "2026-11-25T17:16:37.706619+00:00",
+    "installedPackageID": "install-script-d7e81598bd3fabb072c5e57c",
+    "archivePath": "raw/focused19-v11-repair-durable-packet/authoring/92c4747f-f222-4e51-942b-be752be84819/MiniApp.hanlinNativeScript",
+    "archiveBytes": 7247,
+    "archiveSHA256": "2f0f5c55d583a55fbba85d2a7010e55c1f0290ac935c59e3a65e8f5c96228d40",
+    "receiptSHA256": "03deddc64c1f3a8eb492975d8e90893612aebec662e370ec187bb75ff4ba7c41",
+    "nativeResult": 42,
+    "nativeScreenshotPath": "raw/focused19-v11-repair-first-packet/native-result/FocusedRepair1-attachments/9B5C8802-9A33-43C9-9D46-CDEDF1E0FC18.png",
+    "nativeScreenshotSHA256": "a445957e12456a2b01da29eaf6cafccaa6efcd0ddfe9139610ec047f94664164",
+    "model": {
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/FAE80CB3-0A85-4C82-8539-412574242E70/Documents/Diagnostics/agent-session-2026-11-25T17-11-35-0dbe65bf.json",
+      "runID": "0DBE65BF-2429-4BCC-873F-B9F132CAA830",
+      "status": "completed",
+      "completedAt": "2026-11-25T17:17:05Z",
+      "rounds": 17,
+      "finalVisibleContent": "MINIAPP_AUTHORING_INSTALLED_VERIFIED"
+    },
+    "modelProvenance": {
+      "responses": "controlled UI acceptance fixture",
+      "liveExternalLLMTrial": false,
+      "executionBoundary": "Original production SDK, compiler, tools, receiver, installation and native UI executed."
+    }
+  },
+  "productProof": {
+    "builtInputCount": 35,
+    "builtInputSHA256": "71831b770ee518a6d926650704c509a53d74c41540bd51d743de431b7ca0c640",
+    "stagedInputCount": 11,
+    "stagedInputSHA256": "ab3d55ab809ff78a5a93f28dc058c20e76f98a2a1176f8b6228ce9b3d319d976",
+    "fourRoleMetadata": {
+      "path": "raw/remaining-native-product-metadata-v11.json",
+      "bytes": 4697,
+      "sha256": "b1163811263ef4b648e6d5e265c012cbbf5f946e504f5bd084d28fe13514d724"
+    }
+  },
+  "execution": {
+    "terminalSHA256": "f32e48626bf862f325486ad86044796c68cc4760c66d18feee0ecfcb033133bd",
+    "childSHA256": "269576b8c1494c6c6d33c551a2dfcadc793b8c2484bdfbce075191e1f148f4ab",
+    "decisionPath": "raw/focused19-v11-repair-first-packet/decision.json",
+    "decisionSHA256": "7dd6fbe9469886c57813740b7b9e11fc44605e4d0524cc06879f9ec1170d438c",
+    "chargedSeconds": 814.4282468750025,
+    "cumulativeFocusedSeconds": 5625.533789252004,
+    "cumulativePrimarySeconds": 21098.44556183604,
+    "historicalChargeCount": 10,
+    "originalAllowanceSeconds": 3600,
+    "separateGrantsSeconds": [
+      400,
+      750,
+      200,
+      300,
+      650
+    ],
+    "totalFocusedAllowanceSeconds": 5900,
+    "ownedSimulatorState": "Shutdown",
+    "cleanupErrors": [],
+    "sourceErrors": []
+  },
+  "preflight": {
+    "status": "PREFLIGHT_REJECTED_NOT_RUN_UNCHARGED",
+    "authorityPath": "raw/preflight/focused19-v11-preflight-rejection.json",
+    "authoritySHA256": "ff4b426a7f64e21a32890cde78f6935237f75b07a26725c1d07181ddc23cdae9",
+    "originalDecisionSHA256": "eb1af82f6ccb1bb00a0f61b80f16ee6cef3099f0b7519ea8aa32afd781c9d6ea",
+    "currentDecisionStoredOnce": true,
+    "historicalResultsUnchanged": true
+  },
+  "physicalInventory": {
+    "receiptPath": "raw/physical-device-inventory-after-v11/receipt.json",
+    "receiptSHA256": "4d87d5a89a6059afc63d3a50af58815fc4f0c1e95ec503209637b1c05bff2d60",
+    "observedAt": "2026-11-25T17:23:22.789928+00:00",
+    "physicalAppleMobileCount": 0,
+    "simulatorCount": 60,
+    "physicalMacCount": 1,
+    "physicalAcceptance": "NOT_RUN"
+  },
+  "originalPacketReceipts": [
+    {
+      "path": "raw/focused19-v11-repair-first-packet/receipt.json",
+      "bytes": 6369,
+      "sha256": "6bc74702e0780fcb570a9c36657de3d5d6c6978e6da491e1302d002be0848406",
+      "memberCount": 18,
+      "memberBytes": 2794561
+    },
+    {
+      "path": "raw/focused19-v11-built-inputs/receipt.json",
+      "bytes": 1899,
+      "sha256": "039aec0e4297275cee4a5d9c08e8077ed24a3981bf46368feb9bd7b2109635aa",
+      "memberCount": 4,
+      "memberBytes": 48973
+    },
+    {
+      "path": "raw/focused19-v11-repair-durable-packet/receipt.json",
+      "bytes": 15794,
+      "sha256": "47f643af4a2b466a600e1ebc90662603aedde9ccb30cd0dbb57f540460005ca0",
+      "memberCount": 15,
+      "memberBytes": 2109856
+    }
+  ],
+  "assembly": {
+    "nativeExecutionPerformed": false,
+    "projectFilesModified": false,
+    "rawBytesCopiedWithoutTransformation": true,
+    "gzipFilesCopiedWithoutRecompression": true,
+    "originalPacketMemberNamesPreserved": true,
+    "originalPacketMemberHashesVerified": true
+  }
+}

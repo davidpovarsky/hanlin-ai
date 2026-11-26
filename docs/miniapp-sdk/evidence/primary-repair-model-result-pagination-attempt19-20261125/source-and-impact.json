@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 1,
+  "sourceFix": "b060fea9bd2ff59d437d420ff374f947d40734a6",
+  "integratedSource": "6c006c948f0a6f371f7fc68b90e393f43734f8dd",
+  "failedConsumer": "62dfff9aebd0a272486c7770d4f77ba603d535ab",
+  "sourceBindings": [
+    {
+      "path": "AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift",
+      "source": "6c006c948f0a6f371f7fc68b90e393f43734f8dd",
+      "bytes": 65349,
+      "sha256": "ac5c259fb195d09e641213f7fc33311db658bb3a52a58ee81e89ce6e7aa2a806"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/HanlinAISDKToolAdapter.swift",
+      "source": "6c006c948f0a6f371f7fc68b90e393f43734f8dd",
+      "bytes": 50536,
+      "sha256": "ae9a0a2ffda2449f6cab6a697ad4a290b04aa448dd7f651afda532f250791c49"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/ReadToolResultTool.swift",
+      "source": "6c006c948f0a6f371f7fc68b90e393f43734f8dd",
+      "bytes": 4795,
+      "sha256": "88e34282f7bd2e95ab7e815fa4563787c0093b2f5300cc19de901963fe166d03"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentSkills/ToolResultStore.swift",
+      "source": "6c006c948f0a6f371f7fc68b90e393f43734f8dd",
+      "bytes": 8104,
+      "sha256": "20176211c23d5af30cb2a8de086c221781f9023d0904a7f0bfad888bd389c2a1"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Tools/MiniAppAuthoringTool.swift",
+      "source": "6c006c948f0a6f371f7fc68b90e393f43734f8dd",
+      "bytes": 11702,
+      "sha256": "e317dfd45959f1086e1513643e995d054b670bd42158714e091eca9b02ca9d6e"
+    },
+    {
+      "path": "AI_HLYUITests/MiniAppAuthoringUITests.swift",
+      "source": "6c006c948f0a6f371f7fc68b90e393f43734f8dd",
+      "bytes": 7453,
+      "sha256": "f60502af88a5e4b1166146cf5834e5d54eaa0451159b11f95ff26207f210fd72"
+    }
+  ],
+  "sourceBeforeSHA256": "1de8600e13a011aa35d4f7fbb748b42f971e9b9008b17bbe98cf113702691203",
+  "sourceAfterSHA256": "ac5c259fb195d09e641213f7fc33311db658bb3a52a58ee81e89ce6e7aa2a806",
+  "SDKInputCount": 235,
+  "SDKInputSHA256": "ba8f3f1f09054887eed62532fa1d5ca2ac3bd60e6aa99a98ab1035c7653882a2",
+  "SDKManifestSHA256": "4505c28495d8b6ecd1073254e0e395adcc898cc02dd1d40699591f51db4dee92",
+  "SDKExclusionObservedByRootInFullDeliveredZIP": {
+    "archiveSHA256": "1bf347311b9547054725f8674419a11b3c502a4994feb6dbd9283c3af7400210",
+    "manifestMember": "MiniAppSDK/miniapp-sdk.json",
+    "absentPaths": [
+      "AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift",
+      "Fixtures/ExpoSwiftUIProbe/ManualAdapterProbe.tsx"
+    ]
+  },
+  "actualResultPayload": {
+    "path": "raw/durable/toolResults/chat-8618ba540d6605d90b33ae171f30ebbc2372caad83ed3ec8de0e44e96de78380/ref_96a7511540184d5dac884dbb2fbd947e.payload",
+    "bytes": 13935,
+    "sha256": "ee850d95930744b63a10e9e07557e0803e48bc297e2f56df8ccb70f08c26763d",
+    "JSONParsed": true
+  },
+  "nativeResultBoundary": "Actual failed consumer evidence retained. Corrected build/UI results require their own separate native receipt. No native execution by this evidence capture."
+}

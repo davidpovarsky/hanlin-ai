@@ -1,0 +1,14 @@
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKAgentEngine.swift
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKModels.swift
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKProviderFactory.swift
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinCapturedStreamReplay.swift
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatEngine.swift
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatMessage.swift
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatModelConfiguration.swift
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatRequestBuilder.swift
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatStreamEvent.swift
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatStreamParser.swift
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatStructuredPart.swift
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatTransportTrace.swift
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinNativeStructuredResponse.swift
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinNonEmptyLanguageModel.swift

@@ -1,0 +1,159 @@
+#!/usr/bin/env python3
+"""Run only the original pinned native dependency producers in the new owned root."""
+import argparse, datetime, fcntl, hashlib, importlib.util, json, os, pathlib, signal, stat, subprocess, sys, time, traceback
+P=pathlib.Path
+def utc(): return datetime.datetime.now(datetime.timezone.utc).isoformat()
+def sha(p): return hashlib.file_digest(P(p).open('rb'),'sha256').hexdigest()
+def write(p,obj):
+    tmp=P(str(p)+'.tmp');tmp.write_text(json.dumps(obj,ensure_ascii=False,indent=2)+'\n');os.replace(tmp,p)
+def row(p):
+    p=P(p);return {'path':str(p),'bytes':p.stat().st_size,'sha256':sha(p),'mode':stat.S_IMODE(p.stat().st_mode)}
+def read_bound(x):
+    p=P(x['path']);assert p.is_file() and not p.is_symlink(),str(p)
+    assert p.stat().st_size==x['bytes'] and sha(p)==x['sha256'],str(p)
+    return p
+def run_small(argv,cwd=None,env=None,timeout=15):
+    return subprocess.run(argv,cwd=cwd,env=env,text=True,capture_output=True,check=True,timeout=timeout)
+def live_group(pgid):
+    try: os.killpg(pgid,0)
+    except ProcessLookupError:return []
+    r=subprocess.run(['/usr/bin/pgrep','-g',str(pgid)],text=True,capture_output=True,timeout=5)
+    if r.returncode==1 and not r.stdout.strip() and not r.stderr.strip():return []
+    assert r.returncode==0,(r.returncode,r.stderr)
+    pids=[int(x) for x in r.stdout.split()]
+    if not pids:return []
+    r=subprocess.run(['/bin/ps','-p',','.join(map(str,pids)),'-o','pid=,pgid=,state='],text=True,capture_output=True,timeout=5)
+    if r.returncode==1 and not r.stdout.strip() and not r.stderr.strip():return []
+    assert r.returncode==0,(r.returncode,r.stderr)
+    return [list(x.split()) for x in r.stdout.splitlines() if len(x.split())==3 and int(x.split()[1])==pgid and not x.split()[2].startswith('Z')]
+def cleanup_group(proc):
+    found=live_group(proc.pid)
+    if found:
+        os.killpg(proc.pid,signal.SIGTERM)
+        deadline=time.monotonic()+8
+        while time.monotonic()<deadline and live_group(proc.pid):time.sleep(.2)
+        if live_group(proc.pid):os.killpg(proc.pid,signal.SIGKILL)
+    try:proc.wait(timeout=10)
+    except subprocess.TimeoutExpired:raise RuntimeError('Owned command did not reap')
+    deadline=time.monotonic()+5
+    while time.monotonic()<deadline and live_group(proc.pid):time.sleep(.2)
+    assert not live_group(proc.pid),'Owned native producer group remains alive'
+def main():
+    ap=argparse.ArgumentParser();ap.add_argument('--plan',required=True);args=ap.parse_args()
+    plan_path=P(args.plan);plan=json.loads(plan_path.read_text());root=P(plan['root']);out=P(plan['output'])
+    assert plan['id']=='notification-native-preparation-v1' and plan['allowanceSeconds']==1800
+    assert root==P('/Users/m1/builds/hanlin-notification-wire-fix-20261125') and root.resolve()==root
+    assert out==root/'validation/notification-native-preparation-v1' and not out.exists()
+    assert sha(__file__)==plan['controllerSHA256']
+    for x in plan['requiredFiles']:read_bound(x)
+    assert run_small(['/usr/bin/git','rev-parse','HEAD'],cwd=root).stdout.strip()==plan['source']
+    assert run_small(['/usr/bin/git','rev-parse','HEAD^{tree}'],cwd=root).stdout.strip()==plan['sourceTree']
+    assert not run_small(['/usr/bin/git','status','--porcelain','--untracked-files=no'],cwd=root).stdout
+    restoration=json.loads(P(plan['restoration']['path']).read_text())
+    assert restoration['status']=='RESTORED_INPUTS' and restoration['source']==plan['source']
+    sdk=json.loads(P(plan['sdkManifest']['path']).read_text());assert len(sdk['sourceInputs'])==235
+    def verify_sdk():
+        errors=[]
+        for x in sdk['sourceInputs']:
+            p=root/x['path']
+            if not p.is_file() or sha(p)!=x['sha256']:errors.append(x['path'])
+        for x in plan['hostArchives']:
+            if sha(x['path'])!=x['sha256']:errors.append(x['path'])
+        return errors
+    assert not verify_sdk(),'SDK20 source/resource mismatch before preparation'
+    node=P(plan['node']['path']);assert node.resolve()==node and sha(node)==plan['node']['sha256']
+    env=os.environ.copy()
+    env.update({'PATH':str(node.parent)+':/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin',
+                'DEVELOPER_DIR':'/Applications/Xcode.app/Contents/Developer',
+                'CI':'1','GITHUB_SHA':plan['source'],'PYTHONUNBUFFERED':'1'})
+    ident=json.loads(run_small([str(node),'-e','console.log(JSON.stringify({version:process.versions.node,platform:process.platform,arch:process.arch,execPath:process.execPath}))'],env=env).stdout)
+    assert ident=={'version':'24.5.0','platform':'darwin','arch':'arm64','execPath':str(node)},ident
+    st=os.statvfs(root);free=st.f_bavail*st.f_frsize
+    assert free>=plan['resourceAssessment']['requiredFreeBytes'],('Insufficient measured preparation capacity',free)
+    lock=(root/'validation/native-owner.lock').open('a+');fcntl.flock(lock,fcntl.LOCK_EX|fcntl.LOCK_NB)
+    started=time.monotonic();out.mkdir()
+    state={'schema':1,'id':plan['id'],'source':plan['source'],'sourceTree':plan['sourceTree'],
+           'status':'RUNNING','startedAt':utc(),'pid':os.getpid(),'commands':[],'errors':[],
+           'sourceErrors':[],'cleanupErrors':[],'freeBytesAtStart':free,'nodeIdentity':ident,
+           'allowanceSeconds':1800,'priorLedgersModified':False,'oldDerivedDataModified':False,
+           'plan':row(plan_path),'controller':row(__file__),'restoration':plan['restoration'],
+           'sdkManifest':plan['sdkManifest'],'hostArchives':plan['hostArchives']}
+    proc=None;current=None
+    def checkpoint():
+        state['observedAt']=utc();state['elapsedSeconds']=time.monotonic()-started;write(out/'state.json',state)
+    def interrupt(sig,frame):raise KeyboardInterrupt('Controller signal '+str(sig))
+    signal.signal(signal.SIGTERM,interrupt);signal.signal(signal.SIGINT,interrupt)
+    checkpoint()
+    try:
+        for cmd in plan['commands']:
+            remaining=1800-(time.monotonic()-started)
+            if remaining<=30:raise TimeoutError('Native preparation allowance exhausted before next original command')
+            log=out/(cmd['id']+'.log')
+            current={'id':cmd['id'],'argv':cmd['argv'],'cwd':str(root),'startedAt':utc(),'status':'RUNNING','log':str(log)}
+            state['commands'].append(current);checkpoint()
+            t=time.monotonic()
+            with log.open('xb') as output:
+                proc=subprocess.Popen(cmd['argv'],cwd=root,env=env,stdout=output,stderr=subprocess.STDOUT,start_new_session=True)
+                current['pid']=proc.pid;current['pgid']=proc.pid;checkpoint()
+                code=proc.wait(timeout=remaining-30)
+            cleanup_group(proc);proc=None
+            current.update({'status':'PASS' if code==0 else 'FAILED','exitCode':code,'finishedAt':utc(),
+                            'actualElapsedSeconds':time.monotonic()-t,'logIdentity':row(log)})
+            checkpoint()
+            if code:raise RuntimeError('Original producer failed: '+cmd['id'])
+        state['sourceErrors']=verify_sdk()
+        for x in plan['requiredSourceFiles']:
+            if sha(x['path'])!=x['sha256']:state['sourceErrors'].append(x['path'])
+        if state['sourceErrors']:raise RuntimeError('Declared source/resource bytes changed; SDK20 is not relabeled')
+        spec=importlib.util.spec_from_file_location('native_artifacts',root/'Scripts/SDK/native_artifacts.py')
+        mod=importlib.util.module_from_spec(spec);sys.modules[spec.name]=mod;spec.loader.exec_module(mod)
+        frameworks=[]
+        for target,path in mod.TARGETS.items():
+            frameworks.append({'target':target,'path':path,'libraries':mod.framework_libraries(root/path,target)})
+        assert len(frameworks)==15
+        write(out/'prepared-frameworks.json',{'schema':1,'source':plan['source'],'frameworks':frameworks})
+        state['frameworkReceipt']=row(out/'prepared-frameworks.json')
+        metadata=root/'build/nativescript-metadata-tool/provenance.json'
+        proof=json.loads(metadata.read_text())
+        state['metadataProvenance']=row(metadata);state['metadataTool']=row(root/'build/nativescript-metadata-tool/bin/objc-metadata-generator')
+        assert proof['generatorSHA256']==state['metadataTool']['sha256']
+        assert proof['xcode']==run_small(['/usr/bin/xcodebuild','-version'],env=env).stdout.strip()
+        tracked=run_small(['/usr/bin/git','status','--porcelain','--untracked-files=no'],cwd=root).stdout
+        (out/'tracked-status.txt').write_text(tracked)
+        diff=run_small(['/usr/bin/git','diff','--binary','HEAD'],cwd=root,timeout=30).stdout
+        (out/'prepared-source.diff').write_text(diff)
+        paths=run_small(['/usr/bin/git','diff','--name-only','-z','HEAD'],cwd=root).stdout.split('\0')
+        changes=[]
+        for p in filter(None,paths):
+            actual=root/p
+            prior=subprocess.run(['/usr/bin/git','show','HEAD:'+p],cwd=root,capture_output=True,check=True).stdout
+            changes.append({'path':p,'beforeGitSHA256':hashlib.sha256(prior).hexdigest(),'after':row(actual) if actual.is_file() else None})
+        state['preparedChanges']=changes;state['trackedStatus']=row(out/'tracked-status.txt');state['preparedDiff']=row(out/'prepared-source.diff')
+        state['sdkSourceInputsVerified']=235;state['status']='PREPARED'
+    except BaseException as error:
+        state['status']='FAILED';state['errors'].append(repr(error));state['traceback']=traceback.format_exc()
+    finally:
+        if proc is not None:
+            try:cleanup_group(proc)
+            except BaseException as error:state['cleanupErrors'].append(repr(error))
+        if current and current['status']=='RUNNING':
+            current.update({'status':'FAILED','finishedAt':utc(),'exitCode':proc.returncode if proc else None,
+                            'actualElapsedSeconds':time.monotonic()-t})
+            if P(current['log']).is_file():current['logIdentity']=row(current['log'])
+        try:
+            after=verify_sdk()
+            state['sourceErrors']=sorted(set(state['sourceErrors']+after))
+            state['sourceAfter']=run_small(['/usr/bin/git','rev-parse','HEAD'],cwd=root).stdout.strip()
+            if state['sourceAfter']!=plan['source']:state['sourceErrors'].append('Git HEAD changed')
+        except BaseException as error:state['sourceErrors'].append(repr(error))
+        if state['cleanupErrors'] or state['sourceErrors']:state['status']='FAILED'
+        state['finishedAt']=utc();state['actualElapsedSeconds']=time.monotonic()-started
+        state['remainingAllowanceSeconds']=max(0,1800-state['actualElapsedSeconds'])
+        write(out/'ledger.json',{'schema':1,'id':plan['id'],'allowanceSeconds':1800,
+            'charges':[{'startedAt':state['startedAt'],'finishedAt':state['finishedAt'],'seconds':state['actualElapsedSeconds'],'status':state['status']}],
+            'totalChargedSeconds':state['actualElapsedSeconds'],'remainingAllowanceSeconds':state['remainingAllowanceSeconds'],
+            'priorLedgersModified':False,'restorationChargeRecordedSeparately':54.375687207997544})
+        state['ledger']=row(out/'ledger.json');checkpoint();fcntl.flock(lock,fcntl.LOCK_UN);lock.close()
+    print(json.dumps({'status':state['status'],'state':row(out/'state.json'),'actualElapsedSeconds':state['actualElapsedSeconds']}),flush=True)
+    return 0 if state['status']=='PREPARED' else 1
+if __name__=='__main__':sys.exit(main())

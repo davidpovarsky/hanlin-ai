@@ -1,0 +1,20 @@
+{
+  "schema": 1,
+  "id": "notification-os-v1",
+  "maximumActiveSeconds": 900,
+  "activeElapsedSeconds": 353.58866224999656,
+  "charges": [
+    {
+      "id": "notification-os-v1",
+      "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+      "status": "FAILED",
+      "elapsedSeconds": 353.58866224999656,
+      "statePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/state.json",
+      "decisionSHA256": "6c6daf1c44424cd0c7e68de78a6a46f8727cac01c392eda43c4ed97648109d88",
+      "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines",
+      "separateFromPaired4500AndCompanion1200": true
+    }
+  ],
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "separateFromPaired4500AndCompanion1200": true
+}

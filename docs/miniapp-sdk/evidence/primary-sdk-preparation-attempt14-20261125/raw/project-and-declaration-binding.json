@@ -1,0 +1,255 @@
+{
+  "sourceCommit": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
+  "parserSourceSHA256": "fc46f1e5266f054794811a0756fa51677a291b0533f816f1342a5d42f9ba85b8",
+  "projectSHA256": "71409346bb25cdc8fd5d1d3e8b7363549146e9038044360c93b659615c3b3b3d",
+  "newTarget": {
+    "id": "AC1AB2E6EF07D8BD19B35EDC",
+    "target": {
+      "isa": "PBXNativeTarget",
+      "buildConfigurationList": "AC1A5D505EC62DBE097D5194",
+      "buildPhases": [
+        "AC1A38D284DE915B7FC5EA13",
+        "AC1A50B915F19FB8F7941F7E",
+        "AC1A200F83C701AE3CFCA82E"
+      ],
+      "buildRules": [],
+      "dependencies": [],
+      "fileSystemSynchronizedGroups": [
+        "AC1AE93E557E12AD64B8088E"
+      ],
+      "name": "HanlinMiniAppsNotificationService",
+      "packageProductDependencies": [
+        "AC1900000000000000000042",
+        "AC1900000000000000000040"
+      ],
+      "productName": "HanlinMiniAppsNotificationService",
+      "productReference": "AC1A4E112E2B27FFB777C17B",
+      "productType": "com.apple.product-type.app-extension"
+    },
+    "sourceReferences": [],
+    "configs": [
+      {
+        "isa": "XCBuildConfiguration",
+        "buildSettings": {
+          "APPLICATION_EXTENSION_API_ONLY": "YES",
+          "CODE_SIGN_ENTITLEMENTS": "HanlinMiniAppsExtensions/Notification/HanlinMiniAppsNotificationService.entitlements",
+          "CODE_SIGN_STYLE": "Automatic",
+          "CURRENT_PROJECT_VERSION": "1",
+          "DEVELOPMENT_TEAM": "NA6HPWARQ2",
+          "GENERATE_INFOPLIST_FILE": "NO",
+          "INFOPLIST_FILE": "HanlinMiniAppsExtensions/Notification/Info.plist",
+          "IPHONEOS_DEPLOYMENT_TARGET": "27.0",
+          "LD_RUNPATH_SEARCH_PATHS": [
+            "$(inherited)",
+            "@executable_path/Frameworks",
+            "@executable_path/../../Frameworks"
+          ],
+          "MARKETING_VERSION": "0.1.0",
+          "PRODUCT_BUNDLE_IDENTIFIER": "com.itorah.hanlinminiapps.notification-service",
+          "PRODUCT_NAME": "$(TARGET_NAME)",
+          "SKIP_INSTALL": "YES",
+          "SUPPORTED_PLATFORMS": "iphoneos iphonesimulator",
+          "SWIFT_APPROACHABLE_CONCURRENCY": "YES",
+          "SWIFT_VERSION": "6.0",
+          "TARGETED_DEVICE_FAMILY": "1,2",
+          "PRODUCT_MODULE_NAME": "HanlinMiniAppsNotificationServiceHost"
+        },
+        "name": "Debug"
+      },
+      {
+        "isa": "XCBuildConfiguration",
+        "buildSettings": {
+          "APPLICATION_EXTENSION_API_ONLY": "YES",
+          "CODE_SIGN_ENTITLEMENTS": "HanlinMiniAppsExtensions/Notification/HanlinMiniAppsNotificationService.entitlements",
+          "CODE_SIGN_STYLE": "Automatic",
+          "CURRENT_PROJECT_VERSION": "1",
+          "DEVELOPMENT_TEAM": "NA6HPWARQ2",
+          "GENERATE_INFOPLIST_FILE": "NO",
+          "INFOPLIST_FILE": "HanlinMiniAppsExtensions/Notification/Info.plist",
+          "IPHONEOS_DEPLOYMENT_TARGET": "27.0",
+          "LD_RUNPATH_SEARCH_PATHS": [
+            "$(inherited)",
+            "@executable_path/Frameworks",
+            "@executable_path/../../Frameworks"
+          ],
+          "MARKETING_VERSION": "0.1.0",
+          "PRODUCT_BUNDLE_IDENTIFIER": "com.itorah.hanlinminiapps.notification-service",
+          "PRODUCT_NAME": "$(TARGET_NAME)",
+          "SKIP_INSTALL": "YES",
+          "SUPPORTED_PLATFORMS": "iphoneos iphonesimulator",
+          "SWIFT_APPROACHABLE_CONCURRENCY": "YES",
+          "SWIFT_VERSION": "6.0",
+          "TARGETED_DEVICE_FAMILY": "1,2",
+          "PRODUCT_MODULE_NAME": "HanlinMiniAppsNotificationServiceHost"
+        },
+        "name": "Release"
+      }
+    ],
+    "packageProducts": [
+      "HanlinNotificationExtension",
+      "HanlinExtensionContracts"
+    ],
+    "embedded": [
+      {
+        "phaseID": "AC1A17AA49C9B5C7EF88344D",
+        "buildFile": {
+          "isa": "PBXBuildFile",
+          "fileRef": "AC1A4E112E2B27FFB777C17B",
+          "settings": {
+            "ATTRIBUTES": [
+              "RemoveHeadersOnCopy"
+            ]
+          }
+        }
+      }
+    ],
+    "synchronizedSources": [
+      {
+        "id": "AC1AE93E557E12AD64B8088E",
+        "group": {
+          "isa": "PBXFileSystemSynchronizedRootGroup",
+          "exceptions": [
+            "AC1A9185B3B115E3031BE620"
+          ],
+          "path": "HanlinMiniAppsExtensions/Notification",
+          "sourceTree": "<group>"
+        },
+        "exceptions": [
+          {
+            "isa": "PBXFileSystemSynchronizedBuildFileExceptionSet",
+            "membershipExceptions": [
+              "Info.plist",
+              "HanlinMiniAppsNotificationService.entitlements"
+            ],
+            "target": "AC1AB2E6EF07D8BD19B35EDC"
+          }
+        ],
+        "includedSwiftSource": "HanlinMiniAppsExtensions/Notification/NotificationService.swift"
+      }
+    ],
+    "sourceFileBindings": [
+      {
+        "path": "HanlinMiniAppsExtensions/Notification/NotificationService.swift",
+        "bytes": 235,
+        "sha256": "82f906b9759f275e52db99a9354642546f0b4f9f89437c4c9031e92460e627a9"
+      },
+      {
+        "path": "HanlinMiniAppsExtensions/Notification/Info.plist",
+        "bytes": 1442,
+        "sha256": "9f1fc3aa8ef55f957f6b14151c982c7ee3b006783d08c1de77d4a05a634ee6e4"
+      },
+      {
+        "path": "HanlinMiniAppsExtensions/Notification/HanlinMiniAppsNotificationService.entitlements",
+        "bytes": 349,
+        "sha256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc"
+      }
+    ]
+  },
+  "originalNotificationSPMTargetSnippet": ".target(\n            name: \"HanlinNotificationExtension\",\n            dependencies: [.target(name: \"HanlinExtensionContracts\"), .target(name: \"HanlinScriptExtensions\")],\n            path: \"Packages/HanlinAppExtensionsSDK/Sources/HanlinNotificationExtension\"\n        ),\n        .target(\n            name: \"HanlinTranslationUI\",\n            dependencies: [.target(name: \"HanlinExpoWidgetNative\"), .target(name: \"HanlinScriptContracts\"), .target(name: \"HanlinExtensionContracts\"), .target(name: \"HanlinPlatformContracts\"), .target(name: \"HanlinScriptExtensions\"), .target(name: \"HanlinScriptUI\"), .target(name: \"HanlinChatCore\"), .target(name: \"HanlinLo",
+  "sharedDelegateInGeneratedAIFramework": true,
+  "vendorNativeTargetCount": 15,
+  "vendorMissingTargets": [],
+  "newProjectExtensionIsNotAVendorNativeTarget": true,
+  "typeCorrections": {
+    "producerReceiptSHA256": "c5e5322a6177f36a713380134006d4beb3a0ebd275e435e66b7de93a4cb60f82",
+    "identicalToSDK10": true,
+    "verifiedArchiveCorrections": [
+      {
+        "package": "react-native",
+        "file": "Libraries/Animated/nodes/AnimatedProps.d.ts",
+        "originalSHA256": "0dde4c5442c332f01cb8f830ead7965b64996dca6b9bcc3a280806f48b8d3f21",
+        "correctedSHA256": "aed96d9f0b4b196eb342fdc5c0e952025cdcbb894179360d00319bc9c2b37b4c",
+        "source": "Libraries/Animated/nodes/AnimatedProps.js",
+        "sourceSHA256": "d860011a3cde601ef237ffb40eef05c68cb3b15bc3c25e2fead8db751f1167de",
+        "reason": "Flow explicitly permits an optional nullable style. The TS index signature must admit that named property.",
+        "verifiedManifestMembers": [
+          {
+            "path": "expo/node_modules/react-native/types_generated/Libraries/Animated/nodes/AnimatedProps.d.ts",
+            "sha256": "aed96d9f0b4b196eb342fdc5c0e952025cdcbb894179360d00319bc9c2b37b4c",
+            "bytes": 1275
+          }
+        ]
+      },
+      {
+        "package": "react-native",
+        "file": "Libraries/Lists/VirtualizedList.d.ts",
+        "originalSHA256": "90335722e3f37fbca6dc2dc699efac7ebf2f8866a9cfddce21a3dd6bb9e9a92a",
+        "correctedSHA256": "51500c381dc135aba8268f7af110fb2cc657a0db9c823ec8555f0b9231de0272",
+        "source": "Libraries/Lists/VirtualizedList.js",
+        "sourceSHA256": "94d0e1f682f3422648451be3070a68a6e69eeddce7bed4c43cc3124e89565b5e",
+        "reason": "The exported value is the actual class constructor. Infer its instance without the unrelated React static lifecycle generic constraint.",
+        "verifiedManifestMembers": [
+          {
+            "path": "expo/node_modules/react-native/types_generated/Libraries/Lists/VirtualizedList.d.ts",
+            "sha256": "51500c381dc135aba8268f7af110fb2cc657a0db9c823ec8555f0b9231de0272",
+            "bytes": 1011
+          }
+        ]
+      },
+      {
+        "package": "react-native",
+        "file": "src/private/webapis/dom/nodes/ReadOnlyNode.d.ts",
+        "originalSHA256": "b0599260380ad18e7b783d712990bdf0cfba1346719bb8273fbaf06ed5a61bae",
+        "correctedSHA256": "9f09899132976f3110b403314e07e1a0157459e9f2194259df42094e4114dbaf",
+        "source": "src/private/webapis/dom/nodes/ReactNativeDocument.js",
+        "sourceSHA256": "dcafb922a27f7dac28f3d6079af34c90dfb047ea42f519d6a45fc16a671a4394",
+        "reason": "The abstract base throws; the concrete Document getter really returns null. Preserve that actual subclass behavior in the base return type.",
+        "verifiedManifestMembers": [
+          {
+            "path": "expo/node_modules/react-native/types_generated/src/private/webapis/dom/nodes/ReadOnlyNode.d.ts",
+            "sha256": "9f09899132976f3110b403314e07e1a0157459e9f2194259df42094e4114dbaf",
+            "bytes": 4098
+          }
+        ]
+      },
+      {
+        "package": "@nativescript/react-native",
+        "file": "Runtime.d.ts",
+        "originalSHA256": "f28f211c956653fe859b9fc30a3765afb8902aa3d505248e28e3991fe32d1ca1",
+        "correctedSHA256": "0ec1d58c4bc38f66f8ff77bf03240c304f5e74b5ac17b923de8976f45a68f0cc",
+        "source": "native-api/ffi/objc/shared/bridge/Install.mm",
+        "sourceSHA256": "f8c156b7ea87e6eed0e7aa9a5af1816bacb40332a68038ac521e191e15510e83",
+        "reason": "Actual Install.mm installs constants first and does not overwrite conflicting globals with struct constructors. Keep struct field types and actual constants; do not advertise new timezone()/new dyld_shared_cache_ranges().",
+        "verifiedManifestMembers": [
+          {
+            "path": "expo/node_modules/@nativescript/react-native/types/ios/Runtime.d.ts",
+            "sha256": "0ec1d58c4bc38f66f8ff77bf03240c304f5e74b5ac17b923de8976f45a68f0cc",
+            "bytes": 1268130
+          }
+        ]
+      },
+      {
+        "package": "@nativescript/react-native",
+        "file": "UIKit.d.ts",
+        "originalSHA256": "6ad19868e345469b507442f2666ca55ba69a5a98915e09459739e43246469638",
+        "correctedSHA256": "fde14e711cf6a496d48ba026cc022808df3bce202eec8a0d5521efc72f23d837",
+        "source": "native-api/ffi/objc/shared/bridge/host_objects/Object.mm",
+        "sourceSHA256": "fbc95bc22a5115453f944a408183ca2a64e3338954ba8ca4b2b045146afe7348",
+        "reason": "Apple exposes the ObjC description selector, but the actual JS host object explicitly resolves description to a string before method lookup. Match that JS boundary and inherited NSObject property.",
+        "verifiedManifestMembers": [
+          {
+            "path": "expo/node_modules/@nativescript/react-native/types/ios/UIKit.d.ts",
+            "sha256": "fde14e711cf6a496d48ba026cc022808df3bce202eec8a0d5521efc72f23d837",
+            "bytes": 831181
+          }
+        ]
+      }
+    ]
+  },
+  "applicationBuildAndOSProof": "PENDING_SEPARATE_ACTUAL_RECEIPT",
+  "sharedDelegateInGeneratedMiniAppsTarget": [
+    {
+      "isa": "PBXFileReference",
+      "lastKnownFileType": "sourcecode.swift",
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift",
+      "sourceTree": "SOURCE_ROOT"
+    }
+  ],
+  "expoAssetRetainedProducerBinding": {
+    "receiptSHA256": "299f617ecc8909c16d2a2776488181b5d399a25abed4f255f6b526f8b78ece52",
+    "originalSourceInputSHA256": "a85fc86c413d87679e62878cc4b7b512e925c36806a9b383daf095dab9c55159",
+    "fileCount": 23,
+    "allRetainedStageAndTargetSHA256Equal": true,
+    "boundary": "Reconciles the retained actual producer comparison; framework files were not copied or rehashed by this evidence-only agent."
+  }
+}

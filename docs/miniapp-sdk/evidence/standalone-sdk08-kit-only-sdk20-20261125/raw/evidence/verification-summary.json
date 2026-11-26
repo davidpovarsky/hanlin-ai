@@ -1,0 +1,389 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "verifiedAt": "2026-11-25T21:33:36.354070+00:00",
+  "scope": "Standalone SDK08 authoring replay only: exact retained six production CLI invocations, SDK20, original two representative projects and intentional TypeScript rejection. No native execution.",
+  "productionSource": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+  "SDKProducerSource": "dff3b45c99a57bf8fe8ec721db3fa1fafce7134b",
+  "SDKArchive": {
+    "path": "MiniAppSDK20.zip",
+    "bytes": 68739954,
+    "sha256": "c1c181182d1e47db1f7977a284cea507397dc47e9170645b019dbdec5ab858ca",
+    "mode": "0o644"
+  },
+  "SDKManifest": {
+    "path": "MiniAppSDK/miniapp-sdk.json",
+    "sha256": "6f11ed8da3df18627f05932d47b5b68dec54eb26ac396151a21cbc8c3e65800e"
+  },
+  "SDKInputSHA256": "0388d52ec3ceef1adddb21a8718566876db0ef693520bc761e4ec57573a96514",
+  "productionFiles": [
+    {
+      "path": "kit/Scripts/MiniApps/miniapp.mjs",
+      "bytes": 4101,
+      "sha256": "1c256c00392c626a54ebee2abe3ededaa792c5bfa6dd9b6c5aceb89be84e5b30",
+      "mode": "0o644"
+    },
+    {
+      "path": "kit/AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+      "bytes": 50327,
+      "sha256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9",
+      "mode": "0o644"
+    }
+  ],
+  "prerequisites": {
+    "node": {
+      "path": "/usr/local/bin/node",
+      "version": "v24.22.0",
+      "sha256": "719a43d185f3b6a59d8fcbba1ff06b93c75f76fb0bb9916f81d33921615d4cb5"
+    },
+    "python": {
+      "path": "/usr/bin/python3",
+      "version": "Python 3.12.3",
+      "sha256": "c86f21d0da9290ece2d7d49a3f7ed52aed59cb029abdf0ea25c79634f6cbe960"
+    },
+    "strace": {
+      "path": "/usr/bin/strace",
+      "version": "strace -- version 6.8",
+      "sha256": "33b3ea325915f1213dc477d80e0f0b2b09ffeff5e81d98b25a35320fbcbcaf42"
+    }
+  },
+  "checks": {
+    "expectedInvocations": 6,
+    "matchedInvocations": 6,
+    "positiveValidateAndBuild": 4,
+    "negativeRejects": 2,
+    "SDKFilesByteAndModeIdenticalAfter": 25682,
+    "SDKFileSetUnchanged": true,
+    "productionFilesByteIdentical": true,
+    "originalFixtureFilesByteIdentical": 22,
+    "repositoryDependencyFallbackObserved": false,
+    "externalSuccessfulNodeModuleOpens": 0,
+    "internetNetworkCallsObserved": 0,
+    "ancestorNodeModules": [],
+    "negativeArchiveCreated": false,
+    "negativeBuildStageCreated": false,
+    "sourceOrSDKRegenerated": false,
+    "npmInstallUsed": false,
+    "nativeExecution": "NOT_RUN"
+  },
+  "diagnosticBoundary": {
+    "expo": {
+      "strict": true,
+      "skipLibCheck": false,
+      "dependencyDeclarationsChecked": true
+    },
+    "nativescript": {
+      "strict": true,
+      "skipLibCheck": true,
+      "dependencyDeclarationsChecked": false
+    },
+    "explanation": "Original NativeScript consumer config skips dependency declaration internals; authored source remains strict, and TS2322 was rejected by validate/build."
+  },
+  "commands": [
+    {
+      "id": "expo-validate",
+      "returncode": 0,
+      "succeeded": true,
+      "expectedOutcomeMatched": true,
+      "elapsedSeconds": 9.217229077592492,
+      "command": [
+        "/usr/local/bin/node",
+        "Scripts/MiniApps/miniapp.mjs",
+        "validate",
+        "--sdk",
+        "./MiniAppSDK",
+        "--engine",
+        "expo",
+        "--project",
+        "./workspace/expo-hello-world",
+        "--report",
+        "./artifacts/expo-validate.json"
+      ],
+      "record": {
+        "path": "evidence/expo-validate-command.json",
+        "bytes": 1774,
+        "sha256": "6a8a378d2e9501fc2e4cf5bf550e167695d8cea618e008d6fe1947b34a615871"
+      },
+      "report": {
+        "path": "kit/artifacts/expo-validate.json",
+        "bytes": 1347,
+        "sha256": "bb35f424e154ce3abf5f7a87cb89253937d69d53424c307b3e60aaf548fa825c"
+      },
+      "compilerVersion": "6.0.3",
+      "typecheck": {
+        "strict": true,
+        "checkJs": false,
+        "skipLibCheck": false,
+        "dependencyDeclarationsChecked": true
+      },
+      "diagnostics": []
+    },
+    {
+      "id": "expo-build",
+      "returncode": 0,
+      "succeeded": true,
+      "expectedOutcomeMatched": true,
+      "elapsedSeconds": 35.07494869455695,
+      "command": [
+        "/usr/local/bin/node",
+        "Scripts/MiniApps/miniapp.mjs",
+        "build",
+        "--sdk",
+        "./MiniAppSDK",
+        "--engine",
+        "expo",
+        "--project",
+        "./workspace/expo-hello-world",
+        "--archive",
+        "./artifacts/Expo-Hello-World.hanlinExpo",
+        "--report",
+        "./artifacts/expo-build.json"
+      ],
+      "record": {
+        "path": "evidence/expo-build-command.json",
+        "bytes": 1878,
+        "sha256": "8feb359c6263fc1ada4edf737c07f5d7cee32cfd2cd91f3019f16b0ab8105a4a"
+      },
+      "report": {
+        "path": "kit/artifacts/expo-build.json",
+        "bytes": 1718,
+        "sha256": "8b456208b0c7c32a6c6b77b3ece945227b2ffdaab7c4ac5b7c270012a9075190"
+      },
+      "compilerVersion": "6.0.3",
+      "typecheck": {
+        "strict": true,
+        "checkJs": false,
+        "skipLibCheck": false,
+        "dependencyDeclarationsChecked": true
+      },
+      "diagnostics": []
+    },
+    {
+      "id": "nativescript-validate",
+      "returncode": 0,
+      "succeeded": true,
+      "expectedOutcomeMatched": true,
+      "elapsedSeconds": 7.63492555078119,
+      "command": [
+        "/usr/local/bin/node",
+        "Scripts/MiniApps/miniapp.mjs",
+        "validate",
+        "--sdk",
+        "./MiniAppSDK",
+        "--engine",
+        "nativescript",
+        "--project",
+        "./workspace/nativescript-hello-world",
+        "--report",
+        "./artifacts/nativescript-validate.json"
+      ],
+      "record": {
+        "path": "evidence/nativescript-validate-command.json",
+        "bytes": 1853,
+        "sha256": "a9e3f234d2c09b4b4d11d8ed34374ec4060025fcd933406add2cd6e3dbc1788e"
+      },
+      "report": {
+        "path": "kit/artifacts/nativescript-validate.json",
+        "bytes": 906,
+        "sha256": "e5ebc4f811621fd89732652893da0a5a6c35a5e4735ddd6ccd235fc91dc6b725"
+      },
+      "compilerVersion": "5.9.3",
+      "typecheck": {
+        "strict": true,
+        "checkJs": false,
+        "skipLibCheck": true,
+        "dependencyDeclarationsChecked": false
+      },
+      "diagnostics": []
+    },
+    {
+      "id": "nativescript-build",
+      "returncode": 0,
+      "succeeded": true,
+      "expectedOutcomeMatched": true,
+      "elapsedSeconds": 14.968809400685132,
+      "command": [
+        "/usr/local/bin/node",
+        "Scripts/MiniApps/miniapp.mjs",
+        "build",
+        "--sdk",
+        "./MiniAppSDK",
+        "--engine",
+        "nativescript",
+        "--project",
+        "./workspace/nativescript-hello-world",
+        "--report",
+        "./artifacts/nativescript-build.json",
+        "--archive",
+        "./artifacts/NativeScript-Hello-World.hanlinNativeScript"
+      ],
+      "record": {
+        "path": "evidence/nativescript-build-command.json",
+        "bytes": 1991,
+        "sha256": "5a7b6e87f3a5138d868718dfe4d2ab95c3e4280291cb8b3ff875fc460735b8f6"
+      },
+      "report": {
+        "path": "kit/artifacts/nativescript-build.json",
+        "bytes": 1301,
+        "sha256": "acec71a9124ac93c2b9de1690ce3e40013477b087a123d21cf3d1c4d74c47ac6"
+      },
+      "compilerVersion": "5.9.3",
+      "typecheck": {
+        "strict": true,
+        "checkJs": false,
+        "skipLibCheck": true,
+        "dependencyDeclarationsChecked": false
+      },
+      "diagnostics": []
+    },
+    {
+      "id": "negative-type-error-validate",
+      "returncode": 1,
+      "succeeded": false,
+      "expectedOutcomeMatched": true,
+      "elapsedSeconds": 7.8312846180051565,
+      "command": [
+        "/usr/local/bin/node",
+        "Scripts/MiniApps/miniapp.mjs",
+        "validate",
+        "--sdk",
+        "./MiniAppSDK",
+        "--engine",
+        "nativescript",
+        "--project",
+        "./workspace/nativescript-type-error",
+        "--report",
+        "./artifacts/negative-type-error-validate.json"
+      ],
+      "record": {
+        "path": "evidence/negative-type-error-validate-command.json",
+        "bytes": 1895,
+        "sha256": "8ff05e6892c0ee9278a314f750d65995d0f3a9e311d047c2b03ee088893b9bc1"
+      },
+      "report": {
+        "path": "kit/artifacts/negative-type-error-validate.json",
+        "bytes": 1149,
+        "sha256": "4dfde19cb80ae65a43dd1d79dc7272559a509b9825a64e91ef18e7891eea2fbd"
+      },
+      "compilerVersion": "5.9.3",
+      "typecheck": {
+        "strict": true,
+        "checkJs": false,
+        "skipLibCheck": true,
+        "dependencyDeclarationsChecked": false
+      },
+      "diagnostics": [
+        {
+          "code": "TS2322",
+          "category": "error",
+          "message": "Type 'string' is not assignable to type 'number'.",
+          "file": "index.ts",
+          "line": 36,
+          "column": 14,
+          "endLine": 36,
+          "endColumn": 33
+        }
+      ]
+    },
+    {
+      "id": "negative-type-error-build",
+      "returncode": 1,
+      "succeeded": false,
+      "expectedOutcomeMatched": true,
+      "elapsedSeconds": 8.213286276906729,
+      "command": [
+        "/usr/local/bin/node",
+        "Scripts/MiniApps/miniapp.mjs",
+        "build",
+        "--sdk",
+        "./MiniAppSDK",
+        "--engine",
+        "nativescript",
+        "--project",
+        "./workspace/nativescript-type-error",
+        "--report",
+        "./artifacts/negative-type-error-build.json",
+        "--archive",
+        "./artifacts/Rejected-Type-Error.hanlinNativeScript"
+      ],
+      "record": {
+        "path": "evidence/negative-type-error-build-command.json",
+        "bytes": 2020,
+        "sha256": "5f1c453238441dd61b79f4752e28a28f798acef7407ae2ef6d59a6b46df3589d"
+      },
+      "report": {
+        "path": "kit/artifacts/negative-type-error-build.json",
+        "bytes": 1146,
+        "sha256": "606860f61ba5f7d1994d869613bdeb60e51910bd43a3269c72251a50b8318b71"
+      },
+      "compilerVersion": "5.9.3",
+      "typecheck": {
+        "strict": true,
+        "checkJs": false,
+        "skipLibCheck": true,
+        "dependencyDeclarationsChecked": false
+      },
+      "diagnostics": [
+        {
+          "code": "TS2322",
+          "category": "error",
+          "message": "Type 'string' is not assignable to type 'number'.",
+          "file": "index.ts",
+          "line": 36,
+          "column": 14,
+          "endLine": 36,
+          "endColumn": 33
+        }
+      ]
+    }
+  ],
+  "archives": [
+    {
+      "path": "kit/artifacts/Expo-Hello-World.hanlinExpo",
+      "bytes": 1949299,
+      "sha256": "30b66015c36fb93884ed5360112fb7224c623ae8357d8d8a2894dfd959fa46f1",
+      "engine": "expo",
+      "CRC": "PASS",
+      "memberCount": 14
+    },
+    {
+      "path": "kit/artifacts/NativeScript-Hello-World.hanlinNativeScript",
+      "bytes": 7816,
+      "sha256": "f58ef154b7bb2036653ce44139824c96738eb0258c7c257bc8e4ca72854379d9",
+      "engine": "nativescript",
+      "CRC": "PASS",
+      "memberCount": 16
+    }
+  ],
+  "traceAudit": {
+    "path": "evidence/trace-audit.json",
+    "bytes": 1074452,
+    "sha256": "5db25c8aff061960701076501de3c688820877706f57033d0d3044ce9fedba79"
+  },
+  "archiveAudit": {
+    "path": "evidence/archive-audit.json",
+    "bytes": 10641,
+    "sha256": "6fe725b930fa491de872d16997d658c61aa1f63820739bdb8b125b638e1b0970"
+  },
+  "SDKInventoryBefore": {
+    "path": "evidence/sdk-member-inventory-before.json",
+    "bytes": 5738246,
+    "sha256": "5d19aa8ab4af888a41dfc6833a587be1a2885390aac4bc2e94fce1a9b7882f10"
+  },
+  "SDKInventoryAfter": {
+    "path": "evidence/sdk-member-inventory-after.json",
+    "bytes": 5738246,
+    "sha256": "5d19aa8ab4af888a41dfc6833a587be1a2885390aac4bc2e94fce1a9b7882f10"
+  },
+  "historicalSDK19Proof": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only/evidence/verification-summary.json",
+    "sha256": "7d1885c948302bc7a4b8151be968105bc41ffbebee715d2d5cdc4800fea9970f"
+  },
+  "operationalHarness": {
+    "path": "replay-six-recorded-commands.py",
+    "bytes": 9926,
+    "sha256": "f8be88ce6ec392f0971b8542da76292ceecff0322f9fdd785572e5c55d687622"
+  },
+  "traceNote": "Optional ancestor dependency probes failed. All successful compiler/dependency opens remained within this SDK20 kit; system Node, Python and OS libraries are prerequisites. Complete traces retained.",
+  "runnerIdentityBoundary": "No original runner script was retained; this new wrapper replays the unchanged original six recorded commands and assertions. It does not fabricate a historical script identity."
+}

@@ -1,0 +1,55 @@
+{
+  "capturedAt": "2026-11-25T14:09:52.469870+00:00",
+  "source": "f6bb035f2828ec24a683bb2f5f1dddb27143dc4a",
+  "aiBuild": {
+    "argv": [
+      "xcodebuild",
+      "-project",
+      "AI_HLY.xcodeproj",
+      "-destination",
+      "platform=iOS Simulator,id=E742FBCD-8FF0-4130-B143-7F8328637138",
+      "-parallel-testing-enabled",
+      "NO",
+      "-derivedDataPath",
+      "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete",
+      "-clonedSourcePackagesDirPath",
+      "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/SourcePackages",
+      "-skipPackagePluginValidation",
+      "-skipMacroValidation",
+      "CODE_SIGNING_ALLOWED=YES",
+      "CODE_SIGNING_REQUIRED=YES",
+      "CODE_SIGN_IDENTITY=-",
+      "-scheme",
+      "AI_HLY",
+      "build-for-testing",
+      "-resultBundlePath",
+      "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v7/native-result/paired-prefix/AIBuild.xcresult"
+    ],
+    "exit": 0,
+    "seconds": 121.2856520839996,
+    "log": "ai-build.log",
+    "sha256": "eac9e35e7857e68b2bb3dbaed022640908511f4daa0d8e4dd4a73669bb4f6f29"
+  },
+  "files": [
+    {
+      "path": "built-input-bindings.json",
+      "bytes": 11843,
+      "sha256": "e2ee9f0368c627b7c4b45ae847a0472aa14e1da91b63957ff53c6b94a15c8e43"
+    },
+    {
+      "path": "staged-inputs.json",
+      "bytes": 5833,
+      "sha256": "f30becc670e67684e8a1399f6c3662ad7fc887e247482eba7854c8cd7b6203bf"
+    },
+    {
+      "path": "paired-prefix/commands.jsonl",
+      "bytes": 7849,
+      "sha256": "1613a301b130c8745f76033869bf395e460cb904668b5e19eaa94bdce3dc5077"
+    },
+    {
+      "path": "paired-prefix/ai-build.log",
+      "bytes": 378734,
+      "sha256": "eac9e35e7857e68b2bb3dbaed022640908511f4daa0d8e4dd4a73669bb4f6f29"
+    }
+  ]
+}

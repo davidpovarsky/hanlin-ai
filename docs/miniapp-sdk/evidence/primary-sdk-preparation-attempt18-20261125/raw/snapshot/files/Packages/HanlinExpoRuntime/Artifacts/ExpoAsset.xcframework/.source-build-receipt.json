@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "inputSHA256": "4939d8a43c4a36e9373396d26fbf46f12c30eff34ee57f486dc1a07acb0c4d83",
+  "xcode": "Xcode 27.0\nBuild version 27A266a",
+  "cocoaPods": "1.17.0",
+  "podLockSHA256": "c012c6f8ee2ca782aea7788349d75a3a57e6e4be8d324037a8b9dce573e4d8e6",
+  "originalPackage": {
+    "name": "expo-asset",
+    "version": "58.0.21",
+    "sha256": "2bfbb115da9111702530e5df550eac7e2a074aa12b6297fcc332744767623126",
+    "integrity": "sha512-qaJmuTtswggXdBQfiUdpxrVGM7l+tH8iEDHwVDMuxyCF/kAau8sUGVuWrDKYNW4yAx7Z8ncgsT8s27pXjRH5GA=="
+  },
+  "nativeBuild": "original Expo CLI prebuild + original CocoaPods podspec + Xcode device/simulator frameworks",
+  "swiftModuleDistribution": "same-Xcode internal build input; exact compiler identity is part of inputSHA256",
+  "slices": [
+    {
+      "LibraryPath": "ExpoAsset.framework",
+      "SupportedPlatformVariant": "simulator",
+      "SupportedPlatform": "ios",
+      "BinaryPath": "ExpoAsset.framework/ExpoAsset",
+      "LibraryIdentifier": "ios-arm64_x86_64-simulator",
+      "SupportedArchitectures": [
+        "arm64",
+        "x86_64"
+      ]
+    },
+    {
+      "LibraryPath": "ExpoAsset.framework",
+      "SupportedPlatform": "ios",
+      "BinaryPath": "ExpoAsset.framework/ExpoAsset",
+      "LibraryIdentifier": "ios-arm64",
+      "SupportedArchitectures": [
+        "arm64"
+      ]
+    }
+  ]
+}

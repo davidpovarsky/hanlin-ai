@@ -1,0 +1,134 @@
+{
+  "schemaVersion": 1,
+  "kind": "WORKLETS_COMPILER_VERSION_SOURCE_AND_EVIDENCE",
+  "createdAt": "2026-11-25T08:45:06.336026+00:00",
+  "sourceCommit": "20de36b7c5020304e4bd45adcdabfa52eff7e23d",
+  "files": [
+    {
+      "path": "raw/native-transfer-receipt.json",
+      "bytes": 5475,
+      "sha256": "32685c82e8187bb23822ec0c627ee03be12d1746763a4165306f6152196febac",
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/worklets-native-binding-attempt17/raw-transfer-receipt.json"
+    },
+    {
+      "path": "raw/native/common-cpp-args.resp",
+      "bytes": 3124,
+      "sha256": "586b640a9b521898a8622a6e698810cf0d99ed94f70bdf8a0f1a5a3383462c16",
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/worklets-native-binding-attempt17/raw/common-cpp-args.resp"
+    },
+    {
+      "path": "raw/native/common-objc-args.resp",
+      "bytes": 3032,
+      "sha256": "0e6985f5ee6bb74bff5cc6a6fa6002cad3ee2dd62a32fd132a1a0227ad4f7013",
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/worklets-native-binding-attempt17/raw/common-objc-args.resp"
+    },
+    {
+      "path": "raw/native/WorkletsVersion.o.gz",
+      "bytes": 52233,
+      "sha256": "ecc36c9a991fe4e2f625a3077bdcdc3a97193d9c37bf72fb53ac4e4fdc422bef",
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/worklets-native-binding-attempt17/raw/WorkletsVersion.o",
+      "decodedOriginal": {
+        "bytes": 199424,
+        "sha256": "858156d8df38aa4c6def868ac563da18ff6b2aa76484b8e4558aef75d60ebe97",
+        "encoding": "gzip"
+      }
+    },
+    {
+      "path": "raw/native/WorkletsVersion.d",
+      "bytes": 1612,
+      "sha256": "d4d26a02620ccf9f329e6dda8819664531b2e3036830c9d4462563508d191e61",
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/worklets-native-binding-attempt17/raw/WorkletsVersion.d"
+    },
+    {
+      "path": "raw/native/WorkletsVersion.cpp",
+      "bytes": 1364,
+      "sha256": "239ac8f50ec7ce0f37fc3c897a76c97af6886130926bb8d985893099c3bbd2fa",
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/worklets-native-binding-attempt17/raw/WorkletsVersion.cpp"
+    },
+    {
+      "path": "raw/native/jsVersion.ts",
+      "bytes": 279,
+      "sha256": "0d690a1518ee03b82322ed4d7d651fba3c2ea6da95ac42c465d984a2cf6b14bc",
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/worklets-native-binding-attempt17/raw/jsVersion.ts"
+    },
+    {
+      "path": "raw/native/worklets-package.json",
+      "bytes": 7265,
+      "sha256": "aa8f3e796568bedf9b72b8cac0b1935a2356a5cd5ba5bd7735e75e1bad7e9ead",
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/worklets-native-binding-attempt17/raw/worklets-package.json"
+    },
+    {
+      "path": "raw/native/worklets-compiled-flag-attempt17.json",
+      "bytes": 3350,
+      "sha256": "9c79f8f249a533c952f2e416883f88366ef883cf0cf705c0c2c6a94edcc3697f",
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/worklets-native-binding-attempt17/raw/worklets-compiled-flag-attempt17.json"
+    },
+    {
+      "path": "raw/worklets-identity-attempt17.json",
+      "bytes": 3586,
+      "sha256": "ccad287742098129da9f2f8a6bd0a53e75411732b653e44d64842abee8bfc288",
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/worklets-native-binding-attempt17/worklets-identity-attempt17.json"
+    },
+    {
+      "path": "raw/worklets-native-binding-attempt17.json",
+      "bytes": 7714,
+      "sha256": "6c17bd4e63a0cd4f8925ef9b35e08e82f791d90878ec675382ea62ad1963a69f",
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/worklets-native-binding-attempt17/worklets-native-binding-attempt17.json"
+    },
+    {
+      "path": "raw/portable/focused-portable-candidate.log",
+      "bytes": 1138,
+      "sha256": "fb6001baed36b7f872a333e9f17b3629ba8119c7e729c950d4e86fc88f03107f",
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/worklets-compiler-contract-attempt18/focused-portable-candidate.log"
+    },
+    {
+      "path": "raw/portable/focused-portable-candidate.json",
+      "bytes": 3922,
+      "sha256": "d394ea959870f7ae33ef4c77c1dead11248fa7c8d329cf4d202cd4f46217692d",
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/worklets-compiler-contract-attempt18/focused-portable-candidate.json"
+    },
+    {
+      "path": "raw/portable/focused-portable-final.log",
+      "bytes": 349,
+      "sha256": "91c7117ac20616c0eb18d26751c98d658bf657916bfd852c3ac7b9b0367b1735",
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/worklets-compiler-contract-attempt18/focused-portable-final.log"
+    },
+    {
+      "path": "raw/portable/focused-portable-final.json",
+      "bytes": 2284,
+      "sha256": "fd4bf27cc52be05aea9d42d988c6a8557a8c1b1b7236750e5204853859151e45",
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/worklets-compiler-contract-attempt18/focused-portable-final.json"
+    },
+    {
+      "path": "original/RNWorklets.podspec",
+      "bytes": 3988,
+      "sha256": "fdbd52bb753af0370e2b9f806339be0728880c7c57dcc642fe96761fb7854fc9",
+      "source": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Expo/node_modules/react-native-worklets/RNWorklets.podspec"
+    },
+    {
+      "path": "original/VersionUtils.cpp",
+      "bytes": 1792,
+      "sha256": "ce81145fb9ef1b807cb3903470a3b29318974512efe52b62d36675033a96da35",
+      "source": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Expo/node_modules/react-native-worklets/Common/cpp/worklets/Tools/VersionUtils.cpp"
+    },
+    {
+      "path": "original/checkCppVersion.ts",
+      "bytes": 1320,
+      "sha256": "012e4e0ace7106f5afc64306e14b55ecf13fb7a98eb18d68ecb5ebebf61c9f57",
+      "source": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Expo/node_modules/react-native-worklets/src/debug/checkCppVersion.ts"
+    },
+    {
+      "path": "analysis.json",
+      "bytes": 8520,
+      "sha256": "107a565a320cb20eac64016cdcd71634093db3be3dcf2a0006a4441788629d0c"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2961,
+      "sha256": "e002db22592c4a2db1529d6d3d591917e175d57c93d1394430964af17eeb71f7"
+    }
+  ],
+  "memberCount": 20,
+  "totalStoredBytes": 115308,
+  "nativeAcceptanceAfterCorrection": "NOT_RUN"
+}

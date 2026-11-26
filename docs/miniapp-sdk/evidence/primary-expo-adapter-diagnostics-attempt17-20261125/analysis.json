@@ -1,0 +1,148 @@
+{
+  "schema": "hanlin.expo-adapter-diagnostics.v1",
+  "recordedAt": "2026-11-25T08:24:07.303199+00:00",
+  "actualFailureSource": "cffe7f75436aa2e37ec5d82891937965c0407d2d",
+  "candidateSource": "8f63b410d97f6854b2a3785d2b3ef4dd14d4794f",
+  "actualSuite": {
+    "MiniApps": {
+      "passed": 16,
+      "failed": 9,
+      "skipped": 0
+    },
+    "AI27": "NOT_RUN"
+  },
+  "rawTerminalIndexSHA256": "fb7d3fb0b4ae0b98c495796af6ff4f75cdb4148d73701a0e534ee7636decece7",
+  "sourceBindings": [
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoUIModule.swift",
+      "actualFailureSourceBytes": 19136,
+      "actualFailureSourceSHA256": "700fde24b841e544b21ad20edd0bc2edc485465284a81271eaf4cc6630b476cd",
+      "candidateBytes": 19417,
+      "candidateSHA256": "ccb46dbdf9bdcd03eea952c6699cec1f83d40822bc944bad57e69feb8815cf28"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedViews.swift",
+      "actualFailureSourceBytes": 3020,
+      "actualFailureSourceSHA256": "838154d4e8a44b07eb312dee19df283b217842633c6dbeb84bc369edba77699e",
+      "candidateBytes": 3269,
+      "candidateSHA256": "659364752ba7b69ef70d90f5aad061f391526cb8b6f135a47bf72f0f19b00e18"
+    },
+    {
+      "path": "Packages/HanlinSwiftUIBridgeGenerator/Sources/HanlinSwiftUIBridgeCore/OutputGenerator.swift",
+      "actualFailureSourceBytes": 51162,
+      "actualFailureSourceSHA256": "936e7c000c5a3170b47450d57a7a7fbac7416e94da92fc548333966f0222f6a4",
+      "candidateBytes": 51603,
+      "candidateSHA256": "9468d0da401cbe55a4f041918c107ecc2b676159ee0f6d309d26de7d19750cd8"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/GeneratedModifiersProbe.tsx",
+      "actualFailureSourceBytes": 16669,
+      "actualFailureSourceSHA256": "3b20939a057885bd2293fc65080bfdb28b51ecaa68adab8a26298e8fd251ea1d",
+      "candidateBytes": 16879,
+      "candidateSHA256": "ea8594b03cf65e8b06a83faa25fd86e3cb7fa065ac6f0e3d5eea663198ad958e"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ManualAdapterProbe.tsx",
+      "actualFailureSourceBytes": 11112,
+      "actualFailureSourceSHA256": "4794f92fc158639b806c0f80bf74cf71775651ad2acd2c24c9462f9d810ff48e",
+      "candidateBytes": 11112,
+      "candidateSHA256": "4794f92fc158639b806c0f80bf74cf71775651ad2acd2c24c9462f9d810ff48e"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/GeneratedViewsProbe.tsx",
+      "actualFailureSourceBytes": 7237,
+      "actualFailureSourceSHA256": "c3be93227141ac5d52ed52d02272eb631b6923d76fb66c4d02b024bb09ef3878",
+      "candidateBytes": 7237,
+      "candidateSHA256": "c3be93227141ac5d52ed52d02272eb631b6923d76fb66c4d02b024bb09ef3878"
+    },
+    {
+      "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "actualFailureSourceBytes": 90363,
+      "actualFailureSourceSHA256": "0fe914bfd7b913ba2cb84002df8302582d4d66f0aafbff1ea3c73a976b696a38",
+      "candidateBytes": 91512,
+      "candidateSHA256": "12d0d1c7a3a46044ccc00f995fb8cf0090058a373aca492b181c522238002537"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/README.md",
+      "actualFailureSourceBytes": 2662,
+      "actualFailureSourceSHA256": "9904dc92afb28444f17493c4f26c5d8dfe81e39c2c78fa1ab45002cc90ac70c7",
+      "candidateBytes": 3585,
+      "candidateSHA256": "4e2965ada75bf9bd6bdf6ffb4ebcfe4a06ba49888bb04e803086e358a2a481df"
+    }
+  ],
+  "originalAPIBindings": [
+    {
+      "source": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Expo/node_modules/@expo/ui/package.json",
+      "bytes": 6032,
+      "sha256": "5332dd3b83612fcc7e30f50cb2e137f1e0051b6b2032b0d006f5840a13cf5281"
+    },
+    {
+      "source": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Expo/node_modules/@expo/ui/ios/UIBaseView.swift",
+      "bytes": 4053,
+      "sha256": "654fcc032fd3fa219ddb21ad2789659076571b256f699f9371bafd128de95b0a"
+    },
+    {
+      "source": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Expo/node_modules/@expo/ui/ios/TextFieldView.swift",
+      "bytes": 9493,
+      "sha256": "38489d3129dd69c37c9bff8dfbda4e586a64f9aa1c25e382dcd24fa5c933e867"
+    },
+    {
+      "source": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Expo/node_modules/@expo/ui/ios/ListForEachView.swift",
+      "bytes": 1197,
+      "sha256": "bb9443244d57a929255032211ef0cd1208eaf30591ce856e0525c5838c963caa"
+    },
+    {
+      "source": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Expo/node_modules/@expo/ui/ios/SlotView.swift",
+      "bytes": 1220,
+      "sha256": "cdaa678a318b3a57c40305235feaa5c1a50e052179f2900a335cafced9772747"
+    },
+    {
+      "source": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Expo/node_modules/expo-modules-core/ios/Core/Views/SwiftUI/ExpoSwiftUI.swift",
+      "bytes": 1442,
+      "sha256": "558d677be1246d150797bd2d46e4b604326364d1fc034d4bc8898784ba558f83"
+    },
+    {
+      "source": "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123/Scripts/Expo/node_modules/expo-modules-core/ios/Core/Views/SwiftUI/SwiftUIVirtualView.swift",
+      "bytes": 13794,
+      "sha256": "b3467a932c999cd5cf3c0d8affbcaec37f31b2c3d0b8d9c946d2c7b265da947e"
+    }
+  ],
+  "corrections": [
+    {
+      "commit": "a2df00f91c8b1381bdeb0a4dec685c198c65a245",
+      "scope": "Original ViewWrapper.getWrappedView in generated and manual named-slot projection; generator literal and generated output agree.",
+      "actualEvidence": "Empty GroupBox labels/content; search suggestion rendered in ordinary root; ManualInput missing Focused editor; ManualPresentation empty initial content before any open/dismiss call.",
+      "nativeValidation": "PENDING"
+    },
+    {
+      "commit": "5955c5b8fe7efc801d40313aa45e3957ddb145f7",
+      "scope": "Only original test queries: real combined Alpha native edit row and minus control; exact delete effects retained. Native Modular detail BackButton before unchanged close helper.",
+      "actualEvidence": "Edit-to-Done already passed and native rows/remove controls visible. Modular full text rendered; detail had BackButton labelled Text Search and no root close control.",
+      "nativeValidation": "PENDING"
+    },
+    {
+      "commit": "8f63b410d97f6854b2a3785d2b3ef4dd14d4794f",
+      "scope": "Same original selection-affinity modifier moved from original TextField to documented TextEditor fixture context, with actual TextView/value assertions and limitation documentation. Original generated/public modifier untouched.",
+      "actualEvidence": "PID94039 NSInvalidArgumentException for SwiftUI.UIKitTextField setSelectionAffinity: at07:43:10.898668UTC. Native first-throw stack in SwiftUI.PlatformTextFieldCoordinator.update.",
+      "nativeValidation": "PENDING",
+      "limitation": "Does not claim original TextField affinity crash fixed."
+    }
+  ],
+  "officialDocumentation": [
+    {
+      "url": "https://developer.apple.com/documentation/swiftui/view/textselectionaffinity(_:)",
+      "finding": "Public modifier; documented example uses TextEditor. No explicit TextField prohibition inferred."
+    },
+    {
+      "url": "https://developer.apple.com/documentation/xcuiautomation/xcuielementquery/containing(_:).md",
+      "finding": "Predicate query matches elements containing a matching descendant; used to identify exact Alpha row through its native combined label."
+    }
+  ],
+  "separateObservation": "Retained stdout line999984 reports Worklets native0.13.1 versus JavaScript0.13.0; not attributed as affinity crash cause. Original producer/dependency trace pending.",
+  "boundaries": [
+    "No Mac query, compiler, generator or test executed in this record.",
+    "No modified vendor Expo/Core or no-op public modifier.",
+    "All original test selector names and appended OS method bytes preserved.",
+    "Final SDK/source preparation and actual affected native/UI validation remain required."
+  ]
+}

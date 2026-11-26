@@ -1,0 +1,3 @@
+{"argv": ["xcrun", "simctl", "boot", "E742FBCD-8FF0-4130-B143-7F8328637138"], "exit": 0, "seconds": 0.6991541669995058, "log": "boot.log", "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}
+{"argv": ["xcrun", "simctl", "bootstatus", "E742FBCD-8FF0-4130-B143-7F8328637138", "-b"], "exit": 0, "seconds": 9.508545083008357, "log": "bootstatus.log", "sha256": "ee8305a7b2ea0207733aa6304d52bdf5e01ffb2118dff24dfe922719c312581f"}
+{"argv": ["node", "Scripts/Expo/build-probe.mjs"], "exit": 1, "seconds": 21.617378541996004, "log": "original-expo-probe.log", "sha256": "ab98064ae777bae26834eb567b7c2061d03d5ed9d6d4d760f699d962650670f5"}

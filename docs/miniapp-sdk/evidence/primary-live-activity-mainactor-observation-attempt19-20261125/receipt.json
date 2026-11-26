@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 1,
+  "sealedAt": "2026-11-25T11:15:40.333165+00:00",
+  "sourceCommit": "fcfcfb193acbf98e0d77a67be6db88849fd7af8f",
+  "kind": "ACTUAL_COMPILER_FAILURE_AND_TEST_ONLY_CORRECTION_EVIDENCE",
+  "nativeCorrectedBuildOrTest": "NOT_RUN_BY_THIS_EVIDENCE_AUTHOR",
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 2746,
+      "sha256": "7e38683eaf24002b302b1579b08056735d8bdadc689e37b426bbaee9c3fa0844"
+    },
+    {
+      "path": "actual-compiler-diagnostics.log",
+      "bytes": 2489,
+      "sha256": "1195577d47db61e5d3959539fc187ddcc8c4ac29be6cdc2741a56a72397f11c6"
+    },
+    {
+      "path": "diagnostic-extract-binding.json",
+      "bytes": 817,
+      "sha256": "08487f185d8b988319132eb473bbdc3e90e2deb48c74f00b87e376bc526851ae"
+    },
+    {
+      "path": "raw/AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift",
+      "bytes": 12639,
+      "sha256": "7d6b159d580636269daf67f6ed04634d586b94d07c960bd099cc9c5f4da9e164"
+    },
+    {
+      "path": "raw/build/primary-control/focused19-v1/controller-child.log",
+      "bytes": 10384,
+      "sha256": "50e1e8e69dc605e6e1b848865df43258820bffe759fce30baafddb4f1e1466aa"
+    },
+    {
+      "path": "raw/build/primary-control/focused19-v1/decision.json",
+      "bytes": 62021,
+      "sha256": "77eef76303d4df1ac274a6cbf3db71b8f7efc4ee7f4e9b623334d565dd3297a3"
+    },
+    {
+      "path": "raw/build/primary-control/focused19-v1/events.jsonl",
+      "bytes": 2674,
+      "sha256": "7ec34bf597ad860f24d668d6291161a965476e27d64e22cf347fa80bb7eefa07"
+    },
+    {
+      "path": "raw/build/primary-control/focused19-v1/ledger.json",
+      "bytes": 750,
+      "sha256": "c7835bb97d3017d305628e76ce25b35cfb415433780c4a43f806d0d56fbf708f"
+    },
+    {
+      "path": "raw/build/primary-control/focused19-v1/native-result/paired-prefix/AIBuild.xcresult/Info.plist",
+      "bytes": 776,
+      "sha256": "5a198f7e976f5003dedf427abad9491f54b24098c980be40f43476a8ad126a13"
+    },
+    {
+      "path": "raw/build/primary-control/focused19-v1/native-result/paired-prefix/MiniBuild.xcresult/Info.plist",
+      "bytes": 776,
+      "sha256": "39b81f98bba9d56c1eae8c62b160b855d6c8582ac0da614966e1b85b5b1c4481"
+    },
+    {
+      "path": "raw/build/primary-control/focused19-v1/native-result/paired-prefix/active-command.json",
+      "bytes": 552,
+      "sha256": "005a251586657415acc5f57e040399b8b34b29f1536b3f39622873879243344b"
+    },
+    {
+      "path": "raw/build/primary-control/focused19-v1/native-result/paired-prefix/ai-build.log.gz",
+      "bytes": 62561,
+      "sha256": "f6505cca04f0580510f3621dcf75fae05a7aa78632a33a3c96fb77abb52206e1"
+    },
+    {
+      "path": "raw/build/primary-control/focused19-v1/native-result/paired-prefix/command-events.jsonl",
+      "bytes": 37820,
+      "sha256": "95df1371a1f171fe415373d00b742f37f61b476c0e0b7fa585051e036989bd56"
+    },
+    {
+      "path": "raw/build/primary-control/focused19-v1/native-result/paired-prefix/commands.jsonl",
+      "bytes": 5923,
+      "sha256": "21908d7b1a5b8d6e82700b0d009a1f82172a66388da3ee2467e059607b31f4d6"
+    },
+    {
+      "path": "raw/build/primary-control/focused19-v1/native-result/paired-prefix/created-simulator.txt",
+      "bytes": 37,
+      "sha256": "df333300ba32a39a07bcd88aed5fc6bb5f0b51f738c521f6a0949dc54456a37e"
+    },
+    {
+      "path": "raw/build/primary-control/focused19-v1/native-result/paired-prefix/mini-build.log.gz",
+      "bytes": 75794,
+      "sha256": "27567ecc61276ae302363e31e77c598d895c0b00d77ebef130e230705bba6a23"
+    },
+    {
+      "path": "raw/build/primary-control/focused19-v1/native-result/paired-prefix/original-prefix-state.json",
+      "bytes": 7669,
+      "sha256": "3469b1418aca5cc741b126e40e21486b7b81685f26f0bc1d33669fb3ce208129"
+    },
+    {
+      "path": "raw/build/primary-control/focused19-v1/native-result/paired-prefix/sdk.txt",
+      "bytes": 5,
+      "sha256": "7b01c549928398a045692f24bcac7803b348524cdd76f21265b02984b2ba556a"
+    },
+    {
+      "path": "raw/build/primary-control/focused19-v1/native-result/paired-prefix/source-sha.txt",
+      "bytes": 41,
+      "sha256": "cae36fa138a86bbb422aec45d4b5f2954465d3b60d9c370055ef888b2aeea6b6"
+    },
+    {
+      "path": "raw/build/primary-control/focused19-v1/native-result/state.json",
+      "bytes": 3525,
+      "sha256": "f8f7fd1284b984d77237a2e487961eab0782ba079fadfe43f3805d68148fc24e"
+    },
+    {
+      "path": "raw/build/primary-control/focused19-v1/prefix-state-before.json",
+      "bytes": 9573,
+      "sha256": "846d7b35087174f0c6d5032dc0615d04f5f50eaedc7e48447438d187da90b954"
+    },
+    {
+      "path": "raw/build/primary-control/focused19-v1/primary-state-before.json",
+      "bytes": 111600,
+      "sha256": "57ccab57b3f129e22f15cff94247126d6dc708c8cb2ade3435bf3746226384f9"
+    },
+    {
+      "path": "raw/build/primary-control/focused19-v1/state.json",
+      "bytes": 3959,
+      "sha256": "a7ae2d21b27503b71939ff72670333a7e05736e47e999801f52e6ee6c1520dd6"
+    },
+    {
+      "path": "raw/build/primary-control/state.json",
+      "bytes": 112209,
+      "sha256": "75370da6acbecbbef593533eef974c8afe9c8fea6139ff2a86f3a21b2022ba75"
+    },
+    {
+      "path": "raw/packet-receipt.json",
+      "bytes": 5127,
+      "sha256": "8d1cc3b4be0c4fcfb62841384eb42808b9ad47c5980e7b012d76be93e188edd5"
+    },
+    {
+      "path": "retained-provenance.json",
+      "bytes": 10260,
+      "sha256": "f27c2e4b44e7baec21e7121c00982c5735e6e8fbc9162aecba762a48c24d6757"
+    },
+    {
+      "path": "source-and-sdk-bindings.json",
+      "bytes": 1428,
+      "sha256": "2d32e6b67a9fc6eb739accee1db18a19a43509ed034cce1d097530fdba76466c"
+    },
+    {
+      "path": "source.patch",
+      "bytes": 2697,
+      "sha256": "1fcb201bbe7be69c80b7edf56245e0b72a9fe1b813f0ff65273be7a9d3e7e556"
+    }
+  ],
+  "memberCount": 28,
+  "totalBytes": 546852
+}

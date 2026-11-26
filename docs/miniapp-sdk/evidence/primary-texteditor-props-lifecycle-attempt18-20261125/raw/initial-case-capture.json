@@ -1,0 +1,89 @@
+{
+  "observedAt": "2026-11-25T09:37:49.580995+00:00",
+  "source": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+  "log": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/evidence/paired-product/original-runtimes.log",
+    "bytes": 186153,
+    "sha256": "22c279da5646fbd74574fc312f95831e2284176f9e2f5eaf98d666d5467a5a87"
+  },
+  "state": {
+    "schema": 1,
+    "owner": "/root/native_execution",
+    "id": "paired52-continuation-v4",
+    "source": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+    "scope": "miniapp_complete",
+    "expectedCases": 52,
+    "status": "RUNNING",
+    "decisionSHA256": "62177d808a5c0101dd87548307ece8c3d6c542a8bc56d6c0c93d3fdc4ade7e1d",
+    "controllerPID": 41938,
+    "activeBaselineSeconds": 13320.133330125045,
+    "allowanceSeconds": 5390.276119499977,
+    "originalPlanMaximumActiveSeconds": 12600,
+    "originalTotalPairedAllowanceSeconds": 4500,
+    "priorContinuationChargedSeconds": 2109.7238805000234,
+    "additionalGrants": [
+      {
+        "id": "paired52-additional-grant-20261125",
+        "sha256": "a4e0efba1ef5a375cf6db4ded0637d6ecc8fa31e73fa2fe198ba5d9ce4878738",
+        "seconds": 2400
+      },
+      {
+        "id": "paired52-additional-grant-20261125-supplement",
+        "sha256": "6e35f521dde4ab0c88a413afcc561605cd65c61d4e3b9b8f5b5ccd5c12130271",
+        "seconds": 600
+      }
+    ],
+    "additionalOperationalAllowanceSeconds": 3000,
+    "totalPairedAllowanceSeconds": 7500,
+    "guard": "separately-authorized-paired52-continuation-v4",
+    "argv": [
+      "/bin/bash",
+      "-e",
+      "-o",
+      "pipefail",
+      "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-paired-acceptance.sh"
+    ],
+    "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/original-paired-phase.log",
+    "pairedEvidence": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/evidence/paired-product",
+    "resourceObservationAtLaunch": {
+      "observedAt": "2026-11-25T09:22:33.220941+00:00",
+      "freeBytes": 10139287552,
+      "df": "Filesystem   1024-blocks      Used Available Capacity iused    ifree %iused  Mounted on\n/dev/disk3s5   482797652 429011228   9901648    98% 6535519 99016480    6%   /System/Volumes/Data"
+    },
+    "original52": "RUNNING",
+    "startedAt": "2026-11-25T09:22:33.222287+00:00",
+    "phasePID": 41945,
+    "elapsedSeconds": 900.7706771669909,
+    "logBytes": 14066,
+    "freeBytes": 5532274688
+  },
+  "members": [
+    {
+      "name": "testStandaloneExpoGeneratedEditButtonEditsOriginalList.log",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/evidence/paired-product/original-runtimes.log",
+      "startOffset": 50233,
+      "endOffset": 69487,
+      "completeCase": true,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/live-case-triage-attempt18/testStandaloneExpoGeneratedEditButtonEditsOriginalList.log",
+      "bytes": 19255,
+      "sha256": "36a9871b161d9ff64bb1c4c773ed4937ddd314379688e45b69d35db3a2c18ad6"
+    },
+    {
+      "name": "testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope.log",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/evidence/paired-product/original-runtimes.log",
+      "startOffset": 135432,
+      "endOffset": 149010,
+      "completeCase": true,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/live-case-triage-attempt18/testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope.log",
+      "bytes": 13584,
+      "sha256": "7d0cf3c8d531f194f4569e57e8dbcb4fe04e322287a062642c86daed560cd49f"
+    },
+    {
+      "name": "HanlinMiniAppsUITests.swift",
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "sha256": "12d0d1c7a3a46044ccc00f995fb8cf0090058a373aca492b181c522238002537",
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/live-case-triage-attempt18/HanlinMiniAppsUITests.swift",
+      "bytes": 91512
+    }
+  ]
+}

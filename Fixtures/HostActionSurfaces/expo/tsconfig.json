@@ -1,0 +1,10 @@
+{
+  "include": [
+    "index.ts",
+    "proof.ts",
+    "App.tsx"
+  ],
+  "exclude": [
+    "widget.json"
+  ]
+}

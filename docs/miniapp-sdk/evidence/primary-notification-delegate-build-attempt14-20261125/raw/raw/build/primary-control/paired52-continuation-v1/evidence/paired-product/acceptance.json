@@ -1,0 +1,52 @@
+{
+  "status": "BUILD_FAILED",
+  "ui": "NOT_RUN",
+  "build": "EXECUTED_FAIL",
+  "mini_build": "EXECUTED_FAIL",
+  "ai_build": "NOT_RUN",
+  "physical_device": "NOT_RUN",
+  "provisioned_distribution": "NOT_RUN",
+  "scope": "Original SDK/tools, source diagnostics, native repair sheet, durable AI handoff, actual build/install and NativeScript/Expo runtime controls in both shipping products",
+  "model_boundary": "Only the HTTP model response sequence and the native adapter image fixture resources are deterministic. All source edits, TypeScript diagnostics, Metro/ESM production, imports, receipts, native rendering and UI events are original production code.",
+  "started_at": 1795585088.191493,
+  "test_scope": "miniapp_complete",
+  "selected_tests": [
+    "AI_HLYTests/PendingFirstTurnTests/importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings",
+    "AI_HLYTests/PendingFirstTurnTests/cancelledMiniAppRepairPreservesHomeDraft",
+    "AI_HLYTests/HanlinScriptingPlatformCompositionTests/malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic",
+    "AI_HLYTests/MiniAppAuthoringToolTests/originalSDKWriteValidateBuildAndRepair",
+    "AI_HLYTests/MiniAppAuthoringToolTests/sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource",
+    "AI_HLYTests/MiniAppAuthoringToolTests/originalExpoMetroBuildOnEmbeddedNode",
+    "AI_HLYTests/HanlinOriginalScriptWidgetAPITests",
+    "AI_HLYTests/HanlinNativePresentationTests",
+    "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests",
+    "AI_HLYTests/HanlinOriginalScriptWidgetControlTests",
+    "AI_HLYTests/HanlinMiniAppStorageCapacityTests",
+    "AI_HLYTests/HanlinOriginalExpoWidgetTests",
+    "AI_HLYUITests/MiniAppAuthoringUITests",
+    "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure",
+    "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer"
+  ],
+  "sha": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
+  "simulator": "CD1C36FF-F6F3-4694-8CDC-A75160E1A407",
+  "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-27-0",
+  "device": "iPad Pro 13-inch (M5) (16GB)",
+  "app_intents_metadata": {},
+  "error": "xcodebuild exit 65; inspect mini-build.log",
+  "diagnostic_errors": [],
+  "attachment_exports": [],
+  "build_commands": {
+    "mini_build": {
+      "log": "mini-build.log",
+      "command_id": "7ee4bb0b9b7a4e3dbea11a52edab9df3",
+      "status": "completed",
+      "completion_recorded": true,
+      "exit": 65,
+      "observed_returncode": 65
+    }
+  },
+  "result_bundles": [
+    "MiniBuild.xcresult"
+  ],
+  "duration_seconds": 134.1602590084076
+}

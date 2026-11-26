@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "source": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+  "sourceBindings": [
+    {
+      "path": "docs/product-split/CURRENT_BUILD_AND_RUN.md",
+      "source": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+      "bytes": 5646,
+      "sha256": "891c8b33fe5b94f57a38aa6627fb9323957809034cac57b327ab9f088871f038"
+    },
+    {
+      "path": "AI_HLY.xcodeproj/project.pbxproj",
+      "source": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+      "bytes": 246069,
+      "sha256": "0d94f6b2ba6fdc6cd8466309d911c5e79a3ea08a0d4c525ce7565a38d9e09c73"
+    },
+    {
+      "path": "Scripts/ProductSplit/prepare_signed_products.py",
+      "source": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+      "bytes": 19479,
+      "sha256": "2795daf9779b0d4b5515f2c5bec4dbbddcbae846a753b09daffe606eafb97f3f"
+    },
+    {
+      "path": "AI_HLY/NativeAppPlatform/AppsHub/NativeAppsAddSheet.swift",
+      "source": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+      "bytes": 9673,
+      "sha256": "f4b33f2becbc2bb175aeafe55003664592d9843f062eb8d94c7084dc19d33024"
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift",
+      "source": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+      "bytes": 27662,
+      "sha256": "ab893036c8b7cc8b8d8313eaef10ab18468adfec95c2ba1ff68944fc83591f4b"
+    },
+    {
+      "path": "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsProvider.swift",
+      "source": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+      "bytes": 8388,
+      "sha256": "aa5480c70a5eb10ec6f57261cc830b51548b0c360eb5cfd2d9a1d6379d01f466"
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/MiniAppImportDiagnosticsView.swift",
+      "source": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+      "bytes": 7447,
+      "sha256": "b6697d6f580ce11be5bd2556279a0fede45c6d5625eee6f6493259a67f8aba02"
+    },
+    {
+      "path": "docs/miniapp-sdk/IMPORT_REPAIR.md",
+      "source": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+      "bytes": 5178,
+      "sha256": "489d50e487708c860b023da81c5a1a960e124fee0c07f197ab8bdd98090590f2"
+    },
+    {
+      "path": "docs/miniapp-sdk/README.md",
+      "source": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+      "bytes": 15957,
+      "sha256": "90068db0d87718cc9f995f9d45c1e2e8a7bd670aa8b8f3b324f0bf4cfc591d95"
+    },
+    {
+      "path": "Scripts/MiniApps/stage-sdk.mjs",
+      "source": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+      "bytes": 22599,
+      "sha256": "f0d2b438ee79ac0973f8d261ecf626b2a94268e5140c6dcb67f48b07cabd1f25"
+    }
+  ],
+  "preparedProjectBindings": [
+    {
+      "path": "AI_HLY.xcodeproj/project.pbxproj",
+      "snapshotPath": "files/AI_HLY.xcodeproj/project.pbxproj",
+      "bytes": 252023,
+      "sha256": "a80e2947b4dedf0ce95b326cf44b0efac613b7b044058e3afc3fccb870cb0087",
+      "mode": "0o644"
+    }
+  ],
+  "sourceSnapshotReceiptSHA256": "eb18c6769824496ae5b37f2483dc191c36e614f166e799efe4490b3dbcda83f8",
+  "sdkInputSHA256": "ca69ce053b0d82c258ffd29f1e0ec07eb77da9f8f6893ffe1a68eecdbe02c7ca",
+  "outsideSDKInputs": true,
+  "exclusionSource": "Scripts/MiniApps/stage-sdk.mjs:80-81,86-87,140-145; evidence directory excluded from SDK input walk and documentation copy",
+  "applePrimarySources": [
+    {
+      "url": "https://developer.apple.com/documentation/xcode/running-your-app-on-simulated-or-physical-devices.md",
+      "readableOfficialContent": true
+    },
+    {
+      "url": "https://developer.apple.com/documentation/xcode/enabling-developer-mode-on-a-device.md",
+      "readableOfficialContent": true
+    }
+  ],
+  "physicalInventoryReference": {
+    "observedAt": "2026-11-25T05:00:15.976606Z",
+    "physicalIOS": 0,
+    "physicalMac": 1,
+    "iosSimulators": 52,
+    "watchSimulators": 5,
+    "rawSHA256": "f74ce64c4b72346f70685d8486f8b6606c9ffda3c774789e966b3501f2c695a6",
+    "boundary": "Inventory only, not physical installation or guide execution."
+  }
+}

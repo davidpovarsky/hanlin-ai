@@ -1,0 +1,108 @@
+{
+  "schema": 1,
+  "id": "focused19-v3",
+  "owner": "/root/native_execution",
+  "source": "6c006c948f0a6f371f7fc68b90e393f43734f8dd",
+  "sourceTree": "ecd109e872e08873410a6bf55db697bd42864fa2",
+  "status": "FOCUSED_FAILED",
+  "expectedGroups": {
+    "FocusedManual1": {
+      "expected": 1,
+      "selectors": [
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters"
+      ]
+    },
+    "FocusedRepair1": {
+      "expected": 1,
+      "selectors": [
+        "AI_HLYUITests/MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport"
+      ]
+    }
+  },
+  "expectedTotal": 2,
+  "producerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+  "originalFocusedAllowanceSeconds": 3600,
+  "priorFocusedChargeSeconds": 1343.8571367920085,
+  "priorFocusRecords": [
+    {
+      "path": "build/primary-control/focused19-v1/state.json",
+      "sha256": "a7ae2d21b27503b71939ff72670333a7e05736e47e999801f52e6ee6c1520dd6"
+    },
+    {
+      "path": "build/primary-control/focused19-v1/ledger.json",
+      "sha256": "c7835bb97d3017d305628e76ce25b35cfb415433780c4a43f806d0d56fbf708f"
+    },
+    {
+      "path": "build/primary-control/focused19-v1/decision.json",
+      "sha256": "77eef76303d4df1ac274a6cbf3db71b8f7efc4ee7f4e9b623334d565dd3297a3"
+    },
+    {
+      "path": "build/primary-control/focused19-v1/native-result/state.json",
+      "sha256": "f8f7fd1284b984d77237a2e487961eab0782ba079fadfe43f3805d68148fc24e"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/state.json",
+      "sha256": "9e199031a41095f66c101962da3c1c4ad330e748a9ac2afc267aac71384c2a21"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/ledger.json",
+      "sha256": "ec1d8b41595201d0a64b86d714a0fbd049cfbc9339b8a494fff25875cf6d6898"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/decision.json",
+      "sha256": "72608e39bc0987c619ea24b0eeea53b18cd5cca6f86c4a3dab688699580a315c"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/native-result/state.json",
+      "sha256": "5a0005645e789fc4979ff7515faf2c7ed28a589ff1f5aacdaa35cfdb388a3339"
+    }
+  ],
+  "controllerPID": 38290,
+  "activeBaselineSeconds": 16816.768909376045,
+  "allowanceSeconds": 2256.1428632079915,
+  "decisionSHA256": "e5317f244c6cf6cecb4b9a9c1b3043b1921fbe646d922f332d7bdcd103fea86a",
+  "original52": "UNCHANGED_BY_FOCUSED_RUN",
+  "nativeResult": "FAILED_OR_INCOMPLETE",
+  "resourceObservationAtLaunch": {
+    "observedAt": "2026-11-25T12:22:22.296752+00:00",
+    "freeBytes": 120907382784,
+    "df": "Filesystem   1024-blocks      Used Available Capacity iused      ifree %iused  Mounted on\n/dev/disk3s5   482797652 320839260 118073616    74% 4920860 1180736160    0%   /System/Volumes/Data"
+  },
+  "startedAt": "2026-11-25T12:22:22.297370+00:00",
+  "argv": [
+    "/opt/homebrew/opt/python@3.12/bin/python3.12",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-native-child-v3.py",
+    "--source",
+    "6c006c948f0a6f371f7fc68b90e393f43734f8dd",
+    "--output",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v3/native-result"
+  ],
+  "phasePID": 38317,
+  "elapsedSeconds": 39.67624695900304,
+  "logBytes": 1842,
+  "error": "AssertionError: ",
+  "exitCode": 1,
+  "ownedProcessGroupAtCleanup": [],
+  "remainingOwnedProcessGroup": [],
+  "observedPhaseExitCode": 1,
+  "ownedSimulatorCleanup": {
+    "device": "E742FBCD-8FF0-4130-B143-7F8328637138",
+    "ownership": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v3/native-result/paired-prefix/created-simulator.txt",
+    "ownershipSHA256": "df333300ba32a39a07bcd88aed5fc6bb5f0b51f738c521f6a0949dc54456a37e",
+    "exitCode": 149,
+    "stdout": "",
+    "stderr": "An error was encountered processing the command (domain=com.apple.CoreSimulator.SimError, code=405):\nUnable to shutdown device in current state: Shutdown\n",
+    "observedState": "Shutdown",
+    "observedAt": "2026-11-25T12:23:01.756569+00:00"
+  },
+  "cleanupErrors": [],
+  "sourceErrors": [],
+  "finishedAt": "2026-11-25T12:23:01.973504+00:00",
+  "chargedSeconds": 39.67624695900304,
+  "cumulativeActiveSeconds": 16856.44515633505,
+  "cumulativeFocusedSeconds": 1383.5333837510116,
+  "allowanceExceededDuringCleanup": false,
+  "logSHA256": "5c3085ba2ea41118eae72f8f33666d910d72dc64ca42f8a873f24b23ed8e755a",
+  "chargeCommitted": true,
+  "focusedLedgerSHA256": "c69a3001ec612c74afeaeafcbdf3e8fc2b0ea59fbb96bf18488a2ff641e76ebf"
+}

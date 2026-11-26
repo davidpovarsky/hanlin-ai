@@ -1,0 +1,80 @@
+{
+  "schema": 1,
+  "owner": "/root/native_execution",
+  "id": "paired52-continuation-v4",
+  "source": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+  "scope": "miniapp_complete",
+  "expectedCases": 52,
+  "status": "FAILED",
+  "decisionSHA256": "62177d808a5c0101dd87548307ece8c3d6c542a8bc56d6c0c93d3fdc4ade7e1d",
+  "controllerPID": 41938,
+  "activeBaselineSeconds": 13320.133330125045,
+  "allowanceSeconds": 5390.276119499977,
+  "originalPlanMaximumActiveSeconds": 12600,
+  "originalTotalPairedAllowanceSeconds": 4500,
+  "priorContinuationChargedSeconds": 2109.7238805000234,
+  "additionalGrants": [
+    {
+      "id": "paired52-additional-grant-20261125",
+      "sha256": "a4e0efba1ef5a375cf6db4ded0637d6ecc8fa31e73fa2fe198ba5d9ce4878738",
+      "seconds": 2400
+    },
+    {
+      "id": "paired52-additional-grant-20261125-supplement",
+      "sha256": "6e35f521dde4ab0c88a413afcc561605cd65c61d4e3b9b8f5b5ccd5c12130271",
+      "seconds": 600
+    }
+  ],
+  "additionalOperationalAllowanceSeconds": 3000,
+  "totalPairedAllowanceSeconds": 7500,
+  "guard": "separately-authorized-paired52-continuation-v4",
+  "argv": [
+    "/bin/bash",
+    "-e",
+    "-o",
+    "pipefail",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-paired-acceptance.sh"
+  ],
+  "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/original-paired-phase.log",
+  "pairedEvidence": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/evidence/paired-product",
+  "resourceObservationAtLaunch": {
+    "observedAt": "2026-11-25T09:22:33.220941+00:00",
+    "freeBytes": 10139287552,
+    "df": "Filesystem   1024-blocks      Used Available Capacity iused    ifree %iused  Mounted on\n/dev/disk3s5   482797652 429011228   9901648    98% 6535519 99016480    6%   /System/Volumes/Data"
+  },
+  "original52": "FAILED_OR_INCOMPLETE",
+  "startedAt": "2026-11-25T09:22:33.222287+00:00",
+  "phasePID": 41945,
+  "elapsedSeconds": 1669.903415416993,
+  "logBytes": 20023,
+  "freeBytes": 2270883840,
+  "actualAcceptance": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/evidence/paired-product/acceptance.json",
+    "sha256": "d31420cd49be1d5d99c968603fd5468b3e833df5af6a9101b9a365e677361d13",
+    "status": "INFRA_ERROR",
+    "miniApps": null,
+    "ai": null
+  },
+  "error": "AssertionError: Original paired phase returned 1",
+  "exitCode": 1,
+  "ownedProcessGroupAtCleanup": [],
+  "ownedProcessGroupAfterTermination": [],
+  "observedPhaseExitCode": 1,
+  "ownedSimulatorCleanup": {
+    "ownership": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v4/evidence/paired-product/created-simulator.txt",
+    "startedAt": "2026-11-25T09:50:22.646016+00:00",
+    "device": "50D2F667-196E-4382-A86A-802710579EA9",
+    "exitCode": 149,
+    "stdout": "",
+    "stderr": "An error was encountered processing the command (domain=com.apple.CoreSimulator.SimError, code=405):\nUnable to shutdown device in current state: Shutdown\n",
+    "observedState": "Shutdown"
+  },
+  "remainingOwnedProcessGroup": [],
+  "cleanupErrors": [],
+  "sourceErrors": [],
+  "finishedAt": "2026-11-25T09:50:23.121500+00:00",
+  "cumulativeActiveSeconds": 14990.036745542038,
+  "logSHA256": "c569debbe1cf287825daacc4334d5c0d799b8559a04631bcbfe25504bfa098f2",
+  "allowanceExceededDuringCleanup": false,
+  "chargedSeconds": 1669.903415416993
+}

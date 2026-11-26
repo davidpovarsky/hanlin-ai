@@ -1,0 +1,32 @@
+{
+  "source": "__TEXT,__entitlements",
+  "executable": "HanlinMiniApps",
+  "executable_sha256": "7ea767ff0c107ef7cab0fc25cfb152d2f5aec13fe14002980ac484597d9e6949",
+  "offset": 13458,
+  "bytes": 1190,
+  "section_sha256": "af42e6334ef63e8e48ad03e817ad36368d12292750f49d4b5c3423a5cd26200f",
+  "entitlements": {
+    "application-identifier": "NA6HPWARQ2.com.itorah.hanlinminiapps",
+    "aps-environment": "development",
+    "com.apple.developer.healthkit": true,
+    "com.apple.developer.homekit": true,
+    "com.apple.developer.icloud-container-identifiers": [
+      "iCloud.com.itorah.chavrusachat"
+    ],
+    "com.apple.developer.icloud-services": [
+      "CloudKit",
+      "CloudDocuments"
+    ],
+    "com.apple.developer.kernel.extended-virtual-addressing": true,
+    "com.apple.developer.usernotifications.time-sensitive": true,
+    "com.apple.developer.weatherkit": true,
+    "com.apple.security.application-groups": [
+      "group.com.itorah.chavrusachat",
+      "group.com.itorah.shared"
+    ],
+    "keychain-access-groups": [
+      "NA6HPWARQ2.com.itorah.hanlinminiapps.scriptwidget.services"
+    ]
+  },
+  "source_entitlements_sha256": "6458e58ace4b853a4e291986962c305e54b948173752e98a2932d5d553c8d4ba"
+}

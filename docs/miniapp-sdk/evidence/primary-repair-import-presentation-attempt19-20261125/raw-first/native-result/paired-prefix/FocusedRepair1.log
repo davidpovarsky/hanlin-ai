@@ -1,0 +1,664 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project AI_HLY.xcodeproj -destination "platform=iOS Simulator,id=E742FBCD-8FF0-4130-B143-7F8328637138" -parallel-testing-enabled NO -derivedDataPath /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete -clonedSourcePackagesDirPath /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/SourcePackages -skipPackagePluginValidation -skipMacroValidation CODE_SIGNING_ALLOWED=YES CODE_SIGNING_REQUIRED=YES CODE_SIGN_IDENTITY=- -collect-test-diagnostics never -scheme AI_HLY test-without-building -resultBundlePath /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/paired-prefix/FocusedRepair1.xcresult -test-timeouts-enabled YES -maximum-test-execution-time-allowance 600 "-only-testing:AI_HLYUITests/MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport"
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGNING_ALLOWED = YES
+    CODE_SIGNING_REQUIRED = YES
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  swift-log: https://github.com/apple/swift-log.git @ 96a2f8a
+  mcp-swift-sdk: https://github.com/modelcontextprotocol/swift-sdk.git @ a0ae212
+  Equatable: https://github.com/ordo-one/equatable @ 1.4.1
+  MathJaxSwift: https://github.com/colinc86/MathJaxSwift @ 3.4.0
+  SWCompression: https://github.com/tsolomko/SWCompression.git @ c729f0b
+  SwiftyJSON: https://github.com/SwiftyJSON/SwiftyJSON.git @ 5.0.1
+  LLM: https://github.com/eastriverlee/LLM.swift/ @ 4b25178
+  SwiftStreamingMarkdown: https://github.com/davidpovarsky/hanlin-streaming-markdown @ 5cbb4b6
+  swift-system: https://github.com/apple/swift-system.git @ 1.4.0
+  SwiftAISDK: https://github.com/davidpovarsky/swift-ai-sdk.git @ 07431ab
+  swift-json-schema: https://github.com/ajevans99/swift-json-schema @ 0.13.2
+  NetworkImage: https://github.com/gonzalezreal/NetworkImage @ 6.0.1
+  NativeScriptSDK: https://github.com/NativeScript/ios-spm.git @ 9.1.1
+  ZIPFoundation: https://github.com/weichsel/ZIPFoundation @ 0.9.19
+  EventSource: https://github.com/mattt/eventsource.git @ 1.1.0
+  LaTeXSwiftUI: https://github.com/colinc86/LaTeXSwiftUI @ c45e0fd
+  HTMLEntities: https://github.com/Kitura/swift-html-entities @ 4.0.1
+  SwiftTreeSitter: https://github.com/tree-sitter/swift-tree-sitter @ 08ef81e
+  cmark-gfm: https://github.com/swiftlang/swift-cmark @ 0.9.0
+  SwiftSoup: https://github.com/scinfu/SwiftSoup @ bba848d
+  swift-syntax: https://github.com/swiftlang/swift-syntax.git @ 603.0.2
+  TreeSitter: https://github.com/tree-sitter/tree-sitter @ da6fe9b
+  A2UISwiftCore: https://github.com/a2ui-project/a2ui @ 3ed9601
+  swift-collections: https://github.com/apple/swift-collections.git @ 1.3.0
+  swift-markdown-ui: https://github.com/gonzalezreal/MarkdownUI.git @ 5f61335
+  BitByteData: https://github.com/tsolomko/BitByteData @ 2.1.0
+  swift-atomics: https://github.com/apple/swift-atomics.git @ 1.3.0
+  TreeSitterBash: https://github.com/tree-sitter/tree-sitter-bash @ a06c2e4
+  HighlightSwift: https://github.com/appstefan/highlightswift @ 99c431b
+  SwiftUI-Shimmer: https://github.com/markiv/SwiftUI-Shimmer @ 1.5.1
+  RichTextKit: https://github.com/danielsaidi/RichTextKit.git @ 8aa44cf
+  iosMath: https://github.com/junyan72/iosMath @ ba9ab77
+  HanlinSDK: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete @ local
+  CoreXLSX: https://github.com/CoreOffice/CoreXLSX @ 1391f38
+  SwiftDraw: https://github.com/swhitty/SwiftDraw @ 0.21.0
+  swift-markdown: https://github.com/swiftlang/swift-markdown.git @ 0.7.3
+  Yams: https://github.com/jpsim/Yams.git @ 6.2.2
+  swift-nio: https://github.com/apple/swift-nio.git @ 2.94.0
+  swift-argument-parser: https://github.com/apple/swift-argument-parser @ 1.8.2
+  XMLCoder: https://github.com/maxdesiatov/XMLCoder.git @ 0.14.0
+
+Writing result bundle at path:
+	/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/paired-prefix/FocusedRepair1.xcresult
+
+Resolve Package Graph
+2026-11-25 15:41:23.647764+0100 AI_HLYUITests-Runner[50208:6238125] [Default] Running tests...
+2026-11-25 15:41:23.683820+0100 AI_HLYUITests-Runner[50208:6238125] [UIKit App Config] Update the Info.plist: Launch screens will soon be required.
+objc[50208]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.dmYYVr/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x10495c398) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.dmYYVr/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x1086e8310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-25 15:41:28.154.
+
+2026-11-25 15:41:28.708 xcodebuild[49253:6232368] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-25 15:41:28.708 xcodebuild[49253:6232368] [MT] IDELaunchParametersSnapshot: no debugger version
+Test Suite 'AI_HLYUITests.xctest' started at 2026-11-25 15:41:28.157.
+Test Suite 'MiniAppAuthoringUITests' started at 2026-11-25 15:41:28.158.
+Test Case '-[AI_HLYUITests.MiniAppAuthoringUITests testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport]' started.
+    t =     0.02s Start Test at 2026-11-25 15:41:28.230
+    t =     0.22s Set Up
+    t =     0.23s Open com.itorah.chavrusachat
+    t =     0.23s     Launch com.itorah.chavrusachat
+Resolve Package Graph
+
+    t =    10.76s         Setting up automation session
+    t =    14.64s         Wait for com.itorah.chavrusachat to idle
+    t =    17.60s Waiting 45.0s for "hanlin-settings-tab" Button to exist
+    t =    18.67s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-settings-tab" Button`
+    t =    18.67s         Checking existence of `"hanlin-settings-tab" Button`
+    t =    18.82s Open com.itorah.hanlinminiapps
+    t =    18.83s     Launch com.itorah.hanlinminiapps
+2026-11-25 15:41:47.049 xcodebuild[49253:6232368] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-25 15:41:47.049 xcodebuild[49253:6232368] [MT] IDELaunchParametersSnapshot: no debugger version
+Resolve Package Graph
+
+    t =    26.68s         Setting up automation session
+    t =    30.33s         Wait for com.itorah.hanlinminiapps to idle
+<unknown>:0: warning: -[AI_HLYUITests.MiniAppAuthoringUITests testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport] : Update the Info.plist: Support for all orientations will soon be required.
+    t =    33.10s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-apps-add" Button`
+    t =    33.10s     Checking existence of `"hanlin-apps-add" Button`
+    t =    33.21s     Find the "hanlin-apps-add" Button
+    t =    33.29s     Find the "hanlin-apps-add" Button
+    t =    33.39s Tap "hanlin-apps-add" Button
+    t =    33.39s     Wait for com.itorah.hanlinminiapps to idle
+    t =    33.39s     Find the "hanlin-apps-add" Button
+    t =    33.43s     Check for interrupting elements affecting "hanlin-apps-add" Button
+    t =    33.54s         Wait for com.apple.springboard to idle
+    t =    33.68s     Synthesize event
+    t =    34.13s     Wait for com.itorah.hanlinminiapps to idle
+    t =    35.82s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-import-script-package" Button`
+    t =    35.82s     Checking existence of `"hanlin-import-script-package" Button`
+    t =    35.98s     Find the "hanlin-import-script-package" Button
+    t =    36.13s     Find the "hanlin-import-script-package" Button
+    t =    36.31s Tap "hanlin-import-script-package" Button
+    t =    36.31s     Wait for com.itorah.hanlinminiapps to idle
+    t =    36.31s     Find the "hanlin-import-script-package" Button
+    t =    36.50s     Check for interrupting elements affecting "hanlin-import-script-package" Button
+    t =    36.60s         Wait for com.apple.springboard to idle
+    t =    36.63s     Synthesize event
+    t =    36.93s     Wait for com.itorah.hanlinminiapps to idle
+    t =    37.43s Waiting 20.0s for "hanlin-package-import-list" Any to exist
+    t =    38.50s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-import-list" Any`
+    t =    38.50s         Checking existence of `"hanlin-package-import-list" Any`
+    t =    38.65s Checking existence of `"MiniAppTypeError" Button`
+    t =    38.88s Find the "MiniAppTypeError" Button
+    t =    39.15s Waiting 15.0s for "MiniAppTypeError" Button to exist
+    t =    40.20s     Checking `Expect predicate `existsNoRetry == 1` for object "MiniAppTypeError" Button`
+    t =    40.20s         Checking existence of `"MiniAppTypeError" Button`
+    t =    41.43s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "MiniAppTypeError" Button`
+    t =    41.44s     Checking existence of `"MiniAppTypeError" Button`
+    t =    41.70s     Find the "MiniAppTypeError" Button
+    t =    41.93s     Find the "MiniAppTypeError" Button
+    t =    42.28s Tap "MiniAppTypeError" Button
+    t =    42.28s     Wait for com.itorah.hanlinminiapps to idle
+    t =    42.28s     Find the "MiniAppTypeError" Button
+    t =    42.46s     Check for interrupting elements affecting "MiniAppTypeError" Button
+    t =    42.57s         Wait for com.apple.springboard to idle
+    t =    42.60s     Synthesize event
+    t =    42.93s     Wait for com.itorah.hanlinminiapps to idle
+    t =    42.94s Waiting 90.0s for "hanlin-import-diagnostics-sheet" Any to exist
+    t =    43.94s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    43.94s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    44.36s         Capturing element debug description
+    t =    44.96s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    44.96s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    45.33s         Capturing element debug description
+    t =    45.96s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    45.96s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    46.41s         Capturing element debug description
+    t =    46.95s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    46.95s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    47.31s         Capturing element debug description
+    t =    48.02s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    48.02s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    48.34s         Capturing element debug description
+    t =    48.98s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    48.98s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    49.37s         Capturing element debug description
+    t =    50.00s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    50.00s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    50.40s         Capturing element debug description
+    t =    50.94s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    50.94s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    51.25s         Capturing element debug description
+    t =    51.99s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    51.99s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    52.35s         Capturing element debug description
+    t =    53.00s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    53.00s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    53.32s         Capturing element debug description
+    t =    53.96s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    53.96s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    54.33s         Capturing element debug description
+    t =    54.97s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    54.97s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    55.31s         Capturing element debug description
+    t =    55.94s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    55.94s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    56.36s         Capturing element debug description
+    t =    57.00s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    57.00s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    57.36s         Capturing element debug description
+    t =    57.99s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    57.99s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    58.34s         Capturing element debug description
+    t =    59.02s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    59.02s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    59.38s         Capturing element debug description
+    t =    60.02s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    60.02s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    60.35s         Capturing element debug description
+    t =    60.97s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    60.97s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    61.37s         Capturing element debug description
+    t =    61.99s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    61.99s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    62.45s         Capturing element debug description
+    t =    63.00s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    63.00s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    63.44s         Capturing element debug description
+    t =    63.95s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    63.95s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    64.36s         Capturing element debug description
+    t =    64.99s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    64.99s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    65.29s         Capturing element debug description
+    t =    66.02s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    66.02s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    66.39s         Capturing element debug description
+    t =    66.97s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    66.97s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    67.37s         Capturing element debug description
+    t =    68.01s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    68.01s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    68.44s         Capturing element debug description
+    t =    68.97s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    68.97s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    69.37s         Capturing element debug description
+    t =    69.96s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    69.97s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    70.34s         Capturing element debug description
+    t =    70.95s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    70.95s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    71.24s         Capturing element debug description
+    t =    71.95s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    71.95s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    72.22s         Capturing element debug description
+    t =    72.94s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    72.94s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    73.26s         Capturing element debug description
+    t =    73.99s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    73.99s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    74.29s         Capturing element debug description
+    t =    75.02s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    75.02s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    75.33s         Capturing element debug description
+    t =    75.95s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    75.95s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    76.26s         Capturing element debug description
+    t =    77.01s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    77.01s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    77.34s         Capturing element debug description
+    t =    77.98s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    77.98s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    78.29s         Capturing element debug description
+    t =    78.94s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    78.94s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    79.20s         Capturing element debug description
+    t =    79.95s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    79.95s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    80.32s         Capturing element debug description
+    t =    80.99s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    80.99s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    81.28s         Capturing element debug description
+    t =    82.03s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    82.03s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    82.38s         Capturing element debug description
+    t =    82.94s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    82.95s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    83.28s         Capturing element debug description
+    t =    83.99s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    83.99s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    84.14s Checking existence of `Any (First Match)`
+    t =    84.42s Find the Any (First Match)
+    t =    84.80s Waiting 15.0s for "hanlin-import-diagnostic-2" StaticText to exist
+    t =    85.83s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostic-2" StaticText`
+    t =    85.84s         Checking existence of `"hanlin-import-diagnostic-2" StaticText`
+    t =    86.24s Checking existence of `"hanlin-import-diagnostic-2" StaticText`
+    t =    86.64s Find the Application 'com.itorah.hanlinminiapps'
+    t =    87.17s Added attachment named 'MiniApp original TypeScript diagnostics'
+    t =    87.17s Find the "hanlin-import-repair-agent" Button
+    t =    88.58s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-import-repair-agent" Button`
+    t =    88.58s     Checking existence of `"hanlin-import-repair-agent" Button`
+    t =    88.84s     Find the "hanlin-import-repair-agent" Button
+    t =    89.07s     Find the "hanlin-import-repair-agent" Button
+    t =    89.30s Tap "hanlin-import-repair-agent" Button
+    t =    89.30s     Wait for com.itorah.hanlinminiapps to idle
+    t =    89.30s     Find the "hanlin-import-repair-agent" Button
+    t =    89.51s     Check for interrupting elements affecting "hanlin-import-repair-agent" Button
+    t =    89.62s         Wait for com.apple.springboard to idle
+    t =    89.66s     Synthesize event
+    t =    89.95s     Wait for com.itorah.hanlinminiapps to idle
+    t =    90.72s Wait for com.itorah.chavrusachat to become Running Foreground
+    t =    90.73s Checking existence of `"MiniApp repair unavailable" Alert`
+<unknown>:0: warning: -[AI_HLYUITests.MiniAppAuthoringUITests testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport] :     AVAudioSession_iOS.mm:978   This method can lead to UI unresponsiveness if called on the main thread. Consider using the asynchronous activate/deactivate API instead for calls from the main thread.
+<unknown>:0: warning: -[AI_HLYUITests.MiniAppAuthoringUITests testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport] :            SessionCore.mm:631   This method can lead to UI unresponsiveness if called on the main thread while the audio session is active.
+    t =    93.72s Waiting 45.0s for StaticText (First Match) to exist
+    t =    94.78s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =    94.78s         Checking existence of `StaticText (First Match)`
+    t =    94.95s Wait for com.itorah.hanlinminiapps to become Running Foreground
+Resolve Package Graph
+
+Resolve Package Graph
+
+Resolve Package Graph
+
+    t =   392.81s Checking existence of `"hanlin-file-importer" Button`
+    t =   393.79s Checking existence of `Any (First Match)`
+    t =   394.73s Checking existence of `"hanlin-file-importer" Button`
+    t =   395.06s Checking existence of `Any (First Match)`
+    t =   395.72s Checking existence of `"hanlin-file-importer" Button`
+    t =   395.93s Checking existence of `Any (First Match)`
+    t =   396.75s Checking existence of `"hanlin-file-importer" Button`
+    t =   396.97s Checking existence of `Any (First Match)`
+    t =   397.80s Checking existence of `"hanlin-file-importer" Button`
+    t =   398.02s Checking existence of `Any (First Match)`
+    t =   398.75s Checking existence of `"hanlin-file-importer" Button`
+    t =   399.04s Checking existence of `Any (First Match)`
+    t =   399.72s Checking existence of `"hanlin-file-importer" Button`
+    t =   399.95s Checking existence of `Any (First Match)`
+    t =   400.72s Checking existence of `"hanlin-file-importer" Button`
+    t =   400.93s Checking existence of `Any (First Match)`
+    t =   401.77s Checking existence of `"hanlin-file-importer" Button`
+    t =   401.98s Checking existence of `Any (First Match)`
+    t =   402.80s Checking existence of `"hanlin-file-importer" Button`
+    t =   403.05s Checking existence of `Any (First Match)`
+    t =   403.77s Checking existence of `"hanlin-file-importer" Button`
+    t =   403.95s Checking existence of `Any (First Match)`
+    t =   404.77s Checking existence of `"hanlin-file-importer" Button`
+    t =   405.03s Checking existence of `Any (First Match)`
+    t =   405.76s Checking existence of `"hanlin-file-importer" Button`
+    t =   405.97s Checking existence of `Any (First Match)`
+    t =   406.80s Checking existence of `"hanlin-file-importer" Button`
+    t =   407.10s Checking existence of `Any (First Match)`
+    t =   407.75s Checking existence of `"hanlin-file-importer" Button`
+    t =   408.20s Checking existence of `Any (First Match)`
+    t =   408.74s Checking existence of `"hanlin-file-importer" Button`
+    t =   408.97s Checking existence of `Any (First Match)`
+    t =   409.74s Checking existence of `"hanlin-file-importer" Button`
+    t =   410.06s Checking existence of `Any (First Match)`
+    t =   410.72s Checking existence of `"hanlin-file-importer" Button`
+    t =   410.94s Checking existence of `Any (First Match)`
+    t =   411.75s Checking existence of `"hanlin-file-importer" Button`
+    t =   412.00s Checking existence of `Any (First Match)`
+    t =   412.81s Checking existence of `"hanlin-file-importer" Button`
+    t =   413.01s Checking existence of `Any (First Match)`
+    t =   413.72s Checking existence of `"hanlin-file-importer" Button`
+    t =   413.94s Checking existence of `Any (First Match)`
+    t =   414.79s Checking existence of `"hanlin-file-importer" Button`
+    t =   414.99s Checking existence of `Any (First Match)`
+    t =   415.80s Checking existence of `"hanlin-file-importer" Button`
+    t =   416.01s Checking existence of `Any (First Match)`
+    t =   416.72s Checking existence of `"hanlin-file-importer" Button`
+    t =   416.90s Checking existence of `Any (First Match)`
+    t =   417.71s Checking existence of `"hanlin-file-importer" Button`
+    t =   417.90s Checking existence of `Any (First Match)`
+    t =   418.75s Checking existence of `"hanlin-file-importer" Button`
+    t =   418.94s Checking existence of `Any (First Match)`
+    t =   419.74s Checking existence of `"hanlin-file-importer" Button`
+    t =   419.97s Checking existence of `Any (First Match)`
+    t =   420.81s Checking existence of `"hanlin-file-importer" Button`
+    t =   421.06s Checking existence of `Any (First Match)`
+    t =   421.78s Checking existence of `"hanlin-file-importer" Button`
+    t =   422.02s Checking existence of `Any (First Match)`
+    t =   422.77s Checking existence of `"hanlin-file-importer" Button`
+    t =   423.01s Checking existence of `Any (First Match)`
+    t =   423.73s Checking existence of `"hanlin-file-importer" Button`
+    t =   423.93s Checking existence of `Any (First Match)`
+    t =   424.77s Checking existence of `"hanlin-file-importer" Button`
+    t =   424.98s Checking existence of `Any (First Match)`
+    t =   425.81s Checking existence of `"hanlin-file-importer" Button`
+    t =   426.02s Checking existence of `Any (First Match)`
+    t =   426.77s Checking existence of `"hanlin-file-importer" Button`
+    t =   427.01s Checking existence of `Any (First Match)`
+    t =   427.28s Checking existence of `"hanlin-package-install" Button`
+    t =   427.53s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   427.83s Checking existence of `"hanlin-import-error-message" Any`
+    t =   428.12s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   428.52s Checking existence of `"hanlin-package-import-done" Button`
+    t =   428.65s Tap "hanlin-package-import-done" Button
+    t =   428.65s     Wait for com.itorah.hanlinminiapps to idle
+    t =   428.66s     Find the "hanlin-package-import-done" Button
+    t =   428.76s     Check for interrupting elements affecting "hanlin-package-import-done" Button
+    t =   428.86s         Wait for com.apple.springboard to idle
+    t =   428.91s     Synthesize event
+    t =   429.23s     Wait for com.itorah.hanlinminiapps to idle
+    t =   429.60s Checking existence of `"hanlin-apps-add-done" Button`
+    t =   429.69s Tap "hanlin-apps-add-done" Button
+    t =   429.69s     Wait for com.itorah.hanlinminiapps to idle
+    t =   429.70s     Find the "hanlin-apps-add-done" Button
+    t =   429.79s     Check for interrupting elements affecting "hanlin-apps-add-done" Button
+    t =   429.90s         Wait for com.apple.springboard to idle
+    t =   429.92s     Synthesize event
+    t =   430.22s     Wait for com.itorah.hanlinminiapps to idle
+    t =   430.72s Find the "Search Apps" SearchField
+    t =   430.79s Swipe down Application 'com.itorah.hanlinminiapps'
+    t =   430.79s     Wait for com.itorah.hanlinminiapps to idle
+    t =   431.23s     Find the Application 'com.itorah.hanlinminiapps'
+    t =   431.33s     Check for interrupting elements affecting "Hanlin MiniApps" Application
+    t =   431.42s         Wait for com.apple.springboard to idle
+    t =   431.44s     Synthesize event
+    t =   431.86s     Wait for com.itorah.hanlinminiapps to idle
+    t =   432.24s Waiting 15.0s for "Search Apps" SearchField to exist
+    t =   433.28s     Checking `Expect predicate `existsNoRetry == 1` for object "Search Apps" SearchField`
+    t =   433.28s         Checking existence of `"Search Apps" SearchField`
+    t =   434.38s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "Search Apps" SearchField`
+    t =   434.38s     Checking existence of `"Search Apps" SearchField`
+    t =   434.43s     Find the "Search Apps" SearchField
+    t =   434.47s     Find the "Search Apps" SearchField
+    t =   434.52s     Capturing element debug description
+    t =   434.57s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   434.76s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   434.91s         Find: Descendants matching type SearchField
+    t =   434.92s         Find: Elements matching predicate '"Search Apps" IN identifiers'
+    t =   434.92s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   435.07s         Find: Descendants matching type SearchField
+    t =   435.08s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   435.34s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "Search Apps" SearchField`
+    t =   435.34s     Checking existence of `"Search Apps" SearchField`
+    t =   435.38s     Find the "Search Apps" SearchField
+    t =   435.42s     Find the "Search Apps" SearchField
+    t =   435.47s     Capturing element debug description
+    t =   435.54s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   435.70s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   435.86s         Find: Descendants matching type SearchField
+    t =   435.86s         Find: Elements matching predicate '"Search Apps" IN identifiers'
+    t =   435.86s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   436.02s         Find: Descendants matching type SearchField
+    t =   436.02s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   436.38s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "Search Apps" SearchField`
+    t =   436.38s     Checking existence of `"Search Apps" SearchField`
+    t =   436.43s     Find the "Search Apps" SearchField
+    t =   436.48s     Find the "Search Apps" SearchField
+    t =   436.53s     Capturing element debug description
+    t =   436.62s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   436.80s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   437.00s         Find: Descendants matching type SearchField
+    t =   437.00s         Find: Elements matching predicate '"Search Apps" IN identifiers'
+    t =   437.00s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   437.17s         Find: Descendants matching type SearchField
+    t =   437.17s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   438.39s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "Search Apps" SearchField`
+    t =   438.39s     Checking existence of `"Search Apps" SearchField`
+    t =   438.44s     Find the "Search Apps" SearchField
+    t =   438.48s     Find the "Search Apps" SearchField
+    t =   438.53s     Capturing element debug description
+    t =   438.60s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   438.76s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   438.93s         Find: Descendants matching type SearchField
+    t =   438.93s         Find: Elements matching predicate '"Search Apps" IN identifiers'
+    t =   438.94s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   439.10s         Find: Descendants matching type SearchField
+    t =   439.11s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   439.40s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "Search Apps" SearchField`
+    t =   439.40s     Checking existence of `"Search Apps" SearchField`
+    t =   439.46s     Find the "Search Apps" SearchField
+    t =   439.51s     Find the "Search Apps" SearchField
+    t =   439.61s     Capturing element debug description
+    t =   439.75s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   439.94s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   440.11s         Find: Descendants matching type SearchField
+    t =   440.11s         Find: Elements matching predicate '"Search Apps" IN identifiers'
+    t =   440.11s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   440.27s         Find: Descendants matching type SearchField
+    t =   440.27s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   441.52s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "Search Apps" SearchField`
+    t =   441.57s     Checking existence of `"Search Apps" SearchField`
+    t =   441.64s     Find the "Search Apps" SearchField
+    t =   441.69s     Find the "Search Apps" SearchField
+    t =   441.75s     Capturing element debug description
+    t =   441.84s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   442.02s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   442.19s         Find: Descendants matching type SearchField
+    t =   442.19s         Find: Elements matching predicate '"Search Apps" IN identifiers'
+    t =   442.19s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   442.35s         Find: Descendants matching type SearchField
+    t =   442.36s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   443.37s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "Search Apps" SearchField`
+    t =   443.37s     Checking existence of `"Search Apps" SearchField`
+    t =   443.42s     Find the "Search Apps" SearchField
+    t =   443.46s     Find the "Search Apps" SearchField
+    t =   443.52s     Capturing element debug description
+    t =   443.62s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   443.79s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   443.96s         Find: Descendants matching type SearchField
+    t =   443.96s         Find: Elements matching predicate '"Search Apps" IN identifiers'
+    t =   443.97s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   444.13s         Find: Descendants matching type SearchField
+    t =   444.14s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   444.41s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "Search Apps" SearchField`
+    t =   444.42s     Checking existence of `"Search Apps" SearchField`
+    t =   444.46s     Find the "Search Apps" SearchField
+    t =   444.50s     Find the "Search Apps" SearchField
+    t =   444.55s     Capturing element debug description
+    t =   444.63s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   444.80s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   444.95s         Find: Descendants matching type SearchField
+    t =   444.95s         Find: Elements matching predicate '"Search Apps" IN identifiers'
+    t =   444.96s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   445.12s         Find: Descendants matching type SearchField
+    t =   445.13s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   445.42s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "Search Apps" SearchField`
+    t =   445.42s     Checking existence of `"Search Apps" SearchField`
+    t =   445.46s     Find the "Search Apps" SearchField
+    t =   445.52s     Find the "Search Apps" SearchField
+    t =   445.57s     Capturing element debug description
+    t =   445.64s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   445.87s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   446.06s         Find: Descendants matching type SearchField
+    t =   446.06s         Find: Elements matching predicate '"Search Apps" IN identifiers'
+    t =   446.06s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   446.24s         Find: Descendants matching type SearchField
+    t =   446.24s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   447.35s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "Search Apps" SearchField`
+    t =   447.35s     Checking existence of `"Search Apps" SearchField`
+    t =   447.40s     Find the "Search Apps" SearchField
+    t =   447.44s     Find the "Search Apps" SearchField
+    t =   447.50s     Capturing element debug description
+    t =   447.58s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   447.76s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   447.93s         Find: Descendants matching type SearchField
+    t =   447.93s         Find: Elements matching predicate '"Search Apps" IN identifiers'
+    t =   447.93s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   448.10s         Find: Descendants matching type SearchField
+    t =   448.11s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   448.37s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "Search Apps" SearchField`
+    t =   448.38s     Checking existence of `"Search Apps" SearchField`
+    t =   448.43s     Find the "Search Apps" SearchField
+    t =   448.47s     Find the "Search Apps" SearchField
+    t =   448.52s     Capturing element debug description
+    t =   448.58s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   448.76s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   448.91s         Find: Descendants matching type SearchField
+    t =   448.91s         Find: Elements matching predicate '"Search Apps" IN identifiers'
+    t =   448.91s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   449.06s         Find: Descendants matching type SearchField
+    t =   449.07s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   449.43s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "Search Apps" SearchField`
+    t =   449.43s     Checking existence of `"Search Apps" SearchField`
+    t =   449.48s     Find the "Search Apps" SearchField
+    t =   449.52s     Find the "Search Apps" SearchField
+    t =   449.58s     Capturing element debug description
+    t =   449.66s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   449.82s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   449.97s         Find: Descendants matching type SearchField
+    t =   449.97s         Find: Elements matching predicate '"Search Apps" IN identifiers'
+    t =   449.98s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   450.13s         Find: Descendants matching type SearchField
+    t =   450.13s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   450.41s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "Search Apps" SearchField`
+    t =   450.41s     Checking existence of `"Search Apps" SearchField`
+    t =   450.45s     Find the "Search Apps" SearchField
+    t =   450.49s     Find the "Search Apps" SearchField
+    t =   450.54s     Capturing element debug description
+    t =   450.60s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   450.75s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   450.90s         Find: Descendants matching type SearchField
+    t =   450.90s         Find: Elements matching predicate '"Search Apps" IN identifiers'
+    t =   450.90s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   451.05s         Find: Descendants matching type SearchField
+    t =   451.06s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   451.41s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "Search Apps" SearchField`
+    t =   451.42s     Checking existence of `"Search Apps" SearchField`
+    t =   451.46s     Find the "Search Apps" SearchField
+    t =   451.51s     Find the "Search Apps" SearchField
+    t =   451.57s     Capturing element debug description
+    t =   451.66s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   452.01s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   452.85s         Find: Descendants matching type SearchField
+    t =   452.85s         Find: Elements matching predicate '"Search Apps" IN identifiers'
+    t =   452.85s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   453.03s         Find: Descendants matching type SearchField
+    t =   453.03s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   453.35s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "Search Apps" SearchField`
+    t =   453.35s     Checking existence of `"Search Apps" SearchField`
+    t =   453.41s     Find the "Search Apps" SearchField
+    t =   453.46s     Find the "Search Apps" SearchField
+    t =   453.58s     Capturing element debug description
+    t =   453.68s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   453.85s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   454.01s         Find: Descendants matching type SearchField
+    t =   454.01s         Find: Elements matching predicate '"Search Apps" IN identifiers'
+    t =   454.01s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   454.19s         Find: Descendants matching type SearchField
+    t =   454.19s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   455.40s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "Search Apps" SearchField`
+    t =   455.40s     Checking existence of `"Search Apps" SearchField`
+    t =   455.45s     Find the "Search Apps" SearchField
+    t =   455.50s     Find the "Search Apps" SearchField
+    t =   455.56s     Capturing element debug description
+    t =   455.63s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   455.81s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   455.96s         Find: Descendants matching type SearchField
+    t =   455.96s         Find: Elements matching predicate '"Search Apps" IN identifiers'
+    t =   455.97s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   456.12s         Find: Descendants matching type SearchField
+    t =   456.12s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   456.38s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "Search Apps" SearchField`
+    t =   456.38s     Checking existence of `"Search Apps" SearchField`
+    t =   456.43s     Find the "Search Apps" SearchField
+    t =   456.47s     Find the "Search Apps" SearchField
+    t =   456.54s     Capturing element debug description
+    t =   456.65s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   456.82s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   457.00s         Find: Descendants matching type SearchField
+    t =   457.00s         Find: Elements matching predicate '"Search Apps" IN identifiers'
+    t =   457.00s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   457.20s         Find: Descendants matching type SearchField
+    t =   457.20s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   458.41s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "Search Apps" SearchField`
+    t =   458.41s     Checking existence of `"Search Apps" SearchField`
+    t =   458.46s     Find the "Search Apps" SearchField
+    t =   458.50s     Find the "Search Apps" SearchField
+    t =   458.56s     Capturing element debug description
+    t =   458.62s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   458.78s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   458.93s         Find: Descendants matching type SearchField
+    t =   458.93s         Find: Elements matching predicate '"Search Apps" IN identifiers'
+    t =   458.94s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   459.09s         Find: Descendants matching type SearchField
+    t =   459.10s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   459.41s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "Search Apps" SearchField`
+    t =   459.42s     Checking existence of `"Search Apps" SearchField`
+    t =   459.46s     Find the "Search Apps" SearchField
+    t =   459.52s     Find the "Search Apps" SearchField
+    t =   459.59s     Capturing element debug description
+    t =   459.68s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   459.89s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   460.06s         Find: Descendants matching type SearchField
+    t =   460.06s         Find: Elements matching predicate '"Search Apps" IN identifiers'
+    t =   460.06s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   460.22s         Find: Descendants matching type SearchField
+    t =   460.22s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   461.34s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "Search Apps" SearchField`
+    t =   461.34s     Checking existence of `"Search Apps" SearchField`
+    t =   461.39s     Find the "Search Apps" SearchField
+    t =   461.44s     Find the "Search Apps" SearchField
+    t =   461.51s     Capturing element debug description
+    t =   461.59s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   461.76s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   462.05s         Find: Descendants matching type SearchField
+    t =   462.05s         Find: Elements matching predicate '"Search Apps" IN identifiers'
+    t =   462.06s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   462.23s         Find: Descendants matching type SearchField
+    t =   462.24s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   463.35s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "Search Apps" SearchField`
+    t =   463.35s     Checking existence of `"Search Apps" SearchField`
+    t =   463.39s     Find the "Search Apps" SearchField
+    t =   463.43s     Find the "Search Apps" SearchField
+    t =   463.49s     Capturing element debug description
+    t =   463.59s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   463.59s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   463.59s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   463.59s         Requesting snapshot of accessibility hierarchy for app with pid 51414
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/AI_HLYUITests/MiniAppAuthoringUITests.swift:110: error: -[AI_HLYUITests.MiniAppAuthoringUITests testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport] : XCTAssertEqual failed: ("XCTWaiterResult(rawValue: 2)") is not equal to ("XCTWaiterResult(rawValue: 1)")
+    t =   464.08s Tear Down
+    t =   464.08s     Terminate com.itorah.chavrusachat:50854
+    t =   465.17s     Find the Application 'com.itorah.hanlinminiapps'
+    t =   465.47s     Added attachment named 'MiniApps authoring'
+    t =   465.47s     Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   466.05s     Requesting snapshot of accessibility hierarchy for app with pid 51414
+    t =   466.21s     Added attachment named 'MiniApps authoring accessibility'
+    t =   466.21s     Terminate com.itorah.hanlinminiapps:51414
+Test Case '-[AI_HLYUITests.MiniAppAuthoringUITests testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport]' failed (467.930 seconds).
+Test Suite 'MiniAppAuthoringUITests' failed at 2026-11-25 15:49:16.144.
+	 Executed 1 test, with 1 failure (0 unexpected) in 467.930 (467.986) seconds
+Test Suite 'AI_HLYUITests.xctest' failed at 2026-11-25 15:49:16.144.
+	 Executed 1 test, with 1 failure (0 unexpected) in 467.930 (467.987) seconds
+Test Suite 'Selected tests' failed at 2026-11-25 15:49:16.145.
+	 Executed 1 test, with 1 failure (0 unexpected) in 467.930 (467.991) seconds
+Resolve Package Graph
+2026-11-25 15:49:17.553 xcodebuild[49253:6232368] [MT] IDETestOperationsObserverDebug: 477.088 elapsed -- Testing started completed.
+2026-11-25 15:49:17.553 xcodebuild[49253:6232368] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-25 15:49:17.553 xcodebuild[49253:6232368] [MT] IDETestOperationsObserverDebug: 477.088 sec, +477.088 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v8/native-result/paired-prefix/FocusedRepair1.xcresult
+
+Failing tests:
+	MiniAppAuthoringUITests.testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport()
+
+** TEST EXECUTE FAILED **
+
+Testing started

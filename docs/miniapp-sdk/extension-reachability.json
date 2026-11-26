@@ -1,18 +1,20 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "5a0351f7e452789fd41c715c1ccb7f020cff44c5",
+  "sourceCommit": "d9150e3ce4dfec92bbe75eaf1d1db556821e9e29",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
-  "uncommittedSourcePaths": [],
+  "uncommittedSourcePaths": [
+    "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json"
+  ],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
   "sdkAuthority": "source-inventory.json",
   "sdkSources": [
     {
       "path": "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
-      "sha256": "01fdf45041eb8f11e4e7d990a758424e8581a6686e4588edd4586d3adcf9c239"
+      "sha256": "024bd8bcb47d43ace64fb410938f393effb3c6e8bd327506cf9065851de8073c"
     },
     {
       "path": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
-      "sha256": "22f719a227998e889d04c31ef0a624bccec750614e0eb5436975c52b8d4c8cfb"
+      "sha256": "e8da50eb4d076d995135132810444f16900a65d55edd901270a2af07132a57a3"
     },
     {
       "path": "AI_HLY/Downstream/HostServices/Core/HanlinHostCallContext.swift",
@@ -43,16 +45,12 @@
       "sha256": "279e6a4c387afe6845c51a9adea622dc1085c82fb93ddfd23abb9dd5f4ec6f72"
     },
     {
-      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-assistant-tools.mjs",
-      "sha256": "721ed8ccf94803776a8d0c2f9ea8e7bb9e9fb7bc9faa27cc216d6ec65512ebcf"
-    },
-    {
       "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-      "sha256": "659270748cdb6c3f46b9a406770b168545f1cf320e8cc6af216e6e9d821732c6"
+      "sha256": "f18ee4fe94497693fddbf234d7e782b194f2249f03c7c608e7700039c09337aa"
     },
     {
       "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "sha256": "820217e6c6072e2209a8bcc3d2e0c860b6acdbabab2cee396f07fa031f509939"
+      "sha256": "c7bff2798c5797542ffba96ecece2f6a927c68d18d401daf9e6dff87d1c34169"
     },
     {
       "path": "Fixtures/ExpoNativeAPIProbe/tsconfig.json",
@@ -64,15 +62,19 @@
     },
     {
       "path": "Generated/SwiftUIBridge/HanlinGeneratedViews.swift",
-      "sha256": "838154d4e8a44b07eb312dee19df283b217842633c6dbeb84bc369edba77699e"
+      "sha256": "659364752ba7b69ef70d90f5aad061f391526cb8b6f135a47bf72f0f19b00e18"
     },
     {
       "path": "Generated/SwiftUIBridge/bridge-manifest.ts",
       "sha256": "a56c8a16334bfe76ebe6489fc1f018f25f28f7cadba6c1ef11a268e5336f3b37"
     },
     {
+      "path": "Package.swift",
+      "sha256": "392ece3430f8e61eb28afdaa925adf006b1a3dbf82a233568c2c279ab768e53b"
+    },
+    {
       "path": "Packages/HanlinExpoNativeAPI/Package.swift",
-      "sha256": "1bf2b967d85c4759f94f39330b1b435148a9d3956ec6b8e645cec7dd65bec83d"
+      "sha256": "c5fd18fa28a1842be0351053d978cc55b752546dc798c663f0dedabfdbefc28c"
     },
     {
       "path": "Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPI/HanlinExpoNativeAPIHostVersions.swift",
@@ -100,7 +102,7 @@
     },
     {
       "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedViews.swift",
-      "sha256": "838154d4e8a44b07eb312dee19df283b217842633c6dbeb84bc369edba77699e"
+      "sha256": "659364752ba7b69ef70d90f5aad061f391526cb8b6f135a47bf72f0f19b00e18"
     },
     {
       "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoBridgeMetadata.swift",
@@ -140,7 +142,7 @@
     },
     {
       "path": "Packages/HanlinExpoUI/src/host-services.ts",
-      "sha256": "7055a22e3aa4a685b970c1eaaf66f538eeb34f560bb2c345446c55305a045d21"
+      "sha256": "010488e8c6aae2635f67d45cefebb9fdb2d4f97af71161af011a83d626ad60e7"
     },
     {
       "path": "Packages/HanlinExpoUI/src/index.ts",
@@ -148,15 +150,11 @@
     },
     {
       "path": "Packages/HanlinExpoUI/src/manual-components.tsx",
-      "sha256": "23315409689a8fb0f1a652a3d62428eade12822a4626224d0080046f08a80fe2"
+      "sha256": "b95b387fce797a3c0ffe8c258e1fe0b411e76956e6cd50ae9235267f5b638da6"
     },
     {
       "path": "Packages/HanlinExpoUI/src/miniapp-actions.ts",
       "sha256": "d5d38fc209d8d8dedb2832ffd037e53d4eabd8b8c92320bd79e791fdfef2c607"
-    },
-    {
-      "path": "Packages/HanlinExpoUI/src/miniapp-assistant.ts",
-      "sha256": "2e0e25875906f15876b8035d0863482510163ae4a82865eb376b788ff95e3c2c"
     },
     {
       "path": "Packages/HanlinExpoUI/src/modifiers.ts",
@@ -176,7 +174,7 @@
     },
     {
       "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m",
-      "sha256": "e36a9d2ba06dd7878d17df7c9e8f17df8952ac67f087c0a43174742c1c0ebe0c"
+      "sha256": "28909ea2c10145989c4605613f0ac6cc0185a5b34397bab70f8253291a004b3d"
     },
     {
       "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include/HanlinNativeServicesBridge.h",
@@ -192,11 +190,11 @@
     },
     {
       "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.d.ts",
-      "sha256": "4200223f5be97ee12ddd5ffc05479fa7be99748998a716b3e2eb6197c14bc8cc"
+      "sha256": "75f055c7067c2497b64f64714ca175fc09a323236e236b1d57621d4a07c3f7c1"
     },
     {
       "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.mjs",
-      "sha256": "832169736b6d84a6caa983192ceb3d9e9947a8cbda029093eba269c065e8f033"
+      "sha256": "c6cc15960daeb071fc5adc8daf3f041c3e990ee8ce285a0b6c945667763a7dc5"
     },
     {
       "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/package.json",
@@ -205,14 +203,6 @@
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinMiniAppRequestBroker.swift",
       "sha256": "01bf31169e04ca73898fc830d72e0d8824c43563678291823103ac978f114f2c"
-    },
-    {
-      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinAssistantToolDeclaration.swift",
-      "sha256": "eced270fa6b134eb082125550af2518f59d43b72ff99fe75ec05b7150aa8b6ab"
-    },
-    {
-      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinComposerConfiguration.swift",
-      "sha256": "5ce136bc896c30dd8b4a6f0cdbd5a51308d083d90cbdc4549e97418cf3ac2baa"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPreparedRuntimeVersion.swift",
@@ -224,7 +214,7 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-      "sha256": "2d0f3ced366774bac16af0bfaa29047f7a1cb2d413b9940515668c59bfc44d12"
+      "sha256": "690edfb30aca14647b39c8d6f53273558700943051699893ee3ef052c9349a97"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift",
@@ -232,11 +222,11 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-      "sha256": "0c9657251c5333fbb337367c5f0d89f21e3dfca506be9a0551b328c1d856cfd3"
+      "sha256": "e1384840dbf2bdbeb5195327777769a299316e4b7b55deeca94e6aeebcfdb68e"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinInstallContracts.swift",
-      "sha256": "2fd21cd0df503042315302acd8c8fa1f754a53eac3ff37b0ff14d0693b9952a2"
+      "sha256": "09969f5f4cc93bc3a265b0389a3af7a85ef5f8df0a705163a27beeacbad275ea"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinNativePresentationMetadata.swift",
@@ -244,11 +234,11 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinPackageContracts.swift",
-      "sha256": "25122dd11c471950514e717ffb5f17bbcefaa7219183a0e838c71e02129c94ac"
+      "sha256": "226d7dbbd6ea1f5ec700fd1d957fbe29a2b96e4932afdc6e09388bce4589b751"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinWidgetProgram.swift",
-      "sha256": "9c80012c2abcc76f90ca28614f19fdea92331276aa56e803e854251ac5b2ba40"
+      "sha256": "efca4762a310ec01187012221dee907cf767e74f49b01d803e59b84ec25b00b8"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExpoWidgetPublication.swift",
@@ -260,7 +250,7 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
-      "sha256": "74186c563bdf25cd1666f7283a4ca54f9fc5ae46a9776713b23716a7fa4646b5"
+      "sha256": "7901c51ea32046e57ad49a41f7252b488941a2d6ede7bb0f0634e86fe8b634b2"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/HanlinOriginalScriptWidgetControls.swift",
@@ -280,11 +270,11 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift",
-      "sha256": "d33e755c68ea9440fc68c9d42cd695cc3815ede7b9873e010200375c8b38293f"
+      "sha256": "e9d0ff9247fa5673803d643c80bd5f6a7ce612f39b638292a209cde2ccf19c8f"
     },
     {
       "path": "Packages/HanlinSwiftUIBridgeGenerator/Sources/HanlinSwiftUIBridgeCore/OutputGenerator.swift",
-      "sha256": "936e7c000c5a3170b47450d57a7a7fbac7416e94da92fc548333966f0222f6a4"
+      "sha256": "9468d0da401cbe55a4f041918c107ecc2b676159ee0f6d309d26de7d19750cd8"
     },
     {
       "path": "Scripts/Audit/audit-miniapp-sdk.mjs",
@@ -292,15 +282,15 @@
     },
     {
       "path": "Scripts/Audit/miniapp-expo-operations.mjs",
-      "sha256": "0dd499b70871f464d60d076c3ff4231cb2d6d64da529743361bc415c295d3913"
+      "sha256": "3d5cf558193e92f1e30884c4c4edd4405827414988d0ac79228212c3ac6fb84d"
     },
     {
       "path": "Scripts/Audit/miniapp-manifest-contracts.mjs",
-      "sha256": "f7b44f0097f23c5919263774d043caee91c481831329967631e3b083bf8503d7"
+      "sha256": "e8b84222cf1117f83a48a13b6342bdb85b32130587ce4ce39934fd3acc55b225"
     },
     {
       "path": "Scripts/Audit/miniapp-runtime-contract.mjs",
-      "sha256": "61f5e1b1bbf09236ee000388ca0c7451e5d151b7712f9420abcfea5bb4c7dd0f"
+      "sha256": "8682bb4d11fb38ebaeddc4543745916b313c341da26075791b929726fe630fa7"
     },
     {
       "path": "Scripts/Expo/build-probe.mjs",
@@ -316,11 +306,11 @@
     },
     {
       "path": "Scripts/Expo/package-lock.json",
-      "sha256": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8"
+      "sha256": "b20d9bf2ff4850269f72f79ef4e5b1b274ab648226a0597f671fe59ebb5dcfce"
     },
     {
       "path": "Scripts/Expo/package.json",
-      "sha256": "e2b50fae013276229c78619bbbe0b63d8c29b00fefde3afeccea98af117aa206"
+      "sha256": "fe71727b4bb3a28f73238ed1381190ef6de3541af323efb1f443ed2a7c685563"
     },
     {
       "path": "Scripts/Expo/prepare-types.mjs",
@@ -336,7 +326,7 @@
     },
     {
       "path": "Scripts/MiniApps/resolve-upstreams.mjs",
-      "sha256": "7973977cf986cbee14fd147fd8b10c1d54a6f1a1c790511d2df5cf054063e7a2"
+      "sha256": "4e2c12f497d312db93132f69741b783f6e31b1f2604dd852129f3c61109d7428"
     },
     {
       "path": "Scripts/MiniApps/scriptwidget/manifest-validation.mjs",
@@ -356,7 +346,7 @@
     },
     {
       "path": "Scripts/NativeScript/build-host-services.mjs",
-      "sha256": "1ca742df46a70d3ee838de98d4ac128eebeeea99d93c9cfa6475e388fee28cc3"
+      "sha256": "b46fcc461ad34fcf49140e4fd0e11e0dcb8f47a8523a15116029435289ee7003"
     },
     {
       "path": "Scripts/NativeScript/build-metadata-tool.py",
@@ -372,7 +362,7 @@
     },
     {
       "path": "Scripts/NativeScript/host-services.ts",
-      "sha256": "e405a962b090e5786466ef0be2509cd629b16ba2d6d70f40f83dd92fb1e5f442"
+      "sha256": "efe0a28483fa36dbb3745f380b2ddd1bc6348af3b12c41ef10f19c2dd9a486a6"
     },
     {
       "path": "Scripts/NativeScript/metadata_public_headers.py",
@@ -401,10 +391,20 @@
     "boundary": "Historical owner delivery only; not current branch/signature/matrix acceptance"
   },
   "targetsDeclaredInProject": [
+    "AI_HLYTests",
     "AI_HLYUITests",
     "ChavrusaChatNotificationService",
     "ChavrusaChatShare",
     "ChavrusaChatTranslationProvider",
+    "HanlinApp",
+    "HanlinMiniApps",
+    "HanlinMiniAppsBootstrapTests",
+    "HanlinMiniAppsNotificationService",
+    "HanlinMiniAppsShare",
+    "HanlinMiniAppsTests",
+    "HanlinMiniAppsTranslationProvider",
+    "HanlinMiniAppsUITests",
+    "HanlinMiniAppsWidgets",
     "HanlinScriptingWidgets"
   ],
   "entitlements": {
@@ -623,21 +623,21 @@
     },
     "extensionIntent": {
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptAppIntentBridge.swift",
-      "line": 51,
+      "line": 54,
       "anchor": "public func perform()",
-      "sha256": "ce28dca905466819536ac77b4a740091bc7092f8096f3ce3dc70ea02ab97a78f"
+      "sha256": "7f24c3f4c2fac9145bf55425bc971b8ff493bf268b12152f25929f725f316690"
     },
     "extensionQueue": {
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift",
       "line": 8,
       "anchor": "public func enqueue(",
-      "sha256": "b9671f1d78db83f6786320a68878d01852d5a81a3383866cb26a5e52a87da5ff"
+      "sha256": "9acd0135614da05e213e1ede3825b4221fbdc10db19cfbdaa292bb139baa3228"
     },
     "extensionReceipts": {
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationDelivery.swift",
-      "line": 39,
+      "line": 43,
       "anchor": "public struct HanlinInvocationReceipt",
-      "sha256": "b029004be2138cb11ef6221ab7b2c64489ec05b8e22ead565b822da1a946431f"
+      "sha256": "1556c903faaa930c34b657e494763f726f210dab39a7026ae77136b843e146be"
     },
     "extensionExecutor": {
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationExecutor.swift",
@@ -647,45 +647,45 @@
     },
     "resume": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 2029,
+      "line": 2021,
       "anchor": "private func processPendingResumeCommands()",
-      "sha256": "820217e6c6072e2209a8bcc3d2e0c860b6acdbabab2cee396f07fa031f509939"
+      "sha256": "c7bff2798c5797542ffba96ecece2f6a927c68d18d401daf9e6dff87d1c34169"
     },
     "headless": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 1246,
+      "line": 1226,
       "anchor": "func executeHeadlessAction(",
-      "sha256": "820217e6c6072e2209a8bcc3d2e0c860b6acdbabab2cee396f07fa031f509939"
+      "sha256": "c7bff2798c5797542ffba96ecece2f6a927c68d18d401daf9e6dff87d1c34169"
     },
     "expoActionDispatch": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 1288,
+      "line": 1268,
       "anchor": "return try await adapter.actionChannel.invoke(",
-      "sha256": "820217e6c6072e2209a8bcc3d2e0c860b6acdbabab2cee396f07fa031f509939"
+      "sha256": "c7bff2798c5797542ffba96ecece2f6a927c68d18d401daf9e6dff87d1c34169"
     },
     "nativeActionDispatch": {
       "file": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
-      "line": 541,
+      "line": 473,
       "anchor": "func invokeRegisteredAction(",
-      "sha256": "22f719a227998e889d04c31ef0a624bccec750614e0eb5436975c52b8d4c8cfb"
+      "sha256": "e8da50eb4d076d995135132810444f16900a65d55edd901270a2af07132a57a3"
     },
     "resumeDispatch": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 2077,
+      "line": 2084,
       "anchor": "func dispatchResumeCommand(",
-      "sha256": "820217e6c6072e2209a8bcc3d2e0c860b6acdbabab2cee396f07fa031f509939"
+      "sha256": "c7bff2798c5797542ffba96ecece2f6a927c68d18d401daf9e6dff87d1c34169"
     },
     "translationContinuation": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 1612,
+      "line": 1591,
       "anchor": "\"source\": .string(\"translationUI\")",
-      "sha256": "820217e6c6072e2209a8bcc3d2e0c860b6acdbabab2cee396f07fa031f509939"
+      "sha256": "c7bff2798c5797542ffba96ecece2f6a927c68d18d401daf9e6dff87d1c34169"
     },
     "translationAction": {
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExtensionNodeView.swift",
-      "line": 90,
+      "line": 108,
       "anchor": "private var scriptActionIntent: HanlinInvokeScriptActionIntent?",
-      "sha256": "6b094bca3631ddd227bbea80a2bf8f37eccce3d2f0ad84037791daec72187404"
+      "sha256": "6786d5c976ec088a374cd3f62dcd49f67cbefcda881889d860a6e9a49848ab2c"
     },
     "widgetBundle": {
       "file": "HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
@@ -704,6 +704,60 @@
       "line": 15,
       "anchor": "public func perform()",
       "sha256": "77c001374367273d9088ca1987805c0051c07f0cfeabdd6b0b8b967c9b655fac"
+    },
+    "widgetHostDeclaration": {
+      "file": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinWidgetProgram.swift",
+      "line": 94,
+      "anchor": "public struct HanlinWidgetHostAction",
+      "sha256": "efca4762a310ec01187012221dee907cf767e74f49b01d803e59b84ec25b00b8"
+    },
+    "widgetHostCompiler": {
+      "file": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift",
+      "line": 39,
+      "anchor": "public static func validateHostActionTargets(",
+      "sha256": "e9d0ff9247fa5673803d643c80bd5f6a7ce612f39b638292a209cde2ccf19c8f"
+    },
+    "widgetHostExecutor": {
+      "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinWidgetHostAction.swift",
+      "line": 29,
+      "anchor": "public enum HanlinWidgetHostActionExecutor",
+      "sha256": "f8d8ee315d7af478129a32cbd653a21cd76c7a5ba839985d09d469b6bc5664ad"
+    },
+    "widgetHostIntent": {
+      "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinWidgetHostActionIntent.swift",
+      "line": 24,
+      "anchor": "public func perform()",
+      "sha256": "0c211cf56adf9ad479b3407d99a1c4a88f233a6a9bf64d8f84c3d48d399d65df"
+    },
+    "widgetHostWake": {
+      "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinWidgetHostAction.swift",
+      "line": 238,
+      "anchor": "public enum HanlinWidgetHostActionContinuation",
+      "sha256": "f8d8ee315d7af478129a32cbd653a21cd76c7a5ba839985d09d469b6bc5664ad"
+    },
+    "nativeNodeActivityIntent": {
+      "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinLiveActivityHostActionIntent.swift",
+      "line": 30,
+      "anchor": "public func perform()",
+      "sha256": "48ef8e2ec6f03f7556415321b569b08c84c8a4f9da1cebbebc1d5612000dbc2b"
+    },
+    "nativeNodeActivityAction": {
+      "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExtensionNodeView.swift",
+      "line": 56,
+      "anchor": "if invocationSource == .liveActivity",
+      "sha256": "6786d5c976ec088a374cd3f62dcd49f67cbefcda881889d860a6e9a49848ab2c"
+    },
+    "expoWidgetHostButton": {
+      "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ExpoWidgets/HanlinExpoWidgetsViewRenderer.swift",
+      "line": 9,
+      "anchor": "HanlinWidgetHostActionIntent",
+      "sha256": "692b367cdd7060915783efa3429651f7685c784bd1245c6138dbf3508cf8636c"
+    },
+    "scriptWidgetHostButton": {
+      "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Elements/ScriptWidgetElementTagButton.swift",
+      "line": 34,
+      "anchor": "HanlinWidgetHostActionIntent",
+      "sha256": "56cebddb8dd3177b2671b41812a7860bc45ce2d28d49edab3560bfb99d9f0dbf"
     },
     "shortcutIntent": {
       "file": "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingAppIntents.swift",
@@ -733,7 +787,7 @@
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationEvent.swift",
       "line": 6,
       "anchor": "public struct HanlinNotificationEvent",
-      "sha256": "982bbdff39e2baeb944ab476bc16d8f826f36ca38e9a3e6a75e6efaeaf3b318b"
+      "sha256": "867613ea9cf2785e6eff3caad96c620a8c50d16fd22d266eeda899b7ab784f69"
     },
     "notificationQueue": {
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationInvocation.swift",
@@ -751,13 +805,13 @@
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift",
       "line": 11,
       "anchor": "public final class HanlinNotificationApplicationDelegate",
-      "sha256": "917e53aa616fe54cf75370feca5276c02c53eace57cd3b169ccb3414dc893e97"
+      "sha256": "c36fadd1099529226434fc11d258772556ecc82f71a594c3a81d4d6f2ac0e0d9"
     },
     "notificationForeground": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 498,
+      "line": 481,
       "anchor": "func resumePendingInvocations(",
-      "sha256": "820217e6c6072e2209a8bcc3d2e0c860b6acdbabab2cee396f07fa031f509939"
+      "sha256": "c7bff2798c5797542ffba96ecece2f6a927c68d18d401daf9e6dff87d1c34169"
     },
     "requestBroker": {
       "file": "Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinMiniAppRequestBroker.swift",
@@ -773,15 +827,15 @@
     },
     "nativeAdapter": {
       "file": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
-      "line": 139,
+      "line": 103,
       "anchor": "public func executeRuntime(",
-      "sha256": "22f719a227998e889d04c31ef0a624bccec750614e0eb5436975c52b8d4c8cfb"
+      "sha256": "e8da50eb4d076d995135132810444f16900a65d55edd901270a2af07132a57a3"
     },
     "nativeFacade": {
       "file": "Scripts/NativeScript/host-services.ts",
-      "line": 79,
+      "line": 77,
       "anchor": "export function createHostServices()",
-      "sha256": "e405a962b090e5786466ef0be2509cd629b16ba2d6d70f40f83dd92fb1e5f442"
+      "sha256": "efe0a28483fa36dbb3745f380b2ddd1bc6348af3b12c41ef10f19c2dd9a486a6"
     },
     "runtimeWire": {
       "file": "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeWireProtocol.swift",
@@ -797,9 +851,9 @@
     },
     "expoFacade": {
       "file": "Packages/HanlinExpoUI/src/host-services.ts",
-      "line": 182,
+      "line": 179,
       "anchor": "executeRuntime(",
-      "sha256": "7055a22e3aa4a685b970c1eaaf66f538eeb34f560bb2c345446c55305a045d21"
+      "sha256": "010488e8c6aae2635f67d45cefebb9fdb2d4f97af71161af011a83d626ad60e7"
     },
     "expoModule": {
       "file": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinHostServicesModule.swift",
@@ -809,9 +863,9 @@
     },
     "expoAdapter": {
       "file": "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
-      "line": 111,
+      "line": 98,
       "anchor": "case \"runtime.execute\":",
-      "sha256": "01fdf45041eb8f11e4e7d990a758424e8581a6686e4588edd4586d3adcf9c239"
+      "sha256": "024bd8bcb47d43ace64fb410938f393effb3c6e8bd327506cf9065851de8073c"
     },
     "runtimeBroker": {
       "file": "AI_HLY/Downstream/HostServices/Runtime/HanlinRuntimeBroker.swift",
@@ -839,21 +893,21 @@
     },
     "projectTargets": {
       "file": "AI_HLY.xcodeproj/project.pbxproj",
-      "line": 2785,
+      "line": 2772,
       "anchor": "/* Begin PBXNativeTarget section */",
-      "sha256": "df2a72a6dff60393710609e5ee4fb6a40f3ef6ec0884df532e6cd171bf9a333e"
+      "sha256": "a80e2947b4dedf0ce95b326cf44b0efac613b7b044058e3afc3fccb870cb0087"
     },
     "audit": {
       "file": "Scripts/Audit/audit_miniapp_reachability.py",
       "line": 2,
       "anchor": "Curated source-backed extension matrix",
-      "sha256": "39b24956ef354e6adb3ed918ebc8ea067645c462b73bbbfea82f46d7ccd6224e"
+      "sha256": "7ab16bd962c5b1f939e4363f96ad872c7acc34d35d7e8dff576f082011dba99c"
     },
     "miniAppsBootstrap": {
       "file": "HanlinMiniAppsApp/HanlinMiniAppsApp.swift",
       "line": 12,
       "anchor": "@main",
-      "sha256": "579a27ec799ea414cd1ae58533748e79840167fca9d8b849e8a0b3d9d55118c2"
+      "sha256": "f1489c1f8c4ca1039d4ffc5698b43a5e672ec586fb5b9393dc69f246f11de4c1"
     },
     "miniAppsWidgetBundle": {
       "file": "HanlinMiniAppsExtensions/Widgets/HanlinMiniAppsWidgets.swift",
@@ -875,15 +929,15 @@
     },
     "nativeRuntimeDispatch": {
       "file": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
-      "line": 147,
+      "line": 111,
       "anchor": "HanlinRuntimeWireProtocol.execute(",
-      "sha256": "22f719a227998e889d04c31ef0a624bccec750614e0eb5436975c52b8d4c8cfb"
+      "sha256": "e8da50eb4d076d995135132810444f16900a65d55edd901270a2af07132a57a3"
     },
     "expoRuntimeDispatch": {
       "file": "AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift",
-      "line": 112,
+      "line": 99,
       "anchor": "HanlinRuntimeWireProtocol.execute(",
-      "sha256": "01fdf45041eb8f11e4e7d990a758424e8581a6686e4588edd4586d3adcf9c239"
+      "sha256": "024bd8bcb47d43ace64fb410938f393effb3c6e8bd327506cf9065851de8073c"
     },
     "nativePresentationExecutor": {
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNativePresentation.swift",
@@ -941,15 +995,15 @@
     },
     "controlCompiler": {
       "file": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift",
-      "line": 139,
+      "line": 192,
       "anchor": "HanlinOriginalScriptWidgetControls.read(data, entryPath: entryPath)",
-      "sha256": "d33e755c68ea9440fc68c9d42cd695cc3815ede7b9873e010200375c8b38293f"
+      "sha256": "e9d0ff9247fa5673803d643c80bd5f6a7ce612f39b638292a209cde2ccf19c8f"
     },
     "controlUpstream": {
       "file": "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json",
       "line": 3150,
       "anchor": "ScriptWidgetControls/Original/ScriptWidgetControlWidget.swift",
-      "sha256": "63aa2132a1463552c274c328d63fd4b76b45046de28a8420e5a278257905bb5c"
+      "sha256": "4d06d0dfaca462fc21257c8053d3250b7cc0e78c4d77b4eb2e98f64bf7cbe83b"
     },
     "controlSourceRefresh": {
       "file": "Scripts/MiniApps/refresh-original-sources.mjs",
@@ -965,9 +1019,9 @@
     },
     "scriptWidgetActivityRenderer": {
       "file": "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
-      "line": 296,
+      "line": 299,
       "anchor": "public struct HanlinOriginalScriptWidgetLiveActivityWidget",
-      "sha256": "7b1d025d1e25f0d6886e3178911bc547c2081e28e1f1ed5f9f538a26208b3096"
+      "sha256": "cf301ab132ee3554e00a442c9629fc82a83f549ff2d93a86cecccf67d9b9e161"
     },
     "originalExpoWidget": {
       "file": "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidget.swift",
@@ -1001,9 +1055,9 @@
     },
     "shareComposer": {
       "file": "AI_HLY/Views/Components/ChatViewBottom.swift",
-      "line": 472,
+      "line": 464,
       "anchor": "ChavrusaShareInboxView(platform: .shared, useInChat:",
-      "sha256": "b5b4e5fc8de65892ee51fac6b54066b40a8a56982d132072f2a09ca2221d748d"
+      "sha256": "7ae22aafa3c8e61341e773ba627cc1ce804e5cb5f739c3ee60bd21915a70192e"
     },
     "hostControlButtonRegistration": {
       "file": "HanlinScriptingWidgets/HanlinScriptingWidgets.swift",
@@ -1033,7 +1087,7 @@
       "file": "docs/miniapp-sdk/README.md",
       "line": 82,
       "anchor": "## Entry points and native surfaces",
-      "sha256": "90068db0d87718cc9f995f9d45c1e2e8a7bd670aa8b8f3b324f0bf4cfc591d95"
+      "sha256": "490fcfd05965cbebb7334169bece0391481425e6c5d1b8cda41b8b5e1017f329"
     },
     "ChavrusaChatShareInfo": {
       "file": "ChavrusaChatShare/Info.plist",
@@ -1135,9 +1189,21 @@
         "widgetIntent",
         "widgetCallback",
         "originalExpoWidget",
-        "originalExpoModule"
+        "originalExpoModule",
+        "widgetHostDeclaration",
+        "widgetHostCompiler",
+        "widgetHostExecutor",
+        "widgetHostIntent",
+        "widgetHostWake",
+        "expoWidgetHostButton",
+        "scriptWidgetHostButton",
+        "extensionQueue",
+        "extensionReceipts",
+        "resumeDispatch",
+        "nativeActionDispatch",
+        "expoActionDispatch"
       ],
-      "stop": "Original Expo/ScriptWidget widgets and their widget-local callbacks are implemented. Revision/nonces and installed identities govern local actions. This does not establish an extension ingress to the five canonical Host runtimes or a NativeScript foreground VM.",
+      "stop": "Original renderer callbacks retain their local execution path. An explicit hostAction validates the current widget program and one same-package Expo/NativeScript appIntent action, queues a foreground invocation and wakes the existing Host after enqueue. The real handler may call all five canonical runtimes and retains its actual action value/error. A placed-widget OS tap and runtime result readback require separate executed evidence.",
       "owner": "INT-02/INT-03"
     },
     "notification": {
@@ -1168,9 +1234,21 @@
         "scriptWidgetLiveActivity",
         "scriptWidgetActivityRenderer",
         "originalExpoActivity",
-        "originalExpoModule"
+        "originalExpoModule",
+        "widgetHostDeclaration",
+        "widgetHostExecutor",
+        "widgetHostIntent",
+        "widgetHostWake",
+        "scriptWidgetHostButton",
+        "nativeNodeActivityIntent",
+        "nativeNodeActivityAction",
+        "extensionQueue",
+        "extensionReceipts",
+        "resumeDispatch",
+        "nativeActionDispatch",
+        "expoActionDispatch"
       ],
-      "stop": "Original Expo ActivityKit and ScriptWidget original-renderer activities have native start/update/end and local action paths. They are distinct from the retained legacy presentation. None is classified here as a Node/TypeScript/Python/JSC/Shell extension passthrough.",
+      "stop": "A ScriptWidget-rendered activity uses its declared widget hostAction with validated widget origin. A native-node ActivityKit activity uses its published appIntent action and a dedicated foreground LiveActivityIntent without fabricating widget origin. Both record the actual liveActivity source and wake the Host after enqueue; handlers may use all five canonical runtimes. Original Expo createLiveActivity callbacks remain their separate upstream path and do not implicitly consume hanlinWidget.hostAction metadata. Real OS surface execution remains a separate gate.",
       "owner": "INT-02/INT-03"
     },
     "hostAppIntent": {
@@ -1196,6 +1274,8 @@
       "refs": [
         "shortcutIntent",
         "hostShortcuts",
+        "extensionIntent",
+        "widgetHostWake",
         "extensionQueue",
         "extensionReceipts",
         "extensionExecutor",
@@ -1205,7 +1285,7 @@
         "nativeActionDispatch",
         "expoActionDispatch"
       ],
-      "stop": "Hanlin's typed installed-package action intent enqueues foreground continuation for NativeScript or Expo. ChavrusaChatShortcuts advertises alarm/notification phrases; the upstream ScriptWidget AppShortcutsProvider is not registered. Native snippets and original control intents are separate native UI/action surfaces.",
+      "stop": "Hanlin's typed installed-package action intent enqueues foreground continuation for NativeScript or Expo and wakes the existing Host after enqueue. ChavrusaChatShortcuts advertises alarm/notification phrases; the upstream ScriptWidget AppShortcutsProvider is not registered. Native snippets and original control intents are separate native UI/action surfaces.",
       "owner": "INT-02/INT-03"
     },
     "foreground": {
@@ -1894,21 +1974,27 @@
       "surface": "widget",
       "engine": "hanlinNativeScript",
       "runtime": "node",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "widget",
-      "runtimeTail": [],
-      "sourcePathReachesCanonicalExecutor": false,
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
-      "durableActionReceiptInSource": false,
-      "routeCondition": "No canonical Host runtime route established",
+      "durableActionReceiptInSource": true,
+      "routeCondition": "An explicit hostAction validates the current installed widget and registered target, then continues in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
+        "hostAdapterReachable": true,
         "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "userGesturePresent": false,
+        "note": "NativeScript uses the existing foreground context when available; a new headless provider sets canPresentUI=false. Foreground continuation depends on the declared app handler."
       },
       "engineVersionSource": "source-inventory.json#/nativeScript",
       "permissions": [
@@ -1921,21 +2007,27 @@
       "surface": "widget",
       "engine": "hanlinNativeScript",
       "runtime": "typeScript",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "widget",
-      "runtimeTail": [],
-      "sourcePathReachesCanonicalExecutor": false,
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
-      "durableActionReceiptInSource": false,
-      "routeCondition": "No canonical Host runtime route established",
+      "durableActionReceiptInSource": true,
+      "routeCondition": "An explicit hostAction validates the current installed widget and registered target, then continues in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
+        "hostAdapterReachable": true,
         "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "userGesturePresent": false,
+        "note": "NativeScript uses the existing foreground context when available; a new headless provider sets canPresentUI=false. Foreground continuation depends on the declared app handler."
       },
       "engineVersionSource": "source-inventory.json#/nativeScript",
       "permissions": [
@@ -1948,21 +2040,27 @@
       "surface": "widget",
       "engine": "hanlinNativeScript",
       "runtime": "localPython",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "widget",
-      "runtimeTail": [],
-      "sourcePathReachesCanonicalExecutor": false,
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
-      "durableActionReceiptInSource": false,
-      "routeCondition": "No canonical Host runtime route established",
+      "durableActionReceiptInSource": true,
+      "routeCondition": "An explicit hostAction validates the current installed widget and registered target, then continues in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
+        "hostAdapterReachable": true,
         "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "userGesturePresent": false,
+        "note": "NativeScript uses the existing foreground context when available; a new headless provider sets canPresentUI=false. Foreground continuation depends on the declared app handler."
       },
       "engineVersionSource": "source-inventory.json#/nativeScript",
       "permissions": [
@@ -1975,21 +2073,27 @@
       "surface": "widget",
       "engine": "hanlinNativeScript",
       "runtime": "javaScriptCore",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "widget",
-      "runtimeTail": [],
-      "sourcePathReachesCanonicalExecutor": false,
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
-      "durableActionReceiptInSource": false,
-      "routeCondition": "No canonical Host runtime route established",
+      "durableActionReceiptInSource": true,
+      "routeCondition": "An explicit hostAction validates the current installed widget and registered target, then continues in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
+        "hostAdapterReachable": true,
         "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "userGesturePresent": false,
+        "note": "NativeScript uses the existing foreground context when available; a new headless provider sets canPresentUI=false. Foreground continuation depends on the declared app handler."
       },
       "engineVersionSource": "source-inventory.json#/nativeScript",
       "permissions": [
@@ -2002,21 +2106,27 @@
       "surface": "widget",
       "engine": "hanlinNativeScript",
       "runtime": "shell",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "widget",
-      "runtimeTail": [],
-      "sourcePathReachesCanonicalExecutor": false,
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
-      "durableActionReceiptInSource": false,
-      "routeCondition": "No canonical Host runtime route established",
+      "durableActionReceiptInSource": true,
+      "routeCondition": "An explicit hostAction validates the current installed widget and registered target, then continues in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
+        "hostAdapterReachable": true,
         "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "userGesturePresent": false,
+        "note": "NativeScript uses the existing foreground context when available; a new headless provider sets canPresentUI=false. Foreground continuation depends on the declared app handler."
       },
       "engineVersionSource": "source-inventory.json#/nativeScript",
       "permissions": [
@@ -2029,21 +2139,27 @@
       "surface": "widget",
       "engine": "hanlinExpo",
       "runtime": "node",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "widget",
-      "runtimeTail": [],
-      "sourcePathReachesCanonicalExecutor": false,
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
-      "durableActionReceiptInSource": false,
-      "routeCondition": "No canonical Host runtime route established",
+      "durableActionReceiptInSource": true,
+      "routeCondition": "An explicit hostAction validates the current installed widget and registered target, then continues in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
-        "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "Host-bound package/session identity"
       },
       "engineVersionSource": "source-inventory.json#/expo",
       "permissions": [
@@ -2056,21 +2172,27 @@
       "surface": "widget",
       "engine": "hanlinExpo",
       "runtime": "typeScript",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "widget",
-      "runtimeTail": [],
-      "sourcePathReachesCanonicalExecutor": false,
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
-      "durableActionReceiptInSource": false,
-      "routeCondition": "No canonical Host runtime route established",
+      "durableActionReceiptInSource": true,
+      "routeCondition": "An explicit hostAction validates the current installed widget and registered target, then continues in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
-        "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "Host-bound package/session identity"
       },
       "engineVersionSource": "source-inventory.json#/expo",
       "permissions": [
@@ -2083,21 +2205,27 @@
       "surface": "widget",
       "engine": "hanlinExpo",
       "runtime": "localPython",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "widget",
-      "runtimeTail": [],
-      "sourcePathReachesCanonicalExecutor": false,
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
-      "durableActionReceiptInSource": false,
-      "routeCondition": "No canonical Host runtime route established",
+      "durableActionReceiptInSource": true,
+      "routeCondition": "An explicit hostAction validates the current installed widget and registered target, then continues in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
-        "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "Host-bound package/session identity"
       },
       "engineVersionSource": "source-inventory.json#/expo",
       "permissions": [
@@ -2110,21 +2238,27 @@
       "surface": "widget",
       "engine": "hanlinExpo",
       "runtime": "javaScriptCore",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "widget",
-      "runtimeTail": [],
-      "sourcePathReachesCanonicalExecutor": false,
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
-      "durableActionReceiptInSource": false,
-      "routeCondition": "No canonical Host runtime route established",
+      "durableActionReceiptInSource": true,
+      "routeCondition": "An explicit hostAction validates the current installed widget and registered target, then continues in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
-        "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "Host-bound package/session identity"
       },
       "engineVersionSource": "source-inventory.json#/expo",
       "permissions": [
@@ -2137,21 +2271,27 @@
       "surface": "widget",
       "engine": "hanlinExpo",
       "runtime": "shell",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "widget",
-      "runtimeTail": [],
-      "sourcePathReachesCanonicalExecutor": false,
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
-      "durableActionReceiptInSource": false,
-      "routeCondition": "No canonical Host runtime route established",
+      "durableActionReceiptInSource": true,
+      "routeCondition": "An explicit hostAction validates the current installed widget and registered target, then continues in the foreground Host",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
-        "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "Host-bound package/session identity"
       },
       "engineVersionSource": "source-inventory.json#/expo",
       "permissions": [
@@ -2494,21 +2634,27 @@
       "surface": "liveActivity",
       "engine": "hanlinNativeScript",
       "runtime": "node",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "liveActivity",
-      "runtimeTail": [],
-      "sourcePathReachesCanonicalExecutor": false,
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
-      "durableActionReceiptInSource": false,
-      "routeCondition": "No canonical Host runtime route established",
+      "durableActionReceiptInSource": true,
+      "routeCondition": "Declared ScriptWidget hostAction or published native-node action continues in the foreground Host; original Expo callbacks stay separate",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
+        "hostAdapterReachable": true,
         "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "userGesturePresent": false,
+        "note": "NativeScript uses the existing foreground context when available; a new headless provider sets canPresentUI=false. Foreground continuation depends on the declared app handler."
       },
       "engineVersionSource": "source-inventory.json#/nativeScript",
       "permissions": [
@@ -2521,21 +2667,27 @@
       "surface": "liveActivity",
       "engine": "hanlinNativeScript",
       "runtime": "typeScript",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "liveActivity",
-      "runtimeTail": [],
-      "sourcePathReachesCanonicalExecutor": false,
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
-      "durableActionReceiptInSource": false,
-      "routeCondition": "No canonical Host runtime route established",
+      "durableActionReceiptInSource": true,
+      "routeCondition": "Declared ScriptWidget hostAction or published native-node action continues in the foreground Host; original Expo callbacks stay separate",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
+        "hostAdapterReachable": true,
         "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "userGesturePresent": false,
+        "note": "NativeScript uses the existing foreground context when available; a new headless provider sets canPresentUI=false. Foreground continuation depends on the declared app handler."
       },
       "engineVersionSource": "source-inventory.json#/nativeScript",
       "permissions": [
@@ -2548,21 +2700,27 @@
       "surface": "liveActivity",
       "engine": "hanlinNativeScript",
       "runtime": "localPython",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "liveActivity",
-      "runtimeTail": [],
-      "sourcePathReachesCanonicalExecutor": false,
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
-      "durableActionReceiptInSource": false,
-      "routeCondition": "No canonical Host runtime route established",
+      "durableActionReceiptInSource": true,
+      "routeCondition": "Declared ScriptWidget hostAction or published native-node action continues in the foreground Host; original Expo callbacks stay separate",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
+        "hostAdapterReachable": true,
         "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "userGesturePresent": false,
+        "note": "NativeScript uses the existing foreground context when available; a new headless provider sets canPresentUI=false. Foreground continuation depends on the declared app handler."
       },
       "engineVersionSource": "source-inventory.json#/nativeScript",
       "permissions": [
@@ -2575,21 +2733,27 @@
       "surface": "liveActivity",
       "engine": "hanlinNativeScript",
       "runtime": "javaScriptCore",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "liveActivity",
-      "runtimeTail": [],
-      "sourcePathReachesCanonicalExecutor": false,
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
-      "durableActionReceiptInSource": false,
-      "routeCondition": "No canonical Host runtime route established",
+      "durableActionReceiptInSource": true,
+      "routeCondition": "Declared ScriptWidget hostAction or published native-node action continues in the foreground Host; original Expo callbacks stay separate",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
+        "hostAdapterReachable": true,
         "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "userGesturePresent": false,
+        "note": "NativeScript uses the existing foreground context when available; a new headless provider sets canPresentUI=false. Foreground continuation depends on the declared app handler."
       },
       "engineVersionSource": "source-inventory.json#/nativeScript",
       "permissions": [
@@ -2602,21 +2766,27 @@
       "surface": "liveActivity",
       "engine": "hanlinNativeScript",
       "runtime": "shell",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "liveActivity",
-      "runtimeTail": [],
-      "sourcePathReachesCanonicalExecutor": false,
+      "runtimeTail": [
+        "nativeFacade",
+        "nativeBridge",
+        "nativeAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
-      "durableActionReceiptInSource": false,
-      "routeCondition": "No canonical Host runtime route established",
+      "durableActionReceiptInSource": true,
+      "routeCondition": "Declared ScriptWidget hostAction or published native-node action continues in the foreground Host; original Expo callbacks stay separate",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
+        "hostAdapterReachable": true,
         "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "userGesturePresent": false,
+        "note": "NativeScript uses the existing foreground context when available; a new headless provider sets canPresentUI=false. Foreground continuation depends on the declared app handler."
       },
       "engineVersionSource": "source-inventory.json#/nativeScript",
       "permissions": [
@@ -2629,21 +2799,27 @@
       "surface": "liveActivity",
       "engine": "hanlinExpo",
       "runtime": "node",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "liveActivity",
-      "runtimeTail": [],
-      "sourcePathReachesCanonicalExecutor": false,
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
-      "durableActionReceiptInSource": false,
-      "routeCondition": "No canonical Host runtime route established",
+      "durableActionReceiptInSource": true,
+      "routeCondition": "Declared ScriptWidget hostAction or published native-node action continues in the foreground Host; original Expo callbacks stay separate",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
-        "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "Host-bound package/session identity"
       },
       "engineVersionSource": "source-inventory.json#/expo",
       "permissions": [
@@ -2656,21 +2832,27 @@
       "surface": "liveActivity",
       "engine": "hanlinExpo",
       "runtime": "typeScript",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "liveActivity",
-      "runtimeTail": [],
-      "sourcePathReachesCanonicalExecutor": false,
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
-      "durableActionReceiptInSource": false,
-      "routeCondition": "No canonical Host runtime route established",
+      "durableActionReceiptInSource": true,
+      "routeCondition": "Declared ScriptWidget hostAction or published native-node action continues in the foreground Host; original Expo callbacks stay separate",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
-        "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "Host-bound package/session identity"
       },
       "engineVersionSource": "source-inventory.json#/expo",
       "permissions": [
@@ -2683,21 +2865,27 @@
       "surface": "liveActivity",
       "engine": "hanlinExpo",
       "runtime": "localPython",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "liveActivity",
-      "runtimeTail": [],
-      "sourcePathReachesCanonicalExecutor": false,
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
-      "durableActionReceiptInSource": false,
-      "routeCondition": "No canonical Host runtime route established",
+      "durableActionReceiptInSource": true,
+      "routeCondition": "Declared ScriptWidget hostAction or published native-node action continues in the foreground Host; original Expo callbacks stay separate",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
-        "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "Host-bound package/session identity"
       },
       "engineVersionSource": "source-inventory.json#/expo",
       "permissions": [
@@ -2710,21 +2898,27 @@
       "surface": "liveActivity",
       "engine": "hanlinExpo",
       "runtime": "javaScriptCore",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "liveActivity",
-      "runtimeTail": [],
-      "sourcePathReachesCanonicalExecutor": false,
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
-      "durableActionReceiptInSource": false,
-      "routeCondition": "No canonical Host runtime route established",
+      "durableActionReceiptInSource": true,
+      "routeCondition": "Declared ScriptWidget hostAction or published native-node action continues in the foreground Host; original Expo callbacks stay separate",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
-        "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "Host-bound package/session identity"
       },
       "engineVersionSource": "source-inventory.json#/expo",
       "permissions": [
@@ -2737,21 +2931,27 @@
       "surface": "liveActivity",
       "engine": "hanlinExpo",
       "runtime": "shell",
-      "status": "disconnected",
+      "status": "partially-wired",
       "path": "liveActivity",
-      "runtimeTail": [],
-      "sourcePathReachesCanonicalExecutor": false,
+      "runtimeTail": [
+        "expoFacade",
+        "expoModule",
+        "expoAdapter",
+        "runtimeWire",
+        "runtimeBroker"
+      ],
+      "sourcePathReachesCanonicalExecutor": true,
       "structuredReceiptReturnedToIngressInSource": false,
-      "durableActionReceiptInSource": false,
-      "routeCondition": "No canonical Host runtime route established",
+      "durableActionReceiptInSource": true,
+      "routeCondition": "Declared ScriptWidget hostAction or published native-node action continues in the foreground Host; original Expo callbacks stay separate",
       "realSurfaceE2E": false,
       "onDeviceProof": null,
-      "resultBoundary": "No connected canonical-runtime receipt",
+      "resultBoundary": "Durable action receipt; runtime receipt readback to ingress incomplete",
       "callerContext": {
-        "hostAdapterReachable": false,
-        "canPresentUI": null,
-        "userGesturePresent": null,
-        "note": "No canonical Host call context is connected from this ingress"
+        "hostAdapterReachable": true,
+        "canPresentUI": true,
+        "userGesturePresent": false,
+        "note": "Host-bound package/session identity"
       },
       "engineVersionSource": "source-inventory.json#/expo",
       "permissions": [

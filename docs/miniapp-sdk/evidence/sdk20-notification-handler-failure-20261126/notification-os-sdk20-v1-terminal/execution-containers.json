@@ -1,0 +1,102 @@
+{
+  "source": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+  "decisionSHA256": "fbacbfb0a21b33de935d17dab14a2cdd0d7ba9588998b5f7977816a544897f0f",
+  "observedAt": "2026-11-26T00:34:01.803596+00:00",
+  "device": "ED1C7CA0-C85E-41DF-918F-3C9C9033F73E",
+  "runnerBundleID": "com.itorah.hanlinminiapps.integration.uitests.xctrunner",
+  "uiRunnerInfoSHA256": "e807c6b2a4c5444448a527d598bb86195f0737209b6c15bc2b8ecc8273f75d87",
+  "runnerData": "/Users/m1/Library/Developer/CoreSimulator/Devices/ED1C7CA0-C85E-41DF-918F-3C9C9033F73E/data/Containers/Data/Application/F75B9BCE-232A-48B9-973D-4E09348B50EC",
+  "appData": "/Users/m1/Library/Developer/CoreSimulator/Devices/ED1C7CA0-C85E-41DF-918F-3C9C9033F73E/data/Containers/Data/Application/C92B4AAE-0867-4B75-ADAA-21FFB12D031D",
+  "appGroup": "/Users/m1/Library/Developer/CoreSimulator/Devices/ED1C7CA0-C85E-41DF-918F-3C9C9033F73E/data/Containers/Shared/AppGroup/CA9195C2-C33E-4502-9BC4-1241ACB52501",
+  "actionInput": {
+    "source": "Fixtures/Widgets/Hanlin-ScriptWidget-Actions.scripting",
+    "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/ED1C7CA0-C85E-41DF-918F-3C9C9033F73E/data/Containers/Data/Application/C92B4AAE-0867-4B75-ADAA-21FFB12D031D/Documents/Hanlin-ScriptWidget-Actions.scripting",
+    "bytes": 825,
+    "sha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb",
+    "status": "COPIED_EXACT_ORIGINAL_INPUT"
+  },
+  "originalInputsStaged": [
+    {
+      "name": "Hanlin-ScriptWidget-Actions.scripting",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Fixtures/Widgets/Hanlin-ScriptWidget-Actions.scripting",
+      "bytes": 825,
+      "sha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb",
+      "origin": {
+        "kind": "GIT_BLOB",
+        "commit": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+        "path": "Fixtures/Widgets/Hanlin-ScriptWidget-Actions.scripting",
+        "boundary": "Original frozen acceptance fixture; no SDK20 regeneration of this input."
+      },
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/ED1C7CA0-C85E-41DF-918F-3C9C9033F73E/data/Containers/Data/Application/C92B4AAE-0867-4B75-ADAA-21FFB12D031D/Documents/Hanlin-ScriptWidget-Actions.scripting",
+      "status": "COPIED_EXACT_ORIGINAL_INPUT"
+    },
+    {
+      "name": "ExpoSwiftUIProbeA.hanlinExpo",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
+      "bytes": 325929,
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+      "origin": {
+        "kind": "GIT_BLOB",
+        "commit": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+        "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
+        "boundary": "Original frozen acceptance fixture at the unchanged source carrier; actual original build-probe reproduced these exact bytes during the SDK20 preparation. No fixture content change.",
+        "originalProducerAuthority": {
+          "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/probe-fixture-sdk20-preparation-v1/state.json",
+          "bytes": 12255,
+          "sha256": "949660502e1637c5c96aa41372e07d380fe36a0bab586c0f43cc87e7fbcd50d9"
+        },
+        "wrapperPredicateReconciliation": {
+          "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/probe-fixture-sdk20-preparation-v1/hosted-git-predicate-reconciliation.json",
+          "bytes": 6858,
+          "sha256": "449cc069f7e23873b6da57e3af283ae0f135ac25d0d8677157e2d9978b1a0651"
+        }
+      },
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/ED1C7CA0-C85E-41DF-918F-3C9C9033F73E/data/Containers/Data/Application/C92B4AAE-0867-4B75-ADAA-21FFB12D031D/Documents/ExpoSwiftUIProbeA.hanlinExpo",
+      "status": "EXISTING_EXACT_ORIGINAL_INPUT_VERIFIED"
+    },
+    {
+      "name": "hanlin-script-parity.hanlinNativeScript",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/DemoMiniApps/hanlin-script-parity.hanlinNativeScript",
+      "bytes": 7512,
+      "sha256": "2e48509336edba2b301490422102dbf25cb7f1b894430d52994febdc1c33c199",
+      "origin": {
+        "kind": "GIT_BLOB",
+        "commit": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+        "path": "DemoMiniApps/hanlin-script-parity.hanlinNativeScript",
+        "boundary": "Original frozen acceptance fixture; no SDK20 regeneration of this input."
+      },
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/ED1C7CA0-C85E-41DF-918F-3C9C9033F73E/data/Containers/Data/Application/C92B4AAE-0867-4B75-ADAA-21FFB12D031D/Documents/hanlin-script-parity.hanlinNativeScript",
+      "status": "EXISTING_EXACT_ORIGINAL_INPUT_VERIFIED"
+    }
+  ],
+  "metadata": {
+    "runnerData": {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/ED1C7CA0-C85E-41DF-918F-3C9C9033F73E/data/Containers/Data/Application/F75B9BCE-232A-48B9-973D-4E09348B50EC",
+      "metadataPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/ED1C7CA0-C85E-41DF-918F-3C9C9033F73E/data/Containers/Data/Application/F75B9BCE-232A-48B9-973D-4E09348B50EC/.com.apple.mobile_container_manager.metadata.plist",
+      "metadataBytes": 632,
+      "metadataSHA256": "25a6bf81e3496879925b5fb64ebe4fcd6eecc643557ec63b7fd230e1894c9c6f",
+      "metadataIdentifier": "com.itorah.hanlinminiapps.integration.uitests.xctrunner",
+      "containerUUID": "F75B9BCE-232A-48B9-973D-4E09348B50EC",
+      "metadataUUID": "07961744-397F-4F9F-A7BA-D644B9795F2C"
+    },
+    "appData": {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/ED1C7CA0-C85E-41DF-918F-3C9C9033F73E/data/Containers/Data/Application/C92B4AAE-0867-4B75-ADAA-21FFB12D031D",
+      "metadataPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/ED1C7CA0-C85E-41DF-918F-3C9C9033F73E/data/Containers/Data/Application/C92B4AAE-0867-4B75-ADAA-21FFB12D031D/.com.apple.mobile_container_manager.metadata.plist",
+      "metadataBytes": 602,
+      "metadataSHA256": "b3335e3f3db408838efa56d8314e40f969cb9f84700ed4266a48f4fe29ef9c5b",
+      "metadataIdentifier": "com.itorah.hanlinminiapps",
+      "containerUUID": "C92B4AAE-0867-4B75-ADAA-21FFB12D031D",
+      "metadataUUID": "A80E99DE-DF03-434C-98B1-447073422FEC"
+    },
+    "appGroup": {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/ED1C7CA0-C85E-41DF-918F-3C9C9033F73E/data/Containers/Shared/AppGroup/CA9195C2-C33E-4502-9BC4-1241ACB52501",
+      "metadataPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/ED1C7CA0-C85E-41DF-918F-3C9C9033F73E/data/Containers/Shared/AppGroup/CA9195C2-C33E-4502-9BC4-1241ACB52501/.com.apple.mobile_container_manager.metadata.plist",
+      "metadataBytes": 606,
+      "metadataSHA256": "f9b86637724431e1b7bc68a13e058889284d9035636ba890c29826b9c4cc0cd2",
+      "metadataIdentifier": "group.com.itorah.chavrusachat",
+      "containerUUID": "CA9195C2-C33E-4502-9BC4-1241ACB52501",
+      "metadataUUID": "257E774D-1295-4D3F-B077-501294E1D97E"
+    }
+  },
+  "boundary": "OS returned current owned-device containers. No permission grant, registry, queue or receipt is manufactured."
+}

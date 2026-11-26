@@ -1,0 +1,28 @@
+{
+  "observedAt": "2026-11-25T22:07:25.133960+00:00",
+  "files": [
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-metadata-toolchain-v1/state.json",
+      "name": "state.json",
+      "bytes": 1139,
+      "sha256": "86e8c111510ad1baf953e613a6ce22f2ba4b061ccd4b6db30787cd794ad1a446"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-metadata-toolchain-v1/brew-install-cmake.log",
+      "name": "brew-install-cmake.log",
+      "bytes": 423,
+      "sha256": "ffc0d0a091cc4738ccf069c98ec903b10164573c0f6bc0f0c57cd9f4f8c3bb06"
+    }
+  ],
+  "freeBytes": 129499873280,
+  "trackedDiffSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "charge": {
+    "startedAt": "2026-11-25T22:05:07.315082+00:00",
+    "finishedAt": "2026-11-25T22:05:14.662384+00:00",
+    "seconds": 7.347363291992224,
+    "status": "INSTALLED",
+    "phase": "notification-metadata-toolchain-v1"
+  },
+  "prefixTotalBeforeResume": 202.12370433399337,
+  "remainingAllowanceSeconds": 1597.8762956660066
+}

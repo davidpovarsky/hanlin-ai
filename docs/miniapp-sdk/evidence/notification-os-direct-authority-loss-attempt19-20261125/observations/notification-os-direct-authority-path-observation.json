@@ -1,0 +1,37 @@
+{
+  "observedAt": "2026-11-25T20:14:55.048507+00:00",
+  "rootExists": false,
+  "controlExists": false,
+  "rows": [
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v5-decision.json",
+      "exists": false,
+      "isSymlink": false
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v5/decision.json",
+      "exists": false,
+      "isSymlink": false
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v5/state.json",
+      "exists": false,
+      "isSymlink": false
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/state.json",
+      "exists": false,
+      "isSymlink": false
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/remaining-native-product-metadata-v11.json",
+      "exists": false,
+      "isSymlink": false
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-inputs/miniapp-sdk.json",
+      "exists": false,
+      "isSymlink": false
+    }
+  ]
+}

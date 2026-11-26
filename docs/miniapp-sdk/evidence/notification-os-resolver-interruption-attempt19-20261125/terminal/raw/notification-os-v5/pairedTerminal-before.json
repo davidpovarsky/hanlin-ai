@@ -1,0 +1,479 @@
+{
+  "schema": 1,
+  "owner": "/root/native_execution",
+  "id": "paired52-continuation-v5",
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "scope": "miniapp_complete",
+  "expectedCases": 52,
+  "status": "EXECUTED_PASS",
+  "historicalProcessGroupExclusions": [],
+  "decisionSHA256": "b38292358c011d2db0a1a96c167494ca84f87bd806c27e399d7ec294f7e4b42b",
+  "controllerPID": 4139,
+  "activeBaselineSeconds": 21098.44556183604,
+  "allowanceSeconds": 3720.3727040829835,
+  "originalPlanMaximumActiveSeconds": 12600,
+  "originalTotalPairedAllowanceSeconds": 4500,
+  "priorContinuationChargedSeconds": 3779.6272959170165,
+  "additionalGrants": [
+    {
+      "id": "paired52-additional-grant-20261125",
+      "sha256": "a4e0efba1ef5a375cf6db4ded0637d6ecc8fa31e73fa2fe198ba5d9ce4878738",
+      "seconds": 2400
+    },
+    {
+      "id": "paired52-additional-grant-20261125-supplement",
+      "sha256": "6e35f521dde4ab0c88a413afcc561605cd65c61d4e3b9b8f5b5ccd5c12130271",
+      "seconds": 600
+    }
+  ],
+  "additionalOperationalAllowanceSeconds": 3000,
+  "totalPairedAllowanceSeconds": 7500,
+  "guard": "authenticated-original25-plus27-retained-products-v5",
+  "argv": [
+    "/opt/homebrew/opt/python@3.12/bin/python3.12",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/original52-retained-child-v7.py",
+    "--decision",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/decision.json",
+    "--output",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result"
+  ],
+  "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/controller-child.log",
+  "pairedEvidence": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result",
+  "sourceTree": "f7a6596a1ef53d8d962ceb9f619460ffa19ee91e",
+  "originalNode": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/node-v24.5.0-darwin-arm64/bin/node",
+    "sha256": "336b5b3ebc5deb86df842102b20b6e4761605b7a667823e68dda7761b91a161b",
+    "version": "24.5.0",
+    "observedIdentity": {
+      "node": "24.5.0",
+      "platform": "darwin",
+      "architecture": "arm64"
+    }
+  },
+  "childSHA256": "04ff68e1ebc6ccd7069363c0aa32894af4b28a815d73a9c8fc6e6d5c3bc5128a",
+  "expectedGroups": {
+    "OriginalRuntimes": {
+      "expected": 25,
+      "selectors": [
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualPresentationAdaptersAndDismissalEvents",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoNativeAPIUsesActualUIKitAndWorklets",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoWidgetsUsesOriginalTimelinesAndLiveActivities",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyExpoPackageImportsRendersAndHandlesEvents",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyNativeScriptPackageImportsRendersAndHandlesEvents",
+        "HanlinMiniAppsTests/CrossAppInvocationTests/testCancelAndDisplayDoneReturnNoDocumentMutation",
+        "HanlinMiniAppsTests/CrossAppInvocationTests/testReusingValueWindowKeepsItsInvocationBindingCurrent",
+        "HanlinMiniAppsTests/CrossAppInvocationTests/testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained",
+        "HanlinMiniAppsTests/CrossAppInvocationTests/testActualIncomingRequestsCreateDistinctIPadScenes",
+        "HanlinMiniAppsTests/NativeScriptWindowOwnershipTests/testUnrelatedAndLateWindowCleanupPreservesNativeScriptOwner",
+        "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testInvalidationReleasesHandlersAndRejectsLateActions",
+        "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testBridgeInvalidationReleasesPendingCallbacksBeforeProviderCancellation",
+        "HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests/testExternalInvocationSurvivesNestedFullScreenModal",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEditButtonEditsOriginalList",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEmptyViewReportsNativeLayout",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierAccessibilityAndGeometry",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierNativeContainerContexts",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoHostServicesUseRealStorageRuntimeAndWidgetPublication",
+        "HanlinMiniAppsTests/CrossAppInvocationTests/testUnavailableCallbackRetainsResultForSourceRecovery"
+      ]
+    },
+    "Paired": {
+      "expected": 27,
+      "selectors": [
+        "AI_HLYTests/PendingFirstTurnTests/importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings()",
+        "AI_HLYTests/PendingFirstTurnTests/cancelledMiniAppRepairPreservesHomeDraft()",
+        "AI_HLYTests/HanlinScriptingPlatformCompositionTests/malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic()",
+        "AI_HLYTests/MiniAppAuthoringToolTests/originalSDKWriteValidateBuildAndRepair()",
+        "AI_HLYTests/MiniAppAuthoringToolTests/sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource()",
+        "AI_HLYTests/MiniAppAuthoringToolTests/originalExpoMetroBuildOnEmbeddedNode()",
+        "AI_HLYTests/HanlinOriginalScriptWidgetAPITests",
+        "AI_HLYTests/HanlinNativePresentationTests",
+        "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests",
+        "AI_HLYTests/HanlinOriginalScriptWidgetControlTests",
+        "AI_HLYTests/HanlinMiniAppStorageCapacityTests",
+        "AI_HLYTests/HanlinOriginalExpoWidgetTests",
+        "AI_HLYUITests/MiniAppAuthoringUITests",
+        "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure",
+        "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer"
+      ]
+    }
+  },
+  "resourceObservationAtLaunch": {
+    "observedAt": "2026-11-25T17:38:35.913029+00:00",
+    "freeBytes": 10298564608,
+    "df": "Filesystem   1024-blocks      Used Available Capacity iused     ifree %iused  Mounted on\n/dev/disk3s5   482797652 427806060  10057192    98% 5635481 100571920    5%   /System/Volumes/Data"
+  },
+  "original52": "EXECUTED_PASS",
+  "startedAt": "2026-11-25T17:38:35.913837+00:00",
+  "phasePID": 4147,
+  "elapsedSeconds": 3106.6737294579943,
+  "logBytes": 16325,
+  "freeBytes": 49201422336,
+  "actualAcceptance": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/state.json",
+    "sha256": "786ea113ee8a47f8b8e8330ee2a3627be727c285f587ebd35afab9bfe2907baf",
+    "status": "EXECUTED_PASS",
+    "groups": {
+      "OriginalRuntimes": {
+        "status": "PASS",
+        "startedAt": "2026-11-25T17:39:15.956736+00:00",
+        "selectors": [
+          "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch",
+          "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents",
+          "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters",
+          "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualPresentationAdaptersAndDismissalEvents",
+          "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoNativeAPIUsesActualUIKitAndWorklets",
+          "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoWidgetsUsesOriginalTimelinesAndLiveActivities",
+          "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText",
+          "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyExpoPackageImportsRendersAndHandlesEvents",
+          "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyNativeScriptPackageImportsRendersAndHandlesEvents",
+          "HanlinMiniAppsTests/CrossAppInvocationTests/testCancelAndDisplayDoneReturnNoDocumentMutation",
+          "HanlinMiniAppsTests/CrossAppInvocationTests/testReusingValueWindowKeepsItsInvocationBindingCurrent",
+          "HanlinMiniAppsTests/CrossAppInvocationTests/testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained",
+          "HanlinMiniAppsTests/CrossAppInvocationTests/testActualIncomingRequestsCreateDistinctIPadScenes",
+          "HanlinMiniAppsTests/NativeScriptWindowOwnershipTests/testUnrelatedAndLateWindowCleanupPreservesNativeScriptOwner",
+          "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testInvalidationReleasesHandlersAndRejectsLateActions",
+          "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testBridgeInvalidationReleasesPendingCallbacksBeforeProviderCancellation",
+          "HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests/testExternalInvocationSurvivesNestedFullScreenModal",
+          "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata",
+          "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEditButtonEditsOriginalList",
+          "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEmptyViewReportsNativeLayout",
+          "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierAccessibilityAndGeometry",
+          "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope",
+          "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierNativeContainerContexts",
+          "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoHostServicesUseRealStorageRuntimeAndWidgetPublication",
+          "HanlinMiniAppsTests/CrossAppInvocationTests/testUnavailableCallbackRetainsResultForSourceRecovery"
+        ],
+        "expectedTests": 25,
+        "commandTimeoutSeconds": 2400,
+        "argv": [
+          "xcodebuild",
+          "-project",
+          "AI_HLY.xcodeproj",
+          "-destination",
+          "platform=iOS Simulator,id=E742FBCD-8FF0-4130-B143-7F8328637138",
+          "-parallel-testing-enabled",
+          "NO",
+          "-derivedDataPath",
+          "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete",
+          "-clonedSourcePackagesDirPath",
+          "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/SourcePackages",
+          "-skipPackagePluginValidation",
+          "-skipMacroValidation",
+          "CODE_SIGNING_ALLOWED=YES",
+          "CODE_SIGNING_REQUIRED=YES",
+          "CODE_SIGN_IDENTITY=-",
+          "-collect-test-diagnostics",
+          "never",
+          "-scheme",
+          "HanlinMiniApps",
+          "test-without-building",
+          "-resultBundlePath",
+          "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/OriginalRuntimes.xcresult",
+          "-only-testing:HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch",
+          "-only-testing:HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents",
+          "-only-testing:HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters",
+          "-only-testing:HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualPresentationAdaptersAndDismissalEvents",
+          "-only-testing:HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoNativeAPIUsesActualUIKitAndWorklets",
+          "-only-testing:HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoWidgetsUsesOriginalTimelinesAndLiveActivities",
+          "-only-testing:HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText",
+          "-only-testing:HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyExpoPackageImportsRendersAndHandlesEvents",
+          "-only-testing:HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyNativeScriptPackageImportsRendersAndHandlesEvents",
+          "-only-testing:HanlinMiniAppsTests/CrossAppInvocationTests/testCancelAndDisplayDoneReturnNoDocumentMutation",
+          "-only-testing:HanlinMiniAppsTests/CrossAppInvocationTests/testReusingValueWindowKeepsItsInvocationBindingCurrent",
+          "-only-testing:HanlinMiniAppsTests/CrossAppInvocationTests/testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained",
+          "-only-testing:HanlinMiniAppsTests/CrossAppInvocationTests/testActualIncomingRequestsCreateDistinctIPadScenes",
+          "-only-testing:HanlinMiniAppsTests/NativeScriptWindowOwnershipTests/testUnrelatedAndLateWindowCleanupPreservesNativeScriptOwner",
+          "-only-testing:HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testInvalidationReleasesHandlersAndRejectsLateActions",
+          "-only-testing:HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testBridgeInvalidationReleasesPendingCallbacksBeforeProviderCancellation",
+          "-only-testing:HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests/testExternalInvocationSurvivesNestedFullScreenModal",
+          "-only-testing:HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata",
+          "-only-testing:HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEditButtonEditsOriginalList",
+          "-only-testing:HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEmptyViewReportsNativeLayout",
+          "-only-testing:HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierAccessibilityAndGeometry",
+          "-only-testing:HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope",
+          "-only-testing:HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierNativeContainerContexts",
+          "-only-testing:HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoHostServicesUseRealStorageRuntimeAndWidgetPublication",
+          "-only-testing:HanlinMiniAppsTests/CrossAppInvocationTests/testUnavailableCallbackRetainsResultForSourceRecovery"
+        ],
+        "resultBundle": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/OriginalRuntimes.xcresult",
+        "exitCode": 0,
+        "finishedAt": "2026-11-25T18:10:10.025692+00:00",
+        "resultFinalized": true,
+        "summary": {
+          "devicesAndConfigurations": [
+            {
+              "device": {
+                "architecture": "arm64",
+                "deviceId": "E742FBCD-8FF0-4130-B143-7F8328637138",
+                "deviceName": "HanlinPaired-local",
+                "modelName": "iPad Pro 13-inch (M5)",
+                "osBuildNumber": "24A434",
+                "osVersion": "27.0",
+                "platform": "iOS Simulator"
+              },
+              "expectedFailures": 0,
+              "failedTests": 0,
+              "passedTests": 25,
+              "skippedTests": 0,
+              "testPlanConfiguration": {
+                "configurationId": "1",
+                "configurationName": "Test Scheme Action"
+              }
+            }
+          ],
+          "environmentDescription": "HanlinMiniApps \u00b7 Built with macOS 27.0",
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "finishTime": 1795630208.529,
+          "passedTests": 25,
+          "result": "Passed",
+          "runtimeWarnings": [
+            {
+              "issueType": "Runtime Warning",
+              "message": "Update the Info.plist: Support for all orientations will soon be required."
+            },
+            {
+              "issueType": "Runtime Warning",
+              "message": "Update the Info.plist: Support for all orientations will soon be required."
+            },
+            {
+              "issueType": "Runtime Warning",
+              "message": "Update the Info.plist: Support for all orientations will soon be required."
+            },
+            {
+              "issueType": "Runtime Warning",
+              "message": "Update the Info.plist: Support for all orientations will soon be required."
+            },
+            {
+              "issueType": "Runtime Warning",
+              "message": "Update the Info.plist: Support for all orientations will soon be required."
+            },
+            {
+              "issueType": "Runtime Warning",
+              "message": "Update the Info.plist: Support for all orientations will soon be required."
+            },
+            {
+              "issueType": "Runtime Warning",
+              "message": "Update the Info.plist: Support for all orientations will soon be required."
+            },
+            {
+              "issueType": "Runtime Warning",
+              "message": "Update the Info.plist: Support for all orientations will soon be required."
+            },
+            {
+              "issueType": "Runtime Warning",
+              "message": "Update the Info.plist: Support for all orientations will soon be required."
+            },
+            {
+              "issueType": "Runtime Warning",
+              "message": "Update the Info.plist: Support for all orientations will soon be required."
+            },
+            {
+              "issueType": "Runtime Warning",
+              "message": "Update the Info.plist: Support for all orientations will soon be required."
+            },
+            {
+              "issueType": "Runtime Warning",
+              "message": "Update the Info.plist: Support for all orientations will soon be required."
+            },
+            {
+              "issueType": "Runtime Warning",
+              "message": "Update the Info.plist: Support for all orientations will soon be required."
+            },
+            {
+              "issueType": "Runtime Warning",
+              "message": "Update the Info.plist: Support for all orientations will soon be required."
+            },
+            {
+              "issueType": "Runtime Warning",
+              "message": "Update the Info.plist: Support for all orientations will soon be required."
+            },
+            {
+              "issueType": "Runtime Warning",
+              "message": "Update the Info.plist: Support for all orientations will soon be required."
+            },
+            {
+              "issueType": "Runtime Warning",
+              "message": "Update the Info.plist: Support for all orientations will soon be required."
+            }
+          ],
+          "skippedTests": 0,
+          "startTime": 1795628405.838,
+          "statistics": [],
+          "testFailures": [],
+          "title": "Test - HanlinMiniApps",
+          "topInsights": [],
+          "totalTestCount": 25
+        },
+        "summarySHA256": "8362539879032ba8a5dfe944fef09ad4769b9ea62cacbd42cc575119efcbddc2",
+        "nodesSHA256": "a9115dcb72398c1cf1a8bfa4ec9dd2b42273176befdbfa2be46354a0eb606878",
+        "selectorVerifierSHA256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96",
+        "attachmentExportExitCode": 0
+      },
+      "Paired": {
+        "status": "PASS",
+        "startedAt": "2026-11-25T18:10:15.850991+00:00",
+        "selectors": [
+          "AI_HLYTests/PendingFirstTurnTests/importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings()",
+          "AI_HLYTests/PendingFirstTurnTests/cancelledMiniAppRepairPreservesHomeDraft()",
+          "AI_HLYTests/HanlinScriptingPlatformCompositionTests/malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic()",
+          "AI_HLYTests/MiniAppAuthoringToolTests/originalSDKWriteValidateBuildAndRepair()",
+          "AI_HLYTests/MiniAppAuthoringToolTests/sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource()",
+          "AI_HLYTests/MiniAppAuthoringToolTests/originalExpoMetroBuildOnEmbeddedNode()",
+          "AI_HLYTests/HanlinOriginalScriptWidgetAPITests",
+          "AI_HLYTests/HanlinNativePresentationTests",
+          "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests",
+          "AI_HLYTests/HanlinOriginalScriptWidgetControlTests",
+          "AI_HLYTests/HanlinMiniAppStorageCapacityTests",
+          "AI_HLYTests/HanlinOriginalExpoWidgetTests",
+          "AI_HLYUITests/MiniAppAuthoringUITests",
+          "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure",
+          "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer"
+        ],
+        "expectedTests": 27,
+        "commandTimeoutSeconds": 2100,
+        "argv": [
+          "xcodebuild",
+          "-project",
+          "AI_HLY.xcodeproj",
+          "-destination",
+          "platform=iOS Simulator,id=E742FBCD-8FF0-4130-B143-7F8328637138",
+          "-parallel-testing-enabled",
+          "NO",
+          "-derivedDataPath",
+          "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete",
+          "-clonedSourcePackagesDirPath",
+          "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/SourcePackages",
+          "-skipPackagePluginValidation",
+          "-skipMacroValidation",
+          "CODE_SIGNING_ALLOWED=YES",
+          "CODE_SIGNING_REQUIRED=YES",
+          "CODE_SIGN_IDENTITY=-",
+          "-collect-test-diagnostics",
+          "never",
+          "-scheme",
+          "AI_HLY",
+          "test-without-building",
+          "-resultBundlePath",
+          "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/Paired.xcresult",
+          "-test-timeouts-enabled",
+          "YES",
+          "-maximum-test-execution-time-allowance",
+          "600",
+          "-only-testing:AI_HLYTests/PendingFirstTurnTests/importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings()",
+          "-only-testing:AI_HLYTests/PendingFirstTurnTests/cancelledMiniAppRepairPreservesHomeDraft()",
+          "-only-testing:AI_HLYTests/HanlinScriptingPlatformCompositionTests/malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic()",
+          "-only-testing:AI_HLYTests/MiniAppAuthoringToolTests/originalSDKWriteValidateBuildAndRepair()",
+          "-only-testing:AI_HLYTests/MiniAppAuthoringToolTests/sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource()",
+          "-only-testing:AI_HLYTests/MiniAppAuthoringToolTests/originalExpoMetroBuildOnEmbeddedNode()",
+          "-only-testing:AI_HLYTests/HanlinOriginalScriptWidgetAPITests",
+          "-only-testing:AI_HLYTests/HanlinNativePresentationTests",
+          "-only-testing:AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests",
+          "-only-testing:AI_HLYTests/HanlinOriginalScriptWidgetControlTests",
+          "-only-testing:AI_HLYTests/HanlinMiniAppStorageCapacityTests",
+          "-only-testing:AI_HLYTests/HanlinOriginalExpoWidgetTests",
+          "-only-testing:AI_HLYUITests/MiniAppAuthoringUITests",
+          "-only-testing:AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure",
+          "-only-testing:AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer"
+        ],
+        "resultBundle": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/Paired.xcresult",
+        "exitCode": 0,
+        "finishedAt": "2026-11-25T18:30:15.319139+00:00",
+        "resultFinalized": true,
+        "summary": {
+          "devicesAndConfigurations": [
+            {
+              "device": {
+                "architecture": "arm64",
+                "deviceId": "E742FBCD-8FF0-4130-B143-7F8328637138",
+                "deviceName": "HanlinPaired-local",
+                "modelName": "iPad Pro 13-inch (M5)",
+                "osBuildNumber": "24A434",
+                "osVersion": "27.0",
+                "platform": "iOS Simulator"
+              },
+              "expectedFailures": 0,
+              "failedTests": 0,
+              "passedTests": 27,
+              "skippedTests": 0,
+              "testPlanConfiguration": {
+                "configurationId": "1",
+                "configurationName": "Test Scheme Action"
+              }
+            }
+          ],
+          "environmentDescription": "AI_HLY \u00b7 Built with macOS 27.0",
+          "expectedFailures": 0,
+          "failedTests": 0,
+          "finishTime": 1795631415.077,
+          "passedTests": 27,
+          "result": "Passed",
+          "runtimeWarnings": [
+            {
+              "issueType": "Runtime Warning",
+              "message": "           SessionCore.mm:631   This method can lead to UI unresponsiveness if called on the main thread while the audio session is active."
+            },
+            {
+              "issueType": "Runtime Warning",
+              "message": "    AVAudioSession_iOS.mm:978   This method can lead to UI unresponsiveness if called on the main thread. Consider using the asynchronous activate/deactivate API instead for calls from the main thread."
+            },
+            {
+              "issueType": "Runtime Warning",
+              "message": "Update the Info.plist: Support for all orientations will soon be required."
+            },
+            {
+              "issueType": "Runtime Warning",
+              "message": "Update the Info.plist: Support for all orientations will soon be required."
+            }
+          ],
+          "skippedTests": 0,
+          "startTime": 1795630246.154,
+          "statistics": [],
+          "testFailures": [],
+          "title": "Test - AI_HLY",
+          "topInsights": [
+            {
+              "category": "Longest Test Runs",
+              "impact": "77% of duration",
+              "text": "1 longest test run with outlier durations exceeding 278.97s (three standard deviations)"
+            }
+          ],
+          "totalTestCount": 27
+        },
+        "summarySHA256": "961704b8fa2ef947d5dc1e37984d0e9ed8904830e496a3ae34110ee5d34ef713",
+        "nodesSHA256": "d208e06cceaf65935d9eb7dc8e20ef640aea6a7488a70691392b9d3671c1e89f",
+        "selectorVerifierSHA256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96",
+        "attachmentExportExitCode": 0
+      }
+    }
+  },
+  "exitCode": 0,
+  "childStateSHA256": "786ea113ee8a47f8b8e8330ee2a3627be727c285f587ebd35afab9bfe2907baf",
+  "ownedProcessGroupAtCleanup": [],
+  "ownedProcessGroupAfterTermination": [],
+  "observedPhaseExitCode": 0,
+  "ownedSimulatorCleanup": {
+    "ownership": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/created-simulator.txt",
+    "startedAt": "2026-11-25T18:30:18.269710+00:00",
+    "device": "E742FBCD-8FF0-4130-B143-7F8328637138",
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": "",
+    "observedState": "Shutdown"
+  },
+  "remainingOwnedProcessGroup": [],
+  "cleanupErrors": [],
+  "sourceErrors": [],
+  "finishedAt": "2026-11-25T18:30:22.583701+00:00",
+  "cumulativeActiveSeconds": 24205.119291294035,
+  "logSHA256": "446018d08a1d6be9b541afd629fa8c46b678af9e887d81c891b31c92cade52df",
+  "allowanceExceededDuringCleanup": false,
+  "chargedSeconds": 3106.6737294579943,
+  "chargeCommitted": true
+}

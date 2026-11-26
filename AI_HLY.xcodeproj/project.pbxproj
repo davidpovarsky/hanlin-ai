@@ -3374,7 +3374,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/bash;
-			shellScript = "set -euo pipefail\nhost_arch=\"$(uname -m)\"\ntarget_arch=\"${CURRENT_ARCH:-}\"\nif [[ -z \"$target_arch\" || \"$target_arch\" == \"undefined_arch\" ]]; then\n  target_arch=\"${ARCHS%% *}\"\nfi\ngenerator_root=\"$SRCROOT/Scripts/NativeScript/node_modules/@nativescript/ios/framework/internal/metadata-generator-$host_arch/bin\"\ngenerator=\"$generator_root/build-step-metadata-generator.py\"\nif [[ ! -x \"$generator\" ]]; then\n  echo \"NativeScript metadata generator is missing: $generator\" >&2\n  exit 1\nfi\npushd \"$generator_root\" >/dev/null\n\"$generator\" \"$target_arch\"\npopd >/dev/null\ntest -f \"$CONFIGURATION_BUILD_DIR/metadata-$target_arch.bin\"\n";
+			shellScript = "set -euo pipefail\nhost_arch=\"$(uname -m)\"\ntarget_arch=\"${CURRENT_ARCH:-}\"\nif [[ -z \"$target_arch\" || \"$target_arch\" == \"undefined_arch\" ]]; then\n  target_arch=\"${ARCHS%% *}\"\nfi\ngenerator_root=\"$SRCROOT/Scripts/NativeScript/node_modules/@nativescript/ios/framework/internal/metadata-generator-$host_arch/bin\"\ngenerator=\"$generator_root/build-step-metadata-generator.py\"\nif [[ ! -x \"$generator\" ]]; then\n  echo \"NativeScript metadata generator is missing: $generator\" >&2\n  exit 1\nfi\npushd \"$generator_root\" >/dev/null\npython3 \"$SRCROOT/Scripts/NativeScript/build-step-metadata-generator-wrapper.py\" \"$target_arch\" --generator-root \"$generator_root\"\npopd >/dev/null\ntest -f \"$CONFIGURATION_BUILD_DIR/metadata-$target_arch.bin\"\n";
 			showEnvVarsInLog = 0;
 		};
 		A10000000000000000000050 /* Process Python libraries */ = {
@@ -3409,7 +3409,7 @@
 			"outputPaths" = ("$(CONFIGURATION_BUILD_DIR)/metadata-$(ARCHS).bin", );
 			"runOnlyForDeploymentPostprocessing" = "0";
 			"shellPath" = "/bin/bash";
-			"shellScript" = "set -euo pipefail\nhost_arch=\"$(uname -m)\"\ntarget_arch=\"${CURRENT_ARCH:-}\"\nif [[ -z \"$target_arch\" || \"$target_arch\" == \"undefined_arch\" ]]; then\n  target_arch=\"${ARCHS%% *}\"\nfi\ngenerator_root=\"$SRCROOT/Scripts/NativeScript/node_modules/@nativescript/ios/framework/internal/metadata-generator-$host_arch/bin\"\ngenerator=\"$generator_root/build-step-metadata-generator.py\"\nif [[ ! -x \"$generator\" ]]; then\n  echo \"NativeScript metadata generator is missing: $generator\" >&2\n  exit 1\nfi\npushd \"$generator_root\" >/dev/null\n\"$generator\" \"$target_arch\"\npopd >/dev/null\ntest -f \"$CONFIGURATION_BUILD_DIR/metadata-$target_arch.bin\"\n";
+			"shellScript" = "set -euo pipefail\nhost_arch=\"$(uname -m)\"\ntarget_arch=\"${CURRENT_ARCH:-}\"\nif [[ -z \"$target_arch\" || \"$target_arch\" == \"undefined_arch\" ]]; then\n  target_arch=\"${ARCHS%% *}\"\nfi\ngenerator_root=\"$SRCROOT/Scripts/NativeScript/node_modules/@nativescript/ios/framework/internal/metadata-generator-$host_arch/bin\"\ngenerator=\"$generator_root/build-step-metadata-generator.py\"\nif [[ ! -x \"$generator\" ]]; then\n  echo \"NativeScript metadata generator is missing: $generator\" >&2\n  exit 1\nfi\npushd \"$generator_root\" >/dev/null\npython3 \"$SRCROOT/Scripts/NativeScript/build-step-metadata-generator-wrapper.py\" \"$target_arch\" --generator-root \"$generator_root\"\npopd >/dev/null\ntest -f \"$CONFIGURATION_BUILD_DIR/metadata-$target_arch.bin\"\n";
 			"showEnvVarsInLog" = "0";
 		};
 		F9071A6DEA050DF055F5A852 /* W1-007 */ = {

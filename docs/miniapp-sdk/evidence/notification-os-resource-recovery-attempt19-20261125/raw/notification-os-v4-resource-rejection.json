@@ -1,0 +1,87 @@
+{
+  "schema": 1,
+  "observedAt": "2026-11-25T19:33:58.417673+00:00",
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "status": "SEAL_RESOURCE_REJECTED_UNCHARGED",
+  "primary": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/state.json",
+    "bytes": 126205,
+    "sha256": "73de5a617bfb057fe56e5767296ba847c1e56ff6756a647ff0569b06a815c255",
+    "activeElapsedSeconds": 24674.060430753034,
+    "status": "FAIL",
+    "controllerPID": null,
+    "phasePID": null
+  },
+  "noNativeOutput": true,
+  "noDecision": true,
+  "ownerLockAcquired": true,
+  "freeBytes": 3507855360,
+  "allocations": [
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex",
+      "exists": true,
+      "isSymlink": false,
+      "exitCode": 0,
+      "stdout": "2695712\t/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex\n",
+      "stderr": ""
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Index.noindex",
+      "exists": true,
+      "isSymlink": false,
+      "exitCode": 0,
+      "stdout": "197492\t/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Index.noindex\n",
+      "stderr": ""
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/ModuleCache.noindex",
+      "exists": true,
+      "isSymlink": false,
+      "exitCode": 0,
+      "stdout": "869892\t/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/ModuleCache.noindex\n",
+      "stderr": ""
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products",
+      "exists": true,
+      "isSymlink": false,
+      "exitCode": 0,
+      "stdout": "4641476\t/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products\n",
+      "stderr": ""
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/test/NotificationOS.xcresult",
+      "exists": true,
+      "isSymlink": false,
+      "exitCode": 0,
+      "stdout": "146292\t/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/test/NotificationOS.xcresult\n",
+      "stderr": ""
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1-attachments",
+      "exists": true,
+      "isSymlink": false,
+      "exitCode": 0,
+      "stdout": "146460\t/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1-attachments\n",
+      "stderr": ""
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v3",
+      "exists": true,
+      "isSymlink": false,
+      "exitCode": 0,
+      "stdout": "432\t/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v3\n",
+      "stderr": ""
+    }
+  ],
+  "ownedDerivedDataProcessCandidates": {
+    "argv": [
+      "/usr/bin/pgrep",
+      "-f",
+      "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete"
+    ],
+    "exitCode": 1,
+    "stdout": "",
+    "stderr": ""
+  }
+}

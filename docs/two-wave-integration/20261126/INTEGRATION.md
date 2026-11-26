@@ -20,3 +20,12 @@ Current PR19 SDK, explicit cache integration, original shared Chat action/presen
 ## Product boundary
 
 Standalone MiniApps owns new shortcut/widget/runtime UI. Hanlin and consumers use shared authoring/types/SDK contracts and the original cross-app bridge without duplicated runtime. Legacy Scripting-JSC/ScriptUI/.scripting stays frozen.
+
+## Second composition: current PR19
+
+- Current SDK parent: c34dd6ae752b3ab3ebc001743fc62c72fc48a203.
+- Preserved original assistant modules and incorporated ScriptWidget resources, widget-engine metadata and widget Host-action validation in the same authoring/compiler path.
+- Both original assistant-export tests and new Host-widget tests are retained. Three changed JavaScript modules passed Node syntax checks; execution remains required on the merged closure.
+- Seven original compiled Expo probes and seven test copies use current PR19 bundles. All manifest fields, missing-grant fixture and incompatible-version fixture remain unchanged; only bundle.js differed. This is provenance comparison, not test execution.
+- All526 application source members and both native window test references remain. The source-only project parser caught four identical duplicated object blocks introduced by automatic merge; removed the second copies and the parser passed.
+- Unified input hashes describe the actual staged package manifests; final canonical generation remains required.

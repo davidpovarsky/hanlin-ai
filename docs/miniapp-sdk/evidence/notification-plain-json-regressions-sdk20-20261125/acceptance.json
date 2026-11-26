@@ -1,0 +1,90 @@
+{
+  "schema": 1,
+  "status": "EXECUTED_PASS",
+  "source": "dff3b45c99a57bf8fe8ec721db3fa1fafce7134b",
+  "sourceTree": "52619d4ca19658c559c8378abe320e7b5cd736e3",
+  "suite": "HanlinNotificationInvocationTests",
+  "testFunctions": 11,
+  "parameterizedInvocations": 2,
+  "totalBodyInvocations": 12,
+  "failed": 0,
+  "skipped": 0,
+  "rawLog": {
+    "path": "terminal/swift-test.log",
+    "bytes": 24225,
+    "sha256": "5b163aa2413597185cf99bd7cb0e6ea52446b3c3cc7d9974fe35431ee76afef8"
+  },
+  "rawState": {
+    "path": "terminal/state.json",
+    "sha256": "95d72c8829b026d2e61b08c037e0cc6a332c2ccd0cdb5ea13d391b174c7aef80"
+  },
+  "testResults": [
+    {
+      "test": "typedEventExecutesOnceAndKeepsItsActualResultAfterReopen",
+      "rawLine": "✔ Test typedEventExecutesOnceAndKeepsItsActualResultAfterReopen(_:) with 2 test cases passed after 0.034 seconds."
+    },
+    {
+      "test": "independentlyAuthoredAPNsParametersDecodeAsPlainJSON",
+      "rawLine": "✔ Test independentlyAuthoredAPNsParametersDecodeAsPlainJSON() passed after 0.007 seconds."
+    },
+    {
+      "test": "userInfoEmitsPlainJSONWhileInternalCodableKeepsItsTags",
+      "rawLine": "✔ Test userInfoEmitsPlainJSONWhileInternalCodableKeepsItsTags() passed after 0.009 seconds."
+    },
+    {
+      "test": "independentlyAuthoredAPNsStillRequiresTheCompleteValidEnvelope",
+      "rawLine": "✔ Test independentlyAuthoredAPNsStillRequiresTheCompleteValidEnvelope() passed after 0.009 seconds."
+    },
+    {
+      "test": "foregroundAdmissionLeavesUnstartedWorkQueuedWithoutConsumingAnAttempt",
+      "rawLine": "✔ Test foregroundAdmissionLeavesUnstartedWorkQueuedWithoutConsumingAnAttempt() passed after 0.026 seconds."
+    },
+    {
+      "test": "changedInstallationsAndUndeclaredTargetsProduceRealFailureReceipts",
+      "rawLine": "✔ Test changedInstallationsAndUndeclaredTargetsProduceRealFailureReceipts() passed after 0.075 seconds."
+    },
+    {
+      "test": "malformedTaggedEventsAndUnknownVersionsDoNotBecomeCommands",
+      "rawLine": "✔ Test malformedTaggedEventsAndUnknownVersionsDoNotBecomeCommands() passed after 0.007 seconds."
+    },
+    {
+      "test": "cancellationExpiryAndActionErrorsRemainDistinct",
+      "rawLine": "✔ Test cancellationExpiryAndActionErrorsRemainDistinct() passed after 0.038 seconds."
+    },
+    {
+      "test": "identicalEventIDsStayInsideTheirProductNamespace",
+      "rawLine": "✔ Test identicalEventIDsStayInsideTheirProductNamespace() passed after 0.029 seconds."
+    },
+    {
+      "test": "missingCatalogStillDurablyRetainsTheEventForLiveHostValidation",
+      "rawLine": "✔ Test missingCatalogStillDurablyRetainsTheEventForLiveHostValidation() passed after 0.012 seconds."
+    },
+    {
+      "test": "cachedCatalogCannotOverrideLiveInstallationOrItsFailureReceipt",
+      "rawLine": "✔ Test cachedCatalogCannotOverrideLiveInstallationOrItsFailureReceipt() passed after 0.031 seconds."
+    }
+  ],
+  "warnings": [
+    "warning: '--skip-update' option is deprecated and will be removed in a future release",
+    "warning: 'zipfoundation': /Users/m1/builds/hanlin-notification-wire-fix-20261125/build/swiftpm-notification-wire/checkouts/ZIPFoundation/Package@swift-5.9.swift:23:61: warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]",
+    "   |                                                             `- warning: 'v4' is deprecated: watchOS 9.0 is the oldest supported version [#DeprecatedDeclaration]",
+    "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeMaps.swift:75:28: warning: 'CLGeocoder' was deprecated in macOS 26.0: Use MapKit [#\u001b]8;;https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration\u001b\\DeprecatedDeclaration\u001b]8;;\u001b\\]",
+    "    |                            `- warning: 'CLGeocoder' was deprecated in macOS 26.0: Use MapKit [#\u001b]8;;https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration\u001b\\DeprecatedDeclaration\u001b]8;;\u001b\\]",
+    "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeMaps.swift:77:51: warning: 'cancelGeocode()' was deprecated in macOS 26.0: Use MKGeocodingRequest [#\u001b]8;;https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration\u001b\\DeprecatedDeclaration\u001b]8;;\u001b\\]",
+    "    |                                                   `- warning: 'cancelGeocode()' was deprecated in macOS 26.0: Use MKGeocodingRequest [#\u001b]8;;https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration\u001b\\DeprecatedDeclaration\u001b]8;;\u001b\\]",
+    "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeMaps.swift:78:22: warning: 'reverseGeocodeLocation(_:completionHandler:)' was deprecated in macOS 26.0: Use MKReverseGeocodingRequest [#\u001b]8;;https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration\u001b\\DeprecatedDeclaration\u001b]8;;\u001b\\]",
+    "    |                      `- warning: 'reverseGeocodeLocation(_:completionHandler:)' was deprecated in macOS 26.0: Use MKReverseGeocodingRequest [#\u001b]8;;https://docs.swift.org/compiler/documentation/diagnostics/deprecated-declaration\u001b\\DeprecatedDeclaration\u001b]8;;\u001b\\]",
+    "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/Animation/ClockHandRotationEffect.swift:31:24: warning: static property 'effectType' is not concurrency-safe because non-'Sendable' type '(any Decodable.Type)?' may have shared mutable state [#\u001b]8;;https://docs.swift.org/compiler/documentation/diagnostics/mutable-global-variable\u001b\\MutableGlobalVariable\u001b]8;;\u001b\\]",
+    "    |                        |- warning: static property 'effectType' is not concurrency-safe because non-'Sendable' type '(any Decodable.Type)?' may have shared mutable state [#\u001b]8;;https://docs.swift.org/compiler/documentation/diagnostics/mutable-global-variable\u001b\\MutableGlobalVariable\u001b]8;;\u001b\\]",
+    "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/Attributes/Animation/ClockHandRotationEffect.swift:31:24: warning: static property 'effectType' is not concurrency-safe because non-'Sendable' type '(any Decodable.Type)?' may have shared mutable state [#\u001b]8;;https://docs.swift.org/compiler/documentation/diagnostics/mutable-global-variable\u001b\\MutableGlobalVariable\u001b]8;;\u001b\\]",
+    "    |                        |- warning: static property 'effectType' is not concurrency-safe because non-'Sendable' type '(any Decodable.Type)?' may have shared mutable state [#\u001b]8;;https://docs.swift.org/compiler/documentation/diagnostics/mutable-global-variable\u001b\\MutableGlobalVariable\u001b]8;;\u001b\\]",
+    "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionStore.swift:226:16: warning: value 'commit' was defined but never used; consider replacing with boolean test [#\u001b]8;;https://docs.swift.org/compiler/documentation/diagnostics/no-usage\u001b\\NoUsage\u001b]8;;\u001b\\]",
+    "     |                `- warning: value 'commit' was defined but never used; consider replacing with boolean test [#\u001b]8;;https://docs.swift.org/compiler/documentation/diagnostics/no-usage\u001b\\NoUsage\u001b]8;;\u001b\\]",
+    "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift:1150:25: warning: '#require(_:_:)' is redundant because 'NSBitmapImageRep(cgImage: image).representation(using: .png, properties: [:])' never equals 'nil' (from macro 'require')",
+    "     |                         `- warning: '#require(_:_:)' is redundant because 'NSBitmapImageRep(cgImage: image).representation(using: .png, properties: [:])' never equals 'nil' (from macro 'require')"
+  ],
+  "xUnitOutput": "NOT_EMITTED_BY_ACTUAL_SWIFT_TESTING; raw positive case results are authority",
+  "actualElapsedSeconds": 86.5407380000106,
+  "finishedAt": "2026-11-25T21:16:50.257711+00:00",
+  "OSLedgerMutation": false
+}

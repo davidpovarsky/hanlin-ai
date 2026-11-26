@@ -1,0 +1,775 @@
+{
+  "schema": 1,
+  "observedAt": "2026-11-26T00:19:38.127356+00:00",
+  "stateStatus": "EXECUTED_PASS",
+  "source": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+  "chargedSeconds": 2367.7255637079943,
+  "totalChargedSeconds": 4918.783101000008,
+  "ownedSimulator": {
+    "dataPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/ED1C7CA0-C85E-41DF-918F-3C9C9033F73E/data",
+    "dataPathSize": 6085431296,
+    "logPath": "/Users/m1/Library/Logs/CoreSimulator/ED1C7CA0-C85E-41DF-918F-3C9C9033F73E",
+    "udid": "ED1C7CA0-C85E-41DF-918F-3C9C9033F73E",
+    "lastUsedAt": "2026-11-25T23:39:08Z",
+    "isAvailable": true,
+    "logPathSize": 323584,
+    "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5-16GB",
+    "state": "Shutdown",
+    "name": "HanlinPaired-paired52-sdk20-v2"
+  },
+  "sourceErrors": [],
+  "cleanupErrors": [],
+  "result": {
+    "status": "EXECUTED_PASS",
+    "mini": {
+      "passed": 25,
+      "failed": 0,
+      "skipped": 0
+    },
+    "ai": {
+      "passed": 27,
+      "failed": 0,
+      "skipped": 0
+    },
+    "proofs": [
+      {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/hosted-fixture-built-check.json",
+        "bytes": 1418,
+        "sha256": "072304963e1427286dee6365c4541496729de186116f5469405d157423bf1a4f"
+      },
+      {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/acceptance.json",
+        "bytes": 29600,
+        "sha256": "baba32ca541c6e8a087e6fed91ed0aedb3d34ea6d5f3f50858c4aae40958b875"
+      },
+      {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/commands.jsonl",
+        "bytes": 27141,
+        "sha256": "db4523cb661c60047c1c1427f9750671ebc16efdfa0e28ded0280247ae26c50a"
+      },
+      {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/command-events.jsonl",
+        "bytes": 367779,
+        "sha256": "12ba7270d0de2b22a62699d7ef3fd11a6ca25af4751077130a30f5ad8ae15f0f"
+      },
+      {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/original-runtimes-summary.json",
+        "bytes": 3534,
+        "sha256": "26c8b33adbb9e3c5d5ba8089a411750f3901605afdfe8be7cbcf708ac60cead0"
+      },
+      {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/original-runtimes-nodes.json",
+        "bytes": 22895,
+        "sha256": "05d9f3551588d8940286ca97de62605cc123a267a359eb738d8d27a0f963e81e"
+      },
+      {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/original-runtimes-selected-tests.log",
+        "bytes": 57,
+        "sha256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96"
+      },
+      {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/test-summary.json",
+        "bytes": 1990,
+        "sha256": "b59fab35b496fc73d74cf081a1cffa954cc03b5bd3a858cbc50dec13e359ea05"
+      },
+      {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/test-nodes.json",
+        "bytes": 22363,
+        "sha256": "0227a44dc4532aad95821f625e2f5a19debb18c579983e8bba5ccb99d96e4568"
+      },
+      {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/requested-tests.log",
+        "bytes": 57,
+        "sha256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96"
+      }
+    ],
+    "builtHostArchives": [
+      {
+        "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/RuntimeHostResources.zip",
+        "bytes": 81839498,
+        "sha256": "ed18d93a88a1020bc2140417cea3847daf3d03472cdd4769d9a5ac4e44f48a22"
+      },
+      {
+        "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+        "bytes": 81839498,
+        "sha256": "ed18d93a88a1020bc2140417cea3847daf3d03472cdd4769d9a5ac4e44f48a22"
+      },
+      {
+        "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+        "bytes": 81839498,
+        "sha256": "ed18d93a88a1020bc2140417cea3847daf3d03472cdd4769d9a5ac4e44f48a22"
+      },
+      {
+        "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/Frameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+        "bytes": 81839498,
+        "sha256": "ed18d93a88a1020bc2140417cea3847daf3d03472cdd4769d9a5ac4e44f48a22"
+      },
+      {
+        "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/Frameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+        "bytes": 81839498,
+        "sha256": "ed18d93a88a1020bc2140417cea3847daf3d03472cdd4769d9a5ac4e44f48a22"
+      }
+    ],
+    "simulator": "ED1C7CA0-C85E-41DF-918F-3C9C9033F73E"
+  },
+  "members": [
+    {
+      "name": "outer-state.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/state.json",
+      "rawBytes": 12578,
+      "rawSHA256": "71a93134e5d50959d368d3bec2e10cde7f2214fab05606da702d75cd7da87b6b",
+      "bytes": 12578,
+      "sha256": "71a93134e5d50959d368d3bec2e10cde7f2214fab05606da702d75cd7da87b6b",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/outer-state.json"
+    },
+    {
+      "name": "outer-ledger.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/ledger.json",
+      "rawBytes": 6158,
+      "rawSHA256": "62fec27bb62ea8be73c70ce3386ab9382aedc82bb75aa4e91f3bde9f0e078ea8",
+      "bytes": 6158,
+      "sha256": "62fec27bb62ea8be73c70ce3386ab9382aedc82bb75aa4e91f3bde9f0e078ea8",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/outer-ledger.json"
+    },
+    {
+      "name": "outer-runner.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/runner.log",
+      "rawBytes": 22512,
+      "rawSHA256": "e8b69f039b89a6a1dd7299a3d68975b94c247d586e2a48f566931571f7cc36c1",
+      "bytes": 1984,
+      "sha256": "83e3b0f07b6c4a6c1f5fd688770abbd5f2ffc9c7bd3b162148be59d742dbf9a8",
+      "compression": "gzip",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/outer-runner.log.gz"
+    },
+    {
+      "name": "acceptance.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/acceptance.json",
+      "rawBytes": 29600,
+      "rawSHA256": "baba32ca541c6e8a087e6fed91ed0aedb3d34ea6d5f3f50858c4aae40958b875",
+      "bytes": 29600,
+      "sha256": "baba32ca541c6e8a087e6fed91ed0aedb3d34ea6d5f3f50858c4aae40958b875",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/acceptance.json"
+    },
+    {
+      "name": "test-summary.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/test-summary.json",
+      "rawBytes": 1990,
+      "rawSHA256": "b59fab35b496fc73d74cf081a1cffa954cc03b5bd3a858cbc50dec13e359ea05",
+      "bytes": 1990,
+      "sha256": "b59fab35b496fc73d74cf081a1cffa954cc03b5bd3a858cbc50dec13e359ea05",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/test-summary.json"
+    },
+    {
+      "name": "test-nodes.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/test-nodes.json",
+      "rawBytes": 22363,
+      "rawSHA256": "0227a44dc4532aad95821f625e2f5a19debb18c579983e8bba5ccb99d96e4568",
+      "bytes": 22363,
+      "sha256": "0227a44dc4532aad95821f625e2f5a19debb18c579983e8bba5ccb99d96e4568",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/test-nodes.json"
+    },
+    {
+      "name": "requested-tests.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/requested-tests.log",
+      "rawBytes": 57,
+      "rawSHA256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96",
+      "bytes": 75,
+      "sha256": "640232ab2a02d5f6ef89211eba5cc0f82e226a0d760c715a6176a1e10c57ad1e",
+      "compression": "gzip",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/requested-tests.log.gz"
+    },
+    {
+      "name": "original-runtimes-summary.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/original-runtimes-summary.json",
+      "rawBytes": 3534,
+      "rawSHA256": "26c8b33adbb9e3c5d5ba8089a411750f3901605afdfe8be7cbcf708ac60cead0",
+      "bytes": 3534,
+      "sha256": "26c8b33adbb9e3c5d5ba8089a411750f3901605afdfe8be7cbcf708ac60cead0",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/original-runtimes-summary.json"
+    },
+    {
+      "name": "original-runtimes-nodes.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/original-runtimes-nodes.json",
+      "rawBytes": 22895,
+      "rawSHA256": "05d9f3551588d8940286ca97de62605cc123a267a359eb738d8d27a0f963e81e",
+      "bytes": 22895,
+      "sha256": "05d9f3551588d8940286ca97de62605cc123a267a359eb738d8d27a0f963e81e",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/original-runtimes-nodes.json"
+    },
+    {
+      "name": "original-runtimes-selected-tests.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/original-runtimes-selected-tests.log",
+      "rawBytes": 57,
+      "rawSHA256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96",
+      "bytes": 75,
+      "sha256": "640232ab2a02d5f6ef89211eba5cc0f82e226a0d760c715a6176a1e10c57ad1e",
+      "compression": "gzip",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/original-runtimes-selected-tests.log.gz"
+    },
+    {
+      "name": "paired-tests.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/paired-tests.log",
+      "rawBytes": 86009,
+      "rawSHA256": "732439e2e4c0151c01b7ae411eab9ffb58e680bd345322d31daafc84af3c660e",
+      "bytes": 13140,
+      "sha256": "d7b6324d38a408df747b1b0a5eb075acf1ed7a2e796da82ca290204a35f55312",
+      "compression": "gzip",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/paired-tests.log.gz"
+    },
+    {
+      "name": "original-runtimes.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/original-runtimes.log",
+      "rawBytes": 572390,
+      "rawSHA256": "5907fa28f0e509a399a8d60b6e5264b4e21668488811e95fad47a569855841c2",
+      "bytes": 50390,
+      "sha256": "edbc20a85d5f438244ca0f8c939fc16803520e932f21d672d135122fd063aae8",
+      "compression": "gzip",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/original-runtimes.log.gz"
+    },
+    {
+      "name": "commands.jsonl.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/commands.jsonl",
+      "rawBytes": 27141,
+      "rawSHA256": "db4523cb661c60047c1c1427f9750671ebc16efdfa0e28ded0280247ae26c50a",
+      "bytes": 5405,
+      "sha256": "81f0dd029d8765f375ce02161a44b6d9796b86a123622fff8a638887031c6a54",
+      "compression": "gzip",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/commands.jsonl.gz"
+    },
+    {
+      "name": "command-events.jsonl.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/command-events.jsonl",
+      "rawBytes": 367779,
+      "rawSHA256": "12ba7270d0de2b22a62699d7ef3fd11a6ca25af4751077130a30f5ad8ae15f0f",
+      "bytes": 13429,
+      "sha256": "862fa480bd82daf98e51669fb7832d178ceefbc89d1fbee3ba971404a623196d",
+      "compression": "gzip",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/command-events.jsonl.gz"
+    },
+    {
+      "name": "created-simulator.txt",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/created-simulator.txt",
+      "rawBytes": 37,
+      "rawSHA256": "30f36492f55131b3bc1361cd8ad4ba6bb4f337bd54fca300dd881c4df46f57e6",
+      "bytes": 37,
+      "sha256": "30f36492f55131b3bc1361cd8ad4ba6bb4f337bd54fca300dd881c4df46f57e6",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/created-simulator.txt"
+    },
+    {
+      "name": "hosted-fixture-built-check.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/hosted-fixture-built-check.json",
+      "rawBytes": 1418,
+      "rawSHA256": "072304963e1427286dee6365c4541496729de186116f5469405d157423bf1a4f",
+      "bytes": 1418,
+      "sha256": "072304963e1427286dee6365c4541496729de186116f5469405d157423bf1a4f",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/hosted-fixture-built-check.json"
+    },
+    {
+      "name": "mini-build.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/mini-build.log",
+      "rawBytes": 1063335,
+      "rawSHA256": "6e4c2db7b01ced367548b2d28192bec3e220c88ae13f059f3cb115a3bcd2adb2",
+      "bytes": 66851,
+      "sha256": "992991b3a9c46634fdcec2fb13576e64d446d62488f4ecfa7951a271eb0364a1",
+      "compression": "gzip",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/mini-build.log.gz"
+    },
+    {
+      "name": "ai-build.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/ai-build.log",
+      "rawBytes": 1083645,
+      "rawSHA256": "122b641c2a6951ae5c0d269f6fe3d6593177e856d1d484d51190097de7710abc",
+      "bytes": 54104,
+      "sha256": "2033c463bf5694d4b712a216f8f23e7017f019d3acdac13ebe4df5720d7887a1",
+      "compression": "gzip",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/ai-build.log.gz"
+    },
+    {
+      "name": "active-command.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/active-command.json",
+      "rawBytes": 690,
+      "rawSHA256": "9fe308c186ea79e0b6e60027a716a5c67492cf0bc9c4c744ea4453e4ba8b8d34",
+      "bytes": 690,
+      "sha256": "9fe308c186ea79e0b6e60027a716a5c67492cf0bc9c4c744ea4453e4ba8b8d34",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/active-command.json"
+    },
+    {
+      "name": "authoring-fixture-build.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/authoring-fixture-build.log",
+      "rawBytes": 3321,
+      "rawSHA256": "4b713d36a50e673befeb34a7d865b7b4e6479713dc08aaba712be86c37d7f208",
+      "bytes": 962,
+      "sha256": "778342272738d24a1838271b42029d8f216e16c1c0be21582e145649fab8cd99",
+      "compression": "gzip",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/authoring-fixture-build.log.gz"
+    },
+    {
+      "name": "authoring-fixture-provenance.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/authoring-fixture-provenance.json",
+      "rawBytes": 4234,
+      "rawSHA256": "95e385d877f397a4a256c073dbad59aca8966b6c0a6e7362add421fce9131008",
+      "bytes": 4234,
+      "sha256": "95e385d877f397a4a256c073dbad59aca8966b6c0a6e7362add421fce9131008",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/authoring-fixture-provenance.json"
+    },
+    {
+      "name": "authoring-mini-data-container.txt",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/authoring-mini-data-container.txt",
+      "rawBytes": 157,
+      "rawSHA256": "f73fad89077cd7cf057ad46029a145b2ec82adda8c06f48b383568a3ad0ff0c7",
+      "bytes": 157,
+      "sha256": "f73fad89077cd7cf057ad46029a145b2ec82adda8c06f48b383568a3ad0ff0c7",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/authoring-mini-data-container.txt"
+    },
+    {
+      "name": "before-boot-host-resources.txt",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/before-boot-host-resources.txt",
+      "rawBytes": 36,
+      "rawSHA256": "383b4760df6e18f59de559f86adfb83243b7d86268ace6242ce6f80f85f8c68d",
+      "bytes": 36,
+      "sha256": "383b4760df6e18f59de559f86adfb83243b7d86268ace6242ce6f80f85f8c68d",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/before-boot-host-resources.txt"
+    },
+    {
+      "name": "before-boot-memory.txt",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/before-boot-memory.txt",
+      "rawBytes": 1247,
+      "rawSHA256": "aaf3116aabd12f0fb57b7425b7b6944ecf189f0cfcb2265a47885a3cb6a45107",
+      "bytes": 1247,
+      "sha256": "aaf3116aabd12f0fb57b7425b7b6944ecf189f0cfcb2265a47885a3cb6a45107",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/before-boot-memory.txt"
+    },
+    {
+      "name": "before-boot-processes.txt.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/before-boot-processes.txt",
+      "rawBytes": 323060,
+      "rawSHA256": "0f64cdd0b31fb17f71f5d650bdb773fcdc521a26fd4e3227aaf48d69ca28cd05",
+      "bytes": 29590,
+      "sha256": "668be1ad1a130bf025f68093d035fe1934d092b7074ab73d01fe385543e7b99f",
+      "compression": "gzip",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/before-boot-processes.txt.gz"
+    },
+    {
+      "name": "boot.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/boot.log",
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 20,
+      "sha256": "abfbb86f9f5ddfbd9fc1a72c43ab384702ce8bae86b60f3324748485e235e61e",
+      "compression": "gzip",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/boot.log.gz"
+    },
+    {
+      "name": "bootstatus.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/bootstatus.log",
+      "rawBytes": 5095,
+      "rawSHA256": "74357b30b356adbccae3b71634538092fa5db83f2bcbae6aa872e9dc492ab01a",
+      "bytes": 635,
+      "sha256": "4f948e3bf20af0accedfcad176425f88b97933c9759d219b0556b1df6e2ca7f0",
+      "compression": "gzip",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/bootstatus.log.gz"
+    },
+    {
+      "name": "com.itorah.chavrusachat-embedded-entitlements.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/com.itorah.chavrusachat-embedded-entitlements.json",
+      "rawBytes": 1382,
+      "rawSHA256": "2c9f9603c4574e012be88a9574e1e82bbfb999dd337f4d855667c48c3b1fe9d9",
+      "bytes": 1382,
+      "sha256": "2c9f9603c4574e012be88a9574e1e82bbfb999dd337f4d855667c48c3b1fe9d9",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/com.itorah.chavrusachat-embedded-entitlements.json"
+    },
+    {
+      "name": "com.itorah.chavrusachat-first-launch-terminate.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/com.itorah.chavrusachat-first-launch-terminate.log",
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 20,
+      "sha256": "abfbb86f9f5ddfbd9fc1a72c43ab384702ce8bae86b60f3324748485e235e61e",
+      "compression": "gzip",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/com.itorah.chavrusachat-first-launch-terminate.log.gz"
+    },
+    {
+      "name": "com.itorah.chavrusachat-first-launch.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/com.itorah.chavrusachat-first-launch.log",
+      "rawBytes": 31,
+      "rawSHA256": "5a6e514e6c96e29a4d1ddf1f4283618651b5cd6875b8d8c98d9e0f7ce7aee633",
+      "bytes": 49,
+      "sha256": "1f0904a05363a0c35e1293a72affc32cadef597b64c20e3a22431634089cd62a",
+      "compression": "gzip",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/com.itorah.chavrusachat-first-launch.log.gz"
+    },
+    {
+      "name": "com.itorah.chavrusachat-group-container.txt",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/com.itorah.chavrusachat-group-container.txt",
+      "rawBytes": 156,
+      "rawSHA256": "2c5b0c327eded140b0c9bac74d2061f6ac10c683252f4692aa58134be067d4b9",
+      "bytes": 156,
+      "sha256": "2c5b0c327eded140b0c9bac74d2061f6ac10c683252f4692aa58134be067d4b9",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/com.itorah.chavrusachat-group-container.txt"
+    },
+    {
+      "name": "com.itorah.chavrusachat-install.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/com.itorah.chavrusachat-install.log",
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 20,
+      "sha256": "abfbb86f9f5ddfbd9fc1a72c43ab384702ce8bae86b60f3324748485e235e61e",
+      "compression": "gzip",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/com.itorah.chavrusachat-install.log.gz"
+    },
+    {
+      "name": "com.itorah.chavrusachat-ios-system-resources.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/com.itorah.chavrusachat-ios-system-resources.json",
+      "rawBytes": 682,
+      "rawSHA256": "8fb16ec2a17f0d543e5e783c7da92013bb2586bb761deabce81216c7070de80e",
+      "bytes": 682,
+      "sha256": "8fb16ec2a17f0d543e5e783c7da92013bb2586bb761deabce81216c7070de80e",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/com.itorah.chavrusachat-ios-system-resources.json"
+    },
+    {
+      "name": "com.itorah.chavrusachat-signature.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/com.itorah.chavrusachat-signature.log",
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 20,
+      "sha256": "abfbb86f9f5ddfbd9fc1a72c43ab384702ce8bae86b60f3324748485e235e61e",
+      "compression": "gzip",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/com.itorah.chavrusachat-signature.log.gz"
+    },
+    {
+      "name": "com.itorah.hanlinminiapps-embedded-entitlements.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/com.itorah.hanlinminiapps-embedded-entitlements.json",
+      "rawBytes": 1211,
+      "rawSHA256": "0d0b8368d7280cc578bdc60104c9a174de97fc3b9f416ca056397299f2667bf0",
+      "bytes": 1211,
+      "sha256": "0d0b8368d7280cc578bdc60104c9a174de97fc3b9f416ca056397299f2667bf0",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/com.itorah.hanlinminiapps-embedded-entitlements.json"
+    },
+    {
+      "name": "com.itorah.hanlinminiapps-first-launch-terminate.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/com.itorah.hanlinminiapps-first-launch-terminate.log",
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 20,
+      "sha256": "abfbb86f9f5ddfbd9fc1a72c43ab384702ce8bae86b60f3324748485e235e61e",
+      "compression": "gzip",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/com.itorah.hanlinminiapps-first-launch-terminate.log.gz"
+    },
+    {
+      "name": "com.itorah.hanlinminiapps-first-launch.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/com.itorah.hanlinminiapps-first-launch.log",
+      "rawBytes": 33,
+      "rawSHA256": "efcdfd03fd65a17ba9d2cdfd2afafa25ced54028288e1dc88a530e9a91c84658",
+      "bytes": 53,
+      "sha256": "27f61f75fcfc65d262a360f7f2c1ab19fcba7199af8a277e3ff3bb0d52f033c6",
+      "compression": "gzip",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/com.itorah.hanlinminiapps-first-launch.log.gz"
+    },
+    {
+      "name": "com.itorah.hanlinminiapps-group-container.txt",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/com.itorah.hanlinminiapps-group-container.txt",
+      "rawBytes": 156,
+      "rawSHA256": "2c5b0c327eded140b0c9bac74d2061f6ac10c683252f4692aa58134be067d4b9",
+      "bytes": 156,
+      "sha256": "2c5b0c327eded140b0c9bac74d2061f6ac10c683252f4692aa58134be067d4b9",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/com.itorah.hanlinminiapps-group-container.txt"
+    },
+    {
+      "name": "com.itorah.hanlinminiapps-install.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/com.itorah.hanlinminiapps-install.log",
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 20,
+      "sha256": "abfbb86f9f5ddfbd9fc1a72c43ab384702ce8bae86b60f3324748485e235e61e",
+      "compression": "gzip",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/com.itorah.hanlinminiapps-install.log.gz"
+    },
+    {
+      "name": "com.itorah.hanlinminiapps-ios-system-resources.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/com.itorah.hanlinminiapps-ios-system-resources.json",
+      "rawBytes": 687,
+      "rawSHA256": "a3117b8ed687e411895c435b095b37dbf218a074e887c2d8b2724458ef299ef5",
+      "bytes": 687,
+      "sha256": "a3117b8ed687e411895c435b095b37dbf218a074e887c2d8b2724458ef299ef5",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/com.itorah.hanlinminiapps-ios-system-resources.json"
+    },
+    {
+      "name": "com.itorah.hanlinminiapps-signature.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/com.itorah.hanlinminiapps-signature.log",
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 20,
+      "sha256": "abfbb86f9f5ddfbd9fc1a72c43ab384702ce8bae86b60f3324748485e235e61e",
+      "compression": "gzip",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/com.itorah.hanlinminiapps-signature.log.gz"
+    },
+    {
+      "name": "container-command-help.txt",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/container-command-help.txt",
+      "rawBytes": 386,
+      "rawSHA256": "62b5b30225c28644c70945a598f2385b4414e2f11c75c4ec2d134d6822f0053b",
+      "bytes": 386,
+      "sha256": "62b5b30225c28644c70945a598f2385b4414e2f11c75c4ec2d134d6822f0053b",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/container-command-help.txt"
+    },
+    {
+      "name": "device-types.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/device-types.json",
+      "rawBytes": 64328,
+      "rawSHA256": "96d335258081671854ac94ea0afb6ae77b8b7efc5892942fc8856d1e6f31be0f",
+      "bytes": 64328,
+      "sha256": "96d335258081671854ac94ea0afb6ae77b8b7efc5892942fc8856d1e6f31be0f",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/device-types.json"
+    },
+    {
+      "name": "external-modal-fixture-stage.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/external-modal-fixture-stage.log",
+      "rawBytes": 2097,
+      "rawSHA256": "21cf619482ce77a809cb5d94f512e3e8b247505004f1c654dc2a149e763483ee",
+      "bytes": 851,
+      "sha256": "62bff90b1c39af12dc37b3c36bcec454317ede43e3e06eafa2746dff13122459",
+      "compression": "gzip",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/external-modal-fixture-stage.log.gz"
+    },
+    {
+      "name": "external-modal-result.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/external-modal-result.json",
+      "rawBytes": 535,
+      "rawSHA256": "9ae186e3157034a6a3644f636ccafaf17369ace893fed035c6c27423e344cb9a",
+      "bytes": 535,
+      "sha256": "9ae186e3157034a6a3644f636ccafaf17369ace893fed035c6c27423e344cb9a",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/external-modal-result.json"
+    },
+    {
+      "name": "modular-search-build.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/modular-search-build.json",
+      "rawBytes": 1654,
+      "rawSHA256": "d8a840fc20e2d8c7d3717f02f16e38c565b238bbd13994a4efe764f7a1a8ed09",
+      "bytes": 1654,
+      "sha256": "d8a840fc20e2d8c7d3717f02f16e38c565b238bbd13994a4efe764f7a1a8ed09",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/modular-search-build.json"
+    },
+    {
+      "name": "modular-search-build.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/modular-search-build.log",
+      "rawBytes": 1654,
+      "rawSHA256": "d8a840fc20e2d8c7d3717f02f16e38c565b238bbd13994a4efe764f7a1a8ed09",
+      "bytes": 693,
+      "sha256": "b7324fb5a8a77a0589504e7a5c6b7315600a6c257e9854b6c8932421278ca7ba",
+      "compression": "gzip",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/modular-search-build.log.gz"
+    },
+    {
+      "name": "original-a2ui-generator.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/original-a2ui-generator.log",
+      "rawBytes": 2627,
+      "rawSHA256": "44ca9594a78dcfef9640442326f821ed3a4335e8aed0d0d4f2c303c23ff30a56",
+      "bytes": 1211,
+      "sha256": "11764a0dbce653b501afa39c3f7fe3aadfb15861d6e7b525f9945787e18c37af",
+      "compression": "gzip",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/original-a2ui-generator.log.gz"
+    },
+    {
+      "name": "originalruntimes-attachments-export.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/originalruntimes-attachments-export.log",
+      "rawBytes": 27219,
+      "rawSHA256": "766d64d9d306306cf41e36f57427f408e692bed3b5265a561eb79f97805ea156",
+      "bytes": 10003,
+      "sha256": "902200e5392ee89ae24e7fdd668f41d06aa8772c4a1c06ac85596e2e81e5b58e",
+      "compression": "gzip",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/originalruntimes-attachments-export.log.gz"
+    },
+    {
+      "name": "paired-attachments-export.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/paired-attachments-export.log",
+      "rawBytes": 5499,
+      "rawSHA256": "790882319b5fff243308030052ef6e709328564c23c31abaf9b62b5d5be8c476",
+      "bytes": 1983,
+      "sha256": "b3bc1aacc3c8a1e23ad7315a844e37955f781a0238146326fc6eb49e04123009",
+      "compression": "gzip",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/paired-attachments-export.log.gz"
+    },
+    {
+      "name": "runtimes.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/runtimes.json",
+      "rawBytes": 45201,
+      "rawSHA256": "8ffab85d0c400fc9fe452582668daf01679d31c2492b1cf48f406be98ef70d71",
+      "bytes": 45201,
+      "sha256": "8ffab85d0c400fc9fe452582668daf01679d31c2492b1cf48f406be98ef70d71",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/runtimes.json"
+    },
+    {
+      "name": "sample-package-hashes.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/sample-package-hashes.json",
+      "rawBytes": 443,
+      "rawSHA256": "996ce32170c65791e393d2686a8be00a726f2340e2cb12e689ff4825f85c425d",
+      "bytes": 443,
+      "sha256": "996ce32170c65791e393d2686a8be00a726f2340e2cb12e689ff4825f85c425d",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/sample-package-hashes.json"
+    },
+    {
+      "name": "sdk-only-departure-budget-build.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/sdk-only-departure-budget-build.json",
+      "rawBytes": 1679,
+      "rawSHA256": "d87d0bc4cb1a823930989c35007089a4071c92ff33e798f0a0c091410138e74d",
+      "bytes": 1679,
+      "sha256": "d87d0bc4cb1a823930989c35007089a4071c92ff33e798f0a0c091410138e74d",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/sdk-only-departure-budget-build.json"
+    },
+    {
+      "name": "sdk-only-departure-budget-build.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/sdk-only-departure-budget-build.log",
+      "rawBytes": 1679,
+      "rawSHA256": "d87d0bc4cb1a823930989c35007089a4071c92ff33e798f0a0c091410138e74d",
+      "bytes": 710,
+      "sha256": "89521a01c8f2ad4413bfa5d4056811487eb2e192c86a9300b8143b8c7707638a",
+      "compression": "gzip",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/sdk-only-departure-budget-build.log.gz"
+    },
+    {
+      "name": "sdk-only-package-provenance.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/sdk-only-package-provenance.json",
+      "rawBytes": 2573,
+      "rawSHA256": "1fe6e0329fd83cca78c8f7bc5acedca66492f85d675ef8601c18fc895c1a10bc",
+      "bytes": 2573,
+      "sha256": "1fe6e0329fd83cca78c8f7bc5acedca66492f85d675ef8601c18fc895c1a10bc",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/sdk-only-package-provenance.json"
+    },
+    {
+      "name": "sdk-only-table-share-build.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/sdk-only-table-share-build.json",
+      "rawBytes": 1223,
+      "rawSHA256": "3e7020440ca4002548c1a23e12157f94724860f47d628659e84a603e5f6b6bdf",
+      "bytes": 1223,
+      "sha256": "3e7020440ca4002548c1a23e12157f94724860f47d628659e84a603e5f6b6bdf",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/sdk-only-table-share-build.json"
+    },
+    {
+      "name": "sdk-only-table-share-build.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/sdk-only-table-share-build.log",
+      "rawBytes": 1223,
+      "rawSHA256": "3e7020440ca4002548c1a23e12157f94724860f47d628659e84a603e5f6b6bdf",
+      "bytes": 565,
+      "sha256": "3d590aab6e63d66698491aeccf7efbb0b0a8d76de452ca7db046184005b9f88b",
+      "compression": "gzip",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/sdk-only-table-share-build.log.gz"
+    },
+    {
+      "name": "sdk.txt",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/sdk.txt",
+      "rawBytes": 5,
+      "rawSHA256": "7b01c549928398a045692f24bcac7803b348524cdd76f21265b02984b2ba556a",
+      "bytes": 5,
+      "sha256": "7b01c549928398a045692f24bcac7803b348524cdd76f21265b02984b2ba556a",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/sdk.txt"
+    },
+    {
+      "name": "source-sha.txt",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/source-sha.txt",
+      "rawBytes": 41,
+      "rawSHA256": "5623d70dcfee926e83650635f0c6c7f18877aaebcde983de83d7a7b5f8c86b2e",
+      "bytes": 41,
+      "sha256": "5623d70dcfee926e83650635f0c6c7f18877aaebcde983de83d7a7b5f8c86b2e",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/source-sha.txt"
+    },
+    {
+      "name": "external-modal-fixture--staging.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/external-modal-fixture/staging.json",
+      "rawBytes": 2097,
+      "rawSHA256": "21cf619482ce77a809cb5d94f512e3e8b247505004f1c654dc2a149e763483ee",
+      "bytes": 2097,
+      "sha256": "21cf619482ce77a809cb5d94f512e3e8b247505004f1c654dc2a149e763483ee",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/external-modal-fixture--staging.json"
+    },
+    {
+      "name": "paired52-sdk20-v2-launch.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2-launch.json",
+      "rawBytes": 1436,
+      "rawSHA256": "d06fca714b6d042c310766f243ebdf178b43e403802250faee0e2ac82e8e106b",
+      "bytes": 1436,
+      "sha256": "d06fca714b6d042c310766f243ebdf178b43e403802250faee0e2ac82e8e106b",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/paired52-sdk20-v2-launch.json"
+    },
+    {
+      "name": "paired52-sdk20-v2-launch.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2-launch.log",
+      "rawBytes": 0,
+      "rawSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "bytes": 20,
+      "sha256": "abfbb86f9f5ddfbd9fc1a72c43ab384702ce8bae86b60f3324748485e235e61e",
+      "compression": "gzip",
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/paired52-sdk20-v2-launch.log.gz"
+    },
+    {
+      "name": "paired52-sdk20-v2-decision.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2-decision.json",
+      "rawBytes": 47750,
+      "rawSHA256": "10e76a4916899f9345cb30421cc4b84566b1cf2b0f054005c70e80c52dce5928",
+      "bytes": 47750,
+      "sha256": "10e76a4916899f9345cb30421cc4b84566b1cf2b0f054005c70e80c52dce5928",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/paired52-sdk20-v2-decision.json"
+    },
+    {
+      "name": "paired52-sdk20-v4b.py",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v4b.py",
+      "rawBytes": 25006,
+      "rawSHA256": "a9040dd634acfe7d1d01d6f477771f9033ab305cde9576b1b5d5ad6423726bcb",
+      "bytes": 25006,
+      "sha256": "a9040dd634acfe7d1d01d6f477771f9033ab305cde9576b1b5d5ad6423726bcb",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/paired52-sdk20-v4b.py"
+    },
+    {
+      "name": "run-original-paired-with-hosted-check-v1.py",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/run-original-paired-with-hosted-check-v1.py",
+      "rawBytes": 3819,
+      "rawSHA256": "a31179f13706cf7a130bef2768afaf316ae541350d3dd439bf4fa6773bd4a825",
+      "bytes": 3819,
+      "sha256": "a31179f13706cf7a130bef2768afaf316ae541350d3dd439bf4fa6773bd4a825",
+      "compression": null,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-terminal/run-original-paired-with-hosted-check-v1.py"
+    }
+  ],
+  "missing": [],
+  "boundary": "Read-only existing finalized original evidence; no test, build, simulator action or source/product modification.",
+  "transferredAt": "2026-11-26T00:19:38.661000+00:00",
+  "captureScript": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-draft/capture-final-paired52-sdk20-v2.py",
+    "bytes": 3245,
+    "sha256": "119b2105c238c383cc4df387d7131906dacd937e7bca9854f37005a96484ebc0"
+  }
+}

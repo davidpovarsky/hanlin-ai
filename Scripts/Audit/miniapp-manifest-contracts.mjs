@@ -203,10 +203,21 @@ export async function auditManifestContracts({source}) {
     actions: 'Required synthesized Codable field, although the Swift initializer defaults empty.',
     families: 'Supported family strings for the prepared native widget.',
   });
-  for (const prefix of ['hanlinWidget.actions[].', 'nativePresentations.*.actions[].'])
+  for (const prefix of ['hanlinWidget.actions[].', 'nativePresentations.*.actions[].']) {
+    const panel = prefix.startsWith('nativePresentations.');
     addRecord(rows, r.widgetProgram, 'HanlinWidgetActionDeclaration', prefix, {
-      id: 'Declared action identity.', kind: 'expoCallback, function, setValue, or reload; program validation imposes engine-specific execution.',
-      handler: 'Optional function/callback handler.', stateKey: 'Optional state mutation key.'});
+      id: 'Declared action identity; unique within the program, nonempty and at most 256 UTF-8 bytes.',
+      kind: panel ? 'expoCallback, function, setValue, or reload; hostAction is rejected for native presentation panels.'
+        : 'expoCallback, function, setValue, reload, or hostAction; program validation imposes engine-specific execution.',
+      handler: 'Optional local function/callback handler; must be absent for hostAction.',
+      stateKey: 'Optional local state mutation key; must be absent for hostAction.',
+      hostAction: panel ? 'Unsupported in native presentation panels; authoring validation and native compilation reject it.'
+        : 'Required for hostAction only; continues one declared action in the containing Expo or NativeScript foreground Host.'});
+  }
+  addRecord(rows, r.widgetProgram, 'HanlinWidgetHostAction', 'hanlinWidget.actions[].hostAction.', {
+    entrypointID: 'Required same-package appIntent entrypoint; nonempty and at most 128 UTF-8 bytes. The prepared native handler and optional exportedSymbol must match the registered action.',
+    actionName: 'Required exact actions[].id with canonical HanlinActionID syntax; original letter case is preserved.',
+    parameters: 'Optional ordinary JSON defaults, including nested arrays/objects and explicit null. Omitted and null are distinct; rendered command parameters override defaults. This is not the internal tagged HanlinValue wire.'});
   addDictionary(rows, r.registration, 'actionObj', 'actions[].', {
     id: ['HanlinActionID', true, 'Metadata: valid ID required to create descriptor; invalid items omitted.'],
     title: ['string', false, 'Metadata: title defaults to ID.'],

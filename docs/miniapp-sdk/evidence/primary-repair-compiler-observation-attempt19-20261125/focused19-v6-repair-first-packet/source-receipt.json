@@ -1,0 +1,234 @@
+{
+  "capturedAt": "2026-11-25T13:40:44.426241+00:00",
+  "source": "958cf666da7be83b9b63e46e3013e3344fb31585",
+  "appData": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/5478D077-32A2-4535-9113-318715D2635C",
+  "directories": [
+    {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/5478D077-32A2-4535-9113-318715D2635C/Library/Application Support/HanlinRuntime",
+      "children": [
+        "v1"
+      ]
+    },
+    {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/5478D077-32A2-4535-9113-318715D2635C/Library/Application Support/Hanlin",
+      "children": [
+        "ToolResults",
+        "MiniApps",
+        "ScriptingPlatform"
+      ]
+    },
+    {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/5478D077-32A2-4535-9113-318715D2635C/Library/Application Support/AgentSkills",
+      "children": [
+        "overrides",
+        "skills"
+      ]
+    },
+    {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/5478D077-32A2-4535-9113-318715D2635C/Library/Application Support/Phase2Acceptance",
+      "children": [
+        "49478684-C834-4823-B397-15669C5F7AC5",
+        "98E95FA7-47E0-42AF-B85E-E97BEB71E3F6",
+        "C4598291-1589-4E6D-9FB1-51BD03D327A8"
+      ]
+    },
+    {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/5478D077-32A2-4535-9113-318715D2635C/Documents/Diagnostics",
+      "children": [
+        "agent-session-2026-11-25T13-34-37-55e04ec1.txt",
+        "agent-session-2026-11-25T11-36-52-04562605-stage-snapshots.json",
+        "agent-session-2026-11-25T12-48-32-4f2db8d2.txt",
+        "agent-session-2026-11-25T12-48-32-4f2db8d2-manifest.json",
+        "agent-session-2026-11-25T12-48-32-4f2db8d2-stage-events.jsonl",
+        "agent-session-2026-11-25T11-36-52-04562605.txt",
+        "Hanlin-Chat-2026-11-25-134831.jsonl",
+        "agent-session-2026-11-25T13-34-37-55e04ec1-stage-snapshots.json",
+        "agent-session-2026-11-25T13-34-37-55e04ec1-manifest.json",
+        "agent-session-2026-11-25T11-36-52-04562605.json",
+        "agent-session-2026-11-25T12-48-32-4f2db8d2.json",
+        "agent-session-2026-11-25T13-34-37-55e04ec1.raw.enc",
+        "agent-session-2026-11-25T11-36-52-04562605.raw.enc",
+        "agent-session-2026-11-25T12-48-32-4f2db8d2-stage-snapshots.json",
+        "Hanlin-Chat-2026-11-25-123651.jsonl",
+        "agent-session-2026-11-25T11-36-52-04562605-manifest.json",
+        "agent-session-2026-11-25T13-34-37-55e04ec1.json",
+        "agent-session-2026-11-25T11-36-52-04562605-stage-events.jsonl",
+        "Hanlin-Chat-2026-11-25-143436.jsonl",
+        "agent-session-2026-11-25T12-48-32-4f2db8d2.raw.enc",
+        "agent-session-2026-11-25T13-34-37-55e04ec1-stage-events.jsonl"
+      ]
+    }
+  ],
+  "members": [
+    {
+      "path": "state.json",
+      "bytes": 6001,
+      "sha256": "4ddca9a8b8bc061dc32e288a392b8ea1e36171617d120342106a7fe0cf8bb5a4"
+    },
+    {
+      "path": "ledger.json",
+      "bytes": 3349,
+      "sha256": "1e48202497a91db193cfe656222d27fe8dafe75ddd886a8296f2975c91a59004"
+    },
+    {
+      "path": "decision.json",
+      "bytes": 75538,
+      "sha256": "39b1aad0ac110ac97a638b08ec1d9c22b3efa4723cce1378e87a7028a056ce4f"
+    },
+    {
+      "path": "native-result/state.json",
+      "bytes": 14766,
+      "sha256": "68715beec45e143bbf7cc46615aae1704348e6dba213760c970f47ffc8cd36c5"
+    },
+    {
+      "path": "native-result/built-input-bindings.json",
+      "bytes": 11843,
+      "sha256": "caa7d554eda20e6caaf02e053fdd0bb10bcc3afe65e3558504d699a2940222bc"
+    },
+    {
+      "path": "native-result/staged-inputs.json",
+      "bytes": 5833,
+      "sha256": "fb48a2597fdb9b14a5023a63306d8fef8e93f8daa08e8ce10058475d30d38601"
+    },
+    {
+      "path": "native-result/paired-prefix/commands.jsonl",
+      "bytes": 7851,
+      "sha256": "59d7eb0591683c373e11c811a94297e3dba9b883ab708edd8f99672d645d5910"
+    },
+    {
+      "path": "native-result/paired-prefix/command-events.jsonl",
+      "bytes": 48943,
+      "sha256": "24b5a78bbea0df8b67802aac651571ec1ecaa41b7c20b011c2a34f88fcec26ea"
+    },
+    {
+      "path": "native-result/paired-prefix/FocusedRepair1.log",
+      "bytes": 19800,
+      "sha256": "b3ac1a201d261904b7a0b4ee951c6d95f4ac8adf2270e3f145c057466ff9c502"
+    },
+    {
+      "path": "native-result/paired-prefix/FocusedRepair1-summary.json",
+      "bytes": 2134,
+      "sha256": "8d26c9cbed13474cd02924160a2a738c81de88944cc917cff7bdc777f9d7041e"
+    },
+    {
+      "path": "native-result/paired-prefix/FocusedRepair1-nodes.json",
+      "bytes": 2368,
+      "sha256": "65028c4e2308d574120580ebe40dbbb23685c454d6ae1e1363a07ba687a851e5"
+    },
+    {
+      "path": "native-result/paired-prefix/FocusedRepair1-selected-tests.log",
+      "bytes": 57,
+      "sha256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/0B461087-60EC-44D8-8776-A3F6F2BF5E88.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/17120BB1-10B4-40D0-874B-CE7C3E91D0E6.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/1A0B5BAB-0450-4E6B-8063-DE3FBB3C862B.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/1EC04614-03A6-46B8-8B32-6F0943FF58A2.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/390703F9-0A05-4BC3-9CCE-5EF0F7435F28.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/3F99A3C5-6768-4B1E-9D8E-C08E72E5EBE9.png",
+      "bytes": 764174,
+      "sha256": "f0641e91ea137ba285434dc040e1b9e3263f845a6f9ac24858488e70f63940a9"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/425E1583-D90C-4DEA-9313-848DA963C184.txt",
+      "bytes": 25453,
+      "sha256": "3aa2f6fdc63bb242721e295a5e8738e1f9fb85b2569d7d4acc23b7c5936ac566"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/55948B86-12F1-476B-BC91-755C3EADC8F0.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/5BA4E6E3-808A-4FB0-AE45-47B054CB34C7.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/6089246F-A501-4E70-AD75-4D72600D3F7F.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/68EE5744-D2BB-4C72-A788-60C5BE9F6823.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/80F1A935-B394-4666-BB29-B2A7AD035644.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/A5D3ABEC-E1AC-4EDC-B8D2-0FD9BB3A4D0E.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/A7347BB9-EF92-4B96-8AB1-E85527FA3635.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/B9699FAF-53F2-4A8D-B178-2AF8DF279465.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/C868BC2A-724E-4052-BAA0-03CE06912192.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/D0C4314C-808F-42AC-92B7-BC5B8B91F554.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/D7F3C780-812A-4DB0-A9C5-59DF25A6C8D4.png",
+      "bytes": 1275406,
+      "sha256": "41e8211e6826256eb8aa7af014cb30e37e0d8c6576bd2a171153eb52f1697449"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/DF3B773B-0708-42CF-9A3F-6982C924676B.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/EAA08CD8-2DF8-481D-8337-9733028F5DDC.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/F899C7D6-0B15-47BE-91A8-D9DBC4820714.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180"
+    },
+    {
+      "path": "native-result/FocusedRepair1-attachments/manifest.json",
+      "bytes": 13501,
+      "sha256": "ab2d46c7e7e5fd576cb48ffbb4607e627253c7a29c9c0f63cb7fddfe8a089054"
+    }
+  ]
+}

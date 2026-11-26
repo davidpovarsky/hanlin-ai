@@ -293,8 +293,9 @@ class NativeScriptMetadataWrapperTests(unittest.TestCase):
             root = Path(name)
             generator = root / "generator"
             generator.mkdir()
-            (generator / "build-step-metadata-generator-upstream.py").write_text(
-                'def generate_metadata():\n    generator_call = ["./objc-metadata-generator", "-verbose",]\n    # clang arguments\n')
+            upstream_source = 'def generate_metadata():\n    generator_call = ["./objc-metadata-generator", "-verbose",]\n    # clang arguments\n'
+            (generator / "build-step-metadata-generator-upstream.py").write_text(upstream_source)
+            installed_generator = generator / "build-step-metadata-generator.py"
             objroot = root / "intermediates"
             header = objroot / "GeneratedModuleMaps-iphonesimulator/HanlinNativeScriptRuntime-Swift.h"
             header.parent.mkdir(parents=True)
@@ -315,6 +316,13 @@ class NativeScriptMetadataWrapperTests(unittest.TestCase):
             (tool / "provenance.json").write_text(json.dumps({
                 "generatorSHA256": hashlib.sha256(b"tool fixture").hexdigest(),
                 "patchSourceSHA256": hashlib.sha256((scripts / "build-metadata-tool.py").read_bytes()).hexdigest()}))
+            # This fixture exercises host metadata failure handling without
+            # additional Core frameworks; their closure is explicit, as in a
+            # prepared app, instead of relying on the repository's artifacts.
+            artifacts = root / "Packages/HanlinNativeScriptRuntime/Artifacts"
+            artifacts.mkdir(parents=True)
+            (artifacts / "dependency-closure.json").write_text(json.dumps({"artifacts": []}))
+            (artifacts / "native-api-usage.json").write_text(json.dumps({"uses": []}))
             sdk = root / "sdk"
             framework = sdk / "System/Library/Frameworks/UIKit.framework"
             (framework / "Modules").mkdir(parents=True)
@@ -324,16 +332,25 @@ class NativeScriptMetadataWrapperTests(unittest.TestCase):
             env = {"OBJROOT": str(objroot), "SRCROOT": str(root), "TARGET_TEMP_DIR": str(root / "target"),
                    "PLATFORM_NAME": "iphonesimulator", "CONFIGURATION_BUILD_DIR": str(products), "SDKROOT": str(sdk),
                    "FRAMEWORK_SEARCH_PATHS": shlex.join([str(selected_framework.parent), str(products)])}
-            with patch.dict(os.environ, env), patch.object(WRAPPER, "__file__", str(generator / "wrapper.py")), \
-                 patch.object(WRAPPER.sys, "argv", ["wrapper", "arm64"]), \
-                 patch.dict(sys.modules, {"metadata_public_headers": HEADERS}), \
-                 patch.object(WRAPPER.subprocess, "run") as run, contextlib.redirect_stdout(io.StringIO()):
-                run.return_value.returncode = 0
-                self.assertEqual(WRAPPER.main(), 1)
-                child_environment = run.call_args.kwargs["env"]
-                expected_view = root / "target/HanlinNativeScriptSwiftMetadata-arm64/Frameworks/0000"
-                self.assertEqual(shlex.split(child_environment["FRAMEWORK_SEARCH_PATHS"]), [str(expected_view)])
-                self.assertIn("-fno-modules", child_environment["OTHER_CFLAGS"])
+            for prepared in [False, True]:
+                with self.subTest(prepared=prepared):
+                    installed_generator.write_text("# HANLIN_METADATA_WRAPPER_V1\n" if prepared else upstream_source)
+                    installed_before = installed_generator.read_bytes()
+                    with patch.dict(os.environ, env), \
+                         patch.object(WRAPPER.sys, "argv", ["wrapper", "arm64", "--generator-root", str(generator)]), \
+                         patch.dict(sys.modules, {"metadata_public_headers": HEADERS}), \
+                         patch.object(WRAPPER.subprocess, "run") as run, contextlib.redirect_stdout(io.StringIO()):
+                        run.return_value.returncode = 0
+                        self.assertEqual(WRAPPER.main(), 1)
+                        self.assertEqual(run.call_args.args[0][-1], "arm64")
+                        self.assertNotIn("--generator-root", run.call_args.args[0])
+                        self.assertEqual(run.call_args.kwargs["cwd"], generator)
+                        child_environment = run.call_args.kwargs["env"]
+                        expected_view = root / "target/HanlinNativeScriptSwiftMetadata-arm64/Frameworks/0000"
+                        self.assertEqual(shlex.split(child_environment["FRAMEWORK_SEARCH_PATHS"]), [str(expected_view)])
+                        self.assertIn("-fno-modules", child_environment["OTHER_CFLAGS"])
+                        self.assertEqual(child_environment["HANLIN_METADATA_GENERATOR"], str(tool / "bin/objc-metadata-generator"))
+                    self.assertEqual(installed_generator.read_bytes(), installed_before)
             retained = root / "build/acceptance/nativescript-metadata/iphonesimulator-arm64"
             self.assertTrue((retained / "FrameworkSearchView.inventory.json").is_file())
             self.assertEqual((retained / diagnostic.name).read_bytes(), diagnostic.read_bytes())

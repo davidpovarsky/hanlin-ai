@@ -1,0 +1,79 @@
+{
+  "schema": 1,
+  "id": "focused19-v1",
+  "owner": "/root/native_execution",
+  "source": "a2c8a1b1be746461272ba77254603304567c309d",
+  "sourceTree": "c3cfefa7775c91e2b2a9eaff980bbde6e681cc37",
+  "status": "FOCUSED_FAILED",
+  "expectedGroups": {
+    "FocusedMini3": {
+      "expected": 3,
+      "selectors": [
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEditButtonEditsOriginalList",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope",
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters"
+      ]
+    },
+    "FocusedAI8": {
+      "expected": 8,
+      "selectors": [
+        "AI_HLYTests/PendingFirstTurnTests/importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings()",
+        "AI_HLYTests/PendingFirstTurnTests/cancelledMiniAppRepairPreservesHomeDraft()",
+        "AI_HLYTests/HanlinScriptingPlatformCompositionTests/malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic()",
+        "AI_HLYTests/MiniAppAuthoringToolTests/originalSDKWriteValidateBuildAndRepair()",
+        "AI_HLYTests/MiniAppAuthoringToolTests/sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource()",
+        "AI_HLYTests/MiniAppAuthoringToolTests/originalExpoMetroBuildOnEmbeddedNode()",
+        "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests/actualActivityKitStartsUpdatesAndEndsTheOriginalProgram()",
+        "AI_HLYUITests/MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport"
+      ]
+    }
+  },
+  "expectedTotal": 11,
+  "controllerPID": 88335,
+  "activeBaselineSeconds": 15472.911772584037,
+  "allowanceSeconds": 3600,
+  "decisionSHA256": "77eef76303d4df1ac274a6cbf3db71b8f7efc4ee7f4e9b623334d565dd3297a3",
+  "original52": "UNCHANGED_BY_FOCUSED_RUN",
+  "nativeResult": "FAILED_OR_INCOMPLETE",
+  "resourceObservationAtLaunch": {
+    "observedAt": "2026-11-25T11:03:15.227243+00:00",
+    "freeBytes": 27421724672,
+    "df": "Filesystem   1024-blocks      Used Available Capacity iused     ifree %iused  Mounted on\n/dev/disk3s5   482797652 412133848  26779028    94% 6402411 267790280    2%   /System/Volumes/Data"
+  },
+  "startedAt": "2026-11-25T11:03:15.227477+00:00",
+  "argv": [
+    "/opt/homebrew/opt/python@3.12/bin/python3.12",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-native-child-v1.py",
+    "--source",
+    "a2c8a1b1be746461272ba77254603304567c309d",
+    "--output",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v1/native-result"
+  ],
+  "phasePID": 88350,
+  "elapsedSeconds": 366.7222996670025,
+  "logBytes": 10384,
+  "error": "AssertionError: ",
+  "exitCode": 1,
+  "ownedProcessGroupAtCleanup": [],
+  "remainingOwnedProcessGroup": [],
+  "observedPhaseExitCode": 1,
+  "ownedSimulatorCleanup": {
+    "device": "E742FBCD-8FF0-4130-B143-7F8328637138",
+    "ownership": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v1/native-result/paired-prefix/created-simulator.txt",
+    "ownershipSHA256": "df333300ba32a39a07bcd88aed5fc6bb5f0b51f738c521f6a0949dc54456a37e",
+    "exitCode": 149,
+    "stdout": "",
+    "stderr": "An error was encountered processing the command (domain=com.apple.CoreSimulator.SimError, code=405):\nUnable to shutdown device in current state: Shutdown\n",
+    "observedState": "Shutdown",
+    "observedAt": "2026-11-25T11:09:21.654887+00:00"
+  },
+  "cleanupErrors": [],
+  "sourceErrors": [],
+  "finishedAt": "2026-11-25T11:09:21.948746+00:00",
+  "chargedSeconds": 366.7222996670025,
+  "cumulativeActiveSeconds": 15839.63407225104,
+  "allowanceExceededDuringCleanup": false,
+  "logSHA256": "50e1e8e69dc605e6e1b848865df43258820bffe759fce30baafddb4f1e1466aa",
+  "chargeCommitted": true,
+  "focusedLedgerSHA256": "c7835bb97d3017d305628e76ce25b35cfb415433780c4a43f806d0d56fbf708f"
+}

@@ -1,0 +1,389 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild test-without-building -xctestrun /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/HanlinMiniApps_iphonesimulator27.0-arm64.xctestrun -destination "platform=iOS Simulator,id=2EFAD83F-45A2-4A8B-B326-16B83BC56DA9" -parallel-testing-enabled NO -collect-test-diagnostics never -resultBundlePath /Users/m1/builds/hanlin-notification-os-recovery-20261125/build/notification-os-recovery-v1/test/NotificationOS.xcresult "-only-testing:HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines"
+
+Writing result bundle at path:
+	/Users/m1/builds/hanlin-notification-os-recovery-20261125/build/notification-os-recovery-v1/test/NotificationOS.xcresult
+
+2026-11-25 21:44:06.585320+0100 HanlinMiniAppsUITests-Runner[46901:8407246] [Default] Running tests...
+2026-11-25 21:44:06.636376+0100 HanlinMiniAppsUITests-Runner[46901:8407246] [UIKit App Config] Update the Info.plist: Launch screens will soon be required.
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-25 21:44:12.828.
+Test Suite 'HanlinMiniAppsUITests.xctest' started at 2026-11-25 21:44:12.828.
+Test Suite 'MiniAppsProductionRuntimeUITests' started at 2026-11-25 21:44:12.829.
+Test Case '-[HanlinMiniAppsUITests.MiniAppsProductionRuntimeUITests testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines]' started.
+    t =     0.03s Start Test at 2026-11-25 21:44:12.862
+    t =     0.24s Set Up
+    t =     0.24s     Open com.itorah.hanlinminiapps
+    t =     0.25s         Launch com.itorah.hanlinminiapps
+2026-11-25 21:44:13.381 xcodebuild[46856:8406910] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-25 21:44:13.381 xcodebuild[46856:8406910] [MT] IDELaunchParametersSnapshot: no debugger version
+objc[46901]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.dmYYVr/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x1047b4398) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.dmYYVr/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x107f30310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =    11.04s             Setting up automation session
+    t =    15.36s             Wait for com.itorah.hanlinminiapps to idle
+<unknown>:0: warning: -[HanlinMiniAppsUITests.MiniAppsProductionRuntimeUITests testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines] : Update the Info.plist: Support for all orientations will soon be required.
+    t =    16.87s Waiting 30.0s for "hanlin-apps-add" Button to exist
+    t =    17.89s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+    t =    17.89s         Checking existence of `"hanlin-apps-add" Button`
+    t =    17.99s Tap "hanlin-apps-add" Button
+    t =    17.99s     Wait for com.itorah.hanlinminiapps to idle
+    t =    18.02s     Find the "hanlin-apps-add" Button
+    t =    18.11s     Check for interrupting elements affecting "hanlin-apps-add" Button
+    t =    18.19s         Wait for com.apple.springboard to idle
+    t =    18.31s     Synthesize event
+    t =    18.77s     Wait for com.itorah.hanlinminiapps to idle
+    t =    19.35s Waiting 15.0s for "hanlin-import-script-package" Button to exist
+    t =    20.37s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-script-package" Button`
+    t =    20.37s         Checking existence of `"hanlin-import-script-package" Button`
+    t =    20.57s Tap "hanlin-import-script-package" Button
+    t =    20.57s     Wait for com.itorah.hanlinminiapps to idle
+    t =    20.59s     Find the "hanlin-import-script-package" Button
+    t =    20.77s     Check for interrupting elements affecting "hanlin-import-script-package" Button
+    t =    20.88s         Wait for com.apple.springboard to idle
+    t =    20.93s     Synthesize event
+    t =    21.25s     Wait for com.itorah.hanlinminiapps to idle
+    t =    21.65s Waiting 15.0s for "hanlin-package-import-list" CollectionView to exist
+    t =    22.73s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-import-list" CollectionView`
+    t =    22.73s         Checking existence of `"hanlin-package-import-list" CollectionView`
+    t =    22.80s Checking existence of `"Hanlin-ScriptWidget-Actions" Button`
+    t =    22.96s Find the "Hanlin-ScriptWidget-Actions" Button
+    t =    23.11s Waiting 15.0s for "Hanlin-ScriptWidget-Actions" Button to exist
+    t =    24.16s     Checking `Expect predicate `existsNoRetry == 1` for object "Hanlin-ScriptWidget-Actions" Button`
+    t =    24.16s         Checking existence of `"Hanlin-ScriptWidget-Actions" Button`
+    t =    24.30s Find the "Hanlin-ScriptWidget-Actions" Button
+    t =    24.56s Tap "Hanlin-ScriptWidget-Actions" Button
+    t =    24.56s     Wait for com.itorah.hanlinminiapps to idle
+    t =    24.62s     Find the "Hanlin-ScriptWidget-Actions" Button
+    t =    24.74s     Check for interrupting elements affecting "Hanlin-ScriptWidget-Actions" Button
+    t =    24.86s         Wait for com.apple.springboard to idle
+    t =    24.88s     Synthesize event
+    t =    25.18s     Wait for com.itorah.hanlinminiapps to idle
+    t =    25.22s Checking existence of `"hanlin-package-install" Button`
+    t =    25.43s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    25.69s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    26.11s Checking existence of `"hanlin-package-install" Button`
+    t =    26.29s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    26.50s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    26.77s Checking existence of `"hanlin-package-install" Button`
+    t =    26.96s Checking existence of `"hanlin-approve-all-capabilities" Button`
+    t =    27.05s Find the "hanlin-package-install" Button
+    t =    27.22s Find the "hanlin-package-install" Button
+    t =    27.35s Find the "hanlin-package-install" Button
+    t =    27.50s Tap "hanlin-package-install" Button
+    t =    27.50s     Wait for com.itorah.hanlinminiapps to idle
+    t =    27.51s     Find the "hanlin-package-install" Button
+    t =    27.71s     Check for interrupting elements affecting "hanlin-package-install" Button
+    t =    27.80s         Wait for com.apple.springboard to idle
+    t =    27.82s     Synthesize event
+    t =    28.13s     Wait for com.itorah.hanlinminiapps to idle
+    t =    28.17s Checking existence of `"hanlin-package-install" Button`
+    t =    28.34s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    28.51s Checking existence of `"hanlin-package-install" Button`
+    t =    28.71s Waiting 10.0s for "Done" Button to exist
+    t =    29.76s     Checking `Expect predicate `existsNoRetry == 1` for object "Done" Button`
+    t =    29.76s         Checking existence of `"Done" Button`
+    t =    29.83s Tap "Done" Button
+    t =    29.83s     Wait for com.itorah.hanlinminiapps to idle
+    t =    29.84s     Find the "Done" Button
+    t =    29.91s     Check for interrupting elements affecting "hanlin-package-import-done" Button
+    t =    30.00s         Wait for com.apple.springboard to idle
+    t =    30.02s     Synthesize event
+    t =    30.43s     Wait for com.itorah.hanlinminiapps to idle
+    t =    30.79s Waiting 10.0s for "hanlin-apps-add-done" Button to exist
+    t =    31.85s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add-done" Button`
+    t =    31.85s         Checking existence of `"hanlin-apps-add-done" Button`
+    t =    31.94s Tap "hanlin-apps-add-done" Button
+    t =    31.94s     Wait for com.itorah.hanlinminiapps to idle
+    t =    31.94s     Find the "hanlin-apps-add-done" Button
+    t =    32.03s     Check for interrupting elements affecting "hanlin-apps-add-done" Button
+    t =    32.12s         Wait for com.apple.springboard to idle
+    t =    32.14s     Synthesize event
+    t =    32.45s     Wait for com.itorah.hanlinminiapps to idle
+    t =    32.86s Waiting 30.0s for "hanlin-apps-add" Button to exist
+    t =    33.92s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+    t =    33.92s         Checking existence of `"hanlin-apps-add" Button`
+    t =    33.97s Find the Target Application 'com.itorah.hanlinminiapps'
+    t =    34.21s Added attachment named 'companion-import-Hanlin-ScriptWidget-Actions'
+    t =    34.22s Requesting snapshot of accessibility hierarchy for app with pid 47089
+    t =    34.44s Requesting snapshot of accessibility hierarchy for app with pid 47089
+    t =    34.54s Added attachment named 'companion-import-Hanlin-ScriptWidget-Actions-accessibility'
+    t =    34.54s Tap "hanlin-apps-add" Button
+    t =    34.54s     Wait for com.itorah.hanlinminiapps to idle
+    t =    34.54s     Find the "hanlin-apps-add" Button
+    t =    34.60s     Check for interrupting elements affecting "hanlin-apps-add" Button
+    t =    34.66s         Wait for com.apple.springboard to idle
+    t =    34.68s     Synthesize event
+    t =    35.01s     Wait for com.itorah.hanlinminiapps to idle
+    t =    35.43s Checking existence of `"hanlin-package-card-ScriptWidget Actions" Button`
+    t =    35.58s Find the "hanlin-package-card-ScriptWidget Actions" Button
+    t =    35.76s Waiting 30.0s for "hanlin-package-card-ScriptWidget Actions" Button to exist
+    t =    36.85s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-card-ScriptWidget Actions" Button`
+    t =    36.85s         Checking existence of `"hanlin-package-card-ScriptWidget Actions" Button`
+    t =    37.07s Find the "hanlin-package-card-ScriptWidget Actions" Button
+    t =    37.25s Tap "hanlin-package-card-ScriptWidget Actions" Button
+    t =    37.25s     Wait for com.itorah.hanlinminiapps to idle
+    t =    37.26s     Find the "hanlin-package-card-ScriptWidget Actions" Button
+    t =    37.40s     Check for interrupting elements affecting "hanlin-package-card-ScriptWidget Actions" Button
+    t =    37.48s         Wait for com.apple.springboard to idle
+    t =    37.50s     Synthesize event
+    t =    37.82s     Wait for com.itorah.hanlinminiapps to idle
+    t =    37.90s Checking existence of `Button (First Match)`
+    t =    38.15s Find the Button (First Match)
+    t =    38.66s Tap "hanlin-widget-services-widget-v2:aW5zdGFsbC1zY3JpcHQtYjU2N2UxNzliZmM3ZTY2MTQxNDA3N2Fk.c2NyaXB0LWI1NjdlMTc5YmZjN2U2NjE0MTQwNzdhZA==.MQ==.d2lkZ2V0.c2NyaXB0d2lkZ2V0.ZGVmYXVsdA==" Button
+    t =    38.66s     Wait for com.itorah.hanlinminiapps to idle
+    t =    38.70s     Find the "hanlin-widget-services-widget-v2:aW5zdGFsbC1zY3JpcHQtYjU2N2UxNzliZmM3ZTY2MTQxNDA3N2Fk.c2NyaXB0LWI1NjdlMTc5YmZjN2U2NjE0MTQwNzdhZA==.MQ==.d2lkZ2V0.c2NyaXB0d2lkZ2V0.ZGVmYXVsdA==" Button
+    t =    39.00s     Check for interrupting elements affecting "hanlin-widget-services-widget-v2:aW5zdGFsbC1zY3JpcHQtYjU2N2UxNzliZmM3ZTY2MTQxNDA3N2Fk.c2NyaXB0LWI1NjdlMTc5YmZjN2U2NjE0MTQwNzdhZA==.MQ==.d2lkZ2V0.c2NyaXB0d2lkZ2V0.ZGVmYXVsdA==" Button
+    t =    39.11s         Wait for com.apple.springboard to idle
+    t =    39.14s     Synthesize event
+    t =    39.59s     Wait for com.itorah.hanlinminiapps to idle
+    t =    39.78s Checking existence of `"Contacts, Home, Files, Notifications and Alarms" Button`
+    t =    40.16s Swipe up Target Application 'com.itorah.hanlinminiapps'
+    t =    40.16s     Wait for com.itorah.hanlinminiapps to idle
+    t =    40.22s     Find the Target Application 'com.itorah.hanlinminiapps'
+    t =    40.34s     Check for interrupting elements affecting "Hanlin MiniApps" Application
+    t =    40.46s         Wait for com.apple.springboard to idle
+    t =    40.48s     Synthesize event
+    t =    40.91s     Wait for com.itorah.hanlinminiapps to idle
+    t =    43.01s Checking existence of `"Contacts, Home, Files, Notifications and Alarms" Button`
+    t =    43.18s Find the "Contacts, Home, Files, Notifications and Alarms" Button
+    t =    43.48s Tap "Contacts, Home, Files, Notifications and Alarms" Button
+    t =    43.48s     Wait for com.itorah.hanlinminiapps to idle
+    t =    43.49s     Find the "Contacts, Home, Files, Notifications and Alarms" Button
+    t =    43.75s     Check for interrupting elements affecting "Contacts, Home, Files, Notifications and Alarms" Button
+    t =    43.85s         Wait for com.apple.springboard to idle
+    t =    43.87s     Synthesize event
+    t =    44.17s     Wait for com.itorah.hanlinminiapps to idle
+    t =    44.67s Checking existence of `"Authorize Notifications" Button`
+    t =    45.17s Swipe up Target Application 'com.itorah.hanlinminiapps'
+    t =    45.17s     Wait for com.itorah.hanlinminiapps to idle
+    t =    45.30s     Find the Target Application 'com.itorah.hanlinminiapps'
+    t =    45.57s     Check for interrupting elements affecting "Hanlin MiniApps" Application
+    t =    45.77s         Wait for com.apple.springboard to idle
+    t =    45.83s     Synthesize event
+    t =    46.32s     Wait for com.itorah.hanlinminiapps to idle
+    t =    48.43s Checking existence of `"Authorize Notifications" Button`
+    t =    48.71s Find the "Authorize Notifications" Button
+    t =    49.06s Find the Target Application 'com.itorah.hanlinminiapps'
+    t =    49.37s Added attachment named 'notification-original-authorization-control'
+    t =    49.38s Requesting snapshot of accessibility hierarchy for app with pid 47089
+    t =    50.48s Requesting snapshot of accessibility hierarchy for app with pid 47089
+    t =    50.71s Added attachment named 'notification-original-authorization-control-accessibility'
+    t =    50.71s Tap "Authorize Notifications" Button
+    t =    50.71s     Wait for com.itorah.hanlinminiapps to idle
+    t =    50.71s     Find the "Authorize Notifications" Button
+    t =    50.95s     Check for interrupting elements affecting "Authorize Notifications" Button
+    t =    51.07s         Wait for com.apple.springboard to idle
+    t =    51.09s     Synthesize event
+    t =    51.41s     Wait for com.itorah.hanlinminiapps to idle
+    t =    51.65s Waiting 10.0s for Alert (First Match) to exist
+    t =    52.72s     Checking `Expect predicate `existsNoRetry == 1` for object Alert (First Match)`
+    t =    52.72s         Checking existence of `Alert (First Match)`
+    t =    52.75s Checking existence of `StaticText (First Match)`
+    t =    53.10s Added attachment named 'notification-original-system-permission'
+    t =    53.10s Checking existence of `"Allow" Button`
+    t =    53.13s Find the "Allow" Button
+    t =    53.18s Tap "Allow" Button
+    t =    53.18s     Wait for com.apple.springboard to idle
+    t =    53.19s     Find the "Allow" Button
+    t =    53.22s     Check for interrupting elements affecting "Allow" Button
+    t =    53.42s     Synthesize event
+    t =    53.92s     Wait for com.apple.springboard to idle
+    t =    54.19s Checking existence of `"system-access-message" StaticText`
+    t =    54.80s Swipe up Target Application 'com.itorah.hanlinminiapps'
+    t =    54.81s     Wait for com.itorah.hanlinminiapps to idle
+    t =    54.82s     Find the Target Application 'com.itorah.hanlinminiapps'
+    t =    54.97s     Check for interrupting elements affecting "Hanlin MiniApps" Application
+    t =    55.28s         Wait for com.apple.springboard to idle
+    t =    55.31s     Synthesize event
+    t =    55.76s     Wait for com.itorah.hanlinminiapps to idle
+    t =    57.86s Checking existence of `"system-access-message" StaticText`
+    t =    58.21s Swipe up Target Application 'com.itorah.hanlinminiapps'
+    t =    58.21s     Wait for com.itorah.hanlinminiapps to idle
+    t =    58.22s     Find the Target Application 'com.itorah.hanlinminiapps'
+    t =    58.34s     Check for interrupting elements affecting "Hanlin MiniApps" Application
+    t =    58.47s         Wait for com.apple.springboard to idle
+    t =    58.48s     Synthesize event
+    t =    58.92s     Wait for com.itorah.hanlinminiapps to idle
+    t =    59.46s Checking existence of `"system-access-message" StaticText`
+    t =    59.81s Find the "system-access-message" StaticText
+    t =    60.08s Find the "system-access-message" StaticText
+    t =    60.36s Find the Target Application 'com.itorah.hanlinminiapps'
+    t =    60.67s Added attachment named 'notification-original-authorization-result'
+    t =    60.67s Requesting snapshot of accessibility hierarchy for app with pid 47089
+    t =    61.63s Requesting snapshot of accessibility hierarchy for app with pid 47089
+    t =    61.83s Added attachment named 'notification-original-authorization-result-accessibility'
+    t =    61.83s Terminate com.itorah.hanlinminiapps:47089
+    t =    62.89s Open com.itorah.hanlinminiapps
+    t =    62.89s     Launch com.itorah.hanlinminiapps
+2026-11-25 21:45:15.721 xcodebuild[46856:8406910] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-25 21:45:15.721 xcodebuild[46856:8406910] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =    63.15s         Setting up automation session
+    t =    66.33s         Wait for com.itorah.hanlinminiapps to idle
+    t =    67.93s Waiting 30.0s for "hanlin-apps-add" Button to exist
+    t =    68.96s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+    t =    68.96s         Checking existence of `"hanlin-apps-add" Button`
+    t =    69.04s Waiting 30.0s for "hanlin-apps-add" Button to exist
+    t =    70.05s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+    t =    70.05s         Checking existence of `"hanlin-apps-add" Button`
+    t =    70.10s Tap "hanlin-apps-add" Button
+    t =    70.10s     Wait for com.itorah.hanlinminiapps to idle
+    t =    70.10s     Find the "hanlin-apps-add" Button
+    t =    70.18s     Check for interrupting elements affecting "hanlin-apps-add" Button
+    t =    70.25s         Wait for com.apple.springboard to idle
+    t =    70.27s     Synthesize event
+    t =    70.61s     Wait for com.itorah.hanlinminiapps to idle
+    t =    71.16s Waiting 15.0s for "hanlin-import-script-package" Button to exist
+    t =    72.18s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-script-package" Button`
+    t =    72.18s         Checking existence of `"hanlin-import-script-package" Button`
+    t =    72.32s Tap "hanlin-import-script-package" Button
+    t =    72.32s     Wait for com.itorah.hanlinminiapps to idle
+    t =    72.33s     Find the "hanlin-import-script-package" Button
+    t =    72.45s     Check for interrupting elements affecting "hanlin-import-script-package" Button
+    t =    72.53s         Wait for com.apple.springboard to idle
+    t =    72.55s     Synthesize event
+    t =    72.86s     Wait for com.itorah.hanlinminiapps to idle
+    t =    73.23s Waiting 15.0s for "hanlin-package-import-list" CollectionView to exist
+    t =    74.24s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-import-list" CollectionView`
+    t =    74.24s         Checking existence of `"hanlin-package-import-list" CollectionView`
+    t =    74.31s Checking existence of `"ExpoSwiftUIProbeA" Button`
+    t =    74.41s Find the "ExpoSwiftUIProbeA" Button
+    t =    74.53s Waiting 15.0s for "ExpoSwiftUIProbeA" Button to exist
+    t =    75.54s     Checking `Expect predicate `existsNoRetry == 1` for object "ExpoSwiftUIProbeA" Button`
+    t =    75.54s         Checking existence of `"ExpoSwiftUIProbeA" Button`
+    t =    75.65s Find the "ExpoSwiftUIProbeA" Button
+    t =    75.75s Tap "ExpoSwiftUIProbeA" Button
+    t =    75.75s     Wait for com.itorah.hanlinminiapps to idle
+    t =    75.76s     Find the "ExpoSwiftUIProbeA" Button
+    t =    75.84s     Check for interrupting elements affecting "ExpoSwiftUIProbeA" Button
+    t =    75.91s         Wait for com.apple.springboard to idle
+    t =    75.93s     Synthesize event
+    t =    76.24s     Wait for com.itorah.hanlinminiapps to idle
+    t =    76.27s Checking existence of `"hanlin-package-install" Button`
+    t =    76.40s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    76.54s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    76.77s Checking existence of `"hanlin-package-install" Button`
+    t =    76.88s Checking existence of `"hanlin-approve-all-capabilities" Button`
+    t =    76.97s Find the "hanlin-package-install" Button
+    t =    77.10s Find the "hanlin-package-install" Button
+    t =    77.22s Find the "hanlin-package-install" Button
+    t =    77.36s Tap "hanlin-package-install" Button
+    t =    77.36s     Wait for com.itorah.hanlinminiapps to idle
+    t =    77.36s     Find the "hanlin-package-install" Button
+    t =    77.48s     Check for interrupting elements affecting "hanlin-package-install" Button
+    t =    77.56s         Wait for com.apple.springboard to idle
+    t =    77.58s     Synthesize event
+    t =    77.89s     Wait for com.itorah.hanlinminiapps to idle
+    t =    77.93s Checking existence of `"hanlin-package-install" Button`
+    t =    78.11s Checking existence of `"hanlin-import-error-message" StaticText`
+    t =    78.26s Checking existence of `"hanlin-package-install" Button`
+    t =    78.41s Waiting 10.0s for "Done" Button to exist
+    t =    79.42s     Checking `Expect predicate `existsNoRetry == 1` for object "Done" Button`
+    t =    79.42s         Checking existence of `"Done" Button`
+    t =    79.48s Tap "Done" Button
+    t =    79.48s     Wait for com.itorah.hanlinminiapps to idle
+    t =    79.48s     Find the "Done" Button
+    t =    79.53s     Check for interrupting elements affecting "hanlin-package-import-done" Button
+    t =    79.60s         Wait for com.apple.springboard to idle
+    t =    79.62s     Synthesize event
+    t =    79.93s     Wait for com.itorah.hanlinminiapps to idle
+    t =    80.27s Waiting 10.0s for "hanlin-apps-add-done" Button to exist
+    t =    81.27s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add-done" Button`
+    t =    81.27s         Checking existence of `"hanlin-apps-add-done" Button`
+    t =    81.34s Tap "hanlin-apps-add-done" Button
+    t =    81.34s     Wait for com.itorah.hanlinminiapps to idle
+    t =    81.35s     Find the "hanlin-apps-add-done" Button
+    t =    81.40s     Check for interrupting elements affecting "hanlin-apps-add-done" Button
+    t =    81.48s         Wait for com.apple.springboard to idle
+    t =    81.49s     Synthesize event
+    t =    81.80s     Wait for com.itorah.hanlinminiapps to idle
+    t =    82.23s Waiting 30.0s for "hanlin-apps-add" Button to exist
+    t =    83.27s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-apps-add" Button`
+    t =    83.27s         Checking existence of `"hanlin-apps-add" Button`
+    t =    83.31s Find the Target Application 'com.itorah.hanlinminiapps'
+    t =    83.54s Added attachment named 'companion-import-ExpoSwiftUIProbeA'
+    t =    83.54s Requesting snapshot of accessibility hierarchy for app with pid 47452
+    t =    83.73s Requesting snapshot of accessibility hierarchy for app with pid 47452
+    t =    83.82s Added attachment named 'companion-import-ExpoSwiftUIProbeA-accessibility'
+    t =    83.82s Checking existence of `"hanlin-package-card-Expo SwiftUI Probe A" Button`
+    t =    83.89s Find the "hanlin-package-card-Expo SwiftUI Probe A" Button
+    t =    83.95s Waiting 30.0s for "hanlin-package-card-Expo SwiftUI Probe A" Button to exist
+    t =    84.99s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-card-Expo SwiftUI Probe A" Button`
+    t =    84.99s         Checking existence of `"hanlin-package-card-Expo SwiftUI Probe A" Button`
+    t =    85.07s Find the "hanlin-package-card-Expo SwiftUI Probe A" Button
+    t =    85.13s Tap "hanlin-package-card-Expo SwiftUI Probe A" Button
+    t =    85.13s     Wait for com.itorah.hanlinminiapps to idle
+    t =    85.14s     Find the "hanlin-package-card-Expo SwiftUI Probe A" Button
+    t =    85.20s     Check for interrupting elements affecting "hanlin-package-card-Expo SwiftUI Probe A" Button
+    t =    85.26s         Wait for com.apple.springboard to idle
+    t =    85.28s     Synthesize event
+    t =    85.57s     Wait for com.itorah.hanlinminiapps to idle
+    t =    85.59s Waiting 5.0s for "Open Host Services Probe" Button to exist
+    t =    86.62s     Checking `Expect predicate `existsNoRetry == 1` for object "Open Host Services Probe" Button`
+    t =    86.62s         Checking existence of `"Open Host Services Probe" Button`
+    t =    86.84s         Capturing element debug description
+    t =    87.67s     Checking `Expect predicate `existsNoRetry == 1` for object "Open Host Services Probe" Button`
+    t =    87.67s         Checking existence of `"Open Host Services Probe" Button`
+    t =    87.86s         Capturing element debug description
+    t =    88.68s     Checking `Expect predicate `existsNoRetry == 1` for object "Open Host Services Probe" Button`
+    t =    88.68s         Checking existence of `"Open Host Services Probe" Button`
+    t =    88.85s         Capturing element debug description
+    t =    89.67s     Checking `Expect predicate `existsNoRetry == 1` for object "Open Host Services Probe" Button`
+    t =    89.67s         Checking existence of `"Open Host Services Probe" Button`
+    t =    89.88s         Capturing element debug description
+    t =    90.60s     Checking `Expect predicate `existsNoRetry == 1` for object "Open Host Services Probe" Button`
+    t =    90.60s         Checking existence of `"Open Host Services Probe" Button`
+    t =    90.79s         Capturing element debug description
+    t =    90.79s     Checking existence of `"Open Host Services Probe" Button`
+    t =    90.96s Collecting debug information to assist test failure triage
+    t =    90.96s     Requesting snapshot of accessibility hierarchy for app with pid 47452
+    t =    91.14s Checking existence of `Button (First Match)`
+    t =    91.24s Find the Button (First Match)
+    t =    91.36s Tap "Show Sidebar" Button
+    t =    91.36s     Wait for com.itorah.hanlinminiapps to idle
+    t =    91.36s     Find the "Show Sidebar" Button
+    t =    91.46s     Check for interrupting elements affecting "Show Sidebar" Button
+    t =    91.56s         Wait for com.apple.springboard to idle
+    t =    91.57s     Synthesize event
+    t =    91.88s     Wait for com.itorah.hanlinminiapps to idle
+    t =    92.67s Waiting 15.0s for Button (First Match) to exist
+    t =    93.69s     Checking `Expect predicate `existsNoRetry == 1` for object Button (First Match)`
+    t =    93.69s         Checking existence of `Button (First Match)`
+    t =    93.94s Find the Button (First Match)
+    t =    94.16s Tap "Open Host Services Probe" Button
+    t =    94.16s     Wait for com.itorah.hanlinminiapps to idle
+    t =    94.17s     Find the "Open Host Services Probe" Button
+    t =    94.41s     Check for interrupting elements affecting "Open Host Services Probe" Button
+    t =    94.53s         Wait for com.apple.springboard to idle
+    t =    94.55s     Synthesize event
+    t =    94.84s     Wait for com.itorah.hanlinminiapps to idle
+    t =    94.84s Waiting 20.0s for "Run Host Services Files" Button to exist
+    t =    95.89s     Checking `Expect predicate `existsNoRetry == 1` for object "Run Host Services Files" Button`
+    t =    95.89s         Checking existence of `"Run Host Services Files" Button`
+    t =   166.62s Added attachment named 'notification-os-expo-actual-receipts'
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift:1598: error: -[HanlinMiniAppsUITests.MiniAppsProductionRuntimeUITests testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines] : XCTAssertEqual failed: ("Optional("FAILED")") is not equal to ("Optional("EXECUTED_PASS")") - No actual terminal OS-ingress receipt
+    t =   166.84s Tear Down
+    t =   166.84s     Find the Target Application 'com.itorah.hanlinminiapps'
+    t =   167.05s     Added attachment named 'companion-runtime-failure'
+    t =   167.05s     Requesting snapshot of accessibility hierarchy for app with pid 47452
+    t =   167.31s     Requesting snapshot of accessibility hierarchy for app with pid 47452
+    t =   167.41s     Added attachment named 'companion-runtime-failure-accessibility'
+    t =   167.41s     Terminate com.itorah.hanlinminiapps:47452
+Test Case '-[HanlinMiniAppsUITests.MiniAppsProductionRuntimeUITests testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines]' failed (168.809 seconds).
+Test Suite 'MiniAppsProductionRuntimeUITests' failed at 2026-11-25 21:47:01.664.
+	 Executed 1 test, with 1 failure (0 unexpected) in 168.809 (168.836) seconds
+Test Suite 'HanlinMiniAppsUITests.xctest' failed at 2026-11-25 21:47:01.665.
+	 Executed 1 test, with 1 failure (0 unexpected) in 168.809 (168.836) seconds
+Test Suite 'Selected tests' failed at 2026-11-25 21:47:01.665.
+	 Executed 1 test, with 1 failure (0 unexpected) in 168.809 (168.837) seconds
+2026-11-25 21:47:02.003 xcodebuild[46856:8406910] [MT] IDETestOperationsObserverDebug: 179.241 elapsed -- Testing started completed.
+2026-11-25 21:47:02.003 xcodebuild[46856:8406910] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-25 21:47:02.003 xcodebuild[46856:8406910] [MT] IDETestOperationsObserverDebug: 179.241 sec, +179.241 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/m1/builds/hanlin-notification-os-recovery-20261125/build/notification-os-recovery-v1/test/NotificationOS.xcresult
+
+Failing tests:
+	MiniAppsProductionRuntimeUITests.testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines()
+
+** TEST EXECUTE FAILED **
+
+Testing started

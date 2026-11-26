@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "id": "probe-fixture-sdk20-preparation-v1",
+  "status": "SOURCE_CHANGED",
+  "combinedAllowanceSeconds": 14400.0,
+  "prior": {
+    "authority": {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v1/ledger.json",
+      "bytes": 4713,
+      "sha256": "f62166616dc312aa689cc2543bbe1f0ca1c9e75d619c0061bccda4f1c488e75f"
+    },
+    "chargedSeconds": 2501.629630375013
+  },
+  "currentCharge": {
+    "id": "probe-fixture-sdk20-preparation-v1",
+    "source": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+    "status": "SOURCE_CHANGED",
+    "startedAt": "2026-11-25T23:19:36.673759+00:00",
+    "finishedAt": "2026-11-25T23:20:26.101422+00:00",
+    "seconds": 49.427906917000655
+  },
+  "totalChargedSeconds": 2551.057537292014,
+  "remainingSeconds": 11848.942462707986,
+  "overrunSeconds": 0.0,
+  "operationalCapSeconds": 600.0,
+  "decision": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/probe-fixture-sdk20-preparation-v1/decision.json",
+    "bytes": 5164,
+    "sha256": "c387c4826c7ad9864b2f1cc7ff7aebc82a15b5c98bf8034b769136c57e24e7a7"
+  },
+  "priorLedgersModified": false,
+  "accounting": "Actual one-time original probe preparation is charged once within the same14400 scope; the actual first failed full52 charge remains immutable."
+}

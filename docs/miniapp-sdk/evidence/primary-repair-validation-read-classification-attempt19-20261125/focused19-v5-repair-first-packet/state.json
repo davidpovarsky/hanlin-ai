@@ -1,0 +1,280 @@
+{
+  "schema": 1,
+  "id": "focused19-v5",
+  "owner": "/root/native_execution",
+  "source": "6c006c948f0a6f371f7fc68b90e393f43734f8dd",
+  "sourceTree": "ecd109e872e08873410a6bf55db697bd42864fa2",
+  "status": "FOCUSED_FAILED",
+  "expectedGroups": {
+    "FocusedManual1": {
+      "expected": 1,
+      "selectors": [
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters"
+      ]
+    },
+    "FocusedRepair1": {
+      "expected": 1,
+      "selectors": [
+        "AI_HLYUITests/MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport"
+      ]
+    }
+  },
+  "expectedTotal": 2,
+  "producerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+  "originalFocusedAllowanceSeconds": 3600,
+  "priorFocusedChargeSeconds": 1383.5333837510116,
+  "priorFocusRecords": [
+    {
+      "path": "build/primary-control/focused19-v1/state.json",
+      "sha256": "a7ae2d21b27503b71939ff72670333a7e05736e47e999801f52e6ee6c1520dd6"
+    },
+    {
+      "path": "build/primary-control/focused19-v1/ledger.json",
+      "sha256": "c7835bb97d3017d305628e76ce25b35cfb415433780c4a43f806d0d56fbf708f"
+    },
+    {
+      "path": "build/primary-control/focused19-v1/decision.json",
+      "sha256": "77eef76303d4df1ac274a6cbf3db71b8f7efc4ee7f4e9b623334d565dd3297a3"
+    },
+    {
+      "path": "build/primary-control/focused19-v1/native-result/state.json",
+      "sha256": "f8f7fd1284b984d77237a2e487961eab0782ba079fadfe43f3805d68148fc24e"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/state.json",
+      "sha256": "9e199031a41095f66c101962da3c1c4ad330e748a9ac2afc267aac71384c2a21"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/ledger.json",
+      "sha256": "ec1d8b41595201d0a64b86d714a0fbd049cfbc9339b8a494fff25875cf6d6898"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/decision.json",
+      "sha256": "72608e39bc0987c619ea24b0eeea53b18cd5cca6f86c4a3dab688699580a315c"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/native-result/state.json",
+      "sha256": "5a0005645e789fc4979ff7515faf2c7ed28a589ff1f5aacdaa35cfdb388a3339"
+    },
+    {
+      "path": "build/primary-control/focused19-v3/state.json",
+      "sha256": "fc722c1417dfcb5029336df1b27f06fd1ec636ae2bc5bcfc82a2258d4f894d25"
+    },
+    {
+      "path": "build/primary-control/focused19-v3/ledger.json",
+      "sha256": "c69a3001ec612c74afeaeafcbdf3e8fc2b0ea59fbb96bf18488a2ff641e76ebf"
+    },
+    {
+      "path": "build/primary-control/focused19-v3/decision.json",
+      "sha256": "e5317f244c6cf6cecb4b9a9c1b3043b1921fbe646d922f332d7bdcd103fea86a"
+    },
+    {
+      "path": "build/primary-control/focused19-v3/native-result/state.json",
+      "sha256": "627355b9bb7c970106c2c5dee504937235d6d55e5782b2129b7427e3f1024e48"
+    }
+  ],
+  "controllerPID": 44298,
+  "activeBaselineSeconds": 16856.44515633505,
+  "allowanceSeconds": 2216.4666162489884,
+  "decisionSHA256": "288fff0babef0edb6cf02f392285a194d9707a79af6214fe4d1e1396a3dff51b",
+  "original52": "UNCHANGED_BY_FOCUSED_RUN",
+  "nativeResult": "FAILED_OR_INCOMPLETE",
+  "resourceObservationAtLaunch": {
+    "observedAt": "2026-11-25T12:39:49.298359+00:00",
+    "freeBytes": 115157852160,
+    "df": "Filesystem   1024-blocks      Used Available Capacity iused      ifree %iused  Mounted on\n/dev/disk3s5   482797652 326454036 112458840    75% 5065200 1124588400    0%   /System/Volumes/Data"
+  },
+  "originalNode": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/node-v24.5.0-darwin-arm64/bin/node",
+    "sha256": "336b5b3ebc5deb86df842102b20b6e4761605b7a667823e68dda7761b91a161b",
+    "version": "24.5.0",
+    "observedIdentity": {
+      "node": "24.5.0",
+      "platform": "darwin",
+      "architecture": "arm64"
+    }
+  },
+  "startedAt": "2026-11-25T12:39:49.505756+00:00",
+  "argv": [
+    "/opt/homebrew/opt/python@3.12/bin/python3.12",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused-native-child-v3.py",
+    "--source",
+    "6c006c948f0a6f371f7fc68b90e393f43734f8dd",
+    "--output",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/native-result"
+  ],
+  "phasePID": 44325,
+  "elapsedSeconds": 713.0760274589993,
+  "logBytes": 17145,
+  "error": "AssertionError: ",
+  "exitCode": 1,
+  "ownedProcessGroupAtCleanup": [],
+  "remainingOwnedProcessGroup": [],
+  "observedPhaseExitCode": 1,
+  "ownedSimulatorCleanup": {
+    "device": "E742FBCD-8FF0-4130-B143-7F8328637138",
+    "ownership": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/native-result/paired-prefix/created-simulator.txt",
+    "ownershipSHA256": "df333300ba32a39a07bcd88aed5fc6bb5f0b51f738c521f6a0949dc54456a37e",
+    "exitCode": 149,
+    "stdout": "",
+    "stderr": "An error was encountered processing the command (domain=com.apple.CoreSimulator.SimError, code=405):\nUnable to shutdown device in current state: Shutdown\n",
+    "observedState": "Shutdown",
+    "observedAt": "2026-11-25T12:51:42.322739+00:00"
+  },
+  "cleanupErrors": [],
+  "verifiedOriginalFixtureProduction": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/native-result/fixture-production.json",
+    "sha256": "b83ff708fb95153e2b362843b77b0a1b0d1a7e174a8dac776bf5c0621e820e4a",
+    "before": [
+      {
+        "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbe.hanlinExpo",
+        "bytes": 325934,
+        "sha256": "6475c3f5d37620ad5882040c2906924df4cf2dd9f627e17a47d360a58ced5b4b"
+      },
+      {
+        "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeA.hanlinExpo",
+        "bytes": 325934,
+        "sha256": "6475c3f5d37620ad5882040c2906924df4cf2dd9f627e17a47d360a58ced5b4b"
+      },
+      {
+        "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeB.hanlinExpo",
+        "bytes": 325935,
+        "sha256": "6131172f65aaeab7f14063324ea605835d8eef099d56ef32f708e2a449228a08"
+      },
+      {
+        "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIMalformed.hanlinExpo",
+        "bytes": 274,
+        "sha256": "a2115ad2fc9395154e793c15fc0c42fffb056e7b259b6c63852b7b61531313e4"
+      },
+      {
+        "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbe.hanlinExpo",
+        "bytes": 325934,
+        "sha256": "6475c3f5d37620ad5882040c2906924df4cf2dd9f627e17a47d360a58ced5b4b"
+      },
+      {
+        "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
+        "bytes": 325934,
+        "sha256": "6475c3f5d37620ad5882040c2906924df4cf2dd9f627e17a47d360a58ced5b4b"
+      },
+      {
+        "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeB.hanlinExpo",
+        "bytes": 325935,
+        "sha256": "6131172f65aaeab7f14063324ea605835d8eef099d56ef32f708e2a449228a08"
+      },
+      {
+        "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIMalformed.hanlinExpo",
+        "bytes": 274,
+        "sha256": "a2115ad2fc9395154e793c15fc0c42fffb056e7b259b6c63852b7b61531313e4"
+      },
+      {
+        "path": "AI_HLYTests/Fixtures/HostServicesProbe.bundle/ExpoSwiftUIProbeA.hanlinExpo",
+        "bytes": 325934,
+        "sha256": "6475c3f5d37620ad5882040c2906924df4cf2dd9f627e17a47d360a58ced5b4b"
+      },
+      {
+        "path": "Fixtures/ExpoWidgetsProbe/ExpoWidgetsProbeA.hanlinExpo",
+        "bytes": 302853,
+        "sha256": "26f1309c3851a6c5af30b24ce62d94b9dd28501b0075673ffdfadb53bd800eee"
+      },
+      {
+        "path": "Fixtures/ExpoWidgetsProbe/ExpoWidgetsProbeB.hanlinExpo",
+        "bytes": 302853,
+        "sha256": "af76fc6c37297bddc7e70bc2499694edb92d5d6ee18a51a584dca9feca8e0385"
+      },
+      {
+        "path": "AI_HLYUITests/Fixtures/ExpoWidgetsProbeA.hanlinExpo",
+        "bytes": 302853,
+        "sha256": "26f1309c3851a6c5af30b24ce62d94b9dd28501b0075673ffdfadb53bd800eee"
+      },
+      {
+        "path": "AI_HLYUITests/Fixtures/ExpoWidgetsProbeB.hanlinExpo",
+        "bytes": 302853,
+        "sha256": "af76fc6c37297bddc7e70bc2499694edb92d5d6ee18a51a584dca9feca8e0385"
+      }
+    ],
+    "after": [
+      {
+        "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbe.hanlinExpo",
+        "bytes": 325929,
+        "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20"
+      },
+      {
+        "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeA.hanlinExpo",
+        "bytes": 325929,
+        "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20"
+      },
+      {
+        "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeB.hanlinExpo",
+        "bytes": 325930,
+        "sha256": "c60e7d88f759118cf52c9ed50f464031a61402367e02e7fe45b50e37ee0bc016"
+      },
+      {
+        "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIMalformed.hanlinExpo",
+        "bytes": 274,
+        "sha256": "a2115ad2fc9395154e793c15fc0c42fffb056e7b259b6c63852b7b61531313e4"
+      },
+      {
+        "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbe.hanlinExpo",
+        "bytes": 325929,
+        "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20"
+      },
+      {
+        "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
+        "bytes": 325929,
+        "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20"
+      },
+      {
+        "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeB.hanlinExpo",
+        "bytes": 325930,
+        "sha256": "c60e7d88f759118cf52c9ed50f464031a61402367e02e7fe45b50e37ee0bc016"
+      },
+      {
+        "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIMalformed.hanlinExpo",
+        "bytes": 274,
+        "sha256": "a2115ad2fc9395154e793c15fc0c42fffb056e7b259b6c63852b7b61531313e4"
+      },
+      {
+        "path": "AI_HLYTests/Fixtures/HostServicesProbe.bundle/ExpoSwiftUIProbeA.hanlinExpo",
+        "bytes": 325929,
+        "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20"
+      },
+      {
+        "path": "Fixtures/ExpoWidgetsProbe/ExpoWidgetsProbeA.hanlinExpo",
+        "bytes": 302853,
+        "sha256": "26f1309c3851a6c5af30b24ce62d94b9dd28501b0075673ffdfadb53bd800eee"
+      },
+      {
+        "path": "Fixtures/ExpoWidgetsProbe/ExpoWidgetsProbeB.hanlinExpo",
+        "bytes": 302853,
+        "sha256": "af76fc6c37297bddc7e70bc2499694edb92d5d6ee18a51a584dca9feca8e0385"
+      },
+      {
+        "path": "AI_HLYUITests/Fixtures/ExpoWidgetsProbeA.hanlinExpo",
+        "bytes": 302853,
+        "sha256": "26f1309c3851a6c5af30b24ce62d94b9dd28501b0075673ffdfadb53bd800eee"
+      },
+      {
+        "path": "AI_HLYUITests/Fixtures/ExpoWidgetsProbeB.hanlinExpo",
+        "bytes": 302853,
+        "sha256": "af76fc6c37297bddc7e70bc2499694edb92d5d6ee18a51a584dca9feca8e0385"
+      }
+    ],
+    "requiredFileReplacements": {
+      "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbe.hanlinExpo": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+      "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeA.hanlinExpo": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+      "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeB.hanlinExpo": "c60e7d88f759118cf52c9ed50f464031a61402367e02e7fe45b50e37ee0bc016",
+      "AI_HLYUITests/Fixtures/ExpoSwiftUIProbe.hanlinExpo": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+      "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+      "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeB.hanlinExpo": "c60e7d88f759118cf52c9ed50f464031a61402367e02e7fe45b50e37ee0bc016"
+    }
+  },
+  "sourceErrors": [],
+  "finishedAt": "2026-11-25T12:51:42.581602+00:00",
+  "chargedSeconds": 713.0760274589993,
+  "cumulativeActiveSeconds": 17569.521183794048,
+  "cumulativeFocusedSeconds": 2096.609411210011,
+  "allowanceExceededDuringCleanup": false,
+  "logSHA256": "d1ad80a8abe2aaae22be3cf0a654497d8de0f9b6ac2433ef28c2259d6897ca82",
+  "chargeCommitted": true,
+  "focusedLedgerSHA256": "fd8a062065a7b7124f68a7a58251238a503aa54797ce8d911b8e857a268fa5a6"
+}

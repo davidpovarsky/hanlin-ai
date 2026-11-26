@@ -1,0 +1,11 @@
+--- v1/AI_HLYTests/NativeScriptRuntimeWireTests.swift
++++ v2/AI_HLYTests/NativeScriptRuntimeWireTests.swift
+@@ -92,7 +92,7 @@
+         let app = directory.appending(path: "app", directoryHint: .isDirectory)
+         try FileManager.default.createDirectory(at: app, withIntermediateDirectories: true)
+         defer { try? FileManager.default.removeItem(at: directory) }
+-        try Data(#"{"name":"ns-action-registration","type":"module","main":"bundle.mjs","hanlinRuntime":"hanlin-nativescript","dependencies":{"@nativescript/core":"9.1.0"}}"#.utf8)
++        try Data(#"{"name":"ns-action-registration","type":"module","main":"bundle.mjs","hanlinRuntime":"hanlin-nativescript","dependencies":{"@nativescript/core":"9.1.4"}}"#.utf8)
+             .write(to: app.appending(path: "package.json"))
+         let key = "HanlinNativeActionRegistration_" + suffix
+         defer { UserDefaults.standard.removeObject(forKey: key) }

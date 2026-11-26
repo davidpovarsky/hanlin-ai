@@ -1,0 +1,3498 @@
+{
+  "schema": 1,
+  "id": "notification-os-v1",
+  "owner": "/root/native_execution",
+  "authorization": {
+    "by": "/root",
+    "scope": "separate original notification OS probe"
+  },
+  "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines",
+  "expectedTests": 1,
+  "allowanceSeconds": 900,
+  "separateFromPaired4500AndCompanion1200": true,
+  "root": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete",
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "sourceTree": "f7a6596a1ef53d8d962ceb9f619460ffa19ee91e",
+  "originalController": {
+    "path": "build/primary-control/paired52-continuation-v3.py",
+    "sha256": "dad6581212134987b666a5161ab33994e6d79b57ed38108faba6ffb22c3bb520"
+  },
+  "outputDirectory": "build/primary-control/notification-os-v1",
+  "primaryStateSHA256": "783d3f71a3b6ac01271b68a22280e265062bc6642ba18de9bdd3dc4c4da78af2",
+  "activeBaselineSeconds": 24307.531661753037,
+  "originalNode": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/node-v24.5.0-darwin-arm64/bin/node",
+    "sha256": "336b5b3ebc5deb86df842102b20b6e4761605b7a667823e68dda7761b91a161b",
+    "version": "24.5.0"
+  },
+  "sdk": {
+    "producerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+    "manifestPath": "build/primary-control/focused19-inputs/miniapp-sdk.json",
+    "manifestSHA256": "4505c28495d8b6ecd1073254e0e395adcc898cc02dd1d40699591f51db4dee92",
+    "archiveSHA256": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc",
+    "inputSHA256": "ba8f3f1f09054887eed62532fa1d5ca2ac3bd60e6aa99a98ab1035c7653882a2",
+    "sourceInputCount": 235
+  },
+  "derivedData": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete",
+  "preparedTrackedDiffSHA256": "8eebad41405fad444ff058766f02cbeaf3d3181022ff04b586f090482b1b4e9d",
+  "pairedTerminal": {
+    "path": "build/primary-control/paired52-continuation-v5/state.json",
+    "bytes": 28524,
+    "sha256": "796a24bcc641e31409c7d9e68de2f95206264e0211952885aba61d8ca7ee8820"
+  },
+  "simulator": {
+    "udid": "E742FBCD-8FF0-4130-B143-7F8328637138",
+    "ownershipSHA256": "df333300ba32a39a07bcd88aed5fc6bb5f0b51f738c521f6a0949dc54456a37e"
+  },
+  "requiredFiles": [
+    {
+      "path": "AI_HLY.xcodeproj/project.pbxproj",
+      "sha256": "a80e2947b4dedf0ce95b326cf44b0efac613b7b044058e3afc3fccb870cb0087"
+    },
+    {
+      "path": "AI_HLY/AI_HLY.swift",
+      "sha256": "68e1f6a51fdc9bf9a313c5fea760085844d3980fd54a937075b2e3ca42879bd7"
+    },
+    {
+      "path": "AI_HLY/Downstream/SDK/HanlinApplicationLifecycle.swift",
+      "sha256": "21a90a9a6c0f6684394e41403705aedade0f6fd8c0c9a8fe9331fed70c27e18e"
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift",
+      "sha256": "c36fadd1099529226434fc11d258772556ecc82f71a594c3a81d4d6f2ac0e0d9"
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "sha256": "0bd52a056289803eb8fa01c45e681df8b3e2f9ac4ac9639fb59577c8624f4efc"
+    },
+    {
+      "path": "AI_HLY/RuntimeHostResources.zip",
+      "sha256": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc"
+    },
+    {
+      "path": "AI_HLYTests/A2UIFixtures/form.jsonl",
+      "sha256": "c3f9f393341162f541321eb3c8462e111724d0f62d0cebc2f418f0967de5891d"
+    },
+    {
+      "path": "AI_HLYTests/A2UIFixtures/invalid-components.jsonl",
+      "sha256": "e761c8070080e37bea0e22c5ed7a19d6424ff4237a214d9c4b0ace0cce51eba3"
+    },
+    {
+      "path": "AI_HLYTests/A2UIFixtures/malformed.txt",
+      "sha256": "5471e5d32b13c8a0bcee95f767fb9580fda7fa47ee0e7a4c124bcb3498fe77da"
+    },
+    {
+      "path": "AI_HLYTests/A2UIFixtures/rtl.jsonl",
+      "sha256": "2e0ce205c2351e8a6baa0ecb184667ecab82e8d73a4c5172dfefa938c4664705"
+    },
+    {
+      "path": "AI_HLYTests/A2UIFixtures/unknown-function.jsonl",
+      "sha256": "058f52de611a570b1a4db5116ea31a3f6fa01ab061d971249e6f51bb2041e63f"
+    },
+    {
+      "path": "AI_HLYTests/A2UIFixtures/unknown.jsonl",
+      "sha256": "14218c93f9e8b4a9b2b05f27f57de89a4a53617f115fe303c9c06f6ef37eb4da"
+    },
+    {
+      "path": "AI_HLYTests/A2UIFixtures/update.jsonl",
+      "sha256": "4ac7c02500a3d797f72b9184a181534949767b75547dd62ca354c1a20b0233a5"
+    },
+    {
+      "path": "AI_HLYTests/A2UITests.swift",
+      "sha256": "c66ab3fbd7e6087208336737c8ea6dcfa28c26c3215cdfc9ffe0d00fb6774f89"
+    },
+    {
+      "path": "AI_HLYTests/AgentActivityHeaderPhaseTests.swift",
+      "sha256": "b05aea3e3b2a17d0f45872f7a30475713968b6fd9255fae3907cb231bd143bf7"
+    },
+    {
+      "path": "AI_HLYTests/AgentDiagnosticsExportTests.swift",
+      "sha256": "3b289e3999f1043a6688c1766b3d58cd45c95122e496848e505c80fa4f521c19"
+    },
+    {
+      "path": "AI_HLYTests/AgentDiagnosticsJournalTests.swift",
+      "sha256": "473c08c7f8ae8ae92e614fe69e0f7f815770cecc937fe289980132714eef57f8"
+    },
+    {
+      "path": "AI_HLYTests/AgentDiagnosticsRawReviewTests.swift",
+      "sha256": "ed2fb00f70ed4f34c05b0a284ba7a6eae9a824b43c8cebb4b52a8512709a32e2"
+    },
+    {
+      "path": "AI_HLYTests/AgentDiagnosticsRecorderPersistenceTests.swift",
+      "sha256": "29e457b115a5310adc1efba83ec78c33bce81a4a2d90e1966c01b067e711603d"
+    },
+    {
+      "path": "AI_HLYTests/AgentDiagnosticsSessionPersistenceTests.swift",
+      "sha256": "7cced6f7bda1500404ea2b650f3f178ba59c8fb6f5281e9c2d211959abe15c5c"
+    },
+    {
+      "path": "AI_HLYTests/AgentRoundPresentationTests.swift",
+      "sha256": "9d10254f721147bd29b862ed7999cff0a4a19a1283cf23fc377d91542b151ff9"
+    },
+    {
+      "path": "AI_HLYTests/AgentRunReadCacheTests.swift",
+      "sha256": "c9c51606c6739229b2aecc00a85df426a3c8d961c1ca2afda763e366f7bca675"
+    },
+    {
+      "path": "AI_HLYTests/AgentRuntimeConversationAcceptanceTests.swift",
+      "sha256": "e7c228e765582a867f27f7dfa54a55d5e1eefb1d3bafe48fe290da76feca7377"
+    },
+    {
+      "path": "AI_HLYTests/AgentSkillsExposureTests.swift",
+      "sha256": "8148c2808bd2023990921fd6fb60d21424f27568d6d6a8db2a9b4c082898f58c"
+    },
+    {
+      "path": "AI_HLYTests/AppleLocalProvidersTests.swift",
+      "sha256": "13c7eaac0dab7c3c73930f0c3c061ec07fdc2add99b05728dc571df830bb9d92"
+    },
+    {
+      "path": "AI_HLYTests/AutomaticWebSearchTests.swift",
+      "sha256": "d5d5fbde79d5f2e41464f125e080f2562ada06fb6eb91d7945cc342465d03d86"
+    },
+    {
+      "path": "AI_HLYTests/CalendarToolTests.swift",
+      "sha256": "10e2b95d046e55089073f9095822ee8df8cee977b9f524648914889d0cb106da"
+    },
+    {
+      "path": "AI_HLYTests/CanonicalAdapterTests.swift",
+      "sha256": "b64c87594610d2e04e7db43c774462f61a7161b044a1660bc0655a8d52607841"
+    },
+    {
+      "path": "AI_HLYTests/CanonicalMiniAppIntegrationTests.swift",
+      "sha256": "ee010ba3e5d192d9609de9bbe912706d7173dfada50b80dce83bbb621dd9eb52"
+    },
+    {
+      "path": "AI_HLYTests/CanonicalShadowCoordinatorTests.swift",
+      "sha256": "70195a35b846b5162a56736649689709eb44f59dac968be99bc35ec569220402"
+    },
+    {
+      "path": "AI_HLYTests/CanonicalToolAuthorityTests.swift",
+      "sha256": "2a54a4764eea2dd9c1c8d6580a22171309b28b8a23b1fc204fca5f5439915acf"
+    },
+    {
+      "path": "AI_HLYTests/ChatAutoFollowTests.swift",
+      "sha256": "c36ac17d0ac2503376ac757cfdaf1b5e4022cc473d8aa8ecc1a5a1968b37b03a"
+    },
+    {
+      "path": "AI_HLYTests/ChatCanonicalPresentationSurvivalTests.swift",
+      "sha256": "3fe797b05de9a8876a07b0e11757d71f5229871374b5b943e54c5fb8f514fc68"
+    },
+    {
+      "path": "AI_HLYTests/ChatCodeFenceTests.swift",
+      "sha256": "0a441d9eb856ee5b7b5c87dd09872d280b81b842801a12367ce6ec4f75ac8fce"
+    },
+    {
+      "path": "AI_HLYTests/ChatPresentationTests.swift",
+      "sha256": "6540c94c86d790efe9d0394f8b68596cd1687e0c04d7efde6f16003e6a7bd5a6"
+    },
+    {
+      "path": "AI_HLYTests/ChatScrollViewHandleTests.swift",
+      "sha256": "ec51b892bd3cd3d8db5bb1fb2480a687159916d871a2918668f49efa7e8b306f"
+    },
+    {
+      "path": "AI_HLYTests/ClassicChatRestorationTests.swift",
+      "sha256": "ea69488b7f6b03d119fc6072798791d4671762f92d1d379688b9e06c18536c77"
+    },
+    {
+      "path": "AI_HLYTests/CurrentLocationToolTests.swift",
+      "sha256": "ec0bff66f8bea7b6296622975ccb4f24d46d24cd47a33737b716b26f637069fb"
+    },
+    {
+      "path": "AI_HLYTests/EmbeddedResultResolverTests.swift",
+      "sha256": "062c9330b578b2aef7bd5632e99b410b7169b7526cfa176c639bce21ca9312f7"
+    },
+    {
+      "path": "AI_HLYTests/ExpoPreparedEntrypointTests.swift",
+      "sha256": "ee8bc32b3ba6b4413796ca952d6658d51902ab4e1042193a8140fabadac54ea2"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/HostServicesProbe.bundle/README.txt",
+      "sha256": "f8f3ac6577959ffb7e847e94227bc53129ef5d33409824249fb733cb0853a4d8"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/README.md",
+      "sha256": "58960d55d3cc65e1b8298101d53fdcc464db5492831de1bf3a3be7dcc20252d4"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/corpus.json",
+      "sha256": "d280d4c87a4068484ae5e046a667391d3c2b22026f630539efb81ff440995114"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/hanlin/cairo-genizah-research/SKILL.md",
+      "sha256": "428e11f5959d05e5ac271586a2757ee1250dffb5364f13f58ec4d85197660b92"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/hanlin/cairo-genizah-research/scripts/browse.py",
+      "sha256": "fe33872736b7a997b79d66bd4cc748922dd479dd131f7f9882bc0976b0b9e253"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/hanlin/cairo-genizah-research/scripts/search.py",
+      "sha256": "56377797dc055b71a1d5e99be86df3bdd25de99c177bc6ff9183e2db2f7045b3"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/hanlin/torah-photo-study/SKILL.md",
+      "sha256": "59da09661c62ab7b77453c7293b7fe515e145ed8cf43c0bc0ea2fa7e2af374c1"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/hanlin/torah-photo-study/agents/openai.yaml",
+      "sha256": "84371855f48d805b87a142f8aac7ee7f7b2b843541bff44d23832d6808a2205a"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/hanlin/torah-photo-study/hanlin.json",
+      "sha256": "54e159944e256434b65823a166c8eb902b7fc6889a9d7fe94cf5b9030e3d5b96"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/hanlin/torah-photo-study/references/identity-and-ambiguity.md",
+      "sha256": "5b31d809da55f895e13f9db03df03c39e80b30beeeeecc0e637c1f92623bf2d5"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/hanlin/torah-photo-study/references/privacy-and-providers.md",
+      "sha256": "c073e004596dd1550753f2cce2834b99e805e293ac0bbc29f81a96a98c424e80"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/hanlin/torah-photo-study/references/tools-and-results.md",
+      "sha256": "9c1e3ff17c8ad95645f790b57cf1e0014d68ec7e2a75c2bbb4fa46e554771886"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/hanlin/yochai-study/SKILL.md",
+      "sha256": "a95cd08bd9a3427f2e63380faf1048467fb35bd8c906489762410c168b27374c"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/licenses/Hanlin-MIT.txt",
+      "sha256": "2bdf2973d798073b983a9068a8e328400068c18d962e2059bfcde4042129f294"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/licenses/OpenClaw-MIT.txt",
+      "sha256": "9efd316ecf1c4c60f6fd5d26433142fff2b6794d7d328e9bc6179b29bf9c82a4"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/apple-notes/SKILL.md",
+      "sha256": "d280e7ffffeb182172da7afad23528ef9f73ee4905ab88ebb124046aa6e6aed7"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/apple-reminders/SKILL.md",
+      "sha256": "08413d063e71c7ad7e4691e81a1063b455b816957ce7898576c2653542e8303d"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/control-ui/SKILL.md",
+      "sha256": "aa54d5df5f8097fd3d2afeb0901502772919b226075d78b7fd9e5b12c25e0aea"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/control-ui/references/dashboards.md",
+      "sha256": "615ec9849acf53325a2552553951ff90fff71efdc1ca24d0128533a0835e07bf"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/control-ui/references/hosting.md",
+      "sha256": "e1a5045eb73101e2daeeeac489d25ee95399c35d6a499789b5fa38a607006fd6"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/diagram-maker/SKILL.md",
+      "sha256": "6195e03fcb04a1a68c4af72165e0c85efcd2719af79380d82e42996ea89ad74a"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/diagram-maker/references/excalidraw-patterns.md",
+      "sha256": "6fc8799815adc1ef0171f25f59431e7e60bfa072ad570a60c335383bd872bf56"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/diagram-maker/references/svg-template.md",
+      "sha256": "3a8b47dbaeb341377a4999ff227f088a3a7fe2bee7b1353929f11a1f30b20c71"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/github/SKILL.md",
+      "sha256": "04d13709b66a75f73774d47c1fb8446669623c8326c2d0af4e7d01017e2f29dc"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/gog/SKILL.md",
+      "sha256": "d54a8e52b1e00bb5d33b46915fd549f8b792ef3a383fe40e92b195d11d2d5255"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/healthcheck/SKILL.md",
+      "sha256": "b41044aeb25afe95daa5c8ef6f2d6b8d197f6a0b113b0888deaa4dd69e42b59b"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/himalaya/SKILL.md",
+      "sha256": "040f5f7304ec39c20e1ea61ed1fabc05108eb16820516ffd8c09b29528e188bb"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/himalaya/references/configuration.md",
+      "sha256": "a1838b3f370abef2c6c45226115158aee095623701a4ffb48ea633bce14ccf0f"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/himalaya/references/message-composition.md",
+      "sha256": "84d889972f5f4243d891405b83e67bddc7e835b2c4e434efd77fdc6bca9fe307"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/meme-maker/SKILL.md",
+      "sha256": "682db7cba34a3d3ca791f7cccaee9488810c731d6622d8886a9bcca77c59d2f3"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/meme-maker/references/templates.json",
+      "sha256": "414847dc28da8556bdd9a3ddf350f3d859d4668ecc237c1889b289d42d2879b8"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/meme-maker/scripts/meme.mjs",
+      "sha256": "6211a37d19d90498b01fc31302506af0c0021e9949038054e1f7c34e71c4e1fd"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/model-usage/SKILL.md",
+      "sha256": "f4e40f006365acc5f519a55f4efacb6c722788026792e498fcf46dc1a0f0c1d1"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/model-usage/references/codexbar-cli.md",
+      "sha256": "58e57a7bf1359ed32b1fe80c7285e75f88127e82db6b0dbab2ec4dda6ffaca42"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/model-usage/scripts/model_usage.py",
+      "sha256": "cd13c65d9d10faaff20bdf40d5f45f6d26a29dacc3e13d8a1e481a3a8a0f4874"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/model-usage/scripts/test_model_usage.py",
+      "sha256": "1bc6fceb436d836532e6901edb6eb473a68a16eda25f45f94322d99beea4a3b2"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/node-connect/SKILL.md",
+      "sha256": "334c20d3973238ba44a8b5885f0f6adf50342f5324940e1880bd75f61b86bfda"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/node-inspect-debugger/SKILL.md",
+      "sha256": "50d2f6828eaf4bbf7ccbaec5af928f9af978e93b7c679b0f3c8afe2a80ab7d52"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/notion/SKILL.md",
+      "sha256": "d45e2c1270d58c7878c13467ab27780530de2af89fb8b307c662b5d4859dc555"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/openai-whisper-api/SKILL.md",
+      "sha256": "afff70c706a9bae250b046b741e9930340ca87cc1689a82d4415dd4d6b45bfa1"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/openai-whisper-api/scripts/transcribe.sh",
+      "sha256": "7840f2628e2e5d878434419592a8cfc5fbfcf2f560cc1511085387e38e429c78"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/python-debugpy/SKILL.md",
+      "sha256": "dd4600a228fcdce153e4e318c2b8644e6f7f3964826958e89b5bae90db4877d3"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/skill-creator/SKILL.md",
+      "sha256": "7da0631cb21fbd87630b5dbeb48010f66776c28e396c276235f5d245903fa6ed"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/skill-creator/license.txt",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/skill-creator/scripts/package_skill.py",
+      "sha256": "fa2f7ba4915464221cd71c7048e6eb71a920cf94c793332b4172d2ac353dd65a"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/skill-creator/scripts/quick_validate.py",
+      "sha256": "580ccffbd9d4370bc35bca22c551da0353424e248d7499e8cd578eaec67dfd75"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/skill-creator/scripts/test_package_skill.py",
+      "sha256": "806e5a5dbca711b9f30dded0b4bc31dc233b85a0ab301caabdd36900d5db9788"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/skill-creator/scripts/test_quick_validate.py",
+      "sha256": "349258a18c0130f0bf11dd60d361abffa493e426355bc14df4d1d3fc09a46f8a"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/tmux/SKILL.md",
+      "sha256": "8aeaa6f3dfe06d58e09721778b8c9e654bcbd47590f26f442c4dc87c9349c572"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/tmux/scripts/find-sessions.sh",
+      "sha256": "8df6ac8e5824b0fa4d791235bd944ce86b0d12dcbf98af7abeb6d6de50e96823"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/tmux/scripts/wait-for-text.sh",
+      "sha256": "b7efb785d3f2a4f1194e2ae18d7191135ad5a2fff4f08e6a4c7ad8412f3a7309"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/trello/SKILL.md",
+      "sha256": "dc524f73bd87b8089d061187bb26add41101ee82e288a1597a2d7b89fd934222"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/visualize/SKILL.md",
+      "sha256": "94259bbb4d06ab0927d540780c2ef095c6bfe17cbb7248ce485c82656290338a"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/MaintainedSkillCorpus.bundle/openclaw/weather/SKILL.md",
+      "sha256": "62ab4821aa873949d1c1091836be1659a42b32caadce4bd145f5505a1ceaeec1"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/RuntimeNetworkFixtures.bundle/probe.mjs",
+      "sha256": "8ae9d02c1296b8f3a55c248d03b4a4bb2cf5e7538e36dc1327cbf55e0490143d"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/RuntimeNetworkFixtures.bundle/tls-fixture.json",
+      "sha256": "2dd234ef6f9429ab93c2a78c082fb0297e3949877508876f5c49b19d71ea9464"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/MalformedManifest/malformed-hanlin-script.json",
+      "sha256": "c6cbc6e96072ce9114705a9ac43ac8662566f6dfc488d402b7f28ecd4f70538e"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/PhysicalIPad/smart-eating-normalized.zip",
+      "sha256": "c8ee66e4e5e6a06a884b2a1d7b552d51691cb824f245e4cca238bc44d1509d57"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus/InvalidBareImport/compiler-acceptance.json",
+      "sha256": "654e70c2806e03d4c0db70331cd9897d847bdfb71d559be6798a550ba7b947a6"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus/InvalidBareImport/index.ts",
+      "sha256": "017221a547c4877f3fde48b972953c05bc6a28e246a2bd65b87056a50c256518"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus/InvalidBareImport/script.json",
+      "sha256": "3baee7cb79306d17c32b46e804f1f102d21152c5390abe58a5e1ba1e2d3d1496"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus/InvalidDOMGlobal/compiler-acceptance.json",
+      "sha256": "e5b5f67d2ddfc1b91593d8400dd8197faf6bc9db927864bc2abcc52a061f8f1d"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus/InvalidDOMGlobal/index.ts",
+      "sha256": "02cb971d58b615dcbcf7960cf04dc6fc5d35ee1389d7d10afe3864172b3b0a63"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus/InvalidDOMGlobal/script.json",
+      "sha256": "8620bc68e0e5369d0de9befe4e237a8205341d7a8aa3a6f2754ccc263f00d0eb"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus/InvalidScriptingAPI/compiler-acceptance.json",
+      "sha256": "61c34a1b9d35309c24548724333b961ac3ed175c4c78ba6ef5b57d6060f9ddd0"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus/InvalidScriptingAPI/index.ts",
+      "sha256": "70635d852acf94c3fbfa73e6cc7a7f10bb83cf5355ae1ef2ba7b2615facd5664"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus/InvalidScriptingAPI/script.json",
+      "sha256": "0ccf5bc6cf90c960ed74ff47a103a40ac1290769a8d88fb1a50570c560999a80"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus/ValidScriptUI/compiler-acceptance.json",
+      "sha256": "0286c328aadb599c3239f8abf2a4663c842afb777126447cfc9f6164c353de63"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus/ValidScriptUI/index.tsx",
+      "sha256": "ee9dd547d385f2079d007d295b87db80e1ae7d8e18d442990c540ffcde54fb75"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus/ValidScriptUI/script.json",
+      "sha256": "b3796e9176d76ded5598209abbe367358d8103efc04693d83e4202f38700a823"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus/ValidStorageModules/compiler-acceptance.json",
+      "sha256": "0286c328aadb599c3239f8abf2a4663c842afb777126447cfc9f6164c353de63"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus/ValidStorageModules/index.ts",
+      "sha256": "ff5ec870af09184cc854b9c7c4e95ddf1354b4b6395d763fe2cb6483df24d7ae"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus/ValidStorageModules/payload.json",
+      "sha256": "7dc24029c919d7d6fbcc60c9ef21d0b4285bf9a1677dbca85723f4fd1cb4dcb3"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus/ValidStorageModules/script.json",
+      "sha256": "ded9c93f7662240513443b91804dbf0c00dd2a1930eaea5b681d83a87e631608"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ProductionCompilerCorpus/ValidStorageModules/value.ts",
+      "sha256": "88c207ed5d09c43e9813f4339f66db15d66589030f7dd1d98f92977ae076fbd3"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ValidEcho/assistant_tool.js",
+      "sha256": "358693a21ddd782326cfab9d8e4b0f4492019e58dece483e7b51c91112b73465"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ValidEcho/assistant_tool.ts",
+      "sha256": "13769047e962847dd557f4613c60c6406eba19e51f3d041cc4b2e8ef9f8cf945"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ValidEcho/fixture-definition.json",
+      "sha256": "72824c62b9cfda62243855c1880ae84d520b88936a8ea4e189b1ebaf9a137f69"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/ScriptingFixtures.bundle/ValidEcho/hanlin-script.json",
+      "sha256": "a042c5e243ab49893ac19ff9f587c1d96b7fefc408de66fe3f575545f1de3992"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Expo-Widget-Counter.hanlinExpo",
+      "sha256": "07bc97e06a1c4b638272dda7eeeb132e2b91499d5546cccfe7fbfd5bfc4cae0e"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Expo-Widget-Visuals.hanlinExpo",
+      "sha256": "2584982f4077b022860a1197c62d3bc85fdaa454e907e6749cd5734e7886cb68"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Mixed-Native-Widget.hanlinExpo",
+      "sha256": "7dc83c351a276573bf8fc8591b1be081401433247a656306d54fb9c16cda0d2e"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-ScriptWidget-Actions.scripting",
+      "sha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-ScriptWidget-Dashboard.scripting",
+      "sha256": "478cd567e9731cc7342aefa9024ea498edf8d12d340cc5c558484e60a210dace"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Widget-Invalid-Cases.hanlinExpo",
+      "sha256": "077a6ea43342877550f495b1bb885a3c93d8d6c60389459bf55ff05d2db5982c"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Widget-Legacy-Regression.scripting",
+      "sha256": "787bf97e48164d7b9021c64bfa7122e48131a82b388efc3bad26c58276f4bb2f"
+    },
+    {
+      "path": "AI_HLYTests/FoundationJSONShadowAdapterTests.swift",
+      "sha256": "29722de80749716197288e3c9733755f0885ad40fdac123c0b5ad3418f8f7720"
+    },
+    {
+      "path": "AI_HLYTests/HanlinA2UIProductPerformanceTests.swift",
+      "sha256": "8f6246f6314eb99051ae1869b7ae947b267b7a90ab327309909a6dc2455ad99e"
+    },
+    {
+      "path": "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift",
+      "sha256": "9ee86ec88ce723c8257cef8a26ff46865408ec3b50568314875a5608c7ddfc0a"
+    },
+    {
+      "path": "AI_HLYTests/HanlinAppSplitOriginTests.swift",
+      "sha256": "476b3a6cca2635a68dc2436f2aba261a5f32633a268d4e163edc0cb0c75277a0"
+    },
+    {
+      "path": "AI_HLYTests/HanlinApplicationEmbeddingTests.swift",
+      "sha256": "d647361dbef8f576f18e13fc852df7f61b7d06a7f5757e5b29bfd503aafc4463"
+    },
+    {
+      "path": "AI_HLYTests/HanlinApplicationSystemIntegrationTests.swift",
+      "sha256": "617d5472d978fde04ca74400267cb1bb92244b84fbe224545896bddb26bfa802"
+    },
+    {
+      "path": "AI_HLYTests/HanlinAutonomousRuntimeTests.swift",
+      "sha256": "4e6901c09632350692b7ce63d8dcf12155e459a2706660f1b8773b1a5438004f"
+    },
+    {
+      "path": "AI_HLYTests/HanlinCapabilityObservationTests.swift",
+      "sha256": "207b4bb7e2821ff0b3e563dde4131922fceb25c2d6b4142084e1461586a95ac4"
+    },
+    {
+      "path": "AI_HLYTests/HanlinConversationProjectionTests.swift",
+      "sha256": "5689f0ed337357edaabe99cb7fa1ea0c9d7d9792614a39c5dd6ff56e8f5d2da6"
+    },
+    {
+      "path": "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests.swift",
+      "sha256": "b9d463b6fdddd37feb857a077d739ea87ff668be7f2e28b57c8bd557609ec0f0"
+    },
+    {
+      "path": "AI_HLYTests/HanlinMCPEmbeddingTests.swift",
+      "sha256": "2774f4a60882be0a8eec456f8e6e75ede049981c58f412931311c1db509f6592"
+    },
+    {
+      "path": "AI_HLYTests/HanlinMiniAppHostDiscoveryTests.swift",
+      "sha256": "d3ab83d384c6f9b7dca925498137a98acd1e12c1b6b3931520406a0c7d7f694d"
+    },
+    {
+      "path": "AI_HLYTests/HanlinMiniAppStorageCapacityTests.swift",
+      "sha256": "95ea844181b906f5449dab7129646b7e8144d71abba7894be62b9681c6d8227d"
+    },
+    {
+      "path": "AI_HLYTests/HanlinModelDisplayNameTests.swift",
+      "sha256": "e8a0ce9249d6093a7b53d6a167feadd2292e191ac317fa9c34750f58013a7106"
+    },
+    {
+      "path": "AI_HLYTests/HanlinModelHostingEnvironmentTests.swift",
+      "sha256": "f9067e859f9a2eae3ab6bc5e43b91e5bba70e7721a807e8e020cdfe4db6b9e19"
+    },
+    {
+      "path": "AI_HLYTests/HanlinMorphComposerTests.swift",
+      "sha256": "df872008bd19d06f88664d7d7aa6e3671a1e2d779c58eb2d964962637ecac113"
+    },
+    {
+      "path": "AI_HLYTests/HanlinNativePresentationTests.swift",
+      "sha256": "200e2c5b9e02b38b2bebbdb91e222893d4622ee3fcaf06186a09c6eda33be182"
+    },
+    {
+      "path": "AI_HLYTests/HanlinNativeWidgetRendererTests.swift",
+      "sha256": "c43cd512bb45c120fd06f2903b80c1092220efd1ed85045b9513c88a13c055f6"
+    },
+    {
+      "path": "AI_HLYTests/HanlinOrganizerDockParityTests.swift",
+      "sha256": "5dc4ca52a85f45daf9640834b0a224df902b6648e72437b9bd4ceb64a7491f3a"
+    },
+    {
+      "path": "AI_HLYTests/HanlinOriginalExpoWidgetTests.swift",
+      "sha256": "4ffadc5573c5fc69e2b1276e5f86cb69a84eb4466f7c819085ba7f0e72b23860"
+    },
+    {
+      "path": "AI_HLYTests/HanlinOriginalScriptWidgetAPITests.swift",
+      "sha256": "7a0bf25e1cb46c63c194efe6d7bc16b878726231aee54b9bbd1653b18d86cbf2"
+    },
+    {
+      "path": "AI_HLYTests/HanlinOriginalScriptWidgetControlTests.swift",
+      "sha256": "b07a43b29328d069577c96af025bda496b5b216d38099f3b9297b93294bf9e46"
+    },
+    {
+      "path": "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift",
+      "sha256": "ea6c76e33bb4594931bb118ab713e2de2d85e561f0e40eb21d64d154c45f9c90"
+    },
+    {
+      "path": "AI_HLYTests/HanlinRemoteMediaURLTests.swift",
+      "sha256": "8d529ef1da665e792f9e56b92f746659eb26be6c790765c6f233b81016247059"
+    },
+    {
+      "path": "AI_HLYTests/HanlinRuntimePerformanceTests.swift",
+      "sha256": "9d468eac221e77a177874ef36d20a420786d01c6e5603302497d89eb69d24dcc"
+    },
+    {
+      "path": "AI_HLYTests/HanlinScriptingAssistantProviderAdapterTests.swift",
+      "sha256": "d3e463bbd242a66ce66dee6717305eb49946f0c28f63efcc8f2d78d6cbfafba3"
+    },
+    {
+      "path": "AI_HLYTests/HanlinScriptingPlatformCompositionTests.swift",
+      "sha256": "6d71ccfbb6018696de27ccaf014162ee470f8148c5fd30733e5bf5d89e2763e9"
+    },
+    {
+      "path": "AI_HLYTests/HanlinScriptingRuntimeTests.swift",
+      "sha256": "3d0c2c64592ad17c3a4fb08ca7635422c01a5d69fd4eb7e6b2bff44282cbbee1"
+    },
+    {
+      "path": "AI_HLYTests/HanlinToolApprovalStoreTests.swift",
+      "sha256": "559cb492cbccb54d416fa69652c45ecb1b318e137dc8774c3d0cfd0a6f49b8ee"
+    },
+    {
+      "path": "AI_HLYTests/HanlinUnifiedHostServicesAgentAcceptanceTests.swift",
+      "sha256": "d4517561e390d4563f15caab1164ce61ce8fb948ca127030acef0698227b2f67"
+    },
+    {
+      "path": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests.swift",
+      "sha256": "85efedee4ec94c5ecc4e727847401fda1ab72a66e7cf9ab2403f909f23a18210"
+    },
+    {
+      "path": "AI_HLYTests/HanlinUnifiedHostServicesTests.swift",
+      "sha256": "06fe315a62c65ee644f1a5f3caa2dc70722f4b3c0ed32c1b210c38ef5e7232a9"
+    },
+    {
+      "path": "AI_HLYTests/LegacyToolMigrationTests.swift",
+      "sha256": "8cf6e3e632175467f0388add08da82214f1032285061ed51e11babf8f55de460"
+    },
+    {
+      "path": "AI_HLYTests/MCPPackageGenerationTests.swift",
+      "sha256": "e833bdaf1fc51d29cba14c0e37563dad1201f09fdb6e00584446527a46b683e7"
+    },
+    {
+      "path": "AI_HLYTests/MaintainedSkillCorpusTests.swift",
+      "sha256": "61e928643550af3ce6c70b7a7e6077aad02960ff1bed931893c3ab3d50eb3cb4"
+    },
+    {
+      "path": "AI_HLYTests/MasterScenarioSemanticAcceptanceTests.swift",
+      "sha256": "e08e557055a4c9c81750817a5dc754b5a872a13bfff26029b48eea7475b23272"
+    },
+    {
+      "path": "AI_HLYTests/MiniAppAuthoringToolTests.swift",
+      "sha256": "e516af0f7ecfa920cbb4e226224934fdbb389bbd43b063cdfaacd1a2d909f750"
+    },
+    {
+      "path": "AI_HLYTests/NativeComposerLineSizingTests.swift",
+      "sha256": "6eb5c1a7f623dac590311d3040c6c0f81cdbb6baec98fdd943d6617151d0f248"
+    },
+    {
+      "path": "AI_HLYTests/NativeScriptEnvironmentOwnershipTests.swift",
+      "sha256": "1444d7ec786b3a9a0688b37058187dd02fb88006ced60e8c641cbc3d72dc8578"
+    },
+    {
+      "path": "AI_HLYTests/NativeScriptRuntimeWireTests.swift",
+      "sha256": "4ac7ed256f861133e3b84eda85d1f5df659317477c6a42c637a42a59def46835"
+    },
+    {
+      "path": "AI_HLYTests/NativeScriptShareDeliveryTests.swift",
+      "sha256": "6aa9c15d739096aaf8ec7f0e929cbde37996de50a8a9178288d3cd2e9812a4ad"
+    },
+    {
+      "path": "AI_HLYTests/NativeScriptSharedModuleLinksTests.swift",
+      "sha256": "ac912366f4be2987454daceeb03c1251b42ddaeaf7f6d3519893ab2eb1061862"
+    },
+    {
+      "path": "AI_HLYTests/PreparedRuntimeVersionGateTests.swift",
+      "sha256": "79cfebe73c25cd7e2490a1192b1a9432156eacd48a1cf75aa94644ba7f1c490c"
+    },
+    {
+      "path": "AI_HLYTests/ProductionSystemSkillsTests.swift",
+      "sha256": "b028cd3fbb3884d028f300e7b744a1a5a35efbfef4780bc71889cfc2c11b82d3"
+    },
+    {
+      "path": "AI_HLYTests/ProviderConformance/ProductionConformanceFixtures.swift",
+      "sha256": "9b3683401bc264206e006ebe9983174b0db1404aefec55e49c2c2086808a3135"
+    },
+    {
+      "path": "AI_HLYTests/ProviderConformance/ProductionConformanceURLProtocol.swift",
+      "sha256": "2e2754247e8ace05f94a22cd02143bee5c105f61a06ce8b0a71dab314518e34c"
+    },
+    {
+      "path": "AI_HLYTests/ProviderConformance/ProductionProviderConformanceTests.swift",
+      "sha256": "c218cc146bdc18bb6ccf7094508285c9894f8617caa716b29fd0bed0c99ff839"
+    },
+    {
+      "path": "AI_HLYTests/ProviderModelCatalogTests.swift",
+      "sha256": "fc30c9c4da9503c032ae51744db5249561f820feb37e2082920570277af0263f"
+    },
+    {
+      "path": "AI_HLYTests/RuntimeAutonomyV3Tests.swift",
+      "sha256": "b72a5d8ec0c51144e864776a2e1d4537cbfd0e28e27074b47280af5b108fba7d"
+    },
+    {
+      "path": "AI_HLYTests/RuntimeExecutionInputArtifactTests.swift",
+      "sha256": "d31065ba2cafceb03c25f2a9bbf845ecbd0c41e8dfdf61fa60be5f1645ffa50c"
+    },
+    {
+      "path": "AI_HLYTests/RuntimeFetchConformanceTests.swift",
+      "sha256": "d62bb6da535e456830dfb3d2fe7d6da6add9403d1f55e59f17085a198aa7a002"
+    },
+    {
+      "path": "AI_HLYTests/RuntimeJavaScriptCoreTests.swift",
+      "sha256": "e0034017f45e08dee2c9df2c5332bb4691a61045518280309e6caa5b5e4744d7"
+    },
+    {
+      "path": "AI_HLYTests/RuntimeJobInterruptionTests.swift",
+      "sha256": "638e0be8e4483f455e5a6de3438fe660c0bf77c67a6735024874df331c2c7406"
+    },
+    {
+      "path": "AI_HLYTests/RuntimeNativeInterruptionTests.swift",
+      "sha256": "64838b626833e0f8a1780f33d9057220e86e0e26f2c967416afc171f35252974"
+    },
+    {
+      "path": "AI_HLYTests/RuntimePackageAcceptanceTests.swift",
+      "sha256": "4ad441f2cbfbeb58fbd60d8e987d66566b8316f2dda3378d4e7471fa646b2595"
+    },
+    {
+      "path": "AI_HLYTests/RuntimeToolContractTests.swift",
+      "sha256": "ee5062ddf4f386a488014aae5d20f6a74ae45eaf7d02ff076a6fdf91933da8d8"
+    },
+    {
+      "path": "AI_HLYTests/RuntimeUserOperationTests.swift",
+      "sha256": "00b4e836d4e848dae19ae3e757657b733c3eafe6b645a538f1b1995828a94151"
+    },
+    {
+      "path": "AI_HLYTests/ScriptingCanonicalAuthorityTests.swift",
+      "sha256": "b204ff4a6325b967669e1ea0574f4f4979643799522d59ca32d483fc74840932"
+    },
+    {
+      "path": "AI_HLYTests/ShareInboxHostIntegrationTests.swift",
+      "sha256": "c6ba09129bdab7fadcae8ac02468081332a8f7296a656a84df650b78e8db0195"
+    },
+    {
+      "path": "AI_HLYTests/SkillImportPresentationStateTests.swift",
+      "sha256": "b231f1233dc5210a5994835a0ee674c299fa879861aaa1583e7e88d4588a85f1"
+    },
+    {
+      "path": "AI_HLYTests/SkillOpenClawPolicyTests.swift",
+      "sha256": "fed5ad40f59184120508d1be60fd9b0c722353bb6db3c6abff29c5ea810726e1"
+    },
+    {
+      "path": "AI_HLYTests/SkillRuntimeProductTests.swift",
+      "sha256": "06471d3f79c83ac8aa95feeeabcdd071be0c96dc8bfe2da92d47bf4850087714"
+    },
+    {
+      "path": "AI_HLYTests/SkillStoreAndImportTests.swift",
+      "sha256": "d88842e5e9262196d7a4c287c0dd3457f8d82d057e8b32155058142acfcdf75d"
+    },
+    {
+      "path": "AI_HLYTests/VoiceRecordingLifecycleTests.swift",
+      "sha256": "6140722d3090e41c7465601624a0fa389509c91bd23054e9a91bd80c0fe4c7c1"
+    },
+    {
+      "path": "AI_HLYUITests/AgentRuntimeConversationUITests.swift",
+      "sha256": "3d9755248a7ac026c2d2a0293d744d45e3c7454c9bd154a7a35e91d65175454a"
+    },
+    {
+      "path": "AI_HLYUITests/AgentSkillsEmbeddedResultsUITests.swift",
+      "sha256": "177a097e99b72ab6817064345956ec7a7bc5eea9d147d57175929bb6398d142f"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/A2UIGalleryLinkReplay.jsonl",
+      "sha256": "ac189f8a2f0b20e0c3c501ab627152f5b254ee5ce0cdb7a6d60340248226f1d2"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/A2UIReplayMedia.jsonl",
+      "sha256": "1f0fbb0926011673b95bfae719babede6bc138119559156543b81a97acc5cb1e"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoNativeAPIMalformed.hanlinExpo",
+      "sha256": "6061e8c26fdbcbbfe20fa7d8abc2a6a8ee63d0f665046583b96fcefd5d6ad301"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeA.hanlinExpo",
+      "sha256": "c050720db91ffb2c32a9723d8b42a960f126cfed3192e14ccd67a1a8472d93c6"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeB.hanlinExpo",
+      "sha256": "794c7a2237c32166a4cd36a4d1088b585f4057073454b17684bee938f5c665ad"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeIncompatible.hanlinExpo",
+      "sha256": "c83750124f42597209a9bbadd1b85f9cfe51128b6b6d7781f16a0cb274cc4e27"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeMissingGrant.hanlinExpo",
+      "sha256": "9bf9cd16e84d7c1c097fab3b2da04aaf0441f814f30852f1e9a0e40ebf506ba7"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIMalformed.hanlinExpo",
+      "sha256": "a2115ad2fc9395154e793c15fc0c42fffb056e7b259b6c63852b7b61531313e4"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbe.hanlinExpo",
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeB.hanlinExpo",
+      "sha256": "c60e7d88f759118cf52c9ed50f464031a61402367e02e7fe45b50e37ee0bc016"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoWidgetsProbeA.hanlinExpo",
+      "sha256": "26f1309c3851a6c5af30b24ce62d94b9dd28501b0075673ffdfadb53bd800eee"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoWidgetsProbeB.hanlinExpo",
+      "sha256": "af76fc6c37297bddc7e70bc2499694edb92d5d6ee18a51a584dca9feca8e0385"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-Expo-Widget-Counter.hanlinExpo",
+      "sha256": "07bc97e06a1c4b638272dda7eeeb132e2b91499d5546cccfe7fbfd5bfc4cae0e"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-Expo-Widget-Visuals.hanlinExpo",
+      "sha256": "2584982f4077b022860a1197c62d3bc85fdaa454e907e6749cd5734e7886cb68"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-Mixed-Native-Widget.hanlinExpo",
+      "sha256": "7dc83c351a276573bf8fc8591b1be081401433247a656306d54fb9c16cda0d2e"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-ScriptWidget-Actions.scripting",
+      "sha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-ScriptWidget-Dashboard.scripting",
+      "sha256": "478cd567e9731cc7342aefa9024ea498edf8d12d340cc5c558484e60a210dace"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-Widget-Invalid-Cases.hanlinExpo",
+      "sha256": "077a6ea43342877550f495b1bb885a3c93d8d6c60389459bf55ff05d2db5982c"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-Widget-Legacy-Regression.scripting",
+      "sha256": "787bf97e48164d7b9021c64bfa7122e48131a82b388efc3bad26c58276f4bb2f"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/HanlinScriptUIAppB.scripting",
+      "sha256": "7da83f8648cc42bcc9b4ab60f925c336b05dc1f0a6f18a9df09c60e4b80b9222"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/HanlinScriptUIMalformed.scripting",
+      "sha256": "71c46b327a251c777066cf588a9d6fd7ea8639be43a5bbb5eedb7c5400f608c5"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/HanlinScriptUIValid.scripting",
+      "sha256": "b0bdeb5f5c21c152632c2275ad01d69a5e5dd769f95a83208a53857ab7961ff4"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinCanvasRuntimeUITests.swift",
+      "sha256": "e0472eaa60b295c9c55372c50ae661ee843446805227829fe9051cc3ef9f03c8"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinContextualTextToolsUITests.swift",
+      "sha256": "b28d1744dc4a3b590f1437da97f92450802a667f278411e54cc0e299f063e8e6"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests.swift",
+      "sha256": "476612f6384b2d96b12a2de2b210b1a1d30a74ae9755059c4d507d7f40271d44"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinExpoProductionE2ETests.swift",
+      "sha256": "f1448ad05a503f71c1e7324f8b67064ab4ab22b9bf3f13f0a5f58816c14e2dee"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinHelpUITests.swift",
+      "sha256": "12c74a81b630f0621c90d96bfbe42c8fb791aa892fcec8e5a239b2a972247b51"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinMorphComposerUITests.swift",
+      "sha256": "46622c7813446f3467fcea823b19200044855ee1739652ea9deb0d6f1de893c8"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift",
+      "sha256": "11b3cb74033aa95a3a37521ee013a1e05245b4a01a0e974bb147a0e259e70edc"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinNativeScriptProductionE2ETests.swift",
+      "sha256": "cdeafe5daa8938bf56a8931807d6d88d6d4e510681ee0bb3b8e7b7c11219cf0c"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinPairedProductUITests.swift",
+      "sha256": "4c578e22ccd2b7e6ade0346ac91b20e9a4b92c28d3f42d0bbdc0fd1881636832"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinPrimaryNavigationSmokeUITests.swift",
+      "sha256": "ccd16287060dde45114798bef06f1dfecdfb2801dcc97e3ef6d51962ae197e72"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinRuntimeCommandAcceptanceUITests.swift",
+      "sha256": "da45f1088d03261357a42bb6ea0fbfeccd1b2fe8a4eecba8f782c5c54c7edc6e"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinRuntimeInstallationUITests.swift",
+      "sha256": "107589b347ee49aa86207365dd9b9e1710fcbedb056fbf4f61bfc93efef4e332"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinScriptUIProductionE2ETests.swift",
+      "sha256": "d974ba0cf471e8e1ce6150ba14ead70bf0c6e59f7c181fb52a805d9705e5b338"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinShareInboxUITests.swift",
+      "sha256": "5a82f3b1c3bea03b857f1743be9122cefcac82b1fd3c8df4d9bff4df44315875"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinSimulatorAcceptanceUITests.swift",
+      "sha256": "6f5316f859282b6cee33502975ae3a324ffa145db0ea9e78f81e4da45834c9fc"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinSkillCenterUITests.swift",
+      "sha256": "f28f973a72bb12c0b669cb4d69a7ce1939158e86a3715ca8cd779085bacfb7fc"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinUIPerformanceUITests.swift",
+      "sha256": "5a45d7679dc37f85b5941a8570b0f6d6ef22112cafc8034527d357d2a779b63f"
+    },
+    {
+      "path": "AI_HLYUITests/MiniAppAuthoringUITests.swift",
+      "sha256": "60a786ea3864a118710f8814a41f52cc454d35c71e4fb911b611a70ba5c2f565"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/App.tsx",
+      "sha256": "9539992cda271d40cdee1deef1afefdb27531c253db811f3b09b0e55f9fd036e"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIMalformed.hanlinExpo",
+      "sha256": "6061e8c26fdbcbbfe20fa7d8abc2a6a8ee63d0f665046583b96fcefd5d6ad301"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeA.hanlinExpo",
+      "sha256": "c050720db91ffb2c32a9723d8b42a960f126cfed3192e14ccd67a1a8472d93c6"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeB.hanlinExpo",
+      "sha256": "794c7a2237c32166a4cd36a4d1088b585f4057073454b17684bee938f5c665ad"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeIncompatible.hanlinExpo",
+      "sha256": "c83750124f42597209a9bbadd1b85f9cfe51128b6b6d7781f16a0cb274cc4e27"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeMissingGrant.hanlinExpo",
+      "sha256": "9bf9cd16e84d7c1c097fab3b2da04aaf0441f814f30852f1e9a0e40ebf506ba7"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/index.ts",
+      "sha256": "a0a0f38324e5fd1100c9cbbb399a51873c811fd727c60e98a4836d10bd7d200c"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/package.json",
+      "sha256": "26af91566f2f81a618d2c0858dc2770e610d95894742c749a0a654bd56a8724b"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/script.json",
+      "sha256": "bffa95d7caf7b69b0bfe74354bb4c40b8ed580c0bc255b847df17b63fe76ef2f"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/tsconfig.json",
+      "sha256": "2ef0da47a48f9f41136b957deeadb8337f3e663502e430a38dadbb16ab933ed0"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/variant-a.ts",
+      "sha256": "dde1cf43fd182f483e8dead8225dec8edae1226c401b8387d0c09c46484dbdfa"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/variant-b.ts",
+      "sha256": "507f52ebc75d04bdaa47ce206501140eecdfed8e7127b952acdb8af08aae6120"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/App.tsx",
+      "sha256": "199f024921e35fbedca737045e342b75cf903b37e6692be5faf524a19a8e91ca"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIMalformed.hanlinExpo",
+      "sha256": "a2115ad2fc9395154e793c15fc0c42fffb056e7b259b6c63852b7b61531313e4"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbe.hanlinExpo",
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeA.hanlinExpo",
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeB.hanlinExpo",
+      "sha256": "c60e7d88f759118cf52c9ed50f464031a61402367e02e7fe45b50e37ee0bc016"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/GeneratedModifiersProbe.tsx",
+      "sha256": "ea8594b03cf65e8b06a83faa25fd86e3cb7fa065ac6f0e3d5eea663198ad958e"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/GeneratedViewsProbe.tsx",
+      "sha256": "c3be93227141ac5d52ed52d02272eb631b6923d76fb66c4d02b024bb09ef3878"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/HostServicesProbe.tsx",
+      "sha256": "d0791fba83acabe38ee0bd1d63a128540c7be2976de774a157f19dac97f7376f"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ManualAdapterProbe.tsx",
+      "sha256": "c93a882be209437f388c5d67a9af6ef98ca5371db4aef084aaf7cd464ce42d57"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/index.ts",
+      "sha256": "f31cbcd820fca2a4df6a5f2730e16d5b69b3646c75b5218e811af9ff0c830b59"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/native-adapter-assets/pixel.png",
+      "sha256": "7713482a5fab3ae135193484df75f4d0a7ce5c8ee50f6b5c33f7aacef5c5ea45"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/package.json",
+      "sha256": "7234c13c597bc7c71862cc1562ba3b4c68cea4528e1c8fa20bd512eb7d2510e7"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/script.json",
+      "sha256": "12d5c8abf129dbe22ea6a4a2e8746de2c2224261ec11cf386943626674a63fbf"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/tsconfig.json",
+      "sha256": "1b682272df710c0d8b97b3fcde9c795204e28e287e6e7ba9b1850112e92854f4"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/variant-a.ts",
+      "sha256": "98a563ae71b1621c65dab5f494b055ec9bf8a401eef1ecd3771e2b1059e5eda6"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/variant-b.ts",
+      "sha256": "12bdc8a3c40cbf87890d527abb9343af94b575342e256f0c5040e900ff465394"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/widget.tsx",
+      "sha256": "aa7271e38789ccecff5e284f1a3846f17af1da56dc4152c7a3bc174989a86119"
+    },
+    {
+      "path": "Fixtures/ExpoWidgetsProbe/App.tsx",
+      "sha256": "5a1e3323d027532126c6fd84a957190ff126aede7fb306282c0992675e2a964e"
+    },
+    {
+      "path": "Fixtures/ExpoWidgetsProbe/ExpoWidgetsProbeA.hanlinExpo",
+      "sha256": "26f1309c3851a6c5af30b24ce62d94b9dd28501b0075673ffdfadb53bd800eee"
+    },
+    {
+      "path": "Fixtures/ExpoWidgetsProbe/ExpoWidgetsProbeB.hanlinExpo",
+      "sha256": "af76fc6c37297bddc7e70bc2499694edb92d5d6ee18a51a584dca9feca8e0385"
+    },
+    {
+      "path": "Fixtures/ExpoWidgetsProbe/package.json",
+      "sha256": "3b187b9ab9e15bee695998de543fbdb8a327c3bfe237a6f9819e5456bb12b66b"
+    },
+    {
+      "path": "Fixtures/ExpoWidgetsProbe/script.json",
+      "sha256": "30a7204c4dd257f78b8c172e9ad5c016422bd404bfabd475ba6386e098d52f3e"
+    },
+    {
+      "path": "Fixtures/ExpoWidgetsProbe/tsconfig.json",
+      "sha256": "7d00b63f943708524087cae769f53cd9bade8e8e3d0746c8f1c85230aec8faf6"
+    },
+    {
+      "path": "Fixtures/ExpoWidgetsProbe/variant-a.ts",
+      "sha256": "724787c0ea6dd55d89af918a98c4cd60920fa20cff65e402035d821d0d500290"
+    },
+    {
+      "path": "Fixtures/ExpoWidgetsProbe/variant-b.ts",
+      "sha256": "022ae25761977cb49b5d77b6ed0300aeb1ddffd621d37054eecd81266bf1662d"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-Expo-Widget-Counter.hanlinExpo",
+      "sha256": "07bc97e06a1c4b638272dda7eeeb132e2b91499d5546cccfe7fbfd5bfc4cae0e"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-Expo-Widget-Visuals.hanlinExpo",
+      "sha256": "2584982f4077b022860a1197c62d3bc85fdaa454e907e6749cd5734e7886cb68"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-Mixed-Native-Widget.hanlinExpo",
+      "sha256": "7dc83c351a276573bf8fc8591b1be081401433247a656306d54fb9c16cda0d2e"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-ScriptWidget-Actions.scripting",
+      "sha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-ScriptWidget-Dashboard.scripting",
+      "sha256": "478cd567e9731cc7342aefa9024ea498edf8d12d340cc5c558484e60a210dace"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-Widget-Invalid-Cases.hanlinExpo",
+      "sha256": "077a6ea43342877550f495b1bb885a3c93d8d6c60389459bf55ff05d2db5982c"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-Widget-Legacy-Regression.scripting",
+      "sha256": "787bf97e48164d7b9021c64bfa7122e48131a82b388efc3bad26c58276f4bb2f"
+    },
+    {
+      "path": "Fixtures/Widgets/SHA256.json",
+      "sha256": "4964eeee90ef13fc28a6f059bfdd4d6316cdd0c60cdc151de192ff6f49d6208c"
+    },
+    {
+      "path": "HanlinMiniAppsApp/HanlinMiniAppsApp.swift",
+      "sha256": "f1489c1f8c4ca1039d4ffc5698b43a5e672ec586fb5b9393dc69f246f11de4c1"
+    },
+    {
+      "path": "HanlinMiniAppsExtensions/Notification/HanlinMiniAppsNotificationService.entitlements",
+      "sha256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc"
+    },
+    {
+      "path": "HanlinMiniAppsExtensions/Notification/Info.plist",
+      "sha256": "9f1fc3aa8ef55f957f6b14151c982c7ee3b006783d08c1de77d4a05a634ee6e4"
+    },
+    {
+      "path": "HanlinMiniAppsExtensions/Notification/NotificationService.swift",
+      "sha256": "82f906b9759f275e52db99a9354642546f0b4f9f89437c4c9031e92460e627a9"
+    },
+    {
+      "path": "HanlinMiniAppsTests/CrossAppInvocationTests.swift",
+      "sha256": "22f91c12d0953f0d1e08ee1a1157bd595a6da01adb85ac8a104c069c4073b936"
+    },
+    {
+      "path": "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests.swift",
+      "sha256": "fac1a7336a3b233a18015f56df18fe615c04f56064029af2d292a7f8ea9d4386"
+    },
+    {
+      "path": "HanlinMiniAppsTests/NativeScriptMainRunLoopCallbackTests.swift",
+      "sha256": "ad4b516db151867a80413646be9dfed9313f3f356d972c112fdf0f0d5806fd99"
+    },
+    {
+      "path": "HanlinMiniAppsTests/NativeScriptWindowOwnershipTests.swift",
+      "sha256": "54458a7424737807a43d3c0f0b4a3009a951c37343c40cdb17ca0fbe238cbff8"
+    },
+    {
+      "path": "HanlinMiniAppsTests/SplitAppStorageLayoutTests.swift",
+      "sha256": "92b4bcab25a77556847a408763a409268dd74ff0bf6b4de61738468903735383"
+    },
+    {
+      "path": "HanlinMiniAppsTests/SplitMailboxTests.swift",
+      "sha256": "f8dff9a2b9da80711f6d25fa022e5ad5fa7000452701a934cbf5cebefa0fde60"
+    },
+    {
+      "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "sha256": "da0fa21f26b677f4d18f8e1972208b39e30401a127e9dd2a9643e0fe8d7ad17c"
+    },
+    {
+      "path": "HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests.swift",
+      "sha256": "b81efd791fabe9c857750e10465226e4326b5a745f03238563575af503877493"
+    },
+    {
+      "path": "HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests.swift",
+      "sha256": "76bd2441ee618b5d0cc6db88902f5985408a7b77842b6724fa991cee4c24ef83"
+    },
+    {
+      "path": "Package.swift",
+      "sha256": "392ece3430f8e61eb28afdaa925adf006b1a3dbf82a233568c2c279ab768e53b"
+    },
+    {
+      "path": "Packages/HanlinAppExtensionsSDK/Package.swift",
+      "sha256": "23056fa7df2e2aca75c3195452085a42151aa113f54370aeceb5a07df269d9bc"
+    },
+    {
+      "path": "Packages/HanlinAppExtensionsSDK/Sources/HanlinNotificationExtension/HanlinNotificationService.swift",
+      "sha256": "fd2568e373da3dfdd2c35a2f0138f02cf46d7e6bd67c70b4d38109718b39480e"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/original-runtime-receipt.json",
+      "sha256": "930fa2685c39e238da2ff557a6653bc7530a5a64edc9166b63dd720b410c01d0"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationDelivery.swift",
+      "sha256": "b029004be2138cb11ef6221ab7b2c64489ec05b8e22ead565b822da1a946431f"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift",
+      "sha256": "b9671f1d78db83f6786320a68878d01852d5a81a3383866cb26a5e52a87da5ff"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationEvent.swift",
+      "sha256": "982bbdff39e2baeb944ab476bc16d8f826f36ca38e9a3e6a75e6efaeaf3b318b"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationInvocation.swift",
+      "sha256": "210a1266c9b276cd0865bf9238faec73c8caaf464329a22b2c470f71f6f76706"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinNotificationInvocationTests.swift",
+      "sha256": "918dac76ba987164dfc80ea47ff3365d4a4fa42cecc87ee36db863721c9e1667"
+    },
+    {
+      "path": "Scripts/Audit/audit_miniapp_reachability.py",
+      "sha256": "a98a0a46f70882e74f64fba51f9a75bce1956640332bb201d28fedaae266b883"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/miniapps_provider_sources.json",
+      "sha256": "818ea10dd85bd0b36449dfe93138fd52c438341d8c5864836ebab6a28a188078"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/project_graph.py",
+      "sha256": "fc46f1e5266f054794811a0756fa51677a291b0533f816f1342a5d42f9ba85b8"
+    },
+    {
+      "path": "Scripts/CI/observe_notification_os_delivery.py",
+      "sha256": "f6cf4e040f592fa94ebf9fd813b6e03d125d5c7c32dc2d2a43f3b42cdb33d085"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/App.tsx",
+      "sha256": "ac62c2f394dceedb422c0fbe05d4182afba07e1bf78fb15828d3f936d212ae8a"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/README.md",
+      "sha256": "8ceff65d4f7248d58389792f86032bbf74f7228b566ed0e77d02b08e6d93e6ce"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/build.ps1",
+      "sha256": "394476bb932e3608709fe455af351585fc692d4255acd2f6dc41a1471a7fcd1f"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/dist/ModularTextSearch.hanlinExpo",
+      "sha256": "27e5524cea612c9270b880f89ebcefcb267bff3b72e702a0a415d3d8795a87e8"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/hanlin.authoring.json",
+      "sha256": "e2cd4f27d796b5ba5888348e9f3e10af45195d383fcb5f5946f94b9d05763030"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/index.ts",
+      "sha256": "00e02d45f2f2a702f611c680663da217bfca69cd375b1dfe9f8f14562f9fb3e0"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/native/original-source-proof.json",
+      "sha256": "f3622f772c9437a79db1d46d750e5e151818bc7ce44b5abc7729aa6527833765"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/native/search.tsx",
+      "sha256": "e1e94967febb0f8aea8be64296e9ad384b7f65d29f7744d7cd39dcfcf775a15b"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/native/src/engines/preferences.js",
+      "sha256": "124ed5937e1a69f51657d8c9bc58b7326269bc2ea77510fc9a6fafece5cb43ac"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/native/src/engines/registry.js",
+      "sha256": "9be4d34fecd98447cb94585be1b5bd589a5a0cbe47c726905a398bfd3d4a09cb"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/native/src/engines/sefaria/client.js",
+      "sha256": "c2221c450bf897c69f2796e3a9867384abc0fefa3d29f18e59a2bd24c64dfd2f"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/native/src/engines/sefaria/constants.js",
+      "sha256": "f6dc8d774ac727b25c3ff278f514ee6f6d0ddd9b74541c9c96d3fec246f7601d"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/native/src/engines/sefaria/engine.js",
+      "sha256": "0fe3b94e5ef58a668990270761336ed5fe200a7472fe853a5e614b1ad64929c3"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/native/src/engines/sefaria/searchPayload.js",
+      "sha256": "6e4c77c4248d0d1ae84d6172bd184a1d61594250517a545dae53fb09723b85c5"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/native/src/intent/snippetDefaults.js",
+      "sha256": "82b15d94edeeda146e04a90a6fa35e44cfbbff891acdbd0bfc3ab3f4cf212809"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/native/src/intent/snippetViewModel.js",
+      "sha256": "22853b612b79dfe8e3d13822417cf7d63ba55144c29111bf9be533adb6a68787"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/native/src/logic/localization.js",
+      "sha256": "d3469b6512a6b9cf02d87ac0fa348b8d29bae0f21443f85af11965db3e98d873"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/native/src/logic/searchGrouping.js",
+      "sha256": "d7f8fe70f0355878624c2faa356f9cad88032cd7068aa7cef5763dd239af0424"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/native/src/logic/textUtils.js",
+      "sha256": "23a5ed4e316acf547ff7505002e10d451f559b56f957cb45ada6e9da324453e0"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/native/tsconfig.json",
+      "sha256": "04f9897c1e27a4f1bfb0b948d70c482618c84961a61567447ef110ea43dcce93"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/package.json",
+      "sha256": "81664c98d9d9e5e26d5206e96fddb5ace83c6bc810d3f8d4b91585b21ab79dbb"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/script.json",
+      "sha256": "c5412f79281a38363bab23697f85d0af24ad735f93a9b30ebac076ff3b6820c2"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/src/engines/preferences.js",
+      "sha256": "38e699d09b942887b84c200c7b07467f3b28f092f3385d9ba9f756a6fc6f6896"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/src/engines/registry.js",
+      "sha256": "9be4d34fecd98447cb94585be1b5bd589a5a0cbe47c726905a398bfd3d4a09cb"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/src/engines/sefaria/client.js",
+      "sha256": "8d2b61f6eaf6cadf286ea3f97379b009c344badcbea52c06d5a6fc437cb6ba85"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/src/engines/sefaria/constants.js",
+      "sha256": "f6dc8d774ac727b25c3ff278f514ee6f6d0ddd9b74541c9c96d3fec246f7601d"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/src/engines/sefaria/engine.js",
+      "sha256": "0fe3b94e5ef58a668990270761336ed5fe200a7472fe853a5e614b1ad64929c3"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/src/engines/sefaria/nativeTransport.js",
+      "sha256": "d82632b3803c352ea3f4f71aadb6365472e0aa819ef1fad459648e62436d90b5"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/src/engines/sefaria/searchPayload.js",
+      "sha256": "6e4c77c4248d0d1ae84d6172bd184a1d61594250517a545dae53fb09723b85c5"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/src/logic/entrypointInput.js",
+      "sha256": "08329ca5f219ba893cbcb796009fb47000f2ef07fa1e213acb3b15a4004a18c5"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/src/logic/localization.js",
+      "sha256": "d3469b6512a6b9cf02d87ac0fa348b8d29bae0f21443f85af11965db3e98d873"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/src/logic/searchGrouping.js",
+      "sha256": "d7f8fe70f0355878624c2faa356f9cad88032cd7068aa7cef5763dd239af0424"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/src/logic/textUtils.js",
+      "sha256": "23a5ed4e316acf547ff7505002e10d451f559b56f957cb45ada6e9da324453e0"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/tests/native-transport.integration.cjs",
+      "sha256": "2cfc69a1c9f6ac2865971c2494f65ec90aa9c28c507b8709cae16e7e88ce4ae0"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/tests/ui-regression.test.cjs",
+      "sha256": "79f9d4d532ec77e0a393757f6636f6a73737c39c21801931124ede0ef7e5a884"
+    },
+    {
+      "path": "Scripts/Expo/miniapps/modular-text-search/tsconfig.json",
+      "sha256": "55a7c670ed7cbb03772ab431e18904fe7a66b801541bd4c6133e87a26685ae8e"
+    },
+    {
+      "path": "Scripts/Expo/package-lock.json",
+      "sha256": "3b31e1c8fd34145df900764a2cda013ab02ecea7f890c969ad5e0a92925d0dd8"
+    },
+    {
+      "path": "Scripts/Expo/package.json",
+      "sha256": "bb447094c0ef2250c445f580fa91c81a55fc3187c7d49e145b84e9c1c3756dce"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/expo-hello-world/notification-event.ts",
+      "sha256": "3faaf31c55f30954b8c3a74cce95d0461bdef531269bcd7832a886be4ac390de"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/expo-hello-world/tsconfig.json",
+      "sha256": "989df0a97a5ac05cb6b26df1d7f2d18896e2627da8ac72d4d35e66a60da84b19"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/nativescript-hello-world/notification-event.ts",
+      "sha256": "3faaf31c55f30954b8c3a74cce95d0461bdef531269bcd7832a886be4ac390de"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/nativescript-hello-world/tsconfig.json",
+      "sha256": "089155f616dd73ff0bebb1469f21fda41c51ad93c7b7db83d2745fa5e88ce0e5"
+    },
+    {
+      "path": "Scripts/MiniApps/Tests/notification-events.test.mjs",
+      "sha256": "b4c7753bbcd8ebfc757a54b9c4783bc40280125f982c48fe12e953097e853d80"
+    },
+    {
+      "path": "Scripts/MiniApps/notification-events/index.d.ts",
+      "sha256": "1fca542efed873474b4541f09945af3db035b570c691be63982a3ddf9ae2f837"
+    },
+    {
+      "path": "Scripts/MiniApps/notification-events/package.json",
+      "sha256": "b6ec9ece2d15d32b029e720cd5dde983a681cba511e807cd5766862d79ef8456"
+    },
+    {
+      "path": "Scripts/MiniApps/stage-sdk.mjs",
+      "sha256": "f0d2b438ee79ac0973f8d261ecf626b2a94268e5140c6dcb67f48b07cabd1f25"
+    },
+    {
+      "path": "Scripts/MiniApps/upstream-resolution.json",
+      "sha256": "28a724580a5c7b03268335bfba6a144b7db155198a916305cd00e2e339db1b2e"
+    },
+    {
+      "path": "Scripts/ProductSplit/miniapps_extensions.py",
+      "sha256": "09d86c238e3f315268b1e849fc82c6c689a2428c4ef682d86cf889c599eb9242"
+    },
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "sha256": "a99b6194f8dd20bc30998ff2ad9e86ec219415a00615b250c65670f7dfcdba7d"
+    },
+    {
+      "path": "Scripts/SDK/update_project.py",
+      "sha256": "7977cbf986ff1cc41d1014c92de44faf0f4aa413bada4d1ff7f710ef35bb7166"
+    },
+    {
+      "path": "build/app-split-evidence-attempt18/miniapp-documentation-snippets.json",
+      "sha256": "28919edc1d454606141f8953329dfc1edad42d9092edf0888b736e876743c3fb"
+    },
+    {
+      "path": "build/app-split-evidence-attempt18/prepared-native/native-artifacts.json",
+      "sha256": "4eb44f823fdfdbc260d0a7b6c050347a82de66b5c6392bb7036189846fcdefc7"
+    },
+    {
+      "path": "build/primary-control/final-prefix-continuation-attempt18-recovery/decision.json",
+      "sha256": "2a2c2a4eccbd557dcd1f1a03705c0eccfbc7d00f1f21c5d3ccca23ace96cf0e6"
+    },
+    {
+      "path": "build/primary-control/final-prefix-continuation-attempt18-recovery/logs/lint-generated-project.log",
+      "sha256": "b019c7e18b5b8a4825f382e7c3a04552e29a406d658592b9f6105fe88a6fe18a"
+    },
+    {
+      "path": "build/primary-control/final-prefix-continuation-attempt18-recovery/logs/runtime-version-contract8.log",
+      "sha256": "84aff727a6ad9dd99f88c61271a4f1de75ca44b3e20e05311f4cfef30d0ee2fb"
+    },
+    {
+      "path": "build/primary-control/final-prefix-continuation-attempt18-recovery/logs/verify-targets.log",
+      "sha256": "4f49124a3b6c18a0b8c4540cb46c33b31c436deed0ad97c4084e189157ed9c8e"
+    },
+    {
+      "path": "build/primary-control/final-prefix-continuation-attempt18-recovery/state.json",
+      "sha256": "8a67763ab2ca97d269b882c2bd0a364d767387d62c978d16339f0e2decf899bd"
+    },
+    {
+      "path": "build/primary-control/final-prefix-continuation-attempt18/decision.json",
+      "sha256": "b5a5615a3e962ae8034421d7ab55e2ead27639eca87fba2251c47524d90706ec"
+    },
+    {
+      "path": "build/primary-control/final-prefix-continuation-attempt18/logs/generate-manifest.log",
+      "sha256": "11ffb997c112dd4c5954bd29a572fb89d05c9048e373d844133bf0580cca034c"
+    },
+    {
+      "path": "build/primary-control/final-prefix-continuation-attempt18/logs/generate-project.log",
+      "sha256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18"
+    },
+    {
+      "path": "build/primary-control/final-prefix-continuation-attempt18/state.json",
+      "sha256": "03d3bad3d8306b42e539de5606001fc44cc1d3366bb80068a239dbe66c328d1b"
+    },
+    {
+      "path": "build/primary-control/source-advance-f33a0d41/receipt.json",
+      "sha256": "d3ce33482ab26b3b68ec414755124539efbf44ea4ad67b14bd76b0fe9eae2069"
+    },
+    {
+      "path": "build/runtime-host/host-metadata.json",
+      "sha256": "3a1c570af2f0e642083ca22e2c846f4c5ca8c49b115b2d70eb2e5a6f05e2fe0f"
+    },
+    {
+      "path": "docs/agent-sdk/unified-package-manifest.json",
+      "sha256": "dd14c80e4223465e6a600f93c153c0f4c80a290b28520dfb8aa65d33f1862e4d"
+    },
+    {
+      "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "sha256": "283c96260a51c095be32f262f9f77ba58bebc5372aa1af994176816c8fb5d538"
+    },
+    {
+      "path": "docs/miniapp-sdk/NOTIFICATION_EVENTS.md",
+      "sha256": "d027d20f9b95087ec7adcfb290ee7f4dab7ee057d623a81c87eeb561e321998f"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "sha256": "84849e4928f42f1b417ad1136c62329e94f7ea9a46f22667177fe6180155b977"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "sha256": "3742686d8b088e8c6afcc6b473b2ffa2cf342dae0723ed1365b265d72e120d27"
+    },
+    {
+      "path": "docs/miniapp-sdk/notification-event.schema.json",
+      "sha256": "519d0ffaf9bb70368de9f2772d141082cef5feefe77d7a2117495f5a19ad7699"
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "sha256": "de8326436f4ecb7f03c7c28e913f00ef3dc6fa331c1c8a7f355406cd9f0c81ea"
+    },
+    {
+      "path": "docs/product-split/target-membership.json",
+      "sha256": "799388c58d92d5edfbe4dcd5ff5d79d66ac6c297217dc0a93bcf4dc9583c761f"
+    },
+    {
+      "path": "AI_HLY/ChatView.swift",
+      "sha256": "d21659cdaa7d3e6141d4677d10ccaee067e7238ba8c4ccc2f689b63db4c41ffe"
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift",
+      "sha256": "baec47f25aba9e08d078b65641a622ab56eb2f76421cb3e714eb08fdd01661dc"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppHostIntegration.swift",
+      "sha256": "f09bd56c25571bbc897fb40327b424ddc67f0e9926e86b7bf8d674eeaa5ce216"
+    },
+    {
+      "path": "AI_HLY/Downstream/SDK/MiniAppRepairCoordinator.swift",
+      "sha256": "8b705812d607cded83ba5c3b96768307af88e388aaea16fcc9ff8fb9678c6c64"
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift",
+      "sha256": "5d3852f726f180788ba60da91137789c0651ff385232cca4b1ebd0c9ce7d23b7"
+    },
+    {
+      "path": "Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPI/HanlinExpoNativeAPIHostVersions.swift",
+      "sha256": "3094b19bbeef676478a22be01efe6ad4679039fb5832bb10d0e7630305b5d138"
+    },
+    {
+      "path": "Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPI/HanlinExpoNativeAPIManager.swift",
+      "sha256": "e714fc23dd1507ba915a674b3beddfd59ecfbf73128d0db655be9ce8dfd1ef48"
+    },
+    {
+      "path": "Packages/HanlinExpoNativeAPIJS/package.json",
+      "sha256": "7a46122e4b3ca8e9fb1caa54bb7bdd0a6e4c56226b6c3bdded20e6134bb5909e"
+    },
+    {
+      "path": "Packages/HanlinExpoNativeAPIJS/src/index.ts",
+      "sha256": "000de857839c76e86a426123d4bce30f0b56854f7655d4021342b2d932b98390"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/HanlinExpoWidgetsIntegration.swift",
+      "sha256": "445d8c707bdb5f74c536d1ab9aa6e11c3fdbaba266a2fee15121cd44619c0e5a"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/HanlinExpoWidgetsIntentsPackage.swift",
+      "sha256": "acb09fc16173670ec0c79d3b9be412b4da4cc7cb0d8698193b893fd14be48cc5"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/LiveActivity.swift",
+      "sha256": "5cd3246b91d1814fa2a8ee204e5791cdb3e2210822246dec7f642817fda6daa2"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/LiveActivityFactory.swift",
+      "sha256": "34aa1afdce0c88e3a81c4013f518d492df561539548ba7c5d5c5244fe479affb"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetObject.swift",
+      "sha256": "025a1cd04deb5333523aa50c0e17c59917f9966f584a82072c2b015d03cde5ea"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/AccessoryWidgetBackgroundView.swift",
+      "sha256": "16436a1b8fc3a66996555de8fe5a9995924f68a70dcdf33d7e63f8f1e8be683e"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/AppIntent.swift",
+      "sha256": "b8316b264e367ba538f09444a74e4a9721d829f10ea69f03f68f9fc9cfa6812a"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/Buttons.swift",
+      "sha256": "5a8b9b6b740e11686c173d67cd4fcf75c3d0b6bd3dc64b668e867e770e59ce29"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/ChildView.swift",
+      "sha256": "1e8f9d57fa6ac106b09df262e6319b44a8995166235381de4c1ad5df94a44b9d"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/DynamicView.swift",
+      "sha256": "f5b5563210ee58f53460dad9de97abd54499b6a8ad024038699a0af9462f5a27"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/EntryView.swift",
+      "sha256": "65ae5ef22a6b4777f7d90e82365108991b8e8b369e28a1607f93b7ae70a76422"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/Fragment.swift",
+      "sha256": "072b40dc5b3e9908cf3a351d707c9e69d6744c5412fbef8cab6dd98f53945dc1"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/LiveActivityBanner.swift",
+      "sha256": "ca7f65ceb0cfbc43c829350521afe11be8d1891a8b322c0a4846210dc7674bbc"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/RedBoxView.swift",
+      "sha256": "652b887b0cda62d993440e0ab41f1507e1592dac45899e4fe03e124c0dff8b50"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/TimelineEntry.swift",
+      "sha256": "f3028ccce31246641f2d537bff4dd50b0686c87d8d208e05c96bd91a23c65b4f"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/TimelineProvider.swift",
+      "sha256": "3431d9cfe5af815b42964dd7dc9b3de8e6e6d20b276739b6eecf5f0a9d5bc689"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/Type.swift",
+      "sha256": "bea95a0d86ec6048f4488111e8bacf5aa7582b55579415620bcfc2e31b6e5ca0"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/Utils.swift",
+      "sha256": "08c1a02e1eaae8ee190a9c908cae0c2e672cddbfb450ed97f978b43b018268ed"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/ViewRenderer.swift",
+      "sha256": "c38e906a25fad080c09fc60789fb336a9c7de3aa31149f4d72500b0947227b60"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/WidgetLiveActivity.swift",
+      "sha256": "0f6d6b8e994d06e4acb69b8e793ded04143b3db96c2e89ba384890bbad176c11"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/WidgetModifiers.swift",
+      "sha256": "be592a19078bf4a06d95fdcc675863f4b13b212cbd46ece1b812196b037aea14"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/WidgetsJSRuntime.swift",
+      "sha256": "ba0e7d6351e1e6dd5f95d4f891203cbdd6954f90e8019e298639b1be2e49c70b"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/WidgetsLayoutRegistry.swift",
+      "sha256": "19a7f6ebf859a2d2695f839c8ccf1968b29fa9426b0325bb1e59f256539fc997"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsContext.swift",
+      "sha256": "14feb7544bff21a7223d59600a1f00b603ebd2ca364459bd5f3fcb964740b246"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsEvents.swift",
+      "sha256": "2afe29cd894b7722645ff0b410d564068e3e6e5d7b8f503c2885f4a8e89103b6"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsExceptions.swift",
+      "sha256": "31b695f7237481a38673ab7e52bd2091b53a1d1e80841a5933292842fe84a4db"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsModule.swift",
+      "sha256": "153e723f0e7a75cb325dc74333efe3788010a1f74319a09ddb386853232634a5"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsRecords.swift",
+      "sha256": "65079174172668f7d9a2595d3e18e3c90351c68903aef8db42760ac605fa3e2f"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsStorage.swift",
+      "sha256": "4a3c58daafb36fc77be701a34431446d96cfc4172f4de60bcaa7f96046f61e5b"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/ExpoWidgets.bundle",
+      "sha256": "6ec4f91b442f8c387f2ea339f503b5a39082878811806cb58179236d06323aed"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/ExpoWidgetsLayoutRegistry.json",
+      "sha256": "71c9d33ca106b100af05bbb627934736fc082bfcf2bb33c412ead9eb0c5840b5"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/Info.plist",
+      "sha256": "06a9c2c6630712a6761042823033448a59a6242cf6e93ddd57edabad88ff724b"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/README.txt",
+      "sha256": "ecab392c89bea2ecf2153f046c9107dec788736ed800907c2c51ab353a5d4a06"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoUIModule.swift",
+      "sha256": "3ad8217ce87005fab1fe3dc256e7d7680ced7c330f7cd9dc5561f1a5e5905e09"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/README.md",
+      "sha256": "4e2965ada75bf9bd6bdf6ffb4ebcfe4a06ba49888bb04e803086e358a2a481df"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/package.json",
+      "sha256": "18dbddebb3c641742ca5f83d0492cec1cbbc7bb1affbefe641477b7481110568"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/generated/bridge-manifest.ts",
+      "sha256": "a56c8a16334bfe76ebe6489fc1f018f25f28f7cadba6c1ef11a268e5336f3b37"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/generated/modifiers.ts",
+      "sha256": "fee40e3a17dd3466ad2a97301e877501832f044968360684af8e473fe6055483"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/generated/views.tsx",
+      "sha256": "7c3bf97da0a680dc80d1a1d19f915b67778e17f42021355c5d99ea4f99c85c74"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/host-services.ts",
+      "sha256": "010488e8c6aae2635f67d45cefebb9fdb2d4f97af71161af011a83d626ad60e7"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/index.ts",
+      "sha256": "d0907d0fd364c9b0621f48099d98ece640ba25d8d40f53cb60aabb3b1dbd3922"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/manual-components.tsx",
+      "sha256": "b95b387fce797a3c0ffe8c258e1fe0b411e76956e6cd50ae9235267f5b638da6"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/miniapp-actions.ts",
+      "sha256": "d5d38fc209d8d8dedb2832ffd037e53d4eabd8b8c92320bd79e791fdfef2c607"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/modifiers.ts",
+      "sha256": "56b1efa29241c519d325682828e944becae6b516887908777661b3a574821782"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/system-surfaces.ts",
+      "sha256": "3a2c4424ce074056ef76d62a4502fb16c389e10a46967fcde15835efde94543f"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/tests/generated-views.test.mjs",
+      "sha256": "03c46a995205ca0b1730fc8aa26bac97771c1f4cd3951665c13f7c2fa2c046fa"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/tests/host-services-publication.test.mjs",
+      "sha256": "84a995d298fd75a7959a63083fb6bdd0c3db65c16850d1571c456c32309ffb1e"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/tests/miniapp-actions.test.mjs",
+      "sha256": "566e95d9b0ba53fdf576de2000c6e97707fb3b85e6fb014445f1c96546eea4bc"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.d.ts",
+      "sha256": "75f055c7067c2497b64f64714ca175fc09a323236e236b1d57621d4a07c3f7c1"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.mjs",
+      "sha256": "c6cc15960daeb071fc5adc8daf3f041c3e990ee8ce285a0b6c945667763a7dc5"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/package.json",
+      "sha256": "c42e3fe3eb38b7289ba3cf49ca0b56bcbd7ac2d27d68955f27e3d5e33e642a7e"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/system-surfaces.d.ts",
+      "sha256": "04a07d066efe992bc4a421e7a8aadd5e555ac82478dcf4fc613703da3ca417f8"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/system-surfaces.mjs",
+      "sha256": "ff92a9423fcfa566d4e00546e7a8e9fb0c8b206a361911225c1f67dddba68d19"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Package.swift",
+      "sha256": "864210a4e3d3a77c375c3211095467e876f41352e5f25bcf72730353d77d6981"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift",
+      "sha256": "d3735e19e7e2603d17449acd0c57c22bc676ee022bfe3152a20d2d846dd58afd"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/HanlinOriginalScriptWidgetArchive.swift",
+      "sha256": "7d5ccfd581640690601e58cef9822dac34ba02320a0e708595ef54987933f7bb"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/HanlinOriginalScriptWidgetConfiguration.swift",
+      "sha256": "4bcf3b53a0a308c7c777cee946872076d87f3541c07913e2f8026fd7b0ace897"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/HanlinOriginalScriptWidgetControls.swift",
+      "sha256": "f79c2efa49d41f215a38293d9dbd068283af9d49066878f5a67c6da03b383063"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/HanlinOriginalScriptWidgetEnvironment.swift",
+      "sha256": "4e4cc8d5cd867e7aa17736ff5d69b7e5a289b8d9bf362f7527ae59a198272eb3"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/HanlinOriginalScriptWidgetSession.swift",
+      "sha256": "aaba22894ddd8bf7863a5ddd4e1e61cece90081b579bb8ce7b2a084f751f8f9b"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptManager.swift",
+      "sha256": "facae6f7b15611a71869ab87fe077c542be22ce58b4c09b280fb7e29236bbe7f"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptMetadata.swift",
+      "sha256": "f1b202b4caef78877cad69700ff698350066066c12f7fcc5bf557810aa1234f9"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptModel.swift",
+      "sha256": "7396a815f5c31e6ad08c6606230304bca663f1caa7789659138e4c66905a4379"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetCloudJSON.swift",
+      "sha256": "d26babdd82bf9ae3ee3288727966c005a3689061a52b7034e00002efd89b9705"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetCloudJSONView.swift",
+      "sha256": "23ae017217072997721d8b18251f1960ba6e07b94b2f43a4733925ce0883d9d0"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetDiagnosticLog.swift",
+      "sha256": "a0caeb5028f04651e9a9b632827a04cde8bcbcafbf8182b5d37c741ad82bf59d"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetPackage.swift",
+      "sha256": "3aa2274d41edd3e7e87edd91697a4a204489d0efc6a2efaa00ea82d517af16fd"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetStorageProfiles.swift",
+      "sha256": "a61b98d72597569fa5fbef1b2c323c52197a0f5224b01ee91fb6ff74fceb0ee5"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetStorageUpgrade.swift",
+      "sha256": "29df6a3af86343a2b97677f410691c35b16f2ec57d9bed6b62af404c62990ff3"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetSystemAccessView.swift",
+      "sha256": "07459e60d68dbb65b1c87d6a1ba4af940a2f6322e7d114bc914e3c9b56051323"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/LICENSE.txt",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/NOTICE.txt",
+      "sha256": "9c66a31a160e44905959f8e02f59f91325439e75e869d9ef7de52ad1983a1a06"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Plugin/ScriptWidgetDataSources.swift",
+      "sha256": "6d5a062de80aeae763087c66b0f31910af63190821942d55d39f782f62095607"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeAlarms.swift",
+      "sha256": "1e018a1f256ea16774cef9241e21c181783e92d17e19d96353aca95520e82245"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeCalendar.swift",
+      "sha256": "5a355f79b06e2e8085ee7668e5f836559048e6b42ad28abd523cbdd855164615"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeCalendarWrites.swift",
+      "sha256": "01a62e3c7bc201cb8c3efaf197ee2aa5ea3014dc6a27e4bcd88f3456b66af5c0"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeCloudJSON.swift",
+      "sha256": "e9361b1dbae78436e78c11f05ebc3f9b5660f0448e75324eddda2faf05a170dd"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeConsole.swift",
+      "sha256": "ad8f57abd7c175e91d874c6c09c0abd1a05f527a5e387ecb484737419f57774e"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeContacts.swift",
+      "sha256": "0c3a85ec23ed8263ec810c5b265f01af001a77a858623d87475c8019658a9def"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeDevice.swift",
+      "sha256": "9e88549b24a86c471afb4b5fb68450abaa84229a617938b47013ae72e1bb2922"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeDocuments.swift",
+      "sha256": "8b7c1b6dee0c3fedbccadd656c581b95917a176f6e23423db61a25f51f608552"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift",
+      "sha256": "8a7bb65bffe0390ac719e33b0ece71e19b20e9be96841e422a3a4c37f09352b3"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFile.swift",
+      "sha256": "ac111e89f1f7a8be1930bfd2f7e111df22e34100a0db000a9ebd12501addfa58"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeHealth.swift",
+      "sha256": "6b5d764332e693654dc3d51a15089d4fd4ee73660d3c00e759a258559de04750"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeHealthHistory.swift",
+      "sha256": "3ff770753d3419c80efa973f62c6f6d46334c66392067741f382e75260921af9"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeHome.swift",
+      "sha256": "d9548a2cfdac8eb02026fd526ee2042edd515a55cae69aef573fb27876f33d21"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeLocation.swift",
+      "sha256": "b002544a5a6946725e07e2a715dce3e994f59637ddd47eafdbad3f6fa007dbe1"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeMaps.swift",
+      "sha256": "b9a1ec2b87723bdba8218585710f77eec686b8a2f60b44559cb6af3c9a4f7f1d"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeMusic.swift",
+      "sha256": "bc973eb825a8bfced7832000f114ea298ea15af53001a211cda5883a082a9268"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeNotifications.swift",
+      "sha256": "59a9580018b112427764dbb1a78422c2eb5eadd3173458930741c4c022d3f087"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimePhotos.swift",
+      "sha256": "7d9a6ffb098f225af83dde31e1e7d73ad23a01a505b76b8f0a72f93a44c96ce8"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimePromise.swift",
+      "sha256": "13f8c1563e906edd2fd9f96b372cace3e15be58e18c583ba60100f2ad842d8d5"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeReminders.swift",
+      "sha256": "d7d060b0bd004126ca34f977a3aa5e8bf0e2be314de3d37a9caafee6fadb56eb"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeServices.swift",
+      "sha256": "68458d34ed1ba2c72dac0792f53cd871ac1f6c81731b62fc41738d2dcf54e661"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeStorage.swift",
+      "sha256": "68d03e9712e1a13cb5db9581a651e2acf81fe68edaacfe6ae49e0af587e1beba"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeSystem.swift",
+      "sha256": "9881cb0bab5bb255eb78d0fdce46ad79014a112af25f953d92850da7532aff35"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeSystemServices.swift",
+      "sha256": "028a336864a6f0fbd9e30e5864eddf5b13aafcd3e87f49c622ee7233bc327f58"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeWeather.swift",
+      "sha256": "beb2d479aadf532c827b31eacd1ec68d80586d409133acedaa1616384fc7aae8"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetServiceAccessPolicy.swift",
+      "sha256": "2952863b469cc93e9fbe545290f6210ef53f0c085aab67111aa63b8b332b01b0"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetServiceAccountsView.swift",
+      "sha256": "7517b058087288d507086c0783a8f59d41b6f6d63fb6c2979be2382074d74c99"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetServiceAuthorization.swift",
+      "sha256": "19f0fbe63f278b0c610ff904a8c1ad7adebbcc400bc575f732f52fbd91d6674a"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetServiceConnections.swift",
+      "sha256": "24c073c04156659df1a77976b15751c91f3e202ee7bd27bc3ded420ba44c9c74"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetServiceCredentialVault.swift",
+      "sha256": "bcf3d0061a90d8f458c1257ad5982767f927001f3fc199dc823cd3b7f515451a"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetServiceTransport.swift",
+      "sha256": "1312ac317ead67b8fa32bc581350c6c8b293fe1724b56d680f853cecc5452b3d"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetStorageFiles.swift",
+      "sha256": "961c3b3242be4d669b8a10e8f79f9660297323f92798899248db3d12e3e79aba"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetStorageLock.swift",
+      "sha256": "98d1e5d58c8ccdb01b973f07f4c24d044147f334a74a3eeb9ca80e6487d8a5c0"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetStorageNamespaces.swift",
+      "sha256": "54833459d4600b6500d3cbb5a54966ec411ad8f0d7307e0ff27d865635564397"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Component/ScriptWidgetRuntimeElement.swift",
+      "sha256": "be05cea780d55eac944292b825f7a4ce2515e75ef5106c318f8df34bb26e85fc"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/DeepLinkDefine.swift",
+      "sha256": "9615881c68517a5fccb601abf6a4bb0d765f63e70bf6da8a0ca879aec5477bcf"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetAppState.swift",
+      "sha256": "dd15a508b6c39b97c611643c4f5ee71fbbee9581b2c10711c5d00159c2659c3c"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRunningState.swift",
+      "sha256": "f7b50ceacdf034833c92554a769fe692abebe296b87e55091e7a2fb09146d9da"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRuntime.swift",
+      "sha256": "15a60ffc1a6171dde86fa442a7a51764fd073eee4f615e329b6593dc5cf9b34a"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRuntimeDelivery.swift",
+      "sha256": "b7d5f4238764f0fc84327ac40efc307982726dadd4beee06d2495da3964792f4"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRuntimeDiagnostics.swift",
+      "sha256": "67fa58dfe4e59209c1b56f927844c51a1f2ce28c03361127b5afbcd0dc0e7307"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Resources/support.bundle/core.js",
+      "sha256": "01546b893cd7951ab5e3dce30009b0e684022f334e9a49d4b498b85b4c4bf163"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Resources/support.bundle/moment.min.js",
+      "sha256": "73de4254959530e4d1d9bec586379184f96b4953dacf9cd5e5e2bdd7bfeceef7"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Resources/support.bundle/util.js",
+      "sha256": "08f291ad3d1ddcc0a9c7637bef13506a978b7d2f47da1a69e8adaaf1618ba642"
+    },
+    {
+      "path": "Scripts/CI/verify_selected_tests.py",
+      "sha256": "4ae4a28934341461b364a9b83fb891ca214da64cf3046635278fb4e6837caad5"
+    },
+    {
+      "path": "Scripts/Expo/babel.config.cjs",
+      "sha256": "62581fd5caf7b97cb36290093b7bbf7103e1c1b1300e0e11a1b3eaaf96c998ba"
+    },
+    {
+      "path": "Scripts/Expo/build-original-widget-runtime.mjs",
+      "sha256": "5928bb12ed2fd2f6b2ecfeb6d8fc309d46e5837c58dcc4272d73af13434eb549"
+    },
+    {
+      "path": "Scripts/Expo/build-probe.mjs",
+      "sha256": "cdead47d9914543725e0e3160a14a13d91b31b2d584b737f0eb95c1b5539618c"
+    },
+    {
+      "path": "Scripts/Expo/dependency-lock.json",
+      "sha256": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65"
+    },
+    {
+      "path": "Scripts/Expo/metro.config.cjs",
+      "sha256": "23907e12eb10e51229e3edebab5cacf46f15c8e9eced70eac2411846fb7062a7"
+    },
+    {
+      "path": "Scripts/Expo/prepare-types.mjs",
+      "sha256": "e32603c7fd4a24f2c5223155185e35bc59ad87455859cf3bf321a23a5e6f878e"
+    },
+    {
+      "path": "Scripts/Expo/sync-original-ui-exports.mjs",
+      "sha256": "0991e011951d7469e29111ae742c1b9479978a6aa5a039c6992762c559504455"
+    },
+    {
+      "path": "Scripts/ExpoNativeAPI/dependency-lock.json",
+      "sha256": "08657d657c1f4efa36149075b632cfc75685fc1ca9af0397fc1168fe9253b768"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/expo-hello-world/App.tsx",
+      "sha256": "e0ec9b33bbe972668b0be87b6f8263faff0977e5bfea7654334c7f7f68b95531"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/expo-hello-world/README.md",
+      "sha256": "367e2b77ec0d06230ed8b7a3756cc5ef6bd2b4328c2405977e383f8ecc52b403"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/expo-hello-world/hanlin.authoring.json",
+      "sha256": "23628daa17919961823da4ebc9a4166ab9e1d7a9b3ec2ff47fdc70d7b444bf94"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/expo-hello-world/index.ts",
+      "sha256": "f3532a443c0193cbb6866cb1a7474d0f5055917ffdc7f5e60efe35159e544d19"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/expo-hello-world/package.json",
+      "sha256": "ce6b14d9dd58a68d245000b2d9997086754acba6b3213087e9531b59701cd9bc"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/expo-hello-world/script.json",
+      "sha256": "308768a8274c3f58254c4f6daafa7b16a07f0c68dc519f17d3e5feae895dcafb"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/index.json",
+      "sha256": "a0eddbc0e8dc3b15d6ddf74e8173d674afec99c5a52c77366e1000116eb4c8d1"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/nativescript-hello-world/README.md",
+      "sha256": "aae06c1b3c963f8a6cf246ea52642d73f5e6ec237cfb19fc4737dd4072570e6a"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/nativescript-hello-world/hanlin.authoring.json",
+      "sha256": "1bf949fb4ba1fd14481df380299652fe9b587aa5c30afdb6621fe23be6c02094"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/nativescript-hello-world/index.ts",
+      "sha256": "bfb34d9b7ac0f50488468a5cf8200d55cefbb9d0d345d080bb652323a1df9bf6"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/nativescript-hello-world/package.json",
+      "sha256": "ab65e0e388ac19daf337b29965fd030e6196faf90cee439c786de9e1c3f49cb6"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/nativescript-hello-world/script.json",
+      "sha256": "521f9d8332544a7858dca222d635cf8530e13d72cfb4e2e62d4196acc3a249cb"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-departure-budget/App.tsx",
+      "sha256": "b2cdbefb1cdfc9c392294692e0c2d4aec7f79176505f3fd4714585716920e0f6"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-departure-budget/README.md",
+      "sha256": "2e14a982ddb34ee47eeba68605d938f580c0706333d58756544037f05a32f192"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-departure-budget/hanlin.authoring.json",
+      "sha256": "23628daa17919961823da4ebc9a4166ab9e1d7a9b3ec2ff47fdc70d7b444bf94"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-departure-budget/index.ts",
+      "sha256": "f3532a443c0193cbb6866cb1a7474d0f5055917ffdc7f5e60efe35159e544d19"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-departure-budget/model.ts",
+      "sha256": "b1b7c165ad8bce614aaf59657750eb508ce867f2e03dedf76119cf76270e05eb"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-departure-budget/package.json",
+      "sha256": "eaca3101f64376e4a2f23475839757d2215fc565b8be582d5e40e0542c89734b"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-departure-budget/script.json",
+      "sha256": "fce829f1ede25e2a95377b3d270c36b974a342c61dd9d8038ae8682d26361a60"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-departure-budget/tsconfig.json",
+      "sha256": "48dc261d79c7417b5e10c2ab83bdce581d8be8f16b70e867789ae7b3f5c9eb59"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-table-share/README.md",
+      "sha256": "2ca21af20c04538813dc2799b29d7b2e44525cd4c92b77ce985361b509a6951f"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-table-share/hanlin.authoring.json",
+      "sha256": "1bf949fb4ba1fd14481df380299652fe9b587aa5c30afdb6621fe23be6c02094"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-table-share/index.ts",
+      "sha256": "afbfe5116695db1f0a2641a19e474493c3559f5c9f6e470bf0b72d500c9c461c"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-table-share/model.ts",
+      "sha256": "f9fbaa39afdd00df325ada8177d0bb8213557672a9af7c54fc98936f00d95e9e"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-table-share/package.json",
+      "sha256": "1341e9a334dcd928fcdee84456d6069e5476a54440395e1bf1732c271836bccb"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-table-share/script.json",
+      "sha256": "1cd5129c60227b1ab53e2752e27b3acc29b73d8161de9495d46b2470393653f1"
+    },
+    {
+      "path": "Scripts/MiniApps/Examples/sdk-only-table-share/tsconfig.json",
+      "sha256": "b70b632b881af38c566610fa375116ee8172fc20ed495f58b0d0261f0226ac0f"
+    },
+    {
+      "path": "Scripts/MiniApps/authoring-examples.json",
+      "sha256": "3ff3b2272bb77eb22fcc3df81063aab3994ec555b1e78562ee9e256b3cd0aa26"
+    },
+    {
+      "path": "Scripts/MiniApps/check-authoring-examples.mjs",
+      "sha256": "419f295ee6f0e7dcbf9cee42560ef1e8760010ae07b1d6767a0f6017fc7b317a"
+    },
+    {
+      "path": "Scripts/MiniApps/generate-scriptwidget-manifest.mjs",
+      "sha256": "2c768de46884937c6ac6e99a0430c754be99257c32571e80c6a7210dbe049aff"
+    },
+    {
+      "path": "Scripts/MiniApps/generate-scriptwidget-service-types.mjs",
+      "sha256": "36362e6c8f4bbbc6a5731b3aa219e8bae102e2e2613ce83ef78a347a72ae2fca"
+    },
+    {
+      "path": "Scripts/MiniApps/generate-scriptwidget-types.mjs",
+      "sha256": "1bfd0374d0340080c9dd256126eef9b03b3f1d579a874fdd921cd87bc372ae13"
+    },
+    {
+      "path": "Scripts/MiniApps/install-tooling.mjs",
+      "sha256": "6fb5f130d1a381d628ffa5042eff7ce36d48431ed7636a36c28fec20e5b79120"
+    },
+    {
+      "path": "Scripts/MiniApps/miniapp.mjs",
+      "sha256": "1c256c00392c626a54ebee2abe3ededaa792c5bfa6dd9b6c5aceb89be84e5b30"
+    },
+    {
+      "path": "Scripts/MiniApps/native-presentations.d.ts",
+      "sha256": "a034605ea3d9582b390a466231fb37023c523a559d807c353ada61c689e396ff"
+    },
+    {
+      "path": "Scripts/MiniApps/refresh-original-sources.mjs",
+      "sha256": "9b367c79ece68771e1ab193cc22c218feb72d2f519ffb410fc560b6fca59a7e8"
+    },
+    {
+      "path": "Scripts/MiniApps/resolve-upstreams.mjs",
+      "sha256": "4e2c12f497d312db93132f69741b783f6e31b1f2604dd852129f3c61109d7428"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/components.d.ts",
+      "sha256": "6a58b4510a4f6ed0b4fb35ced943f25d9748bcd4d9f290af021ee4cad3263651"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/host-globals.d.ts",
+      "sha256": "603148dada2fd81794f8bd2953e6da8aa3f4aaf8bed1176d50435c31b1136c7a"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/manifest-validation.mjs",
+      "sha256": "f84c8dfbe6c86a862c87c4bc6423b30003620fae4d1a7a826cd8c02ae4410289"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/native-api.json",
+      "sha256": "e8ec69ede5ef8b3deaa74767b4c473d7c97733e13dcef6feb063c9aa2973ce96"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/original-api.d.ts",
+      "sha256": "e7212325aa3eb7a8e10cd00de34ab3b09ff4acb7259b296114c8f26672934a7c"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/service-shapes.mjs",
+      "sha256": "eed9da2be6229161f5781c29ee47c2535383b36bfa1c09556a67008ea073a57d"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/service-types.d.ts",
+      "sha256": "51bd5d47d2190ebb8e0f8ddc5ab031b7007dcedaef1213de0c0ef4c4e7d7e446"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/tsconfig.json",
+      "sha256": "7c3f30d1c5e0e38a5250930cc62aea4a47e1cfd9a9dbe5110f5796f0e6bf2e2b"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/upstream/LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/upstream/NOTICE",
+      "sha256": "39d8aedeb5890cc1a1cda786d80b0133faf27f72df1158beacd1406ed275c249"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/upstream/dataAPICatalog.js",
+      "sha256": "71958adac054862f6fe41100c6709bdbbdae7ed59a07f322f934ad2f73d70e88"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/upstream/package.json",
+      "sha256": "1239d4d885dcad42201a27ed9324f8f0f760b78700d8db9ced39a511cffe7eae"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/upstream/provenance.json",
+      "sha256": "425e5bae37920bd571a469c273c923471cb9f1cad5a945e7f28bf972fff8b0d1"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/upstream/scriptWidgetAPI.js",
+      "sha256": "d021101c46f554cd9ba77a83c088295ff2523e011424982facec8d1c9462ec9e"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/upstream/storageAPICatalog.js",
+      "sha256": "9b9cb5e46575b38697d56d0263fa147d50cd9bef6685f82ddd175ebe561b9f45"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/upstream/systemAPICatalog.js",
+      "sha256": "78f83702de1766718ebfde97151a373094fe38f2e480d0b915d99e968b862c90"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/widget-manifest.d.ts",
+      "sha256": "6d9d086bb8d8289390f5b3454b17a435aea0f148724f897c9befb62bf31d5e8f"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/widget-manifest.schema.json",
+      "sha256": "203b06a186dfc4f66397d16f2063449bee7676ae0fde4e151f79b8db58f78aa2"
+    },
+    {
+      "path": "Scripts/MiniApps/test-native-presentations.mjs",
+      "sha256": "e2eb617fcecdb7b0d0dee8b7dec10c287c23f7d38fb0d765c458f2a35dda1fd7"
+    },
+    {
+      "path": "Scripts/MiniApps/upstream-fetch.mjs",
+      "sha256": "762ec94347f12c2ae7cc8bf3b6f4296d5d730c6980b8689f67abf8427df59743"
+    },
+    {
+      "path": "Scripts/MiniApps/verify-sefaria-live.mjs",
+      "sha256": "dfba32975b1cafdf226ecbcab73afdcdece4fa86979f84ab4a3a13e5b1457e1c"
+    },
+    {
+      "path": "Scripts/NativeScript/dependency-lock.json",
+      "sha256": "8499976a4ea0a069ed654b09b597d8fabede4bbbfb62227451a68707b851e8e5"
+    },
+    {
+      "path": "Scripts/NativeScript/package-lock.json",
+      "sha256": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b"
+    },
+    {
+      "path": "Scripts/NativeScript/package.json",
+      "sha256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b"
+    },
+    {
+      "path": "Scripts/ProductSplit/test_run_paired_acceptance.py",
+      "sha256": "3791b4178c5cc49b64c38ead6f913284f29fc990c7223953aa74f2075f3771f1"
+    },
+    {
+      "path": "Tools/SwiftUIBridge/configuration.json",
+      "sha256": "a8711bcfc51ae85ee58cf8ebd5a5724c6a142994dcbe3d558e8644d9c48fda8a"
+    },
+    {
+      "path": "build/primary-control/advance-focus19-importer-view-identity.py",
+      "sha256": "622863fc92fb1d7a70c4a291979d5e61fc27d8d6e92647d6ba2f74806aa27262"
+    },
+    {
+      "path": "build/primary-control/focused-native-child-v1.py",
+      "sha256": "625dd0eb7279e1a93eceaab8ae48ca58de0970218befdd78799475cb58bd6d53"
+    },
+    {
+      "path": "build/primary-control/focused-native-child-v10.py",
+      "sha256": "5ffd86a10eadcb15a0c7e3c7991f593c342a458ed3644d3622a401341e62c4fc"
+    },
+    {
+      "path": "build/primary-control/focused-native-child-v11.py",
+      "sha256": "f5bf628915da0b169468d78dac232aa9e8b4d702995051049eaa8d75274dd644"
+    },
+    {
+      "path": "build/primary-control/focused-native-child-v3.py",
+      "sha256": "bfa992d6793451374eb847f9e0b0f4d28d32a153163ded9ae427acd0bfa5f478"
+    },
+    {
+      "path": "build/primary-control/focused-native-child-v6.py",
+      "sha256": "3499ac0688b0d3fca54885eda0b7d774338a1e3c972a8944f3f22aa162146517"
+    },
+    {
+      "path": "build/primary-control/focused-native-child-v7.py",
+      "sha256": "2476dc9960a6067d9615d6d2f105487739eac45e784cbeb8256f2c7579730931"
+    },
+    {
+      "path": "build/primary-control/focused-native-child-v8.py",
+      "sha256": "8dffdf0cf86deeaa7936922b94ff5a84523085a6a14d02549dacc02c8f13e686"
+    },
+    {
+      "path": "build/primary-control/focused-native-child-v9.py",
+      "sha256": "588fada17b124228e5b2d5a41d182a64c219e81d50a220901034a691fb3b482e"
+    },
+    {
+      "path": "build/primary-control/focused19-controller-v2.py",
+      "sha256": "bd450c6f3d3f2da7d3abdce827b3f26f368d765dc48e969fe7f98254b821eda7"
+    },
+    {
+      "path": "build/primary-control/focused19-mini-reuse-observation.json",
+      "sha256": "81dbdacfebf83dd80c2e5c108c3e8284e041f396ec7c8358e533fb5e564ef3da"
+    },
+    {
+      "path": "build/primary-control/focused19-recovery-controller-v10.py",
+      "sha256": "9501a5ef3dc56dcfae1b0d1e26f22a11fc4896145d1e64efd4f267c854a5eb62"
+    },
+    {
+      "path": "build/primary-control/focused19-recovery-controller-v11.py",
+      "sha256": "f517434f396cbddf2c5c2fcc2870da1112a432f865bbbcb9767ee656c885b73c"
+    },
+    {
+      "path": "build/primary-control/focused19-recovery-controller-v11b.py",
+      "sha256": "332728f7590a572aac6aaf61f5bb6e8b12a3d7d103c185da97fbfba2e5c6ddc4"
+    },
+    {
+      "path": "build/primary-control/focused19-recovery-controller-v6.py",
+      "sha256": "26975d9a652e7ef1c1306bbd92c329e5fda04eb65b2bb76a9be937141c33381c"
+    },
+    {
+      "path": "build/primary-control/focused19-recovery-controller-v6b.py",
+      "sha256": "b3dc734c44f34a9f9c49a7acb8fc6d078f22172679c1700a850c7c9c0e87c3bd"
+    },
+    {
+      "path": "build/primary-control/focused19-recovery-controller-v7.py",
+      "sha256": "4570da142e8a61608818f1b4011486c26b53ed727bd694c73a6a3203332101b2"
+    },
+    {
+      "path": "build/primary-control/focused19-recovery-controller-v8.py",
+      "sha256": "5cbffa3404d72fd2ff3b702da5cefc8a938e4f39c5a9295f3d4e80c083a5609e"
+    },
+    {
+      "path": "build/primary-control/focused19-recovery-controller-v9.py",
+      "sha256": "0c6aba0089a5a12fe5f0c0107a38b377fe2a8b79d14c1c5d6922455e74262d98"
+    },
+    {
+      "path": "build/primary-control/focused19-recovery-inputs.json",
+      "sha256": "bd84aba433c2da0138c4679e368efdbdf078bc897a8ff2ee5c0c9b09f93a47ae"
+    },
+    {
+      "path": "build/primary-control/focused19-v1/decision.json",
+      "sha256": "77eef76303d4df1ac274a6cbf3db71b8f7efc4ee7f4e9b623334d565dd3297a3"
+    },
+    {
+      "path": "build/primary-control/focused19-v1/ledger.json",
+      "sha256": "c7835bb97d3017d305628e76ce25b35cfb415433780c4a43f806d0d56fbf708f"
+    },
+    {
+      "path": "build/primary-control/focused19-v1/native-result/state.json",
+      "sha256": "f8f7fd1284b984d77237a2e487961eab0782ba079fadfe43f3805d68148fc24e"
+    },
+    {
+      "path": "build/primary-control/focused19-v1/state.json",
+      "sha256": "a7ae2d21b27503b71939ff72670333a7e05736e47e999801f52e6ee6c1520dd6"
+    },
+    {
+      "path": "build/primary-control/focused19-v10-mini-reuse-observation.json",
+      "sha256": "c14c3639721a01a91f2f4f82b49b7eda3ceb38fcda5b03549a0579b8c1779284"
+    },
+    {
+      "path": "build/primary-control/focused19-v10-mini-source-impact.json",
+      "sha256": "4d4c3ae14cd2a9beeab28a1b02e252a65da7e6e549144ab22ea16db520dc3ca2"
+    },
+    {
+      "path": "build/primary-control/focused19-v10-readiness.json",
+      "sha256": "3407facfe7d1c86b0b1e2b4db967f6d5c2266a4b8797b09fce941bf7196a7a4c"
+    },
+    {
+      "path": "build/primary-control/focused19-v10-recovery-inputs.json",
+      "sha256": "2f0a8d41db048fee040a398334e1ade3cf8ca064525a546b6987b1c35b1ea006"
+    },
+    {
+      "path": "build/primary-control/focused19-v10/decision.json",
+      "sha256": "e5c4f55ab15c4b8360380bf2523847d073a1c47622fb06fce8b0c7bf83a7a01e"
+    },
+    {
+      "path": "build/primary-control/focused19-v10/ledger.json",
+      "sha256": "6f87f56ae70751274ba77a623e88a40ee8e2febd39b64f7cfa98c4eb3e2ca855"
+    },
+    {
+      "path": "build/primary-control/focused19-v10/native-result/built-input-bindings.json",
+      "sha256": "94c307dbe265089e62bbc10c8bf67b8acf05f4640ded3a6f2658d3982ec53c9e"
+    },
+    {
+      "path": "build/primary-control/focused19-v10/native-result/paired-prefix/commands.jsonl",
+      "sha256": "bb1ab5ae516c2eeb9ac5a85501376ffb043e0b15a12b7dae6b0cf5137b935e8e"
+    },
+    {
+      "path": "build/primary-control/focused19-v10/native-result/staged-inputs.json",
+      "sha256": "bdfb50639abf0a92cb97e9a20d01316452f171f4f7399d1c872106f5d51c7d7b"
+    },
+    {
+      "path": "build/primary-control/focused19-v10/native-result/state.json",
+      "sha256": "06e5aeeb03749df8b63b151b6cbac290040f95d6bbef9745928c91455754f703"
+    },
+    {
+      "path": "build/primary-control/focused19-v10/state.json",
+      "sha256": "dabb6291f9cf251526c229c42affed69b15cf6bae7702acb57bcff0a62bcee79"
+    },
+    {
+      "path": "build/primary-control/focused19-v11-decision.json",
+      "sha256": "eb1af82f6ccb1bb00a0f61b80f16ee6cef3099f0b7519ea8aa32afd781c9d6ea"
+    },
+    {
+      "path": "build/primary-control/focused19-v11-historical-group-observation.json",
+      "sha256": "4aa9fa8360003410a60e4eeaf45040fcf18c5285198f13d5707c9c38ca9d89b7"
+    },
+    {
+      "path": "build/primary-control/focused19-v11-historical-group-utc.json",
+      "sha256": "bcdf20adb75298ee011415a59239c8a5eb5ed1ff589875726264d94ba680e2de"
+    },
+    {
+      "path": "build/primary-control/focused19-v11-importer-source-impact.json",
+      "sha256": "e086b1661f99277ccdb18e5d84dca93311a7f65fe55cb004f79ff5771910e380"
+    },
+    {
+      "path": "build/primary-control/focused19-v11-launch-command.json",
+      "sha256": "00a7cbacb37d27b3e0ce4b699b9914b7017eb8be11901e1b1ca2143e6fad139e"
+    },
+    {
+      "path": "build/primary-control/focused19-v11-launch.json",
+      "sha256": "7c5b6991ebd6677c7c64d2913616cc14baf71206badd978598e23ba4bd405196"
+    },
+    {
+      "path": "build/primary-control/focused19-v11-launch.log",
+      "sha256": "959401d96ba66b8a1343a8c74d7181f018e2ba913964702ecdb59e521fbcaf6e"
+    },
+    {
+      "path": "build/primary-control/focused19-v11-preflight-rejection.json",
+      "sha256": "ff4b426a7f64e21a32890cde78f6935237f75b07a26725c1d07181ddc23cdae9"
+    },
+    {
+      "path": "build/primary-control/focused19-v11-readiness.json",
+      "sha256": "052260363c51c344733c514a90a71081e8dbe2164575088d604a7db570ff4f29"
+    },
+    {
+      "path": "build/primary-control/focused19-v11-recovery-inputs.json",
+      "sha256": "eaccf3795eb755f1bfad0a89794a7ee59dbb4d8b0673d69e690b4bf5fbfa2524"
+    },
+    {
+      "path": "build/primary-control/focused19-v11-source-advance-command.json",
+      "sha256": "ff48207d484f3829fd44f10759519aad112cba5d69c0f15babe16add839a4ca4"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/decision.json",
+      "sha256": "72608e39bc0987c619ea24b0eeea53b18cd5cca6f86c4a3dab688699580a315c"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/ledger.json",
+      "sha256": "ec1d8b41595201d0a64b86d714a0fbd049cfbc9339b8a494fff25875cf6d6898"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/native-result/built-input-bindings.json",
+      "sha256": "f63dc050246a3887ab4d64a632235e88db94f618748d336eeb8aa0ec90b12faf"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/native-result/intercepted-original-command.json",
+      "sha256": "0761e032f202f92ec87e5413ade1890e23d4aa0b22b4aa858f024cb8085a13b9"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/native-result/paired-prefix/commands.jsonl",
+      "sha256": "287977f7fcbf5ec63c4abac2c90a64ef499340eb582e79f47be56277f37886ca"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/native-result/paired-prefix/original-prefix-state.json",
+      "sha256": "4801986291deaff7bb15e83eabbad48529c72729054cd021225e8a34b71069e0"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/native-result/state.json",
+      "sha256": "5a0005645e789fc4979ff7515faf2c7ed28a589ff1f5aacdaa35cfdb388a3339"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/state.json",
+      "sha256": "9e199031a41095f66c101962da3c1c4ad330e748a9ac2afc267aac71384c2a21"
+    },
+    {
+      "path": "build/primary-control/focused19-v3-inputs/mini-source-impact.json",
+      "sha256": "f9df39312b04c98f20d33982c6bf8fe0874377b294b286ebc6e48c54807e93f3"
+    },
+    {
+      "path": "build/primary-control/focused19-v3-recovery-inputs.json",
+      "sha256": "2791472af9e3fc99292ce8889ac3c2f2b6f08bf11f8faa1bdd1ac7e561d3f56c"
+    },
+    {
+      "path": "build/primary-control/focused19-v3-reuse-observation.json",
+      "sha256": "e46e61d307f6b5fe4186e9bddf9faa83bd126b6d3e914d0cbb57feaaaeda1956"
+    },
+    {
+      "path": "build/primary-control/focused19-v3/decision.json",
+      "sha256": "e5317f244c6cf6cecb4b9a9c1b3043b1921fbe646d922f332d7bdcd103fea86a"
+    },
+    {
+      "path": "build/primary-control/focused19-v3/ledger.json",
+      "sha256": "c69a3001ec612c74afeaeafcbdf3e8fc2b0ea59fbb96bf18488a2ff641e76ebf"
+    },
+    {
+      "path": "build/primary-control/focused19-v3/native-result/state.json",
+      "sha256": "627355b9bb7c970106c2c5dee504937235d6d55e5782b2129b7427e3f1024e48"
+    },
+    {
+      "path": "build/primary-control/focused19-v3/state.json",
+      "sha256": "fc722c1417dfcb5029336df1b27f06fd1ec636ae2bc5bcfc82a2258d4f894d25"
+    },
+    {
+      "path": "build/primary-control/focused19-v4-decision.json",
+      "sha256": "e8ada819b562484a9834662c33d2452d77c49eeb314f66e29469ae582c24a603"
+    },
+    {
+      "path": "build/primary-control/focused19-v4-launch.json",
+      "sha256": "a210df388b4cce520c7975b9ca090f89f3a64a787c3ea6ddf7de20cbd796f749"
+    },
+    {
+      "path": "build/primary-control/focused19-v4-launch.log",
+      "sha256": "5cb15346a4bbafd69c0385dfe77356ab8dc03cc717b5ab5b1ee314d0de90d292"
+    },
+    {
+      "path": "build/primary-control/focused19-v5/decision.json",
+      "sha256": "288fff0babef0edb6cf02f392285a194d9707a79af6214fe4d1e1396a3dff51b"
+    },
+    {
+      "path": "build/primary-control/focused19-v5/ledger.json",
+      "sha256": "fd8a062065a7b7124f68a7a58251238a503aa54797ce8d911b8e857a268fa5a6"
+    },
+    {
+      "path": "build/primary-control/focused19-v5/native-result/built-input-bindings.json",
+      "sha256": "670784311bd912b5c142a8fa99da5e6c91365b741ca3f702564b75b122b953d8"
+    },
+    {
+      "path": "build/primary-control/focused19-v5/native-result/fixture-production.json",
+      "sha256": "b83ff708fb95153e2b362843b77b0a1b0d1a7e174a8dac776bf5c0621e820e4a"
+    },
+    {
+      "path": "build/primary-control/focused19-v5/native-result/paired-prefix/commands.jsonl",
+      "sha256": "e0edf79da781f0b942101a3f422fc8ff408243325005c4c56ee5fe7781c5648b"
+    },
+    {
+      "path": "build/primary-control/focused19-v5/native-result/staged-inputs.json",
+      "sha256": "9f6b8927a6a3ba1ffd43e373e341db3ca6dbd88fbbf06933c0141ccc8077e06c"
+    },
+    {
+      "path": "build/primary-control/focused19-v5/native-result/state.json",
+      "sha256": "7cb9bda65b2cad09de873402d449aee0999fa88ad6b47d713514149afaea8d23"
+    },
+    {
+      "path": "build/primary-control/focused19-v5/state.json",
+      "sha256": "a4cfa1c2803d9bd6df5353e0818ec412d51d4d6ae138385842341a9eeb574186"
+    },
+    {
+      "path": "build/primary-control/focused19-v6-cleanup-reconciliation.json",
+      "sha256": "886cb2a7694c2118d65248b33b736e82985e88f58b81e497c13eec025231de8b"
+    },
+    {
+      "path": "build/primary-control/focused19-v6-decision.json",
+      "sha256": "1ce6f140dba24b8a282b833b25a27288f1e2b90003cf7f4d665b1360793a6567"
+    },
+    {
+      "path": "build/primary-control/focused19-v6-launch.json",
+      "sha256": "fdf19a94bf7f922eb05c42ec1325a349a7b312744657fc2f261aa9baba1d4fc0"
+    },
+    {
+      "path": "build/primary-control/focused19-v6-launch.log",
+      "sha256": "03b6fb87b29aa2c7f1669b5a34eda6d6c92df0e5839c1d1f8f652d12f56b4985"
+    },
+    {
+      "path": "build/primary-control/focused19-v6-mini-source-impact.json",
+      "sha256": "5af2987d2265e6fd6999c23efb0539d622b46d069571979dbe273974d93189c2"
+    },
+    {
+      "path": "build/primary-control/focused19-v6-preflight-rejection.json",
+      "sha256": "ff93343392a900bb1443e6188e3cc8df21727d027a90b874e0372e24bdb55317"
+    },
+    {
+      "path": "build/primary-control/focused19-v6-recovery-inputs.json",
+      "sha256": "df4a80f91795d16dbeb0c920249e3a4fbd9bd1888817ad5024c2a78fe70bb126"
+    },
+    {
+      "path": "build/primary-control/focused19-v6-retry1-decision.json",
+      "sha256": "d0df391b5f5c23b0678dc76cd42adff45001e27ddb2670078111a7dc89635698"
+    },
+    {
+      "path": "build/primary-control/focused19-v6-retry1-launch.json",
+      "sha256": "a95cc8e75c2dea1581f8afeb0e95a8cceda8ed3d41343bc418d3f011b9bd57a6"
+    },
+    {
+      "path": "build/primary-control/focused19-v6-retry1-launch.log",
+      "sha256": "03b6fb87b29aa2c7f1669b5a34eda6d6c92df0e5839c1d1f8f652d12f56b4985"
+    },
+    {
+      "path": "build/primary-control/focused19-v6/decision.json",
+      "sha256": "39b1aad0ac110ac97a638b08ec1d9c22b3efa4723cce1378e87a7028a056ce4f"
+    },
+    {
+      "path": "build/primary-control/focused19-v6/ledger.json",
+      "sha256": "1e48202497a91db193cfe656222d27fe8dafe75ddd886a8296f2975c91a59004"
+    },
+    {
+      "path": "build/primary-control/focused19-v6/native-result/built-input-bindings.json",
+      "sha256": "caa7d554eda20e6caaf02e053fdd0bb10bcc3afe65e3558504d699a2940222bc"
+    },
+    {
+      "path": "build/primary-control/focused19-v6/native-result/staged-inputs.json",
+      "sha256": "fb48a2597fdb9b14a5023a63306d8fef8e93f8daa08e8ce10058475d30d38601"
+    },
+    {
+      "path": "build/primary-control/focused19-v6/native-result/state.json",
+      "sha256": "68715beec45e143bbf7cc46615aae1704348e6dba213760c970f47ffc8cd36c5"
+    },
+    {
+      "path": "build/primary-control/focused19-v6/state.json",
+      "sha256": "4ddca9a8b8bc061dc32e288a392b8ea1e36171617d120342106a7fe0cf8bb5a4"
+    },
+    {
+      "path": "build/primary-control/focused19-v7-mini-source-impact.json",
+      "sha256": "e58bf630f6e3c509c266ddfc9a7148c02eced34dbf39fd4a21a2716ab9c39da2"
+    },
+    {
+      "path": "build/primary-control/focused19-v7-recovery-inputs.json",
+      "sha256": "3666ff8aeccad416ef8e333feed8dd0f662915870dd8642c70a02e8ca54eb82c"
+    },
+    {
+      "path": "build/primary-control/focused19-v7/decision.json",
+      "sha256": "51e5f719fc302d9e55dc5da77069b03cd33f1e2eae9def2c59a7c48a819abbb6"
+    },
+    {
+      "path": "build/primary-control/focused19-v7/ledger.json",
+      "sha256": "1af45eba7e832d63fea413326cdb232f4dba879771181669ad3bc8b324871685"
+    },
+    {
+      "path": "build/primary-control/focused19-v7/native-result/built-input-bindings.json",
+      "sha256": "e2ee9f0368c627b7c4b45ae847a0472aa14e1da91b63957ff53c6b94a15c8e43"
+    },
+    {
+      "path": "build/primary-control/focused19-v7/native-result/staged-inputs.json",
+      "sha256": "f30becc670e67684e8a1399f6c3662ad7fc887e247482eba7854c8cd7b6203bf"
+    },
+    {
+      "path": "build/primary-control/focused19-v7/native-result/state.json",
+      "sha256": "38b0f5cf3b0c256050fc5e90c374ab2768592e67321cfc04007f2a7c8a7c9886"
+    },
+    {
+      "path": "build/primary-control/focused19-v7/state.json",
+      "sha256": "b5910e3c415ba2fd73dac642483dc10314fc9d6c798d66049e4353013d89c971"
+    },
+    {
+      "path": "build/primary-control/focused19-v8-readiness.json",
+      "sha256": "0d373016fe7c344abdc58db9dc21e7ec9999978551491afb4021ea3863912f0e"
+    },
+    {
+      "path": "build/primary-control/focused19-v8-recovery-inputs.json",
+      "sha256": "48bb7b37c434b40eae8b3baf8ad708abcf2315b45ef241a6682ae26cf8a2a10a"
+    },
+    {
+      "path": "build/primary-control/focused19-v8/decision.json",
+      "sha256": "7c16a01c08f9ebfe7ac34844afcf1008e8be97975449c7424c3640bbeeab640f"
+    },
+    {
+      "path": "build/primary-control/focused19-v8/ledger.json",
+      "sha256": "b6a1ca5c24d248c8f249e5e05f65b515bfd542c2716ebbf74e28bbc3853196a0"
+    },
+    {
+      "path": "build/primary-control/focused19-v8/native-result/built-input-bindings.json",
+      "sha256": "c09fe3337da9e9d0f869560cb22cde7c969d5d22713dcdf61f3a495a3abd8173"
+    },
+    {
+      "path": "build/primary-control/focused19-v8/native-result/paired-prefix/commands.jsonl",
+      "sha256": "bbf6d39f888dddaf00f44f698308585685c3e92d8b79bbf49b7c98a9c8ea0ac9"
+    },
+    {
+      "path": "build/primary-control/focused19-v8/native-result/staged-inputs.json",
+      "sha256": "c9b2b3c790b4014807bbfd5e37a9ba70cb6b04744597d3ad9120bdcd0923655e"
+    },
+    {
+      "path": "build/primary-control/focused19-v8/native-result/state.json",
+      "sha256": "a99bebccbfe4f0edcbe1d319ac954b82be1264584cdf0194cd330ee533b5af5e"
+    },
+    {
+      "path": "build/primary-control/focused19-v8/state.json",
+      "sha256": "67b563ebb5623d62b12970225a3644a81af55a8667090296de5fdc0db37541cc"
+    },
+    {
+      "path": "build/primary-control/focused19-v9-readiness.json",
+      "sha256": "d46cfbdee088adfc048658a35cb60b6d6812a914909bea5e34f2d2b951ac64ff"
+    },
+    {
+      "path": "build/primary-control/focused19-v9-recovery-inputs.json",
+      "sha256": "d2a9636d6d0e26e3f1ff7c8e80e1d070b208e8806641c60888ad138a8fd21ba7"
+    },
+    {
+      "path": "build/primary-control/focused19-v9/decision.json",
+      "sha256": "dd38954a1f5db85b02c65c02566053e7c2dea660500ccb08c8220f34d5e7c6f9"
+    },
+    {
+      "path": "build/primary-control/focused19-v9/ledger.json",
+      "sha256": "553df5216f223f237f7ede78e997ca21ebd6c8ad63ee591417b585bc9b2aa082"
+    },
+    {
+      "path": "build/primary-control/focused19-v9/native-result/built-input-bindings.json",
+      "sha256": "77d128b2a5214c78c6b35067c989872d32ac51af4ba381a73ff3e0dcd2b11b29"
+    },
+    {
+      "path": "build/primary-control/focused19-v9/native-result/paired-prefix/commands.jsonl",
+      "sha256": "169f61509774aeafc5c9276f6b043c503976f44821b5f7e014d061e83d6f1acb"
+    },
+    {
+      "path": "build/primary-control/focused19-v9/native-result/staged-inputs.json",
+      "sha256": "ce091bb3382fc334afd4e73d05ddda76aef8b2e1aab9100cca4b6620edfe6e8f"
+    },
+    {
+      "path": "build/primary-control/focused19-v9/native-result/state.json",
+      "sha256": "02f2ee47df6f9efb0762f320fbacc6e1f187339d11f907e2a8dad1f8b2d90044"
+    },
+    {
+      "path": "build/primary-control/focused19-v9/state.json",
+      "sha256": "33340d4bb32a7d89d48a1e10a112c8bc210e51370b7a41809f1cab9cf98e0b4e"
+    },
+    {
+      "path": "build/primary-control/node245-restoration/receipt.json",
+      "sha256": "1b34ad8a2a392cebdfa34ee6a56da504e020189788f1d3bbdb440522e035ecc6"
+    },
+    {
+      "path": "build/primary-control/paired52-continuation-v3.py",
+      "sha256": "dad6581212134987b666a5161ab33994e6d79b57ed38108faba6ffb22c3bb520"
+    },
+    {
+      "path": "build/primary-control/source-advance-4cde88df/receipt.json",
+      "sha256": "81b4af063ad1bda1f80c7f7a0121a2a8c252ae1dca475e715ce96e43e148e372"
+    },
+    {
+      "path": "build/primary-control/source-advance-62dfff9a/receipt.json",
+      "sha256": "bd316f63704af5cd9b6981bc7637f6fa5ee73ba66c12d34effa114fbdf5c8b09"
+    },
+    {
+      "path": "build/primary-control/source-advance-6c006c94/receipt.json",
+      "sha256": "46bec03fc6828c1807d3ed1a07d28d1c4f617aab5ab6e89120ba201ac5e6cfc1"
+    },
+    {
+      "path": "build/primary-control/source-advance-7bf0c2fd/receipt.json",
+      "sha256": "696d830db7515fa0bf5965b1f0d4a20a7b407a9ac6511b5bdac9cbfc688c88db"
+    },
+    {
+      "path": "build/primary-control/source-advance-958cf666/receipt.json",
+      "sha256": "5dab9fd095ea4922780e285b128c0478f5fd7527a444714d1455f97500640fd2"
+    },
+    {
+      "path": "build/primary-control/source-advance-a2c8a1b1/receipt.json",
+      "sha256": "3b0c403d49939507e391241a6c105e548ef6dbc3ac640ae7d9fe91c7d1ff4ebd"
+    },
+    {
+      "path": "build/primary-control/source-advance-d4a0b115-payload.json",
+      "sha256": "806f95e58ff55736a1a92ee938ff7c94619382198d3568d9a599b3c766aa0457"
+    },
+    {
+      "path": "build/primary-control/source-advance-d4a0b115/receipt.json",
+      "sha256": "cc3e8d2360726ef9b17c520282bc1694ccc7d5d6f20ba42404d14dfbef55fecb"
+    },
+    {
+      "path": "build/primary-control/source-advance-dc53a6c8/receipt.json",
+      "sha256": "89b5b8c690bc174be1710f933c95d446493805e33692d55ea03da185acd9e869"
+    },
+    {
+      "path": "build/primary-control/source-advance-f6bb035f/receipt.json",
+      "sha256": "5683953c6a4afab2422ae32dee52ef2ee93af52e6e0184fac17d9d55d1edb30c"
+    },
+    {
+      "path": "docs/hanlin-expo-runtime.md",
+      "sha256": "14ba327519fd1b16c72f398eefcbbb4058eaf7682ba98f267807a5c462939808"
+    },
+    {
+      "path": "docs/hanlin-nativescript-guide.md",
+      "sha256": "5545b69b00e47508121c2d80a7b44241b854a7abad4019cc70696d6c0da8d1c6"
+    },
+    {
+      "path": "docs/miniapp-sdk/AUTHORING_WORKFLOW.md",
+      "sha256": "cbf07d75821695da68bddfdfc75fe7b98943ee89b67479afb717cd739383804f"
+    },
+    {
+      "path": "docs/miniapp-sdk/DURABLE_INVOCATION_DELIVERY_2026-11-13.md",
+      "sha256": "810922f08de982da10f4319454d7784ecd31c73d7e5d651d269be40d960d72bf"
+    },
+    {
+      "path": "docs/miniapp-sdk/EXAMPLES.md",
+      "sha256": "a17984f1d39f3f8ea73c9fe5be03eebec5884665a8fd18981639442ba1261e70"
+    },
+    {
+      "path": "docs/miniapp-sdk/EXPO_HOST_FACADE_CORRECTIONS_2026-11-13.md",
+      "sha256": "11f29f3c73015c955e5c63eddc7ccf264ac4489ce0fa927838ba1a364a225bc4"
+    },
+    {
+      "path": "docs/miniapp-sdk/EXPO_STRICT_TYPES_AND_FILE_WIRE_2026-11-14.md",
+      "sha256": "e1a48b1daa1020475feec68d3296a21ce063fef6b6354ee9f485d55f6988d98d"
+    },
+    {
+      "path": "docs/miniapp-sdk/EXPO_WIDGETS_ORIGINAL.md",
+      "sha256": "9862848b1833f255631c6be20b00fc2514d9855eac16cfb9fe63beb6325b236c"
+    },
+    {
+      "path": "docs/miniapp-sdk/HANDOFF_2026-11-15.md",
+      "sha256": "60e35d7e563685be98b83db8a19257bff008b53e00a1685d65c3a0484fa8391e"
+    },
+    {
+      "path": "docs/miniapp-sdk/IMPORT_REPAIR.md",
+      "sha256": "489d50e487708c860b023da81c5a1a960e124fee0c07f197ab8bdd98090590f2"
+    },
+    {
+      "path": "docs/miniapp-sdk/METADATA_FRAMEWORK_DEDUP_2026-11-15.md",
+      "sha256": "5a40ec3f450ba1c7a5941b76df1bdc40aa972049e0130a70258cdbe7ab323c51"
+    },
+    {
+      "path": "docs/miniapp-sdk/MINIAPP_ACTION_LIFETIME_2026-11-13.md",
+      "sha256": "0392ccf073019a5a5260cf84b3967831b5916a992d61ae824a7f313e9dd8f234"
+    },
+    {
+      "path": "docs/miniapp-sdk/NATIVESCRIPT_RUNTIME_WIRE_2026-11-13.md",
+      "sha256": "da34a6f1432e7eaa5ee0c0f05a04a2451ba9e2d7f390fd87d134c45f89a12ce0"
+    },
+    {
+      "path": "docs/miniapp-sdk/NATIVESCRIPT_SDK_METADATA_2026-11-14.md",
+      "sha256": "493c6fc61e7fe5dc6b3ad3bd47c9cb5f80ccaded81be42b8e689ba57a1512bc5"
+    },
+    {
+      "path": "docs/miniapp-sdk/ORIGINAL_UPSTREAM_BUILD.md",
+      "sha256": "dbce13974c47d171dec19432a97b2cf56d4e42e3be78a32afff4dc0cd0eb5639"
+    },
+    {
+      "path": "docs/miniapp-sdk/OWNED_SHARE_INGRESS_2026-11-13.md",
+      "sha256": "b49fdab8b88cc5225480fd9b24a9213ba5437fb298b327db18069dc27aadc059"
+    },
+    {
+      "path": "docs/miniapp-sdk/PREPARED_PACKAGE_VERSION_CONTRACT_2026-11-13.md",
+      "sha256": "68b8ad713aa3177eeb4e3f5a03390f9e40f858fd14f55c50ac357931ddcdf349"
+    },
+    {
+      "path": "docs/miniapp-sdk/README.md",
+      "sha256": "90068db0d87718cc9f995f9d45c1e2e8a7bd670aa8b8f3b324f0bf4cfc591d95"
+    },
+    {
+      "path": "docs/miniapp-sdk/SCRIPTWIDGET_AUTHORING.md",
+      "sha256": "1c9a43f36b5317c263868ac549567a31d08440e600d20b96fd7fef493e31fbca"
+    },
+    {
+      "path": "docs/miniapp-sdk/SCRIPTWIDGET_CONTROLS.md",
+      "sha256": "1a22bcd767f2747a6e522fae41c4ef245594ad43ecacf85bed768c1912f34064"
+    },
+    {
+      "path": "docs/miniapp-sdk/SKILL_RUNTIME_CONTRACT_2026-11-16.md",
+      "sha256": "4ed91dfebcb5c146338b570e1bed33357c2cc10ed3217112c9f2e67bdf901eb9"
+    },
+    {
+      "path": "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json",
+      "sha256": "63aa2132a1463552c274c328d63fd4b76b45046de28a8420e5a278257905bb5c"
+    },
+    {
+      "path": "build/primary-control/focused19-v11/state.json",
+      "sha256": "f32e48626bf862f325486ad86044796c68cc4760c66d18feee0ecfcb033133bd"
+    },
+    {
+      "path": "build/primary-control/focused19-v11/native-result/state.json",
+      "sha256": "269576b8c1494c6c6d33c551a2dfcadc793b8c2484bdfbce075191e1f148f4ab"
+    },
+    {
+      "path": "build/primary-control/focused19-v11/native-result/built-input-bindings.json",
+      "sha256": "71831b770ee518a6d926650704c509a53d74c41540bd51d743de431b7ca0c640"
+    },
+    {
+      "path": "build/primary-control/focused19-v11/native-result/paired-prefix/created-simulator.txt",
+      "sha256": "df333300ba32a39a07bcd88aed5fc6bb5f0b51f738c521f6a0949dc54456a37e"
+    },
+    {
+      "path": "build/primary-control/focused19-v11/native-result/staged-inputs.json",
+      "sha256": "ab3d55ab809ff78a5a93f28dc058c20e76f98a2a1176f8b6228ce9b3d319d976"
+    },
+    {
+      "path": "build/primary-control/focused19-v2/native-result/paired-prefix/external-modal-fixture/external-modal-bridge-fixture",
+      "sha256": "fa3b1c98173a28f37bfc99fe75384f5768cbfd06f295ad13b8aa3ff41dcd89ee"
+    },
+    {
+      "path": "build/primary-control/paired52-v5h.py",
+      "sha256": "04d3f71d81436f95043e8bd84029c17aa4b7b06b7d91f3a5f73fa68d1967cd68"
+    },
+    {
+      "path": "build/primary-control/original52-retained-child-v7.py",
+      "sha256": "04ff68e1ebc6ccd7069363c0aa32894af4b28a815d73a9c8fc6e6d5c3bc5128a"
+    },
+    {
+      "path": "build/primary-control/focused19-v11/ledger.json",
+      "sha256": "f40ad052aa79657b9f54151488393069a4e2383c928db17f9ecfa44d2d3baf34"
+    },
+    {
+      "path": "build/primary-control/focused19-v11/decision.json",
+      "sha256": "7dd6fbe9469886c57813740b7b9e11fc44605e4d0524cc06879f9ec1170d438c"
+    },
+    {
+      "path": "build/primary-control/plan.json",
+      "sha256": "0f48ac183faabd8db7cb8cd37f37702f1e548e7c8862ffe539071a5b406b5e82"
+    },
+    {
+      "path": "build/primary-control/companion-native-v1/decision.json",
+      "sha256": "e4c47637ab828da11bdbd3ba9dc6bc2453dbf9c0214e6640949bd3138de563b3"
+    },
+    {
+      "path": "build/primary-control/paired52-continuation-v1/state.json",
+      "sha256": "9297e6f13487e3b21874f65ac7d1fc66f7a1617d790201d42c59b09b6dd3d1ba"
+    },
+    {
+      "path": "build/primary-control/paired52-continuation-v2/state.json",
+      "sha256": "1341ed597fedc2ee9a4dd99bf6bdca4706b33ff3256c3d0e2dfacdf1a9b463be"
+    },
+    {
+      "path": "build/primary-control/paired52-continuation-v3/state.json",
+      "sha256": "f6bc0a4d6689e1bc08b40747e67c0ae0d7768f4c81f3821dafa3ab552408c75f"
+    },
+    {
+      "path": "build/primary-control/paired52-continuation-v4/state.json",
+      "sha256": "439cd234a138a0e37f895345d2580df2ec70f5272e7e25534c6428bec94968ac"
+    },
+    {
+      "path": "build/primary-control/paired52-continuation-v1/decision.json",
+      "sha256": "492f9c7b75e7776d7a48a34ce2531f140c0c0f9585c437d42922e8308582a734"
+    },
+    {
+      "path": "build/primary-control/paired52-continuation-v2/decision.json",
+      "sha256": "23fe291c3b673d415c51849a6371c5cdb8ebf374eabad5806a42fc8b6663488d"
+    },
+    {
+      "path": "build/primary-control/paired52-continuation-v3/decision.json",
+      "sha256": "c271a5662b7f31e66e4bb9acac84f0f105c26bb3d956c8b0e41df9e02b1030a9"
+    },
+    {
+      "path": "build/primary-control/paired52-continuation-v4/decision.json",
+      "sha256": "62177d808a5c0101dd87548307ece8c3d6c542a8bc56d6c0c93d3fdc4ade7e1d"
+    },
+    {
+      "path": "build/primary-control/ai27-diagnostic-v1/state.json",
+      "sha256": "9ce14c6e9b7370652b2658c681f7c0b8810235eece6c77d77883ab90f6dc4626"
+    },
+    {
+      "path": "build/primary-control/ai27-diagnostic-v1/ledger.json",
+      "sha256": "2d2b7be234b068877e6b1a2ce80ed80e93d04fc884dbf1d832f1ffc5cda14780"
+    },
+    {
+      "path": "build/primary-control/ai27-diagnostic-v1/decision.json",
+      "sha256": "15f6ca053ae5470e96a68dc0a874a16d34551e65831ddffdd58d61ce83654d86"
+    },
+    {
+      "path": "build/primary-control/final-prefix-continuation-attempt19/state.json",
+      "sha256": "846d7b35087174f0c6d5032dc0615d04f5f50eaedc7e48447438d187da90b954"
+    },
+    {
+      "path": "build/primary-control/final-prefix-continuation-attempt19/decision.json",
+      "sha256": "8c23c59be78a089501ee4bbc336147d997c1fde98230b452f09fc1c8424be280"
+    },
+    {
+      "path": "build/primary-control/final-prefix-continuation-attempt19/logs/generate-manifest.log",
+      "sha256": "11ffb997c112dd4c5954bd29a572fb89d05c9048e373d844133bf0580cca034c"
+    },
+    {
+      "path": "build/primary-control/final-prefix-continuation-attempt19/logs/generate-project.log",
+      "sha256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18"
+    },
+    {
+      "path": "build/primary-control/final-prefix-continuation-attempt19/logs/verify-targets.log",
+      "sha256": "4f49124a3b6c18a0b8c4540cb46c33b31c436deed0ad97c4084e189157ed9c8e"
+    },
+    {
+      "path": "build/primary-control/final-prefix-continuation-attempt19/logs/lint-generated-project.log",
+      "sha256": "b019c7e18b5b8a4825f382e7c3a04552e29a406d658592b9f6105fe88a6fe18a"
+    },
+    {
+      "path": "build/primary-control/final-prefix-continuation-attempt19/logs/runtime-version-contract8.log",
+      "sha256": "9e8ae55d89816de935b976e6b4ee2dfc61a8420b63da4ee36527bdd1f1c05ea7"
+    },
+    {
+      "path": "DemoMiniApps/hanlin-script-parity.hanlinNativeScript",
+      "sha256": "2e48509336edba2b301490422102dbf25cb7f1b894430d52994febdc1c33c199"
+    },
+    {
+      "path": "build/primary-control/paired52-continuation-v5/state.json",
+      "sha256": "796a24bcc641e31409c7d9e68de2f95206264e0211952885aba61d8ca7ee8820"
+    },
+    {
+      "path": "build/primary-control/paired52-continuation-v5/decision.json",
+      "sha256": "b38292358c011d2db0a1a96c167494ca84f87bd806c27e399d7ec294f7e4b42b"
+    },
+    {
+      "path": "build/primary-control/paired52-continuation-v5/native-result/state.json",
+      "sha256": "786ea113ee8a47f8b8e8330ee2a3627be727c285f587ebd35afab9bfe2907baf"
+    },
+    {
+      "path": "build/primary-control/remaining-native-product-metadata-v11.json",
+      "sha256": "b1163811263ef4b648e6d5e265c012cbbf5f946e504f5bd084d28fe13514d724"
+    },
+    {
+      "path": "build/primary-control/paired52-continuation-v5/native-result/created-simulator.txt",
+      "sha256": "df333300ba32a39a07bcd88aed5fc6bb5f0b51f738c521f6a0949dc54456a37e"
+    },
+    {
+      "path": "build/primary-control/focused19-inputs/miniapp-sdk.json",
+      "sha256": "4505c28495d8b6ecd1073254e0e395adcc898cc02dd1d40699591f51db4dee92"
+    },
+    {
+      "path": "build/primary-control/notification-os-v6.py",
+      "sha256": "379008353af52593df805257d076ed13c1df93e13b9b39f76782738a8fff9535"
+    },
+    {
+      "path": "build/primary-control/paired52-continuation-v5/native-result/staged-inputs-final-verification.json",
+      "sha256": "174f775acb85a304bcc1790f144a792fc6c56a101b988e1b536b5c7fd11f1d83"
+    },
+    {
+      "path": "build/primary-control/paired52-continuation-v5/native-result/final-mini-container-metadata.plist",
+      "sha256": "cde9660338425f9d80813bfce0c335fca4780f4390b8e84b108c7f0b306ccf8f"
+    },
+    {
+      "path": "build/primary-control/companion-native-v1/notification-package/result-review.json",
+      "sha256": "4396672e8dd3fe2546d89d108c2e57eeb98a48f386171a93bee5e0322ee98999"
+    },
+    {
+      "path": "build/primary-control/companion-native-v1-ns5/state.json",
+      "sha256": "8e20572d909c4d0908a0573685f4e87f80155988ed95c677f6ff3215533f15ab"
+    },
+    {
+      "path": "build/primary-control/companion-native-v1-ns5/decision.json",
+      "sha256": "331f71fbbdb88ff1de29ef41ce9c001d196a68f5ce72af6816be2314f3ebc4a9"
+    },
+    {
+      "path": "build/primary-control/companion-native-v1-ns5/companion-ledger-before.json",
+      "sha256": "0601f21cbf3d2433dec7e5ce7fb66806555bcca6e4577e92b94f265c7a255068"
+    },
+    {
+      "path": "build/primary-control/notification-os-v1-seal-inputs.json",
+      "sha256": "21b654ac4c21988b212f8f67a11529e70daa23889567656ab0b779f9fbe25053"
+    }
+  ],
+  "productFiles": [
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/Info.plist",
+      "size": 5276,
+      "sha256": "b62620a3005aa50f80052859b4d47183f9e4dec8cee463949a7e62fedae813c0",
+      "role": "retainedProduct"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/HanlinMiniApps",
+      "size": 40496,
+      "sha256": "9ecf0a41bd7e8f7f024a957867c65b3bac76dc3c7198a3c78011ae1aabcd66b6",
+      "role": "retainedProduct"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/HanlinMiniApps.debug.dylib",
+      "size": 128035408,
+      "sha256": "44af528fa8cc87861760c2100c5fbb354936eeb3623281fb7efaba6ec58a0c85",
+      "role": "retainedProduct"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/RuntimeHostResources.zip",
+      "size": 81824721,
+      "sha256": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc",
+      "role": "retainedProduct"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsNotificationService.appex/Info.plist",
+      "size": 1278,
+      "sha256": "176d667ec09408832340ae438a7e26886a9f080625c445c3f192850a7b9a467b",
+      "role": "retainedProduct"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsNotificationService.appex/HanlinMiniAppsNotificationService",
+      "size": 37888,
+      "sha256": "53b2d84cbfee4328e4e195f1de8775f998b2b51eed00729b7cc6a1717c2a5687",
+      "role": "retainedProduct"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsNotificationService.appex/HanlinMiniAppsNotificationService.debug.dylib",
+      "size": 21564144,
+      "sha256": "e180275d27cb648701745887a90925c9bdd1822443bda29eec14138b29999a3e",
+      "role": "retainedProduct"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsShare.appex/Info.plist",
+      "size": 1484,
+      "sha256": "5a601d95e10ee6e24eedc25a3ed41523e64becd57a7c38c4a298503f94546b1b",
+      "role": "retainedProduct"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsShare.appex/HanlinMiniAppsShare",
+      "size": 37872,
+      "sha256": "92ca2122829113bfe3634834c2b4125c7c1108846632e5caea983130a6c89821",
+      "role": "retainedProduct"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsShare.appex/HanlinMiniAppsShare.debug.dylib",
+      "size": 3333472,
+      "sha256": "363a34fd6a71f93a2ad621855a3d484ee399312703f84e2e42ba7a644a0efd8d",
+      "role": "retainedProduct"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsWidgets.appex/Info.plist",
+      "size": 2943,
+      "sha256": "7b80628e4ba87f4583a18bc29c2d3541ea49a8c7fac3ae49e69333fe3b7e4ef8",
+      "role": "retainedProduct"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsWidgets.appex/HanlinMiniAppsWidgets",
+      "size": 40512,
+      "sha256": "e216c5d97a9487b246e6813e007f960c7aac45a459a56057414e6f15dd1704de",
+      "role": "retainedProduct"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsWidgets.appex/HanlinMiniAppsWidgets.debug.dylib",
+      "size": 38244752,
+      "sha256": "2255f5989a4b4f662fb35d791cedcd035db5d61a1f1f9ae8fd5d50c6ae0ff878",
+      "role": "retainedProduct"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/Info.plist",
+      "size": 5507,
+      "sha256": "2f8fe3fe0643a2fb10cbb032155ff0956612eb1f745899ad7b0c0202015c61ed",
+      "role": "retainedProduct"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/AI_Hanlin",
+      "size": 40496,
+      "sha256": "4934f20379d6aa7d4c97878b498993436550effede1a610be7630fd723990944",
+      "role": "retainedProduct"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/AI_Hanlin.debug.dylib",
+      "size": 3473824,
+      "sha256": "80ba1b05240eb988af275c12edaef7d4d0a194542a2de60dd56f4ce57f336abb",
+      "role": "retainedProduct"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+      "size": 81824721,
+      "sha256": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc",
+      "role": "retainedProduct"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+      "size": 81824721,
+      "sha256": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc",
+      "role": "retainedProduct"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/Frameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+      "size": 81824721,
+      "sha256": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc",
+      "role": "retainedProduct"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/Frameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+      "size": 81824721,
+      "sha256": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc",
+      "role": "retainedProduct"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/HanlinScriptingWidgets.appex/Info.plist",
+      "size": 2890,
+      "sha256": "167a82ec3ec7e8a0e773c9854116f15138c3a17a6601a92bc3abac5e78671188",
+      "role": "retainedProduct"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/HanlinScriptingWidgets.appex/HanlinScriptingWidgets",
+      "size": 40512,
+      "sha256": "2887da88bddb8b60085ed267c484f03affc140e8422b1170a0d0e164562d5b9d",
+      "role": "retainedProduct"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/HanlinScriptingWidgets.appex/HanlinScriptingWidgets.debug.dylib",
+      "size": 44890400,
+      "sha256": "45f9d58d9f466c706b0f8a01105352547fbcf635c5024a535846fe02430c4a77",
+      "role": "retainedProduct"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/ChavrusaChatNotificationService.appex/Info.plist",
+      "size": 1220,
+      "sha256": "cf22dfcabc37e0108e7d7a24ed8f7566d0934e60290d16e8427b2370532ae32c",
+      "role": "retainedProduct"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/ChavrusaChatNotificationService.appex/ChavrusaChatNotificationService",
+      "size": 37888,
+      "sha256": "207de6131defbd56e873e387e93206520aba3ce2f063597360da6ffcac8d6a4d",
+      "role": "retainedProduct"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/ChavrusaChatNotificationService.appex/ChavrusaChatNotificationService.debug.dylib",
+      "size": 28194512,
+      "sha256": "116e44f3f59bbe9a3a7c8881ccc2ecb99e9521dec60c3af8768d4f20c8f9d94a",
+      "role": "retainedProduct"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/ChavrusaChatShare.appex/Info.plist",
+      "size": 1423,
+      "sha256": "8b9c19a920eb2d2568cfb4e9e1729f98c7e7d907201b31654e65fb2fdc50b84f",
+      "role": "retainedProduct"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/ChavrusaChatShare.appex/ChavrusaChatShare",
+      "size": 37872,
+      "sha256": "116f3e85ecd4331277498f1c012901c68c34064eebe3837374015ba00231182d",
+      "role": "retainedProduct"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/ChavrusaChatShare.appex/ChavrusaChatShare.debug.dylib",
+      "size": 10043312,
+      "sha256": "31bc31f3e9398c0ce194aadb09ad6ada1cd5d1ceb253d7b2f5686c16af44e653",
+      "role": "retainedProduct"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_HLYUITests-Runner.app/PlugIns/AI_HLYUITests.xctest/Info.plist",
+      "size": 736,
+      "sha256": "0b74fc1f509103283e23cb6f8e0d0bbfe187a31208762264f2eca905549da81d",
+      "role": "retainedProduct"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_HLYUITests-Runner.app/PlugIns/AI_HLYUITests.xctest/AI_HLYUITests",
+      "size": 2852064,
+      "sha256": "78a31793185b0e35fcb73da55c660b4ac507627fd77370985e21b3bea0ddeb12",
+      "role": "retainedProduct"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/Info.plist",
+      "size": 704,
+      "sha256": "ef2975aad67dfc02df6ba3d6ffba32fe74b26534b591bbeb8f1062c77d21674a",
+      "role": "retainedProduct"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests",
+      "size": 37680128,
+      "sha256": "345b0e1b3039865c2a58ef864adecf1f722034d4c79a8cc618738da1077b9f5d",
+      "role": "retainedProduct"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app/PlugIns/HanlinMiniAppsUITests.xctest/Info.plist",
+      "size": 734,
+      "sha256": "84ccf7641c4a3489fae0321433bdff3d566b116d7e86ef3bc053b614359b441d",
+      "role": "retainedProduct"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app/PlugIns/HanlinMiniAppsUITests.xctest/HanlinMiniAppsUITests",
+      "size": 748384,
+      "sha256": "9b9397a85e961a0894d8d35198df6faba679924f7c37b8cb2625c93a68e0a226",
+      "role": "retainedProduct"
+    },
+    {
+      "role": "aiXctestrun",
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/AI_HLY_iphonesimulator27.0-arm64.xctestrun",
+      "bytes": 10920,
+      "sha256": "b2cc79f4b3780daec837e119cc5e4a07d5ecccd618ab793b88bb0b80dbfa2062"
+    },
+    {
+      "role": "miniXctestrun",
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/HanlinMiniApps_iphonesimulator27.0-arm64.xctestrun",
+      "bytes": 16737,
+      "sha256": "2d6b493aa93663d03e17a15722eab010326b260ccbbb454ed12077cae45cda96"
+    },
+    {
+      "role": "uiRunnerInfo",
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app/Info.plist",
+      "bytes": 10947,
+      "sha256": "e807c6b2a4c5444448a527d598bb86195f0737209b6c15bc2b8ecc8273f75d87"
+    },
+    {
+      "role": "uiRunnerExecutable",
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app/HanlinMiniAppsUITests-Runner",
+      "bytes": 95248,
+      "sha256": "2493c0f772aa3477817b8f57cc72df3dfeb134cd4d25e329bee41a027f704b78"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/HanlinMiniApps",
+      "size": 40496,
+      "sha256": "9ecf0a41bd7e8f7f024a957867c65b3bac76dc3c7198a3c78011ae1aabcd66b6",
+      "role": "miniAppExecutable"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/HanlinMiniApps.debug.dylib",
+      "size": 128035408,
+      "sha256": "44af528fa8cc87861760c2100c5fbb354936eeb3623281fb7efaba6ec58a0c85",
+      "role": "miniRuntimeImage"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/RuntimeHostResources.zip",
+      "size": 81824721,
+      "sha256": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc",
+      "role": "miniHostResource"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app/PlugIns/HanlinMiniAppsUITests.xctest/HanlinMiniAppsUITests",
+      "size": 748384,
+      "sha256": "9b9397a85e961a0894d8d35198df6faba679924f7c37b8cb2625c93a68e0a226",
+      "role": "uiTestExecutable"
+    },
+    {
+      "role": "xctestrun",
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/HanlinMiniApps_iphonesimulator27.0-arm64.xctestrun",
+      "bytes": 16737,
+      "sha256": "2d6b493aa93663d03e17a15722eab010326b260ccbbb454ed12077cae45cda96"
+    }
+  ],
+  "productProvenance": {
+    "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+    "receipts": [
+      {
+        "path": "build/primary-control/paired52-continuation-v5/state.json",
+        "bytes": 28524,
+        "sha256": "796a24bcc641e31409c7d9e68de2f95206264e0211952885aba61d8ca7ee8820"
+      },
+      {
+        "path": "build/primary-control/paired52-continuation-v5/decision.json",
+        "bytes": 183546,
+        "sha256": "b38292358c011d2db0a1a96c167494ca84f87bd806c27e399d7ec294f7e4b42b"
+      },
+      {
+        "path": "build/primary-control/paired52-continuation-v5/native-result/state.json",
+        "bytes": 39077,
+        "sha256": "786ea113ee8a47f8b8e8330ee2a3627be727c285f587ebd35afab9bfe2907baf"
+      },
+      {
+        "path": "build/primary-control/focused19-v11/native-result/built-input-bindings.json",
+        "bytes": 11631,
+        "sha256": "71831b770ee518a6d926650704c509a53d74c41540bd51d743de431b7ca0c640"
+      },
+      {
+        "path": "build/primary-control/focused19-v11/native-result/staged-inputs.json",
+        "bytes": 5834,
+        "sha256": "ab3d55ab809ff78a5a93f28dc058c20e76f98a2a1176f8b6228ce9b3d319d976"
+      },
+      {
+        "path": "build/primary-control/remaining-native-product-metadata-v11.json",
+        "bytes": 4697,
+        "sha256": "b1163811263ef4b648e6d5e265c012cbbf5f946e504f5bd084d28fe13514d724"
+      },
+      {
+        "path": "build/primary-control/paired52-continuation-v5/native-result/created-simulator.txt",
+        "bytes": 37,
+        "sha256": "df333300ba32a39a07bcd88aed5fc6bb5f0b51f738c521f6a0949dc54456a37e"
+      },
+      {
+        "path": "build/primary-control/focused19-inputs/miniapp-sdk.json",
+        "bytes": 5224120,
+        "sha256": "4505c28495d8b6ecd1073254e0e395adcc898cc02dd1d40699591f51db4dee92"
+      },
+      {
+        "path": "build/primary-control/notification-os-v6.py",
+        "bytes": 33265,
+        "sha256": "379008353af52593df805257d076ed13c1df93e13b9b39f76782738a8fff9535"
+      },
+      {
+        "path": "build/primary-control/paired52-continuation-v5/native-result/staged-inputs-final-verification.json",
+        "bytes": 3206,
+        "sha256": "174f775acb85a304bcc1790f144a792fc6c56a101b988e1b536b5c7fd11f1d83"
+      },
+      {
+        "path": "build/primary-control/paired52-continuation-v5/native-result/final-mini-container-metadata.plist",
+        "bytes": 602,
+        "sha256": "cde9660338425f9d80813bfce0c335fca4780f4390b8e84b108c7f0b306ccf8f"
+      },
+      {
+        "path": "build/primary-control/companion-native-v1/decision.json",
+        "bytes": 1830,
+        "sha256": "e4c47637ab828da11bdbd3ba9dc6bc2453dbf9c0214e6640949bd3138de563b3"
+      },
+      {
+        "path": "build/primary-control/companion-native-v1/notification-package/result-review.json",
+        "bytes": 1308,
+        "sha256": "4396672e8dd3fe2546d89d108c2e57eeb98a48f386171a93bee5e0322ee98999"
+      },
+      {
+        "path": "build/primary-control/companion-native-v1-ns5/state.json",
+        "bytes": 3030,
+        "sha256": "8e20572d909c4d0908a0573685f4e87f80155988ed95c677f6ff3215533f15ab"
+      },
+      {
+        "path": "build/primary-control/companion-native-v1-ns5/decision.json",
+        "bytes": 157442,
+        "sha256": "331f71fbbdb88ff1de29ef41ce9c001d196a68f5ce72af6816be2314f3ebc4a9"
+      },
+      {
+        "path": "build/primary-control/companion-native-v1-ns5/companion-ledger-before.json",
+        "bytes": 1332,
+        "sha256": "0601f21cbf3d2433dec7e5ce7fb66806555bcca6e4577e92b94f265c7a255068"
+      },
+      {
+        "path": "build/primary-control/notification-os-v1-seal-inputs.json",
+        "bytes": 7350,
+        "sha256": "21b654ac4c21988b212f8f67a11529e70daa23889567656ab0b779f9fbe25053"
+      }
+    ]
+  },
+  "resourceAssessment": {
+    "decision": "FITS_MEASURED_NEXT_PHASE",
+    "observedAt": "2026-11-25T18:41:07.912193+00:00",
+    "observedFreeBytes": 41887080448,
+    "df": "Filesystem   1024-blocks      Used Available Capacity iused     ifree %iused  Mounted on\n/dev/disk3s5   482797652 396958908  40905352    91% 5200789 409053520    1%   /System/Volumes/Data",
+    "estimatedIncrementalBytes": 7352293846,
+    "concurrentAndOSAllowanceBytes": 500000000,
+    "components": {
+      "retainedDeviceNewAllocationBytes": 0,
+      "conservativeProductAndRunnerInstallAllowanceBytes": 2505814016,
+      "twoHostUncompressedRecreationsBytes": 713731370,
+      "twoLargestRetainedResultsBytes": 2309439488,
+      "twoRetainedFullDiagnosticExportBoundsBytes": 1323308972,
+      "temporaryAuthoringWorkspacesBytes": 500000000
+    },
+    "basis": "Fresh free-space observation using the existing paired decision's conservative retained-product/result components unchanged for this one remaining test; no new size quota.",
+    "authority": {
+      "path": "build/primary-control/paired52-continuation-v5/decision.json",
+      "bytes": 183546,
+      "sha256": "b38292358c011d2db0a1a96c167494ca84f87bd806c27e399d7ec294f7e4b42b"
+    }
+  },
+  "ns5Terminal": {
+    "path": "build/primary-control/companion-native-v1-ns5/state.json",
+    "bytes": 3030,
+    "sha256": "8e20572d909c4d0908a0573685f4e87f80155988ed95c677f6ff3215533f15ab"
+  },
+  "companionLedgerSHA256": "8b24d810f4a9e3f6d7a5e8440391cdb45c6a6cb0ed2e212d4e59aead0d699301",
+  "uiRunnerInfoPlist": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app/Info.plist"
+}

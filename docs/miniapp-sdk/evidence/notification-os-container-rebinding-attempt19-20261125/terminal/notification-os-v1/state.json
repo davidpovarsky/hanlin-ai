@@ -1,0 +1,139 @@
+{
+  "schema": 1,
+  "id": "notification-os-v1",
+  "owner": "/root/native_execution",
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "status": "FAILED",
+  "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines",
+  "expectedTests": 1,
+  "controllerPID": 52310,
+  "activeBaselineSeconds": 24307.531661753037,
+  "allowanceSeconds": 900,
+  "decisionSHA256": "6c6daf1c44424cd0c7e68de78a6a46f8727cac01c392eda43c4ed97648109d88",
+  "original52Status": "EXECUTED_PASS",
+  "NS5Status": "EXECUTED_PASS",
+  "historicalProcessGroupExclusions": [],
+  "resourceObservationAtLaunch": {
+    "observedAt": "2026-11-25T18:41:11.255937+00:00",
+    "freeBytes": 41900437504,
+    "df": "Filesystem   1024-blocks      Used Available Capacity iused     ifree %iused  Mounted on\n/dev/disk3s5   482797652 396945848  40918396    91% 5201541 409183960    1%   /System/Volumes/Data"
+  },
+  "originalNode": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/node-v24.5.0-darwin-arm64/bin/node",
+    "sha256": "336b5b3ebc5deb86df842102b20b6e4761605b7a667823e68dda7761b91a161b",
+    "version": "24.5.0",
+    "bytes": 116870064,
+    "observedIdentity": {
+      "node": "24.5.0",
+      "platform": "darwin",
+      "architecture": "arm64"
+    }
+  },
+  "startedAt": "2026-11-25T18:41:11.256264+00:00",
+  "ownedProcessGroups": {
+    "setup": {
+      "pid": 52330,
+      "pgid": 52330,
+      "argv": [
+        "/opt/homebrew/opt/python@3.12/bin/python3.12",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v6.py",
+        "--decision",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/decision.json",
+        "--child",
+        "setup"
+      ]
+    },
+    "worker": {
+      "pid": 52632,
+      "pgid": 52632,
+      "argv": [
+        "/opt/homebrew/opt/python@3.12/bin/python3.12",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/CI/observe_notification_os_delivery.py",
+        "--device",
+        "E742FBCD-8FF0-4130-B143-7F8328637138",
+        "--runner-data",
+        "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/9B37C117-33C4-420A-89D1-1A9A16F75D4B",
+        "--app-data",
+        "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/C129E146-10B3-4B74-81C5-5D5FFF89DC38",
+        "--app-group",
+        "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/EAE213D3-0A61-4500-9D46-E8F08D94D8F2",
+        "--output",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/observation",
+        "--started-after",
+        "1795632096.088764",
+        "--timeout",
+        "650"
+      ]
+    },
+    "test": {
+      "pid": 52633,
+      "pgid": 52633,
+      "argv": [
+        "/opt/homebrew/opt/python@3.12/bin/python3.12",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v6.py",
+        "--decision",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/decision.json",
+        "--child",
+        "test"
+      ]
+    }
+  },
+  "executionContainersSHA256": "b96b00ec8665a2489c7a021b40c386424a9016e501b79348971b9e72cc2b58ed",
+  "exchangeStartedAfter": 1795632096.088764,
+  "workerPID": 52632,
+  "testPID": 52633,
+  "elapsedSeconds": 353.58866224999656,
+  "testExitCode": 1,
+  "workerExitCode": null,
+  "error": "RuntimeError: Original selected XCTest/verification failed",
+  "ownedGroupsAtCleanup": {
+    "setup": [],
+    "worker": [
+      "52632 52632 Ss  "
+    ],
+    "test": []
+  },
+  "observedExitCodes": {
+    "setup": 0,
+    "worker": -15,
+    "test": 1
+  },
+  "remainingOwnedProcessGroups": {
+    "setup": [],
+    "worker": [],
+    "test": []
+  },
+  "ownedSimulatorCleanup": {
+    "device": "E742FBCD-8FF0-4130-B143-7F8328637138",
+    "ownership": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/created-simulator.txt",
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": "",
+    "observedState": "Shutdown",
+    "observedAt": "2026-11-25T18:47:03.973448+00:00"
+  },
+  "cleanupErrors": [],
+  "sourceErrors": [],
+  "finishedAt": "2026-11-25T18:47:04.843086+00:00",
+  "chargedSeconds": 353.58866224999656,
+  "cumulativeActiveSeconds": 24661.120324003034,
+  "allowanceExceededDuringCleanup": false,
+  "processLogs": [
+    {
+      "path": "test.log",
+      "bytes": 3653,
+      "sha256": "10d4c7949bae54de9edc936478dbfbf63a732adccd113dbfd73ef7ce4e064a33"
+    },
+    {
+      "path": "worker.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "setup.log",
+      "bytes": 1843,
+      "sha256": "4993b4129d78e14e5724fbfbfc72b133b7f6b8592a622c2ec5cc1c0be9cdfbb6"
+    }
+  ],
+  "chargeCommitted": true
+}

@@ -1,0 +1,9 @@
+{
+  "pid": 98966,
+  "launchedAt": "2026-11-25T05:38:07.879269+00:00",
+  "source": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
+  "decisionSHA256": "492f9c7b75e7776d7a48a34ce2531f140c0c0f9585c437d42922e8308582a734",
+  "statePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v1/state.json",
+  "original52": "STARTING",
+  "allowanceSeconds": 4500
+}

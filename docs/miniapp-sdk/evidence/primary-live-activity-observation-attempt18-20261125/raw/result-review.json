@@ -1,0 +1,105 @@
+{
+  "status": "FAILED_OR_INCOMPLETE",
+  "source": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+  "selectors": [
+    "AI_HLYTests/PendingFirstTurnTests/importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings",
+    "AI_HLYTests/PendingFirstTurnTests/cancelledMiniAppRepairPreservesHomeDraft",
+    "AI_HLYTests/HanlinScriptingPlatformCompositionTests/malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic",
+    "AI_HLYTests/MiniAppAuthoringToolTests/originalSDKWriteValidateBuildAndRepair",
+    "AI_HLYTests/MiniAppAuthoringToolTests/sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource",
+    "AI_HLYTests/MiniAppAuthoringToolTests/originalExpoMetroBuildOnEmbeddedNode",
+    "AI_HLYTests/HanlinOriginalScriptWidgetAPITests",
+    "AI_HLYTests/HanlinNativePresentationTests",
+    "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests",
+    "AI_HLYTests/HanlinOriginalScriptWidgetControlTests",
+    "AI_HLYTests/HanlinMiniAppStorageCapacityTests",
+    "AI_HLYTests/HanlinOriginalExpoWidgetTests",
+    "AI_HLYUITests/MiniAppAuthoringUITests",
+    "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure",
+    "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer"
+  ],
+  "expectedTests": 27,
+  "commandExitCode": 65,
+  "error": "RuntimeError: /opt/homebrew/opt/python@3.12/bin/python3.12 exit 1; inspect ai27-selected-tests.log",
+  "resultBundle": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/AI27.xcresult",
+  "reviewedAt": "2026-11-25T10:19:26.260087+00:00",
+  "original52Status": "UNCHANGED_BY_DIAGNOSTIC",
+  "summary": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "deviceId": "50D2F667-196E-4382-A86A-802710579EA9",
+          "deviceName": "HanlinPaired-primary-ce49e30d-20261124",
+          "modelName": "iPad Pro 13-inch (M5)",
+          "osBuildNumber": "24A434",
+          "osVersion": "27.0",
+          "platform": "iOS Simulator"
+        },
+        "expectedFailures": 0,
+        "failedTests": 2,
+        "passedTests": 19,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "AI_HLY \u00b7 Built with macOS 27.0",
+    "expectedFailures": 0,
+    "failedTests": 2,
+    "finishTime": 1795601965.741,
+    "passedTests": 19,
+    "result": "Failed",
+    "runtimeWarnings": [
+      {
+        "issueType": "Runtime Warning",
+        "message": "    AVAudioSession_iOS.mm:978   This method can lead to UI unresponsiveness if called on the main thread. Consider using the asynchronous activate/deactivate API instead for calls from the main thread."
+      },
+      {
+        "issueType": "Runtime Warning",
+        "message": "Update the Info.plist: Support for all orientations will soon be required."
+      },
+      {
+        "issueType": "Runtime Warning",
+        "message": "Update the Info.plist: Support for all orientations will soon be required."
+      }
+    ],
+    "skippedTests": 0,
+    "startTime": 1795601796.171,
+    "statistics": [],
+    "testFailures": [
+      {
+        "failureText": "Expectation failed: activity.content.state.revision == 2\nactivity.content.state.revision \u2192 1",
+        "targetName": "AI_HLYTests",
+        "testIdentifier": 19,
+        "testIdentifierString": "HanlinOriginalScriptWidgetLiveActivityTests/actualActivityKitStartsUpdatesAndEndsTheOriginalProgram()",
+        "testIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests/actualActivityKitStartsUpdatesAndEndsTheOriginalProgram()",
+        "testName": "actualActivityKitStartsUpdatesAndEndsTheOriginalProgram()"
+      },
+      {
+        "failureText": "XCTAssertTrue failed - The original composer must persist the repair request.",
+        "targetName": "AI_HLYUITests",
+        "testIdentifier": 21,
+        "testIdentifierString": "MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport()",
+        "testIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYUITests/MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport",
+        "testName": "testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport()"
+      }
+    ],
+    "title": "Test - AI_HLY",
+    "topInsights": [
+      {
+        "category": "Longest Test Runs",
+        "impact": "23% of duration",
+        "text": "1 longest test run with outlier durations exceeding 1.73s (three standard deviations)"
+      }
+    ],
+    "totalTestCount": 21
+  },
+  "summarySHA256": "7abe74639707e83dc1cb5927ffb823a437943f21671bfbba61c7955976eb33b4",
+  "nodesSHA256": "c50f0a371d0bbbe07b2a90eb4d95158b85485a4bcd388c3542f5a3bfb610d674",
+  "selectorVerifierLogSHA256": "22fb978e34009bed2c9ff3c80c7b021501b9cb6ca1ad314362a9be282faf601e",
+  "resultInfoSHA256": "55e953bad279d0b8f07bcbb0ae240df05d2d07c18f3708344bbcf7a8df514eba",
+  "attachmentExportExit": 0
+}

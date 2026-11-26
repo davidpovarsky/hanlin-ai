@@ -1,0 +1,40 @@
+{
+  "schema": 1,
+  "id": "companion-native-v1",
+  "owner": "/root/native_execution",
+  "source": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
+  "sourceTree": "1446c01003a90df66bf60b36529f815f02c6621d",
+  "allowanceSeconds": 1200,
+  "scope": [
+    "HanlinNotificationInvocationTests",
+    "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualNativeScriptImportsTheGeneratedTypedFacadeAndCallsEveryEngine"
+  ],
+  "authorization": {
+    "by": "/root",
+    "scope": "separate bounded native companion; package suite may execute before paired52, NS5 after final AI products",
+    "noDuplicateStorageCase": true
+  },
+  "activeBaselineSeconds": 10222.129126207994,
+  "originalPlanMaximumActiveSeconds": 12600,
+  "paired4500Separate": true,
+  "suiteSourceSHA256": "918dac76ba987164dfc80ea47ff3365d4a4fa42cecc87ee36db863721c9e1667",
+  "expectedTestFunctions": 8,
+  "expectedParameterInstances": 9,
+  "note": "First test has two engine arguments; Swift Testing summary may count8 functions. Preserve actual parameter events.",
+  "packageCommand": [
+    "swift",
+    "test",
+    "--package-path",
+    "Packages/HanlinPlatform",
+    "--filter",
+    "HanlinNotificationInvocationTests"
+  ],
+  "storage": {
+    "observedFreeBytes": 10328584192,
+    "df": "Filesystem   1024-blocks      Used Available Capacity iused     ifree %iused  Mounted on\n/dev/disk3s5   482797652 428826368  10086508    98% 6017691 100865080    6%   /System/Volumes/Data\n",
+    "estimatedIncrementalAndHeadroomBytes": 1500000000,
+    "basis": "Reuse existing isolated Packages/HanlinPlatform/.build; only changed notification/platform module and tests compile. No simulator/device install or native framework production."
+  },
+  "preparedDiffSHA256": "d5305084162cedce8d47b6d4c834ba1e55d62493a3b9e0f061e4ae7ef57846b8",
+  "sealedAt": "2026-11-25T05:36:46.030686+00:00"
+}

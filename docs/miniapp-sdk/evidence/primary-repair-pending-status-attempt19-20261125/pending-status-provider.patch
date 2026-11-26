@@ -1,0 +1,100 @@
+diff --git a/AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift b/AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift
+index 7cd4026a..bd8a7fd3 100644
+--- a/AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift
++++ b/AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift
+@@ -403,7 +403,18 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
+     private nonisolated(unsafe) static var responseIndex = 0
+     private nonisolated(unsafe) static var ui07FailCount = 0
+     private nonisolated(unsafe) static var phase2Requests = 0
+-    private var isStopped = false
++    private let cancellationLock = NSLock()
++    private var stopped = false
++    private var isStopped: Bool {
++        get {
++            cancellationLock.lock(); defer { cancellationLock.unlock() }
++            return stopped
++        }
++        set {
++            cancellationLock.lock(); defer { cancellationLock.unlock() }
++            stopped = newValue
++        }
++    }
+ 
+     static var observedPhase2Requests: Int {
+         lock.lock(); defer { lock.unlock() }
+@@ -466,7 +477,7 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
+            currentText.contains("MiniAppTypeError.hanlinNativeScript") {
+             var objects: [String: [String: Any]] = [:]
+             func object(_ id: String) -> [String: Any]? { objects[id] }
+-            func call(_ id: String, _ name: String, _ arguments: [String: Any]) {
++            func call(_ id: String, _ name: String, _ arguments: [String: Any], after delay: TimeInterval = 0) {
+                 var payload = arguments
+                 if name != "tool_search" && name != "read_tool_result" {
+                     payload["progress_summary"] = "Run the requested MiniApp authoring step and inspect its actual result."
+@@ -474,7 +485,15 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
+                 guard let data = try? JSONSerialization.data(withJSONObject: payload, options: [.sortedKeys]) else {
+                     emitFinalAnswer("MINIAPP_AUTHORING_ARGUMENT_ERROR"); return
+                 }
+-                emitToolCall(id: id, name: name, arguments: String(decoding: data, as: UTF8.self))
++                let encodedArguments = String(decoding: data, as: UTF8.self)
++                if delay > 0 {
++                    DispatchQueue.global().asyncAfter(deadline: .now() + delay) { [weak self] in
++                        guard let self, !self.isStopped else { return }
++                        self.emitToolCall(id: id, name: name, arguments: encodedArguments)
++                    }
++                } else {
++                    emitToolCall(id: id, name: name, arguments: encodedArguments)
++                }
+             }
+             let project = currentText.components(separatedBy: "\n")
+                 .first(where: { $0.hasPrefix("Working project: ") })?
+@@ -482,8 +501,15 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
+             guard let project, !project.isEmpty else {
+                 emitFinalAnswer("MINIAPP_AUTHORING_PROJECT_MISSING"); return
+             }
++            let statusIDs = (messages ?? []).compactMap { message -> String? in
++                guard message["role"] as? String == "tool",
++                      let id = message["tool_call_id"] as? String else { return nil }
++                if id == "miniapp-status" { return id }
++                let prefix = "miniapp-status-"
++                return id.hasPrefix(prefix) && Int(id.dropFirst(prefix.count)) != nil ? id : nil
++            }
+             let ids = ["miniapp-find", "miniapp-sdk", "miniapp-invalid", "miniapp-write",
+-                       "miniapp-valid", "miniapp-build", "miniapp-import", "miniapp-status"]
++                       "miniapp-valid", "miniapp-build", "miniapp-import"] + statusIDs
+             // Follow the same stored-result references as a real model. Only
+             // actual read_tool_result responses supply the JSON; byte offsets
+             // preserve Unicode and exclude the tool's pagination footer.
+@@ -550,11 +576,27 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
+                 }
+                 objects[id] = value
+             }
+-            if let receipt = object("miniapp-status") {
+-                let installed = receipt["status"] as? String == "installed"
+-                    && !(receipt["installedPackageID"] as? String ?? "").isEmpty
+-                emitFinalAnswer(installed ? "MINIAPP_AUTHORING_INSTALLED_VERIFIED"
+-                    : "MINIAPP_AUTHORING_INSTALL_NOT_VERIFIED_" + (receipt["status"] as? String ?? "unknown"))
++            if let statusID = statusIDs.last, let receipt = object(statusID) {
++                guard let id = object("miniapp-import")?["transfer_id"] as? String,
++                      let expectedID = UUID(uuidString: id),
++                      let actualID = receipt["transferID"] as? String,
++                      UUID(uuidString: actualID) == expectedID else {
++                    emitFinalAnswer("MINIAPP_AUTHORING_TRANSFER_MISMATCH"); return
++                }
++                let status = receipt["status"] as? String ?? "unknown"
++                if ["queued", "received", "submitted"].contains(status) {
++                    // The original receiver can still be validating or publishing.
++                    // Observe it again through the real tool; unique call IDs retain
++                    // every actual receipt. Cancellation and the whole XCTest case
++                    // bound this fixture's wait without manufacturing completion.
++                    call("miniapp-status-\(statusIDs.count)", "import_miniapp",
++                         ["transfer_id": id], after: 2)
++                } else {
++                    let installed = status == "installed"
++                        && !(receipt["installedPackageID"] as? String ?? "").isEmpty
++                    emitFinalAnswer(installed ? "MINIAPP_AUTHORING_INSTALLED_VERIFIED"
++                        : "MINIAPP_AUTHORING_INSTALL_NOT_VERIFIED_" + status)
++                }
+             } else if let queued = object("miniapp-import") {
+                 guard let id = queued["transfer_id"] as? String else {
+                     emitFinalAnswer("MINIAPP_AUTHORING_TRANSFER_MISSING"); return

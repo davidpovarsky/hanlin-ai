@@ -1,0 +1,152 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "E742FBCD-8FF0-4130-B143-7F8328637138",
+        "deviceName" : "HanlinPaired-local",
+        "exportedFileName" : "D082B0D1-8A54-456E-8C43-6E1742387D19.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-runtime-failure-accessibility_0_12019049-7B6D-427C-B5B0-31735BA72177.txt",
+        "timestamp" : 1795610787.56
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "E742FBCD-8FF0-4130-B143-7F8328637138",
+        "deviceName" : "HanlinPaired-local",
+        "exportedFileName" : "03657BDD-49C5-456F-B895-F3E72F5EDECA.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-runtime-failure_0_B555E662-EB7E-48D0-AD01-2F6EA933D835.png",
+        "timestamp" : 1795610787.281
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "E742FBCD-8FF0-4130-B143-7F8328637138",
+        "deviceName" : "HanlinPaired-local",
+        "exportedFileName" : "366F65D9-D92B-4D13-BFFE-79D1FC91D728.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Manual AsyncImage real HTTP failure slot-accessibility_0_DF0399F6-6A94-4BAA-8E81-FD917342BA95.txt",
+        "timestamp" : 1795610778.629
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "E742FBCD-8FF0-4130-B143-7F8328637138",
+        "deviceName" : "HanlinPaired-local",
+        "exportedFileName" : "E8CF182E-C1BD-4F61-9785-3CF052C91C43.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Manual AsyncImage real HTTP failure slot_0_3194A4B1-7245-4EB0-B1CF-C83932FEDF7D.png",
+        "timestamp" : 1795610778.289
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "E742FBCD-8FF0-4130-B143-7F8328637138",
+        "deviceName" : "HanlinPaired-local",
+        "exportedFileName" : "9F5F5FBC-BDA2-4686-8D0C-0E4D5AF4BC10.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Manual AsyncImage decoded exact PNG-accessibility_0_A5428C1C-18D1-4618-8CC3-781209C1B09D.txt",
+        "timestamp" : 1795610772.97
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "E742FBCD-8FF0-4130-B143-7F8328637138",
+        "deviceName" : "HanlinPaired-local",
+        "exportedFileName" : "E1571211-6509-485E-A730-DD11023C896E.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Manual AsyncImage decoded exact PNG_0_F0450A21-1517-4E89-A546-D15CCC1A2435.png",
+        "timestamp" : 1795610772.629
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "E742FBCD-8FF0-4130-B143-7F8328637138",
+        "deviceName" : "HanlinPaired-local",
+        "exportedFileName" : "CBE35BE2-2A19-470D-A839-513F206DF3CE.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Manual Table native selection and changed rows-accessibility_0_6EFD316B-E267-477A-B089-9C05BCE697B0.txt",
+        "timestamp" : 1795610762.479
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "E742FBCD-8FF0-4130-B143-7F8328637138",
+        "deviceName" : "HanlinPaired-local",
+        "exportedFileName" : "555E8F03-203A-417F-9516-421A5322EB36.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Manual Table native selection and changed rows_0_13602019-4F10-487D-A277-7F6FC5B61E0A.png",
+        "timestamp" : 1795610762.04
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "E742FBCD-8FF0-4130-B143-7F8328637138",
+        "deviceName" : "HanlinPaired-local",
+        "exportedFileName" : "355DA642-1DC2-48FA-B755-E5E912FAD285.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Manual grids adaptive fit and safe area slots-accessibility_0_345844D6-79E5-484D-9D19-8D49929BF22E.txt",
+        "timestamp" : 1795610744.574
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "E742FBCD-8FF0-4130-B143-7F8328637138",
+        "deviceName" : "HanlinPaired-local",
+        "exportedFileName" : "08472FEF-5C43-42B1-9D69-873A581EDC8F.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Manual grids adaptive fit and safe area slots_0_79CBBF0E-2083-4C45-8F92-0DE23E234C55.png",
+        "timestamp" : 1795610744.195
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "E742FBCD-8FF0-4130-B143-7F8328637138",
+        "deviceName" : "HanlinPaired-local",
+        "exportedFileName" : "4584D179-6608-4E9F-86DD-4C74DA4F81E9.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Manual Searchable complete native submit-accessibility_0_F9295266-8593-4D39-A24B-019C10ACE336.txt",
+        "timestamp" : 1795610710.674
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "E742FBCD-8FF0-4130-B143-7F8328637138",
+        "deviceName" : "HanlinPaired-local",
+        "exportedFileName" : "D1563AAC-E678-4D3D-BDBC-CEF109D1AE5F.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Manual Searchable complete native submit_0_6B71362B-6F22-4AD0-8EEC-ABBD32B59C37.png",
+        "timestamp" : 1795610710.198
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "E742FBCD-8FF0-4130-B143-7F8328637138",
+        "deviceName" : "HanlinPaired-local",
+        "exportedFileName" : "F9791004-080E-4932-833B-0E6E89A1F024.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Manual TextEditor and Focused native results-accessibility_0_0227A010-F664-4B93-9C2B-399575636E67.txt",
+        "timestamp" : 1795610692.235
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "E742FBCD-8FF0-4130-B143-7F8328637138",
+        "deviceName" : "HanlinPaired-local",
+        "exportedFileName" : "A2FC7C3F-8AD3-4CAF-BFCB-4F04154A9D77.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Manual TextEditor and Focused native results_0_D64BF762-D244-4043-BFF3-B47AD4450016.png",
+        "timestamp" : 1795610691.674
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "E742FBCD-8FF0-4130-B143-7F8328637138",
+        "deviceName" : "HanlinPaired-local",
+        "exportedFileName" : "EF253D66-8069-4BB1-8E05-05CA3A1FA115.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-import-ExpoSwiftUIProbeA-accessibility_0_BA6537D4-E8DD-42B4-9F68-E0B901468030.txt",
+        "timestamp" : 1795610664.088
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "E742FBCD-8FF0-4130-B143-7F8328637138",
+        "deviceName" : "HanlinPaired-local",
+        "exportedFileName" : "CB0340DC-5489-43F5-962D-C53132C5E76B.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-import-ExpoSwiftUIProbeA_0_009E1A25-BC11-4A74-9638-14EC77217341.png",
+        "timestamp" : 1795610663.794
+      }
+    ],
+    "testIdentifier" : "MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters()",
+    "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters"
+  }
+]

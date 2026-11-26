@@ -1,0 +1,122 @@
+{
+  "schema": 1,
+  "observedAt": "2026-11-25T11:31:17.482406+00:00",
+  "status": "PASS_RETAINED_PACKET_AND_BINDING_RECONCILIATION",
+  "receipt": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/consumer-binding-attempt19-recovery/receipt.json",
+    "bytes": 22112,
+    "sha256": "c19ffc746a122b373e56313e4c6a05ec9c46fa893864e18c80bcc67cf77e1244"
+  },
+  "consumerSource": "62dfff9aebd0a272486c7770d4f77ba603d535ab",
+  "sdkProducerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+  "sdkHostSHA256": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc",
+  "sdkManifestSHA256": "4505c28495d8b6ecd1073254e0e395adcc898cc02dd1d40699591f51db4dee92",
+  "sdkInputSHA256": "ba8f3f1f09054887eed62532fa1d5ca2ac3bd60e6aa99a98ab1035c7653882a2",
+  "rawFileCount": 7,
+  "rawBytes": 20344,
+  "rawFiles": [
+    {
+      "path": "AI_Hanlin.app/NotificationService-Info.plist",
+      "bytes": 1220,
+      "sha256": "cf22dfcabc37e0108e7d7a24ed8f7566d0934e60290d16e8427b2370532ae32c"
+    },
+    {
+      "path": "AI_Hanlin.app/notification-codesign.stderr",
+      "bytes": 1145,
+      "sha256": "b43514867d0ad158a5a96c05c37adf891f37dde9cc75cd4282b3419527067732"
+    },
+    {
+      "path": "AI_Hanlin.app/notification-codesign.stdout",
+      "bytes": 184,
+      "sha256": "00491886daae07a5296c8bad50f116bf006b0004d7bf7338ad46669fbd903a4a"
+    },
+    {
+      "path": "HanlinMiniApps.app/NotificationService-Info.plist",
+      "bytes": 1278,
+      "sha256": "176d667ec09408832340ae438a7e26886a9f080625c445c3f192850a7b9a467b"
+    },
+    {
+      "path": "HanlinMiniApps.app/notification-codesign.stderr",
+      "bytes": 1156,
+      "sha256": "f640531b47ba9e17e650cb677fa9a67f46746014c942f73e4211c84e3faf2167"
+    },
+    {
+      "path": "HanlinMiniApps.app/notification-codesign.stdout",
+      "bytes": 184,
+      "sha256": "00491886daae07a5296c8bad50f116bf006b0004d7bf7338ad46669fbd903a4a"
+    },
+    {
+      "path": "built-input-bindings.json",
+      "bytes": 15177,
+      "sha256": "f63dc050246a3887ab4d64a632235e88db94f618748d336eeb8aa0ec90b12faf"
+    }
+  ],
+  "builtInputBinding": {
+    "sha256": "f63dc050246a3887ab4d64a632235e88db94f618748d336eeb8aa0ec90b12faf",
+    "uniqueRows": 35
+  },
+  "products": [
+    {
+      "product": "HanlinMiniApps.app",
+      "producer": "a2c8a1b1be746461272ba77254603304567c309d",
+      "buildSeconds": 161.94691724999575,
+      "buildExit": 0,
+      "deepStrictSignatureExit": 0,
+      "archives": 1,
+      "notificationBundleID": "com.itorah.hanlinminiapps.notification-service",
+      "namespace": "HanlinMiniApps/v1",
+      "actualSimulatorEntitlementsSource": "__TEXT,__entitlements",
+      "notificationImplementationHashes": [
+        "4f4063d3b1e33add239f48f4a277fe5d4781df178896871cad001dfacfc24018",
+        "e180275d27cb648701745887a90925c9bdd1822443bda29eec14138b29999a3e"
+      ]
+    },
+    {
+      "product": "AI_Hanlin.app",
+      "producer": "62dfff9aebd0a272486c7770d4f77ba603d535ab",
+      "buildSeconds": 123.55400283299969,
+      "buildExit": 0,
+      "deepStrictSignatureExit": 0,
+      "archives": 4,
+      "notificationBundleID": "com.itorah.chavrusachat.notification-service",
+      "namespace": null,
+      "actualSimulatorEntitlementsSource": "__TEXT,__entitlements",
+      "notificationImplementationHashes": [
+        "0485b38f48cb3ce96818b101493a15d7d8e46f439f46447c6a8982bb6145e5e7",
+        "116e44f3f59bbe9a3a7c8881ccc2ecb99e9521dec60c3af8768d4f20c8f9d94a"
+      ]
+    }
+  ],
+  "originalDictionarySourceChecks": [
+    {
+      "path": "Packages/IOSSystemLite/Sources/IOSSystemLite/Resources/commandDictionary.plist",
+      "sha256": "bc70ee9fce71b624c9f80c55be93d8a7c7d67bd06d48902ebe9fef32a906173b",
+      "product": "HanlinMiniApps.app"
+    },
+    {
+      "path": "Packages/IOSSystemLite/Sources/IOSSystemLite/Resources/extraCommandsDictionary.plist",
+      "sha256": "97704a8960b4facceef54397a08fb5d0a456247c3627359215aa2a27df22656c",
+      "product": "HanlinMiniApps.app"
+    },
+    {
+      "path": "Packages/IOSSystemLite/Sources/IOSSystemLite/Resources/commandDictionary.plist",
+      "sha256": "bc70ee9fce71b624c9f80c55be93d8a7c7d67bd06d48902ebe9fef32a906173b",
+      "product": "AI_Hanlin.app"
+    },
+    {
+      "path": "Packages/IOSSystemLite/Sources/IOSSystemLite/Resources/extraCommandsDictionary.plist",
+      "sha256": "97704a8960b4facceef54397a08fb5d0a456247c3627359215aa2a27df22656c",
+      "product": "AI_Hanlin.app"
+    }
+  ],
+  "nativeTextEditorSource": {
+    "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoUIModule.swift",
+    "sha256": "3ad8217ce87005fab1fe3dc256e7d7680ced7c330f7cd9dc5561f1a5e5905e09"
+  },
+  "packagedTextEditorWrapper": {
+    "member": "MiniAppSDK/expo/node_modules/@hanlin/expo-ui/src/manual-components.tsx",
+    "bytes": 11834,
+    "sha256": "b95b387fce797a3c0ffe8c258e1fe0b411e76956e6cd50ae9235267f5b638da6"
+  },
+  "boundary": "Independent Oracle byte/hash/plist/source and cross-receipt consistency verification. Actual Mac products are bound by retained native owner observations; no Mac reread, build, SDK audit, runtime case, OS delivery or physical-device result is inferred."
+}

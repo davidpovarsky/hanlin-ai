@@ -1,0 +1,292 @@
+
+COMMAND ["git", "clone", "--shared", "--no-checkout", "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-completion-20261123", "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/source"]
+Cloning into '/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/source'...
+done.
+
+COMMAND ["git", "-C", "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/source", "config", "core.sparseCheckout", "true"]
+
+COMMAND ["git", "-C", "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/source", "checkout", "--detach", "dff3b45c99a57bf8fe8ec721db3fa1fafce7134b"]
+HEAD is now at dff3b45c Fix notification ingress plain JSON parameter decoding
+
+COMMAND ["bash", "Scripts/Runtime/prepare-runtime-host.sh"]
+[MiniApps] Preparing original npm inputs: No verified original npm installation receipt. Run Scripts/MiniApps/install-tooling.mjs for /mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/source/Scripts/Expo
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: @babel/plugin-transform-arrow-functions@7.29.7
+npm warn Found: @babel/core@7.29.7
+npm warn node_modules/@babel/core
+npm warn   dev @babel/core@"^7.26.0" from the root project
+npm warn   59 more (@babel/helper-create-class-features-plugin, ...)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer @babel/core@"^7.0.0-0" from @babel/plugin-transform-arrow-functions@7.29.7
+npm warn node_modules/@babel/plugin-transform-arrow-functions
+npm warn   @babel/plugin-transform-arrow-functions@"^7.27.1" from react-native-worklets@0.13.0
+npm warn   node_modules/react-native-worklets
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: @babel/plugin-transform-shorthand-properties@7.29.7
+npm warn Found: @babel/core@7.29.7
+npm warn node_modules/@babel/core
+npm warn   dev @babel/core@"^7.26.0" from the root project
+npm warn   59 more (@babel/helper-create-class-features-plugin, ...)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer @babel/core@"^7.0.0-0" from @babel/plugin-transform-shorthand-properties@7.29.7
+npm warn node_modules/@babel/plugin-transform-shorthand-properties
+npm warn   @babel/plugin-transform-shorthand-properties@"^7.27.1" from react-native-worklets@0.13.0
+npm warn   node_modules/react-native-worklets
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: @babel/plugin-transform-template-literals@7.29.7
+npm warn Found: @babel/core@7.29.7
+npm warn node_modules/@babel/core
+npm warn   dev @babel/core@"^7.26.0" from the root project
+npm warn   59 more (@babel/helper-create-class-features-plugin, ...)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer @babel/core@"^7.0.0-0" from @babel/plugin-transform-template-literals@7.29.7
+npm warn node_modules/@babel/plugin-transform-template-literals
+npm warn   @babel/plugin-transform-template-literals@"^7.27.1" from react-native-worklets@0.13.0
+npm warn   node_modules/react-native-worklets
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: @babel/preset-typescript@7.29.7
+npm warn Found: @babel/core@7.29.7
+npm warn node_modules/@babel/core
+npm warn   dev @babel/core@"^7.26.0" from the root project
+npm warn   59 more (@babel/helper-create-class-features-plugin, ...)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer @babel/core@"^7.0.0-0" from @babel/preset-typescript@7.29.7
+npm warn node_modules/@babel/preset-typescript
+npm warn   @babel/preset-typescript@"^7.23.0" from babel-preset-expo@58.0.26
+npm warn   node_modules/babel-preset-expo
+npm warn   1 more (react-native-worklets)
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: react-native-worklets@0.13.0
+npm warn Found: @babel/core@7.29.7
+npm warn node_modules/@babel/core
+npm warn   dev @babel/core@"^7.26.0" from the root project
+npm warn   59 more (@babel/helper-create-class-features-plugin, ...)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer @babel/core@"*" from react-native-worklets@0.13.0
+npm warn node_modules/react-native-worklets
+npm warn   react-native-worklets@"0.13.0" from the root project
+npm warn   3 more (@expo/ui, @nativescript/react-native, expo-modules-core)
+npm warn ERESOLVE overriding peer dependency
+npm warn While resolving: react-native-worklets@0.13.0
+npm warn Found: @react-native/metro-config@0.88.1
+npm warn node_modules/@react-native/metro-config
+npm warn   dev @react-native/metro-config@"0.88.1" from the root project
+npm warn   1 more (@react-native/community-cli-plugin)
+npm warn
+npm warn Could not resolve dependency:
+npm warn peer @react-native/metro-config@"*" from react-native-worklets@0.13.0
+npm warn node_modules/react-native-worklets
+npm warn   react-native-worklets@"0.13.0" from the root project
+npm warn   3 more (@expo/ui, @nativescript/react-native, expo-modules-core)
+
+added 688 packages in 39s
+{"status":"installed","toolingRoot":"/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/source/Scripts/Expo","files":19603,"packages":645}
+[MiniApps] Preparing original npm inputs: No verified original npm installation receipt. Run Scripts/MiniApps/install-tooling.mjs for /mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/source/Scripts/NativeScript
+npm warn deprecated source-map-resolve@0.6.0: See https://github.com/lydell/source-map-resolve#deprecated
+
+added 202 packages in 13s
+{"status":"installed","toolingRoot":"/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/source/Scripts/NativeScript","files":5969,"packages":142}
+PASS: five exact pinned declaration-file corrections; no skipLibCheck or runtime changes.
+ScriptWidget catalog: 29 component declarations generated from original source.
+Wrote source inventory: 94 sources, 176 local public exports; E2E not inferred.
+PASS: SDK source inventory matches 94 sources and 176 local public exports.
+Wrote 80 canonical Host-runtime reachability cells plus separate original-library surface records; no physical/E2E pass inferred.
+PASS: 80 unique source-backed reachability cells; no E2E pass inferred.
+
+added 1 package in 410ms
+{"output":"/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/work/hanlin-runtime-host/MiniAppSDK","inputSHA256":"0388d52ec3ceef1adddb21a8718566876db0ef693520bc761e4ec57573a96514","files":25681,"engines":["expo","nativescript","scriptwidget"]}
+npm warn deprecated node-domexception@1.0.0: Use your platform's native DOMException instead
+
+added 166 packages in 6s
+{"package":"@yarnpkg/shell","version":"4.1.3","files":5}
+{"unicode":"16.0","patterns":3,"comparedPerPattern":1114112,"ranges":736,"upstreamSHA256":"1847afd90236234c0797bd072647aca486a027c6ff696029e294b742985b57fb","patchedSHA256":"35d8582e121e974a0bd611fd2e628f5ea7c992ada05fc584b8eb1be57c575e85"}
+{"compiler":"0.10.0","originalParserReproduced":true,"grammarSHA256":"7471bb6efa3ffc8cafeeb73ae5443121d8f98fd55c12e04e3d2595f3ff25024f","parserSHA256":"cc894ae3938649fc62037e0a574ad3cded99c9771e4e042a2d893185789a47ef"}
+
+> hanlin-runtime-host@2.0.0 test
+> node --test Tests/*.test.mjs
+
+✔ real archive inventory exceeds former file/size caps with bounded I/O and preserves caller budgets (4797.236568ms)
+✔ actual CLI Worker resolves extensionless scripts and directory mains using Node resolution (136.048993ms)
+✔ runtime probe retries opaque Worker exits and loader diagnostics from stderr (1.601049ms)
+✔ unused client stdio and cross-spawn code do not reject the selected server path (96.772164ms)
+✔ direct-blocked may import child_process without executing it (57.010572ms)
+✔ esm-import-only may import child_process without executing it (55.220602ms)
+✔ transitive-blocked may import child_process without executing it (58.471061ms)
+✔ commonjs-blocked may import child_process without executing it (55.363563ms)
+✔ dynamic-blocked may import child_process without executing it (57.402135ms)
+✔ get-builtin-blocked may import child_process without executing it (59.157425ms)
+✔ spawn-call is rejected when subprocess execution is attempted (156.746434ms)
+✔ exec-call is rejected when subprocess execution is attempted (87.971913ms)
+✔ exec-file-call is rejected when subprocess execution is attempted (66.90647ms)
+✔ fork-call is rejected when subprocess execution is attempted (83.202845ms)
+✔ spawn-sync-call is rejected when subprocess execution is attempted (62.371204ms)
+✔ exec-sync-call is rejected when subprocess execution is attempted (67.729795ms)
+✔ exec-file-sync-call is rejected when subprocess execution is attempted (75.096397ms)
+✔ child-process-bypass is rejected when subprocess execution is attempted (101.20087ms)
+✔ fork-child-call is rejected when subprocess execution is attempted (72.072901ms)
+✔ commonjs-spawn-call is rejected when subprocess execution is attempted (119.159295ms)
+✔ get-builtin-call is rejected when subprocess execution is attempted (67.299192ms)
+✔ transitive-call is rejected when subprocess execution is attempted (59.208625ms)
+✔ cluster-blocked is rejected by the Worker runtime policy (56.426769ms)
+✔ binding-blocked is rejected by the Worker runtime policy (53.14231ms)
+✔ process-wrap-blocked is rejected by the Worker runtime policy (94.104909ms)
+✔ unreachable native build material is inventory, not an execution-path rejection (93.547186ms)
+✔ bounded concurrent archive scanning preserves serial safety results (3.233659ms)
+✔ only the selected reachable TypeScript entry is compiled by the Worker loader (334.728472ms)
+✔ a native addon actually resolved by the selected entry is rejected (53.838714ms)
+✔ archive safety rejects a symlink that escapes packageRoot (3.985183ms)
+✔ canonical parent aliases do not make a contained entry point appear to escape (70.754013ms)
+✔ execution-path analysis requires an explicit selected entry point (1.794531ms)
+✔ runtime probe bounds forced shutdown after MCP protocol success (1052.695537ms)
+✔ the production installer rejects executed child_process and preserves the prior package (333.900906ms)
+✔ MCP probe forwards explicitly supplied paths and credentials after bootstrap without argv caps (107.634947ms)
+✔ owned UTF-8 input remains strict without ICU TextDecoder, including scalar splits and BOM (51.058258ms)
+✔ actual authenticated HTTP control executes >32MiB Unicode input with exact durable hashes and no replay (2382.197208ms)
+✔ wrong digest, size, identity and invalid UTF8 preserve failed input without executing its source (18.93347ms)
+✔ interruption during claimed input preparation settles the original ID without a Worker or later replay (115.005511ms)
+✔ never-started receipts and nonregular inbox paths cannot be claimed as fresh execution (8.160168ms)
+✔ actual process termination during preflight recovers the claimed input as interrupted without source replay (145.271007ms)
+✔ ordinary cancellation before POST persists the first cause and prevents delayed file or Host operation side effects (8.297448ms)
+✔ cancelling an unregistered pre-existing journal never overwrites or classifies its history as never-started (5.27771ms)
+✔ Host-generated child job identity reaches input validation and its durable receipt (79.0089ms)
+✔ actual Worker interruption retains its cause and full output through reopen (63.029287ms)
+✔ late Host operation completion cannot erase an already requested system interruption (60.02635ms)
+✔ interruption before POST or during journal creation cannot start or replay side effects (24.09022ms)
+✔ esm resolves workspace modules and local exports before pinned global packages (122.267753ms)
+✔ commonjs resolves workspace modules and local exports before pinned global packages (111.663931ms)
+✔ managed CLI preload does not configure or leak its private bootstrap into nested Workers (96.445122ms)
+✔ Host command wait wakes for actual requests and aborts without cancelling the execution (418.46436ms)
+✔ full stdout and stderr survive preview limits and store reopen with verified hashes (1091.197922ms)
+✔ ordinary event-loop work finishes after module evaluation without being terminated early (174.863699ms)
+✔ explicit timeout retains partial output and is distinct from user cancellation (1507.881551ms)
+✔ explicit cancellation terminates the actual worker and retains partial output (59.598387ms)
+﹣ actual Node job crosses 300 seconds with no hidden deadline (0.161361ms) # SKIP
+✔ a later nonzero exit cannot be hidden by an earlier successful module export (49.74613ms)
+✔ user worker messages cannot hide the final module result (50.560454ms)
+✔ a restored job with no opened streams has an empty lossless output page (3.683621ms)
+✔ actual CommonJS CLI main preserves argv, cwd, environment, binary stdin and late stdout (270.943579ms)
+✔ actual ESM CLI errors and exit status are retained without interpreting user messages as results (106.153499ms)
+✔ CLI cancellation stops the actual main and retains partial output; launch environment is frozen (59.497907ms)
+✔ user PATH HOME and NODE_OPTIONS apply to the job without reconfiguring Worker bootstrap (125.454492ms)
+✔ approved Skill job does not inherit host secrets and keeps its explicit environment (48.910525ms)
+✔ Fetch transport follows actual WebAssembly availability (2.960697ms)
+✔ real JITless Node supports Fetch request, streaming, clone, redirects, gzip, multipart and abort (321.856676ms)
+✔ native Fetch reference proves TLS, SRI and actual controlled Proxy routing (384.046959ms)
+✔ actual published Yarn patch is idempotent and refuses changed bytes or versions (180.838974ms)
+✔ Host operation survives observer loss and retains complete progress, UTF8 previews, digests and reopen (26.279513ms)
+✔ Host cancellation stays requested until the real asynchronous operation drains (19.867956ms)
+✔ a real Host journal failure aborts extraction and exposes failed in-memory status with partial output (9.763737ms)
+✔ Host operation claims real oversized owned inputs before invoking the existing callback and never replays (280.586276ms)
+✔ Host operation ingress rejects changed input identity without executing its callback and retains the real bytes (5.02283ms)
+✔ worker stdin and stdout remain isolated for multiple servers (93.589625ms)
+✔ lifecycle scripts retain native execution metadata while incompatible engines remain rejected (2.263813ms)
+✔ integrity mismatch fails closed (2.256653ms)
+✔ install cancellation aborts work (0.515283ms)
+✔ multiple package bins are listed and an explicit path preserves its bin name (1.039686ms)
+✔ unknown legacy transactions preserve both the installed package and its backup (10.439381ms)
+✔ host redirects npm state before preview and install modules initialize (15990.152824ms)
+✔ worker terminal status is observable only after its actual atomic journal rename (114.520027ms)
+✔ operation terminal status is observable only after its actual atomic journal rename (21.766607ms)
+✔ actual MCP installation executes lifecycle before initialize/tools-list and preserves the prior server after failure (4987.299036ms)
+✔ actual MCP tools/list above the former one-MiB probe cap passes by default (102.402037ms)
+✔ ordinary installation probes a real >one-MiB schema after the former thirty-second deadline and journals exact output (31426.521897ms)
+✔ a stopped probe cancels its actual Worker without waiting for a protocol timeout (1160.614366ms)
+✔ exit zero without a protocol response fails promptly instead of waiting forever (48.09808ms)
+✔ complete protocol reply immediately followed by exit zero remains a valid probe (53.862194ms)
+✔ a caller-selected probe byte budget is honored without a hidden minimum (53.034109ms)
+✔ real MCP HTTP transport retains >eight-MiB disconnected frames, accepts owned >ten-MiB input, and binds generation (3232.425405ms)
+✔ cancelling an actual pending MCP startup settles the managed job and permits a clean later generation (3869.081957ms)
+✔ MCP generations retain actual late Worker imports across commit, rollback and process-style reopen (77.450291ms)
+✔ real TypeScript reports semantic errors with original source locations (3103.582014ms)
+✔ validation uses actual original package declarations from the supplied SDK (4717.432263ms)
+✔ NativeScript package emits a runnable ESM graph and retains exact editable sources (3807.456157ms)
+✔ NativeScript preserves authored CommonJS JavaScript and its source-map mode (3486.409486ms)
+✔ import rechecks retained source and ignores a stale successful report (5202.995333ms)
+✔ ScriptWidget keeps original source and its explicit ABI declaration (1223.147331ms)
+✔ failed typecheck emits no package (1220.243514ms)
+✔ a requested existing output directory is preserved (1393.225403ms)
+✔ SDK discovery reads its real manifest and requested documentation (12.500193ms)
+✔ bundle-only imports do not receive a fabricated source typecheck pass (8.819451ms)
+✔ modified compiled output is rejected even when retained TypeScript is still valid (4146.700175ms)
+✔ the real CLI archives and revalidates retained source, diagnostics and output identity (9038.521455ms)
+✔ compiler-used sources named build or dist survive source retention and archive revalidation (3814.045036ms)
+✔ NativeScript preserves the original npm runtime package rather than leaving an unresolved bare import (4012.835434ms)
+✔ canonical module and type references use the supplied SDK while retaining its nested dependency (2681.738675ms)
+✔ NativeScript emission and copied bodies agree with canonical types and preserve project aliases and extra dependencies (3557.069017ms)
+✔ missing canonical exports, configs and SDK dependencies never resolve from ancestor packages (4060.500153ms)
+✔ explicit esm native command module executes a real CLI and retains complete binary streams (535.908524ms)
+✔ explicit commonjs native command module executes a real CLI and retains complete binary streams (453.965926ms)
+✔ an unattached context never fabricates an execution, PID or successful empty output (1.453049ms)
+✔ actual persistent MCP Worker can inspect the module but cannot inherit a chat command owner (61.512799ms)
+✔ network diagnostics preserve bounded cyclic AggregateError cause codes (3.644741ms)
+✔ the HTTPS diagnostic never disables TLS or accepts credential-bearing echo URLs (1.037966ms)
+✔ real TLS handshake failures remain failures for both fetch and node:https GET/POST (92.306698ms)
+✔ actual optional failure prunes its required ancestor and cyclic private deps, preserving required/shared builds and journals (1692.195945ms)
+✔ required failures and forged optional flags cannot erase required packages (1111.277518ms)
+✔ aborted optional work never becomes an optional success or omission (39.202189ms)
+✔ malformed optional shell syntax is a real journaled build failure, while required syntax remains rejected (1659.997918ms)
+✔ actual registry reify retries previously omitted hooks after an unrelated root version update (1073.085136ms)
+✔ actual Arborist tree plans dependency phases, root project phases and skips unchanged build products (83.767489ms)
+✔ immutable package generations preserve old files, reject conflicting commits and retain published generations (24.407503ms)
+✔ root aliases expose the same physical legacy and published generation without mutating reads (31.835626ms)
+✔ competing commits through host root aliases preserve conflict rejection (9.369574ms)
+✔ reading a missing legacy host does not create directories or introduce a missing-path error (2.394174ms)
+✔ npm lifecycle environment retains user values and flattens RFC183 package metadata (5.499752ms)
+✔ actual registry extraction and Arborist dependency hooks publish atomically and preserve unchanged builds (1298.412369ms)
+✔ command-only package validation hashes actual entries without executing invented CLI arguments (158.539045ms)
+✔ actual Worker loads import and require-only public roots from the staged package generation (131.650327ms)
+✔ an actual root dependency failure is not hidden by CLI or require fallback (71.730898ms)
+✔ subpath metadata does not pretend a nonexistent root was imported; invalid bin targets still fail (63.54609ms)
+✔ source execution preserves explicit positional arguments through the original parser (31.400503ms)
+✔ actual Yarn language preserves quoting, Unicode argv, environment and cwd across command adapters (8.411889ms)
+✔ original multiline shell source retains file redirection and stdout-to-stderr duplication (11.019504ms)
+✔ grammar newline boundaries preserve quoted text, comments, CRLF and continued commands (6.576958ms)
+✔ real interpreter pipes stdin and redirects output while retaining exact failing exit status (4.806708ms)
+✔ dynamic command names and command substitutions always reach adapters, never OS spawn (3.038857ms)
+✔ globs, groups and logical short-circuiting use the actual parser/interpreter (12.287511ms)
+✔ missing adapters fail truthfully and can be handled with shell control flow (6.981121ms)
+✔ capability facts identify the actual Node process and its actual built-in namespace (1.325248ms)
+✔ real parent Worker spools a >10MiB Unicode pipeline through actual CLI jobs without output loss (1450.108534ms)
+✔ npm run uses actual pre/main/post CLI jobs, lifecycle environment and stops at real exit23 (1411.62543ms)
+✔ durable completion receipt is idempotent across lost/reordered acknowledgements and rejects conflicts (10.042019ms)
+✔ parent cancellation remains pending until the actual linked-command receipt arrives (358.944253ms)
+✔ actual journal write failure returns a failed in-memory status and retains partial output (65.665383ms)
+✔ manifest compatibility uses the actual Node version, OS and architecture (3.851382ms)
+✔ an iOS target is not substituted with Darwin and CPU constraints remain effective (0.428803ms)
+✔ actual registry preview and global install use the running interpreter target (159.282769ms)
+✔ MCP candidate selection uses the actual interpreter against supplied registry metadata (4.030664ms)
+✔ actual global installation retains and executes a package beyond fifty thousand files (24339.633457ms)
+✔ commonjs waits for an exported asynchronous network operation before worker teardown (143.264075ms)
+✔ esm waits for an exported asynchronous network operation before worker teardown (106.571101ms)
+✔ generic ESM execution captures Hebrew output and a structured value (52.403906ms)
+✔ generic CommonJS execution returns module.exports (51.576981ms)
+✔ TypeScript 6 compiler emits JavaScript and source maps (43.352413ms)
+✔ execution output is capped without splitting the worker protocol (54.78984ms)
+✔ UTF-8 output budgets never split Hebrew or emoji (520.042432ms)
+✔ lifecycle planner preserves original portable shell source and rejects malformed syntax (6.8466ms)
+✔ failed executions preserve aggregate HTTPS cause codes (51.681861ms)
+✔ console errors preserve cyclic causes within the output budget (52.149904ms)
+✔ actual compiler Worker accepts >10MiB durable source and retains full typed output/hash/reopen (4856.274431ms)
+✔ actual project compiler preserves >128 argv values, emits files and reports locked compiler identity (1268.073393ms)
+✔ compiler diagnostics are preserved with actual failing exit and no emitted JavaScript (1286.293539ms)
+✔ virtual source does not replace an installed dependency with the same basename (1220.545035ms)
+✔ actual compiler job cancellation retains entered Worker output and does not block another job (405.521084ms)
+✔ warning tracing is scoped, reference counted and idempotent (1.007046ms)
+✔ diagnostic execution retains the actual warning stack and worker identity (68.681841ms)
+✔ named fs and fs/promises imports use the execution workspace (59.029024ms)
+✔ relative copy and rename destinations plus native realpath stay in the execution workspace (71.702898ms)
+ℹ tests 170
+ℹ suites 0
+ℹ pass 169
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 1
+ℹ todo 0
+ℹ duration_ms 189706.725426
+{"passed":true,"fetchImplementation":"node-fetch@3.3.2+native-web-api","webAssemblyAvailable":false,"nonce":"fb133c3c-b29d-469f-a192-043800736af3","contracts":["GET","Request POST Unicode","redirect","HTTP error","ReadableStream","clone","gzip","multipart File","abort","HEAD","204"]}
+Prepared RuntimeHostResources.zip (ed18d93a88a1020bc2140417cea3847daf3d03472cdd4769d9a5ac4e44f48a22).

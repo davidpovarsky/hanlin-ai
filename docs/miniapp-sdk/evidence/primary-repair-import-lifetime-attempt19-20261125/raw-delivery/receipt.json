@@ -1,0 +1,226 @@
+{
+  "schema": 1,
+  "source": "4cde88df07a2f3cd86cc99ad87786c79ae207390",
+  "members": [
+    {
+      "name": "metadata/com.itorah.hanlinminiapps.plist",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/D93ECA38-CC9A-4210-9018-4CB0417B906D/.com.apple.mobile_container_manager.metadata.plist",
+      "originalName": "metadata/com.itorah.hanlinminiapps.plist",
+      "originalBytes": 602,
+      "originalSHA256": "cde9660338425f9d80813bfce0c335fca4780f4390b8e84b108c7f0b306ccf8f",
+      "bytes": 602,
+      "sha256": "cde9660338425f9d80813bfce0c335fca4780f4390b8e84b108c7f0b306ccf8f",
+      "mtimeNs": "1795605989523343162",
+      "losslessGzip": false
+    },
+    {
+      "name": "metadata/com.itorah.chavrusachat.plist",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/6210E35D-3370-435B-B777-BB7E4EAFE89F/.com.apple.mobile_container_manager.metadata.plist",
+      "originalName": "metadata/com.itorah.chavrusachat.plist",
+      "originalBytes": 600,
+      "originalSHA256": "64d877dc1ce2f9d25c76f3f549a7ad4bf7028a34efeb289016b00ebd64eaa778",
+      "bytes": 600,
+      "sha256": "64d877dc1ce2f9d25c76f3f549a7ad4bf7028a34efeb289016b00ebd64eaa778",
+      "mtimeNs": "1795605982528793590",
+      "losslessGzip": false
+    },
+    {
+      "name": "diagnostics/agent-session-2026-11-25T16-21-15-19269f43.json.gz",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/6210E35D-3370-435B-B777-BB7E4EAFE89F/Documents/Diagnostics/agent-session-2026-11-25T16-21-15-19269f43.json",
+      "originalName": "diagnostics/agent-session-2026-11-25T16-21-15-19269f43.json",
+      "originalBytes": 2464186,
+      "originalSHA256": "b91d1df87f503cb93207a4b68c7132a7da0b8d9f005cc850d293144e6c070e28",
+      "bytes": 525697,
+      "sha256": "dc979b6d24ca7a7dcc94ec5781cd3c648e8f2d971f35d266965f772d02665de0",
+      "mtimeNs": "1795623846269952363",
+      "losslessGzip": true
+    },
+    {
+      "name": "diagnostics/agent-session-2026-11-25T16-21-15-19269f43-stage-snapshots.json.gz",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/6210E35D-3370-435B-B777-BB7E4EAFE89F/Documents/Diagnostics/agent-session-2026-11-25T16-21-15-19269f43-stage-snapshots.json",
+      "originalName": "diagnostics/agent-session-2026-11-25T16-21-15-19269f43-stage-snapshots.json",
+      "originalBytes": 6108,
+      "originalSHA256": "6893cefa5e5a746202fd0e3a9636ea833d8a2c52217381185fb4e9cda99c09ed",
+      "bytes": 1466,
+      "sha256": "64effba4fca4c00f71333181c0fc00ddbb8c2b0fc3023b602b13f5d7d0ce3b23",
+      "mtimeNs": "1795623846605663817",
+      "losslessGzip": true
+    },
+    {
+      "name": "diagnostics/Hanlin-Chat-2026-11-25-172113.jsonl.gz",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/6210E35D-3370-435B-B777-BB7E4EAFE89F/Documents/Diagnostics/Hanlin-Chat-2026-11-25-172113.jsonl",
+      "originalName": "diagnostics/Hanlin-Chat-2026-11-25-172113.jsonl",
+      "originalBytes": 163358,
+      "originalSHA256": "789390d69df9a931776ae252a1665d4c41bc2bc73f1df33aeb2d571ce2cd9a68",
+      "bytes": 12064,
+      "sha256": "338a22fb705a679aa1b5fd4c9bdec161830ab99cee8dd79d197475c38d738086",
+      "mtimeNs": "1795623846908144887",
+      "losslessGzip": true
+    },
+    {
+      "name": "diagnostics/agent-session-2026-11-25T16-21-15-19269f43-manifest.json.gz",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/6210E35D-3370-435B-B777-BB7E4EAFE89F/Documents/Diagnostics/agent-session-2026-11-25T16-21-15-19269f43-manifest.json",
+      "originalName": "diagnostics/agent-session-2026-11-25T16-21-15-19269f43-manifest.json",
+      "originalBytes": 881,
+      "originalSHA256": "6e89a733bee4a7e7e4af899ca4ec1e31296d6e6f4fc7c777594c132a83c7502a",
+      "bytes": 505,
+      "sha256": "ea55ce4f780356f210e3250b05b4b0a32b6f2b38da7e1849e06621612e97e876",
+      "mtimeNs": "1795623846606196982",
+      "losslessGzip": true
+    },
+    {
+      "name": "diagnostics/agent-session-2026-11-25T16-21-15-19269f43.txt.gz",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/6210E35D-3370-435B-B777-BB7E4EAFE89F/Documents/Diagnostics/agent-session-2026-11-25T16-21-15-19269f43.txt",
+      "originalName": "diagnostics/agent-session-2026-11-25T16-21-15-19269f43.txt",
+      "originalBytes": 2779257,
+      "originalSHA256": "b803d09e7a267808b49f543a781ebb08acd66fb29e24e6dc10121c0cb862750d",
+      "bytes": 515905,
+      "sha256": "955f900dd737f08ff0ffba8909b596ec5f4eb8ef95ffa0a7f05c3f9fbc7c2208",
+      "mtimeNs": "1795623846600158621",
+      "losslessGzip": true
+    },
+    {
+      "name": "diagnostics/agent-session-2026-11-25T16-21-15-19269f43-stage-events.jsonl.gz",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/6210E35D-3370-435B-B777-BB7E4EAFE89F/Documents/Diagnostics/agent-session-2026-11-25T16-21-15-19269f43-stage-events.jsonl",
+      "originalName": "diagnostics/agent-session-2026-11-25T16-21-15-19269f43-stage-events.jsonl",
+      "originalBytes": 4839420,
+      "originalSHA256": "b8daf5573517528de2c36b44e45f95d141c377344dd054724161033cecdff014",
+      "bytes": 1032582,
+      "sha256": "c83e6cfd8adecf1d4799ba51482af6cb6f62250759f99c53c38f635c717a4844",
+      "mtimeNs": "1795623846654082791",
+      "losslessGzip": true
+    },
+    {
+      "name": "metadata/group.com.itorah.shared.plist",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428/.com.apple.mobile_container_manager.metadata.plist",
+      "originalName": "metadata/group.com.itorah.shared.plist",
+      "originalBytes": 600,
+      "originalSHA256": "5d786796ff8cd0b5295885e3cbd155d9f4f80fb9662bf8ca18b50b978174d44f",
+      "bytes": 600,
+      "sha256": "5d786796ff8cd0b5295885e3cbd155d9f4f80fb9662bf8ca18b50b978174d44f",
+      "mtimeNs": "1795605982605832081",
+      "losslessGzip": false
+    },
+    {
+      "name": "authoring/481496c9-4f80-44dc-aa23-99afa2f2a0e3/request.json",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428/HanlinSplit/v1/Authoring/v1/481496c9-4f80-44dc-aa23-99afa2f2a0e3/request.json",
+      "originalName": "authoring/481496c9-4f80-44dc-aa23-99afa2f2a0e3/request.json",
+      "originalBytes": 251,
+      "originalSHA256": "34846266b1fdfab94316e02254ee6152ddec3aa0184a9ff22e6b7f6da29e4598",
+      "bytes": 251,
+      "sha256": "34846266b1fdfab94316e02254ee6152ddec3aa0184a9ff22e6b7f6da29e4598",
+      "mtimeNs": "1795623670854402998",
+      "losslessGzip": false
+    },
+    {
+      "name": "authoring/481496c9-4f80-44dc-aa23-99afa2f2a0e3/MiniAppTypeError.hanlinNativeScript",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428/HanlinSplit/v1/Authoring/v1/481496c9-4f80-44dc-aa23-99afa2f2a0e3/MiniAppTypeError.hanlinNativeScript",
+      "originalName": "authoring/481496c9-4f80-44dc-aa23-99afa2f2a0e3/MiniAppTypeError.hanlinNativeScript",
+      "originalBytes": 4399,
+      "originalSHA256": "9a2a14be4ad24565bad66a98fc53522229de903acfb8a41b3df18006e81b51c9",
+      "bytes": 4399,
+      "sha256": "9a2a14be4ad24565bad66a98fc53522229de903acfb8a41b3df18006e81b51c9",
+      "mtimeNs": "1795606009009589935",
+      "losslessGzip": false
+    },
+    {
+      "name": "authoring/481496c9-4f80-44dc-aa23-99afa2f2a0e3/diagnostics.json",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428/HanlinSplit/v1/Authoring/v1/481496c9-4f80-44dc-aa23-99afa2f2a0e3/diagnostics.json",
+      "originalName": "authoring/481496c9-4f80-44dc-aa23-99afa2f2a0e3/diagnostics.json",
+      "originalBytes": 1973,
+      "originalSHA256": "fd1022bf75d9b06f0612d8e590c2fff95dddecbe4b4124ac7154dac564ba5328",
+      "bytes": 1973,
+      "sha256": "fd1022bf75d9b06f0612d8e590c2fff95dddecbe4b4124ac7154dac564ba5328",
+      "mtimeNs": "1795623670852144545",
+      "losslessGzip": false
+    },
+    {
+      "name": "authoring/481496c9-4f80-44dc-aa23-99afa2f2a0e3/receipt.json",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428/HanlinSplit/v1/Authoring/v1/481496c9-4f80-44dc-aa23-99afa2f2a0e3/receipt.json",
+      "originalName": "authoring/481496c9-4f80-44dc-aa23-99afa2f2a0e3/receipt.json",
+      "originalBytes": 214,
+      "originalSHA256": "cc9165b82844b4accd9eeb54a7562a96954e601365c25df413ed5973a722e0ed",
+      "bytes": 214,
+      "sha256": "cc9165b82844b4accd9eeb54a7562a96954e601365c25df413ed5973a722e0ed",
+      "mtimeNs": "1795623674624741818",
+      "losslessGzip": false
+    },
+    {
+      "name": "authoring/2607a055-adfd-45f2-8341-ef1a839868af/request.json",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428/HanlinSplit/v1/Authoring/v1/2607a055-adfd-45f2-8341-ef1a839868af/request.json",
+      "originalName": "authoring/2607a055-adfd-45f2-8341-ef1a839868af/request.json",
+      "originalBytes": 243,
+      "originalSHA256": "66fdd72657b2c80b986c37ba758b0dd3abdf18e4cc6dde2f950ca4023dbdec5e",
+      "bytes": 243,
+      "sha256": "66fdd72657b2c80b986c37ba758b0dd3abdf18e4cc6dde2f950ca4023dbdec5e",
+      "mtimeNs": "1795623807659526875",
+      "losslessGzip": false
+    },
+    {
+      "name": "authoring/2607a055-adfd-45f2-8341-ef1a839868af/MiniApp.hanlinNativeScript",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428/HanlinSplit/v1/Authoring/v1/2607a055-adfd-45f2-8341-ef1a839868af/MiniApp.hanlinNativeScript",
+      "originalName": "authoring/2607a055-adfd-45f2-8341-ef1a839868af/MiniApp.hanlinNativeScript",
+      "originalBytes": 7247,
+      "originalSHA256": "99676ee0e05ed08969a99ce9fae62f1badc5e14b6e69ddc951bc14b52002cd7d",
+      "bytes": 7247,
+      "sha256": "99676ee0e05ed08969a99ce9fae62f1badc5e14b6e69ddc951bc14b52002cd7d",
+      "mtimeNs": "1795623795760670694",
+      "losslessGzip": false
+    },
+    {
+      "name": "authoring/2607a055-adfd-45f2-8341-ef1a839868af/diagnostics.json",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428/HanlinSplit/v1/Authoring/v1/2607a055-adfd-45f2-8341-ef1a839868af/diagnostics.json",
+      "originalName": "authoring/2607a055-adfd-45f2-8341-ef1a839868af/diagnostics.json",
+      "originalBytes": 2,
+      "originalSHA256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "bytes": 2,
+      "sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a",
+      "mtimeNs": "1795623807659031334",
+      "losslessGzip": false
+    },
+    {
+      "name": "authoring/2607a055-adfd-45f2-8341-ef1a839868af/receipt.json",
+      "sourcePath": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428/HanlinSplit/v1/Authoring/v1/2607a055-adfd-45f2-8341-ef1a839868af/receipt.json",
+      "originalName": "authoring/2607a055-adfd-45f2-8341-ef1a839868af/receipt.json",
+      "originalBytes": 166,
+      "originalSHA256": "d8d2b180ec2ebd841802bac60c01349986edc9667ac8832ea12246f0519897f0",
+      "bytes": 166,
+      "sha256": "d8d2b180ec2ebd841802bac60c01349986edc9667ac8832ea12246f0519897f0",
+      "mtimeNs": "1795623831218471020",
+      "losslessGzip": false
+    }
+  ],
+  "observedAt": "2026-11-25T16:28:09.820523+00:00",
+  "actualRequestsAndReceipts": {
+    "authoring/481496c9-4f80-44dc-aa23-99afa2f2a0e3/request.json": {
+      "archiveSHA256": "9a2a14be4ad24565bad66a98fc53522229de903acfb8a41b3df18006e81b51c9",
+      "createdAt": 817316470.850329,
+      "id": "481496C9-4F80-44DC-AA23-99AFA2F2A0E3",
+      "originalFileName": "MiniAppTypeError.hanlinNativeScript",
+      "purpose": "repair",
+      "schemaVersion": 1
+    },
+    "authoring/481496c9-4f80-44dc-aa23-99afa2f2a0e3/receipt.json": {
+      "conversationID": "F7C7C6DE-133C-45CF-A218-56D663979636",
+      "status": "submitted",
+      "transferID": "481496C9-4F80-44DC-AA23-99AFA2F2A0E3",
+      "updatedAt": 817316474.624259,
+      "userMessageID": "F953D109-F531-45D0-9F78-A37B6011C0DB"
+    },
+    "authoring/2607a055-adfd-45f2-8341-ef1a839868af/request.json": {
+      "archiveSHA256": "99676ee0e05ed08969a99ce9fae62f1badc5e14b6e69ddc951bc14b52002cd7d",
+      "createdAt": 817316607.654883,
+      "id": "2607A055-ADFD-45F2-8341-EF1A839868AF",
+      "originalFileName": "MiniApp.hanlinNativeScript",
+      "purpose": "install",
+      "schemaVersion": 1
+    },
+    "authoring/2607a055-adfd-45f2-8341-ef1a839868af/receipt.json": {
+      "installedPackageID": "install-script-d7e81598bd3fabb072c5e57c",
+      "status": "installed",
+      "transferID": "2607A055-ADFD-45F2-8341-EF1A839868AF",
+      "updatedAt": 817316631.217858
+    }
+  },
+  "boundary": "Actual own-device files retained after finalized V10 failure; no boot, test, importer action or store writes. Current metadata identifies real rotated containers. Full original encrypted diagnostics remain on Mac; actual model-visible JSON/TXT/events retained losslessly."
+}

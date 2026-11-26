@@ -1,0 +1,25 @@
+118 |                 let current = activity.content.state
+
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift:114:19: error: passing closure as a 'sending' parameter risks causing data races between main actor-isolated code and concurrent execution of the closure [#RegionIsolation::SendingClosureRisksDataRace]
+112 |         try await withThrowingTaskGroup(of: HanlinScriptWidgetLiveActivityAttributes.ContentState.self) { group in
+113 |             defer { group.cancelAll() }
+114 |             group.addTask { @MainActor in
+    |                   `- error: passing closure as a 'sending' parameter risks causing data races between main actor-isolated code and concurrent execution of the closure [#RegionIsolation::SendingClosureRisksDataRace]
+115 |                 // Prepare asynchronous observation before checking an already-published state.
+116 |                 var updates = activity.contentUpdates.makeAsyncIterator()
+    |                                        `- note: closure captures 'activity' which is accessible to main actor-isolated code
+117 |                 try Task.checkCancellation()
+118 |                 let current = activity.content.state
+
+/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift:120:51: error: sending 'updates' risks causing data races [#RegionIsolation::SendingRisksDataRace]
+118 |                 let current = activity.content.state
+119 |                 if current.revision == revision { return current }
+120 |                 while let content = await updates.next() {
+    |                                                   |- error: sending 'updates' risks causing data races [#RegionIsolation::SendingRisksDataRace]
+    |                                                   `- note: sending main actor-isolated 'updates' to @concurrent instance method 'next()' risks causing data races between @concurrent and main actor-isolated uses
+121 |                     try Task.checkCancellation()
+122 |                     if content.state.revision == revision { return content.state }
+
+[#RegionIsolation]: <https://docs.swift.org/compiler/documentation/diagnostics/region-isolation>
+[#SendingClosureRisksDataRace]: <https://docs.swift.org/compiler/documentation/diagnostics/sending-closure-risks-data-race>
+[#SendingRisksDataRace]: <https://docs.swift.org/compiler/documentation/diagnostics/sending-risks-data-race>

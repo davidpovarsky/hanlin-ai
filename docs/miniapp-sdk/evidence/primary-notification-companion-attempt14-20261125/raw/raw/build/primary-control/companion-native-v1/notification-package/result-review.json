@@ -1,0 +1,33 @@
+{
+  "status": "EXECUTED_PASS",
+  "source": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
+  "commandExitCode": 0,
+  "testFunctions": 8,
+  "parameterInstances": 9,
+  "suiteCount": 1,
+  "failed": 0,
+  "skipped": 0,
+  "functions": [
+    "identicalEventIDsStayInsideTheirProductNamespace",
+    "missingCatalogStillDurablyRetainsTheEventForLiveHostValidation",
+    "cancellationExpiryAndActionErrorsRemainDistinct",
+    "cachedCatalogCannotOverrideLiveInstallationOrItsFailureReceipt",
+    "malformedTaggedEventsAndUnknownVersionsDoNotBecomeCommands",
+    "typedEventExecutesOnceAndKeepsItsActualResultAfterReopen",
+    "changedInstallationsAndUndeclaredTargetsProduceRealFailureReceipts",
+    "foregroundAdmissionLeavesUnstartedWorkQueuedWithoutConsumingAnAttempt"
+  ],
+  "parameterizedFunction": {
+    "name": "typedEventExecutesOnceAndKeepsItsActualResultAfterReopen",
+    "actualCases": [
+      "hanlinNativeScript",
+      "hanlinExpo"
+    ],
+    "reportedPassedCases": 2
+  },
+  "actualTestDurationSeconds": 0.059,
+  "commandElapsedSeconds": 26.137203625010443,
+  "logSHA256": "3e8a1217f04fe6f439d0adf25f691f1af33123b6a9b5a045ffc5ee4b58b941fe",
+  "reviewedAt": "2026-11-25T05:38:07.491324+00:00",
+  "boundary": "Actual canonical queue/unit integration tests; no claim of OS notification or physical delivery."
+}

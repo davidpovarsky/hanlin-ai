@@ -1,0 +1,222 @@
+{
+  "schemaVersion": 1,
+  "kind": "RETAINED_SOURCE_PROVENANCE_ANALYSIS_NOT_NEW_NATIVE_EXECUTION",
+  "recordedAt": "2026-11-25T09:58:54.300Z",
+  "source": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+  "snapshotReceiptSHA256": "eb18c6769824496ae5b37f2483dc191c36e614f166e799efe4490b3dbcda83f8",
+  "sdkManifestSHA256": "1ca059acbc56b0d8d33f3d678c5023fd5aff26c744ac1e5412c3b1663529dfcd",
+  "selectedOriginalRevision": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
+  "retainedSourceUpdateRevision": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
+  "changedNativeSources": 0,
+  "upstreamResolutionSHA256": "28a724580a5c7b03268335bfba6a144b7db155198a916305cd00e2e339db1b2e",
+  "groups": [
+    {
+      "kind": "original-renderer",
+      "prefix": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/",
+      "rows": 41,
+      "revision": "4da256d58247bbafb9a5cd443a285250b97b3c4b"
+    },
+    {
+      "kind": "original-service-core",
+      "prefix": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/",
+      "rows": 55,
+      "revision": "4da256d58247bbafb9a5cd443a285250b97b3c4b"
+    },
+    {
+      "kind": "original-controls",
+      "prefix": "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/ScriptWidgetControls/Original/",
+      "rows": 2,
+      "revision": "4da256d58247bbafb9a5cd443a285250b97b3c4b"
+    },
+    {
+      "kind": "original-support-resources",
+      "paths": [
+        "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/Resources/core.js",
+        "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/Resources/support.bundle/moment.min.js",
+        "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/Resources/support.bundle/util.js"
+      ],
+      "rows": 3,
+      "revision": "4da256d58247bbafb9a5cd443a285250b97b3c4b"
+    },
+    {
+      "kind": "authored-host-adapter-derivation",
+      "rows": 2,
+      "revision": "68f04194f00222558c44d5a832e7617a96f62574",
+      "latestContractRevision": "4da256d58247bbafb9a5cd443a285250b97b3c4b"
+    }
+  ],
+  "hostAdapters": [
+    {
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift",
+      "sourceRole": "host-adapter",
+      "derivationCommit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "derivationUpstreamBlob": "d87cddf8b6b23e07b08948a2941ba7d4ef222e49",
+      "localSHA256": "d3735e19e7e2603d17449acd0c57c22bc676ee022bfe3152a20d2d846dd58afd",
+      "latestUpstreamContract": {
+        "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift",
+        "upstream": "Shared/ScriptWidgetRuntime/Widget/Runtime/ScriptWidgetRuntime.swift",
+        "identity": {
+          "repository": "everettjf/scriptwidget",
+          "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
+          "path": "Shared/ScriptWidgetRuntime/Widget/Runtime/ScriptWidgetRuntime.swift"
+        },
+        "originalSHA256": "7040cab9a460f5845ee96114c396b7e27e46caf8c9e62614a717e25adb1af574",
+        "changed": true,
+        "hostSHA256": "d3735e19e7e2603d17449acd0c57c22bc676ee022bfe3152a20d2d846dd58afd",
+        "implementation": "Hanlin host adapter; original renderer source and original app service coverage are separate"
+      }
+    },
+    {
+      "local": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/Resources/prepare-widget.js",
+      "sourceRole": "host-adapter",
+      "derivationCommit": "68f04194f00222558c44d5a832e7617a96f62574",
+      "derivationUpstreamBlob": "d87cddf8b6b23e07b08948a2941ba7d4ef222e49",
+      "localSHA256": "5053e0587036008a1ae85d24b4d469271d5f6c880e1a1244e752ec436b32813c",
+      "latestUpstreamContract": {
+        "local": "Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/Resources/prepare-widget.js",
+        "upstream": "Shared/ScriptWidgetRuntime/Widget/Runtime/ScriptWidgetRuntime.swift",
+        "identity": {
+          "repository": "everettjf/scriptwidget",
+          "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
+          "path": "Shared/ScriptWidgetRuntime/Widget/Runtime/ScriptWidgetRuntime.swift"
+        },
+        "originalSHA256": "7040cab9a460f5845ee96114c396b7e27e46caf8c9e62614a717e25adb1af574",
+        "changed": true,
+        "hostSHA256": "5053e0587036008a1ae85d24b4d469271d5f6c880e1a1244e752ec436b32813c",
+        "implementation": "Hanlin host adapter; original renderer source and original app service coverage are separate"
+      }
+    }
+  ],
+  "originalServiceRuntime": {
+    "repository": "everettjf/scriptwidget",
+    "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
+    "upstream": "Shared/ScriptWidgetRuntime/Widget/Runtime/ScriptWidgetRuntime.swift",
+    "upstreamBlob": "1504079272e64447a0cba422492ab6a8313c80c9",
+    "local": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRuntime.swift",
+    "localSHA256": "15a60ffc1a6171dde86fa442a7a51764fd073eee4f615e329b6593dc5cf9b34a",
+    "byteIdentical": false,
+    "adaptation": "Original API/core source compiled in an isolated Swift 5 module. Host adaptations configure product storage, native bundle resources, the existing ZIPFoundation archive backend, and externally prepared JavaScript sessions. Original OS providers and JSExport contracts are retained. Trailing-space normalization preserves native source behavior."
+  },
+  "aggregation": {
+    "sourcePath": "Scripts/MiniApps/stage-sdk.mjs",
+    "sha256": "f0d2b438ee79ac0973f8d261ecf626b2a94268e5140c6dcb67f48b07cabd1f25",
+    "lines": [
+      261,
+      262,
+      277,
+      298
+    ],
+    "logic": "Unique commit values from every everettjf/scriptwidget manifest row; no sourceRole filtering. Joined values populate packageVersions and then upstream.scriptwidget.",
+    "actualPackageVersions": {
+      "everettjf/scriptwidget": "4da256d58247bbafb9a5cd443a285250b97b3c4b,68f04194f00222558c44d5a832e7617a96f62574"
+    }
+  },
+  "refresh": {
+    "sourcePath": "Scripts/MiniApps/refresh-original-sources.mjs",
+    "sha256": "9b367c79ece68771e1ab193cc22c218feb72d2f519ffb410fc560b6fca59a7e8",
+    "selectionAndFetchLines": [
+      219,
+      220,
+      221,
+      237,
+      238
+    ],
+    "adapterContractLines": [
+      256,
+      257,
+      258,
+      259,
+      260
+    ],
+    "originalMergeAndCommitLines": [
+      282,
+      283,
+      284,
+      285,
+      286,
+      287,
+      288
+    ],
+    "logic": "Adapter rows retain historical derivation while latestUpstreamContract records selected current original; ordinary original rows advance entry.commit even when content is unchanged."
+  },
+  "sdkInputBindings": [
+    {
+      "path": "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json",
+      "sha256": "63aa2132a1463552c274c328d63fd4b76b45046de28a8420e5a278257905bb5c"
+    },
+    {
+      "path": "Scripts/MiniApps/refresh-original-sources.mjs",
+      "sha256": "9b367c79ece68771e1ab193cc22c218feb72d2f519ffb410fc560b6fca59a7e8"
+    },
+    {
+      "path": "Scripts/MiniApps/scriptwidget/upstream/provenance.json",
+      "sha256": "425e5bae37920bd571a469c273c923471cb9f1cad5a945e7f28bf972fff8b0d1"
+    },
+    {
+      "path": "Scripts/MiniApps/upstream-resolution.json",
+      "sha256": "28a724580a5c7b03268335bfba6a144b7db155198a916305cd00e2e339db1b2e"
+    }
+  ],
+  "localVerification": {
+    "fileSHA256": {
+      "count": 103,
+      "matches": 103,
+      "mismatches": [],
+      "perCommit": {
+        "4da256d58247bbafb9a5cd443a285250b97b3c4b": 101,
+        "68f04194f00222558c44d5a832e7617a96f62574": 2
+      }
+    },
+    "byteIdenticalOriginalRows": 31,
+    "allClaimedOriginalGitBlobsMatch": true,
+    "adaptedOriginalRows": 70,
+    "adaptedHostRows": 2,
+    "catalogFiles": [
+      {
+        "path": "Scripts/MiniApps/scriptwidget/upstream/scriptWidgetAPI.js",
+        "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
+        "sha256": "d021101c46f554cd9ba77a83c088295ff2523e011424982facec8d1c9462ec9e",
+        "matches": true
+      },
+      {
+        "path": "Scripts/MiniApps/scriptwidget/upstream/storageAPICatalog.js",
+        "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
+        "sha256": "9b9cb5e46575b38697d56d0263fa147d50cd9bef6685f82ddd175ebe561b9f45",
+        "matches": true
+      },
+      {
+        "path": "Scripts/MiniApps/scriptwidget/upstream/dataAPICatalog.js",
+        "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
+        "sha256": "71958adac054862f6fe41100c6709bdbbdae7ed59a07f322f934ad2f73d70e88",
+        "matches": true
+      },
+      {
+        "path": "Scripts/MiniApps/scriptwidget/upstream/LICENSE",
+        "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
+        "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+        "matches": true
+      },
+      {
+        "path": "Scripts/MiniApps/scriptwidget/upstream/NOTICE",
+        "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
+        "sha256": "39d8aedeb5890cc1a1cda786d80b0133faf27f72df1158beacd1406ed275c249",
+        "matches": true
+      },
+      {
+        "path": "Scripts/MiniApps/scriptwidget/upstream/systemAPICatalog.js",
+        "commit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
+        "sha256": "78f83702de1766718ebfde97151a373094fe38f2e480d0b915d99e968b862c90",
+        "matches": true
+      }
+    ]
+  },
+  "conclusion": "Mixed metadata is explained by two explicitly authored host-adapter derivation rows. No stale original-source group is established by this two-revision string.",
+  "boundaries": [
+    "Uses the already completed exact local Git/retained SDK18 resolver trace; this persistence performs no new original download, Mac query, generator or test.",
+    "The producer selected revision is4da at its recorded resolution; this note is not a fresh claim about the internet HEAD now.",
+    "All103 local SHA values match the authenticated source manifest;31 claimed byte-identical original rows also match recorded Git blob IDs;70 original rows are explicitly adapted.",
+    "The2 adapters are not byte-identical originals and both latest contract records say changed=true. Metadata alone does not prove complete semantic adaptation compatibility.",
+    "No new independent remote-byte comparison or replay of every historical merge for the70 adapted original rows occurred in this lane.",
+    "Source/package/native/UI acceptance and task closure remain separate; no source fix or SDK regeneration was made for this explanation."
+  ]
+}

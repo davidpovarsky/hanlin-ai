@@ -57,6 +57,24 @@ export async function copyCompilerClosure(source,destination,files,label,ancesto
   }
 }
 
+async function stageSystemSurfaceTypes(root, destination, files, label) {
+  const packageSource = path.join(root, 'Scripts/MiniApps/system-surfaces/package.json');
+  const pkg = await readJSON(packageSource);
+  const target = path.join(destination, 'node_modules', pkg.name);
+  await mkdir(target, {recursive: true});
+  for (const [source, name] of [[packageSource, 'package.json'],
+    [path.join(root, 'Scripts/MiniApps/native-presentations.d.ts'), 'index.d.ts']]) {
+    const bytes = await readFile(source);
+    await writeFile(path.join(target, name), bytes);
+    files.push({path: path.posix.join(label, 'node_modules', pkg.name, name),
+      sha256: sha(bytes), bytes: bytes.length});
+  }
+  return {packageName: pkg.name, version: pkg.version,
+    typesPath: path.posix.join(label, 'node_modules', pkg.name, 'index.d.ts'),
+    docsPath: 'docs/miniapp-sdk/SYSTEM_SURFACE_ACTIONS.md',
+    runtime: 'declarations-only', widgetHostActions: 'Foreground continuation in the containing Expo or NativeScript package'};
+}
+
 export const sdkInputs = [
  'Scripts/CI/IntegrationValidation/project_graph.py',
  'Scripts/Expo/package.json','Scripts/Expo/package-lock.json','Scripts/Expo/dependency-lock.json',
@@ -67,10 +85,21 @@ export const sdkInputs = [
  'Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPI/HanlinExpoNativeAPIManager.swift',
  'Packages/HanlinExpoNativeAPI/Sources/HanlinExpoNativeAPI/HanlinExpoNativeAPIHostVersions.swift',
  'Packages/HanlinPlatform/Package.swift',
+ 'Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinIdentifiers.swift',
+ 'Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinWidgetProgram.swift',
+ 'Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinNativePresentationMetadata.swift',
+ 'Packages/HanlinPlatform/Sources/HanlinWidgetCompiler/HanlinWidgetCompiler.swift',
  'Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationEvent.swift',
  'Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationInvocation.swift',
  'Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationDelivery.swift',
  'Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift',
+ 'Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinWidgetHostAction.swift',
+ 'Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinWidgetHostActionIntent.swift',
+ 'Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinLiveActivityHostActionIntent.swift',
+ 'Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptAppIntentBridge.swift',
+ 'Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExtensionNodeView.swift',
+ 'Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionContracts.swift',
+ 'Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionStore.swift',
  'Packages/HanlinAppExtensionsSDK/Sources/HanlinNotificationExtension/HanlinNotificationService.swift',
  'AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift',
  'docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json','docs/miniapp-sdk/source-inventory.json',
@@ -195,6 +224,8 @@ export async function stageSDK({root=repositoryRoot,output,engines:requestedEngi
       await copyAuthoringTree(notificationTypes,path.join(destination,'node_modules/@hanlin/notification-events'),
         files,engine+'/node_modules/@hanlin/notification-events');
       graph.versions['@hanlin/notification-events']=(await readJSON(path.join(notificationTypes,'package.json'))).version;
+      const systemSurfaces=await stageSystemSurfaceTypes(root,destination,files,engine);
+      graph.versions[systemSurfaces.packageName]=systemSurfaces.version;
       if(engine==='nativescript') {
         const hostServices=path.join(root,'Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services');
         await copyAuthoringTree(hostServices,path.join(destination,'node_modules/@hanlin/host-services'),files,'nativescript/node_modules/@hanlin/host-services');
@@ -237,6 +268,7 @@ export async function stageSDK({root=repositoryRoot,output,engines:requestedEngi
       engines[engine]={toolingRoot:engine,tsconfigPath:engine+'/tsconfig.json',
         typescriptPath:engine+'/node_modules/typescript/lib/typescript.js',
         packageVersions:graph.versions,typescript:await compilerIdentity(source),installation:graph.installation,
+        systemSurfaces,
         ...(engine==='expo'?{hostContract:{runtimeVersion:expoLock.expo.uiVersion,expoSDKVersion:expoLock.expo.sdkVersion,
           bridgeVersion:bridgeConfiguration.bridgeVersion,nativeApiContractVersion,
           nativeApiAbiIdentity:`rn${expoLock.expo.reactNativeVersion}-hermes${expoLock.expo.hermesVersion}`,
@@ -245,7 +277,7 @@ export async function stageSDK({root=repositoryRoot,output,engines:requestedEngi
         typeCheckingPolicy:{strictSource:true,checkOriginalDeclarationBodies:engine==='expo',
           explanation:engine==='expo'?'Original declarations and source are checked.':'Original NativeScript consumer mode: source is strict; original declaration bodies are not revalidated. Set skipLibCheck:false for SDK declaration diagnostics.'},
         docs:engine==='expo'?['docs/hanlin-expo-runtime.md','docs/miniapp-sdk/README.md','docs/miniapp-sdk/EXPO_WIDGETS_ORIGINAL.md']:['docs/hanlin-nativescript-guide.md','docs/miniapp-sdk/README.md'],
-        capabilities:engine==='expo'?['foreground','native-ui','host-services','prepared-widgets','original-widget-api','original-live-activity-api']:['foreground','native-ui','host-services','esm-package'],
+        capabilities:engine==='expo'?['foreground','native-ui','host-services','prepared-widgets','original-widget-api','original-live-activity-api','widget-host-actions']:['foreground','native-ui','host-services','esm-package','widget-host-actions'],
         assistantTools:{manifestSchemaPath:'assistant-tools.schema.json',typesPackage:'@hanlin/assistant-tools',
           module:'Dedicated prepared program, separate from foreground app',configurationVersion:1},
         notificationEvents:{schemaVersion:1,packageName:'@hanlin/notification-events',
@@ -267,7 +299,7 @@ export async function stageSDK({root=repositoryRoot,output,engines:requestedEngi
     for(const engine of ['expo','nativescript']) if(engines[engine]) {
       engines[engine].examples=exampleProjects.filter(project=>project.engine===engine);
       engines[engine].assistantToolExamples=assistantExamples.filter(project=>project.engine===engine);
-      engines[engine].docs.push('docs/miniapp-sdk/EXAMPLES.md','docs/miniapp-sdk/ASSISTANT_TOOLS_AND_COMPOSER.md','docs/miniapp-sdk/NOTIFICATION_EVENTS.md');
+      engines[engine].docs.push('docs/miniapp-sdk/EXAMPLES.md','docs/miniapp-sdk/ASSISTANT_TOOLS_AND_COMPOSER.md','docs/miniapp-sdk/NOTIFICATION_EVENTS.md','docs/miniapp-sdk/SYSTEM_SURFACE_ACTIONS.md');
     }
     await copySDKDocumentation(path.join(root,'docs/miniapp-sdk'),path.join(staging,'docs/miniapp-sdk'));
     for(const file of ['hanlin-expo-runtime.md','hanlin-nativescript-guide.md']) {
@@ -278,6 +310,7 @@ export async function stageSDK({root=repositoryRoot,output,engines:requestedEngi
     const widgetCommits=[...new Set(widgetManifest.files.filter(x=>x.repository==='everettjf/scriptwidget').map(x=>x.commit))];
     await mkdir(path.join(staging,'scriptwidget'),{recursive:true});
     await cp(path.join(root,'Scripts/MiniApps/scriptwidget'),path.join(staging,'scriptwidget'),{recursive:true});
+    const systemSurfaces=await stageSystemSurfaceTypes(root,path.join(staging,'scriptwidget'),files,'scriptwidget');
     // Generate against this build's real original native registrations. A new
     // unsupported signature fails staging instead of publishing invented types.
     const {generateScriptWidgetServiceTypes}=await import(pathToFileURL(path.join(root,'Scripts/MiniApps/generate-scriptwidget-service-types.mjs')).href);
@@ -290,8 +323,9 @@ export async function stageSDK({root=repositoryRoot,output,engines:requestedEngi
     }
     engines.scriptwidget={toolingRoot:'scriptwidget',tsconfigPath:'scriptwidget/tsconfig.json',
       typescriptPath:engines.expo?.typescriptPath??'scriptwidget/typescript/lib/typescript.js',
-      typescript:engines.expo?.typescript??await compilerIdentity(path.join(root,'Scripts/Expo')),packageVersions:{'everettjf/scriptwidget':widgetCommits.join(',')},
-      docs:['docs/miniapp-sdk/SCRIPTWIDGET_AUTHORING.md','docs/miniapp-sdk/SCRIPTWIDGET_CONTROLS.md'],capabilities:['prepared-widgets','original-native-services','original-control-widgets'],
+      typescript:engines.expo?.typescript??await compilerIdentity(path.join(root,'Scripts/Expo')),packageVersions:{'everettjf/scriptwidget':widgetCommits.join(','),[systemSurfaces.packageName]:systemSurfaces.version},
+       systemSurfaces,
+      docs:['docs/miniapp-sdk/SCRIPTWIDGET_AUTHORING.md','docs/miniapp-sdk/SCRIPTWIDGET_CONTROLS.md','docs/miniapp-sdk/SYSTEM_SURFACE_ACTIONS.md'],capabilities:['prepared-widgets','original-native-services','original-control-widgets'],
       packageManifestSchemaPath:'scriptwidget/widget-manifest.schema.json',
       packageManifestValidatorPath:'scriptwidget/manifest-validation.mjs',
       nativeAPIManifestPath:'scriptwidget/native-api.json',

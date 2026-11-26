@@ -116,9 +116,21 @@ async function projectInput(request) {
   if (sourceRoot !== project) author = {...author, ...(await optionalJSON(path.join(sourceRoot, 'hanlin.authoring.json')) ?? {})};
   const script = await json(path.join(sourceRoot, 'script.json'));
   const pkg = await optionalJSON(path.join(sourceRoot, 'package.json')) ?? {};
-  const inferred = script.widgetEngine === 'scriptwidget' ? 'scriptwidget'
-    : script.hanlinRuntime === 'hanlin-expo' ? 'expo'
-    : script.hanlinRuntime === 'hanlin-nativescript' ? 'nativescript' : null;
+  const widgetEngines = ['widgetEngine', 'widget_engine', 'engine']
+    .filter(key => Object.hasOwn(script, key)).map(key => script[key]);
+  const widgetEngine = widgetEngines[0];
+  if (widgetEngines.some(value => !['legacy', 'expo', 'scriptwidget'].includes(value))
+      || new Set(widgetEngines).size > 1
+      || (widgetEngine === 'expo' && script.hanlinRuntime !== 'hanlin-expo')
+      || (widgetEngine === 'scriptwidget' && script.hanlinRuntime === 'hanlin-expo')) {
+    throw Object.assign(new Error('Widget renderer and foreground runtime declarations conflict with the native package contract.'),
+      {miniAppCode: 'MINIAPP_WIDGET_ENGINE_INVALID', filename: 'script.json'});
+  }
+  // A NativeScript app can host a ScriptWidget widget. The renderer does not
+  // replace the application's original foreground runtime or compiler.
+  const inferred = script.hanlinRuntime === 'hanlin-expo' ? 'expo'
+    : script.hanlinRuntime === 'hanlin-nativescript' ? 'nativescript'
+    : widgetEngine === 'scriptwidget' ? 'scriptwidget' : null;
   const engine = request.engine ?? author.engine ?? inferred;
   if (!engines.has(engine)) throw new Error('Specify expo, nativescript, or scriptwidget in hanlin.authoring.json.');
   if (author.engine && author.engine !== engine) throw new Error('Requested engine differs from the authoring project.');
@@ -139,7 +151,7 @@ async function projectInput(request) {
     if (!inside(sourceRoot, await fs.realpath(sourceFile))) throw new Error('Assistant source leaves its project.');
     assistantTools.push({...tool, sourceFile});
   }
-  return {project, sourceRoot, author, packagedAuthor, script, pkg, engine, entry, entryFile,
+  return {project, sourceRoot, author, packagedAuthor, script, pkg, engine, widgetEngine, entry, entryFile,
     assistantTools, assistantDiagnostics: assistant.diagnostics};
 }
 
@@ -290,6 +302,77 @@ async function parseProject(ts, input, sdkRoot, sdkEngine, fallbackConfig, usePr
     diagnostics: deduplicate(diagnostics.map(item => normalizedDiagnostic(ts, item, input.sourceRoot)))};
 }
 
+
+// This metadata is shared with HanlinWidgetHostAction and the native widget
+// compiler. JSON files do not receive TypeScript's excess-property checks.
+function validateWidgetHostActions(input) {
+  const diagnostics = [];
+  const object = value => value !== null && typeof value === 'object' && !Array.isArray(value);
+  const ordinaryJSON = value => value === null || typeof value === 'string' || typeof value === 'boolean'
+    || (typeof value === 'number' && Number.isFinite(value))
+    || (Array.isArray(value) ? value.every(ordinaryJSON)
+      : object(value) && Object.values(value).every(ordinaryJSON));
+  const groups = [];
+  const widget = input.script.hanlinWidget;
+  if (object(widget) && widget.actions !== undefined) {
+    if (Array.isArray(widget.actions)) groups.push({path: 'hanlinWidget.actions', actions: widget.actions, host: true});
+    else diagnostics.push(finding('MINIAPP_WIDGET_HOST_ACTION_INVALID',
+      'hanlinWidget.actions must be an array of declared widget actions.', 'script.json'));
+  }
+  if (object(input.script.nativePresentations)) {
+    for (const [id, panel] of Object.entries(input.script.nativePresentations)) {
+      if (object(panel) && Array.isArray(panel.actions))
+        groups.push({path: 'nativePresentations.' + id + '.actions', actions: panel.actions, host: false});
+    }
+  }
+  const entrypoints = Array.isArray(input.script.entrypoints) ? input.script.entrypoints : [];
+  const declaredActions = Array.isArray(input.script.actions) ? input.script.actions : [];
+  for (const group of groups) for (const [index, action] of group.actions.entries()) {
+    if (!object(action) || (action.kind !== 'hostAction' && action.hostAction == null)) continue;
+    const location = group.path + '[' + index + ']';
+    const reject = message => diagnostics.push(finding('MINIAPP_WIDGET_HOST_ACTION_INVALID',
+      location + ': ' + message, 'script.json',
+      'Declare a hostAction targeting one same-package appIntent entrypoint and its registered action; keep native presentation callbacks local.'));
+    if (!group.host) { reject('Host actions are supported by widgets and Live Activities, not native presentation panels.'); continue; }
+    if (!['expo', 'nativescript'].includes(input.engine)) {
+      reject('The containing package must use the Expo or NativeScript foreground runtime.'); continue;
+    }
+    if (action.kind !== 'hostAction' || action.handler != null || action.stateKey != null) {
+      reject('hostAction must not also declare a local handler or stateKey.'); continue;
+    }
+    const target = action.hostAction;
+    if (typeof action.id !== 'string' || !action.id || Buffer.byteLength(action.id, 'utf8') > 256 || !object(target) ||
+        typeof target.entrypointID !== 'string' || !target.entrypointID || Buffer.byteLength(target.entrypointID, 'utf8') > 128 ||
+        typeof target.actionName !== 'string' || target.actionName.length > 255 ||
+        !/^[A-Za-z0-9]+(?:[._-][A-Za-z0-9]+)*$/.test(target.actionName)) {
+      reject('A widget action ID, appIntent entrypointID and valid exact actionName are required.'); continue;
+    }
+    if (group.actions.filter(item => object(item) && item.id === action.id).length !== 1) {
+      reject('The widget action ID must identify exactly one declaration.'); continue;
+    }
+    if (Object.hasOwn(target, 'parameters') && !ordinaryJSON(target.parameters)) {
+      reject('parameters must contain ordinary JSON with finite numbers.'); continue;
+    }
+    const entries = entrypoints.filter(item => object(item) && item.id === target.entrypointID);
+    const actions = declaredActions.filter(item => object(item) && item.id === target.actionName);
+    if (entries.length !== 1 || entries[0].kind !== 'appIntent' || actions.length !== 1) {
+      reject('The target must identify exactly one declared appIntent entrypoint and actions[].id.'); continue;
+    }
+    const entry = entries[0], declared = actions[0];
+    if (typeof entry.exportedSymbol === 'string' && entry.exportedSymbol !== target.actionName) {
+      reject('The appIntent exportedSymbol does not match actionName.'); continue;
+    }
+    const handler = typeof declared.handler === 'string' ? declared.handler
+      : typeof declared.entrypoint === 'string' ? declared.entrypoint : null;
+    const paths = entrypoints.filter(object).map(item => item.sourcePath);
+    const resolved = handler != null && !paths.includes(handler) && paths.includes('source/' + handler)
+      ? 'source/' + handler : handler;
+    if (typeof entry.sourcePath !== 'string' || !entry.sourcePath || resolved !== entry.sourcePath) {
+      reject('The registered action handler must match the prepared appIntent sourcePath.'); continue;
+    }
+  }
+  return diagnostics;
+}
 
 async function validateNativePresentations(input, sdk, compiler) {
   const declarations = input.script.nativePresentations;
@@ -651,6 +734,9 @@ async function buildNativeScript(ts, input, parsed, stage, sdkEngine) {
     const toolEntry = slash(path.relative(modules, toolOutput));
     await fs.writeFile(path.join(toolRoot, 'bundle.mjs'), assistantToolWrapper(tool, './modules/' + toolEntry, 'nativescript'));
   }
+  // The native importer discovers widget sources at the package root. Keep
+  // the original module resources as well for the foreground NativeScript app.
+  if (input.widgetEngine === 'scriptwidget') await copyResources(input, stage);
   await writeJSON(path.join(stage, 'script.json'), {...input.script,
     entry: 'nativescript/app/bundle.mjs', runInApp: true, hanlinRuntime: 'hanlin-nativescript'});
   return emitted.diagnostics.map(item => normalizedDiagnostic(ts, item, input.sourceRoot));
@@ -842,7 +928,7 @@ export async function runMiniAppOperation(request, {sdkRoot, compiler} = {}) {
       }
     }
     report.diagnostics = [...originalManifest.diagnostics, ...parsed.diagnostics, ...native.diagnostics,
-      ...assistantDiagnostics, ...await packageConsistency(input)];
+      ...assistantDiagnostics, ...validateWidgetHostActions(input), ...await packageConsistency(input)];
     if (report.diagnostics.some(item => item.category === 'error')) return report;
     if (request.operation === 'validate') { report.succeeded = true; return report; }
     stage = request.outputDirectory ? path.resolve(request.outputDirectory)

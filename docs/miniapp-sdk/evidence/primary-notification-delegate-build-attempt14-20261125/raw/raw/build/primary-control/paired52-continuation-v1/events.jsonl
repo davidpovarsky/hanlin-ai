@@ -1,0 +1,9 @@
+{"at": "2026-11-25T05:38:08.131718+00:00", "event": "prepared"}
+{"at": "2026-11-25T05:38:08.135644+00:00", "event": "launched", "status": "RUNNING", "phasePID": 98972, "original52": "RUNNING"}
+{"at": "2026-11-25T05:38:38.151041+00:00", "event": "heartbeat", "elapsedSeconds": 30.004434125003172, "logBytes": 3537, "freeBytes": 9685557248}
+{"at": "2026-11-25T05:39:08.162514+00:00", "event": "heartbeat", "elapsedSeconds": 60.02126904200122, "logBytes": 3637, "freeBytes": 8400093184}
+{"at": "2026-11-25T05:39:38.169661+00:00", "event": "heartbeat", "elapsedSeconds": 90.031389959011, "logBytes": 3739, "freeBytes": 8015663104}
+{"at": "2026-11-25T05:40:08.174732+00:00", "event": "heartbeat", "elapsedSeconds": 120.038958834004, "logBytes": 3842, "freeBytes": 7508258816}
+{"at": "2026-11-25T05:40:25.737876+00:00", "event": "actual_terminal", "status": "FAILED", "error": "AssertionError: Original paired phase returned 1", "exitCode": 1}
+{"at": "2026-11-25T05:40:26.564556+00:00", "event": "charge_ready", "chargedSeconds": 138.4319897920068, "cumulativeActiveSeconds": 10386.698319625011}
+{"at": "2026-11-25T05:40:26.567407+00:00", "event": "finalized", "status": "FAILED", "elapsedSeconds": 138.4319897920068, "cumulativeActiveSeconds": 10386.698319625011}

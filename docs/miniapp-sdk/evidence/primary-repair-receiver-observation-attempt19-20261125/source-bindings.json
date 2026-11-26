@@ -1,0 +1,58 @@
+{
+  "source": "7bf0c2fdc2f7168d6b98dda66f443ae032fe1c11",
+  "parent": "f6bb035f2828ec24a683bb2f5f1dddb27143dc4a",
+  "sourceTree": "e9f9ece792d1972a98cee2a0adf2d1647c7db2bd",
+  "executedSource": "f6bb035f2828ec24a683bb2f5f1dddb27143dc4a",
+  "changedPaths": [
+    "AI_HLYUITests/MiniAppAuthoringUITests.swift"
+  ],
+  "files": [
+    {
+      "path": "AI_HLYUITests/MiniAppAuthoringUITests.swift",
+      "beforeBytes": 7752,
+      "beforeSHA256": "f566ad0222f585875528f9d040f1f4d1ae728fb76f25b575ef9ab923e617520c",
+      "afterBytes": 8635,
+      "afterSHA256": "60a786ea3864a118710f8814a41f52cc454d35c71e4fb911b611a70ba5c2f565",
+      "changed": true
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift",
+      "beforeBytes": 27662,
+      "beforeSHA256": "ab893036c8b7cc8b8d8313eaef10ab18468adfec95c2ba1ff68944fc83591f4b",
+      "afterBytes": 27662,
+      "afterSHA256": "ab893036c8b7cc8b8d8313eaef10ab18468adfec95c2ba1ff68944fc83591f4b",
+      "changed": false
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "beforeBytes": 156844,
+      "beforeSHA256": "0bd52a056289803eb8fa01c45e681df8b3e2f9ac4ac9639fb59577c8624f4efc",
+      "afterBytes": 156844,
+      "afterSHA256": "0bd52a056289803eb8fa01c45e681df8b3e2f9ac4ac9639fb59577c8624f4efc",
+      "changed": false
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+      "beforeBytes": 50327,
+      "beforeSHA256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9",
+      "afterBytes": 50327,
+      "afterSHA256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9",
+      "changed": false
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppHostIntegration.swift",
+      "beforeBytes": 23884,
+      "beforeSHA256": "f09bd56c25571bbc897fb40327b424ddc67f0e9926e86b7bf8d674eeaa5ce216",
+      "afterBytes": 23884,
+      "afterSHA256": "f09bd56c25571bbc897fb40327b424ddc67f0e9926e86b7bf8d674eeaa5ce216",
+      "changed": false
+    }
+  ],
+  "originalWholeCaseAllowanceSeconds": 600,
+  "receiverCompositeWaitSeconds": 120,
+  "installedCatalogWaitSeconds": 90,
+  "foregroundWaitSeconds": 420,
+  "SDKArchiveUnchanged": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc",
+  "SDKManifestUnchanged": "4505c28495d8b6ecd1073254e0e395adcc898cc02dd1d40699591f51db4dee92",
+  "nativeAcceptance": "V7_FAILED; POSTFIX_NOT_ESTABLISHED"
+}

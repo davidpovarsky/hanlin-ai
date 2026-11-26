@@ -1,0 +1,164 @@
+[
+  {
+    "sourcePath": "receipt.json",
+    "originalBytes": 6643,
+    "originalSHA256": "2212a879f0e323c838bae554776ad57e5fb44277aa07c0c7de659b837af21a2c",
+    "storedPath": "raw/receipt.json",
+    "storedBytes": 6643,
+    "storedSHA256": "2212a879f0e323c838bae554776ad57e5fb44277aa07c0c7de659b837af21a2c",
+    "encoding": "identity"
+  },
+  {
+    "sourcePath": "raw/build/primary-control/paired52-continuation-v1/state.json",
+    "originalBytes": 2930,
+    "originalSHA256": "9297e6f13487e3b21874f65ac7d1fc66f7a1617d790201d42c59b09b6dd3d1ba",
+    "storedPath": "raw/raw/build/primary-control/paired52-continuation-v1/state.json",
+    "storedBytes": 2930,
+    "storedSHA256": "9297e6f13487e3b21874f65ac7d1fc66f7a1617d790201d42c59b09b6dd3d1ba",
+    "encoding": "identity"
+  },
+  {
+    "sourcePath": "raw/build/primary-control/paired52-continuation-v1/decision.json",
+    "originalBytes": 75465,
+    "originalSHA256": "492f9c7b75e7776d7a48a34ce2531f140c0c0f9585c437d42922e8308582a734",
+    "storedPath": "raw/raw/build/primary-control/paired52-continuation-v1/decision.json.gz",
+    "storedBytes": 21562,
+    "storedSHA256": "0f9fc6d417c1adcc9beec0ff266b0d591821d29e36886fcaf848700e0a138ec5",
+    "encoding": "gzip"
+  },
+  {
+    "sourcePath": "raw/build/primary-control/paired52-continuation-v1/events.jsonl",
+    "originalBytes": 1259,
+    "originalSHA256": "37fcf5bd5d13c69afefa89fa9b3cc3528f3a544621feb93097c246bd0f6bae88",
+    "storedPath": "raw/raw/build/primary-control/paired52-continuation-v1/events.jsonl",
+    "storedBytes": 1259,
+    "storedSHA256": "37fcf5bd5d13c69afefa89fa9b3cc3528f3a544621feb93097c246bd0f6bae88",
+    "encoding": "identity"
+  },
+  {
+    "sourcePath": "raw/build/primary-control/paired52-continuation-v1/original-paired-phase.log",
+    "originalBytes": 5545,
+    "originalSHA256": "5afec25e92b759c6d806fdecef582337a4654e6ac84b7ddd76ff4787c2e88cf1",
+    "storedPath": "raw/raw/build/primary-control/paired52-continuation-v1/original-paired-phase.log",
+    "storedBytes": 5545,
+    "storedSHA256": "5afec25e92b759c6d806fdecef582337a4654e6ac84b7ddd76ff4787c2e88cf1",
+    "encoding": "identity"
+  },
+  {
+    "sourcePath": "raw/build/primary-control/state.json",
+    "originalBytes": 66283,
+    "originalSHA256": "82bdf6980c3273bb88f1019c56a2590bd085ee8eb2eec6341fca0a1d6901b96b",
+    "storedPath": "raw/raw/build/primary-control/state.json.gz",
+    "storedBytes": 10228,
+    "storedSHA256": "42bf288b7a95d5bf90ec3f20a6830c038c5919fb222581634aeefd28c49baccc",
+    "encoding": "gzip"
+  },
+  {
+    "sourcePath": "raw/build/primary-control/paired52-continuation-v1/evidence/paired-product/commands.jsonl",
+    "originalBytes": 4506,
+    "originalSHA256": "322e03369908349af27d2e2dca65e9b5e127efee3ac78bcaced8555ad36185f4",
+    "storedPath": "raw/raw/build/primary-control/paired52-continuation-v1/evidence/paired-product/commands.jsonl",
+    "storedBytes": 4506,
+    "storedSHA256": "322e03369908349af27d2e2dca65e9b5e127efee3ac78bcaced8555ad36185f4",
+    "encoding": "identity"
+  },
+  {
+    "sourcePath": "raw/build/primary-control/paired52-continuation-v1/evidence/paired-product/command-events.jsonl",
+    "originalBytes": 25320,
+    "originalSHA256": "cef54ae42a02797fa95bfc90cbd06fb283f9cc316399f2e07075ce782e7204fd",
+    "storedPath": "raw/raw/build/primary-control/paired52-continuation-v1/evidence/paired-product/command-events.jsonl",
+    "storedBytes": 25320,
+    "storedSHA256": "cef54ae42a02797fa95bfc90cbd06fb283f9cc316399f2e07075ce782e7204fd",
+    "encoding": "identity"
+  },
+  {
+    "sourcePath": "raw/build/primary-control/paired52-continuation-v1/evidence/paired-product/acceptance.json",
+    "originalBytes": 2632,
+    "originalSHA256": "bf82704c8b490606e3ebbc982de87da231c802407243e41832332c74c427b7dd",
+    "storedPath": "raw/raw/build/primary-control/paired52-continuation-v1/evidence/paired-product/acceptance.json",
+    "storedBytes": 2632,
+    "storedSHA256": "bf82704c8b490606e3ebbc982de87da231c802407243e41832332c74c427b7dd",
+    "encoding": "identity"
+  },
+  {
+    "sourcePath": "raw/build/primary-control/paired52-continuation-v1/evidence/paired-product/mini-build.log",
+    "originalBytes": 1179589,
+    "originalSHA256": "9efe279b1895c019f683bd39afe2b714bc107078491eeb7270564bdf1194ba34",
+    "storedPath": "raw/raw/build/primary-control/paired52-continuation-v1/evidence/paired-product/mini-build.log.gz",
+    "storedBytes": 74777,
+    "storedSHA256": "c5e77692eddecb1ed6a3cb799c880604be276754464ea8b7a96f5a5b9da322b4",
+    "encoding": "gzip"
+  },
+  {
+    "sourcePath": "raw/build/primary-control/paired52-continuation-v1/evidence/paired-product/created-simulator.txt",
+    "originalBytes": 37,
+    "originalSHA256": "983d9fa88838b33e101e35e8b8db4b19cd366314baf440eb57f3fc405ab73070",
+    "storedPath": "raw/raw/build/primary-control/paired52-continuation-v1/evidence/paired-product/created-simulator.txt",
+    "storedBytes": 37,
+    "storedSHA256": "983d9fa88838b33e101e35e8b8db4b19cd366314baf440eb57f3fc405ab73070",
+    "encoding": "identity"
+  },
+  {
+    "sourcePath": "raw/build/primary-control/paired52-continuation-v1/evidence/paired-product/MiniBuild.xcresult/Info.plist",
+    "originalBytes": 776,
+    "originalSHA256": "216e4f316d28e46a3d46563a9b18010e14f1dc95308f2e9cebed59dd4061a9f1",
+    "storedPath": "raw/raw/build/primary-control/paired52-continuation-v1/evidence/paired-product/MiniBuild.xcresult/Info.plist",
+    "storedBytes": 776,
+    "storedSHA256": "216e4f316d28e46a3d46563a9b18010e14f1dc95308f2e9cebed59dd4061a9f1",
+    "encoding": "identity"
+  },
+  {
+    "sourcePath": "raw/AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift",
+    "originalBytes": 3109,
+    "originalSHA256": "65e908cc29df4bab76ef3a1b44e032fe2651b47ed4b438035b4e5757a468fa67",
+    "storedPath": "raw/raw/AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift",
+    "storedBytes": 3109,
+    "storedSHA256": "65e908cc29df4bab76ef3a1b44e032fe2651b47ed4b438035b4e5757a468fa67",
+    "encoding": "identity"
+  },
+  {
+    "sourcePath": "raw/build/primary-control/notification-signature-proof-attempt14/NotificationDelegateSignature.swift",
+    "originalBytes": 696,
+    "originalSHA256": "18dc51fa7d456ec89f653b83cd983f833e3788d901016caf4552b4a497afd22a",
+    "storedPath": "raw/raw/build/primary-control/notification-signature-proof-attempt14/NotificationDelegateSignature.swift",
+    "storedBytes": 696,
+    "storedSHA256": "18dc51fa7d456ec89f653b83cd983f833e3788d901016caf4552b4a497afd22a",
+    "encoding": "identity"
+  },
+  {
+    "sourcePath": "raw/build/primary-control/notification-signature-proof-attempt14/state.json",
+    "originalBytes": 1375,
+    "originalSHA256": "60ad08225143eb65fde91917223f2de9b6d839d37d68d02a2f2746e52fdfa87d",
+    "storedPath": "raw/raw/build/primary-control/notification-signature-proof-attempt14/state.json",
+    "storedBytes": 1375,
+    "storedSHA256": "60ad08225143eb65fde91917223f2de9b6d839d37d68d02a2f2746e52fdfa87d",
+    "encoding": "identity"
+  },
+  {
+    "sourcePath": "raw/build/primary-control/notification-signature-proof-attempt14/swiftc.log",
+    "originalBytes": 0,
+    "originalSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "storedPath": "raw/raw/build/primary-control/notification-signature-proof-attempt14/swiftc.log",
+    "storedBytes": 0,
+    "storedSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "encoding": "identity"
+  },
+  {
+    "sourcePath": "apple-sdk/UNUserNotificationCenter.h",
+    "originalBytes": 8450,
+    "originalSHA256": "7e79a7672061ab07511f71aa9cd5b7883dc83107cfabfb100d32d758bae3d281",
+    "storedPath": "raw/apple-sdk/UNUserNotificationCenter.h",
+    "storedBytes": 8450,
+    "storedSHA256": "7e79a7672061ab07511f71aa9cd5b7883dc83107cfabfb100d32d758bae3d281",
+    "encoding": "identity"
+  },
+  {
+    "sourcePath": "diagnostics.txt",
+    "originalBytes": 3126,
+    "originalSHA256": "5f98aa18065f586597a4d473bfa303f98e62cc22b61def1d349522693e0f2be3",
+    "storedPath": "raw/diagnostics.txt.gz",
+    "storedBytes": 1120,
+    "storedSHA256": "afb427f3b43b16974dfa65096c93136c327bd142d7c444ffec95cad1d6f40fd1",
+    "encoding": "gzip"
+  }
+]

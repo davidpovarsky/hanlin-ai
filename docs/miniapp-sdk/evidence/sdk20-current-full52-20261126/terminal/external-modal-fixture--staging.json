@@ -1,0 +1,28 @@
+{
+  "status": "REAL_IMPORT_AND_INCOMING_REQUEST_STAGED",
+  "simulator_udid": "ED1C7CA0-C85E-41DF-918F-3C9C9033F73E",
+  "bundle_id": "com.itorah.hanlinminiapps",
+  "source_sha": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+  "fixture_sources": {
+    "Scripts/ProductSplit/Fixtures/ExternalModal/script.json": "c70a875eec94bc9173993def1cf9d17e98dab5d5ea07f5f317b3f7f57b897433",
+    "Scripts/ProductSplit/Fixtures/ExternalModal/index.tsx": "d03ae8f4c78fb3f7e75a359215dfd0147b0da1b143e2f6ca167266334d97c2fb"
+  },
+  "archive_sha256": "5e9b0eadbcb91e8a01c2c993be6f50356bf94c345940ec86bae25ce3c2127ba1",
+  "archive": "/Users/m1/Library/Developer/CoreSimulator/Devices/ED1C7CA0-C85E-41DF-918F-3C9C9033F73E/data/Containers/Data/Application/E21E8765-2093-4C02-A6AD-24F991A81A88/Documents/MiniAppsExternalModal.zip",
+  "shared_group": "group.com.itorah.shared",
+  "shared_group_container": "/Users/m1/Library/Developer/CoreSimulator/Devices/ED1C7CA0-C85E-41DF-918F-3C9C9033F73E/data/Containers/Shared/AppGroup/B9B08C59-D7A1-49C6-9D95-01910F41F6CD",
+  "seeder": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/external-modal-fixture/external-modal-bridge-fixture",
+  "request": {
+    "app_group_container": "/Users/m1/Library/Developer/CoreSimulator/Devices/ED1C7CA0-C85E-41DF-918F-3C9C9033F73E/data/Containers/Shared/AppGroup/B9B08C59-D7A1-49C6-9D95-01910F41F6CD",
+    "launch_url": "hanlinminiapps://x-callback-url/run?request=4f2ecda0-9c21-46a2-b2e1-8cd4f017c623&x-source=Modal%20fixture%20source",
+    "request_id": "4f2ecda0-9c21-46a2-b2e1-8cd4f017c623",
+    "result_synthesized": false,
+    "status": "INCOMING_REQUEST_STAGED"
+  },
+  "verify_command": [
+    "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/external-modal-fixture/external-modal-bridge-fixture",
+    "verify",
+    "/Users/m1/Library/Developer/CoreSimulator/Devices/ED1C7CA0-C85E-41DF-918F-3C9C9033F73E/data/Containers/Shared/AppGroup/B9B08C59-D7A1-49C6-9D95-01910F41F6CD"
+  ],
+  "runtime_result_synthesized": false
+}

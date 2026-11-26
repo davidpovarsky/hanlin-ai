@@ -90,13 +90,26 @@ public struct HanlinNotificationEvent: Codable, Hashable, Sendable {
     /// explicit ingress error, never a fallback to some other package/action.
     public static func decode(userInfo: [AnyHashable: Any]) throws -> Self? {
         guard let value = userInfo[userInfoKey] else { return nil }
-        guard let object = value as? [String: Any], JSONSerialization.isValidJSONObject(object) else {
+        guard var object = value as? [String: Any], JSONSerialization.isValidJSONObject(object),
+              let rawParameters = object[CodingKeys.parameters.rawValue] else {
             throw HanlinInvocationQueueError.invalidEnvelope
         }
+        // APNs carries plain JSON; HanlinJSONValue's Codable representation is
+        // tagged for internal storage. Convert only this external boundary.
+        let parameters = try HanlinJSONValue.decodeCanonicalJSON(
+            JSONSerialization.data(withJSONObject: rawParameters, options: [.fragmentsAllowed]),
+            limits: .unbounded)
+        object[CodingKeys.parameters.rawValue] = try JSONSerialization.jsonObject(
+            with: JSONEncoder().encode(parameters))
         return try JSONDecoder().decode(Self.self, from: JSONSerialization.data(withJSONObject: object))
     }
 
     public func userInfo() throws -> [AnyHashable: Any] {
-        [Self.userInfoKey: try JSONSerialization.jsonObject(with: JSONEncoder().encode(self))]
+        guard var object = try JSONSerialization.jsonObject(with: JSONEncoder().encode(self)) as? [String: Any] else {
+            throw HanlinInvocationQueueError.invalidEnvelope
+        }
+        object[CodingKeys.parameters.rawValue] = try JSONSerialization.jsonObject(
+            with: parameters.canonicalJSONData(limits: .unbounded), options: [.fragmentsAllowed])
+        return [Self.userInfoKey: object]
     }
 }

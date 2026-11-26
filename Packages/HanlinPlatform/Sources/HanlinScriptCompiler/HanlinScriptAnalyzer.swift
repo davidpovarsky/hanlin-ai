@@ -178,6 +178,19 @@ public struct HanlinScriptAnalyzer: Sendable {
             )
         }
 
+        if let widgetMetadata = package.manifest.unknownFields["hanlinWidget"] {
+            do {
+                let metadata = try JSONDecoder().decode(HanlinWidgetPackageMetadata.self,
+                    from: widgetMetadata.canonicalJSONData(limits: .unbounded))
+                try HanlinWidgetCompiler.validateHostActionTargets(metadata.actions,
+                    manifest: package.manifest, entrypoints: entrypoints)
+            } catch {
+                findings.append(.init(state: .unsupported, severity: .error, sourcePath: "script.json",
+                    message: "Invalid widget Host action: \(error)",
+                    code: "MINIAPP_WIDGET_HOST_ACTION_INVALID"))
+            }
+        }
+
         for entrypoint in entrypoints where entrypoint.kind == .widget && entrypoint.widgetEngine != .legacy && entrypoint.widgetEngine != nil {
             do {
                 _ = try HanlinWidgetCompiler.prepare(manifest: package.manifest, entryPath: entrypoint.sourcePath, files: files)

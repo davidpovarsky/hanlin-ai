@@ -1,0 +1,409 @@
+{
+  "schema": 1,
+  "oldSDKManifest": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt19/extracted-sdk/miniapp-sdk.json",
+    "bytes": 5224120,
+    "sha256": "4505c28495d8b6ecd1073254e0e395adcc898cc02dd1d40699591f51db4dee92"
+  },
+  "newSDKManifest": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/MiniAppSDK/miniapp-sdk.json",
+    "bytes": 5226713,
+    "sha256": "6f11ed8da3df18627f05932d47b5b68dec54eb26ac396151a21cbc8c3e65800e"
+  },
+  "oldFiles": 25669,
+  "newFiles": 25681,
+  "unchangedCount": 25641,
+  "added": [
+    {
+      "path": "expo/node_modules/@esbuild/linux-arm64/README.md",
+      "sha256": "4fab48c3fa538df99460382c5b2d1790e558ec9d1912d4e9ace49e5a1502a168",
+      "bytes": 145
+    },
+    {
+      "path": "expo/node_modules/@esbuild/linux-arm64/package.json",
+      "sha256": "5ae708562b6e4dae72612fd88a3a1af41e9008004c808d203517eb73929ac32b",
+      "bytes": 381
+    },
+    {
+      "path": "expo/node_modules/@expo/modules-macros-linux-arm64/LICENSE",
+      "sha256": "fb3ca4a837f5779e83cef89b78253a8949cfb9429c340309f62d0465ec6610b4",
+      "bytes": 1106
+    },
+    {
+      "path": "expo/node_modules/@expo/modules-macros-linux-arm64/README.md",
+      "sha256": "aeba1dccfd874cb043ddd9300ca88fb4707384fd690960cce74714a4091f753e",
+      "bytes": 1037
+    },
+    {
+      "path": "expo/node_modules/@expo/modules-macros-linux-arm64/package.json",
+      "sha256": "c15833bb6720aeceb7c0365465e6f9b58b45fa0295fe3f7f3e386f194c58e5e4",
+      "bytes": 530
+    },
+    {
+      "path": "expo/node_modules/@noxcturnal/noxcturnal-linux-arm64-gnu/LICENSE",
+      "sha256": "fcfe57164bb41951a49b3fa329895c1b7750c49dcf1cab3d7d383ca814780248",
+      "bytes": 1239
+    },
+    {
+      "path": "expo/node_modules/@noxcturnal/noxcturnal-linux-arm64-gnu/README.md",
+      "sha256": "937344635ae07d662c0eeeabde17f7a4768e2f99a0c800fd617d111b6fb2c7c2",
+      "bytes": 455
+    },
+    {
+      "path": "expo/node_modules/@noxcturnal/noxcturnal-linux-arm64-gnu/package.json",
+      "sha256": "ef50a02a54f946ccfc01c6b53a28005e70ccfc2117f517fe97d7ef8f1c22997c",
+      "bytes": 568
+    },
+    {
+      "path": "expo/node_modules/@noxcturnal/noxcturnal-linux-arm64-musl/LICENSE",
+      "sha256": "fcfe57164bb41951a49b3fa329895c1b7750c49dcf1cab3d7d383ca814780248",
+      "bytes": 1239
+    },
+    {
+      "path": "expo/node_modules/@noxcturnal/noxcturnal-linux-arm64-musl/README.md",
+      "sha256": "7ea85cb4ef1aa974013ea2847879c9c3c8cfc1ee6fa640aca5f26471c0703114",
+      "bytes": 456
+    },
+    {
+      "path": "expo/node_modules/@noxcturnal/noxcturnal-linux-arm64-musl/package.json",
+      "sha256": "3bcb8882eb64cfccecf8593ca8926d28725d7212e3d55b7fe889cecea7c9016c",
+      "bytes": 570
+    },
+    {
+      "path": "expo/node_modules/lightningcss-linux-arm64-gnu/LICENSE",
+      "sha256": "5eba353fe5076ac3432177f8ab1cf75e3afcd0584251e37c3bfead5f447d040e",
+      "bytes": 15648
+    },
+    {
+      "path": "expo/node_modules/lightningcss-linux-arm64-gnu/README.md",
+      "sha256": "1bcc077c4e7ba9f20d2b1d4a4d014ebabe017868936883a69c208d993f49ecb0",
+      "bytes": 124
+    },
+    {
+      "path": "expo/node_modules/lightningcss-linux-arm64-gnu/package.json",
+      "sha256": "b1d0e85aeed20593a71feee73a4833af9366c975f502acbde3523f0381a4a227",
+      "bytes": 753
+    },
+    {
+      "path": "expo/node_modules/lightningcss-linux-arm64-musl/LICENSE",
+      "sha256": "5eba353fe5076ac3432177f8ab1cf75e3afcd0584251e37c3bfead5f447d040e",
+      "bytes": 15648
+    },
+    {
+      "path": "expo/node_modules/lightningcss-linux-arm64-musl/README.md",
+      "sha256": "2a535e563129575404f58abcbc39767a305b58ab68d502218f8370983d192084",
+      "bytes": 125
+    },
+    {
+      "path": "expo/node_modules/lightningcss-linux-arm64-musl/package.json",
+      "sha256": "4663dfa9fc9f33c34770e723d57d8c1d219b833862ab194ef672fd046c67f140",
+      "bytes": 755
+    },
+    {
+      "path": "nativescript/node_modules/@esbuild/linux-arm64/README.md",
+      "sha256": "4fab48c3fa538df99460382c5b2d1790e558ec9d1912d4e9ace49e5a1502a168",
+      "bytes": 145
+    },
+    {
+      "path": "nativescript/node_modules/@esbuild/linux-arm64/package.json",
+      "sha256": "47efc64772d6f507a76c25a98d2feaf5f243533df9d6e70275d4c81a274a4d20",
+      "bytes": 380
+    },
+    {
+      "path": "nativescript/node_modules/@parcel/watcher-linux-arm64-glibc/LICENSE",
+      "sha256": "5cfba9d5711264d45a2431a53c79f597cef12720cc7c764db2602daa92d0bd2a",
+      "bytes": 1077
+    },
+    {
+      "path": "nativescript/node_modules/@parcel/watcher-linux-arm64-glibc/README.md",
+      "sha256": "a3d1a20b27ed9f651f10b381473c2288dfc4a11ba95cf57c34126e5207c9f69c",
+      "bytes": 114
+    },
+    {
+      "path": "nativescript/node_modules/@parcel/watcher-linux-arm64-glibc/package.json",
+      "sha256": "c857c54870ef2a5fc3f11877e4978b6c24bb7460b0159f7d91e0df7a5806c269",
+      "bytes": 644
+    },
+    {
+      "path": "nativescript/node_modules/@parcel/watcher-linux-arm64-musl/LICENSE",
+      "sha256": "5cfba9d5711264d45a2431a53c79f597cef12720cc7c764db2602daa92d0bd2a",
+      "bytes": 1077
+    },
+    {
+      "path": "nativescript/node_modules/@parcel/watcher-linux-arm64-musl/README.md",
+      "sha256": "6e24c09cb0c080664107deeff9041a01c2f0060231c72240ee0bac4db6e171d4",
+      "bytes": 113
+    },
+    {
+      "path": "nativescript/node_modules/@parcel/watcher-linux-arm64-musl/package.json",
+      "sha256": "546a021a56fe3bd3ec6d7034ec812ef422b2394f35bf3aff67727f4fb81bc6df",
+      "bytes": 642
+    },
+    {
+      "path": "nativescript/node_modules/@rolldown/binding-linux-arm64-gnu/README.md",
+      "sha256": "ac6d866d042c697683cb134124829f21b997f1dcf00dc69d33def096a3bb30b2",
+      "bytes": 112
+    },
+    {
+      "path": "nativescript/node_modules/@rolldown/binding-linux-arm64-gnu/package.json",
+      "sha256": "7b1ed5e58e7a338106878c4d0f91e45dfd69bfd26620591349fa2e99e091df0a",
+      "bytes": 821
+    },
+    {
+      "path": "nativescript/node_modules/@rolldown/binding-linux-arm64-musl/README.md",
+      "sha256": "7146f7dfb97aa4c355f176a8c18c80bcb0dc2b538b88c943b2c4413237056396",
+      "bytes": 114
+    },
+    {
+      "path": "nativescript/node_modules/@rolldown/binding-linux-arm64-musl/package.json",
+      "sha256": "ed5f0267babf9164f07365ecf256866380bee7570ee887734ff8110b0f074456",
+      "bytes": 823
+    },
+    {
+      "path": "nativescript/node_modules/lightningcss-linux-arm64-gnu/LICENSE",
+      "sha256": "5eba353fe5076ac3432177f8ab1cf75e3afcd0584251e37c3bfead5f447d040e",
+      "bytes": 15648
+    },
+    {
+      "path": "nativescript/node_modules/lightningcss-linux-arm64-gnu/README.md",
+      "sha256": "1bcc077c4e7ba9f20d2b1d4a4d014ebabe017868936883a69c208d993f49ecb0",
+      "bytes": 124
+    },
+    {
+      "path": "nativescript/node_modules/lightningcss-linux-arm64-gnu/package.json",
+      "sha256": "b1d0e85aeed20593a71feee73a4833af9366c975f502acbde3523f0381a4a227",
+      "bytes": 753
+    },
+    {
+      "path": "nativescript/node_modules/lightningcss-linux-arm64-musl/LICENSE",
+      "sha256": "5eba353fe5076ac3432177f8ab1cf75e3afcd0584251e37c3bfead5f447d040e",
+      "bytes": 15648
+    },
+    {
+      "path": "nativescript/node_modules/lightningcss-linux-arm64-musl/README.md",
+      "sha256": "2a535e563129575404f58abcbc39767a305b58ab68d502218f8370983d192084",
+      "bytes": 125
+    },
+    {
+      "path": "nativescript/node_modules/lightningcss-linux-arm64-musl/package.json",
+      "sha256": "4663dfa9fc9f33c34770e723d57d8c1d219b833862ab194ef672fd046c67f140",
+      "bytes": 755
+    }
+  ],
+  "removed": [
+    {
+      "path": "expo/node_modules/@esbuild/darwin-arm64/README.md",
+      "sha256": "ee16cb15a2211accccb38f378786bfe48bc5dcfae5db554352424cd710470efa",
+      "bytes": 145
+    },
+    {
+      "path": "expo/node_modules/@esbuild/darwin-arm64/package.json",
+      "sha256": "79a69873b3ae6dbc47d8c3c8027b9563630f65e8fe58690183c5398a52410e7f",
+      "bytes": 383
+    },
+    {
+      "path": "expo/node_modules/@noxcturnal/noxcturnal-darwin-arm64/LICENSE",
+      "sha256": "fcfe57164bb41951a49b3fa329895c1b7750c49dcf1cab3d7d383ca814780248",
+      "bytes": 1239
+    },
+    {
+      "path": "expo/node_modules/@noxcturnal/noxcturnal-darwin-arm64/README.md",
+      "sha256": "cb57c59998235f2a6d66c3786d48a409d0276dffb0349bd6d2f5df59d26941b4",
+      "bytes": 456
+    },
+    {
+      "path": "expo/node_modules/@noxcturnal/noxcturnal-darwin-arm64/package.json",
+      "sha256": "4179c520672851e8545ff51eb198aa6a11fa1c5fef337b229013ba567be00aa7",
+      "bytes": 531
+    },
+    {
+      "path": "expo/node_modules/lightningcss-darwin-arm64/LICENSE",
+      "sha256": "5eba353fe5076ac3432177f8ab1cf75e3afcd0584251e37c3bfead5f447d040e",
+      "bytes": 15648
+    },
+    {
+      "path": "expo/node_modules/lightningcss-darwin-arm64/README.md",
+      "sha256": "1abbdc63f9f5bae3e65bdb9fc1c5368631ff15c0a41e697e95bceaac1d2f574d",
+      "bytes": 119
+    },
+    {
+      "path": "expo/node_modules/lightningcss-darwin-arm64/package.json",
+      "sha256": "1f50679ba283d8cc6c883b516a6b4689bb017d67a4dc35bf64af2f31ea6bbb7d",
+      "bytes": 716
+    },
+    {
+      "path": "nativescript/node_modules/@esbuild/darwin-arm64/README.md",
+      "sha256": "ee16cb15a2211accccb38f378786bfe48bc5dcfae5db554352424cd710470efa",
+      "bytes": 145
+    },
+    {
+      "path": "nativescript/node_modules/@esbuild/darwin-arm64/package.json",
+      "sha256": "2716c24eaffc7327a0f910d977a72e266daa0d88f2155390dc31af0e164f4a0e",
+      "bytes": 382
+    },
+    {
+      "path": "nativescript/node_modules/@parcel/watcher-darwin-arm64/LICENSE",
+      "sha256": "5cfba9d5711264d45a2431a53c79f597cef12720cc7c764db2602daa92d0bd2a",
+      "bytes": 1077
+    },
+    {
+      "path": "nativescript/node_modules/@parcel/watcher-darwin-arm64/README.md",
+      "sha256": "26f65174282fd5194dfa98bb27171ff0826d3ef53108d333a7ff8d4790c15549",
+      "bytes": 109
+    },
+    {
+      "path": "nativescript/node_modules/@parcel/watcher-darwin-arm64/package.json",
+      "sha256": "e5fd63d21fd98c88e7d8b258d0602b9cf02777098a04e009be794447f34fb857",
+      "bytes": 611
+    },
+    {
+      "path": "nativescript/node_modules/@rolldown/binding-darwin-arm64/README.md",
+      "sha256": "d0ed9ea9f9b8215381c7db10404bb507d7e54146c4a6a2fa80ca1e8dccd3dad1",
+      "bytes": 104
+    },
+    {
+      "path": "nativescript/node_modules/@rolldown/binding-darwin-arm64/package.json",
+      "sha256": "48feaf2345201f4b825e7a86f4d9b39257f6647cb76c8064bf802c2227df2c8e",
+      "bytes": 784
+    },
+    {
+      "path": "nativescript/node_modules/fsevents/LICENSE",
+      "sha256": "2a8a5d6197bb97a018b8a190dd3ed853d750ca87c8e80c17aad41d6c6ff448e1",
+      "bytes": 1133
+    },
+    {
+      "path": "nativescript/node_modules/fsevents/README.md",
+      "sha256": "0311b7e1a5a37192243d37889a838d2252b2201554e9db49b57a657f9fb517c7",
+      "bytes": 3203
+    },
+    {
+      "path": "nativescript/node_modules/fsevents/fsevents.d.ts",
+      "sha256": "5c246116b08ff4de6926ed0d5d065249857b256fb45ef3681b46a4bdc03412ec",
+      "bytes": 1431
+    },
+    {
+      "path": "nativescript/node_modules/fsevents/fsevents.js",
+      "sha256": "1d75660f48786792f0e98d6dabfd301883c8f2a8f61aa690cbf58fb4386c0f1a",
+      "bytes": 2483
+    },
+    {
+      "path": "nativescript/node_modules/fsevents/package.json",
+      "sha256": "500839fcc76f6c5efcb454e6614b23c26775e75e1140619fff9ca64c291aec2b",
+      "bytes": 1348
+    },
+    {
+      "path": "nativescript/node_modules/lightningcss-darwin-arm64/LICENSE",
+      "sha256": "5eba353fe5076ac3432177f8ab1cf75e3afcd0584251e37c3bfead5f447d040e",
+      "bytes": 15648
+    },
+    {
+      "path": "nativescript/node_modules/lightningcss-darwin-arm64/README.md",
+      "sha256": "1abbdc63f9f5bae3e65bdb9fc1c5368631ff15c0a41e697e95bceaac1d2f574d",
+      "bytes": 119
+    },
+    {
+      "path": "nativescript/node_modules/lightningcss-darwin-arm64/package.json",
+      "sha256": "1f50679ba283d8cc6c883b516a6b4689bb017d67a4dc35bf64af2f31ea6bbb7d",
+      "bytes": 716
+    }
+  ],
+  "changed": [
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "before": {
+        "path": "docs/miniapp-sdk/extension-reachability.json",
+        "sha256": "84849e4928f42f1b417ad1136c62329e94f7ea9a46f22667177fe6180155b977",
+        "bytes": 153644
+      },
+      "after": {
+        "path": "docs/miniapp-sdk/extension-reachability.json",
+        "sha256": "6fd8aded2b668bb8559b6a685eea3cceaa68595f389a91e13ad85a76a9f1f93d",
+        "bytes": 153602
+      }
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "before": {
+        "path": "docs/miniapp-sdk/extension-reachability.md",
+        "sha256": "3742686d8b088e8c6afcc6b473b2ffa2cf342dae0723ed1365b265d72e120d27",
+        "bytes": 23332
+      },
+      "after": {
+        "path": "docs/miniapp-sdk/extension-reachability.md",
+        "sha256": "6730f12db379df1d0238ca3a003f87aa2e7cb15f3f92e630d7cb72ea5cf988d3",
+        "bytes": 23332
+      }
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "before": {
+        "path": "docs/miniapp-sdk/source-inventory.json",
+        "sha256": "de8326436f4ecb7f03c7c28e913f00ef3dc6fa331c1c8a7f355406cd9f0c81ea",
+        "bytes": 494020
+      },
+      "after": {
+        "path": "docs/miniapp-sdk/source-inventory.json",
+        "sha256": "f1373dcc97544c8b3e0f88d1628195252c89c8d999d76dbd0123646c0511baf5",
+        "bytes": 493926
+      }
+    },
+    {
+      "path": "expo/node_modules/.package-lock.json",
+      "before": {
+        "path": "expo/node_modules/.package-lock.json",
+        "sha256": "cef1961e8ac7caecc49133ad615f9cd02bf1498baa5de9ef8b897f270a1108ca",
+        "bytes": 336592
+      },
+      "after": {
+        "path": "expo/node_modules/.package-lock.json",
+        "sha256": "116020d2617d1f0b77c74f39d2d3d9c439269bb1b4e95547744446bfcecbac4c",
+        "bytes": 336508
+      }
+    },
+    {
+      "path": "nativescript/node_modules/.package-lock.json",
+      "before": {
+        "path": "nativescript/node_modules/.package-lock.json",
+        "sha256": "9fcb11c5730b6b6ce2a1b9ebf6e19249d260e6b105fee09071a6c5a7a044dc6a",
+        "bytes": 111545
+      },
+      "after": {
+        "path": "nativescript/node_modules/.package-lock.json",
+        "sha256": "c248ddc0a348c24e82944b32c0dbc9859d21a883f92e8aea62e3905144cd0181",
+        "bytes": 111489
+      }
+    }
+  ],
+  "upstreamVersionMapsEqual": true,
+  "compilerIdentitiesEqual": true,
+  "hostContractsEqual": true,
+  "hostOutsideSDK": {
+    "oldFiles": 3102,
+    "newFiles": 3102,
+    "added": [],
+    "removed": [],
+    "changed": []
+  },
+  "sourceInputChanges": [
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "before": "84849e4928f42f1b417ad1136c62329e94f7ea9a46f22667177fe6180155b977",
+      "after": "6fd8aded2b668bb8559b6a685eea3cceaa68595f389a91e13ad85a76a9f1f93d"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "before": "3742686d8b088e8c6afcc6b473b2ffa2cf342dae0723ed1365b265d72e120d27",
+      "after": "6730f12db379df1d0238ca3a003f87aa2e7cb15f3f92e630d7cb72ea5cf988d3"
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "before": "de8326436f4ecb7f03c7c28e913f00ef3dc6fa331c1c8a7f355406cd9f0c81ea",
+      "after": "f1373dcc97544c8b3e0f88d1628195252c89c8d999d76dbd0123646c0511baf5"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationEvent.swift",
+      "before": "982bbdff39e2baeb944ab476bc16d8f826f36ca38e9a3e6a75e6efaeaf3b318b",
+      "after": "867613ea9cf2785e6eff3caad96c620a8c50d16fd22d266eeda899b7ab784f69"
+    }
+  ]
+}

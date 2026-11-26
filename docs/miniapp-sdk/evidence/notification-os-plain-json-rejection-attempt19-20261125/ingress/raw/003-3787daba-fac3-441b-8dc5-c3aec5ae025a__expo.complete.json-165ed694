@@ -1,0 +1,10 @@
+{
+  "challenge": "notification-os-8dba666b-6f15-413d-b698-b170bef6ff47",
+  "finishedAt": "2026-11-25T20:46:59.409453+00:00",
+  "reason": "No actual terminal OS-ingress receipt",
+  "runID": "3787daba-fac3-441b-8dc5-c3aec5ae025a",
+  "runtime": "expo",
+  "status": "FAILED",
+  "transport": "simctl_push",
+  "version": 1
+}

@@ -1,0 +1,73 @@
+{
+  "schema": 1,
+  "actualV8Source": "7bf0c2fdc2f7168d6b98dda66f443ae032fe1c11",
+  "actualV8Result": "FAIL_AT_UI_SEARCH_AFTER_ACTUAL_INSTALL",
+  "sessionSHA256": "1180dfbe26176e3ddb255d2c950548087b82955ad0c8949031dabadd7bbb6c6f",
+  "rounds": [
+    {
+      "index": 12,
+      "startedAt": "2026-11-25T14:47:52Z",
+      "completedAt": "2026-11-25T14:48:06Z",
+      "visibleContent": null,
+      "toolCalls": [
+        {
+          "callID": "miniapp-import",
+          "toolName": "import_miniapp",
+          "executionStartedAt": "2026-11-25T14:47:57Z",
+          "executionCompletedAt": "2026-11-25T14:47:59Z",
+          "outcome": "succeeded",
+          "wasDeduplicated": false,
+          "resultForModel": {
+            "companion_opened": true,
+            "message": "The original package is queued in Hanlin MiniApps. Query import_miniapp with transfer_id for its actual installation result.",
+            "receipt": {
+              "status": "queued",
+              "transferID": "56F463EE-F2A6-4F6C-AD43-7614F7DCF2B1",
+              "updatedAt": 817310878.867856
+            },
+            "status": "queued",
+            "transfer_id": "56f463ee-f2a6-4f6c-ad43-7614f7dcf2b1",
+            "wake_url": "hanlinminiapps://miniapp-authoring/v1/install/56f463ee-f2a6-4f6c-ad43-7614f7dcf2b1"
+          }
+        }
+      ]
+    },
+    {
+      "index": 13,
+      "startedAt": "2026-11-25T14:48:05Z",
+      "completedAt": "2026-11-25T14:48:21Z",
+      "visibleContent": null,
+      "toolCalls": [
+        {
+          "callID": "miniapp-status",
+          "toolName": "import_miniapp",
+          "executionStartedAt": "2026-11-25T14:48:13Z",
+          "executionCompletedAt": "2026-11-25T14:48:15Z",
+          "outcome": "succeeded",
+          "wasDeduplicated": false,
+          "resultForModel": {
+            "status": "received",
+            "transferID": "56F463EE-F2A6-4F6C-AD43-7614F7DCF2B1",
+            "updatedAt": 817310879.43686
+          }
+        }
+      ]
+    },
+    {
+      "index": 14,
+      "startedAt": "2026-11-25T14:48:19Z",
+      "completedAt": "2026-11-25T14:48:27Z",
+      "visibleContent": "MINIAPP_AUTHORING_INSTALL_NOT_VERIFIED_received",
+      "toolCalls": []
+    }
+  ],
+  "subsequentActualInstall": {
+    "at": "2026-11-25T14:48:36.843681+00:00",
+    "transferID": "56f463ee-f2a6-4f6c-ad43-7614f7dcf2b1",
+    "installedPackageID": "install-script-d7e81598bd3fabb072c5e57c",
+    "receiptSHA256": "2dea9f53e15c9f031a8ca0da56d733afbe71ffbe5c2e575852a5339c1067c90d",
+    "authority": "../primary-repair-import-presentation-attempt19-20261125"
+  },
+  "native42": "NOT_REACHED",
+  "finalProviderVerification": "NOT_REACHED"
+}

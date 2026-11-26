@@ -1,0 +1,102 @@
+{
+  "status": "SOURCE_READY_PREFIX_RECOVERY_NOT_STARTED",
+  "from": "1d5e598614f2bc7c689f34f5d7b364f67e1d5ae1",
+  "to": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+  "tree": "3e18683d6b88c3d49abdb1f256aad1e73d9f52c4",
+  "preparedFiles": [
+    {
+      "path": "AI_HLY.xcodeproj/project.pbxproj",
+      "sha256": "a80e2947b4dedf0ce95b326cf44b0efac613b7b044058e3afc3fccb870cb0087",
+      "bytes": 252023
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbe.hanlinExpo",
+      "sha256": "b81e8ecccb8e8495f203b51273787df1ab10d64d4236abfa061dc6cb9dd60b1c",
+      "bytes": 325823
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
+      "sha256": "b81e8ecccb8e8495f203b51273787df1ab10d64d4236abfa061dc6cb9dd60b1c",
+      "bytes": 325823
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeB.hanlinExpo",
+      "sha256": "cdf1b95be3e210621095a6269f9d17bf6cab11c6b7e6c6d8895265fcb8a4b84b",
+      "bytes": 325825
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbe.hanlinExpo",
+      "sha256": "b81e8ecccb8e8495f203b51273787df1ab10d64d4236abfa061dc6cb9dd60b1c",
+      "bytes": 325823
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeA.hanlinExpo",
+      "sha256": "b81e8ecccb8e8495f203b51273787df1ab10d64d4236abfa061dc6cb9dd60b1c",
+      "bytes": 325823
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeB.hanlinExpo",
+      "sha256": "cdf1b95be3e210621095a6269f9d17bf6cab11c6b7e6c6d8895265fcb8a4b84b",
+      "bytes": 325825
+    },
+    {
+      "path": "Package.swift",
+      "sha256": "392ece3430f8e61eb28afdaa925adf006b1a3dbf82a233568c2c279ab768e53b",
+      "bytes": 88328
+    },
+    {
+      "path": "Scripts/Expo/package-lock.json",
+      "sha256": "3b31e1c8fd34145df900764a2cda013ab02ecea7f890c969ad5e0a92925d0dd8",
+      "bytes": 336324
+    },
+    {
+      "path": "Scripts/Expo/package.json",
+      "sha256": "bb447094c0ef2250c445f580fa91c81a55fc3187c7d49e145b84e9c1c3756dce",
+      "bytes": 1759
+    },
+    {
+      "path": "Scripts/MiniApps/upstream-resolution.json",
+      "sha256": "28a724580a5c7b03268335bfba6a144b7db155198a916305cd00e2e339db1b2e",
+      "bytes": 15092
+    },
+    {
+      "path": "docs/agent-sdk/unified-package-manifest.json",
+      "sha256": "dd14c80e4223465e6a600f93c153c0f4c80a290b28520dfb8aa65d33f1862e4d",
+      "bytes": 3901
+    },
+    {
+      "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "sha256": "283c96260a51c095be32f262f9f77ba58bebc5372aa1af994176816c8fb5d538",
+      "bytes": 118804
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "sha256": "e8532f65e6dca533f63bade581e12ccc485ad835377523201073ef6dd402fb04",
+      "bytes": 153517
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "sha256": "f164b2e5c8b1271d9d673e87d438ef8f4016315860596a25800ef78de8e6dcb1",
+      "bytes": 23332
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "sha256": "e2aa1346d6c5409fc7dcf658fc2f0e8c108a4dfb8e95c2c6f9769cc1aa4983a6",
+      "bytes": 493798
+    }
+  ],
+  "preparedArchiveSHA256": "408fbfd0b9684db56f4a00c02ced8b17495019b9a2d16fd6d94095d6aae27112",
+  "actualGenerationSource": "1d5e598614f2bc7c689f34f5d7b364f67e1d5ae1",
+  "actualGenerationProjectSHA256": "a80e2947b4dedf0ce95b326cf44b0efac613b7b044058e3afc3fccb870cb0087",
+  "rootPackageSHA256": "392ece3430f8e61eb28afdaa925adf006b1a3dbf82a233568c2c279ab768e53b",
+  "priorPrefixStateSHA256": "03d3bad3d8306b42e539de5606001fc44cc1d3366bb80068a239dbe66c328d1b",
+  "remainingPrefixSeconds": 568.354392291003,
+  "cumulativeActiveSeconds": 12907.536914916043,
+  "planSHA256": "310d9f24be539df99ceadc6c50632861c2c4583661468cfaa17af54f417a52dd",
+  "primaryStateSHA256": "2bb98f8c8246743af6e81bdf6c7dbbf65161f43c251198611a7cd627c4ecd6cf",
+  "sourceHashes": {
+    "Scripts/CI/IntegrationValidation/miniapps_provider_sources.json": "818ea10dd85bd0b36449dfe93138fd52c438341d8c5864836ebab6a28a188078",
+    "docs/product-split/target-membership.json": "799388c58d92d5edfbe4dcd5ff5d79d66ac6c297217dc0a93bcf4dc9583c761f"
+  },
+  "advancedAt": "2026-11-25T09:01:22.415046+00:00"
+}

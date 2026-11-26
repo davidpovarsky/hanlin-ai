@@ -1,0 +1,66 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "createdAt": "2026-11-25T18:13:13.649376+00:00",
+  "payload": {
+    "path": "payload/Hanlin-MiniApp-Authoring-CLI-2026-11-25.zip",
+    "bytes": 15285,
+    "sha256": "a76b7cc57fc4ff8b2dae653226f095eb136afc91b97785e306378c096ea5b793"
+  },
+  "proofArchive": {
+    "path": "SDK08-Standalone-Authoring-Proof-2026-11-25.zip",
+    "bytes": 4404863,
+    "sha256": "357827dad828dea02aa422523df8cc460222bfb1b7e5fc84c02ddde12bb4cb16"
+  },
+  "proofReceipt": {
+    "path": "evidence/receipt.json",
+    "bytes": 13018,
+    "sha256": "8408547fc4351508d8a6ed349be59dba0631aa963a29bb699921202ced902919"
+  },
+  "readme": {
+    "path": "payload/Standalone-Authoring-CLI.md",
+    "bytes": 7236,
+    "sha256": "0e6443ce73bd93c9861686b825bbd7c5da80bd617fcf0e8c3ed339ca62493396"
+  },
+  "exportRecipe": {
+    "path": "payload/export-standalone-toolchain.py",
+    "bytes": 4944,
+    "sha256": "cbedfdda2acdada007e95514ebc54ffe406640c1671eb0968d882cfdc88bb186"
+  },
+  "summary": {
+    "path": "evidence/verification-summary.json",
+    "bytes": 12347,
+    "sha256": "7d1885c948302bc7a4b8151be968105bc41ffbebee715d2d5cdc4800fea9970f"
+  },
+  "productionFiles": [
+    {
+      "path": "Scripts/MiniApps/miniapp.mjs",
+      "bytes": 4101,
+      "sha256": "1c256c00392c626a54ebee2abe3ededaa792c5bfa6dd9b6c5aceb89be84e5b30",
+      "gitMode": "100644",
+      "identicalSources": [
+        "d4a0b115b106d4250ea40ad66153d5156847a07c",
+        "a2c8a1b1be746461272ba77254603304567c309d"
+      ]
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+      "bytes": 50327,
+      "sha256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9",
+      "gitMode": "100644",
+      "identicalSources": [
+        "d4a0b115b106d4250ea40ad66153d5156847a07c",
+        "a2c8a1b1be746461272ba77254603304567c309d"
+      ]
+    }
+  ],
+  "verifiedSDKFileCount": 25670,
+  "SDKFileSetUnchanged": true,
+  "positiveCommands": 4,
+  "negativeCommands": 2,
+  "expectedOutcomesMatched": 6,
+  "proofMemberCount": 63,
+  "nativeExecution": "NOT_RUN",
+  "canonicalSourceMutation": false,
+  "integration": "Extract the two-file payload at the final kit root beside the unchanged MiniAppSDK/ directory. Copy Standalone-Authoring-CLI.md and the optional maintainer export recipe separately."
+}

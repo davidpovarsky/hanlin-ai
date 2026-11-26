@@ -1,0 +1,133 @@
+diff --git a/AI_HLYTests/NativeScriptRuntimeWireTests.swift b/AI_HLYTests/NativeScriptRuntimeWireTests.swift
+index 27062db8e..ab113355e 100644
+--- a/AI_HLYTests/NativeScriptRuntimeWireTests.swift
++++ b/AI_HLYTests/NativeScriptRuntimeWireTests.swift
+@@ -3,6 +3,7 @@ import Foundation
+ import HanlinNativeScriptCoreSupport
+ import HanlinNativeScriptRuntime
+ import HanlinPlatformContracts
++import HanlinMiniAppCore
+ import Testing
+ @testable import AI_Hanlin
+ 
+@@ -85,6 +86,85 @@ extension HanlinUnifiedHostServicesE2ETests {
+         #expect(results[4].stdout.hasPrefix("/"))
+     }
+ 
++    @Test func nativeScriptActionDeclarationsPreserveRegisteredJavaScriptState() async throws {
++        let suffix = UUID().uuidString.lowercased()
++        let directory = FileManager.default.temporaryDirectory.appending(path: "ns-action-registration-\(suffix)")
++        let app = directory.appending(path: "app", directoryHint: .isDirectory)
++        try FileManager.default.createDirectory(at: app, withIntermediateDirectories: true)
++        defer { try? FileManager.default.removeItem(at: directory) }
++        try Data(#"{"name":"ns-action-registration","type":"module","main":"bundle.mjs","hanlinRuntime":"hanlin-nativescript","dependencies":{"@nativescript/core":"9.1.4"}}"#.utf8)
++            .write(to: app.appending(path: "package.json"))
++        let key = "HanlinNativeActionRegistration_" + suffix
++        defer { UserDefaults.standard.removeObject(forKey: key) }
++        let script = """
++        try {
++          const bridge = HanlinNativeServicesBridge.activeSessionBridge();
++          if (!bridge) throw new Error('The real NativeScript session has no Host bridge');
++          let counter = 40;
++          const name = '\(key)';
++          bridge.registerRequestHandlerCapabilityHandler('registration.state', 'inter-app.share', (caller, json, reply) => {
++            counter += 1;
++            reply(JSON.stringify({source: 'registered-js-handler', caller, request: JSON.parse(json), counter, name}), null);
++          });
++          // Match the original parity fixture's late declaration after its JS handler.
++          HanlinNativeServicesBridge.registerActionCapability('registration.state', 'inter-app.share');
++          HanlinNativeServicesBridge.roundTripValueKey('registration.state', 'hostService.registerAction:inter-app.share');
++          HanlinNativeScriptCompatibility.roundTripValueKey('registration.state', 'hostService.registerAction:inter-app.share');
++          // Declaring an action without a handler must never manufacture a result.
++          HanlinNativeServicesBridge.registerActionCapability('registration.unhandled', 'inter-app.share');
++          HanlinNativeServicesBridge.roundTripValueKey('registration.unhandled', 'hostService.registerAction:inter-app.share');
++          HanlinNativeScriptCompatibility.roundTripValueKey('registration.unhandled', 'hostService.registerAction:inter-app.share');
++          NSUserDefaults.standardUserDefaults.setObjectForKey(JSON.stringify({ready: true}), '\(key)');
++        } catch (error) {
++          NSUserDefaults.standardUserDefaults.setObjectForKey(JSON.stringify({error: String(error)}), '\(key)');
++        }
++        """
++        try Data(script.utf8).write(to: app.appending(path: "bundle.mjs"))
++        let adapter = NativeScriptHostServicesAdapter(
++            appID: try HanlinAppID(validating: "ns-action-registration-\(suffix)"),
++            grantedCapabilities: ["inter-app.share"], canPresentUI: false)
++        HanlinNativeServicesBridge.register(adapter, forSessionID: adapter.sessionID)
++        defer { HanlinNativeServicesBridge.unregisterProvider(forSessionID: adapter.sessionID) }
++        let session = try HanlinNativeScriptSession(applicationRoot: app, sessionID: adapter.sessionID)
++        defer { session.shutdown() }
++        try session.start()
++        let deadline = ContinuousClock.now + .seconds(20)
++        while UserDefaults.standard.string(forKey: key) == nil {
++            try #require(ContinuousClock.now < deadline, "Actual NativeScript did not finish action registration")
++            try await Task.sleep(for: .milliseconds(25))
++        }
++        struct Registration: Decodable { let ready: Bool?; let error: String? }
++        let json = try #require(UserDefaults.standard.string(forKey: key))
++        let registration = try JSONDecoder().decode(Registration.self, from: Data(json.utf8))
++        #expect(registration.error == nil, "Actual NativeScript registration failed: \(registration.error ?? "none")")
++        try #require(registration.ready == true)
++        let action = try HanlinActionID(validating: "registration.state")
++        let capability = try HanlinCapabilityID(validating: "inter-app.share")
++        let caller = try HanlinAppID(validating: "hanlin.host")
++        let payload: HanlinValue = .object(["challenge": .string(suffix)])
++        for counter in [Int64(41), Int64(42)] {
++            let value = try await adapter.invokeRegisteredAction(action, capability: capability, caller: caller, payload: payload)
++            guard case .object(let result) = value else {
++                Issue.record("The actual JavaScript handler did not return its object result")
++                return
++            }
++            #expect(result["source"] == .string("registered-js-handler"))
++            #expect(result["caller"] == .string(caller.rawValue))
++            #expect(result["request"] == payload)
++            #expect(result["counter"] == .integer(counter))
++            #expect(result["name"] == .string(key))
++            #expect(result["status"] == nil)
++        }
++        let unhandled = try HanlinActionID(validating: "registration.unhandled")
++        #expect(!adapter.hasRegisteredAction(unhandled))
++        do {
++            _ = try await adapter.invokeRegisteredAction(unhandled, capability: capability, caller: caller, payload: payload)
++            Issue.record("A declaration without a JavaScript handler must not synthesize a successful reply")
++        } catch let error as HanlinMiniAppRequestError {
++            #expect(error == .routeNotFound)
++        }
++    }
++
+     @Test func actualNativeSDKGlobalAndPropertyShapesAreObservedWithoutInvokingUI() async throws {
+         let directory = FileManager.default.temporaryDirectory.appending(path: "ns-sdk-shapes-\(UUID().uuidString.lowercased())")
+         let app = directory.appending(path: "app", directoryHint: .isDirectory)
+diff --git a/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m b/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m
+index dc797ef33..7bbc804da 100644
+--- a/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m
++++ b/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m
+@@ -639,28 +639,8 @@ static NSString *HanlinExecuteSyncWithTimeout(NSTimeInterval timeoutSeconds, Han
+     if ([provider respondsToSelector:@selector(registerAction:capability:)]) {
+         [(id)provider registerAction:action capability:capability];
+     }
+-    if ([provider respondsToSelector:@selector(registerRequestHandler:capability:handler:)]) {
+-        [provider registerRequestHandler:action capability:capability handler:^(NSString *caller, NSString *payloadJSON, HanlinBridgeStringResultBlock reply) {
+-            NSLog(@"[HanlinNativeServicesBridge] Action handler invoked for action=%@ caller=%@ payload=%@", action, caller, payloadJSON);
+-            NSDictionary *reqDict = nil;
+-            if (payloadJSON.length > 0) {
+-                NSData *data = [payloadJSON dataUsingEncoding:NSUTF8StringEncoding];
+-                if (data) {
+-                    reqDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+-                }
+-            }
+-            NSDictionary *replyDict = @{
+-                @"source": @"hanlin.demo.script-parity",
+-                @"action": action ?: @"",
+-                @"caller": caller ?: @"",
+-                @"request": reqDict ?: @{},
+-                @"status": @"ok"
+-            };
+-            NSData *replyData = [NSJSONSerialization dataWithJSONObject:replyDict options:0 error:nil];
+-            NSString *replyStr = replyData ? [[NSString alloc] initWithData:replyData encoding:NSUTF8StringEncoding] : @"{}";
+-            if (reply) reply(replyStr, nil);
+-        }];
+-    }
++    // Declaration must not replace a mini app's explicitly registered handler.
++    // Only registerRequestHandler:capability:handler: supplies action results.
+ }
+ 
+ + (NSString *)roundTripValue:(NSString *)value key:(NSString *)key {

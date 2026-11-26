@@ -1,0 +1,53 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "ED1C7CA0-C85E-41DF-918F-3C9C9033F73E",
+      "deviceName" : "HanlinPaired-paired52-sdk20-v2",
+      "modelName" : "iPad Pro 13-inch (M5)",
+      "osBuildNumber" : "24A434",
+      "osVersion" : "27.0",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "duration" : "36s",
+                  "durationInSeconds" : 36.83397316932678,
+                  "name" : "actualNativeScriptImportsTheGeneratedTypedFacadeAndCallsEveryEngine()",
+                  "nodeIdentifier" : "HanlinUnifiedHostServicesE2ETests/actualNativeScriptImportsTheGeneratedTypedFacadeAndCallsEveryEngine()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualNativeScriptImportsTheGeneratedTypedFacadeAndCallsEveryEngine()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "Unified Host Services E2E",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinUnifiedHostServicesE2ETests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "AI_HLYTests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests",
+          "nodeType" : "Unit test bundle",
+          "result" : "Passed"
+        }
+      ],
+      "name" : "AI_HLY",
+      "nodeType" : "Test Plan",
+      "result" : "Passed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

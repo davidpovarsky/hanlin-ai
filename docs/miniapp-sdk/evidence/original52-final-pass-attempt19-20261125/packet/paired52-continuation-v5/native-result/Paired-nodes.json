@@ -1,0 +1,387 @@
+{
+  "devices" : [
+    {
+      "architecture" : "arm64",
+      "deviceId" : "E742FBCD-8FF0-4130-B143-7F8328637138",
+      "deviceName" : "HanlinPaired-local",
+      "modelName" : "iPad Pro 13-inch (M5)",
+      "osBuildNumber" : "24A434",
+      "osVersion" : "27.0",
+      "platform" : "iOS Simulator"
+    }
+  ],
+  "testNodes" : [
+    {
+      "children" : [
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "duration" : "1s",
+                  "durationInSeconds" : 1.7860220670700073,
+                  "name" : "testInstalledExpoActionsReturnActualReplyAndFailure()",
+                  "nodeIdentifier" : "HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,75s",
+                  "durationInSeconds" : 0.7502270936965942,
+                  "name" : "testPreparedExpoWidgetPublicationReachesExistingConsumer()",
+                  "nodeIdentifier" : "HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "HanlinExpoHostServicesAcceptanceTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinExpoHostServicesAcceptanceTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0,49s",
+                  "durationInSeconds" : 0.4880499839782715,
+                  "name" : "testExpoLayoutEntryUsesItsDeclaredFormatRegardlessOfFileExtension()",
+                  "nodeIdentifier" : "HanlinNativePresentationTests/testExpoLayoutEntryUsesItsDeclaredFormatRegardlessOfFileExtension()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinNativePresentationTests/testExpoLayoutEntryUsesItsDeclaredFormatRegardlessOfFileExtension",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,26s",
+                  "durationInSeconds" : 0.259876012802124,
+                  "name" : "testNativePresentationRejectsRemovedGenerationAndDifferentProductStore()",
+                  "nodeIdentifier" : "HanlinNativePresentationTests/testNativePresentationRejectsRemovedGenerationAndDifferentProductStore()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinNativePresentationTests/testNativePresentationRejectsRemovedGenerationAndDifferentProductStore",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,54s",
+                  "durationInSeconds" : 0.5440030097961426,
+                  "name" : "testNativeSnippetHasIndependentDurableSessionsWithoutWidgetInstances()",
+                  "nodeIdentifier" : "HanlinNativePresentationTests/testNativeSnippetHasIndependentDurableSessionsWithoutWidgetInstances()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinNativePresentationTests/testNativeSnippetHasIndependentDurableSessionsWithoutWidgetInstances",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "1s",
+                  "durationInSeconds" : 1.2783830165863037,
+                  "name" : "testOriginalDynamicIslandCapturesAllSevenNativeRegionsAndFunctionComponents()",
+                  "nodeIdentifier" : "HanlinNativePresentationTests/testOriginalDynamicIslandCapturesAllSevenNativeRegionsAndFunctionComponents()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinNativePresentationTests/testOriginalDynamicIslandCapturesAllSevenNativeRegionsAndFunctionComponents",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,28s",
+                  "durationInSeconds" : 0.2779198884963989,
+                  "name" : "testTranslationUsesOriginalAsyncAPIAndReturnsNativeFinishEffect()",
+                  "nodeIdentifier" : "HanlinNativePresentationTests/testTranslationUsesOriginalAsyncAPIAndReturnsNativeFinishEffect()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinNativePresentationTests/testTranslationUsesOriginalAsyncAPIAndReturnsNativeFinishEffect",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "HanlinNativePresentationTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinNativePresentationTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "3s",
+                  "durationInSeconds" : 3.1462109088897705,
+                  "name" : "largeArtifactsResourcesAndSnapshotsRetainIntegrity()",
+                  "nodeIdentifier" : "HanlinMiniAppStorageCapacityTests/largeArtifactsResourcesAndSnapshotsRetainIntegrity()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppStorageCapacityTests/largeArtifactsResourcesAndSnapshotsRetainIntegrity()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "HanlinMiniAppStorageCapacityTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinMiniAppStorageCapacityTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0,08s",
+                  "durationInSeconds" : 0.08029389381408691,
+                  "name" : "testOriginalWidgetRegistrationTimelineAndPickerKeepProductAndInstallationIdentity()",
+                  "nodeIdentifier" : "HanlinOriginalExpoWidgetTests/testOriginalWidgetRegistrationTimelineAndPickerKeepProductAndInstallationIdentity()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinOriginalExpoWidgetTests/testOriginalWidgetRegistrationTimelineAndPickerKeepProductAndInstallationIdentity",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "HanlinOriginalExpoWidgetTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinOriginalExpoWidgetTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0,008s",
+                  "durationInSeconds" : 0.007994651794433594,
+                  "name" : "Imported MiniApp repair uses the mounted composer once and preserves Home and conversation settings",
+                  "nodeIdentifier" : "PendingFirstTurnTests/importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/PendingFirstTurnTests/importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,00031s",
+                  "durationInSeconds" : 0.000308990478515625,
+                  "name" : "Cancelled MiniApp handoff preserves the unrelated Home draft and rejects a second in-flight repair",
+                  "nodeIdentifier" : "PendingFirstTurnTests/cancelledMiniAppRepairPreservesHomeDraft()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/PendingFirstTurnTests/cancelledMiniAppRepairPreservesHomeDraft()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "7A.6 PendingFirstTurnTests — Home First-Send State Machine & Cancellation",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/PendingFirstTurnTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0,096s",
+                  "durationInSeconds" : 0.09554100036621094,
+                  "name" : "originalNativeProvidersAreRegisteredAndExposeRealDeviceValues()",
+                  "nodeIdentifier" : "HanlinOriginalScriptWidgetAPITests/originalNativeProvidersAreRegisteredAndExposeRealDeviceValues()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinOriginalScriptWidgetAPITests/originalNativeProvidersAreRegisteredAndExposeRealDeviceValues()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,3s",
+                  "durationInSeconds" : 0.3009769916534424,
+                  "name" : "originalAsyncDocumentsProviderSettlesBeforeRenderingAndStateCommit()",
+                  "nodeIdentifier" : "HanlinOriginalScriptWidgetAPITests/originalAsyncDocumentsProviderSettlesBeforeRenderingAndStateCommit()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinOriginalScriptWidgetAPITests/originalAsyncDocumentsProviderSettlesBeforeRenderingAndStateCommit()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,15s",
+                  "durationInSeconds" : 0.15138030052185059,
+                  "name" : "upstreamPromiseRejectionIsCatchableWithoutUnsupportedAsyncFailure()",
+                  "nodeIdentifier" : "HanlinOriginalScriptWidgetAPITests/upstreamPromiseRejectionIsCatchableWithoutUnsupportedAsyncFailure()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinOriginalScriptWidgetAPITests/upstreamPromiseRejectionIsCatchableWithoutUnsupportedAsyncFailure()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,17s",
+                  "durationInSeconds" : 0.16553521156311035,
+                  "name" : "originalStorageAndHanlinCompatibilityValuesShareOneTransaction()",
+                  "nodeIdentifier" : "HanlinOriginalScriptWidgetAPITests/originalStorageAndHanlinCompatibilityValuesShareOneTransaction()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinOriginalScriptWidgetAPITests/originalStorageAndHanlinCompatibilityValuesShareOneTransaction()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "HanlinOriginalScriptWidgetAPITests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinOriginalScriptWidgetAPITests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0,82s",
+                  "durationInSeconds" : 0.8225772380828857,
+                  "name" : "originalControlsCompileAndRunNativeActionsWithoutRendering()",
+                  "nodeIdentifier" : "HanlinOriginalScriptWidgetControlTests/originalControlsCompileAndRunNativeActionsWithoutRendering()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinOriginalScriptWidgetControlTests/originalControlsCompileAndRunNativeActionsWithoutRendering()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,35s",
+                  "durationInSeconds" : 0.34992408752441406,
+                  "name" : "controlSelectionPreservesProductInstallationAndGenerationOwnership()",
+                  "nodeIdentifier" : "HanlinOriginalScriptWidgetControlTests/controlSelectionPreservesProductInstallationAndGenerationOwnership()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinOriginalScriptWidgetControlTests/controlSelectionPreservesProductInstallationAndGenerationOwnership()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,61s",
+                  "durationInSeconds" : 0.6106100082397461,
+                  "name" : "originalControlEntitiesProvidersAndNativeIntentsUseThePublishedHostStore()",
+                  "nodeIdentifier" : "HanlinOriginalScriptWidgetControlTests/originalControlEntitiesProvidersAndNativeIntentsUseThePublishedHostStore()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinOriginalScriptWidgetControlTests/originalControlEntitiesProvidersAndNativeIntentsUseThePublishedHostStore()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "HanlinOriginalScriptWidgetControlTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinOriginalScriptWidgetControlTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0,19s",
+                  "durationInSeconds" : 0.19048786163330078,
+                  "name" : "originalRegionsPersistOutsideActivityContentAndActionsProduceFreshSnapshots()",
+                  "nodeIdentifier" : "HanlinOriginalScriptWidgetLiveActivityTests/originalRegionsPersistOutsideActivityContentAndActionsProduceFreshSnapshots()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests/originalRegionsPersistOutsideActivityContentAndActionsProduceFreshSnapshots()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,13s",
+                  "durationInSeconds" : 0.13248896598815918,
+                  "name" : "inactiveWidgetCannotProduceOrLoadALiveActivitySnapshot()",
+                  "nodeIdentifier" : "HanlinOriginalScriptWidgetLiveActivityTests/inactiveWidgetCannotProduceOrLoadALiveActivitySnapshot()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests/inactiveWidgetCannotProduceOrLoadALiveActivitySnapshot()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,34s",
+                  "durationInSeconds" : 0.33791184425354004,
+                  "name" : "actualActivityKitStartsUpdatesAndEndsTheOriginalProgram()",
+                  "nodeIdentifier" : "HanlinOriginalScriptWidgetLiveActivityTests/actualActivityKitStartsUpdatesAndEndsTheOriginalProgram()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests/actualActivityKitStartsUpdatesAndEndsTheOriginalProgram()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "HanlinOriginalScriptWidgetLiveActivityTests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "0,054s",
+                  "durationInSeconds" : 0.054205894470214844,
+                  "name" : "malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic()",
+                  "nodeIdentifier" : "HanlinScriptingPlatformCompositionTests/malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinScriptingPlatformCompositionTests/malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "Scripting Platform application services",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinScriptingPlatformCompositionTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            },
+            {
+              "children" : [
+                {
+                  "duration" : "7m 7s",
+                  "durationInSeconds" : 427.34488797187805,
+                  "name" : "Original installed SDK writes, typechecks, repairs and builds a source-preserving archive",
+                  "nodeIdentifier" : "MiniAppAuthoringToolTests/originalSDKWriteValidateBuildAndRepair()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/MiniAppAuthoringToolTests/originalSDKWriteValidateBuildAndRepair()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "0,018s",
+                  "durationInSeconds" : 0.018444061279296875,
+                  "name" : "Source edits preserve unrelated files, target retained source and accept exact binary resources",
+                  "nodeIdentifier" : "MiniAppAuthoringToolTests/sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/MiniAppAuthoringToolTests/sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "duration" : "1m 53s",
+                  "durationInSeconds" : 113.3821542263031,
+                  "name" : "Original Expo Metro builds inside the embedded Node host and retains real image assets",
+                  "nodeIdentifier" : "MiniAppAuthoringToolTests/originalExpoMetroBuildOnEmbeddedNode()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/MiniAppAuthoringToolTests/originalExpoMetroBuildOnEmbeddedNode()",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "MiniApp Authoring Tools",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/MiniAppAuthoringToolTests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "AI_HLYTests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests",
+          "nodeType" : "Unit test bundle",
+          "result" : "Passed"
+        },
+        {
+          "children" : [
+            {
+              "children" : [
+                {
+                  "children" : [
+                    {
+                      "name" : "Update the Info.plist: Support for all orientations will soon be required.",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "3m 10s",
+                  "durationInSeconds" : 190.63211297988892,
+                  "name" : "testMalformedArchiveShowsOriginalImportDiagnostic()",
+                  "nodeIdentifier" : "MiniAppAuthoringUITests/testMalformedArchiveShowsOriginalImportDiagnostic()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/MiniAppAuthoringUITests/testMalformedArchiveShowsOriginalImportDiagnostic",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                },
+                {
+                  "children" : [
+                    {
+                      "name" : "Multiple Runtime Warnings",
+                      "nodeType" : "Runtime Warning"
+                    }
+                  ],
+                  "duration" : "4m 50s",
+                  "durationInSeconds" : 290.6924670934677,
+                  "name" : "testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport()",
+                  "nodeIdentifier" : "MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport()",
+                  "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport",
+                  "nodeType" : "Test Case",
+                  "result" : "Passed"
+                }
+              ],
+              "name" : "MiniAppAuthoringUITests",
+              "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/MiniAppAuthoringUITests",
+              "nodeType" : "Test Suite",
+              "result" : "Passed"
+            }
+          ],
+          "name" : "AI_HLYUITests",
+          "nodeIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests",
+          "nodeType" : "UI test bundle",
+          "result" : "Passed"
+        }
+      ],
+      "name" : "AI_HLY",
+      "nodeType" : "Test Plan",
+      "result" : "Passed"
+    }
+  ],
+  "testPlanConfigurations" : [
+    {
+      "configurationId" : "1",
+      "configurationName" : "Test Scheme Action"
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "observedAt": "2026-11-25T19:50:20.175053+00:00",
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "reason": "Root-authorized bounded own-Xcode sample and SIGINT to owned controller after growing repeated package resolution without any XCTest case",
+  "identityQuery": {
+    "argv": [
+      "/bin/ps",
+      "-p",
+      "7320,7517,7530",
+      "-o",
+      "pid=,ppid=,pgid=,state=,command="
+    ],
+    "exitCode": 0,
+    "stdout": " 7320     1  7320 Ss   /opt/homebrew/Cellar/python@3.12/3.12.16/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v10.py --decision /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v5-decision.json\n 7517  7320  7517 Rs   /opt/homebrew/Cellar/python@3.12/3.12.16/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v10.py --decision /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v5/decision.json --child test\n 7530  7517  7517 R    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project AI_HLY.xcodeproj -destination platform=iOS Simulator,id=E742FBCD-8FF0-4130-B143-7F8328637138 -parallel-testing-enabled NO -derivedDataPath /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete -clonedSourcePackagesDirPath /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/SourcePackages -skipPackagePluginValidation -skipMacroValidation CODE_SIGNING_ALLOWED=YES CODE_SIGNING_REQUIRED=YES CODE_SIGN_IDENTITY=- -collect-test-diagnostics never -scheme HanlinMiniApps test-without-building -resultBundlePath /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v5/test/NotificationOS.xcresult -only-testing:HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines\n",
+    "stderr": ""
+  },
+  "sampleCommand": {
+    "argv": [
+      "/usr/bin/sample",
+      "7530",
+      "3",
+      "10",
+      "-file",
+      "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v5/owned-xcode7530-sample.txt"
+    ],
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": "Sampling process 7530 for 3 seconds with 10 milliseconds of run time between samples\nSampling completed, processing symbols...\nSample analysis of process 7530 written to file /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v5/owned-xcode7530-sample.txt\n",
+    "finishedAt": "2026-11-25T19:50:24.536258+00:00"
+  },
+  "sample": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v5/owned-xcode7530-sample.txt",
+    "bytes": 482337,
+    "sha256": "76cfe97ac166b10327353980aff439d22e5a5df2b5c9c42c1a044c0c2a71bfb3"
+  },
+  "interrupt": {
+    "pid": 7320,
+    "signal": "SIGINT",
+    "sentAt": "2026-11-25T19:50:24.542197+00:00",
+    "verifiedCurrentArgv": " 7320 Ss   /opt/homebrew/Cellar/python@3.12/3.12.16/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v10.py --decision /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v5-decision.json\n"
+  }
+}

@@ -1,0 +1,8 @@
+{"at": "2026-11-25T18:37:38.823810+00:00", "event": "prepared", "startedAt": "2026-11-25T18:37:38.823418+00:00", "argv": ["/opt/homebrew/opt/python@3.12/bin/python3.12", "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-ns5-v6.py", "--decision", "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1-ns5/decision.json", "--native-child"]}
+{"at": "2026-11-25T18:37:38.828042+00:00", "event": "launched", "status": "RUNNING", "phasePID": 48820, "nativeResult": "RUNNING"}
+{"at": "2026-11-25T18:38:08.841707+00:00", "event": "heartbeat", "elapsedSeconds": 30.017675334005617, "logBytes": 1140}
+{"at": "2026-11-25T18:38:38.849091+00:00", "event": "heartbeat", "elapsedSeconds": 60.02475116700225, "logBytes": 1240}
+{"at": "2026-11-25T18:39:08.854462+00:00", "event": "heartbeat", "elapsedSeconds": 90.030062292004, "logBytes": 1340}
+{"at": "2026-11-25T18:39:16.410635+00:00", "event": "actual_terminal", "status": "EXECUTED_PASS", "nativeResult": "EXECUTED_PASS", "resultReviewSHA256": "ab16b1d1a080c9434c2fefe123ff198f5f5c15f756d5a0096fe207b20014b4b9", "exitCode": 0}
+{"at": "2026-11-25T18:39:21.236309+00:00", "event": "charge_ready", "finishedAt": "2026-11-25T18:39:21.235602+00:00", "elapsedSeconds": 102.41237045900198, "chargedSeconds": 102.41237045900198, "cumulativeActiveSeconds": 24307.531661753037, "cumulativeCompanionSeconds": 128.54957408401242, "allowanceExceededDuringCleanup": false, "logBytes": 2446, "logSHA256": "75ee5fa71649889fdf88da25b20e44abbc9050a7b2589b462c0b7ed56b2a5330"}
+{"at": "2026-11-25T18:39:21.241861+00:00", "event": "finalized", "status": "EXECUTED_PASS"}

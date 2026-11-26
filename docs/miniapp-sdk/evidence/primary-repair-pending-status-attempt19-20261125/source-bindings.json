@@ -1,0 +1,25 @@
+{
+  "source": "dc53a6c8ff1bb68bfbc52a64667e14ce688055b0",
+  "tree": "fa7fdb2a1d05414b772329acd107721cd82bba46",
+  "parent": "43212054f21bf93440df961cc312d1307dc2da8c",
+  "provider": {
+    "path": "AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift",
+    "bytes": 67592,
+    "sha256": "baec47f25aba9e08d078b65641a622ab56eb2f76421cb3e714eb08fdd01661dc"
+  },
+  "miniAppPresentationSource": "43212054f21bf93440df961cc312d1307dc2da8c",
+  "miniAppEntrySHA256": "f1489c1f8c4ca1039d4ffc5698b43a5e672ec586fb5b9393dc69f246f11de4c1",
+  "originalUITestSHA256": "60a786ea3864a118710f8814a41f52cc454d35c71e4fb911b611a70ba5c2f565",
+  "originalUITestWholeCaseSeconds": 600,
+  "SDKProducerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+  "nativeVerification": "NOT_RUN_AT_CAPTURE",
+  "requiredAffectedBuilds": [
+    "HanlinMiniApps",
+    "AI_HLY"
+  ],
+  "reviewers": [
+    "/root",
+    "/root/status_reporting"
+  ],
+  "publicationObservedAt": "2026-11-25T15:22:40.737245+00:00"
+}
