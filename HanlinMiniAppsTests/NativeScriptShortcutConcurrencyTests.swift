@@ -133,8 +133,22 @@ final class NativeScriptShortcutConcurrencyTests: XCTestCase {
 
         // Stale and disabled commands never execute a new factory or action.
         let beforeRejection = observations.started.count
+        let previouslyLoaded = fixture.platform(observations: observations)
+        await previouslyLoaded.restore()
         _ = try await fixture.store.update(plan: fixture.plan(fixture.second, version: "1.0.1"),
             artifactDirectory: fixture.second.artifact, artifactManifest: fixture.second.manifest)
+        // Reproduce the final admission race using two real store actors: this
+        // platform already loaded generation1 before the other actor committed2.
+        do {
+            _ = try await previouslyLoaded.executeHeadlessAction(
+                caller: .init(validating: "hanlin.host"), targetAppID: fixture.second.appID,
+                action: .init(validating: "probe"), capability: .init(validating: "inter-app.share"),
+                payload: .object(["nonce": .string("stale-cached-store"), "mode": .string("immediate")]))
+            XCTFail("Cached registry state admitted an obsolete generation.")
+        } catch let error as HanlinInvocationDispatchError {
+            XCTAssertEqual(error.status, .stale)
+            XCTAssertEqual(error.failure, .staleGeneration)
+        }
         let stale = try fixture.command(fixture.second, nonce: "stale")
         await assertRejected(stale, using: fixture.platform(observations: observations),
                              extensions: fixture.extensions, failure: .staleGeneration)

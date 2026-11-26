@@ -1444,7 +1444,9 @@ final class HanlinScriptingPlatform {
         let docsDirStr = container.documents.path(percentEncoded: false)
         let cacheDirStr = container.cache.path(percentEncoded: false)
 
-        let currentPackages = try await store.snapshots()
+        // Another scene or Shortcut owns a different store actor. Refresh the
+        // persisted registry instead of trusting this actor's earlier snapshot.
+        let currentPackages = try await store.restore()
         guard let current = currentPackages.first(where: { $0.record.installedPackageID == package.record.installedPackageID }),
               current.enabled, current.record.activeGeneration == package.record.activeGeneration else {
             throw HanlinInvocationDispatchError(.stale, .staleGeneration)
