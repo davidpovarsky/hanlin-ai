@@ -945,6 +945,9 @@ final class AgentRuntimeConversationUITests: XCTestCase {
     func testUI04CollapsedProgressAndInspectorWithoutRawCoT() throws {
         let app = launchAcceptanceApp()
         openChat(in: app)
+        // UI03 intentionally remembers Python consent across conversations.
+        // Start this consent journey through the original Settings revocation.
+        revokeRememberedToolPermissions(in: app)
 
         sendPrompt("PROMPT_UI04_REASONING_INSPECTOR", in: app)
         approveOriginalToolRequest(["source": "print(6 * 7)"], in: app)
