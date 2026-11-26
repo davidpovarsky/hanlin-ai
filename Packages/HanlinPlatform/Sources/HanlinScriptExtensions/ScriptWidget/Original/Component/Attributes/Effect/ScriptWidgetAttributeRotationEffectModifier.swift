@@ -19,7 +19,7 @@ struct ScriptWidgetAttributeRotationEffectModifier: ViewModifier {
 
     init(_ element: ScriptWidgetRuntimeElement) {
 
-        if let rotationValue = element.getPropDouble("rotation") {
+        if let rotationValue = element.getPropDouble("rotation"), rotationValue.isFinite {
             self.degree = rotationValue
         }
     }
@@ -28,7 +28,7 @@ struct ScriptWidgetAttributeRotationEffectModifier: ViewModifier {
     func body(content: Content) -> some View {
         if let degree = self.degree {
             content
-                .rotationEffect(Angle(degrees: degree))
+                .rotationEffect(Angle(degrees: degree), anchor: .center)
         } else {
             content
         }

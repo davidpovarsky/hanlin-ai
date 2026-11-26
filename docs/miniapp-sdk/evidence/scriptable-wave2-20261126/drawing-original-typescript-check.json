@@ -1,0 +1,14 @@
+{
+  "scope": "Original installed compiler and declarations; not freshly staged combined SDK, not native runtime",
+  "compilerVersion": "5.9.3",
+  "packageVersions": {
+    "@nativescript/core": "9.1.0",
+    "@nativescript/types": "9.1.0",
+    "@nativescript/types-ios": "9.1.0"
+  },
+  "hashes": {
+    "index.ts": "210384ff649d97f1c1cbe6e70093ad99c7438e6d4eef180b50190ddf92e22246",
+    "drawing.ts": "0d6b26a7908444c8cab5e7e2e777e3d8b134e2dbf1075c52c9dea14e79a89a52"
+  },
+  "diagnostics": []
+}
