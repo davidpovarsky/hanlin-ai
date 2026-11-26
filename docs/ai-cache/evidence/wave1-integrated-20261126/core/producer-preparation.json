@@ -1,0 +1,99 @@
+{
+  "started": "2026-11-26T12:41:47.954962+00:00",
+  "steps": [
+    {
+      "command": [
+        "git",
+        "clone",
+        "--shared",
+        "--no-checkout",
+        "/Users/m1/builds/hanlin-testflight-149101-20261125/SourcePackages/checkouts/swift-ai-sdk",
+        "/Users/m1/builds/hanlin-wave1-core-f3b55fdd-20261126/producer-sdk"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "Cloning into '/Users/m1/builds/hanlin-wave1-core-f3b55fdd-20261126/producer-sdk'...\ndone.\n"
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/Users/m1/builds/hanlin-wave1-core-f3b55fdd-20261126/producer-sdk",
+        "cat-file",
+        "-e",
+        "abf0921c6e89e6521cc2b510ff11016b45a0ef08^{commit}"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/Users/m1/builds/hanlin-wave1-core-f3b55fdd-20261126/producer-sdk",
+        "sparse-checkout",
+        "init",
+        "--cone"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/Users/m1/builds/hanlin-wave1-core-f3b55fdd-20261126/producer-sdk",
+        "sparse-checkout",
+        "set",
+        "Tests"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/Users/m1/builds/hanlin-wave1-core-f3b55fdd-20261126/producer-sdk",
+        "checkout",
+        "--detach",
+        "abf0921c6e89e6521cc2b510ff11016b45a0ef08"
+      ],
+      "exit": 0,
+      "stdout": "",
+      "stderr": "Previous HEAD position was 07431ab ci: qualify complete package after deterministic abort fixture repair\nHEAD is now at abf0921 test(cache): await root telemetry span completion\n"
+    },
+    {
+      "command": [
+        "git",
+        "-C",
+        "/Users/m1/builds/hanlin-wave1-core-f3b55fdd-20261126/producer-sdk",
+        "rev-parse",
+        "HEAD"
+      ],
+      "exit": 0,
+      "stdout": "abf0921c6e89e6521cc2b510ff11016b45a0ef08\n",
+      "stderr": ""
+    }
+  ],
+  "state": "READY",
+  "producer_sha": "abf0921c6e89e6521cc2b510ff11016b45a0ef08",
+  "fixtures": {
+    "OpenAIPromptCacheControlTests.swift": {
+      "source": "/Users/m1/builds/hanlin-wave1-core-f3b55fdd-20261126/producer-sdk/Tests/SwiftAISDKTests/OpenAI/OpenAIPromptCacheControlTests.swift",
+      "sha256": "623b47a3a43dbf4a57948b5eef7d7df436c4e7f65c222ca3fcf7774f9b08cd7c"
+    },
+    "MockTracer.swift": {
+      "source": "/Users/m1/builds/hanlin-wave1-core-f3b55fdd-20261126/producer-sdk/Tests/SwiftAISDKTests/TestSupport/MockTracer.swift",
+      "sha256": "a6a51dde8ad9779723a7482d5789e25dd498ee41df449bd8cdd7e33c2fffe864"
+    }
+  },
+  "historical_fixture_hashes": {
+    "MockTracer.swift": "a6a51dde8ad9779723a7482d5789e25dd498ee41df449bd8cdd7e33c2fffe864",
+    "OpenAIPromptCacheControlTests.swift": "623b47a3a43dbf4a57948b5eef7d7df436c4e7f65c222ca3fcf7774f9b08cd7c"
+  },
+  "finished": "2026-11-26T12:41:48.351018+00:00"
+}

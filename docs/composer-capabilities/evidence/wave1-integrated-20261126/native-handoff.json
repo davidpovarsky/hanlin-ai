@@ -1,0 +1,136 @@
+{
+  "source_sha": "a30c8267c1f5ce2a122889b81dc9fffc0f295758",
+  "created_at": "2026-11-26T12:56:43.495534+00:00",
+  "owner": "root full application native queue",
+  "status": "PREPARED_NOT_EXECUTED_ON_CURRENT_SOURCE",
+  "test_source_sha256": {
+    "AI_HLYTests/HanlinComposerCapabilityIntegrationTests.swift": "d87f9637ae40195a5e2dbadbf5c1e88230df276847aa033c3163213d9aa51d55",
+    "AI_HLYTests/HanlinMiniAppAssistantToolTests.swift": "7cdd51b1ae123240c6e9cda58c837221ad8daec3385e79a8edf53dd010b74b25",
+    "AI_HLYTests/HanlinMiniAppHostDiscoveryTests.swift": "cb57318fa2e3d91eb9f16a1061044332aa20ff69b911c7b5e35b2a363383f7d0",
+    "AI_HLYTests/HanlinUnifiedHostServicesE2ETests.swift": "85efedee4ec94c5ecc4e727847401fda1ab72a66e7cf9ab2403f909f23a18210",
+    "AI_HLYTests/NativeComposerLineSizingTests.swift": "6eb5c1a7f623dac590311d3040c6c0f81cdbb6baec98fdd943d6617151d0f248",
+    "AI_HLYTests/SkillOpenClawPolicyTests.swift": "cb76a65631f8fb6fede8a87ddb0a552d6082268839273a73cd6c28796e12fae1",
+    "AI_HLYUITests/HanlinComposerCapabilitiesUITests.swift": "8ddf41f1b39533c8643b176ce3c73de63af6a70cf4072ba2e2601bb24e160883",
+    "AI_HLYUITests/HanlinMorphComposerUITests.swift": "033fc452d12dc94b207da7291592b147a6f1dde311162a837e5ae3ff1075affe",
+    "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/HanlinCapabilityCustomPanelProviderTests.swift": "b8c4796eac65d88fb9c4dfdb6c6e3673b05e06ae32c65cc16ff8439544800260",
+    "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/HanlinCapabilityNumberInputTests.swift": "fb637c3fc42423076a7a8bf72fac43bf4124edc6a3720f28a101cfc6bdddb424",
+    "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/HanlinComposerCapabilityTests.swift": "c18dd51a3931a751b93fb11c2ea285fd2e8020e2e03176d7e01448b15371757f"
+  },
+  "app_cache": {
+    "inventory": "docs/ai-cache/evidence/wave1-integrated-20261126/app-cache-source-inventory.json",
+    "original_runner": "Scripts/CI/IntegrationValidation/run_cache_app_native.py",
+    "python_requirement": "Python 3.11+",
+    "node_requirement": "Pinned Node 24 on PATH",
+    "selectors": [
+      "AI_HLYTests/HanlinPromptCachingIntegrationTests",
+      "AI_HLYTests/ClassicChatRestorationTests",
+      "AI_HLYTests/HanlinMiniAppAssistantIntegrationTests",
+      "AI_HLYTests/HanlinModelPromptCachePersistenceTests"
+    ],
+    "expected_methods": 46,
+    "expected_invocations": 48,
+    "commands": [
+      [
+        "<Python-3.11+-executable>",
+        "Scripts/CI/IntegrationValidation/run_cache_app_native.py",
+        "--phase",
+        "prepare",
+        "--derived",
+        "<owned-current-DerivedData>",
+        "--evidence",
+        "<owned-current-evidence>"
+      ],
+      [
+        "<Python-3.11+-executable>",
+        "Scripts/CI/IntegrationValidation/run_cache_app_native.py",
+        "--phase",
+        "test",
+        "--derived",
+        "<same-owned-current-DerivedData>",
+        "--evidence",
+        "<same-owned-current-evidence>"
+      ]
+    ]
+  },
+  "composer": {
+    "app_scope": {
+      "classification": "VERIFY_REGRESSION",
+      "original_plan_status": "EXECUTED_PASS",
+      "selectors": [
+        "AI_HLYTests/HanlinComposerCapabilityIntegrationTests",
+        "AI_HLYTests/HanlinMiniAppAssistantToolTests",
+        "AI_HLYTests/SkillOpenClawPolicyTests/currentOriginalPolicyControlsLoadReadAndActualSDKContinuation",
+        "AI_HLYTests/HanlinMiniAppHostDiscoveryTests/preparedExpoActionExportsKeepTheirInstalledAppInTheCatalog"
+      ]
+    },
+    "native_engines": {
+      "classification": "VERIFY_REGRESSION",
+      "original_plan_status": "FAILED",
+      "selectors": [
+        "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualNativeScriptAssistantUsesDedicatedSourceAndImmutableConfiguration",
+        "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualExpoAssistantUsesDedicatedSourceAndImmutableConfiguration",
+        "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptAssistantRepliesSettleOnceAndRejectMalformedJSON",
+        "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptAssistantCancellationAndInvalidationReleaseWaiters"
+      ]
+    },
+    "native_editor": {
+      "classification": "VERIFY_REGRESSION",
+      "selectors": [
+        "AI_HLYTests/NativeComposerLineSizingTests/equalStringOwnerSwitchKeepsPendingInputAndLateDelegateScoped()",
+        "AI_HLYTests/NativeComposerLineSizingTests/canonicalEquivalentOwnerAndNativeReplacementsPreserveExactText()",
+        "AI_HLYTests/NativeComposerLineSizingTests/markedTextOwnerSwitchPreservesCompositionAndAuthoritativeClear(_:)",
+        "AI_HLYTests/NativeComposerLineSizingTests/programmaticDraftUpdatesWhileEditing()"
+      ],
+      "original_expected_methods": 4,
+      "original_expected_invocations": 5,
+      "parameterized_method": "markedTextOwnerSwitchPreservesCompositionAndAuthoritativeClear"
+    },
+    "shared_sdk": {
+      "classification": "PROBE_UNKNOWN",
+      "selectors": [
+        "HanlinComposerCapabilityQueryTests",
+        "HanlinComposerCapabilityDraftTests",
+        "HanlinCapabilityCustomPanelProviderTests",
+        "HanlinCapabilityNumberInputTests"
+      ],
+      "original_accepted_methods": 11,
+      "original_source": "a3aae0b952b0518cb8c40ed4a511d4cffadab99f",
+      "applicability": "Requires source/dependency closure assessment; no fresh execution claimed."
+    },
+    "ui": {
+      "classification": "VERIFY_REGRESSION",
+      "original_plan_status": "FAILED",
+      "device_selectors": {
+        "iPhone": [
+          "AI_HLYUITests/HanlinComposerCapabilitiesUITests/testMiniAppSelectionAttachesWithoutLaunchingAndEnablesAttachmentOnlySend",
+          "AI_HLYUITests/HanlinComposerCapabilitiesUITests/testMentionAndSlashPreserveHebrewTextAtTheRealCaretAndInsertTheSameIdentity",
+          "AI_HLYUITests/HanlinComposerCapabilitiesUITests/testManifestCatalogAndMapPanelsKeepUserConfigurationAcrossEditing",
+          "AI_HLYUITests/HanlinMorphComposerUITests/testDismissModelPickerKeepsSelectedModelAndDraft"
+        ],
+        "iPad": [
+          "AI_HLYUITests/HanlinComposerCapabilitiesUITests/testMiniAppSelectionAttachesWithoutLaunchingAndEnablesAttachmentOnlySend",
+          "AI_HLYUITests/HanlinComposerCapabilitiesUITests/testMentionAndSlashPreserveHebrewTextAtTheRealCaretAndInsertTheSameIdentity",
+          "AI_HLYUITests/HanlinComposerCapabilitiesUITests/testManifestCatalogAndMapPanelsKeepUserConfigurationAcrossEditing"
+        ]
+      },
+      "execution_template": [
+        "xcodebuild",
+        "test-without-building",
+        "-xctestrun",
+        "<fresh-original-AI_HLY-generated.xctestrun>",
+        "-destination",
+        "platform=iOS Simulator,id=<owned-device>",
+        "-resultBundlePath",
+        "<new-result-bundle>",
+        "<one -only-testing: argument per device selector>"
+      ]
+    }
+  },
+  "required_checks": [
+    "Use immutable source and original prepared runtime artifacts/locks.",
+    "Original freshly generated AI_HLY xctestrun must identify AI_HLYTests and AI_HLYUITests and preserve HANLIN_UNIT_TEST_HOST=1.",
+    "Export exact test-node identities and every parameterized argument result; require expected selected invocations to run and pass.",
+    "Keep d89ce38b native-engine and UI failures as historical failures; current fixes do not imply acceptance.",
+    "Source manifests are from a30c8267; compare affected source closure for later source reuse."
+  ]
+}
