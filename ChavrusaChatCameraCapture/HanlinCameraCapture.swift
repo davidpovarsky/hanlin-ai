@@ -1,4 +1,5 @@
 import AppIntents
+import ExtensionKit
 import HanlinCameraCaptureUI
 import LockedCameraCapture
 import SwiftUI
