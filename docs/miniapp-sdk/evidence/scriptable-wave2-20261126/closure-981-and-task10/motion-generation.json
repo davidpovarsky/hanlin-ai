@@ -1,0 +1,271 @@
+{
+  "sourceRevision": "3f7c4a6f3cafa3919301750086cd1abf5c459955",
+  "sameProductSource": "9819697c1792119a6a93b492d12abad7b3330c93",
+  "startedAtUTC": "2026-11-26T18:15:24.454785+00:00",
+  "scope": "Unmodified canonical selected-product manifest generation on Oracle; no native compilation, no network resolution; all package manifests and canonical graph inputs materialized",
+  "inputs": {
+    "AI_HLY.xcodeproj/project.pbxproj": {
+      "bytes": 273984,
+      "sha256": "52bd71e97d08c1982fe0547d2b0c80374c373533d9abcaf885591adab87dccdb"
+    },
+    "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved": {
+      "bytes": 10518,
+      "sha256": "56d19a4b8c677831fb91e1f8155a68e411b42fd4807ad618d6f169569e1bb5a4"
+    },
+    "Packages/HanlinAgentSDK/Package.swift": {
+      "bytes": 3056,
+      "sha256": "16becff5f9e626f171d21f0277684c249c773f3169334fc9a63a37876c44a36e"
+    },
+    "Packages/HanlinAppExtensionsSDK/Package.swift": {
+      "bytes": 3120,
+      "sha256": "55a32b484dfecced9c96546063ce5f207c186add846fbc47711b2fb93d77cd86"
+    },
+    "Packages/HanlinExpoNativeAPI/Package.swift": {
+      "bytes": 7065,
+      "sha256": "c5fd18fa28a1842be0351053d978cc55b752546dc798c663f0dedabfdbefc28c"
+    },
+    "Packages/HanlinExpoRuntime/Package.swift": {
+      "bytes": 8800,
+      "sha256": "6a4169ffd1975358466068c3f7776d8ac88fab4b6c0b883005669522086cda0e"
+    },
+    "Packages/HanlinExpoWidgetSubset/Package.swift": {
+      "bytes": 381,
+      "sha256": "ed50b8b4f6ee4532ff3ed2af82d7994c7718e958387495280f9a939218323a41"
+    },
+    "Packages/HanlinMiniAppsBridge/Package.swift": {
+      "bytes": 711,
+      "sha256": "579cdb6febf974d7f463aee0cd6592cdf0cfd5a4c8e53840009ff170e52b6e2e"
+    },
+    "Packages/HanlinNativeScriptRuntime/Package.swift": {
+      "bytes": 1695,
+      "sha256": "88a4926e884e6804246a7d077efed3837271886a9825585b1e561b4ce1576120"
+    },
+    "Packages/HanlinParityMiniApp/Package.swift": {
+      "bytes": 865,
+      "sha256": "66025f0b1fb7db7db9b8a24426319b651858f3454295780ee807edd335cec90b"
+    },
+    "Packages/HanlinPlatform/Package.swift": {
+      "bytes": 10823,
+      "sha256": "78d7081d0e197c3e99746e5b3e476b41280fc5b32110035fab31a3e949cb4dab"
+    },
+    "Packages/HanlinPresentationSDK/Package.swift": {
+      "bytes": 4077,
+      "sha256": "951afd5b85422e7d6ed99cf497602e7122b988c1d956132bd9c00e04c695b4c3"
+    },
+    "Packages/HanlinProductSplit/Package.swift": {
+      "bytes": 1161,
+      "sha256": "31234398119e82e9895391040f281e9c9895c2cc73f962c12f1b37489e7f5e3a"
+    },
+    "Packages/HanlinQuickJS/Package.swift": {
+      "bytes": 624,
+      "sha256": "3b3e64732c71724b027fd28236f635073d02a3c208cbd9060fafaf802a47480e"
+    },
+    "Packages/HanlinSefariaMiniApp/Package.swift": {
+      "bytes": 794,
+      "sha256": "7ac94c46688313d32e03c2ffa3bb74c1f1dc00fc8b0b8b7322ae1286b918d50c"
+    },
+    "Packages/HanlinSkillFormat/Package.swift": {
+      "bytes": 662,
+      "sha256": "3878f654329884843943a463a901537c45f894b198a4bc9b9b9169410dc66741"
+    },
+    "Packages/HanlinSwiftUIBridgeGenerator/Package.swift": {
+      "bytes": 1163,
+      "sha256": "e11b7f704d956a7ef293b8ed309c3f715b2797daada2a14d4a0cdadf4dcbc378"
+    },
+    "Packages/HanlinTextStudioMiniApp/Package.swift": {
+      "bytes": 812,
+      "sha256": "d2049eb9401b85c9ab1734a369b818f930db964aee7ce7bb7bf865ec21af291d"
+    },
+    "Packages/HanlinWidgetSDK/Package.swift": {
+      "bytes": 3891,
+      "sha256": "970610b13278a21fad358fa9c6f19b15789c6c7cb219fc2984f2aa92298502e6"
+    },
+    "Packages/HanlinWikipediaMiniApp/Package.swift": {
+      "bytes": 806,
+      "sha256": "01b8cc014f8a5e853b644947fd6684df56b65b37feb08ef23f410fb56c902d8e"
+    },
+    "Packages/IOSSystemLite/Package.swift": {
+      "bytes": 2350,
+      "sha256": "06c6721c4b59328ba4f78997c9a8b23330357db12d3a619207dc1bac8cb76bab"
+    },
+    "Packages/TorahLibraryKit/Package.swift": {
+      "bytes": 654,
+      "sha256": "4423074f870fe146b8914dc275db77aedef4cc1b6c0b856dfad844b65c3a21d6"
+    },
+    "Scripts/CI/IntegrationValidation/project_graph.py": {
+      "bytes": 25273,
+      "sha256": "b55b15a969fb438d32f78db491e65ea51d755019d3f2d563e61e1cffe9f9afbd"
+    },
+    "Scripts/ProductSplit/audit_cross_app_identity.py": {
+      "bytes": 3524,
+      "sha256": "6392281f625a834103239243d1a78521502544e255e356cffff97827905a06f8"
+    },
+    "Scripts/ProductSplit/audit_release_resources.py": {
+      "bytes": 17057,
+      "sha256": "e503d4f38a928c43fbc944511190e9fb4cd346998f8bdf85cb5146d2579a5d5b"
+    },
+    "Scripts/ProductSplit/capture_evidence.py": {
+      "bytes": 7643,
+      "sha256": "dcc5fa3e9191ec906cd00f1d62288ac2e7f7d7e5ec2b39f9c16ce8e47018c6d6"
+    },
+    "Scripts/ProductSplit/export_cross_app_simulator.py": {
+      "bytes": 6529,
+      "sha256": "7f49be4a5bd49da057f9b12ee6cf37492150323e080d95f69280d0727c7078c9"
+    },
+    "Scripts/ProductSplit/extension_inventory.py": {
+      "bytes": 4263,
+      "sha256": "969011d17099fada7c7010528579ec8b3a256b8c7bb25fcfd609789e800068a8"
+    },
+    "Scripts/ProductSplit/local_apple_resource_audit.py": {
+      "bytes": 5860,
+      "sha256": "448c8362ba4774682eab6aa2f4ce4f6f758a52186aa445b51cca93eb0d247d43"
+    },
+    "Scripts/ProductSplit/miniapps_extensions.py": {
+      "bytes": 8789,
+      "sha256": "c1221938e89b5a4d3ae944c2678046dcf022d24c5693c11ab5d39f2660004a9b"
+    },
+    "Scripts/ProductSplit/parity_inventory.py": {
+      "bytes": 12984,
+      "sha256": "c8af0678e2a806e5953a0cfc012f0c0af1184ee0cb5b48ceeb6e0b4919af0d33"
+    },
+    "Scripts/ProductSplit/prepare_signed_products.py": {
+      "bytes": 20137,
+      "sha256": "f87dfdd59c5719578f6962efeac2d2304521c593106acfe80bbb0c5211c26127"
+    },
+    "Scripts/ProductSplit/probe_xcode_miniapps_groups.py": {
+      "bytes": 11313,
+      "sha256": "152e6e00234b396c8ec096244a40a0e511a0adf78f3ca1d8bffd6055f8ec5385"
+    },
+    "Scripts/ProductSplit/provenance.py": {
+      "bytes": 4781,
+      "sha256": "2069ba7bb6e4f86247a0c4ff67f8517446abbee5bfa36b3af26be88973f4718d"
+    },
+    "Scripts/ProductSplit/reconcile_miniapps_extension_ids.py": {
+      "bytes": 9581,
+      "sha256": "6ac4d28acacdd202aa24c8446252205c6586088bf479b92d6a95b7153fe8f2c9"
+    },
+    "Scripts/ProductSplit/register_miniapps_bundle.py": {
+      "bytes": 11848,
+      "sha256": "7bb770d5e0dd30e1db9e1744a217ff66873c5a199a856e77a24b12ec1271e45a"
+    },
+    "Scripts/ProductSplit/resolve_signing_profiles.py": {
+      "bytes": 15066,
+      "sha256": "e1f9b06d9e6824b27526c39f8c87e7df089638d2dcaebc72bbe6e697145f7756"
+    },
+    "Scripts/ProductSplit/restore_host_proof.py": {
+      "bytes": 20501,
+      "sha256": "9f76722ff6518454ccb18ed57993c5962a489bc70345512652dcc88adb2202c8"
+    },
+    "Scripts/ProductSplit/reuse_cross_app_native_proof.py": {
+      "bytes": 29169,
+      "sha256": "46b8e3a346499f7cba8725fdf2612d12803569c7a3bb5902fac5c21f71ebbf3d"
+    },
+    "Scripts/ProductSplit/run_native_acceptance.py": {
+      "bytes": 37579,
+      "sha256": "0070ab53ebc486c4df2a722cdd74b036bb5cf002aa72e772813ffaa434dbf23a"
+    },
+    "Scripts/ProductSplit/run_paired_acceptance.py": {
+      "bytes": 48764,
+      "sha256": "d1cc722f9fcbd712377df67afd4f9f85e353a73644cc843bd24d275391495cab"
+    },
+    "Scripts/ProductSplit/run_portable.py": {
+      "bytes": 10946,
+      "sha256": "74bb2557f6b17eacd1786769d0095d9edc787cf5de2308be35368b7798d87bc9"
+    },
+    "Scripts/ProductSplit/signing_profile_preflight.py": {
+      "bytes": 37632,
+      "sha256": "121143283f479c5be9627a9e507a2bdfbc786d401f804ee6d0032eca70d3bbc2"
+    },
+    "Scripts/ProductSplit/simulator_entitlements.py": {
+      "bytes": 3658,
+      "sha256": "aa1cfcd4f371dd25a637bc56ab281ef94f8bcdcc2bb415b9125dd0b0aa0b27a8"
+    },
+    "Scripts/ProductSplit/stage_external_modal_fixture.py": {
+      "bytes": 4068,
+      "sha256": "926727998d186585347fc7737a5d87e0ac499b52483aafe463292db0db99bc29"
+    },
+    "Scripts/ProductSplit/stage_nativescript_window_fixture.py": {
+      "bytes": 5250,
+      "sha256": "71d15d704e6cce55d177189c398d8153f9fa5a0995650a194ea0f109f16ccb76"
+    },
+    "Scripts/ProductSplit/test_local_distribution_profiles.py": {
+      "bytes": 14664,
+      "sha256": "9fbd33aa83e99caa850c8cd5174d8a6e70d8cae27b598a4ae08b6f61a6842db7"
+    },
+    "Scripts/ProductSplit/test_local_miniapps_profiles.py": {
+      "bytes": 7487,
+      "sha256": "665b390ef0f552d56f0d70c8bbbf2502dd992adcf9bcb89d4c4b2e109d23a20a"
+    },
+    "Scripts/ProductSplit/test_restore_host_proof.py": {
+      "bytes": 14341,
+      "sha256": "1ef8efe676d55f169db38ff5f60a9a3b9335a45f7fc9e055b40dbb21ec133970"
+    },
+    "Scripts/ProductSplit/test_reuse_cross_app_localization_delta.py": {
+      "bytes": 5150,
+      "sha256": "96e116d68f3e7a86856c676940e5b058620b0fe0535b45e4dde5039af56396dd"
+    },
+    "Scripts/ProductSplit/test_run_paired_acceptance.py": {
+      "bytes": 19171,
+      "sha256": "3791b4178c5cc49b64c38ead6f913284f29fc990c7223953aa74f2075f3771f1"
+    },
+    "Scripts/ProductSplit/test_signed_product_bundles.py": {
+      "bytes": 4847,
+      "sha256": "851fbfe72b1b787ccdd8f34b6f65cd895c315f66c3858132e613495fc7f0f0ee"
+    },
+    "Scripts/ProductSplit/test_signing_profiles.py": {
+      "bytes": 33232,
+      "sha256": "c26547cdabdbc80347e968d74e456c086a84e0f97870c90527443f1923cf4e5b"
+    },
+    "Scripts/ProductSplit/test_simulator_entitlements.py": {
+      "bytes": 3175,
+      "sha256": "e330a7cc0a6eb8a25a42f5a001935d2994a1d16a7790c8cd999a7fcc45aff06c"
+    },
+    "Scripts/ProductSplit/verify_inventory.py": {
+      "bytes": 1624,
+      "sha256": "119a4b6875075d851cc3064af96778f5f38fa1ee45b40cdc8e523d9e68065623"
+    },
+    "Scripts/ProductSplit/verify_miniapps_share_profile.py": {
+      "bytes": 8929,
+      "sha256": "aa2e9c1f638eb62ff302f19532a41c1fab4e6f00f6c1c2c5d924e12b4f376961"
+    },
+    "Scripts/ProductSplit/verify_targets.py": {
+      "bytes": 15519,
+      "sha256": "a87a7e45b2d9406a84468a941eda40620d37910436527fc314dcbf909735b0ed"
+    },
+    "Scripts/SDK/application_products.json": {
+      "bytes": 4433,
+      "sha256": "75d508598ad67dbde717c31f88c96a0d53d9429796f4d2c5fe57321f322203ac"
+    },
+    "Scripts/SDK/generate_manifest.py": {
+      "bytes": 18385,
+      "sha256": "6f63564559c7bffd0fab033110b7cf4d760643f6bc544d5ff0de0bbde2b24089"
+    },
+    "Scripts/SDK/install.py": {
+      "bytes": 20684,
+      "sha256": "0dbaa3da8ed5b981c5994ce541382d00ab8f0c7b7cf2b9261c0eace85c108b1e"
+    }
+  },
+  "toolchain": "Swift version 6.4.3 (swift-6.4.3-RELEASE)\nTarget: aarch64-unknown-linux-gnu\n",
+  "command": [
+    "python3",
+    "Scripts/SDK/generate_manifest.py",
+    "--products",
+    "HanlinChatUI"
+  ],
+  "exitCode": 0,
+  "logSHA256": "12871279c0bada03dbeaa3014689b626231e92de17d11f6328ada1d5d0b9bc42",
+  "finishedAtUTC": "2026-11-26T18:15:29.628688+00:00",
+  "generatedSHA256": {
+    "Package.swift": "61b583342dc4c35519a7b7614c3269140edbd10590f7faf5269467b997e2bdc4",
+    "docs/agent-sdk/unified-package-manifest.json": "08210da5320a92740df212c03485d95e8e29c8f08eb459c7603ab7ab3611c48b"
+  },
+  "retainedGeneratedSHA256": {
+    "Package.swift": "61b583342dc4c35519a7b7614c3269140edbd10590f7faf5269467b997e2bdc4",
+    "docs/agent-sdk/unified-package-manifest.json": "9f6efcaa50cb0cc8e68ef96975ab7c7967e703843db78eef52c1c5f6a68ab967"
+  },
+  "selectedManifestByteIdentical": true,
+  "selectedProducts": [
+    "HanlinChatUI"
+  ],
+  "targetCount": 5
+}
