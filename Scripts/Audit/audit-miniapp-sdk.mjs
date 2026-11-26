@@ -160,6 +160,7 @@ const facade = (await source('Packages/HanlinExpoUI/src/host-services.ts')).text
 const facadeOperations = [...facade.matchAll(/invoke(?:<[^\n]+?>)?\('([^']+)'/g)].map(m => m[1]);
 const operationContract = auditExpoOperationRoutes({adapter, nativeNames, facadeOperations,
   externalSession: await source('AI_HLY/Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift'),
+  shortcutSession: await source('HanlinMiniAppsApp/MiniAppsShortcutIntent.swift'),
   platform: await source('AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift')});
 const operations = operationContract.operations;
 const preparedWidgetPublication = await source('Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExpoWidgetPublication.swift');

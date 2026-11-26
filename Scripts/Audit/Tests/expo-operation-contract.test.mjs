@@ -11,6 +11,7 @@ async function fixture() {
   const facade = await source('Packages/HanlinExpoUI/src/host-services.ts');
   return {adapter: await source('AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift'),
     externalSession: await source('AI_HLY/Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift'),
+    shortcutSession: await source('HanlinMiniAppsApp/MiniAppsShortcutIntent.swift'),
     platform: await source('AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift'),
     nativeNames: [...module.text.matchAll(/AsyncFunction\("([^"]+)"\)/g)].map(match => match[1]),
     facadeOperations: [...facade.text.matchAll(/invoke(?:<[^\n]+?>)?\('([^']+)'/g)].map(match => match[1])};
@@ -22,6 +23,8 @@ test('actual Expo grouped cases and explicitly connected external cases cover th
   for (const name of ['miniapps.context', 'miniapps.readAttachment', 'miniapps.writeAttachment', 'miniapps.complete', 'miniapps.cancel', 'miniapps.return']) assert.ok(result.routes[1].operations.includes(name));
   assert.ok(result.routes[0].operations.includes('widgets.publishPrepared'));
   assert.match(result.routes[1].condition, /active external MiniApp invocation/);
+  assert.deepEqual(result.routes[2].operations, ['miniapps.shortcutProgress']);
+  assert.match(result.routes[2].condition, /owned headless Shortcuts invocation/);
   assert.ok(input.facadeOperations.every(name => result.operations.includes(name)));
 });
 
@@ -52,5 +55,22 @@ test('the connected assistant factory is explicit without relaxing other constru
     assert.notEqual(text, input.platform.text);
     assert.throws(() => auditExpoOperationRoutes({...input, platform: {...input.platform, text}}),
       /callback linkage changed/, replacement || 'missing assistant factory');
+  }
+});
+
+test('Shortcuts progress requires its actual validated callback and owned headless dispatch', async () => {
+  const input = await fixture();
+  for (const [before, after] of [
+    ['operation == "miniapps.shortcutProgress"', 'operation.hasPrefix("miniapps.")'],
+    ['operation == "miniapps.shortcutProgress"', 'operation == "miniapps.notImplemented"'],
+    ['try update.validate()', ''],
+    ['progress.completedUnitCount = update.completedUnitCount', 'progress.completedUnitCount = 0'],
+    ['actionPresentationAllowed: false', 'actionPresentationAllowed: true'],
+    ['platform.executeShortcutCommand(command)', 'HanlinScriptingPlatform.shared.executeShortcutCommand(command)'],
+  ]) {
+    const text = input.shortcutSession.text.replace(before, after);
+    assert.notEqual(text, input.shortcutSession.text, before);
+    assert.throws(() => auditExpoOperationRoutes({...input,
+      shortcutSession: {...input.shortcutSession, text}}), /Shortcuts progress callback linkage changed/, before);
   }
 });

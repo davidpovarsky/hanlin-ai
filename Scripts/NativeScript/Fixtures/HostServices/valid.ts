@@ -2,6 +2,9 @@ import {createHostServices, type RuntimeExecutionResult} from '../../host-servic
 
 export async function run(): Promise<RuntimeExecutionResult[]> {
   const host = createHostServices();
+  host.registerRequestHandler('probe', 'inter-app.share', async ({caller, parameters}) => ({
+    caller, parameters, completed: true,
+  }));
   return [
     await host.executeRuntime('node', "console.log('Node')"),
     await host.executeRuntime('typeScript', 'const value: number = 42; console.log(value)'),
