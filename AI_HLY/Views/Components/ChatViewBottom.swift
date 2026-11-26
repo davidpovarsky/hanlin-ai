@@ -278,6 +278,8 @@ struct ChatViewBottom: View {
     var dockContextKey: String? = nil
     /// Both workspace hosts supply their current, keyboard-adjusted viewport.
     var availableWorkspaceSize: CGSize = .zero
+    /// A retained compact workspace yields accessibility to its visible history.
+    var isWorkspaceObscured: Bool = false
     var onNativeEditorLifecycle: ((UITextView, NativeMultilineTextEditor.LifecycleEvent) -> Void)? = nil
     var onModelPopoverPresentationChange: (@MainActor (UUID, Bool) -> Void)? = nil
     /// Synchronous read from the same owner written by the message Binding.
@@ -1444,6 +1446,9 @@ struct ChatViewBottom: View {
             .frame(height: layout.editorHeight)
             .focused(isInputActive)
             .accessibilityIdentifier("hanlin-chat-input")
+            // Hide the SwiftUI accessibility leaf as well as the native editor.
+            // The workspace keeps the same editor, draft and keyboard owner mounted.
+            .accessibilityHidden(isWorkspaceObscured)
             // The corner button never intercepts the native selection/caret area.
             .padding(.trailing, showsExpansionControl ? HanlinMorphStyle.inputControlHitSize : 0)
             .padding(.horizontal, 11)
@@ -1477,6 +1482,7 @@ struct ChatViewBottom: View {
         .frame(minHeight: HanlinMorphStyle.launcherSize)
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-composer-surface")
+        .accessibilityHidden(isWorkspaceObscured)
     }
 
     // Keep one fixed-height row in the editor's material. The model's title
@@ -1502,6 +1508,7 @@ struct ChatViewBottom: View {
         .padding(.bottom, HanlinMorphStyle.inputControlsInset)
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-composer-quick-bar")
+        .accessibilityHidden(isWorkspaceObscured)
     }
 
     private var composerExpandEditorControl: some View {

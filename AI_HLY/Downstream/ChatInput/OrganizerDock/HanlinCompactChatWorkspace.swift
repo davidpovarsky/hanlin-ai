@@ -479,6 +479,7 @@ struct HanlinCompactChatWorkspace: View {
             isInputActive: $isCompactComposerInputActive,
             dockContextKey: activeComposerKey,
             availableWorkspaceSize: availableSize,
+            isWorkspaceObscured: showsHistory,
             onNativeEditorLifecycle: { editor, event in
                 keyboardOwner.observe(editor, event: event)
             },

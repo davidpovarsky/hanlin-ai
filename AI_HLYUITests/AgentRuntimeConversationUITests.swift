@@ -2257,28 +2257,55 @@ final class AgentRuntimeConversationUITests: XCTestCase {
             "hanlin-compact-recent-row-", "Agent Acceptance Chat"
         )).firstMatch
 
+        let compactWorkspace = app.descendants(matching: .any)["hanlin-compact-chat-workspace"].firstMatch
+        let isCompactWorkspace = compactWorkspace.exists
+        let title = app.navigationBars.descendants(matching: .any).matching(
+            NSPredicate(format: "label == %@", "Agent Acceptance Chat")
+        ).firstMatch
+
         func currentChatIsReady() -> Bool {
             let input = chatInputElement(in: app)
-            let title = app.navigationBars.descendants(matching: .any).matching(
-                NSPredicate(format: "label == %@", "Agent Acceptance Chat")
-            ).firstMatch
-            return input.exists && input.isHittable && !compactViewAll.exists && title.exists
+            return input.exists && input.isEnabled && input.isHittable
+                && !compactViewAll.exists && title.exists
+        }
+        func waitForSelectedChat() -> Bool {
+            let hasTitle = title.waitForExistence(timeout: 15)
+            XCTAssertTrue(hasTitle, "Selection must open the actual Agent Acceptance Chat destination",
+                          file: file, line: line)
+            guard hasTitle else { return false }
+            let input = chatInputElement(in: app)
+            let hasInput = input.waitForExistence(timeout: 15)
+            XCTAssertTrue(hasInput, "The selected conversation must retain its original editor",
+                          file: file, line: line)
+            guard hasInput else { return false }
+            let hittable = XCTNSPredicateExpectation(
+                predicate: NSPredicate(format: "hittable == true"), object: input)
+            let ready = XCTWaiter.wait(for: [hittable], timeout: 10)
+            XCTAssertEqual(ready, .completed, "The selected conversation editor must be reachable",
+                           file: file, line: line)
+            XCTAssertTrue(input.isEnabled, "The selected conversation editor must be enabled",
+                          file: file, line: line)
+            let homeDismissed = !isCompactWorkspace || compactViewAll.waitForNonExistence(timeout: 10)
+            XCTAssertTrue(homeDismissed, "The compact Home screen must yield to the selected chat",
+                          file: file, line: line)
+            return ready == .completed && input.isEnabled && homeDismissed
         }
         func selectVisibleSeededRow() -> Bool {
-            for row in [seededRow, recentRow] where row.exists && row.isHittable {
+            // A retained, disabled history row can have an on-screen AX frame.
+            // Select the real compact Home control first; never tap disabled rows.
+            let rows = isCompactWorkspace ? [recentRow, seededRow] : [seededRow, recentRow]
+            for row in rows where row.exists && row.isEnabled && row.isHittable {
                 row.tap()
-                XCTAssertTrue(chatInputElement(in: app).waitForExistence(timeout: 15),
-                    "Selecting the actual seeded conversation must open its editor", file: file, line: line)
-                return true
+                return waitForSelectedChat()
             }
             return false
         }
 
         // A wide launch can already expose the seeded row. Do not hide that
         // sidebar or navigate through unrelated tabs before selecting it.
-        if selectVisibleSeededRow() || currentChatIsReady() { return }
+        if currentChatIsReady() || selectVisibleSeededRow() { return }
         _ = selectTab(identifier: "hanlin-home-tab", labels: ["Chats", "Messages", "Home", "列表"], in: app)
-        if selectVisibleSeededRow() || currentChatIsReady() { return }
+        if currentChatIsReady() || selectVisibleSeededRow() { return }
 
         let compactHistory = app.buttons["hanlin-history-open"].firstMatch
         if compactHistory.exists && compactHistory.isHittable {
@@ -2305,9 +2332,11 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertEqual(ready, .completed,
             "The seeded row must be visible before selection", file: file, line: line)
         guard ready == .completed else { return }
+        XCTAssertTrue(seededRow.isEnabled, "The visible conversation row must be enabled",
+                      file: file, line: line)
+        guard seededRow.isEnabled else { return }
         seededRow.tap()
-        XCTAssertTrue(chatInputElement(in: app).waitForExistence(timeout: 15),
-            "Selecting the seeded conversation must open its original editor", file: file, line: line)
+        _ = waitForSelectedChat()
     }
 
     private func runtimeState(for kindRaw: String, in app: XCUIApplication) -> XCUIElement {
