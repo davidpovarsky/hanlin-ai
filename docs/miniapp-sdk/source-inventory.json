@@ -1,15 +1,6 @@
 {
-  "sourceCommit": "0bbd94866f10a5a64b8a1d401d14bcb06e7b4ddb",
-  "uncommittedSourcePaths": [
-    "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
-    "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-    "Package.swift",
-    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
-    "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
-    "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinInstallContracts.swift",
-    "Scripts/Audit/audit-miniapp-sdk.mjs",
-    "Scripts/Audit/miniapp-manifest-contracts.mjs"
-  ],
+  "sourceCommit": "9819697c1792119a6a93b492d12abad7b3330c93",
+  "uncommittedSourcePaths": [],
   "schemaVersion": 1,
   "auditParser": {
     "package": "@typescript/typescript6",

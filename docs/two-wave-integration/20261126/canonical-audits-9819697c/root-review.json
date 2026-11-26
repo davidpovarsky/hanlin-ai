@@ -1,0 +1,16 @@
+{
+  "schemaVersion": 1,
+  "sourceCommit": "9819697c1792119a6a93b492d12abad7b3330c93",
+  "rootAtReview": "a27107ab0d1c0f57944a4414d1aac45a4389a615",
+  "sourceFilesVerified": 102,
+  "sourceFailures": [],
+  "reachabilityCells": 100,
+  "shippingEntitlementIdentities": 13,
+  "changedAuditFiles": [
+    "docs/miniapp-sdk/extension-reachability.json",
+    "docs/miniapp-sdk/extension-reachability.md",
+    "docs/miniapp-sdk/source-inventory.json"
+  ],
+  "hostAcceptance": "PENDING_SEPARATE_FINAL_TEST_PACK_JITLESS_RESULT",
+  "meaning": "Canonical source audit, not native/system execution"
+}
