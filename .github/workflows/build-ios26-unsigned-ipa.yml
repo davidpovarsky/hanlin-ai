@@ -1203,6 +1203,8 @@ jobs:
 
       - name: Resolve current original MiniApp sources and exact build graph
         shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           mkdir -p "$LOG_DIR" build/acceptance/miniapp-upstreams
@@ -2112,6 +2114,8 @@ jobs:
 
       - name: Resolve current original MiniApp sources and exact build graph
         shell: bash
+        env:
+          GH_TOKEN: ${{ github.token }}
         run: |
           set -euo pipefail
           mkdir -p "$LOG_DIR" build/acceptance/miniapp-upstreams
