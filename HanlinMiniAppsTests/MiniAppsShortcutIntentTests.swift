@@ -70,11 +70,40 @@ struct MiniAppsShortcutIntentTests {
         #expect(try store.receipt(for: input.id) == receipt)
     }
 
-    private func command() throws -> HanlinScriptResumeCommand {
+    @Test func successfulForegroundActionWithoutASurfaceSettlesWithoutCancellation() async throws {
+        let root = FileManager.default.temporaryDirectory.appending(path: "shortcut-no-surface-\(UUID().uuidString)")
+        defer { try? FileManager.default.removeItem(at: root) }
+        let store = HanlinScriptExtensionStore(root: root.appending(path: "Extensions"))
+        let initialization = HanlinScriptingPlatform.Initialization(
+            registerExpoDefines: {}, makeExtensionStore: { store }, enqueuePublication: { $0() })
+        let owner = HanlinScriptingPlatform(rootOverride: root, initialization: initialization,
+            registersForegroundContinuation: false)
+        let child = HanlinScriptingPlatform(rootOverride: root, initialization: initialization,
+            registersForegroundContinuation: false)
+        let input = try command(foreground: true)
+        defer { owner.dismissShortcutPresentation(input.id, executionFinished: true) }
+        let value = HanlinValue.object(["result": .string("NO_SURFACE_SUCCESS")])
+        let result = try await HanlinInvocationExecutor(store: store).execute(input) { owned in
+            try await owner.admitShortcutPresentation(child, command: owned, store: store)
+            let running = try #require(try store.receipt(for: owned.id))
+            await owner.settleShortcutPresentation(running)
+            #expect(try store.receipt(for: owned.id)?.cancellationRequested == false)
+            return value
+        }
+        let receipt = try #require(result)
+        #expect(receipt.status == .succeeded && receipt.value == value && !receipt.cancellationRequested)
+        #expect(owner.shortcutPresentation?.id == input.id && !child.presentsForegroundAction)
+        owner.settleShortcutPresentation(receipt)
+        #expect(owner.shortcutPresentation == nil && child.activeApplicationID == nil)
+        #expect(try store.receipt(for: input.id) == receipt)
+    }
+
+    private func command(foreground: Bool = false) throws -> HanlinScriptResumeCommand {
         .init(invocation: .init(identity: .init(
             installedPackageID: try .init(validating: "installed.shortcut"), packageID: try .init(validating: "test.shortcut"),
             generation: 1, entrypointID: "app.intent"), entityID: "probe",
+            continueInForeground: foreground,
             delivery: .init(appID: try .init(validating: "test.shortcut"), source: .shortcuts,
-                            expiresAt: .now.addingTimeInterval(600))))
+                            expiresAt: .now.addingTimeInterval(600), canPresentUI: foreground)))
     }
 }

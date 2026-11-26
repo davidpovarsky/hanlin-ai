@@ -83,8 +83,8 @@ struct HanlinRunMiniAppShortcutIntent: LongRunningIntent, CancellableIntent {
                         _ = try? store.requestCancellation(invocationID)
                     }
                 } catch {
-                    _ = try? store.requestCancellation(invocationID)
                     if await preparation.recordIfUnstarted(error) {
+                        _ = try? store.requestCancellation(invocationID)
                         // OS refusal happened before package execution. Preserve
                         // the real OS error for the caller and cancel its lease.
                         throw CancellationError()
@@ -100,7 +100,7 @@ struct HanlinRunMiniAppShortcutIntent: LongRunningIntent, CancellableIntent {
         } catch {
             _ = try? store.requestCancellation(invocationID)
             if runsInForeground {
-                await HanlinScriptingPlatform.shared.dismissShortcutPresentation(invocationID)
+                await HanlinScriptingPlatform.shared.dismissShortcutPresentation(invocationID, executionFinished: true)
             }
             throw error
         }
@@ -190,36 +190,29 @@ enum MiniAppsShortcutExecution {
         platform.externalMiniAppOperation = { operation, payload in
             try reporter.receive(operation, payload: payload)
         }
-        var retainsPresentation = false
+        var ownedByScene = false
         defer {
             reporter.close()
-            if !retainsPresentation { platform.dismissActiveApplication() }
+            // A foreground owner releases or retains its platform only after
+            // the executor publishes the terminal receipt. Pre-terminal cleanup
+            // must not convert successful work into a cancellation request.
+            if !ownedByScene { platform.dismissActiveApplication() }
             platform.externalMiniAppOperation = nil
         }
-        let owner: HanlinScriptingPlatform?
         if presentsUI {
             let captures = HanlinMiniAppCaptureCoordinator.shared
             guard captures.cameraPresentation == nil, !captures.showsInbox else {
                 throw HanlinInvocationDispatchError(.needsForeground, .unavailableHost)
             }
-            owner = .shared
-            try owner?.admitShortcutPresentation(platform, command: command, store: store)
-        } else {
-            owner = nil
+            try HanlinScriptingPlatform.shared.admitShortcutPresentation(platform, command: command, store: store)
+            ownedByScene = true
         }
-        do {
-            progress.localizedAdditionalDescription = String(localized: "Running saved action", table: "HanlinAppIntents")
-            progress.completedUnitCount = 2
-            let value = try await platform.executeClaimedShortcutCommand(command)
-            progress.completedUnitCount = progress.totalUnitCount
-            progress.localizedAdditionalDescription = String(localized: "Action completed", table: "HanlinAppIntents")
-            retainsPresentation = owner?.shortcutPresentation?.id == command.id && platform.presentsForegroundAction
-            if let owner, !retainsPresentation { owner.dismissShortcutPresentation(command.id) }
-            return value
-        } catch {
-            owner?.dismissShortcutPresentation(command.id)
-            throw error
-        }
+        progress.localizedAdditionalDescription = String(localized: "Running saved action", table: "HanlinAppIntents")
+        progress.completedUnitCount = 2
+        let value = try await platform.executeClaimedShortcutCommand(command)
+        progress.completedUnitCount = progress.totalUnitCount
+        progress.localizedAdditionalDescription = String(localized: "Action completed", table: "HanlinAppIntents")
+        return value
     }
 }
 

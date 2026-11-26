@@ -191,26 +191,31 @@ final class HanlinScriptingPlatform {
         needsFreshProcessForTransfer = true
     }
 
-    func dismissShortcutPresentation(_ invocationID: UUID) {
+    func dismissShortcutPresentation(_ invocationID: UUID, executionFinished: Bool = false) {
         guard let owned = shortcutPresentation, owned.id == invocationID else { return }
         // Keep an actual running result authoritative. The executor observes this
         // cancellation request, drains its work and records the terminal outcome.
         let receipt = try? owned.store.requestCancellation(invocationID)
         shortcutPresentation = nil
         owned.platform.presentsForegroundAction = false
-        if owned.completed || receipt?.status.isTerminal == true { owned.platform.dismissActiveApplication() }
+        if executionFinished || owned.completed || receipt?.status.isTerminal == true {
+            owned.platform.dismissActiveApplication()
+        }
         Task { @MainActor [weak self] in try? await self?.processPendingResumeCommands() }
     }
 
     func settleShortcutPresentation(_ receipt: HanlinInvocationReceipt) {
         guard var owned = shortcutPresentation, owned.id == receipt.invocationID,
               receipt.status.isTerminal else { return }
-        if receipt.status == .succeeded {
+        if receipt.status == .succeeded, owned.platform.presentsForegroundAction {
             owned.completed = true
             shortcutPresentation = owned
         } else {
+            // Terminal success without a surface is a normal result. Detach it
+            // here, after execution, without requesting cancellation.
             shortcutPresentation = nil
             owned.platform.dismissActiveApplication()
+            Task { @MainActor [weak self] in try? await self?.processPendingResumeCommands() }
         }
     }
     private(set) var systemUIPresentation: HanlinScriptingSystemUIPresentation?
