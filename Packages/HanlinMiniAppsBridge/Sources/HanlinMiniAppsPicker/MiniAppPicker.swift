@@ -335,6 +335,7 @@ private struct MiniAppPickerEditor: View {
             }
         } icon: { MiniAppPickerIcon(item: item, size: 30) }
         .frame(maxWidth: .infinity, alignment: .leading)
+        .contentShape(Rectangle())
     }
     private func update(_ change: MiniAppPickerChange) {
         guard !isSaving else { return }
