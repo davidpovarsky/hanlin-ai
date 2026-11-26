@@ -28,6 +28,52 @@ KEYS = (
     "Enable Notifications",
 )
 
+# New standalone Shortcuts and shared receipt UI use the same canonical table.
+KEYS += (
+    "Run MiniApp Action",
+    "Runs a saved MiniApp action and returns its actual text, JSON or file result.",
+    "Input Type",
+    "JSON File",
+    "Allow Long Running",
+    "MiniApp Input",
+    "Text",
+    "Dictionary or List (JSON)",
+    "MiniApp Action Result",
+    "Invocation",
+    "Refresh MiniApp Result",
+    "Wait for MiniApp Result",
+    "Waits for an existing MiniApp action and returns its text or JSON result without running it again.",
+    "Running MiniApp action",
+    "Preparing app storage",
+    "Running saved action",
+    "Action completed",
+    "Choose a JSON file as input.",
+    "The JSON file must contain UTF-8 text.",
+    "This MiniApp action is no longer available. Select it again.",
+    "This operation requires an interactive MiniApp window.",
+    "This action receipt is no longer available in this app.",
+    "Refresh result",
+    "Action unavailable",
+    "Waiting to run",
+    "Running in MiniApps",
+    "Action failed",
+    "Action cancelled",
+    "Package changed",
+    "Action expired",
+    "Continue in the app",
+    "Action acknowledged",
+    "The action returned a result that is available in the app.",
+    "The installed package changed. Select its current action again.",
+    "The package does not declare this action or input.",
+    "Open the app to continue this action.",
+    "The package reported an error. Open the app for details.",
+    "The app was interrupted before a result was recorded.",
+    "This action could not be completed.",
+    "This action expired before it completed.",
+    "This MiniApp invocation could not be found in this app.",
+    "The MiniApp action did not complete successfully (%@).",
+)
+
 def render():
     catalog = json.loads(SOURCE.read_text())
     selected = {}
@@ -55,7 +101,7 @@ def main():
     else:
         OUTPUT.parent.mkdir(parents=True, exist_ok=True)
         OUTPUT.write_text(expected)
-    print("AppIntents host projection: 18 original keys, en/he/zh-Hans; canonical translations retained")
+    print(f"AppIntents host projection: {len(KEYS)} keys (18 original retained), en/he/zh-Hans; canonical translations retained")
 
 if __name__ == "__main__":
     main()

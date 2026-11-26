@@ -8,24 +8,26 @@ import UniformTypeIdentifiers
 /// This execution surface belongs to the independent MiniApps application.
 /// Hanlin AI continues to consume the shared authoring contracts and old intents.
 struct HanlinRunMiniAppShortcutIntent: LongRunningIntent, CancellableIntent {
-    static let title: LocalizedStringResource = "Run MiniApp Action"
-    static let description = IntentDescription("Runs a saved MiniApp action and returns its actual text, JSON or file result.")
-    static var supportedModes: IntentModes { [.background, .foreground(.dynamic)] }
+    static let title = LocalizedStringResource("Run MiniApp Action", table: "HanlinAppIntents")
+    static let description = IntentDescription(LocalizedStringResource("Runs a saved MiniApp action and returns its actual text, JSON or file result.", table: "HanlinAppIntents"))
+    // The OS selects the mode, including its Open When Run preference.
+    // Availability of a foreground transition is never treated as a request.
+    static var supportedModes: IntentModes { [.background, .foreground(.immediate)] }
     static var allowedExecutionTargets: IntentExecutionTargets { .main }
 
-    @Parameter(title: "Action")
+    @Parameter(title: LocalizedStringResource("Action", table: "HanlinAppIntents"))
     var action: HanlinScriptActionEntity
 
-    @Parameter(title: "Input Type", default: .text)
+    @Parameter(title: LocalizedStringResource("Input Type", table: "HanlinAppIntents"), default: .text)
     var inputType: MiniAppsShortcutInputType
 
-    @Parameter(title: "Input", default: "")
+    @Parameter(title: LocalizedStringResource("Input", table: "HanlinAppIntents"), default: "")
     var input: String
 
-    @Parameter(title: "JSON File", supportedContentTypes: [.json])
+    @Parameter(title: LocalizedStringResource("JSON File", table: "HanlinAppIntents"), supportedContentTypes: [.json])
     var jsonFile: IntentFile?
 
-    @Parameter(title: "Allow Long Running", default: false)
+    @Parameter(title: LocalizedStringResource("Allow Long Running", table: "HanlinAppIntents"), default: false)
     var allowLongRunning: Bool
 
     static var parameterSummary: some ParameterSummary {
@@ -53,33 +55,56 @@ struct HanlinRunMiniAppShortcutIntent: LongRunningIntent, CancellableIntent {
             inputValue = try HanlinShortcutValueCodec.decode(text, as: .dictionaryOrList)
         }
 
+        let runsInForeground = systemContext.currentMode == .foreground
         let store = try await HanlinScriptingPlatform.productExtensionStore()
-        let command = try await MiniAppsShortcutExecution.makeCommand(action: action, input: inputValue)
+        let command = try await MiniAppsShortcutExecution.makeCommand(
+            action: action, input: inputValue, canPresentUI: runsInForeground)
         let invocationID = command.id
-        // Persist before asking the OS for extended time, so cancellation during
-        // preparation cannot be lost before the action is admitted.
-        try store.enqueue(command)
         let reportedProgress = progress
-        let operation = {
-            try await MiniAppsShortcutExecution.run(command: command, progress: reportedProgress)
-        }
+        let preparation = MiniAppsShortcutPreparationFailure()
+        let executor = HanlinInvocationExecutor(store: store)
         let value: HanlinValue
         do {
-            if allowLongRunning {
-                value = try await performBackgroundTask(operation: operation) { _ in
-                    _ = try? store.requestCancellation(invocationID)
+            // One atomic command/lease record precedes OS preparation. The
+            // existing executor renews it throughout preparation and execution.
+            let receipt = try await executor.execute(command) { ownedCommand in
+                let operation = {
+                    await preparation.didStart()
+                    return try await MiniAppsShortcutExecution.run(
+                        command: ownedCommand, store: store, progress: reportedProgress)
                 }
-            } else {
-                value = try await withIntentCancellationHandler(operation: operation) { _ in
+                do {
+                    if self.allowLongRunning {
+                        return try await self.performBackgroundTask(operation: operation) { _ in
+                            _ = try? store.requestCancellation(invocationID)
+                        }
+                    }
+                    return try await self.withIntentCancellationHandler(operation: operation) { _ in
+                        _ = try? store.requestCancellation(invocationID)
+                    }
+                } catch {
                     _ = try? store.requestCancellation(invocationID)
+                    if await preparation.recordIfUnstarted(error) {
+                        // OS refusal happened before package execution. Preserve
+                        // the real OS error for the caller and cancel its lease.
+                        throw CancellationError()
+                    }
+                    throw error
                 }
             }
+            try await preparation.rethrowIfPresent()
+            value = try MiniAppsShortcutExecution.result(receipt, for: invocationID)
+            if runsInForeground, let receipt {
+                await HanlinScriptingPlatform.shared.settleShortcutPresentation(receipt)
+            }
         } catch {
-            // An OS refusal or preparation error must not leave work to execute
-            // later. Terminal receipts keep their real outcome unchanged.
             _ = try? store.requestCancellation(invocationID)
+            if runsInForeground {
+                await HanlinScriptingPlatform.shared.dismissShortcutPresentation(invocationID)
+            }
             throw error
         }
+
         let file: IntentFile
         switch value {
         case .data(let data):
@@ -97,30 +122,30 @@ struct HanlinRunMiniAppShortcutIntent: LongRunningIntent, CancellableIntent {
 enum MiniAppsShortcutInputType: String, AppEnum {
     case text, json, jsonFile
 
-    static let typeDisplayRepresentation = TypeDisplayRepresentation(name: "MiniApp Input")
+    static let typeDisplayRepresentation = TypeDisplayRepresentation(name: LocalizedStringResource("MiniApp Input", table: "HanlinAppIntents"))
     static let caseDisplayRepresentations: [Self: DisplayRepresentation] = [
-        .text: "Text",
-        .json: "Dictionary or List (JSON)",
-        .jsonFile: "JSON File"
+        .text: DisplayRepresentation(title: LocalizedStringResource("Text", table: "HanlinAppIntents")),
+        .json: DisplayRepresentation(title: LocalizedStringResource("Dictionary or List (JSON)", table: "HanlinAppIntents")),
+        .jsonFile: DisplayRepresentation(title: LocalizedStringResource("JSON File", table: "HanlinAppIntents"))
     ]
 }
 
-private enum MiniAppsShortcutError: LocalizedError {
+enum MiniAppsShortcutError: LocalizedError {
     case missingJSONFile, invalidUTF8, unavailableAction, unsupportedOperation
 
     var errorDescription: String? {
         switch self {
-        case .missingJSONFile: "Choose a JSON file as input."
-        case .invalidUTF8: "The JSON file must contain UTF-8 text."
-        case .unavailableAction: "This MiniApp action is no longer available. Select it again."
-        case .unsupportedOperation: "This operation requires an interactive MiniApp window."
+        case .missingJSONFile: String(localized: "Choose a JSON file as input.", table: "HanlinAppIntents")
+        case .invalidUTF8: String(localized: "The JSON file must contain UTF-8 text.", table: "HanlinAppIntents")
+        case .unavailableAction: String(localized: "This MiniApp action is no longer available. Select it again.", table: "HanlinAppIntents")
+        case .unsupportedOperation: String(localized: "This operation requires an interactive MiniApp window.", table: "HanlinAppIntents")
         }
     }
 }
 
 @MainActor
-private enum MiniAppsShortcutExecution {
-    static func makeCommand(action: HanlinScriptActionEntity, input: HanlinValue) async throws -> HanlinScriptResumeCommand {
+enum MiniAppsShortcutExecution {
+    static func makeCommand(action: HanlinScriptActionEntity, input: HanlinValue, canPresentUI: Bool = false) async throws -> HanlinScriptResumeCommand {
         let store = try HanlinScriptingPlatform.productExtensionStore()
         guard let record = try store.load()?.intentEntities.first(where: {
             $0.identity == action.identity
@@ -131,46 +156,120 @@ private enum MiniAppsShortcutExecution {
             identity: record.identity,
             entityID: record.id,
             parameters: input,
-            continueInForeground: false,
+            continueInForeground: canPresentUI,
             delivery: .init(appID: appID, source: .shortcuts,
                             expiresAt: .now.addingTimeInterval(HanlinInvocationDelivery.maximumLifetime - 1),
-                            userGesturePresent: true, canPresentUI: false)
+                            userGesturePresent: true, canPresentUI: canPresentUI)
         ))
     }
 
-    static func run(command: HanlinScriptResumeCommand, progress: Progress) async throws -> HanlinValue {
+    nonisolated static func result(_ receipt: HanlinInvocationReceipt?, for invocationID: UUID) throws -> HanlinValue {
+        guard let receipt, receipt.invocationID == invocationID else {
+            throw HanlinInvocationQueueError.missingCommand
+        }
+        if receipt.status == .succeeded { return receipt.value ?? .null }
+        if receipt.status == .cancelled { throw CancellationError() }
+        throw HanlinInvocationDispatchError(receipt.status, receipt.failure ?? .actionFailed)
+    }
+
+    static func run(command: HanlinScriptResumeCommand, store: HanlinScriptExtensionStore,
+                    progress: Progress) async throws -> HanlinValue {
         try Task.checkCancellation()
         progress.totalUnitCount = 3
         progress.completedUnitCount = 0
-        progress.localizedDescription = String(localized: "Running MiniApp action")
-        progress.localizedAdditionalDescription = String(localized: "Preparing app storage")
+        progress.localizedDescription = String(localized: "Running MiniApp action", table: "HanlinAppIntents")
+        progress.localizedAdditionalDescription = String(localized: "Preparing app storage", table: "HanlinAppIntents")
         try await AppRuntimeCore.shared.prepareStorage()
         HanlinNativeScriptProductionBootstrap.prepareEmbeddedProviders()
         progress.completedUnitCount = 1
 
-        let platform = HanlinScriptingPlatform(actionPresentationAllowed: false,
+        let presentsUI = command.invocation.delivery?.canPresentUI == true
+        let platform = HanlinScriptingPlatform(actionPresentationAllowed: presentsUI,
                                                registersForegroundContinuation: false)
+        let reporter = try MiniAppsShortcutProgressReporter(progress: progress, commandID: command.id, store: store)
         platform.externalMiniAppOperation = { operation, payload in
-            try Task.checkCancellation()
-            guard operation == "miniapps.shortcutProgress" else {
-                throw MiniAppsShortcutError.unsupportedOperation
-            }
-            let update = try JSONDecoder().decode(HanlinShortcutProgress.self, from: Data(payload.utf8))
-            try update.validate()
-            progress.totalUnitCount = update.totalUnitCount
-            progress.completedUnitCount = update.completedUnitCount
-            if let message = update.message { progress.localizedAdditionalDescription = message }
-            return #"{"ok":true}"#
+            try reporter.receive(operation, payload: payload)
         }
+        var retainsPresentation = false
         defer {
-            platform.dismissActiveApplication()
+            reporter.close()
+            if !retainsPresentation { platform.dismissActiveApplication() }
             platform.externalMiniAppOperation = nil
         }
-        progress.localizedAdditionalDescription = String(localized: "Running saved action")
-        progress.completedUnitCount = 2
-        let value = try await platform.executeShortcutCommand(command)
-        progress.completedUnitCount = progress.totalUnitCount
-        progress.localizedAdditionalDescription = String(localized: "Action completed")
-        return value
+        let owner: HanlinScriptingPlatform?
+        if presentsUI {
+            let captures = HanlinMiniAppCaptureCoordinator.shared
+            guard captures.cameraPresentation == nil, !captures.showsInbox else {
+                throw HanlinInvocationDispatchError(.needsForeground, .unavailableHost)
+            }
+            owner = .shared
+            try owner?.admitShortcutPresentation(platform, command: command, store: store)
+        } else {
+            owner = nil
+        }
+        do {
+            progress.localizedAdditionalDescription = String(localized: "Running saved action", table: "HanlinAppIntents")
+            progress.completedUnitCount = 2
+            let value = try await platform.executeClaimedShortcutCommand(command)
+            progress.completedUnitCount = progress.totalUnitCount
+            progress.localizedAdditionalDescription = String(localized: "Action completed", table: "HanlinAppIntents")
+            retainsPresentation = owner?.shortcutPresentation?.id == command.id && platform.presentsForegroundAction
+            if let owner, !retainsPresentation { owner.dismissShortcutPresentation(command.id) }
+            return value
+        } catch {
+            owner?.dismissShortcutPresentation(command.id)
+            throw error
+        }
+    }
+}
+
+/// A provider captures this object once. Closing it rejects late progress instead
+/// of directing a previous action's callback to a later intent or visible app.
+@MainActor
+final class MiniAppsShortcutProgressReporter {
+    private var progress: Progress?
+    private let commandID: UUID
+    private let leaseID: UUID
+    private let store: HanlinScriptExtensionStore
+
+    init(progress: Progress, commandID: UUID, store: HanlinScriptExtensionStore) throws {
+        guard let receipt = try store.receipt(for: commandID), receipt.status == .running,
+              let leaseID = receipt.leaseID, receipt.leaseExpiresAt.map({ $0 > .now }) == true else {
+            throw HanlinInvocationQueueError.staleLease
+        }
+        self.progress = progress; self.commandID = commandID; self.leaseID = leaseID; self.store = store
+    }
+
+    func receive(_ operation: String, payload: String) throws -> String {
+        try Task.checkCancellation()
+        guard operation == "miniapps.shortcutProgress" else { throw MiniAppsShortcutError.unsupportedOperation }
+        guard let progress, let receipt = try store.receipt(for: commandID),
+              receipt.status == .running, receipt.leaseID == leaseID,
+              receipt.leaseExpiresAt.map({ $0 > .now }) == true, !receipt.cancellationRequested else {
+            throw CancellationError()
+        }
+        let update = try JSONDecoder().decode(HanlinShortcutProgress.self, from: Data(payload.utf8))
+        try update.validate()
+        progress.totalUnitCount = update.totalUnitCount
+        progress.completedUnitCount = update.completedUnitCount
+        if let message = update.message { progress.localizedAdditionalDescription = message }
+        return #"{"ok":true}"#
+    }
+
+    func close() { progress = nil }
+}
+
+private actor MiniAppsShortcutPreparationFailure {
+    private var started = false
+    private var error: (any Error)?
+
+    func didStart() { started = true }
+    func recordIfUnstarted(_ error: any Error) -> Bool {
+        guard !started else { return false }
+        self.error = error
+        return true
+    }
+    func rethrowIfPresent() throws {
+        if let error { throw error }
     }
 }
