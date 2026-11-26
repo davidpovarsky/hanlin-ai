@@ -251,8 +251,7 @@ public enum HanlinExpoWidgetsIntegration {
     }
 
     public static func placeholder(named name: String) -> WidgetsTimelineEntry {
-        WidgetsTimelineEntry(date: Date(), name: name,
-            props: isRegistrationActive(name) ? WidgetsLayoutRegistry.initialProps(for: name) : nil, entryIndex: nil)
+        HanlinExpoWidgetState.placeholder(name)
     }
 
     public static func timeline(named name: String, family: WidgetFamily) -> Timeline<WidgetsTimelineEntry> {

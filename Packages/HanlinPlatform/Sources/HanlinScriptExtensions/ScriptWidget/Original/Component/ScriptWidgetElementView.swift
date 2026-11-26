@@ -15,13 +15,15 @@ final class ScriptWidgetElementContext {
     let nativeActionBuilder: ((HanlinWidgetActionCommand, AnyView) -> AnyView)?
     let debugMode = false
     let animationDate: Date?
+    let containerRootID: UUID?
     let package: HanlinScriptWidgetResources
     var canExecuteActions: Bool { !actionContext.actions.isEmpty }
-    init(actionContext: HanlinWidgetActionContext, animationDate: Date? = nil,
+    init(actionContext: HanlinWidgetActionContext, animationDate: Date? = nil, containerRootID: UUID? = nil,
          nativeActionBuilder: ((HanlinWidgetActionCommand, AnyView) -> AnyView)? = nil) {
         self.actionContext = actionContext
         self.nativeActionBuilder = nativeActionBuilder
         self.animationDate = animationDate
+        self.containerRootID = containerRootID
         package = HanlinScriptWidgetResources(files: actionContext.resources)
     }
     func command(for element: ScriptWidgetRuntimeElement, declaration: HanlinWidgetActionDeclaration,
@@ -31,7 +33,7 @@ final class ScriptWidgetElementContext {
             nonce: actionContext.presentation == nil ? "" : UUID().uuidString,
             desiredValue: desiredValue, parameters: parameters)
     }
-    func usesContainerBackground(for element: ScriptWidgetRuntimeElement) -> Bool { false }
+    func usesContainerBackground(for element: ScriptWidgetRuntimeElement) -> Bool { element.id == containerRootID }
     func declaration(for element: ScriptWidgetRuntimeElement) -> HanlinWidgetActionDeclaration? {
         if element.getPropString("action")?.lowercased() == "reload" {
             return actionContext.actions.first { $0.kind == .reload }

@@ -3,7 +3,7 @@ import WidgetKit
 
 public struct WidgetsTimelineProvider: TimelineProvider {
   public func placeholder(in context: Context) -> WidgetsTimelineEntry {
-    WidgetsTimelineEntry(date: Date(), name: name, props: WidgetsLayoutRegistry.initialProps(for: name), entryIndex: nil)
+    HanlinExpoWidgetState.placeholder(name)
   }
 
   public func getSnapshot(
@@ -12,12 +12,12 @@ public struct WidgetsTimelineProvider: TimelineProvider {
     let groupIdentifier =
       Bundle.main.object(forInfoDictionaryKey: "ExpoWidgetsAppGroupIdentifier") as? String
     guard let groupIdentifier else {
-      completion(WidgetsTimelineEntry(date: Date(), name: name, props: WidgetsLayoutRegistry.initialProps(for: name), entryIndex: nil))
+      completion(HanlinExpoWidgetState.placeholder(name))
       return
     }
 
     let entries = parseTimeline(identifier: groupIdentifier, name: name, family: context.family)
-    completion(entries.first ?? WidgetsTimelineEntry(date: Date(), name: name, props: WidgetsLayoutRegistry.initialProps(for: name), entryIndex: nil))
+    completion(entries.first ?? HanlinExpoWidgetState.placeholder(name))
   }
 
   public func getTimeline(

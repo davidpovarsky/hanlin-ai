@@ -331,7 +331,8 @@ final class HanlinNativeWidgetRendererTests: XCTestCase {
     }
 
     func testInstalledExternalSourceRendersThroughAnyChild() throws {
-      for archive in ["Hanlin-Expo-Widget-Counter.hanlinExpo", "Hanlin-Expo-Widget-Visuals.hanlinExpo"] {
+      for archive in ["Hanlin-Expo-Widget-Counter.hanlinExpo", "Hanlin-Expo-Widget-Visuals.hanlinExpo",
+                      "Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo"] {
         let bundle = Bundle(for: Self.self)
         let fixtures = try XCTUnwrap(bundle.url(forResource: "WidgetEngineFixtures", withExtension: "bundle", subdirectory: "Fixtures") ?? bundle.url(forResource: "WidgetEngineFixtures", withExtension: "bundle"))
         let root = FileManager.default.temporaryDirectory.appending(path: UUID().uuidString)
@@ -345,11 +346,24 @@ final class HanlinNativeWidgetRendererTests: XCTestCase {
             files[String(file.path.dropFirst(staged.packageRoot.path.count + 1))] = try Data(contentsOf: file)
         }
         let program = try HanlinWidgetCompiler.prepare(manifest: staged.manifest, entryPath: entry, files: files)
+        if archive == "Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo" {
+            XCTAssertEqual(Set(program.families), Set(HanlinWidgetProgram.supportedFamilies))
+            for family in program.families {
+                XCTAssertNoThrow(try HanlinExpoWidgetsRuntime.shared.render(layout: program.javaScript,
+                    props: [:], environment: ["widgetFamily": family]).get())
+            }
+        }
         let node = try HanlinExpoWidgetsRuntime.shared.render(layout: program.javaScript, props: [:], environment: ["widgetFamily": "systemMedium"]).get()
         let identity = HanlinScriptExtensionIdentity(installedPackageID: try .init(validating: "installed.native-raster"), packageID: try .init(validating: "package.native-raster"), generation: 1, entrypointID: "widget")
         let context = HanlinWidgetActionContext(identity: identity, engine: .expo, artifactSHA256: String(repeating: "a", count: 64), family: "systemMedium", actions: program.actions)
         var commands: [HanlinWidgetActionCommand] = []
-        let child: any ExpoSwiftUI.AnyChild = HanlinExpoWidgetNative.render(node: node) { target, role, label in
+        let child: any ExpoSwiftUI.AnyChild = HanlinExpoWidgetNative.render(node: node, toggleBuilder: { target, isOn, label in
+            do {
+                let intent = try HanlinExpoWidgetsViewRenderer.toggleIntent(target: target, isOn: isOn, context: context)
+                commands.append(try JSONDecoder().decode(HanlinWidgetActionCommand.self, from: Data(intent.commandJSON.utf8)))
+                return AnyView(SwiftUI.Toggle(isOn: isOn, intent: intent) { label })
+            } catch { XCTFail("Native renderer emitted an invalid Toggle: \(error)"); return AnyView(Text("Invalid Toggle")) }
+        }) { target, role, label in
             do {
                 let intent = try HanlinExpoWidgetsViewRenderer.actionIntent(target: target, context: context)
                 commands.append(try JSONDecoder().decode(HanlinWidgetActionCommand.self, from: Data(intent.commandJSON.utf8)))

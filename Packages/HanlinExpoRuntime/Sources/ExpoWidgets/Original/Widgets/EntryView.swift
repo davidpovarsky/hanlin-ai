@@ -17,7 +17,9 @@ public struct WidgetsEntryView: View {
     var env: [String: Any] = getWidgetEnvironment(environment: environment)
     env["timestamp"] = Int(entry.date.timeIntervalSince1970 * 1000)
     env["configuration"] = configuration
-    env["__hanlinLayoutRevision"] = HanlinExpoWidgetState.layoutRevision(entry.name)
+    if let proof = entry.snapshotProof {
+      env.merge(proof.environment) { _, captured in captured }
+    }
     return env
   }
 
@@ -30,8 +32,8 @@ public struct WidgetsEntryView: View {
   }
 
   public var body: some View {
-    if let layout = WidgetsLayoutRegistry.layout(for: entry.name) {
-      let rendered = HanlinExpoWidgetState.render(name: entry.name, layout: layout, props: entry.props, environment: widgetEnvironment)
+    if let proof = entry.snapshotProof, let layout = WidgetsLayoutRegistry.layout(for: entry.name) {
+      let rendered = HanlinExpoWidgetState.render(name: entry.name, layout: layout, props: entry.props, environment: widgetEnvironment, proof: proof)
       WidgetsDynamicView(name: entry.name, kind: .widget, node: rendered.node, entryIndex: entry.entryIndex, environmentString: widgetEnvironmentString)
         .disabled(rendered.retained)
     } else {

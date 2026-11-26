@@ -154,9 +154,9 @@ public struct HanlinScriptingWidget: Widget {
     public init(kind: String) { self.kind = kind }
     public var body: some WidgetConfiguration {
         AppIntentConfiguration(kind: kind, intent: HanlinWidgetConfigurationIntent.self, provider: HanlinWidgetTimelineProvider()) { entry in
-            HanlinExtensionSnapshotView(presentation: entry.presentation)
+            HanlinExtensionSnapshotView(presentation: entry.presentation, usesWidgetContainerBackground: true)
                 .modifier(PassiveLegacyWidgetURL(url: entry.presentation.passiveLegacyURL))
-                .containerBackground(.background, for: .widget)
+                .modifier(HanlinWidgetContainerBackground(presentation: entry.presentation))
         }
         .configurationDisplayName(Text("Hanlin Script", bundle: HanlinLocalization.bundle))
         .description(Text("Native widgets from installed packages. Create independent instances in Hanlin.", bundle: HanlinLocalization.bundle))
@@ -165,6 +165,32 @@ public struct HanlinScriptingWidget: Widget {
         .containerBackgroundRemovable(true)
     }
 }
+/// Preserve an authored clear/material container instead of covering it with
+/// an unconditional opaque host background. WidgetKit controls its removal.
+private struct HanlinWidgetContainerBackground: ViewModifier {
+    let presentation: HanlinPreparedWidget
+    @ViewBuilder func body(content: Content) -> some View {
+        switch presentation {
+        case .scriptwidget:
+            content
+        case let .expo(node, _):
+            if Self.hasAuthoredBackground(node) { content }
+            else { content.containerBackground(.background, for: .widget) }
+        case .legacy, .failure:
+            content.containerBackground(.background, for: .widget)
+        }
+    }
+    private static func hasAuthoredBackground(_ value: HanlinValue) -> Bool {
+        switch value {
+        case let .object(object):
+            return object["$type"] == .string("containerBackground") ||
+                object.contains { hasAuthoredBackground($0.value) }
+        case let .array(values): return values.contains(where: hasAuthoredBackground)
+        default: return false
+        }
+    }
+}
+
 private struct PassiveLegacyWidgetURL: ViewModifier {
     let url: URL?
     @ViewBuilder func body(content: Content) -> some View {
@@ -264,9 +290,13 @@ public struct HanlinLiveActivityRegionView: View {
 }
 
 public struct HanlinExtensionSnapshotView: View {
-    public init(presentation: HanlinPreparedWidget) { self.presentation = presentation }
+    public init(presentation: HanlinPreparedWidget, usesWidgetContainerBackground: Bool = false) {
+        self.presentation = presentation
+        self.usesWidgetContainerBackground = usesWidgetContainerBackground
+    }
 
     public let presentation: HanlinPreparedWidget
+    private let usesWidgetContainerBackground: Bool
     @ViewBuilder public var body: some View {
         switch presentation {
         case let .legacy(snapshot): HanlinExtensionNodeView(node: snapshot.root, identity: snapshot.actionIdentity ?? snapshot.identity)
@@ -274,7 +304,7 @@ public struct HanlinExtensionSnapshotView: View {
             HanlinExpoWidgetsDynamicView(node: node, context: context) { node, context in
                 HanlinPreparedExpoNativeView(node: node, context: context)
             }
-        case let .scriptwidget(node, context): HanlinScriptWidgetDynamicView(node: node, context: context)
+        case let .scriptwidget(node, context): HanlinScriptWidgetDynamicView(node: node, context: context, usesWidgetContainerBackground: usesWidgetContainerBackground)
         case let .failure(reason): ContentUnavailableView(hanlin: "Hanlin Widget", systemImage: "exclamationmark.triangle", description: Text(reason))
         }
     }

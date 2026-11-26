@@ -12,6 +12,10 @@ enum HanlinExpoWidgetState {
     let node: [String: Any]
     let retained: Bool
   }
+  struct Snapshot {
+    let timeline: [[String: Any]]
+    let proof: HanlinExpoWidgetTimelineProof
+  }
   private struct Record: Codable {
     var version = 1
     let name: String
@@ -49,30 +53,62 @@ enum HanlinExpoWidgetState {
     return try JSONSerialization.data(withJSONObject: entries, options: [.sortedKeys])
   }
 
-  private static func withRecord<T>(_ name: String, _ body: (inout Record) throws -> T) throws -> T {
+  private static func withRecord<T>(_ name: String, _ body: (inout Record, HanlinExpoWidgetTimelineProof) throws -> T) throws -> T {
     guard let owner = HanlinExpoWidgetsIntegration.storageOwner(name),
           let layout = layoutRevision(name), let group = WidgetsStorage.appGroupIdentifier,
           let container = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: group) else {
       throw Failure.unavailable
     }
-    let directory = container.appendingPathComponent("ExpoWidgets", isDirectory: true)
-      .appendingPathComponent(owner.namespace, isDirectory: true)
-      .appendingPathComponent("WidgetState-v1", isDirectory: true)
-      .appendingPathComponent(digest(Data(name.utf8)), isDirectory: true)
-    try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
-    let descriptor = open(directory.appendingPathComponent("state.lock").path,
-                          O_CREAT | O_RDWR | O_CLOEXEC | O_NOFOLLOW, S_IRUSR | S_IWUSR)
+    // Walk from the OS-owned App Group descriptor. No ancestor, lock, state or
+    // backup file can redirect reads/writes outside this installation namespace.
+    var directoryFD = open(container.path, O_RDONLY | O_DIRECTORY | O_CLOEXEC | O_NOFOLLOW)
+    guard directoryFD >= 0 else { throw Failure.unavailable }
+    defer { close(directoryFD) }
+    for component in ["ExpoWidgets", owner.namespace, "WidgetState-v1", digest(Data(name.utf8))] {
+      if mkdirat(directoryFD, component, S_IRWXU) != 0 && errno != EEXIST { throw Failure.unavailable }
+      let child = openat(directoryFD, component, O_RDONLY | O_DIRECTORY | O_CLOEXEC | O_NOFOLLOW)
+      guard child >= 0 else { throw Failure.unavailable }
+      close(directoryFD)
+      directoryFD = child
+    }
+    let descriptor = openat(directoryFD, "state.lock", O_CREAT | O_RDWR | O_CLOEXEC | O_NOFOLLOW,
+                            S_IRUSR | S_IWUSR)
     guard descriptor >= 0 else { throw Failure.unavailable }
     defer { close(descriptor) }
     guard flock(descriptor, LOCK_EX) == 0 else { throw Failure.unavailable }
-    defer { flock(descriptor, LOCK_UN) }
-    // Recheck after waiting for another app/extension transaction.
+    defer { _ = flock(descriptor, LOCK_UN) }
     guard HanlinExpoWidgetsIntegration.storageOwner(name)?.generation == owner.generation,
           layoutRevision(name) == layout else { throw Failure.unavailable }
-    let currentURL = directory.appendingPathComponent("state.json")
-    let previousURL = directory.appendingPathComponent("previous.json")
-    func decode(_ url: URL) -> Record? {
-      guard let data = try? Data(contentsOf: url),
+    func exists(_ filename: String) throws -> Bool {
+      var info = stat()
+      if fstatat(directoryFD, filename, &info, AT_SYMLINK_NOFOLLOW) != 0 {
+        guard errno == ENOENT else { throw Failure.unavailable }
+        return false
+      }
+      guard (info.st_mode & S_IFMT) == S_IFREG else { throw Failure.invalidState }
+      return true
+    }
+    func read(_ filename: String) -> Data? {
+      let file = openat(directoryFD, filename, O_RDONLY | O_CLOEXEC | O_NOFOLLOW)
+      guard file >= 0 else { return nil }
+      defer { close(file) }
+      var info = stat()
+      guard fstat(file, &info) == 0, (info.st_mode & S_IFMT) == S_IFREG else { return nil }
+      return try? FileHandle(fileDescriptor: file, closeOnDealloc: false).readToEnd()
+    }
+    func atomicWrite(_ data: Data, filename: String) throws {
+      let temporary = ".pending-" + UUID().uuidString
+      let file = openat(directoryFD, temporary, O_CREAT | O_EXCL | O_WRONLY | O_CLOEXEC | O_NOFOLLOW,
+                        S_IRUSR | S_IWUSR)
+      guard file >= 0 else { throw Failure.unavailable }
+      defer { close(file); _ = unlinkat(directoryFD, temporary, 0) }
+      try FileHandle(fileDescriptor: file, closeOnDealloc: false).write(contentsOf: data)
+      guard fsync(file) == 0, renameat(directoryFD, temporary, directoryFD, filename) == 0 else {
+        throw Failure.unavailable
+      }
+    }
+    func decode(_ filename: String) -> Record? {
+      guard let data = read(filename),
             let envelope = try? JSONDecoder().decode(Envelope.self, from: data),
             digest(envelope.payload) == envelope.sha256,
             let record = try? JSONDecoder().decode(Record.self, from: envelope.payload),
@@ -82,30 +118,35 @@ enum HanlinExpoWidgetState {
             (try? checkedTimeline(timeline)) != nil else { return nil }
       return record
     }
+    let hasCurrent = try exists("state.json")
+    let hasPrevious = try exists("previous.json")
     var record: Record
-    if let valid = decode(currentURL) ?? decode(previousURL) { record = valid }
+    if let valid = decode("state.json") ?? decode("previous.json") { record = valid }
     else {
-      let previous = WidgetsStorage.getArray(forKey: "__expo_widgets_\(name)_timeline") as? [[String: Any]]
-      let entries = previous.flatMap { (try? checkedTimeline($0)) != nil ? $0 : nil }
+      // Legacy migration happens once, only for a first-generation registration.
+      // A corrupt or superseded record cannot resurrect unqualified old props.
+      let canMigrate = !hasCurrent && !hasPrevious && owner.generation <= 1
+      let legacy = canMigrate
+        ? WidgetsStorage.getArray(forKey: "__expo_widgets_\(name)_timeline") as? [[String: Any]] : nil
+      let entries = legacy.flatMap { (try? checkedTimeline($0)) != nil ? $0 : nil }
         ?? [["timestamp": Int(Date.now.timeIntervalSince1970 * 1_000),
              "props": WidgetsLayoutRegistry.initialProps(for: name) ?? [:]]]
       record = Record(name: name, generation: owner.generation, layoutSHA256: layout,
                       timeline: try checkedTimeline(entries))
     }
     let before = try JSONEncoder().encode(record)
-    let result = try body(&record)
-    // If a package was disabled/updated during script execution, do not commit.
+    let proof = HanlinExpoWidgetTimelineProof(namespace: owner.namespace, generation: record.generation,
+                                             layoutSHA256: record.layoutSHA256)
+    let result = try body(&record, proof)
     guard HanlinExpoWidgetsIntegration.storageOwner(name)?.generation == owner.generation,
           layoutRevision(name) == layout else { throw Failure.unavailable }
     let payload = try JSONEncoder().encode(record)
-    if payload != before || !FileManager.default.fileExists(atPath: currentURL.path) || decode(currentURL) == nil {
-      if let previous = decode(currentURL) {
+    if payload != before || !hasCurrent || decode("state.json") == nil {
+      if let previous = decode("state.json") {
         let prior = try JSONEncoder().encode(previous)
-        try JSONEncoder().encode(Envelope(sha256: digest(prior), payload: prior))
-          .write(to: previousURL, options: .atomic)
+        try atomicWrite(JSONEncoder().encode(Envelope(sha256: digest(prior), payload: prior)), filename: "previous.json")
       }
-      try JSONEncoder().encode(Envelope(sha256: digest(payload), payload: payload))
-        .write(to: currentURL, options: .atomic)
+      try atomicWrite(JSONEncoder().encode(Envelope(sha256: digest(payload), payload: payload)), filename: "state.json")
     }
     if let entries = try JSONSerialization.jsonObject(with: record.timeline) as? [[String: Any]] {
       WidgetsStorage.set(entries, forKey: "__expo_widgets_\(name)_timeline")
@@ -115,17 +156,26 @@ enum HanlinExpoWidgetState {
 
   static func updateTimeline(_ entries: [[String: Any]], name: String) throws {
     let data = try checkedTimeline(entries)
-    try withRecord(name) { $0.timeline = data }
+    try withRecord(name) { record, _ in record.timeline = data }
 
   }
 
-  static func timeline(_ name: String) -> [[String: Any]]? {
-    try? withRecord(name) { record in
+  static func snapshot(_ name: String) -> Snapshot? {
+    try? withRecord(name) { record, proof in
       guard let entries = try JSONSerialization.jsonObject(with: record.timeline) as? [[String: Any]] else {
         throw Failure.invalidState
       }
-      return entries
+      return Snapshot(timeline: entries, proof: proof)
     }
+  }
+
+  static func timeline(_ name: String) -> [[String: Any]]? { snapshot(name)?.timeline }
+
+  static func placeholder(_ name: String) -> WidgetsTimelineEntry {
+    let captured = snapshot(name)
+    return WidgetsTimelineEntry(date: Date(), name: name,
+      props: captured?.timeline.first?["props"] as? [String: Any], entryIndex: nil,
+      snapshotProof: captured?.proof)
   }
 
   static func performInteraction(source: String?, target: String?, entryIndex: Int?,
@@ -136,8 +186,10 @@ enum HanlinExpoWidgetState {
           var environment = try JSONSerialization.jsonObject(with: bytes) as? [String: Any] else {
       throw Failure.staleEntry
     }
-    try withRecord(source) { record in
-      guard environment["__hanlinLayoutRevision"] as? String == record.layoutSHA256,
+    try withRecord(source) { record, proof in
+      guard environment["__hanlinNamespace"] as? String == proof.namespace,
+            environment["__hanlinGeneration"] as? String == String(proof.generation),
+            environment["__hanlinLayoutRevision"] as? String == proof.layoutSHA256,
             var entries = try JSONSerialization.jsonObject(with: record.timeline) as? [[String: Any]],
             entries.indices.contains(entryIndex),
             let expectedTimestamp = environment["timestamp"] as? NSNumber,
@@ -150,7 +202,12 @@ enum HanlinExpoWidgetState {
       let next: [String: Any]
       switch evaluateWidgetButtonPress(layout: layout, props: props, environment: environment) {
       case .success(let value):
-        guard let value else { throw Failure.missingCallback }
+        guard let value else {
+          // Original Buttons may only emit an app listener event without
+          // returning props. Preserve that original API; Toggles must commit.
+          if desiredValue != nil { throw Failure.missingCallback }
+          return
+        }
         next = value
       case .failure(let error): throw error
       }
@@ -166,26 +223,36 @@ enum HanlinExpoWidgetState {
   /// Retain the last actual successful render for the same source/generation,
   /// family, appearance and user configuration. Never reuse across installations.
   static func render(name: String, layout: String, props: [String: Any]?,
-                     environment: [String: Any]) -> Rendered {
+                     environment: [String: Any], proof capturedProof: HanlinExpoWidgetTimelineProof?) -> Rendered {
     let appearanceKeys = ["widgetFamily", "configuration", "colorScheme", "widgetRenderingMode",
                           "showsContainerBackground", "isLuminanceReduced", "widgetContentMargins",
                           "levelOfDetail", "showsWidgetLabel"]
     let appearance = environment.filter { appearanceKeys.contains($0.key) }
     let key = (try? JSONSerialization.data(withJSONObject: appearance, options: [.sortedKeys])).map(digest)
-    switch evaluateWidgetLayout(layout: layout, props: props, environment: environment) {
-    case .success(let node):
-      if let key, JSONSerialization.isValidJSONObject(node),
-         let data = try? JSONSerialization.data(withJSONObject: node, options: [.sortedKeys]) {
-        try? withRecord(name) { $0.rendered[key] = data }
+    do {
+      return try withRecord(name) { record, currentProof in
+        // A timeline captured before a package upgrade must never execute or
+        // populate a new generation's cache using its stale layout.
+        guard capturedProof == currentProof,
+              record.layoutSHA256 == digest(Data(layout.utf8)) else { throw Failure.staleEntry }
+        switch evaluateWidgetLayout(layout: layout, props: props, environment: environment) {
+        case .success(let node):
+          if let key, JSONSerialization.isValidJSONObject(node),
+             let data = try? JSONSerialization.data(withJSONObject: node, options: [.sortedKeys]) {
+            record.rendered[key] = data
+          }
+          return .init(node: node, retained: false)
+        case .failure(let error):
+          if let key, let data = record.rendered[key],
+             let node = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
+            return .init(node: node, retained: true)
+          }
+          return .init(node: createRedBox(message: error.message), retained: false)
+        }
       }
-      return .init(node: node, retained: false)
-    case .failure(let error):
-      if let key, let data = try? withRecord(name, { $0.rendered[key] }),
-         let node = try? JSONSerialization.jsonObject(with: data) as? [String: Any] {
-        // The retained view remains readable; stale controls are disabled by its host.
-        return .init(node: node, retained: true)
-      }
-      return .init(node: createRedBox(message: error.message), retained: false)
+    } catch {
+      return .init(node: createRedBox(message: "This widget's source or installation is no longer current."),
+                   retained: false)
     }
   }
 }

@@ -1,5 +1,17 @@
 [
   {
+    "archive": "Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo",
+    "sha256": "c31ea9245556e2c851c89bb79d95dd323cf5f51c0ad8fcb7d6ef6298949027d1",
+    "bytes": 1701,
+    "engine": "expo",
+    "expected": "IMPORT_AND_NATIVE_TEST_REQUIRED",
+    "sources": {
+      "script.json": "a4c56e9beb4f460c40a24cf5f47ec856bc8ead65a4a8e3529714bfc9b3e8a23a",
+      "package.json": "7f16dd9ea28232d518853869e66d200dbc460a2b8ab937db8dd70074e2673447",
+      "widget.jsx": "98b22ec695b71de0ddd64980a80881f62efbd5e4ad246996ad1caecd6cb111c3"
+    }
+  },
+  {
     "archive": "Hanlin-Expo-Widget-Counter.hanlinExpo",
     "sha256": "07bc97e06a1c4b638272dda7eeeb132e2b91499d5546cccfe7fbfd5bfc4cae0e",
     "bytes": 1148,

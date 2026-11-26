@@ -1,0 +1,68 @@
+{
+  "at": "2026-11-26T12:53:14Z",
+  "base": "c34dd6ae752b3ab3ebc001743fc62c72fc48a203",
+  "scope": "10 real original/prepared JavaScript bundle tests, strict original SDK declaration typecheck, and syntax-only Linux Swift parse; Apple native execution pending.",
+  "swiftParsedFiles": 26,
+  "checks": [
+    {
+      "name": "original-and-prepared-toggle.txt",
+      "command": [
+        "/usr/local/bin/node",
+        "--test",
+        "Scripts/Widgets/Tests/interactive-toggle.test.mjs"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 0.9740936756134033,
+      "logSHA256": "50f5a2cc8ac1b211ae0d4f8fdfa1d797009637871342b1a7263d51ca9fc52a45"
+    },
+    {
+      "name": "sdk-widget-types.txt",
+      "command": [
+        "/usr/local/bin/node",
+        "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/portable-sdk-consumer-validation-20261126/current-surface-nativescript-v2/kit/MiniAppSDK/expo/node_modules/typescript/lib/tsc.js",
+        "-p",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-widget-wave2-20261126/docs/miniapps/evidence/widget-wave2-20261126/typescript-tsconfig.json"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 1.8377079963684082,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "swift-syntax.txt",
+      "command": [
+        "/usr/local/bin/swiftc",
+        "-frontend",
+        "-parse",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-widget-wave2-20261126/AI_HLYTests/HanlinNativeWidgetRendererTests.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-widget-wave2-20261126/AI_HLYTests/HanlinOriginalExpoWidgetTests.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-widget-wave2-20261126/Packages/HanlinExpoRuntime/Package.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-widget-wave2-20261126/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/HanlinExpoWidgetState.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-widget-wave2-20261126/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/HanlinExpoWidgetsIntegration.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-widget-wave2-20261126/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/HanlinWidgetToggle.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-widget-wave2-20261126/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetObject.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-widget-wave2-20261126/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/AppIntent.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-widget-wave2-20261126/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/EntryView.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-widget-wave2-20261126/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/TimelineEntry.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-widget-wave2-20261126/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/TimelineProvider.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-widget-wave2-20261126/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/Utils.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-widget-wave2-20261126/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/ViewRenderer.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-widget-wave2-20261126/Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/WidgetsJSRuntime.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-widget-wave2-20261126/Packages/HanlinExpoRuntime/Sources/HanlinExpoWidgetNative/HanlinExpoWidgetNative.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-widget-wave2-20261126/Packages/HanlinExpoRuntime/Sources/HanlinExpoWidgetNative/ViewRenderer.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-widget-wave2-20261126/Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinExpoWidgetInteractions.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-widget-wave2-20261126/Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinWidgetProgram.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-widget-wave2-20261126/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ExpoWidgets/HanlinExpoWidgetsRuntime.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-widget-wave2-20261126/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ExpoWidgets/HanlinExpoWidgetsViewRenderer.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-widget-wave2-20261126/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinWidgetActionExecutor.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-widget-wave2-20261126/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetDynamicView.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-widget-wave2-20261126/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetElementView.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-widget-wave2-20261126/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/ScriptWidgetElementView.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-widget-wave2-20261126/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidget.swift",
+        "/mnt/development/projects/worktrees/hanlin-miniapps-widget-wave2-20261126/Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingWidgets.swift"
+      ],
+      "exitCode": 0,
+      "durationSeconds": 0.07891106605529785,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

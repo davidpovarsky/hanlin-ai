@@ -1,0 +1,18 @@
+✔ original: SDK matrix renders all eight families with authored clear background and native component nodes (160.556253ms)
+✔ original: actual original Toggle wrapper returns props; intended values survive repeat requests (23.513177ms)
+✔ original: original Button callback is unchanged alongside Toggle and source instances stay isolated (67.812394ms)
+✔ original: callback failures, promises and malformed values cannot become committed state (68.80424ms)
+✔ original: duplicate targets and disabled modifiers fail before invoking a Toggle callback (40.641396ms)
+✔ prepared: SDK matrix renders all eight families with authored clear background and native component nodes (49.651448ms)
+✔ prepared: actual original Toggle wrapper returns props; intended values survive repeat requests (38.048101ms)
+✔ prepared: original Button callback is unchanged alongside Toggle and source instances stay isolated (47.326475ms)
+✔ prepared: callback failures, promises and malformed values cannot become committed state (54.577157ms)
+✔ prepared: duplicate targets and disabled modifiers fail before invoking a Toggle callback (36.817934ms)
+ℹ tests 10
+ℹ suites 0
+ℹ pass 10
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 924.339532

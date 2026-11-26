@@ -15,17 +15,18 @@ public struct WidgetConfigurationOption {
 }
 
 func parseTimeline(identifier: String, name: String, family: WidgetFamily) -> [WidgetsTimelineEntry] {
-  guard let timeline = HanlinExpoWidgetState.timeline(name) else {
-    return [WidgetsTimelineEntry(date: Date(), name: name, props: WidgetsLayoutRegistry.initialProps(for: name), entryIndex: nil)]
+  guard let snapshot = HanlinExpoWidgetState.snapshot(name) else {
+    return [WidgetsTimelineEntry(date: Date(), name: name, props: nil, entryIndex: nil)]
   }
 
-  let entries: [WidgetsTimelineEntry?] = timeline.enumerated().map { index, entry in
+  let entries: [WidgetsTimelineEntry?] = snapshot.timeline.enumerated().map { index, entry in
     if let entry = entry as? [String: Any], let timestamp = entry["timestamp"] as? Int, let props = entry["props"] as? [String: Any] {
       return WidgetsTimelineEntry(
         date: Date(timeIntervalSince1970: Double(timestamp) / 1000),
         name: name,
         props: props,
-        entryIndex: index
+        entryIndex: index,
+        snapshotProof: snapshot.proof
       )
     }
     return nil

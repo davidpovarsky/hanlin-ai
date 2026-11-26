@@ -1,0 +1,157 @@
+{
+  "base": "c34dd6ae752b3ab3ebc001743fc62c72fc48a203",
+  "files": {
+    "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo": {
+      "sha256": "c31ea9245556e2c851c89bb79d95dd323cf5f51c0ad8fcb7d6ef6298949027d1",
+      "bytes": 1701
+    },
+    "AI_HLYTests/HanlinNativeWidgetRendererTests.swift": {
+      "sha256": "10459d521834d0070dc827246fb694fcdcc6bb0cff3af67df46be7c42a322251",
+      "bytes": 31681
+    },
+    "AI_HLYTests/HanlinOriginalExpoWidgetTests.swift": {
+      "sha256": "9e80175151ded1703d912155ad74e749239ebcbb46ed9c0ca6fcf837cb0f6c35",
+      "bytes": 20077
+    },
+    "AI_HLYUITests/Fixtures/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo": {
+      "sha256": "c31ea9245556e2c851c89bb79d95dd323cf5f51c0ad8fcb7d6ef6298949027d1",
+      "bytes": 1701
+    },
+    "Fixtures/Widgets/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo": {
+      "sha256": "c31ea9245556e2c851c89bb79d95dd323cf5f51c0ad8fcb7d6ef6298949027d1",
+      "bytes": 1701
+    },
+    "Fixtures/Widgets/SHA256.json": {
+      "sha256": "7cc92b814164f3f664c034f8229928eb9df92da322dff39a51143c75383bab69",
+      "bytes": 4241
+    },
+    "Packages/HanlinExpoRuntime/Package.swift": {
+      "sha256": "6a4169ffd1975358466068c3f7776d8ac88fab4b6c0b883005669522086cda0e",
+      "bytes": 8800
+    },
+    "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/HanlinExpoWidgetState.swift": {
+      "sha256": "9c32f6b659dd953d501409166e8d570a4d0f98f8e0122fe06b80e42610efe791",
+      "bytes": 13164
+    },
+    "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/HanlinExpoWidgetsIntegration.swift": {
+      "sha256": "ea189d45e4c15aedb9a8e7a9cb593b1bd03d8aac1d9b9db4844778664f48a475",
+      "bytes": 14346
+    },
+    "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/HanlinWidgetToggle.swift": {
+      "sha256": "e263dac82965baa2914d0dd025e7cbbceabb20324263f71a4f5c1af7264e2b4a",
+      "bytes": 2504
+    },
+    "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetObject.swift": {
+      "sha256": "e38d05ab6a64b0c1a8572807c32cb3ea2a5e71f8f95fb273da1d20d95490b935",
+      "bytes": 1592
+    },
+    "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/AppIntent.swift": {
+      "sha256": "c1209662d26d6b45e8a1e39194ddf068a18ba7d29bb2507ddd754cf195054025",
+      "bytes": 2229
+    },
+    "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/EntryView.swift": {
+      "sha256": "8d5ec20ef476227b42548fa14236e60afdd6e025016dc6ddbbc26601f635b595",
+      "bytes": 2048
+    },
+    "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/TimelineEntry.swift": {
+      "sha256": "c8fbdb1aa6639a88f5687086f359ab19bfc2e426f866a38e5b00465ce4a50f94",
+      "bytes": 1008
+    },
+    "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/TimelineProvider.swift": {
+      "sha256": "2328d82bd311ce502b687a42b9a87cbc28797d7663a36217684f7d72cddaf8a9",
+      "bytes": 1453
+    },
+    "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/Utils.swift": {
+      "sha256": "8bc5cdb65bec73713e38e445ee0219b5ecb8f5d58da283fc163442092e82f12d",
+      "bytes": 4970
+    },
+    "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/ViewRenderer.swift": {
+      "sha256": "316bec95c2c1d2bb00b67df0fb77e053aeab0b79f1583ea3c747a8bd8b61f192",
+      "bytes": 7460
+    },
+    "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/WidgetsJSRuntime.swift": {
+      "sha256": "0c24483ac4856576058996de042acdac1122957d9bf2bb27455351c50d7e578b",
+      "bytes": 5458
+    },
+    "Packages/HanlinExpoRuntime/Sources/HanlinExpoWidgetNative/HanlinExpoWidgetNative.swift": {
+      "sha256": "c1d9a7d74560b4cd5d598541142f8b43acf62b594b72946f9ad9b3f076c68fe0",
+      "bytes": 1898
+    },
+    "Packages/HanlinExpoRuntime/Sources/HanlinExpoWidgetNative/ViewRenderer.swift": {
+      "sha256": "3060507b885276d669029357bedbbc58595e3892d7b5d9192329ad051b19d543",
+      "bytes": 6749
+    },
+    "Packages/HanlinExpoUI/src/index.ts": {
+      "sha256": "0617eac5c3a1273f69cdc3770371f5e1918780a5af74858196dd7cb0ebe8f2cf",
+      "bytes": 222
+    },
+    "Packages/HanlinExpoUI/src/system-surfaces.ts": {
+      "sha256": "7a0ff824ab5bb6c3a4cae705022bf0103d15caa17ed72500aeb5a28cd117c432",
+      "bytes": 3491
+    },
+    "Packages/HanlinExpoUI/src/widget-types.ts": {
+      "sha256": "0b95a154aa990b55273c3d69d2db95bf11ff88437993014e9d32f958d991d525",
+      "bytes": 1349
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinExpoWidgetInteractions.swift": {
+      "sha256": "b021f04ed6dfff4b8191d14c9d2749fc9169033f9d6b3255bc23dd9aa9ad3604",
+      "bytes": 527
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinWidgetProgram.swift": {
+      "sha256": "1553704463c32e72e07fc6b6c1464df286e01d65c003fd6cb9bdb5e6170cb77a",
+      "bytes": 5834
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptContracts/Resources/HanlinExpoWidgetInteractions.js": {
+      "sha256": "b61f368b89370868cd75562fce1c0ae693797687193559311d286900a9408f00",
+      "bytes": 3936
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ExpoWidgets/HanlinExpoWidgetsRuntime.swift": {
+      "sha256": "cf2b278230ac56365825094e6c6360a386a7ff7c507a6684196ab8c5726038c0",
+      "bytes": 5638
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ExpoWidgets/HanlinExpoWidgetsViewRenderer.swift": {
+      "sha256": "fb03a5fe6484c8d2edce4c062a118c975300b191a4d8e9344e4a5db37cc2a123",
+      "bytes": 1664
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinWidgetActionExecutor.swift": {
+      "sha256": "781efebc72d75d0942f0d8a48b7713d3c3cfe2057947fdfbcfa04b000ea59ca6",
+      "bytes": 10953
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetDynamicView.swift": {
+      "sha256": "8e1241685ccf78f906f881fd47894bc46f91bb0504f91b292f8de8d168db25e0",
+      "bytes": 665
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetElementView.swift": {
+      "sha256": "7372481af84e7e8991bbd77dbcf598b7ca09bd204f63ffdcb2c73d6b93dc43e0",
+      "bytes": 2635
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/Original/Component/ScriptWidgetElementView.swift": {
+      "sha256": "55ef079020840873491c983687a2839b7da84ee80f4270fb7d4ad3b91d1fc1b3",
+      "bytes": 6916
+    },
+    "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidget.swift": {
+      "sha256": "e103056e846e54c6cde439b5eba5b193b8261ac25b081cbf93ddcc2d0ff7b3b7",
+      "bytes": 7818
+    },
+    "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingWidgets.swift": {
+      "sha256": "facb857818b43586c678573f296c2770725f4efcbf4f6f663a11817dd70eecdc",
+      "bytes": 19768
+    },
+    "Scripts/MiniApps/native-presentations.d.ts": {
+      "sha256": "f1f5b12bbf5b89437a887d8499976bc4bb47d8fc603e90dfb228be0f7f67574a",
+      "bytes": 2590
+    },
+    "Scripts/Widgets/Tests/interactive-toggle.test.mjs": {
+      "sha256": "fe37f5f11b53b5504fd9d073b78a89b8df2c8e70d6941b3cf0c37ed658d4b986",
+      "bytes": 6217
+    },
+    "Scripts/Widgets/Tests/widget-types-consumer.ts": {
+      "sha256": "a4801bd6b1020efd6f157f12032ac393f6452f9f0d65ba27fe753fdf4b90e4c3",
+      "bytes": 675
+    },
+    "Scripts/Widgets/samples.mjs": {
+      "sha256": "6d57baad5c835595624e5f913153a045353a90a077b2cfdc888dd22420d5f07c",
+      "bytes": 10219
+    }
+  }
+}

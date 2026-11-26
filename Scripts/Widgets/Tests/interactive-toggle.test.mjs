@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import vm from 'node:vm';
+import {widgetSamples} from '../samples.mjs';
 
 const root = path.resolve(import.meta.dirname, '../../..');
 const read = relative => fs.readFileSync(path.join(root, relative), 'utf8');
@@ -37,6 +38,28 @@ function toggle(context, props, value, target = 'notifications') {
   });
 }
 for (const [engine, bundle] of Object.entries(bundles)) {
+  test(engine + ': SDK matrix renders all eight families with authored clear background and native component nodes', () => {
+    const sample = widgetSamples.find(s => s.name === 'Hanlin-Expo-Widget-Interactive-Matrix');
+    const manifest = JSON.parse(sample.files['script.json']);
+    assert.equal(manifest.hanlinWidget.families.length, 8);
+    const context = contextFor(bundle, sample.files['widget.jsx']);
+    for (const family of manifest.hanlinWidget.families) {
+      const tree = context.__expoWidgetRender({enabled:false,count:3}, {widgetFamily:family});
+      const wire = JSON.stringify(tree);
+      assert.ok(tree && !wire.includes('RedBoxView'));
+      if (!family.startsWith('accessory')) {
+        for (const type of ['ToggleView','Button','ProgressView','GaugeView','ImageView','LinkView'])
+          assert.ok(wire.includes(type), family + ' omitted ' + type);
+        assert.ok(wire.includes('containerBackground'));
+        assert.ok(wire.includes('clear'));
+        if (family !== 'systemSmall') assert.ok(wire.includes('ChartView'));
+      }
+    }
+    const updated = toggle(context, {enabled:false,count:3}, true, 'enabled');
+    assert.equal(updated.enabled, true);
+    assert.equal(updated.count, 4);
+    assert.throws(() => context.__expoWidgetRender({fail:true}, {widgetFamily:'systemMedium'}), /Fixture refresh failed/);
+  });
   test(engine + ': actual original Toggle wrapper returns props; intended values survive repeat requests', () => {
     const context = contextFor(bundle);
     let props = {};
@@ -54,6 +77,10 @@ for (const [engine, bundle] of Object.entries(bundles)) {
     assert.equal(first.__expoWidgetHandlePress(firstProps, {target:'increment'}).count, 2);
     assert.match(JSON.stringify(second.__expoWidgetRender({}, {})), /"isOn":false/);
     assert.equal(second.__expoWidgetHandlePress({}, {target:'increment'}).count, 1);
+    const eventOnly = contextFor(bundle, source.replace('() => ({count: (props.count ?? 0) + 1})', '() => undefined'));
+    assert.ok(eventOnly.__expoWidgetHandlePress({}, {target:'increment'}) == null,
+      'Original event-only Buttons may return no props');
+
     assert.throws(() => toggle(first, {}, true, 'missing'), /No matching/);
     assert.throws(() => toggle(first, {}, 'true'), /Boolean/);
   });
