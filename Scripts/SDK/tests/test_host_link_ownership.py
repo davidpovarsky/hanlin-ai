@@ -123,23 +123,40 @@ class HostLinkOwnershipTests(unittest.TestCase):
     def test_every_declared_host_product_remains_reachable_and_unknown_products_are_kept(self):
         manifest = json.loads(subprocess.check_output(
             ["swift", "package", "--package-path", str(ROOT), "dump-package"], text=True))
-        self.assertEqual(len(manifest["products"]), 47)
-        self.assertEqual(len(manifest["targets"]), 113)
+        # The public graph must preserve every canonical module and test
+        # target. New public UI products must not require freezing old counts.
+        canonical = [value for _, value in generate_manifest.get_manifests()]
+        expected_products = {p["name"] for source in canonical for p in source["products"]
+                             if "library" in p["type"]}
+        expected_products.add("HanlinApplication")
+        expected_targets = {t["name"] for source in canonical for t in source["targets"]}
+        expected_targets.update({"NodeMobile", "Python", "HanlinNodeBridge",
+                                 "HanlinPythonBridge", "AI_Hanlin"})
+        self.assertEqual({p["name"] for p in manifest["products"]}, expected_products)
         target_names = {target["name"] for target in manifest["targets"]}
+        self.assertEqual(target_names, expected_targets)
+        self.assertEqual(len(target_names), len(manifest["targets"]))
         self.assertIn("AI_Hanlin", target_names)
         self.assertNotIn("HanlinApp", target_names)
         closure = update_project.application_product_closure(manifest)
         objects = self.project["objects"]
         definition = json.loads(generate_manifest.APPLICATION_PRODUCTS.read_text())
         self.assertEqual(definition["module"], "AI_Hanlin")
-        self.assertEqual(len(definition["products"]), 50)
+        self.assertEqual(len(definition["products"]), 51)
         for entry in definition["products"]:
             matches = [obj for obj in objects.values()
                        if obj.get("isa") == "XCSwiftPackageProductDependency"
                        and obj["productName"] == entry["product"]
                        and (entry["package"] == "HanlinSDK"
                             or objects[obj["package"]].get("repositoryURL", "").rstrip("/").removesuffix(".git").rsplit("/", 1)[-1] == entry["package"])]
-            self.assertTrue(matches, entry)
+            if entry["product"] == "HanlinChatPresentation":
+                # A new internal SDK dependency is owned by AI_Hanlin. It must
+                # not acquire an unnecessary direct link edge in either host.
+                self.assertEqual(entry["package"], "HanlinSDK")
+                self.assertIn("HanlinChatPresentation", closure[0])
+                self.assertFalse(matches)
+            else:
+                self.assertTrue(matches, entry)
             self.assertTrue(all(update_project.product_is_covered(obj, objects, closure) for obj in matches), entry)
         self.assertFalse(update_project.product_is_covered(
             {"productName": "IndependentHostLibrary", "package": "separate"},
