@@ -1,6 +1,6 @@
 # Approved two-wave integration — 2026-11-26
 
-Status: source composition in progress; no new native or release acceptance.
+Status: both-wave source integrated; focused native Chat/core evidence accepted on their exact sources; full application and release acceptance in progress.
 
 ## First composition
 
@@ -41,3 +41,7 @@ POST744 merged in98a7279; original shared Chat/Launcher3f65 merged ina84ecd6; st
 ## Both-wave feature composition
 
 Original widgets3a4936+693a2f, standalone Developer Studio679ee14, original ActivityKit serializationa78f50, and prepared LKGeb8 are now composed. Shared chat native5/0/0 at730, native core48 and JS15 at a30, plus explicitly accepted local18 unchanged-source evidence are retained from their owners. Full application/OS/device acceptance remains pending. Canonical SDK48products/116targets/526application sources and NativeScript facade regenerated from the composed source. The first window-factory check lacked its tracked generated directory in the sparse worktree; materializing the original directory made the unchanged check pass. Mac full native preparation/queue owner is mac_build_ops; root owns integration/publication/Asana. First Mac native preparation copied and byte-verified10frameworks but stopped at missing untracked Libffi archives; a versioned continuation must retain original tracked headers/plist and required raw failure receipt.
+
+## Main integration review and current acceptance boundary
+
+Root independently reviewed and integrated main595e via b7fde763. All product/native CI inputs from7f6 remain unchanged by that reconciliation; 14 policy/CI conflicts are resolved without dropping original assertions or evidence requirements. PR23 is the review vehicle. Drawinge42 and Studioe641 are integrated; the actual source review then found a required NativeScript Shortcut/windowFactory admission defect, now owned by wave2 for correction. Current Host/SDK generation executes on3101 and must be refreshed if its declared facade inputs change. Available simulator runtimes include27.2; installed build SDK is27.0. All17 devicectl entries observed are simulated, with no physical device connected. The physical gate remains separate.
