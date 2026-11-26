@@ -1,0 +1,12 @@
+{
+  "sourceCommit": "3f7c4a6f3cafa3919301750086cd1abf5c459955",
+  "runId": 45870248837,
+  "jobId": 140084080387,
+  "jobConclusion": "success",
+  "scope": "Original NativeScript runtime package simulator and generic iOS device compilation; not app tests",
+  "rawLogBytes": 826252,
+  "rawLogSHA256": "469732224f59f01fe7e7a334c952e10456935db50a541a7bbd6a6a4598e3047c",
+  "successMarkers": 2,
+  "archiveSHA256": "a620a6f2617c5e7dcbbf104af580a1b134db12b2cfecbbaf238ab627eaea19b9",
+  "archiveBytes": 77926
+}
