@@ -115,8 +115,10 @@ private struct MiniAppsStudioBrowser: View {
                             MiniAppsStudioBrowser(workspace: workspace, directory: entry.path, title: entry.name)
                         }
                     } label: {
-                        let style = (try? workspace.style(for: entry.path)) ?? .init()
-                        Label(entry.name, systemImage: isProject(entry) ? "curlybraces.square" : style.symbol)
+                        let defaultSymbol = isProject(entry) ? "curlybraces.square" : "folder"
+                        let style = (try? workspace.style(for: entry.path, defaultSymbol: defaultSymbol))
+                            ?? .init(symbol: defaultSymbol)
+                        Label(entry.name, systemImage: style.symbol)
                             .foregroundStyle(studioColor(style.color))
                     }
                     .contextMenu {
@@ -159,7 +161,8 @@ private struct MiniAppsStudioBrowser: View {
             NavigationStack { MiniAppsStudioGallery(workspace: workspace, directory: directory) }
         }
         .sheet(item: $styling, onDismiss: refresh) { entry in
-            MiniAppsFolderStyleSheet(workspace: workspace, entry: entry)
+            MiniAppsFolderStyleSheet(workspace: workspace, entry: entry,
+                defaultSymbol: isProject(entry) ? "curlybraces.square" : "folder")
         }
         .fileImporter(isPresented: $showsImport, allowedContentTypes: [.folder]) { result in
             do {
@@ -251,6 +254,7 @@ private struct MiniAppsStudioGallery: View {
 private struct MiniAppsFolderStyleSheet: View {
     let workspace: MiniAppsDeveloperWorkspace
     let entry: MiniAppsDeveloperWorkspace.Entry
+    let defaultSymbol: String
     @Environment(\.dismiss) private var dismiss
     @State private var symbol = "folder"
     @State private var color = "blue"
@@ -291,7 +295,7 @@ private struct MiniAppsFolderStyleSheet: View {
             }
             .task {
                 do {
-                    let value = try workspace.style(for: entry.path)
+                    let value = try workspace.style(for: entry.path, defaultSymbol: defaultSymbol)
                     symbol = value.symbol; color = value.color
                 } catch { self.error = error.localizedDescription }
             }

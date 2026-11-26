@@ -154,10 +154,10 @@ struct MiniAppsDeveloperWorkspace: Sendable {
         #endif
     }
 
-    func style(for directory: String) throws -> FolderStyle {
+    func style(for directory: String, defaultSymbol: String = "folder") throws -> FolderStyle {
         _ = try url(for: directory, allowRoot: true)
         let file = try url(for: directory.isEmpty ? ".miniapps-folder.json" : directory + "/.miniapps-folder.json")
-        guard FileManager.default.fileExists(atPath: file.path) else { return FolderStyle() }
+        guard FileManager.default.fileExists(atPath: file.path) else { return FolderStyle(symbol: defaultSymbol) }
         let style = try coordinateRead(file) { target in
             try JSONDecoder().decode(FolderStyle.self, from: Data(contentsOf: target))
         }
