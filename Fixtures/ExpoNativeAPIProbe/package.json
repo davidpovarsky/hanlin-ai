@@ -5,10 +5,10 @@
   "main": "bundle.js",
   "hanlinRuntime": "hanlin-expo",
   "hanlinExpo": {
-    "runtimeVersion": "58.0.29",
+    "runtimeVersion": "58.0.30",
     "bridgeVersion": "3.0.0",
     "plugins": {
-      "@expo/ui": "58.0.29",
+      "@expo/ui": "58.0.30",
       "@hanlin/expo-ui": "3.0.0",
       "@nativescript/react-native": "9.1.2",
       "react-native-worklets": "0.13.0"
@@ -18,11 +18,11 @@
     }
   },
   "dependencies": {
-    "@expo/ui": "58.0.29",
+    "@expo/ui": "58.0.30",
     "@hanlin/expo-native-api": "1.0.0",
     "@hanlin/expo-ui": "1.0.0",
     "@nativescript/react-native": "9.1.2",
-    "expo": "58.0.26",
+    "expo": "58.1.0",
     "react": "19.3.0",
     "react-native": "0.88.1",
     "react-native-worklets": "0.13.0"

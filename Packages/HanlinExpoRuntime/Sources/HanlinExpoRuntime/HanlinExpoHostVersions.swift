@@ -1,8 +1,8 @@
 // Generated from the same exact original inputs used by the native framework producer.
 enum HanlinExpoHostVersions {
-    static let runtimeVersion = "58.0.29"
-    static let expoSDKVersion = "58.0.26"
-    static let expoUIVersion = "58.0.29"
+    static let runtimeVersion = "58.0.30"
+    static let expoSDKVersion = "58.1.0"
+    static let expoUIVersion = "58.0.30"
     static let reactNativeVersion = "0.88.1"
     static let hermesVersion = "260318099.0.5"
     static let nativeApiVersion = "9.1.2"

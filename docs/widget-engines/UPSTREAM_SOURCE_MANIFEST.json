@@ -411,9 +411,9 @@
       "adaptation": "Original AnyChild/ExpoUI props and native type-preserving children. Hanlin injects native Button intent factory, removes Live Activity route and renders explicit errors. Measured Gauge slot failure in 41239679485: preserve children for Gauge/Label/Progress, whose original native bodies consume slots/labels.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "ios/Widgets/ViewRenderer.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -428,9 +428,9 @@
       "adaptation": "Original AnyChild/ExpoUI props and native type-preserving children. Hanlin injects native Button intent factory, removes Live Activity route and renders explicit errors.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "ios/Widgets/ChildView.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -445,9 +445,9 @@
       "adaptation": "Original AnyChild/ExpoUI props and native type-preserving children. Hanlin injects native Button intent factory, removes Live Activity route and renders explicit errors.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "ios/Widgets/Fragment.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -492,9 +492,9 @@
       "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "bundle/async-require-stub.ts"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -509,9 +509,9 @@
       "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "bundle/decorator.ts"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -526,9 +526,9 @@
       "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "bundle/expo-modules-core-stub.ts"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -543,9 +543,9 @@
       "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "bundle/expo-stub.ts"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -560,9 +560,9 @@
       "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "bundle/index.ts"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -577,9 +577,9 @@
       "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "bundle/jsx-runtime-stub.ts"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -594,9 +594,9 @@
       "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "bundle/layout-registry-entry.js"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -611,9 +611,9 @@
       "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "bundle/layout-registry-stub.ts"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -628,9 +628,9 @@
       "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "bundle/modules/expo-ui.ts"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -645,9 +645,9 @@
       "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "bundle/react-native-stub.ts"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -663,9 +663,9 @@
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "bundle/react-stub.ts"
       }
     },
@@ -679,9 +679,9 @@
       "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "bundle/ui-globals.android.ts"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -696,9 +696,9 @@
       "adaptation": "Pinned runtime bundle stubs; classic JSX createElement adapter retains keys. Files without an upstream blob are Hanlin adapters, not copied source.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "bundle/ui-globals.ts"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -709,7 +709,7 @@
       "upstream": "Shared/ScriptWidgetRuntime/Widget/Runtime/ScriptWidgetRuntime.swift",
       "upstreamBlob": "d87cddf8b6b23e07b08948a2941ba7d4ef222e49",
       "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift",
-      "localSHA256": "d3735e19e7e2603d17449acd0c57c22bc676ee022bfe3152a20d2d846dd58afd",
+      "localSHA256": "fa62de1025c7ae06406794e9c397e3f64ed0e32a8fb0fc3584e43fa2e28bd066",
       "byteIdentical": false,
       "adaptation": "Source-derived original JSExport/util/custom-component lifecycle; Hanlin one-shot VM owner, verified files, typed transactional storage and prepared Sendable tree. Source/prepared-JavaScript, element-count/depth/props and cooperative deadlines are read from the installed original ScriptWidget runtime contract. Scalar children and nested child arrays do not consume additional element/depth allowances; each Dynamic Island region is validated separately. No additional host material-byte, frozen-JSON or scalar-node authoring quota. Element/array cycles, invalid JSON and original runtime errors remain failures. Not a byte-identical copy or hard VM-memory/preemption guarantee. Native presentation action transport, local source-module compilation, and frozen dynamic-island/presentation effects preserve original engine components and APIs. Original Control actions can complete with storage values and no rendered root; rendered widget/presentation paths retain their native tree contract. Single-element root Fragments normalize at the original unchanged depth before node/property validation; non-root Fragments retain their original counting behavior.",
       "sourceRole": "host-adapter",
@@ -723,7 +723,7 @@
         },
         "originalSHA256": "7040cab9a460f5845ee96114c396b7e27e46caf8c9e62614a717e25adb1af574",
         "changed": true,
-        "hostSHA256": "d3735e19e7e2603d17449acd0c57c22bc676ee022bfe3152a20d2d846dd58afd",
+        "hostSHA256": "fa62de1025c7ae06406794e9c397e3f64ed0e32a8fb0fc3584e43fa2e28bd066",
         "implementation": "Hanlin host adapter; original renderer source and original app service coverage are separate"
       }
     },
@@ -766,9 +766,9 @@
         "upstream": "packages/expo-widgets/ios/Widgets/Buttons.swift",
         "identity": {
           "package": "expo-widgets",
-          "version": "58.0.29",
-          "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-          "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+          "version": "58.0.30",
+          "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+          "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
           "path": "ios/Widgets/Buttons.swift"
         },
         "originalSHA256": "ed7d8d4b0091aacab0a60fa88466497b4fa3f12b0c741551b96d084d18e81903",
@@ -792,9 +792,9 @@
         "upstream": "packages/expo-widgets/ios/WidgetsContext.swift",
         "identity": {
           "package": "expo-widgets",
-          "version": "58.0.29",
-          "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-          "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+          "version": "58.0.30",
+          "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+          "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
           "path": "ios/WidgetsContext.swift"
         },
         "originalSHA256": "aa9f9ad9f00e2afac731ea6ce5dc8d8e68230d20de6b2627a0d55b0aa8596722",
@@ -823,9 +823,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/TextView.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -840,9 +840,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored. SlotView retains original native children and slot helpers; the React-only shadow-origin callback is omitted in this WidgetKit dictionary context.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/SlotView.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -857,9 +857,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/HStackView.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -874,9 +874,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/VStackView.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -891,9 +891,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/ZStackView.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -908,9 +908,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/OverlayView.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -925,9 +925,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/BackgroundView.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -942,9 +942,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/MaskView.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -959,9 +959,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/RectangleView.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -976,9 +976,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/RoundedRectangleView.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -993,9 +993,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/CapsuleView.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1010,9 +1010,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/CircleView.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1027,9 +1027,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/ImageView.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1048,9 +1048,9 @@
       },
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "ios/Widgets/AccessoryWidgetBackgroundView.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1065,9 +1065,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/DividerView.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1082,9 +1082,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/EllipseView.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1099,9 +1099,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Label.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1116,9 +1116,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/ProgressView.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1133,9 +1133,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/SpacerView.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1150,9 +1150,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/UnevenRoundedRectangleView.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1167,9 +1167,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored. Reject an inverted closed range with a native diagnostic rather than trapping in Swift ClosedRange.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/GaugeView.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1184,9 +1184,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/ChartView.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1201,9 +1201,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/LinkView.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1218,9 +1218,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/ClosedRangeDateRecord.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1235,9 +1235,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/UIBaseViewProps.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1252,9 +1252,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/UIBaseView.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1269,9 +1269,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Button/ButtonProps.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1286,9 +1286,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Convertibles/AlignmentOptions.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1303,9 +1303,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Convertibles/AxisOptions.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1320,9 +1320,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Convertibles/EdgeOptions.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1337,9 +1337,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Convertibles/PaddingValue.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1354,9 +1354,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Convertibles/SafeAreaRegionOptions.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1371,9 +1371,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Convertibles/ScrollIndicatorVisibilityOptions.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1388,9 +1388,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Convertibles/ShapeStyleValue.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1405,9 +1405,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Convertibles/VisibilityOptions.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1422,9 +1422,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Modifiers/AnimationConfig.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1439,9 +1439,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Modifiers/BackgroundModifier.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1456,9 +1456,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Modifiers/ButtonBorderShapeModifier.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1473,9 +1473,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Modifiers/ContainerBackgroundModifier.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1490,9 +1490,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Modifiers/ContainerRelativeFrameModifier.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1507,9 +1507,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Modifiers/ContainerShapeModifier.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1524,9 +1524,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Modifiers/ContentShapeModifier.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1541,9 +1541,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Modifiers/ContentTransitionModifier.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1558,9 +1558,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Modifiers/ControlSizeModifier.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1575,9 +1575,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Modifiers/DynamicTypeSizeModifier.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1592,9 +1592,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Modifiers/EnvironmentModifier.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1609,9 +1609,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Modifiers/FontModifier.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1626,9 +1626,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Modifiers/ForegroundStyleModifier.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1643,9 +1643,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Modifiers/GaugeStyleModifier.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1660,9 +1660,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Modifiers/ImageScaleModifier.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1677,9 +1677,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Modifiers/LabelStyleModifier.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1694,9 +1694,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Modifiers/LineLimitModifier.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1711,9 +1711,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Modifiers/ProgressViewStyleModifier.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1728,9 +1728,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Modifiers/ResizableModifier.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1745,9 +1745,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Modifiers/Rotation3DEffectModifier.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1762,9 +1762,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Modifiers/ShapeTypes.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1779,9 +1779,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Modifiers/SymbolEffectModifier.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1796,9 +1796,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Modifiers/View+AccessibilityModifiers.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1813,9 +1813,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Modifiers/View+ModifierArray.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1823,16 +1823,16 @@
     {
       "repository": "expo/expo",
       "upstream": "packages/expo-ui/ios/Modifiers/ViewModifierRegistry.swift",
-      "upstreamBlob": "07a856574df36a69b802bd483caf4e33ae05a976",
+      "upstreamBlob": "af2dac884df10ffcbb1e5fef368c74db878969a1",
       "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/ViewModifierRegistry.swift",
-      "localSHA256": "c78e40ec4dfca8434c37aca45ca4c2252b4f80624e04ef90797d0852120800b6",
+      "localSHA256": "cd5df150531f4f4ab331ad4aae26769d5e68221337cb6c02c3b0dcbe874d95cf",
       "byteIdentical": false,
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Modifiers/ViewModifierRegistry.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1851,9 +1851,9 @@
       },
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "ios/Widgets/WidgetModifiers.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1868,9 +1868,9 @@
       "adaptation": "UIKit/Foundation imports and explicit MainActor/preconcurrency protocol isolation matching the installed public SDK interface; native child and identity semantics retained.",
       "upstreamPublication": {
         "package": "expo-modules-core",
-        "version": "58.1.0",
-        "tarball": "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-58.1.0.tgz",
-        "sha256": "bb1bcaac52c1409fa58bb7268bae8eed9b472acb91c1653687013890e1a27524",
+        "version": "58.2.0",
+        "tarball": "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-58.2.0.tgz",
+        "sha256": "c36f39aaaac93b8dbb0b3cb687e7cf73f566e1538d4785c652049f5d51f8213d",
         "path": "ios/Core/Views/SwiftUI/AnyChild.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1885,9 +1885,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "expo-modules-core",
-        "version": "58.1.0",
-        "tarball": "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-58.1.0.tgz",
-        "sha256": "bb1bcaac52c1409fa58bb7268bae8eed9b472acb91c1653687013890e1a27524",
+        "version": "58.2.0",
+        "tarball": "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-58.2.0.tgz",
+        "sha256": "c36f39aaaac93b8dbb0b3cb687e7cf73f566e1538d4785c652049f5d51f8213d",
         "path": "ios/Core/Views/SwiftUI/ExpoSwiftUI.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1902,9 +1902,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "expo-modules-core",
-        "version": "58.1.0",
-        "tarball": "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-58.1.0.tgz",
-        "sha256": "bb1bcaac52c1409fa58bb7268bae8eed9b472acb91c1653687013890e1a27524",
+        "version": "58.2.0",
+        "tarball": "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-58.2.0.tgz",
+        "sha256": "c36f39aaaac93b8dbb0b3cb687e7cf73f566e1538d4785c652049f5d51f8213d",
         "path": "ios/Core/Views/SwiftUI/Convertibles+SwiftUI.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1919,9 +1919,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "expo-modules-core",
-        "version": "58.1.0",
-        "tarball": "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-58.1.0.tgz",
-        "sha256": "bb1bcaac52c1409fa58bb7268bae8eed9b472acb91c1653687013890e1a27524",
+        "version": "58.2.0",
+        "tarball": "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-58.2.0.tgz",
+        "sha256": "c36f39aaaac93b8dbb0b3cb687e7cf73f566e1538d4785c652049f5d51f8213d",
         "path": "ios/Core/Views/SwiftUI/ExpoSystemColors.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1936,9 +1936,9 @@
       "adaptation": "UIKit/Foundation imports; reject non-finite, negative or overflowing numeric ARGB input before UInt64 conversion. Original native CSS/dynamic color behavior retained.",
       "upstreamPublication": {
         "package": "expo-modules-core",
-        "version": "58.1.0",
-        "tarball": "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-58.1.0.tgz",
-        "sha256": "bb1bcaac52c1409fa58bb7268bae8eed9b472acb91c1653687013890e1a27524",
+        "version": "58.2.0",
+        "tarball": "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-58.2.0.tgz",
+        "sha256": "c36f39aaaac93b8dbb0b3cb687e7cf73f566e1538d4785c652049f5d51f8213d",
         "path": "ios/Core/Convertibles/Convertibles+Color.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1953,9 +1953,9 @@
       "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
       "upstreamPublication": {
         "package": "expo-modules-core",
-        "version": "58.1.0",
-        "tarball": "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-58.1.0.tgz",
-        "sha256": "bb1bcaac52c1409fa58bb7268bae8eed9b472acb91c1653687013890e1a27524",
+        "version": "58.2.0",
+        "tarball": "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-58.2.0.tgz",
+        "sha256": "c36f39aaaac93b8dbb0b3cb687e7cf73f566e1538d4785c652049f5d51f8213d",
         "path": "ios/Core/Records/FieldExtensions.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1970,9 +1970,9 @@
       "adaptation": "No changes.",
       "upstreamPublication": {
         "package": "expo-modules-core",
-        "version": "58.1.0",
-        "tarball": "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-58.1.0.tgz",
-        "sha256": "bb1bcaac52c1409fa58bb7268bae8eed9b472acb91c1653687013890e1a27524",
+        "version": "58.2.0",
+        "tarball": "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-58.2.0.tgz",
+        "sha256": "c36f39aaaac93b8dbb0b3cb687e7cf73f566e1538d4785c652049f5d51f8213d",
         "path": "ios/Core/Views/SwiftUI/View+Modifiers.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -1987,9 +1987,9 @@
       "localSHA256": "f4d2ef488cca26102854d6705f3110fa1bdf1c2d6233b1584a4270d9ec5d4e96",
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/NamespaceRegistry.swift"
       },
       "baseGitCommit": "917a61b581baeb852aa4fe331da2c1395d824351"
@@ -2554,9 +2554,9 @@
       "adaptation": "Explicit Foundation scope where required for SwiftPM. Stop original token callbacks for inactive installation generations.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "ios/LiveActivity.swift"
       },
       "localAdaptations": [
@@ -2573,9 +2573,9 @@
       "adaptation": "Explicit Foundation scope where required for SwiftPM. Upstream trailing whitespace normalized.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "ios/LiveActivityFactory.swift"
       }
     },
@@ -2589,9 +2589,9 @@
       "adaptation": "Explicit Foundation scope where required for SwiftPM. Reload original widget kind and the generic installed-widget host kind.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "ios/WidgetObject.swift"
       }
     },
@@ -2605,9 +2605,9 @@
       "adaptation": "Explicit Foundation scope where required for SwiftPM.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "ios/Widgets/AccessoryWidgetBackgroundView.swift"
       }
     },
@@ -2621,9 +2621,9 @@
       "adaptation": "Explicit Foundation scope where required for SwiftPM. Reload original widget kind and the generic installed-widget host kind.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "ios/Widgets/AppIntent.swift"
       }
     },
@@ -2637,9 +2637,9 @@
       "adaptation": "Explicit Foundation scope where required for SwiftPM.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "ios/Widgets/Buttons.swift"
       }
     },
@@ -2653,9 +2653,9 @@
       "adaptation": "Explicit Foundation scope where required for SwiftPM.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "ios/Widgets/ChildView.swift"
       }
     },
@@ -2669,9 +2669,9 @@
       "adaptation": "Explicit Foundation scope where required for SwiftPM.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "ios/Widgets/DynamicView.swift"
       }
     },
@@ -2685,9 +2685,9 @@
       "adaptation": "Explicit Foundation scope where required for SwiftPM. Forward generic host configuration through original environment.configuration.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "ios/Widgets/EntryView.swift"
       },
       "localAdaptations": [
@@ -2704,9 +2704,9 @@
       "adaptation": "Explicit Foundation scope where required for SwiftPM.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "ios/Widgets/Fragment.swift"
       }
     },
@@ -2720,9 +2720,9 @@
       "adaptation": "Explicit Foundation scope where required for SwiftPM.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "ios/Widgets/LiveActivityBanner.swift"
       }
     },
@@ -2736,9 +2736,9 @@
       "adaptation": "Explicit Foundation scope where required for SwiftPM.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "ios/Widgets/RedBoxView.swift"
       }
     },
@@ -2752,9 +2752,9 @@
       "adaptation": "Explicit Foundation scope where required for SwiftPM.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "ios/Widgets/TimelineEntry.swift"
       }
     },
@@ -2768,9 +2768,9 @@
       "adaptation": "Explicit Foundation scope where required for SwiftPM.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "ios/Widgets/TimelineProvider.swift"
       }
     },
@@ -2784,9 +2784,9 @@
       "adaptation": "Explicit Foundation scope where required for SwiftPM.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "ios/Widgets/Type.swift"
       }
     },
@@ -2800,9 +2800,9 @@
       "adaptation": "Explicit Foundation scope where required for SwiftPM. Inactive installation generations do not render live activity layouts.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "ios/Widgets/Utils.swift"
       }
     },
@@ -2816,9 +2816,9 @@
       "adaptation": "Explicit Foundation scope where required for SwiftPM.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "ios/Widgets/ViewRenderer.swift"
       }
     },
@@ -2832,9 +2832,9 @@
       "adaptation": "Explicit Foundation scope where required for SwiftPM. Upstream trailing whitespace normalized.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "ios/Widgets/WidgetLiveActivity.swift"
       }
     },
@@ -2848,9 +2848,9 @@
       "adaptation": "Explicit Foundation scope where required for SwiftPM.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "ios/Widgets/WidgetModifiers.swift"
       }
     },
@@ -2864,9 +2864,9 @@
       "adaptation": "Explicit Foundation scope where required for SwiftPM. Resolve genuine JavaScript resource through SwiftPM; inactive installation layouts are unavailable.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "ios/Widgets/WidgetsJSRuntime.swift"
       }
     },
@@ -2880,9 +2880,9 @@
       "adaptation": "Explicit Foundation scope where required for SwiftPM. Resolve genuine JavaScript resource through SwiftPM; inactive installation layouts are unavailable.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "ios/Widgets/WidgetsLayoutRegistry.swift"
       }
     },
@@ -2896,9 +2896,9 @@
       "adaptation": "Explicit Foundation scope where required for SwiftPM.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "ios/WidgetsContext.swift"
       }
     },
@@ -2912,9 +2912,9 @@
       "adaptation": "Explicit Foundation scope where required for SwiftPM.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "ios/WidgetsEvents.swift"
       }
     },
@@ -2928,9 +2928,9 @@
       "adaptation": "Explicit Foundation scope where required for SwiftPM.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "ios/WidgetsExceptions.swift"
       }
     },
@@ -2944,9 +2944,9 @@
       "adaptation": "Explicit Foundation scope where required for SwiftPM. Bind original SharedObject names, methods, storage directory and events to the actual product/installation/generation.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "ios/WidgetsModule.swift"
       }
     },
@@ -2960,9 +2960,9 @@
       "adaptation": "Explicit Foundation scope where required for SwiftPM.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "ios/WidgetsRecords.swift"
       }
     },
@@ -2976,9 +2976,9 @@
       "adaptation": "Explicit Foundation scope where required for SwiftPM.",
       "upstreamPublication": {
         "package": "expo-widgets",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-        "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+        "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
         "path": "ios/WidgetsStorage.swift"
       }
     },
@@ -2991,9 +2991,9 @@
       "byteIdentical": false,
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/UniversalLayout.swift"
       },
       "adaptation": "Complete original universal layout implementation in the shared original widget type namespace."
@@ -3007,9 +3007,9 @@
       "byteIdentical": false,
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Modifiers/WidgetKitModifiers.swift"
       },
       "adaptation": "Complete original universal layout implementation in the shared original widget type namespace."
@@ -3023,9 +3023,9 @@
       "byteIdentical": false,
       "upstreamPublication": {
         "package": "expo-modules-core",
-        "version": "58.1.0",
-        "tarball": "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-58.1.0.tgz",
-        "sha256": "bb1bcaac52c1409fa58bb7268bae8eed9b472acb91c1653687013890e1a27524",
+        "version": "58.2.0",
+        "tarball": "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-58.2.0.tgz",
+        "sha256": "c36f39aaaac93b8dbb0b3cb687e7cf73f566e1538d4785c652049f5d51f8213d",
         "path": "ios/Core/Coding/JavaScriptCodable+Color.swift"
       },
       "adaptation": "Original Any/JSON color conversion with existing checked numeric conversions; foreground original Core owns the JSI decode overloads."
@@ -3039,9 +3039,9 @@
       "byteIdentical": false,
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Modifiers/SelectedSegmentTintColorModifier.swift"
       },
       "adaptation": "Complete original dependency of the current widget renderer; shared original widget type namespace."
@@ -3055,9 +3055,9 @@
       "byteIdentical": false,
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Modifiers/ArrangementModifiers.swift"
       },
       "adaptation": "Complete original dependency of the current widget renderer; shared original widget type namespace."
@@ -3071,9 +3071,9 @@
       "byteIdentical": false,
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Modifiers/SearchToolbarBehaviorModifier.swift"
       },
       "adaptation": "Complete original dependency of the current widget renderer; shared original widget type namespace."
@@ -3087,9 +3087,9 @@
       "byteIdentical": false,
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Modifiers/PreferredColorSchemeModifier.swift"
       },
       "adaptation": "Complete original dependency of the current widget renderer; shared original widget type namespace."
@@ -3103,9 +3103,9 @@
       "byteIdentical": false,
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Modifiers/ScrollEdgeEffectStyleModifier.swift"
       },
       "adaptation": "Complete original dependency of the current widget renderer; shared original widget type namespace."
@@ -3119,9 +3119,9 @@
       "byteIdentical": false,
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Modifiers/PresentationModifiers.swift"
       },
       "adaptation": "Complete original dependency of the current widget renderer; shared original widget type namespace."
@@ -3135,9 +3135,9 @@
       "byteIdentical": false,
       "upstreamPublication": {
         "package": "@expo/ui",
-        "version": "58.0.29",
-        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
         "path": "ios/Modifiers/SectionIndexLabelModifier.swift"
       },
       "adaptation": "Complete original dependency of the current widget renderer; shared original widget type namespace."
@@ -3161,6 +3161,22 @@
       "localSHA256": "f632bd5007e5036432815eb72641027934284ff52bf457817336076eca63cb8d",
       "byteIdentical": false,
       "adaptation": "Original native ControlWidget Button/Toggle, AppEntity, configuration, and AppIntentControlValueProvider source. Public Swift module access; catalog and function/state execution bind to current Hanlin product/installation/generation/artifact and original native ScriptWidget transaction. Control execution remains in the WidgetKit extension."
+    },
+    {
+      "repository": "expo/expo",
+      "upstream": "packages/expo-ui/ios/Modifiers/RenderingModeModifier.swift",
+      "upstreamBlob": "bd8b0033bdf161501021b1aa9f8b1ff51402d52f",
+      "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/RenderingModeModifier.swift",
+      "localSHA256": "6b4b3ec4bd7d4a1ec30f25d7fd5353af4a668fce7a104a1f9fcf87ec5a142ba8",
+      "byteIdentical": false,
+      "upstreamPublication": {
+        "package": "@expo/ui",
+        "version": "58.0.30",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+        "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
+        "path": "ios/Modifiers/RenderingModeModifier.swift"
+      },
+      "adaptation": "Complete original dependency of the current widget renderer; shared original widget type namespace."
     }
   ],
   "schemaVersion": 2

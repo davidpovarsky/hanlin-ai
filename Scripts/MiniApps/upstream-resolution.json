@@ -10,7 +10,7 @@
           "range": "^19.1.1"
         },
         {
-          "source": "expo@58.0.26 devDependencies",
+          "source": "expo@58.1.0 devDependencies",
           "range": "~19.3.0"
         }
       ]
@@ -32,21 +32,21 @@
   },
   "versions": {
     "expo": {
-      "expo": "58.0.26",
-      "@expo/ui": "58.0.29",
+      "expo": "58.1.0",
+      "@expo/ui": "58.0.30",
       "expo-brownfield": "58.0.20",
       "react": "19.3.0",
       "react-native": "0.88.1",
       "react-native-worklets": "0.13.0",
-      "expo-modules-core": "58.1.0",
+      "expo-modules-core": "58.2.0",
       "expo-asset": "58.0.21",
-      "expo-modules-jsi": "58.0.23",
-      "expo-widgets": "58.0.29",
+      "expo-modules-jsi": "58.0.24",
+      "expo-widgets": "58.0.30",
       "@nativescript/react-native": "9.1.2",
       "@types/react": "19.3.3",
       "@react-native/codegen": "0.88.1",
       "@react-native/metro-config": "0.88.1",
-      "babel-preset-expo": "58.0.26"
+      "babel-preset-expo": "58.0.27"
     },
     "nativescript": {
       "@nativescript/core": "9.1.4",
@@ -63,17 +63,17 @@
   "originals": {
     "expo": {
       "package": "expo",
-      "version": "58.0.26",
-      "tarball": "https://registry.npmjs.org/expo/-/expo-58.0.26.tgz",
-      "integrity": "sha512-6i4kqt5lbcQdxmtnkkJ3JR5sn+A3L+xO45duLhh2rndvrek/chX/GTysTYozl4oL3+txKD53pDlJd75XRYf9Ow==",
-      "sha256": "2540ecaad20106f9cd1f7980f9fc40899a3e4368399a6a27fee0d4eb45cff414"
+      "version": "58.1.0",
+      "tarball": "https://registry.npmjs.org/expo/-/expo-58.1.0.tgz",
+      "integrity": "sha512-Q0KDTf0zAP7yaVnYgQXMBnLh3soQf2Di2pCZABOz8xeDzS+fPv5SE25NLsJTDE59ZVz6+p3ejxYgVduQcsllRQ==",
+      "sha256": "0cf19e0a80610e65f0895a17e848ea3ae315d10795d401c349fddd44e758a7eb"
     },
     "@expo/ui": {
       "package": "@expo/ui",
-      "version": "58.0.29",
-      "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-      "integrity": "sha512-+zeaoDU1zS1rKe1afVsH8sh7+b+HNZyq93ZL0BRJ03RtrxZyYxKljqOcl78Q9NkX1oOO8CdQxzhFa8Dl6o52ug==",
-      "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c"
+      "version": "58.0.30",
+      "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+      "integrity": "sha512-b31dbJSKyMTylptXbb3Dx+XG57ehvYa+JVIkkoBwY6zLIAePNGlgQKzlFUyWF5jsgzqNZUXKJTjw0roY4MicZA==",
+      "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94"
     },
     "expo-asset": {
       "package": "expo-asset",
@@ -91,24 +91,24 @@
     },
     "expo-modules-core": {
       "package": "expo-modules-core",
-      "version": "58.1.0",
-      "tarball": "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-58.1.0.tgz",
-      "integrity": "sha512-eXHOPyxHkDyTxUWnKEatC+Hx4tLoPWCPd5pCynAU4WkaBvAG/l5t/wu5jXiE5eh2CRr2NU4iAQePX2zUfNEVhA==",
-      "sha256": "bb1bcaac52c1409fa58bb7268bae8eed9b472acb91c1653687013890e1a27524"
+      "version": "58.2.0",
+      "tarball": "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-58.2.0.tgz",
+      "integrity": "sha512-Xt8rjT+so/SzQCB0q7MFpz/SlazIfy4MLid/tKIjp6nKQz/kpT0zDVp8LofSs3penSYOzot9ZB023LMWL58dUg==",
+      "sha256": "c36f39aaaac93b8dbb0b3cb687e7cf73f566e1538d4785c652049f5d51f8213d"
     },
     "expo-modules-jsi": {
       "package": "expo-modules-jsi",
-      "version": "58.0.23",
-      "tarball": "https://registry.npmjs.org/expo-modules-jsi/-/expo-modules-jsi-58.0.23.tgz",
-      "integrity": "sha512-ex3CnT8KLubsPjUG0RpEL5VgmpnWxf7Ouc+WXEr8jEbIwqcULEWtA2tfhGZwjg6jS3zeNwjygF1w8QSstP7JfQ==",
-      "sha256": "b432f8a25637f556f89ac780e8981b941cd8598d5ae7593fbcbf40e15df5df93"
+      "version": "58.0.24",
+      "tarball": "https://registry.npmjs.org/expo-modules-jsi/-/expo-modules-jsi-58.0.24.tgz",
+      "integrity": "sha512-xoJLTtRaCSuxAhJXY0XJn31puGK0ugzke1At92FsjsQ14N62x55JZeY/4qEgzimLP74Vk6OKyCwgHarQs/WCmw==",
+      "sha256": "7f5b9873dbca9cf10b4f0a4aac51eec1173ba0015e66ed1601f225239da2519d"
     },
     "expo-widgets": {
       "package": "expo-widgets",
-      "version": "58.0.29",
-      "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-      "integrity": "sha512-iDq5M3+T5OXcldvHmUbedptclmMLeckMwSHa7KDdUeqy0l/EStNphANZB1QiCMwcDaxwDKQ0/47BkrQXv6EtOQ==",
-      "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670"
+      "version": "58.0.30",
+      "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+      "integrity": "sha512-a2JMusFtp4+R8KEmm7KNXVpDwMyxS9ElVA/7ge6M/VzENZF0JPYfwzada9rYAkjxhI93BozHwiANt5uT+MYjOw==",
+      "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2"
     },
     "react-native": {
       "package": "react-native",
@@ -146,7 +146,20 @@
   },
   "sourceUpdates": {
     "scriptWidgetCommit": "4da256d58247bbafb9a5cd443a285250b97b3c4b",
-    "changedNativeSources": [],
+    "changedNativeSources": [
+      {
+        "path": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/ViewModifierRegistry.swift",
+        "originalBeforeSHA256": "4cb49138695127b562e79727299068b0652172ba50d0752e35e281a6a4cd914b",
+        "originalAfterSHA256": "e0b5855ae893c4629bcffe9154927f58e69b34b9b91687971f6d676722392a68",
+        "adapted": true
+      },
+      {
+        "path": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/RenderingModeModifier.swift",
+        "originalAfterSHA256": "201600e59ef77b44b3d6f471ee68f5a6d4bdbbe5cb02478a0235806a59565932",
+        "added": true,
+        "requiredType": "RenderingModeModifier"
+      }
+    ],
     "adapterContracts": [
       {
         "local": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift",
@@ -158,7 +171,7 @@
         },
         "originalSHA256": "7040cab9a460f5845ee96114c396b7e27e46caf8c9e62614a717e25adb1af574",
         "changed": true,
-        "hostSHA256": "d3735e19e7e2603d17449acd0c57c22bc676ee022bfe3152a20d2d846dd58afd",
+        "hostSHA256": "fa62de1025c7ae06406794e9c397e3f64ed0e32a8fb0fc3584e43fa2e28bd066",
         "implementation": "Hanlin host adapter; original renderer source and original app service coverage are separate"
       },
       {
@@ -179,9 +192,9 @@
         "upstream": "packages/expo-widgets/ios/Widgets/Buttons.swift",
         "identity": {
           "package": "expo-widgets",
-          "version": "58.0.29",
-          "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-          "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+          "version": "58.0.30",
+          "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+          "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
           "path": "ios/Widgets/Buttons.swift"
         },
         "originalSHA256": "ed7d8d4b0091aacab0a60fa88466497b4fa3f12b0c741551b96d084d18e81903",
@@ -194,9 +207,9 @@
         "upstream": "packages/expo-widgets/ios/WidgetsContext.swift",
         "identity": {
           "package": "expo-widgets",
-          "version": "58.0.29",
-          "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.29.tgz",
-          "sha256": "438dec5be1800a7b2bc9dd6987f15a9226831a54aec94e1243a1075a8e1fa670",
+          "version": "58.0.30",
+          "tarball": "https://registry.npmjs.org/expo-widgets/-/expo-widgets-58.0.30.tgz",
+          "sha256": "25effdc7765f7fa46e5e11e7803aab1e99fd743234e97cb5f140f335ab1e59b2",
           "path": "ios/WidgetsContext.swift"
         },
         "originalSHA256": "aa9f9ad9f00e2afac731ea6ce5dc8d8e68230d20de6b2627a0d55b0aa8596722",
@@ -205,7 +218,7 @@
         "implementation": "Hanlin host adapter; original renderer source and original app service coverage are separate"
       }
     ],
-    "manifestSHA256": "4d06d0dfaca462fc21257c8053d3250b7cc0e78c4d77b4eb2e98f64bf7cbe83b",
+    "manifestSHA256": "8bbe9acb8ec610861401134e8bddd9013c19d9ab9ced81eae4d97e3c99459b29",
     "catalogSHA256": "425e5bae37920bd571a469c273c923471cb9f1cad5a945e7f28bf972fff8b0d1"
   },
   "nativeArtifacts": [
@@ -213,13 +226,13 @@
       "name": "ExpoUI",
       "source": "npm-source",
       "package": "@expo/ui",
-      "version": "58.0.29",
-      "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
-      "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+      "version": "58.0.30",
+      "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.30.tgz",
+      "sha256": "3c9f177e31c6552515fb170192b9621f88e81f86ef5d1e5861500b0c7b13be94",
       "target": "Packages/HanlinExpoRuntime/Artifacts/ExpoUI.xcframework",
       "sourceBuild": {
         "producer": "original-cocoapods",
-        "packageIntegrity": "sha512-+zeaoDU1zS1rKe1afVsH8sh7+b+HNZyq93ZL0BRJ03RtrxZyYxKljqOcl78Q9NkX1oOO8CdQxzhFa8Dl6o52ug=="
+        "packageIntegrity": "sha512-b31dbJSKyMTylptXbb3Dx+XG57ehvYa+JVIkkoBwY6zLIAePNGlgQKzlFUyWF5jsgzqNZUXKJTjw0roY4MicZA=="
       }
     },
     {
@@ -239,22 +252,22 @@
       "name": "ExpoModulesJSI",
       "source": "npm-source",
       "package": "expo-modules-jsi",
-      "version": "58.0.23",
-      "tarball": "https://registry.npmjs.org/expo-modules-jsi/-/expo-modules-jsi-58.0.23.tgz",
-      "sha256": "b432f8a25637f556f89ac780e8981b941cd8598d5ae7593fbcbf40e15df5df93",
+      "version": "58.0.24",
+      "tarball": "https://registry.npmjs.org/expo-modules-jsi/-/expo-modules-jsi-58.0.24.tgz",
+      "sha256": "7f5b9873dbca9cf10b4f0a4aac51eec1173ba0015e66ed1601f225239da2519d",
       "target": "Packages/HanlinExpoRuntime/Artifacts/ExpoModulesJSI.xcframework",
       "sourceBuild": {
         "producer": "original-swiftpm",
-        "packageIntegrity": "sha512-ex3CnT8KLubsPjUG0RpEL5VgmpnWxf7Ouc+WXEr8jEbIwqcULEWtA2tfhGZwjg6jS3zeNwjygF1w8QSstP7JfQ=="
+        "packageIntegrity": "sha512-xoJLTtRaCSuxAhJXY0XJn31puGK0ugzke1At92FsjsQ14N62x55JZeY/4qEgzimLP74Vk6OKyCwgHarQs/WCmw=="
       }
     },
     {
       "name": "ExpoModulesCore",
       "source": "npm",
       "package": "expo-modules-core",
-      "version": "58.1.0",
-      "tarball": "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-58.1.0.tgz",
-      "sha256": "bb1bcaac52c1409fa58bb7268bae8eed9b472acb91c1653687013890e1a27524",
+      "version": "58.2.0",
+      "tarball": "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-58.2.0.tgz",
+      "sha256": "c36f39aaaac93b8dbb0b3cb687e7cf73f566e1538d4785c652049f5d51f8213d",
       "subpath": "package/prebuilds/output/release/xcframeworks/ExpoModulesCore.tar.gz",
       "target": "Packages/HanlinExpoRuntime/Artifacts/ExpoModulesCore.xcframework"
     },
@@ -262,9 +275,9 @@
       "name": "ExpoModulesWorklets",
       "source": "npm",
       "package": "expo-modules-core",
-      "version": "58.1.0",
-      "tarball": "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-58.1.0.tgz",
-      "sha256": "bb1bcaac52c1409fa58bb7268bae8eed9b472acb91c1653687013890e1a27524",
+      "version": "58.2.0",
+      "tarball": "https://registry.npmjs.org/expo-modules-core/-/expo-modules-core-58.2.0.tgz",
+      "sha256": "c36f39aaaac93b8dbb0b3cb687e7cf73f566e1538d4785c652049f5d51f8213d",
       "subpath": "package/prebuilds/output/release/xcframeworks/ExpoModulesWorklets.tar.gz",
       "target": "Packages/HanlinExpoRuntime/Artifacts/ExpoModulesWorklets.xcframework"
     },
