@@ -1,0 +1,43 @@
+Building for debugging...
+[Computing dependencies]
+[12 / 35] HanlinPlatformContracts
+[13 / 35] HanlinPlatformContracts
+[19 / 36]
+[21 / 39] HanlinPlatformContractsTests-product
+[22 / 40] HanlinPlatformContractsTests-product
+[25 / 40] HanlinPlatformContractsTests-product
+[29 / 40] HanlinPlatformContracts
+[29 / 40] HanlinPlatformContractsTests-product
+[33 / 41] HanlinPlatformContractsTests-product
+[37 / 44] HanlinPlatformContractsTests-test-runner
+[41 / 44] HanlinPlatformContractsTests-test-runner
+[45 / 45] HanlinPlatformContractsTests-test-runner
+Build complete! (19.78 secs)
+Test Suite 'All tests' started at 2026-11-26 11:48:34.690
+Test Suite 'Debug-linux-aarch64.xctest' started at 2026-11-26 11:48:34.705
+Test Suite 'Debug-linux-aarch64.xctest' passed at 2026-11-26 11:48:34.705
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'All tests' passed at 2026-11-26 11:48:34.705
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+◇ Test run started.
+↳ Testing Library Version: 6.4.3 (ba0861fb203553c)
+↳ Target Platform: aarch64-unknown-linux-gnu
+◇ Test shortcutJSONRejectsMalformedOrLossyInput(_:) started.
+◇ Test shortcutDictionaryAndListRetainStructureAndExactNumbers() started.
+◇ Test shortcutTextRemainsTextAndBinaryOutputRequiresAFile() started.
+◇ Test shortcutJSONAcceptsScalarValuesWithoutDoubleEncoding(_:) started.
+◇ Test case passing 1 argument input → "" to shortcutJSONRejectsMalformedOrLossyInput(_:) started.
+◇ Test case passing 1 argument input → "[" to shortcutJSONRejectsMalformedOrLossyInput(_:) started.
+◇ Test case passing 1 argument input → "{"duplicate":1,"duplicate":2}" to shortcutJSONRejectsMalformedOrLossyInput(_:) started.
+◇ Test case passing 1 argument input → "9223372036854775808" to shortcutJSONRejectsMalformedOrLossyInput(_:) started.
+◇ Test case passing 1 argument input → "NaN" to shortcutJSONRejectsMalformedOrLossyInput(_:) started.
+◇ Test case passing 1 argument input → "null" to shortcutJSONAcceptsScalarValuesWithoutDoubleEncoding(_:) started.
+◇ Test case passing 1 argument input → "true" to shortcutJSONAcceptsScalarValuesWithoutDoubleEncoding(_:) started.
+◇ Test case passing 1 argument input → "42" to shortcutJSONAcceptsScalarValuesWithoutDoubleEncoding(_:) started.
+◇ Test case passing 1 argument input → "1.5" to shortcutJSONAcceptsScalarValuesWithoutDoubleEncoding(_:) started.
+◇ Test case passing 1 argument input → ""hello"" to shortcutJSONAcceptsScalarValuesWithoutDoubleEncoding(_:) started.
+✔ Test shortcutJSONRejectsMalformedOrLossyInput(_:) with 5 test cases passed after 0.018 seconds.
+✔ Test shortcutTextRemainsTextAndBinaryOutputRequiresAFile() passed after 0.019 seconds.
+✔ Test shortcutJSONAcceptsScalarValuesWithoutDoubleEncoding(_:) with 5 test cases passed after 0.019 seconds.
+✔ Test shortcutDictionaryAndListRetainStructureAndExactNumbers() passed after 0.019 seconds.
+✔ Test run with 4 tests in 0 suites passed after 0.020 seconds.

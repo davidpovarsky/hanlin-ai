@@ -1,5 +1,4 @@
 import AppIntents
-import CoreFoundation
 import Foundation
 import HanlinPlatformContracts
 
@@ -73,34 +72,9 @@ public struct HanlinInvokeScriptActionIntent: AppIntent {
     }
 
     static func decodeParameters(_ json: String) throws -> HanlinValue {
-        guard let data = json.data(using: .utf8) else { throw HanlinScriptAppIntentBridgeError.invalidParameters }
-        return try value(JSONSerialization.jsonObject(with: data))
+        try HanlinShortcutValueCodec.decode(json, as: .json)
     }
 
-    private static func value(_ object: Any) throws -> HanlinValue {
-        switch object {
-        case is NSNull:
-            return .null
-        case let string as String:
-            return .string(string)
-        case let number as NSNumber:
-            if CFGetTypeID(number) == CFBooleanGetTypeID() { return .bool(number.boolValue) }
-            let value = number.doubleValue
-            if value.rounded(.towardZero) == value,
-               value >= Double(Int64.min), value <= Double(Int64.max) {
-                return .integer(number.int64Value)
-            }
-            return try .finiteNumber(value)
-        case let array as [Any]:
-            return .array(try array.map { try value($0) })
-        case let dictionary as [String: Any]:
-            return .object(try .init(uniqueMembers: dictionary.map {
-                (key: $0.key, value: try value($0.value))
-            }))
-        default:
-            throw HanlinScriptAppIntentBridgeError.invalidParameters
-        }
-    }
 }
 
 private enum HanlinScriptAppIntentBridgeError: Error {

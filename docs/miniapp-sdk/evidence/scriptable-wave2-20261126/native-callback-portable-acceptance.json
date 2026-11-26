@@ -1,0 +1,22 @@
+{
+  "exit": 0,
+  "scope": "exact production callback completion helper and actual tests; Swift6.4.3 Linux only",
+  "inputs": [
+    {
+      "source": "Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinMiniAppActionCompletion.swift",
+      "sha256": "523105b13b0b56a8d87cf190945c6c770eb5f11689e35abfa1822dbe331d87cd"
+    },
+    {
+      "source": "Packages/HanlinPlatform/Tests/HanlinMiniAppCoreTests/HanlinMiniAppActionCompletionTests.swift",
+      "sha256": "9d38b90083c8d352f166a2f9a910e7047ffa8f9d55097df9557eaa83d8c3c931"
+    },
+    {
+      "source": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinShortcutProgress.swift",
+      "sha256": "da618582dbed4d29b36fe512fe566c1dfc3382156ba4e2f5e88076dc77f90d00"
+    }
+  ],
+  "status": "EXECUTED_PASS",
+  "tests": 3,
+  "failures": 0,
+  "logSHA256": "97d9a22f1d0840e7a0438ee64d165902a367f70caf53f64506704047ef80b0ba"
+}
