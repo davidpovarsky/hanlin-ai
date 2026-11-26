@@ -423,6 +423,7 @@ public struct HanlinScriptExtensionSnapshot: Codable, Hashable, Sendable {
     public let widgetStates: [HanlinWidgetInstanceState]
     public let widgetEntityMigrations: [String: String]
     public let inactiveWidgetInstallations: [String]
+    public let widgetLastSuccessfulRenders: [HanlinWidgetLastSuccessfulRender]
 
     public init(
         schemaVersion: UInt32 = 1,
@@ -434,7 +435,8 @@ public struct HanlinScriptExtensionSnapshot: Codable, Hashable, Sendable {
         widgetInstances: [HanlinWidgetInstance] = [],
         widgetStates: [HanlinWidgetInstanceState] = [],
         widgetEntityMigrations: [String: String] = [:],
-        inactiveWidgetInstallations: [String] = []
+        inactiveWidgetInstallations: [String] = [],
+        widgetLastSuccessfulRenders: [HanlinWidgetLastSuccessfulRender] = []
     ) {
         self.schemaVersion = schemaVersion
         self.generatedAt = generatedAt
@@ -446,13 +448,14 @@ public struct HanlinScriptExtensionSnapshot: Codable, Hashable, Sendable {
         self.widgetStates = widgetStates
         self.widgetEntityMigrations = widgetEntityMigrations
         self.inactiveWidgetInstallations = inactiveWidgetInstallations
+        self.widgetLastSuccessfulRenders = widgetLastSuccessfulRenders
     }
 
     private enum CodingKeys: String, CodingKey {
         case schemaVersion, generatedAt, widgets, intentEntities, liveActivities, translationApps
         case widgetInstances, widgetStates
         case widgetEntityMigrations
-        case inactiveWidgetInstallations
+        case inactiveWidgetInstallations, widgetLastSuccessfulRenders
     }
 
     public init(from decoder: Decoder) throws {
@@ -474,6 +477,7 @@ public struct HanlinScriptExtensionSnapshot: Codable, Hashable, Sendable {
         widgetStates = try container.decodeIfPresent([HanlinWidgetInstanceState].self, forKey: .widgetStates) ?? []
         widgetEntityMigrations = try container.decodeIfPresent([String: String].self, forKey: .widgetEntityMigrations) ?? [:]
         inactiveWidgetInstallations = try container.decodeIfPresent([String].self, forKey: .inactiveWidgetInstallations) ?? []
+        widgetLastSuccessfulRenders = try container.decodeIfPresent([HanlinWidgetLastSuccessfulRender].self, forKey: .widgetLastSuccessfulRenders) ?? []
     }
 }
 
