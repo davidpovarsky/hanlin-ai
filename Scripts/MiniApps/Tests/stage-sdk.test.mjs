@@ -101,7 +101,7 @@ test('SDK documentation and complete example staging retain exact source without
     const prefix='Scripts/MiniApps/Examples';
     const initialInputs=await collectSDKSourceInputs(examples,prefix);
     const catalog=JSON.parse(await fs.readFile(path.join(examples,'index.json'),'utf8'));
-    assert.equal(catalog.projects.length,4);
+    assert.equal(catalog.projects.length,5);
     const first=catalog.projects[0].directory;
     const excludedOutputs=['.hanlin-build/run/package/bundle.js','.hanlin-build/run/MiniApp.hanlinExpo',
       '.hanlin-authoring/validation.json','.metro-cache/data','node_modules/installed/index.js',
@@ -130,7 +130,8 @@ test('SDK documentation and complete example staging retain exact source without
       input.sha256===createHash('sha256').update(bytes).digest('hex')));
     const projects=await copySDKExamples(examples,sdkExamples,['expo','nativescript','scriptwidget']);
     assert.deepEqual(projects.map(project=>[project.engine,project.level]),[
-      ['expo','hello-world'],['expo','complete-app'],['nativescript','hello-world'],['nativescript','complete-app']]);
+      ['expo','hello-world'],['expo','complete-app'],['nativescript','hello-world'],['nativescript','complete-app'],
+      ['nativescript','complete-app']]);
     const emitted=JSON.parse(await fs.readFile(path.join(sdkExamples,'index.json'),'utf8'));
     assert.deepEqual(emitted,{schemaVersion:1,projects});
     for(const project of projects) {

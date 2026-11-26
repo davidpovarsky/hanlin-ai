@@ -28,6 +28,13 @@
       "level": "complete-app",
       "title": "Table Share",
       "directory": "sdk-only-table-share"
+    },
+    {
+      "id": "nativescript-image-drawing",
+      "engine": "nativescript",
+      "level": "complete-app",
+      "title": "Native Image Drawing",
+      "directory": "nativescript-image-drawing"
     }
   ]
 }
