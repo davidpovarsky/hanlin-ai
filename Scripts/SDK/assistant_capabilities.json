@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "module": "AI_Hanlin",
+  "sourceDirectories": [
+    "Downstream/RuntimeCore",
+    "Downstream/MCP",
+    "Downstream/AgentSkills"
+  ],
+  "excludeDirectories": [
+    "Downstream/RuntimeCore/Tools"
+  ],
+  "excludeSources": [
+    "Downstream/RuntimeCore/Core/MiniAppAuthoringService.swift",
+    "Downstream/RuntimeCore/Shell/ShellRuntimeAcceptance.swift",
+    "Downstream/RuntimeCore/Shell/ShellRuntimeSmokeSuite.swift",
+    "Downstream/AgentSkills/HanlinAISDKToolAdapter.swift",
+    "Downstream/AgentSkills/AssistantCapabilitySession+Selections.swift",
+    "Downstream/MCP/Runtime/MCPRuntimeAcceptance.swift",
+    "Downstream/MCP/Runtime/MCPServerPathResolverAcceptance.swift",
+    "Downstream/MCP/ToolIntegration/AssistantToolBridge.swift"
+  ],
+  "additionalSources": [
+    "Downstream/SDK/HanlinApplicationResources.swift",
+    "Downstream/SDK/HanlinApplicationMCP.swift",
+    "Downstream/CanonicalTools/CanonicalToolSearchRecord.swift",
+    "Downstream/ChatInput/HanlinComposerCapabilityError.swift",
+    "NativeAgentExtensions/ToolRuntime/NativeToolResult.swift",
+    "NativeAgentExtensions/UI/NativeUIBlock.swift",
+    "Downstream/AgentActivity/Evidence/AgentEvidenceItem.swift",
+    "Downstream/AgentActivity/ToolPresentation/ToolPresentationProfile.swift"
+  ],
+  "products": [
+    "HanlinSkillFormat",
+    "HanlinHostContracts",
+    "HanlinAgentCore",
+    "HanlinPlatformContracts",
+    "HanlinMiniAppCore",
+    "HanlinScriptCompiler",
+    "HanlinScriptContracts",
+    "IOSSystemLite",
+    "MCP",
+    "SWCompression",
+    "Logging",
+    "ZIPFoundation",
+    "SwiftTreeSitter",
+    "TreeSitter",
+    "TreeSitterBash",
+    "HanlinPresentationKit"
+  ],
+  "targets": [
+    "HanlinNodeBridge",
+    "HanlinPythonBridge",
+    "HanlinLocalization",
+    "HanlinAgentActivityCore",
+    "HanlinExtensionContracts"
+  ]
+}

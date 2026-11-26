@@ -13,6 +13,7 @@ sys.path.insert(0, str(ROOT / "Scripts/CI/IntegrationValidation"))
 from project_graph import parse_project
 
 APPLICATION_PRODUCTS = ROOT / "Scripts/SDK/application_products.json"
+ASSISTANT_CAPABILITIES = ROOT / "Scripts/SDK/assistant_capabilities.json"
 
 def quoted(value):
     # Absolute package-directory arguments are evaluated at consumer location.
@@ -109,7 +110,7 @@ def target(value, folder, local_products):
         if values: args.append(key+": "+array(values))
     return "."+functions[kind]+"(\n            "+",\n            ".join(args)+"\n        )"
 
-def application_dependencies(local_products, dependencies):
+def application_dependencies(local_products, dependencies, product_names=None):
     """The SDK implementation owns its dependencies, independently of thin hosts."""
     definition = json.loads(APPLICATION_PRODUCTS.read_text())
     if definition.get("schemaVersion") != 1 or definition.get("module") != "AI_Hanlin":
@@ -122,6 +123,7 @@ def application_dependencies(local_products, dependencies):
         if not isinstance(entry, dict) or set(entry) != {"product", "package"}:
             raise ValueError("Malformed canonical application product")
         name, owner = entry["product"], entry["package"]
+        if product_names is not None and name not in product_names: continue
         if not isinstance(name, str) or not name or not isinstance(owner, str) or not owner:
             raise ValueError("Canonical application product requires a name and package")
         identity = (name, owner.lower())
@@ -160,6 +162,10 @@ def application_external_packages():
 
 
 def generate(selected_products=None):
+    capability_profile = selected_products is not None and "HanlinAssistantCapabilities" in selected_products and "HanlinApplication" not in selected_products
+    profile = json.loads(ASSISTANT_CAPABILITIES.read_text())
+    if profile.get("schemaVersion") != 1 or profile.get("module") != "AI_Hanlin":
+        raise ValueError("Unsupported assistant capabilities source profile")
     manifests=get_manifests()
     products={};local_products={};targets=[];deps={};product_targets={};target_edges={};target_remote={}
     for folder,manifest in manifests:
@@ -211,13 +217,27 @@ def generate(selected_products=None):
             target_edges[t["name"]]=edges
             target_remote[t["name"]]=remote
             targets.append(target(t,folder,local_products))
-    app_deps=application_dependencies(local_products, deps)
+    app_deps=application_dependencies(local_products, deps, set(profile["products"]) if capability_profile else None)
     app_deps.extend([quoted("HanlinNodeBridge"),quoted("HanlinPythonBridge"),quoted("HanlinA2UI"),quoted("HanlinLocalization"),
                      quoted("HanlinAgentActivityCore"),quoted("HanlinAgentActivityUI"),quoted("HanlinExtensionContracts"),quoted("HanlinWidgetUI"),quoted("HanlinMiniAppsUI"),quoted("HanlinMiniAppsBridge"),quoted("HanlinMiniAppsPicker")])
+    if capability_profile:
+        app_deps = application_dependencies(local_products, deps, set(profile["products"]))
+        app_deps.extend(quoted(name) for name in profile["targets"])
     # Every original application Swift file remains a single authoritative
     # implementation. The executable only owns its tiny @main declaration.
     app_sources=sorted(p.relative_to(ROOT/"AI_HLY").as_posix()
                        for p in (ROOT/"AI_HLY").rglob("*.swift") if p.name!="AI_HLY.swift")
+    if capability_profile:
+        selected = {path for path in app_sources
+                    if any(path.startswith(directory + "/") for directory in profile["sourceDirectories"])}
+        selected.difference_update(profile["excludeSources"])
+        selected = {path for path in selected if not any(path.startswith(directory + "/") for directory in profile["excludeDirectories"])}
+        selected.update(profile["additionalSources"])
+        missing = [path for path in selected if not (ROOT/"AI_HLY"/path).is_file()]
+        if missing: raise ValueError("Missing canonical capability sources: " + ", ".join(sorted(missing)))
+        app_sources = sorted(selected)
+    app_defines = ['.define("HANLIN_A2UI_POC")', '.define("HANLIN_SKILL_ANALYSIS_POC")']
+    if capability_profile: app_defines.append('.define("HANLIN_ASSISTANT_CAPABILITIES_SDK")')
     # Shared resources use the same original files; no runtime or UI replicas.
     app_resources=[
         '.copy("RuntimeHostResources.zip")'
@@ -240,11 +260,13 @@ def generate(selected_products=None):
         '            path: "AI_HLY", exclude: ["AI_HLY.swift", "AI_HLY.entitlements", "Assets.xcassets", "Base.lproj", "mul.lproj"],\n'
         '            sources: '+array(quoted(x) for x in app_sources)+',\n'
         '            resources: '+array(app_resources)+',\n'
-        '            swiftSettings: [.define("HANLIN_A2UI_POC"), .define("HANLIN_SKILL_ANALYSIS_POC"), .interoperabilityMode(.Cxx), .enableUpcomingFeature("NonisolatedNonsendingByDefault")],\n'
+        '            swiftSettings: ['+", ".join(app_defines)+', .interoperabilityMode(.Cxx), .enableUpcomingFeature("NonisolatedNonsendingByDefault")],\n'
         '            linkerSettings: [.linkedLibrary("icucore"), .linkedLibrary("z"), .linkedLibrary("c++")])'
     ])
     products["HanlinApplication"]='.library(name: "HanlinApplication", targets: ["AI_Hanlin"])'
     product_targets["HanlinApplication"]=["AI_Hanlin"]
+    products["HanlinAssistantCapabilities"]='.library(name: "HanlinAssistantCapabilities", targets: ["AI_Hanlin"])'
+    product_targets["HanlinAssistantCapabilities"]=["AI_Hanlin"]
     target_edges["HanlinNodeBridge"]=["NodeMobile"]
     target_edges["HanlinPythonBridge"]=["Python"]
     target_edges["NodeMobile"]=[];target_edges["Python"]=[]
@@ -279,11 +301,14 @@ def generate(selected_products=None):
     receipt={"schemaVersion":1,"sourceOwnership":"one original source path per target",
              "applicationModule":"AI_Hanlin" if "AI_Hanlin" in chosen_targets else None,
              "applicationSourceCount":len(app_sources) if "AI_Hanlin" in chosen_targets else 0,
+             "applicationSourceProfile":"assistantCapabilities" if capability_profile else "full",
+             "applicationSources":app_sources if capability_profile else None,
              "selectedProducts":list(selected_products) if selected_products else None,
              "products":list(products),"targets":len(targets),
              "localPackageEdgesRemaining":0,
              "inputs":{**{folder+"/Package.swift":hashlib.sha256((ROOT/folder/"Package.swift").read_bytes()).hexdigest() for folder,_ in manifests},
-                       APPLICATION_PRODUCTS.relative_to(ROOT).as_posix(): hashlib.sha256(APPLICATION_PRODUCTS.read_bytes()).hexdigest()}}
+                       APPLICATION_PRODUCTS.relative_to(ROOT).as_posix(): hashlib.sha256(APPLICATION_PRODUCTS.read_bytes()).hexdigest(),
+                       ASSISTANT_CAPABILITIES.relative_to(ROOT).as_posix(): hashlib.sha256(ASSISTANT_CAPABILITIES.read_bytes()).hexdigest()}}
     return text,receipt
 
 if __name__=="__main__":

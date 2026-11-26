@@ -8,9 +8,19 @@ public final class HanlinApplicationMCP {
     private let provider: MCPRuntimeProvider
     private let validateConversation: @MainActor (UUID) throws -> Void
 
+    #if !HANLIN_ASSISTANT_CAPABILITIES_SDK
     init(context: HanlinApplicationContext) {
         provider = .shared
         validateConversation = { [context] id in _ = try context.record(id) }
+    }
+
+    #endif
+
+    /// Bind the original MCP service to an embedding host's live conversation
+    /// authority. This callback is revalidated around every asynchronous access.
+    public init(validateConversation: @escaping @MainActor (UUID) throws -> Void) {
+        self.provider = .shared
+        self.validateConversation = validateConversation
     }
 
     // Internal boundary for native tests using the real isolated provider/store.
@@ -159,8 +169,11 @@ public final class HanlinApplicationMCP {
     }
 }
 
+#if !HANLIN_ASSISTANT_CAPABILITIES_SDK
 extension HanlinApplicationContext {
     /// The original full-runtime MCP services. All returned facades share the
     /// same process-owned provider; no second registry, runtime or engine exists.
     public var mcp: HanlinApplicationMCP { HanlinApplicationMCP(context: self) }
 }
+
+#endif

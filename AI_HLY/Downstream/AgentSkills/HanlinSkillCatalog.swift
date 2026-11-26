@@ -88,6 +88,13 @@ public final class HanlinSkillCatalog {
     var invocationPolicyError: String?
     public private(set) var currentDomainConfiguration: SkillDomainConfiguration = SkillDomainConfiguration()
 
+    private var installedSkillProvider: @MainActor () -> [HanlinInstalledSkillSource] = HanlinProductionSkillSources.current
+
+    public func useInstalledSkillProvider(_ provider: @escaping @MainActor () -> [HanlinInstalledSkillSource]) {
+        installedSkillProvider = provider
+        refreshFromStore()
+    }
+
     public init(loadProductionSkills: Bool = false) {
         if loadProductionSkills {
             synchronizeProductionSkills(configuration: currentDomainConfiguration)
@@ -166,7 +173,7 @@ public final class HanlinSkillCatalog {
     }
 
     /// Synchronizes skills with a given domain configuration.
-    func synchronizeProductionSkills(configuration: SkillDomainConfiguration, scriptingPlatform: HanlinScriptingPlatform? = nil) {
+    public func synchronizeProductionSkills(configuration: SkillDomainConfiguration) {
         self.currentDomainConfiguration = configuration
         skillEntries.removeAll()
 
@@ -191,7 +198,9 @@ public final class HanlinSkillCatalog {
         }
 
         // 2. Compiled Swift Mini Apps
+        #if !HANLIN_ASSISTANT_CAPABILITIES_SDK
         BuiltinCanonicalRegistrations.ensureRegistered()
+        #endif
         for provider in HanlinCompiledMiniAppRegistry.shared.allProviders() {
             let appID = provider.descriptor.id.rawValue
             let sourceID = SkillSourceIdentity(kind: .compiledMiniApp, identifier: appID)
@@ -218,65 +227,12 @@ public final class HanlinSkillCatalog {
             }
         }
 
-        // 3. Installed scripting packages (ScriptUI, NativeScript, Expo)
-        let resolvedPlatform = scriptingPlatform ?? HanlinScriptingPlatform.shared
-        for package in resolvedPlatform.installedPackages where package.enabled {
-            guard let desc = try? package.appDescriptor() else { continue }
-            let packageID = package.record.packageID
-            let sourceID = SkillSourceIdentity(kind: .installedPackage, identifier: packageID.rawValue)
-            for skill in desc.skills {
-                register(
-                    skill: skill,
-                    tier: .installedPackage,
-                    sourceIdentity: sourceID,
-                    instructionLoader: { [weak resolvedPlatform] in
-                        guard let currentPlatform = resolvedPlatform else {
-                            return ""
-                        }
-                        guard let currentPackage = currentPlatform.installedPackages.first(where: { $0.record.packageID == packageID && $0.enabled }) else {
-                            return ""
-                        }
-                        switch skill.instructions {
-                        case .inline(let text):
-                            return text
-                        case .resource(let path):
-                            if let artifactURL = currentPlatform.activeArtifactURL(for: currentPackage) {
-                                let candidateURL = artifactURL.appending(path: path)
-                                if let content = try? String(contentsOf: candidateURL, encoding: .utf8) {
-                                    return content
-                                }
-                                let sourceCandidate = artifactURL.appending(path: "source/\(path)")
-                                if let content = try? String(contentsOf: sourceCandidate, encoding: .utf8) {
-                                    return content
-                                }
-                            }
-                            if let resURL = currentPlatform.resolveResourceURL(packageID: packageID, relativePath: path),
-                               let content = try? String(contentsOf: resURL, encoding: .utf8) {
-                                return content
-                            }
-                            if let url = HanlinApplicationResources.bundle.url(forResource: path, withExtension: nil),
-                               let content = try? String(contentsOf: url, encoding: .utf8) {
-                                return content
-                            }
-                        }
-                        return "# \(skill.title.preferredValue())\n\n\(skill.summary.preferredValue())"
-                    },
-                    resourceResolver: { [weak resolvedPlatform] relPath in
-                        guard let currentPlatform = resolvedPlatform else {
-                            return nil
-                        }
-                        guard let currentPackage = currentPlatform.installedPackages.first(where: { $0.record.packageID == packageID && $0.enabled }) else {
-                            return nil
-                        }
-                        let rawTrimmed = relPath.replacingOccurrences(of: "\\", with: "/").trimmingCharacters(in: .whitespacesAndNewlines)
-                        guard !rawTrimmed.isEmpty, !rawTrimmed.contains("\0"), !rawTrimmed.hasPrefix("/"),
-                              let clean = SkillStore.normalizeRelativePath(rawTrimmed) else {
-                            return nil
-                        }
-                        return currentPlatform.resolveResourceURL(packageID: currentPackage.record.packageID, relativePath: clean)
-                    }
-                )
-            }
+        // 3. Installed packages supplied by the original scripting owner or host.
+        for source in installedSkillProvider() {
+            register(skill: source.descriptor, tier: .installedPackage,
+                     sourceIdentity: .init(kind: .installedPackage, identifier: source.packageID),
+                     instructionLoader: source.instructionLoader,
+                     resourceResolver: source.resourceResolver)
         }
 
         // 4. Custom Skills and User Overrides from SkillStore
@@ -368,8 +324,7 @@ public final class HanlinSkillCatalog {
         codeEnabled: Bool = true,
         healthEnabled: Bool = true,
         weatherEnabled: Bool = true,
-        canvasEnabled: Bool = true,
-        scriptingPlatform: HanlinScriptingPlatform? = nil
+        canvasEnabled: Bool = true
     ) {
         let config = SkillDomainConfiguration(
             memoryEnabled: memoryEnabled,
@@ -382,7 +337,7 @@ public final class HanlinSkillCatalog {
             weatherEnabled: weatherEnabled,
             canvasEnabled: canvasEnabled
         )
-        synchronizeProductionSkills(configuration: config, scriptingPlatform: scriptingPlatform)
+        synchronizeProductionSkills(configuration: config)
     }
 
     /// Clears all registered skills (useful for isolated tests).
