@@ -1,0 +1,15 @@
+{
+  "source_sha": "730bbb6d70e8c9f136c5ee21437f78cc5b6e7bfb",
+  "parent": "07f6526841df1c356b873f2c4b79280a10ce045e",
+  "archive_sha256": "baf7272e96f9fdb8144adc6e0727d7ac204e64d223195d32f019a53e73411cbc",
+  "files": {
+    "Examples/HanlinLauncherLab/README.md": {
+      "before_sha256": "91c63748cbc3396f67d041d0b75ff0d0275114803430e5e35842ed44c4d15be6",
+      "after_sha256": "13dedd2fdda73e6369a0e857994da3d730a3f369fc5bbca87b3e9fbcf9266249"
+    },
+    "Examples/HanlinLauncherLab/project.yml": {
+      "before_sha256": "49d014969e0aec1021896ac3627bb9c5fa50a8a3293baf9f1cba4d8419390384",
+      "after_sha256": "de816577e33c20d0ae8f2b3b64a0276b32859a1ba9b75f7c0808d5ba9d3c8cbf"
+    }
+  }
+}

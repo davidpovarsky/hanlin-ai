@@ -1,0 +1,27 @@
+{
+  "devicesAndConfigurations" : [
+
+  ],
+  "environmentDescription" : "HanlinLauncherLab · Built with macOS 27.0",
+  "expectedFailures" : 0,
+  "failedTests" : 0,
+  "finishTime" : 1795695528.993,
+  "passedTests" : 0,
+  "result" : "unknown",
+  "runtimeWarnings" : [
+
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1795695513.93,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+
+  ],
+  "title" : "Test - HanlinLauncherLab",
+  "topInsights" : [
+
+  ],
+  "totalTestCount" : 0
+}

@@ -67,6 +67,12 @@ xcodebuild test \
   CODE_SIGNING_ALLOWED=NO
 ```
 
-The commands above are the validation route, not a recorded successful native
-run. Source checks, original evidence and remaining acceptance gates are in
-`docs/agent-sdk/evidence/shared-chat-interactions-20261126/`.
+The focused native route passed on 2026-11-26 at source
+730bbb6d70e8c9f136c5ee21437f78cc5b6e7bfb: five new interaction methods
+executed, all passed, with no skips. The source consumer was rebuilt from the
+canonical six-target product closure and exact original dependency pins.
+The native evidence directory under
+docs/agent-sdk/evidence/shared-chat-interactions-20261126 retains the
+result bundle, exact test identities, raw logs and preceding failed attempts.
+Full application UI, live providers and physical-device appearance remain
+separate acceptance gates.

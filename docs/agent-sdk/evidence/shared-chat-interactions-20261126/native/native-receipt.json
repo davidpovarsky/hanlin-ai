@@ -1,0 +1,429 @@
+{
+  "source_sha": "a84ecd6db0dfa77e2241cb9481b9f9d43a7a13c6",
+  "started_at": "2026-11-26T12:11:52.498779+00:00",
+  "status": "FAILED",
+  "scope": "Focused original LauncherLab consumer and five new shared interaction methods",
+  "steps": [
+    {
+      "name": "extract",
+      "command": [
+        "tar",
+        "-xzf",
+        "/Users/m1/builds/hanlin-shared-chat-a84ecd6d-20261126/source.tar.gz",
+        "-C",
+        "/Users/m1/builds/hanlin-shared-chat-a84ecd6d-20261126/source"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-shared-chat-a84ecd6d-20261126",
+      "started_at": "2026-11-26T12:11:52.516211+00:00",
+      "free_bytes_before": 8231301120,
+      "exit": 0,
+      "finished_at": "2026-11-26T12:11:53.120248+00:00",
+      "seconds": 0.604,
+      "log": "/Users/m1/builds/hanlin-shared-chat-a84ecd6d-20261126/results/extract.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "free_bytes_after": 8036339712
+    },
+    {
+      "name": "toolchain",
+      "command": [
+        "xcodebuild",
+        "-version"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-shared-chat-a84ecd6d-20261126",
+      "started_at": "2026-11-26T12:11:53.120922+00:00",
+      "free_bytes_before": 8036192256,
+      "exit": 0,
+      "finished_at": "2026-11-26T12:11:53.211404+00:00",
+      "seconds": 0.091,
+      "log": "/Users/m1/builds/hanlin-shared-chat-a84ecd6d-20261126/results/toolchain.log",
+      "log_sha256": "694b44731d0b415c5b11d844151e466d7f5e200a95627efda377f232f1a6ab77",
+      "free_bytes_after": 8033140736
+    },
+    {
+      "name": "clone-repositories",
+      "command": [
+        "/bin/cp",
+        "-cR",
+        "/Users/m1/builds/hanlin-testflight-149101-20261125/SourcePackages/repositories",
+        "/Users/m1/builds/hanlin-shared-chat-a84ecd6d-20261126/SourcePackages/repositories"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-shared-chat-a84ecd6d-20261126",
+      "started_at": "2026-11-26T12:11:53.211912+00:00",
+      "free_bytes_before": 8033140736,
+      "exit": 0,
+      "finished_at": "2026-11-26T12:11:53.622261+00:00",
+      "seconds": 0.41,
+      "log": "/Users/m1/builds/hanlin-shared-chat-a84ecd6d-20261126/results/clone-repositories.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "free_bytes_after": 7975419904
+    },
+    {
+      "name": "clone-checkouts",
+      "command": [
+        "/bin/cp",
+        "-cR",
+        "/Users/m1/builds/hanlin-testflight-149101-20261125/SourcePackages/checkouts",
+        "/Users/m1/builds/hanlin-shared-chat-a84ecd6d-20261126/SourcePackages/checkouts"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-shared-chat-a84ecd6d-20261126",
+      "started_at": "2026-11-26T12:11:53.622731+00:00",
+      "free_bytes_before": 7975153664,
+      "exit": 0,
+      "finished_at": "2026-11-26T12:11:57.210361+00:00",
+      "seconds": 3.588,
+      "log": "/Users/m1/builds/hanlin-shared-chat-a84ecd6d-20261126/results/clone-checkouts.log",
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "free_bytes_after": 7598460928
+    },
+    {
+      "name": "selected-products",
+      "command": [
+        "python3",
+        "Scripts/SDK/generate_manifest.py",
+        "--products",
+        "HanlinChatPresentation",
+        "HanlinPresentationKit",
+        "HanlinChatUI"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-shared-chat-a84ecd6d-20261126/source",
+      "started_at": "2026-11-26T12:11:57.210878+00:00",
+      "free_bytes_before": 7598448640,
+      "exit": 0,
+      "finished_at": "2026-11-26T12:12:04.328256+00:00",
+      "seconds": 7.117,
+      "log": "/Users/m1/builds/hanlin-shared-chat-a84ecd6d-20261126/results/selected-products.log",
+      "log_sha256": "964bf409419d20c89180c7b5e837205797b356227d8fdbb3b98a0659657affdc",
+      "free_bytes_after": 7594491904
+    },
+    {
+      "name": "xcodegen",
+      "command": [
+        "/opt/homebrew/bin/xcodegen",
+        "generate",
+        "--spec",
+        "project.yml"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-shared-chat-a84ecd6d-20261126/source/Examples/HanlinLauncherLab",
+      "started_at": "2026-11-26T12:12:04.329637+00:00",
+      "free_bytes_before": 7594475520,
+      "exit": 0,
+      "finished_at": "2026-11-26T12:12:04.414423+00:00",
+      "seconds": 0.085,
+      "log": "/Users/m1/builds/hanlin-shared-chat-a84ecd6d-20261126/results/xcodegen.log",
+      "log_sha256": "708f975c8c6ed8ee026994b6bd88d6fc874f0af86773dc112cd32940af473483",
+      "free_bytes_after": 7571116032
+    },
+    {
+      "name": "resolve",
+      "command": [
+        "xcodebuild",
+        "-project",
+        "/Users/m1/builds/hanlin-shared-chat-a84ecd6d-20261126/source/Examples/HanlinLauncherLab/HanlinLauncherLab.xcodeproj",
+        "-scheme",
+        "HanlinLauncherLab",
+        "-clonedSourcePackagesDirPath",
+        "/Users/m1/builds/hanlin-shared-chat-a84ecd6d-20261126/SourcePackages",
+        "-skipPackagePluginValidation",
+        "-skipMacroValidation",
+        "-resolvePackageDependencies",
+        "-onlyUsePackageVersionsFromResolvedFile"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-shared-chat-a84ecd6d-20261126/source",
+      "started_at": "2026-11-26T12:12:04.415666+00:00",
+      "free_bytes_before": 7570677760,
+      "exit": 0,
+      "finished_at": "2026-11-26T12:12:25.516259+00:00",
+      "seconds": 21.101,
+      "log": "/Users/m1/builds/hanlin-shared-chat-a84ecd6d-20261126/results/resolve.log",
+      "log_sha256": "98e307c0bc69662a497c746c0b8411a9d22531c39feb6919b1c5c403fdb05a05",
+      "free_bytes_after": 6161211392
+    },
+    {
+      "name": "native-interactions",
+      "command": [
+        "xcodebuild",
+        "-project",
+        "/Users/m1/builds/hanlin-shared-chat-a84ecd6d-20261126/source/Examples/HanlinLauncherLab/HanlinLauncherLab.xcodeproj",
+        "-scheme",
+        "HanlinLauncherLab",
+        "-clonedSourcePackagesDirPath",
+        "/Users/m1/builds/hanlin-shared-chat-a84ecd6d-20261126/SourcePackages",
+        "-skipPackagePluginValidation",
+        "-skipMacroValidation",
+        "test",
+        "-configuration",
+        "Debug",
+        "-destination",
+        "platform=iOS Simulator,id=35FB64E2-F0BC-4E19-952E-26323D8C6140",
+        "-derivedDataPath",
+        "/Users/m1/caches/DerivedData/hanlin-shared-chat-a84ecd6d-20261126",
+        "-resultBundlePath",
+        "/Users/m1/builds/hanlin-shared-chat-a84ecd6d-20261126/results/interaction-r1.xcresult",
+        "-disableAutomaticPackageResolution",
+        "-onlyUsePackageVersionsFromResolvedFile",
+        "-parallel-testing-enabled",
+        "NO",
+        "-only-testing:HanlinLauncherLabTests/HanlinMessagePreviewMetricsTests",
+        "-only-testing:HanlinLauncherLabTests/HanlinMessageActionTests",
+        "CODE_SIGNING_ALLOWED=NO",
+        "COMPILER_INDEX_STORE_ENABLE=NO"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-shared-chat-a84ecd6d-20261126/source",
+      "started_at": "2026-11-26T12:12:26.073339+00:00",
+      "free_bytes_before": 6129692672,
+      "exit": 65,
+      "finished_at": "2026-11-26T12:13:45.767459+00:00",
+      "seconds": 79.694,
+      "log": "/Users/m1/builds/hanlin-shared-chat-a84ecd6d-20261126/results/native-interactions.log",
+      "log_sha256": "57a607cf9c4fbb5c526183ac29da409b67fb313e7e19158549ea6140c157dd29",
+      "free_bytes_after": 4179968000
+    },
+    {
+      "name": "test-summary",
+      "command": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "summary",
+        "--path",
+        "/Users/m1/builds/hanlin-shared-chat-a84ecd6d-20261126/results/interaction-r1.xcresult"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-shared-chat-a84ecd6d-20261126",
+      "started_at": "2026-11-26T12:13:45.773278+00:00",
+      "free_bytes_before": 4180066304,
+      "exit": 0,
+      "finished_at": "2026-11-26T12:13:45.966884+00:00",
+      "seconds": 0.194,
+      "log": "/Users/m1/builds/hanlin-shared-chat-a84ecd6d-20261126/results/test-summary.log",
+      "log_sha256": "a979aa7fe985e6087a8ab2c1b44612271688cbe9bf8ad03a57b4c8b1245b9e0b",
+      "free_bytes_after": 4175777792
+    }
+  ],
+  "free_bytes_start": 8233738240,
+  "derived_data": "/Users/m1/caches/DerivedData/hanlin-shared-chat-a84ecd6d-20261126",
+  "result_bundle": "/Users/m1/builds/hanlin-shared-chat-a84ecd6d-20261126/results/interaction-r1.xcresult",
+  "policy_tests": "NOT_RUN: unchanged original policy evidence reused separately",
+  "transfer": {
+    "source_sha": "a84ecd6db0dfa77e2241cb9481b9f9d43a7a13c6",
+    "source_tree": "7fe927b3aaf605c92e6088475d629134386f7e07",
+    "paths": [
+      "Packages",
+      "AI_HLY",
+      "AI_HLY.xcodeproj",
+      "Scripts/SDK",
+      "Scripts/CI/IntegrationValidation",
+      "Examples/HanlinLauncherLab",
+      "Package.swift",
+      "Generated",
+      "Vendor",
+      "AGENTS.md",
+      "PROJECT_AGENT_GUIDANCE.md"
+    ],
+    "archive_bytes": 31819273,
+    "archive_sha256": "b40b8d4a4ec4c33e9c4dd5e8e883261b4282956100f7d814908157ff93188d38",
+    "mac_stage": "/Users/m1/builds/hanlin-shared-chat-a84ecd6d-20261126"
+  },
+  "profile": {
+    "schemaVersion": 1,
+    "sourceOwnership": "one original source path per target",
+    "applicationModule": null,
+    "applicationSourceCount": 0,
+    "selectedProducts": [
+      "HanlinChatPresentation",
+      "HanlinPresentationKit",
+      "HanlinChatUI"
+    ],
+    "products": [
+      "HanlinPresentationKit",
+      "HanlinChatUI",
+      "HanlinChatPresentation"
+    ],
+    "targets": 6,
+    "localPackageEdgesRemaining": 0,
+    "inputs": {
+      "Packages/HanlinAgentSDK/Package.swift": "16becff5f9e626f171d21f0277684c249c773f3169334fc9a63a37876c44a36e",
+      "Packages/HanlinAppExtensionsSDK/Package.swift": "23056fa7df2e2aca75c3195452085a42151aa113f54370aeceb5a07df269d9bc",
+      "Packages/HanlinExpoNativeAPI/Package.swift": "c5fd18fa28a1842be0351053d978cc55b752546dc798c663f0dedabfdbefc28c",
+      "Packages/HanlinExpoRuntime/Package.swift": "d4157d16c1d505b408cf4b78f7ab59f53ff607ea94e0c4e51a4e2c088a691f37",
+      "Packages/HanlinExpoWidgetSubset/Package.swift": "ed50b8b4f6ee4532ff3ed2af82d7994c7718e958387495280f9a939218323a41",
+      "Packages/HanlinMiniAppsBridge/Package.swift": "579cdb6febf974d7f463aee0cd6592cdf0cfd5a4c8e53840009ff170e52b6e2e",
+      "Packages/HanlinNativeScriptRuntime/Package.swift": "88a4926e884e6804246a7d077efed3837271886a9825585b1e561b4ce1576120",
+      "Packages/HanlinParityMiniApp/Package.swift": "66025f0b1fb7db7db9b8a24426319b651858f3454295780ee807edd335cec90b",
+      "Packages/HanlinPlatform/Package.swift": "78d7081d0e197c3e99746e5b3e476b41280fc5b32110035fab31a3e949cb4dab",
+      "Packages/HanlinPresentationSDK/Package.swift": "951afd5b85422e7d6ed99cf497602e7122b988c1d956132bd9c00e04c695b4c3",
+      "Packages/HanlinProductSplit/Package.swift": "31234398119e82e9895391040f281e9c9895c2cc73f962c12f1b37489e7f5e3a",
+      "Packages/HanlinQuickJS/Package.swift": "3b3e64732c71724b027fd28236f635073d02a3c208cbd9060fafaf802a47480e",
+      "Packages/HanlinSefariaMiniApp/Package.swift": "7ac94c46688313d32e03c2ffa3bb74c1f1dc00fc8b0b8b7322ae1286b918d50c",
+      "Packages/HanlinSkillFormat/Package.swift": "3878f654329884843943a463a901537c45f894b198a4bc9b9b9169410dc66741",
+      "Packages/HanlinTextStudioMiniApp/Package.swift": "d2049eb9401b85c9ab1734a369b818f930db964aee7ce7bb7bf865ec21af291d",
+      "Packages/HanlinWidgetSDK/Package.swift": "970610b13278a21fad358fa9c6f19b15789c6c7cb219fc2984f2aa92298502e6",
+      "Packages/HanlinWikipediaMiniApp/Package.swift": "01b8cc014f8a5e853b644947fd6684df56b65b37feb08ef23f410fb56c902d8e",
+      "Packages/IOSSystemLite/Package.swift": "06c6721c4b59328ba4f78997c9a8b23330357db12d3a619207dc1bac8cb76bab",
+      "Packages/TorahLibraryKit/Package.swift": "4423074f870fe146b8914dc275db77aedef4cc1b6c0b856dfad844b65c3a21d6",
+      "Scripts/SDK/application_products.json": "3095d0418b7cc5baf05f6ac39c5961a687a163345952d5f4df67e9158707f68a"
+    }
+  },
+  "selected_manifest_sha256": "83823bf6d107dc14f3b9f03e6ab6e4289c62728279cd34ca1da39dbba07c1e6a",
+  "canonical_lock_sha256": "56d19a4b8c677831fb91e1f8155a68e411b42fd4807ad618d6f169569e1bb5a4",
+  "pin_validation": {
+    "actual": {
+      "a2ui": {
+        "revision": "3ed9601862ecc78027e20ac80ad8b1b98a5d9079"
+      },
+      "bitbytedata": {
+        "revision": "e1a5443be67daf0833cbb5f4fa3a06a265ca3105",
+        "version": "2.1.0"
+      },
+      "corexlsx": {
+        "revision": "1391f3832ea2eeee5186ea8abb81ea49ed0609cc"
+      },
+      "equatable": {
+        "revision": "597c2bb34af0c51331eb3b5e705f942d8ee20daa",
+        "version": "1.4.1"
+      },
+      "eventsource": {
+        "revision": "e83f076811f32757305b8bf69ac92d05626ffdd7",
+        "version": "1.1.0"
+      },
+      "hanlin-streaming-markdown": {
+        "revision": "5cbb4b6c950051f98f02a0b0ae56756f5174a9b8"
+      },
+      "highlightswift": {
+        "revision": "99c431b38a1444a5fd6a4978307fbbefe3a7af53"
+      },
+      "ios-spm": {
+        "revision": "33605a91197dc86bd9f15fecaad6e897223caa8a",
+        "version": "9.1.1"
+      },
+      "iosmath": {
+        "revision": "ba9ab7729b151329c54fd895a7c1859981d9484c"
+      },
+      "latexswiftui": {
+        "revision": "c45e0fd45f64923c49c5904a9f9626bc8939f05f"
+      },
+      "llm.swift": {
+        "revision": "4b2517839f24498bea0695bae8967b359b9a35c4"
+      },
+      "lrucache": {
+        "revision": "f0570e943ea4445d258113ba73f50cb2b7e564ac",
+        "version": "1.3.0"
+      },
+      "markdownui": {
+        "revision": "5f613358148239d0292c0cef674a3c2314737f9e"
+      },
+      "mathjaxswift": {
+        "revision": "e23d6eab941da699ac4a60fb0e60f3ba5c937459",
+        "version": "3.4.0"
+      },
+      "networkimage": {
+        "revision": "2849f5323265386e200484b0d0f896e73c3411b9",
+        "version": "6.0.1"
+      },
+      "opentelemetry-swift-core": {
+        "revision": "c6fcee77cfc21ba400366f12475217c7b6e1d605",
+        "version": "2.6.0"
+      },
+      "richtextkit": {
+        "revision": "8aa44cfa645404ad84e52e3ab7723ecf4b82f92b"
+      },
+      "swcompression": {
+        "revision": "c729f0baa49e91bafef3921fea663db2b75acc46"
+      },
+      "swift-ai-sdk": {
+        "revision": "abf0921c6e89e6521cc2b510ff11016b45a0ef08"
+      },
+      "swift-argument-parser": {
+        "revision": "6a52f3251125d74daf04fcbd5e6f08a75d074382",
+        "version": "1.8.2"
+      },
+      "swift-atomics": {
+        "revision": "0442cb5a3f98ab802acb777929fdb446bda11a34",
+        "version": "1.3.1"
+      },
+      "swift-cmark": {
+        "revision": "08ddb528923cc1a6527e02b7a1aee9e516ca749a",
+        "version": "0.9.0"
+      },
+      "swift-collections": {
+        "revision": "7b847a3b7008b2dc2f47ca3110d8c782fb2e5c7e",
+        "version": "1.3.0"
+      },
+      "swift-html-entities": {
+        "revision": "d8ca73197f59ce260c71bd6d7f6eb8bbdccf508b",
+        "version": "4.0.1"
+      },
+      "swift-json-schema": {
+        "revision": "c0a9375ea9cd3fd47d875c98ed7f027ea61c03cb",
+        "version": "0.13.2"
+      },
+      "swift-log": {
+        "revision": "96a2f8a0fa41e9e09af4585e2724c4e825410b91"
+      },
+      "swift-markdown": {
+        "revision": "7d9a5ce307528578dfa777d505496bd5f544ad94",
+        "version": "0.7.3"
+      },
+      "swift-nio": {
+        "revision": "5e72fc102906ebe75a3487595a653e6f43725552",
+        "version": "2.94.0"
+      },
+      "swift-sdk": {
+        "revision": "a0ae212ebf6eab5f754c3129608bc5557637e605"
+      },
+      "swift-syntax": {
+        "revision": "79e4b74a295b6eb74a8b585e3a39d29e70c1dbd1",
+        "version": "603.0.2"
+      },
+      "swift-system": {
+        "revision": "c8a44d836fe7913603e246acab7c528c2e780168",
+        "version": "1.4.0"
+      },
+      "swift-tree-sitter": {
+        "revision": "08ef81eb8620617b55b08868126707ad72bf754f"
+      },
+      "swiftdraw": {
+        "revision": "2a36e6ce369cbecdd031ee95f5b5b3faa69ef50f",
+        "version": "0.21.0"
+      },
+      "swiftsoup": {
+        "revision": "bba848db50462894e7fc0891d018dfecad4ef11e"
+      },
+      "swiftui-shimmer": {
+        "revision": "0226e21f9bf355d40e07e5f5e1c33679d50e167f",
+        "version": "1.5.1"
+      },
+      "swiftyjson": {
+        "revision": "b3dcd7dbd0d488e1a7077cb33b00f2083e382f07",
+        "version": "5.0.1"
+      },
+      "tree-sitter": {
+        "revision": "da6fe9beb4f7f67beb75914ca8e0d48ae48d6406"
+      },
+      "tree-sitter-bash": {
+        "revision": "a06c2e4415e9bc0346c6b86d401879ffb44058f7"
+      },
+      "xmlcoder": {
+        "revision": "ca932442d7481700f5434a7b138c47dd42d9902b",
+        "version": "0.14.0"
+      },
+      "yams": {
+        "revision": "a27b21e0c81c5bf42049b897a62aaf387e80f279",
+        "version": "6.2.2"
+      },
+      "zipfoundation": {
+        "revision": "02b6abe5f6eef7e3cbd5f247c5cc24e246efcfe0",
+        "version": "0.9.19"
+      }
+    },
+    "mismatches": {}
+  },
+  "simulator": {
+    "udid": "35FB64E2-F0BC-4E19-952E-26323D8C6140",
+    "name": "HanlinSharedUI-a84ecd6d-20261126",
+    "runtime": "iOS 27.0 24A434",
+    "device_type": "iPad Pro 11-inch M5 12GB"
+  },
+  "finished_at": "2026-11-26T12:13:45.967566+00:00",
+  "free_bytes_end": 4175777792
+}

@@ -1,0 +1,76 @@
+{
+  "source_sha": "07f6526841df1c356b873f2c4b79280a10ce045e",
+  "parent": "f3b55fdd3926330a9169d104bd245d877ac942c4",
+  "started_at": "2026-11-26T12:32:26.919737+00:00",
+  "status": "FAILED",
+  "source_delta": {
+    "source_sha": "07f6526841df1c356b873f2c4b79280a10ce045e",
+    "parent": "f3b55fdd3926330a9169d104bd245d877ac942c4",
+    "archive_sha256": "f8ddb2ec73c41444879267b5b190dda977c784ad65ab1a527512774e9256fb27",
+    "files": {
+      "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/HanlinMessageInteractionTests.swift": {
+        "before_sha256": "5496e70b20301d1cdb52b5e55560d3ae541c6d911b168b666fe31571f4a8dd45",
+        "after_sha256": "9ebc746229f11b2e8cb7c2091a160aa8174a45b6906a2d364e66288e8ccd83f3"
+      }
+    }
+  },
+  "reused_setup": "native-receipt.json: canonical six-target source profile, exact pins, original XcodeGen target, own dependency cache and products",
+  "steps": [
+    {
+      "name": "native-interactions-r5",
+      "command": [
+        "xcodebuild",
+        "-project",
+        "/Users/m1/builds/hanlin-shared-chat-a84ecd6d-20261126/source/Examples/HanlinLauncherLab/HanlinLauncherLab.xcodeproj",
+        "-scheme",
+        "HanlinLauncherLab",
+        "-clonedSourcePackagesDirPath",
+        "/Users/m1/builds/hanlin-shared-chat-a84ecd6d-20261126/SourcePackages",
+        "-skipPackagePluginValidation",
+        "-skipMacroValidation",
+        "test",
+        "-configuration",
+        "Debug",
+        "-destination",
+        "platform=iOS Simulator,id=35FB64E2-F0BC-4E19-952E-26323D8C6140",
+        "-derivedDataPath",
+        "/Users/m1/caches/DerivedData/hanlin-shared-chat-a84ecd6d-20261126",
+        "-resultBundlePath",
+        "/Users/m1/builds/hanlin-shared-chat-a84ecd6d-20261126/results/interaction-r5.xcresult",
+        "-disableAutomaticPackageResolution",
+        "-onlyUsePackageVersionsFromResolvedFile",
+        "-parallel-testing-enabled",
+        "NO",
+        "-only-testing:HanlinLauncherLabTests/HanlinMessagePreviewMetricsTests",
+        "-only-testing:HanlinLauncherLabTests/HanlinMessageActionTests",
+        "CODE_SIGNING_ALLOWED=NO",
+        "COMPILER_INDEX_STORE_ENABLE=NO"
+      ],
+      "started_at": "2026-11-26T12:32:35.010083+00:00",
+      "free_bytes_before": 1573830656,
+      "exit": 65,
+      "finished_at": "2026-11-26T12:33:22.289306+00:00",
+      "seconds": 47.284,
+      "log_sha256": "16622d48022bde3971f5b50165738937512196288e72f7e998335ba9583b9bf7"
+    }
+  ],
+  "free_bytes_start": 1682403328,
+  "simulator": {
+    "udid": "35FB64E2-F0BC-4E19-952E-26323D8C6140",
+    "name": "HanlinSharedUI-a84ecd6d-20261126",
+    "runtime": "iOS 27.0 24A434",
+    "device_type": "iPad Pro 11-inch M5 12GB"
+  },
+  "source_validation": {
+    "checked_archived_files": 3318,
+    "mismatches": [],
+    "selected_manifest_unchanged": true
+  },
+  "summary": {
+    "exit": 0,
+    "path": "/Users/m1/builds/hanlin-shared-chat-a84ecd6d-20261126/results/test-summary-r5.json",
+    "sha256": "a32df71dd9a412ff394028c571ef365fce74f4fe744beed4ccd807a590784e9c"
+  },
+  "finished_at": "2026-11-26T12:33:22.518846+00:00",
+  "free_bytes_end": 1693560832
+}
