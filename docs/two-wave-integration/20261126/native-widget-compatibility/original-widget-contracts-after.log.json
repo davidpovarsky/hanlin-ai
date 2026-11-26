@@ -1,0 +1,7 @@
+{
+  "originalPath": "/tmp/hanlin-native-compatibility-20261126-549ij7t3/original-widget-contracts-after.log",
+  "sha256": "0efa4a4121309deb34c27d9e1366f6e852d1d3c0719caca71d776c8457dec3f6",
+  "bytes": 928,
+  "encoding": "utf-8",
+  "text": "✔ P3-02: real Expo JSX wrappers run source callbacks, including arbitrary props (171.820676ms)\n✔ P3-09: original Expo JSX preserves named slot and nested text nodes (101.903271ms)\n✔ P3-08: separate executions cannot retain another package global (124.397321ms)\n✔ P3-15: the widget module closure excludes an unrelated foreground bundle (65.148737ms)\n✔ P3-03/P3-24: ScriptWidget source functions preserve typed state (53.190709ms)\n✔ ScriptWidget starts an independent original compile budget for every Babel operation (205.780513ms)\n✔ P3-12: reserved guard identifiers and malformed JSX fail compilation (79.29926ms)\n✔ P3-26: fixture archives rebuild byte-for-byte in all three locations (15.063088ms)\n✔ P3-26: Expo fixture contracts match the exact embedded native widget versions (1.822611ms)\nℹ tests 9\nℹ suites 0\nℹ pass 9\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 1232.159664\n"
+}

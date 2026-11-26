@@ -1,0 +1,394 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-26T21:53:19.164100+00:00",
+  "reviewer": "/root/wave1_chat_sdk",
+  "implementationOwner": "/root/wave2_miniapps",
+  "nativeOwner": "/root/mac_build_ops",
+  "base": "6975e769e82a7803853180cd6aec6a26fe412f9f",
+  "source": "16b4af4490d96c41cb76ed185a1e6d4e828899e7",
+  "tree": "632415c4c543c004acbc1dc755d683bc550e1b90",
+  "decision": "APPROVED_BOUNDED_SOURCE_CORRECTION_NATIVE_ACCEPTANCE_PENDING",
+  "classification": "FIX_REPRODUCED_TWO_ORIGINAL_NATIVE_FAILURES",
+  "observedFailureReceipt": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/package-selection/actual-execution-qualification-6975e769-r2.json",
+  "observedFailureReceiptSHA256": "f477b931f8ecca8cf173862159a72b247fdcdc37957acadab12ca33f51888a71",
+  "v1Finding": "The prior V1 shadow retained nativePresentations and new entity/translation fields. The frozen reader discards unknown fields when decoding and re-encodes its original model before verifying SHA256, producing the measured integrityMismatch. The LKG top-level key was already removed before this correction.",
+  "v1ProjectionMatchesFrozenStoredFields": {
+    "snapshot": [
+      "schemaVersion",
+      "generatedAt",
+      "widgets",
+      "intentEntities",
+      "liveActivities",
+      "translationApps"
+    ],
+    "identity": [
+      "installedPackageID",
+      "packageID",
+      "generation",
+      "entrypointID"
+    ],
+    "widgets": [
+      "identity",
+      "displayName",
+      "family",
+      "actionIdentity",
+      "validUntil",
+      "relevance",
+      "root",
+      "deepLink"
+    ],
+    "intentEntities": [
+      "identity",
+      "id",
+      "displayName",
+      "subtitle"
+    ],
+    "liveActivities": [
+      "identity",
+      "activityID",
+      "title",
+      "state",
+      "root",
+      "staleDate"
+    ],
+    "translationApps": [
+      "identity",
+      "appID",
+      "displayName",
+      "summary",
+      "iconSymbol",
+      "accentHex",
+      "isBeta",
+      "entrypointID",
+      "rootNode"
+    ]
+  },
+  "productionOutsideLegacyProjectionByteIdentical": {
+    "bytes": 55427,
+    "sha256": "44420f80ae4299f2b8732f46422f0fbac07bb417a1e5049f354d2391506ff09e"
+  },
+  "allOriginalDualWidgetTestFileBytesPreservedAfterRemovingOnlyNewTest": {
+    "bytes": 79563,
+    "sha256": "f79bb40cbfff82eb8631275fd70f99e2f527c5ee497b4cbb168602b6fbf81658"
+  },
+  "originalNodeContractFileIsUnchangedPrefix": true,
+  "preservedImmutableInputs": {
+    "Packages/HanlinPlatform/Tests/Fixtures/LegacyWidgetStore/HanlinScriptExtensionStore.swift": {
+      "bytes": 5562,
+      "sha256": "c44d53ad45e2b0b42ad2eb488cf971c814ca8ffa9a8acf415a369504d9944ab4",
+      "unchanged": true
+    },
+    "Packages/HanlinPlatform/Tests/Fixtures/LegacyWidgetStore/HanlinScriptExtensionContracts.swift": {
+      "bytes": 10670,
+      "sha256": "da5f1877fc9ce1a1f5b49e67429935c2514bb6b00e977302679107bc0413c28e",
+      "unchanged": true
+    },
+    "Packages/HanlinPlatform/Tests/Fixtures/LegacyWidgetStore/PROVENANCE.txt": {
+      "bytes": 123,
+      "sha256": "f25ad5faf038b5e38d4530e1c1d3d6dd1449fdf0be3b9a4061a1a1ec1d981487",
+      "unchanged": true
+    },
+    "Scripts/Expo/package.json": {
+      "bytes": 1759,
+      "sha256": "fe71727b4bb3a28f73238ed1381190ef6de3541af323efb1f443ed2a7c685563",
+      "unchanged": true
+    },
+    "Scripts/Expo/package-lock.json": {
+      "bytes": 336324,
+      "sha256": "b20d9bf2ff4850269f72f79ef4e5b1b274ab648226a0597f671fe59ebb5dcfce",
+      "unchanged": true
+    },
+    "Scripts/Expo/dependency-lock.json": {
+      "bytes": 5375,
+      "sha256": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65",
+      "unchanged": true
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift": {
+      "bytes": 60758,
+      "sha256": "7e3a1ff682abef2b319a4c428c9da6a4069989872cdbab777479e2eced0d1306",
+      "unchanged": true
+    }
+  },
+  "fixtureCorrection": "Canonical samples now obtain exact versions from the unchanged Scripts/Expo/package.json. Five Expo archives across three existing locations change only package.json; four version fields move58.0.3 to58.0.29. React19.3.0, all source members and all three ScriptWidget/legacy archives remain byte-identical. Matrix moves after original fixtures; its source members remain unchanged.",
+  "fixtureInputs": [
+    {
+      "archive": "Hanlin-Expo-Widget-Counter.hanlinExpo",
+      "bytes": 1149,
+      "oldSHA256": "07bc97e06a1c4b638272dda7eeeb132e2b91499d5546cccfe7fbfd5bfc4cae0e",
+      "sha256": "a52c828cdb87f115c668b7cba544781ce89c023b14a65551844ee7985faa3d9d",
+      "changedMembers": [
+        "package.json"
+      ],
+      "changedVersionFields": [
+        "hanlinExpo.runtimeVersion",
+        "hanlinExpo.plugins.@expo/ui",
+        "dependencies.@expo/ui",
+        "dependencies.expo-widgets"
+      ],
+      "threeCopiesByteIdentical": true
+    },
+    {
+      "archive": "Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo",
+      "bytes": 1703,
+      "oldSHA256": "c31ea9245556e2c851c89bb79d95dd323cf5f51c0ad8fcb7d6ef6298949027d1",
+      "sha256": "593bee65811c0e4d6fc63532254d0ab174a8bb5779b06c838023d0792d06914d",
+      "changedMembers": [
+        "package.json"
+      ],
+      "changedVersionFields": [
+        "hanlinExpo.runtimeVersion",
+        "hanlinExpo.plugins.@expo/ui",
+        "dependencies.@expo/ui",
+        "dependencies.expo-widgets"
+      ],
+      "threeCopiesByteIdentical": true
+    },
+    {
+      "archive": "Hanlin-Expo-Widget-Visuals.hanlinExpo",
+      "bytes": 1283,
+      "oldSHA256": "2584982f4077b022860a1197c62d3bc85fdaa454e907e6749cd5734e7886cb68",
+      "sha256": "4532c361e91e32580a7dca5c120e1131bb2d9f07138b2b4103bdab138f588368",
+      "changedMembers": [
+        "package.json"
+      ],
+      "changedVersionFields": [
+        "hanlinExpo.runtimeVersion",
+        "hanlinExpo.plugins.@expo/ui",
+        "dependencies.@expo/ui",
+        "dependencies.expo-widgets"
+      ],
+      "threeCopiesByteIdentical": true
+    },
+    {
+      "archive": "Hanlin-Mixed-Native-Widget.hanlinExpo",
+      "bytes": 1000,
+      "oldSHA256": "7dc83c351a276573bf8fc8591b1be081401433247a656306d54fb9c16cda0d2e",
+      "sha256": "2121ea971faa158e891b8222372e2250062286b813ad8a889971cc351a8c75d7",
+      "changedMembers": [
+        "package.json"
+      ],
+      "changedVersionFields": [
+        "hanlinExpo.runtimeVersion",
+        "hanlinExpo.plugins.@expo/ui",
+        "dependencies.@expo/ui",
+        "dependencies.expo-widgets"
+      ],
+      "threeCopiesByteIdentical": true
+    },
+    {
+      "archive": "Hanlin-ScriptWidget-Actions.scripting",
+      "bytes": 825,
+      "oldSHA256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb",
+      "sha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb",
+      "changedMembers": [],
+      "changedVersionFields": [],
+      "threeCopiesByteIdentical": true
+    },
+    {
+      "archive": "Hanlin-ScriptWidget-Dashboard.scripting",
+      "bytes": 968,
+      "oldSHA256": "478cd567e9731cc7342aefa9024ea498edf8d12d340cc5c558484e60a210dace",
+      "sha256": "478cd567e9731cc7342aefa9024ea498edf8d12d340cc5c558484e60a210dace",
+      "changedMembers": [],
+      "changedVersionFields": [],
+      "threeCopiesByteIdentical": true
+    },
+    {
+      "archive": "Hanlin-Widget-Invalid-Cases.hanlinExpo",
+      "bytes": 949,
+      "oldSHA256": "077a6ea43342877550f495b1bb885a3c93d8d6c60389459bf55ff05d2db5982c",
+      "sha256": "a86f47a41f684ecbb1dcce23552798b88cc7ab6622a8c316f2b721b44daf52c5",
+      "changedMembers": [
+        "package.json"
+      ],
+      "changedVersionFields": [
+        "hanlinExpo.runtimeVersion",
+        "hanlinExpo.plugins.@expo/ui",
+        "dependencies.@expo/ui",
+        "dependencies.expo-widgets"
+      ],
+      "threeCopiesByteIdentical": true
+    },
+    {
+      "archive": "Hanlin-Widget-Legacy-Regression.scripting",
+      "bytes": 444,
+      "oldSHA256": "787bf97e48164d7b9021c64bfa7122e48131a82b388efc3bad26c58276f4bb2f",
+      "sha256": "787bf97e48164d7b9021c64bfa7122e48131a82b388efc3bad26c58276f4bb2f",
+      "changedMembers": [],
+      "changedVersionFields": [],
+      "threeCopiesByteIdentical": true
+    }
+  ],
+  "newRegression": {
+    "identifier": "HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/v1ShadowProjectsHistoricalFieldsWithoutLosingCurrentMetadata()",
+    "definitions": 1,
+    "invocations": 1,
+    "exercises": [
+      "Real production store save and frozen V1 reader with populated new native metadata",
+      "Original legacy widget/action identity/intent/activity/translation content retention",
+      "Exact V2 current snapshot readback including new metadata",
+      "Exact six top-level V1 keys",
+      "Tampered V1 shadow still rejected by unchanged frozen integrityMismatch check"
+    ]
+  },
+  "nativeInventory": {
+    "originalRequiredDefinitions": 57,
+    "originalRequiredInvocations": 78,
+    "additionalDefinitions": 1,
+    "additionalInvocations": 1,
+    "nextRequiredDefinitions": 58,
+    "nextRequiredInvocations": 79,
+    "originalParameterInvocations": 28,
+    "collateralAcceptance": 0,
+    "status": "NOT_RUN_AT_REVIEWED_SOURCE"
+  },
+  "changedFiles": [
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Expo-Widget-Counter.hanlinExpo",
+      "bytes": 1149,
+      "sha256": "a52c828cdb87f115c668b7cba544781ce89c023b14a65551844ee7985faa3d9d"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo",
+      "bytes": 1703,
+      "sha256": "593bee65811c0e4d6fc63532254d0ab174a8bb5779b06c838023d0792d06914d"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Expo-Widget-Visuals.hanlinExpo",
+      "bytes": 1283,
+      "sha256": "4532c361e91e32580a7dca5c120e1131bb2d9f07138b2b4103bdab138f588368"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Mixed-Native-Widget.hanlinExpo",
+      "bytes": 1000,
+      "sha256": "2121ea971faa158e891b8222372e2250062286b813ad8a889971cc351a8c75d7"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Widget-Invalid-Cases.hanlinExpo",
+      "bytes": 949,
+      "sha256": "a86f47a41f684ecbb1dcce23552798b88cc7ab6622a8c316f2b721b44daf52c5"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-Expo-Widget-Counter.hanlinExpo",
+      "bytes": 1149,
+      "sha256": "a52c828cdb87f115c668b7cba544781ce89c023b14a65551844ee7985faa3d9d"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo",
+      "bytes": 1703,
+      "sha256": "593bee65811c0e4d6fc63532254d0ab174a8bb5779b06c838023d0792d06914d"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-Expo-Widget-Visuals.hanlinExpo",
+      "bytes": 1283,
+      "sha256": "4532c361e91e32580a7dca5c120e1131bb2d9f07138b2b4103bdab138f588368"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-Mixed-Native-Widget.hanlinExpo",
+      "bytes": 1000,
+      "sha256": "2121ea971faa158e891b8222372e2250062286b813ad8a889971cc351a8c75d7"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-Widget-Invalid-Cases.hanlinExpo",
+      "bytes": 949,
+      "sha256": "a86f47a41f684ecbb1dcce23552798b88cc7ab6622a8c316f2b721b44daf52c5"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-Expo-Widget-Counter.hanlinExpo",
+      "bytes": 1149,
+      "sha256": "a52c828cdb87f115c668b7cba544781ce89c023b14a65551844ee7985faa3d9d"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo",
+      "bytes": 1703,
+      "sha256": "593bee65811c0e4d6fc63532254d0ab174a8bb5779b06c838023d0792d06914d"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-Expo-Widget-Visuals.hanlinExpo",
+      "bytes": 1283,
+      "sha256": "4532c361e91e32580a7dca5c120e1131bb2d9f07138b2b4103bdab138f588368"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-Mixed-Native-Widget.hanlinExpo",
+      "bytes": 1000,
+      "sha256": "2121ea971faa158e891b8222372e2250062286b813ad8a889971cc351a8c75d7"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-Widget-Invalid-Cases.hanlinExpo",
+      "bytes": 949,
+      "sha256": "a86f47a41f684ecbb1dcce23552798b88cc7ab6622a8c316f2b721b44daf52c5"
+    },
+    {
+      "path": "Fixtures/Widgets/SHA256.json",
+      "bytes": 4242,
+      "sha256": "1634045a1994308f6770002e8ca2848917e0c04310561c628a697fb8c1e2b8a5"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionStore.swift",
+      "bytes": 57913,
+      "sha256": "0085600e6e48bb8e40565a85e081403854639279e82f2bc72664cf7f56e69248"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+      "bytes": 83986,
+      "sha256": "53bc610452297522b67593dc6a63e201aa5287acc8ed5b0e5769d94f381b7b5f"
+    },
+    {
+      "path": "Scripts/Widgets/Tests/compiler-and-actions.test.mjs",
+      "bytes": 8677,
+      "sha256": "85dcba7c47a30ccec0fc49618f46c03cd8bfa610b7514cb9416e9a77155a523c"
+    },
+    {
+      "path": "Scripts/Widgets/samples.mjs",
+      "bytes": 10480,
+      "sha256": "35e890a18641ed5f13ff5cc474a246f1dff0e4d61a0cd6d54ae8af64342730bb"
+    }
+  ],
+  "ownerPortableProofs": [
+    {
+      "path": "/tmp/hanlin-native-compatibility-20261126-549ij7t3/original-widget-contracts-after.log",
+      "bytes": 928,
+      "sha256": "0efa4a4121309deb34c27d9e1366f6e852d1d3c0719caca71d776c8457dec3f6",
+      "interpretation": "OWNER_ORIGINAL_NODE_PASS",
+      "reportedCases": 9,
+      "reviewedWithoutRerun": true
+    },
+    {
+      "path": "/tmp/hanlin-native-compatibility-20261126-549ij7t3/original-interactive-widget-contracts-complete-inputs.log",
+      "bytes": 1259,
+      "sha256": "7b297ef198c88c34ceb82d20423aaa2749a89ca6a7606f92a722204477adbd27",
+      "interpretation": "OWNER_ORIGINAL_NODE_PASS",
+      "reportedCases": 10,
+      "reviewedWithoutRerun": true
+    },
+    {
+      "path": "/tmp/hanlin-native-compatibility-20261126-549ij7t3/exact-pin-contract-negative.log",
+      "bytes": 1126,
+      "sha256": "cb5f766fec0a82c7948dd6b9f6e2394fd3786fc0dcb78c18abdda3366559e495",
+      "interpretation": "EXPECTED_REJECTION_OF_OLD_PIN",
+      "reportedCases": 1,
+      "reviewedWithoutRerun": true
+    },
+    {
+      "path": "/tmp/hanlin-native-compatibility-20261126-549ij7t3/fixture-byte-proof.json",
+      "bytes": 2739,
+      "sha256": "992f7c2f838a90bd1ea9079dee8f11f1b4fc7e02ee4d8f41fd5cd363f1b67a12",
+      "interpretation": "OWNER_ARCHIVE_BYTE_PROOF",
+      "reportedCases": 8,
+      "reviewedWithoutRerun": true
+    },
+    {
+      "path": "/tmp/hanlin-native-compatibility-20261126-549ij7t3/preserved-original-contracts.json",
+      "bytes": 1741,
+      "sha256": "98accf00946991b6f1a286437ecb48bf5b45dba2982697798ec7ccf8a3fb5520",
+      "interpretation": "OWNER_PRESERVATION_PROOF",
+      "reportedCases": null,
+      "reviewedWithoutRerun": true
+    }
+  ],
+  "limitations": [
+    "No native build or test was executed by this reviewer. Both required original failing methods and new regression need actual current-source native execution.",
+    "Frozen original V1 store/contracts/provenance, current decoder/verifier, exact runtime pins and original test assertions are unchanged.",
+    "This review does not grant full product, device, OS-surface or final integrated root acceptance."
+  ]
+}
