@@ -1,0 +1,235 @@
+{
+  "at": "2026-11-26T14:46:19.182Z",
+  "read_only": true,
+  "source": "a35694f73d07b161d6db5e8c150b7d905e883455",
+  "products": [
+    {
+      "product": "Hanlin",
+      "app_id": "6811910017",
+      "app_status": 200,
+      "app": {
+        "name": "ChavrusaChat",
+        "bundleId": "com.itorah.chavrusachat",
+        "primaryLocale": "he"
+      },
+      "builds_status": 200,
+      "builds": [
+        {
+          "id": "794a0108-2a39-4c0b-ae6c-c8f1b2f246b5",
+          "build": "149101",
+          "processing_state": "VALID",
+          "uploaded_at": "2026-11-26T00:32:38-08:00",
+          "expired": false,
+          "version": "0.7.3"
+        },
+        {
+          "id": "bc83ebb2-8d55-4cbb-a68f-250b7657a84d",
+          "build": "149001",
+          "processing_state": "VALID",
+          "uploaded_at": "2026-11-25T11:56:36-08:00",
+          "expired": false,
+          "version": "0.7.3"
+        },
+        {
+          "id": "660a5ea1-c875-4b4b-ba9c-5cb5af68f547",
+          "build": "148801",
+          "processing_state": "VALID",
+          "uploaded_at": "2026-11-22T17:52:54-08:00",
+          "expired": false,
+          "version": "0.7.3"
+        },
+        {
+          "id": "d616a47f-e368-4f20-a0c9-9a9253d184c1",
+          "build": "147501",
+          "processing_state": "VALID",
+          "uploaded_at": "2026-11-22T09:55:18-08:00",
+          "expired": false,
+          "version": "0.7.3"
+        },
+        {
+          "id": "1e9aa944-86e5-4e03-9a02-989cc93585f8",
+          "build": "145801",
+          "processing_state": "VALID",
+          "uploaded_at": "2026-11-21T22:27:28-08:00",
+          "expired": false,
+          "version": "0.7.3"
+        },
+        {
+          "id": "ea8b309c-a0a3-4afb-b8f8-3234c0a536c1",
+          "build": "145401",
+          "processing_state": "VALID",
+          "uploaded_at": "2026-11-21T18:41:31-08:00",
+          "expired": false,
+          "version": "0.7.3"
+        },
+        {
+          "id": "1e3cd763-54a8-447a-b6e1-2795c1c8f59f",
+          "build": "145201",
+          "processing_state": "VALID",
+          "uploaded_at": "2026-11-21T15:13:35-08:00",
+          "expired": false,
+          "version": "0.7.3"
+        },
+        {
+          "id": "f0987c1e-9d6c-49f5-a4ac-92f878fe1113",
+          "build": "145001",
+          "processing_state": "VALID",
+          "uploaded_at": "2026-11-21T11:09:15-08:00",
+          "expired": false,
+          "version": "0.7.3"
+        },
+        {
+          "id": "56bb0a9e-9344-4dcd-8636-328d2cff3c64",
+          "build": "143801",
+          "processing_state": "VALID",
+          "uploaded_at": "2026-11-19T19:59:02-08:00",
+          "expired": false,
+          "version": "0.7.3"
+        },
+        {
+          "id": "00c1d534-796d-4a2b-b633-0bb3e07d87b4",
+          "build": "98201",
+          "processing_state": "VALID",
+          "uploaded_at": "2026-11-11T05:38:04-08:00",
+          "expired": false,
+          "version": "0.7.3"
+        }
+      ]
+    },
+    {
+      "product": "MiniApps",
+      "app_id": "6836449016",
+      "app_status": 200,
+      "app": {
+        "name": "Hanlin MiniApps",
+        "bundleId": "com.itorah.hanlinminiapps",
+        "primaryLocale": "en-US"
+      },
+      "builds_status": 200,
+      "builds": [
+        {
+          "id": "1ae71753-e43d-46dd-b01c-11fab5c54fcb",
+          "build": "8301",
+          "processing_state": "VALID",
+          "uploaded_at": "2026-11-22T17:15:19-08:00",
+          "expired": false,
+          "version": "0.1.0"
+        },
+        {
+          "id": "a98e948c-a986-4290-b82a-f34f6a9194de",
+          "build": "6601",
+          "processing_state": "VALID",
+          "uploaded_at": "2026-11-22T08:34:02-08:00",
+          "expired": false,
+          "version": "0.1.0"
+        }
+      ]
+    },
+    {
+      "product": "Otzaria",
+      "app_id": "6809559414",
+      "app_status": 200,
+      "app": {
+        "name": "ChavrusaText",
+        "bundleId": "com.davidpovarsky.chavrusatext",
+        "primaryLocale": "en-US"
+      },
+      "builds_status": 200,
+      "builds": [
+        {
+          "id": "78f4cf1f-d84a-4a57-aa1d-de472790916c",
+          "build": "11201",
+          "processing_state": "VALID",
+          "uploaded_at": "2026-11-09T18:40:04-08:00",
+          "expired": false,
+          "version": "1.0.0"
+        },
+        {
+          "id": "3ad95949-abf0-46d4-afa5-62609dd80dea",
+          "build": "11001",
+          "processing_state": "VALID",
+          "uploaded_at": "2026-11-09T15:34:25-08:00",
+          "expired": false,
+          "version": "1.0.0"
+        },
+        {
+          "id": "3e2f77e7-b9e5-452b-b268-84a0908b1e2a",
+          "build": "10901",
+          "processing_state": "VALID",
+          "uploaded_at": "2026-11-09T12:33:24-08:00",
+          "expired": false,
+          "version": "1.0.0"
+        },
+        {
+          "id": "00ce1524-94dd-4fe2-bcaa-750ae1d3a5fe",
+          "build": "10701",
+          "processing_state": "VALID",
+          "uploaded_at": "2026-11-09T07:09:49-08:00",
+          "expired": false,
+          "version": "1.0.0"
+        },
+        {
+          "id": "97bff7e2-0fe6-457a-9db0-bf32794e88c2",
+          "build": "10601",
+          "processing_state": "VALID",
+          "uploaded_at": "2026-11-09T00:29:49-08:00",
+          "expired": false,
+          "version": "1.0.0"
+        },
+        {
+          "id": "bb00cef6-216b-4ae2-a660-d4cc1e45728e",
+          "build": "10401",
+          "processing_state": "VALID",
+          "uploaded_at": "2026-11-08T13:11:45-08:00",
+          "expired": false,
+          "version": "1.0.0"
+        },
+        {
+          "id": "0f6c6bbd-dc26-4e37-a97b-6e8c8c7a6855",
+          "build": "10301",
+          "processing_state": "VALID",
+          "uploaded_at": "2026-11-08T11:17:06-08:00",
+          "expired": false,
+          "version": "1.0.0"
+        },
+        {
+          "id": "c9e541c9-6883-4828-96be-b78060c6287c",
+          "build": "10101",
+          "processing_state": "VALID",
+          "uploaded_at": "2026-11-07T23:56:13-08:00",
+          "expired": false,
+          "version": "1.0.0"
+        },
+        {
+          "id": "bbb94d8b-a1f7-4e4c-95f0-3ce990280284",
+          "build": "10001",
+          "processing_state": "VALID",
+          "uploaded_at": "2026-11-04T02:17:48-08:00",
+          "expired": false,
+          "version": "1.0.0"
+        },
+        {
+          "id": "2c512159-772f-4644-b4c4-9cb09e7ccdce",
+          "build": "9801",
+          "processing_state": "VALID",
+          "uploaded_at": "2026-11-03T18:06:16-08:00",
+          "expired": false,
+          "version": "1.0.0"
+        }
+      ]
+    }
+  ],
+  "anytype": {
+    "status": 200,
+    "exact_apps": [
+      {
+        "id": "6839398256",
+        "name": "Pinkha Notes",
+        "bundleId": "io.anytype.app.NA6HPWARQ2",
+        "primaryLocale": "en-US"
+      }
+    ]
+  },
+  "new_archive": "NOT_RUN",
+  "new_upload": "NOT_RUN"
+}

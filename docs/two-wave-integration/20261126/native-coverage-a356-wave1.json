@@ -1,0 +1,2217 @@
+{
+  "planSHA": "a35694f73d07b161d6db5e8c150b7d905e883455",
+  "baseSHA": "c34dd6ae752b3ab3ebc001743fc62c72fc48a203",
+  "planSHA256": "1930975b4cb8a9dc0f79f4089d47f8ff9b80a3a202596c8a34d69fec21866f14",
+  "isFullValidation": false,
+  "selectedCount": 87,
+  "selectedUnitCount": 77,
+  "selectedUICount": 10,
+  "status": "SOURCE_COVERAGE_RECONCILIATION_ONLY_NO_NATIVE_EXECUTION",
+  "knownPendingGroups": {
+    "original_paired_ai29": [
+      "AI_HLYTests/PendingFirstTurnTests/importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings()",
+      "AI_HLYTests/PendingFirstTurnTests/cancelledMiniAppRepairPreservesHomeDraft()",
+      "AI_HLYTests/HanlinScriptingPlatformCompositionTests/malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic()",
+      "AI_HLYTests/MiniAppAuthoringToolTests/originalSDKWriteValidateBuildAndRepair()",
+      "AI_HLYTests/MiniAppAuthoringToolTests/sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource()",
+      "AI_HLYTests/MiniAppAuthoringToolTests/originalExpoMetroBuildOnEmbeddedNode()",
+      "AI_HLYTests/HanlinOriginalScriptWidgetAPITests",
+      "AI_HLYTests/HanlinNativePresentationTests",
+      "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests",
+      "AI_HLYTests/HanlinOriginalScriptWidgetControlTests",
+      "AI_HLYTests/HanlinMiniAppStorageCapacityTests",
+      "AI_HLYTests/HanlinOriginalExpoWidgetTests",
+      "AI_HLYUITests/MiniAppAuthoringUITests",
+      "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure",
+      "AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer"
+    ],
+    "original_cache_app48": [
+      "AI_HLYTests/HanlinPromptCachingIntegrationTests",
+      "AI_HLYTests/ClassicChatRestorationTests",
+      "AI_HLYTests/HanlinMiniAppAssistantIntegrationTests",
+      "AI_HLYTests/HanlinModelPromptCachePersistenceTests"
+    ],
+    "composer_app13": [
+      "AI_HLYTests/HanlinComposerCapabilityIntegrationTests/sentSDKRequestAndPersistedMessageKeepIndependentCapabilitySnapshots()",
+      "AI_HLYTests/HanlinComposerCapabilityIntegrationTests/mcpAttachmentChangesOnlyThisRequestAndResolvesCurrentAliases()",
+      "AI_HLYTests/HanlinComposerCapabilityIntegrationTests/nativeAndLegacySelectionsDispatchOriginalArgumentsWithIndependentConfiguration()",
+      "AI_HLYTests/HanlinComposerCapabilityIntegrationTests/explicitNativeRequestAdmitsADisabledToolWithoutEnablingItsPreferences()",
+      "AI_HLYTests/HanlinComposerCapabilityIntegrationTests/overlappingNativeAndMiniAppSelectionsRejectDifferentConfigurationsAtomically()",
+      "AI_HLYTests/HanlinComposerCapabilityIntegrationTests/selectedMapRegionOverridesModelCoordinatesAndNeverBecomesADefault()",
+      "AI_HLYTests/HanlinMiniAppAssistantToolTests/discoveryAndSelectionUseMetadataWithoutOpeningTheApp()",
+      "AI_HLYTests/HanlinMiniAppAssistantToolTests/originalArgumentsAndSnapshotConfigurationHaveSeparateAuthorities()",
+      "AI_HLYTests/HanlinMiniAppAssistantToolTests/staleSelectionAndOverlappingDifferentConfigurationsAreRejected()",
+      "AI_HLYTests/HanlinMiniAppAssistantToolTests/runtimeRootMustLoadTheDeclaredToolAndCannotFallBackToIndex()",
+      "AI_HLYTests/HanlinMiniAppAssistantToolTests/modernRenderersReceivePlainExactJavaScriptJSON()",
+      "AI_HLYTests/SkillOpenClawPolicyTests/currentOriginalPolicyControlsLoadReadAndActualSDKContinuation()",
+      "AI_HLYTests/HanlinMiniAppHostDiscoveryTests/preparedExpoActionExportsKeepTheirInstalledAppInTheCatalog()"
+    ],
+    "composer_native_engines4": [
+      "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualNativeScriptAssistantUsesDedicatedSourceAndImmutableConfiguration()",
+      "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualExpoAssistantUsesDedicatedSourceAndImmutableConfiguration()",
+      "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptAssistantRepliesSettleOnceAndRejectMalformedJSON()",
+      "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptAssistantCancellationAndInvalidationReleaseWaiters()"
+    ],
+    "composer_native_editor5_invocations": [
+      "AI_HLYTests/NativeComposerLineSizingTests/equalStringOwnerSwitchKeepsPendingInputAndLateDelegateScoped()",
+      "AI_HLYTests/NativeComposerLineSizingTests/canonicalEquivalentOwnerAndNativeReplacementsPreserveExactText()",
+      "AI_HLYTests/NativeComposerLineSizingTests/markedTextOwnerSwitchPreservesCompositionAndAuthoritativeClear(_:)",
+      "AI_HLYTests/NativeComposerLineSizingTests/programmaticDraftUpdatesWhileEditing()"
+    ],
+    "composer_ui_phone4": [
+      "AI_HLYUITests/HanlinComposerCapabilitiesUITests/testMiniAppSelectionAttachesWithoutLaunchingAndEnablesAttachmentOnlySend",
+      "AI_HLYUITests/HanlinComposerCapabilitiesUITests/testMentionAndSlashPreserveHebrewTextAtTheRealCaretAndInsertTheSameIdentity",
+      "AI_HLYUITests/HanlinComposerCapabilitiesUITests/testManifestCatalogAndMapPanelsKeepUserConfigurationAcrossEditing",
+      "AI_HLYUITests/HanlinMorphComposerUITests/testDismissModelPickerKeepsSelectedModelAndDraft"
+    ],
+    "composer_ui_tablet3": [
+      "AI_HLYUITests/HanlinComposerCapabilitiesUITests/testMiniAppSelectionAttachesWithoutLaunchingAndEnablesAttachmentOnlySend",
+      "AI_HLYUITests/HanlinComposerCapabilitiesUITests/testMentionAndSlashPreserveHebrewTextAtTheRealCaretAndInsertTheSameIdentity",
+      "AI_HLYUITests/HanlinComposerCapabilitiesUITests/testManifestCatalogAndMapPanelsKeepUserConfigurationAcrossEditing"
+    ],
+    "chat_ui4_per_destination": [
+      "AI_HLYUITests/AgentRuntimeConversationUITests/testUI02ClassicUserAndAssistantBubbleWithDirectActionButtons",
+      "AI_HLYUITests/AgentRuntimeConversationUITests/testUserBubbleLongPressKeepsNativeActionsAndOriginalMessage",
+      "AI_HLYUITests/AgentRuntimeConversationUITests/testHebrewNewChatAndNativeMessageActions",
+      "AI_HLYUITests/HanlinContextualTextToolsUITests/testOriginalTextToolsReceiveTheMessageWithoutReplacingTheConversation"
+    ]
+  },
+  "rows": [
+    {
+      "selector": "AI_HLYTests/AgentActivityHeaderPhaseTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/AgentActivityHeaderPhaseTests.swift"
+      ],
+      "sourceMethodCount": 19,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "activeRunGapsKeepTheRootWithoutInventingAnAnimatedLeaf",
+        "admittedNonTextOutputEndsReasoningWithoutDemotingTheFinalAnswer",
+        "automaticDisclosureRespectsManualChoiceAcrossUpdatesAndRestoration",
+        "completedHistoryNeverRevivesThinkingFromStaleApproval",
+        "completedToolDoesNotReuseItsEarlierRunningSummary",
+        "confirmedFinalAnswerStopsWorkingWithoutFalsifyingConcurrentExecution",
+        "displayedProviderTextNeverDisappearsWhenLaterChunksArrive",
+        "failureCancellationAndConsentDoNotImplyLiveWorkOrSuccess",
+        "finalAnswerReceiptSurvivesSnapshotButProvisionalTextDoesNotFinishWork",
+        "historicalFooterAndDuplicateActivityStatusAreHidden",
+        "internalPreparationDoesNotCreateToolActivityOrRewriteHistory",
+        "longDisplayableReasoningSurvivesStreamingCompletionAndColdRead",
+        "mountedDetailsKeepCallIdentityAndPayloadIndependentOfExpansion",
+        "olderStoredRunsDoNotInventPendingRequestReceipt",
+        "onlyActualRequestReceiptShowsWaitingAndFirstSemanticOutputClearsIt",
+        "permissionWaitPausesShimmerAndCanResumeOnlyWhileActive",
+        "providerReasoningSurvivesCompositionAndEndsAtTheFirstAnswer",
+        "reasoningAndRealToolLifecyclesSurviveWhileDiscoveryStaysHidden",
+        "thinkingRootRemainsVisibleBesideOnlyActualToolMotion"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/AgentDiagnosticsExportTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/AgentDiagnosticsExportTests.swift"
+      ],
+      "sourceMethodCount": 4,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "archiveRedactsAgainExcludesRawAndAuthenticatesExportedBytes",
+        "crashTailIsExplicitAndMalformedCompleteRecordsFail",
+        "symlinksAndOversizedAssetsFailInsteadOfEscapingOrTruncating",
+        "upgradeStopsLegacyDeletionAndRespectsSubsequentExplicitChoice"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/AgentDiagnosticsJournalTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/AgentDiagnosticsJournalTests.swift"
+      ],
+      "sourceMethodCount": 5,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "credentialsSplitAcrossSSEEventsRemainOnlyInTheEncryptedSource",
+        "legacyTraceKeepsTokenCountsButRedactsNestedAndCamelCaseCredentials",
+        "redactionPreservesOrdinaryConversationAndMasksNestedSecrets",
+        "splitUTF8TransportRetainsExactEncryptedBytesAndReadableSSE",
+        "unavailableKeyNeverWritesRawPlaintextAndReportsTheLoss"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/AgentDiagnosticsRecorderPersistenceTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/AgentDiagnosticsRecorderPersistenceTests.swift"
+      ],
+      "sourceMethodCount": 1,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "actualRecorderReopensItsSessionAndDeviceKeyCapture"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/AgentDiagnosticsSessionPersistenceTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/AgentDiagnosticsSessionPersistenceTests.swift"
+      ],
+      "sourceMethodCount": 4,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "latencyNamesDoNotAllowCredentialStringsOrOrdinaryTokensThrough",
+        "legacyRepairDoesNotAcceptOtherCorruptFieldsOrGuessedNumericStrings",
+        "numericLatencyMetricsSurviveRedactionAndTypedSessionReopen",
+        "oldRedactedLatenciesRecoverWithoutRewritingTheSourceFile"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/AgentRoundPresentationTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/AgentRoundPresentationTests.swift"
+      ],
+      "sourceMethodCount": 26,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "actualApprovalKeepsCallIdentityAndDenialStaysNeutralThroughFailureReplay",
+        "actualRoundMarkersOwnReasoningAndParallelSameNameTools",
+        "approvalSummaryNeverHidesArgumentsThatNeedReview",
+        "asyncCancellationCannotClearANewerRunWhileRecorderDrains",
+        "attributedSingletonRoundsKeepTheirHierarchyWithoutInventingLegacyParents",
+        "calendarAndMemoryOperationsSelectTheirOwnTrustedMotion",
+        "chatCompletionsSourceLinksPersistWithoutProviderAnnotationEvents",
+        "citationEventBesideItsTextDeltaKeepsTheNewTranscriptOwner",
+        "emptyReasoningDoesNotCreateHistoryAtAnyDuration",
+        "exactBuiltInOperationsKeepTheirOwnActivityPresentation",
+        "legacyActivitiesNeverAcquireAParentFromTheirTimeOrName",
+        "legacyResourcesRequireExplicitSourceLinksAndNeverGuessNumericIndexes",
+        "locationApprovalShowsRealScopeWithoutTrustingProgressNarrative",
+        "mcpDeclaredIconsPreferToolThenItsServerForCurrentTheme",
+        "mcpIconMetadataPreservesLegacyCodableAndSkipsMalformedDecoration",
+        "mcpIconsSurviveCanonicalCallPersistenceAndActivityProjectionWithoutChangingAuthority",
+        "mcpUnsafeAndMissingIconsKeepServerOrSystemSymbolFallback",
+        "missingOrUnsafeResourceFaviconsKeepTheExistingDefault",
+        "orderedMarkdownFragmentRetainsOnlyItsVerifiedAnchors",
+        "providerCitationsKeepTheOriginalAnswerAndCannotBorrowChangedText",
+        "richToolFollowupPreservesPriorAnswerAndStableActivityIdentity",
+        "sourceURLAliasesKeepClaimAnchorsAndScopedProjectionAfterReplay",
+        "sourceURLAliasesStayBoundedAndKeepOriginalDestination",
+        "sourceURLAliasesSurviveEvidenceDeduplicationAndCodable",
+        "suppliedResourceFaviconSurvivesCanonicalSourceAndInlineAliasProjection",
+        "suspendedBeginCannotReclaimOwnershipFromANewerRun"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/AgentRuntimeConversationAcceptanceTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/AgentRuntimeConversationAcceptanceTests.swift"
+      ],
+      "sourceMethodCount": 12,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "cancelDuringAgentWorkStopsAllLaterToolExecution",
+        "diagnosticsCaptureActualContinuationRequest",
+        "malformedCallsRecover",
+        "productionCodeSkillLocalPythonCompletesSameUserTurn",
+        "productionToolFailureRecoversAndAnswersSameTurn",
+        "recoversAfterRejectedShellCall",
+        "roundOrderUsesExactSDKStepNumbers",
+        "runtimeParameters",
+        "startingNewRunCancelsOldRunWithoutGhostWork",
+        "successfulRuntimeChain",
+        "terminalDiagnosticsAreImmutable",
+        "unexpectedSDKStreamEndIsFailureNotCompleted"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/AgentSkillsExposureTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/AgentSkillsExposureTests.swift"
+      ],
+      "sourceMethodCount": 10,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "capabilitySessionIsolation",
+        "fullSDKSkillToToolFlow",
+        "loadSkillInstructionContextPropagation",
+        "loadSkillToolExecution",
+        "productionSkillCatalogSynchronization",
+        "readToolResultToolPagination",
+        "skillCatalogRegistration",
+        "skillIndexPrompt",
+        "toolExposurePlannerBudget",
+        "toolSearchToolExecution"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/AgentTokenUsageCacheTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/AgentTokenUsageCacheTests.swift"
+      ],
+      "sourceMethodCount": 7,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "aggregateFractionRequiresCompleteProviderMeasurementCoverage",
+        "cacheReadAndWriteAreSubsetsNotAdditionalTokenCharges",
+        "completeRoundAggregationRetainsWritesAndUsesWeightedReadFraction",
+        "genuineZeroDiffersFromMissingAndInconsistentMeasurements",
+        "legacyJSONAndRoundTripPreserveMissingAndReportedCacheValues",
+        "readableReportIncludesCoverageAndKeepsUnknownUnavailable",
+        "unavailableAndPartialMeasurementsDoNotInventTotals"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/AppleLocalProvidersTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/AppleLocalProvidersTests.swift"
+      ],
+      "sourceMethodCount": 8,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "testCapabilityDetection",
+        "testCoreAIEmptyModelFileRejected",
+        "testCoreAIGenerateThrowsBlockedDependency",
+        "testCoreAIInvalidFormat",
+        "testCoreAINonExistentFile",
+        "testFoundationModelProviderRejectsImagesWhenNonMultimodal",
+        "testFoundationModelProviderStreamingViaBackend",
+        "testFoundationModelProviderUnavailable"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/AutomaticWebSearchCacheTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/AutomaticWebSearchCacheTests.swift"
+      ],
+      "sourceMethodCount": 11,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "bypassDoesNotJoinAnOrdinaryFlight",
+        "cacheHitExpiryAndClockRollback",
+        "cancellingAllWaitersCancelsTheFlightAndAllowsFreshRequest",
+        "cancellingOneWaiterPreservesTheOtherWaiter",
+        "diagnosticBypassDoesNotReplaceNormalCachedResults",
+        "failuresAreNotCachedAndDifferentCountsAreSeparateRequests",
+        "freshnessStartsWhenProviderCompletes",
+        "invalidationSeparatesGenerationsAndPreventsLateRepopulation",
+        "originalLRULibraryEvictsLeastRecentlyUsedEntry",
+        "oversizedResultsReturnWithoutEvictingUsefulEntries",
+        "simultaneousEquivalentSearchesShareOneProviderCall"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/CalendarToolTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/CalendarToolTests.swift"
+      ],
+      "sourceMethodCount": 4,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "failedReadProducesStructuredOutcomeWithoutPoisoningNextCall",
+        "failedWriteIsNeverReportedAsCommitted",
+        "malformedWriteIsRejectedBeforeExecutorAndCommittedWriteIsRetained",
+        "reversedDatesDoNotDispatchAndNextSearchCanComplete"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/CanonicalAdapterTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/CanonicalAdapterTests.swift"
+      ],
+      "sourceMethodCount": 14,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "appModulesDeriveFromCanonicalDescriptor",
+        "builtinCanonicalRegistrations",
+        "builtinRuntimeBindings",
+        "canonicalCapabilityProjectionPartitioning",
+        "capabilityProjectionMappingAndDiagnostics",
+        "chatCardProjectsToEmbeddedResult",
+        "mcpProjection",
+        "mcpRejections",
+        "moduleCapabilityProjectionPreservesDiagnostics",
+        "nativeApplicationProjection",
+        "nativeToolProjection",
+        "registryCapabilityAggregationPreservesDiagnostics",
+        "runtimeCoreProjection",
+        "supportedCapabilitiesProjectWithMetadata"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/CanonicalMiniAppIntegrationTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/CanonicalMiniAppIntegrationTests.swift"
+      ],
+      "sourceMethodCount": 13,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "allCompiledProvidersRegistered",
+        "bridgeContainerAndCapabilityGating",
+        "callerIdentitySpoofingRejected",
+        "catalogEngineGrouping",
+        "compiledExposures",
+        "compiledIntentPublishesItsActualDurableResultAndRejectsStaleIdentity",
+        "interAppRequestBrokering",
+        "nativeServicesExecution",
+        "perEntrypointIsolationHybrid",
+        "perEntrypointResolutionHybrid",
+        "privateStoragePathTraversalRejected",
+        "stableUpdateIdentity",
+        "swiftParityStateTransitions"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/CanonicalShadowCoordinatorTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/CanonicalShadowCoordinatorTests.swift"
+      ],
+      "sourceMethodCount": 5,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "allObservableDomains",
+        "combinedToolRouteFailures",
+        "reportRedaction",
+        "reportStatusesAndOrdering",
+        "skippedDomains"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/CanonicalToolAuthorityTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/CanonicalToolAuthorityTests.swift"
+      ],
+      "sourceMethodCount": 11,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "backendRouteIndexValidation",
+        "catalogShapes",
+        "combinedCatalogAndRoutes",
+        "deterministicDiscoveryOrder",
+        "exactDispatch",
+        "executionErrorPropagatesOnce",
+        "identityIndependence",
+        "legacyModelFacingParity",
+        "nativeFirstCollisionPolicy",
+        "preservesModelSchemas",
+        "rejectsInvalidAuthorityInputs"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/ChatAutoFollowTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/ChatAutoFollowTests.swift"
+      ],
+      "sourceMethodCount": 15,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "aNewRunRejectsThePreviousPendingScroll",
+        "detachedTranscriptCannotReuseCachedLayoutOrQueuedRestoration",
+        "finiteNearBottomMeasurementHandlesInsetsAndElasticOverscroll",
+        "followLatestVisibilityUsesMeasuredPositionRatherThanFollowMode",
+        "growingTranscriptCanFollowAgainWhileUserPauseRemainsAuthoritative",
+        "interactionCancelsScheduledScrollAndStaleTimerCannotClearNewOne",
+        "invalidGeometryCancelsAnAlreadyQueuedScroll",
+        "invalidationAndFittingContentClearAnObsoleteArrowWithoutChangingUserIntent",
+        "measuredScrollRangeIncludesOriginalInsetsWithoutDuplicateComposerClearance",
+        "nonFiniteAndOverflowingGeometryCannotRestoreAnOffset",
+        "pendingLongTranscriptRequestRechecksGeometryAfterContentShrinks",
+        "resizedViewportRecomputesBottomFromTheNewLayoutAndOffsetTogether",
+        "selectionPauseRejectsLayoutWorkUntilAnExplicitResume",
+        "sustainedRequestsKeepOneTimerAndMergeAnimationWithoutStarvation",
+        "unmeasuredAndFittingTranscriptsNeverScheduleEvenForcedScrolling"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/ChatCanonicalPresentationSurvivalTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/ChatCanonicalPresentationSurvivalTests.swift"
+      ],
+      "sourceMethodCount": 5,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "builtinCanonicalToolsFallback",
+        "canonicalMetadataPrecedence",
+        "dynamicToolPresentationSurvival",
+        "failedActivityTitle",
+        "scriptingToolPresentationSurvival"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/ChatCodeFenceTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/ChatCodeFenceTests.swift"
+      ],
+      "sourceMethodCount": 5,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "actualWebKitParsesFullUnifiedAndSplitDiffWithoutExecutingSource",
+        "actualWebKitQueuesDiagramAndDiffAgainstOneColdStartup",
+        "actualWebKitRendersRequiredMermaidFamiliesAndCachesExactInputs",
+        "assetsFailClosedOnTamperingAndVisibleDocumentDisablesScripts",
+        "cancellationRejectsAnOfflinePreviewWithoutReturningStaleContent"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/ChatComposerSessionBridgeTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/HanlinOrganizerDockParityTests.swift"
+      ],
+      "sourceMethodCount": 7,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "endpointRegistrationAndStaleUnregisterGuard",
+        "layoutModeTransitionPreservesTemporaryChat",
+        "liveDraftOwnerKeepsBridgeSnapshotsCurrent",
+        "outOfOrderStaleRegistrationRejected",
+        "perChatDraftSnapshotsIsolateState",
+        "temporaryMCPSelectionClearDoesNotCrossChats",
+        "toolUseBindingRemainsScopedToItsChat"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/ChatPresentationTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/ChatPresentationTests.swift"
+      ],
+      "sourceMethodCount": 15,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "actualCodeToolLifecycleKeepsOneRowPerCallAndRetainsItsFailureAfterRunCompletion",
+        "actualStreamProjectionDoesNotLetEventDedupHideCanonicalOutputOrFreezeItsStatus",
+        "addingSavedExcerptsMigratesTheExistingApplicationSchemaWithoutDeletingChat",
+        "ambiguousOrFormattedQuotesNeverInventOffsets",
+        "answerDeltasDoNotDuplicateReasoningOrEncodeEveryRunSnapshot",
+        "internalBrowserAcceptsOnlyRealWebURLs",
+        "mixedMarkdownMathAndStreamingHaveFiniteLayout",
+        "nativeSelectionPausesFollowingEvenWhenTheMessageIsNearTheBottom",
+        "parallelCallsWithSameToolAndArgumentsKeepTheirOwnIdentity",
+        "permissionReceiptDoesNotClaimExecutionOrBecomeItsTitle",
+        "personalSaveUsesSelectedQuoteWithoutAddingKnowledge",
+        "renderedRangesDisambiguateIdenticalSavedQuotes",
+        "rendererSelectionRetainsExactGraphemeAndNativeRange",
+        "savedSnapshotSurvivesStoreReopenAndSourceDeletion",
+        "selectionSheetCallbacksUseUnicodeSelectedRange"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/ChatScrollViewHandleTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/ChatScrollViewHandleTests.swift"
+      ],
+      "sourceMethodCount": 12,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "cancelledReadinessCannotRestoreAPreviousConversation",
+        "contentGrowthAndUserScrollingKeepTheViewportLifetime",
+        "deferredReadinessRechecksResizeAndCanRecoverAtTheNewViewport",
+        "detachAndReplacementInvalidateCapturedRequestsWithoutRetainingViews",
+        "everyReadRechecksWindowDimensionsAndConversation",
+        "incomingBindingBeforeActivationDoesNotNeedAnotherBridgeCallback",
+        "lateWindowAttachmentDeliversOneDeferredReadinessCallback",
+        "movingTheSameScrollViewToAnotherWindowInvalidatesQueuedPositioning",
+        "outgoingConversationCallbacksCannotUnbindOrCancelTheCurrentViewport",
+        "positiveGeometryWithoutAWindowCannotPositionATranscript",
+        "resizedViewportRejectsARequestBeforeTheNextBridgeCallback",
+        "settledPositionReadsTheCurrentOffsetWithoutMutatingTheViewport"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/ClassicChatRestorationTests",
+      "status": "PENDING_EXISTING_COMPLETE_SUITE_GATE",
+      "sourceFiles": [
+        "AI_HLYTests/ClassicChatRestorationTests.swift"
+      ],
+      "sourceMethodCount": 32,
+      "fullPendingGroups": [
+        "original_cache_app48"
+      ],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [
+        "agentReasoningNeverLeaksRawCoTToViews",
+        "assistantBubbleOwnsFinalAnswerAndActionButtons",
+        "build84001MCPValidationAndIncompatiblePackageGuard",
+        "build84001SchemaOverheadTokenBudget",
+        "build84001ShellPwdAndNodeCommonJSInference",
+        "build84001SkillVsToolNameDisambiguation",
+        "build84001UnicodePropertyRegexSanitizerInServerWorker",
+        "build84701P0ToolContentSeparationAndPerCallProjection",
+        "classicActionButtonsDirectVisibilityAndStates",
+        "classicBubbleAuthorityNeverSuppressesMessageRows",
+        "classicChatAgentProjectionSourceFileAndValidResources",
+        "codeBlockRowClassicPresentation",
+        "complexToolSequenceAndErrorPreservation",
+        "composerAccessoryBarNoOverlap",
+        "conversationListClassicNavigationAndPinnedRows",
+        "domainToolLegitimateInstructionsHeadingPreserved",
+        "duplicateOutputsDifferentCallsRetainOrderAndIdentity",
+        "dynamicBottomPaddingTracksMeasuredComposerHeight",
+        "expandedReasoningUsesApprovedSummaryProjection",
+        "hanlinComposerActionBridgeCapabilityAndActiveChips",
+        "hanlinComposerPopupCoordinatorMutualExclusionAndV33TwoPhaseZoom",
+        "hebrewEnglishChineseToolSummaryLocalization",
+        "legacyToolContentOnlyChatFallback",
+        "lifecycleCancelRetryLateEventsAcrossRuns",
+        "mcpInstallSelectInvokeUninstallE2E",
+        "modelRoutingAcrossPersistentProbeRefresh",
+        "multimodalFormattedMessagesToSDKConversion",
+        "nativeMultilineTextEditorEffectiveMeasurementWidth",
+        "retryReplacesFailedAssistantGroupWithoutDuplicateBubbles",
+        "toolResultVisibilityAndHistory",
+        "userBubbleUsesClassicShapeAndAttachments",
+        "webSearchCitationsAndSourcesDeduplicated"
+      ],
+      "remainingMethodNames": []
+    },
+    {
+      "selector": "AI_HLYTests/CompactChatRouteTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/HanlinOrganizerDockParityTests.swift"
+      ],
+      "sourceMethodCount": 2,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "compactWorkspaceThresholdMatchesSpec",
+        "workspaceRouteIdentity"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/CompactRecentConversationsTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/HanlinOrganizerDockParityTests.swift"
+      ],
+      "sourceMethodCount": 4,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "historySnippetHandlesShortAndAbsentMatches",
+        "historySnippetKeepsOriginalStringIndices",
+        "historySnippetPreservesUnicodeContext",
+        "selectsTopThreeByLastEditedIgnoringPinnedAndTemp"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/ComposerActionsParityTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/HanlinOrganizerDockParityTests.swift"
+      ],
+      "sourceMethodCount": 3,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "capabilityAndChipsUseClassicVocabulary",
+        "detachedCapabilitiesProjectRealModeState",
+        "imageCapabilityFollowsActualModelAfterPickerCancellation"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/CurrentLocationToolTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/CurrentLocationToolTests.swift"
+      ],
+      "sourceMethodCount": 7,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "addressLookupCancellationRemainsCancellation",
+        "alreadyCancelledRequestDoesNotReportSuccess",
+        "currentLocationAppendsToExistingMapPayload",
+        "currentLocationFailureAndCancellationAreTruthful",
+        "deniedLocationDoesNotAttemptAddressLookup",
+        "validCoordinatesSurviveUnavailableAddress",
+        "weatherFailuresAreNotReportedAsSuccess"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/EmbeddedResultResolverTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/EmbeddedResultResolverTests.swift"
+      ],
+      "sourceMethodCount": 16,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "boundedResultStoreCapacity",
+        "boundedResultStoreHardBoundRejection",
+        "chatPresentationBridgeMultiExpansions",
+        "contentActionsAndLaunchRequestStructure",
+        "contentActionsPipelineAndDispatch",
+        "payloadPreservation",
+        "resolverDispatchesToScriptingEngines",
+        "resolverDispatchesToSwift",
+        "resolverFallbackOnUnknown",
+        "resolverOwnerIdentityRouting",
+        "resultStoreSessionCleanup",
+        "resultStoreUnicodePagination",
+        "scriptUIEmbeddedInputContext",
+        "scriptingAdaptersStrictResolution",
+        "sessionLifecycleTearDown",
+        "swiftAdapterStrictResolution"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/ExpoPreparedEntrypointTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/ExpoPreparedEntrypointTests.swift"
+      ],
+      "sourceMethodCount": 3,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "defaultAndNestedRegularFilesRemainValidWithoutStartingReactOrHermes",
+        "malformedAndEscapingMainValuesAreRejectedBeforeRuntimeCreation",
+        "symlinkedMetadataOrAnyEntrypointComponentCannotRedirectThePreparedRoot"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/FoundationJSONShadowAdapterTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/FoundationJSONShadowAdapterTests.swift"
+      ],
+      "sourceMethodCount": 4,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "negativeZero",
+        "nestedCollectionsAndUnicodeKeys",
+        "primitiveDomains",
+        "rejectsUnsupportedValues"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/HanlinAppAgentSessionOwnerTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/HanlinAppAgentSessionOwnerTests.swift"
+      ],
+      "sourceMethodCount": 51,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "acceptedOriginAcknowledgementCannotClearAnotherWindowOrNewerDelivery",
+        "actualEventKitToolRecoversTheOriginalChatAndReadsTheFullDateWindow",
+        "actualNativeBoundaryPreservesExactInputsAndRejectsInvalidOrChangedContextBeforeEffects",
+        "actualSDKAdapterUsesOriginalAttachmentTurnAcrossDiagnosticsRoundsAndRevocation",
+        "appHostInvokesOriginalExecutorOnceAndUsesExplicitNativeOutcome",
+        "cachedSearchCatalogKeepsOriginalRoutesAndInvalidatesChangedSchemasBeforeDispatch",
+        "clearHistoryCommitsCanonicalBarrierAndVisibleReplacementToOriginalDiskStore",
+        "clearHistoryPreservesUnrecognizedOrExhaustedCanonicalRecord",
+        "clearHistoryRejectsAlreadySuspendedOriginalStoreWriter",
+        "clearHistorySaveFailureRestoresOriginalDiskContentWithoutSuccessMarker",
+        "deletingConversationDuringOriginalEnginePreparationCannotAdmitLateSession",
+        "diskBackedOriginalConversationReopensWithoutLosingLegacyOrCanonicalHistory",
+        "existingSwiftDataRowPreservesLegacyFieldsAndRejectsConflictForeignScopeAndDeletion",
+        "historicalReceiptDedupRejectsChangedLargeIntegerOutcomeAndPreservesBytes",
+        "historyOpenRejectsDeletedForeignAndCancelledOriginsWithoutCreatingSession",
+        "identicalContentAndPartIDsKeepExactRowRunBindingAndOriginalReplaySession",
+        "liveSettledAndProvisionalReceiptsHaveDistinctReconciliationRules",
+        "nativeConsentUsesOriginalOperationAcrossForeignAnswerContextAndRevocation",
+        "officialToolPayloadUsesOriginalRendererAndPersistsExactBytesWithoutInferringArbitraryJSON",
+        "originalCompactPublisherExportsOnlySecuredReferenceAndRetainsLegacyCompatibility",
+        "originalConsentExpiresRevokesAndRejectsStaleSheetAnswers",
+        "originalCredentialCommitSurvivesPublicationFailureAndRetryDoesNotResave",
+        "originalCredentialEditorRemainsTransientAndLegacyCompatible",
+        "originalCredentialHandlesFailClosedAndPreserveCurrentRequestAuthority",
+        "originalCredentialPortRejectsForeignModelNamespaceRequestAndDeletedOrigin",
+        "originalCredentialReadOnlySaveRetainsStagedRecoveryWithoutReplacingLegacyRow",
+        "originalCredentialStageFailureLeavesOriginalDiskRowUnchanged",
+        "originalCredentialStaleContextCannotCheckpointOverNewerSavedValue",
+        "originalDataEpochSurvivesEngineReplacementAndIsRevokedDuringPreparation",
+        "originalDirectTransportRechecksOwnerInsideItsProducer",
+        "originalDiscoveryAndProbesUseUnsavedCredentialWithoutImplicitFallback",
+        "originalHostActionContinuesThroughTheSameOwnerEngineAndCanonicalStore",
+        "originalInjectedProviderCannotBeReplacedByTurnTransport",
+        "originalMemoryPortRechecksOptInsAndCannotReplaceOriginlessRows",
+        "originalProviderAdmissionRejectsChangesDuringDiagnosticAwait",
+        "originalProviderCredentialRowsReopenAndRecoverWithoutSchemaChanges",
+        "originalReusedSDKEngineUsesEachTurnsManagerAndTransport",
+        "originalSecuredCredentialRotationRetainsPredecessorAndRejectsStaleDraft",
+        "originalSecuredSearchSelectionSurvivesUnavailableKeychain",
+        "originalStoreKeepsItsContainerAliveAcrossDeferredPersistenceAfterCreatorReturns",
+        "originalTypedAttachmentStorePreservesBytesAndRejectsForeignSessionMetadataAndTurn",
+        "protectedCredentialExplicitMigrationIsTargetedAndRecoverable",
+        "protectedCredentialExplicitReplacementRecoversMissingReferenceWithoutPlaintextFallback",
+        "protectedCredentialMetadataFailureAndStaleDraftPreserveOriginalDiskRow",
+        "protectedCredentialMetadataSaveRetainsNilAndEmptyRepresentations",
+        "protectedCredentialMetadataSavesPreserveOriginalRowsAndGenerations",
+        "protectedCredentialMigrationRejectsBuiltInMarkersAndEmptyKeys",
+        "protectedCredentialNewProviderCommitsOnlyReferenceAndFailedInsertRetainsExistingRows",
+        "stoppingInlineToolReleasesOnlyItsLeaseBeforeNonCooperativeExecutorDrains",
+        "temporaryCanonicalMetadataSurvivesCancellationWithoutDatabaseWrite",
+        "temporaryClearHistoryDropsOriginalSessionHistoryWithoutInsertingStoreRows"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/HanlinAppSplitOriginTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/HanlinAppSplitOriginTests.swift"
+      ],
+      "sourceMethodCount": 18,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "actualSessionDispatchSavesBeforeOpenAndReceiptBeforeOneTimeAccept",
+        "anotherIdleOrFailedOwnerCannotHideTheOriginalActiveCanonicalWriter",
+        "cancellationAfterReceiverStartKeepsOutcomeUnknownAndNeverNavigates",
+        "cancellationDuringTargetContextReturnsNotDispatchedWithoutMailboxWrite",
+        "cancellationWhileOSOpenAwaitsCannotLeaveAnUnresumableHostWaiter",
+        "canonicalSharingDoesNotBypassTheHostAuthorizer",
+        "canonicalSharingNeverRecastsCorruptPersistedStateAsAnEmptySuccess",
+        "canonicalSharingStillRejectsUnrelatedCallerAndWrongCapability",
+        "canonicalSharingSurvivesViewRegistrationAndReadsActualPrivateState",
+        "companionPreExecutionCancellationReturnsConfirmedNoEffectAndAllowsContinuation",
+        "consentedReturnSucceedsPastOriginalAdmissionDeadlineWithinSplitLifetime",
+        "deletedOriginalAssistantRowCannotRetargetAnExistingConversation",
+        "deletedOriginalCannotSaveAcceptNavigateOrRecreateAConversation",
+        "expiredHostAdmissionDeadlineStillRejectsBeforeDispatch",
+        "expiredOriginalFailsBeforeAnyTargetAuthorityOrStoreLookup",
+        "postStartCancelledOutcomeRemainsUncertainAndBlocksSubsequentTurn",
+        "preDispatchDeadlineExpiryDuringTargetContextBlocksMailboxAndOSOpen",
+        "receptionClaimRequiresAnExplicitWindowAndRejectsDuplicatesBeforeAwait"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/HanlinApplicationEmbeddingTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/HanlinApplicationEmbeddingTests.swift"
+      ],
+      "sourceMethodCount": 16,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "conversationDeletionRevokesPreparationAndRejectsLateProjection",
+        "conversationMetadataAndDeletionReturnSaveFailuresAndRollback",
+        "conversationMetadataMutatesOnlyTheOriginalRowsAndPreservesAnnouncement",
+        "conversationMutationRejectsAForeignContainerBeforeRevocation",
+        "explicitBuiltinRequestOverrideStaysHostOwnedDuringPreload",
+        "hostConstructedActivitySnapshotPreservesIdentityAndOriginalPayloads",
+        "modelPreloadingKeepsCustomMetadataForMatchingCatalogName",
+        "modelPreloadingPreservesDistinctCustomRowsWithEqualNames",
+        "modelPreloadingRetainsBuiltinCustomNameCollision",
+        "originalRuntimeCannotBeRedirectedToAnotherContainer",
+        "programmaticProviderAndModelUseOriginalRowsAndProtectedWriter",
+        "providerCredentialLookupUsesTheRecordsContainer",
+        "providerPreloadingKeepsCustomBuiltinRoutingOverride",
+        "providerPreloadingPreservesDistinctRoutingIdentitiesWithEqualNames",
+        "providerPreloadingPreservesRenamedBuiltinCredentials",
+        "providerPreloadingRetainsAmbiguousLegacyCredentialRows"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/HanlinApplicationSystemIntegrationTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/HanlinApplicationSystemIntegrationTests.swift"
+      ],
+      "sourceMethodCount": 4,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "liveSystemIntegrationOwnershipCannotBeRedirected",
+        "notificationBootstrapPreservesHostActionsAndCategories",
+        "plainHostsDoNotInheritHanlinShareGroupOrCameraRoute",
+        "widgetIntentMetadataLoadsTheOriginalHostTranslations"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/HanlinComposerCapabilityIntegrationTests",
+      "status": "PENDING_EXISTING_METHODS_COVER_COMPLETE_SUITE",
+      "sourceFiles": [
+        "AI_HLYTests/HanlinComposerCapabilityIntegrationTests.swift"
+      ],
+      "sourceMethodCount": 6,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {
+        "composer_app13": [
+          "AI_HLYTests/HanlinComposerCapabilityIntegrationTests/sentSDKRequestAndPersistedMessageKeepIndependentCapabilitySnapshots()",
+          "AI_HLYTests/HanlinComposerCapabilityIntegrationTests/mcpAttachmentChangesOnlyThisRequestAndResolvesCurrentAliases()",
+          "AI_HLYTests/HanlinComposerCapabilityIntegrationTests/nativeAndLegacySelectionsDispatchOriginalArgumentsWithIndependentConfiguration()",
+          "AI_HLYTests/HanlinComposerCapabilityIntegrationTests/explicitNativeRequestAdmitsADisabledToolWithoutEnablingItsPreferences()",
+          "AI_HLYTests/HanlinComposerCapabilityIntegrationTests/overlappingNativeAndMiniAppSelectionsRejectDifferentConfigurationsAtomically()",
+          "AI_HLYTests/HanlinComposerCapabilityIntegrationTests/selectedMapRegionOverridesModelCoordinatesAndNeverBecomesADefault()"
+        ]
+      },
+      "coveredMethodNames": [
+        "explicitNativeRequestAdmitsADisabledToolWithoutEnablingItsPreferences",
+        "mcpAttachmentChangesOnlyThisRequestAndResolvesCurrentAliases",
+        "nativeAndLegacySelectionsDispatchOriginalArgumentsWithIndependentConfiguration",
+        "overlappingNativeAndMiniAppSelectionsRejectDifferentConfigurationsAtomically",
+        "selectedMapRegionOverridesModelCoordinatesAndNeverBecomesADefault",
+        "sentSDKRequestAndPersistedMessageKeepIndependentCapabilitySnapshots"
+      ],
+      "remainingMethodNames": []
+    },
+    {
+      "selector": "AI_HLYTests/HanlinComposerDrawerRouteTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/HanlinOrganizerDockParityTests.swift"
+      ],
+      "sourceMethodCount": 3,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "directOneTapToolsOpensToolsRootImmediately",
+        "modelPickerPreservesDrawer",
+        "switchingPlusAndToolsSwapsModeInSameDock"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/HanlinConversationHistorySectionTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/HanlinSidebarGestureTests.swift"
+      ],
+      "sourceMethodCount": 3,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "calendarDayBoundaryHandlesDaylightSaving",
+        "pinnedAndDaySectionsKeepIdentityAndOrder",
+        "searchAndPinChangesDoNotDuplicateRows"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/HanlinConversationMetadataTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/HanlinConversationMetadataTests.swift"
+      ],
+      "sourceMethodCount": 16,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "allSuggestedSymbolsExistInTheNativeSDK",
+        "clearHistoryRejectsOldMetadataAndAllowsTheNewConversationSubject",
+        "configuredOptimizerWinsAndMissingCredentialsFallbackBeforeOneGeneration",
+        "deletionWhileGeneratingCannotResurrectTheConversation",
+        "editedSourceTextCannotApplyDelayedMetadata",
+        "explicitRenameToSamePlaceholderCancelsAutomationWithoutAnnouncement",
+        "fallbackUsesTheActualRequestModelInsteadOfSavedSelection",
+        "generatedTitleAndIconPersistTogetherWithoutSyntheticMessages",
+        "legacyCustomIconIsRetainedAndExplicitNamesDoNotGenerate",
+        "localModelUsesTheExistingFileWithoutRequiringAnAPIKey",
+        "manualAppearanceWinsAgainstDelayedMetadataAndPersists",
+        "manualEditInAnotherContextWinsAgainstTheOriginalObject",
+        "oldJobFinishingAfterClearCannotReleaseTheNewJob",
+        "overlappingUIAndHeadlessRequestsShareOneMetadataJob",
+        "separateModelContextsShareTheSameMetadataJob",
+        "sharedCreationStartsEmptyAndPreservesExplicitTitles"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/HanlinConversationProjectionTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/HanlinConversationProjectionTests.swift"
+      ],
+      "sourceMethodCount": 2,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "originalRichPayloadsAndFailureTextPersistInTheSameRows",
+        "staleRunLeaseCannotReleaseANewerUIOrHeadlessOwner"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/HanlinLocalizationTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [],
+      "sourceMethodCount": 0,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": []
+    },
+    {
+      "selector": "AI_HLYTests/HanlinLocalizedControlTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [],
+      "sourceMethodCount": 0,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": []
+    },
+    {
+      "selector": "AI_HLYTests/HanlinMCPEmbeddingTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/HanlinMCPEmbeddingTests.swift"
+      ],
+      "sourceMethodCount": 10,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "cancellationBeforeInstallerProgressDoesNotStartRuntimeAndReleasesOnlyItsLease",
+        "conversationSelectionKeepsOriginalDefaultsExplicitEmptyAndOtherChats",
+        "disabledRuntimeOperationsReturnTheirOwnFailure",
+        "duplicateEnvironmentNamesFailBeforePersistenceAndCannotCrashRuntimeAssembly",
+        "duplicatePersistentIdentitiesProduceErrorsInsteadOfTrapsOrAmbiguousRows",
+        "failedFeatureCommitDoesNotPublishSuccessOrStartRuntime",
+        "failedSelectionReadCannotRestoreDefaultMCPAuthority",
+        "overlappingAdministrationCannotReplaceCredentialsOrDisableAnAdmittedOperation",
+        "selectionAcknowledgementRejectsAConversationDeletedDuringCommit",
+        "staleEditableSettingsPreserveCurrentEnvironmentAndPackageIdentity"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/HanlinMiniAppAssistantIntegrationTests",
+      "status": "PENDING_EXISTING_COMPLETE_SUITE_GATE",
+      "sourceFiles": [
+        "AI_HLYTests/HanlinMiniAppAssistantIntegrationTests.swift"
+      ],
+      "sourceMethodCount": 7,
+      "fullPendingGroups": [
+        "original_cache_app48"
+      ],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [
+        "activeAdapterDispatch",
+        "incompleteStructuredOutput",
+        "invalidStructuredOutput",
+        "noImplicitToolsOrCredentials",
+        "sessionBoundHandles",
+        "teardownCancellation",
+        "validatedStructuredOutput"
+      ],
+      "remainingMethodNames": []
+    },
+    {
+      "selector": "AI_HLYTests/HanlinMiniAppAssistantToolTests",
+      "status": "PENDING_EXISTING_METHODS_COVER_COMPLETE_SUITE",
+      "sourceFiles": [
+        "AI_HLYTests/HanlinMiniAppAssistantToolTests.swift"
+      ],
+      "sourceMethodCount": 5,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {
+        "composer_app13": [
+          "AI_HLYTests/HanlinMiniAppAssistantToolTests/discoveryAndSelectionUseMetadataWithoutOpeningTheApp()",
+          "AI_HLYTests/HanlinMiniAppAssistantToolTests/originalArgumentsAndSnapshotConfigurationHaveSeparateAuthorities()",
+          "AI_HLYTests/HanlinMiniAppAssistantToolTests/staleSelectionAndOverlappingDifferentConfigurationsAreRejected()",
+          "AI_HLYTests/HanlinMiniAppAssistantToolTests/runtimeRootMustLoadTheDeclaredToolAndCannotFallBackToIndex()",
+          "AI_HLYTests/HanlinMiniAppAssistantToolTests/modernRenderersReceivePlainExactJavaScriptJSON()"
+        ]
+      },
+      "coveredMethodNames": [
+        "discoveryAndSelectionUseMetadataWithoutOpeningTheApp",
+        "modernRenderersReceivePlainExactJavaScriptJSON",
+        "originalArgumentsAndSnapshotConfigurationHaveSeparateAuthorities",
+        "runtimeRootMustLoadTheDeclaredToolAndCannotFallBackToIndex",
+        "staleSelectionAndOverlappingDifferentConfigurationsAreRejected"
+      ],
+      "remainingMethodNames": []
+    },
+    {
+      "selector": "AI_HLYTests/HanlinMiniAppHostDiscoveryTests",
+      "status": "PENDING_EXISTING_PARTIAL_SUITE_GATE",
+      "sourceFiles": [
+        "AI_HLYTests/HanlinMiniAppHostDiscoveryTests.swift"
+      ],
+      "sourceMethodCount": 8,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {
+        "composer_app13": [
+          "AI_HLYTests/HanlinMiniAppHostDiscoveryTests/preparedExpoActionExportsKeepTheirInstalledAppInTheCatalog()"
+        ]
+      },
+      "coveredMethodNames": [
+        "preparedExpoActionExportsKeepTheirInstalledAppInTheCatalog"
+      ],
+      "remainingMethodNames": [
+        "disabledPackagesStayUndiscoverable",
+        "invalidCanonicalDescriptorsStayUndiscoverable",
+        "legacyForegroundAndExplicitRuntimeDoNotNeedFilenameHints",
+        "nativeScriptAndExpoKeepTheirDeclaredEngines",
+        "nonForegroundPackagesStayUndiscoverable",
+        "ordinaryScriptUIUsesTheCanonicalJSCLaunchPlan",
+        "unsupportedAndUnknownRuntimesStayUndiscoverable"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/HanlinModelPromptCachePersistenceTests",
+      "status": "PENDING_EXISTING_COMPLETE_SUITE_GATE",
+      "sourceFiles": [
+        "AI_HLYTests/HanlinModelPromptCachePersistenceTests.swift"
+      ],
+      "sourceMethodCount": 3,
+      "fullPendingGroups": [
+        "original_cache_app48"
+      ],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [
+        "compactConfigurationPreservesPreferencesAndLegacyDecoding",
+        "oldRowsAndOriginalSwiftDataRoundTrip",
+        "scopedResourcesCannotReplaceGlobalPreferences"
+      ],
+      "remainingMethodNames": []
+    },
+    {
+      "selector": "AI_HLYTests/HanlinNativeWidgetRendererTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/HanlinNativeWidgetRendererTests.swift"
+      ],
+      "sourceMethodCount": 8,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "testDeclaredWidgetHostActionsCompileAndKeepOriginalLocalActions",
+        "testExpoRawTaggedAndDateWireSurvivePublicationAndSourceAction",
+        "testInstalledExternalSourceRendersThroughAnyChild",
+        "testOriginalChartAndGaugeReceiveTheirTypedNativeData",
+        "testOriginalLabelAndProgressKeepTheirPreparedChildren",
+        "testOriginalShapesStacksImagesLinksAndModifiersMatchNativeReferences",
+        "testOriginalSlotsMatchNativeOverlayBackgroundAndMaskPixels",
+        "testOriginalTextConcatenationPreservesNativeTypeAndChildStyles"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/HanlinOpenUIBridgeTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/HanlinOpenUIBridgeTests.swift"
+      ],
+      "sourceMethodCount": 1,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "originalBundledQueryUsesHostBridge"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/HanlinOriginalAssetTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [],
+      "sourceMethodCount": 0,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": []
+    },
+    {
+      "selector": "AI_HLYTests/HanlinOriginalExpoWidgetTests",
+      "status": "PENDING_EXISTING_COMPLETE_SUITE_GATE",
+      "sourceFiles": [
+        "AI_HLYTests/HanlinOriginalExpoWidgetTests.swift"
+      ],
+      "sourceMethodCount": 3,
+      "fullPendingGroups": [
+        "original_paired_ai29"
+      ],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [
+        "testOriginalExpoRetainsSuccessfulRenderOnlyForMatchingWidgetAndConfiguration",
+        "testOriginalToggleUsesIntendedValuesAndAtomicTimelineThroughRealRuntime",
+        "testOriginalWidgetRegistrationTimelineAndPickerKeepProductAndInstallationIdentity"
+      ],
+      "remainingMethodNames": []
+    },
+    {
+      "selector": "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests",
+      "status": "PENDING_EXISTING_COMPLETE_SUITE_GATE",
+      "sourceFiles": [
+        "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift"
+      ],
+      "sourceMethodCount": 3,
+      "fullPendingGroups": [
+        "original_paired_ai29"
+      ],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [
+        "actualActivityKitStartsUpdatesAndEndsTheOriginalProgram",
+        "inactiveWidgetCannotProduceOrLoadALiveActivitySnapshot",
+        "originalRegionsPersistOutsideActivityContentAndActionsProduceFreshSnapshots"
+      ],
+      "remainingMethodNames": []
+    },
+    {
+      "selector": "AI_HLYTests/HanlinPromptCachingIntegrationTests",
+      "status": "PENDING_EXISTING_COMPLETE_SUITE_GATE",
+      "sourceFiles": [
+        "AI_HLYTests/HanlinPromptCachingIntegrationTests.swift"
+      ],
+      "sourceMethodCount": 4,
+      "fullPendingGroups": [
+        "original_cache_app48"
+      ],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [
+        "distinctSystemBlocks",
+        "emptyAndVerbatimSections",
+        "stableInstructionsSurviveContextChanges",
+        "stableSkillCatalogOrder"
+      ],
+      "remainingMethodNames": []
+    },
+    {
+      "selector": "AI_HLYTests/HanlinScriptPackageProductionE2ETests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/HanlinScriptingRuntimeTests.swift"
+      ],
+      "sourceMethodCount": 2,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "launchActiveApplicationIDIsNoOp",
+        "productionPackageFlow"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/HanlinScriptingAcceptanceTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/HanlinScriptingRuntimeTests.swift"
+      ],
+      "sourceMethodCount": 4,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "executableVerticalSlice",
+        "integrityTamperingIsUnavailable",
+        "malformedPackageIsUnavailable",
+        "structuredAssistantToolResult"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/HanlinScriptingAssistantProviderAdapterTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/HanlinScriptingAssistantProviderAdapterTests.swift"
+      ],
+      "sourceMethodCount": 3,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "schemaConversion",
+        "streamChunks",
+        "structuredContent"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/HanlinSidebarAccessibilityOwnershipTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/HanlinSidebarGestureTests.swift"
+      ],
+      "sourceMethodCount": 3,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "historyBeforeAttachmentPreservesPriorHiddenState",
+        "historyTemporarilyOwnsEditorAccessibility",
+        "replacementAndDetachRestoreScopedAccessibility"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/HanlinSidebarGestureTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/HanlinSidebarGestureTests.swift"
+      ],
+      "sourceMethodCount": 5,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "cancellationAndProjection",
+        "horizontalDirectionAndBounds",
+        "nativeInteractionsKeepOwnership",
+        "navigationEdgeOwnership",
+        "searchWindowOwnershipWithoutComposer"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests",
+      "status": "PENDING_EXISTING_PARTIAL_SUITE_GATE",
+      "sourceFiles": [
+        "AI_HLYTests/HanlinMiniAppAssistantToolAcceptanceTests.swift",
+        "AI_HLYTests/HanlinMiniAppAssistantToolTests.swift",
+        "AI_HLYTests/HanlinUnifiedHostServicesE2ETests.swift",
+        "AI_HLYTests/NativeScriptEnvironmentOwnershipTests.swift",
+        "AI_HLYTests/NativeScriptRuntimeWireTests.swift",
+        "AI_HLYTests/NativeScriptShareDeliveryTests.swift"
+      ],
+      "sourceMethodCount": 41,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {
+        "composer_native_engines4": [
+          "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualNativeScriptAssistantUsesDedicatedSourceAndImmutableConfiguration()",
+          "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualExpoAssistantUsesDedicatedSourceAndImmutableConfiguration()",
+          "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptAssistantRepliesSettleOnceAndRejectMalformedJSON()",
+          "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptAssistantCancellationAndInvalidationReleaseWaiters()"
+        ]
+      },
+      "coveredMethodNames": [
+        "actualExpoAssistantUsesDedicatedSourceAndImmutableConfiguration",
+        "actualNativeScriptAssistantUsesDedicatedSourceAndImmutableConfiguration",
+        "nativeScriptAssistantCancellationAndInvalidationReleaseWaiters",
+        "nativeScriptAssistantRepliesSettleOnceAndRejectMalformedJSON"
+      ],
+      "remainingMethodNames": [
+        "actualNativeSDKGlobalAndPropertyShapesAreObservedWithoutInvokingUI",
+        "actualNativeScriptImportsTheGeneratedTypedFacadeAndCallsEveryEngine",
+        "actualOwnedShareDispatchWaitsForTheVMAndPreservesResultsAcrossTwoSessions",
+        "boundObjectiveCBridgeReturnsActualReceiptsFromAllFiveEngines",
+        "cancellationHandlesCannotCrossSessionBoundaries",
+        "capabilityAuthorityGrantRevokePersists",
+        "crossCallerConcurrency",
+        "expoAppContextsResolveExactlyAndTeardownIndependently",
+        "expoFileWirePreservesEmptyBinaryAndMissingFiles",
+        "expoLegacyPythonFailureDoesNotBecomeOKOrExposeStderrToModuleLogging",
+        "expoLegacyRuntimeNamesReachAllFiveActualBackends",
+        "expoLegacyUnknownRuntimeRejectsInsteadOfExecutingJavaScriptCore",
+        "expoStructuredInvokeUsesTheSharedReceiptBoundaryAndRejectsUnknownKinds",
+        "failedNativeScriptBootstrapRollsBackEnvironmentWithoutKeepingAFalseOwner",
+        "fileOperationsWorkWithoutInternalGrants",
+        "fileScopesOverwriteDeleteSharedAccessAndSymlinkProtection",
+        "fullReceiptsPreserveArgumentsEnvironmentAndOutputArtifacts",
+        "invalidKindsAndInvalidatedSessionsFailBeforeExecution",
+        "legacyPackageGrantMetadataDoesNotGateNetwork",
+        "nativeScriptActionDeclarationsPreserveRegisteredJavaScriptState",
+        "nativeScriptActiveBridgeIsolationAndNoGlobalLeakage",
+        "nativeScriptActiveSessionClearedWhileAnotherRemainsFailsStaleCaller",
+        "nativeScriptLocalAndRemoteRequestWorksAfterCleanupAndReregistration",
+        "nativeScriptNegativeAuthCasesFailWithGenuineErrors",
+        "nativeScriptNoActiveSessionWithStaleGlobalProviderFailsUnauthorizedRequest",
+        "nativeScriptOneLegitimatelyActiveRegisteredSession",
+        "nativeScriptRuntimeRealLaunchFixtureAndTeardown",
+        "nativeScriptSessionRemovalAndResetAllSessionsInvalidateBridges",
+        "nativeScriptSessionsResolveExactlyAndTeardownIndependently",
+        "nativeScriptTimedOutSyncExecutionLateCallbackSafety",
+        "nativeScriptTwoConcurrentRegisteredSessionsStrictIsolation",
+        "onlyTheStartedNativeScriptSessionRestoresItsExactPreviousEnvironment",
+        "runtimeBrokerAutoStartsStoppedRuntime",
+        "runtimeBrokerExecutesFromAnOrdinaryGrantlessContext",
+        "sqliteScopeAndTraversalRejection",
+        "sqliteTransactionsTypesConcurrencyAndScopeIsolation",
+        "storageIsolationBetweenApps"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/LegacyToolMigrationTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/LegacyToolMigrationTests.swift"
+      ],
+      "sourceMethodCount": 5,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "canonicalAuthorityLegacyIndexing",
+        "legacyAdapterCategoryFiltering",
+        "legacyAdapterMatchesSourceTruth",
+        "legacyToolCanonicalExecutionCutover",
+        "preparedToolsSearchAndSchemaFiltering"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/MaintainedSkillCorpusTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/MaintainedSkillCorpusTests.swift"
+      ],
+      "sourceMethodCount": 3,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "cairoInvalidInputUsesTheCurrentRuntimePlan",
+        "maintainedPackagesFollowOriginalImportPolicyAndReadiness",
+        "originalPythonPackageFactsUseRealInstallAndInvalidateChangedSource"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/MasterScenarioSemanticAcceptanceTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/MasterScenarioSemanticAcceptanceTests.swift"
+      ],
+      "sourceMethodCount": 19,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "chat24StopGenerationCancelsRunAndReturnsIdle",
+        "cmd01AwkExecutionWithPrintArgvSampleText",
+        "cmd04CurlFixtureBaseReturnsExpectedJSONAndZeroExitCode",
+        "coreai06GGUFLLMStreamingAndCancellationRegression",
+        "final09LiveToolDiscoveryAndExecution",
+        "final10ColdRelaunchStateRestorationAndToolReset",
+        "final11CancellationAndImmediateNextRunCleanliness",
+        "final12InvariantsAndToolsCrossJoinAudit",
+        "fs01PythonNodeShellSharedWorkspace",
+        "py02DistributionNameDiffersFromImportName",
+        "sh01DynamicCommandsReconciliationWithoutExact23",
+        "sh03MissingFrameworkReportsUnavailableWithDependencies",
+        "sh05GrepAlphaExactTwoLinesWithoutPathRequirement",
+        "zip01RootZIPImportWithSkillHanlinAndAgentConfig",
+        "zip02WrappedZIPImportUnderFixtureRuntime",
+        "zip04FoundationVarAndPrivateVarAliasesResolveWithoutFalseEscape",
+        "zip07SkillImportPreservesAllAssetFilesByteForByte",
+        "zip08LargeArchiveOver25MBExpanded64MBWithMarker",
+        "zip11InternalRelativePathsResolveWithoutBlanketRejection"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/ModelPopoverZoomOrderTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/HanlinOrganizerDockParityTests.swift"
+      ],
+      "sourceMethodCount": 16,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "backDuringExpansionRejectsObsoleteTarget",
+        "canvasPresentationRetainsItsOriginalOrigin",
+        "compactNativeVisibilityKeepsFeaturedAndSelectedIndices",
+        "dismissedResizeCannotReopenPicker",
+        "downloadedLocalConversationCreationDoesNotTreatCatalogPresenceAsReadiness",
+        "nativeCallbacksAreDeferredAndSuperseded",
+        "nativeCatalogRegistrationFeedsExistingPickerWithoutIndexDrift",
+        "nativeGenerationConfigurationPreservesOriginalSettings",
+        "nativeGenerationRejectsUnsupportedTopPThroughOriginalEngine",
+        "nativeOnlyConversationCreationRespectsActualAvailabilityAndCatalogIndices",
+        "nativeVisibilityKeepsOriginalIndices",
+        "popoverFitsSmallContainer",
+        "reduceMotionNavigatesImmediately",
+        "reenterDuringShrinkKeepsOneDestination",
+        "singleEntryUpdatesRouteAndSizeTogether",
+        "staleNativeResizeCannotCompleteReopenedPresentation"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/NativeComposerLineSizingTests",
+      "status": "PENDING_EXISTING_PARTIAL_SUITE_GATE",
+      "sourceFiles": [
+        "AI_HLYTests/NativeComposerLineSizingTests.swift"
+      ],
+      "sourceMethodCount": 14,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {
+        "composer_native_editor5_invocations": [
+          "AI_HLYTests/NativeComposerLineSizingTests/equalStringOwnerSwitchKeepsPendingInputAndLateDelegateScoped()",
+          "AI_HLYTests/NativeComposerLineSizingTests/canonicalEquivalentOwnerAndNativeReplacementsPreserveExactText()",
+          "AI_HLYTests/NativeComposerLineSizingTests/markedTextOwnerSwitchPreservesCompositionAndAuthoritativeClear(_:)",
+          "AI_HLYTests/NativeComposerLineSizingTests/programmaticDraftUpdatesWhileEditing()"
+        ]
+      },
+      "coveredMethodNames": [
+        "canonicalEquivalentOwnerAndNativeReplacementsPreserveExactText",
+        "equalStringOwnerSwitchKeepsPendingInputAndLateDelegateScoped",
+        "markedTextOwnerSwitchPreservesCompositionAndAuthoritativeClear",
+        "programmaticDraftUpdatesWhileEditing"
+      ],
+      "remainingMethodNames": [
+        "coalescedNativeEditsPreserveTextAndSelection",
+        "editingKeepsDraftAndSelection",
+        "fontAndViewport",
+        "layoutDuringNativeEditPreservesCharactersAndCursor",
+        "liveOwnerClearAndReplacementBeforeRenderAcknowledgement",
+        "retainedRenderSnapshotPreservesNativeDraftAndCursor",
+        "sameValueClearPrecedesLateNativeDelegate",
+        "textKit2ParagraphCoverageAndConservativeFallback",
+        "textKit2WrappedLinesKeepNativeLayout",
+        "wrappedLinesAndScrolling"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/NodeHostHealthRecoveryTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/NodeHostHealthRecoveryTests.swift"
+      ],
+      "sourceMethodCount": 4,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "idleCommandObservationClearsTheFailureWithoutRestartingTheApp",
+        "jobObservationRecoversTheExistingExecutionsWithoutResettingTheirCount",
+        "lateHealthProbeFailureCannotSupersedeANewerSuccessfulObservation",
+        "lateResponseCannotReviveAConfirmedProcessExit"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/OrganizerDockStateTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/HanlinOrganizerDockParityTests.swift"
+      ],
+      "sourceMethodCount": 8,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "composerResizeDragAndAccessibilityAdjustment",
+        "defaultCollapsedStateMatchesSourceFormulas",
+        "drawerDragThresholdsMatchSource",
+        "expandedStatePanelAndComposerHeight",
+        "focusAndLifecycleResets",
+        "keyboardOverlapAvoidsDoubleSubtraction",
+        "manualResizeExpandsInnerEditorFrameHeight",
+        "multilineDraftAndAttachmentHeightFormulas"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/OriginalSourceNonRegressionTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/HanlinOrganizerDockParityTests.swift"
+      ],
+      "sourceMethodCount": 2,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "chatViewComponentsAndChatAndFileRetainOriginalIdentifiers",
+        "protectedFilesAndReferenceMetadataRemainIntact"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/PendingFirstTurnTests",
+      "status": "PENDING_EXISTING_PARTIAL_SUITE_GATE",
+      "sourceFiles": [
+        "AI_HLYTests/HanlinOrganizerDockParityTests.swift"
+      ],
+      "sourceMethodCount": 6,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {
+        "original_paired_ai29": [
+          "AI_HLYTests/PendingFirstTurnTests/importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings()",
+          "AI_HLYTests/PendingFirstTurnTests/cancelledMiniAppRepairPreservesHomeDraft()"
+        ]
+      },
+      "coveredMethodNames": [
+        "cancelledMiniAppRepairPreservesHomeDraft",
+        "importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings"
+      ],
+      "remainingMethodNames": [
+        "cancellingPendingFirstTurnPreventsExecution",
+        "homeFirstTurnDispatchesOnEndpointRegistration",
+        "invalidHomeSelectedModelIndexRefused",
+        "rejectedSendRollsBackAndRestoresHomeDraft"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/ProductionProviderConformanceTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/ProviderConformance/ProductionProviderConformanceTests.swift"
+      ],
+      "sourceMethodCount": 18,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "testDynamicProviderInventory",
+        "testOpenAINativeProductionAPIManagerSmoke",
+        "testOpenAIResponseDormancyCharacterization",
+        "testP01SkillsExposureAndExecution",
+        "testP02FailureRecovery",
+        "testP03FiveStepSequentialTools",
+        "testP04ParallelTools",
+        "testP05ReasoningToolLoopAnthropic",
+        "testP05ReasoningToolLoopGoogle",
+        "testP05ReasoningToolLoopOpenAICompatible",
+        "testP05ReasoningToolLoopOpenRouter",
+        "testP06TwentyStepProductionLoop",
+        "testP07AbruptCloseFailure",
+        "testP08FinishOtherNoContent",
+        "testP09CancelProviderStream",
+        "testP10CancelRunningTool",
+        "testP11OverlappingRunBSupercedesA",
+        "testP12ARealApplicationSecondTurnHistory"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/ProductionSystemSkillsTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/ProductionSystemSkillsTests.swift"
+      ],
+      "sourceMethodCount": 13,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "canonicalToolsRemainDiscoverableByExactAlias",
+        "catalogCollisionRequiresExplicitOverride",
+        "codeSkillPrefersLocalPythonOnly",
+        "disabledDomainDisappearsFromSkillIndex",
+        "packageDisableAndUninstallRemoveSkillImmediately",
+        "packageSkillRefreshTracksCurrentGeneration",
+        "productionCodeSkillPrefersLocalPythonAndDropsRemote",
+        "productionSystemSkillAliasesResolveAgainstActualCanonicalAuthority",
+        "sameTierUnrelatedSourcesCannotSilentlyShadow",
+        "storeRefreshPreservesDisabledProductionDomains",
+        "systemSkillsDescriptionsAndToolIntegrity",
+        "weatherSkillResolvesCoordinatesBeforeQuerying",
+        "weatherSkillRespectsDisabledMaps"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeAutonomyV3Tests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/RuntimeAutonomyV3Tests.swift"
+      ],
+      "sourceMethodCount": 43,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "actualCommandOnlyNpmValidationDoesNotRunTheCommandUntilInvoked",
+        "actualEmbeddedNodeExecutesThePinnedPortableShellWithoutJITOrAnOSSubprocess",
+        "actualGlobalNpmInstallUpdateImportAndRemovalUsePreservedGenerations",
+        "actualMCPTransportPreservesLargeStructuredResultsThroughTheOriginalRendererAndStore",
+        "actualNodeAndOriginalJavaScriptCoreCoexistWithTheVerifiedLaunchMode",
+        "actualNodeFileInputExceedsTheHTTPFrameWithoutTruncationOrReplay",
+        "actualOptionalLifecycleFailureKeepsRequiredNativeBuildsAndFailedJobEvidence",
+        "actualTypeScriptCompilerUsesLargeDurableInputAndRetrievableFullOutput",
+        "bundledNativePythonExtensionInstallsAndExecutesARealNonce",
+        "cancellingQueuedPythonNeverExecutesItsSourceAfterTheRunningJobFinishes",
+        "cancellingShellWhileThePythonDirectoryLockIsBusyNeverRunsTheCommandLater",
+        "capabilityReportNeverPromotesStoppedOrFailedEnginesToReady",
+        "defaultSchemaExposureDoesNotHideToolsPastOldBudgets",
+        "embeddedNodeAndPythonActuallyRunBeyondThreeHundredSeconds",
+        "embeddedPythonActuallyDownloadsVerifiesInstallsAndImportsAPureWheel",
+        "explicitNativeCommandModuleUsesActualPythonAndLinkedBsdWithFullArtifacts",
+        "finishingRunKeepsHistoryReferencesButNotExposedSchemas",
+        "fullResultsExceedOldCountAndByteCapsAndSurviveReopen",
+        "hostOutputPageQueriesPreserveParametersAndTheAuthenticatedOrigin",
+        "journalRetainsCompletedJobsAndMarksUnfinishedOnRestart",
+        "linkedPythonExtensionCatalogReadsDoNotStartOrChangeTheOriginalService",
+        "linkedShellActuallyAcceptsMoreThan127Arguments",
+        "linkedShellActuallyPipesAndRedirectsWithinItsWorkspace",
+        "linkedShellRetainsFullOutputBeyondThePreviewAndReopensLosslessPages",
+        "mcpEnvironmentEditPreservesOtherFieldsSharedReferencesAndRejectsStaleDraft",
+        "mcpEnvironmentPrecommitFailureKeepsOriginalSecretAndRemovesOnlyStagedValue",
+        "mcpEnvironmentPrimaryWriteFailureRetainsBothDurableGenerations",
+        "mcpEnvironmentUnknownReadAfterBackupCommitPreservesTheStagedCredential",
+        "mcpInstallationIsADurableJobAndRunsNativeHooksBeforeTheRealProtocolProbe",
+        "nativeKeychainReplacementPreservesOriginalServiceIsolation",
+        "nodeCLIUsesActualMainModuleAndRetainsItsInputAndDelayedOutput",
+        "portableShellDispatchesActualPythonNodeAndNativeBSDPipelineWithFullStreams",
+        "pythonCLIUsesActualFileArgumentsInputAndStandardExitStatus",
+        "retainedNativePythonCancellationCallbackRemainsValidAfterItsJobIsReleased",
+        "runtimeEnvironmentCommitFailurePreservesTheOriginalSecret",
+        "runtimeOutputKeepsRetrievalMetadataForTheAgentAndReadableContentForTheUser",
+        "savedEnvironmentPrecedenceFollowsScopesAndPreservesUserPaths",
+        "sourceImportsUseTheActualWorkspaceAndNativePackageExportConditions",
+        "stoppingAnActualCompilerJobNeverLaunchesItsCompiledSource",
+        "stoppingTypeScriptCancelsItsActualWorkerAndPreservesTheReceipt",
+        "subsequentTurnsCanReadOwnChatResultsWithoutLeakingOtherChats",
+        "typeScriptReportsTheActualCompilerAndItsOwnStoppedState",
+        "verifiedLifecycleSourceRunsThroughTheActualSharedEnginesAndRejectsStalePlans"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeNativeInterruptionTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/RuntimeNativeInterruptionTests.swift"
+      ],
+      "sourceMethodCount": 5,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "actualNodeForegroundObservationKeepsTheHostAndDoesNotReplayAJob",
+        "actualNodeInterruptionRetainsAuthenticatedJournalAndOutput",
+        "actualPythonChildThreadsKeepTheirWorkspaceAndFullOutputUntilCompletion",
+        "actualPythonInterruptionRetainsCooperativeNativeOutput",
+        "linkedShellCompletionCannotHideAnEarlierRootInterruption"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/RuntimeToolContractTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/RuntimeToolContractTests.swift"
+      ],
+      "sourceMethodCount": 13,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "diagnosticsCountSemanticFailureInsideCompletedRun",
+        "diagnosticsRecordsStepMetadataWithoutSecrets",
+        "diagnosticsTerminalStateIsIdempotent",
+        "executeSkillResourceRequiresLoadedContextAndValidArguments",
+        "javaScriptCoreExpressionValueReachesModel",
+        "localAndRemotePythonAreUnambiguous",
+        "preparedSchemasHaveUniqueAliasesRoutesAndValidObjectContracts",
+        "runtimeSchemasAdvertiseOnlyHandledParameters",
+        "runtimeToolsRejectMalformedArgumentsSemantically",
+        "sevenTorahToolsAreRegisteredWithValidSchemas",
+        "shellSchemaIsStructurallyConstrained",
+        "skillResourceReadVsExecuteDistinction",
+        "strictJSONScalarsDistinguishOneFromTrue"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/ScriptingCanonicalAuthorityTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/ScriptingCanonicalAuthorityTests.swift"
+      ],
+      "sourceMethodCount": 4,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "exactScriptDispatch",
+        "rejectsInvalidScriptAuthorityInputs",
+        "scriptOnlyCatalog",
+        "threeProviderCollisionPolicy"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/SkillOpenClawPolicyTests",
+      "status": "PENDING_EXISTING_PARTIAL_SUITE_GATE",
+      "sourceFiles": [
+        "AI_HLYTests/SkillOpenClawPolicyTests.swift"
+      ],
+      "sourceMethodCount": 5,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {
+        "composer_app13": [
+          "AI_HLYTests/SkillOpenClawPolicyTests/currentOriginalPolicyControlsLoadReadAndActualSDKContinuation()"
+        ]
+      },
+      "coveredMethodNames": [
+        "currentOriginalPolicyControlsLoadReadAndActualSDKContinuation"
+      ],
+      "remainingMethodNames": [
+        "actualYamsMetadataKeepsOriginalInstallAndDynamicEnablementPolicy",
+        "originalInvocationFlagsAndDefaultAreResolvedInOneNativeBatch",
+        "originalPolicyRunsInTheActualEmbeddedNode",
+        "pruningOneSkillRetainsSharedInstructionsOwnedByAnotherSkill"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/SkillRuntimeProductTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/SkillRuntimeProductTests.swift"
+      ],
+      "sourceMethodCount": 7,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "hostileImportedArchivesAreRejectedBeforeInstallation",
+        "importedSkillPlanExecuteAndReopen",
+        "nativeManifestAnalysisProducesTheExpectedPassiveFacts",
+        "openClawInputBoundaryRejectsUnsupportedShapes",
+        "ordinaryInstructionsLoadReadAndContinueWithoutRuntimeWork",
+        "ordinaryInstructionsSurviveUnrelatedPolicyInspectionFailure",
+        "originalOpenClawSixCasesExecuteInTheActualEmbeddedAppEngine"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/SkillStoreAndImportTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/SkillStoreAndImportTests.swift"
+      ],
+      "sourceMethodCount": 21,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "anchoredStoreEditDoesNotRewriteOriginal",
+        "archivePolicyAllowsSkillWithoutScriptJSON",
+        "archivePolicyRejectsSecurityThreats",
+        "backgroundLargeSkillArchive",
+        "boundedDownloaderEnforcesNetworkLimits",
+        "catalogMetadataFollowsSelectedSource",
+        "customSkillLifecycle",
+        "directMarkdownSkillInstallsSuccessfully",
+        "failedReplacementPreservesPreviouslyInstalledSkill",
+        "fileBackedDownloadAndCancellation",
+        "importedPythonScriptCanBeReadButIsNotExecutedDuringInstall",
+        "markdownParserRoundtrip",
+        "nestedMetadataSurvivesStoreSaveAndOverride",
+        "overridePrecedenceAndReset",
+        "pathTraversalRejected",
+        "rejectsNonHTTPSURL",
+        "resourceReadingContract",
+        "resourceReadingSymlinkEscapeRejected",
+        "skillEditorRejectsUnknownPreferredToolAlias",
+        "tempStagingCleansUpOnSuccessAndFailure",
+        "zipNestedMetadataAndResourcesRemainLossless"
+      ]
+    },
+    {
+      "selector": "AI_HLYTests/VoiceRecordingLifecycleTests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYTests/VoiceRecordingLifecycleTests.swift"
+      ],
+      "sourceMethodCount": 22,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "testVR01_DismissBeforePermissionCallback_IgnoresLateGranted",
+        "testVR02_ReopenCreatesNewAttempt_OldCallbackIgnored",
+        "testVR03_PermissionDeniedAndRestricted",
+        "testVR04_PermissionRevokedInSettings_RecheckedOnForeground",
+        "testVR05_RapidDoubleStart_OnlyOneActive",
+        "testVR06_FailureAfterSetActive_RollsBackAudioSession",
+        "testVR07_RollbackAtAllStages",
+        "testVR08_StopPreservesRecognizedText_SecondStopIdempotent",
+        "testVR09_DismissWhileTapActive_ShutsDownCleanly",
+        "testVR10_StaleGenerationCallback_CannotMutateNewSession",
+        "testVR11_AudioTapSink_RealTimeSafetyAndRms",
+        "testVR12_RouteChangeAndBackgroundHandling",
+        "testVR13_TextToSpeechCoordination_PreservesPlaybackCategory",
+        "testVR14_LanguageSelectionAndRequestedVsEffectiveLocale",
+        "testVR15_LocalizedStrings_AuthenticJsonIntegrity",
+        "testVR16_VoiceInputViewBindingsAndDismissal",
+        "testVR17_StressFiftyRapidCycles",
+        "testVR19_AudioTapSink_RealFilePoolBranchExecution_VariousFrameSizes",
+        "testVR20_AudioTapSink_OversizedAndIncompatibleFrameSafety_NoCrash",
+        "testVR21_RepeatedCyclesWithRealSinkFileMode",
+        "testVR22_OwnRecordingCategoryChangeDoesNotStopMicrophone",
+        "testVR23_OutputChangesPreserveInputButInputOrFormatLossStopsRecording"
+      ]
+    },
+    {
+      "selector": "AI_HLYUITests/AgentRuntimeConversationUITests",
+      "status": "PENDING_EXISTING_PARTIAL_SUITE_GATE",
+      "sourceFiles": [
+        "AI_HLYUITests/AgentRuntimeConversationUITests.swift"
+      ],
+      "sourceMethodCount": 43,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {
+        "chat_ui4_per_destination": [
+          "AI_HLYUITests/AgentRuntimeConversationUITests/testUI02ClassicUserAndAssistantBubbleWithDirectActionButtons",
+          "AI_HLYUITests/AgentRuntimeConversationUITests/testUserBubbleLongPressKeepsNativeActionsAndOriginalMessage",
+          "AI_HLYUITests/AgentRuntimeConversationUITests/testHebrewNewChatAndNativeMessageActions"
+        ]
+      },
+      "coveredMethodNames": [
+        "testHebrewNewChatAndNativeMessageActions",
+        "testUI02ClassicUserAndAssistantBubbleWithDirectActionButtons",
+        "testUserBubbleLongPressKeepsNativeActionsAndOriginalMessage"
+      ],
+      "remainingMethodNames": [
+        "testAccessibilityKeyboardRTLReduceMotion",
+        "testActivityAutoExpansionManualCollapseFinalCollapseAndColdReasoning",
+        "testClassicHanlinIconAndVisualParity",
+        "testCompactToolsManagementDestinationsPreserveDraft",
+        "testDiagnosticsReviewsTheAutomaticallyCapturedRunWithoutSharingItsKey",
+        "testDirectToolsOneTapAndRealState",
+        "testDockCompactHomeShowsThreeRecentWithOnePersistentComposer",
+        "testDraftAndAttachmentPersistenceAtoBAndFirstSend",
+        "testDrawerGrowsFromComposerNotPopover",
+        "testDrawerHandleDragCloseOpenAndComposerResize",
+        "testFollowLatestArrowTracksRealBottomAcrossScrollAndComposerChanges",
+        "testIpadNarrowShowsRecentAndWidePreservesSplitSidebar",
+        "testLiveGeminiPythonConsentAndColdReopen",
+        "testMarkdownLinkOpensAndClosesTheInternalSafariBrowser",
+        "testModelPopoverZoomExpandThenNavigate",
+        "testModelPopoverZoomNarrowAndRepeatedPresentation",
+        "testModelPopoverZoomWithKeyboardAndDraft",
+        "testNativePartialSelectionSaveAndOriginalLongPressPreview",
+        "testOriginalBubbleRendersLocalCodeFencesAndPreservesSourceActions",
+        "testOriginalChatActivitySurvivesKeyboardRotationAndConversationReattachment",
+        "testPhase2ActualPythonToolApprovalAndColdConversationRestoration",
+        "testPhase2OfficialToolSurfaceContinuesThroughTheSameOriginalChat",
+        "testProductionCodeSkillLocalPythonNeedsNoUserNudge",
+        "testRealChatUISendsPromptShowsToolActivityAndFinalAnswer",
+        "testSourcesSheetSingleSourceHasReadableNativeSize",
+        "testSourcesSheetTwentySevenSourcesScrollsInHebrew",
+        "testStopThenNewMessageHasNoGhostOldRun",
+        "testStreamingStopObserveTemporaryAndStateTransitions",
+        "testUI01UnifiedHistoryPinSearchSwitchDraftPreservation",
+        "testUI03HebrewRTLSearchMessageAndDeduplicatedCitations",
+        "testUI03SearchMessageAndDeduplicatedCitations",
+        "testUI04CollapsedProgressAndInspectorWithoutRawCoT",
+        "testUI05RichCodeBlockHTMLCardAndAttachments",
+        "testUI06ComposerMultilineAttachmentsModelSelectorNoOverlap",
+        "testUI07StopAndRetryRecoveryWithoutDuplicateBubbles",
+        "testUI08ConversationalMCPLifecycleAndSecondTurnReuse",
+        "testUI09DirectToolsCatalogAndSkillsNavigation",
+        "testUI10ModelPickerSearchSelectionAndPersistence",
+        "testViewAllZoomSourceToLibraryAndCancelledInteractiveBack",
+        "testWideToolsManagementDestinationsPreserveDraft"
+      ]
+    },
+    {
+      "selector": "AI_HLYUITests/HanlinComposerCapabilitiesUITests",
+      "status": "PENDING_EXISTING_METHODS_COVER_COMPLETE_SUITE",
+      "sourceFiles": [
+        "AI_HLYUITests/HanlinComposerCapabilitiesUITests.swift"
+      ],
+      "sourceMethodCount": 3,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {
+        "composer_ui_phone4": [
+          "AI_HLYUITests/HanlinComposerCapabilitiesUITests/testMiniAppSelectionAttachesWithoutLaunchingAndEnablesAttachmentOnlySend",
+          "AI_HLYUITests/HanlinComposerCapabilitiesUITests/testMentionAndSlashPreserveHebrewTextAtTheRealCaretAndInsertTheSameIdentity",
+          "AI_HLYUITests/HanlinComposerCapabilitiesUITests/testManifestCatalogAndMapPanelsKeepUserConfigurationAcrossEditing"
+        ],
+        "composer_ui_tablet3": [
+          "AI_HLYUITests/HanlinComposerCapabilitiesUITests/testMiniAppSelectionAttachesWithoutLaunchingAndEnablesAttachmentOnlySend",
+          "AI_HLYUITests/HanlinComposerCapabilitiesUITests/testMentionAndSlashPreserveHebrewTextAtTheRealCaretAndInsertTheSameIdentity",
+          "AI_HLYUITests/HanlinComposerCapabilitiesUITests/testManifestCatalogAndMapPanelsKeepUserConfigurationAcrossEditing"
+        ]
+      },
+      "coveredMethodNames": [
+        "testManifestCatalogAndMapPanelsKeepUserConfigurationAcrossEditing",
+        "testMentionAndSlashPreserveHebrewTextAtTheRealCaretAndInsertTheSameIdentity",
+        "testMiniAppSelectionAttachesWithoutLaunchingAndEnablesAttachmentOnlySend"
+      ],
+      "remainingMethodNames": []
+    },
+    {
+      "selector": "AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests.swift"
+      ],
+      "sourceMethodCount": 7,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "testExpoNativeAPIDynamicVariantSwitching",
+        "testExpoNativeAPIIncompatibleVersionRejection",
+        "testExpoNativeAPIMalformedPackageRejection",
+        "testExpoNativeAPIMountAndInteraction",
+        "testExpoNativeAPIRepeatedLifecycle",
+        "testExpoNativeAPIRevokeWhileMounted",
+        "testExpoNativeAPIWorksWithoutPersistedGrant"
+      ]
+    },
+    {
+      "selector": "AI_HLYUITests/HanlinExpoProductionE2ETests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYUITests/HanlinExpoProductionE2ETests.swift"
+      ],
+      "sourceMethodCount": 12,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "testInstalledScriptWidgetPackageInformationShowsDefaultInstance",
+        "testNativeExpoWidgetSourceActionsWithHostTerminated",
+        "testNativeLegacyWidgetWithHostTerminated",
+        "testNativeScriptWidgetBooleanWithHostTerminated",
+        "testProductionExpo1000RowsProbe",
+        "testProductionExpoDynamicPackageSwitching",
+        "testProductionExpoHostFilesPreserveEmptyAndBinaryBytesThroughTheJSFacade",
+        "testProductionExpoLifecycleAndUninstall",
+        "testProductionExpoMalformedPackageRejection",
+        "testProductionExpoSearchableContentAndEvents",
+        "testProductionExpoSwiftUIProbeEndToEnd",
+        "testWidgetOnlyRowOpensPackageInformationNotApp"
+      ]
+    },
+    {
+      "selector": "AI_HLYUITests/HanlinMorphComposerUITests",
+      "status": "PENDING_EXISTING_PARTIAL_SUITE_GATE",
+      "sourceFiles": [
+        "AI_HLYUITests/HanlinMorphComposerUITests.swift"
+      ],
+      "sourceMethodCount": 8,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {
+        "composer_ui_phone4": [
+          "AI_HLYUITests/HanlinMorphComposerUITests/testDismissModelPickerKeepsSelectedModelAndDraft"
+        ]
+      },
+      "coveredMethodNames": [
+        "testDismissModelPickerKeepsSelectedModelAndDraft"
+      ],
+      "remainingMethodNames": [
+        "testCompactLargeTextWithAttachment",
+        "testCompactNavigationKeepsDraft",
+        "testEnabledToolsChipOpensSettingsAndContextMenuDisables",
+        "testLargeTextLongDraftFitsWithKeyboardAndAfterPalette",
+        "testParameterOverlayDismissesOnComposerBackground",
+        "testRTLToolChipKeepsLongDraftAndAccessibleLabel",
+        "testWideNavigationKeepsDraft"
+      ]
+    },
+    {
+      "selector": "AI_HLYUITests/HanlinNativeA2UIChatUITests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYUITests/HanlinNativeA2UIChatUITests.swift"
+      ],
+      "sourceMethodCount": 7,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "testExpandedDismissalRetainsTheOriginalFormAndDoesNotIssueARequest",
+        "testNewConversationWorksWithoutOptimizationModel",
+        "testOriginalFormSubmitsEditedValueAndPreservesUnsentComposerDraft",
+        "testOriginalGalleryAndLinkRetainSourcesAndReadOnlyHistory",
+        "testOriginalMixedOpenUIReactAndNativeShareStateAndKeepDraft",
+        "testSameProcessReopenRestoresCanonicalReadOnlyMediaWithoutAnotherModelRequest",
+        "testSurfaceOnlyNativeResponseUsesTheOriginalAssistantRow"
+      ]
+    },
+    {
+      "selector": "AI_HLYUITests/HanlinNativeScriptProductionE2ETests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYUITests/HanlinNativeScriptProductionE2ETests.swift"
+      ],
+      "sourceMethodCount": 10,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "testCoreFixtureATabViewOnly",
+        "testCoreFixtureBFrameOnly",
+        "testCoreFixtureCTabViewWithFrame",
+        "testDirectUIKitTabBarBridge",
+        "testMalformedPackageRejection",
+        "testProductionNativeScriptParityFullRuntime",
+        "testProductionSefariaCoreEndToEnd",
+        "testProductionSharedCoreUnbundledEndToEnd",
+        "testProductionSwiftUIInteractionCoreRegressionAndLifecycle",
+        "testUnsupportedPluginRejection"
+      ]
+    },
+    {
+      "selector": "AI_HLYUITests/HanlinRuntimeInstallationUITests/testRuntimeCenterEmbeddedRuntimesSmokeAndReadiness",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYUITests/HanlinRuntimeInstallationUITests.swift"
+      ],
+      "sourceMethodCount": 1,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "testRuntimeCenterEmbeddedRuntimesSmokeAndReadiness"
+      ]
+    },
+    {
+      "selector": "AI_HLYUITests/HanlinScriptUIProductionE2ETests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYUITests/HanlinScriptUIProductionE2ETests.swift"
+      ],
+      "sourceMethodCount": 4,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "testProductionScriptUIUserJourneyAndLifecycle",
+        "testScriptUIDiscardPreviewLifecycle",
+        "testScriptUILaunchReEntrancyAndIsolation",
+        "testScriptUIMalformedPackageRejection"
+      ]
+    },
+    {
+      "selector": "AI_HLYUITests/HanlinSidebarNavigationUITests",
+      "status": "NOT_IN_KNOWN_PAIRED_OR_WAVE1_QUEUE",
+      "sourceFiles": [
+        "AI_HLYUITests/HanlinSidebarNavigationUITests.swift"
+      ],
+      "sourceMethodCount": 6,
+      "fullPendingGroups": [],
+      "partialPendingGroups": {},
+      "coveredMethodNames": [],
+      "remainingMethodNames": [
+        "testHebrewHistoryKeepsPhysicalRevealAndMirroredControls",
+        "testHistoryRevealKeepsDraftAndOriginalProfileRoute",
+        "testHistorySeparatesPinnedAndTodayWithoutDuplicatingChats",
+        "testNativeHistoryRowSwipeRemainsAvailable",
+        "testPhysicalDragsAndReactivationKeepGestureConfigurationCurrent",
+        "testSearchSelectionAndNativeBackPreserveSeparateDrafts"
+      ]
+    }
+  ],
+  "local18Reuse": {
+    "sourceAndPinEqual": true,
+    "checks": [
+      {
+        "path": "AI_HLY/Services/ChatServices/WebSearchTool.swift",
+        "currentSHA256": "435a550ab05ef7785113fb8849a0e8019e32427338591a8fd53428a8c19a854b",
+        "acceptedSHA256": "435a550ab05ef7785113fb8849a0e8019e32427338591a8fd53428a8c19a854b",
+        "equal": true
+      },
+      {
+        "path": "AI_HLY/Downstream/AgentDiagnostics/AgentTokenUsage.swift",
+        "currentSHA256": "ea9473749962a6c078d36a6972abe2ce30ecf38cd23dffa92231a02b53b7c665",
+        "acceptedSHA256": "ea9473749962a6c078d36a6972abe2ce30ecf38cd23dffa92231a02b53b7c665",
+        "equal": true
+      },
+      {
+        "path": "AI_HLY/Services/ChatServices/AutomaticSearch/AutomaticWebSearchCoordinator.swift",
+        "currentSHA256": "51196278174564c14b1568c21fcaf0b95adcb31bbcea07a57fe3c045075240fb",
+        "acceptedSHA256": "51196278174564c14b1568c21fcaf0b95adcb31bbcea07a57fe3c045075240fb",
+        "equal": true
+      },
+      {
+        "path": "AI_HLY/Services/ChatServices/AutomaticSearch/KeenablePublicSearchAdapter.swift",
+        "currentSHA256": "96c88b7fcc0de48e6b30570850fbd80f82a679499eb339fcf53cd363d4de9c54",
+        "acceptedSHA256": "96c88b7fcc0de48e6b30570850fbd80f82a679499eb339fcf53cd363d4de9c54",
+        "equal": true
+      },
+      {
+        "path": "AI_HLY/Services/ChatServices/AutomaticSearch/TavilyKeylessSearchAdapter.swift",
+        "currentSHA256": "8143549a517e6717c85fb64e903a27958fd61cba875899ec38d7fb10a1154a68",
+        "acceptedSHA256": "8143549a517e6717c85fb64e903a27958fd61cba875899ec38d7fb10a1154a68",
+        "equal": true
+      },
+      {
+        "path": "AI_HLY/Services/ChatServices/AutomaticSearch/WebSearchProviderProtocol.swift",
+        "currentSHA256": "2cb061ddfdd1536a417d630c6f776cf3bb9ec95328452afbbf20dc08337ef537",
+        "acceptedSHA256": "2cb061ddfdd1536a417d630c6f776cf3bb9ec95328452afbbf20dc08337ef537",
+        "equal": true
+      },
+      {
+        "path": "AI_HLY/Services/ChatServices/AutomaticSearch/WebSearchRelevanceEvaluator.swift",
+        "currentSHA256": "2ec1352dcce9a19ede76148c540caf98a36dc076f7c2740015395656192a4158",
+        "acceptedSHA256": "2ec1352dcce9a19ede76148c540caf98a36dc076f7c2740015395656192a4158",
+        "equal": true
+      },
+      {
+        "path": "AI_HLY/Services/ChatServices/AutomaticSearch/WebSearchResult.swift",
+        "currentSHA256": "d3b69274d06eb3403c44a2ec1d2a78399baef65bc875b8888bd8af1e3887e751",
+        "acceptedSHA256": "d3b69274d06eb3403c44a2ec1d2a78399baef65bc875b8888bd8af1e3887e751",
+        "equal": true
+      },
+      {
+        "path": "AI_HLY/Services/ChatServices/AutomaticSearch/YouKeylessSearchAdapter.swift",
+        "currentSHA256": "d07f829a5896928f43bbbf4b49fa16e10f98f4d76cd6a6862525cf4d02305520",
+        "acceptedSHA256": "d07f829a5896928f43bbbf4b49fa16e10f98f4d76cd6a6862525cf4d02305520",
+        "equal": true
+      },
+      {
+        "path": "AI_HLYTests/AutomaticWebSearchCacheTests.swift",
+        "currentSHA256": "faa0342db6fe61bac1eb65da32622e47284b00e669ca1ff1d3ebd276f105438c",
+        "acceptedSHA256": "faa0342db6fe61bac1eb65da32622e47284b00e669ca1ff1d3ebd276f105438c",
+        "equal": true
+      },
+      {
+        "path": "AI_HLYTests/AgentTokenUsageCacheTests.swift",
+        "currentSHA256": "622fa32878079e11c3f3dcd502b216f270d22ad3a0c277e021b0aa77a3afa33f",
+        "acceptedSHA256": "622fa32878079e11c3f3dcd502b216f270d22ad3a0c277e021b0aa77a3afa33f",
+        "equal": true
+      }
+    ],
+    "priorReceipt": "docs/ai-cache/evidence/wave1-integrated-20261126/local-cache-reuse.json",
+    "scope": "Original macOS source harness only; not fresh iOS app acceptance",
+    "matchingPlannerSuites": [
+      "AI_HLYTests/AutomaticWebSearchCacheTests",
+      "AI_HLYTests/AgentTokenUsageCacheTests"
+    ]
+  },
+  "additionalRequired": [
+    "Original Motion B/A/C (B failed on dacb; fix24bc pending)",
+    "Original OpenUI native gate owned by root/Mac",
+    "Release Device IPA required by original planner",
+    "Existing ScriptUI production compatibility checks only; frozen development boundary retained"
+  ]
+}
