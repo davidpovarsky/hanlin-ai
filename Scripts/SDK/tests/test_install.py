@@ -225,6 +225,37 @@ class SDKInstallTests(unittest.TestCase):
                          "S AI_HLY/Unselected/large-runtime.dat")
         self.assertEqual(installer.check(self.host, self.lock, "Vendor/HanlinSDK")["state"], "installed")
 
+    def test_sparse_bootstrap_includes_original_project_graph_imports(self):
+        canonical = SCRIPT.parents[2]
+        for relative in (
+            "Scripts/CI/IntegrationValidation/project_graph.py",
+            "Scripts/ProductSplit/extension_inventory.py",
+        ):
+            path = self.repository / relative
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes((canonical / relative).read_bytes())
+        # Match the canonical repository's interpreter-cache exclusions.
+        ignore = self.repository / ".gitignore"
+        ignore.write_text(ignore.read_text() + "__pycache__/\n")
+        generator = self.repository / "Scripts/SDK/generate_manifest.py"
+        generator.write_text(GENERATOR.replace(
+            "root=Path(__file__).resolve().parents[2]",
+            "root=Path(__file__).resolve().parents[2]\n"
+            "import sys\n"
+            "sys.path.insert(0,str(root/'Scripts/CI/IntegrationValidation'))\n"
+            "from project_graph import parse_project\n"
+            "assert parse_project('{}') == {}"))
+        self.git("add", ".")
+        self.git("commit", "-m", "Use original generator project graph imports")
+        self.revision = self.git("rev-parse", "HEAD")
+        self.lock_products(["HanlinAgentCore"])
+
+        receipt = self.install()
+        sdk = self.host / "Vendor/HanlinSDK"
+        self.assertEqual(receipt["state"], "installed")
+        self.assertTrue((sdk / "Scripts/ProductSplit/extension_inventory.py").is_file())
+        self.assertEqual(installer.check(self.host, self.lock, "Vendor/HanlinSDK")["state"], "installed")
+
     def test_mutable_ref_and_destination_escape_are_rejected(self):
         self.lock.write_text(json.dumps({"revision": "main", "products": ["HanlinAgentCore"]}))
         with self.assertRaisesRegex(ValueError, "immutable"):

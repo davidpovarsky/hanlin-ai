@@ -23,6 +23,7 @@ APP_INTENTS_HOST_RESOURCES = "Packages/HanlinWidgetSDK/HostResources"
 BOOTSTRAP_PATTERNS = (
     "/.gitignore", "/.gitattributes", "/Package.swift",
     "/Scripts/SDK/", "/Scripts/CI/IntegrationValidation/project_graph.py",
+    "/Scripts/ProductSplit/extension_inventory.py",
     "/Packages/*/Package.swift", "/AI_HLY.xcodeproj/project.pbxproj",
     "/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
     "/docs/agent-sdk/unified-package-manifest.json", "/docs/native-artifacts.json",
