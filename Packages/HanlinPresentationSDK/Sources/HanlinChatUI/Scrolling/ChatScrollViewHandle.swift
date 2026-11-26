@@ -17,6 +17,9 @@ public final class ChatScrollViewHandle {
     public private(set) var generation = UUID()
     private var deliveredGeneration: UUID?
     private var readinessTask: Task<Void, Never>?
+    private var positionReadTask: Task<Void, Never>?
+    private var positionReadID: UUID?
+    private var positionReadAction: (@MainActor (ChatAutoFollowPosition) -> Void)?
 
     /// A scroll view can move between windows or change its viewport without
     /// being replaced. Neither content size nor offset belongs here: streaming
@@ -115,6 +118,42 @@ public final class ChatScrollViewHandle {
         readinessTask?.cancel()
         readinessTask = nil
         deliveredGeneration = nil
+        positionReadTask?.cancel()
+        clearPositionRead()
+    }
+
+    /// Coalesce native layout/geometry notifications into one read after the
+    /// current callback returns. Unlike attachment readiness, content and offset
+    /// changes may request another read within the same viewport generation.
+    /// No cached geometry is published and this never repositions the scroll view.
+    /// One yield is not a guarantee that every lazy layout pass is finished;
+    /// further real notifications request another current native sample.
+    @discardableResult
+    public func readPositionAfterLayout(conversationID: UUID,
+                                        action: @escaping @MainActor (ChatAutoFollowPosition) -> Void) -> Task<Void, Never>? {
+        guard activeConversationID == conversationID, boundConversationID == conversationID,
+              layout(conversationID: conversationID) != nil else { return nil }
+        positionReadAction = action
+        if let positionReadTask { return positionReadTask }
+        let expectedGeneration = generation
+        let requestID = UUID()
+        positionReadID = requestID
+        positionReadTask = Task { @MainActor [weak self] in
+            await Task.yield()
+            guard let self, !Task.isCancelled, self.positionReadID == requestID else { return }
+            let action = self.positionReadAction
+            self.clearPositionRead()
+            guard let position = self.position(conversationID: conversationID,
+                                               expectedGeneration: expectedGeneration) else { return }
+            action?(position)
+        }
+        return positionReadTask
+    }
+
+    private func clearPositionRead() {
+        positionReadTask = nil
+        positionReadID = nil
+        positionReadAction = nil
     }
 
     private func refreshViewport() {

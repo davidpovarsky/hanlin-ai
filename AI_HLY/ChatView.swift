@@ -184,6 +184,7 @@ struct ChatView: View {
         NativeToolTraceLogger.shared.log(event, fields)
     })
     @State private var transcriptScrollView = ChatScrollViewHandle()
+    @State private var pendingNativeScrollIdle: UUID?
     #if DEBUG || HANLIN_TESTING
     // Reference counters do not invalidate the transcript they are measuring.
     private final class ScrollGeometryDiagnostics {
@@ -1148,6 +1149,7 @@ struct ChatView: View {
                 .chatScrollImmediateContentTouches { [transcriptScrollView, conversationID = effectiveChatSessionID] scrollView in
                     transcriptScrollView.bind(scrollView, conversationID: conversationID)
                     traceAutoFollowBoundary(scrollView == nil ? "viewport-unbound" : "viewport-bound")
+                    scheduleNativePositionRead()
                     scheduleScrollWhenViewportReady(using: scrollViewProxy)
                 }
             }
@@ -1231,11 +1233,11 @@ struct ChatView: View {
                     contentOffsetY: Double(geometry.contentOffset.y).rounded())
             } action: { previous, position in
                 let wasNearBottom = autoFollowController.state.isNearBottom
-                // Position is an observation, not an animated layout change.
-                // Animating the owner also animates LazyVStack height estimates,
-                // which feed another geometry sample back into this callback.
-                // The follow-latest control owns its own visibility transition.
-                autoFollowController.updatePosition(position)
+                // SwiftUI's early content measure admits growth, while the
+                // attached native viewport owns position and arrow visibility.
+                // Its contentSize can settle after the last scroll-idle event.
+                autoFollowController.updateLayout(position.layout)
+                scheduleNativePositionRead()
                 traceAutoFollowPosition("geometry", position: position,
                     significant: previous.layout == position.layout ||
                         wasNearBottom != autoFollowController.state.isNearBottom)
@@ -1246,11 +1248,15 @@ struct ChatView: View {
             .onScrollPhaseChange { _, newPhase in
                 switch newPhase {
                 case .tracking, .interacting, .decelerating:
+                    pendingNativeScrollIdle = nil
                     cancelSourceScroll()
                     autoFollowController.userInteractionBegan()
                 case .idle:
-                    refreshSettledScrollPosition()
-                    autoFollowController.userInteractionEnded()
+                    // Finish a manual gesture using the post-layout native
+                    // sample, not a transient lazy height at the idle callback.
+                    pendingNativeScrollIdle = autoFollowController.state.isUserInteracting
+                        ? effectiveChatSessionID : nil
+                    scheduleNativePositionRead()
                 case .animating:
                     break
                 @unknown default:
@@ -1258,17 +1264,20 @@ struct ChatView: View {
                 }
             }
             .onAppear {
+                pendingNativeScrollIdle = nil
                 transcriptScrollView.activate(conversationID: effectiveChatSessionID)
                 autoFollowController.invalidateLayout()
                 scheduleScrollWhenViewportReady(using: scrollViewProxy)
             }
             .task(id: effectiveChatSessionID) {
                 guard !Task.isCancelled else { return }
+                pendingNativeScrollIdle = nil
                 transcriptScrollView.activate(conversationID: effectiveChatSessionID)
                 scheduleScrollWhenViewportReady(using: scrollViewProxy)
             }
             .onDisappear {
                 guard transcriptScrollView.deactivate(conversationID: effectiveChatSessionID) else { return }
+                pendingNativeScrollIdle = nil
                 cancelSourceScroll()
                 autoFollowController.invalidateLayout()
             }
@@ -1291,6 +1300,27 @@ struct ChatView: View {
         }
         autoFollowController.updatePosition(position)
         traceAutoFollowPosition("native-settled", position: position, significant: true)
+    }
+
+    private func scheduleNativePositionRead() {
+        let conversationID = effectiveChatSessionID
+        transcriptScrollView.readPositionAfterLayout(conversationID: conversationID) { position in
+            guard effectiveChatSessionID == conversationID,
+                  let isNearBottom = position.isNearBottom else { return }
+            let wasNearBottom = autoFollowController.state.isNearBottom
+            // Observe bottom truth without replacing a newer SwiftUI growth
+            // measurement that has already admitted a pending follow request.
+            autoFollowController.updateNearBottom(isNearBottom)
+            let finishesManualScroll = pendingNativeScrollIdle == conversationID
+            if finishesManualScroll {
+                pendingNativeScrollIdle = nil
+                autoFollowController.userInteractionEnded()
+            }
+            if finishesManualScroll || wasNearBottom != autoFollowController.state.isNearBottom {
+                traceAutoFollowPosition(finishesManualScroll ? "native-settled" : "native-layout",
+                                        position: position, significant: true)
+            }
+        }
     }
 
     private func resumeFollowingLatest(using scrollViewProxy: ScrollViewProxy) {
@@ -1347,6 +1377,9 @@ struct ChatView: View {
             traceAutoFollowPosition("perform-before", significant: true)
             scrollToLastMessage(using: scrollViewProxy, animated: animate)
             traceAutoFollowPosition("perform-after", significant: true)
+            // An admitted scroll can already be at its final offset and produce
+            // no new idle transition. Still reconcile the committed native size.
+            scheduleNativePositionRead()
         }
     }
 
