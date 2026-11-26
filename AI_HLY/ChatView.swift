@@ -184,6 +184,15 @@ struct ChatView: View {
         NativeToolTraceLogger.shared.log(event, fields)
     })
     @State private var transcriptScrollView = ChatScrollViewHandle()
+    #if DEBUG || HANLIN_TESTING
+    // Reference counters do not invalidate the transcript they are measuring.
+    private final class ScrollGeometryDiagnostics {
+        var conversationID: UUID?
+        var initialSamples = 0
+        var significantSamples = 0
+    }
+    @State private var scrollGeometryDiagnostics = ScrollGeometryDiagnostics()
+    #endif
     @State private var measuredComposerHeight: CGFloat = 0
     @State private var chatContainerWidth: CGFloat = 0
 
@@ -1190,9 +1199,15 @@ struct ChatView: View {
                         bottomInset: Double(geometry.contentInsets.bottom).rounded()),
                     contentOffsetY: Double(geometry.contentOffset.y).rounded())
             } action: { previous, position in
-                withAnimation(.easeOut(duration: 0.16)) {
-                    autoFollowController.updatePosition(position)
-                }
+                let wasNearBottom = autoFollowController.state.isNearBottom
+                // Position is an observation, not an animated layout change.
+                // Animating the owner also animates LazyVStack height estimates,
+                // which feed another geometry sample back into this callback.
+                // The follow-latest control owns its own visibility transition.
+                autoFollowController.updatePosition(position)
+                traceAutoFollowPosition("geometry", position: position,
+                    significant: previous.layout == position.layout ||
+                        wasNearBottom != autoFollowController.state.isNearBottom)
                 guard previous.layout != position.layout else { return }
                 scheduleSourceScroll(using: scrollViewProxy)
                 scheduleAutoFollow(using: scrollViewProxy, animated: false, measuredLayout: position.layout)
@@ -1243,9 +1258,8 @@ struct ChatView: View {
             autoFollowController.invalidateLayout()
             return
         }
-        withAnimation(.easeOut(duration: 0.16)) {
-            autoFollowController.updatePosition(position)
-        }
+        autoFollowController.updatePosition(position)
+        traceAutoFollowPosition("native-settled", position: position, significant: true)
     }
 
     // 聊天时滚动到最底层
@@ -1293,8 +1307,54 @@ struct ChatView: View {
                 return
             }
             traceAutoFollowBoundary("perform")
+            traceAutoFollowPosition("perform-before", significant: true)
             scrollToLastMessage(using: scrollViewProxy, animated: animate)
+            traceAutoFollowPosition("perform-after", significant: true)
         }
+    }
+
+    private func traceAutoFollowPosition(_ source: String,
+                                         position: ChatAutoFollowPosition? = nil,
+                                         significant: Bool = false) {
+        #if DEBUG || HANLIN_TESTING
+        guard ProcessInfo.processInfo.environment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] == "1" else { return }
+        let diagnostics = scrollGeometryDiagnostics
+        if diagnostics.conversationID != effectiveChatSessionID {
+            diagnostics.conversationID = effectiveChatSessionID
+            diagnostics.initialSamples = 0
+            diagnostics.significantSamples = 0
+        }
+        if significant {
+            guard diagnostics.significantSamples < 64 else { return }
+            diagnostics.significantSamples += 1
+        } else {
+            guard diagnostics.initialSamples < 12 else { return }
+            diagnostics.initialSamples += 1
+        }
+        var fields: [String: Any] = [
+            "source": source,
+            "nearBottom": autoFollowController.state.isNearBottom,
+            "mode": autoFollowController.state.mode.rawValue,
+            "interacting": autoFollowController.state.isUserInteracting
+        ]
+        func include(_ sample: ChatAutoFollowPosition?, prefix: String) {
+            guard let sample else { return }
+            fields[prefix + "Content"] = sample.layout.contentHeight
+            fields[prefix + "Viewport"] = sample.layout.viewportHeight
+            fields[prefix + "TopInset"] = sample.layout.topInset
+            fields[prefix + "BottomInset"] = sample.layout.bottomInset
+            fields[prefix + "Offset"] = sample.contentOffsetY
+            if let range = sample.layout.validOffsetRange {
+                fields[prefix + "Minimum"] = range.lowerBound
+                fields[prefix + "Maximum"] = range.upperBound
+                fields[prefix + "Distance"] = range.upperBound - sample.contentOffsetY
+            }
+        }
+        include(position, prefix: "sample")
+        include(transcriptScrollView.peekPosition(conversationID: effectiveChatSessionID), prefix: "native")
+        NativeToolTraceLogger.shared.log("autoFollowPositionSample", fields,
+            conversationID: effectiveChatSessionID.uuidString)
+        #endif
     }
 
     private func traceAutoFollowBoundary(_ event: String, layout: ChatAutoFollowLayout? = nil) {

@@ -137,6 +137,18 @@ public final class ChatScrollViewHandle {
         return position.isNearBottom == nil ? nil : position
     }
 
+    /// Diagnostic-only observation of the current native geometry. Unlike an
+    /// admitted position read, this must not refresh the viewport lifetime,
+    /// cancel readiness, or affect whether a queued scroll can execute.
+    public func peekPosition(conversationID: UUID) -> ChatAutoFollowPosition? {
+        guard activeConversationID == conversationID,
+              boundConversationID == conversationID,
+              let scrollView, scrollView.window != nil,
+              let layout = Self.snapshotLayout(of: scrollView) else { return nil }
+        let position = ChatAutoFollowPosition(layout: layout, contentOffsetY: Double(scrollView.contentOffset.y))
+        return position.isNearBottom == nil ? nil : position
+    }
+
     /// Re-read UIKit at execution time. A cached SwiftUI geometry notification
     /// can belong to the previous window, split-view width or conversation.
     public func layout(conversationID: UUID, expectedGeneration: UUID? = nil) -> ChatAutoFollowLayout? {
@@ -148,6 +160,12 @@ public final class ChatScrollViewHandle {
         refreshViewport()
         guard expectedGeneration == nil || expectedGeneration == generation,
               let scrollView, scrollView.window != nil else { return nil }
+        return Self.snapshotLayout(of: scrollView)
+    }
+
+    /// Shared finite-value validation only; reading UIKit properties here does
+    /// not change this handle's attachment, generation or pending readiness.
+    private static func snapshotLayout(of scrollView: UIScrollView) -> ChatAutoFollowLayout? {
         let bounds = scrollView.bounds
         let content = scrollView.contentSize
         let offset = scrollView.contentOffset

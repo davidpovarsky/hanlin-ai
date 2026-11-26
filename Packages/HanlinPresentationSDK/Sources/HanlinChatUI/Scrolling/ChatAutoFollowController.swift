@@ -134,7 +134,7 @@ public final class ChatAutoFollowController {
         }
         guard latestLayout != layout else { return }
         latestLayout = layout
-        if !layout.hasScrollableContent { state.isNearBottom = true }
+        if !layout.hasScrollableContent { updateNearBottom(true) }
         if layoutTraceCount < 64 {
             layoutTraceCount += 1
             trace("autoFollowLayoutObserved", fields: [
@@ -150,10 +150,15 @@ public final class ChatAutoFollowController {
     public func invalidateLayout() {
         cancelPendingScroll()
         latestLayout = nil
-        state.isNearBottom = true
+        updateNearBottom(true)
     }
 
     public func updateNearBottom(_ isNearBottom: Bool) {
+        // A nested @Observable value mutation invalidates its readers even when
+        // the Boolean is unchanged. Geometry can emit hundreds of intermediate
+        // samples while a lazy transcript settles; only visibility transitions
+        // should ask its host and external composer to render again.
+        guard state.isNearBottom != isNearBottom else { return }
         state.isNearBottom = isNearBottom
     }
 

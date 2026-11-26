@@ -232,6 +232,45 @@ struct ChatScrollViewHandleTests {
         #expect(handle.position(conversationID: conversationID) == nil)
     }
 
+    @Test func diagnosticPeekCannotAdvanceGenerationOrCancelPendingReadiness() async throws {
+        let conversationID = UUID()
+        let handle = ChatScrollViewHandle()
+        let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 800, height: 600))
+        let scrollView = UIScrollView(frame: window.bounds)
+        window.addSubview(scrollView)
+        scrollView.contentSize = CGSize(width: 800, height: 2_000)
+        scrollView.contentInset.bottom = 20
+        scrollView.contentOffset.y = 300
+        handle.activate(conversationID: conversationID)
+        handle.bind(scrollView, conversationID: conversationID)
+        let generation = handle.generation
+        var calls = 0
+        let pending = try #require(handle.whenReady(conversationID: conversationID) { calls += 1 })
+
+        // UIKit has resized, but the bridge has not refreshed the lifetime yet.
+        scrollView.bounds.size.height = 320
+        let observed = try #require(handle.peekPosition(conversationID: conversationID))
+        #expect(observed.layout.viewportHeight == 320 && observed.contentOffsetY == 300)
+        #expect(handle.generation == generation && !pending.isCancelled)
+        #expect(scrollView.contentOffset.y == 300)
+        #expect(handle.peekPosition(conversationID: UUID()) == nil)
+        scrollView.bounds.size.height = 0
+        #expect(handle.peekPosition(conversationID: conversationID) == nil)
+        #expect(handle.generation == generation && !pending.isCancelled)
+        scrollView.bounds.size.height = 320
+
+        // Only the normal admission read advances generation and rejects work
+        // captured for the old viewport. Diagnostics cannot do that first.
+        #expect(handle.position(conversationID: conversationID, expectedGeneration: generation) == nil)
+        #expect(handle.generation != generation && pending.isCancelled)
+        await pending.value
+        #expect(calls == 0)
+        #expect(handle.position(conversationID: conversationID) == observed)
+        let current = try #require(handle.whenReady(conversationID: conversationID) { calls += 1 })
+        await current.value
+        #expect(calls == 1)
+    }
+
     @Test func incomingBindingBeforeActivationDoesNotNeedAnotherBridgeCallback() throws {
         let previousConversation = UUID(), currentConversation = UUID()
         let handle = ChatScrollViewHandle()

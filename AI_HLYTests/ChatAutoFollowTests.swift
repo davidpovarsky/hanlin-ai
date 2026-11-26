@@ -1,4 +1,5 @@
 import Foundation
+import Observation
 import Testing
 @testable import AI_Hanlin
 
@@ -273,6 +274,55 @@ struct ChatAutoFollowTests {
         #expect(!controller.showsScrollToBottomButton && controller.mode == .following)
         controller.updatePosition(.init(layout: Self.longLayout, contentOffsetY: .nan))
         #expect(!controller.showsScrollToBottomButton && controller.latestLayout == nil)
+    }
+
+    @Test func equalVisibilitySamplesDoNotInvalidateTheTranscriptOrExternalComposer() {
+        let controller = ChatAutoFollowController()
+        controller.updatePosition(.init(layout: Self.longLayout, contentOffsetY: 0))
+        let invalidations = ObservationInvalidations()
+        withObservationTracking {
+            _ = controller.showsScrollToBottomButton
+        } onChange: {
+            invalidations.record()
+        }
+
+        for index in 0..<100 {
+            let layout = ChatAutoFollowLayout(contentHeight: 2_000 + Double(index),
+                viewportHeight: 1_318, topInset: 108, bottomInset: 0)
+            controller.updatePosition(.init(layout: layout, contentOffsetY: Double(index)))
+        }
+        #expect(invalidations.count == 0,
+            "Changing lazy height estimates and offsets must not redraw readers while arrow visibility is unchanged")
+        #expect(controller.showsScrollToBottomButton)
+        controller.updatePosition(.init(layout: Self.longLayout, contentOffsetY: 682))
+        #expect(invalidations.count == 1, "The actual bottom crossing must notify the composer")
+        #expect(!controller.showsScrollToBottomButton)
+    }
+
+    @Test func fittingAndInvalidatedSamplesDoNotPublishRepeatedHiddenArrowState() {
+        let controller = ChatAutoFollowController()
+        let invalidations = ObservationInvalidations()
+        withObservationTracking {
+            _ = controller.showsScrollToBottomButton
+        } onChange: {
+            invalidations.record()
+        }
+        for height in [100.0, 140.0, 80.0] {
+            controller.updatePosition(.init(layout: .init(contentHeight: height,
+                viewportHeight: 600, topInset: 0, bottomInset: 0), contentOffsetY: 0))
+            controller.invalidateLayout()
+        }
+        #expect(invalidations.count == 0)
+        controller.updatePosition(.init(layout: Self.longLayout, contentOffsetY: 0))
+        #expect(invalidations.count == 1, "A newly scrollable transcript must still publish its arrow")
+        #expect(controller.showsScrollToBottomButton)
+    }
+
+    private final class ObservationInvalidations: @unchecked Sendable {
+        private let lock = NSLock()
+        private var recorded = 0
+        var count: Int { lock.withLock { recorded } }
+        func record() { lock.withLock { recorded += 1 } }
     }
 
     @MainActor private final class Gate {

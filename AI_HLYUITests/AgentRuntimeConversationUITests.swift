@@ -657,6 +657,9 @@ final class AgentRuntimeConversationUITests: XCTestCase {
     func testUI01UnifiedHistoryPinSearchSwitchDraftPreservation() throws {
         let app = launchAcceptanceApp()
         openChat(in: app)
+        let identity = app.staticTexts["hanlin-phase2-chat-id"].firstMatch
+        XCTAssertTrue(identity.waitForExistence(timeout: 10))
+        let originalChatID = try XCTUnwrap(UUID(uuidString: identity.label))
 
         let input = chatInputElement(in: app)
         XCTAssertTrue(input.waitForExistence(timeout: 20), "Chat input did not appear in Agent Acceptance Chat")
@@ -670,24 +673,25 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         tapElement(newChatButton)
 
         // A new conversation contains no synthetic welcome message and has an empty draft.
-        let freshInput = chatInputElement(in: app)
-        XCTAssertTrue(freshInput.waitForExistence(timeout: 10))
-        XCTAssertEqual(freshInput.value as? String ?? "", "")
+        assertEmptyComposer(in: app, conversationTitle: "New chat",
+                            fallbackPlaceholder: "Ask any questions.")
+        let newChatID = try XCTUnwrap(UUID(uuidString: identity.label))
+        XCTAssertNotEqual(newChatID, originalChatID, "New chat must create a different conversation")
         let infoBubble = app.descendants(matching: .any)["hanlin-info-bubble"].firstMatch
         XCTAssertFalse(infoBubble.exists, "New conversations must not insert a group welcome message")
         XCTAssertFalse(app.staticTexts["New Group Chat"].exists)
 
         // Switch back to Agent Acceptance Chat and verify the draft was preserved
         ensureChatListVisible(in: app)
-        selectChatRow(named: "Agent Acceptance Chat", in: app)
+        openChat(in: app)
+        XCTAssertEqual(try XCTUnwrap(UUID(uuidString: identity.label)), originalChatID,
+                       "Draft restoration must reopen the original conversation UUID")
 
         let restoredInput = chatInputElement(in: app)
         XCTAssertTrue(restoredInput.waitForExistence(timeout: 10))
         let draftValue = (restoredInput.value as? String) ?? ""
-        XCTAssertTrue(
-            draftValue.contains("Draft preserved across switch"),
-            "Expected draft 'Draft preserved across switch' to be preserved after switching chats, got: '\(draftValue)'"
-        )
+        XCTAssertEqual(draftValue, "Draft preserved across switch",
+                       "The original conversation must restore the complete, unchanged draft")
         attachScreenshot("UI-01_UnifiedHistoryPinSearchSwitchDraftPreservation", in: app)
     }
 
@@ -726,7 +730,9 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         sendPrompt(prompt, in: app)
         let final = app.descendants(matching: .any).matching(
             NSPredicate(format: "label CONTAINS 'UI02_CLASSIC_COMPLETE'")).firstMatch
-        XCTAssertTrue(final.waitForExistence(timeout: 30))
+        // This visual/action test waits for the exact completed response. On the
+        // shared native runner the observed response completed after 76 seconds.
+        XCTAssertTrue(final.waitForExistence(timeout: 120))
         let bubble = app.descendants(matching: .any)["hanlin-user-bubble"].firstMatch
         XCTAssertTrue(bubble.waitForExistence(timeout: 5))
         XCTAssertTrue(bubble.isHittable)
@@ -790,11 +796,9 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertTrue(done.waitForNonExistence(timeout: 10))
         let newChat = chatListToolbarButton("hanlin-new-chat-button", in: app)
         tapElement(newChat)
-        let input = chatInputElement(in: app)
-        XCTAssertTrue(input.waitForExistence(timeout: 10))
-        XCTAssertEqual(input.value as? String ?? "", "")
+        assertEmptyComposer(in: app, conversationTitle: "צ׳אט חדש",
+                            fallbackPlaceholder: "אפשר לשאול כל שאלה")
         XCTAssertFalse(app.descendants(matching: .any)["hanlin-info-bubble"].firstMatch.exists)
-        XCTAssertTrue(app.staticTexts["צ׳אט חדש"].firstMatch.waitForExistence(timeout: 10))
         XCTAssertFalse(app.staticTexts["New Group Chat"].exists)
         attachScreenshot("post149101-Hebrew-empty-chat-and-sidebar", in: app)
     }
@@ -2121,6 +2125,34 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         let tv = app.textViews["hanlin-chat-input"].firstMatch
         if tv.exists { return tv }
         return app.descendants(matching: .any)["hanlin-chat-input"].firstMatch
+    }
+
+    private func assertEmptyComposer(in app: XCUIApplication, conversationTitle: String,
+                                     fallbackPlaceholder: String,
+                                     file: StaticString = #filePath, line: UInt = #line) {
+        // Home retains an editor too. Prove the intended destination before
+        // interpreting the native editor's accessibility value.
+        let title = app.navigationBars.descendants(matching: .any).matching(
+            NSPredicate(format: "label == %@", conversationTitle)).firstMatch
+        XCTAssertTrue(title.waitForExistence(timeout: 10),
+                      "The new conversation destination must be selected", file: file, line: line)
+        guard title.exists else { return }
+        let input = chatInputElement(in: app)
+        XCTAssertTrue(input.waitForExistence(timeout: 10), file: file, line: line)
+        guard input.exists else { return }
+        XCTAssertTrue(input.isEnabled && input.isHittable,
+                      "The selected conversation editor must be reachable", file: file, line: line)
+        // The original native editor displays its placeholder in UITextView.text
+        // while unfocused. XCTest may therefore expose that exact text as value.
+        let placeholder = input.placeholderValue.flatMap { $0.isEmpty ? nil : $0 }
+            ?? fallbackPlaceholder
+        guard let value = input.value as? String else {
+            XCTFail("The native editor must expose a readable text value", file: file, line: line)
+            return
+        }
+        XCTAssertTrue(value.isEmpty || value == placeholder,
+                      "Expected an empty composer or its exact placeholder, got: '\(value)'",
+                      file: file, line: line)
     }
 
     private func sendPrompt(_ text: String, in app: XCUIApplication,
