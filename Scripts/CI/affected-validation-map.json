@@ -34,7 +34,17 @@
     "Docs/SDK/HanlinNativeArtifactProvenance20261123.json",
     "Docs/SDK/NativeArtifactProvenanceEvidence20261123/**",
     "Docs/SDK/AppIntentsInstallationEvidence20261123/**",
-    "Docs/SDK/validation/provider-summary-count-20261123/**"
+    "Docs/SDK/validation/provider-summary-count-20261123/**",
+    "Docs/SDK/Validation/post149101-activity-20261126/portable-checks.stdout.txt",
+    "Docs/SDK/Validation/post149101-activity-20261126/portable-result.json",
+    "Docs/SDK/Validation/post149101-activity-20261126/source-fingerprints.json",
+    "Docs/SDK/Validation/post149101-activity-20261126/validation-plan.json",
+    "Docs/SDK/Validation/post149101-metadata-review-20261126/finish-reason-validation.json",
+    "Docs/SDK/Validation/post149101-metadata-review-20261126/syntax-validation.json",
+    "Docs/Validation/Post149101Metadata/portable-metadata.stdout.txt",
+    "Docs/Validation/Post149101Metadata/portable-result.json",
+    "Docs/Validation/Post149101Metadata/validation-plan.json",
+    "Docs/Validation/Post149101RuntimeRecovery.json"
   ],
   "components": {
     "ci_router": {
@@ -394,7 +404,9 @@
         "Scripts/NativeScript/build-controller-fixtures.mjs",
         "Scripts/NativeScript/nativescript.config.ts",
         "Scripts/NativeScript/tsconfig.json",
-        "Scripts/NativeScript/vite.config.mts"
+        "Scripts/NativeScript/vite.config.mts",
+        "Scripts/NativeScript/build_package_window_fixtures.py",
+        "Scripts/NativeScript/window-factory.d.ts"
       ],
       "direct_validation_groups": [
         "nativescript_dependencies",
@@ -467,7 +479,10 @@
         "Scripts/Runtime/generate-yarn-unicode-patch.mjs",
         "Scripts/Runtime/generate-yarn-multiline-patch.mjs",
         "Scripts/Runtime/HostGrammarTools/**",
-        "Scripts/Runtime/verify_runtime_reuse.py"
+        "Scripts/Runtime/verify_runtime_reuse.py",
+        "Scripts/MiniApps/AssistantExamples/**",
+        "Scripts/MiniApps/assistant-tools.d.ts",
+        "Scripts/MiniApps/assistant-tools.schema.json"
       ],
       "direct_validation_groups": [
         "runtimecore_host"
@@ -679,7 +694,8 @@
         "AI_HLY/Downstream/ChatPresentation/**",
         "AI_HLY/Downstream/ChatInput/**",
         "AI_HLY/Downstream/ChatCore/**",
-        "AI_HLY/Downstream/SystemIntegrations/**"
+        "AI_HLY/Downstream/SystemIntegrations/**",
+        "Scripts/Tests/verify_chatgpt_plan_contract.swift"
       ],
       "direct_validation_groups": [
         "app_unit_tests"
@@ -1612,7 +1628,8 @@
     "canonical_agent_sdk": {
       "description": "Canonical SDK Host schemas and source consumers",
       "patterns": [
-        "Packages/HanlinAgentSDK/**"
+        "Packages/HanlinAgentSDK/**",
+        "Scripts/Tests/run_private_store_tests.py"
       ],
       "direct_validation_groups": [
         "app_unit_tests"
@@ -1626,7 +1643,8 @@
       "description": "Reusable original Composer/Markdown/OpenUI source; native SDK compilation uses dedicated proof and its real app consumer uses these suites",
       "patterns": [
         "Packages/HanlinPresentationSDK/**",
-        "Scripts/OpenUI/**"
+        "Scripts/OpenUI/**",
+        "Examples/HanlinLauncherLab/**"
       ],
       "direct_validation_groups": [
         "app_unit_tests",
@@ -1653,7 +1671,8 @@
         "HanlinMiniAppsUITests/**",
         "Tests/ProductSplit/**",
         "AI_HLYTests/HanlinAppSplitOriginTests.swift",
-        "AI_HLYUITests/HanlinPairedProductUITests.swift"
+        "AI_HLYUITests/HanlinPairedProductUITests.swift",
+        "Packages/HanlinMiniAppsBridge/**"
       ],
       "direct_validation_groups": [
         "app_unit_tests"
@@ -1789,6 +1808,60 @@
       "consumers": [
         "project_packaging"
       ]
+    },
+    "chat_completion_unit_tests": {
+      "description": "Original chat activity, cache, Composer, metadata, sidebar and MiniApp assistant integration test source",
+      "patterns": [
+        "AI_HLYTests/AgentActivityHeaderPhaseTests.swift",
+        "AI_HLYTests/AgentTokenUsageCacheTests.swift",
+        "AI_HLYTests/AutomaticWebSearchCacheTests.swift",
+        "AI_HLYTests/HanlinComposerCapabilityIntegrationTests.swift",
+        "AI_HLYTests/HanlinConversationMetadataTests.swift",
+        "AI_HLYTests/HanlinMiniAppAssistantIntegrationTests.swift",
+        "AI_HLYTests/HanlinMiniAppAssistantToolAcceptanceTests.swift",
+        "AI_HLYTests/HanlinMiniAppAssistantToolTests.swift",
+        "AI_HLYTests/HanlinModelPromptCachePersistenceTests.swift",
+        "AI_HLYTests/HanlinOpenUIBridgeTests.swift",
+        "AI_HLYTests/HanlinPromptCachingIntegrationTests.swift",
+        "AI_HLYTests/HanlinSidebarGestureTests.swift",
+        "AI_HLYTests/NodeHostHealthRecoveryTests.swift"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/AgentActivityHeaderPhaseTests",
+        "AI_HLYTests/AgentTokenUsageCacheTests",
+        "AI_HLYTests/AutomaticWebSearchCacheTests",
+        "AI_HLYTests/HanlinComposerCapabilityIntegrationTests",
+        "AI_HLYTests/HanlinConversationHistorySectionTests",
+        "AI_HLYTests/HanlinConversationMetadataTests",
+        "AI_HLYTests/HanlinMiniAppAssistantIntegrationTests",
+        "AI_HLYTests/HanlinMiniAppAssistantToolTests",
+        "AI_HLYTests/HanlinModelPromptCachePersistenceTests",
+        "AI_HLYTests/HanlinOpenUIBridgeTests",
+        "AI_HLYTests/HanlinPromptCachingIntegrationTests",
+        "AI_HLYTests/HanlinSidebarAccessibilityOwnershipTests",
+        "AI_HLYTests/HanlinSidebarGestureTests",
+        "AI_HLYTests/HanlinUnifiedHostServicesE2ETests",
+        "AI_HLYTests/NodeHostHealthRecoveryTests"
+      ],
+      "consumers": []
+    },
+    "chat_completion_ui_tests": {
+      "description": "Original Composer capabilities and sidebar navigation UI acceptance",
+      "patterns": [
+        "AI_HLYUITests/HanlinComposerCapabilitiesUITests.swift",
+        "AI_HLYUITests/HanlinSidebarNavigationUITests.swift"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinComposerCapabilitiesUITests",
+        "AI_HLYUITests/HanlinSidebarNavigationUITests"
+      ],
+      "consumers": []
     }
   },
   "validation_groups": {
