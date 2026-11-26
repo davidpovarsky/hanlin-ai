@@ -136,14 +136,12 @@ export function createSurfaceProof(input: {
         result.status = 'completed';
         result.finishedAt = new Date().toISOString();
         await save(state);
-        console.log('[HanlinSurfaceProof] ' + JSON.stringify(result));
         return result;
       } catch (error) {
         result.status = 'failed';
         result.error = String(error);
         result.finishedAt = new Date().toISOString();
         await save(state);
-        console.error('[HanlinSurfaceProof] ' + JSON.stringify(result));
         throw error;
       }
     })
