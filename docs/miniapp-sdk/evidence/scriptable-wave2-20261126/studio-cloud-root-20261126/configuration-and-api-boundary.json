@@ -1,0 +1,34 @@
+{
+  "source": "9819697c1792119a6a93b492d12abad7b3330c93",
+  "iCloudContainerIdentifiers": [
+    "iCloud.com.itorah.chavrusachat"
+  ],
+  "services": [
+    "CloudKit",
+    "CloudDocuments"
+  ],
+  "ubiquityContainerIdentifiersSourceKey": null,
+  "declaredStudioContainer": "iCloud.com.itorah.chavrusachat",
+  "UIFileSharingEnabled": true,
+  "LSSupportsOpeningDocumentsInPlace": true,
+  "signedEntitlementAndContainerAccess": "NOT_VERIFIED_BY_THIS_SOURCE_TASK",
+  "sdkReadOnlyAt": "2026-11-26T17:52:45.921822+00:00",
+  "sdk": "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk",
+  "headerHashes": {
+    "System/Library/Frameworks/Foundation.framework/Headers/NSURL.h": "fd98908ae391ef82507f8375942e70a97f8426e6d003fe876d63e31d7e9f2324",
+    "System/Library/Frameworks/Foundation.framework/Headers/NSFileManager.h": "008bdb614b3c41bebec979a8936184716a6d48f442718166217ffcf147bdb731",
+    "System/Library/Frameworks/Foundation.framework/Headers/NSMetadata.h": "e2d9c273f7cdcb58607bcd23a2bc2eae56a5b0c06aeb916c915a6b7c9206b033",
+    "System/Library/Frameworks/FileProvider.framework/Headers/NSFileProviderItem.h": "3f48afe1e78469571b8f863592d4fb54883b773b23e35897455a3059471897cd",
+    "System/Library/Frameworks/UIKit.framework/Headers/UIDocumentBrowserViewController.h": "86495a35c08f4a5d48fcb3473fe8833fe12af11e4705cbb436e3ae854f2cdd16"
+  },
+  "publicAPIFindings": {
+    "URLForUbiquityContainerIdentifier": "Available on iOS; must be called off the main thread; nil means unavailable and must not overwrite an existing workspace.",
+    "NSURLTagNamesKey": "API_UNAVAILABLE(ios) in installed iPhoneSimulator27.0 SDK. Not introduced.",
+    "NSMetadataQueryUbiquitousDocumentsScope": "Public iOS API; no placeholder implementation or OS acceptance added in this narrow lifecycle fix."
+  },
+  "officialReferences": [
+    "https://developer.apple.com/documentation/foundation/filemanager/url(forubiquitycontaineridentifier:)",
+    "https://developer.apple.com/documentation/bundleresources/entitlements/com.apple.developer.icloud-services",
+    "https://developer.apple.com/documentation/fileprovider/nsfileprovideritemprotocol/tagdata"
+  ]
+}

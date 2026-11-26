@@ -1,0 +1,58 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-26T18:18:28.022306+00:00",
+  "sourceIdentity": "Containing commit plus exact file hashes below",
+  "base": "9819697c1792119a6a93b492d12abad7b3330c93",
+  "classification": "SOURCE_FIX_AND_PORTABLE_REGRESSION_PASSED_NATIVE_PENDING",
+  "sources": {
+    "HanlinMiniAppsApp/MiniAppsDeveloperStudio.swift": {
+      "bytes": 34009,
+      "sha256": "2147cdb4b930b6da804a9879d9f5b99a9b7c4ac02051e223c3449a10400ef487"
+    },
+    "HanlinMiniAppsApp/MiniAppsDeveloperWorkspace.swift": {
+      "bytes": 14023,
+      "sha256": "ab466b2429bca4c4fc91fc0142202c2890101f1b53782be76cb5ca5596078921"
+    },
+    "HanlinMiniAppsTests/MiniAppsDeveloperWorkspaceTests.swift": {
+      "bytes": 9689,
+      "sha256": "200c2783b7da02fd6c9647326bc1ee81f16b9f37e53418cdeaf46625f245edac"
+    }
+  },
+  "originalWorkspaceImplementationUnchanged": true,
+  "allFourOriginalWorkspaceTestsUnchanged": true,
+  "allOtherStudioUIUnchanged": true,
+  "portableTests": {
+    "originalWorkspace": 4,
+    "newRootLifecycle": 4,
+    "total": 8,
+    "failed": 0,
+    "sourceFilesCopiedByteIdentically": true
+  },
+  "swiftFrontendParseExit": 0,
+  "nativeSelectors": [
+    "HanlinMiniAppsTests/MiniAppsStudioLibraryResolutionTests/rootLookupLeavesTheMainActorAvailable",
+    "HanlinMiniAppsTests/MiniAppsStudioLibraryResolutionTests/cancellingAnInFlightLookupRejectsItsLateRoot",
+    "HanlinMiniAppsTests/MiniAppsStudioLibraryResolutionTests/lateLookupAndCancellationCannotReplaceTheOpenedWorkspace",
+    "HanlinMiniAppsTests/MiniAppsStudioLibraryResolutionTests/anUnavailableLibraryCanRetryWithoutAcceptingAnOldCompletion"
+  ],
+  "retainedOriginalNativeScopes": [
+    "HanlinMiniAppsTests/MiniAppsDeveloperWorkspaceTests (4)",
+    "HanlinMiniAppsTests/MiniAppsStudioProjectTests (6 invocations)"
+  ],
+  "newStudioNativeTotal": 14,
+  "native": "NOT_RUN",
+  "cloudAccountAndFileProvider": "NOT_RUN",
+  "unchangedInputs": [
+    "Info.plist",
+    "entitlements",
+    "project generators",
+    "SDK manifests",
+    "engine implementations",
+    "editor/draft/save/coordination implementation"
+  ],
+  "externalGates": [
+    "Actual signed container access or unavailable-state UI on Apple",
+    "Cloud/FileProvider placeholder and remote-conflict behavior remains an original OS probe",
+    "Actual native lifecycle tests and Studio navigation/dirty-document preservation"
+  ]
+}

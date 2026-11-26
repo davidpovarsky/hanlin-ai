@@ -245,3 +245,64 @@ struct MiniAppsDeveloperWorkspace: Sendable {
         #endif
     }
 }
+
+/// A library lookup may finish after its view disappears or a newer lookup starts.
+/// Publishing is generation-qualified, and an opened workspace is never replaced
+/// by a later root lookup while its editor and drafts are still in use.
+struct MiniAppsStudioLibraryLoadState: Sendable {
+    private(set) var workspace: MiniAppsDeveloperWorkspace?
+    private(set) var error: String?
+    private var request: UUID?
+
+    mutating func begin() -> UUID? {
+        guard workspace == nil else { return nil }
+        let next = UUID()
+        request = next
+        error = nil
+        return next
+    }
+
+    mutating func succeed(_ workspace: MiniAppsDeveloperWorkspace, for request: UUID) {
+        guard self.request == request else { return }
+        self.workspace = workspace
+        error = nil
+        self.request = nil
+    }
+
+    mutating func fail(_ message: String, for request: UUID) {
+        guard self.request == request else { return }
+        error = message
+        self.request = nil
+    }
+
+    mutating func cancel(_ request: UUID) {
+        guard self.request == request else { return }
+        self.request = nil
+    }
+
+    mutating func cancelCurrentRequest() {
+        request = nil
+    }
+
+    /// FileManager's ubiquity lookup can block while extending the sandbox.
+    /// Both root resolution and workspace creation must stay off the main actor.
+    /// Cancelling the view cannot interrupt Foundation, but it cancels the worker
+    /// and rejects its result before a stale workspace can be published.
+    nonisolated static func resolveWorkspace(
+        root: @escaping @Sendable () throws -> URL
+    ) async throws -> MiniAppsDeveloperWorkspace {
+        try Task.checkCancellation()
+        let worker = Task.detached(priority: .userInitiated) {
+            let url = try root()
+            try Task.checkCancellation()
+            return try MiniAppsDeveloperWorkspace(root: url)
+        }
+        return try await withTaskCancellationHandler {
+            let workspace = try await worker.value
+            try Task.checkCancellation()
+            return workspace
+        } onCancel: {
+            worker.cancel()
+        }
+    }
+}
