@@ -225,6 +225,56 @@ struct ChatAutoFollowTests {
         #expect(calls == 0)
     }
 
+    @Test func followLatestVisibilityUsesMeasuredPositionRatherThanFollowMode() {
+        let controller = ChatAutoFollowController()
+        #expect(!controller.showsScrollToBottomButton)
+        let layout = ChatAutoFollowLayout(contentHeight: 2_000, viewportHeight: 600,
+            topInset: 100, bottomInset: 20)
+        controller.updatePosition(.init(layout: layout, contentOffsetY: 500))
+        #expect(controller.showsScrollToBottomButton)
+        controller.pauseFollowing(reason: "manualReading")
+        controller.resumeFollowing()
+        #expect(controller.showsScrollToBottomButton,
+                "Tapping jump cannot hide the arrow before the actual viewport reaches the bottom")
+        controller.updatePosition(.init(layout: layout, contentOffsetY: 1_420))
+        #expect(!controller.showsScrollToBottomButton)
+        controller.updatePosition(.init(layout: layout, contentOffsetY: 1_500))
+        #expect(!controller.showsScrollToBottomButton, "Bottom elastic bounce is still at the bottom")
+    }
+
+    @Test func invalidationAndFittingContentClearAnObsoleteArrowWithoutChangingUserIntent() {
+        let controller = ChatAutoFollowController()
+        controller.updatePosition(.init(layout: Self.longLayout, contentOffsetY: 0))
+        controller.pauseFollowing(reason: "manualReading")
+        #expect(controller.showsScrollToBottomButton)
+        controller.invalidateLayout()
+        #expect(!controller.showsScrollToBottomButton)
+        #expect(controller.mode == .pausedByUser)
+
+        controller.updatePosition(.init(layout: Self.longLayout, contentOffsetY: 0))
+        #expect(controller.showsScrollToBottomButton)
+        controller.updateLayout(.init(contentHeight: 100, viewportHeight: 600, topInset: 0, bottomInset: 0))
+        #expect(!controller.showsScrollToBottomButton)
+        #expect(controller.mode == .pausedByUser)
+    }
+
+    @Test func resizedViewportRecomputesBottomFromTheNewLayoutAndOffsetTogether() {
+        let controller = ChatAutoFollowController()
+        controller.updatePosition(.init(layout: .init(contentHeight: 2_000, viewportHeight: 1_000,
+            topInset: 0, bottomInset: 0), contentOffsetY: 1_000))
+        #expect(!controller.showsScrollToBottomButton)
+        controller.updatePosition(.init(layout: .init(contentHeight: 2_000, viewportHeight: 500,
+            topInset: 0, bottomInset: 0), contentOffsetY: 1_000))
+        #expect(controller.showsScrollToBottomButton)
+        controller.userInteractionBegan()
+        controller.updatePosition(.init(layout: .init(contentHeight: 2_000, viewportHeight: 500,
+            topInset: 0, bottomInset: 0), contentOffsetY: 1_500))
+        controller.userInteractionEnded()
+        #expect(!controller.showsScrollToBottomButton && controller.mode == .following)
+        controller.updatePosition(.init(layout: Self.longLayout, contentOffsetY: .nan))
+        #expect(!controller.showsScrollToBottomButton && controller.latestLayout == nil)
+    }
+
     @MainActor private final class Gate {
         private(set) var starts = 0
         private var releases: [CheckedContinuation<Void, Never>] = []

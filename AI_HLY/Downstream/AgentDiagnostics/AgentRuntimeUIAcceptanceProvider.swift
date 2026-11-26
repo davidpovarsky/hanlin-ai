@@ -195,6 +195,19 @@ enum AgentRuntimeUIAcceptanceProvider {
 #endif
             context.insert(acceptanceChat)
 #if (DEBUG || HANLIN_TESTING) && targetEnvironment(simulator)
+            if ProcessInfo.processInfo.environment["HANLIN_SCROLL_BOTTOM_ACCEPTANCE_FIXTURE"] == "1" {
+                // Historical messages in the real store/view, not manufactured
+                // scroll offsets or a replacement transcript/composer.
+                for index in 0..<12 {
+                    let paragraph = "Original transcript row \(index + 1). This historical paragraph gives the native chat real content to scroll while retaining the original message renderer."
+                    let text = index == 11 ? "POST149101_SCROLL_LAST"
+                        : Array(repeating: paragraph, count: 4).joined(separator: "\n\n")
+                    let message = ChatMessages(role: "assistant", text: text,
+                        modelDisplayName: "Agent Acceptance", record: acceptanceChat)
+                    message.timestamp = now.addingTimeInterval(Double(index - 12))
+                    context.insert(message)
+                }
+            }
             if isSkillsEnabled,
                ProcessInfo.processInfo.environment["HANLIN_EMBEDDED_FALLBACK_FIXTURE"] == "1" {
                 // Historical rendering fixture only: original message/AgentRun/

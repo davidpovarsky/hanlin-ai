@@ -358,8 +358,6 @@ struct ChatViewBottom: View {
     @ScaledMetric(relativeTo: .body) var size_44: CGFloat = 44
     @ScaledMetric(relativeTo: .body) var size_80: CGFloat = 80
 
-    @ScaledMetric(relativeTo: .body) var followLatestSymbolSize: CGFloat = 14
-
     let buttonHeight: CGFloat = 36
 
     var body: some View {
@@ -369,9 +367,9 @@ struct ChatViewBottom: View {
 
     private var composerSurface: some View {
         VStack {
-            // 只有在需要时才显示“画布”和“滚动到底部”按钮
-            if (showScrollToBottomButton
-                || (chatRecord.canvas?.content.isEmpty == false))  && isMultiSelectMode == false
+            // Canvas is persistent content. A transient follow-latest button
+            // must not change the measured composer height or transcript range.
+            if chatRecord.canvas?.content.isEmpty == false && !isMultiSelectMode
             {
                 HStack(spacing: 12) {
                     Spacer()
@@ -408,20 +406,7 @@ struct ChatViewBottom: View {
                         .disabled(!modelTemp.indices.contains(selectedModelIndex))
                     }
 
-                    if showScrollToBottomButton {
-                        Button(action: { needScrollToBottomButton.toggle() }) {
-                            Image(systemName: "arrow.down")
-                                .font(HanlinTypography.fixed(size: followLatestSymbolSize, weight: .semibold))
-                                .foregroundStyle(Color.primary.opacity(0.77))
-                                .frame(width: buttonHeight, height: buttonHeight)
-                                .background(Color(uiColor: .systemBackground), in: Circle())
-                                .shadow(color: .black.opacity(0.12), radius: 8, y: 2)
-                        }
-                        .buttonStyle(.plain)
-                        .transition(.move(edge: .bottom).combined(with: .opacity))
-                        .animation(.spring(response: 0.5, dampingFraction: 0.7),
-                                   value: showScrollToBottomButton)
-                    }
+                    if showScrollToBottomButton { followLatestButton }
                 }
                 .offset(y: isViewLoaded ? 0 : 60) // 初次进入时滑入
                 .opacity(isViewLoaded ? 1 : 0)    // 初次进入时淡入
@@ -431,6 +416,13 @@ struct ChatViewBottom: View {
 
             // 多选模式工具栏 + 底部输入面板
             buildMultiSelectAndInputControls()
+        }
+        .overlay(alignment: .topTrailing) {
+            if showScrollToBottomButton && chatRecord.canvas?.content.isEmpty != false && !isMultiSelectMode {
+                followLatestButton
+                    .padding(.trailing, 15)
+                    .offset(y: -(buttonHeight + 8))
+            }
         }
         .sheet(item: $canvasPresentation) { presentation in
             AICanvasView(
@@ -605,6 +597,26 @@ struct ChatViewBottom: View {
                 Color.clear.preference(key: ComposerHeightPreferenceKey.self, value: proxy.size.height)
             }
         )
+    }
+
+    private var followLatestButton: some View {
+        Button(action: { needScrollToBottomButton.toggle() }) {
+            Image(systemName: "arrow.down")
+                .font(HanlinTypography.fixed(size: size_16, weight: .medium))
+                .foregroundColor(TemporaryRecord ? .primary : .hanlinHLBluefont)
+                .frame(width: buttonHeight, height: buttonHeight)
+                .clipShape(Circle())
+                .background(
+                    GlassView(style: .systemUltraThinMaterial)
+                        .clipShape(Circle())
+                        .shadow(color: TemporaryRecord ? .primary : .hanlinHLBlue, radius: 1)
+                )
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(Text("Scroll to latest message", bundle: HanlinLocalization.bundle))
+        .accessibilityIdentifier("hanlin-chat-follow-latest")
+        .transition(.move(edge: .bottom).combined(with: .opacity))
+        .animation(.spring(response: 0.5, dampingFraction: 0.7), value: showScrollToBottomButton)
     }
 
     /// 底部动画触发状态集合

@@ -155,6 +155,103 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         restored.name = "cold-original-conversation-draft-and-history-without-replay"; restored.lifetime = .keepAlways; add(restored)
     }
 
+    /// Uses the canonical message store and the real compact external composer
+    /// on iPhone, plus the original overlaid composer on iPad. No offset or
+    /// visibility is injected; every transition comes from native user actions.
+    func testFollowLatestArrowTracksRealBottomAcrossScrollAndComposerChanges() throws {
+        continueAfterFailure = false
+        executionTimeAllowance = 240
+        let app = XCUIApplication()
+        XCUIDevice.shared.orientation = .portrait
+        defer { app.terminate(); XCUIDevice.shared.orientation = .portrait }
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+        app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
+        app.launchEnvironment["HANLIN_PHASE2_STORE_ID"] = UUID().uuidString
+        app.launchEnvironment["HANLIN_SCROLL_BOTTOM_ACCEPTANCE_FIXTURE"] = "1"
+        app.launchEnvironment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] = "1"
+        app.launch()
+        openChat(in: app)
+
+        let transcript = app.descendants(matching: .any)["hanlin-chat-transcript"].firstMatch
+        let arrow = app.buttons["hanlin-chat-follow-latest"].firstMatch
+        let last = app.descendants(matching: .any).matching(NSPredicate(
+            format: "label == %@", "POST149101_SCROLL_LAST")).firstMatch
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            XCTAssertTrue(app.descendants(matching: .any)["hanlin-compact-chat-workspace"].firstMatch.exists,
+                          "The phone regression must exercise the persistent external composer")
+        }
+        func assertAtBottom(_ stage: String) {
+            let settled = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+                last.exists && last.isHittable && !arrow.exists
+            }, object: nil)
+            XCTAssertEqual(XCTWaiter.wait(for: [settled], timeout: 12), .completed,
+                           "The final real message must be visible with no arrow at \(stage)")
+        }
+        XCTAssertTrue(transcript.waitForExistence(timeout: 15))
+        assertAtBottom("initial attachment")
+
+        transcript.swipeDown()
+        transcript.swipeDown()
+        XCTAssertTrue(arrow.waitForExistence(timeout: 8) && arrow.isHittable,
+                      "Reading earlier messages must reveal a reachable original arrow")
+        let composerTopWhileReading = chatInputElement(in: app).frame.minY
+        let viewportHeightWhileReading = transcript.frame.height
+        attachScreenshot("follow-latest-original-blue-glass-reading-history", in: app)
+        arrow.tap()
+        assertAtBottom("jump button")
+        XCTAssertEqual(chatInputElement(in: app).frame.minY, composerTopWhileReading, accuracy: 2,
+                       "Removing the floating arrow must not change composer layout")
+        XCTAssertEqual(transcript.frame.height, viewportHeightWhileReading, accuracy: 2,
+                       "Arrow visibility must not resize the compact transcript viewport")
+
+        // Reach the bottom manually, without pressing the button. This is the
+        // reported failure mode and must resume tracking from the real offset.
+        transcript.swipeDown()
+        transcript.swipeDown()
+        XCTAssertTrue(arrow.waitForExistence(timeout: 8))
+        for _ in 0..<8 where arrow.exists { transcript.swipeUp() }
+        assertAtBottom("manual scroll")
+
+        let draft = "UNSENT_BOTTOM_REGRESSION"
+        let input = chatInputElement(in: app)
+        XCTAssertTrue(input.isHittable)
+        input.tap(); input.typeText(draft)
+        XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 5))
+        assertAtBottom("keyboard and composer growth")
+        XCUIDevice.shared.orientation = .landscapeLeft
+        let landscape = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+            let frame = app.windows.firstMatch.frame
+            return frame.width > frame.height
+        }, object: nil)
+        XCTAssertEqual(XCTWaiter.wait(for: [landscape], timeout: 10), .completed)
+        assertAtBottom("rotated keyboard viewport")
+        XCTAssertEqual(chatInputElement(in: app).value as? String, draft)
+        attachScreenshot("follow-latest-bottom-keyboard-landscape", in: app)
+        XCUIDevice.shared.orientation = .portrait
+
+        // Leave an explicitly paused, long chat for an empty new one. An old
+        // endpoint or invalidated layout cannot carry its arrow into that chat.
+        transcript.swipeDown()
+        transcript.swipeDown()
+        XCTAssertTrue(arrow.waitForExistence(timeout: 8))
+        let identity = app.staticTexts["hanlin-phase2-chat-id"].firstMatch
+        XCTAssertTrue(identity.waitForExistence(timeout: 5))
+        let oldID = identity.label
+        let newChat = chatListToolbarButton("hanlin-new-chat-button", in: app)
+        XCTAssertTrue(newChat.isHittable)
+        newChat.tap()
+        let replaced = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+            identity.exists && identity.label != oldID && UUID(uuidString: identity.label) != nil
+        }, object: nil)
+        XCTAssertEqual(XCTWaiter.wait(for: [replaced], timeout: 12), .completed)
+        XCTAssertTrue(arrow.waitForNonExistence(timeout: 8),
+                      "A new, fitting chat has no older scroll target")
+        XCTAssertEqual(app.staticTexts["hanlin-phase2-request-count"].label, "0",
+                       "Reading and jumping in historical messages cannot execute a model request")
+        attachScreenshot("follow-latest-new-short-chat-without-arrow", in: app)
+    }
+
     /// Exercises the production transcript, Host approval and actual Python
     /// output through the existing controlled provider. No replacement view,
     /// preinstalled tool result or synthetic scroll geometry is involved.

@@ -164,7 +164,14 @@ struct ChatView: View {
         return matchedMessageID
     }
     var matchedMessageID: UUID?                             // 匹配的消息 ID
-    @State private var showScrollToBottomButton = false     // 控制滚动到底部按钮显示
+    private var showScrollToBottomButton: Bool { autoFollowController.showsScrollToBottomButton }
+
+    private var scrollToBottomVisibility: Binding<Bool> {
+        // The persistent external composer outlives individual ChatView renders.
+        // Capture the shared observable owner, not a State Binding's cached value.
+        Binding(get: { [autoFollowController] in autoFollowController.showsScrollToBottomButton },
+                set: { [autoFollowController] in autoFollowController.updateNearBottom(!$0) })
+    }
     @State private var needScrollToBottomButton = false     // 是否需要显示滚动到底部按钮
     @State private var autoFollowController = ChatAutoFollowController(onTrace: { event, fields in
         #if DEBUG || HANLIN_TESTING
@@ -344,7 +351,7 @@ struct ChatView: View {
             temporaryRecord: TemporaryRecord,
             respondIndex: respondIndex,
             selectedModelIndex: $selectedModelIndex,
-            showScrollToBottomButton: $showScrollToBottomButton,
+            showScrollToBottomButton: scrollToBottomVisibility,
             needScrollToBottomButton: $needScrollToBottomButton,
             isMultiSelectMode: $isMultiSelectMode,
             selectedMessageIDs: $selectedMessageIDs,
@@ -391,6 +398,7 @@ struct ChatView: View {
     }
 
     private struct ComposerBridgeSyncState: Equatable {
+        var showScrollToBottomButton: Bool
         var temporaryRecord: Bool
         var respondIndex: Int
         var isResponding: Bool
@@ -413,6 +421,7 @@ struct ChatView: View {
 
     private var composerBridgeSyncState: ComposerBridgeSyncState {
         ComposerBridgeSyncState(
+            showScrollToBottomButton: showScrollToBottomButton,
             temporaryRecord: TemporaryRecord,
             respondIndex: respondIndex,
             isResponding: isResponding || agentSessionOwner.inlineToolIsRunning,
@@ -1173,28 +1182,20 @@ struct ChatView: View {
                     chatContainerWidth = newWidth
                 }
             }
-            .onScrollGeometryChange(for: Bool?.self) { geometry in
-                ChatAutoFollowLayout(contentHeight: Double(geometry.contentSize.height),
-                    viewportHeight: Double(geometry.containerSize.height),
-                    topInset: Double(geometry.contentInsets.top),
-                    bottomInset: Double(geometry.contentInsets.bottom))
-                    .isNearBottom(contentOffsetY: Double(geometry.contentOffset.y))
-            } action: { _, measuredNearBottom in
-                guard let isScrolledToBottom = measuredNearBottom else { return }
-                autoFollowController.updateNearBottom(isScrolledToBottom)
+            .onScrollGeometryChange(for: ChatAutoFollowPosition.self) { geometry in
+                ChatAutoFollowPosition(
+                    layout: ChatAutoFollowLayout(contentHeight: Double(geometry.contentSize.height).rounded(),
+                        viewportHeight: Double(geometry.containerSize.height).rounded(),
+                        topInset: Double(geometry.contentInsets.top).rounded(),
+                        bottomInset: Double(geometry.contentInsets.bottom).rounded()),
+                    contentOffsetY: Double(geometry.contentOffset.y).rounded())
+            } action: { previous, position in
                 withAnimation(.easeOut(duration: 0.16)) {
-                    showScrollToBottomButton = !isScrolledToBottom
+                    autoFollowController.updatePosition(position)
                 }
-            }
-            .onScrollGeometryChange(for: ChatAutoFollowLayout.self) { geometry in
-                ChatAutoFollowLayout(contentHeight: Double(geometry.contentSize.height).rounded(),
-                    viewportHeight: Double(geometry.containerSize.height).rounded(),
-                    topInset: Double(geometry.contentInsets.top).rounded(),
-                    bottomInset: Double(geometry.contentInsets.bottom).rounded())
-            } action: { _, layout in
-                autoFollowController.updateLayout(layout)
+                guard previous.layout != position.layout else { return }
                 scheduleSourceScroll(using: scrollViewProxy)
-                scheduleAutoFollow(using: scrollViewProxy, animated: false, measuredLayout: layout)
+                scheduleAutoFollow(using: scrollViewProxy, animated: false, measuredLayout: position.layout)
             }
             .onScrollPhaseChange { _, newPhase in
                 switch newPhase {
@@ -1202,6 +1203,7 @@ struct ChatView: View {
                     cancelSourceScroll()
                     autoFollowController.userInteractionBegan()
                 case .idle:
+                    refreshSettledScrollPosition()
                     autoFollowController.userInteractionEnded()
                 case .animating:
                     break
@@ -1230,11 +1232,22 @@ struct ChatView: View {
         let conversationID = effectiveChatSessionID
         transcriptScrollView.whenReady(conversationID: conversationID) {
             guard effectiveChatSessionID == conversationID else { return }
+            refreshSettledScrollPosition()
             scheduleSourceScroll(using: proxy)
             scheduleAutoFollow(using: proxy, animated: false)
         }
     }
     
+    private func refreshSettledScrollPosition() {
+        guard let position = transcriptScrollView.position(conversationID: effectiveChatSessionID) else {
+            autoFollowController.invalidateLayout()
+            return
+        }
+        withAnimation(.easeOut(duration: 0.16)) {
+            autoFollowController.updatePosition(position)
+        }
+    }
+
     // 聊天时滚动到最底层
     private func scrollToLastMessage(using scrollViewProxy: ScrollViewProxy, animated: Bool = true) {
         let target = TranscriptBottomTarget(conversationID: effectiveChatSessionID)
