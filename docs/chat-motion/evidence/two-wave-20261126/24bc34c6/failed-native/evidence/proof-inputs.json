@@ -1,0 +1,2307 @@
+{
+  "schemaVersion": 2,
+  "scope": "Original Motion components through actual shared SDK; full app/renderer/engine/scroll/physical acceptance is separate",
+  "sourceRevision": "24bc34c618615cb75b362d9d64f55e4607fd0e74",
+  "selectedProducts": [
+    "HanlinChatUI"
+  ],
+  "productionOwnership": "Canonical selected-product Git checkout; no extracted or copied production component bodies",
+  "fixtureInputs": [
+    {
+      "path": "docs/chat-motion/MotionUI/App.swift",
+      "bytes": 26138,
+      "sha256": "7323a83f5ed539b25d12f944a7bd256faba63c2d5806168d0def42e829454b25",
+      "matchesRecordedRevision": true
+    },
+    {
+      "path": "docs/chat-motion/MotionUI/MotionUITests.swift",
+      "bytes": 25386,
+      "sha256": "5f714f6ad4fc5db3abec22abc5e520f4bba94d5f66740f69673ed3d401665874",
+      "matchesRecordedRevision": true
+    },
+    {
+      "path": "docs/chat-motion/prepare_motion_ui.py",
+      "bytes": 4220,
+      "sha256": "32af6c5a01fcf7130f5b54a664d20dbff186e8117cba81d5c4a9a2b52b21b77a",
+      "matchesRecordedRevision": true
+    },
+    {
+      "path": "docs/chat-motion/record_sdk_inputs.py",
+      "bytes": 13936,
+      "sha256": "71451c3f6b891c3443924f1ab134f4b2098b56cee1f1217113a7ddb143df8c54",
+      "matchesRecordedRevision": true
+    },
+    {
+      "path": "docs/chat-motion/run_motion_ui.sh",
+      "bytes": 10493,
+      "sha256": "985cd3ea5244bf4dce4e0309510ae9e8af5f8157806adae6c1a45de3c8107c2e",
+      "matchesRecordedRevision": true
+    },
+    {
+      "path": "docs/chat-motion/record_ui_run.py",
+      "bytes": 4881,
+      "sha256": "955b0dd748008e86244548f648e38d6c5e6edd005093f0a99c3afb9eece740fa",
+      "matchesRecordedRevision": true
+    },
+    {
+      "path": "docs/chat-motion/collect_motion_result.py",
+      "bytes": 5332,
+      "sha256": "861478e73cae505bae1981f9b0e063fbd7a46d77a3b6be1a41f002754ac7156b",
+      "matchesRecordedRevision": true
+    },
+    {
+      "path": "Scripts/CI/ChatRegressionValidation/run_native.py",
+      "bytes": 25508,
+      "sha256": "86f58b55ef3f717111303bf3897945f433b66261a2870dfe2b94b4e123787e5a",
+      "matchesRecordedRevision": true
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/run_presentation_sdk.sh",
+      "bytes": 1890,
+      "sha256": "40f697b08afd1e1dbb2f4da4755ade92cb5032abe9da63bb44166ed29cc4959e",
+      "matchesRecordedRevision": true
+    },
+    {
+      "path": ".github/workflows/testflight.yml",
+      "bytes": 44328,
+      "sha256": "8994965cfd5979831092e7d139d654074e051ce85fd635de1879e4af6866db8e",
+      "matchesRecordedRevision": true
+    }
+  ],
+  "fixtureMatchesRecordedRevision": true,
+  "sdkGraphInputs": [
+    {
+      "path": "AI_HLY.xcodeproj/project.pbxproj",
+      "bytes": 254317,
+      "sha256": "c5268b5b3c91dc0a3254a22a70cd330e3aad7d5061b36ff22267fa37856c82cc"
+    },
+    {
+      "path": "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "bytes": 10518,
+      "sha256": "56d19a4b8c677831fb91e1f8155a68e411b42fd4807ad618d6f169569e1bb5a4"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Package.swift",
+      "bytes": 3056,
+      "sha256": "16becff5f9e626f171d21f0277684c249c773f3169334fc9a63a37876c44a36e"
+    },
+    {
+      "path": "Packages/HanlinAppExtensionsSDK/Package.swift",
+      "bytes": 1944,
+      "sha256": "23056fa7df2e2aca75c3195452085a42151aa113f54370aeceb5a07df269d9bc"
+    },
+    {
+      "path": "Packages/HanlinExpoNativeAPI/Package.swift",
+      "bytes": 7065,
+      "sha256": "c5fd18fa28a1842be0351053d978cc55b752546dc798c663f0dedabfdbefc28c"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Package.swift",
+      "bytes": 8800,
+      "sha256": "6a4169ffd1975358466068c3f7776d8ac88fab4b6c0b883005669522086cda0e"
+    },
+    {
+      "path": "Packages/HanlinExpoWidgetSubset/Package.swift",
+      "bytes": 381,
+      "sha256": "ed50b8b4f6ee4532ff3ed2af82d7994c7718e958387495280f9a939218323a41"
+    },
+    {
+      "path": "Packages/HanlinMiniAppsBridge/Package.swift",
+      "bytes": 711,
+      "sha256": "579cdb6febf974d7f463aee0cd6592cdf0cfd5a4c8e53840009ff170e52b6e2e"
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Package.swift",
+      "bytes": 1695,
+      "sha256": "88a4926e884e6804246a7d077efed3837271886a9825585b1e561b4ce1576120"
+    },
+    {
+      "path": "Packages/HanlinParityMiniApp/Package.swift",
+      "bytes": 865,
+      "sha256": "66025f0b1fb7db7db9b8a24426319b651858f3454295780ee807edd335cec90b"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Package.swift",
+      "bytes": 10823,
+      "sha256": "78d7081d0e197c3e99746e5b3e476b41280fc5b32110035fab31a3e949cb4dab"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Package.swift",
+      "bytes": 4077,
+      "sha256": "951afd5b85422e7d6ed99cf497602e7122b988c1d956132bd9c00e04c695b4c3"
+    },
+    {
+      "path": "Packages/HanlinProductSplit/Package.swift",
+      "bytes": 1161,
+      "sha256": "31234398119e82e9895391040f281e9c9895c2cc73f962c12f1b37489e7f5e3a"
+    },
+    {
+      "path": "Packages/HanlinQuickJS/Package.swift",
+      "bytes": 624,
+      "sha256": "3b3e64732c71724b027fd28236f635073d02a3c208cbd9060fafaf802a47480e"
+    },
+    {
+      "path": "Packages/HanlinSefariaMiniApp/Package.swift",
+      "bytes": 794,
+      "sha256": "7ac94c46688313d32e03c2ffa3bb74c1f1dc00fc8b0b8b7322ae1286b918d50c"
+    },
+    {
+      "path": "Packages/HanlinSkillFormat/Package.swift",
+      "bytes": 662,
+      "sha256": "3878f654329884843943a463a901537c45f894b198a4bc9b9b9169410dc66741"
+    },
+    {
+      "path": "Packages/HanlinTextStudioMiniApp/Package.swift",
+      "bytes": 812,
+      "sha256": "d2049eb9401b85c9ab1734a369b818f930db964aee7ce7bb7bf865ec21af291d"
+    },
+    {
+      "path": "Packages/HanlinWidgetSDK/Package.swift",
+      "bytes": 3891,
+      "sha256": "970610b13278a21fad358fa9c6f19b15789c6c7cb219fc2984f2aa92298502e6"
+    },
+    {
+      "path": "Packages/HanlinWikipediaMiniApp/Package.swift",
+      "bytes": 806,
+      "sha256": "01b8cc014f8a5e853b644947fd6684df56b65b37feb08ef23f410fb56c902d8e"
+    },
+    {
+      "path": "Packages/IOSSystemLite/Package.swift",
+      "bytes": 2350,
+      "sha256": "06c6721c4b59328ba4f78997c9a8b23330357db12d3a619207dc1bac8cb76bab"
+    },
+    {
+      "path": "Packages/TorahLibraryKit/Package.swift",
+      "bytes": 654,
+      "sha256": "4423074f870fe146b8914dc275db77aedef4cc1b6c0b856dfad844b65c3a21d6"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/project_graph.py",
+      "bytes": 18232,
+      "sha256": "fc46f1e5266f054794811a0756fa51677a291b0533f816f1342a5d42f9ba85b8"
+    },
+    {
+      "path": "Scripts/SDK/application_products.json",
+      "bytes": 4349,
+      "sha256": "3095d0418b7cc5baf05f6ac39c5961a687a163345952d5f4df67e9158707f68a"
+    },
+    {
+      "path": "Scripts/SDK/generate_manifest.py",
+      "bytes": 18385,
+      "sha256": "6f63564559c7bffd0fab033110b7cf4d760643f6bc544d5ff0de0bbde2b24089"
+    },
+    {
+      "path": "Scripts/SDK/install.py",
+      "bytes": 20684,
+      "sha256": "0dbaa3da8ed5b981c5994ce541382d00ab8f0c7b7cf2b9261c0eace85c108b1e"
+    }
+  ],
+  "sdkSourcePaths": [
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI",
+    "Packages/HanlinPresentationSDK/Sources/HanlinLocalization",
+    "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit",
+    "Packages/HanlinPresentationSDK/Sources/HanlinRichUI"
+  ],
+  "sdkSourceAndResourceFiles": [
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinAssistantToolDeclaration.swift",
+      "bytes": 5839,
+      "sha256": "eced270fa6b134eb082125550af2518f59d43b72ff99fe75ec05b7150aa8b6ab"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinCapabilityAttachment.swift",
+      "bytes": 6229,
+      "sha256": "eb8ec5975b912c87f973064fef9ce000051894b27e9c58fdeec7f4aee23a531b"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinCatalogContracts.swift",
+      "bytes": 9413,
+      "sha256": "757478b238a1fc3144ef51c70275539502f959dd2aca9e67dbbf2449b24f7473"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinChatStructuredPart.swift",
+      "bytes": 3784,
+      "sha256": "07479b91a7ce77a8fdf5d53f3cb16939d9d46b0287efbd50b8b20b446c8ea2fa"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinComposerConfiguration.swift",
+      "bytes": 14245,
+      "sha256": "5ce136bc896c30dd8b4a6f0cdbd5a51308d083d90cbdc4549e97418cf3ac2baa"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinContractError.swift",
+      "bytes": 5423,
+      "sha256": "ad59a698345d7c218b3787c721b93fc6104ae462f7f11000d9204b1dd03e8518"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinDescriptors.swift",
+      "bytes": 45010,
+      "sha256": "52cef01505c00514be2df9a1f59bf6acb14b800b88687ac6a292510106d0536b"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinExposureContracts.swift",
+      "bytes": 21909,
+      "sha256": "a975c82c8584d3f46e06150efc1222c4688283c62b5cb767b777fbafaf08ed64"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinIdentifiers.swift",
+      "bytes": 16108,
+      "sha256": "02d34beb9cd36bc236e0326427e800d369c50cab0d052b773c2e8c19bb0c6f8c"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinJSONSchemaDocument.swift",
+      "bytes": 4842,
+      "sha256": "d763b95edd959241d4c6931892802eb20f1bf90bd21037ed6371c4d68a5e661a"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinManifestJSONValue.swift",
+      "bytes": 3308,
+      "sha256": "ebf50ac1114b9f7c3d2264ab2ef86dadb7b3b720c5e4201901a7cbcc30a64e72"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinManifestSchema.swift",
+      "bytes": 565,
+      "sha256": "c1dd837d01913bc58b72d62cf47a9a21ef4bf1f23a1b3ccdaf93858e987c4d23"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinMiniAppAuthoring.swift",
+      "bytes": 5169,
+      "sha256": "ef40e7b0ee39954a7d704a121adb03a13b1cd02db0cba8c28e47fb0af49a7a33"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinMiniAppContracts.swift",
+      "bytes": 6472,
+      "sha256": "eb880c3c00a789bcd21d8e0cbc353018e32b4e7d7f781415809781751515ae63"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPackagePath.swift",
+      "bytes": 1600,
+      "sha256": "ab230354fd913397dfb2cb776bdde629fe0cf603b17729a7b9dc7cd9aab98c76"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPermissionContracts.swift",
+      "bytes": 8912,
+      "sha256": "f0911d44d578d35f2714b30e4aa925a953475d54fb4f9ee2da39cf0f8590fed3"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPreparedRuntimeVersion.swift",
+      "bytes": 1806,
+      "sha256": "e7e6dcb882b853a086c8ea33023de3a3f6889eefd6ed7c7075ba26d1ba511134"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPresentationContracts.swift",
+      "bytes": 12525,
+      "sha256": "2e6c055d35355a88b2ba92ea88ddc07fe932cb00bc006dfe9b241d43f1f07548"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinRuntimeProfiles.swift",
+      "bytes": 5825,
+      "sha256": "43bffad1d4245d9a00924aab08ffd498a622d32321b5165ff036f0e425140262"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinScriptContracts.swift",
+      "bytes": 24544,
+      "sha256": "e92224cd4a0a1b5ed8e49bd85881c647595337b95ccbb20e6a6684110977679c"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinSessionContracts.swift",
+      "bytes": 6805,
+      "sha256": "03493cb4f2f414088282d97b2b4c0a01a918c0df1db78451974400bbfcba7386"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinShortcutProgress.swift",
+      "bytes": 881,
+      "sha256": "da618582dbed4d29b36fe512fe566c1dfc3382156ba4e2f5e88076dc77f90d00"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinShortcutValueCodec.swift",
+      "bytes": 1443,
+      "sha256": "3c3aee14c37a5835c6cc85a4ebb86271ff63b5fc3f60e1a62158bc5281eb332c"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinSkillContracts.swift",
+      "bytes": 3494,
+      "sha256": "cb8910c6d12ac4cc0f8546e89a0a514151fc9d3cd53d30aacd8abc479f2af99f"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinStoreFileAccess.swift",
+      "bytes": 523,
+      "sha256": "ee87c52bc778c1a3848c37e125a709378f69e032ca91f80cc58f250a3c81a3f5"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinToolApprovalDescriptor.swift",
+      "bytes": 2265,
+      "sha256": "f091f9d83f629f5ba94b4fd30c6775255226f13a671eb047a1dc40f3c3a30ca7"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinToolContracts.swift",
+      "bytes": 7298,
+      "sha256": "8ce9c0771689e43f24b42fb16b0f1bf2a545628e99f972b625af57314257156d"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinValue.swift",
+      "bytes": 57167,
+      "sha256": "cd266a8b820ae8673fd576697bc30d77ba5dd563feaa670f7e5b2f18319ff3d8"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinVersions.swift",
+      "bytes": 15847,
+      "sha256": "014a9f0d5d078b84cda43d805e8b95b89203cabd834254f4e30030805e8dad0f"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinWireProtocol.swift",
+      "bytes": 6725,
+      "sha256": "13fc4ffbffef08ac7d439f6e9f961b4b94b05d6d0e45ba3cec6522709b7870d7"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/Resources/HanlinAppManifest.schema.json",
+      "bytes": 26607,
+      "sha256": "2d0f3ced366774bac16af0bfaa29047f7a1cb2d413b9940515668c59bfc44d12"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/CodeFences/ChatCodeFenceDocument.swift",
+      "bytes": 4397,
+      "sha256": "7f31ac91338ea49adc56b4d2a09bc2c3dc85a9a36741f6d96095ff258c5afff2"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/CodeFences/ChatCodeFenceEngine.swift",
+      "bytes": 9661,
+      "sha256": "6c768748f2ea34eded51652837d1cad6217acdd1d65de264108d47864da53cdf"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/CodeFences/ChatCodeFenceView.swift",
+      "bytes": 8482,
+      "sha256": "964d36b7e3b02537f5f885b6c59e51c50a6d5f36de19ce1f2896b96829df9fcf"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/CodeFences/ChatCodeFenceWebView.swift",
+      "bytes": 2298,
+      "sha256": "8661ca2b102acfe0f2b6d66f05c1f34499fb3a02e290e54d57f813c8208a9219"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/CodeFences/Resources/HanlinCodeFenceAssets.json",
+      "bytes": 849,
+      "sha256": "83fa172883bf5bcb46546cc9d080b9be3550ca348c01ad894d437c37df1b168d"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/CodeFences/Resources/HanlinCodeFenceRenderer.css",
+      "bytes": 18118,
+      "sha256": "e6804c928b954fe3d2945c45b6c45c1c57b631712914c203974f9933216b1648"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/CodeFences/Resources/HanlinCodeFenceRenderer.js",
+      "bytes": 5413583,
+      "sha256": "4a07872b5b1f65ac9003185bd48d258b0a4a0d9590a208bf0efb38bfcba6052e"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/CodeFences/Resources/HanlinCodeFenceRenderer.js.LEGAL.txt",
+      "bytes": 1811,
+      "sha256": "722c5c4b2a604b4fb9a53cf03bed346136f00e4e26d8f0972a2e27538482798e"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/CodeFences/Resources/HanlinCodeFenceThirdPartyLicenses.txt",
+      "bytes": 233740,
+      "sha256": "f399606a509628e5e55c41ddbc5464ccf3b648b358c8aa18f13935b24107ec45"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinCapabilityAttachmentChips.swift",
+      "bytes": 6792,
+      "sha256": "617d8a6222498669703101dcd1bd5ce9e18628c6368ecf04a7d41cb955041846"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinCapabilityConfigurationView.swift",
+      "bytes": 13560,
+      "sha256": "2a9c89370441b7dbfc7ce09a76ac428dc71e5badd4d17ef54a5dd9174624ad40"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinCapabilityCustomPanelProvider.swift",
+      "bytes": 2758,
+      "sha256": "d1aa1b4d573e67f4b8a358f160992da73d94a2959327485d9da94fd3533371d4"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinCapabilityLocationField.swift",
+      "bytes": 6241,
+      "sha256": "a06a51f256be6914dbcdd35b5254038b9233a021c2eac5e18d64ba9b7404ff0f"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinCapabilityPicker.swift",
+      "bytes": 5581,
+      "sha256": "faa258372fa7096708fcc7c806f3e22c094a91dad9c22d452a97832b80a609aa"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinComposerCapabilityQuery.swift",
+      "bytes": 2110,
+      "sha256": "c9e5287c6512e058475962c4988126fa067c813cf5917df85b9e4573ff54606a"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinComposerDraft.swift",
+      "bytes": 2277,
+      "sha256": "976a6dbebdc5e681e29ea0b44a1e79e51e36ea81dfcc49b88c7366097f981682"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinComposerFieldFocus.swift",
+      "bytes": 857,
+      "sha256": "dc8e80a6e20c9bb44a0cc43d7631c3340a7a8ec590d7b3a1b0acddec0d0a3ba1"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinDetachedCapabilityChips.swift",
+      "bytes": 5928,
+      "sha256": "d2d6f3600cdfea85c969d46d8703568faff8b11209fd1007fca3b4f67b082bbd"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/HanlinMorphComposer.swift",
+      "bytes": 23592,
+      "sha256": "49893774c0f99c9f882f16ec8e38084f6bab1956105f1cab2ef530f2bcc9210d"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Composer/NativeMultilineTextEditor.swift",
+      "bytes": 39701,
+      "sha256": "629fe63011e457af638fc59110d24b1d83db3ab2de8b96f1aafd5bb3eb0f85e0"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinActivityHierarchy.swift",
+      "bytes": 4590,
+      "sha256": "3b7ad77d4ac4cb1e05ff68dae5a41229defb8b2846186654c14c02b13ef9fd83"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinChatAppearance.swift",
+      "bytes": 2553,
+      "sha256": "07347fadba9c0cc2da321e7e5f4d915b3ba453143ed989ec4db441511184bc0d"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinChatView.swift",
+      "bytes": 2817,
+      "sha256": "29dd51e457edf57d9821de19d59766092ea1d700e891ab4b436f043bc3984e63"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinComponentCatalogView.swift",
+      "bytes": 3653,
+      "sha256": "88e23d82060089fd86a1e10d3f451e04896113adcd1950ce1b93a2fba8305f6c"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinFeedback.swift",
+      "bytes": 1797,
+      "sha256": "572961706e8101f5e8be47e75ae0c13f33902c452e6a941e6a49f20a6ea103be"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinFileContentView.swift",
+      "bytes": 3473,
+      "sha256": "cae1895609127a867a0a028f5716e602026e5c87d4f669f051e9c4e665457801"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinIconThumbnailLoader.swift",
+      "bytes": 2634,
+      "sha256": "9ead1e6d32cea78f619196c3e69bf0c574ca1c46b7aff2a03fc68d6899a36df4"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinImageViewer.swift",
+      "bytes": 7597,
+      "sha256": "8427d5bfafea323a84d0f62f9c272aaed848241ed26af6e3f832d767b5a57f13"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinInlineToolApproval.swift",
+      "bytes": 12024,
+      "sha256": "5fe7e40ae61e4dfeb6e36f0d519bf90f4a7ef5c1b865c3dd030bd3561d35e364"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMarkdownView.swift",
+      "bytes": 8713,
+      "sha256": "907a9e0db9e4c8f3a95b95cfdef144a5d329792578546720bec463ab0130a037"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageActionBar.swift",
+      "bytes": 9732,
+      "sha256": "f559b1b5fb3ab8f858399a710e79024bd8fe25b6267c84a9ef843ab7150e004e"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageActions.swift",
+      "bytes": 5256,
+      "sha256": "40561523428c78730dc052ed23349669860a3891638981c96a34dc2d68ef8d39"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageBubble.swift",
+      "bytes": 5601,
+      "sha256": "c8ca0b950b08a84e2a8feb73f638668a3e614a28e10fb1667395fb12572f4720"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageDocumentAttachments.swift",
+      "bytes": 4378,
+      "sha256": "02c3a8a8f3560afd95c6638a12ab07e6a05e028b5c0c962df06a2e82367ce733"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageImageAttachments.swift",
+      "bytes": 4536,
+      "sha256": "7d89b9d5a6996f9e6ae36b7d0ff43ed48a0160c1f7d3bd0ac69ae7eae82a4e0f"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageMarkdownView.swift",
+      "bytes": 4665,
+      "sha256": "fd09ce372d0936da5d3388b30c638ad33fce00227f01cb9352294211a8a0b2b6"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessagePreview.swift",
+      "bytes": 7115,
+      "sha256": "3ffe0ba0d520f0a8489388bab991bf51316c9cec21b411986e77e885b6dd73b1"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessagePreviewMetrics.swift",
+      "bytes": 659,
+      "sha256": "5faf31d6d9278f3488cfcf35188c7fe722c7a4f91393d5ac128a659cc6076be8"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageSelectionView.swift",
+      "bytes": 5909,
+      "sha256": "b53108a0ddc25c49eb10ba5992f67e908ae3bba7f5cea3b417adacc5e941c52b"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinPresentationDiagnostics.swift",
+      "bytes": 352,
+      "sha256": "30db36f46bc50709716c0422f0ac19d74e09404d5ce197e97fe6c6a65cb8afd5"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinSearchField.swift",
+      "bytes": 3357,
+      "sha256": "3a7a4f1749d0da46252c0f26c1de0163a15bd398ea90ed3dd82c59d62988b2c1"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinSources.swift",
+      "bytes": 3497,
+      "sha256": "e8e2a50a59edd9408a02e98508e2236c139d00ad70579216e8b882b33c3f6a9a"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinToolActivityHeader.swift",
+      "bytes": 14888,
+      "sha256": "7fb074912db7fb4f98167a5a1748a9d553a8509def81764887b86c9bec7d34e6"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinToolDomainActivityGlyph.swift",
+      "bytes": 6098,
+      "sha256": "1da959230a530bb4e0be2d08f2f8c4be428880c4fcd34f828e78a527b0764bcb"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinVisualEffectBlur.swift",
+      "bytes": 522,
+      "sha256": "9f87a1d6c1a28314d90c49e5e5f0776315ab21e398b32faed8db3f6fb5340a49"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinWritingTool.swift",
+      "bytes": 523,
+      "sha256": "4d6d6679d1669aa0c071223c59af8e4b9ce0a696e6b0966b3aaa4a549e529661"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatMotionConfiguration.swift",
+      "bytes": 3311,
+      "sha256": "f69f4e098e0820eac6100f0536538b7496e55304e2226cc7b9cd7e71399dcb43"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatMotionPreferences.swift",
+      "bytes": 4392,
+      "sha256": "709f948ac85ac042d15fb8c258383f1bbb06f5336c0904dc170e04b46f143791"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/ChatShimmerEffect.swift",
+      "bytes": 4994,
+      "sha256": "1e50716abf0d81150b4c16b69000c90d34afa02ef94f48bd1a95f18ac69baa2e"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+      "bytes": 8205,
+      "sha256": "948c6ba85207b017c3819dd27694419e5f195a62fa08d3cfdcbe4f043eba2f7d"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinOriginalActivityControls.swift",
+      "bytes": 2927,
+      "sha256": "1a88b02132e48ba6fece0e9227943951e1c0b6a379abda5591e4537241833e71"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/ChatAutoFollowController.swift",
+      "bytes": 10070,
+      "sha256": "b7c660481d9e0cbd687f8d209b7bfb07bf828c503556233005d1ebe55d027572"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/ChatAutoFollowValidation.swift",
+      "bytes": 979,
+      "sha256": "acff6190820537c5c751f24d7809faa471f6370db86601f3683aa4a1d176a6e4"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/ChatScrollImmediateContentTouches.swift",
+      "bytes": 4388,
+      "sha256": "d600437a0d38a9ebaddad0b02c1f4bd46f39b1ef2577f62b6d32cd3cde357d28"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/ChatScrollViewHandle.swift",
+      "bytes": 7806,
+      "sha256": "f11217b50d59fcf298d5a10c318b10425e5f78b421c1c332392591c4422cb87a"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/HanlinColorAssets.swift",
+      "bytes": 4531,
+      "sha256": "a57e582eedc619ee6f0f7023e631c6169ae00aec0ceb4235203844a93aa07457"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/HanlinImageAssets.swift",
+      "bytes": 749,
+      "sha256": "0ca09f8cb9e052fdd1bd0265f1d8747e73483f65a09bbf90fb1192984ed66e41"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/HanlinLocalization.swift",
+      "bytes": 829,
+      "sha256": "2112f0888e23a46d23b37371c14ee24ef91cf57ab412b1011aaaa64e1cb0541e"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/HanlinLocalizedControls.swift",
+      "bytes": 4782,
+      "sha256": "b7a48118d691376e71e6032c59dfb80831491ee01851e752d63ab0fee996c9f1"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/MCPL10n.swift",
+      "bytes": 391,
+      "sha256": "516fdf4e70b402487fee3b3862f567ee75aff522406592cfb7a787713d6e0005"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/Contents.json",
+      "bytes": 63,
+      "sha256": "0fd49ba3c3585c709678e0046a821c3c60685ec7063720d30d3a3448be3a208b"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLAutumn.colorset/Contents.json",
+      "bytes": 701,
+      "sha256": "8d2920f3089e205b9b96bd31dfb16268daf5f244a5e0aad1674d1bac17f6ded0"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLAzure.colorset/Contents.json",
+      "bytes": 701,
+      "sha256": "96b8523c3fb7da097e523965c2a67a713809556524145a87c20647479deec730"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLBlue.colorset/Contents.json",
+      "bytes": 701,
+      "sha256": "e8074a9eaed399ee02476150c44b117b6515757354db8b9c931b733db4f3180e"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLBluefont.colorset/Contents.json",
+      "bytes": 701,
+      "sha256": "26b4ae7db29ab464477bb180ee79ee8ed773d293ed33c70978885500b8300b08"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLBrown.colorset/Contents.json",
+      "bytes": 701,
+      "sha256": "a5b8aa179c93511ba6f0d035cad92d6879d000cda111b6d7a18778360e03bacc"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLCyanite.colorset/Contents.json",
+      "bytes": 701,
+      "sha256": "7f0c517c1e9f50d68e6c865934d4bb4200e62092fa9e5059d60da49c3785f58d"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLGray.colorset/Contents.json",
+      "bytes": 701,
+      "sha256": "081101bfa952e1ffd36060666283c21121816cd406947b1828eac8f4bb2bc92e"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLGreen.colorset/Contents.json",
+      "bytes": 701,
+      "sha256": "1b3774ce7525383d0ee03a7aa45484df0d88a90e024ad967ba6ebe90f4625b2d"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLIndigo.colorset/Contents.json",
+      "bytes": 701,
+      "sha256": "c191986e3c1c9e9c2ec69d0c51628b00e9f7049fb4d86fd77e40ff1ab75c91e5"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLNavy.colorset/Contents.json",
+      "bytes": 701,
+      "sha256": "7ad9e76b1fc0d15d56f5da925943bc0c9dcccc3e9551cfb22b79f549485836ea"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLOrange.colorset/Contents.json",
+      "bytes": 701,
+      "sha256": "649a9ff7428e9bb8d16d0f5c4732d031bc0901332aa55b7ca4b5aa515fc5646c"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLPink.colorset/Contents.json",
+      "bytes": 701,
+      "sha256": "787a40135b6e98bfcf1e49c89308dd3d2aa0fbde71d1bac0986b5738942b5d35"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLPlum.colorset/Contents.json",
+      "bytes": 701,
+      "sha256": "afac7ddc7d7e56e65a350c983b0ae7d7c0c5c90c6c3ed0f49a65ac9e78a5b1e8"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLPurple.colorset/Contents.json",
+      "bytes": 701,
+      "sha256": "85cbf5652f802d4599adb62448a2bf97221dcd72cf01d0d2b7af1f55fe82b251"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLRed.colorset/Contents.json",
+      "bytes": 701,
+      "sha256": "6416355ed501e875567a1715f9d898d9482b5b5e805e1932b3bcbacb1a30687c"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLSidebarBackground.colorset/Contents.json",
+      "bytes": 666,
+      "sha256": "e244ffb5d12172c849f1bd6a8f46c3bddb7de4eddbcca2e2336177ae512453ac"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLSidebarSelection.colorset/Contents.json",
+      "bytes": 666,
+      "sha256": "61b1519afbe0db3a5ab17a7d663de9aa4e0021f25ce6231a2edf62c2a3102c5e"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLSpring.colorset/Contents.json",
+      "bytes": 701,
+      "sha256": "90c79d5f10b83c1924ef77ba37b7b710bd896451b5e94db0ca39a886f9993818"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLTeal.colorset/Contents.json",
+      "bytes": 701,
+      "sha256": "a21d974963a74787db8433fbafd56fb4cbff4d3e3b1feef1e76e0d9480e7b927"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLYellow.colorset/Contents.json",
+      "bytes": 701,
+      "sha256": "7964b31f2ecea2e968bd98b61c1bb88a17d02924343a5e456fba9651762a75fd"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/ai302.imageset/Contents.json",
+      "bytes": 389,
+      "sha256": "f63d40a75e5f3948f8f4c19d014020a8393cd401ccf403bf0295b918df0d98df"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/ai302.imageset/ai302-color 1.png",
+      "bytes": 58641,
+      "sha256": "3bbd1cb755996e47fd041193f7022a96eb6f9058d3910598846bf539eb924fad"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/ai302.imageset/ai302-color 2.png",
+      "bytes": 58641,
+      "sha256": "3bbd1cb755996e47fd041193f7022a96eb6f9058d3910598846bf539eb924fad"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/ai302.imageset/ai302-color.png",
+      "bytes": 58641,
+      "sha256": "3bbd1cb755996e47fd041193f7022a96eb6f9058d3910598846bf539eb924fad"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/aihubmix.imageset/Contents.json",
+      "bytes": 398,
+      "sha256": "5a104695d210e0588f86e5fef143384ff8cd5a321901d2c631a400e0c8d13c79"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/aihubmix.imageset/aihubmix-color 1.png",
+      "bytes": 53838,
+      "sha256": "720817d3ef36df938813103d304a47ee545d594bd727eb364f87566fe424e811"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/aihubmix.imageset/aihubmix-color 2.png",
+      "bytes": 53838,
+      "sha256": "720817d3ef36df938813103d304a47ee545d594bd727eb364f87566fe424e811"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/aihubmix.imageset/aihubmix-color.png",
+      "bytes": 53838,
+      "sha256": "720817d3ef36df938813103d304a47ee545d594bd727eb364f87566fe424e811"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/amap.imageset/Contents.json",
+      "bytes": 452,
+      "sha256": "34aa78f3badd66eca2ba753445e60bb3e6f2218d05437325d84d7c24664677a3"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/amap.imageset/c28b713232a745b497a3d136b38e15c7 1.png",
+      "bytes": 363379,
+      "sha256": "8766b3e76108c6b2e07bcf7d91ba08593a462d22ccc1ab6b39963d4128c1550f"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/amap.imageset/c28b713232a745b497a3d136b38e15c7 2.png",
+      "bytes": 363379,
+      "sha256": "8766b3e76108c6b2e07bcf7d91ba08593a462d22ccc1ab6b39963d4128c1550f"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/amap.imageset/c28b713232a745b497a3d136b38e15c7.png",
+      "bytes": 363379,
+      "sha256": "8766b3e76108c6b2e07bcf7d91ba08593a462d22ccc1ab6b39963d4128c1550f"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/applemap.imageset/Contents.json",
+      "bytes": 458,
+      "sha256": "21f669b0bc7042555a5ae69e70ac8335dc499b226bd6ff1ed1c721af84e700e1"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/applemap.imageset/footer_icon__pr1hkqvdj7e6_large_2x 1.png",
+      "bytes": 32259,
+      "sha256": "3dd9ec28ff51820dd6670290783e48097a527fbcd734d43f2234368f8321b9a2"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/applemap.imageset/footer_icon__pr1hkqvdj7e6_large_2x 2.png",
+      "bytes": 32259,
+      "sha256": "3dd9ec28ff51820dd6670290783e48097a527fbcd734d43f2234368f8321b9a2"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/applemap.imageset/footer_icon__pr1hkqvdj7e6_large_2x.png",
+      "bytes": 32259,
+      "sha256": "3dd9ec28ff51820dd6670290783e48097a527fbcd734d43f2234368f8321b9a2"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/applogo.imageset/Contents.json",
+      "bytes": 380,
+      "sha256": "b581179dc5b8fde0933843ca75d7f4a1e401c3d79e59a427ffe8c5edc118005d"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/applogo.imageset/logo_3_0 1.png",
+      "bytes": 225416,
+      "sha256": "33627c30c1c853af9e9e9a27502a831b8b2c3f0ad286c91e580a5e0159163841"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/applogo.imageset/logo_3_0 2.png",
+      "bytes": 225416,
+      "sha256": "33627c30c1c853af9e9e9a27502a831b8b2c3f0ad286c91e580a5e0159163841"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/applogo.imageset/logo_3_0.png",
+      "bytes": 225416,
+      "sha256": "33627c30c1c853af9e9e9a27502a831b8b2c3f0ad286c91e580a5e0159163841"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/arxiv.imageset/Contents.json",
+      "bytes": 425,
+      "sha256": "545dc958ee147e16e080734315da90960463ecf5a268c497a72565b555637707"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/arxiv.imageset/arxiv-logomark-small@2x 1.png",
+      "bytes": 2066,
+      "sha256": "8a9b6f6422b16d06b4feada756072382a3d9bb0f016e1af646fabb5b79b1950e"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/arxiv.imageset/arxiv-logomark-small@2x 2.png",
+      "bytes": 2066,
+      "sha256": "8a9b6f6422b16d06b4feada756072382a3d9bb0f016e1af646fabb5b79b1950e"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/arxiv.imageset/arxiv-logomark-small@2x.png",
+      "bytes": 2066,
+      "sha256": "8a9b6f6422b16d06b4feada756072382a3d9bb0f016e1af646fabb5b79b1950e"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/assistant.imageset/Contents.json",
+      "bytes": 365,
+      "sha256": "f7358cd04623cd6f4dddc3ba43ccc2ca058e3957a19738dd911226b846f13674"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/assistant.imageset/cpu 1.png",
+      "bytes": 7997,
+      "sha256": "12ca0f00afd51ab9f41f2488d0c9e7332bbe6a05bf0e8d59566731359aa14008"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/assistant.imageset/cpu 2.png",
+      "bytes": 7997,
+      "sha256": "12ca0f00afd51ab9f41f2488d0c9e7332bbe6a05bf0e8d59566731359aa14008"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/assistant.imageset/cpu.png",
+      "bytes": 7997,
+      "sha256": "12ca0f00afd51ab9f41f2488d0c9e7332bbe6a05bf0e8d59566731359aa14008"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/baidumap.imageset/Contents.json",
+      "bytes": 386,
+      "sha256": "1c64e746b8d4aa756be45bd33506ad86d86dc2fbe112c1fb37a5a5cdbe74861b"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/baidumap.imageset/baidu-copy 1.png",
+      "bytes": 5951,
+      "sha256": "48e2739ef7cf7ba3d0d83dc314dc115028dbae531c17f982e521ae5d20186d35"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/baidumap.imageset/baidu-copy 2.png",
+      "bytes": 5951,
+      "sha256": "48e2739ef7cf7ba3d0d83dc314dc115028dbae531c17f982e521ae5d20186d35"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/baidumap.imageset/baidu-copy.png",
+      "bytes": 5951,
+      "sha256": "48e2739ef7cf7ba3d0d83dc314dc115028dbae531c17f982e521ae5d20186d35"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/bing.imageset/Contents.json",
+      "bytes": 386,
+      "sha256": "de0c3ce4d9e15c8ecaeebc910219dd10825d2e4a1fec40c16c50dba968ace625"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/bing.imageset/bing-color 1.png",
+      "bytes": 49912,
+      "sha256": "20f7459f342ebecbbbca50524e63026404f7ec4031708455f7ae339b0f432f22"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/bing.imageset/bing-color 2.png",
+      "bytes": 49912,
+      "sha256": "20f7459f342ebecbbbca50524e63026404f7ec4031708455f7ae339b0f432f22"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/bing.imageset/bing-color.png",
+      "bytes": 49912,
+      "sha256": "20f7459f342ebecbbbca50524e63026404f7ec4031708455f7ae339b0f432f22"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/bochaai.imageset/Contents.json",
+      "bytes": 368,
+      "sha256": "31c1c2e0633f3c246a7c2c1ec66bcea50b312f5c07c65d95f21188e49cb57d45"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/bochaai.imageset/icon 1.png",
+      "bytes": 147949,
+      "sha256": "b1cddc3d7ae00e42c99747cc754deca102168c1826c967565d75d5fefb51d5a2"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/bochaai.imageset/icon 2.png",
+      "bytes": 147949,
+      "sha256": "b1cddc3d7ae00e42c99747cc754deca102168c1826c967565d75d5fefb51d5a2"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/bochaai.imageset/icon.png",
+      "bytes": 147949,
+      "sha256": "b1cddc3d7ae00e42c99747cc754deca102168c1826c967565d75d5fefb51d5a2"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/brave.imageset/Contents.json",
+      "bytes": 371,
+      "sha256": "107cafb29143c541dbd86bdbb8bcfc113bafb615aec19ee1c9e34388e6e8624c"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/brave.imageset/brave 1.png",
+      "bytes": 513467,
+      "sha256": "b9ddb562825be6740e195fd208d93611b9a14e32860c8ddc48a53597b220b90f"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/brave.imageset/brave 2.png",
+      "bytes": 513467,
+      "sha256": "b9ddb562825be6740e195fd208d93611b9a14e32860c8ddc48a53597b220b90f"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/brave.imageset/brave.png",
+      "bytes": 513467,
+      "sha256": "b9ddb562825be6740e195fd208d93611b9a14e32860c8ddc48a53597b220b90f"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/cherry.imageset/Contents.json",
+      "bytes": 383,
+      "sha256": "6f597a8c502b22d34a1f90eba21001a9dd7df6ee02167896396ff41edf419611"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/cherry.imageset/cherry_in 1.png",
+      "bytes": 37164,
+      "sha256": "7ba006cbde3619816475c927d876e569908c76274c5731120c612de8ffc31f1a"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/cherry.imageset/cherry_in 2.png",
+      "bytes": 37164,
+      "sha256": "7ba006cbde3619816475c927d876e569908c76274c5731120c612de8ffc31f1a"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/cherry.imageset/cherry_in.png",
+      "bytes": 37164,
+      "sha256": "7ba006cbde3619816475c927d876e569908c76274c5731120c612de8ffc31f1a"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/claude.imageset/Contents.json",
+      "bytes": 392,
+      "sha256": "3d8fe258377d27a449b249aad4ae6e8c06d2218bfb8333d1310471d812cc9626"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/claude.imageset/claude-color 1.png",
+      "bytes": 54846,
+      "sha256": "c266266e64f6fdb47826b9d926edacb634599bffcee5307d10f13635059d1a44"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/claude.imageset/claude-color 2.png",
+      "bytes": 54846,
+      "sha256": "c266266e64f6fdb47826b9d926edacb634599bffcee5307d10f13635059d1a44"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/claude.imageset/claude-color.png",
+      "bytes": 54846,
+      "sha256": "c266266e64f6fdb47826b9d926edacb634599bffcee5307d10f13635059d1a44"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/deepseek.imageset/Contents.json",
+      "bytes": 380,
+      "sha256": "351ad32ad5b605a2dee60fac208464d99e589b9370b38aa8dac75a137fe40c5f"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/deepseek.imageset/deepseek 1.svg",
+      "bytes": 3296,
+      "sha256": "456c7754c2eba2c2659d5b70b9f4bfa2fc59871445f49983d6d5227057cfe3c3"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/deepseek.imageset/deepseek 2.svg",
+      "bytes": 3296,
+      "sha256": "456c7754c2eba2c2659d5b70b9f4bfa2fc59871445f49983d6d5227057cfe3c3"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/deepseek.imageset/deepseek.svg",
+      "bytes": 3296,
+      "sha256": "456c7754c2eba2c2659d5b70b9f4bfa2fc59871445f49983d6d5227057cfe3c3"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/defaultIcon.imageset/Contents.json",
+      "bytes": 380,
+      "sha256": "cfc377d6d6d67506a23e6b8a67cd32a27b5ac4049a8cbb078ac9a4427c72200f"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/defaultIcon.imageset/sparkles 1.png",
+      "bytes": 10176,
+      "sha256": "e82256e8c02d2fbaeff5eb3d5486655ac96ca90ea329e5e78a500b0c1980170b"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/defaultIcon.imageset/sparkles 2.png",
+      "bytes": 10176,
+      "sha256": "e82256e8c02d2fbaeff5eb3d5486655ac96ca90ea329e5e78a500b0c1980170b"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/defaultIcon.imageset/sparkles.png",
+      "bytes": 10176,
+      "sha256": "e82256e8c02d2fbaeff5eb3d5486655ac96ca90ea329e5e78a500b0c1980170b"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/doubao.imageset/Contents.json",
+      "bytes": 392,
+      "sha256": "d36d217490f81bbbfb6d9166756e981a8fc41b9718cfb8f2d2888f527a332988"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/doubao.imageset/doubao-color 1.png",
+      "bytes": 43417,
+      "sha256": "91ae6b55afe0aa5beb7beea802440d16f632387638d880477e2fd030117f1e5c"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/doubao.imageset/doubao-color 2.png",
+      "bytes": 43417,
+      "sha256": "91ae6b55afe0aa5beb7beea802440d16f632387638d880477e2fd030117f1e5c"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/doubao.imageset/doubao-color.png",
+      "bytes": 43417,
+      "sha256": "91ae6b55afe0aa5beb7beea802440d16f632387638d880477e2fd030117f1e5c"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/exa.imageset/Contents.json",
+      "bytes": 371,
+      "sha256": "d0891b57dc17fcca8984312b7d4b17a581b323101c68e949a3221e085d17c9a6"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/exa.imageset/light 1.png",
+      "bytes": 122762,
+      "sha256": "ac317a50c6222202f8b4eb254850b76f4a75aabf55987b00652689e00ec7346d"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/exa.imageset/light 2.png",
+      "bytes": 122762,
+      "sha256": "ac317a50c6222202f8b4eb254850b76f4a75aabf55987b00652689e00ec7346d"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/exa.imageset/light.png",
+      "bytes": 122762,
+      "sha256": "ac317a50c6222202f8b4eb254850b76f4a75aabf55987b00652689e00ec7346d"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/gitee.imageset/Contents.json",
+      "bytes": 377,
+      "sha256": "1e4a3d5a4eac4406540d66f5f4527177c95bf8981f49413d7ca274f61bcbb404"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/gitee.imageset/giteeai 1.png",
+      "bytes": 40315,
+      "sha256": "0e02d453f90709205127f65d31555c036ef9deabda0686495b613850ee641dea"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/gitee.imageset/giteeai 2.png",
+      "bytes": 40315,
+      "sha256": "0e02d453f90709205127f65d31555c036ef9deabda0686495b613850ee641dea"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/gitee.imageset/giteeai.png",
+      "bytes": 40315,
+      "sha256": "0e02d453f90709205127f65d31555c036ef9deabda0686495b613850ee641dea"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/gitee_dark.imageset/Contents.json",
+      "bytes": 383,
+      "sha256": "dde2dc842d44c9560798dc6c6690dfe808ccb3890978f91a73e7c56b2b5bde55"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/gitee_dark.imageset/giteeai-2 1.png",
+      "bytes": 40235,
+      "sha256": "b72cc2fff5261ace486d2a2308d0a11b192564f5e6d738dc0370d9f85f9e3dfd"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/gitee_dark.imageset/giteeai-2 2.png",
+      "bytes": 40235,
+      "sha256": "b72cc2fff5261ace486d2a2308d0a11b192564f5e6d738dc0370d9f85f9e3dfd"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/gitee_dark.imageset/giteeai-2.png",
+      "bytes": 40235,
+      "sha256": "b72cc2fff5261ace486d2a2308d0a11b192564f5e6d738dc0370d9f85f9e3dfd"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/github.imageset/Contents.json",
+      "bytes": 380,
+      "sha256": "4f0b403ef7dc505b75d03bfde473fce559dcbb23628c00d297203d2343377c04"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/github.imageset/github-2 1.png",
+      "bytes": 31445,
+      "sha256": "03fe7f8b724c3e2822ffaa65d2f173fb87dafbe106318bdf74c70a88211f38a6"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/github.imageset/github-2 2.png",
+      "bytes": 31445,
+      "sha256": "03fe7f8b724c3e2822ffaa65d2f173fb87dafbe106318bdf74c70a88211f38a6"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/github.imageset/github-2.png",
+      "bytes": 31445,
+      "sha256": "03fe7f8b724c3e2822ffaa65d2f173fb87dafbe106318bdf74c70a88211f38a6"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/github_dark.imageset/Contents.json",
+      "bytes": 374,
+      "sha256": "dfdf8f553f685d49f70c6278d358ac3040fc2651e39ab99342519cb5ec2c0c95"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/github_dark.imageset/github 1.png",
+      "bytes": 31107,
+      "sha256": "180f3334965f9f0e87944388e409e0e1a36fb1390892c5f3907cf5cd99177c6f"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/github_dark.imageset/github 2.png",
+      "bytes": 31107,
+      "sha256": "180f3334965f9f0e87944388e409e0e1a36fb1390892c5f3907cf5cd99177c6f"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/github_dark.imageset/github.png",
+      "bytes": 31107,
+      "sha256": "180f3334965f9f0e87944388e409e0e1a36fb1390892c5f3907cf5cd99177c6f"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/google.imageset/Contents.json",
+      "bytes": 392,
+      "sha256": "adb2ee6b0215d60b58b459e57ef218a5433401cfa62354f6e56ada7430ec7e22"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/google.imageset/gemini-color 1.png",
+      "bytes": 240400,
+      "sha256": "50ba22c7a5d382f242e799951462bd87a27170a714a3a786e55546ddbfaddfb0"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/google.imageset/gemini-color 2.png",
+      "bytes": 240400,
+      "sha256": "50ba22c7a5d382f242e799951462bd87a27170a714a3a786e55546ddbfaddfb0"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/google.imageset/gemini-color.png",
+      "bytes": 240400,
+      "sha256": "50ba22c7a5d382f242e799951462bd87a27170a714a3a786e55546ddbfaddfb0"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/google_search.imageset/Contents.json",
+      "bytes": 392,
+      "sha256": "651917ed9bef63660355e48a03a6b67ac2711c7cfa59e8b681be9668ecfdfc75"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/google_search.imageset/google-color 1.png",
+      "bytes": 37557,
+      "sha256": "fbb281efb973d347524a95235f8af1a36e273b6d86a11eee421fee4d113ae392"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/google_search.imageset/google-color 2.png",
+      "bytes": 37557,
+      "sha256": "fbb281efb973d347524a95235f8af1a36e273b6d86a11eee421fee4d113ae392"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/google_search.imageset/google-color.png",
+      "bytes": 37557,
+      "sha256": "fbb281efb973d347524a95235f8af1a36e273b6d86a11eee421fee4d113ae392"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/googlemap.imageset/Contents.json",
+      "bytes": 392,
+      "sha256": "dcbabe49385550358e4822e2aaa206a599e4b96c5300d568082d78e420103697"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/googlemap.imageset/a-GoogleMaps 1.png",
+      "bytes": 6196,
+      "sha256": "7dbdb8e039d8247b9f7dc0cf8e6f515d139194bb9d662a750bc6aaea1cc6ed21"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/googlemap.imageset/a-GoogleMaps 2.png",
+      "bytes": 6196,
+      "sha256": "7dbdb8e039d8247b9f7dc0cf8e6f515d139194bb9d662a750bc6aaea1cc6ed21"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/googlemap.imageset/a-GoogleMaps.png",
+      "bytes": 6196,
+      "sha256": "7dbdb8e039d8247b9f7dc0cf8e6f515d139194bb9d662a750bc6aaea1cc6ed21"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/hanlin.imageset/Contents.json",
+      "bytes": 359,
+      "sha256": "513287ddcba8d15df2797a068b08ffee64bc4b998e36a932a929e7220919f74a"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/hanlin.imageset/h 1.png",
+      "bytes": 83407,
+      "sha256": "f04f7c3644f9828906236f8ae0197d8032163ef27854a63e2672067fe6b3d82e"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/hanlin.imageset/h 2.png",
+      "bytes": 83407,
+      "sha256": "f04f7c3644f9828906236f8ae0197d8032163ef27854a63e2672067fe6b3d82e"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/hanlin.imageset/h.png",
+      "bytes": 83407,
+      "sha256": "f04f7c3644f9828906236f8ae0197d8032163ef27854a63e2672067fe6b3d82e"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/huggingface.imageset/Contents.json",
+      "bytes": 407,
+      "sha256": "f11b726029bd75d1faaa0d68b366ecf2d08176006cc0b44984ece13627725bd8"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/huggingface.imageset/huggingface-color 1.png",
+      "bytes": 61054,
+      "sha256": "f399bb4fa79f3ff30930d6c5f2ed8b7d6094cdd6f904317a803108dd2069c664"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/huggingface.imageset/huggingface-color 2.png",
+      "bytes": 61054,
+      "sha256": "f399bb4fa79f3ff30930d6c5f2ed8b7d6094cdd6f904317a803108dd2069c664"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/huggingface.imageset/huggingface-color.png",
+      "bytes": 61054,
+      "sha256": "f399bb4fa79f3ff30930d6c5f2ed8b7d6094cdd6f904317a803108dd2069c664"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/hunyuan.imageset/Contents.json",
+      "bytes": 383,
+      "sha256": "2c52f206729a38fc66e2e9567a2f4e53fd43d900f8a75f020e2a8e6509d1fb62"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/hunyuan.imageset/a-yemian1 1.png",
+      "bytes": 7558,
+      "sha256": "ca8f3a4d6d6c3b4eda39c8eb6bd9069850946df26cc5f7fc4a20c885342422ce"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/hunyuan.imageset/a-yemian1 2.png",
+      "bytes": 7558,
+      "sha256": "ca8f3a4d6d6c3b4eda39c8eb6bd9069850946df26cc5f7fc4a20c885342422ce"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/hunyuan.imageset/a-yemian1.png",
+      "bytes": 7558,
+      "sha256": "ca8f3a4d6d6c3b4eda39c8eb6bd9069850946df26cc5f7fc4a20c885342422ce"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/iflow.imageset/Contents.json",
+      "bytes": 512,
+      "sha256": "948b16b7d51e3ad70f2e21073c7821f165f61781c5261534ff79c2f0724507e8"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/iflow.imageset/O1CN01nulwex1q7Eq1TVqUh_!!6000000005448-55-tps-32-32 1.svg",
+      "bytes": 4217,
+      "sha256": "7450cab608ce761bfe5d5f5c95c124788e1ef7f1741f7ca3f4b3dbf71e28abcd"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/iflow.imageset/O1CN01nulwex1q7Eq1TVqUh_!!6000000005448-55-tps-32-32 2.svg",
+      "bytes": 4217,
+      "sha256": "7450cab608ce761bfe5d5f5c95c124788e1ef7f1741f7ca3f4b3dbf71e28abcd"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/iflow.imageset/O1CN01nulwex1q7Eq1TVqUh_!!6000000005448-55-tps-32-32.svg",
+      "bytes": 4217,
+      "sha256": "7450cab608ce761bfe5d5f5c95c124788e1ef7f1741f7ca3f4b3dbf71e28abcd"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/kimi.imageset/Contents.json",
+      "bytes": 392,
+      "sha256": "1dff867f07713dca1194e18d885315c0712a4641fe1136b8043242cb5f5eb2b1"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/kimi.imageset/kimi-color-2 1.png",
+      "bytes": 22348,
+      "sha256": "5a722caa7b29b3eec31d7b929d527faf52c7187011fc9bae8f056c1c6e280465"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/kimi.imageset/kimi-color-2 2.png",
+      "bytes": 22348,
+      "sha256": "5a722caa7b29b3eec31d7b929d527faf52c7187011fc9bae8f056c1c6e280465"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/kimi.imageset/kimi-color-2.png",
+      "bytes": 22348,
+      "sha256": "5a722caa7b29b3eec31d7b929d527faf52c7187011fc9bae8f056c1c6e280465"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/kimi_dark.imageset/Contents.json",
+      "bytes": 386,
+      "sha256": "f11a71100179cb58b0269a823c0459247e211801feeb90f36d00be24fdbc7612"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/kimi_dark.imageset/kimi-color 1.png",
+      "bytes": 21725,
+      "sha256": "35dd8b86a4493b01f4d699dde2b2b7fb2f119cf01173920f0df74b522be65221"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/kimi_dark.imageset/kimi-color 2.png",
+      "bytes": 21725,
+      "sha256": "35dd8b86a4493b01f4d699dde2b2b7fb2f119cf01173920f0df74b522be65221"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/kimi_dark.imageset/kimi-color.png",
+      "bytes": 21725,
+      "sha256": "35dd8b86a4493b01f4d699dde2b2b7fb2f119cf01173920f0df74b522be65221"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/knowledge_bag.imageset/Contents.json",
+      "bytes": 380,
+      "sha256": "5646188b6d9b071aecfabe5ee6384f878adf80efa8bc3a9de502724bf153f4ef"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/knowledge_bag.imageset/know_bag 1.png",
+      "bytes": 303971,
+      "sha256": "ca998e0ec2e2681a5d611801520a7ab9e25f811f0def98f1c71892f9c18bf126"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/knowledge_bag.imageset/know_bag 2.png",
+      "bytes": 303971,
+      "sha256": "ca998e0ec2e2681a5d611801520a7ab9e25f811f0def98f1c71892f9c18bf126"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/knowledge_bag.imageset/know_bag.png",
+      "bytes": 303971,
+      "sha256": "ca998e0ec2e2681a5d611801520a7ab9e25f811f0def98f1c71892f9c18bf126"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/langsearch.imageset/Contents.json",
+      "bytes": 377,
+      "sha256": "f9631c104d2ebcc6523b883968b05af9a5a3f34c7150831ea1bdb5ebdf0bfc65"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/langsearch.imageset/unnamed 1.png",
+      "bytes": 6480,
+      "sha256": "d995fb6d20895f67059120ef2e96d970a8a4c15cbd08db2b0dc392d0ba222d8b"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/langsearch.imageset/unnamed 2.png",
+      "bytes": 6480,
+      "sha256": "d995fb6d20895f67059120ef2e96d970a8a4c15cbd08db2b0dc392d0ba222d8b"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/langsearch.imageset/unnamed.png",
+      "bytes": 6480,
+      "sha256": "d995fb6d20895f67059120ef2e96d970a8a4c15cbd08db2b0dc392d0ba222d8b"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/lm_studio.imageset/Contents.json",
+      "bytes": 380,
+      "sha256": "d329251aaa7d56f9c5f628d87b9e74f259856b770cc4c4c837b497183b94a039"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/lm_studio.imageset/lmstudio 1.png",
+      "bytes": 18907,
+      "sha256": "84a44b8e19f6036b0d736267dfe4c719a10dafcb3259305f728b8606536e2911"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/lm_studio.imageset/lmstudio 2.png",
+      "bytes": 18907,
+      "sha256": "84a44b8e19f6036b0d736267dfe4c719a10dafcb3259305f728b8606536e2911"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/lm_studio.imageset/lmstudio.png",
+      "bytes": 18907,
+      "sha256": "84a44b8e19f6036b0d736267dfe4c719a10dafcb3259305f728b8606536e2911"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/lm_studio_dark.imageset/Contents.json",
+      "bytes": 386,
+      "sha256": "e438d99b0f4dc8ec72a87f92439c488dbcc95d47ebeaf895b694e97b31cd8611"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/lm_studio_dark.imageset/lmstudio-2 1.png",
+      "bytes": 18853,
+      "sha256": "4edcfda9c52803953d9d765efb5aa5b5523cfa096f740c67639dfcc58c8ebe7d"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/lm_studio_dark.imageset/lmstudio-2 2.png",
+      "bytes": 18853,
+      "sha256": "4edcfda9c52803953d9d765efb5aa5b5523cfa096f740c67639dfcc58c8ebe7d"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/lm_studio_dark.imageset/lmstudio-2.png",
+      "bytes": 18853,
+      "sha256": "4edcfda9c52803953d9d765efb5aa5b5523cfa096f740c67639dfcc58c8ebe7d"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/longcat.imageset/Contents.json",
+      "bytes": 407,
+      "sha256": "e7ef6ea5f052e24deea0d79e8f32ea15ea3688588aaafe3e88f94b657bb3b8f1"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/longcat.imageset/longcat-color (1) 1.png",
+      "bytes": 35062,
+      "sha256": "64af5298e1631c3a54d86ffc46cec340dc17d2e89909c984e19a4e60909652ce"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/longcat.imageset/longcat-color (1) 2.png",
+      "bytes": 35062,
+      "sha256": "64af5298e1631c3a54d86ffc46cec340dc17d2e89909c984e19a4e60909652ce"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/longcat.imageset/longcat-color (1).png",
+      "bytes": 35062,
+      "sha256": "64af5298e1631c3a54d86ffc46cec340dc17d2e89909c984e19a4e60909652ce"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/longcat_dark.imageset/Contents.json",
+      "bytes": 395,
+      "sha256": "39c70d23fb5ae43f9575dc3aba920ae99bd9e3ee407d0563a71c06f7a15a54a2"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/longcat_dark.imageset/longcat-color 1.png",
+      "bytes": 35495,
+      "sha256": "2336d2778860511247bcbfb285bbecc2c237172aea7a151547bd03d5be85b667"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/longcat_dark.imageset/longcat-color 2.png",
+      "bytes": 35495,
+      "sha256": "2336d2778860511247bcbfb285bbecc2c237172aea7a151547bd03d5be85b667"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/longcat_dark.imageset/longcat-color.png",
+      "bytes": 35495,
+      "sha256": "2336d2778860511247bcbfb285bbecc2c237172aea7a151547bd03d5be85b667"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/meta.imageset/Contents.json",
+      "bytes": 386,
+      "sha256": "6ee3b43b7bc6751bb6fb3e7ea74068c32761169f3ba3411c7fa5f8b40cc10912"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/meta.imageset/meta-color 1.png",
+      "bytes": 50138,
+      "sha256": "907e3d525d295aa4c981c3533a6dcbc42d07b344bcc13de1fe01863c1359d790"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/meta.imageset/meta-color 2.png",
+      "bytes": 50138,
+      "sha256": "907e3d525d295aa4c981c3533a6dcbc42d07b344bcc13de1fe01863c1359d790"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/meta.imageset/meta-color.png",
+      "bytes": 50138,
+      "sha256": "907e3d525d295aa4c981c3533a6dcbc42d07b344bcc13de1fe01863c1359d790"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/mimo.imageset/Contents.json",
+      "bytes": 398,
+      "sha256": "32338edea8a07f64ea035d8d83d03dbf9a3c9dee390629577b0f76865fe6a4fa"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/mimo.imageset/xiaomimimo (1) 1.png",
+      "bytes": 37389,
+      "sha256": "3cfdf270d86c9124c69515efff080943fdfdbb579ff248af77beabe5e275d72d"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/mimo.imageset/xiaomimimo (1) 2.png",
+      "bytes": 37389,
+      "sha256": "3cfdf270d86c9124c69515efff080943fdfdbb579ff248af77beabe5e275d72d"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/mimo.imageset/xiaomimimo (1).png",
+      "bytes": 37389,
+      "sha256": "3cfdf270d86c9124c69515efff080943fdfdbb579ff248af77beabe5e275d72d"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/mimo_dark.imageset/Contents.json",
+      "bytes": 386,
+      "sha256": "a382d467484ca17817ec5f4c84be372c217237f2a4e10c1c77aa1065288bedec"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/mimo_dark.imageset/xiaomimimo 1.png",
+      "bytes": 36311,
+      "sha256": "dc86439c3efeb848a219cd90d8078a9fba58421da313adfb17c3629ff8cb678b"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/mimo_dark.imageset/xiaomimimo 2.png",
+      "bytes": 36311,
+      "sha256": "dc86439c3efeb848a219cd90d8078a9fba58421da313adfb17c3629ff8cb678b"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/mimo_dark.imageset/xiaomimimo.png",
+      "bytes": 36311,
+      "sha256": "dc86439c3efeb848a219cd90d8078a9fba58421da313adfb17c3629ff8cb678b"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/minimax.imageset/Contents.json",
+      "bytes": 395,
+      "sha256": "cd33b5756a62749fd1d70d59a337366d8cc165eb04ac5870865dab10a945eb2b"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/minimax.imageset/minimax-color 1.png",
+      "bytes": 40634,
+      "sha256": "4d05a9ea9ad0f71df9517e2c5426473b4ab55165440c24e6deb4ec7a9a3d60cd"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/minimax.imageset/minimax-color 2.png",
+      "bytes": 40634,
+      "sha256": "4d05a9ea9ad0f71df9517e2c5426473b4ab55165440c24e6deb4ec7a9a3d60cd"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/minimax.imageset/minimax-color.png",
+      "bytes": 40634,
+      "sha256": "4d05a9ea9ad0f71df9517e2c5426473b4ab55165440c24e6deb4ec7a9a3d60cd"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/modelscope.imageset/Contents.json",
+      "bytes": 404,
+      "sha256": "01780f70e190fbd0ae1d52cbebd177e67239f7f8648aca13ba37b79b76e9c2be"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/modelscope.imageset/modelscope-color 1.png",
+      "bytes": 12740,
+      "sha256": "8195deb625e65bdddbdc2135db67cdcce56a337c617ac85b601682c7749b8e5d"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/modelscope.imageset/modelscope-color 2.png",
+      "bytes": 12740,
+      "sha256": "8195deb625e65bdddbdc2135db67cdcce56a337c617ac85b601682c7749b8e5d"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/modelscope.imageset/modelscope-color.png",
+      "bytes": 12740,
+      "sha256": "8195deb625e65bdddbdc2135db67cdcce56a337c617ac85b601682c7749b8e5d"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/n1n.imageset/Contents.json",
+      "bytes": 365,
+      "sha256": "1636946680700eaa246beba40b1d55d212cb02b4690e2aa4d79683385cf62920"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/n1n.imageset/n1n 1.png",
+      "bytes": 8271,
+      "sha256": "82006fc4b3add8490b742f8188e1b0ae40a0b5f3c5ad654f49a1b202631ade0d"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/n1n.imageset/n1n 2.png",
+      "bytes": 8271,
+      "sha256": "82006fc4b3add8490b742f8188e1b0ae40a0b5f3c5ad654f49a1b202631ade0d"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/n1n.imageset/n1n.png",
+      "bytes": 8271,
+      "sha256": "82006fc4b3add8490b742f8188e1b0ae40a0b5f3c5ad654f49a1b202631ade0d"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openai.imageset/Contents.json",
+      "bytes": 380,
+      "sha256": "1793eeeddf5e3f4c0359ab42ae99bdb1cea80c0d7282206b4b392f795d8da31c"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openai.imageset/openai-2 1.png",
+      "bytes": 46274,
+      "sha256": "3528e80f3e973b10cc6d5535d3d83d93b19408e64fa4326f0ec36c905bac9be1"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openai.imageset/openai-2 2.png",
+      "bytes": 46274,
+      "sha256": "3528e80f3e973b10cc6d5535d3d83d93b19408e64fa4326f0ec36c905bac9be1"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openai.imageset/openai-2.png",
+      "bytes": 46274,
+      "sha256": "3528e80f3e973b10cc6d5535d3d83d93b19408e64fa4326f0ec36c905bac9be1"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openai_dark.imageset/Contents.json",
+      "bytes": 374,
+      "sha256": "6a08b20020e33d33c526cc3d930e1c8876d53bd2d708225cc05aafed506f8837"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openai_dark.imageset/openai 1.png",
+      "bytes": 45414,
+      "sha256": "5d4877a114835587b9a48a22e82936275bbffd429631007c81ea44ee7800b33a"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openai_dark.imageset/openai 2.png",
+      "bytes": 45414,
+      "sha256": "5d4877a114835587b9a48a22e82936275bbffd429631007c81ea44ee7800b33a"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openai_dark.imageset/openai.png",
+      "bytes": 45414,
+      "sha256": "5d4877a114835587b9a48a22e82936275bbffd429631007c81ea44ee7800b33a"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openrouter.imageset/Contents.json",
+      "bytes": 392,
+      "sha256": "17b4dd76f15c16dc2c4086e9dee518ffdc964716feb91c6f03afd093524e1740"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openrouter.imageset/openrouter-2 1.png",
+      "bytes": 21996,
+      "sha256": "0634e44f566ac26b8e27ad297a5b8697c9978e1d8931f214ac2df9862bcaed2b"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openrouter.imageset/openrouter-2 2.png",
+      "bytes": 21996,
+      "sha256": "0634e44f566ac26b8e27ad297a5b8697c9978e1d8931f214ac2df9862bcaed2b"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openrouter.imageset/openrouter-2.png",
+      "bytes": 21996,
+      "sha256": "0634e44f566ac26b8e27ad297a5b8697c9978e1d8931f214ac2df9862bcaed2b"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openrouter_dark.imageset/Contents.json",
+      "bytes": 386,
+      "sha256": "1eeac645e9d644d5e9992652a5dee1d86ac75b10034f3255616442b2f290ee50"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openrouter_dark.imageset/openrouter 1.png",
+      "bytes": 21348,
+      "sha256": "47bc2cfc604791b3c6129e202b8d57d5a48cdcba2f24a24f6ee2f09fc86d28a7"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openrouter_dark.imageset/openrouter 2.png",
+      "bytes": 21348,
+      "sha256": "47bc2cfc604791b3c6129e202b8d57d5a48cdcba2f24a24f6ee2f09fc86d28a7"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openrouter_dark.imageset/openrouter.png",
+      "bytes": 21348,
+      "sha256": "47bc2cfc604791b3c6129e202b8d57d5a48cdcba2f24a24f6ee2f09fc86d28a7"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openweather.imageset/1743227 1.png",
+      "bytes": 5893,
+      "sha256": "aa4198f7e32aa2767cff934664d7a229d688ff5d49682b35dc553ee9112187c8"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openweather.imageset/1743227 2.png",
+      "bytes": 5893,
+      "sha256": "aa4198f7e32aa2767cff934664d7a229d688ff5d49682b35dc553ee9112187c8"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openweather.imageset/1743227.png",
+      "bytes": 5893,
+      "sha256": "aa4198f7e32aa2767cff934664d7a229d688ff5d49682b35dc553ee9112187c8"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/openweather.imageset/Contents.json",
+      "bytes": 377,
+      "sha256": "1d65783818684b4a25d876922b25867bbed908fe98615cf6f3b3bf279078a84f"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/perplexity.imageset/Contents.json",
+      "bytes": 404,
+      "sha256": "5b5fec4af4492b87a3d076c9975914a32628eecb373e7e4e74c26e82e83907a3"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/perplexity.imageset/perplexity-color 1.png",
+      "bytes": 43614,
+      "sha256": "089fa59dcece4b82a8f964576b69a736e7c6312f6f66cda5140d410ac9e61464"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/perplexity.imageset/perplexity-color 2.png",
+      "bytes": 43614,
+      "sha256": "089fa59dcece4b82a8f964576b69a736e7c6312f6f66cda5140d410ac9e61464"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/perplexity.imageset/perplexity-color.png",
+      "bytes": 43614,
+      "sha256": "089fa59dcece4b82a8f964576b69a736e7c6312f6f66cda5140d410ac9e61464"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/poe.imageset/Contents.json",
+      "bytes": 383,
+      "sha256": "34963de97ab940ad85696a7e806837714a91ea399f24c29a8d3eab7f60aa45c1"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/poe.imageset/poe-color 1.png",
+      "bytes": 44985,
+      "sha256": "cb3420735cfed2c00922d610dd1c7c43d8738927edf947298accd9f92b3845e2"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/poe.imageset/poe-color 2.png",
+      "bytes": 44985,
+      "sha256": "cb3420735cfed2c00922d610dd1c7c43d8738927edf947298accd9f92b3845e2"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/poe.imageset/poe-color.png",
+      "bytes": 44985,
+      "sha256": "cb3420735cfed2c00922d610dd1c7c43d8738927edf947298accd9f92b3845e2"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/poe_dark.imageset/Contents.json",
+      "bytes": 395,
+      "sha256": "fefbf603ad503fe0974d65b3b1c9e60668b0ee464a2da1442fa566cb1e499a1b"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/poe_dark.imageset/poe-color (1) 1.png",
+      "bytes": 41358,
+      "sha256": "cfd4f0f5d9c194cf10bcacd9171e3c1a50520617fbbaefbfcd9656bb83dcd3fd"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/poe_dark.imageset/poe-color (1) 2.png",
+      "bytes": 41358,
+      "sha256": "cfd4f0f5d9c194cf10bcacd9171e3c1a50520617fbbaefbfcd9656bb83dcd3fd"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/poe_dark.imageset/poe-color (1).png",
+      "bytes": 41358,
+      "sha256": "cfd4f0f5d9c194cf10bcacd9171e3c1a50520617fbbaefbfcd9656bb83dcd3fd"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/prompt.imageset/Contents.json",
+      "bytes": 374,
+      "sha256": "ca09a0a2c4cd7c0447171f87a692859390ddb951d58684295de2573cae927dbb"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/prompt.imageset/prompt 1.png",
+      "bytes": 54509,
+      "sha256": "70beb778a0e9694e26f1834f7cfae0a8531f579b5a15a2944c7c0dd21141accd"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/prompt.imageset/prompt 2.png",
+      "bytes": 54509,
+      "sha256": "70beb778a0e9694e26f1834f7cfae0a8531f579b5a15a2944c7c0dd21141accd"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/prompt.imageset/prompt.png",
+      "bytes": 54509,
+      "sha256": "70beb778a0e9694e26f1834f7cfae0a8531f579b5a15a2944c7c0dd21141accd"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/qweather.imageset/Contents.json",
+      "bytes": 380,
+      "sha256": "eebd4ac3adc413d807e89a67656b8cb943790988b2cdb8b9690ddeadaeda718d"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/qweather.imageset/qweather 1.png",
+      "bytes": 4857,
+      "sha256": "8768ab21831fe0074d46172e3a41e6f02d431ef36dee2ec4465ce38a607922ae"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/qweather.imageset/qweather 2.png",
+      "bytes": 4857,
+      "sha256": "8768ab21831fe0074d46172e3a41e6f02d431ef36dee2ec4465ce38a607922ae"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/qweather.imageset/qweather.png",
+      "bytes": 4857,
+      "sha256": "8768ab21831fe0074d46172e3a41e6f02d431ef36dee2ec4465ce38a607922ae"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/qweather_dark.imageset/Contents.json",
+      "bytes": 392,
+      "sha256": "6723927b108583b72bf81bc89e4cc4ac374807744aa7ba7d0058e75f2d76e952"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/qweather_dark.imageset/qweather (1) 1.png",
+      "bytes": 4952,
+      "sha256": "10f3c741e7236c6e5583a20ed0db01ec1b11a2ce219adfa76bede9bc75e6457e"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/qweather_dark.imageset/qweather (1) 2.png",
+      "bytes": 4952,
+      "sha256": "10f3c741e7236c6e5583a20ed0db01ec1b11a2ce219adfa76bede9bc75e6457e"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/qweather_dark.imageset/qweather (1).png",
+      "bytes": 4952,
+      "sha256": "10f3c741e7236c6e5583a20ed0db01ec1b11a2ce219adfa76bede9bc75e6457e"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/qwen.imageset/Contents.json",
+      "bytes": 368,
+      "sha256": "8b3897b67f99dafbba04f7ca5e90e8516a6d08140a26427dbc190ca24a3ed541"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/qwen.imageset/qwen 1.svg",
+      "bytes": 986,
+      "sha256": "885e994548f24c0955ef23b2aae53e8a1eaadbc343323973db45ec845f9d86c1"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/qwen.imageset/qwen 2.svg",
+      "bytes": 986,
+      "sha256": "885e994548f24c0955ef23b2aae53e8a1eaadbc343323973db45ec845f9d86c1"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/qwen.imageset/qwen.svg",
+      "bytes": 986,
+      "sha256": "885e994548f24c0955ef23b2aae53e8a1eaadbc343323973db45ec845f9d86c1"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/siliconflow.imageset/Contents.json",
+      "bytes": 410,
+      "sha256": "8fba0e828bb83a705496ce7589180093a6a65b7d1bd47d1e81d9f781e2e77ac5"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/siliconflow.imageset/siliconcloud-color 1.png",
+      "bytes": 10774,
+      "sha256": "195e58ef6178547903fa512024d62cfafeee9e9a70ea17266a1b25c4a7f232c4"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/siliconflow.imageset/siliconcloud-color 2.png",
+      "bytes": 10774,
+      "sha256": "195e58ef6178547903fa512024d62cfafeee9e9a70ea17266a1b25c4a7f232c4"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/siliconflow.imageset/siliconcloud-color.png",
+      "bytes": 10774,
+      "sha256": "195e58ef6178547903fa512024d62cfafeee9e9a70ea17266a1b25c4a7f232c4"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/siri.imageset/Contents.json",
+      "bytes": 368,
+      "sha256": "2964f5f05bab1561ad36d912efc1d9b5f35be18d2d064d9fb409301e3311b273"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/siri.imageset/siri 1.png",
+      "bytes": 603861,
+      "sha256": "cdde970913f72b198b055733970b1ad1ce204f5876984144703a5c615549499a"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/siri.imageset/siri 2.png",
+      "bytes": 603861,
+      "sha256": "cdde970913f72b198b055733970b1ad1ce204f5876984144703a5c615549499a"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/siri.imageset/siri.png",
+      "bytes": 603861,
+      "sha256": "cdde970913f72b198b055733970b1ad1ce204f5876984144703a5c615549499a"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/spark.imageset/Contents.json",
+      "bytes": 389,
+      "sha256": "a7a74bf3b22e8c3b1a4e858f8d483e0b720d141e83f36a32841cc58d83af3473"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/spark.imageset/spark-color 1.png",
+      "bytes": 46203,
+      "sha256": "5422fee48c9270b25a6f6eff9bae213ccab83e33cc061cd393dbce995363b7c6"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/spark.imageset/spark-color 2.png",
+      "bytes": 46203,
+      "sha256": "5422fee48c9270b25a6f6eff9bae213ccab83e33cc061cd393dbce995363b7c6"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/spark.imageset/spark-color.png",
+      "bytes": 46203,
+      "sha256": "5422fee48c9270b25a6f6eff9bae213ccab83e33cc061cd393dbce995363b7c6"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/step.imageset/Contents.json",
+      "bytes": 395,
+      "sha256": "97e98cab202927199c129fd37dde7e2a924c316e9836bb6d2055d06f1a99d2a4"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/step.imageset/stepfun-color 1.png",
+      "bytes": 24523,
+      "sha256": "90a7ab6699491a34d618362ce0493d1971b681d21f14d9c316ecd90b530535d5"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/step.imageset/stepfun-color 2.png",
+      "bytes": 24523,
+      "sha256": "90a7ab6699491a34d618362ce0493d1971b681d21f14d9c316ecd90b530535d5"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/step.imageset/stepfun-color.png",
+      "bytes": 24523,
+      "sha256": "90a7ab6699491a34d618362ce0493d1971b681d21f14d9c316ecd90b530535d5"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/tavily.imageset/Contents.json",
+      "bytes": 374,
+      "sha256": "68ddd49eef661418ed53eae653da0e49a6902cb52fe2c400bb1172fc0203adb8"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/tavily.imageset/tavily 1.png",
+      "bytes": 46137,
+      "sha256": "0ea9bfd05b84f6a2e47b1d57b35f4e687bbac7816bf75b063c51d88bc648c526"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/tavily.imageset/tavily 2.png",
+      "bytes": 46137,
+      "sha256": "0ea9bfd05b84f6a2e47b1d57b35f4e687bbac7816bf75b063c51d88bc648c526"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/tavily.imageset/tavily.png",
+      "bytes": 46137,
+      "sha256": "0ea9bfd05b84f6a2e47b1d57b35f4e687bbac7816bf75b063c51d88bc648c526"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/tiangong.imageset/Contents.json",
+      "bytes": 398,
+      "sha256": "261471236423b27b38ef334f2481e6b8eaa8b1623509171ebbf48336d25a7a27"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/tiangong.imageset/tiangong-color 1.png",
+      "bytes": 59625,
+      "sha256": "e9bf775ef4b3e0e958fb2baf4241755c968ce6ee805a4876e3f25883cb37dea6"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/tiangong.imageset/tiangong-color 2.png",
+      "bytes": 59625,
+      "sha256": "e9bf775ef4b3e0e958fb2baf4241755c968ce6ee805a4876e3f25883cb37dea6"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/tiangong.imageset/tiangong-color.png",
+      "bytes": 59625,
+      "sha256": "e9bf775ef4b3e0e958fb2baf4241755c968ce6ee805a4876e3f25883cb37dea6"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/translate.imageset/Contents.json",
+      "bytes": 434,
+      "sha256": "f87806344086061b1bf91014f8b490aa997e1a7ddefc83d8174e69578a19e22d"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/translate.imageset/translate-bold-svgrepo-com 1.svg",
+      "bytes": 991,
+      "sha256": "7077172335b4e6a84d317522f362515a934c8df6d5dcf9c733e84c07531f7a5d"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/translate.imageset/translate-bold-svgrepo-com 2.svg",
+      "bytes": 991,
+      "sha256": "7077172335b4e6a84d317522f362515a934c8df6d5dcf9c733e84c07531f7a5d"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/translate.imageset/translate-bold-svgrepo-com.svg",
+      "bytes": 991,
+      "sha256": "7077172335b4e6a84d317522f362515a934c8df6d5dcf9c733e84c07531f7a5d"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/translate_circle.imageset/Contents.json",
+      "bytes": 371,
+      "sha256": "c0509af550ad0f7f9a972ff2e69b7f4adff6380747fb3585ca70a6303a30bbbb"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/translate_circle.imageset/svg-6 1.svg",
+      "bytes": 1298,
+      "sha256": "c10f5abc9aa3aadb740535016f8ba68129a1b68192f247c5ea2aa9b26240a1cd"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/translate_circle.imageset/svg-6 2.svg",
+      "bytes": 1298,
+      "sha256": "c10f5abc9aa3aadb740535016f8ba68129a1b68192f247c5ea2aa9b26240a1cd"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/translate_circle.imageset/svg-6.svg",
+      "bytes": 1298,
+      "sha256": "c10f5abc9aa3aadb740535016f8ba68129a1b68192f247c5ea2aa9b26240a1cd"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/webreader.imageset/Contents.json",
+      "bytes": 365,
+      "sha256": "589ad184c19d4c4269f585dd73cce59bad0e34dafdbfc32cd70d7d0c212ab219"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/webreader.imageset/web 1.png",
+      "bytes": 340326,
+      "sha256": "c4d0f6954eb7cc3b9deef9ce79c41fa4b1e97bab8b5abdfd22fcbdfe9a8a548b"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/webreader.imageset/web 2.png",
+      "bytes": 340326,
+      "sha256": "c4d0f6954eb7cc3b9deef9ce79c41fa4b1e97bab8b5abdfd22fcbdfe9a8a548b"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/webreader.imageset/web.png",
+      "bytes": 340326,
+      "sha256": "c4d0f6954eb7cc3b9deef9ce79c41fa4b1e97bab8b5abdfd22fcbdfe9a8a548b"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/wenxin.imageset/Contents.json",
+      "bytes": 392,
+      "sha256": "c5da498ae663ceef48da53fb011f5d16b6e4f02f90b68035a45996f42762491e"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/wenxin.imageset/wenxin-color 1.png",
+      "bytes": 63990,
+      "sha256": "9aee025d5c9faddd20c9eba3418644629cfba3443c8ced8b047080fcbe744bd7"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/wenxin.imageset/wenxin-color 2.png",
+      "bytes": 63990,
+      "sha256": "9aee025d5c9faddd20c9eba3418644629cfba3443c8ced8b047080fcbe744bd7"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/wenxin.imageset/wenxin-color.png",
+      "bytes": 63990,
+      "sha256": "9aee025d5c9faddd20c9eba3418644629cfba3443c8ced8b047080fcbe744bd7"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/xai.imageset/Contents.json",
+      "bytes": 374,
+      "sha256": "b8df73214003bf6b03050ff7c85aaeb110c6a94691f042d8b0614d6098bda516"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/xai.imageset/grok-2 1.png",
+      "bytes": 32083,
+      "sha256": "ede4f7a90fac3ede444ef4e9f6225d862f9f261e5eaf079c354c66e29091777b"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/xai.imageset/grok-2 2.png",
+      "bytes": 32083,
+      "sha256": "ede4f7a90fac3ede444ef4e9f6225d862f9f261e5eaf079c354c66e29091777b"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/xai.imageset/grok-2.png",
+      "bytes": 32083,
+      "sha256": "ede4f7a90fac3ede444ef4e9f6225d862f9f261e5eaf079c354c66e29091777b"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/xai_dark.imageset/Contents.json",
+      "bytes": 368,
+      "sha256": "4e3e6f58797966b3109cc67c718a171c9a3e605fb28c38fd0250dd7896fcb927"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/xai_dark.imageset/grok 1.png",
+      "bytes": 32043,
+      "sha256": "f39bb8901c2ba6d93de6105de951b21b0115e28b79afa268a3cdcf5cb4536f49"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/xai_dark.imageset/grok 2.png",
+      "bytes": 32043,
+      "sha256": "f39bb8901c2ba6d93de6105de951b21b0115e28b79afa268a3cdcf5cb4536f49"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/xai_dark.imageset/grok.png",
+      "bytes": 32043,
+      "sha256": "f39bb8901c2ba6d93de6105de951b21b0115e28b79afa268a3cdcf5cb4536f49"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/yi.imageset/Contents.json",
+      "bytes": 386,
+      "sha256": "18a14592f1808f209908494b470c70db7db4ddef43521b75e52a9ff14f424516"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/yi.imageset/yi-color-2 1.png",
+      "bytes": 21528,
+      "sha256": "f904765ec4247764278522473fdb2850fb68c685884dd796db84eba05ba9b710"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/yi.imageset/yi-color-2 2.png",
+      "bytes": 21528,
+      "sha256": "f904765ec4247764278522473fdb2850fb68c685884dd796db84eba05ba9b710"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/yi.imageset/yi-color-2.png",
+      "bytes": 21528,
+      "sha256": "f904765ec4247764278522473fdb2850fb68c685884dd796db84eba05ba9b710"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/yi_dark.imageset/Contents.json",
+      "bytes": 380,
+      "sha256": "5a82fdbb3e15933a1fca08988059693d118c8e50ef7b90afc86160d5b271a8ed"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/yi_dark.imageset/yi-color 1.png",
+      "bytes": 21487,
+      "sha256": "4501ab4496c00c84a85e85c413201b4eab3afed31fe69a2e91a853fad2eb0226"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/yi_dark.imageset/yi-color 2.png",
+      "bytes": 21487,
+      "sha256": "4501ab4496c00c84a85e85c413201b4eab3afed31fe69a2e91a853fad2eb0226"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/yi_dark.imageset/yi-color.png",
+      "bytes": 21487,
+      "sha256": "4501ab4496c00c84a85e85c413201b4eab3afed31fe69a2e91a853fad2eb0226"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/zhipuai.imageset/Contents.json",
+      "bytes": 377,
+      "sha256": "90fa152fcd66961414e1982023a9ca36f9f59c28c8c44914d6632925e6cf1d60"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/zhipuai.imageset/zai (1) 1.png",
+      "bytes": 24935,
+      "sha256": "e4b9c0070aa93d8a3da4b64e53ec05e5bd85d218545e0e253f80811c07cc873c"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/zhipuai.imageset/zai (1) 2.png",
+      "bytes": 24935,
+      "sha256": "e4b9c0070aa93d8a3da4b64e53ec05e5bd85d218545e0e253f80811c07cc873c"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/zhipuai.imageset/zai (1).png",
+      "bytes": 24935,
+      "sha256": "e4b9c0070aa93d8a3da4b64e53ec05e5bd85d218545e0e253f80811c07cc873c"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/zhipuai_dark.imageset/Contents.json",
+      "bytes": 365,
+      "sha256": "3ff36c57a188f6eaecb58ddd7af5368ff2a01396a34451c905ac32032d2bfe69"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/zhipuai_dark.imageset/zai 1.png",
+      "bytes": 17575,
+      "sha256": "c5cfd73dea9364e7c421d0e4d11d73f21110a022257856b777dfc1f3368e356d"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/zhipuai_dark.imageset/zai 2.png",
+      "bytes": 17575,
+      "sha256": "c5cfd73dea9364e7c421d0e4d11d73f21110a022257856b777dfc1f3368e356d"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/zhipuai_dark.imageset/zai.png",
+      "bytes": 17575,
+      "sha256": "c5cfd73dea9364e7c421d0e4d11d73f21110a022257856b777dfc1f3368e356d"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/Localizable.xcstrings",
+      "bytes": 638590,
+      "sha256": "5e334f24f2fae133c560758c49d03f9974991018fdf56467fdb7fdcf686bbf90"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/MCPLocalizable.xcstrings",
+      "bytes": 44266,
+      "sha256": "00f9e7f6da0a1d8c6976f482cd3675b0e5fb07a9f3fdfae204745d43aa24c8c7"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/RuntimeLocalizable.xcstrings",
+      "bytes": 185670,
+      "sha256": "11e346d6eef46ed0eb3cafb2fc785c9d157bf2766d8e04618021a8a2aad86971"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/RuntimeL10n.swift",
+      "bytes": 399,
+      "sha256": "ab9c346079a2e84819f35afaf85f6df62431bd37f7b95819c09a2c13acb3aa9a"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/SkillL10n.swift",
+      "bytes": 5798,
+      "sha256": "239f94de8906371a89487ce76ac754c87f4513bcb669858ecd8b4678e79c2709"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit/HanlinActivityDisclosureState.swift",
+      "bytes": 1244,
+      "sha256": "8876d867d6aed5771cd251cbaa2e6f9c5b4579218b26fa6cef19a1640d976b69"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit/HanlinCitations.swift",
+      "bytes": 13931,
+      "sha256": "91cfd8b2ba1480b17da80e22b9a91f540af04aa1312c3edf98f042feca759963"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit/HanlinDesignCatalog.swift",
+      "bytes": 5224,
+      "sha256": "58a33bd987cc324ba44fa9c64ce911772c2f88c16f4b78e9f1bf4122716741db"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit/HanlinToolIconSet.swift",
+      "bytes": 4786,
+      "sha256": "f64258a4d2def0c90e202c26e08bb34a23b77e7d18ed03388b0407fa6caf51a2"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit/MessageOpenUIStateStore.swift",
+      "bytes": 6442,
+      "sha256": "637d499055f0e9fcc57b5b499afe094aa85dbe3bb9f555d592ecb6bf561c5b26"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit/OpenUIInlineParts.swift",
+      "bytes": 3977,
+      "sha256": "902a002b7f3cb1092234e4a83e9fa1743a0f814502f2ba2bf21338c46eb0f5db"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit/PresentationProfile.swift",
+      "bytes": 7982,
+      "sha256": "f7964967239fb3d55c0fe215360de2370e921b0ae05627e49e41092c5f068029"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit/PresentationValue.swift",
+      "bytes": 2295,
+      "sha256": "6f3965430583bc63f1df64c6d5cd0ae5c61ad6c730814adf9878bcbae3ca881a"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/NativeOpenUINode.swift",
+      "bytes": 22751,
+      "sha256": "d78707654c528159d36d3b694d934a4fca086ad31248b5e24a4e7d547a16c40e"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/OpenUIBlock.swift",
+      "bytes": 10457,
+      "sha256": "0bb37aeb1fce914a8e27511a3c56a46bbc14bdcc9c79867d0481de7e508b2858"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/OpenUICatalogs.swift",
+      "bytes": 3041,
+      "sha256": "ddf1517e261f41de43aa11a7addada6df435a3c181fc95108f85ed6e89b4c224"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/OpenUIRendererConfiguration.swift",
+      "bytes": 1406,
+      "sha256": "be58ebe69a95c69bfde290b2e8079f93166f8bf9b637e74f932826673f4cd4a6"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/Resources/OpenUI/.gitattributes",
+      "bytes": 162,
+      "sha256": "ef8722d0d0dd44cfb82678da6fd1056f9e9a9c6d943e9125bcd6f6a5460e88e6"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/Resources/OpenUI/THIRD_PARTY_NOTICES.md",
+      "bytes": 5693,
+      "sha256": "84f847d0d98c2956481dafbfa2f42f47e3d2a3e15c1c376fd6a4ab802cca9b56"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/Resources/OpenUI/bridge.css",
+      "bytes": 356861,
+      "sha256": "cab51495b9923c124d303b80f64aee322eaad5133f07cf34fcb02ac7cc1b9a1d"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/Resources/OpenUI/bridge.js",
+      "bytes": 3582180,
+      "sha256": "a1e800746e8281f6e487a0dc279e502bda9d2ae35c5a910a19a28375f9b1c9de"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/Resources/OpenUI/bridge.js.LEGAL.txt",
+      "bytes": 76610,
+      "sha256": "cc72edf544f42b902a91e479860f87404d8408e74e7908b33ff2b78173bc81df"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/Resources/OpenUI/catalog-manifest.json",
+      "bytes": 4787,
+      "sha256": "f0c755d157dd18c5503ddf84710b58f6f7b38c6ba2b65a7cf3810d4d43fcc3df"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/Resources/OpenUI/index.html",
+      "bytes": 469,
+      "sha256": "460c6bdfd6dd964f251954900bbbb34481e3c0f0b25ca3165031fafd643d1b54"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/Resources/OpenUI/original-prompt.txt",
+      "bytes": 34202,
+      "sha256": "aad61ab2488e864b43169df4be7710bea6524efed01df5bf86c7d2172f41e03c"
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinRichUI/Resources/OpenUI/torah-prompt.txt",
+      "bytes": 34958,
+      "sha256": "abc486ddfe23182bbe6f967296645a448a3b2f45e5e7b65a0c30ca8480f59fd9"
+    }
+  ],
+  "sdkSourceAndResourceSHA256": "a4453b9d0a17b89ddc03cbfb361d982206e8569bac34e100b571c00f612911db",
+  "generatedSHA256": {
+    "Package.swift": "61b583342dc4c35519a7b7614c3269140edbd10590f7faf5269467b997e2bdc4",
+    "docs/agent-sdk/unified-package-manifest.json": "9f6efcaa50cb0cc8e68ef96975ab7c7967e703843db78eef52c1c5f6a68ab967"
+  },
+  "projectSpecSHA256": "b3414f9fb78c3cddd0becc66b0fb3120e842b5858eb44452aed8a8da5773a224",
+  "runtimeBinaryTargets": [],
+  "externalDependencies": "Pinned by generated manifest; actual resolved checkouts and packaged bundle bytes recorded after build",
+  "nativeExecution": "NOT_RUN_BY_PREPARATION"
+}

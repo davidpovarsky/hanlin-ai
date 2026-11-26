@@ -1,0 +1,26 @@
+{
+  "status": "CAPTURED_NOT_ACCEPTANCE",
+  "sourceSHA": "24bc34c618615cb75b362d9d64f55e4607fd0e74",
+  "captures": [
+    {
+      "path": "captures/expanded-accessibility.txt",
+      "bytes": 5970,
+      "sha256": "f71c6e5ae2ab05fc785389da95fdc29a9529ad0d5e0761a626f2e88dd4aed3e9"
+    },
+    {
+      "path": "captures/collapsed-accessibility.txt",
+      "bytes": 5970,
+      "sha256": "3fefa43c9b97ce0a436a086089e2950985aacd3fbfa070518d878a11ddd93f1e"
+    },
+    {
+      "path": "captures/expanded-screen.png",
+      "bytes": 178523,
+      "sha256": "3b841ff4d411b528a1f67e2095e2410e0e774d5a5dbf878e83f1471920b753df"
+    },
+    {
+      "path": "captures/collapsed-screen.png",
+      "bytes": 148102,
+      "sha256": "0bd9f790b9965083045c965001dc0b2e639c60a8c4ab9bbadfd30551731a2007"
+    }
+  ]
+}

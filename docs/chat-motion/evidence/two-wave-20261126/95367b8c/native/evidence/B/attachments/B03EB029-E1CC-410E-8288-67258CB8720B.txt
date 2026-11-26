@@ -1,0 +1,1 @@
+Triple tap delivered: Optional("actions=5;expanded=true;natural=100.0;visible=5.517244989739993;gaps=1.4917,1.5000,0.0665,0.0501;intermediate=false,false,true,true;scrollY=0.0;orientation=portrait;actionVisible=0.0,106.0,0.0,0.3,5.5"); geometry: transitioning

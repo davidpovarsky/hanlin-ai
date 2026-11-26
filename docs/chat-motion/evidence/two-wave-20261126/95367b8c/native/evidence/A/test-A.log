@@ -1,0 +1,2173 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild test-without-building -project ChatMotionProof.xcodeproj -scheme ChatMotionProof -derivedDataPath /Users/m1/caches/DerivedData/hanlin-motion-dacb4ca5-20261126 -destination "platform=iOS Simulator,id=B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D" -destination-timeout 60 -resultBundlePath /Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/A/Motion.xcresult -disableAutomaticPackageResolution -skipMacroValidation -parallel-testing-enabled NO -test-timeouts-enabled YES -default-test-execution-time-allowance 600 -maximum-test-execution-time-allowance 720 CODE_SIGNING_ALLOWED=NO "-only-testing:ChatMotionProofUITests/MotionUITests/testAAllFivePresetsTwentyCompleteCyclesEach"
+
+Build settings from command line:
+    CODE_SIGNING_ALLOWED = NO
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  swift-markdown: https://github.com/swiftlang/swift-markdown.git @ 0.7.3
+  swift-syntax: https://github.com/swiftlang/swift-syntax.git @ 603.0.2
+  cmark-gfm: https://github.com/swiftlang/swift-cmark @ 0.9.0
+  iosMath: https://github.com/junyan72/iosMath @ ba9ab77
+  Equatable: https://github.com/ordo-one/equatable @ 1.4.1
+  HanlinSDK: /Users/m1/builds/hanlin-motion-dacb4ca5-20261126/proof/Vendor/HanlinSDK
+  HighlightSwift: https://github.com/appstefan/highlightswift @ 99c431b
+  SwiftStreamingMarkdown: https://github.com/davidpovarsky/hanlin-streaming-markdown @ 5cbb4b6
+  SwiftUI-Shimmer: https://github.com/markiv/SwiftUI-Shimmer @ 1.5.1
+
+Writing result bundle at path:
+	/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/A/Motion.xcresult
+
+2026-11-26 17:27:48.807747+0100 ChatMotionProofUITests-Runner[54760:15582719] [Default] Running tests...
+2026-11-26 17:27:49.360021+0100 ChatMotionProofUITests-Runner[54760:15582719] [UIKit App Config] Update the Info.plist: Launch screens will soon be required.
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-26 17:27:54.519.
+Test Suite 'ChatMotionProofUITests.xctest' started at 2026-11-26 17:27:54.522.
+Test Suite 'MotionUITests' started at 2026-11-26 17:27:54.522.
+Test Case '-[ChatMotionProofUITests.MotionUITests testAAllFivePresetsTwentyCompleteCyclesEach]' started.
+    t =     0.01s Start Test at 2026-11-26 17:27:54.536
+    t =     0.10s Set Up
+    t =     0.12s     Open ai.hanlin.motion-proof
+    t =     0.12s         Launch ai.hanlin.motion-proof
+2026-11-26 17:27:55.302 xcodebuild[54346:15579616] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-26 17:27:55.302 xcodebuild[54346:15579616] [MT] IDELaunchParametersSnapshot: no debugger version
+objc[54760]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.3CDVUO/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x106338310) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.3CDVUO/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x10636c398). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+    t =     4.15s             Setting up automation session
+    t =     7.81s             Wait for ai.hanlin.motion-proof to idle
+    t =    11.00s     Waiting 10.0s for "proof-thinking" Button to exist
+    t =    12.06s         Checking `Expect predicate `existsNoRetry == 1` for object "proof-thinking" Button`
+    t =    12.06s             Checking existence of `"proof-thinking" Button`
+<unknown>:0: warning: -[ChatMotionProofUITests.MotionUITests testAAllFivePresetsTwentyCompleteCyclesEach] : Update the Info.plist: Support for all orientations will soon be required.
+    t =    12.48s Tap "hanlin-chat-motion-preset" Button
+    t =    12.48s     Wait for ai.hanlin.motion-proof to idle
+    t =    12.51s     Find the "hanlin-chat-motion-preset" Button
+    t =    12.64s     Check for interrupting elements affecting "hanlin-chat-motion-preset" Button
+    t =    13.08s         Wait for com.apple.springboard to idle
+    t =    13.44s     Synthesize event
+    t =    14.23s     Wait for ai.hanlin.motion-proof to idle
+    t =    15.46s Tap "Smooth and relaxed" Button
+    t =    15.47s     Wait for ai.hanlin.motion-proof to idle
+    t =    15.58s     Find the "Smooth and relaxed" Button
+    t =    15.65s     Check for interrupting elements affecting "Smooth and relaxed" Button
+    t =    15.72s         Wait for com.apple.springboard to idle
+    t =    15.76s     Synthesize event
+    t =    16.18s     Wait for ai.hanlin.motion-proof to idle
+    t =    18.65s Checking `Expect predicate `label == "v1.relaxed"` for object "proof-persisted-preset" StaticText`
+    t =    18.65s     Find the "proof-persisted-preset" StaticText
+    t =    18.68s Tap "proof-thinking" Button
+    t =    18.68s     Wait for ai.hanlin.motion-proof to idle
+    t =    18.70s     Find the "proof-thinking" Button
+    t =    18.74s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    18.77s         Wait for com.apple.springboard to idle
+    t =    18.80s     Synthesize event
+    t =    19.12s     Wait for ai.hanlin.motion-proof to idle
+    t =    20.13s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    20.13s     Find the "proof-geometry-state" StaticText
+    t =    20.17s Checking existence of `"proof-summary" StaticText`
+    t =    20.19s Find the Target Application 'ai.hanlin.motion-proof'
+    t =    20.46s Added attachment named 'v1.relaxed-expanded'
+    t =    20.46s Tap "proof-thinking" Button
+    t =    20.46s     Wait for ai.hanlin.motion-proof to idle
+    t =    20.47s     Find the "proof-thinking" Button
+    t =    20.49s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    20.52s         Wait for com.apple.springboard to idle
+    t =    20.54s     Synthesize event
+    t =    20.86s     Wait for ai.hanlin.motion-proof to idle
+    t =    21.96s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =    21.96s     Find the "proof-geometry-state" StaticText
+    t =    22.00s Checking existence of `"proof-summary" StaticText`
+    t =    22.02s Tap "proof-thinking" Button
+    t =    22.02s     Wait for ai.hanlin.motion-proof to idle
+    t =    22.02s     Find the "proof-thinking" Button
+    t =    22.05s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    22.07s         Wait for com.apple.springboard to idle
+    t =    22.11s     Synthesize event
+    t =    22.42s     Wait for ai.hanlin.motion-proof to idle
+    t =    23.48s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    23.48s     Find the "proof-geometry-state" StaticText
+    t =    23.53s Checking existence of `"proof-summary" StaticText`
+    t =    23.57s Tap "proof-thinking" Button
+    t =    23.57s     Wait for ai.hanlin.motion-proof to idle
+    t =    23.58s     Find the "proof-thinking" Button
+    t =    23.61s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    23.64s         Wait for com.apple.springboard to idle
+    t =    23.66s     Synthesize event
+    t =    23.95s     Wait for ai.hanlin.motion-proof to idle
+    t =    25.02s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =    25.02s     Find the "proof-geometry-state" StaticText
+    t =    25.07s Checking existence of `"proof-summary" StaticText`
+    t =    25.09s Tap "proof-thinking" Button
+    t =    25.09s     Wait for ai.hanlin.motion-proof to idle
+    t =    25.10s     Find the "proof-thinking" Button
+    t =    25.13s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    25.15s         Wait for com.apple.springboard to idle
+    t =    25.17s     Synthesize event
+    t =    25.48s     Wait for ai.hanlin.motion-proof to idle
+    t =    26.55s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    26.55s     Find the "proof-geometry-state" StaticText
+    t =    26.58s Checking existence of `"proof-summary" StaticText`
+    t =    26.61s Tap "proof-thinking" Button
+    t =    26.61s     Wait for ai.hanlin.motion-proof to idle
+    t =    26.61s     Find the "proof-thinking" Button
+    t =    26.64s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    26.66s         Wait for com.apple.springboard to idle
+    t =    26.69s     Synthesize event
+    t =    26.99s     Wait for ai.hanlin.motion-proof to idle
+    t =    28.03s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =    28.03s     Find the "proof-geometry-state" StaticText
+    t =    28.05s Checking existence of `"proof-summary" StaticText`
+    t =    28.07s Tap "proof-thinking" Button
+    t =    28.07s     Wait for ai.hanlin.motion-proof to idle
+    t =    28.08s     Find the "proof-thinking" Button
+    t =    28.10s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    28.12s         Wait for com.apple.springboard to idle
+    t =    28.14s     Synthesize event
+    t =    28.43s     Wait for ai.hanlin.motion-proof to idle
+    t =    29.49s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    29.49s     Find the "proof-geometry-state" StaticText
+    t =    29.52s Checking existence of `"proof-summary" StaticText`
+    t =    29.55s Tap "proof-thinking" Button
+    t =    29.55s     Wait for ai.hanlin.motion-proof to idle
+    t =    29.56s     Find the "proof-thinking" Button
+    t =    29.58s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    29.61s         Wait for com.apple.springboard to idle
+    t =    29.64s     Synthesize event
+    t =    29.94s     Wait for ai.hanlin.motion-proof to idle
+    t =    30.98s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =    30.98s     Find the "proof-geometry-state" StaticText
+    t =    31.01s Checking existence of `"proof-summary" StaticText`
+    t =    31.02s Tap "proof-thinking" Button
+    t =    31.02s     Wait for ai.hanlin.motion-proof to idle
+    t =    31.03s     Find the "proof-thinking" Button
+    t =    31.07s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    31.10s         Wait for com.apple.springboard to idle
+    t =    31.14s     Synthesize event
+    t =    31.44s     Wait for ai.hanlin.motion-proof to idle
+    t =    32.52s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    32.52s     Find the "proof-geometry-state" StaticText
+    t =    32.54s Checking existence of `"proof-summary" StaticText`
+    t =    32.57s Tap "proof-thinking" Button
+    t =    32.57s     Wait for ai.hanlin.motion-proof to idle
+    t =    32.58s     Find the "proof-thinking" Button
+    t =    32.60s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    32.62s         Wait for com.apple.springboard to idle
+    t =    32.64s     Synthesize event
+    t =    32.95s     Wait for ai.hanlin.motion-proof to idle
+    t =    34.02s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =    34.02s     Find the "proof-geometry-state" StaticText
+    t =    34.04s Checking existence of `"proof-summary" StaticText`
+    t =    34.07s Tap "proof-thinking" Button
+    t =    34.07s     Wait for ai.hanlin.motion-proof to idle
+    t =    34.08s     Find the "proof-thinking" Button
+    t =    34.11s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    34.15s         Wait for com.apple.springboard to idle
+    t =    34.19s     Synthesize event
+    t =    34.51s     Wait for ai.hanlin.motion-proof to idle
+    t =    35.59s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    35.59s     Find the "proof-geometry-state" StaticText
+    t =    35.62s Checking existence of `"proof-summary" StaticText`
+    t =    35.65s Tap "proof-thinking" Button
+    t =    35.65s     Wait for ai.hanlin.motion-proof to idle
+    t =    35.65s     Find the "proof-thinking" Button
+    t =    35.68s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    35.70s         Wait for com.apple.springboard to idle
+    t =    35.73s     Synthesize event
+    t =    36.02s     Wait for ai.hanlin.motion-proof to idle
+    t =    37.10s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =    37.10s     Find the "proof-geometry-state" StaticText
+    t =    37.13s Checking existence of `"proof-summary" StaticText`
+    t =    37.16s Tap "proof-thinking" Button
+    t =    37.16s     Wait for ai.hanlin.motion-proof to idle
+    t =    37.16s     Find the "proof-thinking" Button
+    t =    37.20s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    37.24s         Wait for com.apple.springboard to idle
+    t =    37.27s     Synthesize event
+    t =    37.56s     Wait for ai.hanlin.motion-proof to idle
+    t =    38.63s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    38.63s     Find the "proof-geometry-state" StaticText
+    t =    38.66s Checking existence of `"proof-summary" StaticText`
+    t =    38.69s Tap "proof-thinking" Button
+    t =    38.69s     Wait for ai.hanlin.motion-proof to idle
+    t =    38.69s     Find the "proof-thinking" Button
+    t =    38.72s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    38.74s         Wait for com.apple.springboard to idle
+    t =    38.77s     Synthesize event
+    t =    39.05s     Wait for ai.hanlin.motion-proof to idle
+    t =    40.12s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =    40.12s     Find the "proof-geometry-state" StaticText
+    t =    40.14s Checking existence of `"proof-summary" StaticText`
+    t =    40.16s Tap "proof-thinking" Button
+    t =    40.16s     Wait for ai.hanlin.motion-proof to idle
+    t =    40.17s     Find the "proof-thinking" Button
+    t =    40.19s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    40.35s         Wait for com.apple.springboard to idle
+    t =    40.40s     Synthesize event
+    t =    40.72s     Wait for ai.hanlin.motion-proof to idle
+    t =    41.79s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    41.79s     Find the "proof-geometry-state" StaticText
+    t =    41.81s Checking existence of `"proof-summary" StaticText`
+    t =    41.84s Tap "proof-thinking" Button
+    t =    41.84s     Wait for ai.hanlin.motion-proof to idle
+    t =    41.84s     Find the "proof-thinking" Button
+    t =    41.87s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    41.90s         Wait for com.apple.springboard to idle
+    t =    41.92s     Synthesize event
+    t =    42.22s     Wait for ai.hanlin.motion-proof to idle
+    t =    43.25s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =    43.25s     Find the "proof-geometry-state" StaticText
+    t =    43.27s Checking existence of `"proof-summary" StaticText`
+    t =    43.29s Tap "proof-thinking" Button
+    t =    43.29s     Wait for ai.hanlin.motion-proof to idle
+    t =    43.30s     Find the "proof-thinking" Button
+    t =    43.32s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    43.35s         Wait for com.apple.springboard to idle
+    t =    43.37s     Synthesize event
+    t =    43.67s     Wait for ai.hanlin.motion-proof to idle
+    t =    44.70s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    44.70s     Find the "proof-geometry-state" StaticText
+    t =    44.73s Checking existence of `"proof-summary" StaticText`
+    t =    44.75s Tap "proof-thinking" Button
+    t =    44.75s     Wait for ai.hanlin.motion-proof to idle
+    t =    44.75s     Find the "proof-thinking" Button
+    t =    44.79s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    44.81s         Wait for com.apple.springboard to idle
+    t =    44.83s     Synthesize event
+    t =    45.13s     Wait for ai.hanlin.motion-proof to idle
+    t =    46.18s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =    46.18s     Find the "proof-geometry-state" StaticText
+    t =    46.21s Checking existence of `"proof-summary" StaticText`
+    t =    46.23s Tap "proof-thinking" Button
+    t =    46.23s     Wait for ai.hanlin.motion-proof to idle
+    t =    46.24s     Find the "proof-thinking" Button
+    t =    46.26s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    46.28s         Wait for com.apple.springboard to idle
+    t =    46.30s     Synthesize event
+    t =    46.60s     Wait for ai.hanlin.motion-proof to idle
+    t =    47.65s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    47.65s     Find the "proof-geometry-state" StaticText
+    t =    47.68s Checking existence of `"proof-summary" StaticText`
+    t =    47.71s Tap "proof-thinking" Button
+    t =    47.71s     Wait for ai.hanlin.motion-proof to idle
+    t =    47.72s     Find the "proof-thinking" Button
+    t =    47.74s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    47.77s         Wait for com.apple.springboard to idle
+    t =    47.79s     Synthesize event
+    t =    48.09s     Wait for ai.hanlin.motion-proof to idle
+    t =    49.27s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =    49.27s     Find the "proof-geometry-state" StaticText
+    t =    49.30s Checking existence of `"proof-summary" StaticText`
+    t =    49.32s Tap "proof-thinking" Button
+    t =    49.32s     Wait for ai.hanlin.motion-proof to idle
+    t =    49.33s     Find the "proof-thinking" Button
+    t =    49.36s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    49.39s         Wait for com.apple.springboard to idle
+    t =    49.44s     Synthesize event
+    t =    49.87s     Wait for ai.hanlin.motion-proof to idle
+    t =    50.91s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    50.92s     Find the "proof-geometry-state" StaticText
+    t =    50.95s Checking existence of `"proof-summary" StaticText`
+    t =    50.98s Tap "proof-thinking" Button
+    t =    50.98s     Wait for ai.hanlin.motion-proof to idle
+    t =    50.98s     Find the "proof-thinking" Button
+    t =    51.02s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    51.05s         Wait for com.apple.springboard to idle
+    t =    51.08s     Synthesize event
+    t =    51.38s     Wait for ai.hanlin.motion-proof to idle
+    t =    52.45s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =    52.45s     Find the "proof-geometry-state" StaticText
+    t =    52.51s Checking existence of `"proof-summary" StaticText`
+    t =    52.54s Tap "proof-thinking" Button
+    t =    52.54s     Wait for ai.hanlin.motion-proof to idle
+    t =    52.58s     Find the "proof-thinking" Button
+    t =    52.62s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    52.71s         Wait for com.apple.springboard to idle
+    t =    52.73s     Synthesize event
+    t =    53.04s     Wait for ai.hanlin.motion-proof to idle
+    t =    54.09s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    54.09s     Find the "proof-geometry-state" StaticText
+    t =    54.12s Checking existence of `"proof-summary" StaticText`
+    t =    54.14s Tap "proof-thinking" Button
+    t =    54.14s     Wait for ai.hanlin.motion-proof to idle
+    t =    54.14s     Find the "proof-thinking" Button
+    t =    54.17s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    54.20s         Wait for com.apple.springboard to idle
+    t =    54.23s     Synthesize event
+    t =    54.55s     Wait for ai.hanlin.motion-proof to idle
+    t =    55.60s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =    55.60s     Find the "proof-geometry-state" StaticText
+    t =    55.63s Checking existence of `"proof-summary" StaticText`
+    t =    55.65s Tap "proof-thinking" Button
+    t =    55.65s     Wait for ai.hanlin.motion-proof to idle
+    t =    55.65s     Find the "proof-thinking" Button
+    t =    55.67s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    55.69s         Wait for com.apple.springboard to idle
+    t =    55.72s     Synthesize event
+    t =    56.02s     Wait for ai.hanlin.motion-proof to idle
+    t =    57.07s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    57.07s     Find the "proof-geometry-state" StaticText
+    t =    57.09s Checking existence of `"proof-summary" StaticText`
+    t =    57.12s Tap "proof-thinking" Button
+    t =    57.12s     Wait for ai.hanlin.motion-proof to idle
+    t =    57.13s     Find the "proof-thinking" Button
+    t =    57.16s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    57.19s         Wait for com.apple.springboard to idle
+    t =    57.21s     Synthesize event
+    t =    57.51s     Wait for ai.hanlin.motion-proof to idle
+    t =    58.55s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =    58.55s     Find the "proof-geometry-state" StaticText
+    t =    58.58s Checking existence of `"proof-summary" StaticText`
+    t =    58.60s Tap "proof-thinking" Button
+    t =    58.60s     Wait for ai.hanlin.motion-proof to idle
+    t =    58.61s     Find the "proof-thinking" Button
+    t =    58.63s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    58.66s         Wait for com.apple.springboard to idle
+    t =    58.70s     Synthesize event
+    t =    59.02s     Wait for ai.hanlin.motion-proof to idle
+    t =    60.06s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    60.06s     Find the "proof-geometry-state" StaticText
+    t =    60.09s Checking existence of `"proof-summary" StaticText`
+    t =    60.11s Tap "proof-thinking" Button
+    t =    60.11s     Wait for ai.hanlin.motion-proof to idle
+    t =    60.13s     Find the "proof-thinking" Button
+    t =    60.15s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    60.17s         Wait for com.apple.springboard to idle
+    t =    60.20s     Synthesize event
+    t =    60.50s     Wait for ai.hanlin.motion-proof to idle
+    t =    61.55s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =    61.55s     Find the "proof-geometry-state" StaticText
+    t =    61.57s Checking existence of `"proof-summary" StaticText`
+    t =    61.59s Tap "proof-thinking" Button
+    t =    61.59s     Wait for ai.hanlin.motion-proof to idle
+    t =    61.59s     Find the "proof-thinking" Button
+    t =    61.62s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    61.65s         Wait for com.apple.springboard to idle
+    t =    61.67s     Synthesize event
+    t =    61.98s     Wait for ai.hanlin.motion-proof to idle
+    t =    63.02s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    63.02s     Find the "proof-geometry-state" StaticText
+    t =    63.06s Checking existence of `"proof-summary" StaticText`
+    t =    63.11s Tap "proof-thinking" Button
+    t =    63.11s     Wait for ai.hanlin.motion-proof to idle
+    t =    63.12s     Find the "proof-thinking" Button
+    t =    63.23s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    63.30s         Wait for com.apple.springboard to idle
+    t =    63.35s     Synthesize event
+    t =    63.72s     Wait for ai.hanlin.motion-proof to idle
+    t =    64.78s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =    64.78s     Find the "proof-geometry-state" StaticText
+    t =    64.83s Checking existence of `"proof-summary" StaticText`
+    t =    64.85s Tap "proof-thinking" Button
+    t =    64.85s     Wait for ai.hanlin.motion-proof to idle
+    t =    64.85s     Find the "proof-thinking" Button
+    t =    64.88s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    65.13s         Wait for com.apple.springboard to idle
+    t =    65.16s     Synthesize event
+    t =    65.78s     Wait for ai.hanlin.motion-proof to idle
+    t =    66.90s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    66.91s     Find the "proof-geometry-state" StaticText
+    t =    66.95s Checking existence of `"proof-summary" StaticText`
+    t =    67.00s Tap "proof-thinking" Button
+    t =    67.00s     Wait for ai.hanlin.motion-proof to idle
+    t =    67.01s     Find the "proof-thinking" Button
+    t =    67.07s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    67.13s         Wait for com.apple.springboard to idle
+    t =    67.18s     Synthesize event
+    t =    67.49s     Wait for ai.hanlin.motion-proof to idle
+    t =    68.57s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =    68.57s     Find the "proof-geometry-state" StaticText
+    t =    68.61s Checking existence of `"proof-summary" StaticText`
+    t =    68.64s Tap "proof-thinking" Button
+    t =    68.65s     Wait for ai.hanlin.motion-proof to idle
+    t =    68.65s     Find the "proof-thinking" Button
+    t =    68.70s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    68.73s         Wait for com.apple.springboard to idle
+    t =    68.75s     Synthesize event
+    t =    69.06s     Wait for ai.hanlin.motion-proof to idle
+    t =    70.13s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    70.13s     Find the "proof-geometry-state" StaticText
+    t =    70.18s Checking existence of `"proof-summary" StaticText`
+    t =    70.21s Tap "proof-thinking" Button
+    t =    70.21s     Wait for ai.hanlin.motion-proof to idle
+    t =    70.21s     Find the "proof-thinking" Button
+    t =    70.24s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    70.28s         Wait for com.apple.springboard to idle
+    t =    70.38s     Synthesize event
+    t =    70.75s     Wait for ai.hanlin.motion-proof to idle
+    t =    71.82s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =    71.82s     Find the "proof-geometry-state" StaticText
+    t =    71.85s Checking existence of `"proof-summary" StaticText`
+    t =    71.87s Tap "proof-thinking" Button
+    t =    71.87s     Wait for ai.hanlin.motion-proof to idle
+    t =    71.88s     Find the "proof-thinking" Button
+    t =    71.90s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    71.93s         Wait for com.apple.springboard to idle
+    t =    71.95s     Synthesize event
+    t =    72.26s     Wait for ai.hanlin.motion-proof to idle
+    t =    73.32s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    73.32s     Find the "proof-geometry-state" StaticText
+    t =    73.35s Checking existence of `"proof-summary" StaticText`
+    t =    73.38s Tap "proof-thinking" Button
+    t =    73.38s     Wait for ai.hanlin.motion-proof to idle
+    t =    73.39s     Find the "proof-thinking" Button
+    t =    73.41s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    73.45s         Wait for com.apple.springboard to idle
+    t =    73.49s     Synthesize event
+    t =    73.82s     Wait for ai.hanlin.motion-proof to idle
+    t =    74.88s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =    74.88s     Find the "proof-geometry-state" StaticText
+    t =    74.91s Checking existence of `"proof-summary" StaticText`
+    t =    74.93s Tap "proof-thinking" Button
+    t =    74.93s     Wait for ai.hanlin.motion-proof to idle
+    t =    74.93s     Find the "proof-thinking" Button
+    t =    74.95s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    74.98s         Wait for com.apple.springboard to idle
+    t =    75.00s     Synthesize event
+    t =    75.31s     Wait for ai.hanlin.motion-proof to idle
+    t =    76.37s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    76.37s     Find the "proof-geometry-state" StaticText
+    t =    76.42s Checking existence of `"proof-summary" StaticText`
+    t =    76.44s Tap "proof-thinking" Button
+    t =    76.44s     Wait for ai.hanlin.motion-proof to idle
+    t =    76.45s     Find the "proof-thinking" Button
+    t =    76.47s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    76.50s         Wait for com.apple.springboard to idle
+    t =    76.53s     Synthesize event
+    t =    76.84s     Wait for ai.hanlin.motion-proof to idle
+    t =    77.90s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =    77.90s     Find the "proof-geometry-state" StaticText
+    t =    77.96s Checking existence of `"proof-summary" StaticText`
+    t =    78.00s Tap "proof-thinking" Button
+    t =    78.00s     Wait for ai.hanlin.motion-proof to idle
+    t =    78.01s     Find the "proof-thinking" Button
+    t =    78.03s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    78.06s         Wait for com.apple.springboard to idle
+    t =    78.09s     Synthesize event
+    t =    78.39s     Wait for ai.hanlin.motion-proof to idle
+    t =    79.42s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    79.42s     Find the "proof-geometry-state" StaticText
+    t =    79.46s Checking existence of `"proof-summary" StaticText`
+    t =    79.48s Tap "proof-thinking" Button
+    t =    79.48s     Wait for ai.hanlin.motion-proof to idle
+    t =    79.49s     Find the "proof-thinking" Button
+    t =    79.51s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    79.54s         Wait for com.apple.springboard to idle
+    t =    79.56s     Synthesize event
+    t =    79.86s     Wait for ai.hanlin.motion-proof to idle
+    t =    80.92s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =    80.92s     Find the "proof-geometry-state" StaticText
+    t =    80.99s Checking existence of `"proof-summary" StaticText`
+    t =    81.03s Find the Target Application 'ai.hanlin.motion-proof'
+    t =    81.49s Added attachment named 'v1.relaxed-closed-after20'
+    t =    81.49s Tap "hanlin-chat-motion-preset" Button
+    t =    81.49s     Wait for ai.hanlin.motion-proof to idle
+    t =    81.49s     Find the "hanlin-chat-motion-preset" Button
+    t =    81.54s     Check for interrupting elements affecting "hanlin-chat-motion-preset" Button
+    t =    81.61s         Wait for com.apple.springboard to idle
+    t =    81.67s     Synthesize event
+    t =    82.33s     Wait for ai.hanlin.motion-proof to idle
+    t =    83.44s Tap "Height reveal" Button
+    t =    83.45s     Wait for ai.hanlin.motion-proof to idle
+    t =    84.66s     Find the "Height reveal" Button
+    t =    84.73s     Check for interrupting elements affecting "Height reveal" Button
+    t =    84.79s         Wait for com.apple.springboard to idle
+    t =    84.84s     Synthesize event
+    t =    85.19s     Wait for ai.hanlin.motion-proof to idle
+    t =    87.78s Checking `Expect predicate `label == "v1.height-reveal"` for object "proof-persisted-preset" StaticText`
+    t =    87.78s     Find the "proof-persisted-preset" StaticText
+    t =    87.82s Tap "proof-thinking" Button
+    t =    87.82s     Wait for ai.hanlin.motion-proof to idle
+    t =    87.82s     Find the "proof-thinking" Button
+    t =    87.85s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    87.88s         Wait for com.apple.springboard to idle
+    t =    87.91s     Synthesize event
+    t =    88.23s     Wait for ai.hanlin.motion-proof to idle
+    t =    89.26s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    89.27s     Find the "proof-geometry-state" StaticText
+    t =    89.30s Checking existence of `"proof-summary" StaticText`
+    t =    89.33s Find the Target Application 'ai.hanlin.motion-proof'
+    t =    89.58s Added attachment named 'v1.height-reveal-expanded'
+    t =    89.58s Tap "proof-thinking" Button
+    t =    89.58s     Wait for ai.hanlin.motion-proof to idle
+    t =    89.58s     Find the "proof-thinking" Button
+    t =    89.61s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    89.64s         Wait for com.apple.springboard to idle
+    t =    89.66s     Synthesize event
+    t =    89.97s     Wait for ai.hanlin.motion-proof to idle
+    t =    91.01s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =    91.01s     Find the "proof-geometry-state" StaticText
+    t =    91.06s Checking existence of `"proof-summary" StaticText`
+    t =    91.10s Tap "proof-thinking" Button
+    t =    91.10s     Wait for ai.hanlin.motion-proof to idle
+    t =    91.24s     Find the "proof-thinking" Button
+    t =    91.29s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    91.33s         Wait for com.apple.springboard to idle
+    t =    91.36s     Synthesize event
+    t =    91.67s     Wait for ai.hanlin.motion-proof to idle
+    t =    92.80s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    92.80s     Find the "proof-geometry-state" StaticText
+    t =    92.86s Checking existence of `"proof-summary" StaticText`
+    t =    92.89s Tap "proof-thinking" Button
+    t =    92.89s     Wait for ai.hanlin.motion-proof to idle
+    t =    92.91s     Find the "proof-thinking" Button
+    t =    92.96s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    93.02s         Wait for com.apple.springboard to idle
+    t =    93.08s     Synthesize event
+    t =    93.44s     Wait for ai.hanlin.motion-proof to idle
+    t =    94.53s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =    94.54s     Find the "proof-geometry-state" StaticText
+    t =    94.57s Checking existence of `"proof-summary" StaticText`
+    t =    94.60s Tap "proof-thinking" Button
+    t =    94.60s     Wait for ai.hanlin.motion-proof to idle
+    t =    94.68s     Find the "proof-thinking" Button
+    t =    94.73s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    94.78s         Wait for com.apple.springboard to idle
+    t =    94.83s     Synthesize event
+    t =    95.18s     Wait for ai.hanlin.motion-proof to idle
+    t =    96.23s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    96.24s     Find the "proof-geometry-state" StaticText
+    t =    96.27s Checking existence of `"proof-summary" StaticText`
+    t =    96.30s Tap "proof-thinking" Button
+    t =    96.30s     Wait for ai.hanlin.motion-proof to idle
+    t =    96.30s     Find the "proof-thinking" Button
+    t =    96.33s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    96.36s         Wait for com.apple.springboard to idle
+    t =    96.38s     Synthesize event
+    t =    96.68s     Wait for ai.hanlin.motion-proof to idle
+    t =    97.72s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =    97.72s     Find the "proof-geometry-state" StaticText
+    t =    97.75s Checking existence of `"proof-summary" StaticText`
+    t =    97.77s Tap "proof-thinking" Button
+    t =    97.77s     Wait for ai.hanlin.motion-proof to idle
+    t =    97.77s     Find the "proof-thinking" Button
+    t =    97.80s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    97.82s         Wait for com.apple.springboard to idle
+    t =    97.84s     Synthesize event
+    t =    98.13s     Wait for ai.hanlin.motion-proof to idle
+    t =    99.17s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =    99.17s     Find the "proof-geometry-state" StaticText
+    t =    99.19s Checking existence of `"proof-summary" StaticText`
+    t =    99.22s Tap "proof-thinking" Button
+    t =    99.22s     Wait for ai.hanlin.motion-proof to idle
+    t =    99.22s     Find the "proof-thinking" Button
+    t =    99.25s     Check for interrupting elements affecting "proof-thinking" Button
+    t =    99.28s         Wait for com.apple.springboard to idle
+    t =    99.30s     Synthesize event
+    t =    99.60s     Wait for ai.hanlin.motion-proof to idle
+    t =   100.65s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   100.65s     Find the "proof-geometry-state" StaticText
+    t =   100.68s Checking existence of `"proof-summary" StaticText`
+    t =   100.71s Tap "proof-thinking" Button
+    t =   100.71s     Wait for ai.hanlin.motion-proof to idle
+    t =   100.71s     Find the "proof-thinking" Button
+    t =   100.73s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   100.76s         Wait for com.apple.springboard to idle
+    t =   100.79s     Synthesize event
+    t =   101.08s     Wait for ai.hanlin.motion-proof to idle
+    t =   102.13s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   102.13s     Find the "proof-geometry-state" StaticText
+    t =   102.16s Checking existence of `"proof-summary" StaticText`
+    t =   102.18s Tap "proof-thinking" Button
+    t =   102.18s     Wait for ai.hanlin.motion-proof to idle
+    t =   102.18s     Find the "proof-thinking" Button
+    t =   102.20s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   102.22s         Wait for com.apple.springboard to idle
+    t =   102.24s     Synthesize event
+    t =   102.54s     Wait for ai.hanlin.motion-proof to idle
+    t =   103.58s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   103.58s     Find the "proof-geometry-state" StaticText
+    t =   103.61s Checking existence of `"proof-summary" StaticText`
+    t =   103.63s Tap "proof-thinking" Button
+    t =   103.63s     Wait for ai.hanlin.motion-proof to idle
+    t =   103.63s     Find the "proof-thinking" Button
+    t =   103.66s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   103.68s         Wait for com.apple.springboard to idle
+    t =   103.70s     Synthesize event
+    t =   104.00s     Wait for ai.hanlin.motion-proof to idle
+    t =   105.05s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   105.05s     Find the "proof-geometry-state" StaticText
+    t =   105.08s Checking existence of `"proof-summary" StaticText`
+    t =   105.11s Tap "proof-thinking" Button
+    t =   105.11s     Wait for ai.hanlin.motion-proof to idle
+    t =   105.11s     Find the "proof-thinking" Button
+    t =   105.14s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   105.17s         Wait for com.apple.springboard to idle
+    t =   105.19s     Synthesize event
+    t =   105.49s     Wait for ai.hanlin.motion-proof to idle
+    t =   106.53s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   106.53s     Find the "proof-geometry-state" StaticText
+    t =   106.56s Checking existence of `"proof-summary" StaticText`
+    t =   106.58s Tap "proof-thinking" Button
+    t =   106.58s     Wait for ai.hanlin.motion-proof to idle
+    t =   106.58s     Find the "proof-thinking" Button
+    t =   106.61s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   106.63s         Wait for com.apple.springboard to idle
+    t =   106.65s     Synthesize event
+    t =   106.95s     Wait for ai.hanlin.motion-proof to idle
+    t =   108.00s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   108.00s     Find the "proof-geometry-state" StaticText
+    t =   108.03s Checking existence of `"proof-summary" StaticText`
+    t =   108.06s Tap "proof-thinking" Button
+    t =   108.06s     Wait for ai.hanlin.motion-proof to idle
+    t =   108.06s     Find the "proof-thinking" Button
+    t =   108.08s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   108.11s         Wait for com.apple.springboard to idle
+    t =   108.13s     Synthesize event
+    t =   108.43s     Wait for ai.hanlin.motion-proof to idle
+    t =   109.48s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   109.48s     Find the "proof-geometry-state" StaticText
+    t =   109.51s Checking existence of `"proof-summary" StaticText`
+    t =   109.52s Tap "proof-thinking" Button
+    t =   109.52s     Wait for ai.hanlin.motion-proof to idle
+    t =   109.53s     Find the "proof-thinking" Button
+    t =   109.55s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   109.57s         Wait for com.apple.springboard to idle
+    t =   109.59s     Synthesize event
+    t =   109.88s     Wait for ai.hanlin.motion-proof to idle
+    t =   110.93s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   110.93s     Find the "proof-geometry-state" StaticText
+    t =   110.97s Checking existence of `"proof-summary" StaticText`
+    t =   110.99s Tap "proof-thinking" Button
+    t =   110.99s     Wait for ai.hanlin.motion-proof to idle
+    t =   111.00s     Find the "proof-thinking" Button
+    t =   111.02s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   111.05s         Wait for com.apple.springboard to idle
+    t =   111.07s     Synthesize event
+    t =   111.37s     Wait for ai.hanlin.motion-proof to idle
+    t =   112.40s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   112.40s     Find the "proof-geometry-state" StaticText
+    t =   112.43s Checking existence of `"proof-summary" StaticText`
+    t =   112.44s Tap "proof-thinking" Button
+    t =   112.44s     Wait for ai.hanlin.motion-proof to idle
+    t =   112.45s     Find the "proof-thinking" Button
+    t =   112.47s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   112.49s         Wait for com.apple.springboard to idle
+    t =   112.51s     Synthesize event
+    t =   112.80s     Wait for ai.hanlin.motion-proof to idle
+    t =   113.83s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   113.83s     Find the "proof-geometry-state" StaticText
+    t =   113.86s Checking existence of `"proof-summary" StaticText`
+    t =   113.89s Tap "proof-thinking" Button
+    t =   113.89s     Wait for ai.hanlin.motion-proof to idle
+    t =   113.89s     Find the "proof-thinking" Button
+    t =   113.92s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   113.94s         Wait for com.apple.springboard to idle
+    t =   113.97s     Synthesize event
+    t =   114.29s     Wait for ai.hanlin.motion-proof to idle
+    t =   115.32s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   115.32s     Find the "proof-geometry-state" StaticText
+    t =   115.34s Checking existence of `"proof-summary" StaticText`
+    t =   115.36s Tap "proof-thinking" Button
+    t =   115.36s     Wait for ai.hanlin.motion-proof to idle
+    t =   115.37s     Find the "proof-thinking" Button
+    t =   115.39s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   115.41s         Wait for com.apple.springboard to idle
+    t =   115.43s     Synthesize event
+    t =   115.73s     Wait for ai.hanlin.motion-proof to idle
+    t =   116.78s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   116.78s     Find the "proof-geometry-state" StaticText
+    t =   116.82s Checking existence of `"proof-summary" StaticText`
+    t =   116.84s Tap "proof-thinking" Button
+    t =   116.84s     Wait for ai.hanlin.motion-proof to idle
+    t =   116.85s     Find the "proof-thinking" Button
+    t =   116.87s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   116.89s         Wait for com.apple.springboard to idle
+    t =   116.92s     Synthesize event
+    t =   117.23s     Wait for ai.hanlin.motion-proof to idle
+    t =   118.27s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   118.27s     Find the "proof-geometry-state" StaticText
+    t =   118.29s Checking existence of `"proof-summary" StaticText`
+    t =   118.31s Tap "proof-thinking" Button
+    t =   118.31s     Wait for ai.hanlin.motion-proof to idle
+    t =   118.31s     Find the "proof-thinking" Button
+    t =   118.33s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   118.36s         Wait for com.apple.springboard to idle
+    t =   118.38s     Synthesize event
+    t =   118.67s     Wait for ai.hanlin.motion-proof to idle
+    t =   119.70s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   119.70s     Find the "proof-geometry-state" StaticText
+    t =   119.73s Checking existence of `"proof-summary" StaticText`
+    t =   119.76s Tap "proof-thinking" Button
+    t =   119.76s     Wait for ai.hanlin.motion-proof to idle
+    t =   119.77s     Find the "proof-thinking" Button
+    t =   119.79s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   119.96s         Wait for com.apple.springboard to idle
+    t =   119.99s     Synthesize event
+    t =   120.32s     Wait for ai.hanlin.motion-proof to idle
+    t =   121.37s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   121.37s     Find the "proof-geometry-state" StaticText
+    t =   121.41s Checking existence of `"proof-summary" StaticText`
+    t =   121.44s Tap "proof-thinking" Button
+    t =   121.44s     Wait for ai.hanlin.motion-proof to idle
+    t =   121.44s     Find the "proof-thinking" Button
+    t =   121.46s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   121.49s         Wait for com.apple.springboard to idle
+    t =   121.51s     Synthesize event
+    t =   121.81s     Wait for ai.hanlin.motion-proof to idle
+    t =   122.88s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   122.88s     Find the "proof-geometry-state" StaticText
+    t =   122.92s Checking existence of `"proof-summary" StaticText`
+    t =   122.95s Tap "proof-thinking" Button
+    t =   122.95s     Wait for ai.hanlin.motion-proof to idle
+    t =   122.95s     Find the "proof-thinking" Button
+    t =   122.98s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   123.03s         Wait for com.apple.springboard to idle
+    t =   123.05s     Synthesize event
+    t =   123.37s     Wait for ai.hanlin.motion-proof to idle
+    t =   124.42s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   124.42s     Find the "proof-geometry-state" StaticText
+    t =   124.46s Checking existence of `"proof-summary" StaticText`
+    t =   124.48s Tap "proof-thinking" Button
+    t =   124.48s     Wait for ai.hanlin.motion-proof to idle
+    t =   124.48s     Find the "proof-thinking" Button
+    t =   124.51s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   124.54s         Wait for com.apple.springboard to idle
+    t =   124.56s     Synthesize event
+    t =   124.86s     Wait for ai.hanlin.motion-proof to idle
+    t =   125.90s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   125.90s     Find the "proof-geometry-state" StaticText
+    t =   125.93s Checking existence of `"proof-summary" StaticText`
+    t =   125.95s Tap "proof-thinking" Button
+    t =   125.95s     Wait for ai.hanlin.motion-proof to idle
+    t =   125.96s     Find the "proof-thinking" Button
+    t =   125.98s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   126.02s         Wait for com.apple.springboard to idle
+    t =   126.04s     Synthesize event
+    t =   126.33s     Wait for ai.hanlin.motion-proof to idle
+    t =   127.37s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   127.37s     Find the "proof-geometry-state" StaticText
+    t =   127.41s Checking existence of `"proof-summary" StaticText`
+    t =   127.44s Tap "proof-thinking" Button
+    t =   127.44s     Wait for ai.hanlin.motion-proof to idle
+    t =   127.44s     Find the "proof-thinking" Button
+    t =   127.47s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   127.50s         Wait for com.apple.springboard to idle
+    t =   127.52s     Synthesize event
+    t =   127.82s     Wait for ai.hanlin.motion-proof to idle
+    t =   128.83s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   128.84s     Find the "proof-geometry-state" StaticText
+    t =   128.87s Checking existence of `"proof-summary" StaticText`
+    t =   128.90s Tap "proof-thinking" Button
+    t =   128.90s     Wait for ai.hanlin.motion-proof to idle
+    t =   128.90s     Find the "proof-thinking" Button
+    t =   128.93s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   128.96s         Wait for com.apple.springboard to idle
+    t =   128.98s     Synthesize event
+    t =   129.28s     Wait for ai.hanlin.motion-proof to idle
+    t =   130.31s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   130.32s     Find the "proof-geometry-state" StaticText
+    t =   130.34s Checking existence of `"proof-summary" StaticText`
+    t =   130.36s Tap "proof-thinking" Button
+    t =   130.36s     Wait for ai.hanlin.motion-proof to idle
+    t =   130.36s     Find the "proof-thinking" Button
+    t =   130.39s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   130.41s         Wait for com.apple.springboard to idle
+    t =   130.43s     Synthesize event
+    t =   130.73s     Wait for ai.hanlin.motion-proof to idle
+    t =   131.76s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   131.77s     Find the "proof-geometry-state" StaticText
+    t =   131.80s Checking existence of `"proof-summary" StaticText`
+    t =   131.82s Tap "proof-thinking" Button
+    t =   131.82s     Wait for ai.hanlin.motion-proof to idle
+    t =   131.83s     Find the "proof-thinking" Button
+    t =   131.85s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   131.88s         Wait for com.apple.springboard to idle
+    t =   131.91s     Synthesize event
+    t =   132.20s     Wait for ai.hanlin.motion-proof to idle
+    t =   133.23s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   133.23s     Find the "proof-geometry-state" StaticText
+    t =   133.25s Checking existence of `"proof-summary" StaticText`
+    t =   133.28s Tap "proof-thinking" Button
+    t =   133.28s     Wait for ai.hanlin.motion-proof to idle
+    t =   133.30s     Find the "proof-thinking" Button
+    t =   133.32s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   133.36s         Wait for com.apple.springboard to idle
+    t =   133.39s     Synthesize event
+    t =   133.70s     Wait for ai.hanlin.motion-proof to idle
+    t =   134.75s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   134.75s     Find the "proof-geometry-state" StaticText
+    t =   134.78s Checking existence of `"proof-summary" StaticText`
+    t =   134.81s Tap "proof-thinking" Button
+    t =   134.81s     Wait for ai.hanlin.motion-proof to idle
+    t =   134.81s     Find the "proof-thinking" Button
+    t =   134.84s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   134.87s         Wait for com.apple.springboard to idle
+    t =   134.91s     Synthesize event
+    t =   135.22s     Wait for ai.hanlin.motion-proof to idle
+    t =   136.26s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   136.26s     Find the "proof-geometry-state" StaticText
+    t =   136.29s Checking existence of `"proof-summary" StaticText`
+    t =   136.31s Tap "proof-thinking" Button
+    t =   136.31s     Wait for ai.hanlin.motion-proof to idle
+    t =   136.31s     Find the "proof-thinking" Button
+    t =   136.33s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   136.36s         Wait for com.apple.springboard to idle
+    t =   136.38s     Synthesize event
+    t =   136.67s     Wait for ai.hanlin.motion-proof to idle
+    t =   137.68s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   137.68s     Find the "proof-geometry-state" StaticText
+    t =   137.71s Checking existence of `"proof-summary" StaticText`
+    t =   137.73s Tap "proof-thinking" Button
+    t =   137.73s     Wait for ai.hanlin.motion-proof to idle
+    t =   137.74s     Find the "proof-thinking" Button
+    t =   137.76s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   137.79s         Wait for com.apple.springboard to idle
+    t =   137.81s     Synthesize event
+    t =   138.10s     Wait for ai.hanlin.motion-proof to idle
+    t =   139.14s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   139.14s     Find the "proof-geometry-state" StaticText
+    t =   139.17s Checking existence of `"proof-summary" StaticText`
+    t =   139.19s Tap "proof-thinking" Button
+    t =   139.19s     Wait for ai.hanlin.motion-proof to idle
+    t =   139.19s     Find the "proof-thinking" Button
+    t =   139.22s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   139.24s         Wait for com.apple.springboard to idle
+    t =   139.26s     Synthesize event
+    t =   139.55s     Wait for ai.hanlin.motion-proof to idle
+    t =   140.58s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   140.58s     Find the "proof-geometry-state" StaticText
+    t =   140.61s Checking existence of `"proof-summary" StaticText`
+    t =   140.63s Tap "proof-thinking" Button
+    t =   140.63s     Wait for ai.hanlin.motion-proof to idle
+    t =   140.63s     Find the "proof-thinking" Button
+    t =   140.66s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   140.68s         Wait for com.apple.springboard to idle
+    t =   140.70s     Synthesize event
+    t =   141.00s     Wait for ai.hanlin.motion-proof to idle
+    t =   142.02s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   142.02s     Find the "proof-geometry-state" StaticText
+    t =   142.04s Checking existence of `"proof-summary" StaticText`
+    t =   142.06s Tap "proof-thinking" Button
+    t =   142.06s     Wait for ai.hanlin.motion-proof to idle
+    t =   142.07s     Find the "proof-thinking" Button
+    t =   142.09s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   142.12s         Wait for com.apple.springboard to idle
+    t =   142.14s     Synthesize event
+    t =   142.44s     Wait for ai.hanlin.motion-proof to idle
+    t =   143.48s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   143.48s     Find the "proof-geometry-state" StaticText
+    t =   143.52s Checking existence of `"proof-summary" StaticText`
+    t =   143.54s Tap "proof-thinking" Button
+    t =   143.54s     Wait for ai.hanlin.motion-proof to idle
+    t =   143.54s     Find the "proof-thinking" Button
+    t =   143.57s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   143.59s         Wait for com.apple.springboard to idle
+    t =   143.62s     Synthesize event
+    t =   143.92s     Wait for ai.hanlin.motion-proof to idle
+    t =   144.96s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   144.97s     Find the "proof-geometry-state" StaticText
+    t =   145.00s Checking existence of `"proof-summary" StaticText`
+    t =   145.02s Tap "proof-thinking" Button
+    t =   145.02s     Wait for ai.hanlin.motion-proof to idle
+    t =   145.02s     Find the "proof-thinking" Button
+    t =   145.05s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   145.07s         Wait for com.apple.springboard to idle
+    t =   145.09s     Synthesize event
+    t =   145.39s     Wait for ai.hanlin.motion-proof to idle
+    t =   146.42s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   146.42s     Find the "proof-geometry-state" StaticText
+    t =   146.44s Checking existence of `"proof-summary" StaticText`
+    t =   146.46s Tap "proof-thinking" Button
+    t =   146.46s     Wait for ai.hanlin.motion-proof to idle
+    t =   146.47s     Find the "proof-thinking" Button
+    t =   146.50s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   146.53s         Wait for com.apple.springboard to idle
+    t =   146.56s     Synthesize event
+    t =   146.85s     Wait for ai.hanlin.motion-proof to idle
+    t =   147.88s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   147.89s     Find the "proof-geometry-state" StaticText
+    t =   147.91s Checking existence of `"proof-summary" StaticText`
+    t =   147.94s Find the Target Application 'ai.hanlin.motion-proof'
+    t =   148.15s Added attachment named 'v1.height-reveal-closed-after20'
+    t =   148.15s Tap "hanlin-chat-motion-preset" Button
+    t =   148.15s     Wait for ai.hanlin.motion-proof to idle
+    t =   148.16s     Find the "hanlin-chat-motion-preset" Button
+    t =   148.18s     Check for interrupting elements affecting "hanlin-chat-motion-preset" Button
+    t =   148.21s         Wait for com.apple.springboard to idle
+    t =   148.22s     Synthesize event
+    t =   148.52s     Wait for ai.hanlin.motion-proof to idle
+    t =   149.65s Tap "Gentle squeeze" Button
+    t =   149.65s     Wait for ai.hanlin.motion-proof to idle
+    t =   149.66s     Find the "Gentle squeeze" Button
+    t =   149.70s     Check for interrupting elements affecting "Gentle squeeze" Button
+    t =   149.73s         Wait for com.apple.springboard to idle
+    t =   149.75s     Synthesize event
+    t =   150.05s     Wait for ai.hanlin.motion-proof to idle
+    t =   152.52s Checking `Expect predicate `label == "v1.gentle-squeeze"` for object "proof-persisted-preset" StaticText`
+    t =   152.52s     Find the "proof-persisted-preset" StaticText
+    t =   152.54s Tap "proof-thinking" Button
+    t =   152.54s     Wait for ai.hanlin.motion-proof to idle
+    t =   152.55s     Find the "proof-thinking" Button
+    t =   152.58s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   152.61s         Wait for com.apple.springboard to idle
+    t =   152.64s     Synthesize event
+    t =   152.94s     Wait for ai.hanlin.motion-proof to idle
+    t =   153.97s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   153.97s     Find the "proof-geometry-state" StaticText
+    t =   154.00s Checking existence of `"proof-summary" StaticText`
+    t =   154.03s Find the Target Application 'ai.hanlin.motion-proof'
+    t =   154.22s Added attachment named 'v1.gentle-squeeze-expanded'
+    t =   154.22s Tap "proof-thinking" Button
+    t =   154.22s     Wait for ai.hanlin.motion-proof to idle
+    t =   154.22s     Find the "proof-thinking" Button
+    t =   154.25s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   154.27s         Wait for com.apple.springboard to idle
+    t =   154.29s     Synthesize event
+    t =   154.60s     Wait for ai.hanlin.motion-proof to idle
+    t =   155.62s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   155.62s     Find the "proof-geometry-state" StaticText
+    t =   155.66s Checking existence of `"proof-summary" StaticText`
+    t =   155.70s Tap "proof-thinking" Button
+    t =   155.70s     Wait for ai.hanlin.motion-proof to idle
+    t =   155.71s     Find the "proof-thinking" Button
+    t =   155.74s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   155.77s         Wait for com.apple.springboard to idle
+    t =   155.80s     Synthesize event
+    t =   156.10s     Wait for ai.hanlin.motion-proof to idle
+    t =   157.13s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   157.13s     Find the "proof-geometry-state" StaticText
+    t =   157.15s Checking existence of `"proof-summary" StaticText`
+    t =   157.18s Tap "proof-thinking" Button
+    t =   157.18s     Wait for ai.hanlin.motion-proof to idle
+    t =   157.18s     Find the "proof-thinking" Button
+    t =   157.21s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   157.23s         Wait for com.apple.springboard to idle
+    t =   157.25s     Synthesize event
+    t =   157.55s     Wait for ai.hanlin.motion-proof to idle
+    t =   158.58s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   158.58s     Find the "proof-geometry-state" StaticText
+    t =   158.61s Checking existence of `"proof-summary" StaticText`
+    t =   158.63s Tap "proof-thinking" Button
+    t =   158.63s     Wait for ai.hanlin.motion-proof to idle
+    t =   158.64s     Find the "proof-thinking" Button
+    t =   158.66s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   158.68s         Wait for com.apple.springboard to idle
+    t =   158.70s     Synthesize event
+    t =   159.00s     Wait for ai.hanlin.motion-proof to idle
+    t =   160.02s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   160.02s     Find the "proof-geometry-state" StaticText
+    t =   160.32s Checking existence of `"proof-summary" StaticText`
+    t =   160.36s Tap "proof-thinking" Button
+    t =   160.36s     Wait for ai.hanlin.motion-proof to idle
+    t =   160.36s     Find the "proof-thinking" Button
+    t =   160.39s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   160.45s         Wait for com.apple.springboard to idle
+    t =   160.47s     Synthesize event
+    t =   160.79s     Wait for ai.hanlin.motion-proof to idle
+    t =   161.83s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   161.83s     Find the "proof-geometry-state" StaticText
+    t =   161.87s Checking existence of `"proof-summary" StaticText`
+    t =   161.89s Tap "proof-thinking" Button
+    t =   161.89s     Wait for ai.hanlin.motion-proof to idle
+    t =   161.89s     Find the "proof-thinking" Button
+    t =   161.91s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   161.98s         Wait for com.apple.springboard to idle
+    t =   162.00s     Synthesize event
+    t =   162.29s     Wait for ai.hanlin.motion-proof to idle
+    t =   163.35s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   163.35s     Find the "proof-geometry-state" StaticText
+    t =   163.37s Checking existence of `"proof-summary" StaticText`
+    t =   163.39s Tap "proof-thinking" Button
+    t =   163.39s     Wait for ai.hanlin.motion-proof to idle
+    t =   163.39s     Find the "proof-thinking" Button
+    t =   163.42s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   163.44s         Wait for com.apple.springboard to idle
+    t =   163.46s     Synthesize event
+    t =   163.76s     Wait for ai.hanlin.motion-proof to idle
+    t =   164.80s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   164.80s     Find the "proof-geometry-state" StaticText
+    t =   164.83s Checking existence of `"proof-summary" StaticText`
+    t =   164.86s Tap "proof-thinking" Button
+    t =   164.86s     Wait for ai.hanlin.motion-proof to idle
+    t =   164.87s     Find the "proof-thinking" Button
+    t =   164.89s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   164.91s         Wait for com.apple.springboard to idle
+    t =   164.94s     Synthesize event
+    t =   165.23s     Wait for ai.hanlin.motion-proof to idle
+    t =   166.27s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   166.27s     Find the "proof-geometry-state" StaticText
+    t =   166.29s Checking existence of `"proof-summary" StaticText`
+    t =   166.31s Tap "proof-thinking" Button
+    t =   166.32s     Wait for ai.hanlin.motion-proof to idle
+    t =   166.32s     Find the "proof-thinking" Button
+    t =   166.35s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   166.37s         Wait for com.apple.springboard to idle
+    t =   166.39s     Synthesize event
+    t =   166.69s     Wait for ai.hanlin.motion-proof to idle
+    t =   167.75s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   167.75s     Find the "proof-geometry-state" StaticText
+    t =   167.80s Checking existence of `"proof-summary" StaticText`
+    t =   167.83s Tap "proof-thinking" Button
+    t =   167.83s     Wait for ai.hanlin.motion-proof to idle
+    t =   167.83s     Find the "proof-thinking" Button
+    t =   167.87s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   167.92s         Wait for com.apple.springboard to idle
+    t =   167.94s     Synthesize event
+    t =   168.25s     Wait for ai.hanlin.motion-proof to idle
+    t =   169.29s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   169.29s     Find the "proof-geometry-state" StaticText
+    t =   169.38s Checking existence of `"proof-summary" StaticText`
+    t =   169.41s Tap "proof-thinking" Button
+    t =   169.41s     Wait for ai.hanlin.motion-proof to idle
+    t =   169.41s     Find the "proof-thinking" Button
+    t =   169.43s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   169.46s         Wait for com.apple.springboard to idle
+    t =   169.48s     Synthesize event
+    t =   169.77s     Wait for ai.hanlin.motion-proof to idle
+    t =   170.81s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   170.82s     Find the "proof-geometry-state" StaticText
+    t =   170.84s Checking existence of `"proof-summary" StaticText`
+    t =   170.87s Tap "proof-thinking" Button
+    t =   170.87s     Wait for ai.hanlin.motion-proof to idle
+    t =   170.87s     Find the "proof-thinking" Button
+    t =   170.89s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   170.92s         Wait for com.apple.springboard to idle
+    t =   170.95s     Synthesize event
+    t =   171.25s     Wait for ai.hanlin.motion-proof to idle
+    t =   172.29s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   172.29s     Find the "proof-geometry-state" StaticText
+    t =   172.32s Checking existence of `"proof-summary" StaticText`
+    t =   172.34s Tap "proof-thinking" Button
+    t =   172.34s     Wait for ai.hanlin.motion-proof to idle
+    t =   172.35s     Find the "proof-thinking" Button
+    t =   172.37s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   172.39s         Wait for com.apple.springboard to idle
+    t =   172.41s     Synthesize event
+    t =   172.70s     Wait for ai.hanlin.motion-proof to idle
+    t =   173.75s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   173.75s     Find the "proof-geometry-state" StaticText
+    t =   173.88s Checking existence of `"proof-summary" StaticText`
+    t =   173.90s Tap "proof-thinking" Button
+    t =   173.91s     Wait for ai.hanlin.motion-proof to idle
+    t =   173.91s     Find the "proof-thinking" Button
+    t =   173.94s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   173.96s         Wait for com.apple.springboard to idle
+    t =   173.98s     Synthesize event
+    t =   174.27s     Wait for ai.hanlin.motion-proof to idle
+    t =   175.32s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   175.32s     Find the "proof-geometry-state" StaticText
+    t =   175.35s Checking existence of `"proof-summary" StaticText`
+    t =   175.37s Tap "proof-thinking" Button
+    t =   175.37s     Wait for ai.hanlin.motion-proof to idle
+    t =   175.38s     Find the "proof-thinking" Button
+    t =   175.40s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   175.43s         Wait for com.apple.springboard to idle
+    t =   175.45s     Synthesize event
+    t =   175.75s     Wait for ai.hanlin.motion-proof to idle
+    t =   176.78s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   176.78s     Find the "proof-geometry-state" StaticText
+    t =   176.81s Checking existence of `"proof-summary" StaticText`
+    t =   176.83s Tap "proof-thinking" Button
+    t =   176.83s     Wait for ai.hanlin.motion-proof to idle
+    t =   176.83s     Find the "proof-thinking" Button
+    t =   176.86s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   176.88s         Wait for com.apple.springboard to idle
+    t =   176.91s     Synthesize event
+    t =   177.20s     Wait for ai.hanlin.motion-proof to idle
+    t =   178.25s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   178.25s     Find the "proof-geometry-state" StaticText
+    t =   178.28s Checking existence of `"proof-summary" StaticText`
+    t =   178.31s Tap "proof-thinking" Button
+    t =   178.31s     Wait for ai.hanlin.motion-proof to idle
+    t =   178.31s     Find the "proof-thinking" Button
+    t =   178.34s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   178.36s         Wait for com.apple.springboard to idle
+    t =   178.38s     Synthesize event
+    t =   178.67s     Wait for ai.hanlin.motion-proof to idle
+    t =   179.70s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   179.70s     Find the "proof-geometry-state" StaticText
+    t =   179.72s Checking existence of `"proof-summary" StaticText`
+    t =   179.74s Tap "proof-thinking" Button
+    t =   179.74s     Wait for ai.hanlin.motion-proof to idle
+    t =   179.75s     Find the "proof-thinking" Button
+    t =   179.77s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   179.79s         Wait for com.apple.springboard to idle
+    t =   179.82s     Synthesize event
+    t =   180.12s     Wait for ai.hanlin.motion-proof to idle
+    t =   181.22s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   181.23s     Find the "proof-geometry-state" StaticText
+    t =   181.28s Checking existence of `"proof-summary" StaticText`
+    t =   181.30s Tap "proof-thinking" Button
+    t =   181.30s     Wait for ai.hanlin.motion-proof to idle
+    t =   181.32s     Find the "proof-thinking" Button
+    t =   181.35s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   181.41s         Wait for com.apple.springboard to idle
+    t =   181.45s     Synthesize event
+    t =   181.75s     Wait for ai.hanlin.motion-proof to idle
+    t =   182.80s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   182.80s     Find the "proof-geometry-state" StaticText
+    t =   182.84s Checking existence of `"proof-summary" StaticText`
+    t =   182.86s Tap "proof-thinking" Button
+    t =   182.86s     Wait for ai.hanlin.motion-proof to idle
+    t =   182.87s     Find the "proof-thinking" Button
+    t =   182.91s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   182.94s         Wait for com.apple.springboard to idle
+    t =   182.96s     Synthesize event
+    t =   183.27s     Wait for ai.hanlin.motion-proof to idle
+    t =   184.32s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   184.32s     Find the "proof-geometry-state" StaticText
+    t =   184.34s Checking existence of `"proof-summary" StaticText`
+    t =   184.37s Tap "proof-thinking" Button
+    t =   184.37s     Wait for ai.hanlin.motion-proof to idle
+    t =   184.37s     Find the "proof-thinking" Button
+    t =   184.40s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   184.44s         Wait for com.apple.springboard to idle
+    t =   184.47s     Synthesize event
+    t =   184.77s     Wait for ai.hanlin.motion-proof to idle
+    t =   185.82s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   185.82s     Find the "proof-geometry-state" StaticText
+    t =   185.84s Checking existence of `"proof-summary" StaticText`
+    t =   185.86s Tap "proof-thinking" Button
+    t =   185.86s     Wait for ai.hanlin.motion-proof to idle
+    t =   185.86s     Find the "proof-thinking" Button
+    t =   185.89s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   185.92s         Wait for com.apple.springboard to idle
+    t =   185.94s     Synthesize event
+    t =   186.27s     Wait for ai.hanlin.motion-proof to idle
+    t =   187.32s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   187.32s     Find the "proof-geometry-state" StaticText
+    t =   187.35s Checking existence of `"proof-summary" StaticText`
+    t =   187.38s Tap "proof-thinking" Button
+    t =   187.38s     Wait for ai.hanlin.motion-proof to idle
+    t =   187.39s     Find the "proof-thinking" Button
+    t =   187.42s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   187.44s         Wait for com.apple.springboard to idle
+    t =   187.46s     Synthesize event
+    t =   187.77s     Wait for ai.hanlin.motion-proof to idle
+    t =   188.80s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   188.82s     Find the "proof-geometry-state" StaticText
+    t =   188.87s Checking existence of `"proof-summary" StaticText`
+    t =   188.89s Tap "proof-thinking" Button
+    t =   188.89s     Wait for ai.hanlin.motion-proof to idle
+    t =   188.90s     Find the "proof-thinking" Button
+    t =   188.93s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   188.96s         Wait for com.apple.springboard to idle
+    t =   189.20s     Synthesize event
+    t =   189.53s     Wait for ai.hanlin.motion-proof to idle
+    t =   190.58s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   190.58s     Find the "proof-geometry-state" StaticText
+    t =   190.61s Checking existence of `"proof-summary" StaticText`
+    t =   190.64s Tap "proof-thinking" Button
+    t =   190.64s     Wait for ai.hanlin.motion-proof to idle
+    t =   190.64s     Find the "proof-thinking" Button
+    t =   190.67s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   190.69s         Wait for com.apple.springboard to idle
+    t =   190.71s     Synthesize event
+    t =   191.01s     Wait for ai.hanlin.motion-proof to idle
+    t =   192.06s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   192.06s     Find the "proof-geometry-state" StaticText
+    t =   192.19s Checking existence of `"proof-summary" StaticText`
+    t =   192.21s Tap "proof-thinking" Button
+    t =   192.21s     Wait for ai.hanlin.motion-proof to idle
+    t =   192.21s     Find the "proof-thinking" Button
+    t =   192.23s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   192.26s         Wait for com.apple.springboard to idle
+    t =   192.28s     Synthesize event
+    t =   192.57s     Wait for ai.hanlin.motion-proof to idle
+    t =   193.62s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   193.62s     Find the "proof-geometry-state" StaticText
+    t =   193.65s Checking existence of `"proof-summary" StaticText`
+    t =   193.67s Tap "proof-thinking" Button
+    t =   193.67s     Wait for ai.hanlin.motion-proof to idle
+    t =   193.67s     Find the "proof-thinking" Button
+    t =   193.70s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   193.73s         Wait for com.apple.springboard to idle
+    t =   193.75s     Synthesize event
+    t =   194.05s     Wait for ai.hanlin.motion-proof to idle
+    t =   195.11s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   195.11s     Find the "proof-geometry-state" StaticText
+    t =   195.14s Checking existence of `"proof-summary" StaticText`
+    t =   195.16s Tap "proof-thinking" Button
+    t =   195.16s     Wait for ai.hanlin.motion-proof to idle
+    t =   195.16s     Find the "proof-thinking" Button
+    t =   195.18s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   195.20s         Wait for com.apple.springboard to idle
+    t =   195.22s     Synthesize event
+    t =   195.52s     Wait for ai.hanlin.motion-proof to idle
+    t =   196.57s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   196.57s     Find the "proof-geometry-state" StaticText
+    t =   196.59s Checking existence of `"proof-summary" StaticText`
+    t =   196.62s Tap "proof-thinking" Button
+    t =   196.62s     Wait for ai.hanlin.motion-proof to idle
+    t =   196.62s     Find the "proof-thinking" Button
+    t =   196.65s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   196.67s         Wait for com.apple.springboard to idle
+    t =   196.69s     Synthesize event
+    t =   196.98s     Wait for ai.hanlin.motion-proof to idle
+    t =   198.03s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   198.03s     Find the "proof-geometry-state" StaticText
+    t =   198.05s Checking existence of `"proof-summary" StaticText`
+    t =   198.07s Tap "proof-thinking" Button
+    t =   198.07s     Wait for ai.hanlin.motion-proof to idle
+    t =   198.07s     Find the "proof-thinking" Button
+    t =   198.09s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   198.12s         Wait for com.apple.springboard to idle
+    t =   198.14s     Synthesize event
+    t =   198.44s     Wait for ai.hanlin.motion-proof to idle
+    t =   199.46s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   199.46s     Find the "proof-geometry-state" StaticText
+    t =   199.49s Checking existence of `"proof-summary" StaticText`
+    t =   199.51s Tap "proof-thinking" Button
+    t =   199.51s     Wait for ai.hanlin.motion-proof to idle
+    t =   199.51s     Find the "proof-thinking" Button
+    t =   199.54s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   199.56s         Wait for com.apple.springboard to idle
+    t =   199.58s     Synthesize event
+    t =   199.88s     Wait for ai.hanlin.motion-proof to idle
+    t =   200.92s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   200.92s     Find the "proof-geometry-state" StaticText
+    t =   200.94s Checking existence of `"proof-summary" StaticText`
+    t =   200.96s Tap "proof-thinking" Button
+    t =   200.96s     Wait for ai.hanlin.motion-proof to idle
+    t =   200.96s     Find the "proof-thinking" Button
+    t =   200.98s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   201.01s         Wait for com.apple.springboard to idle
+    t =   201.03s     Synthesize event
+    t =   201.33s     Wait for ai.hanlin.motion-proof to idle
+    t =   202.38s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   202.38s     Find the "proof-geometry-state" StaticText
+    t =   202.41s Checking existence of `"proof-summary" StaticText`
+    t =   202.43s Tap "proof-thinking" Button
+    t =   202.43s     Wait for ai.hanlin.motion-proof to idle
+    t =   202.43s     Find the "proof-thinking" Button
+    t =   202.46s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   202.48s         Wait for com.apple.springboard to idle
+    t =   202.50s     Synthesize event
+    t =   202.80s     Wait for ai.hanlin.motion-proof to idle
+    t =   203.85s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   203.85s     Find the "proof-geometry-state" StaticText
+    t =   203.87s Checking existence of `"proof-summary" StaticText`
+    t =   203.89s Tap "proof-thinking" Button
+    t =   203.89s     Wait for ai.hanlin.motion-proof to idle
+    t =   203.89s     Find the "proof-thinking" Button
+    t =   203.91s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   203.94s         Wait for com.apple.springboard to idle
+    t =   203.96s     Synthesize event
+    t =   204.26s     Wait for ai.hanlin.motion-proof to idle
+    t =   205.29s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   205.29s     Find the "proof-geometry-state" StaticText
+    t =   205.34s Checking existence of `"proof-summary" StaticText`
+    t =   205.36s Tap "proof-thinking" Button
+    t =   205.36s     Wait for ai.hanlin.motion-proof to idle
+    t =   205.37s     Find the "proof-thinking" Button
+    t =   205.39s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   205.41s         Wait for com.apple.springboard to idle
+    t =   205.44s     Synthesize event
+    t =   205.75s     Wait for ai.hanlin.motion-proof to idle
+    t =   206.80s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   206.80s     Find the "proof-geometry-state" StaticText
+    t =   206.83s Checking existence of `"proof-summary" StaticText`
+    t =   206.84s Tap "proof-thinking" Button
+    t =   206.84s     Wait for ai.hanlin.motion-proof to idle
+    t =   206.85s     Find the "proof-thinking" Button
+    t =   206.87s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   206.89s         Wait for com.apple.springboard to idle
+    t =   206.92s     Synthesize event
+    t =   207.22s     Wait for ai.hanlin.motion-proof to idle
+    t =   208.27s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   208.27s     Find the "proof-geometry-state" StaticText
+    t =   208.30s Checking existence of `"proof-summary" StaticText`
+    t =   208.32s Tap "proof-thinking" Button
+    t =   208.32s     Wait for ai.hanlin.motion-proof to idle
+    t =   208.33s     Find the "proof-thinking" Button
+    t =   208.36s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   208.39s         Wait for com.apple.springboard to idle
+    t =   208.41s     Synthesize event
+    t =   208.70s     Wait for ai.hanlin.motion-proof to idle
+    t =   209.73s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   209.73s     Find the "proof-geometry-state" StaticText
+    t =   209.76s Checking existence of `"proof-summary" StaticText`
+    t =   209.77s Tap "proof-thinking" Button
+    t =   209.77s     Wait for ai.hanlin.motion-proof to idle
+    t =   209.78s     Find the "proof-thinking" Button
+    t =   209.80s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   209.82s         Wait for com.apple.springboard to idle
+    t =   209.84s     Synthesize event
+    t =   210.14s     Wait for ai.hanlin.motion-proof to idle
+    t =   211.17s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   211.17s     Find the "proof-geometry-state" StaticText
+    t =   211.20s Checking existence of `"proof-summary" StaticText`
+    t =   211.22s Tap "proof-thinking" Button
+    t =   211.22s     Wait for ai.hanlin.motion-proof to idle
+    t =   211.22s     Find the "proof-thinking" Button
+    t =   211.25s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   211.27s         Wait for com.apple.springboard to idle
+    t =   211.29s     Synthesize event
+    t =   211.58s     Wait for ai.hanlin.motion-proof to idle
+    t =   212.62s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   212.62s     Find the "proof-geometry-state" StaticText
+    t =   212.65s Checking existence of `"proof-summary" StaticText`
+    t =   212.67s Find the Target Application 'ai.hanlin.motion-proof'
+    t =   212.94s Added attachment named 'v1.gentle-squeeze-closed-after20'
+    t =   212.94s Tap "hanlin-chat-motion-preset" Button
+    t =   212.94s     Wait for ai.hanlin.motion-proof to idle
+    t =   212.94s     Find the "hanlin-chat-motion-preset" Button
+    t =   212.96s     Check for interrupting elements affecting "hanlin-chat-motion-preset" Button
+    t =   212.99s         Wait for com.apple.springboard to idle
+    t =   213.01s     Synthesize event
+    t =   213.31s     Wait for ai.hanlin.motion-proof to idle
+    t =   214.48s Tap "Quiet fade" Button
+    t =   214.48s     Wait for ai.hanlin.motion-proof to idle
+    t =   214.49s     Find the "Quiet fade" Button
+    t =   214.52s     Check for interrupting elements affecting "Quiet fade" Button
+    t =   214.55s         Wait for com.apple.springboard to idle
+    t =   214.57s     Synthesize event
+    t =   214.85s     Wait for ai.hanlin.motion-proof to idle
+    t =   217.35s Checking `Expect predicate `label == "v1.quiet-fade"` for object "proof-persisted-preset" StaticText`
+    t =   217.35s     Find the "proof-persisted-preset" StaticText
+    t =   217.38s Tap "proof-thinking" Button
+    t =   217.38s     Wait for ai.hanlin.motion-proof to idle
+    t =   217.38s     Find the "proof-thinking" Button
+    t =   217.40s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   217.44s         Wait for com.apple.springboard to idle
+    t =   217.46s     Synthesize event
+    t =   217.75s     Wait for ai.hanlin.motion-proof to idle
+    t =   218.80s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   218.80s     Find the "proof-geometry-state" StaticText
+    t =   218.82s Checking existence of `"proof-summary" StaticText`
+    t =   218.84s Find the Target Application 'ai.hanlin.motion-proof'
+    t =   219.03s Added attachment named 'v1.quiet-fade-expanded'
+    t =   219.03s Tap "proof-thinking" Button
+    t =   219.03s     Wait for ai.hanlin.motion-proof to idle
+    t =   219.03s     Find the "proof-thinking" Button
+    t =   219.06s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   219.08s         Wait for com.apple.springboard to idle
+    t =   219.10s     Synthesize event
+    t =   219.40s     Wait for ai.hanlin.motion-proof to idle
+    t =   220.45s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   220.45s     Find the "proof-geometry-state" StaticText
+    t =   220.52s Checking existence of `"proof-summary" StaticText`
+    t =   220.54s Tap "proof-thinking" Button
+    t =   220.54s     Wait for ai.hanlin.motion-proof to idle
+    t =   220.54s     Find the "proof-thinking" Button
+    t =   220.56s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   220.58s         Wait for com.apple.springboard to idle
+    t =   220.60s     Synthesize event
+    t =   220.90s     Wait for ai.hanlin.motion-proof to idle
+    t =   221.93s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   221.93s     Find the "proof-geometry-state" StaticText
+    t =   221.96s Checking existence of `"proof-summary" StaticText`
+    t =   221.98s Tap "proof-thinking" Button
+    t =   221.98s     Wait for ai.hanlin.motion-proof to idle
+    t =   221.98s     Find the "proof-thinking" Button
+    t =   222.01s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   222.03s         Wait for com.apple.springboard to idle
+    t =   222.04s     Synthesize event
+    t =   222.34s     Wait for ai.hanlin.motion-proof to idle
+    t =   223.38s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   223.38s     Find the "proof-geometry-state" StaticText
+    t =   223.40s Checking existence of `"proof-summary" StaticText`
+    t =   223.42s Tap "proof-thinking" Button
+    t =   223.42s     Wait for ai.hanlin.motion-proof to idle
+    t =   223.42s     Find the "proof-thinking" Button
+    t =   223.44s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   223.46s         Wait for com.apple.springboard to idle
+    t =   223.48s     Synthesize event
+    t =   223.77s     Wait for ai.hanlin.motion-proof to idle
+    t =   224.80s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   224.80s     Find the "proof-geometry-state" StaticText
+    t =   224.83s Checking existence of `"proof-summary" StaticText`
+    t =   224.86s Tap "proof-thinking" Button
+    t =   224.86s     Wait for ai.hanlin.motion-proof to idle
+    t =   224.86s     Find the "proof-thinking" Button
+    t =   224.89s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   224.91s         Wait for com.apple.springboard to idle
+    t =   224.94s     Synthesize event
+    t =   225.23s     Wait for ai.hanlin.motion-proof to idle
+    t =   226.27s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   226.27s     Find the "proof-geometry-state" StaticText
+    t =   226.29s Checking existence of `"proof-summary" StaticText`
+    t =   226.30s Tap "proof-thinking" Button
+    t =   226.30s     Wait for ai.hanlin.motion-proof to idle
+    t =   226.31s     Find the "proof-thinking" Button
+    t =   226.33s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   226.35s         Wait for com.apple.springboard to idle
+    t =   226.38s     Synthesize event
+    t =   226.67s     Wait for ai.hanlin.motion-proof to idle
+    t =   227.71s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   227.71s     Find the "proof-geometry-state" StaticText
+    t =   227.73s Checking existence of `"proof-summary" StaticText`
+    t =   227.75s Tap "proof-thinking" Button
+    t =   227.75s     Wait for ai.hanlin.motion-proof to idle
+    t =   227.76s     Find the "proof-thinking" Button
+    t =   227.78s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   227.80s         Wait for com.apple.springboard to idle
+    t =   227.82s     Synthesize event
+    t =   228.12s     Wait for ai.hanlin.motion-proof to idle
+    t =   229.15s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   229.15s     Find the "proof-geometry-state" StaticText
+    t =   229.17s Checking existence of `"proof-summary" StaticText`
+    t =   229.19s Tap "proof-thinking" Button
+    t =   229.19s     Wait for ai.hanlin.motion-proof to idle
+    t =   229.19s     Find the "proof-thinking" Button
+    t =   229.21s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   229.25s         Wait for com.apple.springboard to idle
+    t =   229.27s     Synthesize event
+    t =   229.57s     Wait for ai.hanlin.motion-proof to idle
+    t =   230.58s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   230.58s     Find the "proof-geometry-state" StaticText
+    t =   230.62s Checking existence of `"proof-summary" StaticText`
+    t =   230.64s Tap "proof-thinking" Button
+    t =   230.64s     Wait for ai.hanlin.motion-proof to idle
+    t =   230.64s     Find the "proof-thinking" Button
+    t =   230.67s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   230.70s         Wait for com.apple.springboard to idle
+    t =   230.71s     Synthesize event
+    t =   231.02s     Wait for ai.hanlin.motion-proof to idle
+    t =   232.05s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   232.05s     Find the "proof-geometry-state" StaticText
+    t =   232.08s Checking existence of `"proof-summary" StaticText`
+    t =   232.09s Tap "proof-thinking" Button
+    t =   232.09s     Wait for ai.hanlin.motion-proof to idle
+    t =   232.10s     Find the "proof-thinking" Button
+    t =   232.12s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   232.14s         Wait for com.apple.springboard to idle
+    t =   232.16s     Synthesize event
+    t =   232.45s     Wait for ai.hanlin.motion-proof to idle
+    t =   233.47s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   233.47s     Find the "proof-geometry-state" StaticText
+    t =   233.49s Checking existence of `"proof-summary" StaticText`
+    t =   233.51s Tap "proof-thinking" Button
+    t =   233.51s     Wait for ai.hanlin.motion-proof to idle
+    t =   233.52s     Find the "proof-thinking" Button
+    t =   233.54s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   233.56s         Wait for com.apple.springboard to idle
+    t =   233.58s     Synthesize event
+    t =   233.88s     Wait for ai.hanlin.motion-proof to idle
+    t =   234.96s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   235.06s     Find the "proof-geometry-state" StaticText
+    t =   235.34s Checking existence of `"proof-summary" StaticText`
+    t =   235.36s Tap "proof-thinking" Button
+    t =   235.36s     Wait for ai.hanlin.motion-proof to idle
+    t =   235.48s     Find the "proof-thinking" Button
+    t =   235.50s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   235.53s         Wait for com.apple.springboard to idle
+    t =   235.55s     Synthesize event
+    t =   235.84s     Wait for ai.hanlin.motion-proof to idle
+    t =   236.87s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   236.87s     Find the "proof-geometry-state" StaticText
+    t =   236.89s Checking existence of `"proof-summary" StaticText`
+    t =   236.91s Tap "proof-thinking" Button
+    t =   236.91s     Wait for ai.hanlin.motion-proof to idle
+    t =   236.91s     Find the "proof-thinking" Button
+    t =   236.93s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   236.95s         Wait for com.apple.springboard to idle
+    t =   236.97s     Synthesize event
+    t =   237.27s     Wait for ai.hanlin.motion-proof to idle
+    t =   238.32s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   238.32s     Find the "proof-geometry-state" StaticText
+    t =   238.34s Checking existence of `"proof-summary" StaticText`
+    t =   238.36s Tap "proof-thinking" Button
+    t =   238.36s     Wait for ai.hanlin.motion-proof to idle
+    t =   238.37s     Find the "proof-thinking" Button
+    t =   238.39s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   238.41s         Wait for com.apple.springboard to idle
+    t =   238.43s     Synthesize event
+    t =   238.72s     Wait for ai.hanlin.motion-proof to idle
+    t =   239.76s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   239.76s     Find the "proof-geometry-state" StaticText
+    t =   239.79s Checking existence of `"proof-summary" StaticText`
+    t =   239.81s Tap "proof-thinking" Button
+    t =   239.81s     Wait for ai.hanlin.motion-proof to idle
+    t =   239.81s     Find the "proof-thinking" Button
+    t =   239.84s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   239.86s         Wait for com.apple.springboard to idle
+    t =   239.88s     Synthesize event
+    t =   240.17s     Wait for ai.hanlin.motion-proof to idle
+    t =   241.22s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   241.22s     Find the "proof-geometry-state" StaticText
+    t =   241.24s Checking existence of `"proof-summary" StaticText`
+    t =   241.26s Tap "proof-thinking" Button
+    t =   241.26s     Wait for ai.hanlin.motion-proof to idle
+    t =   241.26s     Find the "proof-thinking" Button
+    t =   241.28s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   241.30s         Wait for com.apple.springboard to idle
+    t =   241.32s     Synthesize event
+    t =   241.61s     Wait for ai.hanlin.motion-proof to idle
+    t =   242.63s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   242.63s     Find the "proof-geometry-state" StaticText
+    t =   242.67s Checking existence of `"proof-summary" StaticText`
+    t =   242.69s Tap "proof-thinking" Button
+    t =   242.69s     Wait for ai.hanlin.motion-proof to idle
+    t =   242.69s     Find the "proof-thinking" Button
+    t =   242.71s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   242.73s         Wait for com.apple.springboard to idle
+    t =   242.75s     Synthesize event
+    t =   243.04s     Wait for ai.hanlin.motion-proof to idle
+    t =   244.07s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   244.07s     Find the "proof-geometry-state" StaticText
+    t =   244.09s Checking existence of `"proof-summary" StaticText`
+    t =   244.11s Tap "proof-thinking" Button
+    t =   244.11s     Wait for ai.hanlin.motion-proof to idle
+    t =   244.11s     Find the "proof-thinking" Button
+    t =   244.13s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   244.15s         Wait for com.apple.springboard to idle
+    t =   244.16s     Synthesize event
+    t =   244.46s     Wait for ai.hanlin.motion-proof to idle
+    t =   245.50s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   245.51s     Find the "proof-geometry-state" StaticText
+    t =   245.53s Checking existence of `"proof-summary" StaticText`
+    t =   245.55s Tap "proof-thinking" Button
+    t =   245.55s     Wait for ai.hanlin.motion-proof to idle
+    t =   245.56s     Find the "proof-thinking" Button
+    t =   245.58s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   245.60s         Wait for com.apple.springboard to idle
+    t =   245.62s     Synthesize event
+    t =   245.90s     Wait for ai.hanlin.motion-proof to idle
+    t =   246.93s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   246.94s     Find the "proof-geometry-state" StaticText
+    t =   246.96s Checking existence of `"proof-summary" StaticText`
+    t =   246.98s Tap "proof-thinking" Button
+    t =   246.98s     Wait for ai.hanlin.motion-proof to idle
+    t =   246.98s     Find the "proof-thinking" Button
+    t =   247.02s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   247.05s         Wait for com.apple.springboard to idle
+    t =   247.07s     Synthesize event
+    t =   247.36s     Wait for ai.hanlin.motion-proof to idle
+    t =   248.38s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   248.38s     Find the "proof-geometry-state" StaticText
+    t =   248.41s Checking existence of `"proof-summary" StaticText`
+    t =   248.43s Tap "proof-thinking" Button
+    t =   248.43s     Wait for ai.hanlin.motion-proof to idle
+    t =   248.43s     Find the "proof-thinking" Button
+    t =   248.45s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   248.47s         Wait for com.apple.springboard to idle
+    t =   248.49s     Synthesize event
+    t =   248.78s     Wait for ai.hanlin.motion-proof to idle
+    t =   249.82s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   249.82s     Find the "proof-geometry-state" StaticText
+    t =   249.84s Checking existence of `"proof-summary" StaticText`
+    t =   249.85s Tap "proof-thinking" Button
+    t =   249.85s     Wait for ai.hanlin.motion-proof to idle
+    t =   249.86s     Find the "proof-thinking" Button
+    t =   249.88s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   249.90s         Wait for com.apple.springboard to idle
+    t =   249.91s     Synthesize event
+    t =   250.21s     Wait for ai.hanlin.motion-proof to idle
+    t =   251.26s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   251.26s     Find the "proof-geometry-state" StaticText
+    t =   251.29s Checking existence of `"proof-summary" StaticText`
+    t =   251.31s Tap "proof-thinking" Button
+    t =   251.31s     Wait for ai.hanlin.motion-proof to idle
+    t =   251.31s     Find the "proof-thinking" Button
+    t =   251.33s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   251.36s         Wait for com.apple.springboard to idle
+    t =   251.38s     Synthesize event
+    t =   251.67s     Wait for ai.hanlin.motion-proof to idle
+    t =   252.70s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   252.70s     Find the "proof-geometry-state" StaticText
+    t =   252.72s Checking existence of `"proof-summary" StaticText`
+    t =   252.74s Tap "proof-thinking" Button
+    t =   252.74s     Wait for ai.hanlin.motion-proof to idle
+    t =   252.74s     Find the "proof-thinking" Button
+    t =   252.76s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   252.79s         Wait for com.apple.springboard to idle
+    t =   252.80s     Synthesize event
+    t =   253.20s     Wait for ai.hanlin.motion-proof to idle
+    t =   254.23s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   254.23s     Find the "proof-geometry-state" StaticText
+    t =   254.26s Checking existence of `"proof-summary" StaticText`
+    t =   254.28s Tap "proof-thinking" Button
+    t =   254.28s     Wait for ai.hanlin.motion-proof to idle
+    t =   254.29s     Find the "proof-thinking" Button
+    t =   254.32s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   254.34s         Wait for com.apple.springboard to idle
+    t =   254.36s     Synthesize event
+    t =   254.65s     Wait for ai.hanlin.motion-proof to idle
+    t =   255.70s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   255.70s     Find the "proof-geometry-state" StaticText
+    t =   255.73s Checking existence of `"proof-summary" StaticText`
+    t =   255.74s Tap "proof-thinking" Button
+    t =   255.74s     Wait for ai.hanlin.motion-proof to idle
+    t =   255.75s     Find the "proof-thinking" Button
+    t =   255.76s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   255.78s         Wait for com.apple.springboard to idle
+    t =   255.80s     Synthesize event
+    t =   256.09s     Wait for ai.hanlin.motion-proof to idle
+    t =   257.12s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   257.12s     Find the "proof-geometry-state" StaticText
+    t =   257.15s Checking existence of `"proof-summary" StaticText`
+    t =   257.17s Tap "proof-thinking" Button
+    t =   257.17s     Wait for ai.hanlin.motion-proof to idle
+    t =   257.17s     Find the "proof-thinking" Button
+    t =   257.20s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   257.22s         Wait for com.apple.springboard to idle
+    t =   257.24s     Synthesize event
+    t =   257.53s     Wait for ai.hanlin.motion-proof to idle
+    t =   258.57s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   258.57s     Find the "proof-geometry-state" StaticText
+    t =   258.59s Checking existence of `"proof-summary" StaticText`
+    t =   258.60s Tap "proof-thinking" Button
+    t =   258.60s     Wait for ai.hanlin.motion-proof to idle
+    t =   258.61s     Find the "proof-thinking" Button
+    t =   258.62s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   258.64s         Wait for com.apple.springboard to idle
+    t =   258.66s     Synthesize event
+    t =   258.95s     Wait for ai.hanlin.motion-proof to idle
+    t =   259.98s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   259.98s     Find the "proof-geometry-state" StaticText
+    t =   260.00s Checking existence of `"proof-summary" StaticText`
+    t =   260.02s Tap "proof-thinking" Button
+    t =   260.02s     Wait for ai.hanlin.motion-proof to idle
+    t =   260.03s     Find the "proof-thinking" Button
+    t =   260.05s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   260.07s         Wait for com.apple.springboard to idle
+    t =   260.09s     Synthesize event
+    t =   260.38s     Wait for ai.hanlin.motion-proof to idle
+    t =   261.42s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   261.42s     Find the "proof-geometry-state" StaticText
+    t =   261.44s Checking existence of `"proof-summary" StaticText`
+    t =   261.46s Tap "proof-thinking" Button
+    t =   261.46s     Wait for ai.hanlin.motion-proof to idle
+    t =   261.46s     Find the "proof-thinking" Button
+    t =   261.48s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   261.50s         Wait for com.apple.springboard to idle
+    t =   261.51s     Synthesize event
+    t =   261.80s     Wait for ai.hanlin.motion-proof to idle
+    t =   262.83s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   262.83s     Find the "proof-geometry-state" StaticText
+    t =   262.86s Checking existence of `"proof-summary" StaticText`
+    t =   262.89s Tap "proof-thinking" Button
+    t =   262.89s     Wait for ai.hanlin.motion-proof to idle
+    t =   262.89s     Find the "proof-thinking" Button
+    t =   262.91s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   262.93s         Wait for com.apple.springboard to idle
+    t =   262.95s     Synthesize event
+    t =   263.24s     Wait for ai.hanlin.motion-proof to idle
+    t =   264.27s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   264.27s     Find the "proof-geometry-state" StaticText
+    t =   264.29s Checking existence of `"proof-summary" StaticText`
+    t =   264.31s Tap "proof-thinking" Button
+    t =   264.31s     Wait for ai.hanlin.motion-proof to idle
+    t =   264.31s     Find the "proof-thinking" Button
+    t =   264.33s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   264.35s         Wait for com.apple.springboard to idle
+    t =   264.36s     Synthesize event
+    t =   264.65s     Wait for ai.hanlin.motion-proof to idle
+    t =   265.70s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   265.70s     Find the "proof-geometry-state" StaticText
+    t =   265.73s Checking existence of `"proof-summary" StaticText`
+    t =   265.75s Tap "proof-thinking" Button
+    t =   265.75s     Wait for ai.hanlin.motion-proof to idle
+    t =   265.75s     Find the "proof-thinking" Button
+    t =   265.77s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   265.79s         Wait for com.apple.springboard to idle
+    t =   265.81s     Synthesize event
+    t =   266.10s     Wait for ai.hanlin.motion-proof to idle
+    t =   267.15s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   267.15s     Find the "proof-geometry-state" StaticText
+    t =   267.17s Checking existence of `"proof-summary" StaticText`
+    t =   267.19s Tap "proof-thinking" Button
+    t =   267.19s     Wait for ai.hanlin.motion-proof to idle
+    t =   267.19s     Find the "proof-thinking" Button
+    t =   267.21s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   267.23s         Wait for com.apple.springboard to idle
+    t =   267.25s     Synthesize event
+    t =   267.53s     Wait for ai.hanlin.motion-proof to idle
+    t =   268.58s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   268.58s     Find the "proof-geometry-state" StaticText
+    t =   268.61s Checking existence of `"proof-summary" StaticText`
+    t =   268.63s Tap "proof-thinking" Button
+    t =   268.63s     Wait for ai.hanlin.motion-proof to idle
+    t =   268.63s     Find the "proof-thinking" Button
+    t =   268.65s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   268.67s         Wait for com.apple.springboard to idle
+    t =   268.69s     Synthesize event
+    t =   268.98s     Wait for ai.hanlin.motion-proof to idle
+    t =   270.03s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   270.03s     Find the "proof-geometry-state" StaticText
+    t =   270.05s Checking existence of `"proof-summary" StaticText`
+    t =   270.07s Tap "proof-thinking" Button
+    t =   270.07s     Wait for ai.hanlin.motion-proof to idle
+    t =   270.07s     Find the "proof-thinking" Button
+    t =   270.09s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   270.11s         Wait for com.apple.springboard to idle
+    t =   270.13s     Synthesize event
+    t =   270.45s     Wait for ai.hanlin.motion-proof to idle
+    t =   271.50s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   271.50s     Find the "proof-geometry-state" StaticText
+    t =   271.52s Checking existence of `"proof-summary" StaticText`
+    t =   271.54s Tap "proof-thinking" Button
+    t =   271.54s     Wait for ai.hanlin.motion-proof to idle
+    t =   271.54s     Find the "proof-thinking" Button
+    t =   271.56s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   271.58s         Wait for com.apple.springboard to idle
+    t =   271.60s     Synthesize event
+    t =   271.89s     Wait for ai.hanlin.motion-proof to idle
+    t =   272.93s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   272.93s     Find the "proof-geometry-state" StaticText
+    t =   272.96s Checking existence of `"proof-summary" StaticText`
+    t =   272.97s Tap "proof-thinking" Button
+    t =   272.97s     Wait for ai.hanlin.motion-proof to idle
+    t =   272.98s     Find the "proof-thinking" Button
+    t =   272.99s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   273.01s         Wait for com.apple.springboard to idle
+    t =   273.03s     Synthesize event
+    t =   273.32s     Wait for ai.hanlin.motion-proof to idle
+    t =   274.36s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   274.37s     Find the "proof-geometry-state" StaticText
+    t =   274.39s Checking existence of `"proof-summary" StaticText`
+    t =   274.42s Tap "proof-thinking" Button
+    t =   274.42s     Wait for ai.hanlin.motion-proof to idle
+    t =   274.42s     Find the "proof-thinking" Button
+    t =   274.44s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   274.46s         Wait for com.apple.springboard to idle
+    t =   274.48s     Synthesize event
+    t =   274.77s     Wait for ai.hanlin.motion-proof to idle
+    t =   275.82s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   275.82s     Find the "proof-geometry-state" StaticText
+    t =   275.84s Checking existence of `"proof-summary" StaticText`
+    t =   275.86s Find the Target Application 'ai.hanlin.motion-proof'
+    t =   276.03s Added attachment named 'v1.quiet-fade-closed-after20'
+    t =   276.03s Tap "hanlin-chat-motion-preset" Button
+    t =   276.03s     Wait for ai.hanlin.motion-proof to idle
+    t =   276.03s     Find the "hanlin-chat-motion-preset" Button
+    t =   276.05s     Check for interrupting elements affecting "hanlin-chat-motion-preset" Button
+    t =   276.07s         Wait for com.apple.springboard to idle
+    t =   276.09s     Synthesize event
+    t =   276.38s     Wait for ai.hanlin.motion-proof to idle
+    t =   277.48s Tap "No animations" Button
+    t =   277.48s     Wait for ai.hanlin.motion-proof to idle
+    t =   277.49s     Find the "No animations" Button
+    t =   277.52s     Check for interrupting elements affecting "No animations" Button
+    t =   277.54s         Wait for com.apple.springboard to idle
+    t =   277.56s     Synthesize event
+    t =   277.85s     Wait for ai.hanlin.motion-proof to idle
+    t =   282.36s Checking `Expect predicate `label == "v1.none"` for object "proof-persisted-preset" StaticText`
+    t =   282.36s     Find the "proof-persisted-preset" StaticText
+    t =   282.39s Tap "proof-thinking" Button
+    t =   282.39s     Wait for ai.hanlin.motion-proof to idle
+    t =   282.39s     Find the "proof-thinking" Button
+    t =   282.41s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   282.43s         Wait for com.apple.springboard to idle
+    t =   282.45s     Synthesize event
+    t =   282.73s     Wait for ai.hanlin.motion-proof to idle
+    t =   283.76s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   283.77s     Find the "proof-geometry-state" StaticText
+    t =   283.80s Checking existence of `"proof-summary" StaticText`
+    t =   283.82s Find the Target Application 'ai.hanlin.motion-proof'
+    t =   284.00s Added attachment named 'v1.none-expanded'
+    t =   284.00s Tap "proof-thinking" Button
+    t =   284.00s     Wait for ai.hanlin.motion-proof to idle
+    t =   284.00s     Find the "proof-thinking" Button
+    t =   284.03s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   284.05s         Wait for com.apple.springboard to idle
+    t =   284.07s     Synthesize event
+    t =   284.36s     Wait for ai.hanlin.motion-proof to idle
+    t =   285.39s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   285.39s     Find the "proof-geometry-state" StaticText
+    t =   285.42s Checking existence of `"proof-summary" StaticText`
+    t =   285.44s Tap "proof-thinking" Button
+    t =   285.44s     Wait for ai.hanlin.motion-proof to idle
+    t =   285.44s     Find the "proof-thinking" Button
+    t =   285.46s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   285.48s         Wait for com.apple.springboard to idle
+    t =   285.50s     Synthesize event
+    t =   285.80s     Wait for ai.hanlin.motion-proof to idle
+    t =   286.83s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   286.83s     Find the "proof-geometry-state" StaticText
+    t =   286.85s Checking existence of `"proof-summary" StaticText`
+    t =   286.87s Tap "proof-thinking" Button
+    t =   286.87s     Wait for ai.hanlin.motion-proof to idle
+    t =   286.87s     Find the "proof-thinking" Button
+    t =   286.90s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   286.92s         Wait for com.apple.springboard to idle
+    t =   286.94s     Synthesize event
+    t =   287.23s     Wait for ai.hanlin.motion-proof to idle
+    t =   288.23s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   288.23s     Find the "proof-geometry-state" StaticText
+    t =   288.25s Checking existence of `"proof-summary" StaticText`
+    t =   288.27s Tap "proof-thinking" Button
+    t =   288.27s     Wait for ai.hanlin.motion-proof to idle
+    t =   288.27s     Find the "proof-thinking" Button
+    t =   288.29s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   288.31s         Wait for com.apple.springboard to idle
+    t =   288.33s     Synthesize event
+    t =   288.62s     Wait for ai.hanlin.motion-proof to idle
+    t =   289.65s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   289.65s     Find the "proof-geometry-state" StaticText
+    t =   289.67s Checking existence of `"proof-summary" StaticText`
+    t =   289.69s Tap "proof-thinking" Button
+    t =   289.69s     Wait for ai.hanlin.motion-proof to idle
+    t =   289.69s     Find the "proof-thinking" Button
+    t =   289.71s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   289.73s         Wait for com.apple.springboard to idle
+    t =   289.75s     Synthesize event
+    t =   290.05s     Wait for ai.hanlin.motion-proof to idle
+    t =   291.08s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   291.08s     Find the "proof-geometry-state" StaticText
+    t =   291.10s Checking existence of `"proof-summary" StaticText`
+    t =   291.11s Tap "proof-thinking" Button
+    t =   291.12s     Wait for ai.hanlin.motion-proof to idle
+    t =   291.12s     Find the "proof-thinking" Button
+    t =   291.14s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   291.15s         Wait for com.apple.springboard to idle
+    t =   291.17s     Synthesize event
+    t =   291.47s     Wait for ai.hanlin.motion-proof to idle
+    t =   292.50s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   292.50s     Find the "proof-geometry-state" StaticText
+    t =   292.53s Checking existence of `"proof-summary" StaticText`
+    t =   292.54s Tap "proof-thinking" Button
+    t =   292.54s     Wait for ai.hanlin.motion-proof to idle
+    t =   292.55s     Find the "proof-thinking" Button
+    t =   292.57s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   292.59s         Wait for com.apple.springboard to idle
+    t =   292.61s     Synthesize event
+    t =   292.90s     Wait for ai.hanlin.motion-proof to idle
+    t =   293.95s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   293.95s     Find the "proof-geometry-state" StaticText
+    t =   293.98s Checking existence of `"proof-summary" StaticText`
+    t =   293.99s Tap "proof-thinking" Button
+    t =   293.99s     Wait for ai.hanlin.motion-proof to idle
+    t =   293.99s     Find the "proof-thinking" Button
+    t =   294.01s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   294.03s         Wait for com.apple.springboard to idle
+    t =   294.05s     Synthesize event
+    t =   294.34s     Wait for ai.hanlin.motion-proof to idle
+    t =   295.38s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   295.38s     Find the "proof-geometry-state" StaticText
+    t =   295.41s Checking existence of `"proof-summary" StaticText`
+    t =   295.43s Tap "proof-thinking" Button
+    t =   295.43s     Wait for ai.hanlin.motion-proof to idle
+    t =   295.43s     Find the "proof-thinking" Button
+    t =   295.45s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   295.47s         Wait for com.apple.springboard to idle
+    t =   295.49s     Synthesize event
+    t =   295.78s     Wait for ai.hanlin.motion-proof to idle
+    t =   296.82s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   296.82s     Find the "proof-geometry-state" StaticText
+    t =   296.84s Checking existence of `"proof-summary" StaticText`
+    t =   296.85s Tap "proof-thinking" Button
+    t =   296.85s     Wait for ai.hanlin.motion-proof to idle
+    t =   296.86s     Find the "proof-thinking" Button
+    t =   296.87s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   296.89s         Wait for com.apple.springboard to idle
+    t =   296.91s     Synthesize event
+    t =   297.20s     Wait for ai.hanlin.motion-proof to idle
+    t =   298.22s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   298.23s     Find the "proof-geometry-state" StaticText
+    t =   298.25s Checking existence of `"proof-summary" StaticText`
+    t =   298.27s Tap "proof-thinking" Button
+    t =   298.27s     Wait for ai.hanlin.motion-proof to idle
+    t =   298.27s     Find the "proof-thinking" Button
+    t =   298.29s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   298.31s         Wait for com.apple.springboard to idle
+    t =   298.33s     Synthesize event
+    t =   298.63s     Wait for ai.hanlin.motion-proof to idle
+    t =   299.65s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   299.65s     Find the "proof-geometry-state" StaticText
+    t =   299.67s Checking existence of `"proof-summary" StaticText`
+    t =   299.68s Tap "proof-thinking" Button
+    t =   299.68s     Wait for ai.hanlin.motion-proof to idle
+    t =   299.68s     Find the "proof-thinking" Button
+    t =   299.70s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   299.72s         Wait for com.apple.springboard to idle
+    t =   299.74s     Synthesize event
+    t =   300.03s     Wait for ai.hanlin.motion-proof to idle
+    t =   301.06s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   301.06s     Find the "proof-geometry-state" StaticText
+    t =   301.09s Checking existence of `"proof-summary" StaticText`
+    t =   301.10s Tap "proof-thinking" Button
+    t =   301.10s     Wait for ai.hanlin.motion-proof to idle
+    t =   301.11s     Find the "proof-thinking" Button
+    t =   301.13s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   301.15s         Wait for com.apple.springboard to idle
+    t =   301.16s     Synthesize event
+    t =   301.45s     Wait for ai.hanlin.motion-proof to idle
+    t =   302.46s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   302.46s     Find the "proof-geometry-state" StaticText
+    t =   302.48s Checking existence of `"proof-summary" StaticText`
+    t =   302.50s Tap "proof-thinking" Button
+    t =   302.50s     Wait for ai.hanlin.motion-proof to idle
+    t =   302.50s     Find the "proof-thinking" Button
+    t =   302.52s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   302.53s         Wait for com.apple.springboard to idle
+    t =   302.55s     Synthesize event
+    t =   302.84s     Wait for ai.hanlin.motion-proof to idle
+    t =   303.88s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   303.88s     Find the "proof-geometry-state" StaticText
+    t =   303.91s Checking existence of `"proof-summary" StaticText`
+    t =   303.93s Tap "proof-thinking" Button
+    t =   303.93s     Wait for ai.hanlin.motion-proof to idle
+    t =   303.93s     Find the "proof-thinking" Button
+    t =   303.95s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   303.97s         Wait for com.apple.springboard to idle
+    t =   303.99s     Synthesize event
+    t =   304.29s     Wait for ai.hanlin.motion-proof to idle
+    t =   305.30s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   305.30s     Find the "proof-geometry-state" StaticText
+    t =   305.33s Checking existence of `"proof-summary" StaticText`
+    t =   305.34s Tap "proof-thinking" Button
+    t =   305.34s     Wait for ai.hanlin.motion-proof to idle
+    t =   305.35s     Find the "proof-thinking" Button
+    t =   305.36s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   305.38s         Wait for com.apple.springboard to idle
+    t =   305.40s     Synthesize event
+    t =   305.69s     Wait for ai.hanlin.motion-proof to idle
+    t =   306.72s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   306.72s     Find the "proof-geometry-state" StaticText
+    t =   306.75s Checking existence of `"proof-summary" StaticText`
+    t =   306.77s Tap "proof-thinking" Button
+    t =   306.77s     Wait for ai.hanlin.motion-proof to idle
+    t =   306.77s     Find the "proof-thinking" Button
+    t =   306.79s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   306.81s         Wait for com.apple.springboard to idle
+    t =   306.83s     Synthesize event
+    t =   307.13s     Wait for ai.hanlin.motion-proof to idle
+    t =   308.16s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   308.16s     Find the "proof-geometry-state" StaticText
+    t =   308.18s Checking existence of `"proof-summary" StaticText`
+    t =   308.20s Tap "proof-thinking" Button
+    t =   308.20s     Wait for ai.hanlin.motion-proof to idle
+    t =   308.20s     Find the "proof-thinking" Button
+    t =   308.22s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   308.24s         Wait for com.apple.springboard to idle
+    t =   308.26s     Synthesize event
+    t =   308.55s     Wait for ai.hanlin.motion-proof to idle
+    t =   309.58s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   309.58s     Find the "proof-geometry-state" StaticText
+    t =   309.61s Checking existence of `"proof-summary" StaticText`
+    t =   309.62s Tap "proof-thinking" Button
+    t =   309.63s     Wait for ai.hanlin.motion-proof to idle
+    t =   309.63s     Find the "proof-thinking" Button
+    t =   309.65s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   309.67s         Wait for com.apple.springboard to idle
+    t =   309.69s     Synthesize event
+    t =   309.98s     Wait for ai.hanlin.motion-proof to idle
+    t =   311.01s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   311.01s     Find the "proof-geometry-state" StaticText
+    t =   311.03s Checking existence of `"proof-summary" StaticText`
+    t =   311.05s Tap "proof-thinking" Button
+    t =   311.05s     Wait for ai.hanlin.motion-proof to idle
+    t =   311.05s     Find the "proof-thinking" Button
+    t =   311.07s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   311.09s         Wait for com.apple.springboard to idle
+    t =   311.10s     Synthesize event
+    t =   311.40s     Wait for ai.hanlin.motion-proof to idle
+    t =   312.45s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   312.45s     Find the "proof-geometry-state" StaticText
+    t =   312.47s Checking existence of `"proof-summary" StaticText`
+    t =   312.49s Tap "proof-thinking" Button
+    t =   312.49s     Wait for ai.hanlin.motion-proof to idle
+    t =   312.49s     Find the "proof-thinking" Button
+    t =   312.51s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   312.54s         Wait for com.apple.springboard to idle
+    t =   312.55s     Synthesize event
+    t =   312.85s     Wait for ai.hanlin.motion-proof to idle
+    t =   313.88s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   313.88s     Find the "proof-geometry-state" StaticText
+    t =   313.91s Checking existence of `"proof-summary" StaticText`
+    t =   313.92s Tap "proof-thinking" Button
+    t =   313.92s     Wait for ai.hanlin.motion-proof to idle
+    t =   313.92s     Find the "proof-thinking" Button
+    t =   313.94s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   313.96s         Wait for com.apple.springboard to idle
+    t =   313.98s     Synthesize event
+    t =   314.27s     Wait for ai.hanlin.motion-proof to idle
+    t =   315.31s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   315.31s     Find the "proof-geometry-state" StaticText
+    t =   315.35s Checking existence of `"proof-summary" StaticText`
+    t =   315.36s Tap "proof-thinking" Button
+    t =   315.36s     Wait for ai.hanlin.motion-proof to idle
+    t =   315.37s     Find the "proof-thinking" Button
+    t =   315.39s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   315.41s         Wait for com.apple.springboard to idle
+    t =   315.42s     Synthesize event
+    t =   315.72s     Wait for ai.hanlin.motion-proof to idle
+    t =   316.75s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   316.75s     Find the "proof-geometry-state" StaticText
+    t =   316.78s Checking existence of `"proof-summary" StaticText`
+    t =   316.79s Tap "proof-thinking" Button
+    t =   316.79s     Wait for ai.hanlin.motion-proof to idle
+    t =   316.80s     Find the "proof-thinking" Button
+    t =   316.81s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   316.83s         Wait for com.apple.springboard to idle
+    t =   316.85s     Synthesize event
+    t =   317.14s     Wait for ai.hanlin.motion-proof to idle
+    t =   318.16s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   318.16s     Find the "proof-geometry-state" StaticText
+    t =   318.19s Checking existence of `"proof-summary" StaticText`
+    t =   318.21s Tap "proof-thinking" Button
+    t =   318.21s     Wait for ai.hanlin.motion-proof to idle
+    t =   318.21s     Find the "proof-thinking" Button
+    t =   318.23s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   318.25s         Wait for com.apple.springboard to idle
+    t =   318.27s     Synthesize event
+    t =   318.56s     Wait for ai.hanlin.motion-proof to idle
+    t =   319.60s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   319.60s     Find the "proof-geometry-state" StaticText
+    t =   319.62s Checking existence of `"proof-summary" StaticText`
+    t =   319.64s Tap "proof-thinking" Button
+    t =   319.64s     Wait for ai.hanlin.motion-proof to idle
+    t =   319.64s     Find the "proof-thinking" Button
+    t =   319.66s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   319.67s         Wait for com.apple.springboard to idle
+    t =   319.69s     Synthesize event
+    t =   319.98s     Wait for ai.hanlin.motion-proof to idle
+    t =   321.01s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   321.01s     Find the "proof-geometry-state" StaticText
+    t =   321.04s Checking existence of `"proof-summary" StaticText`
+    t =   321.06s Tap "proof-thinking" Button
+    t =   321.06s     Wait for ai.hanlin.motion-proof to idle
+    t =   321.06s     Find the "proof-thinking" Button
+    t =   321.08s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   321.10s         Wait for com.apple.springboard to idle
+    t =   321.12s     Synthesize event
+    t =   321.42s     Wait for ai.hanlin.motion-proof to idle
+    t =   322.45s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   322.45s     Find the "proof-geometry-state" StaticText
+    t =   322.47s Checking existence of `"proof-summary" StaticText`
+    t =   322.48s Tap "proof-thinking" Button
+    t =   322.48s     Wait for ai.hanlin.motion-proof to idle
+    t =   322.49s     Find the "proof-thinking" Button
+    t =   322.51s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   322.52s         Wait for com.apple.springboard to idle
+    t =   322.54s     Synthesize event
+    t =   322.83s     Wait for ai.hanlin.motion-proof to idle
+    t =   323.86s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   323.86s     Find the "proof-geometry-state" StaticText
+    t =   323.89s Checking existence of `"proof-summary" StaticText`
+    t =   323.91s Tap "proof-thinking" Button
+    t =   323.91s     Wait for ai.hanlin.motion-proof to idle
+    t =   323.91s     Find the "proof-thinking" Button
+    t =   323.93s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   323.96s         Wait for com.apple.springboard to idle
+    t =   323.98s     Synthesize event
+    t =   324.27s     Wait for ai.hanlin.motion-proof to idle
+    t =   325.31s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   325.31s     Find the "proof-geometry-state" StaticText
+    t =   325.33s Checking existence of `"proof-summary" StaticText`
+    t =   325.35s Tap "proof-thinking" Button
+    t =   325.35s     Wait for ai.hanlin.motion-proof to idle
+    t =   325.35s     Find the "proof-thinking" Button
+    t =   325.37s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   325.39s         Wait for com.apple.springboard to idle
+    t =   325.41s     Synthesize event
+    t =   325.70s     Wait for ai.hanlin.motion-proof to idle
+    t =   326.75s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   326.75s     Find the "proof-geometry-state" StaticText
+    t =   326.77s Checking existence of `"proof-summary" StaticText`
+    t =   326.79s Tap "proof-thinking" Button
+    t =   326.79s     Wait for ai.hanlin.motion-proof to idle
+    t =   326.80s     Find the "proof-thinking" Button
+    t =   326.82s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   326.84s         Wait for com.apple.springboard to idle
+    t =   326.86s     Synthesize event
+    t =   327.15s     Wait for ai.hanlin.motion-proof to idle
+    t =   328.18s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   328.18s     Find the "proof-geometry-state" StaticText
+    t =   328.21s Checking existence of `"proof-summary" StaticText`
+    t =   328.22s Tap "proof-thinking" Button
+    t =   328.22s     Wait for ai.hanlin.motion-proof to idle
+    t =   328.22s     Find the "proof-thinking" Button
+    t =   328.24s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   328.26s         Wait for com.apple.springboard to idle
+    t =   328.28s     Synthesize event
+    t =   328.57s     Wait for ai.hanlin.motion-proof to idle
+    t =   329.63s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   329.63s     Find the "proof-geometry-state" StaticText
+    t =   329.66s Checking existence of `"proof-summary" StaticText`
+    t =   329.68s Tap "proof-thinking" Button
+    t =   329.68s     Wait for ai.hanlin.motion-proof to idle
+    t =   329.68s     Find the "proof-thinking" Button
+    t =   329.70s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   329.72s         Wait for com.apple.springboard to idle
+    t =   329.74s     Synthesize event
+    t =   330.04s     Wait for ai.hanlin.motion-proof to idle
+    t =   331.08s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   331.08s     Find the "proof-geometry-state" StaticText
+    t =   331.11s Checking existence of `"proof-summary" StaticText`
+    t =   331.13s Tap "proof-thinking" Button
+    t =   331.13s     Wait for ai.hanlin.motion-proof to idle
+    t =   331.13s     Find the "proof-thinking" Button
+    t =   331.15s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   331.17s         Wait for com.apple.springboard to idle
+    t =   331.19s     Synthesize event
+    t =   331.48s     Wait for ai.hanlin.motion-proof to idle
+    t =   332.53s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   332.53s     Find the "proof-geometry-state" StaticText
+    t =   332.55s Checking existence of `"proof-summary" StaticText`
+    t =   332.57s Tap "proof-thinking" Button
+    t =   332.57s     Wait for ai.hanlin.motion-proof to idle
+    t =   332.57s     Find the "proof-thinking" Button
+    t =   332.59s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   332.61s         Wait for com.apple.springboard to idle
+    t =   332.63s     Synthesize event
+    t =   332.92s     Wait for ai.hanlin.motion-proof to idle
+    t =   333.95s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   333.95s     Find the "proof-geometry-state" StaticText
+    t =   333.98s Checking existence of `"proof-summary" StaticText`
+    t =   333.99s Tap "proof-thinking" Button
+    t =   334.00s     Wait for ai.hanlin.motion-proof to idle
+    t =   334.00s     Find the "proof-thinking" Button
+    t =   334.02s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   334.03s         Wait for com.apple.springboard to idle
+    t =   334.05s     Synthesize event
+    t =   334.34s     Wait for ai.hanlin.motion-proof to idle
+    t =   335.40s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   335.40s     Find the "proof-geometry-state" StaticText
+    t =   335.42s Checking existence of `"proof-summary" StaticText`
+    t =   335.44s Tap "proof-thinking" Button
+    t =   335.44s     Wait for ai.hanlin.motion-proof to idle
+    t =   335.44s     Find the "proof-thinking" Button
+    t =   335.46s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   335.48s         Wait for com.apple.springboard to idle
+    t =   335.50s     Synthesize event
+    t =   335.79s     Wait for ai.hanlin.motion-proof to idle
+    t =   336.83s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   336.83s     Find the "proof-geometry-state" StaticText
+    t =   336.85s Checking existence of `"proof-summary" StaticText`
+    t =   336.86s Tap "proof-thinking" Button
+    t =   336.86s     Wait for ai.hanlin.motion-proof to idle
+    t =   336.87s     Find the "proof-thinking" Button
+    t =   336.88s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   336.90s         Wait for com.apple.springboard to idle
+    t =   336.92s     Synthesize event
+    t =   337.21s     Wait for ai.hanlin.motion-proof to idle
+    t =   338.25s Checking `Expect predicate `label == "expanded"` for object "proof-geometry-state" StaticText`
+    t =   338.25s     Find the "proof-geometry-state" StaticText
+    t =   338.27s Checking existence of `"proof-summary" StaticText`
+    t =   338.29s Tap "proof-thinking" Button
+    t =   338.29s     Wait for ai.hanlin.motion-proof to idle
+    t =   338.29s     Find the "proof-thinking" Button
+    t =   338.32s     Check for interrupting elements affecting "proof-thinking" Button
+    t =   338.34s         Wait for com.apple.springboard to idle
+    t =   338.35s     Synthesize event
+    t =   338.65s     Wait for ai.hanlin.motion-proof to idle
+    t =   339.71s Checking `Expect predicate `label == "collapsed"` for object "proof-geometry-state" StaticText`
+    t =   339.71s     Find the "proof-geometry-state" StaticText
+    t =   339.74s Checking existence of `"proof-summary" StaticText`
+    t =   339.75s Find the Target Application 'ai.hanlin.motion-proof'
+    t =   339.93s Added attachment named 'v1.none-closed-after20'
+    t =   339.93s Tap "proof-save-timeline" Button
+    t =   339.93s     Wait for ai.hanlin.motion-proof to idle
+    t =   339.93s     Find the "proof-save-timeline" Button
+    t =   339.95s     Check for interrupting elements affecting "proof-save-timeline" Button
+    t =   339.97s         Wait for com.apple.springboard to idle
+    t =   339.99s     Synthesize event
+    t =   340.28s     Wait for ai.hanlin.motion-proof to idle
+    t =   340.29s Tear Down
+    t =   340.29s     Setting device orientation to Portrait
+    t =   340.30s         Wait for ai.hanlin.motion-proof to idle
+    t =   340.30s         Wait for com.apple.springboard to idle
+    t =   340.30s     Terminate ai.hanlin.motion-proof:55120
+Test Case '-[ChatMotionProofUITests.MotionUITests testAAllFivePresetsTwentyCompleteCyclesEach]' passed (341.678 seconds).
+Test Suite 'MotionUITests' passed at 2026-11-26 17:33:36.213.
+	 Executed 1 test, with 0 failures (0 unexpected) in 341.678 (341.691) seconds
+Test Suite 'ChatMotionProofUITests.xctest' passed at 2026-11-26 17:33:36.226.
+	 Executed 1 test, with 0 failures (0 unexpected) in 341.678 (341.704) seconds
+Test Suite 'Selected tests' passed at 2026-11-26 17:33:36.226.
+	 Executed 1 test, with 0 failures (0 unexpected) in 341.678 (341.707) seconds
+2026-11-26 17:43:36.658 xcodebuild[54346:15579836]  IDETestOperationsObserverDebug: Failure collecting diagnostics from simulator: Timed out after 600.0 seconds while waiting for a response from the invoked process
+2026-11-26 17:43:36.698 xcodebuild[54346:15579616] [MT] IDETestOperationsObserverDebug: 974.195 elapsed -- Testing started completed.
+2026-11-26 17:43:36.698 xcodebuild[54346:15579616] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-26 17:43:36.698 xcodebuild[54346:15579616] [MT] IDETestOperationsObserverDebug: 974.195 sec, +974.195 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/A/Motion.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started

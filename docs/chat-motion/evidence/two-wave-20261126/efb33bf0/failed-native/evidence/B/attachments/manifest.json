@@ -1,0 +1,35 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D",
+        "deviceName" : "Hanlin-Phase2-Motion-local-motion-dacb4ca5-20261126-1",
+        "exportedFileName" : "C352E009-2740-40D3-AF3F-E5E2CD09CE42",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-26 at 04.54.45 PM",
+        "timestamp" : 1795708485.544
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D",
+        "deviceName" : "Hanlin-Phase2-Motion-local-motion-dacb4ca5-20261126-1",
+        "exportedFileName" : "29F7B16C-D112-49D1-9241-39AD81F3355B",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-26 at 04.54.43 PM",
+        "timestamp" : 1795708483.988
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D",
+        "deviceName" : "Hanlin-Phase2-Motion-local-motion-dacb4ca5-20261126-1",
+        "exportedFileName" : "B7AEA143-7116-4491-9007-F62EE7A12631",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Screen Recording 2026-11-26 at 04.54.30 PM",
+        "timestamp" : 1795708470.041
+      }
+    ],
+    "testIdentifier" : "MotionUITests/testBRapidReversalPresetSwitchAndPersistence()",
+    "testIdentifierURL" : "test://com.apple.xcode/ChatMotionProof/ChatMotionProofUITests/MotionUITests/testBRapidReversalPresetSwitchAndPersistence"
+  }
+]

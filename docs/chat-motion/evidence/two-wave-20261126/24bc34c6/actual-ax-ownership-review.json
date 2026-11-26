@@ -1,0 +1,62 @@
+{
+  "schemaVersion": 1,
+  "sourceSHA": "24bc34c618615cb75b362d9d64f55e4607fd0e74",
+  "diagnosticStatus": "CAPTURED_NOT_ACCEPTANCE",
+  "diagnosticTestDurationSeconds": 14.493,
+  "originalAcceptanceStatus": "B_FAILED_A_C_NOT_RUN",
+  "actualHierarchy": {
+    "expanded": {
+      "geometry": "expanded",
+      "summaryExists": true,
+      "summaryFrame": [
+        0,
+        298.5,
+        474.5,
+        52.5
+      ]
+    },
+    "collapsed": {
+      "geometry": "collapsed",
+      "summaryExists": true,
+      "summaryFrame": [
+        0,
+        292.5,
+        474.5,
+        52.5
+      ],
+      "retainedChildElements": [
+        "proof-summary",
+        "Repeated tool name",
+        "source call-2",
+        "source call-3"
+      ]
+    }
+  },
+  "visualReview": {
+    "reviewedAt": "2026-11-26T15:39:43.067434+00:00",
+    "reviewer": "ChatGPT built-in wave1 agent",
+    "inputs": [
+      "ax-diagnostic-stdout/captures/expanded-screen.png",
+      "ax-diagnostic-stdout/captures/collapsed-screen.png"
+    ],
+    "observations": [
+      "Expanded actual screenshot shows summary, nested tool header, source labels, then original footer.",
+      "Collapsed actual screenshot shows Thinking header and original footer only; retained summary/tool/source labels are visually absent.",
+      "The captured AX tree still exposes the visually absent content. No visual inference from source alone."
+    ]
+  },
+  "fixCandidate": {
+    "sha": "efb33bf0093981abdf882031ffe56c3044902968",
+    "scope": "Existing retained inner VStack childBehavior switches contain/ignore with expanded target state; same structural identity, layout, nested state, animation and test bodies.",
+    "nativeAcceptance": "NOT_RUN",
+    "bundleSHA256": "a8533b7548b0fcb52bf26c0f88dc70174d0a48d5e11cf8e248611663767684de"
+  },
+  "originalFixtureRestored": true,
+  "testFileSHA256": "5f714f6ad4fc5db3abec22abc5e520f4bba94d5f66740f69673ed3d401665874",
+  "finalizationIncident": {
+    "path": "Mac revisions/24bc34c6/ax-diagnostic",
+    "caseFinishedButCommandInterrupted": true,
+    "reason": "Xcode sampled waiting for simctl diagnose; raw incomplete result retained; no acceptance credit",
+    "diagnosticOnlyRetry": "Installed xcodebuild supports collect-test-diagnostics never; used only separate capture diagnostic. Original B/A/C orchestration unchanged."
+  }
+}

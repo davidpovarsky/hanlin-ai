@@ -1,0 +1,72 @@
+{
+  "schemaVersion": 1,
+  "sourceSHA": "24bc34c618615cb75b362d9d64f55e4607fd0e74",
+  "parentSHA": "dacb4ca5c809e7b0355a95e53d137ef3bb58f7fb",
+  "classification": "FIX_REPRODUCED_NOT_RESOLVED",
+  "acceptanceStatus": "FAILED",
+  "sourceFingerprint": "a4453b9d0a17b89ddc03cbfb361d982206e8569bac34e100b571c00f612911db",
+  "sourceFiles": 418,
+  "resolvedPins": 8,
+  "originalSourceRecorder": "EXECUTED_PASS",
+  "nativeBuild": {
+    "status": "EXECUTED_PASS",
+    "seconds": 43.08001658300054
+  },
+  "cases": {
+    "B": {
+      "status": "FAILED",
+      "durationSeconds": 19.90907609462738,
+      "sourceLine": 144,
+      "assertion": "XCTAssertFalse(app.staticTexts[\"proof-summary\"].exists)",
+      "observation": "Expanded and collapsed original geometry predicates passed; retained summary remained in the collapsed AX query."
+    },
+    "A": {
+      "status": "NOT_RUN"
+    },
+    "C": {
+      "status": "NOT_RUN"
+    }
+  },
+  "productionCompilation": {
+    "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+    "bytes": 8205,
+    "sha256": "948c6ba85207b017c3819dd27694419e5f195a62fa08d3cfdcbe4f043eba2f7d",
+    "evidence": [
+      "failed-native/evidence/build.log",
+      "failed-native/evidence/proof-inputs.json",
+      "failed-native/evidence/sdk-resolved-inputs.json"
+    ]
+  },
+  "tests": {
+    "wholeFileSHA256": "5f714f6ad4fc5db3abec22abc5e520f4bba94d5f66740f69673ed3d401665874",
+    "assertionsChanged": false
+  },
+  "runtime": {
+    "xcode": "27.0 (27A266a)",
+    "compilerSDK": "27.0",
+    "iOS": "27.2",
+    "runtimeBuild": "24B8117",
+    "ownedDevice": "B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D"
+  },
+  "asana": {
+    "task": "1220546846740594",
+    "comment": "1220933911109166"
+  },
+  "remainingDiagnosis": "The inner content container still preserves children with .contain while hidden; collect actual AX hierarchy before changing that existing child behavior.",
+  "primaryReferences": [
+    {
+      "url": "https://developer.apple.com/documentation/swiftui/accessibilitychildbehavior/ignore.md",
+      "relevance": "Child suppression behavior; use with existing container without rebuilding content."
+    },
+    {
+      "url": "https://developer.apple.com/documentation/swiftui/view/accessibilityhidden(_:isenabled:).md",
+      "relevance": "Conditional hidden state leaves inherited nested behavior unchanged when disabled."
+    }
+  ],
+  "noCredit": [
+    "Visual disappearance is not inferred from opacity source",
+    "Diagnostic capture is not original acceptance",
+    "A/C not executed",
+    "Mac simulator evidence is not physical device evidence"
+  ]
+}

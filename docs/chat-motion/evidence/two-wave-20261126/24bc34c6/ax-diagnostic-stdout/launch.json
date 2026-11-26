@@ -1,0 +1,11 @@
+{
+  "pid": 15224,
+  "at": "2026-11-26T15:36:11.331943+00:00",
+  "freeBytes": 1939275776,
+  "controllerSHA256": "efd2b5c84226eb8b929eafa4752088573bab18c1e19f0bdcc8b556652c6f7a5d",
+  "budget": {
+    "ownBytes": 600000000,
+    "concurrentHostBytes": 0,
+    "marginBytes": 1073741824
+  }
+}

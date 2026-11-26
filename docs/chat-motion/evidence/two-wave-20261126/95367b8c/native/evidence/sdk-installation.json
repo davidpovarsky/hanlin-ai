@@ -1,0 +1,42 @@
+{
+  "binaryTargets": [],
+  "checkoutMode": "sparse",
+  "generatedSHA256": {
+    "Package.swift": "61b583342dc4c35519a7b7614c3269140edbd10590f7faf5269467b997e2bdc4",
+    "docs/agent-sdk/unified-package-manifest.json": "9f6efcaa50cb0cc8e68ef96975ab7c7967e703843db78eef52c1c5f6a68ab967"
+  },
+  "hostRelativePath": "Vendor/HanlinSDK",
+  "managedNativeTargets": [],
+  "packageName": "HanlinSDK",
+  "products": [
+    "HanlinChatUI"
+  ],
+  "repository": "https://github.com/davidpovarsky/hanlin-ai.git",
+  "revision": "95367b8c06b166873dfab2143a8323a869085af2",
+  "schemaVersion": 1,
+  "sourcePaths": [
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI",
+    "Packages/HanlinPresentationSDK/Sources/HanlinLocalization",
+    "Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit",
+    "Packages/HanlinPresentationSDK/Sources/HanlinRichUI"
+  ],
+  "sparsePatterns": [
+    "/.gitignore",
+    "/.gitattributes",
+    "/Package.swift",
+    "/Scripts/SDK/",
+    "/Scripts/CI/IntegrationValidation/project_graph.py",
+    "/Packages/*/Package.swift",
+    "/AI_HLY.xcodeproj/project.pbxproj",
+    "/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+    "/docs/agent-sdk/unified-package-manifest.json",
+    "/docs/native-artifacts.json",
+    "/Packages/HanlinPlatform/Sources/HanlinPlatformContracts/",
+    "/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/",
+    "/Packages/HanlinPresentationSDK/Sources/HanlinLocalization/",
+    "/Packages/HanlinPresentationSDK/Sources/HanlinPresentationKit/",
+    "/Packages/HanlinPresentationSDK/Sources/HanlinRichUI/"
+  ],
+  "state": "installed"
+}

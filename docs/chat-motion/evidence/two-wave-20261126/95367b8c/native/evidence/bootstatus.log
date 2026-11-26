@@ -1,0 +1,4 @@
+{"name": "bootstatus-attempt-1", "command": ["xcrun", "simctl", "bootstatus", "B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D", "-b"], "timeout_seconds": 300.0, "return_code": 0, "timed_out": false, "elapsed_seconds": 0.635, "output_file": "bootstatus-attempt-1.log"}
+Monitoring boot status for Hanlin-Phase2-Motion-local-motion-dacb4ca5-20261126-1 (B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D).
+Device already booted, nothing to do.
+

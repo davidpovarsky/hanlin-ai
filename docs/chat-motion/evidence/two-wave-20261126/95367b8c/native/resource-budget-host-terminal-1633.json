@@ -1,0 +1,14 @@
+{
+  "previous": {
+    "concurrentHostRemainingBytes": 1000000000,
+    "systemMarginBytes": 1073741824,
+    "authority": "Mac owner: original Host185 resumed with~1GB remaining reservation; changes will be recorded separately",
+    "at": "2026-11-26T16:13:42.292461+00:00"
+  },
+  "current": {
+    "concurrentHostRemainingBytes": 0,
+    "systemMarginBytes": 1073741824,
+    "authority": "Mac owner16:33UTC: Host terminalPASS including finalSDK verification; no MiniApps heavybuild admitted yet",
+    "at": "2026-11-26T16:33:55.842031+00:00"
+  }
+}
