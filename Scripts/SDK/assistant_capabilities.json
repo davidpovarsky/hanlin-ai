@@ -33,7 +33,15 @@
     "Downstream/ChatPresentation/HanlinTypographyBridge.swift",
     "Downstream/SDK/HanlinAssistantServices.swift",
     "NativeAgentExtensions/Diagnostics/NativeToolTraceLogger.swift",
-    "Downstream/AgentDiagnostics/AgentDiagnosticsRedactor.swift"
+    "Downstream/AgentDiagnostics/AgentDiagnosticsRedactor.swift",
+    "Downstream/RuntimeCore/Tools/RuntimeToolSupport.swift",
+    "Downstream/HostServices/Adapters/AgentHostServicesAdapter.swift",
+    "Downstream/HostServices/Runtime/HanlinRuntimeBroker.swift",
+    "Downstream/HostServices/Core/HanlinHostCallContext.swift",
+    "Downstream/HostServices/Core/HanlinHostServiceError.swift",
+    "Downstream/HostServices/Capabilities/HanlinHostCapabilityAuthority.swift",
+    "NativeAgentExtensions/Core/NativeToolJSON.swift",
+    "Downstream/HostServices/Capabilities/HanlinHostCapabilityMetadata.swift"
   ],
   "products": [
     "HanlinSkillFormat",
@@ -51,7 +59,8 @@
     "SwiftTreeSitter",
     "TreeSitter",
     "TreeSitterBash",
-    "HanlinPresentationKit"
+    "HanlinPresentationKit",
+    "HanlinScriptStore"
   ],
   "targets": [
     "HanlinNodeBridge",

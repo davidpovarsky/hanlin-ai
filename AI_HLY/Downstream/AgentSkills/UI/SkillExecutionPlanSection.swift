@@ -202,8 +202,8 @@ struct SkillExecutionPlanSection: View {
                     }) {
                         await SkillRuntimeAuthorization.$invocationSource.withValue(.user) {
                             await SkillRuntimeAuthorization.$approved.withValue(true) {
-                                await ExecuteSkillResourceTool().execute(argumentsJSON: String(decoding: args, as: UTF8.self),
-                                    context: .init(localeIdentifier: Locale.current.identifier, capabilitySession: session))
+                                await SkillResourceExecutor().execute(argumentsJSON: String(decoding: args, as: UTF8.self),
+                                    session: session)
                             }
                         }
                     }
