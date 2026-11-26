@@ -15,7 +15,7 @@ public struct WidgetConfigurationOption {
 }
 
 func parseTimeline(identifier: String, name: String, family: WidgetFamily) -> [WidgetsTimelineEntry] {
-  guard let timeline = WidgetsStorage.getArray(forKey: "__expo_widgets_\(name)_timeline") else {
+  guard let timeline = HanlinExpoWidgetState.timeline(name) else {
     return [WidgetsTimelineEntry(date: Date(), name: name, props: WidgetsLayoutRegistry.initialProps(for: name), entryIndex: nil)]
   }
 

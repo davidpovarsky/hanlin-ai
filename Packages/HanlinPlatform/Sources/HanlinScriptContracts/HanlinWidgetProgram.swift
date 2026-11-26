@@ -60,7 +60,7 @@ public struct HanlinWidgetProgram: Codable, Hashable, Sendable {
         }
     }
 
-    public static let supportedFamilies = ["systemSmall", "systemMedium", "systemLarge", "systemExtraLarge"]
+    public static let supportedFamilies = ["systemSmall", "systemMedium", "systemLarge", "systemExtraLarge", "systemExtraLargePortrait", "accessoryCircular", "accessoryRectangular", "accessoryInline"]
     public static func isSHA256(_ value: String) -> Bool {
         value.utf8.count == 64 && value.utf8.allSatisfy { (48...57).contains($0) || (97...102).contains($0) }
     }

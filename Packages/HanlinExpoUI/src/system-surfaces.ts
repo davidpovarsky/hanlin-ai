@@ -63,7 +63,7 @@ export interface NativeSurfaceLiveActivityStart {
 export interface ScriptWidgetLiveActivityStart {
   scriptWidgetEntrypointID: string;
   widgetInstanceID?: string;
-  family?: 'systemSmall' | 'systemMedium' | 'systemLarge' | 'systemExtraLarge';
+  family?: 'systemSmall' | 'systemMedium' | 'systemLarge' | 'systemExtraLarge' | 'systemExtraLargePortrait' | 'accessoryCircular' | 'accessoryRectangular' | 'accessoryInline';
   title?: string;
   state?: Record<string, NativeSurfaceJSON>;
   staleDateEpochMilliseconds?: number;

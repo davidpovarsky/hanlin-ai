@@ -116,6 +116,10 @@ public struct HanlinWidgetTimelineProvider: AppIntentTimelineProvider {
         case .systemMedium: familyName = "systemMedium"
         case .systemLarge: familyName = "systemLarge"
         case .systemExtraLarge: familyName = "systemExtraLarge"
+        case .systemExtraLargePortrait: familyName = "systemExtraLargePortrait"
+        case .accessoryCircular: familyName = "accessoryCircular"
+        case .accessoryRectangular: familyName = "accessoryRectangular"
+        case .accessoryInline: familyName = "accessoryInline"
         default: return .init(date: .now, presentation: .failure("Unsupported widget family"))
         }
         let presentation = await Task.detached(priority: .userInitiated) {
@@ -156,7 +160,9 @@ public struct HanlinScriptingWidget: Widget {
         }
         .configurationDisplayName(Text("Hanlin Script", bundle: HanlinLocalization.bundle))
         .description(Text("Native widgets from installed packages. Create independent instances in Hanlin.", bundle: HanlinLocalization.bundle))
-        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge, .systemExtraLarge])
+        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge, .systemExtraLarge, .systemExtraLargePortrait,
+            .accessoryCircular, .accessoryRectangular, .accessoryInline])
+        .containerBackgroundRemovable(true)
     }
 }
 private struct PassiveLegacyWidgetURL: ViewModifier {
@@ -282,7 +288,12 @@ public struct HanlinPreparedExpoNativeView: View {
     public let context: HanlinWidgetActionContext
     @ViewBuilder public var body: some View {
         if let object = node.toAny() as? [String: Any] {
-            let child = HanlinExpoWidgetNative.render(node: object, resources: context.resources) { target, role, label in
+            let child = HanlinExpoWidgetNative.render(node: object, resources: context.resources, toggleBuilder: { target, isOn, label in
+                guard let intent = try? HanlinExpoWidgetsViewRenderer.toggleIntent(target: target, isOn: isOn, context: context) else {
+                    return AnyView(SwiftUI.Toggle(isOn: .constant(isOn)) { label }.disabled(true))
+                }
+                return AnyView(SwiftUI.Toggle(isOn: isOn, intent: intent) { label })
+            }) { target, role, label in
                 if let intent = try? HanlinExpoWidgetsViewRenderer.hostActionIntent(target: target, context: context) {
                     return AnyView(SwiftUI.Button(role: role, intent: intent) { label })
                 }

@@ -1,5 +1,6 @@
 import Foundation
 import JavaScriptCore
+import HanlinScriptContracts
 
 struct WidgetJavaScriptError: Error {
   let message: String
@@ -21,7 +22,7 @@ private final class WidgetsJSRuntime {
     call(layout: layout, functionName: "__expoWidgetRender") { context in
       [props.map { $0 } ?? JSValue(undefinedIn: context) as Any, environment]
     }.flatMap { result in
-      guard let renderedNode = result?.toObject() as? [String: Any] else {
+      guard let renderedNode = result as? [String: Any] else {
         return .failure(WidgetJavaScriptError(message: "Expo widget render did not produce any results."))
       }
       return .success(renderedNode)
@@ -29,15 +30,16 @@ private final class WidgetsJSRuntime {
   }
 
   func handlePress(layout: String, props: [String: Any], environment: [String: Any]) -> WidgetJavaScriptResult<[String: Any]?> {
-    call(layout: layout, functionName: "__expoWidgetHandlePress") { _ in [props, environment] }
-      .map { $0?.toObject() as? [String: Any] }
+    call(layout: layout, functionName: environment["__hanlinToggleValue"] == nil
+      ? "__expoWidgetHandlePress" : "__hanlinWidgetHandleToggle") { _ in [props, environment] }
+      .map { $0 as? [String: Any] }
   }
 
   private func call(
     layout: String,
     functionName: String,
     arguments: (JSContext) -> [Any]
-  ) -> WidgetJavaScriptResult<JSValue?> {
+  ) -> WidgetJavaScriptResult<Any?> {
     lock.lock()
     defer { lock.unlock() }
 
@@ -60,7 +62,16 @@ private final class WidgetsJSRuntime {
     if let exceptionMessage = contextExceptionMessage(context) {
       return .failure(WidgetJavaScriptError(message: exceptionMessage))
     }
-    return .success(result)
+    guard let result, !result.isUndefined, !result.isNull else { return .success(nil) }
+    // Convert while holding the context lock. Closures remain in the original
+    // VM; native rendering and atomic state receive only immutable JSON values.
+    guard let json = context.objectForKeyedSubscript("JSON")?
+      .invokeMethod("stringify", withArguments: [result])?.toString(),
+      let bytes = json.data(using: .utf8),
+      let object = try? JSONSerialization.jsonObject(with: bytes) else {
+      return .failure(WidgetJavaScriptError(message: contextExceptionMessage(context) ?? "Widget output is not valid JSON"))
+    }
+    return .success(object)
   }
 
   private func getContext() -> JSContext? {
@@ -78,6 +89,9 @@ private final class WidgetsJSRuntime {
     }
 
     context.evaluateScript(script)
+    guard context.exception == nil else { return nil }
+    do { context.evaluateScript(try HanlinExpoWidgetInteractions.script()) }
+    catch { return nil }
     if let exceptionMessage = contextExceptionMessage(context) {
       print("[ExpoWidgets] Bundle evaluation failed: \(exceptionMessage)")
       return nil

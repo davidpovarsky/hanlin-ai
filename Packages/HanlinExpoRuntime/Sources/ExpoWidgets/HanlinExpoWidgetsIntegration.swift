@@ -136,6 +136,15 @@ public enum HanlinExpoWidgetsIntegration {
         }
     }
 
+    static func storageOwner(_ name: String) -> (namespace: String, generation: UInt64)? {
+        guard name.hasPrefix("hanlin.") else {
+            return (digest([productIdentifier, name]), 0)
+        }
+        guard let value = descriptor(for: name), value.productIdentifier == productIdentifier,
+              isCurrent(value) else { return nil }
+        return (digest([value.productIdentifier, value.installedPackageID]), value.generation)
+    }
+
     static func isRegistrationActive(_ name: String) -> Bool {
         // Original build-time embedded layouts remain supported as well.
         guard name.hasPrefix("hanlin.") else { return true }
