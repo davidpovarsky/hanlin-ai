@@ -1,0 +1,158 @@
+{
+  "schemaVersion": 1,
+  "scope": "Historical original Host and gallery execution; no b80 native or fresh-SDK acceptance",
+  "handoffArchiveSHA256": "5c46a947b2f02853955f1d3ecc8cee8b0eaf00078c0e313663876fbac10cc904",
+  "sourceReceipts": [
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/final-host-a356-08ed/mac-stage/host-preparation-a35694f7-final.json",
+      "bytes": 15531,
+      "sha256": "9d33801834cb8a9d1da0830301a0ea50fa04edb3d6cb87d87a3484b1d2947e55"
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/final-host-a356-08ed/mac-stage/gallery-4d-to-a356-reuse-qualified.json",
+      "bytes": 3206,
+      "sha256": "7c8a726b5f08a7ea77b9a1e191a35dcf2e0f498aa4d0fa281e48ee594dd8084c"
+    }
+  ],
+  "host": {
+    "status": "FRESH_HOST_AND_SDK_VERIFIED",
+    "route": "RESUMED_ORIGINAL_PHASES",
+    "source": "a35694f73d07b161d6db5e8c150b7d905e883455",
+    "startedAt": "2026-11-26T16:20:25.616251+00:00",
+    "originalHostStartedAt": "2026-11-26T15:48:23.878338+00:00",
+    "originalTestSummary": {
+      "tests": 185,
+      "pass": 184,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 1
+    },
+    "sourceInputsHash": "0b2425df7d3b1fdb2f0d89036deb065adc2e4b22a47ba26bd0fcffffa561a9a2",
+    "sdkInputHash": "32c2ed6254af86c5264b93f641d28ef6046dc8e69c43fa18d536cb514f54cf6c",
+    "filesVerified": 25703,
+    "filesRepaired": 2795,
+    "finishedAt": "2026-11-26T16:21:53.354072+00:00",
+    "phaseResults": [
+      {
+        "name": "node-version",
+        "exitCode": 0,
+        "logSHA256": "2f30156cd7f9137514ea68d53554f583cf6541fd107dbc8ae8a19253379a735a"
+      },
+      {
+        "name": "current-sdk-audit",
+        "exitCode": 0,
+        "logSHA256": "2ee9c916551f02c23122474ee76503e1e4091dd3067480a69a73489da9ee7543"
+      },
+      {
+        "name": "current-reachability-audit",
+        "exitCode": 0,
+        "logSHA256": "bc234237931951c0e0e70dc212b9f47da2f6c76a61109e41c235f0f7f0eabcef"
+      },
+      {
+        "name": "current-sdk-fingerprint",
+        "exitCode": 0,
+        "logSHA256": "04e4f2925b45e523d79d82d80c3468246468e6f0d6b28d12a749c3a92a984232"
+      },
+      {
+        "name": "node-fingerprint",
+        "exitCode": 0,
+        "logSHA256": "5d9368cd4b939d652aab8afbd31375396f6312d3f7b6b30c4843c40aab2f32fe"
+      },
+      {
+        "name": "host-input-fingerprint-before",
+        "exitCode": 0,
+        "logSHA256": "dc0688ab93ae46fe5a50047ffb44d6b1cb4e8325eb1b5082b3dc13eac45ab8e8"
+      },
+      {
+        "name": "complete-original-test-set",
+        "exitCode": 0,
+        "logSHA256": "8a560cab570a2b1c9c4cbe3e927759aae638043d97d14e7b4989536302d23fae"
+      },
+      {
+        "name": "host-input-fingerprint-after",
+        "exitCode": 0,
+        "logSHA256": "dc0688ab93ae46fe5a50047ffb44d6b1cb4e8325eb1b5082b3dc13eac45ab8e8"
+      },
+      {
+        "name": "original-post-test-packing",
+        "exitCode": 0,
+        "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "original-packed-validation-jitless-and-seal",
+        "exitCode": 0,
+        "logSHA256": "8a9906169909bccceef460064742405e681f28158278eb60d6979abd80cba931"
+      },
+      {
+        "name": "original-archive-reuse-validation",
+        "exitCode": 0,
+        "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ]
+  },
+  "galleryScopedReuse": {
+    "status": "GALLERY_REUSE_QUALIFIED_BY_OPERATIONAL_BYTE_IDENTITY",
+    "recordedAt": "2026-11-26T16:50:32.003459+00:00",
+    "originalGalleryReceipt": "/Users/m1/builds/hanlin-wave2-gallery-4d76e605-20261126/gallery-original-contract-receipt.json",
+    "originalGalleryReceiptSHA256": "df4b7b743999f0f48400f6e8dbad78f9500a34a66e119db8f993138252fa427b",
+    "originalSource": "4d76e6053662957281ffbcb0a2ad28fc4f0c2f89",
+    "currentHostSource": "a35694f73d07b161d6db5e8c150b7d905e883455",
+    "currentAppSource": "08ed647b2515066c3750a726e3053da6c1f5ca50",
+    "originalSDKInputSHA256": "48f09da9dc0ec43b5591db3a701d9572204b31785bf5049bae0044a78b191289",
+    "currentSDKInputSHA256": "32c2ed6254af86c5264b93f641d28ef6046dc8e69c43fa18d536cb514f54cf6c",
+    "comparisonReceiptSHA256": "4ae0dc757ae4670be239d1b0769f416644ca829fd0b62d7404a1de742ca6d084",
+    "archiveComparison": {
+      "unchangedMembers": 28802,
+      "added": [],
+      "removed": [],
+      "changed": [
+        {
+          "path": "MiniAppSDK/docs/miniapp-sdk/extension-reachability.json",
+          "oldSHA256": "e8bdbc4b447b8e6e408e8650c1c3de78ad4ea7f5c8509e5677e3935ff45d5d32",
+          "newSHA256": "81f454af8cbc2ead5361793472e01ff2b3e002815336d8c4cc826c2ec5acd745"
+        },
+        {
+          "path": "MiniAppSDK/docs/miniapp-sdk/extension-reachability.md",
+          "oldSHA256": "032ff8f19e0f32dfb41fe48434364c3ef5be1265f830bffa84fbeff047ac09fd",
+          "newSHA256": "1014345126c3e200f3a1167b97bd8ddbae20dff1f3dcba69b8f5ad8ab8b66ac6"
+        },
+        {
+          "path": "MiniAppSDK/docs/miniapp-sdk/source-inventory.json",
+          "oldSHA256": "ba3b6fbf90507999248c4ab35d3abb32abc584f75b69f99090dc755b08f4322e",
+          "newSHA256": "8ed4cb80e62977be4997d6e318dfc140ad65c25f1a1d6b4c000bd12e459ad19e"
+        },
+        {
+          "path": "MiniAppSDK/miniapp-sdk.json",
+          "oldSHA256": "d2f4fe35ab3cc26b6c7962de0722db7126737b92ccf0ff85530176897a5857a0",
+          "newSHA256": "cca7eaf3b6e5e1d15a798613ec96fe91629eff6884e8cdbb90bc4c3e22b1d5c0"
+        }
+      ]
+    },
+    "manifestChangedFileRows": {
+      "files": [
+        "docs/miniapp-sdk/extension-reachability.json",
+        "docs/miniapp-sdk/extension-reachability.md",
+        "docs/miniapp-sdk/source-inventory.json"
+      ],
+      "sourceInputs": [
+        "docs/miniapp-sdk/extension-reachability.json",
+        "docs/miniapp-sdk/extension-reachability.md",
+        "docs/miniapp-sdk/source-inventory.json"
+      ]
+    },
+    "allOperationalManifestFieldsUnchanged": true,
+    "authoringModules": [
+      {
+        "path": "miniapp-authoring.mjs",
+        "sha256": "ed6244894695eeb4b83aa41ea1f7523cda2d5db2059452b666fd21a099238a30"
+      },
+      {
+        "path": "miniapp-assistant-tools.mjs",
+        "sha256": "721ed8ccf94803776a8d0c2f9ea8e7bb9e9fb7bc9faa27cc216d6ec65512ebcf"
+      }
+    ],
+    "qualification": "The actual five original validate/build operations remain recorded against 4d. Every operational SDK/example/dependency/compiler/Host file is byte-identical in a356; only three audit/provenance documents and their manifest hashes changed. This permits scoped behavior reuse. Current provenance and the complete185 original Host set are independently qualified by the final a356 receipt. No fresh gallery invocation or native launch is claimed."
+  },
+  "currentSourceRequiresFreshHost": true,
+  "reason": "Candidate b80 changes canonical SDK/authoring source inputs; historical 28802-member operational equivalence ends at 08ed."
+}
