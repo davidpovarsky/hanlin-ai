@@ -202,7 +202,7 @@ final class HanlinActiveComposerSessionBridge {
     /// Unpersisted placeholder record used only for binding compatibility while on the compact Home root.
     /// Never inserted into SwiftData `ModelContext`.
     let homePlaceholderRecord = ChatRecords(
-        name: String(localized: "New Group Chat", bundle: HanlinLocalization.bundle),
+        name: HanlinConversationCreation.defaultTitle,
         type: "chat",
         lastEdited: Date()
     )

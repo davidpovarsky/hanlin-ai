@@ -1713,51 +1713,12 @@ struct ChatView: View {
         }
     }
 
-    // MARK: - 自动生成标题
-    /// 异步独立执行，不阻塞主对话
-    /// 触发条件：chatRecord.name == "新群聊" 且 user 消息数 >= 1 且 <= 3
+    // MARK: - Shared automatic conversation metadata
     private func autoGenerateTitleIfNeeded() {
-        // 检查是否为新群聊
-        guard ["新群聊", "New Group Chat", String(localized: "新群聊", bundle: HanlinLocalization.bundle)].contains(chatRecord.name ?? "") else { return }
-        
-        // 统计用户消息数量
-        let userMessages = chatTemps.filter { $0.role == "user" }
-        let userCount = userMessages.count
-        guard userCount >= 1 && userCount <= 3 else { return }
-        
-        // 构建历史消息文本
-        let historyMessage = userMessages
-            .map { "- " + ($0.text ?? "") + ($0.images_text ?? "") + ($0.document_text ?? "") }
-            .joined(separator: "\n")
-        guard !historyMessage.isEmpty else { return }
-        
-        // 捕获需要的值，避免在 Task 中访问 MainActor 隔离属性
-        let currentContext = context
-        let record = chatRecord
-        let originalTitle = record.name
-        let temporary = TemporaryRecord
-
-        // 启动异步任务，不阻塞主对话
-        Task {
-            do {
-                let optimizer = SystemOptimizer(context: currentContext)
-                let title = try await optimizer.autoChatName(historyMessage: historyMessage)
-                if !title.isEmpty {
-                    try await MainActor.run {
-                        // A delayed automatic title cannot overwrite a manual rename
-                        // or resurrect a conversation removed while optimization ran.
-                        guard record.name == originalTitle else { return }
-                        try HanlinConversationMutation.rename(record, title: title, announceChange: false,
-                            in: currentContext, temporary: temporary)
-                        chatTitle = title
-                    }
-                }
-            } catch {
-                print("自动命名失败: \(error.localizedDescription)")
-            }
-        }
+        HanlinConversationAutoMetadata.schedule(for: chatRecord, messages: chatTemps,
+            in: context, temporary: TemporaryRecord)
     }
-    
+
     // 处理消息发送
     private func handleMessageSending(ifObservingMode: Bool, continuationText: String? = nil, richInteraction: HanlinHostInteractionRequest? = nil) {
         guard !agentSessionOwner.inlineToolIsRunning else { return }

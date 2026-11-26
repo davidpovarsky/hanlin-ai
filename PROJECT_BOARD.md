@@ -256,3 +256,10 @@ Potential improvements, features, optimizations, or architectural ideas.
 - **2026-11-13 inter-app action lifetime:** personal MiniApp Host inherited an implicit15s broker deadline, independent of uncapped Runtime Core jobs. Personal Host now explicitly selects a nil deadline; actual16s/explicit deadline/cancellation tests are pending. Typed HanlinValue and broker payload/response budgets remain1MiB/4MiB. Share text beyond inline budgets needs owned references rather than a misleading claim that removing the timer removes every data boundary.
 
 - [ ] **2026-11-16 CI dependency-cache follow-up:** actual app run [43841684109](https://github.com/davidpovarsky/hanlin-ai/actions/runs/43841684109) spent18m24s before an A2UI generated-input failure; later app-only Swift failures rebuild the successful dependency closure because DerivedData saves require overall build success. Investigate a separate toolchain/input-verified dependency compiler cache for failed app builds, with explicit incomplete-build provenance and no reuse of failed/skipped test results. The current successful-build cache and acceptance policies remain in force.
+
+
+## POST-149101 — User-reported chat corrections (2026-11-26)
+- Implementation in progress under Asana 1220927011075841; baseline aa7b6fa (TestFlight 149101).
+- New conversations share a localized empty creation path; generated title and validated SF Symbol use one job for UI and headless SDK. Manual metadata edits have a persisted guard against delayed automatic writes.
+- Sidebar uses shared adaptive pale-blue surfaces. Related Hebrew labels are corrected in the canonical localization bundle.
+- Shared activity/bubble, scroll/composer and Node recovery changes are being integrated from isolated scopes. Native acceptance and new TestFlight delivery remain pending; portable PASS is not device acceptance.

@@ -1,6 +1,213 @@
 {
   "sourceLanguage" : "zh-Hans",
   "strings" : {
+    "The runtime stopped. Reopen the app to start it again; previous commands will not be run again." : {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The runtime stopped. Reopen the app to start it again; previous commands will not be run again."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "המנוע נעצר. יש לפתוח מחדש את האפליקציה כדי להפעילו; הפקודות הקודמות לא יורצו שוב."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "运行时已停止。重新打开应用可再次启动；之前的命令不会再次运行。"
+          }
+        }
+      }
+    },
+    "The runtime is still starting. It will reconnect when you use it again." : {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The runtime is still starting. It will reconnect when you use it again."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "המנוע עדיין מופעל. החיבור יתחדש בשימוש הבא."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "运行时仍在启动。下次使用时将重新连接。"
+          }
+        }
+      }
+    },
+    "The connection was interrupted. It reconnects automatically without running your commands again." : {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The connection was interrupted. It reconnects automatically without running your commands again."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "החיבור נקטע. החיבור מתחדש אוטומטית, בלי להריץ שוב את הפקודות."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "连接已中断。系统会自动重新连接，不会再次运行你的命令。"
+          }
+        }
+      }
+    },
+    "Technical details" : {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Technical details"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "פרטים טכניים"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "技术详情"
+          }
+        }
+      }
+    },
+    "Reconnecting" : {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Reconnecting"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "מתחבר מחדש"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "正在重新连接"
+          }
+        }
+      }
+    },
+    "The current model \"%@\" does not support tool calling. You can still browse and manage skills and MCP." : {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "The current model \"%@\" does not support tool calling. You can still browse and manage skills and MCP."
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "המודל הנוכחי ״%@״ אינו תומך בשימוש בכלים. עדיין אפשר לעיין במיומנויות ובשרתי MCP ולנהל אותם."
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "当前模型“%@”不支持工具调用。你仍可浏览和管理技能及 MCP。"
+          }
+        }
+      }
+    },
+    "Manage built-in tools, agent skills and MCP" : {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manage built-in tools, agent skills and MCP"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ניהול כלים מובנים, מיומנויות ושרתי MCP"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "管理内置工具、智能体技能和 MCP"
+          }
+        }
+      }
+    },
+    "Scroll to latest message" : {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Scroll to latest message"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "גלילה להודעה האחרונה"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "滚动到最新消息"
+          }
+        }
+      }
+    },
+    "Conversation renamed to %@" : {
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Conversation renamed to %@"
+          }
+        },
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "שם השיחה שונה ל־%@"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "对话已重命名为 %@"
+          }
+        }
+      }
+    },
     "Start Live Activity" : {
       "extractionState" : "manual",
       "localizations" : {
@@ -2618,24 +2825,24 @@
       }
     },
     "New chat" : {
-      "extractionState" : "manual",
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "New chat"
+      "extractionState": "manual",
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "New chat"
           }
         },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "שיחה חדשה"
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "צ׳אט חדש"
           }
         },
-        "zh-Hans" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "新建对话"
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "新建对话"
           }
         }
       }
@@ -9737,17 +9944,17 @@
       }
     },
     "复制内容" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Copy Content"
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copy Content"
           }
         },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Copy Content"
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "העתקת תוכן"
           }
         }
       }
@@ -11513,17 +11720,17 @@
       }
     },
     "查看源码" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Source Code"
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Source Code"
           }
         },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Source Code"
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "קוד המקור"
           }
         }
       }
@@ -12953,33 +13160,33 @@
       }
     },
     "程序源码" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Source Code"
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Source Code"
           }
         },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Source Code"
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "קוד המקור"
           }
         }
       }
     },
     "程序运行结果" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Program Results"
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Program Results"
           }
         },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Program Results"
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "תוצאות ההרצה"
           }
         }
       }
@@ -14976,17 +15183,17 @@
       }
     },
     "选择文本" : {
-      "localizations" : {
-        "en" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Select Text"
+      "localizations": {
+        "en": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Select Text"
           }
         },
-        "he" : {
-          "stringUnit" : {
-            "state" : "translated",
-            "value" : "Select Text"
+        "he": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "בחירת טקסט"
           }
         }
       }

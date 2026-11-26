@@ -572,9 +572,13 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         let newChatButton = chatListToolbarButton("hanlin-new-chat-button", in: app)
         tapElement(newChatButton)
 
-        // Verify the newly created chat opens with an information welcome bubble and empty draft
+        // A new conversation contains no synthetic welcome message and has an empty draft.
+        let freshInput = chatInputElement(in: app)
+        XCTAssertTrue(freshInput.waitForExistence(timeout: 10))
+        XCTAssertEqual(freshInput.value as? String ?? "", "")
         let infoBubble = app.descendants(matching: .any)["hanlin-info-bubble"].firstMatch
-        XCTAssertTrue(infoBubble.waitForExistence(timeout: 10), "New chat welcome information bubble did not appear")
+        XCTAssertFalse(infoBubble.exists, "New conversations must not insert a group welcome message")
+        XCTAssertFalse(app.staticTexts["New Group Chat"].exists)
 
         // Switch back to Agent Acceptance Chat and verify the draft was preserved
         ensureChatListVisible(in: app)

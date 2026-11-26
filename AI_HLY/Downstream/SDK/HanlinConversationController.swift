@@ -307,6 +307,7 @@ public final class HanlinConversationController {
                 user.promptUse = request.prompts.isEmpty ? nil : request.prompts
                 context.insert(user)
                 rows.append(user)
+                HanlinConversationAutoMetadata.schedule(for: record, messages: rows, in: context)
             }
             let input = HanlinConversationStreamProjection.requestMessages(
                 from: rows, limit: request.historyLimit ?? record.maxMessagesNum)

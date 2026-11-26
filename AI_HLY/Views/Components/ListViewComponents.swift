@@ -131,7 +131,7 @@ struct ChatRowView: View {
         }
         .padding(10)
         .frame(maxWidth: .infinity, alignment: .leading)
-        .background(isSelected ? selectedColor.opacity(0.12) : Color.clear,
+        .background(isSelected ? Color.hanlinHLSidebarSelection : Color.clear,
                     in: RoundedRectangle(cornerRadius: 10, style: .continuous))
     }
     

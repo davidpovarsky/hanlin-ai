@@ -1,0 +1,23 @@
+{
+  "baseline": "aa7b6fa862d54f2a0054e0dd6ffb20fe20efe702",
+  "scope": "post-149101 metadata, creation, sidebar, localization",
+  "obligations": [
+    {
+      "group": "pure-metadata",
+      "reason": "New shared decoder, allowlist, prompt and placeholder policy",
+      "status": "NEEDS_TEST"
+    },
+    {
+      "group": "native-metadata",
+      "reason": "New persistence flag, manual-edit CAS, concurrent job dedup and empty creation",
+      "status": "NEEDS_TEST"
+    },
+    {
+      "group": "native-UI-01",
+      "reason": "New empty conversation and sidebar changes",
+      "status": "NEEDS_TEST"
+    }
+  ],
+  "reused": [],
+  "toolchain": "Oracle Swift6.4.3 portable; Mac Xcode27 native pending"
+}

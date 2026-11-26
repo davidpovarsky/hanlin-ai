@@ -1,4 +1,6 @@
 import Foundation
+import HanlinChatCore
+import HanlinLocalization
 import HanlinHostContracts
 import SwiftData
 
@@ -61,13 +63,8 @@ enum HanlinConversationMutation {
         var announcement: ChatMessages?
         try saveMetadata(record, in: context, temporary: temporary) {
             if announceChange {
-                let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
-                let text: String
-                if currentLanguage.hasPrefix("zh") {
-                    text = "群聊名称被修改为“\(title)”"
-                } else {
-                    text = "Group chat name has been changed to \"\(title)\""
-                }
+                let text = String(format: String(localized: "Conversation renamed to %@",
+                    bundle: HanlinLocalization.bundle), title)
                 let message = ChatMessages(role: "information", text: text,
                     modelDisplayName: "system", timestamp: Date(), record: record)
                 if ephemeral { record.messages = (record.messages ?? []) + [message] }
@@ -75,6 +72,7 @@ enum HanlinConversationMutation {
                 announcement = message
             }
             record.name = title
+            record.metadataWasManuallyEdited = true
         }
         publish(record.id!, originalRow: ObjectIdentifier(record), kind: .metadata, messageID: announcement?.id, in: context.container)
         return announcement
@@ -88,8 +86,42 @@ enum HanlinConversationMutation {
             record.name = title
             record.icon = icon
             record.color = color
+            record.metadataWasManuallyEdited = true
         }
         publish(record.id!, originalRow: ObjectIdentifier(record), kind: .metadata, in: context.container)
+    }
+
+
+    struct MetadataSnapshot: Equatable {
+        let title: String?
+        let icon: String?
+        let color: String?
+        let wasManuallyEdited: Bool
+
+        init(_ record: ChatRecords) {
+            title = record.name
+            icon = record.icon
+            color = record.color
+            wasManuallyEdited = record.metadataWasManuallyEdited
+        }
+    }
+
+    @discardableResult
+    static func applyGeneratedMetadata(_ metadata: HanlinConversationMetadata,
+                                       to record: ChatRecords, expected: MetadataSnapshot,
+                                       in context: ModelContext, temporary: Bool = false) throws -> Bool {
+        try requireOriginal(record, in: context, temporary: temporary)
+        guard !record.metadataWasManuallyEdited, MetadataSnapshot(record) == expected,
+              HanlinConversationMetadataPolicy.isPlaceholderTitle(record.name) else { return false }
+        try saveMetadata(record, in: context, temporary: temporary) {
+            record.name = metadata.title
+            // Retain a legacy user-selected icon even when its old placeholder title is eligible.
+            if record.icon == nil || record.icon == HanlinConversationMetadata.defaultIcon {
+                record.icon = metadata.icon
+            }
+        }
+        publish(record.id!, originalRow: ObjectIdentifier(record), kind: .metadata, in: context.container)
+        return true
     }
 
     static func setPinned(_ record: ChatRecords, isPinned: Bool, in context: ModelContext) throws {
@@ -151,5 +183,60 @@ enum HanlinConversationMutation {
         let change = Change(conversationID: id, originalRow: originalRow, kind: kind, messageID: messageID)
         HanlinConversationControllerRegistry.conversationDidChange(change, in: container)
         NotificationCenter.default.post(name: didChange, object: container, userInfo: ["change": change])
+    }
+}
+
+
+/// UI and headless SDK requests use the same bounded, deduplicated metadata job.
+@MainActor
+enum HanlinConversationAutoMetadata {
+    private static var inFlight: Set<ObjectIdentifier> = []
+
+    static func schedule(for record: ChatRecords, messages: [ChatMessages],
+                         in context: ModelContext, temporary: Bool = false) {
+        Task { @MainActor in
+            do {
+                _ = try await generateIfNeeded(for: record, messages: messages,
+                    in: context, temporary: temporary)
+            } catch {
+                // Metadata must not fail or replay the chat request. Do not log
+                // provider bodies, conversation content or credentials here.
+                print("[Hanlin] Conversation metadata unavailable; will retry on the next eligible turn.")
+            }
+        }
+    }
+
+    @discardableResult
+    static func generateIfNeeded(
+        for record: ChatRecords, messages: [ChatMessages], in context: ModelContext,
+        temporary: Bool = false,
+        generate: (@MainActor (String) async throws -> HanlinConversationMetadata)? = nil
+    ) async throws -> Bool {
+        guard !record.metadataWasManuallyEdited,
+              HanlinConversationMetadataPolicy.isPlaceholderTitle(record.name) else { return false }
+        let users = messages.filter { $0.role == "user" }
+        guard (1...3).contains(users.count) else { return false }
+        let history = users.map {
+            [$0.text, $0.images_text, $0.document_text].compactMap { $0 }.joined(separator: "\n")
+        }.joined(separator: "\n").trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !history.isEmpty else { return false }
+        try HanlinConversationMutation.requireOriginal(record, in: context, temporary: temporary)
+        let key = ObjectIdentifier(record)
+        guard inFlight.insert(key).inserted else { return false }
+        defer { inFlight.remove(key) }
+        let expected = HanlinConversationMutation.MetadataSnapshot(record)
+        let metadata: HanlinConversationMetadata
+        if let generate {
+            metadata = try await generate(String(history.prefix(12000)))
+        } else {
+            let models = try context.fetch(FetchDescriptor<AllModels>(
+                sortBy: [SortDescriptor(\AllModels.position, order: .forward)]))
+            let fallbackName = record.useModel.flatMap { models.indices.contains($0) ? models[$0].name : nil }
+            metadata = try await SystemOptimizer(context: context).autoChatMetadata(
+                historyMessage: String(history.prefix(12000)), fallbackModelName: fallbackName)
+        }
+        try Task.checkCancellation()
+        return try HanlinConversationMutation.applyGeneratedMetadata(metadata, to: record,
+            expected: expected, in: context, temporary: temporary)
     }
 }

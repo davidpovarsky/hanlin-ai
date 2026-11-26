@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import HanlinChatCore
 import PhotosUI
 import SwiftData
 
@@ -19,14 +20,15 @@ class SystemOptimizer {
     /// 封装从数据库查询 API 配置和模型信息
     /// - Parameter isVisual: 是否为视觉（多模态）模型
     /// - Returns: (模型名称, 模型所属厂商, API Key, 请求 URL, 支持可控思考)
-    private func fetchAPIConfig(isVisual: Bool) throws -> (modelName: String, company: String, apiKey: String, url: URL, supportReasoningChange: Bool) {
+    private func fetchAPIConfig(isVisual: Bool, modelNameOverride: String? = nil) throws -> (modelName: String, company: String, apiKey: String, url: URL, supportReasoningChange: Bool) {
         print("[SystemOptimizer] 开始获取API配置，isVisual: \(isVisual)")
         let userFetchDescriptor = FetchDescriptor<UserInfo>()
         let user = try context.fetch(userFetchDescriptor).first
         
         let defaultModel = isVisual ? "glm-4v-flash_hanlin" : "glm-4.5-flash_hanlin"
-        let optimizationModelName: String = isVisual ? (user?.optimizationVisualModel ?? defaultModel)
-        : (user?.optimizationTextModel ?? defaultModel)
+        let optimizationModelName = modelNameOverride ?? (isVisual
+            ? (user?.optimizationVisualModel ?? defaultModel)
+            : (user?.optimizationTextModel ?? defaultModel))
         print("[SystemOptimizer] 使用模型：\(optimizationModelName)")
 
         // 查询模型信息，获取厂商
@@ -972,29 +974,30 @@ class SystemOptimizer {
         return optimizedContent
     }
     
-    // MARK: 自动生成群聊标题
-    func autoChatName(historyMessage: String) async throws -> String {
-        let apiConfig = try fetchAPIConfig(isVisual: false)
+    // MARK: - Automatic conversation metadata
+    @MainActor
+    func autoChatMetadata(historyMessage: String, fallbackModelName: String? = nil,
+                          transport: (URLRequest) async throws -> (Data, URLResponse) = {
+                              try await URLSession.shared.data(for: $0)
+                          }) async throws -> HanlinConversationMetadata {
+        let apiConfig: (modelName: String, company: String, apiKey: String, url: URL, supportReasoningChange: Bool)
+        do {
+            apiConfig = try fetchAPIConfig(isVisual: false)
+        } catch {
+            guard let fallbackModelName else { throw error }
+            apiConfig = try fetchAPIConfig(isVisual: false, modelNameOverride: fallbackModelName)
+        }
         let optimizationModelName = restoreBaseModelName(from: apiConfig.modelName)
-        
-        let currentLanguage = Locale.preferredLanguages.first ?? "zh-Hans"
-        let languageKey = currentLanguage.hasPrefix("zh") ? "zh-Hans" : "en"
-        let systemMessages: [String: String] = [
-            "zh-Hans": "请根据下面的群聊内容为群聊取一个标题，可以根据内容及场合适当添加emoji，总字符数不超过6个字。直接给出纯文本的标题即可，不用多余的解释",
-            "en": "Please give a title for the group chat based on the content of the group chat below, you can add emoji as appropriate to the content and the occasion, with a total character count of no more than 6 words. Just give the title directly in plain text, no extra explanation is needed."
-        ]
-        let systemMessage = systemMessages[languageKey] ?? systemMessages["zh-Hans"]!
         var messages: [[String: Any]] = [
-            [
-                "role": "user",
-                "content": "\(systemMessage):\n\n\(historyMessage)"
-            ]
+            ["role": "system", "content": HanlinConversationMetadataPolicy.instruction(
+                languageTag: Locale.preferredLanguages.first ?? "en")],
+            ["role": "user", "content": historyMessage]
         ]
-        
+
         var requestBody: [String: Any] = [
             "model": optimizationModelName,
             "messages": messages,
-            "temperature": 1.0,
+            "temperature": 0.3,
             "stream": false
         ]
 
@@ -1005,13 +1008,13 @@ class SystemOptimizer {
             messages: &messages
         )
         
-        var request = URLRequest(url: apiConfig.url)
+        var request = URLRequest(url: apiConfig.url, timeoutInterval: 30)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Bearer \(apiConfig.apiKey)", forHTTPHeaderField: "Authorization")
         request.httpBody = try JSONSerialization.data(withJSONObject: requestBody, options: [])
         
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let (data, response) = try await transport(request)
         
         guard let httpResponse = response as? HTTPURLResponse else {
             throw NSError(domain: "NetworkError", code: -1,
@@ -1044,7 +1047,7 @@ class SystemOptimizer {
                           userInfo: [NSLocalizedDescriptionKey: "解析 API 响应失败"])
         }
         
-        return optimizedContent
+        return try HanlinConversationMetadata.decode(optimizedContent)
     }
     
     // MARK: 自动生成智能体设定
