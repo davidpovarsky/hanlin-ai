@@ -1,0 +1,32 @@
+{
+  "startedAtUTC": "2026-11-26T18:10:36.545896+00:00",
+  "sourceBase": "9819697c1792119a6a93b492d12abad7b3330c93",
+  "scope": "Original Foundation workspace file and original test file plus four new root-lifecycle tests, compiled unchanged in a portable module; not UIKit/iCloud/native execution",
+  "sources": {
+    "HanlinMiniAppsApp/MiniAppsDeveloperWorkspace.swift": {
+      "bytes": 14023,
+      "sha256": "ab466b2429bca4c4fc91fc0142202c2890101f1b53782be76cb5ca5596078921",
+      "portablePath": "Sources/HanlinMiniApps/MiniAppsDeveloperWorkspace.swift"
+    },
+    "HanlinMiniAppsTests/MiniAppsDeveloperWorkspaceTests.swift": {
+      "bytes": 9413,
+      "sha256": "47ec091e02d6990aa1ff25291c2b8c581f94c966faee737708ff043088f8e1b3",
+      "portablePath": "Tests/HanlinMiniAppsTests/MiniAppsDeveloperWorkspaceTests.swift"
+    }
+  },
+  "command": [
+    "swift",
+    "test",
+    "--package-path",
+    "/mnt/development/projects/builds/hanlin-studio-cloud-root-20261126/portable-proof",
+    "--scratch-path",
+    "/mnt/development/projects/builds/hanlin-studio-cloud-root-20261126/products",
+    "--jobs",
+    "2"
+  ],
+  "toolchain": "Swift version 6.4.3 (swift-6.4.3-RELEASE)\nTarget: aarch64-unknown-linux-gnu\n",
+  "exitCode": 1,
+  "finishedAtUTC": "2026-11-26T18:10:47.673985+00:00",
+  "logSHA256": "2610fe4d3c2a4a9448f79cd46e799680f4bc27b40fcc89437488ecbbc90e0644",
+  "sourceStillIdentical": true
+}

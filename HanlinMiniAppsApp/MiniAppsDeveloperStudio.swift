@@ -42,35 +42,47 @@ struct MiniAppsDeveloperStudio: View {
 
 private struct MiniAppsStudioLibrary: View {
     let isCloud: Bool
-    @State private var workspace: MiniAppsDeveloperWorkspace?
-    @State private var error: String?
+    @State private var load = MiniAppsStudioLibraryLoadState()
 
     var body: some View {
         Group {
-            if let workspace {
+            if let workspace = load.workspace {
                 MiniAppsStudioBrowser(workspace: workspace, directory: "", title: isCloud ? "iCloud Projects" : "My Projects")
-            } else if let error {
+            } else if let error = load.error {
                 ContentUnavailableView("Library unavailable", systemImage: "folder.badge.questionmark",
                     description: Text(error))
             } else {
                 ProgressView("Opening projects…")
             }
         }
-        .task {
+        .task(id: isCloud) {
+            // Keep an already opened workspace and its editor/navigation state.
+            guard let request = load.begin() else { return }
+            let requestedCloud = isCloud
             do {
-                let root: URL
-                if isCloud {
-                    guard let container = FileManager.default.url(forUbiquityContainerIdentifier: "iCloud.com.itorah.chavrusachat") else {
-                        throw NSError(domain: "MiniApps.Studio", code: 1,
-                            userInfo: [NSLocalizedDescriptionKey: "Sign in to iCloud and enable iCloud Drive to open this library."])
+                let workspace = try await MiniAppsStudioLibraryLoadState.resolveWorkspace {
+                    if requestedCloud {
+                        guard let container = FileManager.default.url(forUbiquityContainerIdentifier: "iCloud.com.itorah.chavrusachat") else {
+                            throw NSError(domain: "MiniApps.Studio", code: 1,
+                                userInfo: [NSLocalizedDescriptionKey:
+                                    "iCloud document storage is unavailable for this app on this device. Check iCloud Drive, then reopen this library."])
+                        }
+                        return container.appending(path: "Documents/MiniAppsStudio", directoryHint: .isDirectory)
                     }
-                    root = container.appending(path: "Documents/MiniAppsStudio", directoryHint: .isDirectory)
-                } else {
-                    root = try RuntimeFileLayout.default.workspace(client: .tools, identifier: "miniapp-studio")
+                    return try RuntimeFileLayout.default.workspace(client: .tools, identifier: "miniapp-studio")
                 }
-                workspace = try MiniAppsDeveloperWorkspace(root: root)
-            } catch { self.error = error.localizedDescription }
+                load.succeed(workspace, for: request)
+            } catch is CancellationError {
+                load.cancel(request)
+            } catch {
+                guard !Task.isCancelled else {
+                    load.cancel(request)
+                    return
+                }
+                load.fail(error.localizedDescription, for: request)
+            }
         }
+        .onDisappear { load.cancelCurrentRequest() }
     }
 }
 
