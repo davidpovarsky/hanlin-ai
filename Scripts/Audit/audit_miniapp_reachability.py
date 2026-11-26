@@ -193,7 +193,7 @@ def build() -> dict:
     ref("cameraDurableCopy", "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppCaptureInbox.swift", "func receive(directory: URL) throws -> HanlinMiniAppCaptureRecord")
     ref("cameraPackageCopy", "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppCaptureInbox.swift", "func copyPhotos(for id: UUID, documents: URL) throws -> [URL]")
     ref("cameraActionContinuation", "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppCaptureCoordinator.swift", "invocationID: record.invocationID, createdAt: record.invocationCreatedAt")
-    ref("miniAppsCapturePrincipal", "HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.swift", "struct HanlinMiniAppsCameraCaptureExtension: LockedCameraCaptureExtension")
+    ref("miniAppsCapturePrincipal", "HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.swift", "struct HanlinMiniAppsCameraCaptureExtension: @MainActor LockedCameraCaptureExtension")
     ref("miniAppsKeyboardPrincipal", "HanlinMiniAppsExtensions/Keyboard/HanlinMiniAppsKeyboard.swift", "final class HanlinMiniAppsKeyboard: HanlinKeyboardInputViewController")
     ref("keyboardController", "Packages/HanlinAppExtensionsSDK/Sources/HanlinKeyboardUI/HanlinKeyboardInputViewController.swift", "open class HanlinKeyboardInputViewController: UIInputViewController")
     ref("keyboardTextEdit", "Packages/HanlinAppExtensionsSDK/Sources/HanlinKeyboardUI/HanlinKeyboardInputViewController.swift", "case .insertText: textDocumentProxy.insertText(edit.text!)")
