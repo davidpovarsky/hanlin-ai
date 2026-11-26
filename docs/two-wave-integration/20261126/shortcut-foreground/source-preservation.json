@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-11-26T18:48:28.988228+00:00",
+  "base": "9819697c1792119a6a93b492d12abad7b3330c93",
+  "legacyIntentFiles": [
+    {
+      "path": "HanlinScriptingWidgets/HanlinScriptingAppIntents.swift",
+      "sha256": "77b051771b6725f52276f7be62eb4edb57c6876d01fc3befe5fccc42b9c108ef",
+      "unchangedFrom": "9819697c1792119a6a93b492d12abad7b3330c93"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptAppIntentBridge.swift",
+      "sha256": "3d7607cc245162f60963e9c718e3638744c8bfb01602b5a997069d28d688ada4",
+      "unchangedFrom": "9819697c1792119a6a93b492d12abad7b3330c93"
+    },
+    {
+      "path": "Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingAppIntents.swift",
+      "sha256": "01cc756189febdb6287eeb73c7c4349b8e211da95e49c4e23b42f6271a024cba",
+      "unchangedFrom": "9819697c1792119a6a93b492d12abad7b3330c93"
+    }
+  ],
+  "localizationCatalogs": [
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/Localizable.xcstrings",
+      "originalEntries": 1252,
+      "currentEntries": 1294,
+      "preservedOriginalEntries": true,
+      "newKeys": 42,
+      "newLocales": [
+        "en",
+        "he",
+        "zh-Hans"
+      ],
+      "sha256": "9437aa101dd2d12ad2e39471c6f76171750e6f4e2c83f01f21bbe47e1ef0186e"
+    },
+    {
+      "path": "Packages/HanlinWidgetSDK/HostResources/HanlinAppIntents.xcstrings",
+      "originalEntries": 18,
+      "currentEntries": 60,
+      "preservedOriginalEntries": true,
+      "newKeys": 42,
+      "newLocales": [
+        "en",
+        "he",
+        "zh-Hans"
+      ],
+      "sha256": "8a8bd214e8e1e5856f529451d44a8b82e975f975e93cb77666e94a9775b4733e"
+    }
+  ],
+  "generatorCheckExitCode": 0,
+  "diffCheckExitCode": 0,
+  "nativeExecution": "NOT_RUN"
+}

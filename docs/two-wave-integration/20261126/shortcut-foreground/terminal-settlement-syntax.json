@@ -1,0 +1,25 @@
+{
+  "source": "559f77b04ff701c4bc50669e25630b2ccbbc0882",
+  "scope": "Linux Swift syntax only; Apple typecheck/runtime NOT_RUN",
+  "checks": [
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "exitCode": 0,
+      "output": "",
+      "sha256": "67bb9f9e15ab8ee19578663c94a211180c47cebdfcaaf734a8840a1d9867da76"
+    },
+    {
+      "path": "HanlinMiniAppsApp/MiniAppsShortcutIntent.swift",
+      "exitCode": 0,
+      "output": "",
+      "sha256": "b1ed3e326e5fe968671a15900c18cffb3606641674aafa9c47dd36fd49b6b5bd"
+    },
+    {
+      "path": "HanlinMiniAppsTests/MiniAppsShortcutIntentTests.swift",
+      "exitCode": 0,
+      "output": "",
+      "sha256": "7924240896003356d83cf65d484087719ad01f217e6eb9d90fee28131d652f7e"
+    }
+  ],
+  "passed": true
+}

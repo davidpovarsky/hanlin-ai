@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "source": "a6eaf6ee77fbc0a48e9997b434dc28d2c15b916d",
+  "base": "9819697c1792119a6a93b492d12abad7b3330c93",
+  "authority": "Scripts/MiniApps/stage-sdk.mjs#sdkInputs-and-inputReceipt",
+  "sourceInputSHAWillChange": true,
+  "originalJSFacadesAndDependencyLocksChanged": false,
+  "files": [
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSystemEntrypointsView.swift",
+      "sha256": "c1a226e995240acf6c200faf15d10cbcb391c0b702f6bc3e77bc25842494a83b",
+      "directCanonicalSDKInput": true
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "sha256": "e53341f9f5e62702f3b2703d2ac4367f6921164dc43980a85ac2e0d4d2bddd65",
+      "directCanonicalSDKInput": true
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift",
+      "sha256": "b35644d9aa1abd6002f1d00e4c6c009d80ad63eb0b445cd002c96c49f91a6207",
+      "directCanonicalSDKInput": true
+    },
+    {
+      "path": "HanlinMiniAppsApp/MiniAppsShortcutIntent.swift",
+      "sha256": "b1ed3e326e5fe968671a15900c18cffb3606641674aafa9c47dd36fd49b6b5bd",
+      "directCanonicalSDKInput": false
+    },
+    {
+      "path": "HanlinMiniAppsTests/MiniAppsShortcutIntentTests.swift",
+      "sha256": "7924240896003356d83cf65d484087719ad01f217e6eb9d90fee28131d652f7e",
+      "directCanonicalSDKInput": false
+    },
+    {
+      "path": "HanlinMiniAppsTests/NativeScriptShortcutConcurrencyTests.swift",
+      "sha256": "235493a3b33d2a796da655f71c84a6cace6852e9046def2d7562bb162dc4a0f2",
+      "directCanonicalSDKInput": false
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationExecutor.swift",
+      "sha256": "450f3a5e0308c5cca03b07d863d71f2c96f04f9ec381fab9f49cc0201a08dcd3",
+      "directCanonicalSDKInput": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift",
+      "sha256": "a39e7d674cd4ecba7c95a0162dfd97f4aba7ce9f05af64f194ec2002277e922c",
+      "directCanonicalSDKInput": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationSnippet.swift",
+      "sha256": "93b2d3061d90c413c1119a711d01a07dcc095df579a0eb14aa561c95bc753b10",
+      "directCanonicalSDKInput": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinWidgetLastSuccessfulRender.swift",
+      "sha256": "60f21b8917461d7b1b4db94034644d08f11c433bb1b4c1f774388adc0b267787",
+      "directCanonicalSDKInput": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinInvocationQueueTests.swift",
+      "sha256": "23e451c2f4367a12b1a2f1a5cd94a23882ebd51535403b49450a1e213881f4a6",
+      "directCanonicalSDKInput": false
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinWidgetLastSuccessfulRenderTests.swift",
+      "sha256": "258a9c3d7a27b5795f4f84bb4109863613faf49bc41ddc072e13d2f94b83c50b",
+      "directCanonicalSDKInput": false
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/Localizable.xcstrings",
+      "sha256": "9437aa101dd2d12ad2e39471c6f76171750e6f4e2c83f01f21bbe47e1ef0186e",
+      "directCanonicalSDKInput": false
+    },
+    {
+      "path": "Packages/HanlinWidgetSDK/HostResources/HanlinAppIntents.xcstrings",
+      "sha256": "8a8bd214e8e1e5856f529451d44a8b82e975f975e93cb77666e94a9775b4733e",
+      "directCanonicalSDKInput": false
+    },
+    {
+      "path": "Scripts/SDK/generate_app_intents_resources.py",
+      "sha256": "dcc0733ec154214d8da3ba43c48438e53dee415559b312cd56474d3495a1bffc",
+      "directCanonicalSDKInput": false
+    }
+  ],
+  "qualification": "Direct SDK input classification only. Final integration inventories and native resource/test membership still require canonical regeneration; no final Host/SDK fingerprint claimed."
+}
