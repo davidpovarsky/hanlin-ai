@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Wait until App Store Connect acknowledges the uploaded ChavrusaChat build."""
+"""Verify uploaded TestFlight availability without changing its tester audience."""
 
 from __future__ import annotations
 
@@ -26,7 +26,7 @@ if len(sys.argv) > 2:
     audience_source = sys.argv[3]
 
 
-def get(path: str, *, method: str = "GET", data: dict | None = None) -> dict:
+def get(path: str) -> dict:
     # Processing may outlive one JWT. Mint a short-lived token per request.
     now = int(time.time())
     token = jwt.encode(
@@ -39,7 +39,7 @@ def get(path: str, *, method: str = "GET", data: dict | None = None) -> dict:
     request = urllib.request.Request(
         f"https://api.appstoreconnect.apple.com{path}",
         headers={"Authorization": f"Bearer {token}", "Content-Type": "application/json"},
-        method=method, data=json.dumps(data).encode() if data is not None else None,
+        method="GET",
     )
     try:
         with urllib.request.urlopen(request, timeout=45) as response:
@@ -51,12 +51,12 @@ def get(path: str, *, method: str = "GET", data: dict | None = None) -> dict:
             details = "; ".join(f"{item.get('code')}: {item.get('detail', item.get('title', ''))}" for item in errors)
         except (ValueError, TypeError):
             details = "No JSON error details"
-        raise SystemExit(f"App Store Connect {method} {path.split('?')[0]}: HTTP {error.code}; {details}") from None
+        raise SystemExit(f"App Store Connect GET {path.split('?')[0]}: HTTP {error.code}; {details}") from None
 
 
 def groups_for_build(build_id: str) -> list[dict]:
     # Read the documented build include; there is no GET /builds/{id}/betaGroups route.
-    parameters = urllib.parse.urlencode({"include": "betaGroups", "fields[betaGroups]": "name,isInternalGroup"})
+    parameters = urllib.parse.urlencode({"include": "betaGroups", "fields[betaGroups]": "name,isInternalGroup,hasAccessToAllBuilds"})
     response = get(f"/v1/builds/{build_id}?{parameters}")
     return [resource for resource in response.get("included", []) if resource["type"] == "betaGroups"]
 
@@ -100,28 +100,31 @@ for _ in range(40):
                                          if group["attributes"].get("isInternalGroup") is True)
                 if not audience_groups:
                     raise SystemExit("Previous build has no assigned internal group; no audience changed")
+            audience_ready = True
+            if audience_source:
+                # Automatic internal distribution may become visible after VALID.
+                # Never POST an internal group: confirm its actual relationship on
+                # every iteration, even after a previous iteration saw it. The
+                # hasAccessToAllBuilds flag alone is not delivery evidence.
                 current_groups = groups_for_build(builds[0]["id"])
                 missing = sorted(set(audience_groups) - {group["id"] for group in current_groups})
+                audience_ready = not missing
                 if missing:
-                    get(f"/v1/builds/{builds[0]['id']}/relationships/betaGroups", method="POST",
-                        data={"data": [{"type": "betaGroups", "id": group} for group in missing]})
-                confirmed = groups_for_build(builds[0]["id"])
-                if not set(audience_groups).issubset({group["id"] for group in confirmed}):
-                    raise SystemExit("Internal group assignment was not confirmed")
-                print(f"Reused {len(audience_groups)} existing internal groups from build {audience_source}")
+                    print("Waiting for existing internal audience on the processed build")
             detail = get(f"/v1/builds/{builds[0]['id']}/buildBetaDetail")["data"]["attributes"]
             internal = detail["internalBuildState"]
             print(f"TestFlight build {build_number} internal testing state: {internal}")
             if internal in {"PROCESSING_EXCEPTION", "EXPIRED", "MISSING_EXPORT_COMPLIANCE"}:
                 raise SystemExit(f"TestFlight testing unavailable: {internal}")
             ready = {"IN_BETA_TESTING"} if audience_source else {"READY_FOR_BETA_TESTING", "IN_BETA_TESTING"}
-            if internal in ready:
+            if internal in ready and audience_ready:
                 evidence = {"appID": apps[0]["id"], "buildID": builds[0]["id"],
                             "buildNumber": build_number, "processingState": state,
                             "internalBuildState": internal,
                             "externalBuildState": detail.get("externalBuildState"),
                             "sourceSHA": os.environ.get("GITHUB_SHA")}
                 if audience_source:
+                    print(f"Confirmed {len(audience_groups)} existing internal groups from build {audience_source}")
                     evidence["verificationSHA"] = evidence.pop("sourceSHA")
                     evidence["audienceSourceBuild"] = audience_source
                     evidence["internalBetaGroupIDs"] = audience_groups
