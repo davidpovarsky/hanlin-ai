@@ -51,10 +51,15 @@ public struct HanlinMessageMarkdownView: View {
         highlightedRenderer
             .markdownDocumentSelectionMode(documentSelectionMode)
             .markdownSelectAllRequest(selectAllRequest)
-            .markdownSelectionChanged { selection in onSelectionChanged?(selection) }
-            .markdownLongPressPreview(documentSelectionMode ? nil : messagePreview)
+            .markdownSelectionChanged(onSelectionChanged)
+            .markdownLongPressPreview(longPressPreviewHandler)
             .markdownEmbeddedBlockRenderer(embeddedBlockRenderer)
             .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    private var longPressPreviewHandler: (@MainActor (UIView, CGPoint) -> Void)? {
+        guard !documentSelectionMode else { return nil }
+        return messagePreview
     }
 
     private var highlightedRenderer: some View {
