@@ -7,12 +7,7 @@ import hashlib
 import json
 from project_graph import parse_project
 
-EXTENSIONS = (
-    ("HanlinMiniAppsWidgets", "HanlinScriptingWidgets", "Widgets", "widgets"),
-    ("HanlinMiniAppsShare", "ChavrusaChatShare", "Share", "share"),
-    ("HanlinMiniAppsTranslationProvider", "ChavrusaChatTranslationProvider", "Translation", "translation-provider"),
-    ("HanlinMiniAppsNotificationService", "ChavrusaChatNotificationService", "Notification", "notification-service"),
-)
+from extension_inventory import MINIAPPS_EXTENSIONS as EXTENSIONS
 
 def extension_id(role):
     return "AC1A" + hashlib.sha256(("miniapps-extension:" + role).encode()).hexdigest()[:20].upper()

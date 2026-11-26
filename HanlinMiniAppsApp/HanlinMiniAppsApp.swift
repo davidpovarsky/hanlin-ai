@@ -1,4 +1,6 @@
 import AppIntents
+import HanlinCameraCaptureUI
+import LockedCameraCapture
 import ExpoWidgets
 import HanlinTranslationUI
 import HanlinScriptExtensions
@@ -87,12 +89,15 @@ struct HanlinMiniAppsWindow: View {
                     }
                     .accessibilityIdentifier("hanlin-miniapps-bootstrap-failure")
                 case .ready:
-                    if let externalRequestID {
-                        HanlinExternalMiniAppView(requestID: externalRequestID, onClose: { self.externalRequestID = nil })
-                            .id(externalRequestID)
-                    } else {
-                        HanlinMiniAppsReadyRoot()
+                    Group {
+                        if let externalRequestID {
+                            HanlinExternalMiniAppView(requestID: externalRequestID, onClose: { self.externalRequestID = nil })
+                                .id(externalRequestID)
+                        } else {
+                            HanlinMiniAppsReadyRoot()
+                        }
                     }
+                    .hanlinMiniAppSystemEntrypoints(platform: .shared)
                 }
             }
             .task {
@@ -206,12 +211,6 @@ private struct HanlinMiniAppsReadyRoot: View {
                     await AppRuntimeCore.shared.handleForegroundIfLaunched()
                     await provider.platform.resumePendingInvocations(recoverDeliveredNotifications: true)
                 }
-                .fullScreenCover(isPresented: Binding(
-                    get: { provider.platform.presentsForegroundAction },
-                    set: { if !$0 { provider.platform.dismissActiveApplication() } }
-                )) {
-                    ScriptingApplicationContainerView(platform: provider.platform)
-                }
                 .onChange(of: scenePhase) { _, phase in
                     if phase == .active {
                         Task {
@@ -226,6 +225,6 @@ private struct HanlinMiniAppsReadyRoot: View {
 /// Index the original shared actions in the foreground app that executes them.
 struct HanlinMiniAppsIntents: AppIntentsPackage {
     static var includedPackages: [any AppIntentsPackage.Type] {
-        [HanlinWidgetIntentsPackage.self, HanlinNativePresentationIntentsPackage.self, HanlinExpoWidgetsIntentsPackage.self]
+        [HanlinWidgetIntentsPackage.self, HanlinNativePresentationIntentsPackage.self, HanlinExpoWidgetsIntentsPackage.self, HanlinMiniAppSystemIntentsPackage.self, HanlinCameraCaptureIntentsPackage.self]
     }
 }

@@ -25,6 +25,7 @@ import time
 import zipfile
 
 from audit_release_resources import ROLES, certificate, decode, evaluate_profile
+from extension_inventory import signing_targets_for_owner, embedded_product_bundles
 from resolve_signing_profiles import (
     resolve_original_profiles, install_profile, remove_installed_profiles,
 )
@@ -191,8 +192,7 @@ def main():
                 product = {"role": role, "bundle_id": bundle, "archive": "NOT_RUN", "export": "NOT_RUN",
                            "entitlements": "NOT_RUN"}
                 state["products"].append(product)
-                selected_bundles = {b for r, b, _, _ in ROLES
-                                    if (r == "miniapps") == (role == "miniapps")}
+                selected_bundles = {target.bundle for target in signing_targets_for_owner(role)}
                 options["provisioningProfiles"] = {b: profile_mapping[b] for b in selected_bundles}
                 export_options.write_bytes(plistlib.dumps(options))
                 export_options.chmod(0o600)
@@ -240,15 +240,15 @@ def main():
                 if len(apps) != 1:
                     raise RuntimeError("Exported product has an ambiguous app payload")
                 run(["codesign", "--verify", "--deep", "--strict", apps[0]], role + "-signature")
-                targets = [apps[0], *apps[0].glob("PlugIns/*.appex")]
-                expected = {b: (name, path) for name, b, _, path in ROLES if name != "miniapps"} if role == "ai" else {
-                    b: (name, path) for name, b, _, path in ROLES if name == "miniapps"}
+                targets = embedded_product_bundles(apps[0])
+                expected = {target.bundle: (target.role, target.entitlements)
+                            for target in signing_targets_for_owner(role)}
                 observed = {}
                 for target in targets:
                     bundle_info = plistlib.loads((target / "Info.plist").read_bytes())
                     identity = bundle_info["CFBundleIdentifier"]
-                    if identity not in expected:
-                        raise RuntimeError("Unexpected signed extension or product")
+                    if identity not in expected or identity in observed:
+                        raise RuntimeError("Unexpected or duplicate signed extension or product")
                     name, source = expected[identity]
                     decoded = subprocess.run(["security", "cms", "-D", "-i", str(target / "embedded.mobileprovision")],
                                              capture_output=True, timeout=20, check=True)

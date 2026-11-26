@@ -201,6 +201,10 @@
     {
       "product": "HanlinExpoWidgetsOriginal",
       "package": "HanlinSDK"
+    },
+    {
+      "product": "HanlinCameraCaptureUI",
+      "package": "HanlinSDK"
     }
   ]
 }

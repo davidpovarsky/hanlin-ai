@@ -9,6 +9,7 @@ import xml.etree.ElementTree as ET
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "Scripts/CI/IntegrationValidation"))
 from project_graph import parse_project, validate_graph, validate_agent_sdk_linkage
+from extension_inventory import EXTENSIONS, NEW_EXTENSION_KEYS, SIGNING_TARGETS, APP_BUNDLES
 
 
 def validate_native_test_membership():
@@ -32,8 +33,50 @@ def validate_native_test_membership():
     return sorted(paths)
 
 
+
+def validate_system_extension_sources(root=ROOT):
+    """Validate actual entrypoint metadata and entitlement ownership before Xcode."""
+    for target in SIGNING_TARGETS:
+        assert (root / target.entitlements).is_file(), target.entitlements
+    principals = {
+        "ChavrusaChatKeyboard": "HanlinKeyboard",
+        "HanlinMiniAppsKeyboard": "HanlinMiniAppsKeyboard",
+        "ChavrusaChatNotificationContent": "NotificationViewController",
+        "HanlinMiniAppsNotificationContent": "HanlinMiniAppsNotificationContent",
+    }
+    for spec in EXTENSIONS:
+        if spec.key not in NEW_EXTENSION_KEYS:
+            continue
+        for name, folder in ((spec.ai_target, spec.ai_target),
+                             (spec.mini_target, "HanlinMiniAppsExtensions/" + spec.mini_folder)):
+            path = root / folder
+            info = plistlib.loads((path / "Info.plist").read_bytes())
+            entitlements = plistlib.loads((path / (name + ".entitlements")).read_bytes())
+            assert list(path.glob("*.swift")), "Missing native extension entrypoint: " + name
+            if spec.key == "camera-capture":
+                assert info["EXAppExtensionAttributes"]["EXExtensionPointIdentifier"] == "com.apple.securecapture"
+                assert "NSExtension" not in info, "Capture uses ExtensionKit metadata"
+                assert info["HanlinContainingApplicationIdentifier"] == APP_BUNDLES["ai" if name == spec.ai_target else "miniapps"]
+                assert "com.apple.security.application-groups" not in entitlements, "Locked capture cannot use App Groups"
+            else:
+                extension = info["NSExtension"]
+                point = ("com.apple.keyboard-service" if spec.key == "keyboard"
+                         else "com.apple.usernotifications.content-extension")
+                assert extension["NSExtensionPointIdentifier"] == point
+                assert extension["NSExtensionPrincipalClass"] == "$(PRODUCT_MODULE_NAME)." + principals[name]
+                assert entitlements["com.apple.security.application-groups"] == ["group.com.itorah.chavrusachat"]
+                assert info["HanlinExtensionHost"]["AppGroupIdentifier"] == "group.com.itorah.chavrusachat"
+                if spec.key == "keyboard":
+                    assert extension["NSExtensionAttributes"]["RequestsOpenAccess"] is True
+                else:
+                    assert extension["NSExtensionAttributes"]["UNNotificationExtensionCategory"] == info["HanlinExtensionHost"]["NotificationCategoryIdentifier"]
+                if name == spec.mini_target:
+                    assert info["HanlinExtensionHost"]["StorageNamespace"] == "HanlinMiniApps/v1"
+    return {"newExtensionEntryPoints": 6, "signingTargets": len(SIGNING_TARGETS)}
+
 def main():
     validate_native_test_membership()
+    validate_system_extension_sources()
     # The parser rejects duplicate IDs/keys and reads quoted and ordinary OpenStep alike.
     project_text = (ROOT / "AI_HLY.xcodeproj/project.pbxproj").read_text(encoding="utf-8")
     project = parse_project(project_text)

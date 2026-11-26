@@ -82,6 +82,7 @@ public struct HanlinScriptExtensionStore: Sendable {
     }
 
     public let root: URL
+    private var persistsDiagnostics = true
 
     public init(root: URL) {
         self.root = Self.canonicalManagedRoot(for: root)
@@ -150,6 +151,7 @@ public struct HanlinScriptExtensionStore: Sendable {
 
     public func recordDurableQueryDiagnostic(_ diagnostic: HanlinWidgetStorageDiagnostic) {
         Self.recordDiagnostic(diagnostic)
+        guard persistsDiagnostics else { return }
         do {
             let dir = root.appending(path: "diagnostics", directoryHint: .isDirectory)
             try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
@@ -161,6 +163,7 @@ public struct HanlinScriptExtensionStore: Sendable {
     }
 
     public func recordDurableConsistencyReport(_ report: HanlinStorageConsistencyReport) {
+        guard persistsDiagnostics else { return }
         do {
             let dir = root.appending(path: "diagnostics", directoryHint: .isDirectory)
             try FileManager.default.createDirectory(at: dir, withIntermediateDirectories: true)
@@ -314,6 +317,48 @@ public struct HanlinScriptExtensionStore: Sendable {
         try withLock { try loadUnlocked() }
     }
 
+
+    /// Read the last immutable committed publication without creating a shared
+    /// lock, repairing pending writes, materializing resources or saving a
+    /// diagnostic. A keyboard may read this container without Full Access.
+    /// Recovery remains the responsibility of the containing app.
+    public func loadReadOnly() throws -> HanlinScriptExtensionSnapshot? {
+        var reader = self
+        reader.persistsDiagnostics = false
+        return try reader.readCommittedSnapshotWithoutMutation()
+    }
+
+    private func readCommittedSnapshotWithoutMutation() throws -> HanlinScriptExtensionSnapshot? {
+        if let commit = try optionalDecode(Commit.self, at: commitURL) {
+            guard commit.version == 1 else { throw HanlinScriptExtensionStoreError.invalidCommit }
+            let snapshot = try decodeEnvelope(checkedRevision(commit.snapshotHash),
+                relativePath: "Revisions/committed.json")
+            guard try optionalDecode(Commit.self, at: commitURL) == commit else {
+                throw HanlinScriptExtensionStoreError.storageBusy
+            }
+            // The commit points at immutable bytes. A pending shadow or an old
+            // binary's v1 shadow must never overwrite this reader's native data.
+            return snapshot
+        }
+        if let pending = try optionalDecode(Pending.self, at: pendingURL) {
+            // First publication has not committed. Expose only the preceding
+            // verified shadow, if there was one; never admit its candidate.
+            guard let previous = pending.previousShadowHash else { return nil }
+            return try decodeEnvelope(checkedRevision(previous), relativePath: "Revisions/previous.json")
+        }
+        let snapshot: HanlinScriptExtensionSnapshot?
+        if FileManager.default.fileExists(atPath: snapshotV2URL.path) {
+            snapshot = try loadFile(at: snapshotV2URL)
+        } else {
+            snapshot = try loadFile(at: snapshotV1URL)
+        }
+        guard try optionalDecode(Commit.self, at: commitURL) == nil,
+              try optionalData(at: pendingURL) == nil else {
+            throw HanlinScriptExtensionStoreError.storageBusy
+        }
+        return snapshot
+    }
+
     /// One cross-process read/modify/commit boundary, shared by host and intents.
     /// The closure must be synchronous and must not re-enter this store.
     @discardableResult
@@ -395,7 +440,8 @@ public struct HanlinScriptExtensionStore: Sendable {
                 // executable cannot interpret native engines or their variants.
                 let restored = HanlinScriptExtensionSnapshot(schemaVersion: 1, generatedAt: snapshot.generatedAt,
                     widgets: snapshot.widgets, intentEntities: snapshot.intentEntities, liveActivities: snapshot.liveActivities,
-                    translationApps: snapshot.translationApps, widgetInstances: committed.widgetInstances,
+                    translationApps: snapshot.translationApps, nativePresentations: committed.nativePresentations,
+                    widgetInstances: committed.widgetInstances,
                     widgetStates: committed.widgetStates, widgetEntityMigrations: committed.widgetEntityMigrations,
                     inactiveWidgetInstallations: committed.inactiveWidgetInstallations)
                 return .init(snapshot: restored, recovery: .legacyWriterDetected)
@@ -588,7 +634,8 @@ public struct HanlinScriptExtensionStore: Sendable {
                 widgets: v1Widgets,
                 intentEntities: snapshot.intentEntities,
                 liveActivities: snapshot.liveActivities,
-                translationApps: snapshot.translationApps
+                translationApps: snapshot.translationApps,
+                nativePresentations: snapshot.nativePresentations
             )
         } else {
             shadow = snapshot

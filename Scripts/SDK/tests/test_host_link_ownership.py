@@ -123,8 +123,8 @@ class HostLinkOwnershipTests(unittest.TestCase):
     def test_every_declared_host_product_remains_reachable_and_unknown_products_are_kept(self):
         manifest = json.loads(subprocess.check_output(
             ["swift", "package", "--package-path", str(ROOT), "dump-package"], text=True))
-        self.assertEqual(len(manifest["products"]), 47)
-        self.assertEqual(len(manifest["targets"]), 113)
+        self.assertEqual(len(manifest["products"]), 50)
+        self.assertEqual(len(manifest["targets"]), 117)
         target_names = {target["name"] for target in manifest["targets"]}
         self.assertIn("AI_Hanlin", target_names)
         self.assertNotIn("HanlinApp", target_names)
@@ -132,7 +132,7 @@ class HostLinkOwnershipTests(unittest.TestCase):
         objects = self.project["objects"]
         definition = json.loads(generate_manifest.APPLICATION_PRODUCTS.read_text())
         self.assertEqual(definition["module"], "AI_Hanlin")
-        self.assertEqual(len(definition["products"]), 50)
+        self.assertEqual(len(definition["products"]), 51)
         for entry in definition["products"]:
             matches = [obj for obj in objects.values()
                        if obj.get("isa") == "XCSwiftPackageProductDependency"
@@ -150,6 +150,7 @@ class HostLinkOwnershipTests(unittest.TestCase):
         self.assertIn("HanlinExpoWidgetNative", closure[0])
         self.assertIn("HanlinTranslationUI", closure[0])
         self.assertIn("HanlinExpoWidgetsOriginal", closure[0])
+        self.assertIn("HanlinCameraCaptureUI", closure[0])
         self.assertTrue({"HanlinMiniAppsBridge", "HanlinMiniAppsPicker"} <= target_names)
 
 

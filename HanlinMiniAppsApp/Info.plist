@@ -107,6 +107,8 @@
 		<key>NotificationCategoryIdentifier</key>
 		<string>CHAVRUSA_REMINDER</string>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>Capture photos for the installed mini app you choose.</string>
 	<key>NSCalendarsFullAccessUsageDescription</key>
 	<string>Your mini apps use Calendar to read the calendars you choose and create or update requested events.</string>
 	<key>NSCalendarsWriteOnlyAccessUsageDescription</key>

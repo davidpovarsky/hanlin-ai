@@ -2,9 +2,10 @@
 """Wire the original Hanlin executable to its single shared SDK implementation."""
 from pathlib import Path
 import subprocess
-import argparse,json,os,re,shlex,sys
+import argparse,json,os,re,shlex,sys,hashlib
 ROOT=Path(__file__).resolve().parents[2]
 sys.path.insert(0,str(ROOT/"Scripts/CI/IntegrationValidation"))
+sys.path.insert(0,str(ROOT/"Scripts/ProductSplit"))
 from project_graph import parse_project
 FILE=ROOT/"AI_HLY.xcodeproj/project.pbxproj"
 ROOT_PACKAGE="AC1900000000000000000001"
@@ -17,6 +18,9 @@ PRODUCTS={"HanlinApplication":"AC1900000000000000000002","HanlinA2UI":"AC1900000
           "HanlinTranslationUI":"AC1900000000000000000043",
           "HanlinWidgetUI":"AC1900000000000000000044",
           "HanlinExpoWidgetsOriginal":"AC1900000000000000000050",
+          "HanlinKeyboardUI":"AC1900000000000000000060",
+          "HanlinNotificationContentUI":"AC1900000000000000000061",
+          "HanlinCameraCaptureUI":"AC1900000000000000000062",
            "HanlinMiniAppsUI":"AC1900000000000000000045",
            "HanlinPresentationKit":"AC1800000000000000000002",
            "TorahLibraryKit":"F70000000000000000000051"}
@@ -35,16 +39,21 @@ EXTRA_PRODUCT_BUILDS = {
     ("HanlinMiniApps", "HanlinExpoWidgetsOriginal"): "AC1900000000000000000052",
     ("AI_HLYTests", "HanlinExpoWidgetsOriginal"): "AC1900000000000000000053",
     ("HanlinScriptingWidgets", "HanlinExpoWidgetsOriginal"): "AC1900000000000000000054",
-    ("HanlinMiniApps", "HanlinWidgetUI"): "AC1900000000000000000055"
+    ("HanlinMiniApps", "HanlinWidgetUI"): "AC1900000000000000000055",
+    ("HanlinMiniApps", "HanlinCameraCaptureUI"): "AC1900000000000000000063",
+    ("HanlinScriptingWidgets", "HanlinCameraCaptureUI"): "AC1900000000000000000064"
 }
 TARGET_PRODUCTS={
     "HanlinApp": ["HanlinApplication"],
     "AI_HLYTests": ["HanlinApplication"],
-    "HanlinMiniApps": ["HanlinA2UI", "HanlinLocalization", "HanlinAgentActivityCore", "HanlinExtensionContracts", "HanlinMiniAppsUI", "HanlinPresentationKit", "TorahLibraryKit", "HanlinTranslationUI", "HanlinExpoWidgetsOriginal", "HanlinWidgetUI"],
+    "HanlinMiniApps": ["HanlinA2UI", "HanlinLocalization", "HanlinAgentActivityCore", "HanlinExtensionContracts", "HanlinMiniAppsUI", "HanlinPresentationKit", "TorahLibraryKit", "HanlinTranslationUI", "HanlinExpoWidgetsOriginal", "HanlinWidgetUI", "HanlinCameraCaptureUI"],
     "ChavrusaChatShare": ["HanlinShareExtensionUI", "HanlinExtensionContracts"],
     "ChavrusaChatNotificationService": ["HanlinNotificationExtension", "HanlinExtensionContracts"],
     "ChavrusaChatTranslationProvider": ["HanlinTranslationUI", "HanlinExtensionContracts"],
-    "HanlinScriptingWidgets": ["HanlinWidgetUI", "HanlinExtensionContracts", "HanlinExpoWidgetsOriginal"],
+    "HanlinScriptingWidgets": ["HanlinWidgetUI", "HanlinExtensionContracts", "HanlinExpoWidgetsOriginal", "HanlinCameraCaptureUI"],
+    "ChavrusaChatKeyboard": ["HanlinKeyboardUI", "HanlinExtensionContracts"],
+    "ChavrusaChatNotificationContent": ["HanlinNotificationContentUI", "HanlinExtensionContracts"],
+    "ChavrusaChatCameraCapture": ["HanlinCameraCaptureUI"],
 }
 
 class Span:
@@ -261,6 +270,9 @@ def update(package=None):
     for name,key in PRODUCTS.items():
         text=insert_object(text,"XCSwiftPackageProductDependency",key,
             "\t\t\tisa = XCSwiftPackageProductDependency;\n\t\t\tpackage = "+ROOT_PACKAGE+";\n\t\t\tproductName = "+name+";\n")
+    from system_extension_targets import wire_ai_system_extensions
+    text = wire_ai_system_extensions(text, parse_project=parse_project, edit_object=edit_object,
+                                     replace_list=replace_list, insert_object=insert_object)
     objects=parse_project(text)["objects"]
     targets={v["name"]:(k,v) for k,v in objects.items() if v.get("isa")=="PBXNativeTarget"}
     for index,(name,required) in enumerate(TARGET_PRODUCTS.items()):
@@ -361,11 +373,25 @@ def update(package=None):
             "AI_HLY/Downstream/ScriptingPlatform/MiniAppImportDiagnosticsView.swift",
             "AI_HLY/Downstream/RuntimeCore/Core/MiniAppAuthoringService.swift",
             "AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift"]
+    # The original sixteen slots end immediately before reserved test/resource
+    # IDs. New system-entrypoint sources get stable, disjoint identities.
+    system_sources = (
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift",
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppCaptureCoordinator.swift",
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppCaptureInbox.swift",
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSpotlightIndex.swift",
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSystemCatalog.swift",
+        "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSystemEntrypointsView.swift",
+    )
+    shared.extend(system_sources)
     shared_group="F9F4C452EBF2FA6B1274B4D7"
     shared_children=list(objects[shared_group]["children"])
     for index,path in enumerate(shared):
         file_id="AC19"+f"{256+index*2:020X}"
         build_id="AC19"+f"{257+index*2:020X}"
+        if path in system_sources:
+            file_id = "AC1C" + hashlib.sha256(("file:" + path).encode()).hexdigest()[:20].upper()
+            build_id = "AC1C" + hashlib.sha256(("build:" + path).encode()).hexdigest()[:20].upper()
         text=insert_object(text,"PBXFileReference",file_id,
             "\t\t\tisa = PBXFileReference;\n\t\t\tlastKnownFileType = sourcecode.swift;\n\t\t\tpath = "+json.dumps(path)+";\n\t\t\tsourceTree = SOURCE_ROOT;\n")
         text=insert_object(text,"PBXBuildFile",build_id,

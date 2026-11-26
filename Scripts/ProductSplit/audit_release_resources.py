@@ -20,14 +20,7 @@ import urllib.parse
 import urllib.request
 
 ROOT = Path(__file__).resolve().parents[2]
-ROLES = [
-    ("ai", "com.itorah.chavrusachat", "APPLE_MAIN_PROVISIONING_PROFILE_B64", "AI_HLY/AI_HLY.entitlements"),
-    ("miniapps", "com.itorah.hanlinminiapps", "APPLE_MINIAPPS_PROVISIONING_PROFILE_B64", "HanlinMiniAppsApp/HanlinMiniApps.entitlements"),
-    ("share", "com.itorah.chavrusachat.share", "APPLE_SHARE_PROVISIONING_PROFILE_B64", "ChavrusaChatShare/ChavrusaChatShare.entitlements"),
-    ("widgets", "com.itorah.chavrusachat.widgets", "APPLE_WIDGETS_PROVISIONING_PROFILE_B64", "HanlinScriptingWidgets/HanlinScriptingWidgets.entitlements"),
-    ("translation", "com.itorah.chavrusachat.translation-provider", "APPLE_TRANSLATION_PROVISIONING_PROFILE_B64", "ChavrusaChatTranslationProvider/ChavrusaChatTranslationProvider.entitlements"),
-    ("notification", "com.itorah.chavrusachat.notification-service", "APPLE_NOTIFICATION_SERVICE_PROVISIONING_PROFILE_B64", "ChavrusaChatNotificationService/ChavrusaChatNotificationService.entitlements"),
-]
+from extension_inventory import ROLES
 
 def utc(value):
     if not isinstance(value, datetime):

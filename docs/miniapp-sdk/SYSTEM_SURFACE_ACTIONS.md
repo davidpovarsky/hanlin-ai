@@ -1,4 +1,4 @@
-# Widget and Live Activity actions
+# System surfaces and package actions
 
 The installed SDK exports the declaration-only package `@hanlin/system-surfaces` alongside the original Expo, NativeScript and ScriptWidget declarations. Read `get_miniapp_sdk(engine)` and its `selectedEngine.systemSurfaces.typesPath` and `docsPath`. The staged file is copied from `Scripts/MiniApps/native-presentations.d.ts`; it contains Hanlin package metadata, not a replacement runtime implementation.
 
@@ -56,3 +56,104 @@ A widget action has one unique ID. A Host action must not also declare a local `
 `validate_miniapp` and `build_miniapp` report invalid declarations as `MINIAPP_WIDGET_HOST_ACTION_INVALID`, with the file and offending metadata path. The original TypeScript compiler checks typed source imports against `@hanlin/system-surfaces`; for example, a function is not a JSON parameter and a Host action is not a native-panel action. Imported source-bearing packages run the same validation before installation. The application's diagnostic sheet and Send to agent action use the existing [repair workflow](IMPORT_REPAIR.md).
 
 The SDK and native application must be built from matching source inputs. Updating a declaration file in the repository without staging a new SDK does not update the agent's environment. `stage-sdk.mjs` includes the exact contract, compiler, queue and intent source identities in the SDK input fingerprint, and the original Host preparation workflow runs the authoring tests and produces the archive. See [original upstream build](ORIGINAL_UPSTREAM_BUILD.md) for upstream version resolution and maintained source reconciliation.
+
+## Keyboard, notification content, Spotlight and capture
+
+The foreground package keeps its original Expo or NativeScript entrypoint and runtime. Its declared system entrypoints refer to that prepared foreground bundle: normally `bundle.js` for Expo or `nativescript/app/bundle.mjs` for NativeScript. A native presentation has its own original-renderer source in `nativePresentations`; that source is separate from the foreground bundle.
+
+| `entrypoints[].kind` | Installed system integration | Additional package declaration |
+| --- | --- | --- |
+| `keyboard` | The owning app's real iOS custom keyboard extension, with installed package selection | A matching `nativePresentations[entrypointID]` |
+| `notificationUI` | The owning app's notification-content extension and existing notification category | A matching native presentation and typed notification `userInfo` |
+| `spotlight` | Searchable entity for each installed declared package entrypoint | Optional `exportedSymbol`; when present it identifies exactly one registered prepared action |
+| `capture` | Camera Control / locked camera extension, with foreground camera continuation and file handoff | Required `exportedSymbol` identifying exactly one registered prepared action |
+
+These are additional exposure declarations for an installed package. They do not introduce a custom home entrypoint. The legacy Scripting/ScriptUI feature expansion remains frozen.
+
+For example, merge the following metadata into a NativeScript package's existing `script.json`; keep the rest of its original package manifest and source files:
+
+```json
+{
+  "entrypoints": [
+    {"id": "keys", "kind": "keyboard", "sourcePath": "nativescript/app/bundle.mjs"},
+    {"id": "notice", "kind": "notificationUI", "sourcePath": "nativescript/app/bundle.mjs"},
+    {"id": "search", "kind": "spotlight", "sourcePath": "nativescript/app/bundle.mjs"},
+    {"id": "photo", "kind": "capture", "sourcePath": "nativescript/app/bundle.mjs", "exportedSymbol": "capture.receive"}
+  ],
+  "actions": [
+    {"id": "capture.receive", "handler": "nativescript/app/bundle.mjs"}
+  ],
+  "nativePresentations": {
+    "keys": {"engine": "scriptwidget", "sourcePath": "keyboard.tsx", "sourceFormat": "tsx"},
+    "notice": {"engine": "scriptwidget", "sourcePath": "notification.tsx", "sourceFormat": "tsx"}
+  }
+}
+```
+
+The two presentation files must exist and use their declared original renderer. Add their declared local callbacks to each presentation's `actions` array. An original Expo presentation uses `engine: "expo"` with its actual Expo layout/program; the public `NativePresentationDefinition` declares the supported formats. Metadata does not supply a missing renderer or JavaScript handler.
+
+### Keyboard context and editing
+
+An original ScriptWidget presentation reads the current document context through `$getenv("presentation")`. `keyboard.documentContextBeforeInput`, `documentContextAfterInput` and `selectedText` are optional because iOS may not supply them. `keyboard.hasFullAccess` is the current system setting. The typed bridge exposes:
+
+```ts
+$presentation.keyboard.insertText("שלום");
+$presentation.keyboard.deleteBackward();
+$presentation.keyboard.adjustTextPosition(-1);
+$presentation.keyboard.nextInputMode();
+```
+
+Call these inside a declared local presentation action. Edits execute in order against the current `UITextDocumentProxy`. An Expo presentation callback can return `NativePresentationPropsEffect`, with `__hanlinPresentationEffect.keyboardEdits` containing the same typed operations. The surface supplies ordinary Space, Return, Delete and next-keyboard controls as well as the package's original-renderer interface.
+
+The keyboard reads the containing app's published installed catalog; renderer state, copied resources and mutable ScriptWidget service files live in the keyboard's own container. The read-only catalog path does not create a shared lock or write shared diagnostics. Apple's current [open-access documentation](https://developer.apple.com/documentation/uikit/configuring-open-access-for-a-custom-keyboard) permits reading the containing app's shared containers without Full Access; network access and shared-container writes depend on the actual iOS setting. The Host does not add an extra opt-in for ordinary local keyboard editing.
+
+### Notification selection and foreground continuation
+
+Use `NotificationPresentationUserInfoV1` from `@hanlin/system-surfaces` for the notification's ordinary JSON `userInfo`:
+
+```ts
+import type { NotificationPresentationUserInfoV1 } from "@hanlin/system-surfaces";
+
+const userInfo: NotificationPresentationUserInfoV1 = {
+  "hanlin-miniapp-presentation": {
+    schemaVersion: 1,
+    identity: {
+      installedPackageID: "the-actual-installation-id",
+      packageID: "the-actual-package-id",
+      generation: 1,
+      entrypointID: "notice"
+    },
+    parameters: {message: "Ready"}
+  }
+};
+```
+
+Replace the example identity with the current installed identity and use the owning app's existing notification category (`CHAVRUSA_REMINDER` in its current configuration). The presentation key selects the rich interface. A notification without this key retains the ordinary notification content.
+
+The original ScriptWidget callbacks are `$presentation.notification.openApp()` and `.dismiss()`. Expo callbacks use the equivalent `notificationAction` effect. To continue a real package action, also include the existing `hanlin-miniapp-event` envelope from the notification API. Its action entrypoint may differ from the presentation entrypoint, but its installation, package and generation must match. The extension persists the exact event through the existing durable queue before requesting the system's default notification action. The resulting queue receipt means queued; the foreground executor records actual completion or failure.
+
+### Spotlight lifecycle
+
+The searchable catalog follows installed packages and their explicit `spotlight` declarations. It is independent of widget configuration and does not require a widget instance. Index reconciliation includes installation, replacement, disablement and removal. Opening a result resolves the current installed identity.
+
+A Spotlight entrypoint without `exportedSymbol` opens its package's foreground application. With an exported symbol, it continues that registered action through the existing foreground invocation path with the typed input `{source: "spotlight"}`. The action must be unique in `actions[]`, and its prepared handler must match the entrypoint's source.
+
+### Camera and saved-file input
+
+A `capture` entrypoint always declares an action to receive its photos. Choose the capture package in its package details, then use its foreground camera or the owning app's camera control. Locked capture uses Apple's `LockedCameraCapture` session content and the capture App Intent context; it does not access the app's package store or App Group from the locked process.
+
+On handoff, the containing app verifies and copies the captured bytes into the selected package's Documents area before admitting the existing foreground action. The action receives `NativeCaptureInput` from `@hanlin/system-surfaces`:
+
+```ts
+import type { NativeCaptureInput, NativeCaptureFile } from "@hanlin/system-surfaces";
+```
+
+The input carries `source` (`lockedCamera` or `applicationCamera`), `sessionID`, `installedPackageID`, `packageID`, `generation`, `entrypointID`, and `files`. Each `NativeCaptureFile` has its identifier, `area: "documents"`, a relative `captures/<session>/<photo>.jpg` path, JPEG content and MIME types, byte count, SHA-256, width and height. Read the relative path through the package's existing typed Host file service. It is already in that package's Documents area.
+
+The handoff retains its invocation identity for retries, and its durable receipt records the actual Host result. A stored capture or accepted queue message alone does not establish that its handler completed. Disabled, removed or replaced package generations cannot silently receive a capture intended for an older installation.
+
+### Validation, types and native build
+
+`PreparedMiniAppEntrypoint` makes `exportedSymbol` mandatory for `kind: "capture"`. The authoring validator and native analyzer also validate the actual manifest relationship. Missing or conflicting capture/Spotlight actions produce `MINIAPP_SYSTEM_ACTION_INVALID`; missing keyboard/notification native presentations produce `MINIAPP_SYSTEM_PRESENTATION_REQUIRED`. Both identify `script.json` and actionable remediation before packaging. The same diagnostics use the existing import Sheet and agent repair workflow.
+
+The original compiler checks source against the staged declarations. Validation and build require the prepared SDK and Host from the same source inputs; these six new extension targets also require a fresh native Host build. A portable TypeScript or manifest check does not establish that iOS launched a keyboard, displayed rich notification content, opened a Spotlight result or captured a photo. Those are separate native and device acceptance results.

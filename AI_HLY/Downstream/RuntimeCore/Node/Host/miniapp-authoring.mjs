@@ -355,13 +355,36 @@ function validateWidgetHostActions(input) {
 
 async function validateNativePresentations(input, sdk, compiler) {
   const declarations = input.script.nativePresentations;
-  if (!declarations) return {programs: [], sourceFiles: [], diagnostics: []};
+  const entries = Array.isArray(input.script.entrypoints) ? input.script.entrypoints : [];
+  const requiredPanels = entries.filter(item => item && ['keyboard', 'notificationUI'].includes(item.kind));
+  const missingPanels = requiredPanels.filter(item => !declarations || !Object.hasOwn(declarations, item.id))
+    .map(item => finding('MINIAPP_SYSTEM_PRESENTATION_REQUIRED',
+      item.kind + ' entrypoint ' + String(item.id) + ' requires its nativePresentations declaration.', 'script.json',
+      'Declare a separately compiled original Expo or ScriptWidget native presentation for this system entrypoint.'));
+  const declaredActions = Array.isArray(input.script.actions) ? input.script.actions : [];
+  const systemActionDiagnostics = [];
+  for (const entry of entries.filter(item => item && ['capture', 'spotlight'].includes(item.kind))) {
+    if (entry.kind === 'spotlight' && typeof entry.exportedSymbol !== 'string') continue;
+    const name = entry.exportedSymbol;
+    const matches = declaredActions.filter(item => item && item.id === name);
+    const action = matches.length === 1 ? matches[0] : null;
+    const handler = typeof action?.handler === 'string' ? action.handler
+      : typeof action?.entrypoint === 'string' ? action.entrypoint : null;
+    if (typeof name !== 'string' || name.length > 255 || !/^[A-Za-z0-9]+(?:[._-][A-Za-z0-9]+)*$/.test(name)
+        || matches.length !== 1 || typeof entry.sourcePath !== 'string'
+        || !(handler === entry.sourcePath || handler !== null && 'source/' + handler === entry.sourcePath))
+      systemActionDiagnostics.push(finding('MINIAPP_SYSTEM_ACTION_INVALID',
+        entry.kind + ' entrypoint ' + String(entry.id) + ' must name one declared prepared action in exportedSymbol.',
+        'script.json', 'Set exportedSymbol to one actions[].id and target the same prepared foreground bundle with its handler.'));
+  }
+  const metadataDiagnostics = [...missingPanels, ...systemActionDiagnostics];
+  if (!declarations) return {programs: [], sourceFiles: [], diagnostics: metadataDiagnostics};
   if (typeof declarations !== 'object' || Array.isArray(declarations))
-    return {programs: [], sourceFiles: [], diagnostics: [finding('MINIAPP_NATIVE_PRESENTATIONS_INVALID',
+    return {programs: [], sourceFiles: [], diagnostics: [...metadataDiagnostics, finding('MINIAPP_NATIVE_PRESENTATIONS_INVALID',
       'nativePresentations must map entrypoint IDs to native presentation descriptors.', 'script.json')]};
   const programs = [];
   const sourceFiles = [];
-  const diagnostics = [];
+  const diagnostics = [...metadataDiagnostics];
   const visited = new Set();
   for (const [identifier, presentation] of Object.entries(declarations)) {
     if (!presentation || !['expo', 'scriptwidget'].includes(presentation.engine) ||

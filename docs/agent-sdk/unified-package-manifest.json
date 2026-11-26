@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "sourceOwnership": "one original source path per target",
   "applicationModule": "AI_Hanlin",
-  "applicationSourceCount": 514,
+  "applicationSourceCount": 520,
   "selectedProducts": null,
   "products": [
     "HanlinHostContracts",
@@ -11,6 +11,9 @@
     "HanlinShareExtensionUI",
     "HanlinNotificationExtension",
     "HanlinTranslationUI",
+    "HanlinKeyboardUI",
+    "HanlinNotificationContentUI",
+    "HanlinCameraCaptureUI",
     "HanlinExpoNativeAPI",
     "HanlinExpoWidgetNative",
     "HanlinExpoWidgetsOriginal",
@@ -53,11 +56,11 @@
     "TorahLibraryKit",
     "HanlinApplication"
   ],
-  "targets": 114,
+  "targets": 117,
   "localPackageEdgesRemaining": 0,
   "inputs": {
     "Packages/HanlinAgentSDK/Package.swift": "9373a783d26e514b2dba8e11e52b8d2ae6f3b5bb7c5edbeddd8a563c5584c4d8",
-    "Packages/HanlinAppExtensionsSDK/Package.swift": "23056fa7df2e2aca75c3195452085a42151aa113f54370aeceb5a07df269d9bc",
+    "Packages/HanlinAppExtensionsSDK/Package.swift": "55a32b484dfecced9c96546063ce5f207c186add846fbc47711b2fb93d77cd86",
     "Packages/HanlinExpoNativeAPI/Package.swift": "c5fd18fa28a1842be0351053d978cc55b752546dc798c663f0dedabfdbefc28c",
     "Packages/HanlinExpoRuntime/Package.swift": "d4157d16c1d505b408cf4b78f7ab59f53ff607ea94e0c4e51a4e2c088a691f37",
     "Packages/HanlinExpoWidgetSubset/Package.swift": "ed50b8b4f6ee4532ff3ed2af82d7994c7718e958387495280f9a939218323a41",
@@ -75,6 +78,6 @@
     "Packages/HanlinWikipediaMiniApp/Package.swift": "01b8cc014f8a5e853b644947fd6684df56b65b37feb08ef23f410fb56c902d8e",
     "Packages/IOSSystemLite/Package.swift": "06c6721c4b59328ba4f78997c9a8b23330357db12d3a619207dc1bac8cb76bab",
     "Packages/TorahLibraryKit/Package.swift": "4423074f870fe146b8914dc275db77aedef4cc1b6c0b856dfad844b65c3a21d6",
-    "Scripts/SDK/application_products.json": "8be55195f1bbceb2867f9f12f48994f382d1b6ec3df43e3597d1ee7d3f562d55"
+    "Scripts/SDK/application_products.json": "14bfa3ee9c2d8bd0ebbbc5eadfb453b2895a16b0f8acbe0bfe6e703d804c3b47"
   }
 }

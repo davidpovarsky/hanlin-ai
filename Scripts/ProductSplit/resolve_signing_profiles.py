@@ -1,4 +1,4 @@
-"""Resolve profiles for the six original targets and the existing distribution key.
+"""Resolve profiles for the declared shipping targets and the existing distribution key.
 
 The only permitted Apple mutation is creating a missing compatible App Store
 profile. Never create/revoke a certificate, change capabilities, register a device,
@@ -119,7 +119,7 @@ def resolve_profile(role, bundle, required, certificate_sha, certificate_id, tea
                     private_directory, *, get=apple_get, create=create_profile,
                     decode_content=decode_cms):
     if (role, bundle) not in {(r, b) for r, b, _, _ in ROLES}:
-        raise ValueError("Profile preparation is scoped to the six original targets")
+        raise ValueError("Profile preparation is scoped to the declared shipping targets")
     response = get("/v1/bundleIds", {
         "filter[identifier]": bundle, "fields[bundleIds]": "identifier,platform", "limit": 200,
     })
@@ -157,10 +157,17 @@ def resolve_profile(role, bundle, required, certificate_sha, certificate_id, tea
             facts["source"] = "REUSED_COMPATIBLE_APPLE_PROFILE"
             break
     if selected is None:
-        run_id = os.environ.get("GITHUB_RUN_ID", "")
-        if not re.fullmatch(r"[1-9][0-9]*", run_id):
-            raise ValueError("A concrete original GitHub run is required to create a profile")
-        name = "Hanlin " + role + " App Store " + run_id
+        operation_id = os.environ.get("HANLIN_SIGNING_OPERATION_ID", "")
+        if operation_id:
+            if not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9._-]{0,79}", operation_id):
+                raise ValueError("The explicit signing operation identifier is invalid")
+            facts["operation"] = {"kind": "native", "id": operation_id}
+        else:
+            operation_id = os.environ.get("GITHUB_RUN_ID", "")
+            if not re.fullmatch(r"[1-9][0-9]*", operation_id):
+                raise ValueError("A concrete GitHub run or explicit signing operation is required to create a profile")
+            facts["operation"] = {"kind": "github", "id": operation_id}
+        name = "Hanlin " + role + " App Store " + operation_id
         response = create(bundle_id, resource_id(certificate_id), name)
         # Read the newly created object back and evaluate the actual CMS data.
         selected = assess(response["data"]["id"])

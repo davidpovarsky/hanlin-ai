@@ -4,6 +4,7 @@ from datetime import datetime, timezone
 import json, os, sys, urllib.parse
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 from register_miniapps_bundle import request, AppleFailure
+from extension_inventory import SIGNING_TARGETS
 
 out = Path("build/app-split-evidence")
 out.mkdir(parents=True, exist_ok=True)
@@ -32,10 +33,19 @@ try:
         if parsed.netloc != "api.appstoreconnect.apple.com" or parsed.path != "/v1/bundleIds":
             raise ValueError("Unexpected next-page location")
         page = request(parsed.path, parameters=dict(urllib.parse.parse_qsl(parsed.query)))
+    observed = {row["identifier"] for row in report["bundles"]}
+    report["declared_shipping_targets"] = [
+        {"role": target.role, "owner": target.owner, "target": target.target,
+         "bundle_id": target.bundle, "registered": target.bundle in observed,
+         "entitlements_source": target.entitlements}
+        for target in SIGNING_TARGETS]
+    report["missing_declared_shipping_bundles"] = sorted(
+        target.bundle for target in SIGNING_TARGETS if target.bundle not in observed)
+    report["profile_and_signed_entitlement_readiness"] = "NOT_PROVEN_BY_REGISTRATION_READBACK"
     report["status"] = "EXISTING_BUNDLES_READ_BACK"
     report["remaining"] = [
         "APP_GROUPS capability alone does not prove assignment of group.com.itorah.shared.",
-        "Consumer signed profiles must carry the exact same group and owner Team ID.",
+        "Each signed target must match its own source entitlements and the owner Team ID; capture requests no App Groups.",
         "Anytype upstream io.anytype.app is not an owner registered identity unless present here."
     ]
 except Exception as error:

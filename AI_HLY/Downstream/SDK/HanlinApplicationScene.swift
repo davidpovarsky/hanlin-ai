@@ -23,6 +23,7 @@ public struct HanlinApplicationScene: Scene {
                 MiniAppRepairCoordinator.shared.release(window: windowID)
             }) { receivingWindowID in
             MainTabView(deepLinkTarget: $deepLinkTarget)
+                .hanlinMiniAppSystemEntrypoints(platform: .shared)
                 .modelContainer(context.modelContainer)
                 .task {
                     await context.prepareApplication()
