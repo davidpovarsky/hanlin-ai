@@ -1,0 +1,12 @@
+✔ original TypeScript supplies member completion and declaration documentation (1565.564985ms)
+✔ original TypeScript provides active parameter hints and UTF-16 positions (1010.045314ms)
+✔ unsaved overlay diagnostics use canonical strict compiler and never rewrite source (798.942766ms)
+✔ editor refuses cursor and project path escapes, including symlinks (11.858749ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 3792.530177

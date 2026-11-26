@@ -242,10 +242,12 @@ struct HanlinMiniAppsWindow: View {
 /// Constructed only after the real storage preparation succeeded.
 private struct HanlinMiniAppsReadyRoot: View {
     @State private var provider = HanlinMiniAppsProvider(platform: .shared)
+    @State private var showsDeveloperStudio = false
     @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
-        MiniAppsLibrary(provider: provider)
+        MiniAppsLibrary(provider: provider, onOpenDeveloperStudio: { showsDeveloperStudio = true })
+                .sheet(isPresented: $showsDeveloperStudio) { MiniAppsDeveloperStudio() }
                 .task {
                     await AppRuntimeCore.shared.handleForegroundIfLaunched()
                     await provider.platform.resumePendingInvocations(recoverDeliveredNotifications: true)

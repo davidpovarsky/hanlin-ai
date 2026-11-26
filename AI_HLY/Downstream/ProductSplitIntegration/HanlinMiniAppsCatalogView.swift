@@ -7,14 +7,17 @@ import SwiftUI
 @MainActor
 public struct HanlinMiniAppsCatalogView: View {
     @State private var provider: HanlinMiniAppsProvider
+    private let onOpenDeveloperStudio: (() -> Void)?
 
     /// Use after preparing the original application runtime for this host.
-    public init() {
+    public init(onOpenDeveloperStudio: (() -> Void)? = nil) {
         _provider = State(initialValue: HanlinMiniAppsProvider())
+        self.onOpenDeveloperStudio = onOpenDeveloperStudio
     }
 
-    init(provider: HanlinMiniAppsProvider) {
+    init(provider: HanlinMiniAppsProvider, onOpenDeveloperStudio: (() -> Void)? = nil) {
         _provider = State(initialValue: provider)
+        self.onOpenDeveloperStudio = onOpenDeveloperStudio
     }
     @State private var presentation: PresentedApp?
     @State private var isLaunching = false
@@ -57,6 +60,12 @@ public struct HanlinMiniAppsCatalogView: View {
             onLaunchPackage: { packageID in open { try await provider.launch(packageID: packageID) } },
             presentsSourceReader: true
         ) {
+            if let onOpenDeveloperStudio {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button("Developer Studio", systemImage: "curlybraces.square", action: onOpenDeveloperStudio)
+                        .accessibilityIdentifier("miniapps-open-studio")
+                }
+            }
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     do { preferencesStore = try MiniAppBridgeStore() }
