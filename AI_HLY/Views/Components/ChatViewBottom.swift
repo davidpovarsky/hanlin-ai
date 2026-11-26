@@ -240,6 +240,7 @@ struct HanlinFollowLatestButton: View {
                         .clipShape(Circle())
                         .shadow(color: isTemporaryRecord ? .primary : .hanlinHLBlue, radius: 1)
                 )
+                .contentShape(Circle())
         }
         .buttonStyle(.plain)
         .accessibilityLabel(Text("Scroll to latest message", bundle: HanlinLocalization.bundle))

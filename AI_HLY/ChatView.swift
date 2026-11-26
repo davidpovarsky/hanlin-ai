@@ -496,11 +496,14 @@ struct ChatView: View {
         return (overlap.isFinite ? max(0, overlap) : 0) + 8
     }
 
-    private var floatingFollowLatestControl: some View {
+    private func floatingFollowLatestControl(using scrollViewProxy: ScrollViewProxy) -> some View {
         Group {
             if showScrollToBottomButton && chatRecord.canvas?.content.isEmpty != false && !isMultiSelectMode {
                 HanlinFollowLatestButton(isTemporaryRecord: TemporaryRecord) {
-                    needScrollToBottomButton.toggle()
+                    // This is the native Button's action entry, before any policy
+                    // mutation. A current reader needs no State/onChange relay.
+                    traceAutoFollowPosition("button-entry", significant: true)
+                    resumeFollowingLatest(using: scrollViewProxy)
                 }
                 .padding(.trailing, 15)
                 .padding(.bottom, floatingFollowLatestBottomInset)
@@ -521,7 +524,7 @@ struct ChatView: View {
                     ScrollViewReader { scrollViewProxy in
                         buildScrollContent(scrollViewProxy).padding(.bottom, 6)
                             .overlay(alignment: .bottomTrailing) {
-                                floatingFollowLatestControl
+                                floatingFollowLatestControl(using: scrollViewProxy)
                             }
                     }
                     // A reader may retain a pending scroll context until its native
@@ -1158,10 +1161,9 @@ struct ChatView: View {
                 loadMoreMessages()
             }
             .onChange(of: needScrollToBottomButton) {
+                // The canvas row retains the external composer's existing relay.
                 traceAutoFollowPosition("jump-request", significant: true)
-                cancelSourceScroll()
-                autoFollowController.resumeFollowing()
-                scheduleAutoFollow(using: scrollViewProxy, animated: true, force: true)
+                resumeFollowingLatest(using: scrollViewProxy)
             }
             .task(id: sourceDestination?.id) {
                 revealMatchedSource(using: scrollViewProxy)
@@ -1289,6 +1291,12 @@ struct ChatView: View {
         }
         autoFollowController.updatePosition(position)
         traceAutoFollowPosition("native-settled", position: position, significant: true)
+    }
+
+    private func resumeFollowingLatest(using scrollViewProxy: ScrollViewProxy) {
+        cancelSourceScroll()
+        autoFollowController.resumeFollowing()
+        scheduleAutoFollow(using: scrollViewProxy, animated: true, force: true)
     }
 
     // 聊天时滚动到最底层
