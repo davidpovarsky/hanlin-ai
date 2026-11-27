@@ -286,7 +286,7 @@ final class HanlinOriginalExpoWidgetTests: XCTestCase {
     private func removeWave2Widget(_ name: String) {
         guard name.hasPrefix("test.widget.wave2.") else { return }
         if let owner = HanlinExpoWidgetsIntegration.storageOwner(name),
-           let group = WidgetsStorage.appGroupIdentifier,
+           let group = Bundle.main.object(forInfoDictionaryKey: "ExpoWidgetsAppGroupIdentifier") as? String,
            let container = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: group) {
             try? FileManager.default.removeItem(at: container.appendingPathComponent("ExpoWidgets")
                 .appendingPathComponent(owner.namespace))
