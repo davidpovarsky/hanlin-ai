@@ -1,5 +1,6 @@
 #if canImport(SwiftUI) && canImport(UIKit)
 import SwiftUI
+import UIKit
 
 /// A transient presentation request. The current transcript retains its scroll
 /// action; the host resolves only its original control's bounds.
@@ -42,6 +43,56 @@ public extension EnvironmentValues {
     }
 }
 
+/// Give only the resolved control region its own native hosting boundary.
+/// SwiftUI owns the controller view's bounds; the surrounding overlay stays empty.
+@MainActor
+private struct FollowLatestHostedControl<Control: View>: UIViewControllerRepresentable {
+    let control: Control
+    @Environment(\.self) private var environment
+
+    typealias UIViewControllerType = UIHostingController<FollowLatestHostedControlRoot<Control>>
+
+    func makeUIViewController(context: Context) -> UIViewControllerType {
+        let controller = UIHostingController(rootView: rootView)
+        // The transcript's anchor already accounts for safe areas and the keyboard.
+        controller.safeAreaRegions = []
+        controller.view.backgroundColor = .clear
+        controller.view.isOpaque = false
+        return controller
+    }
+
+    func updateUIViewController(_ controller: UIViewControllerType, context: Context) {
+        // Replace the value so the original Button receives the current guarded action.
+        controller.rootView = rootView
+    }
+
+    static func dismantleUIViewController(_ controller: UIViewControllerType, coordinator: ()) {
+        // Release both the action and the captured parent environment.
+        controller.rootView = FollowLatestHostedControlRoot(
+            control: nil, environment: EnvironmentValues()
+        )
+    }
+
+    private var rootView: FollowLatestHostedControlRoot<Control> {
+        FollowLatestHostedControlRoot(control: control, environment: environment)
+    }
+}
+
+@MainActor
+private struct FollowLatestHostedControlRoot<Control: View>: View {
+    var control: Control?
+    let environment: EnvironmentValues
+
+    var body: some View {
+        Group {
+            if let control {
+                control
+            }
+        }
+        .environment(\.self, environment)
+    }
+}
+
 @MainActor
 private struct FollowLatestOverlayHost<Control: View>: ViewModifier {
     let selectedConversationID: Binding<UUID?>
@@ -59,7 +110,8 @@ private struct FollowLatestOverlayHost<Control: View>: ViewModifier {
                             if frame.minX.isFinite, frame.minY.isFinite,
                                frame.width.isFinite, frame.height.isFinite,
                                frame.width > 0, frame.height > 0 {
-                                control(guarded(request))
+                                FollowLatestHostedControl(control: control(guarded(request)))
+                                    .frame(width: frame.width, height: frame.height)
                                     .id(request.ownerToken)
                                     .position(x: frame.midX, y: frame.midY)
                             }
@@ -139,7 +191,8 @@ private struct FollowLatestSceneOverlayHost<Control: View>: ViewModifier {
                             if frame.minX.isFinite, frame.minY.isFinite,
                                frame.width.isFinite, frame.height.isFinite,
                                frame.width > 0, frame.height > 0 {
-                                control(guarded(request))
+                                FollowLatestHostedControl(control: control(guarded(request)))
+                                    .frame(width: frame.width, height: frame.height)
                                     .id(request.ownerToken)
                                     .position(x: frame.midX, y: frame.midY)
                             }
