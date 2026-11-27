@@ -1,0 +1,255 @@
+{
+  "schema": 1,
+  "scope": "Actual original Host producer, strict NativeScript authoring, and narrow imported-header type admission; no app/OS/device completion claim.",
+  "hostExecutionSource": "b5475156e7b0253b24c0a4385236b60da21f6f7e",
+  "generatedSourceSeal": "1d94b855ed58c692f028b55b6e14dacdd025fd80",
+  "rootSDKVerificationSource": "5c7e81d7cfaec125f4dee6b673c705f2851fd1bb",
+  "rootVerificationSHA256": "99864084d21cea16a48846382183c379978c87dc1156b788a19febbb3614cdfe",
+  "host": {
+    "status": "FRESH_HOST_AND_SDK_VERIFIED",
+    "phases": [
+      {
+        "name": "original-pretest-phases",
+        "startedAt": "2026-11-27T17:28:32.707641+00:00",
+        "finishedAt": "2026-11-27T17:32:30.065125+00:00",
+        "exitCode": 0,
+        "logSHA256": "56ca52ea453edd761811484688b9e47064d5780bde9299ede39050394ec4ebbe"
+      },
+      {
+        "name": "node-version",
+        "startedAt": "2026-11-27T17:32:30.116824+00:00",
+        "finishedAt": "2026-11-27T17:32:30.148659+00:00",
+        "exitCode": 0,
+        "logSHA256": "2f30156cd7f9137514ea68d53554f583cf6541fd107dbc8ae8a19253379a735a"
+      },
+      {
+        "name": "current-sdk-audit",
+        "startedAt": "2026-11-27T17:32:30.217487+00:00",
+        "finishedAt": "2026-11-27T17:32:30.824436+00:00",
+        "exitCode": 0,
+        "logSHA256": "6d938ed7d69471fb67d14ac1b2beae53a4383c809514a5f10888d2b14cfb1b06"
+      },
+      {
+        "name": "current-reachability-audit",
+        "startedAt": "2026-11-27T17:32:30.825843+00:00",
+        "finishedAt": "2026-11-27T17:32:34.881305+00:00",
+        "exitCode": 0,
+        "logSHA256": "231e3ea5da8cd01dfdc112d6cb7466ce2b2e6f38070dd193d6bbea0e17f7f39b"
+      },
+      {
+        "name": "current-sdk-fingerprint",
+        "startedAt": "2026-11-27T17:32:34.882929+00:00",
+        "finishedAt": "2026-11-27T17:32:35.230542+00:00",
+        "exitCode": 0,
+        "logSHA256": "2cd3a039052c5933cfcb8497c87c16839a53614b97eacdce0f43d4906e5c0de7"
+      },
+      {
+        "name": "node-fingerprint",
+        "startedAt": "2026-11-27T17:32:35.249330+00:00",
+        "finishedAt": "2026-11-27T17:32:35.300644+00:00",
+        "exitCode": 0,
+        "logSHA256": "5d9368cd4b939d652aab8afbd31375396f6312d3f7b6b30c4843c40aab2f32fe"
+      },
+      {
+        "name": "host-input-fingerprint-before",
+        "startedAt": "2026-11-27T17:32:35.301448+00:00",
+        "finishedAt": "2026-11-27T17:32:35.649803+00:00",
+        "exitCode": 0,
+        "logSHA256": "706c058e5022ab354448e511ea7ad4714ff0c9af7609f176bcd8973815d8dc8a"
+      },
+      {
+        "name": "complete-original-test-set",
+        "startedAt": "2026-11-27T17:32:42.460107+00:00",
+        "finishedAt": "2026-11-27T17:41:56.540258+00:00",
+        "exitCode": 0,
+        "logSHA256": "97a9071a3c08a772c724ff1026d7b829e3135744e05b9bbf15702615679d293e"
+      },
+      {
+        "name": "host-input-fingerprint-after",
+        "startedAt": "2026-11-27T17:42:12.793540+00:00",
+        "finishedAt": "2026-11-27T17:42:13.645265+00:00",
+        "exitCode": 0,
+        "logSHA256": "706c058e5022ab354448e511ea7ad4714ff0c9af7609f176bcd8973815d8dc8a"
+      },
+      {
+        "name": "original-post-test-packing",
+        "startedAt": "2026-11-27T17:42:13.647627+00:00",
+        "finishedAt": "2026-11-27T17:42:37.753275+00:00",
+        "exitCode": 0,
+        "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "original-packed-validation-jitless-and-seal",
+        "startedAt": "2026-11-27T17:42:37.768783+00:00",
+        "finishedAt": "2026-11-27T17:42:58.821141+00:00",
+        "exitCode": 0,
+        "logSHA256": "b9c54f3d858f377d2702ac1d1e659498b45f4468e45463b66b210b8ccf879dac"
+      },
+      {
+        "name": "original-archive-reuse-validation",
+        "startedAt": "2026-11-27T17:42:58.888967+00:00",
+        "finishedAt": "2026-11-27T17:43:18.156856+00:00",
+        "exitCode": 0,
+        "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "originalTestSummary": {
+      "tests": 188,
+      "pass": 188,
+      "fail": 0,
+      "cancelled": 0,
+      "skipped": 0
+    },
+    "actualLongJobProof": {
+      "proof": "actual-node-job-over-300-seconds",
+      "elapsedMilliseconds": 305044.987583,
+      "executionID": "432c5399-ce28-4670-826e-4336fc28dd24"
+    },
+    "rawReceiptSHA256": "ae96e1b3f5cbeafed5645fd26bbd3edfd1a74fd264c5a5dda4837fb1990d43a9",
+    "originalTestLogSHA256": "97a9071a3c08a772c724ff1026d7b829e3135744e05b9bbf15702615679d293e",
+    "archiveBytes": 81905753,
+    "archiveSHA256": "31566653635016402b31d8d8d42f8c73c989a9f1eb5e3be29cb9294455c81049",
+    "archiveVerificationScope": "Original Mac gate/receipt verified archive;81MB archive remains on Mac, not rehashed from transferred packet by root."
+  },
+  "sdk": {
+    "sourceInputCount": 396,
+    "inputSHA256": "7af6ecb6a4041d98d37bd71cf65fa9520ec93978e09ea8f7c9cfe4f1e0cad986",
+    "manifestSHA256": "e343105966824d478319096d673c9801b39dca4d753624252903c970ad6ba61d",
+    "all396InputsMatchRootGit": true
+  },
+  "nativescript": {
+    "status": "ORIGINAL_STRICT_NATIVE_SCRIPT_SURFACE_VALIDATE_BUILD_PASSED",
+    "phases": [
+      {
+        "name": "original-nativescript-surface-validate",
+        "startedAt": "2026-11-27T17:56:30.649755+00:00",
+        "finishedAt": "2026-11-27T17:56:33.890682+00:00",
+        "exitCode": 0,
+        "timeoutSeconds": 300,
+        "logSHA256": "11ce327cebcd6ee77d186bf72b331af41a270a4d0829c55a55b4086e1765132b"
+      },
+      {
+        "name": "original-nativescript-surface-build",
+        "startedAt": "2026-11-27T17:56:33.894895+00:00",
+        "finishedAt": "2026-11-27T17:56:38.109562+00:00",
+        "exitCode": 0,
+        "timeoutSeconds": 600,
+        "logSHA256": "c0fde31f4cd7f7a702257d77483936a19b9090c8e6bbf59a0fbdc4e023103157"
+      }
+    ],
+    "authoredInputs": {
+      "Fixtures/HostActionSurfaces/nativescript/package.json": "048e5efb91e28f9d198c885297cfdf7c7a0081b6e4c3c7b945398797dc283e4a",
+      "Fixtures/HostActionSurfaces/nativescript/script.json": "1169067328625b7475d527b0e2e8f454e0b31bc474157b182377d9aad15de07f",
+      "Fixtures/HostActionSurfaces/nativescript/tsconfig.json": "445e657d8cb59b84146fa8b52b768b67fa9c4ec58e0e601e9e14deb0e922c5e5",
+      "Fixtures/HostActionSurfaces/nativescript/hanlin.authoring.json": "228cd8d7c2d312b4f5c1ef2ba89a4c4a2e02f9b750a82411346c0da9885971c5",
+      "Fixtures/HostActionSurfaces/nativescript/index.ts": "22312e186a363920e470437571e8bdddef2b753372758b66f9a363bfef637a2e",
+      "Fixtures/HostActionSurfaces/nativescript/proof.ts": "19925e21c3f63170e4cf1284702fd675130b5674ffd2289ab36da6e6640b9d28",
+      "Fixtures/HostActionSurfaces/nativescript/widget.jsx": "e2f6676b1de3b9130aeb93176c5c8463b03b75d9a3b8fa7cb863ad32409eabb5"
+    },
+    "originalCLIAndRunner": {
+      "Scripts/MiniApps/miniapp.mjs": "1c256c00392c626a54ebee2abe3ededaa792c5bfa6dd9b6c5aceb89be84e5b30",
+      "Scripts/ProductSplit/run_paired_acceptance.py": "1aa2abbcf7d462b57b1b9df68a04e0af74a789cf5840fca8dee513d63d5dab7f"
+    },
+    "archiveBytes": 33751,
+    "archiveSHA256": "8d763f4ba79b333b2aa84e47f01d0db86ce8276dc8b583a5b443900a3b734e54",
+    "archiveMemberCount": 18,
+    "archiveCRCVerified": true,
+    "generatedOutputCount": 18,
+    "generatedOutputClosureSHA256": "745bf79800d3a8c37c243fb7c3b0f663a87a7a6f6e09c4d1d34c3737ad50b70c",
+    "rawReceiptSHA256": "f6d8625f0b6a1aeb16bca7854eb0aae2fe95579259a8f06b0c562fded28a2139",
+    "sourceUnchanged": true,
+    "fixtureInputsUnchanged": true,
+    "reports": [
+      {
+        "schemaVersion": 1,
+        "engine": "nativescript",
+        "operation": "validate",
+        "succeeded": true,
+        "diagnostics": [],
+        "sdk": {
+          "packageVersions": {
+            "@nativescript/core": "9.1.4",
+            "@nativescript/swift-ui": "4.0.2",
+            "@nativescript/ios": "9.1.1",
+            "@nativescript/types": "9.1.4",
+            "@nativescript/vite": "8.0.24",
+            "typescript": "5.9.3",
+            "vite": "8.0.0",
+            "@hanlin/notification-events": "1.0.0",
+            "@hanlin/system-surfaces": "1.0.0",
+            "@hanlin/host-services": "1.0.0",
+            "@hanlin/window-factory": "1.0.0",
+            "@hanlin/assistant-tools": "1.0.0"
+          },
+          "manifestSHA256": "e343105966824d478319096d673c9801b39dca4d753624252903c970ad6ba61d",
+          "compilerVersion": "5.9.3"
+        },
+        "typecheck": {
+          "strict": true,
+          "checkJs": false,
+          "skipLibCheck": true,
+          "dependencyDeclarationsChecked": false
+        }
+      },
+      {
+        "schemaVersion": 1,
+        "engine": "nativescript",
+        "operation": "build",
+        "succeeded": true,
+        "diagnostics": [],
+        "sdk": {
+          "packageVersions": {
+            "@nativescript/core": "9.1.4",
+            "@nativescript/swift-ui": "4.0.2",
+            "@nativescript/ios": "9.1.1",
+            "@nativescript/types": "9.1.4",
+            "@nativescript/vite": "8.0.24",
+            "typescript": "5.9.3",
+            "vite": "8.0.0",
+            "@hanlin/notification-events": "1.0.0",
+            "@hanlin/system-surfaces": "1.0.0",
+            "@hanlin/host-services": "1.0.0",
+            "@hanlin/window-factory": "1.0.0",
+            "@hanlin/assistant-tools": "1.0.0"
+          },
+          "manifestSHA256": "e343105966824d478319096d673c9801b39dca4d753624252903c970ad6ba61d",
+          "compilerVersion": "5.9.3"
+        },
+        "typecheck": {
+          "strict": true,
+          "checkJs": false,
+          "skipLibCheck": true,
+          "dependencyDeclarationsChecked": false
+        }
+      }
+    ]
+  },
+  "rootTransferredEvidenceVerification": [
+    {
+      "name": "host-sdk-b5475156-complete-pass-proof",
+      "manifestSHA256": "fae27456b22cae713adc18d43df79e5b7c71fc2f01e3f7e1cacbb1071b82bdbc",
+      "verifiedMembers": 42,
+      "verifiedBytes": 19903783
+    },
+    {
+      "name": "ns-surface-b5475156-actual-sdk396-pass-proof",
+      "manifestSHA256": "7156ce83de60a7c1318583ffc4f6483bcfccd6444b7876be31eb5c77a27dfc8f",
+      "verifiedMembers": 38,
+      "verifiedBytes": 208861
+    },
+    {
+      "name": "window-count-actual-header-b5475156-r2",
+      "manifestSHA256": "865f3859233162ec5480e0c63b501eacdbe2f2098302f7bbb1983e9a87253f86",
+      "verifiedMembers": 4,
+      "verifiedBytes": 76625
+    }
+  ],
+  "nativeRerunsByRoot": 0,
+  "notClaimed": [
+    "Whole corrected MiniApps test-file compilation",
+    "MiniApps or Hanlin application acceptance",
+    "Widget/Shortcuts/VoiceOver OS execution",
+    "Physical device/signing/TestFlight completion"
+  ],
+  "initialReaderFailure": "Root first expected TAP summary prefixes, while the unchanged actual Node log uses its spec reporter. Original failed reader and raw log retained; exact observed spec summary was then verified. Native execution was not repeated."
+}
