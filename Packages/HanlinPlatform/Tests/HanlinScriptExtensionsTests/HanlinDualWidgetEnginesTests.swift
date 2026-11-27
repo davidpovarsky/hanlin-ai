@@ -295,7 +295,10 @@ struct HanlinDualWidgetEnginesTests {
         let fixture = try await InstalledFixture(name)
         defer { fixture.remove() }
         let snapshot = try #require(try fixture.store.load())
+        let reopened = Store(root: fixture.extensionRoot)
+        #expect(try reopened.load() == snapshot)
         let widget = try #require(snapshot.widgets.first)
+        var preparedNode: HanlinCachedWidgetNode?
         if widget.engine == .legacy {
             guard case let .legacy(prepared) = HanlinWidgetPreparation.prepare(store: fixture.store, entityID: fixture.entityID, family: "systemMedium") else { Issue.record("Installed legacy archive failed to prepare"); return }
             #expect(prepared.root.properties["text"] == .string("Legacy HanlinScriptUINode Tree"))
@@ -303,14 +306,28 @@ struct HanlinDualWidgetEnginesTests {
             let (program, _) = try fixture.store.loadProgram(for: widget)
             #expect(program.engine == widget.engine)
             switch HanlinWidgetPreparation.prepare(store: fixture.store, entityID: fixture.entityID, family: "systemMedium") {
-            case .expo, .scriptwidget: break
+            case let .expo(node, _): preparedNode = .expo(node)
+            case let .scriptwidget(node, _): preparedNode = .scriptwidget(node)
             default: Issue.record("The actual installed program failed to prepare")
             }
         }
         #expect(widget.identity.generation == 1)
         #expect(try await fixture.installed.snapshots().first?.entrypoints.first?.widgetEngine == widget.engine)
-        let reopened = Store(root: fixture.extensionRoot)
-        #expect(try reopened.load() == snapshot)
+        // Preparation intentionally commits a verified last-good render (and
+        // any original script storage writes). Both persistence boundaries must
+        // round-trip their own complete committed snapshot.
+        let committed = try #require(try fixture.store.load())
+        let afterPreparation = Store(root: fixture.extensionRoot)
+        #expect(try afterPreparation.load() == committed)
+        if widget.engine == .legacy {
+            #expect(committed == snapshot)
+        } else {
+            let expectedNode = try #require(preparedNode)
+            let instance = try #require(committed.widgetInstances.first { $0.identity == widget.identity })
+            let (_, programSHA256) = try afterPreparation.loadProgram(for: widget)
+            #expect(try afterPreparation.lastSuccessfulWidgetNode(in: committed, widget: widget,
+                instance: instance, programSHA256: programSHA256) == expectedNode)
+        }
         var evidence: [String: Any] = [
             "scope": "Actual shared atomic installation and preparation; not SpringBoard placement",
             "archive": name, "archiveSHA256": sha(try Data(contentsOf: fixtureURL(name))),

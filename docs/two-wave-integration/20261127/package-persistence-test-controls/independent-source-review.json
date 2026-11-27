@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "reviewer": "/root/mac_build_resume",
+  "decision": "APPROVED_TEST_ONLY_SOURCE_CORRECTION_FOR_ORIGINAL_GATE",
+  "candidateSHA256": "23adebabdc03af975a280ee1ed3e804a19aad9e914c457de7a2aabf38540da6e",
+  "sourceBefore": "f768d634bfa8a102cf63b32c7ab9d129cafc671d",
+  "files": {
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift": {
+      "beforeSHA256": "53bc610452297522b67593dc6a63e201aa5287acc8ed5b0e5769d94f381b7b5f",
+      "afterSHA256": "7e9f0d66ac6a6235f40af87f687cfc001f7db0f7ce03654535d2a76550ca9813"
+    },
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests.swift": {
+      "beforeSHA256": "6100a9d5412b22cf5542abcd1872e56f5ac6d23e996380947e896d77a97b3d91",
+      "afterSHA256": "708678c69c5078183642edd9e222975d5cbb345a8a97cff452b009d73456220d"
+    }
+  },
+  "diffSHA256": {
+    "HanlinDualWidgetEnginesTests.diff": "fa54fa0aa5f5de68dcc656a0922c72b9b77db8851c21d117fc4d67ae5034eef8",
+    "HanlinKeyboardNotificationPresentationTests.diff": "f84ea9ce0e4f79c4fd6957c3433982aabd9df4f437077ae230797ef4acfd1d79"
+  },
+  "findings": [
+    "Read both complete literal diffs and exact matching original source hashes. The tests already import HanlinScriptExtensions with @testable, making the existing internal cached-node type and verified loader accessible.",
+    "The original pre-preparation full snapshot round-trip is retained before the real preparation. The new post-preparation full snapshot round-trip is compared with its actual committed snapshot, matching the production last-good cache transaction.",
+    "For native engines the stored cache is loaded through the existing identity/program/validity/resource integrity checks and compared to the actual node returned by real preparation. The legacy branch still requires the full committed snapshot to equal the original snapshot.",
+    "The keyboard assertion requires a real resource, resolves both URL aliases and compares complete path components with a strict child-length check. A same-prefix sibling or a resolved escaping resource cannot satisfy the revised containment assertion.",
+    "All original case selectors, fixture names, test methods, production/runtime code and HTTP test are unchanged by this candidate. This approval is source review only; compilation and original native execution remain pending."
+  ],
+  "currentSourceObserved": "d2902ba9a4b18d5dba92662430e7eda355744b0c",
+  "originalHeaders": [
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+      "sha256": "53bc610452297522b67593dc6a63e201aa5287acc8ed5b0e5769d94f381b7b5f",
+      "imports": "import CryptoKit\nimport Foundation\nimport HanlinPlatformContracts\nimport HanlinScriptCompiler\nimport HanlinScriptContracts\nimport HanlinScriptStore\nimport HanlinScriptUI\nimport HanlinLegacyWidgetStoreFixture\n@testable import HanlinScriptExtensions\nimport Testing\nimport SwiftUI\n#if os(macOS)\nimport AppKit\n#endif\n\nprivate typealias Store = HanlinScriptExtensions.HanlinScriptExtensionStore\nprivate typealias Snapshot = HanlinScriptExtensions.HanlinScriptExtensionSnapshot\nprivate typealias Identity = HanlinScriptExtensions.HanlinScriptExtensionIdentity"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinKeyboardNotificationPresentationTests.swift",
+      "sha256": "6100a9d5412b22cf5542abcd1872e56f5ac6d23e996380947e896d77a97b3d91",
+      "imports": "import Foundation\nimport HanlinPlatformContracts\nimport HanlinScriptContracts\n@testable import HanlinScriptExtensions\nimport Testing\n\n@Suite(\"Keyboard and notification native presentations\")\nstruct HanlinKeyboardNotificationPresentationTests {\n    @Test(\"Read-only catalog does not create a shared container, lock or diagnostic\")\n    func readOnlyCatalogDoesNotWriteEvenOnFailure() throws {\n        let root = temporary()\n        defer { try? FileManager.default.removeItem(at: root) }\n        let store = HanlinScriptExtensionStore(root: root)\n        #expect(try store.loadReadOnly() == nil)\n        #expect(!FileManager.default.fileExists(atPath: root.path))\n        try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)\n        try Data(\"invalid JSON\".utf8).write(to: root.appending(path: \"commit.json\"))\n        let before = try image(root)"
+    }
+  ],
+  "inputImpact": {
+    "actual79ExecutionSource": "866d2d3c60525e32eae27564869e6dba024e625c",
+    "originalInventorySHA256": "a5530408269f296d1cbb743fd52624f74755509623ee68b2bfd0f7e351b78822",
+    "bothChangedFilesInOriginalBroad33Map": true,
+    "changedKeyboardMethodIsInSelected79": true,
+    "changedInstallAndVerifiedLoaderMethodIsInSelected79": false,
+    "boundary": "The candidate changes test source and the complete package Tests tree; do not propagate the older4-tree equality or claim newly executed79 from this source review. Root will schedule original native validation once the complete repair batch settles.",
+    "current392ManifestSHA256": "f6603fc7f62b91a80cef33eb72a77e93711504b3b2f0a1851ead62f49c787a7a",
+    "sdk392Intersection": []
+  },
+  "native": "NOT_RUN_BY_REVIEWER",
+  "productionChanged": false,
+  "recordedAtUTC": "2026-11-27T06:48:25.207678+00:00"
+}
