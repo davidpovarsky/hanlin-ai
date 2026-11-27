@@ -13,7 +13,8 @@ The controller checkout SHA and the tested original source SHA are recorded
 separately. No latest branch, current default source or unreviewed full SHA is
 accepted. Every admitted source has its exact reviewed Git tree in
 `obligations.json`, and 19 protected original test/manifest/lock/fixture/helper
-blobs must still match the reviewed reference.
+blobs must still match their reviewed source entry. The reference mapping is
+preserved; the sole reviewed successor override is identified below.
 
 ## Exact source and selection
 
@@ -150,7 +151,8 @@ Local controller tests never invoke Swift, Xcode, a simulator or native APIs.
 ## Fixed continuation of original run45954793309
 
 The separate closed selector `HanlinSDKQuotaWidgetsAfterAgent45954793309`
-admits only source `caa0dac32afa18e58bba55fb4f0fdd262f181835`. It retrieves
+admits the original source `caa0dac32afa18e58bba55fb4f0fdd262f181835` and
+only the exact reviewed test-only successor described below. It retrieves
 the fixed original run45954793309/attempt1, controller35b504, job140358668934
 and artifact15178855568 using the workflow's existing Actions read token.
 The token is passed only to those bounded `gh api` commands, never to the
@@ -190,14 +192,60 @@ Neither result proves an Xcode27.0 binary compatibility claim or the separately
 compiled Anytype App, original NativeScript handler, or six App/UIKit runtime
 scrolling regressions.
 
+## Exact test-only source continuation after the quota compiler failure
+
+Source `35d26911f70794a41361cee710b1fed24a35e269`, tree
+`e982eb1e5f4bb6759b8c18663b716abee65b6cc4`, is a direct child of `caa0`.
+It changes only the existing
+`ChatCodeFencePayloadRetentionTests.swift`: nine mutating `retain(in:)` calls
+are evaluated once into local Bool values immediately before their unchanged
+expectations. All 16 ordered retain calls, six methods, 37 expectations,
+production files and package locks are preserved. Original failure and source
+reviews are published with that exact source; no corrected Swift result is
+claimed by this control preparation.
+
+The actual second run45958390748/attempt1 on controller68151 and sourcecaa0
+remains **failed**. Its Agent admission succeeded without a duplicate run.
+Its quota compile exited1 after98.873s with nine Swift Testing2403 macro errors:
+the macro tried to call each direct mutating method through immutable `$0`.
+No quota test, Widget test or iOS product phase completed. Its exact original
+artifact15179683672 is277231986 bytes, SHA-256
+`14edfa594c30981893ead0ed7383f65f8506dcacecf3eaba0f6659ca60e0258f`.
+Neither that failure nor its partial products qualify the corrected source.
+
+The existing continuation selector and 25 inputs are unchanged. Set only
+`composer_expected_sha=35d26911f70794a41361cee710b1fed24a35e269` for this
+successor. Its exact tree and19 protected paths are checked; one source-specific
+test blob override is permitted and the reference mapping is unchanged. The
+current1005-file inventory must equal the complete original Agent-run inventory
+with exactly one complete, reviewed old/new test row substituted. Missing,
+extra or duplicate files and any change to the other1004 rows fail admission.
+The original inventory is still verified against its original source TAR;
+it is never rewritten to pretend the original run executed the successor.
+The reused Agent report retains its original caa0 source and toolchain, and
+records the current source and exact permitted delta separately. All package
+declarations, locks, Agent production/tests, Platform and fixture rows remain
+identical; the actual six Agent dependency checkouts and products retain the
+original checks. Quota6, Widget2 and the iOS product must execute afresh on the
+selected successor, with their original selection and final-source checks.
+
+Local controller tests replay the original1005-row identity fixture and reject
+unreviewed deltas; they compile no Swift. Both original failed run artifacts and
+the root's accepted68151 controller review remain preserved. No new workflow,
+source input, runtime artifact substitution, Apple job or dispatch is added by
+this preparation.
+
 ## Separate original NativeScript and App/UIKit routes
 
 The original explicit-handler test remains:
 
-`AI_HLYTests/NativeScriptRuntimeWireTests/nativeScriptActionDeclarationsPreserveRegisteredJavaScriptState`
+`AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptActionDeclarationsPreserveRegisteredJavaScriptState()`
 
 At the reference source its actual file blob is
-`ab113355ec8b87b34bc07216806b08f005dc1c36`. It starts the real
+`ab113355ec8b87b34bc07216806b08f005dc1c36`. The file is
+`NativeScriptRuntimeWireTests.swift`, which extends the original
+`HanlinUnifiedHostServicesE2ETests` suite; the filename is not its suite name.
+It starts the real
 `HanlinNativeScriptSession`, registers the actual JavaScript handler, checks
 preserved state across requests and refuses a manufactured result for an
 unhandled action. It cannot be selected by the three package filters above.

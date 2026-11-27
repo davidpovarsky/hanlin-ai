@@ -1,0 +1,17 @@
+{
+  "schema": "hanlin-quota-source-continuation-portable-controls-v1",
+  "argv": [
+    "python3",
+    "-m",
+    "unittest",
+    "-v",
+    "test_control"
+  ],
+  "cwd": "/workspace/scratch/ae335eba85e3/hanlin-hosted-sdk-control/quota-continuation-after/Scripts/CI/SDKSourceValidation",
+  "startedAt": "2026-11-27T07:52:59.023080+00:00",
+  "seconds": 0.315738,
+  "exitCode": 0,
+  "logBytes": 2541,
+  "logSHA256": "de0f5f0105219862b94bd3c5029d7435b9f01365f5e547bd288968f5190caea5",
+  "scope": "Portable Python controller tests only. No Swift, Xcode, simulator, native operation or CI dispatch."
+}

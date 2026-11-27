@@ -1,0 +1,13 @@
+{
+  "admissionSHA256": "a80d33feed9f3fe0fd7daa9978712c4d8622f3466e5553023a70feecc33f9aa1",
+  "controllerCandidate": "quota-continuation-after",
+  "originalCases": 7,
+  "originalMethods": 5,
+  "schema": "hanlin-original-archive-source-successor-control-replay-v1",
+  "scope": "Local offline evidence verification only; no Swift/Xcode/native execution, no workflow dispatch, no archived code or binary executed.",
+  "seconds": 3.574121,
+  "source": "35d26911f70794a41361cee710b1fed24a35e269",
+  "startedAt": "2026-11-27T07:53:58.190393+00:00",
+  "status": "PASS_ORIGINAL_ARCHIVE_AND_EXACT_REVIEWED_TEST_DELTA_CONTROL_ONLY",
+  "unchangedSourceFiles": 1004
+}

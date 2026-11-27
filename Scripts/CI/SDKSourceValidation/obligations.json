@@ -130,6 +130,15 @@
       "parent": "20a1e6fa33ed261ba11e83a0b84a157029822e5e",
       "sourceScope": "Root-reviewed selective successor: three shared scrolling sources, one additive locale entry preserving1294 originals, six additive App/UIKit regression methods and original evidence. Other five package trees and locks unchanged. The six App/UIKit regressions are NOT selected by this package route.",
       "integrationReceiptSHA256": "ac0504faf07be3f094a24749eeace46b60f1b87215f941c70a9ec3f74fcb2bde"
+    },
+    "35d26911f70794a41361cee710b1fed24a35e269": {
+      "tree": "e982eb1e5f4bb6759b8c18663b716abee65b6cc4",
+      "parent": "caa0dac32afa18e58bba55fb4f0fdd262f181835",
+      "protectedBlobOverrides": {
+        "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/ChatCodeFencePayloadRetentionTests.swift": "db073980f3a2968af9f9b1fdbd102dd022088b78"
+      },
+      "sourceIntakeSHA256": "608b064340224b6a9da62de68c8452a86d9ab3843cd0d0bbb65b641fb61ff877",
+      "sourceScope": "Reviewed test-only successor: nine direct mutating retain calls evaluated once into local Bool values immediately before the unchanged expectations. All 16 ordered retain calls, six methods, 37 assertions, production sources, package declarations and locks preserved; 15 original evidence documents added outside the selected source archive. No Swift result is implied by this entry."
     }
   },
   "continuation": {
@@ -206,6 +215,30 @@
       "xcode.log": {
         "bytes": 31,
         "sha256": "67c5b47bcf0e788aecae2f9b3af345813bdf7fe736faefb9666a7f4b2bf27ba7"
+      }
+    },
+    "reviewedSourceSuccessors": {
+      "35d26911f70794a41361cee710b1fed24a35e269": {
+        "originalSource": "caa0dac32afa18e58bba55fb4f0fdd262f181835",
+        "inventoryChanges": [
+          {
+            "before": {
+              "blob": "45baf575d666c580c8e7b79cfe6591adb82aac7e",
+              "bytes": 7001,
+              "mode": "100644",
+              "path": "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/ChatCodeFencePayloadRetentionTests.swift",
+              "sha256": "5781153ac5b7b85476b0c8b1e6f1d73df409a728657d247ad78a9584e46d75dd"
+            },
+            "after": {
+              "blob": "db073980f3a2968af9f9b1fdbd102dd022088b78",
+              "bytes": 7501,
+              "mode": "100644",
+              "path": "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/ChatCodeFencePayloadRetentionTests.swift",
+              "sha256": "2838bf7cd353b80cea82f72ac30851059d6998728c5ed5876cacafb0a3957d18"
+            }
+          }
+        ],
+        "scope": "Exactly one reviewed Presentation test file may differ in the complete 1005-file selected inventory. All 1004 other rows, including the complete Agent package, dependencies, Platform and fixtures, must remain exact. This does not reuse a quota result; quota compilation failed and its six tests still require actual execution."
       }
     }
   }

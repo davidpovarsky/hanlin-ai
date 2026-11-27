@@ -1,0 +1,119 @@
+{
+  "schema": "pinkha-root-original-sdk-continuation-review-v1",
+  "reviewedAt": "2026-11-27T07:24:14.964227+00:00",
+  "controller": "68151b7344645f1831e7683906e0d45e276cfd17",
+  "tree": "e440bcfad17949daeab47899284acf9afbe1e4e1",
+  "parent": "35b504095406476799b76a9593d04ba11900d112",
+  "source": "caa0dac32afa18e58bba55fb4f0fdd262f181835",
+  "status": "ACCEPTED_FOR_EXACT_ONCE_REMAINING_OBLIGATIONS",
+  "sourceFiles": [
+    {
+      "path": ".github/workflows/build-ios26-unsigned-ipa.yml",
+      "bytes": 219117,
+      "sha256": "e1c50b40b2c93f77c22243c755cb8bcb0f9447b44199f5f2ec2518a1640dc423",
+      "blob": "b819f3a8634a8466f821c7d33f3ba11ba03e8a59"
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/Fixtures/original-45954793309-api-identities.json",
+      "bytes": 10440,
+      "sha256": "81568ddd916c22122dde29fde95b442bd166b32195906b0440d4868c851b7d20",
+      "blob": "e5ad66452e11697ec83495e01c063951b8728918"
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/Fixtures/original-45954793309-stop-terminal-provenance.json",
+      "bytes": 962,
+      "sha256": "ead7cd9f6e28b7285d09b07a101d87861fece5e2b512111a1a72167357205219",
+      "blob": "994a5103cd15480eb327a155e480675d7fb58a1c"
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/Fixtures/original-45954793309-stop-terminal.log",
+      "bytes": 2613,
+      "sha256": "387c1134c06e9e9dac179055a30ecd540851c700283f392116862bc754286a5f",
+      "blob": "e39dec6e775b630d544aa2caaba1c8176b100612"
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/README.md",
+      "bytes": 13552,
+      "sha256": "d09a7681adfc74eaa25ed43e4068eb37248bfe792fe52c4bb7783453190dd0c8",
+      "blob": "a3929250a9a8c45348f1a585035005cbdc763a63"
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/continuation.py",
+      "bytes": 14758,
+      "sha256": "2658f82caa0b68a9d3322ff33e91c99d441264d10d51e15ec743001d61639a90",
+      "blob": "c36bc6f02fd17ded61263539bfc23d5b03d5bf6f"
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/obligations.json",
+      "bytes": 10940,
+      "sha256": "e56eeafa0e1be9aa0e484c28b0afa7e6aaa56602a2fb43d2e1571d71ac201958",
+      "blob": "63806d652fc63c267947994ceccacf1cad477ee2"
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/run.py",
+      "bytes": 34314,
+      "sha256": "81f6b2e267989b8d265177d1df52764fba15dc71389989ccca622a51a44d5c23",
+      "blob": "436a81e623c85f7ebda7b29f37563d12585f604e"
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/test_control.py",
+      "bytes": 15251,
+      "sha256": "084cb257e2a485fba32675f3d42b51aa39b75aaeb078c63c66ac7db1cd0c5936",
+      "blob": "5f15c153d00daa72642e36f04361f05869887fcc"
+    }
+  ],
+  "inverseChecks": [
+    {
+      "path": ".github/workflows/build-ios26-unsigned-ipa.yml",
+      "operations": 5,
+      "entireOriginalRestored": true
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/README.md",
+      "operations": 1,
+      "entireOriginalRestored": true
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/obligations.json",
+      "operations": 3,
+      "entireOriginalRestored": true
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/run.py",
+      "operations": 23,
+      "entireOriginalRestored": true
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/test_control.py",
+      "operations": 5,
+      "entireOriginalRestored": true
+    }
+  ],
+  "originalSourceSuiteDeclarations": [
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+      "blob": "c108823a9409264882e7870cc822cccf569bac3c",
+      "declaredSuite": "Pass 3 installed widget programs, actions and transactions",
+      "methodCountExpected": 2
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/ChatCodeFencePayloadRetentionTests.swift",
+      "blob": "45baf575d666c580c8e7b79cfe6591adb82aac7e",
+      "declaredSuite": "Original code-fence retained payload ownership",
+      "methodCountExpected": 6
+    }
+  ],
+  "priorActualArtifactAdmissionSHA256": "ea2d84b6c982002741dbc7fa6c34e2dfadcea35af48b61d20d84a52b9bb0d6a8",
+  "portableControlsReused": 12,
+  "portableReceiptSHA256": "4976a27eace1436e970673e92128beded78f4cbe9e68fb9634c27bb553f32db0",
+  "originalStopLogSHA256": "a141517e1366496b39dd43796a0611dbc292e9146052534760b8937982c1f709",
+  "newSwiftExecutionsByReview": 0,
+  "notes": [
+    "Full new continuation admission source and run/config/workflow/test diffs read by root.",
+    "Observed method/case distinction and exact Bool annotation bound to original raw log; five methods/seven cases reused only under original Xcode27.2 scope.",
+    "Original failed workflow result remains unchanged; remaining six payload methods, two Widget methods and iOS HanlinChatUI build must still execute.",
+    "All API identities, original source archive1005files, dependencies6, commands34, PG absence, product203files are closed against fixed original artifact; no arbitrary artifact input.",
+    "GH token scoped only to existing fixed read-only Actions API retrieval; absent from compiler/source child environments.",
+    "Published full18-file commit independently read through GitHub; no unrelated production SDK source or tests changed."
+  ]
+}

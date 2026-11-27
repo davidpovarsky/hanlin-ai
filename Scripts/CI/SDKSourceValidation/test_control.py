@@ -17,7 +17,7 @@ control = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(control)
 CONFIG = control.CONFIG
 
-from continuation import validate_api, admit_archive
+from continuation import validate_api, admit_archive, validate_source_continuity
 
 
 def admitted_inputs():
@@ -117,6 +117,61 @@ class ControlTests(unittest.TestCase):
                         {"testflight_upload": "true"}, {"exact_test_selector": fixed["selector"] + "-other"}):
             with self.subTest(changes=changes), self.assertRaises(RuntimeError):
                 control.validate_inputs({**inputs, **changes}, environment)
+
+    def test_reviewed_test_only_successor_preserves_all_original_protected_guards(self):
+        fixed = CONFIG["continuation"]
+        source, = fixed["reviewedSourceSuccessors"]
+        inputs = {**admitted_inputs(), "exact_test_selector": fixed["selector"], CONFIG["sourceInput"]: source}
+        environment = {"GITHUB_EVENT_NAME": "workflow_dispatch", "GITHUB_REPOSITORY": "davidpovarsky/hanlin-ai",
+                       "HANLIN_SDK_SOURCE_SHA": source}
+        self.assertEqual(control.validate_inputs(inputs, environment), source)
+        original = control.protected_blobs(fixed["source"])
+        successor = control.protected_blobs(source)
+        self.assertEqual(original, CONFIG["protectedBlobs"])
+        self.assertEqual(len(original), 19)
+        self.assertEqual(set(successor), set(original))
+        changed = [path for path in original if original[path] != successor[path]]
+        change, = fixed["reviewedSourceSuccessors"][source]["inventoryChanges"]
+        self.assertEqual(changed, [change["after"]["path"]])
+        self.assertEqual(successor[changed[0]], change["after"]["blob"])
+        for changes in ({"testflight_upload": "true"}, {"runtime_reuse_artifacts_run_id": "45958390748"},
+                        {CONFIG["sourceInput"]: "f" * 40}):
+            with self.subTest(changes=changes), self.assertRaises(RuntimeError):
+                control.validate_inputs({**inputs, **changes}, environment)
+
+    def test_complete_original_inventory_admits_only_the_reviewed_test_row(self):
+        fixed = CONFIG["continuation"]
+        source, = fixed["reviewedSourceSuccessors"]
+        fixture = (HERE / "Fixtures/original-45954793309-source-files.json").read_bytes()
+        self.assertEqual(len(fixture), fixed["members"]["original-source-files.json"]["bytes"])
+        self.assertEqual(hashlib.sha256(fixture).hexdigest(), fixed["members"]["original-source-files.json"]["sha256"])
+        original = json.loads(fixture)
+        change, = fixed["reviewedSourceSuccessors"][source]["inventoryChanges"]
+        current = [change["after"] if row["path"] == change["before"]["path"] else row for row in original]
+        baseline = validate_source_continuity(original, original, fixed["source"], fixed)
+        self.assertEqual(baseline["unchangedSourceFiles"], 1005)
+        admitted = validate_source_continuity(original, current, source, fixed)
+        self.assertEqual(admitted["unchangedSourceFiles"], 1004)
+        self.assertEqual(admitted["reviewedInventoryChanges"], [change])
+        self.assertEqual(admitted["originalSource"], fixed["source"])
+        self.assertEqual(admitted["currentSource"], source)
+        variants = [("unchanged old test", original), ("missing file", current[:-1]),
+                    ("duplicate file", current + [current[0]]),
+                    ("foreign file", current + [{**current[0], "path": "Packages/Foreign.swift"}])]
+        for prefix in ("Packages/HanlinAgentSDK/Sources/", "Packages/HanlinAgentSDK/Package.resolved",
+                       "AI_HLY.xcodeproj/", "Fixtures/Widgets/", change["after"]["path"]):
+            variant = copy.deepcopy(current)
+            row = next(row for row in variant if row["path"].startswith(prefix))
+            row["sha256"] = "0" * 64
+            variants.append((prefix, variant))
+        for name, rows in variants:
+            with self.subTest(name=name), self.assertRaises(RuntimeError):
+                validate_source_continuity(original, rows, source, fixed)
+        with self.assertRaises(RuntimeError):
+            validate_source_continuity(original, current, fixed["source"], fixed)
+        with self.assertRaises(RuntimeError):
+            validate_source_continuity(original, current, "f" * 40, fixed)
+        self.assertEqual(json.loads(fixture), original)
 
     def test_continuation_api_refuses_foreign_attempt_artifact_or_executed_sibling_job(self):
         fixture = json.loads((HERE / "Fixtures/original-45954793309-api-identities.json").read_text())

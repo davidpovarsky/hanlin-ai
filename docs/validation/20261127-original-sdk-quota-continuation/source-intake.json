@@ -1,0 +1,182 @@
+{
+  "schema": "hanlin-original-sdk-quota-continuation-source-intake-v1",
+  "repository": "davidpovarsky/hanlin-ai",
+  "baseControlSHA": "68151b7344645f1831e7683906e0d45e276cfd17",
+  "source": "35d26911f70794a41361cee710b1fed24a35e269",
+  "sourceTree": "e982eb1e5f4bb6759b8c18663b716abee65b6cc4",
+  "sourceParent": "caa0dac32afa18e58bba55fb4f0fdd262f181835",
+  "files": [
+    {
+      "path": "Scripts/CI/SDKSourceValidation/README.md",
+      "bytes": 16599,
+      "sha256": "b6b1661f605f0cdc842746b69e8f71bbc5896088c0183b33d53fc1da62d7e943",
+      "gitBlob": "645b1f918bda178105e049c1d6a30bb48e892df4",
+      "before": {
+        "bytes": 13552,
+        "sha256": "d09a7681adfc74eaa25ed43e4068eb37248bfe792fe52c4bb7783453190dd0c8",
+        "gitBlob": "a3929250a9a8c45348f1a585035005cbdc763a63"
+      },
+      "literalInverseCount": 5
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/continuation.py",
+      "bytes": 17320,
+      "sha256": "9fd78bf1886e7fda6789a488fb84512c08b6a9826572332f620b9105613c3243",
+      "gitBlob": "c109231b6fa4aac18640657ff17b4d5d4d458645",
+      "before": {
+        "bytes": 14758,
+        "sha256": "2658f82caa0b68a9d3322ff33e91c99d441264d10d51e15ec743001d61639a90",
+        "gitBlob": "c36bc6f02fd17ded61263539bfc23d5b03d5bf6f"
+      },
+      "literalInverseCount": 4
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/obligations.json",
+      "bytes": 13147,
+      "sha256": "5f159ffa4cd590acdc7d7279ff9240dd2c27106e11ab4249c476d1df75561297",
+      "gitBlob": "8dff8a841704e2cede14263337e4a0edd2937ee5",
+      "before": {
+        "bytes": 10940,
+        "sha256": "e56eeafa0e1be9aa0e484c28b0afa7e6aaa56602a2fb43d2e1571d71ac201958",
+        "gitBlob": "63806d652fc63c267947994ceccacf1cad477ee2"
+      },
+      "literalInverseCount": 1
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/run.py",
+      "bytes": 34643,
+      "sha256": "75060da01b718fdb469127c21cb70baa1418b86f2edb09e2a9ce47e6d3f05501",
+      "gitBlob": "33ead3cec5f2edb365716074709c9647b8266b64",
+      "before": {
+        "bytes": 34314,
+        "sha256": "81f6b2e267989b8d265177d1df52764fba15dc71389989ccca622a51a44d5c23",
+        "gitBlob": "436a81e623c85f7ebda7b29f37563d12585f604e"
+      },
+      "literalInverseCount": 7
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/test_control.py",
+      "bytes": 19067,
+      "sha256": "f422b4597289d13ad5190537386999dc7b53d6b96b22466941e5466c3aa81287",
+      "gitBlob": "d20f7a0adb4a7d3fc2f904533f8dfd8153df86a2",
+      "before": {
+        "bytes": 15251,
+        "sha256": "084cb257e2a485fba32675f3d42b51aa39b75aaeb078c63c66ac7db1cd0c5936",
+        "gitBlob": "5f15c153d00daa72642e36f04361f05869887fcc"
+      },
+      "literalInverseCount": 2
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/Fixtures/original-45954793309-source-files.json",
+      "bytes": 305259,
+      "sha256": "75c8afbdff3bb555c1d285843fb6f071cee8471f7c0398e875a294bb3c75dacb",
+      "gitBlob": "195378c4c9610fed0f442a86818869d412da4f49",
+      "added": true
+    }
+  ],
+  "unchangedWorkflow": {
+    "path": ".github/workflows/build-ios26-unsigned-ipa.yml",
+    "bytes": 219117,
+    "sha256": "e1c50b40b2c93f77c22243c755cb8bcb0f9447b44199f5f2ec2518a1640dc423",
+    "gitBlob": "b819f3a8634a8466f821c7d33f3ba11ba03e8a59"
+  },
+  "unchangedInputs": 25,
+  "unchangedWorkflowJobs": 28,
+  "unchangedProtectedPathCount": 19,
+  "changedProtectedPaths": 1,
+  "literalInverseOperations": 19,
+  "evidence": [
+    {
+      "path": "docs/validation/20261127-original-sdk-quota-continuation/actual-original-admission-receipt.json",
+      "bytes": 655,
+      "sha256": "856692c5a3d96388bbaedcd940122ea89488e8327e69c5b66805dcaf010a9165",
+      "gitBlob": "61de7c07cf3320a1925dd1e0bb148095cf7f43c6"
+    },
+    {
+      "path": "docs/validation/20261127-original-sdk-quota-continuation/actual-original-admission.json",
+      "bytes": 54663,
+      "sha256": "a80d33feed9f3fe0fd7daa9978712c4d8622f3466e5553023a70feecc33f9aa1",
+      "gitBlob": "2468bd8a94509bef124e056fc18c350e55ff28c6"
+    },
+    {
+      "path": "docs/validation/20261127-original-sdk-quota-continuation/literal-inverse-proof.json",
+      "bytes": 43236,
+      "sha256": "453e0b5e2948edcf59254a71fd08c94291662cf18e9d873a12147175f843f409",
+      "gitBlob": "09be72ea251aec56915953a94415b9a6f349fe9b"
+    },
+    {
+      "path": "docs/validation/20261127-original-sdk-quota-continuation/local-control-receipt.json",
+      "bytes": 593,
+      "sha256": "3891e5b3fd529d7699d7b3157ff9aa19c67ea2a8f1b569bc0b2bbedf3a2f8138",
+      "gitBlob": "300eb3baffbef9ad918cac53a13ecf603b432d60"
+    },
+    {
+      "path": "docs/validation/20261127-original-sdk-quota-continuation/local-control-tests.log",
+      "bytes": 2541,
+      "sha256": "de0f5f0105219862b94bd3c5029d7435b9f01365f5e547bd288968f5190caea5",
+      "gitBlob": "e12e815f776bd0b7bf0da6d5ff2a8068dc6eb5e4"
+    },
+    {
+      "path": "docs/validation/20261127-original-sdk-quota-continuation/original681-actual-failed-result.json",
+      "bytes": 40139,
+      "sha256": "2bbf071b8252ae8f3d6f0664bbdce746352d2945d6787aba4dd2486a8703aac2",
+      "gitBlob": "6a43d7f87e6ddd5c45668aeb52ccf755ed446263"
+    },
+    {
+      "path": "docs/validation/20261127-original-sdk-quota-continuation/original681-root-independent-review.json",
+      "bytes": 5241,
+      "sha256": "04ee48c57dba5876762a3aa49aa96452f36266397eb32e63bdd7156e9b2d9a82",
+      "gitBlob": "1721b198ea7a730b815eb7ada6d0aace73b080a9"
+    },
+    {
+      "path": "docs/validation/20261127-original-sdk-quota-continuation/primary-source-delta-derivation.json",
+      "bytes": 490092,
+      "sha256": "ce567638397f8e14685332c047b8208e1dbb96213a7ae4fa0c202a95f17dddc2",
+      "gitBlob": "6c2153131451f7a25dcde40f70b8f56efcf4b432"
+    }
+  ],
+  "originalFirstRun": {
+    "runID": 45954793309,
+    "attempt": 1,
+    "artifactID": 15178855568,
+    "artifactBytes": 119169729,
+    "artifactSHA256": "266836f5a18a7977489cbd1e4624ff06b6ccc8d0bff872657ffc7885f0de4ca3",
+    "status": "FAILED_CONTROLLER_METHOD_COUNT_PARSER_AFTER_ACTUAL_AGENT_5_METHOD_7_CASE_PASS",
+    "toolchain": "Xcode27.2 / Swift6.4.2 / Testing2403 / macOS27.0.1"
+  },
+  "originalSecondRun": {
+    "runID": 45958390748,
+    "attempt": 1,
+    "artifactID": 15179683672,
+    "controller": "68151b7344645f1831e7683906e0d45e276cfd17",
+    "source": "caa0dac32afa18e58bba55fb4f0fdd262f181835",
+    "artifactBytes": 277231986,
+    "artifactSHA256": "14edfa594c30981893ead0ed7383f65f8506dcacecf3eaba0f6659ca60e0258f",
+    "status": "FAILED_QUOTA_TEST_COMPILATION_BEFORE_SIX_TESTS_WIDGETS_OR_IOS_BUILD",
+    "commandSeconds": 98.873,
+    "commandExitCode": 1,
+    "compilerLogBytes": 855911,
+    "compilerLogSHA256": "8c26b7effa0664ee7baec3d689f0116485bc5d6d40a914760a943d2d33dc79bb",
+    "originalFailureGitSource": "35d26911f70794a41361cee710b1fed24a35e269",
+    "originalFailureGitPath": "docs/validation/20261127-original-sdk-quota-macro-fix/original-failure",
+    "toolchain": "Xcode27.2 / Swift6.4.2 / Testing2403 / macOS27.0.1"
+  },
+  "acceptance": {
+    "portablePythonControls": "14_PASS_0.093_SECONDS",
+    "originalArchiveReplay": "PASS_LOCAL_OFFLINE_IDENTITY_AND_ORIGINAL_AGENT_TERMINAL_REPARSE_ONLY",
+    "currentSourceIdentity": "DERIVED_FROM_PRIMARY_IMMUTABLE_COMPARISON_AND_ORIGINAL_ACTUAL_INVENTORY",
+    "hostedCurrentSourceMaterialization": "NOT_RUN_IN_THIS_PREPARATION",
+    "correctedQuotaSwiftTests": "NOT_RUN",
+    "widgetSwiftTests": "NOT_RUN",
+    "iosProductBuild": "NOT_RUN",
+    "newDispatches": 0,
+    "nativeOrMacActions": 0
+  },
+  "limits": [
+    "Current hosted source must independently match Git and staged bytes before original Agent reuse.",
+    "The old source inventory remains unchanged and bound to its original archive.",
+    "Exactly the reviewed Presentation test row may differ; all 1004 other rows and actual Agent dependency checks remain exact.",
+    "Original Agent run and current source remain explicitly distinct; no quota result is reused.",
+    "No NativeScript runtime, Anytype UI, signed build, IPA or TestFlight claim."
+  ]
+}

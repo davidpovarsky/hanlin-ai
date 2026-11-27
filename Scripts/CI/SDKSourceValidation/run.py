@@ -21,7 +21,7 @@ import tempfile
 import time
 import traceback
 
-from continuation import admit_archive, validate_api
+from continuation import admit_archive, validate_api, validate_continuation_source
 
 
 HERE = Path(__file__).resolve().parent
@@ -66,6 +66,13 @@ def blob_sha(data: bytes) -> str:
     return hashlib.sha1(b"blob " + str(len(data)).encode() + b"\0" + data).hexdigest()
 
 
+def protected_blobs(source: str) -> dict:
+    original = CONFIG["protectedBlobs"]
+    overrides = CONFIG["reviewedSources"][source].get("protectedBlobOverrides", {})
+    require(set(overrides).issubset(original), "Reviewed override cannot remove or add a protected path")
+    return {**original, **overrides}
+
+
 def validate_inputs(inputs: dict, environment: dict) -> str:
     require(environment.get("GITHUB_EVENT_NAME") == "workflow_dispatch", "Manual dispatch required")
     require(environment.get("GITHUB_REPOSITORY") == "davidpovarsky/hanlin-ai", "Wrong repository")
@@ -78,7 +85,7 @@ def validate_inputs(inputs: dict, environment: dict) -> str:
     require(source in CONFIG["reviewedSources"], "Source has no exact reviewed tree entry in this controller")
     require(environment.get("HANLIN_SDK_SOURCE_SHA") == source, "Workflow/source input mismatch")
     if selector == CONFIG["continuation"]["selector"]:
-        require(source == CONFIG["continuation"]["source"], "Continuation source differs from original execution")
+        validate_continuation_source(source, CONFIG["continuation"])
     for name in FALSE_INPUTS:
         require(inputs.get(name) in (False, "false"), f"{name} must be explicitly false")
     for name in EMPTY_INPUTS:
@@ -400,12 +407,13 @@ def execute(run: Run, source: str, continue_original_agent: bool = False) -> dic
     require(run.git("rev-parse", source + "^{commit}") == source, "Fetched source identity mismatch")
     require(run.git("rev-parse", source + "^{tree}") == CONFIG["reviewedSources"][source]["tree"],
             "Source tree differs from the exact reviewed source entry")
-    for path, expected in CONFIG["protectedBlobs"].items():
+    selected_protected_blobs = protected_blobs(source)
+    for path, expected in selected_protected_blobs.items():
         require(run.git("rev-parse", f"{source}:{path}") == expected,
                 "Protected test/manifest/fixture/lock changed; new source review required: " + path)
     write_json(run.output / "admitted-source.json", {"source": source, "tree": run.git("rev-parse", source + "^{tree}"),
                "referenceSource": CONFIG["referenceSource"], "reviewedSource": CONFIG["reviewedSources"][source],
-               "protectedBlobs": CONFIG["protectedBlobs"],
+               "protectedBlobs": selected_protected_blobs,
                "notCovered": CONFIG["notCovered"], "priorEvidenceReuse": CONFIG["priorEvidenceReuse"]})
     private = Path(tempfile.mkdtemp(prefix="hanlin-original-sdk-", dir=os.environ.get("RUNNER_TEMP", "/tmp")))
     materialized = private / "source"
@@ -441,7 +449,7 @@ def execute(run: Run, source: str, continue_original_agent: bool = False) -> dic
     resolved_locks = {}
     if continue_original_agent:
         fixed = CONFIG["continuation"]
-        require(source == fixed["source"], "Original Agent evidence belongs to another source")
+        validate_continuation_source(source, fixed)
         token = os.environ.get("GH_TOKEN")
         require(token, "Existing Actions read token is required for fixed original artifact retrieval")
         api_environment = dict(run.environment, GH_TOKEN=token)
@@ -458,7 +466,7 @@ def execute(run: Run, source: str, continue_original_agent: bool = False) -> dic
                     timeout=300, binary_output=True, environment=api_environment,
                     maximum_output_bytes=fixed["artifactBytes"])
         reused = admit_archive(run.output / "prior-original-artifact.zip", run.output, fixed,
-                               before, published, sys.modules[__name__])
+                               before, published, sys.modules[__name__], current_source=source)
         suite_results.append(reused["parsed"])
         resolved_locks["agent-stop"] = reused["resolvedLock"]
         run.products.append(reused["product"])

@@ -29,6 +29,45 @@ def hash_stream(stream):
     return count, digest.hexdigest()
 
 
+def validate_continuation_source(source, fixed):
+    """Only the original source or a separately reviewed exact successor."""
+    if source == fixed["source"]:
+        return None
+    successor = fixed.get("reviewedSourceSuccessors", {}).get(source)
+    require(isinstance(successor, dict) and successor.get("originalSource") == fixed["source"],
+            "Continuation source has no reviewed original-source closure")
+    return successor
+
+
+def validate_source_continuity(original_files, current_files, source, fixed):
+    """Do not substitute a changed whole inventory for the executed original."""
+    successor = validate_continuation_source(source, fixed)
+    expected = {row["path"]: row for row in original_files}
+    require(len(expected) == len(original_files), "Duplicate original source identity")
+    changes = [] if successor is None else successor["inventoryChanges"]
+    changed_paths = set()
+    for change in changes:
+        before, after = change["before"], change["after"]
+        path = before["path"]
+        require(path == after["path"] and path not in changed_paths and expected.get(path) == before,
+                "Reviewed source delta does not match its complete original row")
+        require(before != after and before["mode"] == after["mode"],
+                "Reviewed source delta must preserve the original file mode")
+        changed_paths.add(path)
+        expected[path] = after
+    expected_current = [expected[row["path"]] for row in original_files]
+    require(current_files == expected_current,
+            "Current immutable source differs outside the exact reviewed source delta")
+    canonical = lambda rows: hashlib.sha256(json.dumps(rows, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+    return {"originalSource": fixed["source"], "currentSource": source,
+            "originalSourceFiles": len(original_files), "currentSourceFiles": len(current_files),
+            "unchangedSourceFiles": len(original_files) - len(changed_paths),
+            "reviewedInventoryChanges": changes,
+            "originalInventoryCanonicalSHA256": canonical(original_files),
+            "currentInventoryCanonicalSHA256": canonical(current_files),
+            "scope": "Full original inventory stays bound to the actually executed source archive. Current inventory is independently bound to its selected Git source; only the explicit reviewed rows may differ. No changed test result is reused."}
+
+
 def validate_api(run, jobs, artifact, fixed):
     require(run.get("id") == fixed["runID"] and run.get("run_attempt") == fixed["attempt"] and
             run.get("workflow_id") == fixed["workflowID"] and run.get("head_sha") == fixed["controllerSHA"] and
@@ -62,7 +101,7 @@ def validate_api(run, jobs, artifact, fixed):
             "Original artifact metadata differs")
 
 
-def admit_archive(archive, output, fixed, source_inventory, published_lock, control):
+def admit_archive(archive, output, fixed, source_inventory, published_lock, control, current_source=None):
     """Hash originals and actual outputs, then return only the exact Agent obligation."""
     with archive.open("rb") as stream:
         count, digest = hash_stream(stream)
@@ -107,7 +146,8 @@ def admit_archive(archive, output, fixed, source_inventory, published_lock, cont
         control.validate_inputs(inputs, {"GITHUB_EVENT_NAME": "workflow_dispatch",
             "GITHUB_REPOSITORY": "davidpovarsky/hanlin-ai", "HANLIN_SDK_SOURCE_SHA": fixed["source"]})
         original_files = value("original-source-files.json")
-        require(original_files == source_inventory, "Original execution source inventory differs from current immutable source")
+        source_continuity = validate_source_continuity(original_files, source_inventory,
+            fixed["source"] if current_source is None else current_source, fixed)
         expected_files = {row["path"]: row for row in original_files}
         require(len(expected_files) == len(original_files), "Duplicate original source identity")
         with bundle.open(prefix + "original-source.tar") as stream:
@@ -215,6 +255,7 @@ def admit_archive(archive, output, fixed, source_inventory, published_lock, cont
             "admission": {"status": "PASS_REPARSED_ORIGINAL_AGENT_EXECUTION_ONLY", "origin": origin,
                 "originalFailedResultPreserved": True, "originalResultStatus": original_result["status"],
                 "originalError": original_result["error"], "sourceFiles": len(original_files),
+                "sourceContinuity": source_continuity,
                 "originalCommandCount": len(commands), "originalDependencyCount": len(lock),
                 "originalProductFiles": len(expected_products), "methodCount": parsed["methodCount"],
                 "caseCount": parsed["caseCount"],

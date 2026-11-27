@@ -1,0 +1,19 @@
+test_2403_refuses_partial_duplicate_foreign_or_wrong_typed_cases (test_control.ControlTests.test_2403_refuses_partial_duplicate_foreign_or_wrong_typed_cases) ... ok
+test_actual_2403_terminal_distinguishes_method_and_individual_case_success (test_control.ControlTests.test_actual_2403_terminal_distinguishes_method_and_individual_case_success) ... ok
+test_actual_dependency_revision_and_repository_must_match_published_lock (test_control.ControlTests.test_actual_dependency_revision_and_repository_must_match_published_lock) ... ok
+test_actual_original_terminal_has_five_methods_and_seven_cases (test_control.ControlTests.test_actual_original_terminal_has_five_methods_and_seven_cases) ... ok
+test_complete_original_inventory_admits_only_the_reviewed_test_row (test_control.ControlTests.test_complete_original_inventory_admits_only_the_reviewed_test_row) ... ok
+test_continuation_api_refuses_foreign_attempt_artifact_or_executed_sibling_job (test_control.ControlTests.test_continuation_api_refuses_foreign_attempt_artifact_or_executed_sibling_job) ... ok
+test_continuation_only_admits_the_fixed_run_source_and_unchanged_side_effect_inputs (test_control.ControlTests.test_continuation_only_admits_the_fixed_run_source_and_unchanged_side_effect_inputs) ... ok
+test_continuation_refuses_wrong_archive_before_any_source_or_product_admission (test_control.ControlTests.test_continuation_refuses_wrong_archive_before_any_source_or_product_admission) ... ok
+test_exited_leader_does_not_hide_its_remaining_original_group (test_control.ControlTests.test_exited_leader_does_not_hide_its_remaining_original_group) ... ok
+test_explicit_source_and_side_effect_inputs_fail_closed (test_control.ControlTests.test_explicit_source_and_side_effect_inputs_fail_closed) ... ok
+test_new_selector_preserves_every_legacy_job_and_only_selects_one_new_job (test_control.ControlTests.test_new_selector_preserves_every_legacy_job_and_only_selects_one_new_job) ... ok
+test_original_apple_swift_build_products_are_retained (test_control.ControlTests.test_original_apple_swift_build_products_are_retained) ... ok
+test_partial_duplicate_skipped_or_zero_test_output_is_never_acceptance (test_control.ControlTests.test_partial_duplicate_skipped_or_zero_test_output_is_never_acceptance) ... ok
+test_reviewed_test_only_successor_preserves_all_original_protected_guards (test_control.ControlTests.test_reviewed_test_only_successor_preserves_all_original_protected_guards) ... ok
+
+----------------------------------------------------------------------
+Ran 14 tests in 0.093s
+
+OK
