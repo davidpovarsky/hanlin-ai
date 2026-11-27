@@ -22,6 +22,7 @@ struct SkillEditorView: View {
     let onSaved: () -> Void
 
     @Environment(\.dismiss) private var dismiss
+    @Environment(\.hanlinSkillTools) private var availableTools
 
     @State private var rawID: String = ""
     @State private var title: String = ""
@@ -98,7 +99,7 @@ struct SkillEditorView: View {
     }
 
     private var availableCanonicalTools: [HanlinSkillToolReference] {
-        HanlinSkillToolSource.provider().sorted(by: { $0.name < $1.name })
+        availableTools().sorted(by: { $0.name < $1.name })
     }
 
     private var idValidationError: String? {

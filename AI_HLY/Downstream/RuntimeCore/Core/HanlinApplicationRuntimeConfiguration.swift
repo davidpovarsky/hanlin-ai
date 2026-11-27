@@ -126,12 +126,30 @@ final class HanlinApplicationProcessRuntime: @unchecked Sendable {
     private var installed: HanlinApplicationRuntimeConfiguration?
     private var modelContainer: AnyObject?
     private var installedSystemIntegrations: HanlinApplicationSystemIntegrations?
+    private final class AssistantComponentOwner {}
 
     func install(_ configuration: HanlinApplicationRuntimeConfiguration, modelContainer: AnyObject,
                  systemIntegrations: HanlinApplicationSystemIntegrations = .currentHost) throws {
         guard configuration.directory.isFileURL else { throw HanlinApplicationError.invalidStorageURL }
         lock.lock()
         defer { lock.unlock() }
+        try installLocked(configuration, modelContainer: modelContainer, systemIntegrations: systemIntegrations)
+    }
+
+    /// The component has no second model container. Retain or reuse the same
+    /// process owner under the original installation lock and policy.
+    func assistantComponentOwner(_ configuration: HanlinApplicationRuntimeConfiguration) throws -> AnyObject {
+        guard configuration.directory.isFileURL else { throw HanlinApplicationError.invalidStorageURL }
+        lock.lock()
+        defer { lock.unlock() }
+        let owner = modelContainer ?? AssistantComponentOwner()
+        try installLocked(configuration, modelContainer: owner,
+            systemIntegrations: installedSystemIntegrations ?? .currentHost)
+        return owner
+    }
+
+    private func installLocked(_ configuration: HanlinApplicationRuntimeConfiguration, modelContainer: AnyObject,
+                               systemIntegrations: HanlinApplicationSystemIntegrations) throws {
         if let installed, installed != configuration {
             throw HanlinApplicationError.incompatibleRuntimeConfiguration
         }
@@ -161,4 +179,3 @@ final class HanlinApplicationProcessRuntime: @unchecked Sendable {
         return current
     }
 }
-

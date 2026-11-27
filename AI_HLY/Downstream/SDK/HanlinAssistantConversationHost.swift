@@ -191,7 +191,8 @@ private final class HanlinAssistantToolSource: HanlinOriginalToolSource {
             title: .init(["en": "Execute Skill Resource"]),
             summary: .init(["en": skill.description]),
             inputSchema: HanlinJSONSchemaDocument.decodeCanonicalJSON(skill.inputSchemaData, defaultDialect: .draft2020_12),
-            risk: .write, approval: .init(requiresApproval: true, scopeParameters: ["skill_id", "relative_path"]))
+            risk: .write, presentation: .init(),
+            approval: .init(requiresApproval: true, scopeParameters: ["skill_id", "relative_path"]))
         for tool in available.sorted(by: { $0.exposedName < $1.exposedName }) {
             // Keep the exact original wire schema. The original dispatch core
             // refuses MCP definitions whose wire provenance was not verified.

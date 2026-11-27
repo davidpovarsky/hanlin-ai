@@ -10,15 +10,28 @@ public final class HanlinAssistantServices {
     public let mcp: HanlinApplicationMCP
     public var skills: HanlinSkillCatalog { .shared }
     private let owner: AnyObject
+    fileprivate let availableTools: @MainActor () -> [HanlinSkillToolReference]
 
     public init(runtimeConfiguration: HanlinApplicationRuntimeConfiguration,
                 owner: AnyObject,
                 availableTools: @escaping @MainActor () -> [HanlinSkillToolReference],
                 validateConversation: @escaping @MainActor (UUID) throws -> Void) throws {
-        try HanlinApplicationProcessRuntime.shared.install(runtimeConfiguration, modelContainer: owner)
+        try HanlinApplicationProcessRuntime.shared.install(runtimeConfiguration, modelContainer: owner,
+            systemIntegrations: HanlinApplicationProcessRuntime.shared.systemIntegrations)
         self.owner = owner
-        HanlinSkillToolSource.provider = availableTools
+        self.availableTools = availableTools
         self.mcp = HanlinApplicationMCP(validateConversation: validateConversation)
+    }
+
+    /// Reuses the process owner's exact original runtime configuration. Each
+    /// facade retains its own live conversation validation and presentation
+    /// catalog; windows do not replace one another's action source.
+    public static func sharedRuntime(runtimeConfiguration: HanlinApplicationRuntimeConfiguration,
+        availableTools: @escaping @MainActor () -> [HanlinSkillToolReference],
+        validateConversation: @escaping @MainActor (UUID) throws -> Void) throws -> HanlinAssistantServices {
+        let owner = try HanlinApplicationProcessRuntime.shared.assistantComponentOwner(runtimeConfiguration)
+        return try HanlinAssistantServices(runtimeConfiguration: runtimeConfiguration, owner: owner,
+            availableTools: availableTools, validateConversation: validateConversation)
     }
 
     public func prepare() async { await RuntimeLifecycleBridge.prepareApplication() }
@@ -43,15 +56,19 @@ public struct HanlinMCPSettingsView: View {
 
 @MainActor
 public struct HanlinSkillCenterView: View {
-    public init() {}
-    public var body: some View { SkillCenterView() }
+    private let service: HanlinAssistantServices
+    public init(service: HanlinAssistantServices) { self.service = service }
+    public var body: some View {
+        SkillCenterView().environment(\.hanlinSkillTools, { [service] in service.availableTools() })
+    }
 }
 
 /// Original management screens retain their original stores, installer,
 /// permissions, cancellation and runtime receipts. Hosts own presentation.
 @MainActor
 public struct HanlinAssistantSettingsView: View {
-    public init() {}
+    private let service: HanlinAssistantServices
+    public init(service: HanlinAssistantServices) { self.service = service }
 
     public var body: some View {
         List {
@@ -61,7 +78,7 @@ public struct HanlinAssistantSettingsView: View {
                 Label(MCPL10n.string("MCP Servers"), systemImage: "server.rack")
             }
             NavigationLink {
-                SkillCenterView()
+                HanlinSkillCenterView(service: service)
             } label: {
                 Label(SkillL10n.string("Skills"), systemImage: "sparkles")
             }
@@ -76,12 +93,15 @@ public struct HanlinAssistantSettingsView: View {
 @MainActor
 public struct HanlinRuntimeSettingsView<Actions: View>: View {
     private let actions: Actions
+    private let service: HanlinAssistantServices
 
-    public init(@ViewBuilder actions: () -> Actions) {
+    public init(service: HanlinAssistantServices, @ViewBuilder actions: () -> Actions) {
+        self.service = service
         self.actions = actions()
     }
 
     public var body: some View {
         RuntimeCenterView { actions }
+            .environment(\.hanlinSkillTools, { [service] in service.availableTools() })
     }
 }

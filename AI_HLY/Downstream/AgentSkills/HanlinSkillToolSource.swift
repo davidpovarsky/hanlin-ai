@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUI
 
 /// A presentation projection of a tool that the current host actually exposes.
 /// Execution and authorization remain with the original host tool owner.
@@ -13,18 +14,28 @@ public struct HanlinSkillToolReference: Identifiable, Sendable {
     }
 }
 
-@MainActor
 enum HanlinSkillToolSource {
-    static var provider: @MainActor () -> [HanlinSkillToolReference] = productionTools
-
-    private static func productionTools() -> [HanlinSkillToolReference] {
+    @MainActor static func productionTools() -> [HanlinSkillToolReference] {
 #if HANLIN_ASSISTANT_CAPABILITIES_SDK
-        preconditionFailure("Install HanlinAssistantServices with the host's actual tool catalog before presenting skill settings")
+        preconditionFailure("Present the original Skill Center with its HanlinAssistantServices facade")
 #else
         NativeToolCatalog.shared.ensureBuiltinsRegistered()
         return NativeToolCatalog.shared.allEntries().map {
             HanlinSkillToolReference(name: $0.name, title: $0.title)
         }
 #endif
+    }
+}
+
+private struct HanlinSkillToolsEnvironmentKey: EnvironmentKey {
+    static let defaultValue: @MainActor @Sendable () -> [HanlinSkillToolReference] = {
+        HanlinSkillToolSource.productionTools()
+    }
+}
+
+extension EnvironmentValues {
+    var hanlinSkillTools: @MainActor @Sendable () -> [HanlinSkillToolReference] {
+        get { self[HanlinSkillToolsEnvironmentKey.self] }
+        set { self[HanlinSkillToolsEnvironmentKey.self] = newValue }
     }
 }
