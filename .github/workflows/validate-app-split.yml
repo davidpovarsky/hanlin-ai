@@ -102,7 +102,7 @@ on:
       paired_test_scope:
         description: Original cross-product, shared ingress, authoring or isolated MiniApp checks
         type: choice
-        options: [cross_product, shared_ingress, product_and_share, miniapp_authoring, miniapp_sdk04, miniapp_complete, miniapp_complete_with_extra26, miniapp_contracts, miniapp_lifecycle, miniapp_scriptwidget, miniapp_shortcuts_os, miniapp_widget_recovery_os, miniapp_widget_state_os, miniapp_shortcut_concurrency_os, miniapp_shortcut_long_running_os, miniapp_system_surfaces_os, miniapp_studio_gallery_os, miniapp_studio_editor_os]
+        options: [cross_product, shared_ingress, product_and_share, miniapp_authoring, miniapp_sdk04, miniapp_complete, miniapp_complete_with_extra26, miniapp_contracts, miniapp_lifecycle, miniapp_scriptwidget, miniapp_shortcuts_os, miniapp_widget_recovery_os, miniapp_widget_state_os, miniapp_widget_voiceover_os, miniapp_shortcut_concurrency_os, miniapp_shortcut_long_running_os, miniapp_system_surfaces_os, miniapp_studio_gallery_os, miniapp_studio_editor_os]
         required: false
         default: cross_product
 
@@ -338,6 +338,14 @@ jobs:
           node Scripts/MiniApps/resolve-upstreams.mjs --apply --cache="$RUNNER_TEMP/hanlin-miniapp-upstreams" 2>&1 | tee "$SPLIT_EVIDENCE/upstream-resolution.log"
           cp build/acceptance/miniapp-upstreams/resolution.json "$SPLIT_EVIDENCE/upstream-resolution.json"
           git diff --binary > "$SPLIT_EVIDENCE/upstream-inputs.patch"
+      - name: Generate and bind original Widget fixtures for paired system acceptance
+        id: split-widget-fixtures
+        if: ${{ !inputs.signing_preflight_only && !inputs.signed_release_archives && inputs.paired_product_acceptance && (inputs.paired_test_scope == 'miniapp_widget_recovery_os' || inputs.paired_test_scope == 'miniapp_widget_state_os' || inputs.paired_test_scope == 'miniapp_widget_voiceover_os') }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 Scripts/ProductSplit/prepare_widget_fixtures.py --root "$GITHUB_WORKSPACE" --source "$GITHUB_SHA" --evidence "$SPLIT_EVIDENCE/widget-fixture-producer"
+          echo "HANLIN_WIDGET_FIXTURE_PRODUCER_RECEIPT=$SPLIT_EVIDENCE/widget-fixture-producer/receipt.json" >> "$GITHUB_ENV"
       - name: Restore existing Swift package dependency cache
         if: ${{ !inputs.signing_preflight_only }}
         id: split-sourcepackages
@@ -564,7 +572,7 @@ jobs:
             --log-dir "$SPLIT_EVIDENCE" --run-id "$GITHUB_RUN_ID" --commit-sha "$GITHUB_SHA" \
             --output-json "$SPLIT_EVIDENCE/ci-performance-report.json" --step-summary "$GITHUB_STEP_SUMMARY"
       - name: Upload MiniApp authoring UI attachments
-        if: ${{ always() && inputs.paired_product_acceptance && (inputs.paired_test_scope == 'miniapp_authoring' || inputs.paired_test_scope == 'miniapp_sdk04' || inputs.paired_test_scope == 'miniapp_complete' || inputs.paired_test_scope == 'miniapp_complete_with_extra26' || inputs.paired_test_scope == 'miniapp_shortcuts_os' || inputs.paired_test_scope == 'miniapp_widget_recovery_os' || inputs.paired_test_scope == 'miniapp_widget_state_os' || inputs.paired_test_scope == 'miniapp_shortcut_concurrency_os' || inputs.paired_test_scope == 'miniapp_shortcut_long_running_os' || inputs.paired_test_scope == 'miniapp_system_surfaces_os' || inputs.paired_test_scope == 'miniapp_studio_gallery_os' || inputs.paired_test_scope == 'miniapp_studio_editor_os') }}
+        if: ${{ always() && inputs.paired_product_acceptance && (inputs.paired_test_scope == 'miniapp_authoring' || inputs.paired_test_scope == 'miniapp_sdk04' || inputs.paired_test_scope == 'miniapp_complete' || inputs.paired_test_scope == 'miniapp_complete_with_extra26' || inputs.paired_test_scope == 'miniapp_shortcuts_os' || inputs.paired_test_scope == 'miniapp_widget_recovery_os' || inputs.paired_test_scope == 'miniapp_widget_state_os' || inputs.paired_test_scope == 'miniapp_widget_voiceover_os' || inputs.paired_test_scope == 'miniapp_shortcut_concurrency_os' || inputs.paired_test_scope == 'miniapp_shortcut_long_running_os' || inputs.paired_test_scope == 'miniapp_system_surfaces_os' || inputs.paired_test_scope == 'miniapp_studio_gallery_os' || inputs.paired_test_scope == 'miniapp_studio_editor_os') }}
         uses: actions/upload-artifact@v7.0.2
         with:
           name: miniapp-authoring-ui-${{ github.run_id }}
