@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "base": "d077babf9ba9312199aa41cef18f40581edbc52c",
+  "workflowCommit": "9a6a9d1ccde88318387485ba7945cacbe457ff04",
+  "controlsCommit": "4d0c5204258a6fac1033ca2c4878e44c6776e2c3",
+  "sourcePatch": {
+    "rawSHA256": "172ffd9d9a7684d829437b4fc2434a24b4916c7d2d0933f2afd78199603f70ad",
+    "gzipSHA256": "7bba39bade4af31d69a31d71e4ac31ddb80823bdc488d256cc186a30e41753be",
+    "encoding": "gzip of exact original UTF-8 git diff bytes"
+  },
+  "files": {
+    "README.md": {
+      "bytes": 2126,
+      "sha256": "5b90aea18ffe9154f27d5608ecb235fbd59d1c0b43f015052ac57d479cba64d2"
+    },
+    "controls.json": {
+      "bytes": 1026,
+      "sha256": "49bced392c6098e714ca7de99ef0881a68ae72b4b33789f08371a5b67129a663"
+    },
+    "controls.stderr.txt": {
+      "bytes": 562,
+      "sha256": "3db1fff7c0be6a49e36d9be9eb6e93331ba8fb7541c20b0b73931ff12c628333"
+    },
+    "independent-source-review.json": {
+      "bytes": 555,
+      "sha256": "63a8bfce55dab6cbfb1187f87b22f0cccd4326bc313e81b9a70058391fe2fe2c"
+    },
+    "producer-output-coverage.json": {
+      "bytes": 2277,
+      "sha256": "58ccf30717b7e0c2a5e15649c9784762eab9f8e82f22282d5455ccfbfab2fef0"
+    },
+    "source-validation.json": {
+      "bytes": 947,
+      "sha256": "a36f07b74208129a10285bcb0e758d470fb9a6d45e1c645f3cadeb14e008ba06"
+    },
+    "source.patch.gz": {
+      "bytes": 1664,
+      "sha256": "7bba39bade4af31d69a31d71e4ac31ddb80823bdc488d256cc186a30e41753be"
+    }
+  }
+}

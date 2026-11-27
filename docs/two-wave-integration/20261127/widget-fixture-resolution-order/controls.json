@@ -1,0 +1,29 @@
+{
+  "schema": 1,
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "Scripts/CI/Tests",
+    "-p",
+    "test_widget_fixture_resolution_order.py",
+    "-v"
+  ],
+  "startedAtUTC": "2026-11-27T16:02:58.838963+00:00",
+  "finishedAtUTC": "2026-11-27T16:02:59.133518+00:00",
+  "elapsedSeconds": 0.2945497799664736,
+  "exitCode": 0,
+  "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "stderrSHA256": "3db1fff7c0be6a49e36d9be9eb6e93331ba8fb7541c20b0b73931ff12c628333",
+  "sourceSHA256": {
+    ".github/workflows/build-ios26-unsigned-ipa.yml": "7b7f26859dd1d00aec5cebcc50f115b8e2c409f976183a6e40e2f7bbc5de5e53",
+    "Scripts/CI/Tests/test_widget_fixture_resolution_order.py": "133fbd102103d41d126828b7d01386c0415e4f48ec74103caab3682ce1fc553e"
+  },
+  "nativeCommandsStarted": 0,
+  "originalReceiptSHA256": "3b01da66466c7567fa75d7b064d89b71a965cacce001898c34a5b926ff422b7f",
+  "originalReceiptRetainedSeparately": true,
+  "testsPassed": 2,
+  "negativeSubcases": 8
+}

@@ -1,0 +1,7 @@
+test_both_original_builds_produce_widgets_inside_the_recorded_resolution_step (test_widget_fixture_resolution_order.WidgetFixtureResolutionOrderTests.test_both_original_builds_produce_widgets_inside_the_recorded_resolution_step) ... ok
+test_stale_order_missing_producer_and_missing_binary_capture_are_rejected (test_widget_fixture_resolution_order.WidgetFixtureResolutionOrderTests.test_stale_order_missing_producer_and_missing_binary_capture_are_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.186s
+
+OK
