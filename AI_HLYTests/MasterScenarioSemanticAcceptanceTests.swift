@@ -1960,8 +1960,7 @@ struct MasterScenarioSemanticAcceptanceTests {
         }
 
         // Cross-join audit of capability-invariants.json and tool-inventory.json
-        let currentFile = URL(fileURLWithPath: #filePath)
-        let repoRoot = currentFile.deletingLastPathComponent().deletingLastPathComponent()
+        let repoRoot = try OriginalSourceFixtures.root()
         let invariantsURL = repoRoot.appendingPathComponent("capability-invariants.json")
         let toolInventoryURL = repoRoot.appendingPathComponent("docs/hanlin-platform/personal-runtime-completion/tool-inventory.json")
 
