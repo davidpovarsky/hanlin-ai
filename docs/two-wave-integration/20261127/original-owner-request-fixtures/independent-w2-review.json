@@ -1,0 +1,81 @@
+{
+  "schema": 1,
+  "kind": "independent source review",
+  "reviewer": "/root/w2_source_resume",
+  "reviewedAt": "2026-11-27T13:56:27.424472+00:00",
+  "decision": "APPROVED_FOR_ORIGINAL_NATIVE_RETRY_SOURCE_ONLY",
+  "base": "d165b9fc6a1c4e810a21957c063bfeae52eecb59",
+  "patchSHA256": "c1c1876d4d8bb66255251ce0362801afba3649018f4f209ed1a45ce775e18bf7",
+  "files": [
+    {
+      "path": "AI_HLYTests/AgentRuntimeConversationAcceptanceTests.swift",
+      "originalSHA256": "e7c228e765582a867f27f7dfa54a55d5e1eefb1d3bafe48fe290da76feca7377",
+      "candidateSHA256": "635436d34f4686156e319c9d7c4c0a7614d0e015556aa88d8fbc3f3f7d0447a5"
+    },
+    {
+      "path": "AI_HLYTests/ProviderConformance/ProductionProviderConformanceTests.swift",
+      "originalSHA256": "c218cc146bdc18bb6ccf7094508285c9894f8617caa716b29fd0bed0c99ff839",
+      "candidateSHA256": "8f5acff308c7a42d5154e55df6dff50d317509ba2b6204ff688596ee80784917"
+    },
+    {
+      "path": "AI_HLYTests/MasterScenarioSemanticAcceptanceTests.swift",
+      "originalSHA256": "e08e557055a4c9c81750817a5dc754b5a872a13bfff26029b48eea7475b23272",
+      "candidateSHA256": "fa552eed7a9a15883266f9984ea0f0ae65a40dcea42ba9ab16cc0bad66a27c41"
+    }
+  ],
+  "sourceContractsRead": [
+    {
+      "path": "AI_HLY/Services/ChatServices/APIManager.swift",
+      "sha256": "1e65885f3fa5aa398cf6a315cd365705986f092de9838692eb305ce87dc78b12"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppAgentSessionOwner.swift",
+      "sha256": "fa07c1f4cf515ea717cc174893168685f24ee190d0ef09d41d006b955efbe59a"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppConversationStore.swift",
+      "sha256": "adad494a872a28a53b4143dcc7686fe77d8d23611a691f144b4ebe459ccd1593"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/ToolIntegration/AssistantToolRequestScope.swift",
+      "sha256": "28ba6755bbd81ca8e2ebd8061ff53d85ed18c7142262c66ee7d0b92c18592ea3"
+    },
+    {
+      "path": "AI_HLY/Model/ChatMessages.swift",
+      "sha256": "166334b4ae610433e00d1ff2867278b1ce1a61d86be01ceaa806eac8c976ac7e"
+    },
+    {
+      "path": "AI_HLY/Model/ChatRecords.swift",
+      "sha256": "ac838621f8702c000592a37f30af707820b6073fb9b2a696cd753639234c9c2f"
+    },
+    {
+      "path": "AI_HLYTests/ProviderConformance/ProductionConformanceFixtures.swift",
+      "sha256": "9b3683401bc264206e006ebe9983174b0db1404aefec55e49c2c2086808a3135"
+    },
+    {
+      "path": "AI_HLY/Downstream/SDK/HanlinConversationController.swift",
+      "sha256": "30cd41c658111209f73b5696ed3487ddbddf7b845fcc712da6259261057f2bf6"
+    }
+  ],
+  "retainedAuthorPreservationProofSHA256": "9a43bbb164a0ba7d7f6a95087a1031cc070d4890c2d526eb1cec12b1879618e8",
+  "independentFindings": [
+    "All three actual ModelContainer schemas include ChatRecords and ChatMessages; setup uses the original context and persistent object identities, not an alternate store or fabricated receipt.",
+    "Helper is MainActor-isolated and all changed caller paths are MainActor; request creation is synchronous and introduces no await or cancellation edge.",
+    "Conversation and scene are created once per reused APIManager; each existing group/run receives a newly inserted and saved assistant row, with the real default UUID.",
+    "Request matches the current production initializer; requireOriginalConversation returns the exact saved ChatRecords object and the helper separately verifies exact saved assistant identity/group/parent.",
+    "APIManager stableChatID and original request guards match the copied nativeOnly scope plus actual conversationID; mcpServerIDs, global enablement, temporary state and capability attachments remain the original values.",
+    "P12A retains the same fixture in the existing result and reused manager; cancellation/supersession and local follow-up cases keep their existing manager, conversation and scene.",
+    "P07 request setup is outside the existing expected-provider-error catch. Task-based setup is before existing Task launches. Existing actions, exceptions and cancellation ordering are otherwise unchanged.",
+    "Full three-file diff contains only fixture setup, identity argument substitutions and the P12A result reference. All original 363 expectations and 31 requirements remain, with two additional persisted-row requirements; all 49 selectors and original deadlines remain.",
+    "The documented inverse proof was read and source hashes independently recomputed; no author control suite or native test was rerun."
+  ],
+  "limitations": [
+    "Swift compilation, SwiftData execution and the original provider/native cases remain required.",
+    "This approval repairs caller preparation only and does not infer that unrelated UI08, model-record or subsequent provider failures are resolved."
+  ],
+  "execution": {
+    "native": "NOT_RUN",
+    "tests": "NOT_RUN",
+    "sourceEditsByReviewer": false
+  }
+}

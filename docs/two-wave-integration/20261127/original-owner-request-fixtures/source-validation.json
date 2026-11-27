@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "base": "d165b9fc6a1c4e810a21957c063bfeae52eecb59",
+  "commit": "f641161d868a9367de0579786a2746df1d702055",
+  "parent": "d165b9fc6a1c4e810a21957c063bfeae52eecb59",
+  "sourceHashes": {
+    "AI_HLYTests/AgentRuntimeConversationAcceptanceTests.swift": "635436d34f4686156e319c9d7c4c0a7614d0e015556aa88d8fbc3f3f7d0447a5",
+    "AI_HLYTests/ProviderConformance/ProductionProviderConformanceTests.swift": "8f5acff308c7a42d5154e55df6dff50d317509ba2b6204ff688596ee80784917",
+    "AI_HLYTests/MasterScenarioSemanticAcceptanceTests.swift": "fa552eed7a9a15883266f9984ea0f0ae65a40dcea42ba9ab16cc0bad66a27c41"
+  },
+  "status": "",
+  "native": "NOT_RUN",
+  "patchSHA256": "c1c1876d4d8bb66255251ce0362801afba3649018f4f209ed1a45ce775e18bf7",
+  "independentReviewSHA256": "ff6de8012b2737a75116573226f134f9f938a9666bbc28b47231459f7c499287",
+  "fullSourceAuditSHA256": "9a43bbb164a0ba7d7f6a95087a1031cc070d4890c2d526eb1cec12b1879618e8"
+}

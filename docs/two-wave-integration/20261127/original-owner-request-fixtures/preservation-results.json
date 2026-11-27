@@ -1,0 +1,162 @@
+{
+  "schema": 1,
+  "kind": "source-only identity and preservation audit",
+  "base": "d165b9fc6a1c4e810a21957c063bfeae52eecb59",
+  "files": [
+    {
+      "path": "AI_HLYTests/AgentRuntimeConversationAcceptanceTests.swift",
+      "beforeSHA256": "e7c228e765582a867f27f7dfa54a55d5e1eefb1d3bafe48fe290da76feca7377",
+      "afterSHA256": "635436d34f4686156e319c9d7c4c0a7614d0e015556aa88d8fbc3f3f7d0447a5",
+      "beforeBytes": 41713,
+      "afterBytes": 44918,
+      "directStreamCalls": 4,
+      "originalAssertions": {
+        "expect": 124,
+        "require": 11
+      },
+      "candidateAssertions": {
+        "expect": 124,
+        "require": 13
+      },
+      "testSelectors": [
+        "successfulRuntimeChain",
+        "recoversAfterRejectedShellCall",
+        "runtimeParameters",
+        "malformedCallsRecover",
+        "productionCodeSkillLocalPythonCompletesSameUserTurn",
+        "productionToolFailureRecoversAndAnswersSameTurn",
+        "cancelDuringAgentWorkStopsAllLaterToolExecution",
+        "startingNewRunCancelsOldRunWithoutGhostWork",
+        "terminalDiagnosticsAreImmutable",
+        "unexpectedSDKStreamEndIsFailureNotCompleted",
+        "roundOrderUsesExactSDKStepNumbers",
+        "diagnosticsCaptureActualContinuationRequest"
+      ],
+      "documentedSetupInverseExactlyRecoversOriginalBytes": true,
+      "literalTestBodyPreservationClaim": false
+    },
+    {
+      "path": "AI_HLYTests/ProviderConformance/ProductionProviderConformanceTests.swift",
+      "beforeSHA256": "c218cc146bdc18bb6ccf7094508285c9894f8617caa716b29fd0bed0c99ff839",
+      "afterSHA256": "8f5acff308c7a42d5154e55df6dff50d317509ba2b6204ff688596ee80784917",
+      "beforeBytes": 50804,
+      "afterBytes": 53282,
+      "directStreamCalls": 7,
+      "originalAssertions": {
+        "expect": 60,
+        "require": 3
+      },
+      "candidateAssertions": {
+        "expect": 60,
+        "require": 3
+      },
+      "testSelectors": [
+        "testOpenAINativeProductionAPIManagerSmoke",
+        "testP01SkillsExposureAndExecution",
+        "testP02FailureRecovery",
+        "testP03FiveStepSequentialTools",
+        "testP04ParallelTools",
+        "testP05ReasoningToolLoopOpenAICompatible",
+        "testP05ReasoningToolLoopAnthropic",
+        "testP05ReasoningToolLoopGoogle",
+        "testP05ReasoningToolLoopOpenRouter",
+        "testP06TwentyStepProductionLoop",
+        "testP07AbruptCloseFailure",
+        "testP08FinishOtherNoContent",
+        "testP09CancelProviderStream",
+        "testP10CancelRunningTool",
+        "testP11OverlappingRunBSupercedesA",
+        "testP12ARealApplicationSecondTurnHistory",
+        "testDynamicProviderInventory",
+        "testOpenAIResponseDormancyCharacterization"
+      ],
+      "documentedSetupInverseExactlyRecoversOriginalBytes": true,
+      "literalTestBodyPreservationClaim": false
+    },
+    {
+      "path": "AI_HLYTests/MasterScenarioSemanticAcceptanceTests.swift",
+      "beforeSHA256": "e08e557055a4c9c81750817a5dc754b5a872a13bfff26029b48eea7475b23272",
+      "afterSHA256": "fa552eed7a9a15883266f9984ea0f0ae65a40dcea42ba9ab16cc0bad66a27c41",
+      "beforeBytes": 96997,
+      "afterBytes": 98529,
+      "directStreamCalls": 5,
+      "originalAssertions": {
+        "expect": 179,
+        "require": 17
+      },
+      "candidateAssertions": {
+        "expect": 179,
+        "require": 17
+      },
+      "testSelectors": [
+        "chat24StopGenerationCancelsRunAndReturnsIdle",
+        "sh03MissingFrameworkReportsUnavailableWithDependencies",
+        "sh05GrepAlphaExactTwoLinesWithoutPathRequirement",
+        "cmd04CurlFixtureBaseReturnsExpectedJSONAndZeroExitCode",
+        "zip04FoundationVarAndPrivateVarAliasesResolveWithoutFalseEscape",
+        "zip07SkillImportPreservesAllAssetFilesByteForByte",
+        "zip11InternalRelativePathsResolveWithoutBlanketRejection",
+        "coreai06GGUFLLMStreamingAndCancellationRegression",
+        "zip01RootZIPImportWithSkillHanlinAndAgentConfig",
+        "zip02WrappedZIPImportUnderFixtureRuntime",
+        "zip08LargeArchiveOver25MBExpanded64MBWithMarker",
+        "fs01PythonNodeShellSharedWorkspace",
+        "sh01DynamicCommandsReconciliationWithoutExact23",
+        "cmd01AwkExecutionWithPrintArgvSampleText",
+        "py02DistributionNameDiffersFromImportName",
+        "final09LiveToolDiscoveryAndExecution",
+        "final10ColdRelaunchStateRestorationAndToolReset",
+        "final11CancellationAndImmediateNextRunCleanliness",
+        "final12InvariantsAndToolsCrossJoinAudit"
+      ],
+      "documentedSetupInverseExactlyRecoversOriginalBytes": true,
+      "literalTestBodyPreservationClaim": false
+    }
+  ],
+  "totalDirectStreamCalls": 16,
+  "sourceNegativeControls": [
+    {
+      "name": "wrong request argument",
+      "rejected": true,
+      "reason": "AI_HLYTests/AgentRuntimeConversationAcceptanceTests.swift request argument identity"
+    },
+    {
+      "name": "request run ID differs from stream",
+      "rejected": true,
+      "reason": "AI_HLYTests/AgentRuntimeConversationAcceptanceTests.swift actual request construction identity"
+    },
+    {
+      "name": "request group differs from assistant",
+      "rejected": true,
+      "reason": "AI_HLYTests/MasterScenarioSemanticAcceptanceTests.swift actual request construction identity"
+    },
+    {
+      "name": "native scope loses conversation",
+      "rejected": true,
+      "reason": "actual saved original row contract: var scope = AssistantToolRequestScope.nativeOnly\n        scope.chatID = conversationID\n        return scope"
+    },
+    {
+      "name": "assistant row not persisted",
+      "rejected": true,
+      "reason": "actual saved original row contract: context.insert(assistant)\n        try context.save()"
+    },
+    {
+      "name": "second turn replaces original conversation",
+      "rejected": true,
+      "reason": "AI_HLYTests/ProviderConformance/ProductionProviderConformanceTests.swift actual request construction identity"
+    },
+    {
+      "name": "original deadline weakened",
+      "rejected": true,
+      "reason": "AI_HLYTests/AgentRuntimeConversationAcceptanceTests.swift exact original bytes after documented setup/call inverse"
+    },
+    {
+      "name": "original ghost-work assertion removed",
+      "rejected": true,
+      "reason": "AI_HLYTests/AgentRuntimeConversationAcceptanceTests.swift exact original bytes after documented setup/call inverse"
+    }
+  ],
+  "nativeCompilation": "NOT_RUN",
+  "originalNativeCases": "NOT_RUN",
+  "limits": "This source audit establishes identity wiring and exact preservation outside documented setup changes. It is not Swift type checking, SwiftData execution, provider execution, or proof that the original native cases pass."
+}
