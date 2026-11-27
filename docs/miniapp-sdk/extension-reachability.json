@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "866d2d3c60525e32eae27564869e6dba024e625c",
+  "sourceCommit": "f768d634bfa8a102cf63b32c7ab9d129cafc671d",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
   "uncommittedSourcePaths": [],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
@@ -991,7 +991,7 @@
       "file": "HanlinMiniAppsApp/HanlinMiniAppsApp.swift",
       "line": 14,
       "anchor": "@main",
-      "sha256": "65792c17c4dd40c9893b441f746fd13bcd4c471c7c49dabdde1f7e5f7adf6e3b"
+      "sha256": "4d34e6a1a7f50373ccfba3890c547d2df9ab66bb5172deb26afd3fdffa075585"
     },
     "miniAppsWidgetBundle": {
       "file": "HanlinMiniAppsExtensions/Widgets/HanlinMiniAppsWidgets.swift",
@@ -1183,7 +1183,7 @@
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift",
       "line": 38,
       "anchor": "public struct HanlinInstalledMiniAppQuery",
-      "sha256": "114cdb71d067a0cf3139fe373af2b25617e275fa5aa040a0be71a0801e1283f8"
+      "sha256": "10f0ae12345b996c282a9b5e7027e07081f86b438a8424c0133a5ecd055c6300"
     },
     "systemProductBoundary": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSpotlightIndex.swift",
@@ -1195,7 +1195,7 @@
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift",
       "line": 92,
       "anchor": "public struct HanlinOpenInstalledMiniAppIntent: OpenIntent",
-      "sha256": "114cdb71d067a0cf3139fe373af2b25617e275fa5aa040a0be71a0801e1283f8"
+      "sha256": "10f0ae12345b996c282a9b5e7027e07081f86b438a8424c0133a5ecd055c6300"
     },
     "spotlightIndex": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSpotlightIndex.swift",
