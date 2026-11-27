@@ -192,6 +192,8 @@ struct ChatView: View {
         var initialSamples = 0
         var significantSamples = 0
         var boundarySamples = 0
+        var actionConversationID: UUID?
+        var actionSamples = 0
     }
     @State private var scrollGeometryDiagnostics = ScrollGeometryDiagnostics()
     #endif
@@ -537,12 +539,38 @@ struct ChatView: View {
                     // The exported reader belongs only to this mounted transcript.
                     // Validate live State and the attached weak native viewport
                     // BEFORE changing following mode or cancelling a source jump.
-                    guard liveOwnerToken.wrappedValue == ownerToken,
-                          !liveMultiSelect.wrappedValue,
-                          showScrollToBottomButton,
-                          chatRecord.canvas?.content.isEmpty != false,
-                          effectiveChatSessionID == conversationID,
-                          transcriptScrollView.layout(conversationID: conversationID) != nil else { return }
+                    traceFollowLatestActionBoundary("external-entry",
+                        conversationID: conversationID, ownerToken: ownerToken)
+                    guard liveOwnerToken.wrappedValue == ownerToken else {
+                        traceFollowLatestActionBoundary("rejected", conversationID: conversationID,
+                            ownerToken: ownerToken, reason: "owner-token")
+                        return
+                    }
+                    guard !liveMultiSelect.wrappedValue else {
+                        traceFollowLatestActionBoundary("rejected", conversationID: conversationID,
+                            ownerToken: ownerToken, reason: "multiselect")
+                        return
+                    }
+                    guard showScrollToBottomButton else {
+                        traceFollowLatestActionBoundary("rejected", conversationID: conversationID,
+                            ownerToken: ownerToken, reason: "arrow-not-visible")
+                        return
+                    }
+                    guard chatRecord.canvas?.content.isEmpty != false else {
+                        traceFollowLatestActionBoundary("rejected", conversationID: conversationID,
+                            ownerToken: ownerToken, reason: "canvas")
+                        return
+                    }
+                    guard effectiveChatSessionID == conversationID else {
+                        traceFollowLatestActionBoundary("rejected", conversationID: conversationID,
+                            ownerToken: ownerToken, reason: "conversation")
+                        return
+                    }
+                    guard transcriptScrollView.layout(conversationID: conversationID) != nil else {
+                        traceFollowLatestActionBoundary("rejected", conversationID: conversationID,
+                            ownerToken: ownerToken, reason: "native-layout-unavailable")
+                        return
+                    }
                     traceAutoFollowPosition("button-entry", significant: true)
                     resumeFollowingLatest(using: scrollViewProxy)
                 }]
@@ -1184,12 +1212,14 @@ struct ChatView: View {
                 }
                 .padding(.horizontal)
                 .frame(maxWidth: .infinity)
-                .chatScrollImmediateContentTouches { [transcriptScrollView, conversationID = effectiveChatSessionID] scrollView in
-                    transcriptScrollView.bind(scrollView, conversationID: conversationID)
+                .chatScrollImmediateContentTouches(onOwnedScrollViewChanged: {
+                    [transcriptScrollView, conversationID = effectiveChatSessionID] scrollView, producerID in
+                    guard transcriptScrollView.bind(scrollView, conversationID: conversationID,
+                                                    producerID: producerID) else { return }
                     traceAutoFollowBoundary(scrollView == nil ? "viewport-unbound" : "viewport-bound")
                     scheduleNativePositionRead()
                     scheduleScrollWhenViewportReady(using: scrollViewProxy)
-                }
+                })
             }
             .hanlinFeedback(.success, trigger: isOutPut)
             // One measured policy owns positioning. A mutable default bottom
@@ -1419,6 +1449,33 @@ struct ChatView: View {
             // no new idle transition. Still reconcile the committed native size.
             scheduleNativePositionRead()
         }
+    }
+
+    private func traceFollowLatestActionBoundary(_ stage: String, conversationID: UUID,
+                                                ownerToken: UUID, reason: String? = nil) {
+        #if DEBUG || HANLIN_TESTING
+        guard ProcessInfo.processInfo.environment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] == "1" else { return }
+        let diagnostics = scrollGeometryDiagnostics
+        if diagnostics.actionConversationID != effectiveChatSessionID {
+            diagnostics.actionConversationID = effectiveChatSessionID
+            diagnostics.actionSamples = 0
+        }
+        guard diagnostics.actionSamples < 16 else { return }
+        diagnostics.actionSamples += 1
+        var fields: [String: Any] = [
+            "stage": stage, "requestConversationID": conversationID.uuidString,
+            "currentConversationID": effectiveChatSessionID.uuidString,
+            "requestOwnerToken": ownerToken.uuidString,
+            "currentOwnerToken": composerRegistrationToken.uuidString,
+            "multiselect": isMultiSelectMode, "arrowVisible": showScrollToBottomButton,
+            "canvasPresent": chatRecord.canvas?.content.isEmpty == false,
+            "viewportGeneration": transcriptScrollView.generation.uuidString,
+            "nativePositionAvailable": transcriptScrollView.peekPosition(conversationID: conversationID) != nil
+        ]
+        if let reason { fields["reason"] = reason }
+        NativeToolTraceLogger.shared.log("followLatestActionBoundary", fields,
+                                        conversationID: conversationID.uuidString)
+        #endif
     }
 
     private func traceAutoFollowPosition(_ source: String,

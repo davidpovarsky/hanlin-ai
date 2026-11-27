@@ -44,6 +44,13 @@ struct ListView: View {
     @State private var sessionBridge = HanlinActiveComposerSessionBridge()
     @State private var measuredContainerWidth: CGFloat = 0
     @State private var selectedChatRecord: ChatRecords? = nil
+    #if DEBUG || HANLIN_TESTING
+    private final class FollowLatestActionDiagnostics {
+        var conversationID: UUID?
+        var count = 0
+    }
+    @State private var followLatestActionDiagnostics = FollowLatestActionDiagnostics()
+    #endif
     @State private var savedSourceDestination: ChatSourceDestination?
     @State private var matchedSnippets: [UUID: (AttributedString, UUID)] = [:]
     
@@ -130,6 +137,26 @@ struct ListView: View {
         }
     }
 
+    private func traceFollowLatestHostAction(_ request: HanlinFollowLatestOverlayRequest) {
+        #if DEBUG || HANLIN_TESTING
+        guard ProcessInfo.processInfo.environment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] == "1" else { return }
+        let diagnostics = followLatestActionDiagnostics
+        if diagnostics.conversationID != request.conversationID {
+            diagnostics.conversationID = request.conversationID
+            diagnostics.count = 0
+        }
+        guard diagnostics.count < 16 else { return }
+        diagnostics.count += 1
+        let selected = useCompactWorkspace ? nil : selectedChatRecord?.id
+        NativeToolTraceLogger.shared.log("followLatestHostActionEntry", [
+            "requestConversationID": request.conversationID.uuidString,
+            "selectedConversationID": selected?.uuidString ?? "none",
+            "requestOwnerToken": request.ownerToken.uuidString,
+            "selectionMatches": selected == request.conversationID
+        ], conversationID: request.conversationID.uuidString)
+        #endif
+    }
+
     var body: some View {
         Group {
             if !useCompactWorkspace {
@@ -159,6 +186,7 @@ struct ListView: View {
                     set: { _ in }
                 )) { request in
                     HanlinFollowLatestButton(isTemporaryRecord: request.isTemporaryRecord) {
+                        traceFollowLatestHostAction(request)
                         request.perform()
                     }
                 }
