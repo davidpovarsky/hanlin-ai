@@ -1,0 +1,96 @@
+{
+  "at": "2026-11-27T17:00:57.835713+00:00",
+  "status": "SOURCE_ONLY_VERIFIED",
+  "approvedMacControllerSHA256": "882d9b58090a12d3bf5adfd01839f1f241ec5d2e4682a2340b23632505973f18",
+  "githubControllerSHA256": "5865ed78117ac14d82055441481c5a51853061b9780069eb0e903887ae57b841",
+  "originalNativeBodyAfterOnlyFiveBindingReplacementsMatches": true,
+  "bindingReplacements": [
+    [
+      "native=open(\"/Users/m1/caches/hanlin-two-wave-native-app.lock\",\"a+\")",
+      "native=open(LOCKS/\"hanlin-two-wave-native-app.lock\",\"a+\")"
+    ],
+    [
+      "maintenance=open(\"/Users/m1/caches/.scaleway-cache-maintenance.lock\",\"a+\")",
+      "maintenance=open(LOCKS/\".scaleway-cache-maintenance.lock\",\"a+\")"
+    ],
+    [
+      "    assert git(\"merge-base\",BINDING[\"reviewedSource\"],SOURCE)==BINDING[\"reviewedSource\"]\n",
+      ""
+    ],
+    [
+      "        assert git(\"rev-parse\",BINDING[\"reviewedSource\"]+\":\"+rel)==sha\n",
+      ""
+    ],
+    [
+      "    env[\"PATH\"]=str(STAGE/\"tool-bin\")+\":/usr/bin:/bin:/usr/sbin:/sbin:/opt/homebrew/bin\"\n",
+      ""
+    ]
+  ],
+  "nativeBodyDiffSHA256": "b8a0c69d8353d34c893be6781a6f73a3c3229e44acf89cb11596c54d9ad63057",
+  "originalDispatcherRecoveredAfterRemovingElevenLineBranch": true,
+  "originalDispatcherSHA256": "b05f73c7457bfbd4bddcd58a64bda3c08e3f9143b220116e796beb4989cd2c03",
+  "sixteenOriginalPortableControlsByteExactExceptSourcePath": true,
+  "packageTreeComparison": {
+    "Packages/HanlinAgentSDK": {
+      "f57": "40d655a4afe6469ca00c44675725fad2dcd53202",
+      "root97eb": "40d655a4afe6469ca00c44675725fad2dcd53202"
+    },
+    "Packages/HanlinAgentSDK/Sources": {
+      "f57": "deb8dc91c2de361423ee3e02b928cdf020c1ef4f",
+      "root97eb": "deb8dc91c2de361423ee3e02b928cdf020c1ef4f"
+    },
+    "Packages/HanlinAgentSDK/Tests": {
+      "f57": "ee4195fa52d0e937660cec16a7cafc6d5ce41181",
+      "root97eb": "ee4195fa52d0e937660cec16a7cafc6d5ce41181"
+    },
+    "Packages/HanlinPlatform": {
+      "f57": "b1e54c6d1aa3c4ef2dd761e15b7b6df9d946a29a",
+      "root97eb": "b1e54c6d1aa3c4ef2dd761e15b7b6df9d946a29a"
+    },
+    "Packages/HanlinPlatform/Sources": {
+      "f57": "182cad448c545daa956db88dc251e318022e748a",
+      "root97eb": "182cad448c545daa956db88dc251e318022e748a"
+    },
+    "Packages/HanlinPlatform/Tests": {
+      "f57": "72b192559666a54e970578985f1ef091d87090d7",
+      "root97eb": "72b192559666a54e970578985f1ef091d87090d7"
+    }
+  },
+  "pinAndCriticalSourceHashesAtRoot97eb": {
+    "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinHostSchemaValidation.swift": "622c7380bb066002a48bb46e6c76a6f919c41060392d891ac17c34f411b1a040",
+    "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HostMCPWireComparisonTests.swift": "bbcae5565bdcbc7eba72c7d5c272eac5227af9106f00c50589901013f22830c7",
+    "AI_HLY/Downstream/MCP/Runtime/MCPClientSession.swift": "3b331e200237598147def7fed0875b3b5ae62a5581ba85da09a4d6c4b058fc13",
+    "Packages/HanlinAgentSDK/Package.resolved": "543da4b8e9fe589c8d071fa3599d30034cb39bd57e839ba6130f754cdad701ca",
+    "Packages/HanlinPlatform/Package.resolved": "453087cb3345b7c6bb24c00a682f41ffa9708ebd328e60b583f6e04276bf789d",
+    "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved": "56d19a4b8c677831fb91e1f8155a68e411b42fd4807ad618d6f169569e1bb5a4"
+  },
+  "actualNativeCommand": [
+    "/usr/bin/swift",
+    "test",
+    "--package-path",
+    "Packages/HanlinAgentSDK",
+    "--filter",
+    "HostMCPWireComparisonTests",
+    "--jobs",
+    "2"
+  ],
+  "expectedElevenMethodNames": [
+    "largeOriginalUTF8SurvivesOrderAndEscapeProjection",
+    "largeOriginalUTF8RejectsAMutationAtTheTextTail",
+    "metadataIsPartOfTheExactWireValue",
+    "exactDecimalsAndJSONKindsSurviveWithoutBinary64Rounding",
+    "scalarKeysAndStringsDoNotUseSwiftCanonicalEquivalence",
+    "strictSyntaxAndDuplicateDecodedKeysStillFail",
+    "depthKeyAndNumericLimitsRemainTheOriginalPolicy",
+    "cancellationProducesNoComparisonVerdict",
+    "existingSchemaConsentAndProjectionAdmissionRemainBounded",
+    "finitePoliciesChangeOnlyTheirDeclaredByteAndWorkMetrics",
+    "checkedPolicyArithmeticRejectsUnrepresentableBudgetsWithoutAllocation"
+  ],
+  "phaseTimeoutSeconds": 3600,
+  "nativeExecution": "NOT_RUN",
+  "existingSubprocessCaptureFact": {
+    "source": "PROJECT_BOARD.md:83 and Scripts/CI/stage_simulator_fixtures.py:58-87",
+    "finding": "The existing file capture helper addresses inherited output-pipe EOF waits. This is not established as the cause of the actual Mac ps topology timeouts; the approved process observer is preserved."
+  }
+}

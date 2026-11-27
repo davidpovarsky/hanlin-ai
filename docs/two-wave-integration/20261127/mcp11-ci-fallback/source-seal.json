@@ -1,0 +1,25 @@
+{
+  "sourceCommit": "6a01fc672c46c653cdf82c8f7f0ac09d8506c6c6",
+  "baseSource": "f57dfcc2292c0830f454e28d87293e85fe426a44",
+  "reviewSHA256": "0d002d9a12386b32766e03b0656abef06d797f952805852050fd7859a804bfc0",
+  "sourceFiles": [
+    {
+      "path": "Scripts/CI/IntegrationValidation/run_agent_sdk.sh",
+      "bytes": 13062,
+      "sha256": "ace71bbfcb2be24dc3ffef177f4e1e63a1111998be68008f6aa3e428275790eb"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/run_host_mcp_wire_comparison.py",
+      "bytes": 25872,
+      "sha256": "5865ed78117ac14d82055441481c5a51853061b9780069eb0e903887ae57b841"
+    },
+    {
+      "path": "Scripts/CI/Tests/test_mcp_wire_supervision.py",
+      "bytes": 11120,
+      "sha256": "989ae19a5c6c5b10621f474bbb63353bc4ddacdae8ae37ff9bc5102389b9fa80"
+    }
+  ],
+  "portableResult": "16_PASS",
+  "nativeResult": "NOT_RUN",
+  "sdkSourceIntersection": []
+}
