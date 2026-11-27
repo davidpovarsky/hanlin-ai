@@ -227,25 +227,82 @@ struct HanlinFollowLatestButton: View {
     let isTemporaryRecord: Bool
     let action: () -> Void
     @ScaledMetric(relativeTo: .body) private var fontSize: CGFloat = 16
+    @Environment(\.locale) private var locale
 
     var body: some View {
-        Button(action: action) {
-            Image(systemName: "arrow.down")
-                .font(HanlinTypography.fixed(size: fontSize, weight: .medium))
-                .foregroundColor(isTemporaryRecord ? .primary : .hanlinHLBluefont)
-                .frame(width: 36, height: 36)
-                .clipShape(Circle())
-                .background(
-                    GlassView(style: .systemUltraThinMaterial)
-                        .clipShape(Circle())
-                        .shadow(color: isTemporaryRecord ? .primary : .hanlinHLBlue, radius: 1)
-                )
-                .contentShape(Circle())
+        HanlinFollowLatestActionTarget(
+            action: action,
+            accessibilityLabel: String(localized: HanlinLocalization.resource(
+                "Scroll to latest message", locale: locale)))
+            .frame(width: 36, height: 36)
+            .background {
+                visualLabel
+                    .allowsHitTesting(false)
+                    .accessibilityHidden(true)
+            }
+            .transition(.move(edge: .bottom).combined(with: .opacity))
+    }
+
+    private var visualLabel: some View {
+        Image(systemName: "arrow.down")
+            .font(HanlinTypography.fixed(size: fontSize, weight: .medium))
+            .foregroundColor(isTemporaryRecord ? .primary : .hanlinHLBluefont)
+            .frame(width: 36, height: 36)
+            .clipShape(Circle())
+            .background(
+                GlassView(style: .systemUltraThinMaterial)
+                    .clipShape(Circle())
+                    .shadow(color: isTemporaryRecord ? .primary : .hanlinHLBlue, radius: 1)
+            )
+            .contentShape(Circle())
+    }
+}
+
+/// The native control owns the one action; the original SwiftUI label only draws.
+@MainActor
+private struct HanlinFollowLatestActionTarget: UIViewRepresentable {
+    let action: () -> Void
+    let accessibilityLabel: String
+
+    func makeCoordinator() -> Coordinator { Coordinator(action: action) }
+
+    func makeUIView(context: Context) -> CircleButton {
+        let button = CircleButton(type: .custom)
+        button.backgroundColor = .clear
+        button.isAccessibilityElement = true
+        button.accessibilityTraits = .button
+        button.accessibilityIdentifier = "hanlin-chat-follow-latest"
+        button.addTarget(context.coordinator, action: #selector(Coordinator.activate(_:)), for: .touchUpInside)
+        configure(button, context: context)
+        return button
+    }
+
+    func updateUIView(_ button: CircleButton, context: Context) {
+        context.coordinator.action = action
+        configure(button, context: context)
+    }
+
+    static func dismantleUIView(_ button: CircleButton, coordinator: Coordinator) {
+        button.removeTarget(coordinator, action: #selector(Coordinator.activate(_:)), for: .touchUpInside)
+        coordinator.action = nil
+    }
+
+    private func configure(_ button: CircleButton, context: Context) {
+        button.isEnabled = context.environment.isEnabled
+        button.accessibilityLabel = accessibilityLabel
+    }
+
+    final class CircleButton: UIButton {
+        override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+            super.point(inside: point, with: event) && UIBezierPath(ovalIn: bounds).contains(point)
         }
-        .buttonStyle(.plain)
-        .accessibilityLabel(Text("Scroll to latest message", bundle: HanlinLocalization.bundle))
-        .accessibilityIdentifier("hanlin-chat-follow-latest")
-        .transition(.move(edge: .bottom).combined(with: .opacity))
+    }
+
+    @MainActor
+    final class Coordinator: NSObject {
+        var action: (() -> Void)?
+        init(action: @escaping () -> Void) { self.action = action }
+        @objc func activate(_ sender: UIButton) { action?() }
     }
 }
 
