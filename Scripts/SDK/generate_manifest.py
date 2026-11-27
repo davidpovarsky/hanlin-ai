@@ -161,6 +161,22 @@ def application_external_packages():
     return result
 
 
+def original_application_requirement(value):
+    """Keep the app declaration when embedding beside an existing package graph."""
+    kind = value["kind"]
+    if kind == "exactVersion":
+        return "exact: " + quoted(value["version"])
+    if kind == "upToNextMajorVersion":
+        return "from: " + quoted(value["minimumVersion"])
+    if kind == "upToNextMinorVersion":
+        return ".upToNextMinor(from: " + quoted(value["minimumVersion"]) + ")"
+    if kind == "revision":
+        return "revision: " + quoted(value["revision"])
+    if kind == "branch":
+        return "branch: " + quoted(value["branch"])
+    raise ValueError("Unsupported original app package requirement: " + kind)
+
+
 def nested_application_dependencies(app_deps, manifests):
     """Keep original nested package identities when another image already owns them.
 
@@ -248,14 +264,18 @@ def generate(selected_products=None, layout="unified"):
     # by its original full application implementation.
     locks=json.loads((ROOT/"AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved").read_text())
     pins={p["identity"].lower():p for p in locks["pins"]}
-    for obj in objects.values():
+    application_requirements = {}
+    for object_id, obj in objects.items():
         if obj.get("isa")!="XCRemoteSwiftPackageReference": continue
         url=obj["repositoryURL"]
         identity=url.rstrip("/").removesuffix(".git").split("/")[-1].lower()
         pin=pins.get(identity)
         if identity not in deps:
             if not pin: raise ValueError("No original lock pin for "+identity)
-            deps[identity]=(url,"revision: "+quoted(pin["state"]["revision"]))
+            rule = original_application_requirement(obj["requirement"]) if layout == "nested" else "revision: " + quoted(pin["state"]["revision"])
+            deps[identity] = (url, rule)
+            application_requirements[identity] = {"objectID": object_id, "repositoryURL": url,
+                "requirement": obj["requirement"], "resolvedRevision": pin["state"]["revision"]}
     all_target_names=set()
     for folder,manifest in manifests:
         for t in manifest["targets"]:
@@ -363,10 +383,18 @@ def generate(selected_products=None, layout="unified"):
              "applicationSources":app_sources if capability_profile else None,
              "selectedProducts":list(selected_products) if selected_products else None,
              "products":list(products),"targets":len(targets),
-             "localPackageEdgesRemaining":0,
+             "packageLayout": layout,
+             "nestedPackages": nested_packages,
+             "localPackageEdgesRemaining": local_edges,
+             "applicationPackageRequirements": {name: value for name, value in application_requirements.items() if name in deps},
+             "applicationResourcePaths": ["AI_HLY/RuntimeHostResources.zip"] + [file.relative_to(ROOT).as_posix() for file in sorted(resource_files) if file.is_file()],
+             "applicationSourceSHA256": {"AI_HLY/" + name: hashlib.sha256((ROOT/"AI_HLY"/name).read_bytes()).hexdigest() for name in app_sources} if capability_profile else None,
              "inputs":{**{folder+"/Package.swift":hashlib.sha256((ROOT/folder/"Package.swift").read_bytes()).hexdigest() for folder,_ in manifests},
                        APPLICATION_PRODUCTS.relative_to(ROOT).as_posix(): hashlib.sha256(APPLICATION_PRODUCTS.read_bytes()).hexdigest(),
-                       ASSISTANT_CAPABILITIES.relative_to(ROOT).as_posix(): hashlib.sha256(ASSISTANT_CAPABILITIES.read_bytes()).hexdigest()}}
+                       ASSISTANT_CAPABILITIES.relative_to(ROOT).as_posix(): hashlib.sha256(ASSISTANT_CAPABILITIES.read_bytes()).hexdigest(),
+                       **{name: hashlib.sha256((ROOT/name).read_bytes()).hexdigest() for name in (
+                           "Scripts/SDK/generate_manifest.py", "Scripts/CI/IntegrationValidation/project_graph.py",
+                           "AI_HLY.xcodeproj/project.pbxproj", "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved")}}}
     return text,receipt
 
 if __name__=="__main__":
