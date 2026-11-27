@@ -96,7 +96,7 @@ on:
       native_test_scope:
         description: Original standalone storage/UI or actual NativeScript and Expo companion controls
         type: choice
-        options: [baseline, production_runtimes, notification_os]
+        options: [baseline, production_runtimes, notification_os, production_runtimes_with_origin]
         required: false
         default: baseline
       paired_test_scope:
