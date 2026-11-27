@@ -8,6 +8,24 @@
 import Foundation
 import JavaScriptCore
 
+#if DEBUG
+// Existing per-execution logger and test transport are the only opt-in/storage.
+// Pass scalar observations only; never retain a JS value, context or callback.
+func recordOriginalHTTPBoundary(_ state: ScriptWidgetRunningState, _ boundary: String, _ details: [String: Any] = [:]) {
+    guard state.fetchManagerForTesting != nil else { return }
+    var event = details
+    event["boundary"] = boundary
+    event["session"] = state.executionSession.id.uuidString
+    event["pid"] = ProcessInfo.processInfo.processIdentifier
+    event["uptime"] = ProcessInfo.processInfo.systemUptime
+    event["at"] = Date().timeIntervalSince1970
+    event["isMainThread"] = Thread.isMainThread
+    guard let data = try? JSONSerialization.data(withJSONObject: event, options: [.sortedKeys]),
+          let message = String(data: data, encoding: .utf8) else { return }
+    state.logger.addLog("Original HTTP boundary " + message)
+}
+#endif
+
 @objc protocol ScriptWidgetRuntimePromiseExports: JSExport {
     func then(_ resolve: JSValue, _ reject: JSValue) -> Void
 }
@@ -68,23 +86,52 @@ final class ScriptWidgetPromiseDelivery: NSObject {
     }
 
     func finish(_ value: JSValue, rejected: Bool) {
+        #if DEBUG
+        recordOriginalHTTPBoundary(state, "promise-finish", ["delivery": String(describing: ObjectIdentifier(self)), "rejected": rejected])
+        #endif
         state.executionSession.callbackQueue.async { self.deliver(value, rejected: rejected) }
     }
 
     private func deliver(_ value: JSValue, rejected: Bool) {
+        #if DEBUG
+        recordOriginalHTTPBoundary(state, "promise-deliver", ["delivery": String(describing: ObjectIdentifier(self)), "rejected": rejected])
+        #endif
         lock.lock()
-        guard !settled else { lock.unlock(); return }
+        guard !settled else {
+            lock.unlock()
+            #if DEBUG
+            recordOriginalHTTPBoundary(state, "promise-already-settled", ["delivery": String(describing: ObjectIdentifier(self))])
+            #endif
+            return
+        }
         settled = true
         lock.unlock()
         let success = resolve.value
         let failure = reject.value
         virtualMachine?.removeManagedReference(resolve, withOwner: self)
         virtualMachine?.removeManagedReference(reject, withOwner: self)
-        guard state.executionSession.isActive else { return }
+        #if DEBUG
+        recordOriginalHTTPBoundary(state, "promise-continuations", ["delivery": String(describing: ObjectIdentifier(self)), "resolvePresent": success != nil, "rejectPresent": failure != nil, "rejected": rejected])
+        #endif
+        guard state.executionSession.isActive else {
+            #if DEBUG
+            recordOriginalHTTPBoundary(state, "promise-inactive", ["delivery": String(describing: ObjectIdentifier(self))])
+            #endif
+            return
+        }
         guard state.isCurrentExecution else {
+            #if DEBUG
+            recordOriginalHTTPBoundary(state, "promise-identity-rejection-call-attempt", ["delivery": String(describing: ObjectIdentifier(self))])
+            #endif
             failure?.call(withArguments: ["[execution_identity_changed] Reload the widget before continuing"])
             return
         }
+        #if DEBUG
+        recordOriginalHTTPBoundary(state, "promise-current-call-attempt", ["delivery": String(describing: ObjectIdentifier(self)), "rejected": rejected])
+        #endif
         (rejected ? failure : success)?.call(withArguments: [value])
+        #if DEBUG
+        recordOriginalHTTPBoundary(state, "promise-call-site-returned", ["delivery": String(describing: ObjectIdentifier(self))])
+        #endif
     }
 }

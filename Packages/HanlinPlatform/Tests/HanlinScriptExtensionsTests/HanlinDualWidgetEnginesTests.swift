@@ -304,13 +304,25 @@ struct HanlinDualWidgetEnginesTests {
             var rendered: (String, [String])?
             defer {
                 native.cancel()
-                native.onJavaScriptQueue {
+                let boundaryLogger = native.onJavaScriptQueue {
                     native.finish()
                     context.exceptionHandler = nil
                     for key in ["$render", "__httpTestDone", "__httpTestFailed", "__httpTestStore", "__httpTestStage"] {
                         context.setObject(nil, forKeyedSubscript: key as NSString)
                     }
+                    return context.scriptWidgetRunningState?.logger
                 }
+                // Snapshot only bounded diagnostic strings after the original
+                // cancellation/cleanup. The logger owns no JS context or state.
+                let boundaryMessages: [String]
+                if Thread.isMainThread {
+                    boundaryMessages = boundaryLogger?.logs.filter { $0.hasPrefix("Original HTTP boundary ") } ?? []
+                } else {
+                    boundaryMessages = DispatchQueue.main.sync {
+                        boundaryLogger?.logs.filter { $0.hasPrefix("Original HTTP boundary ") } ?? []
+                    }
+                }
+                recordStage(label, "original-callback-boundaries", ["messages": boundaryMessages])
             }
             try native.onJavaScriptQueue {
                 let state = try #require(context.scriptWidgetRunningState)

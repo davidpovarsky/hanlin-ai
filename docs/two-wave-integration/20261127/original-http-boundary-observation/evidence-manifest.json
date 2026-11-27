@@ -1,0 +1,36 @@
+{
+  "base": "602b29e303a633155fe07583e9ece28fce0ba113",
+  "scope": "Reviewed DEBUG diagnostic only; native603 NOT_RUN on this candidate",
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 4076,
+      "sha256": "4d1429fbf94f006e8a8da0cad5440d732322fb3bb2807cc1bd5f4220f0bf07a4"
+    },
+    {
+      "path": "independent-w1-source-review.json",
+      "bytes": 9092,
+      "sha256": "cdc74a141a225a721e448087c435c11be148c3a9c12b9561d4a0835d0304b153"
+    },
+    {
+      "path": "root-independent-review-message.json",
+      "bytes": 2740,
+      "sha256": "50fa13ade6d6be6d031e756dcd002b5fdbdbb0fe7d1b5c5815a3f98311561386"
+    },
+    {
+      "path": "source-patch-encoding.json",
+      "bytes": 290,
+      "sha256": "13348f77eccc83f4d49921e1558c717a1e756e70ed4e002efdc753cce50199ac"
+    },
+    {
+      "path": "source-validation.json",
+      "bytes": 4966,
+      "sha256": "e53f2f5d7326385802619bbb318f1f26a266a62f8baebfcbb8e05810871c68ec"
+    },
+    {
+      "path": "source.patch.gz",
+      "bytes": 2716,
+      "sha256": "19042f817a468529f959b02f98344004e4d01f44006c3e538665313075d4efa8"
+    }
+  ]
+}

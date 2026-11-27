@@ -1,0 +1,90 @@
+{
+  "base": "602b29e303a633155fe07583e9ece28fce0ba113",
+  "status": "SOURCE_ONLY_NOT_COMPILED_NOT_EXECUTED",
+  "files": [
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimePromise.swift",
+      "originalSHA256": "13f8c1563e906edd2fd9f96b372cace3e15be58e18c583ba60100f2ad842d8d5",
+      "candidateSHA256": "9cfc569a213595e7e39fbfaf70e37e3a2006fa9737c75cd6923cd3d3e3b68d3a",
+      "originalBytes": 3750,
+      "candidateBytes": 6200
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift",
+      "originalSHA256": "8a7bb65bffe0390ac719e33b0ece71e19b20e9be96841e422a3a4c37f09352b3",
+      "candidateSHA256": "f8c4adb4cf19e9302ae69167ac7a6e654460423e8cbea25cf763ddbc0259b0df",
+      "originalBytes": 17207,
+      "candidateBytes": 17944
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+      "originalSHA256": "433703973e69d764686c6761ad1851c40d76f5e53afa4561d1720d873a5a1ae4",
+      "candidateSHA256": "9e14ca1f36323df4afcc7df09f7f32bedd4ba55dae667fa1c9d46c81fdbe1993",
+      "originalBytes": 100904,
+      "candidateBytes": 101689
+    },
+    {
+      "path": "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json",
+      "originalSHA256": "9c624bb8985a0f9fa4bc1ce6ab3d614d65ca7a3dc19e737f33b9dada2e2e53a3",
+      "candidateSHA256": "68c029c3a8af0d667f4d4117da95c47da4d275f0cd37073c1d029a829ab43133",
+      "originalBytes": 255664,
+      "candidateBytes": 255664
+    }
+  ],
+  "releaseProjection": [
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimePromise.swift",
+      "equalToOriginalAfterRemovingDEBUGAndExactGuardFormatting": true,
+      "projectedSHA256": "13f8c1563e906edd2fd9f96b372cace3e15be58e18c583ba60100f2ad842d8d5"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift",
+      "equalToOriginalAfterRemovingDEBUGAndExactGuardFormatting": true,
+      "projectedSHA256": "8a7bb65bffe0390ac719e33b0ece71e19b20e9be96841e422a3a4c37f09352b3"
+    }
+  ],
+  "provenanceChanges": [
+    {
+      "jsonPath": [
+        "files",
+        148,
+        "localSHA256"
+      ],
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimePromise.swift",
+      "before": "13f8c1563e906edd2fd9f96b372cace3e15be58e18c583ba60100f2ad842d8d5",
+      "after": "9cfc569a213595e7e39fbfaf70e37e3a2006fa9737c75cd6923cd3d3e3b68d3a"
+    },
+    {
+      "jsonPath": [
+        "files",
+        160,
+        "localSHA256"
+      ],
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift",
+      "before": "8a7bb65bffe0390ac719e33b0ece71e19b20e9be96841e422a3a4c37f09352b3",
+      "after": "f8c4adb4cf19e9302ae69167ac7a6e654460423e8cbea25cf763ddbc0259b0df"
+    }
+  ],
+  "testCleanupOnlyInverseSHA256": "433703973e69d764686c6761ad1851c40d76f5e53afa4561d1720d873a5a1ae4",
+  "sourceOnlyChecks": {
+    "noNewTestsOrSelectors": true,
+    "original601AndTwoPromiseControlsRemain603": true,
+    "originalHTTPServerAndAllAssertionsUnchanged": true,
+    "originalFiveSecondExecutionTimeoutUnchanged": true,
+    "noNewStoredPropertyOrManagedReferenceOrCancellationHook": true,
+    "noChangeToLoggerOrSessionOrRunningState": true,
+    "oneOriginalReadOfEachManagedContinuation": true,
+    "originalSingleCallbackDispatchUnchanged": true,
+    "onlyExistingFetchManagerForTestingOptIn": true
+  },
+  "lifetimeReview": [
+    "Helper is synchronous and receives the already-live state transiently; only scalar fields and bounded JSON strings reach the existing logger.",
+    "No JSValue/JSManagedValue/context/callback/state is added to any closure capture, object property, registry or asynchronous diagnostic payload.",
+    "Original managed continuations are read once at their original locations; presence is observed from existing local values before their original calls, with no later diagnostic use of either JSValue.",
+    "Original queue dispatch, reference removal, settlement state, guard evaluation count and order, selected continuation and optional call are unchanged.",
+    "Test returns only the logger from original cleanup; its main-queue snapshot occurs after the native outcome and original cancellation/cleanup, outside the five-second wait.",
+    "DEBUG logging has bounded CPU/queue overhead and can perturb timing; one native diagnostic outcome alone is not proof that the uninstrumented cause is fixed.",
+    "Call-attempt/call-site-returned events do not assert a nil optional JS callback executed; actual presence fields and existing JS/test terminal checkpoints must be interpreted together."
+  ],
+  "patchSHA256": "8ea95dcdea4dd8f4d3b3cad8d7204333a78cd85cb0fd9c30054f6817be34d07b"
+}
