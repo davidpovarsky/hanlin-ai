@@ -1,0 +1,13 @@
+{
+  "recordedAtUTC": "2026-11-27T01:46:38.290031+00:00",
+  "source": "0456adbe395cde2fb986cf058c4a9497c38d1d21",
+  "reviewedIntegration": "91e53dad21862d5989b6362eecee7b62fa4e9d31",
+  "allManifestFileBytesAndHashesMatch": true,
+  "filesVerified": 40,
+  "totalPayloadBytes": 15141901,
+  "manifestSHA256": "1695ce91cd613a38a244596b4b23d7164d568421f3668a820c4591b5f32fe149",
+  "archiveSHA256": "093f4a45fad0e99f6847374ae1ed645998816ad2bcb4f40851392128911cdd79",
+  "archiveBytes": 3091110,
+  "currentProductDeltaFromHost0456": [],
+  "boundary": "This preserves exact original evidence and reviewed source qualification; it does not claim full application, OS/device, signing or release acceptance. Notification repair later changes a SDK input and requires new Host qualification."
+}
