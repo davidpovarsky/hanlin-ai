@@ -313,6 +313,83 @@ class ShortcutEvidenceControls(unittest.TestCase):
                     with self.assertRaises(observer.ObservationError):
                         observer.installed_catalog(root, identity)
 
+    def _recorded_partial_native_action(self):
+        # This semantic registry entry was retained from an actual earlier
+        # simulator and is also consumed by the original Swift projection test.
+        fixture = Path(__file__).resolve().parents[3] / (
+            "Packages/HanlinPlatform/Tests/HanlinScriptStoreTests/"
+            "HanlinCanonicalEntrypointProjectionTests.swift")
+        swift = fixture.read_text()
+        marker = 'private static let storedCatalogEntryJSON = #"""'
+        self.assertEqual(swift.count(marker), 1)
+        entry = json.loads(swift.split(marker, 1)[1].split('"""#', 1)[0])
+        action = next(row for row in entry["entrypoints"] if row["kind"] == "appIntent")
+        self.assertEqual(action["compatibility"], "partial")
+        record = entry["record"]
+        identity = {
+            "identity": {
+                "installedPackageID": record["installedPackageID"],
+                "packageID": record["packageID"],
+                "generation": record["activeGeneration"],
+                "entrypointID": action["id"],
+                "variantID": "unit-canonical-variant",
+            },
+            "appID": "hanlin.surface.expo",
+            "actionID": action["exportedSymbol"],
+            "hostActionHandler": action["sourcePath"],
+        }
+        return entry, identity
+
+    def test_recorded_partial_native_action_is_admitted_without_rewriting_catalog(self):
+        entry, identity = self._recorded_partial_native_action()
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            path = root / "Library/Application Support/Hanlin/ScriptingPlatform/Installed/registry/catalog.json"
+            path.parent.mkdir(parents=True)
+            catalog = {"schemaVersion": 1, "revision": 1, "packages": {
+                identity["identity"]["installedPackageID"]: entry}}
+            before = json.dumps(catalog).encode()
+            path.write_bytes(before)
+            result = observer.installed_catalog(root, identity)
+            self.assertEqual(result["value"], catalog)
+            self.assertEqual(path.read_bytes(), before)
+
+    def test_recorded_partial_native_action_still_rejects_invalid_contracts(self):
+        entry, identity = self._recorded_partial_native_action()
+        changes = [
+            ("compatibility", "unsupported"),
+            ("compatibility", "unknown"),
+            ("compatibility", None),
+            ("compatibility", {}),
+            ("kind", "widget"),
+            ("runtimeProfile", "legacy"),
+            ("runtimePolicyID", "unrelated-policy"),
+            ("supportedContexts", ["mainApplication"]),
+            ("exportedSymbol", "unrelated.action"),
+            ("sourcePath", "source/unrelated.js"),
+            ("enabled", False),
+            ("activeGeneration", identity["identity"]["generation"] + 1),
+        ]
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            path = root / "Library/Application Support/Hanlin/ScriptingPlatform/Installed/registry/catalog.json"
+            path.parent.mkdir(parents=True)
+            for field, value in changes:
+                with self.subTest(field=field, value=value):
+                    candidate = copy.deepcopy(entry)
+                    action = next(row for row in candidate["entrypoints"]
+                                  if row["id"] == identity["identity"]["entrypointID"])
+                    if field == "enabled":
+                        candidate[field] = value
+                    elif field == "activeGeneration":
+                        candidate["record"][field] = value
+                    else:
+                        action[field] = value
+                    path.write_text(json.dumps({"schemaVersion": 1, "revision": 1, "packages": {
+                        identity["identity"]["installedPackageID"]: candidate}}))
+                    with self.assertRaises(observer.ObservationError):
+                        observer.installed_catalog(root, identity)
+
     def test_run_path_and_preparation_schema_are_strict(self):
         values = example()
         for key, value in (("runID", "../../other"), ("fixtureAppID", "another.app"),

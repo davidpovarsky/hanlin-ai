@@ -244,8 +244,10 @@ def installed_catalog(data_root, identity):
     matches = [item for item in entrypoints if item.get("id") == identity["identity"]["entrypointID"]]
     require(len(matches) == 1, "The installed action entrypoint is missing or ambiguous")
     entrypoint = matches[0]
+    # The original native analyzer deliberately marks declared actions partial.
+    # Identity, executable context, runtime, policy and handler must still match.
     require(entrypoint.get("kind") == "appIntent"
-            and entrypoint.get("compatibility") == "supported"
+            and entrypoint.get("compatibility") in ("supported", "partial")
             and "appIntent" in entrypoint.get("supportedContexts", [])
             and entrypoint.get("runtimeProfile") ==
                 ("hanlin-expo" if identity["appID"].endswith(".expo") else "hanlin-nativescript")
