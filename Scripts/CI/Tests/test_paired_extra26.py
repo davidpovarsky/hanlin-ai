@@ -11,8 +11,8 @@ import unittest
 from unittest.mock import Mock, patch
 
 
-SCRIPTS = Path(__file__).resolve().parents[1]
-ROOT = SCRIPTS.parents[1]
+ROOT = Path(__file__).resolve().parents[3]
+SCRIPTS = ROOT / "Scripts/ProductSplit"
 spec = importlib.util.spec_from_file_location("paired_extra26", SCRIPTS / "paired_extra26.py")
 extra = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(extra)
