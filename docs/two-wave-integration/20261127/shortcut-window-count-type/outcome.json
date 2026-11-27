@@ -1,0 +1,60 @@
+{
+  "schema": 1,
+  "recordedAt": "2026-11-27T18:06:05.035912+00:00",
+  "sourceCommit": "e5554f007e1431650abe7355e1fe7d3d14e69383",
+  "parent": "f57dfcc2292c0830f454e28d87293e85fe426a44",
+  "testPath": "HanlinMiniAppsTests/NativeScriptShortcutConcurrencyTests.swift",
+  "beforeSHA256": "ea849be5aa05038199c69c18d5d18af6bad599dedb325ab60464bffd26fa11d0",
+  "afterSHA256": "9e09c2083d836ba868e5a993a248a7945b80d18c4ced2409d3df8bc24888fd4e",
+  "originalHostedFailure": {
+    "runID": 46034328513,
+    "jobID": 140625790969,
+    "source": "f57dfcc2292c0830f454e28d87293e85fe426a44",
+    "error": "NativeScriptShortcutConcurrencyTests.swift:85:17 failed to produce diagnostic for expression",
+    "buildExit": 65,
+    "UICases": "NOT_RUN",
+    "assessmentSHA256": "659fb2f429a8c36c9b34cf7669f5fac918dcc464a80423b7aab914eae162d394"
+  },
+  "installedProbe": {
+    "status": "ACTUAL_HEADER_UINT_AND_CORRECTED_ASSERTION_TYPECHECK_PASS",
+    "receiptSHA256": "4fa442eb1ea57cdd4dac649b0412e71eda3dc32d6b72fc7a4e8c44599734332f",
+    "manifestSHA256": "865f3859233162ec5480e0c63b501eacdbe2f2098302f7bbb1983e9a87253f86",
+    "probeSHA256": "7f58e9da01f65a6fbd3e41c2336d4b402765c34c89f51c2b302552622f6e7573",
+    "headerHashes": {
+      "HanlinNativeScriptWindowFactory.h": "c69237216c64e263f0ab6a9397cb9ed358e124651a42ae411f60d71d3f381037",
+      "module.modulemap": "e901e084a8d88e9502d7877a0dbcb56404ecc360b28904f2ef5a31c1b0f597c5",
+      "HanlinNativeScriptCoreSupport.h": "550adc1b0798fa56847f2de31fad5cfa1a2dbde8fa6f5f8acdafca45087a66e8",
+      "HanlinNativeServicesBridge.h": "c2e8a138628dfd568a30dcaf0b2fd899347b6065354c86350db7d3f36f4c0b19"
+    },
+    "sdkVersion": "27.0",
+    "swiftVersion": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0",
+    "overlaySHA256": "88e7b85c745a0115a9cf92327a72b786702bacf77476a634d699ecb062e738d8",
+    "exitCode": 0,
+    "elapsedSeconds": 11.363971207999999,
+    "commandTimeoutSeconds": 60,
+    "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "logBytes": 0,
+    "sourceUnchanged": true,
+    "nativeTestCasesExecuted": 0,
+    "wholeCorrectedTestFileCompiled": false,
+    "applicationAcceptance": false,
+    "retainedOriginalPacket": "window-count-actual-header-b5475156-r2"
+  },
+  "priorProbe": {
+    "status": "ACTUAL_HEADER_TYPECHECK_FAILED",
+    "receiptSHA256": "dc084b1d8468436d540fe8b0afd79ba61c1ca693781ae6495640240e26332f78",
+    "exitCode": 1,
+    "logSHA256": "b3e8e39c7b30ebd1c56f580d4fe4f05fa10f5c69bdadc2bbef9622bccd919806",
+    "reason": "The direct frontend search found Objective-C XCTest without its installed Swift overlay; real XCTAssertEqual was unavailable.",
+    "retainedOriginalPacket": "window-count-actual-header-b5475156-r1"
+  },
+  "review": {
+    "agent": "/root/w1_review_resume",
+    "sha256": "e1c077add1f272d0f539ef7470a90554a30e68d367f69c69dbfa075341d74e38"
+  },
+  "limits": [
+    "This proves the actual imported UInt return and corrected original assertion shape, not whole-file compilation.",
+    "Original five selectors, 131 XCTest assertion/unwrap/failure lines, order, cancellation and deadlines preserved.",
+    "No production code, dependency, sandbox or runtime change. Original native acceptance remains required."
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "schema": 1,
+  "reviewer": "/root/w1_review_resume",
+  "recordedAtUTC": "2026-11-27T17:43:20.031370+00:00",
+  "decision": "APPROVED_SOURCE_ONLY_FOR_ORIGINAL_NATIVE_RETRY",
+  "source": "f57dfcc2292c0830f454e28d87293e85fe426a44",
+  "currentRootSourceQualified": "fe0001ac868339d0825d1cc3d07f8383341d163d",
+  "beforeSHA256": "ea849be5aa05038199c69c18d5d18af6bad599dedb325ab60464bffd26fa11d0",
+  "afterSHA256": "9e09c2083d836ba868e5a993a248a7945b80d18c4ced2409d3df8bc24888fd4e",
+  "patchSHA256": "296ae02172773bd87200aa0412160f2e364f24bd484afb59e4e7187c7bc38246",
+  "exactOneExpressionInverse": true,
+  "currentRootTestBytesEqualOriginal": true,
+  "selectors": [
+    "testOriginalWindowSurvivesReverseShortcutsCancellationDeadlineAndStaleGeneration",
+    "testLegacyOwnerRejectsBothFactoryAndLegacyShortcutsWithoutQueuedReplay",
+    "testForegroundShortcutUsesItsOwnedProviderAndReceiptWithoutReplacingTheOwnerHandler",
+    "testClosingRunningForegroundDrainsBeforeReleasingItsOwnedSession",
+    "testOccupiedForegroundRejectsOnlyTheNewShortcutAndPreservesLegacyIntentDrain"
+  ],
+  "xctAssertionUnwrapFailureLineCount": 131,
+  "allXCTLinesPreservedAfterExactUIntInverse": true,
+  "header": {
+    "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include/HanlinNativeScriptWindowFactory.h",
+    "sha256": "c69237216c64e263f0ab6a9397cb9ed358e124651a42ae411f60d71d3f381037",
+    "declaration": "+ (NSUInteger)openWindowCount;"
+  },
+  "typeAndBoundsAssessment": [
+    "The actual declaration returns NSUInteger. The candidate explicitly gives the expected value UInt, matching its ordinary Swift unsigned integer representation; native imported-header admission remains Mac-owned.",
+    "The actual loop is commands.indices.reversed() for the same three commands; index + 1 remains 3, 2, 1, representable without truncation or clamping.",
+    "The comparison still requires exactly one remaining original foreground window plus the not-yet-completed background windows.",
+    "No task submission, reverse release, next()/acknowledgement, owner identity, receipt, assertion, selector, cancellation action or deadline changes."
+  ],
+  "actualFailureQualification": "Retained exact f57 original build stopped at this expression with failed-to-produce-diagnostic. This review does not claim the Swift importer or native compilation has executed on corrected source.",
+  "nativeStatus": "NOT_RUN",
+  "testsRunByReviewer": 0,
+  "receiptSourceSHA256": "659fb2f429a8c36c9b34cf7669f5fac918dcc464a80423b7aab914eae162d394"
+}
