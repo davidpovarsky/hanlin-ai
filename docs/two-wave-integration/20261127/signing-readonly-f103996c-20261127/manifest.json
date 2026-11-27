@@ -1,0 +1,49 @@
+{
+  "status": "READ_ONLY_COMPLETE_TWO_ORIGINAL_APP_GROUP_PROFILES_STILL_BLOCKED",
+  "source": "f103996cc03d2cc5321c7e83b6cdf77c3b60e509",
+  "localReady": 11,
+  "requiredRoles": 13,
+  "profileOrCredentialMutation": false,
+  "files": [
+    {
+      "path": "release-readiness-e6b9630e-20261127.json",
+      "bytes": 38955,
+      "sha256": "98dd83f6a402769dc827051f3ad551a5fc4a5a14c56ee449de47e81e94b4a142"
+    },
+    {
+      "path": "release-readiness-e6b9630e-20261127.py",
+      "bytes": 7504,
+      "sha256": "0379186fb8ae863f07c38c40ce9a212eb3821d5d49a196f1f30d1db5642a0e82"
+    },
+    {
+      "path": "release-bundle-profile-readback-f103996c-20261127.json",
+      "bytes": 1183,
+      "sha256": "ca26ae1e0f872ec3d6797c61a656b2491edc10e44c99cd3b19e9345a8f1071d3"
+    },
+    {
+      "path": "release-bundle-profile-readback-f103996c-20261127.py",
+      "bytes": 4992,
+      "sha256": "46393451cbe829c26aca3e62327c3803d9a4418753c1f9abd5d11b2ee6852d1c"
+    },
+    {
+      "path": "asc-capability-http400-diagnostic-20261127.json",
+      "bytes": 988,
+      "sha256": "c5577878ac8caded5a5796a26d585632e3f7bb67838fd44e13ebfe23937b1b28"
+    },
+    {
+      "path": "asc-capability-http400-diagnostic-20261127.py",
+      "bytes": 1969,
+      "sha256": "42a5142610023d84a086d8168907a578900955b09f915c4c85f80e8fdae8e3ce"
+    },
+    {
+      "path": "release-bundle-profile-readback-f103996c-r2-20261127.json",
+      "bytes": 5234,
+      "sha256": "608375ce86ae013d46005a84444b4d5c2bb210c91ed513fd2d6e913ac762008e"
+    },
+    {
+      "path": "release-bundle-profile-readback-f103996c-r2-20261127.py",
+      "bytes": 5370,
+      "sha256": "9cb0d8f82c7196b9ed5970fdbd11e0fbef4d41d9def4dbbe1dd1742583d3de8f"
+    }
+  ]
+}

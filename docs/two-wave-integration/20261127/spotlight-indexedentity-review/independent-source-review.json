@@ -1,0 +1,18 @@
+{
+  "source_commit": "2a0b19b79f3da0fef092ca8b0762b9b0e7001caa",
+  "parent": "3c3bbb955bc79733607e90c719fc95a454d6b387",
+  "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift",
+  "source_sha256": "114cdb71d067a0cf3139fe373af2b25617e275fa5aa040a0be71a0801e1283f8",
+  "diagnostic_sha256": "e363c4dd683e330833b2454819f9b23b0054f04ac0094d8d1851bde202ec081f",
+  "independent_reviewer": "/root/w1_review_resume",
+  "integrator_reviewer": "/root",
+  "decision": "APPROVED_SOURCE_ONLY",
+  "findings": [
+    "Actual IndexedEntityQuery SDK witnesses are async throws and non-main-actor; CSSearchableIndexDescription is non-Sendable.",
+    "Two explicit nonisolated witnesses call one no-argument MainActor helper. The SDK description is neither captured nor transferred.",
+    "Original restore then reindexSpotlight behavior and error/cancellation propagation are retained.",
+    "No unchecked Sendable, preconcurrency suppression, pin, frozen-engine, assertion or original gate change."
+  ],
+  "corrected_native_status": "NOT_RUN at integration; original SDK refresh required",
+  "integration_time_utc": "2026-11-27T02:28:04.258477+00:00"
+}

@@ -1,0 +1,35 @@
+{
+  "source": "3c3bbb955bc79733607e90c719fc95a454d6b387",
+  "files": [
+    {
+      "original": "dispatch.json",
+      "retained": "dispatch.json",
+      "bytes": 4777,
+      "sha256": "21e059877185acd9efad501abe440dec413c33f00dee862595b34daf9915a7a0"
+    },
+    {
+      "original": "plan.json",
+      "retained": "plan.json",
+      "bytes": 1412944,
+      "sha256": "987e6911071cecd591da614be5c60ddfa52be3d9e0acfb4300aaddcd6951f85b"
+    },
+    {
+      "original": "planner-receipt.json",
+      "retained": "planner-receipt.json",
+      "bytes": 969,
+      "sha256": "233d456a21320f5510e9932c8036562365ed2d077963389728c024517a21c2eb"
+    },
+    {
+      "original": "planner.stderr.log",
+      "retained": "planner.stderr.log.gz",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "original": "planner.stdout.log",
+      "retained": "planner.stdout.log.gz",
+      "bytes": 29449,
+      "sha256": "8af375a1179c720a9b3e5535eec2a6d5049262d3cb377f4bfd5e261c36ce8bed"
+    }
+  ]
+}
