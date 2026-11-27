@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "/root",
+  "base": "24fd1e20eb1af2ebab0f4d7dd7f617145217eded",
+  "decision": "APPROVED_ADDITIVE_OBSERVER_AND_RUNNER_SOURCE_ONLY",
+  "patchSHA256": "3613f36000de08c366995a406617d24ce6251960816ca7523354decc48fa4545",
+  "sourceValidationSHA256": "a143a5bf2e3c8b319cc4e97ac879a4852cd10ac24cb04e7fb7b8fcad1db7e5b8",
+  "wholeUIInsertionInverseExact": true,
+  "originalUISelectors": 32,
+  "moduleProjections": {
+    "Scripts/ProductSplit/run_paired_acceptance.py": {
+      "wholeOriginalASTRestored": true,
+      "originalFunctions": 26
+    },
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": {
+      "wholeOriginalASTRestored": true,
+      "originalFunctions": 39
+    }
+  },
+  "sourceFiles": [
+    {
+      "path": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+      "bytes": 194184,
+      "sha256": "9cc9a4683da1038f0e441c2f3fe4979f9a846282a2301f4dc4e9eb6ae1b11230",
+      "beforeSHA256": "7ba73f651fb9fa326f6a4787e5ac8f4739ca00922ce79f57967c4b309b8c27fd"
+    },
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "bytes": 94991,
+      "sha256": "64b1b87085e7d44b3a8289b571d6681b898238554ad12c77784074a7b3391d43",
+      "beforeSHA256": "77f339cb70b6294a94d8cc8162f2816fb8c4fb21c3f838c94978281707d6d0d1"
+    },
+    {
+      "path": "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+      "bytes": 64739,
+      "sha256": "a8dd6ad5cc2ab61e417db7843692c90678d82b34cb0751e29e8e6ea1a3418b7b",
+      "beforeSHA256": "d0c5304fe391893e17877f704956e9563f20b72358f25f00f661851bdd9ca6ab"
+    },
+    {
+      "path": "Scripts/ProductSplit/observe_widget_voiceover.py",
+      "bytes": 25391,
+      "sha256": "bbf944a7f94953c35d4a0f2adc20dc902983a3b39ef5084ad9a705fd4f9df47b",
+      "beforeSHA256": null
+    },
+    {
+      "path": "Scripts/CI/Tests/test_widget_voiceover_observer.py",
+      "bytes": 20256,
+      "sha256": "e2fb41c662f0892e270505cc1f5b6c5453972f0f2041c5002ef92db2b20b3a54",
+      "beforeSHA256": null
+    }
+  ],
+  "reviewedPortableControls": 14,
+  "newTestInvocations": 0,
+  "firstRootVerifierFailure": {
+    "classification": "VERIFIER_BOUNDARY_ONLY",
+    "reason": "Standalone helper omits the additional trailing LF used by the recorded insertion. Adding that exact LF verifies the original recorded insertionSHA676cfa83 and the whole-file inverse. SequenceMatcher can equivalently attribute the blank LF to the preceding boundary, hash8009912d. Candidate and source metadata were unchanged.",
+    "preserved": true
+  },
+  "reviewFindings": [
+    "One real placed A; distinct B is only an untouched native-state control.",
+    "Two original first native transitions preserve typed Boolean, exact count, single fresh nonce and revision.",
+    "Speech, currentSpeech before gesture, gesture and native state bind source/attempt/run/action, unique switch, physical frames and chronology.",
+    "Public currentSpeech/moveForward supply actual utterances; focused element association remains an explicit inference.",
+    "Final configuration occurs while disabled, prior enabled state is restored, failures remain failures.",
+    "Original Widget source-identity guard is retained; independently owned generated-fixture admission correction remains necessary."
+  ],
+  "nativeUIStatus": "NOT_RUN",
+  "scopeLimit": "Source admission only. Full Swift case, public service runtime, actual gesture and WidgetKit acceptance require original native execution.",
+  "reviewedAt": "2026-11-27T19:55:27.530017+00:00"
+}

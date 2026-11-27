@@ -1,0 +1,124 @@
+{
+  "schemaVersion": 1,
+  "status": "SOURCE_READY_FOR_INDEPENDENT_REVIEW",
+  "base": "24fd1e20eb1af2ebab0f4d7dd7f617145217eded",
+  "sourceFiles": [
+    {
+      "path": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+      "bytes": 194206,
+      "sha256": "0ae41eadc0e30eb81ac25c5f1a82505eaa07cdf3ff57e1f176951753ead54f01",
+      "beforeSHA256": "7ba73f651fb9fa326f6a4787e5ac8f4739ca00922ce79f57967c4b309b8c27fd"
+    },
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "bytes": 94991,
+      "sha256": "64b1b87085e7d44b3a8289b571d6681b898238554ad12c77784074a7b3391d43",
+      "beforeSHA256": "77f339cb70b6294a94d8cc8162f2816fb8c4fb21c3f838c94978281707d6d0d1"
+    },
+    {
+      "path": "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+      "bytes": 64739,
+      "sha256": "a8dd6ad5cc2ab61e417db7843692c90678d82b34cb0751e29e8e6ea1a3418b7b",
+      "beforeSHA256": "d0c5304fe391893e17877f704956e9563f20b72358f25f00f661851bdd9ca6ab"
+    },
+    {
+      "path": "Scripts/ProductSplit/observe_widget_voiceover.py",
+      "bytes": 25391,
+      "sha256": "bbf944a7f94953c35d4a0f2adc20dc902983a3b39ef5084ad9a705fd4f9df47b",
+      "beforeSHA256": null
+    },
+    {
+      "path": "Scripts/CI/Tests/test_widget_voiceover_observer.py",
+      "bytes": 20256,
+      "sha256": "e2fb41c662f0892e270505cc1f5b6c5453972f0f2041c5002ef92db2b20b3a54",
+      "beforeSHA256": null
+    }
+  ],
+  "patchSHA256": "a3e74f83888430dafe6ab62c9a0ba81290bb663d43a81e260d4e47a0814597cb",
+  "ui": {
+    "originalSelectors": [
+      "testExpoPlacedWidgetInvokesAllFiveRuntimes",
+      "testNativeScriptPlacedWidgetInvokesAllFiveRuntimes",
+      "testExpoLiveActivityInvokesAllFiveRuntimes",
+      "testNativeScriptLiveActivityInvokesAllFiveRuntimes",
+      "testExpoShortcutInvokesAllFiveRuntimes",
+      "testNativeScriptShortcutInvokesAllFiveRuntimes",
+      "testExpoSystemShareInvokesAllFiveRuntimes",
+      "testNativeScriptSystemShareInvokesAllFiveRuntimes",
+      "testExpoSystemTranslationInvokesAllFiveRuntimes",
+      "testNativeScriptSystemTranslationInvokesAllFiveRuntimes",
+      "testExpoRunMiniAppActionSavedBackgroundReturnsTypedResult",
+      "testNativeScriptRunMiniAppActionSavedBackgroundReturnsTypedResult",
+      "testExpoRunMiniAppActionSavedForegroundReturnsTypedResult",
+      "testNativeScriptRunMiniAppActionSavedForegroundReturnsTypedResult",
+      "testMiniAppsPlacedWidgetRetainsLastGoodAfterRealFailureAndRecovers",
+      "testMiniAppsPlacedWidgetToggleKeepsIndependentInstanceState",
+      "testNativeScriptOwnerSurvivesThreeOverlappingBackgroundShortcutsInReverseOrder",
+      "testNativeScriptOwnerSurvivesCancellingOneOfThreeOverlappingBackgroundShortcuts",
+      "testStudioExpoHelloWorldCopiesEditsBuildsInstallsAndRuns",
+      "testStudioDepartureBudgetCopiesEditsBuildsInstallsAndRuns",
+      "testStudioNativeScriptHelloWorldCopiesEditsBuildsInstallsAndRuns",
+      "testStudioTableShareCopiesEditsBuildsInstallsAndRuns",
+      "testStudioNativeImageDrawingCopiesEditsBuildsInstallsAndRuns",
+      "testStudioExpoCreatesMovesStylesAndReopensSource",
+      "testStudioNativeScriptCreatesMovesStylesAndReopensSource",
+      "testStudioOriginalTypeScriptHelpPreferencesAndLiveLogExport",
+      "testStudioImportsActualFilesSourceAndReopensIndependentEdit",
+      "testStudioTwoRealWindowsConflictReloadAndRecoverSeparateCopy",
+      "testExpoSavedLongRunningBackgroundActionReturnsAfterThreeHundredSeconds",
+      "testNativeScriptSavedLongRunningBackgroundActionReturnsAfterThreeHundredSeconds",
+      "testExpoSavedLongRunningBackgroundActionCancelsAfterThreeHundredSeconds",
+      "testNativeScriptSavedLongRunningBackgroundActionCancelsAfterThreeHundredSeconds"
+    ],
+    "newSelector": [
+      "testMiniAppsPlacedWidgetToggleVoiceOverAnnouncesAndSetsBothValues"
+    ],
+    "insertionSHA256": "676cfa83e1b3ad9e85efccd12ace1e03855e99d92e6b360c057199fea17a6c64",
+    "unchangedOriginalSelectors": 32,
+    "explicitPublicImport": "import XCUIAutomation",
+    "wholeFileInsertionAndImportInverseExact": true
+  },
+  "originalModuleProjections": {
+    "Scripts/ProductSplit/run_paired_acceptance.py": {
+      "entireOriginalModuleASTPreserved": true,
+      "originalFunctions": 19
+    },
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": {
+      "entireOriginalModuleASTPreserved": true,
+      "originalFunctions": 39
+    }
+  },
+  "unchangedImportedHelperFiles": {
+    "Scripts/ProductSplit/observe_widget_state.py": "22b0cc0357b018a0911b8fd8cf4d5d89c0945b1fa1b9aeb93865690b11d46fcf",
+    "Scripts/CI/Tests/test_widget_state_observer.py": "7e265e61b41ebd46df37dde7306ac7f9549201540e2e5d5cf8eb1311dd21dc2c"
+  },
+  "portableReceipts": {
+    "portable-r1": {
+      "sha256": "a5411653259ce80fd8612538412f4e72dd56dbdf773cbb5d209f96ef8af69d42",
+      "exitCode": 0
+    },
+    "portable-r2": {
+      "sha256": "e783cd26cdd7ceda9cbd850b10fa6d5cb29bf592d69f3d8cf8c637eb375e8e6a",
+      "exitCode": 0
+    }
+  },
+  "nativeStatus": "NOT_RUN",
+  "priorPublicAPITypecheckReceiptSHA256": "2dc7877134d49a9b751e07cdf5f60daba18b21508abcc29218002c81d85b9435",
+  "limits": {
+    "caseAllowanceSeconds": 420,
+    "identityAndPlacementSeconds": 25,
+    "armSeconds": 20,
+    "actionAndReadbackSeconds": 35,
+    "completionSeconds": 30,
+    "scopeCommandSeconds": 2100,
+    "maxSpeechTraceEntries": 128
+  },
+  "scope": "One physically placed medium A; B is a distinct untouched native-state control. English public speech off/on/off, two real doubleTap gestures, exact native nonce/revision and prior VoiceOver restoration. No private focus API or product/fixture changes.",
+  "revision": "R3 explicit public framework import only",
+  "priorCheckpoint": {
+    "sourceValidationSHA256": "a143a5bf2e3c8b319cc4e97ac879a4852cd10ac24cb04e7fb7b8fcad1db7e5b8",
+    "uiSHA256": "9cc9a4683da1038f0e441c2f3fe4979f9a846282a2301f4dc4e9eb6ae1b11230",
+    "deltaSHA256": "2d86635ae8945eb6f4790909f92afa1607fcb98278f1764b507f11a07dbcd6f8"
+  },
+  "portableQualificationReuse": "The exact Python observer, test source, runner and dispatcher are unchanged from the actual14-PASS R2 receipt. Only the Swift public import changed; no new portable execution and no full Swift/native PASS is inferred."
+}
