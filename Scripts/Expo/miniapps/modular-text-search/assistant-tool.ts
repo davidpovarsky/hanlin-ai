@@ -1,5 +1,6 @@
 import type { HanlinAssistantToolHandler } from '@hanlin/assistant-tools';
 import { search as searchSefaria } from './src/engines/sefaria/client.js';
+import type { normalizeHit } from './src/engines/sefaria/client.js';
 
 interface SearchArguments { query: string }
 interface SearchConfiguration {
@@ -32,7 +33,7 @@ export const search: HanlinAssistantToolHandler<SearchArguments, SearchConfigura
     size: options.size,
     total: response.total,
     timedOut: response.timedOut,
-    results: response.results.map(item => ({
+    results: response.results.map((item: ReturnType<typeof normalizeHit>) => ({
       ref: item.ref,
       heRef: item.heRef,
       version: item.version,
