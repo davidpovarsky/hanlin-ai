@@ -1,0 +1,74 @@
+{
+  "a2ui": {
+    "head": "3ed9601862ecc78027e20ac80ad8b1b98a5d9079",
+    "path": "/Users/runner/work/_temp/hanlin-original-sdk-zl2hmzhz/payload-quota-build/checkouts/a2ui"
+  },
+  "equatable": {
+    "head": "597c2bb34af0c51331eb3b5e705f942d8ee20daa",
+    "path": "/Users/runner/work/_temp/hanlin-original-sdk-zl2hmzhz/payload-quota-build/checkouts/equatable"
+  },
+  "hanlin-streaming-markdown": {
+    "head": "5cbb4b6c950051f98f02a0b0ae56756f5174a9b8",
+    "path": "/Users/runner/work/_temp/hanlin-original-sdk-zl2hmzhz/payload-quota-build/checkouts/hanlin-streaming-markdown"
+  },
+  "highlightswift": {
+    "head": "99c431b38a1444a5fd6a4978307fbbefe3a7af53",
+    "path": "/Users/runner/work/_temp/hanlin-original-sdk-zl2hmzhz/payload-quota-build/checkouts/highlightswift"
+  },
+  "iosmath": {
+    "head": "ba9ab7729b151329c54fd895a7c1859981d9484c",
+    "path": "/Users/runner/work/_temp/hanlin-original-sdk-zl2hmzhz/payload-quota-build/checkouts/iosMath"
+  },
+  "opentelemetry-swift-core": {
+    "head": "c6fcee77cfc21ba400366f12475217c7b6e1d605",
+    "path": "/Users/runner/work/_temp/hanlin-original-sdk-zl2hmzhz/payload-quota-build/checkouts/opentelemetry-swift-core"
+  },
+  "swift-ai-sdk": {
+    "head": "abf0921c6e89e6521cc2b510ff11016b45a0ef08",
+    "path": "/Users/runner/work/_temp/hanlin-original-sdk-zl2hmzhz/payload-quota-build/checkouts/swift-ai-sdk"
+  },
+  "swift-argument-parser": {
+    "head": "6a52f3251125d74daf04fcbd5e6f08a75d074382",
+    "path": "/Users/runner/work/_temp/hanlin-original-sdk-zl2hmzhz/payload-quota-build/checkouts/swift-argument-parser"
+  },
+  "swift-atomics": {
+    "head": "0442cb5a3f98ab802acb777929fdb446bda11a34",
+    "path": "/Users/runner/work/_temp/hanlin-original-sdk-zl2hmzhz/payload-quota-build/checkouts/swift-atomics"
+  },
+  "swift-cmark": {
+    "head": "08ddb528923cc1a6527e02b7a1aee9e516ca749a",
+    "path": "/Users/runner/work/_temp/hanlin-original-sdk-zl2hmzhz/payload-quota-build/checkouts/swift-cmark"
+  },
+  "swift-collections": {
+    "head": "7b847a3b7008b2dc2f47ca3110d8c782fb2e5c7e",
+    "path": "/Users/runner/work/_temp/hanlin-original-sdk-zl2hmzhz/payload-quota-build/checkouts/swift-collections"
+  },
+  "swift-json-schema": {
+    "head": "c0a9375ea9cd3fd47d875c98ed7f027ea61c03cb",
+    "path": "/Users/runner/work/_temp/hanlin-original-sdk-zl2hmzhz/payload-quota-build/checkouts/swift-json-schema"
+  },
+  "swift-markdown": {
+    "head": "7d9a5ce307528578dfa777d505496bd5f544ad94",
+    "path": "/Users/runner/work/_temp/hanlin-original-sdk-zl2hmzhz/payload-quota-build/checkouts/swift-markdown"
+  },
+  "swift-syntax": {
+    "head": "79e4b74a295b6eb74a8b585e3a39d29e70c1dbd1",
+    "path": "/Users/runner/work/_temp/hanlin-original-sdk-zl2hmzhz/payload-quota-build/checkouts/swift-syntax"
+  },
+  "swiftsoup": {
+    "head": "bba848db50462894e7fc0891d018dfecad4ef11e",
+    "path": "/Users/runner/work/_temp/hanlin-original-sdk-zl2hmzhz/payload-quota-build/checkouts/SwiftSoup"
+  },
+  "swiftui-shimmer": {
+    "head": "0226e21f9bf355d40e07e5f5e1c33679d50e167f",
+    "path": "/Users/runner/work/_temp/hanlin-original-sdk-zl2hmzhz/payload-quota-build/checkouts/SwiftUI-Shimmer"
+  },
+  "swiftyjson": {
+    "head": "b3dcd7dbd0d488e1a7077cb33b00f2083e382f07",
+    "path": "/Users/runner/work/_temp/hanlin-original-sdk-zl2hmzhz/payload-quota-build/checkouts/SwiftyJSON"
+  },
+  "zipfoundation": {
+    "head": "02b6abe5f6eef7e3cbd5f247c5cc24e246efcfe0",
+    "path": "/Users/runner/work/_temp/hanlin-original-sdk-zl2hmzhz/payload-quota-build/checkouts/ZIPFoundation"
+  }
+}

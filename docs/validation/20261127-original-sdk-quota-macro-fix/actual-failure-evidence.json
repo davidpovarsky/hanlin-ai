@@ -1,0 +1,125 @@
+{
+  "schema": "hanlin.original-hosted-quota-compiler-failure/1",
+  "runID": 45958390748,
+  "attempt": 1,
+  "jobID": 140370128602,
+  "controller": "68151b7344645f1831e7683906e0d45e276cfd17",
+  "source": "caa0dac32afa18e58bba55fb4f0fdd262f181835",
+  "sourceTree": "3c1f540131152aacc87a2249e0d938cb592a852c",
+  "runConclusion": "failure",
+  "originalArtifact": {
+    "id": 15179683672,
+    "bytes": 277231986,
+    "sha256": "14edfa594c30981893ead0ed7383f65f8506dcacecf3eaba0f6659ca60e0258f"
+  },
+  "actualFailedCommand": {
+    "argv": [
+      "xcrun",
+      "swift",
+      "test",
+      "--package-path",
+      "/Users/runner/work/_temp/hanlin-original-sdk-zl2hmzhz/source/Packages/HanlinPresentationSDK",
+      "--scratch-path",
+      "/Users/runner/work/_temp/hanlin-original-sdk-zl2hmzhz/payload-quota-build",
+      "--force-resolved-versions",
+      "--skip-update",
+      "--jobs",
+      "2",
+      "--verbose",
+      "--filter",
+      "ChatCodeFencePayloadRetentionTests"
+    ],
+    "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+    "elapsedSeconds": 98.873,
+    "exitCode": 1,
+    "groupCustody": {
+      "abnormalCleanup": false,
+      "groupAbsent": true,
+      "pgid": 43819,
+      "signals": []
+    },
+    "label": "payload-quota-tests",
+    "log": "payload-quota-tests.log",
+    "logSHA256": "8c26b7effa0664ee7baec3d689f0116485bc5d6d40a914760a943d2d33dc79bb",
+    "pgid": 43819,
+    "pid": 43819,
+    "startedUTC": "2026-11-27T07:28:53Z",
+    "timeoutSeconds": 1800
+  },
+  "rawCompilerLog": {
+    "bytes": 855911,
+    "sha256": "8c26b7effa0664ee7baec3d689f0116485bc5d6d40a914760a943d2d33dc79bb",
+    "retainedCompressed": "original-failure/payload-quota-tests.log.gz"
+  },
+  "actualCompileInput": {
+    "blob": "45baf575d666c580c8e7b79cfe6591adb82aac7e",
+    "bytes": 7001,
+    "mode": "100644",
+    "path": "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/ChatCodeFencePayloadRetentionTests.swift",
+    "sha256": "5781153ac5b7b85476b0c8b1e6f1d73df409a728657d247ad78a9584e46d75dd"
+  },
+  "originalSourceInventory": {
+    "files": 1005,
+    "sha256": "75c8afbdff3bb555c1d285843fb6f071cee8471f7c0398e875a294bb3c75dacb"
+  },
+  "actualSourceArchive": {
+    "bytes": 40611840,
+    "sha256": "181e02e4ccb129f671ed337d80268e33ab55ee2e923fd0279c0bbd7dbb164ffb",
+    "testInputIndependentlyComparedToCanonicalGit": true
+  },
+  "compilerDiagnosticLines": [
+    15,
+    50,
+    51,
+    66,
+    68,
+    86,
+    90,
+    97,
+    98
+  ],
+  "classification": "Swift6.4.2 Testing2403 #expect function-call expansion rejects direct mutating retain calls on an immutable closure argument; no test body executed.",
+  "toolchain": "Xcode27.2 27B52; Swift6.4.2 swiftlang-6.4.2.1.9 clang-2100.4.1.1; macOS27.0.1",
+  "commandCustody": {
+    "commands": 50,
+    "allOwnGroupsAbsentNormally": true,
+    "signals": 0
+  },
+  "portableControls": {
+    "actualMethods": 12,
+    "status": "PASS",
+    "elapsedSeconds": 0.048,
+    "scope": "Controller controls only"
+  },
+  "agentReuse": {
+    "caseCount": 7,
+    "methodCount": 5,
+    "origin": {
+      "artifactID": 15178855568,
+      "artifactSHA256": "266836f5a18a7977489cbd1e4624ff06b6ccc8d0bff872657ffc7885f0de4ca3",
+      "attempt": 1,
+      "controller": "35b504095406476799b76a9593d04ba11900d112",
+      "jobID": 140358668934,
+      "rawLogSHA256": "a141517e1366496b39dd43796a0611dbc292e9146052534760b8937982c1f709",
+      "reexecuted": false,
+      "runID": 45954793309,
+      "source": "caa0dac32afa18e58bba55fb4f0fdd262f181835",
+      "toolchainScope": "Xcode27.2 / Swift6.4.2 / Swift Testing2403 / macOS27.0.1; no Xcode27.0 binary compatibility claim"
+    },
+    "originalCommandCount": 34,
+    "originalDependencyCount": 6,
+    "originalError": "Wrong executed method count",
+    "originalFailedResultPreserved": true,
+    "originalProductFiles": 203,
+    "originalResultStatus": "FAILED_BEFORE_COMPLETION",
+    "scope": "Original compile-input Git/archive identities, actual dependency pre/post checks, normal process-group absence, exact named terminal and compiled products. Original controller failed before its final all-suite source check; it is never relabeled as an overall successful run. New remaining suites and final current-source check are separate.",
+    "sourceFiles": 1005,
+    "status": "PASS_REPARSED_ORIGINAL_AGENT_EXECUTION_ONLY"
+  },
+  "quotaSixCases": "NOT_RUN_COMPILATION_FAILED",
+  "widgetTwoCases": "NOT_REACHED",
+  "iOSChatUIProduct": "NOT_REACHED",
+  "failedSourcePostCompilationRequalification": "NOT_REACHED; do not claim a final complete current-source check",
+  "originalPartialProducts": "Retained in artifact; incomplete quota Products do not establish a passing test binary or application.",
+  "newFixCompilation": "NOT_RUN"
+}

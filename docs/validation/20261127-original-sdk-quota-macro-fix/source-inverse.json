@@ -1,0 +1,85 @@
+{
+  "schema": "hanlin.original-quota-swift-testing-macro-source-fix/1",
+  "base": "caa0dac32afa18e58bba55fb4f0fdd262f181835",
+  "path": "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/ChatCodeFencePayloadRetentionTests.swift",
+  "original": {
+    "gitBlob": "45baf575d666c580c8e7b79cfe6591adb82aac7e",
+    "bytes": 7001,
+    "sha256": "5781153ac5b7b85476b0c8b1e6f1d73df409a728657d247ad78a9584e46d75dd"
+  },
+  "candidate": {
+    "gitBlob": "db073980f3a2968af9f9b1fdbd102dd022088b78",
+    "bytes": 7501,
+    "sha256": "2838bf7cd353b80cea82f72ac30851059d6998728c5ed5876cacafb0a3957d18"
+  },
+  "literalEdits": [
+    {
+      "before": "#expect(copies[0].retain(in: budget))",
+      "after": "let retainedCopy = copies[0].retain(in: budget)\n        #expect(retainedCopy)"
+    },
+    {
+      "before": "#expect(held[0].retain(in: budget))",
+      "after": "let firstHeldRetained = held[0].retain(in: budget)\n        #expect(firstHeldRetained)"
+    },
+    {
+      "before": "#expect(held[1].retain(in: budget))",
+      "after": "let secondHeldRetained = held[1].retain(in: budget)\n        #expect(secondHeldRetained)"
+    },
+    {
+      "before": "#expect(!second.retain(in: countBudget))",
+      "after": "let secondRetainedWhileFull = second.retain(in: countBudget)\n        #expect(!secondRetainedWhileFull)"
+    },
+    {
+      "before": "#expect(second.retain(in: countBudget))",
+      "after": "let secondRetainedAfterRelease = second.retain(in: countBudget)\n        #expect(secondRetainedAfterRelease)"
+    },
+    {
+      "before": "#expect(!other.retain(in: budget))",
+      "after": "let otherRetainedWhileDraining = other.retain(in: budget)\n        #expect(!otherRetainedWhileDraining)"
+    },
+    {
+      "before": "#expect(other.retain(in: budget))",
+      "after": "let otherRetainedAfterDrain = other.retain(in: budget)\n        #expect(otherRetainedAfterDrain)"
+    },
+    {
+      "before": "#expect(payload.retain(in: original))",
+      "after": "let retainedByOriginal = payload.retain(in: original)\n        #expect(retainedByOriginal)"
+    },
+    {
+      "before": "#expect(!payload.retain(in: other))",
+      "after": "let retainedByOther = payload.retain(in: other)\n        #expect(!retainedByOther)"
+    }
+  ],
+  "completeInverseRestoresOriginalBytes": true,
+  "sameOrderedRetainCalls": [
+    "payload?.retain(in: budget)",
+    "copies[0].retain(in: budget)",
+    "payload?.retain(in: budget)",
+    "expanded?.retain(in: budget)",
+    "held[0].retain(in: budget)",
+    "held[1].retain(in: budget)",
+    "next?.retain(in: budget)",
+    "next?.retain(in: budget)",
+    "first?.retain(in: countBudget)",
+    "second.retain(in: countBudget)",
+    "second.retain(in: countBudget)",
+    "payload.retain(in: budget)",
+    "other.retain(in: budget)",
+    "other.retain(in: budget)",
+    "payload.retain(in: original)",
+    "payload.retain(in: other)"
+  ],
+  "sameSixMethods": [
+    "countsUTF8OutputBytesOnceAcrossInlineAndExpandedCopies",
+    "cacheEvictionDoesNotFreeInlineOwnershipAndRemountDoesNotDoubleCharge",
+    "byteAndCountExhaustionPreserveExistingPayloadAndPermitLaterReuse",
+    "cancelledUnpublishedResultKeepsLeaseUntilActualWorkDrains",
+    "distinctBudgetsCannotAdoptAnAlreadyOwnedPayloadAndInvalidCostsDoNotOverflow",
+    "simultaneousOwnersCannotExceedOneSharedQuota"
+  ],
+  "sameExpectationCount": 37,
+  "productionOrPackageLockChanges": false,
+  "swiftCompilation": "NOT_RUN",
+  "nativeTests": "NOT_RUN",
+  "scope": "Evaluate each of the nine compiler-rejected mutating calls exactly once before the original positive/negative expectation; retain original statement order and all other bytes."
+}

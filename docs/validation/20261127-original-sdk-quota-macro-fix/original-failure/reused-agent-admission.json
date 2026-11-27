@@ -1,0 +1,25 @@
+{
+  "caseCount": 7,
+  "methodCount": 5,
+  "origin": {
+    "artifactID": 15178855568,
+    "artifactSHA256": "266836f5a18a7977489cbd1e4624ff06b6ccc8d0bff872657ffc7885f0de4ca3",
+    "attempt": 1,
+    "controller": "35b504095406476799b76a9593d04ba11900d112",
+    "jobID": 140358668934,
+    "rawLogSHA256": "a141517e1366496b39dd43796a0611dbc292e9146052534760b8937982c1f709",
+    "reexecuted": false,
+    "runID": 45954793309,
+    "source": "caa0dac32afa18e58bba55fb4f0fdd262f181835",
+    "toolchainScope": "Xcode27.2 / Swift6.4.2 / Swift Testing2403 / macOS27.0.1; no Xcode27.0 binary compatibility claim"
+  },
+  "originalCommandCount": 34,
+  "originalDependencyCount": 6,
+  "originalError": "Wrong executed method count",
+  "originalFailedResultPreserved": true,
+  "originalProductFiles": 203,
+  "originalResultStatus": "FAILED_BEFORE_COMPLETION",
+  "scope": "Original compile-input Git/archive identities, actual dependency pre/post checks, normal process-group absence, exact named terminal and compiled products. Original controller failed before its final all-suite source check; it is never relabeled as an overall successful run. New remaining suites and final current-source check are separate.",
+  "sourceFiles": 1005,
+  "status": "PASS_REPARSED_ORIGINAL_AGENT_EXECUTION_ONLY"
+}

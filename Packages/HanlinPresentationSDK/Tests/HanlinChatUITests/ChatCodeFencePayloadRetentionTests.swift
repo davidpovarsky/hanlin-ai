@@ -12,7 +12,8 @@ struct ChatCodeFencePayloadRetentionTests: Sendable {
         #expect(payload?.retain(in: budget) == true)
         var copies = [try #require(payload), try #require(payload)]
         payload = nil
-        #expect(copies[0].retain(in: budget))
+        let retainedCopy = copies[0].retain(in: budget)
+        #expect(retainedCopy)
         withExtendedLifetime(copies) {
             #expect(budget.snapshot == .init(bytes: expected, payloads: 1))
         }
@@ -47,8 +48,10 @@ struct ChatCodeFencePayloadRetentionTests: Sendable {
         let budget = ChatCodeFencePayloadRetention(maximumBytes: 20, maximumPayloads: 2)
         var held = [makePayload(html: String(repeating: "a", count: 10)),
                     makePayload(html: String(repeating: "b", count: 10))]
-        #expect(held[0].retain(in: budget))
-        #expect(held[1].retain(in: budget))
+        let firstHeldRetained = held[0].retain(in: budget)
+        #expect(firstHeldRetained)
+        let secondHeldRetained = held[1].retain(in: budget)
+        #expect(secondHeldRetained)
         var next: ChatCodeFencePayload? = makePayload(html: "c")
         #expect(next?.retain(in: budget) == false)
         #expect(next?.html == "c") // Failure does not truncate or rewrite original source/output.
@@ -63,9 +66,11 @@ struct ChatCodeFencePayloadRetentionTests: Sendable {
         var first: ChatCodeFencePayload? = makePayload(html: "x")
         var second = makePayload(html: "y")
         #expect(first?.retain(in: countBudget) == true)
-        #expect(!second.retain(in: countBudget))
+        let secondRetainedWhileFull = second.retain(in: countBudget)
+        #expect(!secondRetainedWhileFull)
         first = nil
-        #expect(second.retain(in: countBudget))
+        let secondRetainedAfterRelease = second.retain(in: countBudget)
+        #expect(secondRetainedAfterRelease)
     }
 
     @Test(.timeLimit(.minutes(1))) func cancelledUnpublishedResultKeepsLeaseUntilActualWorkDrains() async throws {
@@ -83,19 +88,23 @@ struct ChatCodeFencePayloadRetentionTests: Sendable {
         task.cancel()
         #expect(budget.snapshot.payloads == 1)
         var other = makePayload(html: "next")
-        #expect(!other.retain(in: budget))
+        let otherRetainedWhileDraining = other.retain(in: budget)
+        #expect(!otherRetainedWhileDraining)
         await release.open()
         await #expect(throws: CancellationError.self) { _ = try await task.value }
         #expect(budget.snapshot == .init(bytes: 0, payloads: 0))
-        #expect(other.retain(in: budget))
+        let otherRetainedAfterDrain = other.retain(in: budget)
+        #expect(otherRetainedAfterDrain)
     }
 
     @Test func distinctBudgetsCannotAdoptAnAlreadyOwnedPayloadAndInvalidCostsDoNotOverflow() {
         let original = ChatCodeFencePayloadRetention(maximumBytes: 16, maximumPayloads: 2)
         let other = ChatCodeFencePayloadRetention(maximumBytes: 16, maximumPayloads: 2)
         var payload = makePayload(html: "original")
-        #expect(payload.retain(in: original))
-        #expect(!payload.retain(in: other))
+        let retainedByOriginal = payload.retain(in: original)
+        #expect(retainedByOriginal)
+        let retainedByOther = payload.retain(in: other)
+        #expect(!retainedByOther)
         withExtendedLifetime(payload) {
             #expect(original.snapshot == .init(bytes: 8, payloads: 1))
             #expect(other.snapshot == .init(bytes: 0, payloads: 0))

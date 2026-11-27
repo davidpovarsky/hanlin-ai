@@ -1,0 +1,148 @@
+{
+  "original": {
+    "bytes": 7001,
+    "sha256": "5781153ac5b7b85476b0c8b1e6f1d73df409a728657d247ad78a9584e46d75dd",
+    "gitBlob": "45baf575d666c580c8e7b79cfe6591adb82aac7e"
+  },
+  "candidate": {
+    "bytes": 7501,
+    "sha256": "2838bf7cd353b80cea82f72ac30851059d6998728c5ed5876cacafb0a3957d18",
+    "gitBlob": "db073980f3a2968af9f9b1fdbd102dd022088b78"
+  },
+  "literalInverseEdits": 9,
+  "inverseRestoresEveryOriginalByte": true,
+  "orderedRetainCalls": [
+    "payload?.retain(in: budget)",
+    "copies[0].retain(in: budget)",
+    "payload?.retain(in: budget)",
+    "expanded?.retain(in: budget)",
+    "held[0].retain(in: budget)",
+    "held[1].retain(in: budget)",
+    "next?.retain(in: budget)",
+    "next?.retain(in: budget)",
+    "first?.retain(in: countBudget)",
+    "second.retain(in: countBudget)",
+    "second.retain(in: countBudget)",
+    "payload.retain(in: budget)",
+    "other.retain(in: budget)",
+    "other.retain(in: budget)",
+    "payload.retain(in: original)",
+    "payload.retain(in: other)"
+  ],
+  "methods": [
+    "countsUTF8OutputBytesOnceAcrossInlineAndExpandedCopies",
+    "cacheEvictionDoesNotFreeInlineOwnershipAndRemountDoesNotDoubleCharge",
+    "byteAndCountExhaustionPreserveExistingPayloadAndPermitLaterReuse",
+    "cancelledUnpublishedResultKeepsLeaseUntilActualWorkDrains",
+    "distinctBudgetsCannotAdoptAnAlreadyOwnedPayloadAndInvalidCostsDoNotOverflow",
+    "simultaneousOwnersCannotExceedOneSharedQuota"
+  ],
+  "expectationCount": 37,
+  "originalFailureLog": {
+    "path": "hanlin-hosted-sdk-control/actual-run-45958390748-1/original-artifact/45958390748-1/payload-quota-tests.log",
+    "bytes": 855911,
+    "sha256": "8c26b7effa0664ee7baec3d689f0116485bc5d6d40a914760a943d2d33dc79bb",
+    "macroErrorSites": 9,
+    "selected": [
+      {
+        "logLine": 4373,
+        "sourceLocationLines": [
+          "macro expansion #expect:2:6: error: cannot use mutating member on immutable value: '$0' is immutable",
+          "`- /Users/runner/work/_temp/hanlin-original-sdk-zl2hmzhz/source/Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/ChatCodeFencePayloadRetentionTests.swift:15:46: note: expanded code originates here",
+          " 15 |         #expect(copies[0].retain(in: budget))",
+          "    +--- macro expansion #expect ---------------------------------------",
+          "    |  |      `- error: cannot use mutating member on immutable value: '$0' is immutable"
+        ]
+      },
+      {
+        "logLine": 4388,
+        "sourceLocationLines": [
+          "macro expansion #expect:2:6: error: cannot use mutating member on immutable value: '$0' is immutable",
+          "`- /Users/runner/work/_temp/hanlin-original-sdk-zl2hmzhz/source/Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/ChatCodeFencePayloadRetentionTests.swift:50:44: note: expanded code originates here",
+          " 50 |         #expect(held[0].retain(in: budget))",
+          "    +--- macro expansion #expect ---------------------------------------",
+          "    |  |      `- error: cannot use mutating member on immutable value: '$0' is immutable",
+          " 51 |         #expect(held[1].retain(in: budget))"
+        ]
+      },
+      {
+        "logLine": 4403,
+        "sourceLocationLines": [
+          "macro expansion #expect:2:6: error: cannot use mutating member on immutable value: '$0' is immutable",
+          "`- /Users/runner/work/_temp/hanlin-original-sdk-zl2hmzhz/source/Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/ChatCodeFencePayloadRetentionTests.swift:51:44: note: expanded code originates here",
+          " 50 |         #expect(held[0].retain(in: budget))",
+          " 51 |         #expect(held[1].retain(in: budget))",
+          "    +--- macro expansion #expect ---------------------------------------",
+          "    |  |      `- error: cannot use mutating member on immutable value: '$0' is immutable"
+        ]
+      },
+      {
+        "logLine": 4418,
+        "sourceLocationLines": [
+          "macro expansion #expect:2:6: error: cannot use mutating member on immutable value: '$0' is immutable",
+          "`- /Users/runner/work/_temp/hanlin-original-sdk-zl2hmzhz/source/Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/ChatCodeFencePayloadRetentionTests.swift:66:49: note: expanded code originates here",
+          " 65 |         #expect(first?.retain(in: countBudget) == true)",
+          " 66 |         #expect(!second.retain(in: countBudget))",
+          "    +--- macro expansion #expect ---------------------------------------",
+          "    |  |      `- error: cannot use mutating member on immutable value: '$0' is immutable"
+        ]
+      },
+      {
+        "logLine": 4433,
+        "sourceLocationLines": [
+          "macro expansion #expect:2:6: error: cannot use mutating member on immutable value: '$0' is immutable",
+          "`- /Users/runner/work/_temp/hanlin-original-sdk-zl2hmzhz/source/Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/ChatCodeFencePayloadRetentionTests.swift:68:48: note: expanded code originates here",
+          " 66 |         #expect(!second.retain(in: countBudget))",
+          " 68 |         #expect(second.retain(in: countBudget))",
+          "    +--- macro expansion #expect ---------------------------------------",
+          "    |  |      `- error: cannot use mutating member on immutable value: '$0' is immutable"
+        ]
+      },
+      {
+        "logLine": 4448,
+        "sourceLocationLines": [
+          "macro expansion #expect:2:6: error: cannot use mutating member on immutable value: '$0' is immutable",
+          "`- /Users/runner/work/_temp/hanlin-original-sdk-zl2hmzhz/source/Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/ChatCodeFencePayloadRetentionTests.swift:86:43: note: expanded code originates here",
+          " 84 |         #expect(budget.snapshot.payloads == 1)",
+          " 86 |         #expect(!other.retain(in: budget))",
+          "    +--- macro expansion #expect ---------------------------------------",
+          "    |  |      `- error: cannot use mutating member on immutable value: '$0' is immutable"
+        ]
+      },
+      {
+        "logLine": 4463,
+        "sourceLocationLines": [
+          "macro expansion #expect:2:6: error: cannot use mutating member on immutable value: '$0' is immutable",
+          "`- /Users/runner/work/_temp/hanlin-original-sdk-zl2hmzhz/source/Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/ChatCodeFencePayloadRetentionTests.swift:90:42: note: expanded code originates here",
+          " 88 |         await #expect(throws: CancellationError.self) { _ = try await task.value }",
+          " 89 |         #expect(budget.snapshot == .init(bytes: 0, payloads: 0))",
+          " 90 |         #expect(other.retain(in: budget))",
+          "    +--- macro expansion #expect ---------------------------------------"
+        ]
+      },
+      {
+        "logLine": 4478,
+        "sourceLocationLines": [
+          "macro expansion #expect:2:6: error: cannot use mutating member on immutable value: '$0' is immutable",
+          "`- /Users/runner/work/_temp/hanlin-original-sdk-zl2hmzhz/source/Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/ChatCodeFencePayloadRetentionTests.swift:97:46: note: expanded code originates here",
+          " 97 |         #expect(payload.retain(in: original))",
+          "    +--- macro expansion #expect ---------------------------------------",
+          "    |  |      `- error: cannot use mutating member on immutable value: '$0' is immutable",
+          " 98 |         #expect(!payload.retain(in: other))"
+        ]
+      },
+      {
+        "logLine": 4493,
+        "sourceLocationLines": [
+          "macro expansion #expect:2:6: error: cannot use mutating member on immutable value: '$0' is immutable",
+          "`- /Users/runner/work/_temp/hanlin-original-sdk-zl2hmzhz/source/Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/ChatCodeFencePayloadRetentionTests.swift:98:44: note: expanded code originates here",
+          " 97 |         #expect(payload.retain(in: original))",
+          " 98 |         #expect(!payload.retain(in: other))",
+          "    +--- macro expansion #expect ---------------------------------------",
+          "    |  |      `- error: cannot use mutating member on immutable value: '$0' is immutable"
+        ]
+      }
+    ]
+  },
+  "newCompilationOrTestExecutions": 0
+}

@@ -1,0 +1,115 @@
+{
+  "schema": "hanlin.quota-macro-fix-source-intake/1",
+  "base": "caa0dac32afa18e58bba55fb4f0fdd262f181835",
+  "candidateTest": "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/ChatCodeFencePayloadRetentionTests.swift",
+  "changedProductionFiles": [],
+  "changedPackageDefinitionsOrLocks": [],
+  "runtime": "NOT_RUN",
+  "files": [
+    {
+      "path": "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/ChatCodeFencePayloadRetentionTests.swift",
+      "bytes": 7501,
+      "gitBlob": "db073980f3a2968af9f9b1fdbd102dd022088b78",
+      "sha256": "2838bf7cd353b80cea82f72ac30851059d6998728c5ed5876cacafb0a3957d18",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/validation/20261127-original-sdk-quota-macro-fix/README.md",
+      "bytes": 2266,
+      "gitBlob": "f4a44d21a8980dde4c8039d43aab5a86f3f0b8d9",
+      "sha256": "43f329ef16f3c56075740d779845bb1caf7c7832fb393036c54f9131cb722187",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/validation/20261127-original-sdk-quota-macro-fix/actual-failure-evidence.json",
+      "bytes": 4713,
+      "gitBlob": "26b6b968310ea15bcb7e7a5515671f7a0bef4a4e",
+      "sha256": "7a2f3afdf867a3e476338d3a2a2187ee2c11d3d60f112da0b36fe5b0c52116d5",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/validation/20261127-original-sdk-quota-macro-fix/independent-byte-proof.json",
+      "bytes": 8362,
+      "gitBlob": "b412d3d37d4a91ed86b48fa97da14caa16d4be31",
+      "sha256": "e1b697dcd42d2b8aa7b6f6fdcab65314b75c4a70e4c22fd77dd151424aefda4b",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/validation/20261127-original-sdk-quota-macro-fix/independent-review.json",
+      "bytes": 9167,
+      "gitBlob": "01aaa21191461dbd53e9839d486edd043fd95514",
+      "sha256": "cf6b25191916d7401f9e88595e1903edfd7acf7e0907e515094ff489042b43ca",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/validation/20261127-original-sdk-quota-macro-fix/original-failure/commands.json",
+      "bytes": 36170,
+      "gitBlob": "101360565f91a379d00a2b9dc1eaf0ab643e5c35",
+      "sha256": "8ccc20d0c9b14de95d8f6f8148d6aeacd88fa7eea1992fa84535e7f9826fca36",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/validation/20261127-original-sdk-quota-macro-fix/original-failure/controller-error.log",
+      "bytes": 1163,
+      "gitBlob": "6303d69c9d72b8e1d5f1c1cd63329f28536d8b5e",
+      "sha256": "f93917a98ca5d5b5547f4d41ce4d4f1cb92fe75296a5bcd4f826d0dec57f5ae1",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/validation/20261127-original-sdk-quota-macro-fix/original-failure/payload-quota-Package.resolved",
+      "bytes": 4880,
+      "gitBlob": "c19d6b6629800c27848076d99c27efff2cfd1fc7",
+      "sha256": "2498e965486f4a40ed5aada9745475d785a98117b41caf03b88c5781d1969180",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/validation/20261127-original-sdk-quota-macro-fix/original-failure/payload-quota-checkouts.json",
+      "bytes": 3521,
+      "gitBlob": "5686f96dfa632ad80f432e0244864f5f7b2fe060",
+      "sha256": "a743d3f096f834a1a569ea9a2fd548513bf046102901e7624869c4ab158ac414",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/validation/20261127-original-sdk-quota-macro-fix/original-failure/payload-quota-tests.log.gz",
+      "bytes": 36583,
+      "gitBlob": "4cf37ba26063ac29ada38e5e6489ef3d93db2f6e",
+      "sha256": "2f8842e7aa4dab521ab3d4bb22d71085e66f52123cb95335d89ea7157161c821",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/validation/20261127-original-sdk-quota-macro-fix/original-failure/result.json",
+      "bytes": 40139,
+      "gitBlob": "6a43d7f87e6ddd5c45668aeb52ccf755ed446263",
+      "sha256": "2bbf071b8252ae8f3d6f0664bbdce746352d2945d6787aba4dd2486a8703aac2",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/validation/20261127-original-sdk-quota-macro-fix/original-failure/reused-agent-admission.json",
+      "bytes": 1283,
+      "gitBlob": "ab8377f7e81dda40a0cfdfc1932c5c0051d121d9",
+      "sha256": "53cd403fc9e6be2abbecfd4904c0db298c24e24cdb531c6879662568f8f96368",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/validation/20261127-original-sdk-quota-macro-fix/original-failure/swift.log",
+      "bytes": 128,
+      "gitBlob": "079ddd11ea88c5cc3fc55e2d8799a7b5acb507f2",
+      "sha256": "448e3f9c46706640fe62ea0140ecfccbb330baba2076b2916c0423af9642ee06",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/validation/20261127-original-sdk-quota-macro-fix/original-failure/xcode.log",
+      "bytes": 31,
+      "gitBlob": "be452d5caed3be6381a461e533eeefc4385442e8",
+      "sha256": "67c5b47bcf0e788aecae2f9b3af345813bdf7fe736faefb9666a7f4b2bf27ba7",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/validation/20261127-original-sdk-quota-macro-fix/source-inverse.json",
+      "bytes": 3636,
+      "gitBlob": "9f3e2fa2acb28bcb00080240be9202b82afcd970",
+      "sha256": "f2c3e830bb18f9703e307e3634d45548cf1edf684cae3a3ee1c38145e6b3b175",
+      "mode": "100644"
+    }
+  ]
+}
