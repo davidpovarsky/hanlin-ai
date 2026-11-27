@@ -59,6 +59,30 @@ for (const [engine, bundle] of Object.entries(bundles)) {
     assert.equal(updated.enabled, true);
     assert.equal(updated.count, 4);
     assert.throws(() => context.__expoWidgetRender({fail:true}, {widgetFamily:'systemMedium'}), /Fixture refresh failed/);
+    // Both controls must already exist in the last-good node. The original
+    // Button path rebuilds the layout; recovery uses its public render clock.
+    const before = {enabled:true,count:3};
+    const beforeWire = JSON.stringify(context.__expoWidgetRender(before, {widgetFamily:'systemMedium'}));
+    assert.ok(beforeWire.includes('Fail refresh') && beforeWire.includes('Recover'));
+    assert.equal(manifest.hanlinWidget.actions.find(a => a.id === 'failRefresh')?.kind, 'expoCallback');
+    assert.equal(manifest.hanlinWidget.actions.find(a => a.id === 'recover')?.kind, 'expoCallback');
+    const failed = {...before, ...context.__expoWidgetHandlePress(before,
+      {widgetFamily:'systemMedium',target:'failRefresh',timestamp:1000})};
+    assert.equal(failed.fail, true);
+    assert.equal(failed.count, 4);
+    assert.equal(failed.enabled, true);
+    assert.equal(failed.retryAfter, 91000);
+    assert.throws(() => context.__expoWidgetRender(failed, {widgetFamily:'systemMedium',timestamp:2000}), /Fixture refresh failed/);
+    assert.throws(() => context.__expoWidgetHandlePress(failed,
+      {widgetFamily:'systemMedium',target:'recover',timestamp:3000}), /Fixture refresh failed/);
+    const recovered = {...failed, ...context.__expoWidgetHandlePress(failed,
+      {widgetFamily:'systemMedium',target:'recover',timestamp:91000})};
+    assert.equal(recovered.fail, false);
+    assert.equal(recovered.retryAfter, 0);
+    assert.equal(recovered.count, 5);
+    assert.equal(recovered.enabled, true);
+    const recoveredWire = JSON.stringify(context.__expoWidgetRender(recovered, {widgetFamily:'systemMedium'}));
+    assert.ok(recoveredWire.includes('Matrix count: 5') && !recoveredWire.includes('RedBoxView'));
   });
   test(engine + ': actual original Toggle wrapper returns props; intended values survive repeat requests', () => {
     const context = contextFor(bundle);

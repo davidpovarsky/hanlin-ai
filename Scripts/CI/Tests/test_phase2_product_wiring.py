@@ -1,4 +1,5 @@
 """Source-wiring regressions that stop the exact observed pre-build failures early."""
+import copy
 import json
 import os
 from pathlib import Path
@@ -9,10 +10,87 @@ import tempfile
 import unittest
 import yaml
 
+from Scripts.CI.IntegrationValidation.project_graph import parse_project
+from Scripts.CI.ui_viewport_cohorts import plan as viewport_plan
+
 ROOT = Path(__file__).resolve().parents[3]
 
 
 class Phase2WiringTests(unittest.TestCase):
+    REQUIRED_PRODUCTS = {
+        "A2UISwiftCore": "a2ui", "A2UISwiftUI": "a2ui",
+        "BasicCatalog": "a2ui", "BasicCatalogSwiftUI": "a2ui",
+        "SwiftTreeSitter": "swift-tree-sitter", "TreeSitter": "tree-sitter",
+        "TreeSitterBash": "tree-sitter-bash",
+    }
+
+    def assert_native_staging_precedes_ui(self, run):
+        start = run.index('if [ "${STAGE_NATIVESCRIPT_AFTER_UNIT:-false}"')
+        end = run.index('if [ "${STAGE_SCRIPTUI_AFTER_UNIT:-false}"', start)
+        staged = run[start:end]
+        self.assertIn("stage_simulator_fixtures.py", staged)
+        self.assertIn('--simulator-udid "$SIMULATOR_UDID"', staged)
+        self.assertNotIn("--app-path", staged, "Never install a second app over the Xcode host")
+        # The original UI result now belongs to a viewport cohort; it is still
+        # produced after the real unit host install and deferred fixture copy.
+        self.assertLess(start, run.index("python3 Scripts/CI/ui_viewport_cohorts.py rows"))
+        self.assertLess(run.index("python3 Scripts/CI/ui_viewport_cohorts.py rows"),
+                        run.index('-resultBundlePath "$LOG_DIR/$cohort_bundle"'))
+        self.assertIn('cohort_results cohort_bundle cohort_log; do', run)
+        self.assertIn('done < "$LOG_DIR/ui-viewport-cohorts.tsv"', run)
+        return staged
+
+    def required_product_inputs(self):
+        return (parse_project((ROOT / "AI_HLY.xcodeproj/project.pbxproj").read_text(encoding="utf-8")),
+                (ROOT / "Package.swift").read_text(encoding="utf-8"),
+                json.loads((ROOT / "Scripts/SDK/application_products.json").read_text(encoding="utf-8")))
+
+    def assert_required_product_graph(self, project, manifest, inventory):
+        objects = project["objects"]
+        root = objects[project["rootObject"]]
+        targets = {objects[key]["name"]: objects[key] for key in root["targets"]
+                   if objects[key].get("isa") == "PBXNativeTarget"}
+        for name in ("HanlinApp", "AI_HLYTests"):
+            self.assertIn(name, targets)
+            target = targets[name]
+            declared = target["packageProductDependencies"]
+            self.assertEqual(len(declared), 1, name + ": one shared implementation owner")
+            product_id = declared[0]
+            product = objects[product_id]
+            self.assertEqual(product["isa"], "XCSwiftPackageProductDependency", name)
+            self.assertEqual(product["productName"], "HanlinApplication", name)
+            self.assertIn(product["package"], root["packageReferences"], name)
+            package = objects[product["package"]]
+            self.assertEqual(package["isa"], "XCLocalSwiftPackageReference", name)
+            self.assertEqual(package["relativePath"], ".", name)
+            phases = [objects[key] for key in target["buildPhases"]
+                      if objects[key]["isa"] == "PBXFrameworksBuildPhase"]
+            self.assertEqual(len(phases), 1, name)
+            builds = [objects[key] for key in phases[0]["files"] if "productRef" in objects[key]]
+            self.assertTrue(all(item["isa"] == "PBXBuildFile" for item in builds), name)
+            self.assertEqual([item["productRef"] for item in builds], [product_id],
+                             name + ": declaration must reach the real active linker phase")
+
+        # Inspect the generated implementation target, not orphaned old PBX
+        # product objects or another module that happens to name the same library.
+        manifest = re.sub(r'"(?:\\.|[^"\\])*"|//[^\n]*|/\*[\s\S]*?\*/',
+                          lambda match: match[0] if match[0].startswith('"') else "", manifest)
+        exports = re.findall(r'\.library\(\s*name:\s*"HanlinApplication",\s*targets:\s*(\[[^\]]*\])\s*\)', manifest)
+        self.assertEqual(exports, ['["AI_Hanlin"]'], "The linked product must export the original implementation")
+        dependencies = re.findall(
+            r'\.target\(\s*name:\s*"AI_Hanlin",\s*dependencies:\s*\[(.*?)\],\s*path:\s*"AI_HLY"',
+            manifest, re.S)
+        self.assertEqual(len(dependencies), 1, "Exactly one original SDK implementation target is required")
+        external = re.findall(r'\.product\(\s*name:\s*"([^"]+)",\s*package:\s*"([^"]+)"\s*\)', dependencies[0])
+        self.assertEqual(inventory["schemaVersion"], 1)
+        self.assertEqual(inventory["module"], "AI_Hanlin")
+        authored = [(item["product"], item["package"]) for item in inventory["products"]]
+        for product, package in self.REQUIRED_PRODUCTS.items():
+            self.assertEqual([pair for pair in external if pair[0] == product], [(product, package)],
+                             product + ": missing or duplicated real SDK target dependency")
+            self.assertEqual([pair for pair in authored if pair[0] == product], [(product, package)],
+                             product + ": canonical generator input differs from the linked SDK")
+
     def test_native_fixtures_follow_the_actual_xcode_host_install(self):
         workflow = yaml.safe_load((ROOT / ".github/workflows/build-ios26-unsigned-ipa.yml").read_text(encoding="utf-8"))
         job = next(j for j in workflow["jobs"].values() if j.get("name") == "Launch full app on iPad Simulator")
@@ -38,10 +116,27 @@ class Phase2WiringTests(unittest.TestCase):
                     self.assertEqual(result.returncode, 0, result.stderr)
                     self.assertEqual(result.stdout, "false" if overrides else "true")
         run = next(s["run"] for s in job["steps"] if s.get("name") == "Run simulator test suite")
-        staged = run.split('if [ "${STAGE_NATIVESCRIPT_AFTER_UNIT:-false}"', 1)[1].split('if [ "${STAGE_SCRIPTUI_AFTER_UNIT:-false}"', 1)[0]
-        self.assertIn("stage_simulator_fixtures.py", staged)
-        self.assertNotIn("--app-path", staged, "Never install a second app over the Xcode host")
-        self.assertLess(run.index('"${STAGE_NATIVESCRIPT_AFTER_UNIT:-false}"'), run.index('"$LOG_DIR/NativeScriptProductionE2EResult.xcresult"'))
+        self.assert_native_staging_precedes_ui(run)
+        profile = json.loads((ROOT / "Scripts/CI/ui_viewport_cohorts.json").read_text())
+        selected = "AI_HLYUITests/HanlinNativeScriptProductionE2ETests"
+        cohort = viewport_plan(selected, profile)["cohorts"][0]
+        self.assertEqual(cohort["selectors"], [selected])
+        self.assertEqual(cohort["result_bundle"], "NativeScriptProductionE2EResult.xcresult")
+
+    def test_deferred_native_staging_cannot_move_after_ui_or_reinstall_the_host(self):
+        workflow = yaml.safe_load((ROOT / ".github/workflows/build-ios26-unsigned-ipa.yml").read_text(encoding="utf-8"))
+        job = next(j for j in workflow["jobs"].values() if j.get("name") == "Launch full app on iPad Simulator")
+        run = next(s["run"] for s in job["steps"] if s.get("name") == "Run simulator test suite")
+        staged = self.assert_native_staging_precedes_ui(run)
+        changed = run.replace(staged, "", 1) + staged
+        # Keep a following block so the mutation fails on ordering, not parsing.
+        changed += 'if [ "${STAGE_SCRIPTUI_AFTER_UNIT:-false}" = "true" ]; then :; fi\n'
+        with self.assertRaises(AssertionError):
+            self.assert_native_staging_precedes_ui(changed)
+        with self.assertRaises(AssertionError):
+            self.assert_native_staging_precedes_ui(
+                run.replace(staged, staged.replace("stage_simulator_fixtures.py",
+                    'stage_simulator_fixtures.py --app-path "$APP_PATH"'), 1))
 
     def test_explicit_compact_validation_does_not_cancel_native_ipad_acceptance(self):
         workflow = yaml.safe_load((ROOT / ".github/workflows/build-ios26-unsigned-ipa.yml").read_text(encoding="utf-8"))
@@ -135,14 +230,59 @@ class Phase2WiringTests(unittest.TestCase):
         self.assertEqual(len(definitions), len(set(definitions)), "Project object identity was reused")
 
     def test_each_required_product_has_both_target_membership_and_a_link_entry(self):
-        source = (ROOT / "AI_HLY.xcodeproj/project.pbxproj").read_text(encoding="utf-8")
-        for product in ["A2UISwiftCore", "A2UISwiftUI", "BasicCatalog", "BasicCatalogSwiftUI", "SwiftTreeSitter", "TreeSitter", "TreeSitterBash"]:
-            identity = re.search(r'(AC17\w+) = \{isa = XCSwiftPackageProductDependency;[^\n]+productName = ' + product + ';', source).group(1)
-            links = re.findall(r'(AC17\w+) = \{isa = PBXBuildFile; productRef = ' + identity + ';', source)
-            self.assertEqual(len(links), 2, product)
-            for link in links:
-                self.assertGreaterEqual(source.count(link), 2, product)
-            self.assertGreaterEqual(source.count(identity), 5, product)
+        self.assert_required_product_graph(*self.required_product_inputs())
+
+    def test_shared_application_wiring_rejects_orphaned_and_duplicate_host_edges(self):
+        original, manifest, inventory = self.required_product_inputs()
+        for host in ("HanlinApp", "AI_HLYTests"):
+            for mutation in ("membership", "link", "package", "duplicate-product"):
+                with self.subTest(host=host, mutation=mutation):
+                    project = copy.deepcopy(original)
+                    objects = project["objects"]
+                    root = objects[project["rootObject"]]
+                    target = next(objects[key] for key in root["targets"] if objects[key].get("name") == host)
+                    phase = next(objects[key] for key in target["buildPhases"]
+                                 if objects[key]["isa"] == "PBXFrameworksBuildPhase")
+                    product_id = target["packageProductDependencies"][0]
+                    if mutation == "membership":
+                        target["packageProductDependencies"] = []
+                    elif mutation == "link":
+                        # Leave the old PBXBuildFile object present but unreachable.
+                        phase["files"] = [key for key in phase["files"]
+                                          if objects[key].get("productRef") != product_id]
+                    elif mutation == "package":
+                        root["packageReferences"].remove(objects[product_id]["package"])
+                    else:
+                        old = next(key for key, item in objects.items()
+                                   if item.get("isa") == "XCSwiftPackageProductDependency"
+                                   and item.get("productName") == "A2UISwiftCore")
+                        target["packageProductDependencies"].append(old)
+                        link = next(key for key, item in objects.items()
+                                    if item.get("isa") == "PBXBuildFile" and item.get("productRef") == old)
+                        phase["files"].append(link)
+                    with self.assertRaises(AssertionError):
+                        self.assert_required_product_graph(project, manifest, inventory)
+
+    def test_required_products_must_reach_the_original_sdk_module_and_generator_input(self):
+        project, manifest, original = self.required_product_inputs()
+        target_start = manifest.index('.target(name: "AI_Hanlin",')
+        for product, package in self.REQUIRED_PRODUCTS.items():
+            with self.subTest(product=product, missing="generated-target"):
+                token = '.product(name: "' + product + '", package: "' + package + '")'
+                changed = manifest[:target_start] + manifest[target_start:].replace(token, "", 1)
+                self.assertNotEqual(changed, manifest)
+                with self.assertRaises(AssertionError):
+                    self.assert_required_product_graph(project, changed, original)
+            with self.subTest(product=product, missing="canonical-generator-input"):
+                inventory = copy.deepcopy(original)
+                inventory["products"] = [item for item in inventory["products"] if item["product"] != product]
+                with self.assertRaises(AssertionError):
+                    self.assert_required_product_graph(project, manifest, inventory)
+        changed = manifest.replace('.library(name: "HanlinApplication", targets: ["AI_Hanlin"])',
+                                   '.library(name: "HanlinApplication", targets: ["HanlinA2UI"])', 1)
+        self.assertNotEqual(changed, manifest)
+        with self.assertRaises(AssertionError):
+            self.assert_required_product_graph(project, changed, original)
 
     def test_native_boot_has_one_owner_on_each_workflow_branch(self):
         source = (ROOT / ".github/workflows/build-ios26-unsigned-ipa.yml").read_text(encoding="utf-8")

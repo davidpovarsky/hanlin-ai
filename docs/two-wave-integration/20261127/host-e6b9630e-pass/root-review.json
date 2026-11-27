@@ -1,0 +1,15 @@
+{
+  "recordedAtUTC": "2026-11-27T02:07:18.594970+00:00",
+  "validatedSource": "e6b9630e62cef3d5a90a5bcd44890974ffcf6afc",
+  "nativeSeal": "f103996cc03d2cc5321c7e83b6cdf77c3b60e509",
+  "filesVerified": 36,
+  "allManifestFileSizesAndSHA256Match": true,
+  "manifestSHA256": "ab7ed9bdcf2ea24d671ade8cb468c86a2a5122837f4717090b95e8018bc6aa6b",
+  "archiveSHA256": "cfd84084c758d73c66b51952ed7cf25dfd13a3a0cb5617717c55c808c523b318",
+  "integrationSource": "5d1c5e483113fb7d8b8e6e2f3fd45c4665508f9a",
+  "productDeltaFromNativeSeal": [
+    "Scripts/CI/Tests/test_affected_validation.py",
+    "Scripts/CI/affected-validation-map.json"
+  ],
+  "boundary": "Current original Host188 PASS. Package79 reused by complete staged source/fixture/pin proof. Paired54 executing separately; additional26, OS/device, fullsigning/release remain pending. No credential or provisioning-profile bytes are included."
+}

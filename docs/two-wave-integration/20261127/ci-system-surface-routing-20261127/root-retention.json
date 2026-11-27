@@ -1,0 +1,42 @@
+{
+  "reviewer": "/root",
+  "at": "2026-11-27T04:02:26.254711+00:00",
+  "records": [
+    {
+      "original": "source.json",
+      "retained": "source.json",
+      "originalBytes": 707,
+      "originalSHA256": "2fbdb8a9f04a0333e21b54d5786a8253bdcaf0d7670944708af41dc5a525c6b7"
+    },
+    {
+      "original": "source.patch",
+      "retained": "source.patch.gz",
+      "originalBytes": 3598,
+      "originalSHA256": "c134117e97f747ecfc728334781445c4fbc25108ef9e23bc5032b3793bac8c32"
+    },
+    {
+      "original": "receipt.json",
+      "retained": "receipt.json",
+      "originalBytes": 1684,
+      "originalSHA256": "46d39b5bba31e36a371e47bc3967d5cd5ae9d03ee7aafb6d6984f482113b0982"
+    },
+    {
+      "original": "stdout.log",
+      "retained": "stdout.log.gz",
+      "originalBytes": 4882,
+      "originalSHA256": "3f2d4b38ab2285ac2be63342c32e235d693adba73fd492c2caf38363feef2b9f"
+    },
+    {
+      "original": "stderr.log",
+      "retained": "stderr.log.gz",
+      "originalBytes": 91955,
+      "originalSHA256": "cfaf22e65a04747ed837b440eb7108dab293e15469692ae878d91717159f6329"
+    },
+    {
+      "original": "checkout-retention.json",
+      "retained": "checkout-retention.json",
+      "originalBytes": 555,
+      "originalSHA256": "abe6c3f51e59359b2ad8b785a01da1c44d3095b0af5c247d78243a40996a41eb"
+    }
+  ]
+}

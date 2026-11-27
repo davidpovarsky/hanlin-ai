@@ -1,0 +1,13 @@
+{
+  "at_utc": "2026-11-27T02:44:55.945204+00:00",
+  "worktree": "/mnt/development/projects/worktrees/hanlin-ci-router-20261127",
+  "source": "00aabecd5e4cf7995fe358d63a9724edb3b299e4",
+  "product_source": "2a0b19b79f3da0fef092ca8b0762b9b0e7001caa",
+  "full_checkout": true,
+  "tracked_files_materialized": 17740,
+  "missing": 0,
+  "sparse_entries": 0,
+  "owner": "chatgpt-agent",
+  "root_worktree_unchanged": true,
+  "free_after_checkout": 1962774528
+}

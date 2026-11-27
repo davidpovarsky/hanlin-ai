@@ -1,0 +1,255 @@
+{
+  "schema": 1,
+  "agent": "/root/w2_source_resume",
+  "base": "9c0879ee168b6aec78a4cc80fd071514c8787887",
+  "scope": "Authored same-generation temporary render failure/recovery and content-free diagnostics at the actual existing qualified Expo fallback. No OS acceptance execution.",
+  "native": "NOT_RUN",
+  "osWidgetKit": "NOT_RUN",
+  "physicalDevice": "NOT_RUN",
+  "sourceHashes": {
+    "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo": "e076a8543641d9721152d063b58e63a17d722a9d326a9dec742910496cb0a995",
+    "AI_HLYUITests/Fixtures/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo": "e076a8543641d9721152d063b58e63a17d722a9d326a9dec742910496cb0a995",
+    "Fixtures/Widgets/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo": "e076a8543641d9721152d063b58e63a17d722a9d326a9dec742910496cb0a995",
+    "Fixtures/Widgets/SHA256.json": "2c3fac22ca5647ab476bbbfddd6286565959da7b9c1a21438a956c94b64d0466",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinPreparedWidget.swift": "c6de1ead190c0228ea9cb9a842ecbe4d840c53f7bffaa69bf1770fef71d14115",
+    "Scripts/Widgets/Tests/interactive-toggle.test.mjs": "2228d3e1492d56391c32ed59b13a415bcae95f9f761f03530a57340fdff06010",
+    "Scripts/Widgets/samples.mjs": "5c36e26e3b7d86cbb017c67660070e5d3ea2f06faaae807ea72e7ce2c6fa9b82"
+  },
+  "shippingSDKManifestSHA256": "0433011cae7beb42504e4bb29b18bb722e21d9a31cc5aae7324eba67b70afcc7",
+  "sdkInputIntersection": [
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinPreparedWidget.swift",
+      "before": "2d6151c0b5fbda807db99b874c1d8601aa86d7fcc1df2a9bf24c0c403cb3404a",
+      "after": "c6de1ead190c0228ea9cb9a842ecbe4d840c53f7bffaa69bf1770fef71d14115"
+    }
+  ],
+  "sdkInputCount": 392,
+  "packageNativeInputClosure": "MAC_OWNER_TO_REQUALIFY",
+  "originalProducer": "node Scripts/Widgets/build-sample-packages.mjs",
+  "unchangedArchives": [
+    {
+      "path": "Fixtures/Widgets/Hanlin-Expo-Widget-Counter.hanlinExpo",
+      "sha256": "a52c828cdb87f115c668b7cba544781ce89c023b14a65551844ee7985faa3d9d"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-Expo-Widget-Counter.hanlinExpo",
+      "sha256": "a52c828cdb87f115c668b7cba544781ce89c023b14a65551844ee7985faa3d9d"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Expo-Widget-Counter.hanlinExpo",
+      "sha256": "a52c828cdb87f115c668b7cba544781ce89c023b14a65551844ee7985faa3d9d"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-Expo-Widget-Visuals.hanlinExpo",
+      "sha256": "4532c361e91e32580a7dca5c120e1131bb2d9f07138b2b4103bdab138f588368"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-Expo-Widget-Visuals.hanlinExpo",
+      "sha256": "4532c361e91e32580a7dca5c120e1131bb2d9f07138b2b4103bdab138f588368"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Expo-Widget-Visuals.hanlinExpo",
+      "sha256": "4532c361e91e32580a7dca5c120e1131bb2d9f07138b2b4103bdab138f588368"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-ScriptWidget-Dashboard.scripting",
+      "sha256": "478cd567e9731cc7342aefa9024ea498edf8d12d340cc5c558484e60a210dace"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-ScriptWidget-Dashboard.scripting",
+      "sha256": "478cd567e9731cc7342aefa9024ea498edf8d12d340cc5c558484e60a210dace"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-ScriptWidget-Dashboard.scripting",
+      "sha256": "478cd567e9731cc7342aefa9024ea498edf8d12d340cc5c558484e60a210dace"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-ScriptWidget-Actions.scripting",
+      "sha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-ScriptWidget-Actions.scripting",
+      "sha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-ScriptWidget-Actions.scripting",
+      "sha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-Mixed-Native-Widget.hanlinExpo",
+      "sha256": "2121ea971faa158e891b8222372e2250062286b813ad8a889971cc351a8c75d7"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-Mixed-Native-Widget.hanlinExpo",
+      "sha256": "2121ea971faa158e891b8222372e2250062286b813ad8a889971cc351a8c75d7"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Mixed-Native-Widget.hanlinExpo",
+      "sha256": "2121ea971faa158e891b8222372e2250062286b813ad8a889971cc351a8c75d7"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-Widget-Legacy-Regression.scripting",
+      "sha256": "787bf97e48164d7b9021c64bfa7122e48131a82b388efc3bad26c58276f4bb2f"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-Widget-Legacy-Regression.scripting",
+      "sha256": "787bf97e48164d7b9021c64bfa7122e48131a82b388efc3bad26c58276f4bb2f"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Widget-Legacy-Regression.scripting",
+      "sha256": "787bf97e48164d7b9021c64bfa7122e48131a82b388efc3bad26c58276f4bb2f"
+    },
+    {
+      "path": "Fixtures/Widgets/Hanlin-Widget-Invalid-Cases.hanlinExpo",
+      "sha256": "a86f47a41f684ecbb1dcce23552798b88cc7ab6622a8c316f2b721b44daf52c5"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/Hanlin-Widget-Invalid-Cases.hanlinExpo",
+      "sha256": "a86f47a41f684ecbb1dcce23552798b88cc7ab6622a8c316f2b721b44daf52c5"
+    },
+    {
+      "path": "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Widget-Invalid-Cases.hanlinExpo",
+      "sha256": "a86f47a41f684ecbb1dcce23552798b88cc7ab6622a8c316f2b721b44daf52c5"
+    }
+  ],
+  "matrix": {
+    "archiveSHA256": "e076a8543641d9721152d063b58e63a17d722a9d326a9dec742910496cb0a995",
+    "sourceSHA256": "f75e255bdedbc613a4ebdfed4aa649acd50001c48d56d4ff67c7e6ccd67cec77",
+    "families": [
+      "systemSmall",
+      "systemMedium",
+      "systemLarge",
+      "systemExtraLarge",
+      "systemExtraLargePortrait",
+      "accessoryCircular",
+      "accessoryRectangular",
+      "accessoryInline"
+    ],
+    "failureWindowMilliseconds": 90000,
+    "recovery": "Original callback after the authored public render-clock boundary; fail state cleared and count advanced. No callback-only runtime flag or altered press dispatch."
+  },
+  "initialFullSuite": {
+    "base": "9c0879ee168b6aec78a4cc80fd071514c8787887",
+    "node": "v24.22.0",
+    "steps": [
+      {
+        "name": "original-producer",
+        "argv": [
+          "node",
+          "Scripts/Widgets/build-sample-packages.mjs"
+        ],
+        "exitCode": 0,
+        "seconds": 0.5670680999755859,
+        "stdoutSHA256": "2f8d6da5db0cee465c167d888900b5afc4c3ea038bd0aaecc1416eb5af1a56ed",
+        "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "original-interactive-toggle",
+        "argv": [
+          "node",
+          "--test",
+          "Scripts/Widgets/Tests/interactive-toggle.test.mjs"
+        ],
+        "exitCode": 1,
+        "seconds": 5.311869859695435,
+        "stdoutSHA256": "1ef4df72a32fb1a8f1fdfb71292f9da1b2daee1bc31071fe251470704f704029",
+        "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "changedTrackedArchives": {
+      "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo": {
+        "before": "593bee65811c0e4d6fc63532254d0ab174a8bb5779b06c838023d0792d06914d",
+        "after": "424ffe5b8569ee155b6db730ad8bd202b0687e12717215ff55f2d43159cf817b"
+      },
+      "AI_HLYUITests/Fixtures/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo": {
+        "before": "593bee65811c0e4d6fc63532254d0ab174a8bb5779b06c838023d0792d06914d",
+        "after": "424ffe5b8569ee155b6db730ad8bd202b0687e12717215ff55f2d43159cf817b"
+      },
+      "Fixtures/Widgets/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo": {
+        "before": "593bee65811c0e4d6fc63532254d0ab174a8bb5779b06c838023d0792d06914d",
+        "after": "424ffe5b8569ee155b6db730ad8bd202b0687e12717215ff55f2d43159cf817b"
+      }
+    },
+    "unchangedTrackedArchiveCount": 21,
+    "native": "NOT_RUN",
+    "OS": "NOT_RUN"
+  },
+  "initialFullSuiteStdout": "✖ original: SDK matrix renders all eight families with authored clear background and native component nodes (960.72138ms)\n✔ original: actual original Toggle wrapper returns props; intended values survive repeat requests (228.137706ms)\n✔ original: original Button callback is unchanged alongside Toggle and source instances stay isolated (495.896839ms)\n✔ original: callback failures, promises and malformed values cannot become committed state (532.377008ms)\n✔ original: duplicate targets and disabled modifiers fail before invoking a Toggle callback (312.524789ms)\n✖ prepared: SDK matrix renders all eight families with authored clear background and native component nodes (505.072812ms)\n✔ prepared: actual original Toggle wrapper returns props; intended values survive repeat requests (351.695414ms)\n✔ prepared: original Button callback is unchanged alongside Toggle and source instances stay isolated (421.255092ms)\n✔ prepared: callback failures, promises and malformed values cannot become committed state (216.938842ms)\n✔ prepared: duplicate targets and disabled modifiers fail before invoking a Toggle callback (138.01067ms)\nℹ tests 10\nℹ suites 0\nℹ pass 8\nℹ fail 2\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 5084.92227\n\n✖ failing tests:\n\ntest at Scripts/Widgets/Tests/interactive-toggle.test.mjs:41:3\n✖ original: SDK matrix renders all eight families with authored clear background and native component nodes (960.72138ms)\n  Error: Fixture refresh failed\n      at Matrix (evalmachine.<anonymous>:19:48)\n      at __expoWidgetRender (evalmachine.<anonymous>:14:917)\n      at globalThis.__expoWidgetRender (evalmachine.<anonymous>:38:18)\n      at Object.__expoWidgetHandlePress (evalmachine.<anonymous>:14:1295)\n      at TestContext.<anonymous> (file:///mnt/development/projects/worktrees/hanlin-miniapps-widget-recovery-os-20261127/Scripts/Widgets/Tests/interactive-toggle.test.mjs:75:46)\n      at Test.runInAsyncScope (node:async_hooks:227:14)\n      at Test.run (node:internal/test_runner/test:1402:25)\n      at Test.start (node:internal/test_runner/test:1262:17)\n      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17)\n\ntest at Scripts/Widgets/Tests/interactive-toggle.test.mjs:41:3\n✖ prepared: SDK matrix renders all eight families with authored clear background and native component nodes (505.072812ms)\n  Error: Fixture refresh failed\n      at Matrix (evalmachine.<anonymous>:19:48)\n      at __expoWidgetRender (evalmachine.<anonymous>:2954:38)\n      at globalThis.__expoWidgetRender (evalmachine.<anonymous>:38:18)\n      at Object.__expoWidgetHandlePress (evalmachine.<anonymous>:2972:29)\n      at TestContext.<anonymous> (file:///mnt/development/projects/worktrees/hanlin-miniapps-widget-recovery-os-20261127/Scripts/Widgets/Tests/interactive-toggle.test.mjs:75:46)\n      at Test.runInAsyncScope (node:async_hooks:227:14)\n      at Test.run (node:internal/test_runner/test:1402:25)\n      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)\n      at Test.postRun (node:internal/test_runner/test:1542:19)\n      at Test.run (node:internal/test_runner/test:1467:12)\n",
+  "affectedMatrixRetry": {
+    "steps": [
+      {
+        "name": "original-producer-clock-correction",
+        "argv": [
+          "node",
+          "Scripts/Widgets/build-sample-packages.mjs"
+        ],
+        "exitCode": 0,
+        "seconds": 0.32306599617004395,
+        "stdoutSHA256": "ab79bd965569147bdbc83175125f6fdcb2c87f05493823518cbae9ec646bcdd1",
+        "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "name": "original-matrix-clock-correction",
+        "argv": [
+          "node",
+          "--test",
+          "--test-name-pattern=SDK matrix",
+          "Scripts/Widgets/Tests/interactive-toggle.test.mjs"
+        ],
+        "exitCode": 0,
+        "seconds": 2.0863864421844482,
+        "stdoutSHA256": "388849c35cba618e83b8f0f0c755181df540274c34350f3d32e13d2f4e5f03a3",
+        "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      }
+    ],
+    "sourceHashes": {
+      "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo": "e076a8543641d9721152d063b58e63a17d722a9d326a9dec742910496cb0a995",
+      "AI_HLYUITests/Fixtures/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo": "e076a8543641d9721152d063b58e63a17d722a9d326a9dec742910496cb0a995",
+      "Fixtures/Widgets/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo": "e076a8543641d9721152d063b58e63a17d722a9d326a9dec742910496cb0a995",
+      "Fixtures/Widgets/SHA256.json": "2c3fac22ca5647ab476bbbfddd6286565959da7b9c1a21438a956c94b64d0466",
+      "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinPreparedWidget.swift": "c6de1ead190c0228ea9cb9a842ecbe4d840c53f7bffaa69bf1770fef71d14115",
+      "Scripts/Widgets/Tests/interactive-toggle.test.mjs": "2228d3e1492d56391c32ed59b13a415bcae95f9f761f03530a57340fdff06010",
+      "Scripts/Widgets/samples.mjs": "5c36e26e3b7d86cbb017c67660070e5d3ea2f06faaae807ea72e7ce2c6fa9b82"
+    },
+    "diffCheck": {
+      "exitCode": 0,
+      "output": ""
+    },
+    "native": "NOT_RUN",
+    "OS": "NOT_RUN"
+  },
+  "affectedMatrixRetryStdout": "✔ original: SDK matrix renders all eight families with authored clear background and native component nodes (340.216393ms)\n✔ prepared: SDK matrix renders all eight families with authored clear background and native component nodes (202.622403ms)\nℹ tests 2\nℹ suites 0\nℹ pass 2\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 1805.627248\n",
+  "validationInterpretation": "Initial full run: eight PASS, two Matrix FAIL. After correcting actual original callback semantics, only the two affected Matrix methods were rerun and passed. The initial failure is retained; no fresh full-suite/native/OS PASS is claimed.",
+  "diagnosticContract": {
+    "subsystem": "com.hanlin.ai",
+    "category": "WidgetRender",
+    "event": "widget_render_retained",
+    "identitySHA256": "SHA256 of concatenated UTF-8-byte-length:field for installedPackageID, packageID, decimal generation, entrypointID, variantID, in that order",
+    "fields": [
+      "v",
+      "engine",
+      "identitySHA256",
+      "generation",
+      "family",
+      "programSHA256",
+      "stateRevision",
+      "renderSHA256",
+      "pid"
+    ],
+    "contentExcluded": [
+      "props",
+      "settings",
+      "authored render output",
+      "display names",
+      "error message"
+    ],
+    "emission": "Only after existing lastSuccessfulWidgetNode checks succeeded and prepared=.expo(previous, currentContext); before the unchanged return snapshot."
+  },
+  "independentReview": {
+    "status": "APPROVED_SOURCE_FOR_ORIGINAL_NATIVE_AND_OS_PILOT",
+    "agent": "/root/w1_review_resume",
+    "basis": "Independent read of the exact seven-file diff and verification of all source hashes against clock-correction-receipt.json.",
+    "finding": "The diagnostic runs only after the original verified Expo cache path succeeds; hashed identity includes variantID, while the cache still requires exact engine/family/program/settings and verified render bytes. Stored-state/cache behavior and original assertions are unchanged. Both corrected original/prepared Matrix methods passed; the earlier eight PASS and two FAIL are preserved.",
+    "remaining": "Native/OS execution is not inferred. The OS observer must require the actual Recover callback's fail=false/retryAfter=0/count increment, a fresh matching extension-process fallback event, and the same current instance/settings."
+  }
+}

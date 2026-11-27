@@ -46,7 +46,10 @@ class StopContinuationDeltaReportTests(unittest.TestCase):
         locks = []
         for index, package in enumerate(("HanlinAgentSDK", "HanlinPlatform")):
             relative = f"raw-locks/{index:02d}-Package.resolved"
-            raw = (ROOT / "Packages" / package / "Package.resolved").read_bytes()
+            # Use the retained07431 fixture; the live product may deliberately advance.
+            frozen = ROOT / "Scripts/CI/Tests/Fixtures/native-cancellation-07431/delta"
+            lock_name = "sdk" if package == "HanlinAgentSDK" else "core"
+            raw = (frozen / (lock_name + "-Package.resolved")).read_bytes()
             (self.evidence / relative).write_bytes(raw)
             locks.append(dict(source_path=f"/explicit-fixture/Packages/{package}/Package.resolved",
                               raw_file=relative, sha256=hashlib.sha256(raw).hexdigest()))
@@ -63,6 +66,35 @@ class StopContinuationDeltaReportTests(unittest.TestCase):
         self.assertFalse(actual["shipping_native_tool_capability"])
         self.assertEqual(actual["system_model_generation"], "NOT_RUN")
         self.assertIsNone(actual["process_status"]["baseline_core_exit"])
+
+    def test_raw_locks_keep_exactly_one_pinned_producer_after_digest_update(self):
+        self.assertEqual(report.summarize(self.evidence)["status"], "PASS")
+        posts = self.evidence / "post-build-resolution.json"
+        original_posts = posts.read_bytes()
+        for index, lock in enumerate(json.loads(original_posts)):
+            path = self.evidence / lock["raw_file"]
+            original = path.read_bytes()
+            for mutation in ("revision", "missing", "duplicate"):
+                with self.subTest(package=index, mutation=mutation):
+                    value = json.loads(original)
+                    producer = next(pin for pin in value["pins"] if pin["identity"] == "swift-ai-sdk")
+                    if mutation == "revision":
+                        producer["state"]["revision"] = "0" * 40
+                    elif mutation == "missing":
+                        value["pins"] = [pin for pin in value["pins"] if pin["identity"] != "swift-ai-sdk"]
+                    else:
+                        value["pins"].append(copy.deepcopy(producer))
+                    try:
+                        write(path, value)
+                        changed_posts = json.loads(original_posts)
+                        changed_posts[index]["sha256"] = hashlib.sha256(path.read_bytes()).hexdigest()
+                        write(posts, changed_posts)
+                        result = report.summarize(self.evidence)
+                        self.assertEqual(result["status"], "BLOCKED")
+                        self.assertIn("Raw lock is not pinned07431.", result["errors"])
+                    finally:
+                        path.write_bytes(original)
+                        posts.write_bytes(original_posts)
 
     def test_case_process_pin_and_composed_source_adversaries_block(self):
         mutations = [

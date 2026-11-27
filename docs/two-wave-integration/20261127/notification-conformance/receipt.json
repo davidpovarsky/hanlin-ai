@@ -1,0 +1,108 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-27T01:45:10.794470+00:00",
+  "executor": "ChatGPT built-in agent /root/w2_source_resume",
+  "candidateSource": "d7d10dff56e9b19b87ee6058ac491987f00b48e6",
+  "baseSource": "0456adbe395cde2fb986cf058c4a9497c38d1d21",
+  "change": {
+    "controller": "Packages/HanlinAppExtensionsSDK/Sources/HanlinNotificationContentUI/HanlinNotificationContentViewController.swift",
+    "controllerSHA256": "51d2d6ebb03b74cbcc26ba1449a70c16ba778c102a814e1cf18683f7d04a4eef",
+    "sourceBodyAndImportsUnchanged": true,
+    "auditor": "Scripts/Audit/audit_miniapp_reachability.py",
+    "auditorSHA256": "f322ad633f53ef50e5cd97f6812c0dbd9573f989df6e3f470ce8a8a055ade57b",
+    "originalStrictMatcherUnchanged": true,
+    "description": "Explicit MainActor isolation on the existing UNNotificationContentExtension conformance and matching exact auditor anchor only."
+  },
+  "originalNativeFailure": {
+    "source": "759e5cf9ba4c7dac88b0ec80f652e6ba4e37e676",
+    "nativeExitCode": 65,
+    "logBytes": 4101225,
+    "logSHA256": "815c31f3a9849d86342dc85557c73557a1f0132d5260697fd5612d13d28f31c7",
+    "diagnostic": "ConformanceIsolation; compiler explicitly recommends isolating conformance to MainActor.",
+    "diagnosticFile": "original-compiler-diagnostic.json",
+    "diagnosticSHA256": "d23388c3298f7dececeda034123f4a796b5d5bf2dc1faa5f7a8559cca9366df2"
+  },
+  "recoveredOriginalChecks": {
+    "sourceAuditWrite": "PASS",
+    "sourceAuditCheck": "PASS",
+    "sources": 102,
+    "localPublicExports": 200,
+    "reachabilityWrite": "PASS",
+    "reachabilityCheck": "PASS",
+    "cells": 100,
+    "reexecutedOnResume": false,
+    "initialMissingModeAttempt": "FAILED with explicit usage error; retained unchanged"
+  },
+  "negativeControl": {
+    "status": "EXPECTED_REJECTION",
+    "inMemoryOnly": true,
+    "missingActorRejected": true,
+    "file": "missing-isolation-negative-control.json"
+  },
+  "generatedSemanticSectionsUnchanged": [
+    "matrix",
+    "paths",
+    "acceptance",
+    "targetsDeclaredInProject",
+    "entitlements",
+    "originalLibrarySurfaces",
+    "localPresentationSurfaces",
+    "systemServices"
+  ],
+  "logs": [
+    {
+      "path": "reachability-write.json",
+      "bytes": 440,
+      "sha256": "bdac139544cdf66076d9f2d3ae58b56d4bf1b07961a75633b5cded6b8f7cfd12",
+      "exitCode": 0,
+      "originalPath": "/tmp/hanlin-notification-conformance-20261127-_tct4qxm/reachability-write.json",
+      "recoveredAt": "2026-11-27T01:45:10.507848+00:00"
+    },
+    {
+      "path": "source-audit-check.json",
+      "bytes": 538,
+      "sha256": "a68096c7c00ba1f973803fe66749f377c321e685a9decb51c7309f39f3698330",
+      "exitCode": 0,
+      "originalPath": "/tmp/hanlin-notification-conformance-20261127-_tct4qxm/source-audit-check.json",
+      "recoveredAt": "2026-11-27T01:45:10.508717+00:00"
+    },
+    {
+      "path": "source-audit-write.json",
+      "bytes": 542,
+      "sha256": "9cd835da16c0ceb3b3617da05d7df7a943fa2e00c1ad1979c17b16d7ea2060e9",
+      "exitCode": 0,
+      "originalPath": "/tmp/hanlin-notification-conformance-20261127-_tct4qxm/source-audit-write.json",
+      "recoveredAt": "2026-11-27T01:45:10.510737+00:00"
+    },
+    {
+      "path": "reachability-check.json",
+      "bytes": 383,
+      "sha256": "713eaf19a664288787e0d58f50c2e7b414d13b5e0af92214193c2113f7761d91",
+      "exitCode": 0,
+      "originalPath": "/tmp/hanlin-notification-conformance-20261127-_tct4qxm/reachability-check.json",
+      "recoveredAt": "2026-11-27T01:45:10.511729+00:00"
+    },
+    {
+      "path": "initial-missing-mode-source-audit-write.json",
+      "bytes": 957,
+      "sha256": "a76a9271ca41b7a54ef3f906ed916fe9af7b7b669d7ef27776427b070b23c588",
+      "exitCode": 1,
+      "originalPath": "/tmp/hanlin-notification-conformance-20261127-gew3001m/source-audit-write.json",
+      "recoveredAt": "2026-11-27T01:45:10.513353+00:00"
+    }
+  ],
+  "remaining": {
+    "appleCompilation": "NOT_RUN_ON_CORRECTED_SOURCE",
+    "fullApplicationAcceptance": "PENDING",
+    "notificationOSPresentation": "PENDING",
+    "signedPhysicalAcceptance": "PENDING"
+  },
+  "scope": "No runtime body, callback signature, unsafe suppression, test assertion, pin, entitlement, signing or workflow change.",
+  "independentReview": {
+    "reviewer": "/root/w1_review_resume",
+    "status": "APPROVED_BOUNDED_SOURCE_CORRECTION_FOR_ORIGINAL_NATIVE_RETRY",
+    "file": "independent-source-review.json",
+    "sha256": "0005a05eddd6ef0abd32917a609c34a3bd86f8d435b3d7bb3a609affa29852a4",
+    "source": "collaboration message from /root/w1_review_resume"
+  }
+}

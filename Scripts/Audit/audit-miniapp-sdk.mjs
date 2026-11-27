@@ -173,7 +173,8 @@ const shortcutPresentationContext = await source('HanlinMiniAppsApp/MiniAppsShor
 const sessionOwnershipReferences = [
   [windowFactoryOwnership, 'public static func supportsWindowFactory('],
   [shortcutRuntimeOwnership, 'func executeHeadlessAction('],
-  [shortcutPresentationContext, 'userGesturePresent: true, canPresentUI: false'],
+  [shortcutPresentationContext, 'systemContext.currentMode == .foreground'],
+  [shortcutPresentationContext, 'userGesturePresent: true, canPresentUI: canPresentUI'],
 ].map(([record, anchor]) => {
   const offset = record.text.indexOf(anchor);
   if (offset < 0) throw new Error('NativeScript ownership audit anchor changed: ' + record.path);
@@ -229,7 +230,7 @@ const inventory = {
     {id: 'INT06-LEGACY-ACCEPTANCE', owner: 'INT-06', detail: 'Native legacy backend/name/failure cases passed at1e4ba8c0/run43315911311. The generic structured boundary is now shared with NS; complete actual JS-to-module/per-surface receipt coverage remains open.'},
     {id: 'INT06-SHELL-SOURCE', owner: 'INT-06', detail: 'Generic RuntimeKind.shell and the public command-string tool share the existing portable-shell route. Structured program/argv execution uses the direct linked ios_system route; native per-surface acceptance remains separate evidence.'},
     {id: 'INT03-NS-RESULT', owner: 'INT-03', detail: 'Generic NS executeRuntime now uses the same JSON request/full receipt boundary as Expo, with typed generated facade and session-owned cooperative cancellation. Actual VM/metadata/backend acceptance is pending; legacy callbacks retain string semantics.'},
-    {id: 'INT03-SESSION', owner: 'INT-03', detail: 'Window-factory packages can use independently owned cooperating-window contexts in the existing shared NativeScript engine. Headless Shortcuts reserve admission, bind module/provider ownership, disallow UI presentation and tear down only their owned context. Legacy packages retain single-runtime-owner admission and reject competing ownership. No separate JavaScript isolate or process isolation is claimed; current native concurrency, cancellation and lifecycle acceptance remains required.', sourceReferences: sessionOwnershipReferences},
+    {id: 'INT03-SESSION', owner: 'INT-03', detail: 'Window-factory packages can use independently owned cooperating-window contexts in the existing shared NativeScript engine. Shortcuts derive UI admission from the actual OS mode and validated command delivery. Background contexts reserve admission, bind module/provider ownership, disallow UI presentation and tear down only their owned context. Legacy packages retain single-runtime-owner admission and reject competing ownership. No separate JavaScript isolate or process isolation is claimed; current native concurrency, cancellation and lifecycle acceptance remains required.', sourceReferences: sessionOwnershipReferences},
     {id: 'INT06-CONTEXT', owner: 'INT-02/INT-06', detail: 'Actual headless NS share-sheet rejection passed atcbb0d8e3/run43325255401; foreground default remains true. MiniApp context still uses userGesturePresent=false; full invocation context and all OS-prompt services require separate validation.'},
     {id: 'INT06-AVAILABILITY', owner: 'INT-06', detail: 'hasCapability returns personal-host policy, not OS/service availability. The17 SystemServicesBroker declarations have no generic NS/Expo Host binding in these inspected adapters.'},
     {id: 'SDK01-BINARY', owner: 'SDK-01', detail: 'Installed device Host/bridge versions and signed extension entitlements remain unverified here; source manifests are not IPA evidence.'},

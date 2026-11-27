@@ -1,0 +1,47 @@
+{
+  "actualHistoricalV1EncoderAndDowngradeReader": {
+    "bytes": 1519,
+    "sha256": "555df6f717ccc88ae814c956daba97cff161b419e974e97e24e5654aed283b66",
+    "unchanged": true
+  },
+  "actionAndPublicationPreserveUnrelatedCollections": {
+    "bytes": 1726,
+    "sha256": "925cfe3d18739a6b620217c776ea269c53cfccf95d6a34198114b183db88470c",
+    "unchanged": true
+  },
+  "Packages/HanlinPlatform/Tests/Fixtures/LegacyWidgetStore/HanlinScriptExtensionStore.swift": {
+    "bytes": 5562,
+    "sha256": "c44d53ad45e2b0b42ad2eb488cf971c814ca8ffa9a8acf415a369504d9944ab4",
+    "unchanged": true
+  },
+  "Packages/HanlinPlatform/Tests/Fixtures/LegacyWidgetStore/HanlinScriptExtensionContracts.swift": {
+    "bytes": 10670,
+    "sha256": "da5f1877fc9ce1a1f5b49e67429935c2514bb6b00e977302679107bc0413c28e",
+    "unchanged": true
+  },
+  "Packages/HanlinPlatform/Tests/Fixtures/LegacyWidgetStore/PROVENANCE.txt": {
+    "bytes": 123,
+    "sha256": "f25ad5faf038b5e38d4530e1c1d3d6dd1449fdf0be3b9a4061a1a1ec1d981487",
+    "unchanged": true
+  },
+  "Scripts/Expo/package.json": {
+    "bytes": 1759,
+    "sha256": "fe71727b4bb3a28f73238ed1381190ef6de3541af323efb1f443ed2a7c685563",
+    "unchanged": true
+  },
+  "Scripts/Expo/package-lock.json": {
+    "bytes": 336324,
+    "sha256": "b20d9bf2ff4850269f72f79ef4e5b1b274ab648226a0597f671fe59ebb5dcfce",
+    "unchanged": true
+  },
+  "Scripts/Expo/dependency-lock.json": {
+    "bytes": 5375,
+    "sha256": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65",
+    "unchanged": true
+  },
+  "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift": {
+    "bytes": 60758,
+    "sha256": "7e3a1ff682abef2b319a4c428c9da6a4069989872cdbab777479e2eced0d1306",
+    "unchanged": true
+  }
+}

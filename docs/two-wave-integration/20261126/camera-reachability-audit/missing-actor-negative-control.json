@@ -1,0 +1,6 @@
+{
+  "status": "EXPECTED_REJECTION",
+  "condition": "Remove actor isolation from accepted conformance in memory only",
+  "error": "Audit anchor changed: HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.swift: struct HanlinMiniAppsCameraCaptureExtension: @MainActor LockedCameraCaptureExtension",
+  "productionFilesMutated": false
+}

@@ -1,0 +1,14 @@
+{
+  "base": "8a97425e922aca83c81d75ed6cdb13774fde0893",
+  "source": "0456adbe395cde2fb986cf058c4a9497c38d1d21",
+  "sourceChanges": [
+    "Scripts/Audit/audit_miniapp_reachability.py",
+    "docs/miniapp-sdk/extension-reachability.json",
+    "docs/miniapp-sdk/extension-reachability.md"
+  ],
+  "auditorSemanticChange": "One exact literal gains @MainActor; all other auditor bytes are identical.",
+  "productionPackageAndFixtureDiff": [],
+  "bundle": "/tmp/hanlin-camera-reachability-audit-20261126-zpkn4sj0/camera-reachability-source.bundle",
+  "bundleBytes": 1902,
+  "bundleSHA256": "61f79342c50bb465965a31f15edc29fae3525232ac69c79c7d42655397261956"
+}

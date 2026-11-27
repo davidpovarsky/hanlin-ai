@@ -180,6 +180,70 @@ class AffectedValidationPlannerTests(unittest.TestCase):
             exact_test_selector=exact_test_selector,
         )
 
+    def test_system_surface_sources_use_the_original_split_owner(self) -> None:
+        paths = (
+            "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+            "Fixtures/HostActionSurfaces/expo/App.tsx",
+            "Fixtures/HostActionSurfaces/expo/proof.ts",
+            "Fixtures/HostActionSurfaces/nativescript/index.ts",
+            "Fixtures/HostActionSurfaces/nativescript/package.json",
+            "Fixtures/HostActionSurfaces/nativescript/proof.ts",
+        )
+        for path in paths:
+            with self.subTest(path=path):
+                plan = self.plan_files([path])
+                self.assertIn("canonical_product_split", plan.affected_components)
+                self.assertNotIn(path, plan.no_impact_files)
+                self.assertTrue(plan.step_outputs["run_simulator_unit"])
+                self.assertEqual(set(plan.step_outputs["simulator_unit_filter"].split(",")), {
+                    "AI_HLYTests/HanlinAppSplitOriginTests",
+                    "AI_HLYTests/HanlinAppAgentSessionOwnerTests",
+                })
+                # Real paired/system UI requires the original two-product runner;
+                # this one-app plan must not pretend to execute that OS scope.
+                self.assertFalse(plan.step_outputs["run_simulator_targeted_ui"])
+                self.assertEqual(plan.step_outputs["simulator_ui_filter"], "")
+                self.assertFalse(plan.step_outputs["run_full_validation"])
+                self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+                self.assertFalse(plan.step_outputs["run_device_build"])
+
+    def test_unreviewed_system_surface_source_still_fails_closed(self) -> None:
+        for path in ("Fixtures/HostActionSurfaces/expo/unreviewed-driver.ts",
+                     "AI_HLYUITests/UnreviewedSystemSurfaceUITests.swift"):
+            with self.subTest(path=path), self.assertRaises(planner.UnmappedPathsError) as ctx:
+                self.plan_files([path])
+            self.assertEqual(ctx.exception.unmapped_paths, [path])
+
+    def test_original_widget_archives_select_their_existing_consumers(self) -> None:
+        renderer_suite = "AI_HLYTests/HanlinNativeWidgetRendererTests"
+        counter_ui = "AI_HLYUITests/HanlinExpoProductionE2ETests/testNativeExpoWidgetSourceActionsWithHostTerminated"
+        for archive, renders, drives_ui in (
+            ("Hanlin-Expo-Widget-Counter.hanlinExpo", True, True),
+            ("Hanlin-Expo-Widget-Visuals.hanlinExpo", True, False),
+            ("Hanlin-Mixed-Native-Widget.hanlinExpo", False, False),
+            ("Hanlin-Widget-Invalid-Cases.hanlinExpo", False, False),
+        ):
+            with self.subTest(archive=archive):
+                plan = self.plan_files(["Fixtures/Widgets/" + archive])
+                self.assertTrue(plan.step_outputs["run_platform_contracts"])
+                self.assertTrue(plan.step_outputs["run_phase1"])
+                self.assertEqual(plan.step_outputs["run_simulator_unit"], renders)
+                self.assertEqual(plan.step_outputs["simulator_unit_filter"], renderer_suite if renders else "")
+                self.assertEqual(plan.step_outputs["run_simulator_targeted_ui"], drives_ui)
+                self.assertEqual(plan.step_outputs["simulator_ui_filter"], counter_ui if drives_ui else "")
+                self.assertEqual(plan.step_outputs["run_runtimecore_host"], renders)
+                self.assertEqual(plan.step_outputs["stage_scriptui_fixtures"], drives_ui)
+                self.assertFalse(plan.step_outputs["run_full_validation"])
+                self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+                self.assertFalse(plan.step_outputs["run_device_build"])
+                self.assertFalse(plan.step_outputs["run_ipa_packaging"])
+
+    def test_unknown_widget_archive_still_fails_closed(self) -> None:
+        path = "Fixtures/Widgets/Unreviewed-Widget.hanlinExpo"
+        with self.assertRaises(planner.UnmappedPathsError) as ctx:
+            self.plan_files([path])
+        self.assertEqual(ctx.exception.unmapped_paths, [path])
+
     # 1. docs-only change -> no simulator/device/IPA
     def test_docs_only_change_skips_all_expensive_validations(self) -> None:
         changed = ["README.md", "docs/architecture.md", ".gitignore"]

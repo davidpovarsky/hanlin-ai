@@ -1,0 +1,76 @@
+[
+  {
+    "archive": "Hanlin-Expo-Widget-Counter.hanlinExpo",
+    "beforeSha256": "07bc97e06a1c4b638272dda7eeeb132e2b91499d5546cccfe7fbfd5bfc4cae0e",
+    "afterSha256": "a52c828cdb87f115c668b7cba544781ce89c023b14a65551844ee7985faa3d9d",
+    "bytes": 1149,
+    "changedArchiveMembers": [
+      "package.json"
+    ],
+    "allThreeCopiesEqual": true
+  },
+  {
+    "archive": "Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo",
+    "beforeSha256": "c31ea9245556e2c851c89bb79d95dd323cf5f51c0ad8fcb7d6ef6298949027d1",
+    "afterSha256": "593bee65811c0e4d6fc63532254d0ab174a8bb5779b06c838023d0792d06914d",
+    "bytes": 1703,
+    "changedArchiveMembers": [
+      "package.json"
+    ],
+    "allThreeCopiesEqual": true
+  },
+  {
+    "archive": "Hanlin-Expo-Widget-Visuals.hanlinExpo",
+    "beforeSha256": "2584982f4077b022860a1197c62d3bc85fdaa454e907e6749cd5734e7886cb68",
+    "afterSha256": "4532c361e91e32580a7dca5c120e1131bb2d9f07138b2b4103bdab138f588368",
+    "bytes": 1283,
+    "changedArchiveMembers": [
+      "package.json"
+    ],
+    "allThreeCopiesEqual": true
+  },
+  {
+    "archive": "Hanlin-Mixed-Native-Widget.hanlinExpo",
+    "beforeSha256": "7dc83c351a276573bf8fc8591b1be081401433247a656306d54fb9c16cda0d2e",
+    "afterSha256": "2121ea971faa158e891b8222372e2250062286b813ad8a889971cc351a8c75d7",
+    "bytes": 1000,
+    "changedArchiveMembers": [
+      "package.json"
+    ],
+    "allThreeCopiesEqual": true
+  },
+  {
+    "archive": "Hanlin-ScriptWidget-Actions.scripting",
+    "beforeSha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb",
+    "afterSha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb",
+    "bytes": 825,
+    "changedArchiveMembers": [],
+    "allThreeCopiesEqual": true
+  },
+  {
+    "archive": "Hanlin-ScriptWidget-Dashboard.scripting",
+    "beforeSha256": "478cd567e9731cc7342aefa9024ea498edf8d12d340cc5c558484e60a210dace",
+    "afterSha256": "478cd567e9731cc7342aefa9024ea498edf8d12d340cc5c558484e60a210dace",
+    "bytes": 968,
+    "changedArchiveMembers": [],
+    "allThreeCopiesEqual": true
+  },
+  {
+    "archive": "Hanlin-Widget-Invalid-Cases.hanlinExpo",
+    "beforeSha256": "077a6ea43342877550f495b1bb885a3c93d8d6c60389459bf55ff05d2db5982c",
+    "afterSha256": "a86f47a41f684ecbb1dcce23552798b88cc7ab6622a8c316f2b721b44daf52c5",
+    "bytes": 949,
+    "changedArchiveMembers": [
+      "package.json"
+    ],
+    "allThreeCopiesEqual": true
+  },
+  {
+    "archive": "Hanlin-Widget-Legacy-Regression.scripting",
+    "beforeSha256": "787bf97e48164d7b9021c64bfa7122e48131a82b388efc3bad26c58276f4bb2f",
+    "afterSha256": "787bf97e48164d7b9021c64bfa7122e48131a82b388efc3bad26c58276f4bb2f",
+    "bytes": 444,
+    "changedArchiveMembers": [],
+    "allThreeCopiesEqual": true
+  }
+]

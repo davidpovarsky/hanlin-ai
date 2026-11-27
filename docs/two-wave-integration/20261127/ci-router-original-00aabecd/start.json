@@ -1,0 +1,23 @@
+{
+  "at_utc": "2026-11-27T02:46:33.004330+00:00",
+  "source": "00aabecd5e4cf7995fe358d63a9724edb3b299e4",
+  "tree": "8140921cf0f2f346269a1d50e62a3a3756250d19",
+  "cwd": "/mnt/development/projects/worktrees/hanlin-ci-router-20261127",
+  "owner": "chatgpt-agent",
+  "original_command": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "Scripts/CI/Tests",
+    "-p",
+    "test_*.py",
+    "-v"
+  ],
+  "node": "v24.5.0",
+  "python": "3.12.3 (main, Aug 31 2026, 10:18:26) [GCC 13.3.0]",
+  "network_gate_opt_in": false,
+  "controller_pid": 2890545,
+  "test_modules": 42
+}

@@ -1,0 +1,319 @@
+{
+  "schemaVersion": 1,
+  "repository": "davidpovarsky/hanlin-ai",
+  "runID": 45927192346,
+  "jobID": 140271518782,
+  "source": "3c3bbb955bc79733607e90c719fc95a454d6b387",
+  "artifact": {
+    "id": 15168798295,
+    "name": "AI_Hanlin-iOS26-simulator-smoke-logs",
+    "size_in_bytes": 1900437,
+    "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/15168798295",
+    "archive_download_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/15168798295/zip",
+    "expired": false,
+    "created_at": "2026-11-27T03:00:25Z",
+    "expires_at": "2026-12-11T03:00:23Z",
+    "updated_at": "2026-11-27T03:00:25Z",
+    "digest": "sha256:391d39658c0e4d7939187f94f3f28e4bbc5c5270f7c75853705a882732ca47cc",
+    "workflow_run": {
+      "id": 45927192346,
+      "repository_id": 1295277723,
+      "head_repository_id": 1295277723,
+      "head_branch": "codex/hanlin-two-wave-integration-20261126",
+      "head_sha": "3c3bbb955bc79733607e90c719fc95a454d6b387"
+    }
+  },
+  "zip": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-45927192346-app-build-failure/original-app-logs.zip",
+    "bytes": 1900437,
+    "sha256": "391d39658c0e4d7939187f94f3f28e4bbc5c5270f7c75853705a882732ca47cc"
+  },
+  "files": [
+    {
+      "name": "simulator-logs/01-cache-mode.log",
+      "bytes": 226,
+      "sha256": "f692bef5045ba346af800176b9412ba3f1cde549c530ccc1af4dcd52936c1379"
+    },
+    {
+      "name": "simulator-logs/01-environment.log",
+      "bytes": 963,
+      "sha256": "3b668dcda21f7e87d5347b8dc8e7c8df185996680caf8451bf4ded423cab9b26"
+    },
+    {
+      "name": "simulator-logs/03-package-runtime-host.log",
+      "bytes": 877,
+      "sha256": "5528474a6ec07dc659b2220cadf99a51636034a46997d2525d0cfc2abe62110d"
+    },
+    {
+      "name": "simulator-logs/02-prepare-runtime-core.log",
+      "bytes": 21906,
+      "sha256": "50fef7b2402963cdca96efa88d9a29eb370e1b0502c287b6132ca2ae7cfa686f"
+    },
+    {
+      "name": "simulator-logs/04-runtime-preflight.log",
+      "bytes": 1736,
+      "sha256": "fd9938351eabb958480f6a98869eb1bf4588da68ac95a284349a3b2468afd4d1"
+    },
+    {
+      "name": "simulator-logs/05-cache-input-restore.log",
+      "bytes": 46,
+      "sha256": "11083745170de91dcbe17fa5b4e18d24f0cbc6923d8d241af153c25d718f94ef"
+    },
+    {
+      "name": "simulator-logs/05-cache-input-capture.log",
+      "bytes": 103,
+      "sha256": "2a5123722b80becbabb000359e9cf585f15d003be73f06e0cce48a7072b82e76"
+    },
+    {
+      "name": "simulator-logs/05-resolve-packages.log",
+      "bytes": 11212,
+      "sha256": "737ecb07b40945103e68f0e8d58324bd2274812ae11ba24411b371796553d149"
+    },
+    {
+      "name": "simulator-logs/05-stage-modular-headers-duration-seconds.txt",
+      "bytes": 3,
+      "sha256": "20d2add851bf39edcc6b5e830930f962db7e19dffa2cab8610eed551eda6c302"
+    },
+    {
+      "name": "simulator-logs/06-current-unit-xctestrun.json",
+      "bytes": 5703,
+      "sha256": "9fa009ef483994ff68b335cb5d3416a92fc90276ad1ff3d0abfd473d946a42c1"
+    },
+    {
+      "name": "simulator-logs/06-diagnostics-build-provenance.json",
+      "bytes": 7046,
+      "sha256": "182a05832411f2145b5299faad912fc33da04c86c56ef2f5ce5f220d4efa39b5"
+    },
+    {
+      "name": "simulator-logs/06-unit-xctestrun-prepare.log",
+      "bytes": 474,
+      "sha256": "bd68f3a091682a72669c7674676199735ab1c608f55d61ab958c888699eb9a41"
+    },
+    {
+      "name": "simulator-logs/06-xcodebuild-simulator.log",
+      "bytes": 14893408,
+      "sha256": "4a42f5728452a27c9ccebf22ca9999994a2aa9ad88e3e328cad7c7aed01f1ae0"
+    },
+    {
+      "name": "simulator-logs/09-host-resources.log",
+      "bytes": 78576,
+      "sha256": "a465644614b76e2b370d458d5e19f65920e9389079cf7a3751bea3cd129fcbb6"
+    },
+    {
+      "name": "simulator-logs/Resolved-Package.resolved",
+      "bytes": 10518,
+      "sha256": "56d19a4b8c677831fb91e1f8155a68e411b42fd4807ad618d6f169569e1bb5a4"
+    },
+    {
+      "name": "simulator-logs/SimulatorBuildResult.xcresult/Data/data.0~GfQl7l4MOPtk8M2ARhHsstexbFWeyiLir4mT4exY_uxw_68Tsk9pPEvBxV5RlDX7YEiXu82BhTEI9foGXuPOVg==",
+      "bytes": 1012412,
+      "sha256": "f1af0384965311f4585b6a692db75fdd80d24b8a29a4afb0b705fe49682f558c"
+    },
+    {
+      "name": "simulator-logs/SimulatorBuildResult.xcresult/Data/data.0~oex1E62-G9l-v-eq-MnhuJz5UwyF4nWjbDTaKguW_4yYN_GFjS0W6fbptRTqJB_ffap9suilM7Da1T2ZiCz8Xw==",
+      "bytes": 295,
+      "sha256": "1bd82bb44e7446a2f12eff621fbaf74d101fc58c74c286967585ab3739e275ba"
+    },
+    {
+      "name": "simulator-logs/SimulatorBuildResult.xcresult/Data/data.0~yX0n0Zp0GVPSZ4l4TLP3tCSPU5HU_M2fXo0369qi1hUdgKf01FWkaPXcvTl5R1zQIqWgV57iH63qVLg4zmIQmQ==",
+      "bytes": 34443,
+      "sha256": "1af6f8f94dc4e7e1eec283497e75320af92d2c38f1812f46d9bf4c90c354a117"
+    },
+    {
+      "name": "simulator-logs/SimulatorBuildResult.xcresult/Data/refs.0~GfQl7l4MOPtk8M2ARhHsstexbFWeyiLir4mT4exY_uxw_68Tsk9pPEvBxV5RlDX7YEiXu82BhTEI9foGXuPOVg==",
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    {
+      "name": "simulator-logs/SimulatorBuildResult.xcresult/Data/refs.0~oex1E62-G9l-v-eq-MnhuJz5UwyF4nWjbDTaKguW_4yYN_GFjS0W6fbptRTqJB_ffap9suilM7Da1T2ZiCz8Xw==",
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    {
+      "name": "simulator-logs/SimulatorBuildResult.xcresult/Data/refs.0~yX0n0Zp0GVPSZ4l4TLP3tCSPU5HU_M2fXo0369qi1hUdgKf01FWkaPXcvTl5R1zQIqWgV57iH63qVLg4zmIQmQ==",
+      "bytes": 133,
+      "sha256": "cd5133f7aea84ce8391d8b64ccac7e26224f88a33ba830d1f64170932db21a62"
+    },
+    {
+      "name": "simulator-logs/a2ui-generation/compiler.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "simulator-logs/a2ui-generation/result.json",
+      "bytes": 2631,
+      "sha256": "6825a53773bbd1a38b75f63ef3e2c8a287c4da161d3557890d6e0edcd290c251"
+    },
+    {
+      "name": "simulator-logs/SimulatorBuildResult.xcresult/Info.plist",
+      "bytes": 776,
+      "sha256": "5834f15c0aec58897da291d9dcf9b6d1d691b6b37000cc57a32656550f762e34"
+    },
+    {
+      "name": "simulator-logs/app-intents-metadata/AI_HLY.build/Release-iphonesimulator/HanlinScriptingWidgets.build/Objects-normal/arm64/HanlinScriptingWidgets.SwiftConstValuesFileList",
+      "bytes": 229,
+      "sha256": "cd356506d13bc1db3ca9d7f83c685e98031cf1fb7dc0955f31bed93cf4c87ed5"
+    },
+    {
+      "name": "simulator-logs/app-intents-metadata/AI_HLY.build/Release-iphonesimulator/HanlinScriptingWidgets.build/Objects-normal/arm64/HanlinScriptingWidgets.SwiftFileList",
+      "bytes": 406,
+      "sha256": "9fa46913f20c6ca58923d0923ddaeb3809dc90e961a578ab2125380c2cd119aa"
+    },
+    {
+      "name": "simulator-logs/app-intents-metadata/HanlinSDK.build/Release-iphonesimulator/HanlinScriptingWidgets-t.build/Objects-normal/arm64/HanlinScriptingWidgets.SwiftConstValuesFileList",
+      "bytes": 234,
+      "sha256": "7effb2aacfb6e1ec8020ad661a36cafd1b605690a6ef3832ec203a44a532671b"
+    },
+    {
+      "name": "simulator-logs/app-intents-metadata/HanlinSDK.build/Release-iphonesimulator/HanlinScriptingWidgets-t.build/Objects-normal/arm64/HanlinScriptingWidgets.SwiftFileList",
+      "bytes": 956,
+      "sha256": "58a264797647c6ff631e3c91d0bddeb9e488b0172c5529ff5148d2b4ca174b4d"
+    },
+    {
+      "name": "simulator-logs/app-intents-metadata/receipt.json",
+      "bytes": 1296,
+      "sha256": "45410f09c26912c791e7ae3b08664c544045685f5fe4ff9169386743a83aff04"
+    },
+    {
+      "name": "simulator-logs/foundation-models-interface/availability-query/availability.swift",
+      "bytes": 1438,
+      "sha256": "27b70911b258ba1eaa53502eef3e61f9efe594a6cdf87341fb8d104c70cdaba6"
+    },
+    {
+      "name": "simulator-logs/foundation-models-interface/availability-query/compile.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "simulator-logs/foundation-models-interface/availability-query/compile.stdout.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "simulator-logs/foundation-models-interface/availability-query/compiler-version.stderr.log",
+      "bytes": 30,
+      "sha256": "bbc8b176d3c74d4c5a7fd00b40280f98168e116d5272273bfe8e71407625540e"
+    },
+    {
+      "name": "simulator-logs/foundation-models-interface/availability-query/compiler-version.stdout.log",
+      "bytes": 98,
+      "sha256": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a"
+    },
+    {
+      "name": "simulator-logs/foundation-models-interface/availability-query/query.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "simulator-logs/foundation-models-interface/availability-query/query.stdout.log",
+      "bytes": 222,
+      "sha256": "a18ec252484933aa75f0d0e08a41a44aa5d78a3f107a54f574dedd888f463bbc"
+    },
+    {
+      "name": "simulator-logs/foundation-models-interface/availability-query/receipt.json",
+      "bytes": 5361,
+      "sha256": "49be0b5ff38be2d6c2f0869fe2dd80ad23467af9ef081536d46d7fe83ea3525f"
+    },
+    {
+      "name": "simulator-logs/foundation-models-interface/availability-query/sdk-path.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "simulator-logs/foundation-models-interface/availability-query/sdk-path.stdout.log",
+      "bytes": 104,
+      "sha256": "ef0267694b48b092db5b5d7800411bba8eaad357d65f739b69b5c8b262c50409"
+    },
+    {
+      "name": "simulator-logs/foundation-models-interface/availability-query/sdk-version.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "simulator-logs/foundation-models-interface/availability-query/sdk-version.stdout.log",
+      "bytes": 5,
+      "sha256": "53e1ae253beb3b8a3b99dd2d4ec1eb641d392378329fcdccb560779fdf46de0b"
+    },
+    {
+      "name": "simulator-logs/foundation-models-interface/availability-query/xcode-version.stderr.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "simulator-logs/foundation-models-interface/availability-query/xcode-version.stdout.log",
+      "bytes": 31,
+      "sha256": "67c5b47bcf0e788aecae2f9b3af345813bdf7fe736faefb9666a7f4b2bf27ba7"
+    },
+    {
+      "name": "simulator-logs/foundation-models-interface/declarations.txt",
+      "bytes": 193265,
+      "sha256": "d1d50574ae65c19a319d7f8427944cc36a0373affcd8db3fba3fd6a3d531e2e0"
+    },
+    {
+      "name": "simulator-logs/foundation-models-interface/receipt.json",
+      "bytes": 1862,
+      "sha256": "6368aa6eb68421cdec99845d567b0ded98ae5c631ecca64f96b8dff726eab695"
+    },
+    {
+      "name": "simulator-logs/miniapp-upstream-inputs.patch",
+      "bytes": 162919,
+      "sha256": "4dab76167653db5bb79f9d3ca7aad05980626875785c8856ac811b9b6e1c5ef0"
+    },
+    {
+      "name": "simulator-logs/miniapp-upstream-resolution.json",
+      "bytes": 20829,
+      "sha256": "7717d3696d540c9fd5cd2c6bc0f2792c494c8eed4f1af086fbdb419da3f64d21"
+    },
+    {
+      "name": "simulator-logs/miniapp-upstream-resolution.log",
+      "bytes": 7973,
+      "sha256": "3f8a86f9045d5b392fb57ddcc9c9dbe7db1886216d4e37b22ac75ff1cd4e7fdc"
+    },
+    {
+      "name": "simulator-logs/openclaw-original-policy-parity.log",
+      "bytes": 2570,
+      "sha256": "a8f29d9cddabb7aa748d955bddc1212726aacd97857eb4cb5e3acc89e5db0344"
+    },
+    {
+      "name": "simulator-logs/performance-summary.json",
+      "bytes": 107,
+      "sha256": "c9dbceeea60dc1d2ebb3fe380f7501e2bca63527717f50bfc6f70a34f3108162"
+    },
+    {
+      "name": "simulator-logs/performance-summary.md",
+      "bytes": 3472,
+      "sha256": "bf90988f2e273b943b60e5a13de1384051a8fb3d99732936c2089dd6a6d5953a"
+    },
+    {
+      "name": "simulator-logs/sdk-native-export.log",
+      "bytes": 1539,
+      "sha256": "6deeb6a323d0f35eb50164b27884ae6f20b83112af5a1d59c407993bac6bb212"
+    },
+    {
+      "name": "simulator-logs/sdk-native-verify.log",
+      "bytes": 65,
+      "sha256": "4c9d4a5204d1cbac0f74163fc660f12c97db3b8c023041f4855974835bff7a86"
+    },
+    {
+      "name": "build/acceptance/expo-original-widgets-types/result.json",
+      "bytes": 658,
+      "sha256": "61bda670b0f6ee1d468ecb51f07f70d194279e4fb5457cca9d2b310986323dbf"
+    },
+    {
+      "name": "build/acceptance/expo-type-declarations/corrections.json",
+      "bytes": 3600,
+      "sha256": "0a7563cec0198b552d4bfc724c4a8f8edb8dd7c016e003ac5bd22166d2f8a66a"
+    },
+    {
+      "name": "build/acceptance/expo-ui-types/result.json",
+      "bytes": 682,
+      "sha256": "5f68d1b75c7d34dfcc6dd7183b3a0eb1b6532bff228c20dcd04d7c26cb743fec"
+    },
+    {
+      "name": "build/acceptance/miniapp-upstreams/resolution.json",
+      "bytes": 20829,
+      "sha256": "7717d3696d540c9fd5cd2c6bc0f2792c494c8eed4f1af086fbdb419da3f64d21"
+    }
+  ],
+  "retainedAtUTC": "2026-11-27T03:26:02.614983+00:00"
+}

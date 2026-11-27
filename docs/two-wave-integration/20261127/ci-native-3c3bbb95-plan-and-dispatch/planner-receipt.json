@@ -1,0 +1,30 @@
+{
+  "head": "3c3bbb955bc79733607e90c719fc95a454d6b387",
+  "startedAt": "2026-11-27T02:08:09.741147+00:00",
+  "finishedAt": "2026-11-27T02:09:15.852332+00:00",
+  "command": [
+    "python3",
+    "Scripts/CI/plan_affected_validation.py",
+    "--repository",
+    "/mnt/development/projects/worktrees/hanlin-two-wave-integration-20261126",
+    "--event-name",
+    "workflow_dispatch",
+    "--base-sha",
+    "c34dd6ae752b3ab3ebc001743fc62c72fc48a203",
+    "--head-sha",
+    "3c3bbb955bc79733607e90c719fc95a454d6b387",
+    "--json-output",
+    "/mnt/development/projects/worktrees/hanlin-two-wave-integration-20261126/build/affected-routing-3c3bbb95/plan.json"
+  ],
+  "exitCode": 0,
+  "logs": {
+    "planner.stderr.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "planner.stdout.log": {
+      "bytes": 29449,
+      "sha256": "8af375a1179c720a9b3e5535eec2a6d5049262d3cb377f4bfd5e261c36ce8bed"
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "started_at_utc": "2026-11-27T02:46:33.004330+00:00",
+  "finished_at_utc": "2026-11-27T02:51:01.243585+00:00",
+  "source": "00aabecd5e4cf7995fe358d63a9724edb3b299e4",
+  "exit_code": 1,
+  "duration_seconds": 268.715,
+  "summary_matches": [
+    [
+      "453",
+      "224.210"
+    ]
+  ],
+  "git_status_after": "",
+  "node": "v24.5.0",
+  "logs": [
+    {
+      "file": "stdout.log",
+      "bytes": 4882,
+      "sha256": "f255368fee3b58e2d06183082f6c8d88069c0b47125eaa0f2162d9dcd93be4b8"
+    },
+    {
+      "file": "stderr.log",
+      "bytes": 107628,
+      "sha256": "b98f57b798a30de5bc8ebb98d3c36d76df681bdfec6c05aa0cf8a05d3e0bf3d9"
+    }
+  ]
+}

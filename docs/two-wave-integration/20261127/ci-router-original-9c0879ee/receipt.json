@@ -1,0 +1,54 @@
+{
+  "sourceCommit": "9c0879ee168b6aec78a4cc80fd071514c8787887",
+  "command": [
+    "runuser",
+    "-u",
+    "chatgpt-agent",
+    "--",
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "Scripts/CI/Tests",
+    "-p",
+    "test_*.py",
+    "-v"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-ci-router-20261127",
+  "startedAt": "2026-11-27T03:33:41.322725+00:00",
+  "finishedAt": "2026-11-27T03:34:21.329545+00:00",
+  "durationSeconds": 40.00683343689889,
+  "exitCode": 0,
+  "controllerError": null,
+  "originalRunnerSummary": [
+    "",
+    "----------------------------------------------------------------------",
+    "Ran 461 tests in 39.204s",
+    "",
+    "OK (skipped=2)"
+  ],
+  "skips": [
+    "test_staged_artifacts_have_valid_plists_only_ios_slices_and_no_broken_links (test_expo_xcframework_preparation.TestExpoXCFrameworkPreparation.test_staged_artifacts_have_valid_plists_only_ios_slices_and_no_broken_links) ... skipped 'Artifacts directory is not staged'",
+    "test_real_flit_backend_download_build_install_and_import (hanlin_python_packaging_acceptance.PythonPackagingTests.test_real_flit_backend_download_build_install_and_import) ... skipped 'explicit real PyPI/backend integration'"
+  ],
+  "statusAfter": "",
+  "files": {
+    "stdout.log": {
+      "bytes": 4882,
+      "sha256": "104ab973da69f114c6ba2a477e3af8d1d89dd02e33a95a75f248a67890e528c5"
+    },
+    "start.json": {
+      "bytes": 249,
+      "sha256": "25ff670b7ef3c7d8bb7e14b1277705c056ebe72e12001aecc48f8f2afade2924"
+    },
+    "stderr.log": {
+      "bytes": 91595,
+      "sha256": "9f32f99eb728b1ddfd8ef4c9c4f3e48fdad5f7e72b41181e44e069cf11a7cc61"
+    },
+    "source-inputs.json": {
+      "bytes": 5724,
+      "sha256": "59a3dd41be53ec5a35bc3eeef4b0d8a5b4865ea7579cfcdecfa98adb28256b39"
+    }
+  }
+}

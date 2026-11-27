@@ -12,7 +12,7 @@ import UIKit
 /// Notification content is a prepared original presentation. The existing
 /// notification event remains the sole envelope for its foreground Host action.
 @MainActor
-open class HanlinNotificationContentViewController: UIViewController, UNNotificationContentExtension {
+open class HanlinNotificationContentViewController: UIViewController, @MainActor UNNotificationContentExtension {
     open var hostConfiguration: HanlinExtensionHostConfiguration { .init() }
 
     private let model = HanlinNotificationContentModel()

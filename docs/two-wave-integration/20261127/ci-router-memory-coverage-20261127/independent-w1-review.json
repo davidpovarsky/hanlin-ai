@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "/root/w1_review_resume",
+  "status": "APPROVED_FOR_INTEGRATION_AND_ORIGINAL_FULL_ROUTER_GATE",
+  "reviewedCommits": [
+    "71a1355bc49829e6942aadcc282899528b4030e8",
+    "0ce921b1a35d4813dda690dd353b7a87e65206b4"
+  ],
+  "reviewedAtUTC": "2026-11-27T03:29:39.205873+00:00",
+  "scope": "Four CI test files only; independent source and original focused-receipt review.",
+  "findings": [
+    "Historical cancellation/pin-build positive controls now use their authenticated frozen workflow guard hashes. Existing validators and frozen references are unchanged; new negative guard mutations still require blocking.",
+    "Stop-continuation raw locks use the original frozen07431 fixture. Missing, duplicate and wrong-revision producer mutations are rejected even with recomputed valid digests.",
+    "Both AI_HLY and HanlinMiniApps main applications must request extended virtual addressing with a literal boolean true.",
+    "The final memory test uses pure extension_inventory.SIGNING_TARGETS and unions every shipping entitlement path with the original top-level glob. All13 shipping targets, including all7 nested MiniApps extensions, are covered. Every nonapplication path must omit the entitlement key entirely.",
+    "Missing shipping files fail when read; losing either main app from the canonical inventory also fails. The original explicit profile/export/physical acceptance distinctions remain intact."
+  ],
+  "originalFocusedEvidence": [
+    {
+      "commit": "71a1355bc49829e6942aadcc282899528b4030e8",
+      "testCount": 20,
+      "unittestDurationSeconds": 14.846,
+      "controllerDurationSeconds": 15.534,
+      "exitCode": 0,
+      "receiptPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-router-fixture-controls-20261127/receipt.json",
+      "receiptSHA256": "9f05366cf106301dcb3ec71ff1e69edc35e1b99ccf4d2b5c5fae1261b95979a1",
+      "stderrSHA256": "fa5c7a7e13411cebe3194f814ccbf79572e4560220bc2b2a5a99f5994b65b66e"
+    },
+    {
+      "commit": "0ce921b1a35d4813dda690dd353b7a87e65206b4",
+      "testCount": 5,
+      "unittestDurationSeconds": 0.008,
+      "controllerDurationSeconds": 0.22986413165926933,
+      "exitCode": 0,
+      "receiptPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-router-memory-coverage-20261127/receipt.json",
+      "receiptSHA256": "82738e32036e9586070cd8b18c2ef0ee518b2f09e010c89ed38fe5e8e894364c",
+      "stderrSHA256": "c52cda291eb23d02ad6f8a37ef677d92c4645efdf43164005da34197074e7df4"
+    }
+  ],
+  "finalMemoryTestSHA256": "1710dcf4a268afc709d11a29c3629c1b86116f8211a3a47b697495047662d2fb",
+  "reviewerTestsExecuted": 0,
+  "limitations": [
+    "This review does not assert original full CI-router discovery passed; root owns that gate on the integrated source.",
+    "No native build, simulator run, signing/profile or physical-device acceptance is inferred from these CI test repairs."
+  ]
+}

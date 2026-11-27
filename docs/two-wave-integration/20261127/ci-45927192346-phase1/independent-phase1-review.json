@@ -1,0 +1,301 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "/root/w1_review_resume",
+  "repository": "davidpovarsky/hanlin-ai",
+  "source": "3c3bbb955bc79733607e90c719fc95a454d6b387",
+  "runID": 45927192346,
+  "jobID": 140271518817,
+  "scope": "Original successful NativeScript dependency closure and generic iOS Simulator/device package builds only",
+  "status": "NATIVESCRIPT_COMPONENT_PASSED_OTHER_PHASE1_GATES_SKIPPED",
+  "observedToolchain": {
+    "xcode": "27.2",
+    "swift": "6.4.2",
+    "strictConcurrency": "complete"
+  },
+  "buildSuccesses": [
+    {
+      "destination": "generic/platform=iOS Simulator",
+      "atUTC": "2026-11-27T02:18:26.8645790Z"
+    },
+    {
+      "destination": "generic/platform=iOS",
+      "atUTC": "2026-11-27T02:18:58.1698540Z"
+    }
+  ],
+  "originalArtifacts": [
+    {
+      "artifactID": 15167435926,
+      "file": "phase1.zip",
+      "bytes": 43589,
+      "sha256": "c6bff2cb9b2fac6cf2f6c173ebe9ea5991d1c132ac87100cb13f41efd54981a3"
+    },
+    {
+      "artifactID": 15166559552,
+      "file": "plan.zip",
+      "bytes": 52094,
+      "sha256": "31d62b8a8ff1516b68364d664fb89a7ca06b780d3ae5b41c4209237f278fb600"
+    }
+  ],
+  "actualJobSteps": [
+    {
+      "name": "Set up job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 1
+    },
+    {
+      "name": "Live Activity Ã‚Â· refresh",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 2
+    },
+    {
+      "name": "Select newest stable Xcode and print environment",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 3
+    },
+    {
+      "name": "Check out exact validation commit cleanly",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 4
+    },
+    {
+      "name": "Confirm clean exact checkout",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 5
+    },
+    {
+      "name": "Set up pinned baseline Node",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 6
+    },
+    {
+      "name": "Prepare declaration-only metadata tool",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 7
+    },
+    {
+      "name": "Prepare pinned NativeScript iOS dependency closure",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 8
+    },
+    {
+      "name": "Prepare validation logs",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 9
+    },
+    {
+      "name": "Test Xcode cache input normalization",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 10
+    },
+    {
+      "name": "Restore Phase 1 SwiftPM build cache",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 11
+    },
+    {
+      "name": "Restore Phase 1 simulator compiler cache",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 12
+    },
+    {
+      "name": "Restore Phase 1 device compiler cache",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 13
+    },
+    {
+      "name": "Report Phase 1 cache mode",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 14
+    },
+    {
+      "name": "Discard Phase 1 compiler state for forced clean build",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 15
+    },
+    {
+      "name": "Verify Scripting baseline integrity and reproducibility",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 16
+    },
+    {
+      "name": "Validate JSON and internal JSON Schema references",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 17
+    },
+    {
+      "name": "Verify exact TypeScript 7.0.2 Scripting artifacts",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 18
+    },
+    {
+      "name": "Scripting Production Compiler Acceptance",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 19
+    },
+    {
+      "name": "Resolve the Phase 1 Swift package",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 20
+    },
+    {
+      "name": "Compile the Phase 1 Swift package",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 21
+    },
+    {
+      "name": "Live Activity Ã‚Â· refresh",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 22
+    },
+    {
+      "name": "Compile and execute all Phase 1 contract tests",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 23
+    },
+    {
+      "name": "Save successful Phase 1 SwiftPM build cache",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 24
+    },
+    {
+      "name": "Discover the generated Xcode package scheme",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 25
+    },
+    {
+      "name": "Compile contracts for generic iOS Simulator",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 26
+    },
+    {
+      "name": "Save successful Phase 1 simulator compiler cache",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 27
+    },
+    {
+      "name": "Compile contracts for generic iOS device",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 28
+    },
+    {
+      "name": "Compile the NativeScript runtime package for simulator and device",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 29
+    },
+    {
+      "name": "Save successful Phase 1 device compiler cache",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 30
+    },
+    {
+      "name": "Summarize compiler warnings",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 31
+    },
+    {
+      "name": "Live Activity Ã‚Â· refresh",
+      "status": "completed",
+      "conclusion": "skipped",
+      "number": 32
+    },
+    {
+      "name": "Retain Phase 1 validation evidence",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 33
+    },
+    {
+      "name": "Post Set up pinned baseline Node",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 65
+    },
+    {
+      "name": "Post Check out exact validation commit cleanly",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 66
+    },
+    {
+      "name": "Complete job",
+      "status": "completed",
+      "conclusion": "success",
+      "number": 67
+    }
+  ],
+  "actualPlan": {
+    "head": "3c3bbb955bc79733607e90c719fc95a454d6b387",
+    "base": "c34dd6ae752b3ab3ebc001743fc62c72fc48a203",
+    "selectedGroups": [
+      "simulator_targeted_ui",
+      "nativescript_runtime",
+      "nativescript_dependencies",
+      "app_unit_tests",
+      "runtimecore_host"
+    ],
+    "flags": {
+      "run_full_validation": false,
+      "run_phase1": true,
+      "run_ci_router": false,
+      "run_scripting_reference": false,
+      "run_scripting_compiler": false,
+      "run_platform_contracts": false,
+      "run_nativescript_dependencies": true,
+      "run_nativescript_runtime": true,
+      "run_runtimecore_bundle": false,
+      "run_runtimecore_host": true,
+      "run_device_build": false,
+      "run_ipa_packaging": false,
+      "run_simulator_job": true,
+      "run_simulator_unit": true,
+      "run_simulator_scripting_acceptance": false,
+      "run_simulator_targeted_ui": true,
+      "run_simulator_shell_acceptance": false,
+      "run_simulator_mcp_acceptance": false,
+      "run_simulator_smoke_launch": false,
+      "run_simulator_nativescript_poc": false,
+      "run_runtime_tooling_full_acceptance": false
+    }
+  },
+  "notProven": [
+    "Full HanlinPlatform SwiftPM resolve/build/test",
+    "HanlinPlatform generic iOS Simulator/device compile",
+    "CI router discovery",
+    "RuntimeCore bundle pipeline",
+    "Shell/MCP full-app simulator acceptance",
+    "Device archive/IPA",
+    "App90 and MiniApps paired/additional/system acceptance"
+  ],
+  "reviewActions": "Read original GitHub job steps and decoded full job log; downloaded the two original artifact ZIPs and verified the GitHub-provided SHA-256 and exact byte sizes on Oracle. No builds/tests/jobs executed."
+}

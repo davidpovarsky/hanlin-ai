@@ -1,0 +1,246 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-11-27T02:04:20.587594+00:00",
+  "source": "e6b9630e62cef3d5a90a5bcd44890974ffcf6afc",
+  "nativeSource": "f103996cc03d2cc5321c7e83b6cdf77c3b60e509",
+  "status": "FRESH_HOST_AND_SDK_VERIFIED_NATIVE_PENDING",
+  "route": "ORIGINAL_PHASES_WITH_BOUNDED_TEST_CONCURRENCY",
+  "originalTests": {
+    "tests": 188,
+    "pass": 188,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "actualLongJobProof": {
+    "proof": "actual-node-job-over-300-seconds",
+    "elapsedMilliseconds": 305201.885875,
+    "executionID": "8bea890b-508b-408a-8e98-2bb517502864"
+  },
+  "archive": {
+    "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/build/runtime-host-e6b9630e-original-phases-r1/RuntimeHostResources.zip",
+    "canonicalPath": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/build/runtime-host/RuntimeHostResources.zip",
+    "bytes": 81901037,
+    "sha256": "145c7192faf9730bca88e81d1e3031df5ace5e013d2756da556b676dbc6f5b71"
+  },
+  "sdkInputSHA256": "acd36ac16c91b07ff6a8c7245f83c896153e5690c2c28bb713b6faa6f72bc240",
+  "files": [
+    {
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-preparation-e6b9630e-original-phases-r1.json",
+      "archivePath": "stage/host-preparation-e6b9630e-original-phases-r1.json",
+      "bytes": 17911,
+      "sha256": "caa5d15f003ac303a702e1cbd3b5f2d75e34725532c7b8fce5f7ffbf975f92b6"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/source-stage-e6b9630e.json",
+      "archivePath": "stage/source-stage-e6b9630e.json",
+      "bytes": 7559,
+      "sha256": "20f7e4d79bec20d06cd10b5e7bf8ba2fba0dc21642106b4a61db8d9baa1d0e53"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/source-seal-f103996c.json",
+      "archivePath": "stage/source-seal-f103996c.json",
+      "bytes": 1898,
+      "sha256": "4f0f7d0b3094beb8e1e0045346386ed6a43e22682fdaa7d65d1590a43ff74fd1"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/mac-native-sealed-f103996c.bundle",
+      "archivePath": "stage/mac-native-sealed-f103996c.bundle",
+      "bytes": 923,
+      "sha256": "28f60c3158388a0bc2729c421bbf80b43692a8d34061f7692585d1b4416482bf"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/prepare-host-integrated-20261127.py",
+      "archivePath": "stage/prepare-host-integrated-20261127.py",
+      "bytes": 16074,
+      "sha256": "1dc574ca6da582ec6fe09f3349b684acb577d70e26a87f8686a5c8c47d272170"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/run-native-paired-integrated-20261127.py",
+      "archivePath": "stage/run-native-paired-integrated-20261127.py",
+      "bytes": 9087,
+      "sha256": "984b0d277d616d9ff155fbcf52142b106aadfa163cf6029222a38ddc46b19c19"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/release-readiness-e6b9630e-20261127.json",
+      "archivePath": "stage/release-readiness-e6b9630e-20261127.json",
+      "bytes": 38955,
+      "sha256": "98dd83f6a402769dc827051f3ad551a5fc4a5a14c56ee449de47e81e94b4a142"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-resume-e6b9630e-original-phases-r1/original-archive-reuse-validation.log",
+      "archivePath": "stage/host-resume-e6b9630e-original-phases-r1/original-archive-reuse-validation.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-resume-e6b9630e-original-phases-r1/host-input-fingerprint-before.log",
+      "archivePath": "stage/host-resume-e6b9630e-original-phases-r1/host-input-fingerprint-before.log",
+      "bytes": 65,
+      "sha256": "0562b0f474a2f297117c9cc088509a6f3b3c821624890cdebbedb5739087522f"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-resume-e6b9630e-original-phases-r1/node-version.log",
+      "archivePath": "stage/host-resume-e6b9630e-original-phases-r1/node-version.log",
+      "bytes": 8,
+      "sha256": "2f30156cd7f9137514ea68d53554f583cf6541fd107dbc8ae8a19253379a735a"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-resume-e6b9630e-original-phases-r1/original-post-test-packing.sh",
+      "archivePath": "stage/host-resume-e6b9630e-original-phases-r1/original-post-test-packing.sh",
+      "bytes": 130,
+      "sha256": "911a4622f94eef57be7952c184f623cebaa1bad9c8a47ad3bddeb4016b7d91c3"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-resume-e6b9630e-original-phases-r1/original-post-test-packing.log",
+      "archivePath": "stage/host-resume-e6b9630e-original-phases-r1/original-post-test-packing.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-resume-e6b9630e-original-phases-r1/current-sdk-audit.log",
+      "archivePath": "stage/host-resume-e6b9630e-original-phases-r1/current-sdk-audit.log",
+      "bytes": 77,
+      "sha256": "6d938ed7d69471fb67d14ac1b2beae53a4383c809514a5f10888d2b14cfb1b06"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-resume-e6b9630e-original-phases-r1/complete-original-test-set.log",
+      "archivePath": "stage/host-resume-e6b9630e-original-phases-r1/complete-original-test-set.log",
+      "bytes": 18968,
+      "sha256": "70ff0674d43bf25b9252ed6a3831ca196d77164b0d03cf1e6bd7db26f034dd8e"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-resume-e6b9630e-original-phases-r1/grammar-closure-before.json",
+      "archivePath": "stage/host-resume-e6b9630e-original-phases-r1/grammar-closure-before.json",
+      "bytes": 6378,
+      "sha256": "71c4a92b5ec0d156b2b01959f3657eb932db24103d8892384d4ec72c9cffa9bc"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-resume-e6b9630e-original-phases-r1/current-sdk-fingerprint.log",
+      "archivePath": "stage/host-resume-e6b9630e-original-phases-r1/current-sdk-fingerprint.log",
+      "bytes": 66409,
+      "sha256": "0ef8a90519d63482e222f12ab6f836e04e950a61b2748ecfdcca74aca8dc37aa"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-resume-e6b9630e-original-phases-r1/original-packed-validation-jitless-and-seal.log",
+      "archivePath": "stage/host-resume-e6b9630e-original-phases-r1/original-packed-validation-jitless-and-seal.log",
+      "bytes": 387,
+      "sha256": "06af78234703465458b3307838c957313c929a015aad7a287dfcf529710c15dc"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-resume-e6b9630e-original-phases-r1/original-pretest-phases.sh",
+      "archivePath": "stage/host-resume-e6b9630e-original-phases-r1/original-pretest-phases.sh",
+      "bytes": 3565,
+      "sha256": "10538ead63d8fadc14e1362e92985eafce37d4c86650cca6ff422cdaa32cfe22"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-resume-e6b9630e-original-phases-r1/original-packed-verification-and-seal.sh",
+      "archivePath": "stage/host-resume-e6b9630e-original-phases-r1/original-packed-verification-and-seal.sh",
+      "bytes": 1410,
+      "sha256": "8e4bc5c4a631ea51588ecd0686a468f41d61898647de1f60f9429ca737b696a5"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-resume-e6b9630e-original-phases-r1/node-fingerprint.log",
+      "archivePath": "stage/host-resume-e6b9630e-original-phases-r1/node-fingerprint.log",
+      "bytes": 518,
+      "sha256": "5d9368cd4b939d652aab8afbd31375396f6312d3f7b6b30c4843c40aab2f32fe"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-resume-e6b9630e-original-phases-r1/staged-complete-closure-after.json",
+      "archivePath": "stage/host-resume-e6b9630e-original-phases-r1/staged-complete-closure-after.json",
+      "bytes": 6673646,
+      "sha256": "e220532ced4609a10523966444f61906e5f2cfdc8b5c80810f5dae9545ddd00f"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-resume-e6b9630e-original-phases-r1/staged-complete-closure-before.json",
+      "archivePath": "stage/host-resume-e6b9630e-original-phases-r1/staged-complete-closure-before.json",
+      "bytes": 6673646,
+      "sha256": "e220532ced4609a10523966444f61906e5f2cfdc8b5c80810f5dae9545ddd00f"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-resume-e6b9630e-original-phases-r1/host-input-fingerprint-after.log",
+      "archivePath": "stage/host-resume-e6b9630e-original-phases-r1/host-input-fingerprint-after.log",
+      "bytes": 65,
+      "sha256": "0562b0f474a2f297117c9cc088509a6f3b3c821624890cdebbedb5739087522f"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-resume-e6b9630e-original-phases-r1/original-pretest-phases.log",
+      "archivePath": "stage/host-resume-e6b9630e-original-phases-r1/original-pretest-phases.log",
+      "bytes": 1759,
+      "sha256": "67ca64ddb9db5537b5b94d6098a629574fd97bcf9eaeb9b225afbe6dc6e6ace6"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-resume-e6b9630e-original-phases-r1/current-reachability-audit.log",
+      "archivePath": "stage/host-resume-e6b9630e-original-phases-r1/current-reachability-audit.log",
+      "bytes": 73,
+      "sha256": "231e3ea5da8cd01dfdc112d6cb7466ce2b2e6f38070dd193d6bbea0e17f7f39b"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-resume-e6b9630e-original-phases-r1/original-test-source-manifest.json",
+      "archivePath": "stage/host-resume-e6b9630e-original-phases-r1/original-test-source-manifest.json",
+      "bytes": 19301,
+      "sha256": "9028657cebf5404853474d2e3a8900e48aefdc7cb109496bae43417409598711"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/source-stage-e6b9630e-proof/fetch-reviewed-integrated-source.log",
+      "archivePath": "stage/source-stage-e6b9630e-proof/fetch-reviewed-integrated-source.log",
+      "bytes": 161,
+      "sha256": "bc4b663c63a6cba3ca18780a225f6db8fc46c0752c50406c205a4ac8b2a59977"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/source-stage-e6b9630e-proof/checkout-reviewed-integrated-source.log",
+      "archivePath": "stage/source-stage-e6b9630e-proof/checkout-reviewed-integrated-source.log",
+      "bytes": 91,
+      "sha256": "207d7694dcefb03bbd5b605677b49eb3a83a7c0c322aa09d078ba436a89d2168"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/source-stage-e6b9630e-proof/verify-bundle.log",
+      "archivePath": "stage/source-stage-e6b9630e-proof/verify-bundle.log",
+      "bytes": 448,
+      "sha256": "6a8aac6e7e0d76afa91401bfe80249c92b063d0a4b3cd6a23f4358a73bb10d6d"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/build/runtime-host/host-metadata.json",
+      "archivePath": "seal/host-metadata.json",
+      "bytes": 358,
+      "sha256": "1e3df39d3bbaec21bb3d358ae9e908073f78e7525cfb87a53d0839203a4c71bd"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/build/runtime-host/runtime-host.sha256",
+      "archivePath": "seal/runtime-host.sha256",
+      "bytes": 91,
+      "sha256": "2196636551e776c294e177f799ac10b187f68f1544995ed215c7607ccbdbb312"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/fresh-sdk-e6b9630e-original-phases-r1/MiniAppSDK/miniapp-sdk.json",
+      "archivePath": "seal/miniapp-sdk.json",
+      "bytes": 5266087,
+      "sha256": "9a93270d9c524209b47e5cad21f97b3f23d7c15feddc587067b1359c9f7bca14"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/docs/miniapp-sdk/source-inventory.json",
+      "archivePath": "generated/docs/miniapp-sdk/source-inventory.json",
+      "bytes": 569738,
+      "sha256": "8b8f94892af65fa1265107d06c87d28c2d0db29557e2f5b040a502962f10b2b2"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "archivePath": "generated/docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "bytes": 145496,
+      "sha256": "c8311ef65300e6085ce91bcaf74143b470f1a083eae65dc5651f13370450687f"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/docs/miniapp-sdk/extension-reachability.json",
+      "archivePath": "generated/docs/miniapp-sdk/extension-reachability.json",
+      "bytes": 213340,
+      "sha256": "7b92c300d8f5dfe634108a01cc61ae7f4c9835026d66ec5794a708ef6e4e9a84"
+    },
+    {
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/docs/miniapp-sdk/extension-reachability.md",
+      "archivePath": "generated/docs/miniapp-sdk/extension-reachability.md",
+      "bytes": 37881,
+      "sha256": "e3d4a2605030d8db9fd5584461f0d4e301c1b91d82bd22c72af698afc90cc0ef"
+    }
+  ],
+  "boundary": "Host188 fresh PASS on e6; original package79 reused by complete staged input proof; paired54 executing separately on f103 generated-doc seal, extras26/OS/release not credited. Runtime ZIP retained on Mac, no credential/profile bytes included."
+}

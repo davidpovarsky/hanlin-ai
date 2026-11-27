@@ -1,3 +1,6 @@
+import { readFileSync } from 'node:fs';
+
+const expoDependencies = JSON.parse(readFileSync(new URL('../Expo/package.json', import.meta.url), 'utf8')).dependencies;
 const json = value => JSON.stringify(value, null, 2) + '\n';
 // Existing dashboard fixtures intentionally target home-screen sizes.
 const families = ['systemSmall', 'systemMedium', 'systemLarge', 'systemExtraLarge'];
@@ -6,46 +9,14 @@ const metadata = (actions, sourceFormat = 'jsx') => ({ abiVersion: 1, sourceForm
 const manifest = (name, engine, actions, entry = 'widget.jsx') => ({ name, version: '1.0.0', entry, kind: 'widget', widgetEngine: engine,
   hanlinRuntime: engine === 'expo' ? 'hanlin-expo' : 'scripting-jsc', hanlinWidget: metadata(actions, entry.endsWith('.tsx') ? 'tsx' : 'jsx') });
 const expoPackage = name => json({ name, version: '1.0.0', hanlinRuntime: 'hanlin-expo',
-  hanlinExpo: { runtimeVersion: '58.0.3', plugins: { '@expo/ui': '58.0.3' } },
-  dependencies: { '@expo/ui': '58.0.3', 'expo-widgets': '58.0.3', react: '19.3.0' } });
+  hanlinExpo: { runtimeVersion: expoDependencies['@expo/ui'], plugins: { '@expo/ui': expoDependencies['@expo/ui'] } },
+  dependencies: { '@expo/ui': expoDependencies['@expo/ui'], 'expo-widgets': expoDependencies['expo-widgets'], react: expoDependencies.react } });
 const png = Buffer.from('iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jBqkAAAAASUVORK5CYII=', 'base64');
 const counterActions = ['increment', 'decrement', 'status'].map(id => ({ id, kind: 'expoCallback' }));
 const scriptActions = [{ id: 'sync', kind: 'function', handler: 'syncNow' }, { id: 'backup', kind: 'setValue', stateKey: 'backup' },
   { id: 'named', kind: 'function', handler: 'setStatus' }, { id: 'reload', kind: 'reload' }];
 
 export const widgetSamples = [
-  { name: 'Hanlin-Expo-Widget-Interactive-Matrix', extension: 'hanlinExpo', engine: 'expo', expected: 'IMPORT_AND_NATIVE_TEST_REQUIRED', files: {
-    'script.json': json({ ...manifest('Interactive Widget Matrix', 'expo', [
-      {id:'enabled',kind:'expoCallback'}, {id:'increment',kind:'expoCallback'}, {id:'refresh',kind:'reload'}
-    ]), hanlinWidget: {...metadata([
-      {id:'enabled',kind:'expoCallback'}, {id:'increment',kind:'expoCallback'}, {id:'refresh',kind:'reload'}
-    ]), families: allFamilies} }),
-    'package.json': expoPackage('hanlin-expo-widget-interactive-matrix'),
-    'widget.jsx': `import {VStack,HStack,Text,Label,Toggle,Button,ProgressView,Gauge,Chart,Image,Link} from '@expo/ui/swift-ui';
-import {containerBackground,widgetAccentedRenderingMode,frame,font,accessibilityLabel} from '@expo/ui/swift-ui/modifiers';
-export default function Matrix(props, environment) {
-  'widget';
-  if (props.fail) throw Error('Fixture refresh failed');
-  const count = props.count ?? 0;
-  const family = environment.widgetFamily;
-  const enabled = props.enabled ?? false;
-  if (family === 'accessoryInline') return <Text>{'שלום ' + count}</Text>;
-  if (family === 'accessoryCircular') return <Gauge value={Math.min(1, count / 10)} min={0} max={1}><Text>{String(count)}</Text></Gauge>;
-  if (family === 'accessoryRectangular') return <VStack><Text>שלום Widget</Text><ProgressView value={Math.min(1,count/10)}><Text>{String(count)}</Text></ProgressView></VStack>;
-  return <VStack spacing={4} modifiers={[containerBackground('clear','widget'),font({textStyle:'caption'})]}>
-    <Label systemImage="sparkles"><Text>{family === 'systemExtraLargePortrait' ? 'Portrait · שלום' : 'Native · שלום'}</Text></Label>
-    <Toggle target="enabled" label="Notifications" isOn={enabled} onIsOnChange={value=>({enabled:value, count:count+1})}
-      modifiers={[accessibilityLabel('Widget notifications')]}/>
-    <HStack><Button label="Add" target="increment" onPress={()=>({count:count+1})}/>
-      <Button label="Refresh" target="refresh" {...{widgetRefresh:true}}/></HStack>
-    <ProgressView value={Math.min(1,count/10)}><Text>{String(count) + ' of 10'}</Text></ProgressView>
-    <Gauge value={Math.min(1,count/10)} min={0} max={1} currentValueLabel={<Text>{String(count)}</Text>}><Text>Count</Text></Gauge>
-    {family !== 'systemSmall' ? <Chart type="bar" data={[{x:'A',y:count},{x:'B',y:10}]} modifiers={[frame({height:44})]}/> : null}
-    <HStack><Image systemName="book.fill" modifiers={[widgetAccentedRenderingMode('accentedDesaturated')]}/>
-      <Link destination="https://example.com/widget"><Text>Details</Text></Link></HStack>
-  </VStack>;
-}\n`
-  } },
   { name: 'Hanlin-Expo-Widget-Counter', extension: 'hanlinExpo', engine: 'expo', expected: 'IMPORT_AND_NATIVE_TEST_REQUIRED', files: {
     'script.json': json(manifest('Expo Counter Widget', 'expo', counterActions, 'widget.tsx')),
     'package.json': expoPackage('hanlin-expo-widget-counter'),
@@ -116,5 +87,46 @@ $render(<vstack spacing="2"><hstack spacing="4"><text font="caption">ScriptWidge
     'script.json': json({...manifest('Invalid widget engine', 'expo', []),widgetEngine:'foowidget'}),
     'package.json': expoPackage('hanlin-widget-invalid-cases'), 'widget.jsx':'export default function Invalid(){ return <broken; }',
     'negative-cases.json': json(['unknown engine','invalid JSX','unsupported ABI','corrupt digest','stale generation','path traversal'])
+  } },
+  { name: 'Hanlin-Expo-Widget-Interactive-Matrix', extension: 'hanlinExpo', engine: 'expo', expected: 'IMPORT_AND_NATIVE_TEST_REQUIRED', files: {
+    'script.json': json({ ...manifest('Interactive Widget Matrix', 'expo', [
+      {id:'enabled',kind:'expoCallback'}, {id:'increment',kind:'expoCallback'}, {id:'refresh',kind:'reload'},
+      {id:'failRefresh',kind:'expoCallback'}, {id:'recover',kind:'expoCallback'}
+    ]), hanlinWidget: {...metadata([
+      {id:'enabled',kind:'expoCallback'}, {id:'increment',kind:'expoCallback'}, {id:'refresh',kind:'reload'},
+      {id:'failRefresh',kind:'expoCallback'}, {id:'recover',kind:'expoCallback'}
+    ]), families: allFamilies} }),
+    'package.json': expoPackage('hanlin-expo-widget-interactive-matrix'),
+    'widget.jsx': `import {VStack,HStack,Text,Label,Toggle,Button,ProgressView,Gauge,Chart,Image,Link} from '@expo/ui/swift-ui';
+import {containerBackground,widgetAccentedRenderingMode,frame,font,accessibilityLabel} from '@expo/ui/swift-ui/modifiers';
+export default function Matrix(props, environment) {
+  'widget';
+  // Model a temporary source failure using the original public render clock.
+  // Button callbacks rebuild the layout too, so Retry becomes reachable only
+  // after this authored recovery boundary; no callback-only runtime is added.
+  const now = environment.date?.getTime() ?? 0;
+  if (props.fail && !(now >= props.retryAfter)) throw Error('Fixture refresh failed');
+  const count = props.count ?? 0;
+  const family = environment.widgetFamily;
+  const enabled = props.enabled ?? false;
+  if (family === 'accessoryInline') return <Text>{'שלום ' + count}</Text>;
+  if (family === 'accessoryCircular') return <Gauge value={Math.min(1, count / 10)} min={0} max={1}><Text>{String(count)}</Text></Gauge>;
+  if (family === 'accessoryRectangular') return <VStack><Text>שלום Widget</Text><ProgressView value={Math.min(1,count/10)}><Text>{String(count)}</Text></ProgressView></VStack>;
+  return <VStack spacing={4} modifiers={[containerBackground('clear','widget'),font({textStyle:'caption'})]}>
+    <Label systemImage="sparkles"><Text>{family === 'systemExtraLargePortrait' ? 'Portrait · שלום' : 'Native · שלום'}</Text></Label>
+    <Text>{'Matrix count: ' + count}</Text>
+    <Toggle target="enabled" label="Notifications" isOn={enabled} onIsOnChange={value=>({enabled:value, count:count+1})}
+      modifiers={[accessibilityLabel('Widget notifications')]}/>
+    <HStack><Button label="Add" target="increment" onPress={()=>({count:count+1})}/>
+      <Button label="Refresh" target="refresh" {...{widgetRefresh:true}}/></HStack>
+    <HStack><Button label="Fail refresh" target="failRefresh" onPress={()=>({fail:true,retryAfter:now+90000,count:count+1})}/>
+      <Button label="Recover" target="recover" onPress={()=>({fail:false,retryAfter:0,count:count+1})}/></HStack>
+    <ProgressView value={Math.min(1,count/10)}><Text>{String(count) + ' of 10'}</Text></ProgressView>
+    <Gauge value={Math.min(1,count/10)} min={0} max={1} currentValueLabel={<Text>{String(count)}</Text>}><Text>Count</Text></Gauge>
+    {family !== 'systemSmall' ? <Chart type="bar" data={[{x:'A',y:count},{x:'B',y:10}]} modifiers={[frame({height:44})]}/> : null}
+    <HStack><Image systemName="book.fill" modifiers={[widgetAccentedRenderingMode('accentedDesaturated')]}/>
+      <Link destination="https://example.com/widget"><Text>Details</Text></Link></HStack>
+  </VStack>;
+}\n`
   } }
 ];

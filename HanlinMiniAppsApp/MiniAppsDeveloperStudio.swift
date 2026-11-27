@@ -200,7 +200,7 @@ private struct MiniAppsStudioBrowser: View {
     }
     private func refresh() {
         do { entries = try workspace.entries(in: directory) }
-        catch { error = error.localizedDescription }
+        catch { self.error = error.localizedDescription }
     }
 }
 

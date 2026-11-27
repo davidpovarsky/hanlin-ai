@@ -1,0 +1,54 @@
+{
+  "schemaVersion": 1,
+  "status": "PASS",
+  "sourceBase": "9c0879ee168b6aec78a4cc80fd071514c8787887",
+  "command": [
+    "runuser",
+    "-u",
+    "chatgpt-agent",
+    "--",
+    "env",
+    "PYTHONDONTWRITEBYTECODE=1",
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "Scripts/ProductSplit",
+    "-p",
+    "test_local_miniapps_profiles.py",
+    "-v"
+  ],
+  "workingDirectory": "/mnt/development/projects/worktrees/hanlin-miniapps-icloud-documents-20261127",
+  "startedAt": "2026-11-27T03:52:54.971115+00:00",
+  "finishedAt": "2026-11-27T03:52:55.287470+00:00",
+  "elapsedSeconds": 0.31634357012808323,
+  "exitCode": 0,
+  "timedOut": false,
+  "sourceHashesBefore": {
+    "HanlinMiniAppsApp/HanlinMiniApps.entitlements": "3b41191835437afb791dd7d9bfc9287e2051c059ef8c2c368377e8063f31292e",
+    "Scripts/ProductSplit/verify_targets.py": "7d98c480a0a9866115527277abd093e897671705a6164e86b5952e00093c1602",
+    "Scripts/ProductSplit/test_local_miniapps_profiles.py": "85665934c4b8d8ab45e97e941d76c41347252b502f8cecda6675305e55524282"
+  },
+  "sourceHashesAfter": {
+    "HanlinMiniAppsApp/HanlinMiniApps.entitlements": "3b41191835437afb791dd7d9bfc9287e2051c059ef8c2c368377e8063f31292e",
+    "Scripts/ProductSplit/verify_targets.py": "7d98c480a0a9866115527277abd093e897671705a6164e86b5952e00093c1602",
+    "Scripts/ProductSplit/test_local_miniapps_profiles.py": "85665934c4b8d8ab45e97e941d76c41347252b502f8cecda6675305e55524282"
+  },
+  "logs": {
+    "focused.stdout.log": {
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "focused.stderr.log": {
+      "bytes": 1433,
+      "sha256": "55bb9829f58cb3c91d666a928b39509852f210ab4d3ea34acce26374872a389f"
+    }
+  },
+  "gitStatusAfter": " M HanlinMiniAppsApp/HanlinMiniApps.entitlements\n M Scripts/ProductSplit/test_local_miniapps_profiles.py\n M Scripts/ProductSplit/verify_targets.py\n",
+  "nativeTestsRun": false,
+  "accountRequestsRun": false,
+  "profileMutation": false,
+  "fixtureScope": "Original portable MiniApps profile module; Apple reads/creates are injected mocks. One added test retains CloudKit/CloudDocuments grants while missing, empty or wrong ubiquity grants are rejected."
+}

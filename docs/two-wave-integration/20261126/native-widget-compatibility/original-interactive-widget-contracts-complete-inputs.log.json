@@ -1,0 +1,7 @@
+{
+  "originalPath": "/tmp/hanlin-native-compatibility-20261126-549ij7t3/original-interactive-widget-contracts-complete-inputs.log",
+  "sha256": "7b297ef198c88c34ceb82d20423aaa2749a89ca6a7606f92a722204477adbd27",
+  "bytes": 1259,
+  "encoding": "utf-8",
+  "text": "✔ original: SDK matrix renders all eight families with authored clear background and native component nodes (214.820807ms)\n✔ original: actual original Toggle wrapper returns props; intended values survive repeat requests (44.70114ms)\n✔ original: original Button callback is unchanged alongside Toggle and source instances stay isolated (105.658293ms)\n✔ original: callback failures, promises and malformed values cannot become committed state (80.094785ms)\n✔ original: duplicate targets and disabled modifiers fail before invoking a Toggle callback (66.234664ms)\n✔ prepared: SDK matrix renders all eight families with authored clear background and native component nodes (279.3313ms)\n✔ prepared: actual original Toggle wrapper returns props; intended values survive repeat requests (103.3118ms)\n✔ prepared: original Button callback is unchanged alongside Toggle and source instances stay isolated (62.821685ms)\n✔ prepared: callback failures, promises and malformed values cannot become committed state (69.817605ms)\n✔ prepared: duplicate targets and disabled modifiers fail before invoking a Toggle callback (51.049896ms)\nℹ tests 10\nℹ suites 0\nℹ pass 10\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 1489.819003\n"
+}

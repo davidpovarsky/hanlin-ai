@@ -127,3 +127,14 @@ test('P3-26: fixture archives rebuild byte-for-byte in all three locations', () 
     assert.deepEqual(bytes,fs.readFileSync(path.join(root,'AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle',name)));
   }
 });
+test('P3-26: Expo fixture contracts match the exact embedded native widget versions', () => {
+  const pinned = JSON.parse(fs.readFileSync(path.join(root, 'Scripts/Expo/package.json'), 'utf8')).dependencies;
+  for (const sample of widgetSamples.filter(sample => sample.files['package.json'])) {
+    const manifest = JSON.parse(sample.files['package.json']);
+    assert.equal(manifest.hanlinExpo.runtimeVersion, pinned['@expo/ui'], sample.name);
+    assert.equal(manifest.hanlinExpo.plugins['@expo/ui'], pinned['@expo/ui'], sample.name);
+    assert.equal(manifest.dependencies['@expo/ui'], pinned['@expo/ui'], sample.name);
+    assert.equal(manifest.dependencies['expo-widgets'], pinned['expo-widgets'], sample.name);
+    assert.equal(manifest.dependencies.react, pinned.react, sample.name);
+  }
+});

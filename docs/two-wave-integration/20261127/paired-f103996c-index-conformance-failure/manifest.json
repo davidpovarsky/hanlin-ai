@@ -1,0 +1,185 @@
+{
+  "at": "2026-11-27T02:18:41.189720+00:00",
+  "source": "f103996cc03d2cc5321c7e83b6cdf77c3b60e509",
+  "status": "ORIGINAL_MINIAPPS_BUILD_FAILED_TESTS_NOT_RUN",
+  "nativeExitCode": 65,
+  "paired54": "NOT_RUN",
+  "additional26": "NOT_RUN",
+  "archive": {
+    "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/paired-f103996c-index-conformance-failure.tar.gz",
+    "bytes": 5634240,
+    "sha256": "7571b84f6efe3f78d8862882a201119926c0e7e2a23a0813c0b920ac781486c1"
+  },
+  "files": [
+    {
+      "path": "f103996c-index-description-conformance-diagnostic.json",
+      "bytes": 16033,
+      "sha256": "e363c4dd683e330833b2454819f9b23b0054f04ac0094d8d1851bde202ec081f"
+    },
+    {
+      "path": "native-paired-f103996c-paired-r1.json",
+      "bytes": 8663,
+      "sha256": "cf604a7522d3f7ec4939ad140d705452bc82119fda02614cc61390631270740d"
+    },
+    {
+      "path": "native-paired-f103996c-paired-r1.log",
+      "bytes": 6179,
+      "sha256": "12383543ae1eca89d226761b63243d398bfe16637e5bbfcf38d1b317455e22c2"
+    },
+    {
+      "path": "paired-f103996c-detached-supervisor-r1.log",
+      "bytes": 7829,
+      "sha256": "59ec8bd577b4eb9cc3ba496c8bad30dc53e11700341edff0e0b3971856da5660"
+    },
+    {
+      "path": "run-native-paired-integrated-20261127.py",
+      "bytes": 9087,
+      "sha256": "984b0d277d616d9ff155fbcf52142b106aadfa163cf6029222a38ddc46b19c19"
+    },
+    {
+      "path": "validation/f103996c-paired-r1/paired-product/MiniBuild.xcresult/Data/data.0~9XDk34j86LV8fOSwRdflVHEs-9L2HbEqMt76tuk8ndc_sumhRLnBpVbCdCsWGL58KfSTqaK0vBHPn5NoCcuZtg==",
+      "bytes": 313,
+      "sha256": "35543ce4e5add3cfa12e5e9926a7134fae104636bbcd67c86128eeb31d36e78e"
+    },
+    {
+      "path": "validation/f103996c-paired-r1/paired-product/MiniBuild.xcresult/Data/data.0~ObNLuDtb73d3YsTSBAVkNvzsGMgnV5-R02MwOtOkyVNqX5Hsqpk5MWYVNM6g3orPPyf2XDFPWbXUvBNxXUF-tQ==",
+      "bytes": 30888,
+      "sha256": "05c5433c9f63ffa121037ff4f94c7134c5d63b2b242366e7066cbcf4df365c48"
+    },
+    {
+      "path": "validation/f103996c-paired-r1/paired-product/MiniBuild.xcresult/Data/data.0~SuDphleiKHvqJoY2903rJoqoc4A6mXLSoghuib_-vBlr3dahgln-q6wLFjrvhn3tNqz7I6TmGqhVUJaVesZ8wA==",
+      "bytes": 280847,
+      "sha256": "3c87532fae7525313fcea95056b19fca012f19633ab4e417d95944411cfc93b2"
+    },
+    {
+      "path": "validation/f103996c-paired-r1/paired-product/MiniBuild.xcresult/Data/refs.0~9XDk34j86LV8fOSwRdflVHEs-9L2HbEqMt76tuk8ndc_sumhRLnBpVbCdCsWGL58KfSTqaK0vBHPn5NoCcuZtg==",
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    {
+      "path": "validation/f103996c-paired-r1/paired-product/MiniBuild.xcresult/Data/refs.0~ObNLuDtb73d3YsTSBAVkNvzsGMgnV5-R02MwOtOkyVNqX5Hsqpk5MWYVNM6g3orPPyf2XDFPWbXUvBNxXUF-tQ==",
+      "bytes": 133,
+      "sha256": "44e0876223773e3c3b722101947c9bf330ad1557a9f19ca59eea412dbd41a434"
+    },
+    {
+      "path": "validation/f103996c-paired-r1/paired-product/MiniBuild.xcresult/Data/refs.0~SuDphleiKHvqJoY2903rJoqoc4A6mXLSoghuib_-vBlr3dahgln-q6wLFjrvhn3tNqz7I6TmGqhVUJaVesZ8wA==",
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    {
+      "path": "validation/f103996c-paired-r1/paired-product/MiniBuild.xcresult/Info.plist",
+      "bytes": 776,
+      "sha256": "47b75d74b869123957034a4003b8fcebba5b29f5bf59f0ce58363c61573a93bc"
+    },
+    {
+      "path": "validation/f103996c-paired-r1/paired-product/acceptance.json",
+      "bytes": 2891,
+      "sha256": "69068579a8b271702ae08a32a7f46d76a8471b1d8b1e5ed780a3c7ee2c46cc8f"
+    },
+    {
+      "path": "validation/f103996c-paired-r1/paired-product/active-command.json",
+      "bytes": 527,
+      "sha256": "82fca1b3c916cda90295064191553694dfc703215a81280047f84f66840a943f"
+    },
+    {
+      "path": "validation/f103996c-paired-r1/paired-product/before-boot-host-resources.txt",
+      "bytes": 36,
+      "sha256": "383b4760df6e18f59de559f86adfb83243b7d86268ace6242ce6f80f85f8c68d"
+    },
+    {
+      "path": "validation/f103996c-paired-r1/paired-product/before-boot-memory.txt",
+      "bytes": 1247,
+      "sha256": "852ed92d2f51f04639c5257721996c440011c28d52fe15c6d550b87c82845545"
+    },
+    {
+      "path": "validation/f103996c-paired-r1/paired-product/before-boot-processes.txt",
+      "bytes": 330182,
+      "sha256": "d1fcd1a87db40af06b4d2c9467361567b32852a5194bc6ec4211ab0d05ed80f6"
+    },
+    {
+      "path": "validation/f103996c-paired-r1/paired-product/boot.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "validation/f103996c-paired-r1/paired-product/bootstatus.log",
+      "bytes": 6671,
+      "sha256": "478f502fd93b2bbfa1d0c9e337e6d652d95257447702659e463d96cef2b1c68a"
+    },
+    {
+      "path": "validation/f103996c-paired-r1/paired-product/command-events.jsonl",
+      "bytes": 30482,
+      "sha256": "4280f0b2bffac1c259e67e6f8f4fbc252481b0702f80ba2673c54be937d78584"
+    },
+    {
+      "path": "validation/f103996c-paired-r1/paired-product/commands.jsonl",
+      "bytes": 4432,
+      "sha256": "10bab752c9de9a64e06ffc187027e8fa400ced5190e233d03c43074a5c19e1cf"
+    },
+    {
+      "path": "validation/f103996c-paired-r1/paired-product/container-command-help.txt",
+      "bytes": 386,
+      "sha256": "62b5b30225c28644c70945a598f2385b4414e2f11c75c4ec2d134d6822f0053b"
+    },
+    {
+      "path": "validation/f103996c-paired-r1/paired-product/created-simulator.txt",
+      "bytes": 37,
+      "sha256": "32e0feacc1399174830c42c287ebdcf88251bc229dd7d1ea1876bf81528ed4e8"
+    },
+    {
+      "path": "validation/f103996c-paired-r1/paired-product/device-types.json",
+      "bytes": 64328,
+      "sha256": "96d335258081671854ac94ea0afb6ae77b8b7efc5892942fc8856d1e6f31be0f"
+    },
+    {
+      "path": "validation/f103996c-paired-r1/paired-product/failure-device-state.json",
+      "bytes": 31184,
+      "sha256": "6287dc50bd35449e3ebb121a9280873f4a8657247bd03a35ae91c7b138725e35"
+    },
+    {
+      "path": "validation/f103996c-paired-r1/paired-product/failure-installed-apps.plist",
+      "bytes": 54845,
+      "sha256": "d4872768e80edc7bae96df0935ce47ad0347f91c333f57c70e7b785f410e0201"
+    },
+    {
+      "path": "validation/f103996c-paired-r1/paired-product/failure-memory.txt",
+      "bytes": 1247,
+      "sha256": "5c57bff538464dd08e74c45a7ead3d0a446b93222deca72aaa699c1b47bfa3a1"
+    },
+    {
+      "path": "validation/f103996c-paired-r1/paired-product/failure-processes.txt",
+      "bytes": 404304,
+      "sha256": "2e428db090d82e1dedb0017575d6a328d7ea75ace470a7ec4763a2210c18307d"
+    },
+    {
+      "path": "validation/f103996c-paired-r1/paired-product/failure.png",
+      "bytes": 5089680,
+      "sha256": "2492026a85d4e78581cbb14ccfc3762da42b3752ad045256b26aab87f8c8573e"
+    },
+    {
+      "path": "validation/f103996c-paired-r1/paired-product/mini-build.log",
+      "bytes": 3734097,
+      "sha256": "8d44067de553df8ad801e48517d2001e2df6100dae9079ed3fa4c5eddfc14cf2"
+    },
+    {
+      "path": "validation/f103996c-paired-r1/paired-product/runtimes.json",
+      "bytes": 45201,
+      "sha256": "7d7b8804de6356de2d00a28b5288de3d4d5a3ec739e2ab33c9f4f32f0ad2f749"
+    },
+    {
+      "path": "validation/f103996c-paired-r1/paired-product/screenshot.log",
+      "bytes": 277,
+      "sha256": "954cb646bf1f9680ab3d0a20f319727e496155cf31f521c0d9d97ad92c1e1b4e"
+    },
+    {
+      "path": "validation/f103996c-paired-r1/paired-product/sdk.txt",
+      "bytes": 5,
+      "sha256": "7b01c549928398a045692f24bcac7803b348524cdd76f21265b02984b2ba556a"
+    },
+    {
+      "path": "validation/f103996c-paired-r1/paired-product/source-sha.txt",
+      "bytes": 41,
+      "sha256": "797167cc651192ac97117f4aded41d0570cca2b132b48889c18fcb509e30b414"
+    }
+  ]
+}

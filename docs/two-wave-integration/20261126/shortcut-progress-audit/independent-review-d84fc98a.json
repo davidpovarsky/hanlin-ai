@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-26T19:42:10.887506+00:00",
+  "reviewer": "/root/wave1_chat_sdk",
+  "owner": "/root/wave2_miniapps",
+  "sourceRevision": "d84fc98a96cd554bbc67613f96dedd8e380e7f97",
+  "baseRevision": "3c5b6229dbd0fe4374eb3fafcc87abb7dcea45e7",
+  "result": "APPROVED_BOUNDED_SOURCE_GATE_CORRECTION",
+  "changedPaths": [
+    "Scripts/Audit/Tests/expo-operation-contract.test.mjs",
+    "Scripts/Audit/audit-miniapp-sdk.mjs",
+    "Scripts/Audit/miniapp-expo-operations.mjs"
+  ],
+  "sourceHashes": {
+    "Scripts/Audit/miniapp-expo-operations.mjs": {
+      "bytes": 10574,
+      "sha256": "3f2b99ee458114297b399eaed61a8e7e8aeb691b0afc3fd06b8a1acc7003f618"
+    },
+    "Scripts/Audit/audit-miniapp-sdk.mjs": {
+      "bytes": 22009,
+      "sha256": "8c52aa054a2993e0ae93685cc2031eb769c63ca217ee1c709da2a1b499a1b404"
+    },
+    "Scripts/Audit/Tests/expo-operation-contract.test.mjs": {
+      "bytes": 10882,
+      "sha256": "bf2a3222c90d47d02debbe87c5af8fa14953b64466c473846b5ba9432a6f3550"
+    },
+    "HanlinMiniAppsApp/MiniAppsShortcutIntent.swift": {
+      "bytes": 13476,
+      "sha256": "b1ed3e326e5fe968671a15900c18cffb3606641674aafa9c47dd36fd49b6b5bd"
+    },
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift": {
+      "bytes": 183247,
+      "sha256": "e53341f9f5e62702f3b2703d2ac4367f6921164dc43980a85ac2e0d4d2bddd65"
+    },
+    "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinShortcutProgress.swift": {
+      "bytes": 881,
+      "sha256": "da618582dbed4d29b36fe512fe566c1dfc3382156ba4e2f5e88076dc77f90d00"
+    }
+  },
+  "originalOtherRoutes": {
+    "byteIdentical": true,
+    "bytes": 3256,
+    "sha256": "a6bccf3fa3501c14cf254e68279532a828c1342226acdc7664dc2c4843d6d429",
+    "scope": [
+      "Direct operation inventory",
+      "External session callback linkage",
+      "Assistant service factory ownership",
+      "Prepared widget publisher installation/generation/session ownership",
+      "Live Activity delegation"
+    ]
+  },
+  "resolvedReviewFindings": [
+    {
+      "id": "os-mode-connection",
+      "finding": "Inventory anchors alone located OS mode and delivery but did not bind the actual builder call.",
+      "resolution": "Scopes actual intent.perform and makeCommand, binds currentMode==foreground to runsInForeground, builder argument, continueInForeground and delivery.canPresentUI. Constant true/canContinue-only substitutes are negative cases."
+    },
+    {
+      "id": "perform-to-owned-run-connection",
+      "finding": "The intermediate9570 gate validated named run/reporter declarations but could leave them as dead helpers if perform called another execution path.",
+      "resolution": "Scopes executor and operation closure; binds captured original OS Progress, product store, executor.execute(command), ownedCommand and both existing OS operation wrappers into the actual MiniAppsShortcutExecution.run call. Targeted call/command/store/progress/wrapper substitutions are negative cases."
+    }
+  ],
+  "finalVerifiedSourceChain": [
+    "Actual OS currentMode determines command UI delivery.",
+    "Actual intent executor supplies the owned command and captured Progress through both existing OS branches.",
+    "The local child platform captures the newly constructed reporter for that command/store.",
+    "Reporter admission checks a running receipt and unexpired lease, and retains its command and lease IDs.",
+    "Every receive requires exact miniapps.shortcutProgress, running matching live lease, noncancelled receipt and nonclosed Progress.",
+    "The typed payload is decoded and validated before its counts are written.",
+    "The same child executes the claimed command; defer closes the reporter and clears its callback."
+  ],
+  "ownerValidationObserved": {
+    "logPath": "/tmp/hanlin-progress-audit-20261126-x3ohgx1p/original-contract-tests-connected.log",
+    "logSHA256": "15a3ffc051cd97241a0bd58b4ac057cb2e6741654cd145371d7e50df5bfd31ab",
+    "tests": 5,
+    "passed": 5,
+    "failed": 0,
+    "skipped": 0,
+    "cancelled": 0,
+    "durationMilliseconds": 197.803562,
+    "note": "Read the owner log for the original contract test file (four existing tests retained/adapted to current source, plus one added dead-helper test);46 targeted Shortcuts mutation instances are represented in the reviewed source. Reviewer did not rerun tests."
+  },
+  "reviewerExecutedTests": false,
+  "reviewerNativeJobs": false,
+  "productionSourceModified": false,
+  "remainingGates": [
+    "Owner canonical full source audit and staging",
+    "Original complete Host validation/packaging",
+    "Apple compilation and native regressions",
+    "Actual Shortcuts/OS/device behavior"
+  ],
+  "limits": "This source contract intentionally matches the reviewed Swift declaration/ownership structure. It is not a Swift AST, native execution receipt or general proof of all possible control flow; future structural changes require a source review rather than relaxed matching."
+}

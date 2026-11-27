@@ -1,5 +1,5 @@
 {
-  "sourceCommit": "9819697c1792119a6a93b492d12abad7b3330c93",
+  "sourceCommit": "2a0b19b79f3da0fef092ca8b0762b9b0e7001caa",
   "uncommittedSourcePaths": [],
   "schemaVersion": 1,
   "auditParser": {
@@ -1295,7 +1295,7 @@
           "operations": [
             "miniapps.shortcutProgress"
           ],
-          "condition": "An owned headless Shortcuts invocation validates and reports its Progress."
+          "condition": "An owned Shortcuts invocation validates its live lease and typed Progress; UI admission follows its validated foreground/background delivery."
         }
       ],
       "facadeOperations": [
@@ -8669,8 +8669,8 @@
             },
             {
               "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-              "sha256": "38445d96c657661ddc2eb68018b25c8439a6a267cb7be86ac040e6e123329ecb",
-              "line": 1868
+              "sha256": "e53341f9f5e62702f3b2703d2ac4367f6921164dc43980a85ac2e0d4d2bddd65",
+              "line": 1980
             }
           ]
         },
@@ -15474,7 +15474,7 @@
     {
       "id": "INT03-SESSION",
       "owner": "INT-03",
-      "detail": "Window-factory packages can use independently owned cooperating-window contexts in the existing shared NativeScript engine. Headless Shortcuts reserve admission, bind module/provider ownership, disallow UI presentation and tear down only their owned context. Legacy packages retain single-runtime-owner admission and reject competing ownership. No separate JavaScript isolate or process isolation is claimed; current native concurrency, cancellation and lifecycle acceptance remains required.",
+      "detail": "Window-factory packages can use independently owned cooperating-window contexts in the existing shared NativeScript engine. Shortcuts derive UI admission from the actual OS mode and validated command delivery. Background contexts reserve admission, bind module/provider ownership, disallow UI presentation and tear down only their owned context. Legacy packages retain single-runtime-owner admission and reject competing ownership. No separate JavaScript isolate or process isolation is claimed; current native concurrency, cancellation and lifecycle acceptance remains required.",
       "sourceReferences": [
         {
           "source": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptWindowSession.swift",
@@ -15484,15 +15484,21 @@
         },
         {
           "source": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-          "sha256": "38445d96c657661ddc2eb68018b25c8439a6a267cb7be86ac040e6e123329ecb",
-          "line": 1411,
+          "sha256": "e53341f9f5e62702f3b2703d2ac4367f6921164dc43980a85ac2e0d4d2bddd65",
+          "line": 1523,
           "anchor": "func executeHeadlessAction("
         },
         {
           "source": "HanlinMiniAppsApp/MiniAppsShortcutIntent.swift",
-          "sha256": "2afc13785f68bdef95109d753ebfd25ad97b2a08056b0707a20f16a28b6ca67f",
-          "line": 137,
-          "anchor": "userGesturePresent: true, canPresentUI: false"
+          "sha256": "b1ed3e326e5fe968671a15900c18cffb3606641674aafa9c47dd36fd49b6b5bd",
+          "line": 58,
+          "anchor": "systemContext.currentMode == .foreground"
+        },
+        {
+          "source": "HanlinMiniAppsApp/MiniAppsShortcutIntent.swift",
+          "sha256": "b1ed3e326e5fe968671a15900c18cffb3606641674aafa9c47dd36fd49b6b5bd",
+          "line": 162,
+          "anchor": "userGesturePresent: true, canPresentUI: canPresentUI"
         }
       ]
     },
@@ -15559,7 +15565,7 @@
     },
     {
       "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "sha256": "38445d96c657661ddc2eb68018b25c8439a6a267cb7be86ac040e6e123329ecb"
+      "sha256": "e53341f9f5e62702f3b2703d2ac4367f6921164dc43980a85ac2e0d4d2bddd65"
     },
     {
       "path": "Fixtures/ExpoNativeAPIProbe/tsconfig.json",
@@ -15579,7 +15585,7 @@
     },
     {
       "path": "HanlinMiniAppsApp/MiniAppsShortcutIntent.swift",
-      "sha256": "2afc13785f68bdef95109d753ebfd25ad97b2a08056b0707a20f16a28b6ca67f"
+      "sha256": "b1ed3e326e5fe968671a15900c18cffb3606641674aafa9c47dd36fd49b6b5bd"
     },
     {
       "path": "Package.swift",
@@ -15811,11 +15817,11 @@
     },
     {
       "path": "Scripts/Audit/audit-miniapp-sdk.mjs",
-      "sha256": "d896e6c51af5d499686343161e46291187f88dea747b20e0a01b0221e1c23f31"
+      "sha256": "8c52aa054a2993e0ae93685cc2031eb769c63ca217ee1c709da2a1b499a1b404"
     },
     {
       "path": "Scripts/Audit/miniapp-expo-operations.mjs",
-      "sha256": "f68924a561be49fe9c0cb476639b9674587a6ea7ba68baba8ca022786ea8605c"
+      "sha256": "3f2b99ee458114297b399eaed61a8e7e8aeb691b0afc3fd06b8a1acc7003f618"
     },
     {
       "path": "Scripts/Audit/miniapp-manifest-contracts.mjs",

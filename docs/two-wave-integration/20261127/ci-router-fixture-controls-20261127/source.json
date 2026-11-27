@@ -1,0 +1,13 @@
+{
+  "source": "71a1355bc49829e6942aadcc282899528b4030e8",
+  "base": "00aabecd5e4cf7995fe358d63a9724edb3b299e4",
+  "files": {
+    "Scripts/CI/Tests/test_native_tool_cancellation_recheck_report.py": "4a058d97e46834a2527400bdf3d92cd6797502d761dc4b40da1d929102d6bda4",
+    "Scripts/CI/Tests/test_native_tool_pin_build_report.py": "d2541a3adb30f1a85945f183c7254eadcc5078b2b8f42e3e91f0b705445ff76b",
+    "Scripts/CI/Tests/test_stop_continuation_delta_report.py": "9ffe0958385a220595747c5d07972330ad64e2c6de0e1518561cb09b0d08a2b4",
+    "Scripts/CI/Tests/test_runtime_memory_entitlements.py": "9d6cfe7fa2ffcb203122aed3cdaf100e42ebf296330f49e090271ffb49b37dec"
+  },
+  "validators_changed": false,
+  "frozen_reference_changed": false,
+  "original_assertions_removed": false
+}

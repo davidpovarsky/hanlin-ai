@@ -47,7 +47,7 @@ The returned and persisted SurfaceResult contains schemaVersion, appID, action, 
 
 Expo receives the actual Host invocation UUID in its existing action callback. NativeScript's original callback supplies caller and payload but no invocation UUID, so requestIDOrigin is javascript-handler and requestID is the fresh JS nonce. Correlate that result with the real canonical receipt UUID in the current app-group queue. requestedSurface is a payload label, not independent proof of an OS launch.
 
-The private file is surface-proof.json in the canonical app state area. Expo uses the typed Host readFile/writeFile with area state. NS uses the actual bound bridge.stateDirectory() and the original NativeScript File API; its app shows the resolved path. The file contains schemaVersion, appID, challenge, counter, activityID, and lastResult. Expo console output also includes the actual result prefixed [HanlinSurfaceProof]. NativeScript retains the complete result in its state file without requiring a console global.
+The private file is surface-proof.json in the canonical app state area. Expo uses the typed Host readFile/writeFile with area state. NS uses the existing registerWindowFactory context's own storage.state and the original NativeScript File API; its app shows the resolved path. A fresh Shortcut window receives the UI-prepared challenge in its actual JSON input and writes only its own state; it never reads a sibling window's file. The file contains schemaVersion, appID, challenge, counter, activityID, and lastResult. Expo console output also includes the actual result prefixed [HanlinSurfaceProof]. NativeScript retains the complete result in its state file without requiring a console global.
 
 The UI's Run all five runtimes is a foreground diagnostic only. It cannot count as a Widget, Live Activity, Shortcuts, Share, or Translation attempt. Those results require genuine system interaction plus matching current native delivery/receipt evidence. Neither an unavailable system surface nor a failed action is silently promoted to PASS.
 
@@ -58,3 +58,25 @@ Expo's Live Activity is the existing shared native-node ActivityKit API, now usi
 The NS metadata-selector declaration is a typed reference to the existing public HanlinNativeServicesBridge.h session selectors. Execution still goes exclusively through @hanlin/host-services. Both packages declare the current original library versions; the original SDK/compiler controls the actual prepared dependency closure. No npm install, native compilation, or alternate runtime is implemented by these fixtures.
 
 These files are new proof sources, not a build or execution result. Actual compiler reports, archives, system attempts, and receipts must be retained separately.
+
+## Additional Run MiniApp Action OS route
+
+The same installed action is exposed through the standalone **Run MiniApp Action** entity picker. Choose **Dictionary or List (JSON)** and pass the fresh challenge shown by **Prepare challenge**, for example:
+
+    {"surface":"miniAppShortcut","challenge":"<the actual visible challenge>","typed":{"text":"שלום עולם","count":42,"enabled":true,"empty":null}}
+
+The fixture still runs and checks all five original Host runtimes. On this new route it also reports real invocation-owned progress. NativeScript retains observations of its bound window ID, state path, execution mode and actual native attachment. The returned result includes a fresh summary; it remains the complete actual result and receipts.
+
+The existing paired runner has an additional, separate scope:
+
+    PAIRED_TEST_SCOPE=miniapp_shortcuts_os python3 Scripts/ProductSplit/run_paired_acceptance.py
+
+Use the original runner's existing source-qualified build environment, SPLIT_EVIDENCE and SPLIT_DERIVED_DATA. This scope builds these sources with the **current shipping SDK and original CLI**, stages only input archives, and selects four additional methods in HanlinEntrypointSystemSurfaceUITests. They use the real Shortcuts gallery/entity picker, verify the new default and saved Open When Run off/on choices across both process restarts, and compare the built-in Get Text from Input → Show Result chain with the exact native result.
+
+The original paired54 plans and the original ten system-surface methods are unchanged. The read-only observe_shortcut_surfaces.py helper supplies only the existing Shortcuts observation exchange. It resolves actual post-XCTest MCM containers, the primary enabled installation/current generation, committed snapshot, native queue/terminal receipt, and matching private five-runtime result. It writes only XCTest coordination responses and evidence, never production grants, commands, receipts or state.
+
+Portable validation of the reader is:
+
+    python3 -B -m unittest discover -s Scripts/ProductSplit/Tests -p test_shortcut_surface_observer.py -v
+
+Those unit inputs are temporary local fixtures, not system acceptance evidence. The four new UI methods require their actual Mac/Simulator run; source preparation and reader tests do not qualify native snippets, long-running cancellation, Home Screen shortcuts, Hebrew system layout, other surfaces or locked physical-device acceptance.

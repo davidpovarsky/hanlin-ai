@@ -1,0 +1,7 @@
+{
+  "originalPath": "/tmp/hanlin-camera-reachability-audit-20261126-zpkn4sj0/original-reachability-check.log",
+  "sha256": "231e3ea5da8cd01dfdc112d6cb7466ce2b2e6f38070dd193d6bbea0e17f7f39b",
+  "bytes": 73,
+  "encoding": "utf-8",
+  "text": "PASS: 100 unique source-backed reachability cells; no E2E pass inferred.\n"
+}
