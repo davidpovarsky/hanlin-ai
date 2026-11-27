@@ -1,6 +1,6 @@
+import HanlinExpoWidgetSubset
 import Foundation
 import SwiftUI
-import ExpoModulesCore
 import WidgetKit
 
 public struct WidgetsEntryView: View {

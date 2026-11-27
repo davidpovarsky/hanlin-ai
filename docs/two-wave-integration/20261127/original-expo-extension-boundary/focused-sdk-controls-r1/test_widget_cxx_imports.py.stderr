@@ -1,0 +1,8 @@
+test_original_modifier_vocabulary_does_not_expand_prepared_widget_admission (test_widget_cxx_imports.WidgetCxxImportTests.test_original_modifier_vocabulary_does_not_expand_prepared_widget_admission) ... ok
+test_original_widget_extension_keeps_one_shared_module_and_rejects_app_runtime_edges (test_widget_cxx_imports.WidgetCxxImportTests.test_original_widget_extension_keeps_one_shared_module_and_rejects_app_runtime_edges) ... ok
+test_real_widget_consumers_preserve_original_expo_cpp_import_contract (test_widget_cxx_imports.WidgetCxxImportTests.test_real_widget_consumers_preserve_original_expo_cpp_import_contract) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 2.773s
+
+OK

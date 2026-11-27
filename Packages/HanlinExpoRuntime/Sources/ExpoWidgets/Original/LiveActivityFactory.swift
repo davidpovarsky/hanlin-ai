@@ -1,5 +1,6 @@
 import Foundation
 import ExpoModulesCore
+import ExpoWidgets
 import ActivityKit
 
 final class LiveActivityFactory: SharedObject {

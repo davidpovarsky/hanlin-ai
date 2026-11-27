@@ -1,6 +1,5 @@
 import Foundation
 import CryptoKit
-import ExpoModulesCore
 import ActivityKit
 import WidgetKit
 
@@ -122,12 +121,12 @@ public enum HanlinExpoWidgetsIntegration {
 
     public static func registeredWidgetNames() -> [String] { registeredWidgets().map(\.id) }
 
-    static func directoryNamespace(appContext: AnyObject?) -> String? {
+    package static func directoryNamespace(appContext: AnyObject?) -> String? {
         guard let owner = binding(for: appContext) else { return nil }
         return digest([owner.productIdentifier, owner.installedPackageID])
     }
 
-    static func requireActive(name: String, appContext: AnyObject?) throws {
+    package static func requireActive(name: String, appContext: AnyObject?) throws {
         guard let owner = binding(for: appContext), let record = descriptor(for: name), isCurrent(record),
               record.productIdentifier == owner.productIdentifier,
               record.installedPackageID == owner.installedPackageID,
@@ -152,13 +151,13 @@ public enum HanlinExpoWidgetsIntegration {
         return isCurrent(value)
     }
 
-    static func recordActivity(id: String, name: String, appContext: AnyObject?) throws {
+    package static func recordActivity(id: String, name: String, appContext: AnyObject?) throws {
         try requireActive(name: name, appContext: appContext)
         guard let record = descriptor(for: name) else { return }
         WidgetsStorage.defaults?.set(try JSONEncoder().encode(record), forKey: activityPrefix + id)
     }
 
-    static func isActivityCurrent(id: String, name: String, appContext: AnyObject?) -> Bool {
+    package static func isActivityCurrent(id: String, name: String, appContext: AnyObject?) -> Bool {
         guard (try? requireActive(name: name, appContext: appContext)) != nil else { return false }
         // A native push-to-start activity has no local creation receipt until it is adopted.
         guard let activity = descriptor(for: id, prefix: activityPrefix) else { return true }
@@ -168,7 +167,7 @@ public enum HanlinExpoWidgetsIntegration {
     }
 
     /// Filter real native notifications by actual owner; preserve original public names/IDs.
-    static func eventData(_ data: [String: Any], appContext: AnyObject?) -> [String: Any]? {
+    package static func eventData(_ data: [String: Any], appContext: AnyObject?) -> [String: Any]? {
         guard let source = data["source"] as? String else { return nil }
         var result = data
         if let widget = descriptor(for: source), widget.kind == "widget" {
@@ -234,7 +233,7 @@ public enum HanlinExpoWidgetsIntegration {
         return changed
     }
 
-    static func reload(_ name: String) {
+    package static func reload(_ name: String) {
         WidgetCenter.shared.reloadTimelines(ofKind: name)
         WidgetCenter.shared.reloadTimelines(ofKind: genericWidgetKind)
     }

@@ -1,5 +1,6 @@
 // Copyright 2015-present 650 Industries. All rights reserved.
 
+import Foundation
 import SwiftUI
 
 // MARK: - Individual ViewModifier Structs
@@ -1918,6 +1919,9 @@ internal struct ToolbarTitleDisplayModeModifier: ViewModifier, Record {
 // swiftlint:disable:next no_grouping_extension
 extension ViewModifierRegistry {
   private func registerBuiltInModifiers() {
+    register("listSectionSpacing") { params, appContext, _ in
+      return try ListSectionSpacingModifier(from: params, appContext: appContext)
+    }
 
     register("background") { params, appContext, _ in
       return try BackgroundModifier(from: params, appContext: appContext)
@@ -2062,8 +2066,36 @@ extension ViewModifierRegistry {
       return try ClipShapeModifier(from: params, appContext: appContext)
     }
 
+    register("onTapGesture") { params, appContext, eventDispatcher in
+      return try OnTapGestureModifier(from: params, appContext: appContext, eventDispatcher: eventDispatcher)
+    }
+
+    register("onLongPressGesture") { params, appContext, eventDispatcher in
+      return try OnLongPressGestureModifier(from: params, appContext: appContext, eventDispatcher: eventDispatcher)
+    }
+
+    register("onAppear") { params, appContext, eventDispatcher in
+      return try OnAppearModifier(from: params, appContext: appContext, eventDispatcher: eventDispatcher)
+    }
+
+    register("onDisappear") { params, appContext, eventDispatcher in
+      return try OnDisappearModifier(from: params, appContext: appContext, eventDispatcher: eventDispatcher)
+    }
+
+    register("onGeometryChange") { params, appContext, eventDispatcher in
+      return try OnGeometryChangeModifier(from: params, appContext: appContext, eventDispatcher: eventDispatcher)
+    }
+
+    register("refreshable") { params, appContext, eventDispatcher in
+      return try RefreshableModifier(from: params, appContext: appContext, eventDispatcher: eventDispatcher)
+    }
+
     register("hueRotation") { params, appContext, _ in
       return try HueRotationModifier(from: params, appContext: appContext)
+    }
+
+    register("navigationTitle") { params, appContext, _ in
+      return try NavigationTitleModifier(from: params, appContext: appContext)
     }
 
     register("navigationBarTitleDisplayMode") { params, appContext, _ in
@@ -2072,6 +2104,14 @@ extension ViewModifierRegistry {
 
     register("toolbarTitleDisplayMode") { params, appContext, _ in
       return try ToolbarTitleDisplayModeModifier(from: params, appContext: appContext)
+    }
+
+    register("navigationSplitViewStyle") { params, appContext, _ in
+      return try NavigationSplitViewStyleModifier(from: params, appContext: appContext)
+    }
+
+    register("navigationSplitViewColumnWidth") { params, appContext, _ in
+      return try NavigationSplitViewColumnWidthModifier(from: params, appContext: appContext)
     }
 
     register("arrangementViewStyle") { params, appContext, _ in
@@ -2154,8 +2194,20 @@ extension ViewModifierRegistry {
       return try BackgroundOverlayModifier(from: params, appContext: appContext)
     }
 
+    register("glassEffect") { params, appContext, _ in
+      return try GlassEffectModifier(from: params, appContext: appContext)
+    }
+
     register("animation") { params, appContext, _ in
       return try AnimationModifier.init(from: params, appContext: appContext)
+    }
+
+    register("glassEffectId") { params, appContext, _ in
+      return try GlassEffectIdModifier.init(from: params, appContext: appContext)
+    }
+
+    register("matchedGeometryEffect") { params, appContext, _ in
+      return try MatchedGeometryEffectModifier.init(from: params, appContext: appContext)
     }
 
     register("geometryGroup") { params, appContext, _ in
@@ -2190,12 +2242,40 @@ extension ViewModifierRegistry {
       return try ButtonBorderShapeModifier(from: params, appContext: appContext)
     }
 
+    register("toggleStyle") { params, appContext, _ in
+      return try ToggleStyleModifier(from: params, appContext: appContext)
+    }
+
     register("controlSize") { params, appContext, _ in
       return try ControlSizeModifier(from: params, appContext: appContext)
     }
 
     register("labelStyle") { params, appContext, _ in
       return try LabelStyleModifier(from: params, appContext: appContext)
+    }
+
+    register("textFieldStyle") { params, appContext, _ in
+      return try TextFieldStyleModifier(from: params, appContext: appContext)
+    }
+
+    register("scrollContentBackground") { params, appContext, _ in
+      return try ScrollContentBackground(from: params, appContext: appContext)
+    }
+
+    register("listRowBackground") { params, appContext, _ in
+      return try ListRowBackground(from: params, appContext: appContext)
+    }
+
+    register("listRowSeparator") { params, appContext, _ in
+      return try ListRowSeparator(from: params, appContext: appContext)
+    }
+
+    register("listRowSeparatorTint") { params, appContext, _ in
+      return try ListRowSeparatorTint(from: params, appContext: appContext)
+    }
+
+    register("listRowSpacing") { params, appContext, _ in
+      return try ListRowSpacing(from: params, appContext: appContext)
     }
 
     register("alignmentGuide") { params, appContext, _ in
@@ -2250,6 +2330,34 @@ extension ViewModifierRegistry {
       return try LineLimitModifier(from: params, appContext: appContext)
     }
 
+    register("listRowInsets") { params, appContext, _ in
+      return try ListRowInsets(from: params, appContext: appContext)
+    }
+
+    register("badgeProminence") { params, appContext, _ in
+      return try BadgeProminence(from: params, appContext: appContext)
+    }
+
+    register("badge") { params, appContext, _ in
+      return try Badge(from: params, appContext: appContext)
+    }
+
+    register("listSectionMargins") { params, appContext, _ in
+      return try ListSectionMargins(from: params, appContext: appContext)
+    }
+
+    register("scrollDismissesKeyboard") { params, appContext, _ in
+      return try ScrollDismissesKeyboardModifier(from: params, appContext: appContext)
+    }
+
+    register("menuActionDismissBehavior") { params, appContext, _ in
+      return try MenuActionDismissBehaviorModifier(from: params, appContext: appContext)
+    }
+
+    register("headerProminence") { params, appContext, _ in
+      return try HeaderProminence(from: params, appContext: appContext)
+    }
+
     register("font") { params, appContext, _ in
       return try FontModifier(from: params, appContext: appContext)
     }
@@ -2262,16 +2370,116 @@ extension ViewModifierRegistry {
       return try ImageScaleModifier(from: params, appContext: appContext)
     }
 
+    register("gridCellUnsizedAxes") { params, appContext, _ in
+      return try GridCellUnsizedAxes(from: params, appContext: appContext)
+    }
+
+    register("gridCellColumns") { params, appContext, _ in
+      return try GridCellColumns(from: params, appContext: appContext)
+    }
+
+    register("gridColumnAlignment") { params, appContext, _ in
+      return try GridColumnAlignment(from: params, appContext: appContext)
+    }
+
+    register("gridCellAnchor") { params, appContext, _ in
+      return try GridCellAnchor(from: params, appContext: appContext)
+    }
+
+    register("tag") { params, appContext, _ in
+      return try TagModifier(from: params, appContext: appContext)
+    }
+
+    register("scrollTargetBehavior") { params, appContext, _ in
+      return try ScrollTargetBehaviorModifier(from: params, appContext: appContext)
+    }
+
+    register("scrollTargetLayout") { params, appContext, _ in
+      return try ScrollTargetLayoutModifier(from: params, appContext: appContext)
+    }
+
+    register("id") { params, appContext, _ in
+      return try IDModifier(from: params, appContext: appContext)
+    }
+
+    register("scrollPosition") { params, appContext, eventDispatcher in
+      return try ScrollPositionModifier(from: params, appContext: appContext, eventDispatcher: eventDispatcher)
+    }
+
+    register("searchable") { params, appContext, eventDispatcher in
+      return try SearchableModifier(from: params, appContext: appContext, eventDispatcher: eventDispatcher)
+    }
+
     register("searchToolbarBehavior") { params, appContext, _ in
       return try SearchToolbarBehaviorModifier(from: params, appContext: appContext)
+    }
+
+    register("pickerStyle") { params, appContext, _ in
+      return try PickerStyleModifier(from: params, appContext: appContext)
+    }
+
+    register("menuOrder") { params, appContext, _ in
+      return try MenuOrderModifier(from: params, appContext: appContext)
+    }
+
+    register("menuStyle") { params, appContext, _ in
+      return try MenuStyleModifier(from: params, appContext: appContext)
+    }
+
+    register("menuIndicator") { params, appContext, _ in
+      return try MenuIndicatorModifier(from: params, appContext: appContext)
+    }
+
+    register("submitLabel") { params, appContext, _ in
+      return try SubmitLabelModifier(from: params, appContext: appContext)
+    }
+
+    register("textInputAutocapitalization") { params, appContext, _ in
+      return try TextInputAutocapitalizationModifier(from: params, appContext: appContext)
+    }
+
+    register("textContentType") { params, appContext, _ in
+      return try TextContentTypeModifier(from: params, appContext: appContext)
+    }
+
+    register("datePickerStyle") { params, appContext, _ in
+      return try DatePickerStyleModifier(from: params, appContext: appContext)
+    }
+
+    register("scrollDisabled") { params, appContext, _ in
+      return try ScrollDisabledModifier(from: params, appContext: appContext)
     }
 
     register("preferredColorScheme") { params, appContext, _ in
       return try PreferredColorSchemeModifier(from: params, appContext: appContext)
     }
 
+    register("scrollClipDisabled") { params, appContext, _ in
+      return try ScrollClipDisabledModifier(from: params, appContext: appContext)
+    }
+
+    register("scrollIndicators") { params, appContext, _ in
+      return try ScrollIndicatorsModifier(from: params, appContext: appContext)
+    }
+
     register("scrollEdgeEffectStyle") { params, appContext, _ in
       return try ScrollEdgeEffectStyleModifier(from: params, appContext: appContext)
+    }
+
+    register("tabViewStyle") { params, appContext, _ in
+      return try TabViewStyleModifier(from: params, appContext: appContext)
+    }
+
+    register("indexViewStyle") { params, appContext, _ in
+      return try IndexViewStyleModifier(from: params, appContext: appContext)
+    }
+
+    register("defaultScrollAnchor") { params, appContext, _ in
+      return try DefaultScrollAnchorModifier(from: params, appContext: appContext)
+    }
+
+    register("defaultScrollAnchorForRole") { params, appContext, _ in
+      return try DefaultScrollAnchorForRoleModifier(from: params, appContext: appContext)
     }
 
     register("progressViewStyle") { params, appContext, _ in
@@ -2282,12 +2490,48 @@ extension ViewModifierRegistry {
       return try GaugeStyleModifier(from: params, appContext: appContext)
     }
 
+    register("presentationDetents") { params, appContext, eventDispatcher in
+      return try PresentationDetentsModifier(from: params, appContext: appContext, eventDispatcher: eventDispatcher)
+    }
+
+    register("presentationDragIndicator") { params, appContext, _ in
+      return try PresentationDragIndicatorModifier(from: params, appContext: appContext)
+    }
+
     register("presentationCornerRadius") { params, appContext, _ in
       return try PresentationCornerRadiusModifier(from: params, appContext: appContext)
     }
 
+    register("presentationBackgroundInteraction") { params, appContext, _ in
+      return try PresentationBackgroundInteractionModifier(from: params, appContext: appContext)
+    }
+
+    register("interactiveDismissDisabled") { params, appContext, _ in
+      return try InteractiveDismissDisabledModifier(from: params, appContext: appContext)
+    }
+
+    register("presentationBackground") { params, appContext, _ in
+      return try PresentationBackgroundModifier(from: params, appContext: appContext)
+    }
+
+    register("presentationSizing") { params, appContext, _ in
+      return try PresentationSizingModifier(from: params, appContext: appContext)
+    }
+
+    register("listStyle") { params, appContext, _ in
+      return try ListStyleModifier(from: params, appContext: appContext)
+    }
+
     register("sectionIndexLabel") { params, appContext, _ in
       return try SectionIndexLabelModifier(from: params, appContext: appContext)
+    }
+
+    register("moveDisabled") { params, appContext, _ in
+      return try MoveDisabledModifier(from: params, appContext: appContext)
+    }
+
+    register("deleteDisabled") { params, appContext, _ in
+      return try DeleteDisabledModifier(from: params, appContext: appContext)
     }
 
     register("environment") { params, appContext, _ in
@@ -2296,6 +2540,18 @@ extension ViewModifierRegistry {
 
     register("contentTransition") { params, appContext, _ in
       return try ContentTransitionModifier(from: params, appContext: appContext)
+    }
+
+    register("keyboardType") { params, appContext, _ in
+      return try KeyboardTypeModifier(from: params, appContext: appContext)
+    }
+
+    register("autocorrectionDisabled") { params, appContext, _ in
+      return try AutocorrectionDisabledModifier(from: params, appContext: appContext)
+    }
+
+    register("onSubmit") { params, appContext, eventDispatcher in
+      return try OnSubmitModifier(from: params, appContext: appContext, eventDispatcher: eventDispatcher)
     }
 
     register("containerBackground") { params, appContext, _ in
@@ -2310,5 +2566,16 @@ extension ViewModifierRegistry {
       return try SymbolEffectModifier(from: params, appContext: appContext)
     }
 
+    register("onScrollPhaseChange") { params, appContext, eventDispatcher in
+      return try OnScrollPhaseChangeModifier(from: params, appContext: appContext, eventDispatcher: eventDispatcher)
+    }
+
+    register("onScrollGeometryChange") { params, appContext, eventDispatcher in
+      return try OnScrollGeometryChangeModifier(from: params, appContext: appContext, eventDispatcher: eventDispatcher)
+    }
+
+    register("onHingeChange") { params, appContext, eventDispatcher in
+      return try OnHingeChangeModifier(from: params, appContext: appContext, eventDispatcher: eventDispatcher)
+    }
   }
 }

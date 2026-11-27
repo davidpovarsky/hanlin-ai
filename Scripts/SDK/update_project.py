@@ -18,6 +18,7 @@ PRODUCTS={"HanlinApplication":"AC1900000000000000000002","HanlinA2UI":"AC1900000
           "HanlinTranslationUI":"AC1900000000000000000043",
           "HanlinWidgetUI":"AC1900000000000000000044",
           "HanlinExpoWidgetsOriginal":"AC1900000000000000000050",
+          "HanlinExpoWidgetsExtension":"AC1900000000000000000056",
           "HanlinKeyboardUI":"AC1900000000000000000060",
           "HanlinNotificationContentUI":"AC1900000000000000000061",
           "HanlinCameraCaptureUI":"AC1900000000000000000062",
@@ -38,7 +39,7 @@ EXTRA_PRODUCT_BUILDS = {
     ("HanlinApp", "HanlinExpoWidgetsOriginal"): "AC1900000000000000000051",
     ("HanlinMiniApps", "HanlinExpoWidgetsOriginal"): "AC1900000000000000000052",
     ("AI_HLYTests", "HanlinExpoWidgetsOriginal"): "AC1900000000000000000053",
-    ("HanlinScriptingWidgets", "HanlinExpoWidgetsOriginal"): "AC1900000000000000000054",
+    ("HanlinScriptingWidgets", "HanlinExpoWidgetsExtension"): "AC1900000000000000000057",
     ("HanlinMiniApps", "HanlinWidgetUI"): "AC1900000000000000000055",
     ("HanlinMiniApps", "HanlinCameraCaptureUI"): "AC1900000000000000000063"
 }
@@ -49,7 +50,7 @@ TARGET_PRODUCTS={
     "ChavrusaChatShare": ["HanlinShareExtensionUI", "HanlinExtensionContracts"],
     "ChavrusaChatNotificationService": ["HanlinNotificationExtension", "HanlinExtensionContracts"],
     "ChavrusaChatTranslationProvider": ["HanlinTranslationUI", "HanlinExtensionContracts"],
-    "HanlinScriptingWidgets": ["HanlinWidgetUI", "HanlinExtensionContracts", "HanlinExpoWidgetsOriginal"],
+    "HanlinScriptingWidgets": ["HanlinWidgetUI", "HanlinExtensionContracts", "HanlinExpoWidgetsExtension"],
 }
 
 class Span:
@@ -150,13 +151,13 @@ def product_is_covered(product, objects, closure):
 
 def widget_cxx_import_flags(package):
     # Read the genuine original producer from the evaluated unified manifest.
-    producers = [target for target in package["targets"] if target["name"] == "ExpoWidgets"]
+    producers = [target for target in package["targets"] if target["name"] == "ExpoWidgetsHost"]
     if len(producers) != 1:
-        raise ValueError("Expected the original ExpoWidgets producer")
+        raise ValueError("Expected the original ExpoWidgets host registration producer")
     settings = [value["kind"] for value in producers[0]["settings"] if value["tool"] == "swift"]
     modes = [value["interoperabilityMode"]["_0"] for value in settings if "interoperabilityMode" in value]
     if modes != ["Cxx"]:
-        raise ValueError("Expected ExpoWidgets' original C++ interoperability contract")
+        raise ValueError("Expected ExpoWidgetsHost's original C++ interoperability contract")
     flags = [flag for value in settings if "unsafeFlags" in value for flag in value["unsafeFlags"]["_0"]]
     # Package-relative absolute paths become repository-relative Xcode inputs;
     # retain the producer's flags, definitions and fallback search paths.
@@ -200,16 +201,96 @@ def wire_expo_cxx_imports(text, package, host_name):
     return text
 
 
+def validate_widget_extension_boundary(package):
+    """Fail before generation if an original WidgetKit product reaches app Core."""
+    targets = {target["name"]: target for target in package["targets"]}
+    products = {product["name"]: product["targets"] for product in package["products"]}
+    if products.get("HanlinExpoWidgetsExtension") != ["ExpoWidgets"]:
+        raise ValueError("The widget extension must retain the original ExpoWidgets module")
+    if products.get("HanlinExpoWidgetsOriginal") != ["ExpoWidgets", "ExpoWidgetsHost"]:
+        raise ValueError("The application must retain original ExpoWidgets host registration")
+    core = targets["ExpoWidgets"]
+    settings = [value["kind"] for value in core["settings"] if value["tool"] == "swift"]
+    flags = [flag for value in settings if "unsafeFlags" in value for flag in value["unsafeFlags"]["_0"]]
+    if "-application-extension" not in flags or any("interoperabilityMode" in value for value in settings):
+        raise ValueError("Original ExpoWidgets must compile with extension-safe native imports")
+    forbidden = {"ExpoWidgetsHost", "HanlinExpoRuntime", "ReactNativeHeaders", "React",
+                 "ReactNativeDependencies", "hermesvm", "ExpoModulesJSI", "ExpoModulesCore",
+                 "ExpoModulesWorklets", "ExpoUI", "ExpoBrownfield", "ExpoAsset"}
+    visited = set()
+
+    def visit(name):
+        if name in forbidden:
+            raise ValueError("Widget extension reaches app-only target: " + name)
+        if name in visited:
+            return
+        if name not in targets:
+            raise ValueError("Missing canonical widget target: " + name)
+        visited.add(name)
+        for dependency in targets[name].get("dependencies", []):
+            if "target" in dependency:
+                visit(dependency["target"][0])
+            elif "byName" in dependency:
+                visit(dependency["byName"][0])
+            elif "product" in dependency:
+                product, owner, *_ = dependency["product"]
+                if product in forbidden:
+                    raise ValueError("Widget extension reaches app-only product: " + product)
+                if not owner:
+                    raise ValueError("Widget dependency requires an explicit package: " + product)
+            else:
+                raise ValueError("Unsupported widget dependency: " + repr(dependency))
+
+    for product in ("HanlinExpoWidgetsExtension", "HanlinWidgetUI", "HanlinCameraCaptureUI"):
+        for name in products[product]:
+            visit(name)
+    return visited
+
+
 def wire_widget_cxx_imports(text, package):
+    validate_widget_extension_boundary(package)
     objects = parse_project(text)["objects"]
-    consumers = {"HanlinApp", "HanlinMiniApps", "AI_HLYTests", "HanlinMiniAppsTests",
-                 "HanlinScriptingWidgets", "HanlinMiniAppsWidgets"}
+    apps = {"HanlinApp", "HanlinMiniApps", "AI_HLYTests", "HanlinMiniAppsTests"}
+    widgets = {"HanlinScriptingWidgets", "HanlinMiniAppsWidgets"}
+    consumers = apps | widgets
     actual = {value.get("name") for value in objects.values()
               if value.get("isa") == "PBXNativeTarget" and value.get("name") in consumers}
     if actual != consumers:
         raise ValueError("Missing native consumer of the original Expo import contract")
-    for name in sorted(consumers):
+    for name in sorted(apps):
         text = wire_expo_cxx_imports(text, package, name)
+
+    # Remove only the original producer's app-only Clang flag pairs from the
+    # extension consumers. Preserve unrelated flags and explicit module scanning.
+    flags = widget_cxx_import_flags(package)
+    pairs = {tuple(flags[index:index + 2]) for index in range(0, len(flags), 2)}
+    for host in objects.values():
+        if host.get("isa") != "PBXNativeTarget" or host.get("name") not in widgets:
+            continue
+        for key in objects[host["buildConfigurationList"]]["buildConfigurations"]:
+            settings = objects[key]["buildSettings"]
+            if settings.get("APPLICATION_EXTENSION_API_ONLY") != "YES":
+                raise ValueError("Widget host must retain APPLICATION_EXTENSION_API_ONLY")
+            current = settings.get("OTHER_SWIFT_FLAGS", ["$(inherited)"])
+            values = shlex.split(current) if isinstance(current, str) else list(current)
+            retained, index = [], 0
+            while index < len(values):
+                if tuple(values[index:index + 2]) in pairs:
+                    index += 2
+                else:
+                    retained.append(values[index])
+                    index += 1
+
+            def extension_settings(block):
+                block = re.sub(r'\n[ \t]*"?SWIFT_OBJC_INTEROP_MODE"? = [^;]+;', '', block, count=1)
+                line = "OTHER_SWIFT_FLAGS = (" + ", ".join(json.dumps(value) for value in retained) + ",);"
+                pattern = r'"?OTHER_SWIFT_FLAGS"? = [^;]+;'
+                if re.search(pattern, block):
+                    return re.sub(pattern, lambda _: line, block, count=1)
+                return re.sub(r'("?buildSettings"? = \{)',
+                              lambda match: match[1] + "\n\t\t\t\t" + line, block, count=1)
+
+            text = edit_object(text, key, extension_settings)
     return text
 
 
@@ -277,6 +358,8 @@ def update(package=None):
     for index,(name,required) in enumerate(TARGET_PRODUCTS.items()):
         key,target=targets[name]
         products=list(target.get("packageProductDependencies",[]))
+        if name == "HanlinScriptingWidgets":
+            products = [ref for ref in products if ref != PRODUCTS["HanlinExpoWidgetsOriginal"]]
         for product in required:
             if PRODUCTS[product] not in products:products.append(PRODUCTS[product])
         owner = HOST_LINK_OWNERS.get(name)
@@ -295,6 +378,9 @@ def update(package=None):
         text=edit_object(text,key,set_products)
         phase=next(k for k in target["buildPhases"] if objects[k]["isa"]=="PBXFrameworksBuildPhase")
         linked=list(objects[phase]["files"])
+        if name == "HanlinScriptingWidgets":
+            linked = [key for key in linked
+                      if objects[key].get("productRef") != PRODUCTS["HanlinExpoWidgetsOriginal"]]
         if owner:
             # Preserve native/system references and independent host products.
             linked = [key for key in linked

@@ -1,6 +1,6 @@
+import HanlinExpoWidgetSubset
 import Foundation
 import SwiftUI
-import ExpoModulesCore
 
 public struct WidgetsDynamicView: View {
   private let child: any ExpoSwiftUI.AnyChild

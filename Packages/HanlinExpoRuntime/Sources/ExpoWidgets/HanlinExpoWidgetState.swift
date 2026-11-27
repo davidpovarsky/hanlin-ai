@@ -7,7 +7,7 @@ import WidgetKit
 /// Atomic, installation-qualified state for the original Expo widget engine.
 /// The original timeline wire remains visible through WidgetsStorage. A verified
 /// file is authoritative for concurrent extension/app read-modify-write actions.
-enum HanlinExpoWidgetState {
+package enum HanlinExpoWidgetState {
   struct Rendered {
     let node: [String: Any]
     let retained: Bool
@@ -154,7 +154,7 @@ enum HanlinExpoWidgetState {
     return result
   }
 
-  static func updateTimeline(_ entries: [[String: Any]], name: String) throws {
+  package static func updateTimeline(_ entries: [[String: Any]], name: String) throws {
     let data = try checkedTimeline(entries)
     try withRecord(name) { record, _ in record.timeline = data }
 
@@ -169,7 +169,7 @@ enum HanlinExpoWidgetState {
     }
   }
 
-  static func timeline(_ name: String) -> [[String: Any]]? { snapshot(name)?.timeline }
+  package static func timeline(_ name: String) -> [[String: Any]]? { snapshot(name)?.timeline }
 
   static func placeholder(_ name: String) -> WidgetsTimelineEntry {
     let captured = snapshot(name)

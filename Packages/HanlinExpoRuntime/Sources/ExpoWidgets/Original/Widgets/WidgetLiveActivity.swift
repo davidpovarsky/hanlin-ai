@@ -1,20 +1,25 @@
+import HanlinExpoWidgetSubset
 import Foundation
 import SwiftUI
 import WidgetKit
-import ExpoModulesCore
 import ActivityKit
 
-struct LiveActivityAttributes: ActivityAttributes {
+package struct LiveActivityAttributes: ActivityAttributes {
   // The deep link URL passed to start(). Stored in the static attributes so it is
   // scoped to this activity and survives content updates, unlike ContentState.
-  var url: String?
+  package var url: String?
 
-  public struct ContentState: Codable, Hashable {
-    var name: String
-    var props: String?
+  package struct ContentState: Codable, Hashable {
+    package var name: String
+    package var props: String?
+
+    package init(name: String, props: String?) {
+      self.name = name
+      self.props = props
+    }
   }
 
-  init(url: String? = nil) {
+  package init(url: String? = nil) {
     self.url = url
   }
 }

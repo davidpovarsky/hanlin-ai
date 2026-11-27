@@ -1,6 +1,6 @@
+import HanlinExpoWidgetSubset
 import Foundation
 import SwiftUI
-import ExpoModulesCore
 
 private final class FallbackIdentity {}
 

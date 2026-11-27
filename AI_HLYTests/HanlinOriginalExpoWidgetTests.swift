@@ -1,6 +1,7 @@
 import CryptoKit
 import ExpoModulesCore
 @testable import ExpoWidgets
+@testable import ExpoWidgetsHost
 import Foundation
 import HanlinWidgetUI
 import HanlinPlatformContracts

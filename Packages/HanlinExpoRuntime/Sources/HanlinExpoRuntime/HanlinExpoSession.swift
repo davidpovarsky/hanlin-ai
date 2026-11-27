@@ -4,6 +4,7 @@ import ExpoBrownfield
 import ExpoModulesCore
 import ExpoUI
 import ExpoWidgets
+import ExpoWidgetsHost
 import HanlinExpoNativeAPI
 import HanlinExpoNativeAPICore
 import HanlinPlatformContracts
@@ -84,7 +85,7 @@ public final class HanlinExpoModulesProvider: ModulesProvider {
         return [
             (module: ExpoAsset.AssetModule.self, name: nil),
             (module: ExpoUIModule.self, name: "ExpoUI"),
-            (module: ExpoWidgets.WidgetsModule.self, name: "ExpoWidgets"),
+            (module: ExpoWidgetsHost.WidgetsModule.self, name: "ExpoWidgets"),
             (module: HanlinExpoUIModule.self, name: "HanlinExpoUI"),
             (module: HanlinGeneratedExpoUIModule.self, name: "HanlinGeneratedExpoUI"),
             (module: ExpoBrownfieldModule.self, name: "ExpoBrownfieldModule"),

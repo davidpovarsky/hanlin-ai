@@ -1,8 +1,7 @@
+import HanlinExpoWidgetSubset
 import Foundation
 // Copyright 2015-present 650 Industries. All rights reserved.
 
-import ExpoModulesCore
-import ExpoUI
 import SwiftUI
 #if !os(tvOS)
 import WidgetKit

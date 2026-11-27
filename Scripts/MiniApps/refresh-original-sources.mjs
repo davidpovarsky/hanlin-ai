@@ -270,14 +270,9 @@ export async function refreshOriginalSources({root,cache,publications,archives})
     if(entry.local.endsWith('/ExpoUI/Modifiers/ViewModifierRegistry.swift')) {
       const localKeys=new Set(registrationBlocks(local.toString()).map(block=>block.key));
       const removedKeys=new Set(registrationBlocks(previous.toString()).map(block=>block.key).filter(key=>!localKeys.has(key)));
-      // These original callbacks require the real React/JSI state/worklet
-      // context. They stay in the complete original ExpoUI framework and
-      // original ExpoWidgets module, not the existing prepared JSON namespace.
-      removedKeys.add('onHingeChange');removedKeys.add('searchable');
-
       // Preserve existing target registrations, update their original bodies,
       // and include every newly introduced upstream registration and its source.
-      mergeLocal=originalWidgetRegistry(local,new Set(['onHingeChange','searchable']));mergePrevious=originalWidgetRegistry(mergePrevious,removedKeys);mergeNext=originalWidgetRegistry(mergeNext,removedKeys);
+      mergeLocal=local;mergePrevious=originalWidgetRegistry(mergePrevious,removedKeys);mergeNext=originalWidgetRegistry(mergeNext,removedKeys);
     }
     const merged=await mergeOriginal({local:mergeLocal,previous:mergePrevious,next:mergeNext,cache,label:entry.local+' <- '+entry.upstream,target:entry.local});
     files.set(entry.local,merged);

@@ -1825,9 +1825,9 @@
       "upstream": "packages/expo-ui/ios/Modifiers/ViewModifierRegistry.swift",
       "upstreamBlob": "07a856574df36a69b802bd483caf4e33ae05a976",
       "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/ViewModifierRegistry.swift",
-      "localSHA256": "c78e40ec4dfca8434c37aca45ca4c2252b4f80624e04ef90797d0852120800b6",
+      "localSHA256": "a8c897fe4b3d57b5941848b5a53e7dae052a7e1f5b5935977ba1840443a1a257",
       "byteIdentical": false,
-      "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored.",
+      "adaptation": "Source-built SwiftUI widget subset; remove binary ExpoModulesCore imports. UIBaseView excludes React view registration; modifier registry registers widget-compatible source modifiers only. Dictionary/context adapters are separately authored. Restore all 164 original native registrations; the separately authored default prepared context retains its exact former 97 registrations plus four widget/image specials. No app Core/React dependency is linked into the original widget extension product.",
       "upstreamPublication": {
         "package": "@expo/ui",
         "version": "58.0.29",
@@ -2549,9 +2549,9 @@
       "upstream": "packages/expo-widgets/ios/LiveActivity.swift",
       "upstreamBlob": "b80655d974acbdd764b7b476fdc9a56b6aa4dcca",
       "local": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/LiveActivity.swift",
-      "localSHA256": "5cd3246b91d1814fa2a8ee204e5791cdb3e2210822246dec7f642817fda6daa2",
+      "localSHA256": "c479fcf531445a8eba3dec10245397091b71c26ec29940361f6c582b1b6c87ff",
       "byteIdentical": false,
-      "adaptation": "Explicit Foundation scope where required for SwiftPM. Stop original token callbacks for inactive installation generations.",
+      "adaptation": "Explicit Foundation scope where required for SwiftPM. Stop original token callbacks for inactive installation generations. Retain the original WidgetKit/JSC implementation and local installation/timeline/identity adaptations; separate the app-only Core registrations into ExpoWidgetsHost at the same canonical source paths. Native view props import the shared original SwiftUI primitives; ActivityAttributes remains in ExpoWidgets. Only the unreachable pre-iOS17 button fallback is removed under the unchanged iOS27 deployment floor.",
       "upstreamPublication": {
         "package": "expo-widgets",
         "version": "58.0.29",
@@ -2568,9 +2568,9 @@
       "upstream": "packages/expo-widgets/ios/LiveActivityFactory.swift",
       "upstreamBlob": "29e4f1566d188665e301d32bc1ad85640f83e68c",
       "local": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/LiveActivityFactory.swift",
-      "localSHA256": "34aa1afdce0c88e3a81c4013f518d492df561539548ba7c5d5c5244fe479affb",
+      "localSHA256": "85051dd3c20a95b984a5d10d48ef64c46ea932040be21394fe0b676d0afeb4d8",
       "byteIdentical": false,
-      "adaptation": "Explicit Foundation scope where required for SwiftPM. Upstream trailing whitespace normalized.",
+      "adaptation": "Explicit Foundation scope where required for SwiftPM. Upstream trailing whitespace normalized. Retain the original WidgetKit/JSC implementation and local installation/timeline/identity adaptations; separate the app-only Core registrations into ExpoWidgetsHost at the same canonical source paths. Native view props import the shared original SwiftUI primitives; ActivityAttributes remains in ExpoWidgets. Only the unreachable pre-iOS17 button fallback is removed under the unchanged iOS27 deployment floor.",
       "upstreamPublication": {
         "package": "expo-widgets",
         "version": "58.0.29",
@@ -2584,9 +2584,9 @@
       "upstream": "packages/expo-widgets/ios/WidgetObject.swift",
       "upstreamBlob": "41506785247f9a6ed907244c06fb05609f9c048d",
       "local": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetObject.swift",
-      "localSHA256": "025a1cd04deb5333523aa50c0e17c59917f9966f584a82072c2b015d03cde5ea",
+      "localSHA256": "64b752d83991caa3c14865708fe0cdcff42bbe90ee6848e758cfb8a740455ea2",
       "byteIdentical": false,
-      "adaptation": "Explicit Foundation scope where required for SwiftPM. Reload original widget kind and the generic installed-widget host kind.",
+      "adaptation": "Explicit Foundation scope where required for SwiftPM. Reload original widget kind and the generic installed-widget host kind. Retain the original WidgetKit/JSC implementation and local installation/timeline/identity adaptations; separate the app-only Core registrations into ExpoWidgetsHost at the same canonical source paths. Native view props import the shared original SwiftUI primitives; ActivityAttributes remains in ExpoWidgets. Only the unreachable pre-iOS17 button fallback is removed under the unchanged iOS27 deployment floor.",
       "upstreamPublication": {
         "package": "expo-widgets",
         "version": "58.0.29",
@@ -2600,9 +2600,9 @@
       "upstream": "packages/expo-widgets/ios/Widgets/AccessoryWidgetBackgroundView.swift",
       "upstreamBlob": "68c3e8c3df21f3c88c43661835bf4733ee4e3524",
       "local": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/AccessoryWidgetBackgroundView.swift",
-      "localSHA256": "16436a1b8fc3a66996555de8fe5a9995924f68a70dcdf33d7e63f8f1e8be683e",
+      "localSHA256": "f92afe8ef1eea55e1f0ef9df0604cabe19b6dfc999ff88c1f6b937651eb03cc6",
       "byteIdentical": false,
-      "adaptation": "Explicit Foundation scope where required for SwiftPM.",
+      "adaptation": "Explicit Foundation scope where required for SwiftPM. Retain the original WidgetKit/JSC implementation and local installation/timeline/identity adaptations; separate the app-only Core registrations into ExpoWidgetsHost at the same canonical source paths. Native view props import the shared original SwiftUI primitives; ActivityAttributes remains in ExpoWidgets. Only the unreachable pre-iOS17 button fallback is removed under the unchanged iOS27 deployment floor.",
       "upstreamPublication": {
         "package": "expo-widgets",
         "version": "58.0.29",
@@ -2616,9 +2616,9 @@
       "upstream": "packages/expo-widgets/ios/Widgets/AppIntent.swift",
       "upstreamBlob": "1730fffee8dd7992c09457e88542cd743be741e1",
       "local": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/AppIntent.swift",
-      "localSHA256": "b8316b264e367ba538f09444a74e4a9721d829f10ea69f03f68f9fc9cfa6812a",
+      "localSHA256": "c1209662d26d6b45e8a1e39194ddf068a18ba7d29bb2507ddd754cf195054025",
       "byteIdentical": false,
-      "adaptation": "Explicit Foundation scope where required for SwiftPM. Reload original widget kind and the generic installed-widget host kind.",
+      "adaptation": "Explicit Foundation scope where required for SwiftPM. Reload original widget kind and the generic installed-widget host kind. Retain the original WidgetKit/JSC implementation and local installation/timeline/identity adaptations; separate the app-only Core registrations into ExpoWidgetsHost at the same canonical source paths. Native view props import the shared original SwiftUI primitives; ActivityAttributes remains in ExpoWidgets. Only the unreachable pre-iOS17 button fallback is removed under the unchanged iOS27 deployment floor.",
       "upstreamPublication": {
         "package": "expo-widgets",
         "version": "58.0.29",
@@ -2632,9 +2632,9 @@
       "upstream": "packages/expo-widgets/ios/Widgets/Buttons.swift",
       "upstreamBlob": "55fb9b3d5fa04d38ab8c2a8b3de7f7656afc401e",
       "local": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/Buttons.swift",
-      "localSHA256": "5a8b9b6b740e11686c173d67cd4fcf75c3d0b6bd3dc64b668e867e770e59ce29",
+      "localSHA256": "c7e5687f9258b08c37a5527728b0d51dc737c055ba466331fb49a1b8f42d4fe0",
       "byteIdentical": false,
-      "adaptation": "Explicit Foundation scope where required for SwiftPM.",
+      "adaptation": "Explicit Foundation scope where required for SwiftPM. Retain the original WidgetKit/JSC implementation and local installation/timeline/identity adaptations; separate the app-only Core registrations into ExpoWidgetsHost at the same canonical source paths. Native view props import the shared original SwiftUI primitives; ActivityAttributes remains in ExpoWidgets. Only the unreachable pre-iOS17 button fallback is removed under the unchanged iOS27 deployment floor.",
       "upstreamPublication": {
         "package": "expo-widgets",
         "version": "58.0.29",
@@ -2648,9 +2648,9 @@
       "upstream": "packages/expo-widgets/ios/Widgets/ChildView.swift",
       "upstreamBlob": "0d107a67f85635fafc02013b0a97205b7146c731",
       "local": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/ChildView.swift",
-      "localSHA256": "1e8f9d57fa6ac106b09df262e6319b44a8995166235381de4c1ad5df94a44b9d",
+      "localSHA256": "44fa73c52f6d8eaa0163d2dc8b9b1219321b44e4fa67f701815dce29c8e198d0",
       "byteIdentical": false,
-      "adaptation": "Explicit Foundation scope where required for SwiftPM.",
+      "adaptation": "Explicit Foundation scope where required for SwiftPM. Retain the original WidgetKit/JSC implementation and local installation/timeline/identity adaptations; separate the app-only Core registrations into ExpoWidgetsHost at the same canonical source paths. Native view props import the shared original SwiftUI primitives; ActivityAttributes remains in ExpoWidgets. Only the unreachable pre-iOS17 button fallback is removed under the unchanged iOS27 deployment floor.",
       "upstreamPublication": {
         "package": "expo-widgets",
         "version": "58.0.29",
@@ -2664,9 +2664,9 @@
       "upstream": "packages/expo-widgets/ios/Widgets/DynamicView.swift",
       "upstreamBlob": "12db0cd574d3472805e215078b64ee8ddb828ea5",
       "local": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/DynamicView.swift",
-      "localSHA256": "f5b5563210ee58f53460dad9de97abd54499b6a8ad024038699a0af9462f5a27",
+      "localSHA256": "c92d7615df8b84f07a01104bffc9faa979ca5e2dc208d7c42e380dfbfc50efeb",
       "byteIdentical": false,
-      "adaptation": "Explicit Foundation scope where required for SwiftPM.",
+      "adaptation": "Explicit Foundation scope where required for SwiftPM. Retain the original WidgetKit/JSC implementation and local installation/timeline/identity adaptations; separate the app-only Core registrations into ExpoWidgetsHost at the same canonical source paths. Native view props import the shared original SwiftUI primitives; ActivityAttributes remains in ExpoWidgets. Only the unreachable pre-iOS17 button fallback is removed under the unchanged iOS27 deployment floor.",
       "upstreamPublication": {
         "package": "expo-widgets",
         "version": "58.0.29",
@@ -2680,9 +2680,9 @@
       "upstream": "packages/expo-widgets/ios/Widgets/EntryView.swift",
       "upstreamBlob": "638ee4825a5ce2e4038d2be0beccbc89e334311a",
       "local": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/EntryView.swift",
-      "localSHA256": "65ae5ef22a6b4777f7d90e82365108991b8e8b369e28a1607f93b7ae70a76422",
+      "localSHA256": "4f7ea2ecca3a41344972d2bdf919f994e9a8e17eb41e46380bd04e4a8ec3100e",
       "byteIdentical": false,
-      "adaptation": "Explicit Foundation scope where required for SwiftPM. Forward generic host configuration through original environment.configuration.",
+      "adaptation": "Explicit Foundation scope where required for SwiftPM. Forward generic host configuration through original environment.configuration. Retain the original WidgetKit/JSC implementation and local installation/timeline/identity adaptations; separate the app-only Core registrations into ExpoWidgetsHost at the same canonical source paths. Native view props import the shared original SwiftUI primitives; ActivityAttributes remains in ExpoWidgets. Only the unreachable pre-iOS17 button fallback is removed under the unchanged iOS27 deployment floor.",
       "upstreamPublication": {
         "package": "expo-widgets",
         "version": "58.0.29",
@@ -2699,9 +2699,9 @@
       "upstream": "packages/expo-widgets/ios/Widgets/Fragment.swift",
       "upstreamBlob": "0f17a9d07cc37831acd9978215077e5d87c6feeb",
       "local": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/Fragment.swift",
-      "localSHA256": "072b40dc5b3e9908cf3a351d707c9e69d6744c5412fbef8cab6dd98f53945dc1",
+      "localSHA256": "a504091e73d0601e60e49d3bb20f1082a55dd0d90231f9252d21af447bfe9977",
       "byteIdentical": false,
-      "adaptation": "Explicit Foundation scope where required for SwiftPM.",
+      "adaptation": "Explicit Foundation scope where required for SwiftPM. Retain the original WidgetKit/JSC implementation and local installation/timeline/identity adaptations; separate the app-only Core registrations into ExpoWidgetsHost at the same canonical source paths. Native view props import the shared original SwiftUI primitives; ActivityAttributes remains in ExpoWidgets. Only the unreachable pre-iOS17 button fallback is removed under the unchanged iOS27 deployment floor.",
       "upstreamPublication": {
         "package": "expo-widgets",
         "version": "58.0.29",
@@ -2731,9 +2731,9 @@
       "upstream": "packages/expo-widgets/ios/Widgets/RedBoxView.swift",
       "upstreamBlob": "d636dbc5bdebc539d142273b8341e693635827fb",
       "local": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/RedBoxView.swift",
-      "localSHA256": "652b887b0cda62d993440e0ab41f1507e1592dac45899e4fe03e124c0dff8b50",
+      "localSHA256": "944a941202d2174bf3dbe4be03eedaa09ecbf1dcda41fca1a0a7214d876fc1ff",
       "byteIdentical": false,
-      "adaptation": "Explicit Foundation scope where required for SwiftPM.",
+      "adaptation": "Explicit Foundation scope where required for SwiftPM. Retain the original WidgetKit/JSC implementation and local installation/timeline/identity adaptations; separate the app-only Core registrations into ExpoWidgetsHost at the same canonical source paths. Native view props import the shared original SwiftUI primitives; ActivityAttributes remains in ExpoWidgets. Only the unreachable pre-iOS17 button fallback is removed under the unchanged iOS27 deployment floor.",
       "upstreamPublication": {
         "package": "expo-widgets",
         "version": "58.0.29",
@@ -2747,9 +2747,9 @@
       "upstream": "packages/expo-widgets/ios/Widgets/TimelineEntry.swift",
       "upstreamBlob": "3f48c022bb56237b9d48e5fbc729a657706ce58c",
       "local": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/TimelineEntry.swift",
-      "localSHA256": "f3028ccce31246641f2d537bff4dd50b0686c87d8d208e05c96bd91a23c65b4f",
+      "localSHA256": "c8fbdb1aa6639a88f5687086f359ab19bfc2e426f866a38e5b00465ce4a50f94",
       "byteIdentical": false,
-      "adaptation": "Explicit Foundation scope where required for SwiftPM.",
+      "adaptation": "Explicit Foundation scope where required for SwiftPM. Retain the original WidgetKit/JSC implementation and local installation/timeline/identity adaptations; separate the app-only Core registrations into ExpoWidgetsHost at the same canonical source paths. Native view props import the shared original SwiftUI primitives; ActivityAttributes remains in ExpoWidgets. Only the unreachable pre-iOS17 button fallback is removed under the unchanged iOS27 deployment floor.",
       "upstreamPublication": {
         "package": "expo-widgets",
         "version": "58.0.29",
@@ -2763,9 +2763,9 @@
       "upstream": "packages/expo-widgets/ios/Widgets/TimelineProvider.swift",
       "upstreamBlob": "f339d981be36efed718ddd635b9c82195f981880",
       "local": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/TimelineProvider.swift",
-      "localSHA256": "3431d9cfe5af815b42964dd7dc9b3de8e6e6d20b276739b6eecf5f0a9d5bc689",
+      "localSHA256": "2328d82bd311ce502b687a42b9a87cbc28797d7663a36217684f7d72cddaf8a9",
       "byteIdentical": false,
-      "adaptation": "Explicit Foundation scope where required for SwiftPM.",
+      "adaptation": "Explicit Foundation scope where required for SwiftPM. Retain the original WidgetKit/JSC implementation and local installation/timeline/identity adaptations; separate the app-only Core registrations into ExpoWidgetsHost at the same canonical source paths. Native view props import the shared original SwiftUI primitives; ActivityAttributes remains in ExpoWidgets. Only the unreachable pre-iOS17 button fallback is removed under the unchanged iOS27 deployment floor.",
       "upstreamPublication": {
         "package": "expo-widgets",
         "version": "58.0.29",
@@ -2795,9 +2795,9 @@
       "upstream": "packages/expo-widgets/ios/Widgets/Utils.swift",
       "upstreamBlob": "76b2199c2d3f879463fed5d2bd49038b0428a2e7",
       "local": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/Utils.swift",
-      "localSHA256": "08c1a02e1eaae8ee190a9c908cae0c2e672cddbfb450ed97f978b43b018268ed",
+      "localSHA256": "8bc5cdb65bec73713e38e445ee0219b5ecb8f5d58da283fc163442092e82f12d",
       "byteIdentical": false,
-      "adaptation": "Explicit Foundation scope where required for SwiftPM. Inactive installation generations do not render live activity layouts.",
+      "adaptation": "Explicit Foundation scope where required for SwiftPM. Inactive installation generations do not render live activity layouts. Retain the original WidgetKit/JSC implementation and local installation/timeline/identity adaptations; separate the app-only Core registrations into ExpoWidgetsHost at the same canonical source paths. Native view props import the shared original SwiftUI primitives; ActivityAttributes remains in ExpoWidgets. Only the unreachable pre-iOS17 button fallback is removed under the unchanged iOS27 deployment floor.",
       "upstreamPublication": {
         "package": "expo-widgets",
         "version": "58.0.29",
@@ -2811,9 +2811,9 @@
       "upstream": "packages/expo-widgets/ios/Widgets/ViewRenderer.swift",
       "upstreamBlob": "68e376fdd5a4a1b088f6e2e28b0babb285feec12",
       "local": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/ViewRenderer.swift",
-      "localSHA256": "c38e906a25fad080c09fc60789fb336a9c7de3aa31149f4d72500b0947227b60",
+      "localSHA256": "7863f8b3535e5c1211b91069f925fb14faa50f6a94f4862f5582f491fd71b3e0",
       "byteIdentical": false,
-      "adaptation": "Explicit Foundation scope where required for SwiftPM.",
+      "adaptation": "Explicit Foundation scope where required for SwiftPM. Retain the original WidgetKit/JSC implementation and local installation/timeline/identity adaptations; separate the app-only Core registrations into ExpoWidgetsHost at the same canonical source paths. Native view props import the shared original SwiftUI primitives; ActivityAttributes remains in ExpoWidgets. Only the unreachable pre-iOS17 button fallback is removed under the unchanged iOS27 deployment floor.",
       "upstreamPublication": {
         "package": "expo-widgets",
         "version": "58.0.29",
@@ -2827,9 +2827,9 @@
       "upstream": "packages/expo-widgets/ios/Widgets/WidgetLiveActivity.swift",
       "upstreamBlob": "4d135c4e4eb1f846315654ed9d835a935d120d42",
       "local": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/WidgetLiveActivity.swift",
-      "localSHA256": "0f6d6b8e994d06e4acb69b8e793ded04143b3db96c2e89ba384890bbad176c11",
+      "localSHA256": "143662ae2dfb28feb18c0433130917b82861da8161decce231c811f173d8b45f",
       "byteIdentical": false,
-      "adaptation": "Explicit Foundation scope where required for SwiftPM. Upstream trailing whitespace normalized.",
+      "adaptation": "Explicit Foundation scope where required for SwiftPM. Upstream trailing whitespace normalized. Retain the original WidgetKit/JSC implementation and local installation/timeline/identity adaptations; separate the app-only Core registrations into ExpoWidgetsHost at the same canonical source paths. Native view props import the shared original SwiftUI primitives; ActivityAttributes remains in ExpoWidgets. Only the unreachable pre-iOS17 button fallback is removed under the unchanged iOS27 deployment floor.",
       "upstreamPublication": {
         "package": "expo-widgets",
         "version": "58.0.29",
@@ -2843,9 +2843,9 @@
       "upstream": "packages/expo-widgets/ios/Widgets/WidgetModifiers.swift",
       "upstreamBlob": "78caff110309dd5797e78486affa8f3332ce85d6",
       "local": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/WidgetModifiers.swift",
-      "localSHA256": "be592a19078bf4a06d95fdcc675863f4b13b212cbd46ece1b812196b037aea14",
+      "localSHA256": "93fd8616e5c0a887f4844d198dc6a36873ee44996b3c8abddaee8c729673642b",
       "byteIdentical": false,
-      "adaptation": "Explicit Foundation scope where required for SwiftPM.",
+      "adaptation": "Explicit Foundation scope where required for SwiftPM. Retain the original WidgetKit/JSC implementation and local installation/timeline/identity adaptations; separate the app-only Core registrations into ExpoWidgetsHost at the same canonical source paths. Native view props import the shared original SwiftUI primitives; ActivityAttributes remains in ExpoWidgets. Only the unreachable pre-iOS17 button fallback is removed under the unchanged iOS27 deployment floor.",
       "upstreamPublication": {
         "package": "expo-widgets",
         "version": "58.0.29",
@@ -2859,9 +2859,9 @@
       "upstream": "packages/expo-widgets/ios/Widgets/WidgetsJSRuntime.swift",
       "upstreamBlob": "0df32631f805e15f6475f03f8cdc62722cd85ea3",
       "local": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/WidgetsJSRuntime.swift",
-      "localSHA256": "ba0e7d6351e1e6dd5f95d4f891203cbdd6954f90e8019e298639b1be2e49c70b",
+      "localSHA256": "0c24483ac4856576058996de042acdac1122957d9bf2bb27455351c50d7e578b",
       "byteIdentical": false,
-      "adaptation": "Explicit Foundation scope where required for SwiftPM. Resolve genuine JavaScript resource through SwiftPM; inactive installation layouts are unavailable.",
+      "adaptation": "Explicit Foundation scope where required for SwiftPM. Resolve genuine JavaScript resource through SwiftPM; inactive installation layouts are unavailable. Retain the original WidgetKit/JSC implementation and local installation/timeline/identity adaptations; separate the app-only Core registrations into ExpoWidgetsHost at the same canonical source paths. Native view props import the shared original SwiftUI primitives; ActivityAttributes remains in ExpoWidgets. Only the unreachable pre-iOS17 button fallback is removed under the unchanged iOS27 deployment floor.",
       "upstreamPublication": {
         "package": "expo-widgets",
         "version": "58.0.29",
@@ -2891,9 +2891,9 @@
       "upstream": "packages/expo-widgets/ios/WidgetsContext.swift",
       "upstreamBlob": "632669259edf59b9b667c43507cb9112b3e26ee9",
       "local": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsContext.swift",
-      "localSHA256": "14feb7544bff21a7223d59600a1f00b603ebd2ca364459bd5f3fcb964740b246",
+      "localSHA256": "ed0697ecbef53a33d307a2b2ea139835f54f1922e62ee4e09e8b399cffd379ff",
       "byteIdentical": false,
-      "adaptation": "Explicit Foundation scope where required for SwiftPM.",
+      "adaptation": "Explicit Foundation scope where required for SwiftPM. Retain the original WidgetKit/JSC implementation and local installation/timeline/identity adaptations; separate the app-only Core registrations into ExpoWidgetsHost at the same canonical source paths. Native view props import the shared original SwiftUI primitives; ActivityAttributes remains in ExpoWidgets. Only the unreachable pre-iOS17 button fallback is removed under the unchanged iOS27 deployment floor.",
       "upstreamPublication": {
         "package": "expo-widgets",
         "version": "58.0.29",
@@ -2907,9 +2907,9 @@
       "upstream": "packages/expo-widgets/ios/WidgetsEvents.swift",
       "upstreamBlob": "0dec3e31bbcc04eb5b4587731199a080dadc4e31",
       "local": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsEvents.swift",
-      "localSHA256": "2afe29cd894b7722645ff0b410d564068e3e6e5d7b8f503c2885f4a8e89103b6",
+      "localSHA256": "d4a1326c61286742ba656dd266db43f9ad5e4b3ac9d8a3a3b2ab78197c4cc1c0",
       "byteIdentical": false,
-      "adaptation": "Explicit Foundation scope where required for SwiftPM.",
+      "adaptation": "Explicit Foundation scope where required for SwiftPM. Retain the original WidgetKit/JSC implementation and local installation/timeline/identity adaptations; separate the app-only Core registrations into ExpoWidgetsHost at the same canonical source paths. Native view props import the shared original SwiftUI primitives; ActivityAttributes remains in ExpoWidgets. Only the unreachable pre-iOS17 button fallback is removed under the unchanged iOS27 deployment floor.",
       "upstreamPublication": {
         "package": "expo-widgets",
         "version": "58.0.29",
@@ -2939,9 +2939,9 @@
       "upstream": "packages/expo-widgets/ios/WidgetsModule.swift",
       "upstreamBlob": "285136b3774e531b35c1a3e832506f93f61654be",
       "local": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsModule.swift",
-      "localSHA256": "153e723f0e7a75cb325dc74333efe3788010a1f74319a09ddb386853232634a5",
+      "localSHA256": "8ab0a5dc30ab82e8f4f5f28cebe203586febaf22dd28ab9486476be78509cf17",
       "byteIdentical": false,
-      "adaptation": "Explicit Foundation scope where required for SwiftPM. Bind original SharedObject names, methods, storage directory and events to the actual product/installation/generation.",
+      "adaptation": "Explicit Foundation scope where required for SwiftPM. Bind original SharedObject names, methods, storage directory and events to the actual product/installation/generation. Retain the original WidgetKit/JSC implementation and local installation/timeline/identity adaptations; separate the app-only Core registrations into ExpoWidgetsHost at the same canonical source paths. Native view props import the shared original SwiftUI primitives; ActivityAttributes remains in ExpoWidgets. Only the unreachable pre-iOS17 button fallback is removed under the unchanged iOS27 deployment floor.",
       "upstreamPublication": {
         "package": "expo-widgets",
         "version": "58.0.29",
@@ -2971,9 +2971,9 @@
       "upstream": "packages/expo-widgets/ios/WidgetsStorage.swift",
       "upstreamBlob": "86f9d6c615a77777a9a497786b6a883e15eefdc1",
       "local": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsStorage.swift",
-      "localSHA256": "4a3c58daafb36fc77be701a34431446d96cfc4172f4de60bcaa7f96046f61e5b",
+      "localSHA256": "413114683181fdb618132f906e3aab5f3b63ff68374f7d2121d49588f663155c",
       "byteIdentical": false,
-      "adaptation": "Explicit Foundation scope where required for SwiftPM.",
+      "adaptation": "Explicit Foundation scope where required for SwiftPM. Retain the original WidgetKit/JSC implementation and local installation/timeline/identity adaptations; separate the app-only Core registrations into ExpoWidgetsHost at the same canonical source paths. Native view props import the shared original SwiftUI primitives; ActivityAttributes remains in ExpoWidgets. Only the unreachable pre-iOS17 button fallback is removed under the unchanged iOS27 deployment floor.",
       "upstreamPublication": {
         "package": "expo-widgets",
         "version": "58.0.29",
@@ -3161,6 +3161,518 @@
       "localSHA256": "f632bd5007e5036432815eb72641027934284ff52bf457817336076eca63cb8d",
       "byteIdentical": false,
       "adaptation": "Original native ControlWidget Button/Toggle, AppEntity, configuration, and AppIntentControlValueProvider source. Public Swift module access; catalog and function/state execution bind to current Hanlin product/installation/generation/artifact and original native ScriptWidget transaction. Control execution remains in the WidgetKit extension."
+    },
+    {
+      "repository": "expo/expo",
+      "upstream": "packages/expo-ui/ios/Modifiers/DatePickerStyleModifier.swift",
+      "upstreamBlob": "f69cdfd095e3a9f5ff88b94303fa4a2e45bb8025",
+      "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/DatePickerStyleModifier.swift",
+      "localSHA256": "966beaa4ef8224571faf55d96c8d08961513f506660bab34d67c5852f96cc9c8",
+      "byteIdentical": false,
+      "adaptation": "Original native SwiftUI modifier implementation from the hash-verified @expo/ui publication; replace the binary ExpoModulesCore import with explicit Foundation and the existing native dictionary/props contracts. The full native registry is used by original Expo Widgets; prepared JSON admission stays unchanged.",
+      "upstreamPublication": {
+        "package": "@expo/ui",
+        "version": "58.0.29",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
+        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "path": "ios/Modifiers/DatePickerStyleModifier.swift"
+      }
+    },
+    {
+      "repository": "expo/expo",
+      "upstream": "packages/expo-ui/ios/Modifiers/DefaultScrollAnchorForRoleModifier.swift",
+      "upstreamBlob": "0c79c0f7bccf14eefd7b8fcf64d308f4ed02f1af",
+      "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/DefaultScrollAnchorForRoleModifier.swift",
+      "localSHA256": "d14cffd34df0a243629da2deb072a70280a5cb5820f68c2fe3168ddfd5f5afb5",
+      "byteIdentical": false,
+      "adaptation": "Original native SwiftUI modifier implementation from the hash-verified @expo/ui publication; replace the binary ExpoModulesCore import with explicit Foundation and the existing native dictionary/props contracts. The full native registry is used by original Expo Widgets; prepared JSON admission stays unchanged.",
+      "upstreamPublication": {
+        "package": "@expo/ui",
+        "version": "58.0.29",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
+        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "path": "ios/Modifiers/DefaultScrollAnchorForRoleModifier.swift"
+      }
+    },
+    {
+      "repository": "expo/expo",
+      "upstream": "packages/expo-ui/ios/Modifiers/DefaultScrollAnchorModifier.swift",
+      "upstreamBlob": "184d9840031d2a11338639038b20c2e4d1757169",
+      "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/DefaultScrollAnchorModifier.swift",
+      "localSHA256": "74785fb76044525e036bfc14c0c4b26fdc6743def34e68d095089f1f05799560",
+      "byteIdentical": false,
+      "adaptation": "Original native SwiftUI modifier implementation from the hash-verified @expo/ui publication; replace the binary ExpoModulesCore import with explicit Foundation and the existing native dictionary/props contracts. The full native registry is used by original Expo Widgets; prepared JSON admission stays unchanged.",
+      "upstreamPublication": {
+        "package": "@expo/ui",
+        "version": "58.0.29",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
+        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "path": "ios/Modifiers/DefaultScrollAnchorModifier.swift"
+      }
+    },
+    {
+      "repository": "expo/expo",
+      "upstream": "packages/expo-ui/ios/Modifiers/GlassEffectModifier.swift",
+      "upstreamBlob": "3a32f89a86a36127af54b6bde47443813eb8ce45",
+      "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/GlassEffectModifier.swift",
+      "localSHA256": "4bf9437bcf5db2db7a9097245b0fdf95b03b8cc40a77baded61fcd0a4e4c4f8a",
+      "byteIdentical": false,
+      "adaptation": "Original native SwiftUI modifier implementation from the hash-verified @expo/ui publication; replace the binary ExpoModulesCore import with explicit Foundation and the existing native dictionary/props contracts. The full native registry is used by original Expo Widgets; prepared JSON admission stays unchanged.",
+      "upstreamPublication": {
+        "package": "@expo/ui",
+        "version": "58.0.29",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
+        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "path": "ios/Modifiers/GlassEffectModifier.swift"
+      }
+    },
+    {
+      "repository": "expo/expo",
+      "upstream": "packages/expo-ui/ios/Modifiers/HingeObservationModifiers.swift",
+      "upstreamBlob": "9f76621d90fb957ed59b86c54f58519a21d93484",
+      "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/HingeObservationModifiers.swift",
+      "localSHA256": "135262912444359c352ac7e1961d1238521bfbba2acf567268ddc557c3eb53da",
+      "byteIdentical": false,
+      "adaptation": "Original native SwiftUI modifier implementation from the hash-verified @expo/ui publication; replace the binary ExpoModulesCore import with explicit Foundation and the existing native dictionary/props contracts. The full native registry is used by original Expo Widgets; prepared JSON admission stays unchanged. Retain the original native event branch; reject a non-null app JSI worklet reference at raw JSON admission. No fake worklet execution or app runtime is provided in the extension.",
+      "upstreamPublication": {
+        "package": "@expo/ui",
+        "version": "58.0.29",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
+        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "path": "ios/Modifiers/HingeObservationModifiers.swift"
+      }
+    },
+    {
+      "repository": "expo/expo",
+      "upstream": "packages/expo-ui/ios/Modifiers/IDModifier.swift",
+      "upstreamBlob": "bdfc24d6069b407f11e48e2e8828d66e470b5db3",
+      "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/IDModifier.swift",
+      "localSHA256": "8737131ae7a8a927f1dc249bb5ac84f5882ae223b167f3ca5b2213edc4a070de",
+      "byteIdentical": false,
+      "adaptation": "Original native SwiftUI modifier implementation from the hash-verified @expo/ui publication; replace the binary ExpoModulesCore import with explicit Foundation and the existing native dictionary/props contracts. The full native registry is used by original Expo Widgets; prepared JSON admission stays unchanged.",
+      "upstreamPublication": {
+        "package": "@expo/ui",
+        "version": "58.0.29",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
+        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "path": "ios/Modifiers/IDModifier.swift"
+      }
+    },
+    {
+      "repository": "expo/expo",
+      "upstream": "packages/expo-ui/ios/Modifiers/IndexViewStyleModifier.swift",
+      "upstreamBlob": "b206ec3afa2d1240914e86f011ee386fd9206d3a",
+      "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/IndexViewStyleModifier.swift",
+      "localSHA256": "6728c3f454f78f6b0b62be40cc4d4ed7beb415004eb74a9294e8cafaafe93863",
+      "byteIdentical": false,
+      "adaptation": "Original native SwiftUI modifier implementation from the hash-verified @expo/ui publication; replace the binary ExpoModulesCore import with explicit Foundation and the existing native dictionary/props contracts. The full native registry is used by original Expo Widgets; prepared JSON admission stays unchanged.",
+      "upstreamPublication": {
+        "package": "@expo/ui",
+        "version": "58.0.29",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
+        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "path": "ios/Modifiers/IndexViewStyleModifier.swift"
+      }
+    },
+    {
+      "repository": "expo/expo",
+      "upstream": "packages/expo-ui/ios/Modifiers/KeyboardTypeModifier.swift",
+      "upstreamBlob": "7667552036d3e0eb9c1c361c6702fbcf0f8d2bc5",
+      "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/KeyboardTypeModifier.swift",
+      "localSHA256": "edb16a8c6ddacb6952513b0c219665dd1057079b7fc386610764d79cae40f17e",
+      "byteIdentical": false,
+      "adaptation": "Original native SwiftUI modifier implementation from the hash-verified @expo/ui publication; replace the binary ExpoModulesCore import with explicit Foundation and the existing native dictionary/props contracts. The full native registry is used by original Expo Widgets; prepared JSON admission stays unchanged.",
+      "upstreamPublication": {
+        "package": "@expo/ui",
+        "version": "58.0.29",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
+        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "path": "ios/Modifiers/KeyboardTypeModifier.swift"
+      }
+    },
+    {
+      "repository": "expo/expo",
+      "upstream": "packages/expo-ui/ios/Modifiers/ListItemModifier.swift",
+      "upstreamBlob": "dd0386ea110abfb29dd37db7d5b36bbc0c96f179",
+      "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/ListItemModifier.swift",
+      "localSHA256": "b3760cb0cc3264355ca91ec393d39299988b6809607a785c9edc0e984305ff15",
+      "byteIdentical": false,
+      "adaptation": "Original native SwiftUI modifier implementation from the hash-verified @expo/ui publication; replace the binary ExpoModulesCore import with explicit Foundation and the existing native dictionary/props contracts. The full native registry is used by original Expo Widgets; prepared JSON admission stays unchanged.",
+      "upstreamPublication": {
+        "package": "@expo/ui",
+        "version": "58.0.29",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
+        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "path": "ios/Modifiers/ListItemModifier.swift"
+      }
+    },
+    {
+      "repository": "expo/expo",
+      "upstream": "packages/expo-ui/ios/Modifiers/ListStyleModifier.swift",
+      "upstreamBlob": "9fe35fec9ffa4edacefab4e246dacb152e5f5051",
+      "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/ListStyleModifier.swift",
+      "localSHA256": "696f498981a4af782fd643d2fbcc925b0d16c703e2becc11d20b4bc1e6cef1e7",
+      "byteIdentical": false,
+      "adaptation": "Original native SwiftUI modifier implementation from the hash-verified @expo/ui publication; replace the binary ExpoModulesCore import with explicit Foundation and the existing native dictionary/props contracts. The full native registry is used by original Expo Widgets; prepared JSON admission stays unchanged.",
+      "upstreamPublication": {
+        "package": "@expo/ui",
+        "version": "58.0.29",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
+        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "path": "ios/Modifiers/ListStyleModifier.swift"
+      }
+    },
+    {
+      "repository": "expo/expo",
+      "upstream": "packages/expo-ui/ios/Modifiers/MenuIndicatorModifier.swift",
+      "upstreamBlob": "4ee82274b2ddb5f4c3d584b0b713fd1ad2ad431f",
+      "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/MenuIndicatorModifier.swift",
+      "localSHA256": "f27afdbed9a351138a044f767c2ea7dc53bb828d93b145dc9d6e6c575a3134a0",
+      "byteIdentical": false,
+      "adaptation": "Original native SwiftUI modifier implementation from the hash-verified @expo/ui publication; replace the binary ExpoModulesCore import with explicit Foundation and the existing native dictionary/props contracts. The full native registry is used by original Expo Widgets; prepared JSON admission stays unchanged.",
+      "upstreamPublication": {
+        "package": "@expo/ui",
+        "version": "58.0.29",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
+        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "path": "ios/Modifiers/MenuIndicatorModifier.swift"
+      }
+    },
+    {
+      "repository": "expo/expo",
+      "upstream": "packages/expo-ui/ios/Modifiers/MenuOrderModifier.swift",
+      "upstreamBlob": "259b2cfb5492f7f240ef95685617b7f1b6be06cd",
+      "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/MenuOrderModifier.swift",
+      "localSHA256": "12c26f4329798717e5e78244115f74b998049797cf1e82d4c45bd4dd9b892d42",
+      "byteIdentical": false,
+      "adaptation": "Original native SwiftUI modifier implementation from the hash-verified @expo/ui publication; replace the binary ExpoModulesCore import with explicit Foundation and the existing native dictionary/props contracts. The full native registry is used by original Expo Widgets; prepared JSON admission stays unchanged.",
+      "upstreamPublication": {
+        "package": "@expo/ui",
+        "version": "58.0.29",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
+        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "path": "ios/Modifiers/MenuOrderModifier.swift"
+      }
+    },
+    {
+      "repository": "expo/expo",
+      "upstream": "packages/expo-ui/ios/Modifiers/MenuStyleModifier.swift",
+      "upstreamBlob": "0a37b5a60fcd4c76e130eebc8afdfe4b0ca4cc3b",
+      "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/MenuStyleModifier.swift",
+      "localSHA256": "ea892bc237453f1e7ce61ba9bf48c06b170847878ab32ec0ef0747873c6f6569",
+      "byteIdentical": false,
+      "adaptation": "Original native SwiftUI modifier implementation from the hash-verified @expo/ui publication; replace the binary ExpoModulesCore import with explicit Foundation and the existing native dictionary/props contracts. The full native registry is used by original Expo Widgets; prepared JSON admission stays unchanged.",
+      "upstreamPublication": {
+        "package": "@expo/ui",
+        "version": "58.0.29",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
+        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "path": "ios/Modifiers/MenuStyleModifier.swift"
+      }
+    },
+    {
+      "repository": "expo/expo",
+      "upstream": "packages/expo-ui/ios/Modifiers/NavigationModifiers.swift",
+      "upstreamBlob": "6f13700f19dc3bb5d2f12f4af051e91967e24574",
+      "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/NavigationModifiers.swift",
+      "localSHA256": "96b4fc2ea306d98e0c27adfde7bb169c0ab8317d55a6cd86fadbedf444484bd8",
+      "byteIdentical": false,
+      "adaptation": "Original native SwiftUI modifier implementation from the hash-verified @expo/ui publication; replace the binary ExpoModulesCore import with explicit Foundation and the existing native dictionary/props contracts. The full native registry is used by original Expo Widgets; prepared JSON admission stays unchanged.",
+      "upstreamPublication": {
+        "package": "@expo/ui",
+        "version": "58.0.29",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
+        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "path": "ios/Modifiers/NavigationModifiers.swift"
+      }
+    },
+    {
+      "repository": "expo/expo",
+      "upstream": "packages/expo-ui/ios/Modifiers/OnGeometryChangeModifier.swift",
+      "upstreamBlob": "da8f3639a7b3c9f1d867791e966aed7e7b8eeeb4",
+      "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/OnGeometryChangeModifier.swift",
+      "localSHA256": "a7c74a817862f68cf2e9442c51b9c2399287a879e69a2ca3e855d467c2a50ce2",
+      "byteIdentical": false,
+      "adaptation": "Original native SwiftUI modifier implementation from the hash-verified @expo/ui publication; replace the binary ExpoModulesCore import with explicit Foundation and the existing native dictionary/props contracts. The full native registry is used by original Expo Widgets; prepared JSON admission stays unchanged.",
+      "upstreamPublication": {
+        "package": "@expo/ui",
+        "version": "58.0.29",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
+        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "path": "ios/Modifiers/OnGeometryChangeModifier.swift"
+      }
+    },
+    {
+      "repository": "expo/expo",
+      "upstream": "packages/expo-ui/ios/Modifiers/OnSubmitModifier.swift",
+      "upstreamBlob": "4ab6dcbb9d6a524e8c2760a83c07230e7f40a2b4",
+      "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/OnSubmitModifier.swift",
+      "localSHA256": "e13272a52e7e19cc555b53c64aff0a21d6de11cb672a8d96356ee0a371525c05",
+      "byteIdentical": false,
+      "adaptation": "Original native SwiftUI modifier implementation from the hash-verified @expo/ui publication; replace the binary ExpoModulesCore import with explicit Foundation and the existing native dictionary/props contracts. The full native registry is used by original Expo Widgets; prepared JSON admission stays unchanged.",
+      "upstreamPublication": {
+        "package": "@expo/ui",
+        "version": "58.0.29",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
+        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "path": "ios/Modifiers/OnSubmitModifier.swift"
+      }
+    },
+    {
+      "repository": "expo/expo",
+      "upstream": "packages/expo-ui/ios/Modifiers/PickerStyleModifier.swift",
+      "upstreamBlob": "d00e44f38e219d988c3c3633cda2b119114a5959",
+      "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/PickerStyleModifier.swift",
+      "localSHA256": "34d96ed2b33d78a3cc7bf61a30a735b8b87fbfb6ff2d56d3593b056f7a938a8d",
+      "byteIdentical": false,
+      "adaptation": "Original native SwiftUI modifier implementation from the hash-verified @expo/ui publication; replace the binary ExpoModulesCore import with explicit Foundation and the existing native dictionary/props contracts. The full native registry is used by original Expo Widgets; prepared JSON admission stays unchanged.",
+      "upstreamPublication": {
+        "package": "@expo/ui",
+        "version": "58.0.29",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
+        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "path": "ios/Modifiers/PickerStyleModifier.swift"
+      }
+    },
+    {
+      "repository": "expo/expo",
+      "upstream": "packages/expo-ui/ios/Modifiers/RefreshableModifier.swift",
+      "upstreamBlob": "56c4f14ec02a0653150013330e48c419ac9ebb10",
+      "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/RefreshableModifier.swift",
+      "localSHA256": "9aca962766fd70b555cd45241782bbe8059b2f1fc148c2d3d1b9d543c4e461ab",
+      "byteIdentical": false,
+      "adaptation": "Original native SwiftUI modifier implementation from the hash-verified @expo/ui publication; replace the binary ExpoModulesCore import with explicit Foundation and the existing native dictionary/props contracts. The full native registry is used by original Expo Widgets; prepared JSON admission stays unchanged.",
+      "upstreamPublication": {
+        "package": "@expo/ui",
+        "version": "58.0.29",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
+        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "path": "ios/Modifiers/RefreshableModifier.swift"
+      }
+    },
+    {
+      "repository": "expo/expo",
+      "upstream": "packages/expo-ui/ios/Modifiers/ScrollClipDisabledModifier.swift",
+      "upstreamBlob": "6483063efc89535f387dd9b217491ada6dab60ae",
+      "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/ScrollClipDisabledModifier.swift",
+      "localSHA256": "ceef275749b001db25336a77dc67644a8a18272294279d1633bbb6aeb16490c8",
+      "byteIdentical": false,
+      "adaptation": "Original native SwiftUI modifier implementation from the hash-verified @expo/ui publication; replace the binary ExpoModulesCore import with explicit Foundation and the existing native dictionary/props contracts. The full native registry is used by original Expo Widgets; prepared JSON admission stays unchanged.",
+      "upstreamPublication": {
+        "package": "@expo/ui",
+        "version": "58.0.29",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
+        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "path": "ios/Modifiers/ScrollClipDisabledModifier.swift"
+      }
+    },
+    {
+      "repository": "expo/expo",
+      "upstream": "packages/expo-ui/ios/Modifiers/ScrollDisabledModifier.swift",
+      "upstreamBlob": "5bc9dfc026ae22be121f3e99c4acb9b2e4eb9e58",
+      "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/ScrollDisabledModifier.swift",
+      "localSHA256": "95f406c9e63cffccbb2f4b0c436964f45e309fe450eb1f2482d7993c0ca0a4d6",
+      "byteIdentical": false,
+      "adaptation": "Original native SwiftUI modifier implementation from the hash-verified @expo/ui publication; replace the binary ExpoModulesCore import with explicit Foundation and the existing native dictionary/props contracts. The full native registry is used by original Expo Widgets; prepared JSON admission stays unchanged.",
+      "upstreamPublication": {
+        "package": "@expo/ui",
+        "version": "58.0.29",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
+        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "path": "ios/Modifiers/ScrollDisabledModifier.swift"
+      }
+    },
+    {
+      "repository": "expo/expo",
+      "upstream": "packages/expo-ui/ios/Modifiers/ScrollIndicatorsModifier.swift",
+      "upstreamBlob": "654a3f4643718fd8a87103237e6deaedd56cdc55",
+      "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/ScrollIndicatorsModifier.swift",
+      "localSHA256": "ebd6d0b856d76eb409a9d33464da79e2a7bd6b7e9ecdcbf33113ad5e393c145b",
+      "byteIdentical": false,
+      "adaptation": "Original native SwiftUI modifier implementation from the hash-verified @expo/ui publication; replace the binary ExpoModulesCore import with explicit Foundation and the existing native dictionary/props contracts. The full native registry is used by original Expo Widgets; prepared JSON admission stays unchanged.",
+      "upstreamPublication": {
+        "package": "@expo/ui",
+        "version": "58.0.29",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
+        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "path": "ios/Modifiers/ScrollIndicatorsModifier.swift"
+      }
+    },
+    {
+      "repository": "expo/expo",
+      "upstream": "packages/expo-ui/ios/Modifiers/ScrollObservationModifiers.swift",
+      "upstreamBlob": "46d8585e2886489f2af7d7c8b523769d691e126c",
+      "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/ScrollObservationModifiers.swift",
+      "localSHA256": "03868f71a51875aa55d75e01db7afb3b4f1d03a49c97957831b110f97d3178a1",
+      "byteIdentical": false,
+      "adaptation": "Original native SwiftUI modifier implementation from the hash-verified @expo/ui publication; replace the binary ExpoModulesCore import with explicit Foundation and the existing native dictionary/props contracts. The full native registry is used by original Expo Widgets; prepared JSON admission stays unchanged. Retain the original native event branch; reject a non-null app JSI worklet reference at raw JSON admission. No fake worklet execution or app runtime is provided in the extension.",
+      "upstreamPublication": {
+        "package": "@expo/ui",
+        "version": "58.0.29",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
+        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "path": "ios/Modifiers/ScrollObservationModifiers.swift"
+      }
+    },
+    {
+      "repository": "expo/expo",
+      "upstream": "packages/expo-ui/ios/Modifiers/ScrollPositionModifier.swift",
+      "upstreamBlob": "2b9e034d0c6aff0255d44c36de08733ffca5e892",
+      "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/ScrollPositionModifier.swift",
+      "localSHA256": "e08a7efcc3aba7e22e2ea8c8a7c6ffd0c49600d02496ba940a7ef99713c7bfe1",
+      "byteIdentical": false,
+      "adaptation": "Original native SwiftUI modifier implementation from the hash-verified @expo/ui publication; replace the binary ExpoModulesCore import with explicit Foundation and the existing native dictionary/props contracts. The full native registry is used by original Expo Widgets; prepared JSON admission stays unchanged.",
+      "upstreamPublication": {
+        "package": "@expo/ui",
+        "version": "58.0.29",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
+        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "path": "ios/Modifiers/ScrollPositionModifier.swift"
+      }
+    },
+    {
+      "repository": "expo/expo",
+      "upstream": "packages/expo-ui/ios/Modifiers/ScrollTargetBehaviorModifier.swift",
+      "upstreamBlob": "07af5faf882c270eee79f9c2628174aafdef4c0c",
+      "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/ScrollTargetBehaviorModifier.swift",
+      "localSHA256": "b7bd79085bc99814b87073402d818ac221b5031e8adb89d3b0c5b32ad9bb536c",
+      "byteIdentical": false,
+      "adaptation": "Original native SwiftUI modifier implementation from the hash-verified @expo/ui publication; replace the binary ExpoModulesCore import with explicit Foundation and the existing native dictionary/props contracts. The full native registry is used by original Expo Widgets; prepared JSON admission stays unchanged.",
+      "upstreamPublication": {
+        "package": "@expo/ui",
+        "version": "58.0.29",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
+        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "path": "ios/Modifiers/ScrollTargetBehaviorModifier.swift"
+      }
+    },
+    {
+      "repository": "expo/expo",
+      "upstream": "packages/expo-ui/ios/Modifiers/ScrollTargetLayoutModifier.swift",
+      "upstreamBlob": "9a5270d19125f39ac8da4afc5c8ec4772e37e3f5",
+      "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/ScrollTargetLayoutModifier.swift",
+      "localSHA256": "40707339a47a61166bbb10205413adceb0458812eb2b7de6e472235d55b33026",
+      "byteIdentical": false,
+      "adaptation": "Original native SwiftUI modifier implementation from the hash-verified @expo/ui publication; replace the binary ExpoModulesCore import with explicit Foundation and the existing native dictionary/props contracts. The full native registry is used by original Expo Widgets; prepared JSON admission stays unchanged.",
+      "upstreamPublication": {
+        "package": "@expo/ui",
+        "version": "58.0.29",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
+        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "path": "ios/Modifiers/ScrollTargetLayoutModifier.swift"
+      }
+    },
+    {
+      "repository": "expo/expo",
+      "upstream": "packages/expo-ui/ios/Modifiers/SearchableModifier.swift",
+      "upstreamBlob": "eda660277e99392dc5af60110d5148c10ffe058d",
+      "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/SearchableModifier.swift",
+      "localSHA256": "0a56fa2dd0c37d567f34555fa4d7a5a8b0052ead88113217ca895bde6df6aa96",
+      "byteIdentical": false,
+      "adaptation": "Original native SwiftUI modifier implementation from the hash-verified @expo/ui publication; replace the binary ExpoModulesCore import with explicit Foundation and the existing native dictionary/props contracts. The full native registry is used by original Expo Widgets; prepared JSON admission stays unchanged.",
+      "upstreamPublication": {
+        "package": "@expo/ui",
+        "version": "58.0.29",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
+        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "path": "ios/Modifiers/SearchableModifier.swift"
+      }
+    },
+    {
+      "repository": "expo/expo",
+      "upstream": "packages/expo-ui/ios/Modifiers/SubmitLabelModifier.swift",
+      "upstreamBlob": "61f39ada9972605ad2313c356a751830e74c413f",
+      "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/SubmitLabelModifier.swift",
+      "localSHA256": "35995e3108c8f05f3cae123978f0a365eaa62e3fe6881b7836924d3b26bbc4b1",
+      "byteIdentical": false,
+      "adaptation": "Original native SwiftUI modifier implementation from the hash-verified @expo/ui publication; replace the binary ExpoModulesCore import with explicit Foundation and the existing native dictionary/props contracts. The full native registry is used by original Expo Widgets; prepared JSON admission stays unchanged.",
+      "upstreamPublication": {
+        "package": "@expo/ui",
+        "version": "58.0.29",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
+        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "path": "ios/Modifiers/SubmitLabelModifier.swift"
+      }
+    },
+    {
+      "repository": "expo/expo",
+      "upstream": "packages/expo-ui/ios/Modifiers/TabViewStyleModifier.swift",
+      "upstreamBlob": "a30ca051d8acd13472bce7c4bc502e921a3f426d",
+      "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/TabViewStyleModifier.swift",
+      "localSHA256": "1898832157b7554ee319b577e055d05729abe7f35ac7afb4b1427da8ac147f0f",
+      "byteIdentical": false,
+      "adaptation": "Original native SwiftUI modifier implementation from the hash-verified @expo/ui publication; replace the binary ExpoModulesCore import with explicit Foundation and the existing native dictionary/props contracts. The full native registry is used by original Expo Widgets; prepared JSON admission stays unchanged.",
+      "upstreamPublication": {
+        "package": "@expo/ui",
+        "version": "58.0.29",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
+        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "path": "ios/Modifiers/TabViewStyleModifier.swift"
+      }
+    },
+    {
+      "repository": "expo/expo",
+      "upstream": "packages/expo-ui/ios/Modifiers/TagModifier.swift",
+      "upstreamBlob": "e047c43f6b31ddc9b18fca290ed8f31d26bb60b8",
+      "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/TagModifier.swift",
+      "localSHA256": "c6dba619371627b3031b6a48e10dbdfb8f0523b88e6a599ecac7e0bdc314459d",
+      "byteIdentical": false,
+      "adaptation": "Original native SwiftUI modifier implementation from the hash-verified @expo/ui publication; replace the binary ExpoModulesCore import with explicit Foundation and the existing native dictionary/props contracts. The full native registry is used by original Expo Widgets; prepared JSON admission stays unchanged.",
+      "upstreamPublication": {
+        "package": "@expo/ui",
+        "version": "58.0.29",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
+        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "path": "ios/Modifiers/TagModifier.swift"
+      }
+    },
+    {
+      "repository": "expo/expo",
+      "upstream": "packages/expo-ui/ios/Modifiers/TextContentTypeModifier.swift",
+      "upstreamBlob": "2f3e992e0ae3acad6b8260daa525125e57081ec5",
+      "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/TextContentTypeModifier.swift",
+      "localSHA256": "b940d10f65840d9eb970bfc67a5207a813d8c247167ec64e4c129d5e91b2c862",
+      "byteIdentical": false,
+      "adaptation": "Original native SwiftUI modifier implementation from the hash-verified @expo/ui publication; replace the binary ExpoModulesCore import with explicit Foundation and the existing native dictionary/props contracts. The full native registry is used by original Expo Widgets; prepared JSON admission stays unchanged.",
+      "upstreamPublication": {
+        "package": "@expo/ui",
+        "version": "58.0.29",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
+        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "path": "ios/Modifiers/TextContentTypeModifier.swift"
+      }
+    },
+    {
+      "repository": "expo/expo",
+      "upstream": "packages/expo-ui/ios/Modifiers/TextInputAutocapitalizationModifier.swift",
+      "upstreamBlob": "64c687a36e484534eab3073c015fce57041e55e7",
+      "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/TextInputAutocapitalizationModifier.swift",
+      "localSHA256": "09cdc76ee23e36d91329599edd028ebb5e90efa104aef057f8fe205a4e2a3315",
+      "byteIdentical": false,
+      "adaptation": "Original native SwiftUI modifier implementation from the hash-verified @expo/ui publication; replace the binary ExpoModulesCore import with explicit Foundation and the existing native dictionary/props contracts. The full native registry is used by original Expo Widgets; prepared JSON admission stays unchanged.",
+      "upstreamPublication": {
+        "package": "@expo/ui",
+        "version": "58.0.29",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
+        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "path": "ios/Modifiers/TextInputAutocapitalizationModifier.swift"
+      }
+    },
+    {
+      "repository": "expo/expo",
+      "upstream": "packages/expo-ui/ios/Modifiers/ToggleStyleModifier.swift",
+      "upstreamBlob": "6c1886ac762a7623b943c7167b59a89430a6d29c",
+      "local": "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/ToggleStyleModifier.swift",
+      "localSHA256": "f49cca583f6e0525e962d975353e2279187ead7679ec44504e5ecde822c75dd8",
+      "byteIdentical": false,
+      "adaptation": "Original native SwiftUI modifier implementation from the hash-verified @expo/ui publication; replace the binary ExpoModulesCore import with explicit Foundation and the existing native dictionary/props contracts. The full native registry is used by original Expo Widgets; prepared JSON admission stays unchanged.",
+      "upstreamPublication": {
+        "package": "@expo/ui",
+        "version": "58.0.29",
+        "tarball": "https://registry.npmjs.org/@expo/ui/-/ui-58.0.29.tgz",
+        "sha256": "559c84d9d72234fb5df033794e94dfb04cd6f99989f14685c3abbb397dc3f37c",
+        "path": "ios/Modifiers/ToggleStyleModifier.swift"
+      }
     }
   ],
   "schemaVersion": 2

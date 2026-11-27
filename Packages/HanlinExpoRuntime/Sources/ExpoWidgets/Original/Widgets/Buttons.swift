@@ -1,9 +1,8 @@
+import HanlinExpoWidgetSubset
 import Foundation
 import SwiftUI
-import ExpoModulesCore
-import ExpoUI
 
-final class ButtonProps: ExpoUI.ButtonProps {
+final class ButtonProps: HanlinExpoWidgetSubset.ButtonProps {
   @Field var source: String?
   @Field var target: String?
   @Field var entryIndex: Int?

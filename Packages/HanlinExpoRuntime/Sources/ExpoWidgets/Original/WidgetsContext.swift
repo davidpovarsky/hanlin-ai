@@ -1,10 +1,10 @@
+import HanlinExpoWidgetSubset
 import Foundation
-import ExpoModulesCore
 
 // Shared AppContext for widgets
 struct WidgetsContext {
   static let shared = WidgetsContext()
-  let context: AppContext = AppContext()
+  let context: AppContext = AppContext(properties: .originalWidgets)
 
   private init() {
     registerWidgetModifiers()

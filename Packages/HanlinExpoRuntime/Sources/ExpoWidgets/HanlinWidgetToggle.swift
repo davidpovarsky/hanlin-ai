@@ -1,6 +1,5 @@
+import HanlinExpoWidgetSubset
 import AppIntents
-import ExpoModulesCore
-import ExpoUI
 import SwiftUI
 
 /// Widget-only specialization of the original Expo Toggle props. The native

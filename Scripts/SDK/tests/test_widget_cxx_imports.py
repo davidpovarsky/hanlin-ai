@@ -1,3 +1,4 @@
+import copy
 import json
 import os
 import re
@@ -39,7 +40,7 @@ class WidgetCxxImportTests(unittest.TestCase):
         original = dump(ROOT / "Packages/HanlinExpoRuntime")
         widgets = dump(ROOT / "Packages/HanlinWidgetSDK")
         unified = dump(ROOT)
-        producer = target(original, "ExpoWidgets")
+        producer = target(original, "ExpoWidgetsHost")
         expected = swift_import_contract(producer)
         self.assertEqual(expected[0], ["Cxx"])
         self.assertIn("-std=gnu++20", expected[1])
@@ -56,8 +57,9 @@ class WidgetCxxImportTests(unittest.TestCase):
         for name in ["HanlinScriptingWidgets", "HanlinWidgetUI"]:
             with self.subTest(target=name):
                 source = target(widgets, name)
-                self.assertEqual(swift_import_contract(source), expected)
-                self.assertEqual(swift_import_contract(target(unified, name)), expected)
+                extension_contract = ([], ["-application-extension"])
+                self.assertEqual(swift_import_contract(source), extension_contract)
+                self.assertEqual(swift_import_contract(target(unified, name)), extension_contract)
                 self.assertFalse(any("swiftLanguageMode" in item["kind"] for item in source["settings"]),
                                  "Consumer must retain package Swift6, not inherit original ExpoWidgets Swift5.")
                 self.assertIn(generate_manifest.target(source, "Packages/HanlinWidgetSDK", local_products), text)
@@ -76,16 +78,19 @@ class WidgetCxxImportTests(unittest.TestCase):
             for key in configs:
                 settings = objects[key]["buildSettings"]
                 with self.subTest(host=name, config=objects[key]["name"]):
-                    self.assertEqual(settings["SWIFT_OBJC_INTEROP_MODE"], "objcxx")
                     self.assertEqual(settings["SWIFT_ENABLE_EXPLICIT_MODULES"], "YES")
                     flags = settings["OTHER_SWIFT_FLAGS"]
                     self.assertIn("$(inherited)", flags)
-                    for index in range(1, len(expected_flags), 2):
-                        pair = expected_flags[index:index + 2]
-                        self.assertTrue(any(flags[offset:offset + 2] == pair
-                                            for offset in range(len(flags) - 1)), pair)
                     if name in {"HanlinScriptingWidgets", "HanlinMiniAppsWidgets"}:
-                        self.assertEqual(flags, expected_flags)
+                        self.assertNotIn("SWIFT_OBJC_INTEROP_MODE", settings)
+                        self.assertEqual(settings["APPLICATION_EXTENSION_API_ONLY"], "YES")
+                        self.assertEqual(flags, ["$(inherited)"])
+                    else:
+                        self.assertEqual(settings["SWIFT_OBJC_INTEROP_MODE"], "objcxx")
+                        for index in range(1, len(expected_flags), 2):
+                            pair = expected_flags[index:index + 2]
+                            self.assertTrue(any(flags[offset:offset + 2] == pair
+                                                for offset in range(len(flags) - 1)), pair)
         # Preserve an existing scalar flags setting, including app-specific
         # definitions, without modifying any other project object or setting.
         app_key = objects[hosts["HanlinApp"]["buildConfigurationList"]]["buildConfigurations"][0]
@@ -107,6 +112,83 @@ class WidgetCxxImportTests(unittest.TestCase):
                 self.assertEqual(parse_project(rendered), parse_project(project_text))
                 path.write_text(rendered)
                 self.assertEqual(update_project.update(package=unified), rendered)
+
+
+    def test_original_widget_extension_keeps_one_shared_module_and_rejects_app_runtime_edges(self):
+        unified = dump(ROOT)
+        products = {value["name"]: value["targets"] for value in unified["products"]}
+        self.assertEqual(products["HanlinExpoWidgetsExtension"], ["ExpoWidgets"])
+        self.assertEqual(products["HanlinExpoWidgetsOriginal"], ["ExpoWidgets", "ExpoWidgetsHost"])
+        reachable = update_project.validate_widget_extension_boundary(unified)
+        self.assertIn("ExpoWidgets", reachable)
+        self.assertIn("HanlinExpoWidgetSubset", reachable)
+        self.assertNotIn("ExpoWidgetsHost", reachable)
+        self.assertNotIn("ExpoModulesCore", reachable)
+        for forbidden in ("ExpoWidgetsHost", "ExpoModulesCore", "React", "hermesvm"):
+            changed = copy.deepcopy(unified)
+            target(changed, "ExpoWidgets")["dependencies"].append({"byName": [forbidden, None]})
+            with self.subTest(forbidden=forbidden), self.assertRaisesRegex(ValueError, "app-only target"):
+                update_project.validate_widget_extension_boundary(changed)
+        changed = copy.deepcopy(unified)
+        target(changed, "ExpoWidgets")["settings"] = []
+        with self.assertRaisesRegex(ValueError, "extension-safe native imports"):
+            update_project.validate_widget_extension_boundary(changed)
+        original = dump(ROOT / "Packages/HanlinExpoRuntime")
+        shared, host = target(original, "ExpoWidgets"), target(original, "ExpoWidgetsHost")
+        self.assertEqual(shared["path"], host["path"])
+        expected_host = {"Original/LiveActivity.swift", "Original/LiveActivityFactory.swift",
+                         "Original/WidgetObject.swift", "Original/WidgetsExceptions.swift",
+                         "Original/WidgetsModule.swift", "Original/WidgetsRecords.swift"}
+        self.assertEqual(set(host["sources"]), expected_host)
+        self.assertEqual(set(shared["exclude"]), expected_host)
+        self.assertEqual(shared["resources"], [{"path": "Resources/ExpoWidgets.bundle", "rule": {"copy": {}}}])
+        root = ROOT / "Packages/HanlinExpoRuntime" / shared["path"]
+        self.assertTrue(expected_host <= {path.relative_to(root).as_posix() for path in root.rglob("*.swift")})
+        for path in root.rglob("*.swift"):
+            if path.relative_to(root).as_posix() not in expected_host:
+                self.assertNotRegex(path.read_text(), r"(?m)^import (ExpoModulesCore|ExpoUI|React)\b", path)
+        host_settings = swift_import_contract(host)
+        self.assertEqual(host_settings[0], ["Cxx"])
+        self.assertIn("-DREACT_NATIVE_PRODUCTION=1", host_settings[1])
+        project = parse_project(update_project.FILE.read_text())["objects"]
+        for value in project.values():
+            if value.get("isa") != "PBXNativeTarget" or value.get("name") not in {"HanlinScriptingWidgets", "HanlinMiniAppsWidgets"}:
+                continue
+            declared = {project[ref]["productName"] for ref in value["packageProductDependencies"]}
+            self.assertIn("HanlinExpoWidgetsExtension", declared)
+            self.assertNotIn("HanlinExpoWidgetsOriginal", declared)
+            phase = next(project[ref] for ref in value["buildPhases"] if project[ref]["isa"] == "PBXFrameworksBuildPhase")
+            linked = {project[project[ref]["productRef"]]["productName"] for ref in phase["files"] if "productRef" in project[ref]}
+            self.assertIn("HanlinExpoWidgetsExtension", linked)
+            self.assertNotIn("HanlinExpoWidgetsOriginal", linked)
+
+    def test_original_modifier_vocabulary_does_not_expand_prepared_widget_admission(self):
+        native = ROOT / "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset"
+        registry = (native / "ExpoUI/Modifiers/ViewModifierRegistry.swift").read_text()
+        keys = set(re.findall(r'register\("([^"]+)"', registry))
+        self.assertEqual(len(keys), 164)
+        self.assertTrue({"glassEffect", "toggleStyle", "onScrollGeometryChange", "onHingeChange", "searchable"} <= keys)
+        context = (native / "DictionaryContext.swift").read_text()
+        block = context.split("static let preparedModifierTypes: Set<String> = [", 1)[1].split("]", 1)[0]
+        prepared = set(re.findall(r'"([^"]+)"', block))
+        self.assertEqual(len(prepared), 101)
+        self.assertEqual(len(prepared & keys), 97)
+        self.assertEqual(prepared - keys, {"widgetURL", "activityBackgroundTint", "resizable", "widgetAccentedRenderingMode"})
+        self.assertIn("AppContext.preparedModifierTypes.contains(name)", context)
+        self.assertIn("context.resources.values.contains(url)", context)
+        self.assertIn("properties: Properties = .preparedResources", context)
+        self.assertIn("if context.properties == .originalWidgets", context)
+        self.assertIn("guard appContext.properties == .preparedResources", context)
+        for filename in ("HingeObservationModifiers.swift", "ScrollObservationModifiers.swift"):
+            text = (native / "ExpoUI/Modifiers" / filename).read_text()
+            self.assertIn('guard params["workletCallback"] == nil || params["workletCallback"] is NSNull else', text)
+            self.assertNotIn("WorkletCallback?", text)
+            self.assertNotIn("workletCallback.invoke", text)
+        source = (ROOT / "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/ViewRenderer.swift").read_text()
+        self.assertIn("WidgetButtonView.self", source)
+        self.assertIn("LiveActivityButtonView.self", source)
+        self.assertIn("WidgetToggleView.self", source)
+        self.assertNotIn("HanlinExpoNativeWidgetView", source)
 
 
 if __name__ == "__main__":

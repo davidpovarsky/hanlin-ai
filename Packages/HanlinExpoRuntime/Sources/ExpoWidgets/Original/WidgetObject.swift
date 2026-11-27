@@ -1,5 +1,6 @@
 import Foundation
 import ExpoModulesCore
+import ExpoWidgets
 import WidgetKit
 
 final class WidgetObject: SharedObject {

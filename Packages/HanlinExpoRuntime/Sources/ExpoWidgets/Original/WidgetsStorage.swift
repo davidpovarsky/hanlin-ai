@@ -3,25 +3,25 @@ public enum WidgetsStorage {
   public static var appGroupIdentifier: String? = Bundle.main.object(forInfoDictionaryKey: "ExpoWidgetsAppGroupIdentifier") as? String
   static let defaults = UserDefaults(suiteName: appGroupIdentifier)
 
-  static func set(_ value: [String: Any], forKey key: String) {
+  package static func set(_ value: [String: Any], forKey key: String) {
     guard let defaults else { return }
 
     defaults.set(value, forKey: key)
   }
 
-  static func set(_ value: [[String: Any]], forKey key: String) {
+  package static func set(_ value: [[String: Any]], forKey key: String) {
     guard let defaults else { return }
 
     defaults.set(value, forKey: key)
   }
 
-  static func set(_ value: String, forKey key: String) {
+  package static func set(_ value: String, forKey key: String) {
     guard let defaults else { return }
 
     defaults.set(value, forKey: key)
   }
 
-  static func set(_ value: Data, forKey key: String) {
+  package static func set(_ value: Data, forKey key: String) {
     guard let defaults else { return }
 
     defaults.set(value, forKey: key)
@@ -51,7 +51,7 @@ public enum WidgetsStorage {
     return defaults.string(forKey: key)
   }
 
-  static func removeObject(forKey key: String) {
+  package static func removeObject(forKey key: String) {
     guard let defaults else { return }
 
     defaults.removeObject(forKey: key)

@@ -6,8 +6,123 @@ import UIKit
 /// Dictionary-only widget adapter for the pinned ExpoUI source props. It has no
 /// React registry, JavaScript engine, hosting controller or module lifecycle.
 public final class AppContext {
+    public enum Properties: Equatable {
+        /// Existing prepared JSON widgets accept only verified resources and
+        /// their original declarative modifier vocabulary.
+        case preparedResources
+        /// Original Expo Widgets receives the original JSC JSON props. Native
+        /// file images and all original SwiftUI modifiers retain their behavior.
+        case originalWidgets
+    }
     public let resources: [String: URL]
-    public init(resources: [String: URL] = [:]) { self.resources = resources }
+    public let properties: Properties
+    public init(resources: [String: URL] = [:], properties: Properties = .preparedResources) {
+        self.resources = resources
+        self.properties = properties
+    }
+    static let preparedModifierTypes: Set<String> = [
+        "accessibilityAddTraits",
+        "accessibilityElement",
+        "accessibilityHidden",
+        "accessibilityHint",
+        "accessibilityIdentifier",
+        "accessibilityInputLabels",
+        "accessibilityLabel",
+        "accessibilityRemoveTraits",
+        "accessibilityValue",
+        "activityBackgroundTint",
+        "alignmentGuide",
+        "allowsTightening",
+        "animation",
+        "arrangementViewStyle",
+        "aspectRatio",
+        "background",
+        "backgroundOverlay",
+        "blur",
+        "bold",
+        "border",
+        "brightness",
+        "buttonBorderShape",
+        "buttonStyle",
+        "clipShape",
+        "clipped",
+        "colorInvert",
+        "containerBackground",
+        "containerRelativeFrame",
+        "containerShape",
+        "contentShape",
+        "contentTransition",
+        "contrast",
+        "controlSize",
+        "cornerRadius",
+        "disabled",
+        "dynamicTypeSize",
+        "environment",
+        "fixedSize",
+        "font",
+        "foregroundColor",
+        "foregroundStyle",
+        "frame",
+        "gaugeStyle",
+        "geometryGroup",
+        "grayscale",
+        "hidden",
+        "hueRotation",
+        "ignoreSafeArea",
+        "imageScale",
+        "invalidatableContent",
+        "italic",
+        "kerning",
+        "labelStyle",
+        "labelsHidden",
+        "layoutPriority",
+        "lineHeight",
+        "lineLimit",
+        "lineSpacing",
+        "luminanceToAlpha",
+        "mask",
+        "minimumScaleFactor",
+        "monospacedDigit",
+        "multilineTextAlignment",
+        "navigationBarTitleDisplayMode",
+        "offset",
+        "opacity",
+        "overlay",
+        "overlayArrangementEdge",
+        "padding",
+        "preferredColorScheme",
+        "presentationCornerRadius",
+        "privacySensitive",
+        "progressViewStyle",
+        "redacted",
+        "resizable",
+        "rotation3DEffect",
+        "rotationEffect",
+        "saturation",
+        "scaleEffect",
+        "scrollEdgeEffectStyle",
+        "searchToolbarBehavior",
+        "sectionIndexLabel",
+        "selectedSegmentTintColor",
+        "shadow",
+        "splitArrangementFixedLayoutSize",
+        "splitArrangementLayoutRatio",
+        "splitArrangementLayoutSize",
+        "strikethrough",
+        "strokeBorder",
+        "symbolEffect",
+        "textCase",
+        "textSelection",
+        "tint",
+        "toolbarTitleDisplayMode",
+        "truncationMode",
+        "underline",
+        "universalLayout",
+        "unredacted",
+        "widgetAccentedRenderingMode",
+        "widgetURL",
+        "zIndex",
+    ]
 }
 
 public protocol Convertible {
@@ -152,12 +267,18 @@ public final class EventDispatcher {
     public init(_ name: String? = nil) {}
     public func callAsFunction(_ payload: Any? = nil) {}
 }
-/// Widget presentations carry a frozen value; shared JSI state and its setters
-/// are deliberately absent. The original symbol-effect view reads this value.
+/// Prepared presentations carry a frozen value; the original symbol-effect
+/// view reads it. Native modifier source retains its internal setter, while
+/// original Widgets JSON cannot manufacture a live app JSI SharedObject.
 public final class ObservableState: ObservableObject, Convertible {
-    public let value: Any
+    public internal(set) var value: Any
     private init(value: Any) { self.value = value }
     public static func convert(from value: Any?, appContext: AppContext) throws -> ObservableState {
+        // The original Widgets renderer has no Expo JSI runtime or
+        // SharedObject registry. A JSON object is not a bound shared state.
+        guard appContext.properties == .preparedResources else {
+            throw Conversions.ConvertingException<ObservableState>(value)
+        }
         guard let object = value as? [String: Any], let scalar = object["value"],
               scalar is String || scalar is NSNumber else { throw Conversions.ConvertingException<ObservableState>(value) }
         return .init(value: scalar)
@@ -173,10 +294,17 @@ extension ExpoSwiftUI {
         public required init() {}
         public required init(rawProps: [String: Any], context: AppContext) throws {
             appContext = context
+            if context.properties == .originalWidgets {
+                // Match original ViewProps: update declared fields, leaving
+                // native image loading and modifier application to ExpoUI.
+                try updateFields(self, props: rawProps, context: context)
+                return
+            }
             guard rawProps["useTapGesture"] as? Bool != true else { throw GenericException("Use a native widget Button for an action") }
             if let modifiers = rawProps["modifiers"] as? [[String: Any]] {
                 for modifier in modifiers {
                     guard let name = modifier["$type"] as? String,
+                          AppContext.preparedModifierTypes.contains(name),
                           name == "resizable" || name == "widgetAccentedRenderingMode" || ViewModifierRegistry.shared.hasModifier(name) else {
                         throw GenericException("Unsupported widget modifier: \(modifier["$type"] ?? "missing type")")
                     }
@@ -218,5 +346,9 @@ struct WidgetSourceLogger { func warn(_ message: String) { NSLog("[HanlinExpoWid
 let log = WidgetSourceLogger()
 
 extension View {
-    func applyOnTapGesture(useTapGesture: Bool?, eventDispatcher: EventDispatcher) -> some View { self }
+    @ViewBuilder
+    func applyOnTapGesture(useTapGesture: Bool?, eventDispatcher: EventDispatcher) -> some View {
+        if useTapGesture == true { self.onTapGesture { eventDispatcher() } }
+        else { self }
+    }
 }

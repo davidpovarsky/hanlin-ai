@@ -1,14 +1,13 @@
 import Foundation
 import ExpoModulesCore
+import ExpoWidgets
 import ActivityKit
 import WidgetKit
 
 let pushNotificationsEnabledKey: String = "ExpoWidgets_EnablePushNotifications"
 
-let onUserInteraction = "onExpoWidgetsUserInteraction"
 let onPushToStartTokenReceived = "onExpoWidgetsPushToStartTokenReceived"
 let onTokenReceived = "onExpoWidgetsTokenReceived"
-let onUserInteractionNotification = Notification.Name(onUserInteraction)
 
 public final class WidgetsModule: Module {
   var pushToStartTokenObserverTask: Task<Void, Never>?

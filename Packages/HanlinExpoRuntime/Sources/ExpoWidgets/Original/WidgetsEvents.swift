@@ -1,4 +1,8 @@
 import Foundation
+
+package let onUserInteraction = "onExpoWidgetsUserInteraction"
+package let onUserInteractionNotification = Notification.Name(onUserInteraction)
+
 public enum WidgetsEventType: String {
   case userEvent = "ExpoWidgetsUserInteraction"
 }

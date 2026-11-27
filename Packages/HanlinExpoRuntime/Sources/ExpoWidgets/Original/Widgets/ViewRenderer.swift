@@ -1,7 +1,6 @@
+import HanlinExpoWidgetSubset
 import Foundation
 import SwiftUI
-import ExpoModulesCore
-import ExpoUI
 
 @MainActor
 struct WidgetsViewRenderer {
@@ -72,8 +71,7 @@ struct WidgetsViewRenderer {
         return makeChild(Text("Toggle is available in widgets").disabled(true))
       }
     case "Button":
-      if #available(iOS 17.0, *) {
-        switch kind {
+      switch kind {
         case .widget:
           if (node["props"] as? [String: Any])?["widgetRefresh"] as? Bool == true {
             return renderWithModifiers(WidgetRefreshButtonView.self, ButtonProps.self) { props in
@@ -92,9 +90,6 @@ struct WidgetsViewRenderer {
             try updateChildren(buttonProps)
             buttonProps.source = name
           }
-        }
-      } else {
-        return renderWithModifiers(ExpoUI.Button.self, ExpoUI.ButtonProps.self, updateProps: updateChildren)
       }
     case "react.fragment":
       return renderWithModifiers(FragmentView.self, FragmentProps.self, updateProps: updateChildren)

@@ -9,7 +9,8 @@ let package = Package(
     platforms: [.iOS("27.0")],
     products: [
         .library(name: "HanlinExpoWidgetNative", targets: ["HanlinExpoWidgetNative"]),
-        .library(name: "HanlinExpoWidgetsOriginal", targets: ["ExpoWidgets"]),
+        .library(name: "HanlinExpoWidgetsOriginal", targets: ["ExpoWidgets", "ExpoWidgetsHost"]),
+        .library(name: "HanlinExpoWidgetsExtension", targets: ["ExpoWidgets"]),
         .library(
             name: "HanlinExpoRuntime",
             targets: ["HanlinExpoRuntime"]
@@ -42,6 +43,7 @@ let package = Package(
                 "ExpoUI",
                 "ExpoAsset",
                 "ExpoWidgets",
+                "ExpoWidgetsHost",
                 "ExpoBrownfield",
                 .product(name: "HanlinExpoNativeAPI", package: "HanlinExpoNativeAPI")
             ],
@@ -85,11 +87,28 @@ let package = Package(
         ),
         .target(
             name: "ExpoWidgets",
-            dependencies: ["ReactNativeHeaders", "React", "ReactNativeDependencies", "hermesvm",
+            dependencies: [
+                .product(name: "HanlinExpoWidgetSubset", package: "HanlinExpoWidgetSubset"),
+                .product(name: "HanlinScriptContracts", package: "HanlinPlatform")
+            ],
+            path: "Sources/ExpoWidgets",
+            exclude: ["Original/LiveActivity.swift", "Original/LiveActivityFactory.swift", "Original/WidgetObject.swift", "Original/WidgetsExceptions.swift", "Original/WidgetsModule.swift", "Original/WidgetsRecords.swift"],
+            resources: [.copy("Resources/ExpoWidgets.bundle")],
+            swiftSettings: [.swiftLanguageMode(.v5), .unsafeFlags(["-application-extension"])],
+            linkerSettings: [.linkedFramework("Foundation"), .linkedFramework("SwiftUI"),
+                .linkedFramework("UIKit"), .linkedFramework("WidgetKit"),
+                .linkedFramework("ActivityKit"), .linkedFramework("JavaScriptCore")]
+        ),
+        .target(
+            name: "ExpoWidgetsHost",
+            dependencies: ["ExpoWidgets", "ReactNativeHeaders", "React", "ReactNativeDependencies", "hermesvm",
                            "ExpoModulesJSI", "ExpoModulesCore", "ExpoModulesWorklets", "ExpoUI",
                            .product(name: "HanlinScriptContracts", package: "HanlinPlatform")],
             path: "Sources/ExpoWidgets",
-            resources: [.copy("Resources/ExpoWidgets.bundle")],
+            exclude: ["Resources", "HanlinExpoWidgetsIntegration.swift", "HanlinExpoWidgetsIntentsPackage.swift",
+                      "HanlinExpoWidgetState.swift", "HanlinWidgetToggle.swift", "Original/Widgets",
+                      "Original/WidgetsContext.swift", "Original/WidgetsEvents.swift", "Original/WidgetsStorage.swift"],
+            sources: ["Original/LiveActivity.swift", "Original/LiveActivityFactory.swift", "Original/WidgetObject.swift", "Original/WidgetsExceptions.swift", "Original/WidgetsModule.swift", "Original/WidgetsRecords.swift"],
             swiftSettings: [.swiftLanguageMode(.v5),
                 .interoperabilityMode(.Cxx),
                 .unsafeFlags([
