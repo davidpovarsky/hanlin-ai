@@ -232,6 +232,7 @@ struct ChatView: View {
     @Environment(\.dismiss) private var dismiss
     @Environment(\.horizontalSizeClass) private var horizontalSizeClass
     @Environment(\.hanlinExternalCompactComposerHost) private var isExternalCompactComposerHost
+    @Environment(\.hanlinFollowLatestHostedExternally) private var followLatestHostedExternally
     @Environment(\.hanlinExternalDockHeight) private var externalDockHeight
     @Environment(\.hanlinComposerSessionBridge) private var sessionBridge
 
@@ -500,11 +501,17 @@ struct ChatView: View {
     private func floatingFollowLatestControl(using scrollViewProxy: ScrollViewProxy) -> some View {
         Group {
             if showScrollToBottomButton && chatRecord.canvas?.content.isEmpty != false && !isMultiSelectMode {
-                HanlinFollowLatestButton(isTemporaryRecord: TemporaryRecord) {
-                    // This is the native Button's action entry, before any policy
-                    // mutation. A current reader needs no State/onChange relay.
-                    traceAutoFollowPosition("button-entry", significant: true)
-                    resumeFollowingLatest(using: scrollViewProxy)
+                Group {
+                    if followLatestHostedExternally {
+                        externalFollowLatestAnchor(using: scrollViewProxy)
+                    } else {
+                        HanlinFollowLatestButton(isTemporaryRecord: TemporaryRecord) {
+                            // This is the native Button's action entry, before any policy
+                            // mutation. A current reader needs no State/onChange relay.
+                            traceAutoFollowPosition("button-entry", significant: true)
+                            resumeFollowingLatest(using: scrollViewProxy)
+                        }
+                    }
                 }
                 .padding(.trailing, 15)
                 .padding(.bottom, floatingFollowLatestBottomInset)
@@ -513,6 +520,35 @@ struct ChatView: View {
         // Animate this overlay only; its visibility cannot resize the composer
         // or animate the transcript's lazy content measurements.
         .animation(.spring(response: 0.5, dampingFraction: 0.7), value: showScrollToBottomButton)
+    }
+
+    private func externalFollowLatestAnchor(using scrollViewProxy: ScrollViewProxy) -> some View {
+        let conversationID = effectiveChatSessionID
+        let ownerToken = composerRegistrationToken
+        let liveOwnerToken = $composerRegistrationToken
+        let liveMultiSelect = $isMultiSelectMode
+        return Color.clear
+            .frame(width: 36, height: 36)
+            .anchorPreference(key: HanlinFollowLatestOverlayPreferenceKey.self, value: .bounds) { bounds in
+                [HanlinFollowLatestOverlayRequest(
+                    conversationID: conversationID, ownerToken: ownerToken,
+                    bounds: bounds, isTemporaryRecord: TemporaryRecord
+                ) {
+                    // The exported reader belongs only to this mounted transcript.
+                    // Validate live State and the attached weak native viewport
+                    // BEFORE changing following mode or cancelling a source jump.
+                    guard liveOwnerToken.wrappedValue == ownerToken,
+                          !liveMultiSelect.wrappedValue,
+                          showScrollToBottomButton,
+                          chatRecord.canvas?.content.isEmpty != false,
+                          effectiveChatSessionID == conversationID,
+                          transcriptScrollView.layout(conversationID: conversationID) != nil else { return }
+                    traceAutoFollowPosition("button-entry", significant: true)
+                    resumeFollowingLatest(using: scrollViewProxy)
+                }]
+            }
+            .allowsHitTesting(false)
+            .accessibilityHidden(true)
     }
 
     private var canonicalChatWorkspace: some View {

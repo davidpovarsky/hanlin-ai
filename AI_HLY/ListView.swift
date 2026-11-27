@@ -1,4 +1,5 @@
 import HanlinLocalization
+import HanlinChatUI
 import SwiftUI
 import SwiftData
 
@@ -151,6 +152,14 @@ struct ListView: View {
                         .id(selected.id)
                     } else {
                         ContentUnavailableView(hanlin: "请选择一个对话", systemImage: "bubble.left.and.bubble.right")
+                    }
+                }
+                .hanlinFollowLatestOverlayHost(selectedConversationID: Binding(
+                    get: { useCompactWorkspace ? nil : selectedChatRecord?.id },
+                    set: { _ in }
+                )) { request in
+                    HanlinFollowLatestButton(isTemporaryRecord: request.isTemporaryRecord) {
+                        request.perform()
                     }
                 }
             } else {
