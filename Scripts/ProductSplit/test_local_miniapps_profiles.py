@@ -124,6 +124,24 @@ class MiniAppsLocalProfilesTests(unittest.TestCase):
             self.resolve()
         self.create.assert_called_once()
 
+    def test_studio_document_container_remains_required_with_cloudkit_granted(self):
+        key = "com.apple.developer.ubiquity-container-identifiers"
+        self.assertEqual(self.required["miniapps"].get(key), ["iCloud.com.itorah.chavrusachat"])
+        original = self.profiles["miniapps"]["Entitlements"].copy()
+        for grant in (None, [], ["iCloud.com.itorah.other"]):
+            with self.subTest(grant=grant):
+                entitlements = original.copy()
+                if grant is None:
+                    entitlements.pop(key)
+                else:
+                    entitlements[key] = grant
+                self.profiles["miniapps"]["Entitlements"] = entitlements
+                self.create.reset_mock()
+                with self.assertRaisesRegex(ValueError, "ubiquity-container-identifiers"):
+                    self.resolve()
+                self.create.assert_called_once()
+                self.assertEqual(self.create.call_args.args[0], "miniapps-bundle")
+
     def test_all_source_plists_are_loaded_before_any_account_request(self):
         with tempfile.TemporaryDirectory() as folder:
             for _, _, _, source in self.roles[:-1]:
