@@ -1,0 +1,56 @@
+{
+  "base": "24fd1e20eb1af2ebab0f4d7dd7f617145217eded",
+  "files": {
+    "Scripts/CI/Tests/test_widget_fixture_producer.py": "28a59303b8c737dbe2511d408caba09350e6b63963db3ac0265ec8c02e69366c",
+    "Scripts/ProductSplit/observe_widget_state.py": "68b84fcc6475a125e1424c774c9337dde5fbde06f92becec1e6b3782389e8be6",
+    "Scripts/ProductSplit/prepare_widget_fixtures.py": "2c24e64319ffd6547243b445260ef1448588a9c639dfe2a1103d74dc68e1273a"
+  },
+  "fixtureArchivesModifiedInGit": false,
+  "nativeStatus": "NOT_RUN",
+  "originalNodeProducer": {
+    "actualInvocationCount": 1,
+    "allRetainedHostedBytesEqual": true,
+    "hostedWorkflowExecuted": false,
+    "outputCount": 25,
+    "readOnlyRecipeLeavesProjectionUnchanged": true,
+    "receiptSHA256": "1599f44bd2380d4964854a89dfc2d208a9bd8b5f1656c01ae5e6505835650c20",
+    "syntheticGitHubIdentityUsed": false
+  },
+  "patchSHA256": "89ca110e94cb7f90f2c4cd2b57b0d3fb75918d36bde10c25a11f2a304338ed87",
+  "portableControls": {
+    "count": 12,
+    "failed": 0,
+    "passed": 12,
+    "rawStderrSHA256": "f62b01245aba4ede8998e5fcb906ce8141ec0f2001fac49ddfa2a6989cd53c09",
+    "receiptSHA256": "37eec50046c47228562e4bbe5820f87c8fd28c081627a9e9f4e4c5d0d8dff577",
+    "syntheticEvidenceOnly": true
+  },
+  "proofEncoding": {
+    "portable-stderr.log.gz": "lossless gzip of original stderr.log",
+    "producer.stdout.log.gz": "lossless gzip of original producer.stdout.log",
+    "recipe.stdout.json.gz": "lossless gzip of original recipe.stdout.json"
+  },
+  "readerPreservation": {
+    "changedFunction": "source_identity",
+    "derivedProducerEntries": 2,
+    "ordinaryGitEntries": 5,
+    "originalFunctions": 23,
+    "originalSourceEntries": 7,
+    "signatureAndReturnShapePreserved": true,
+    "unchangedFunctionASTs": 22,
+    "wholeFileInverseSHA256": "22b0cc0357b018a0911b8fd8cf4d5d89c0945b1fa1b9aeb93865690b11d46fcf"
+  },
+  "reviewSHA256": {
+    "independent-w2-source-review.json": "482b3ab0459b3599fd3e2fbf2249c9131db7d5fd246555c3f956740d014753c6",
+    "root-independent-source-review.json": "c2575cb9dd51bcc4f735be59105792be82446203d2eb12abb24ea7998a2424b8"
+  },
+  "schema": 1,
+  "sdkImpact": {
+    "actualSourceInputCount": 396,
+    "changedPathIntersection": [],
+    "manifestSHA256": "7f2702e52587fe1d126cef37f068ab3a9e3a26adb275ffafb687cb38a2db9b87"
+  },
+  "sourceCommit": "d2586537ef480993a6f5fdb208b171a5c7844231",
+  "status": "SOURCE_REVIEWED_PORTABLE_QUALIFIED_NATIVE_NOT_RUN",
+  "workflowStatus": "NOT_RUN"
+}

@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "/root",
+  "decision": "APPROVED_PRODUCER_READER_SOURCE_WITH_EXISTING_GHA_SCOPE",
+  "base": "24fd1e20eb1af2ebab0f4d7dd7f617145217eded",
+  "sourceHashes": {
+    "Scripts/ProductSplit/prepare_widget_fixtures.py": "2c24e64319ffd6547243b445260ef1448588a9c639dfe2a1103d74dc68e1273a",
+    "Scripts/ProductSplit/observe_widget_state.py": "68b84fcc6475a125e1424c774c9337dde5fbde06f92becec1e6b3782389e8be6",
+    "Scripts/CI/Tests/test_widget_fixture_producer.py": "28a59303b8c737dbe2511d408caba09350e6b63963db3ac0265ec8c02e69366c"
+  },
+  "patchSHA256": "89ca110e94cb7f90f2c4cd2b57b0d3fb75918d36bde10c25a11f2a304338ed87",
+  "wholeOriginalReaderInverseExact": true,
+  "originalFunctionsPreserved": 23,
+  "originalSourceEntries": 7,
+  "ordinaryGitExactEntries": 5,
+  "derivedEntries": 2,
+  "authoredOutputIdentities": 25,
+  "priorPortableControlReceiptSHA256": "37eec50046c47228562e4bbe5820f87c8fd28c081627a9e9f4e4c5d0d8dff577",
+  "portableControlsReviewed": 12,
+  "newTestInvocations": 0,
+  "originalPinnedNodeProducerReceiptSHA256": "1599f44bd2380d4964854a89dfc2d208a9bd8b5f1656c01ae5e6505835650c20",
+  "independentW2ReviewSHA256": "482b3ab0459b3599fd3e2fbf2249c9131db7d5fd246555c3f956740d014753c6",
+  "workflowReviewSHA256": "7822f7b7eeb698720226241028803caf281148650cabfcd66177fc484e3e86af",
+  "reviewFindings": [
+    "Original Node producer is the sole writer and runs once; independent exact original exports recompute25output identities without writes.",
+    "All helper/test/producer/sample/zip/resolver code remains exactGit; effective package/lock/version reports, pinned Node binary, source/run/attempt, finite chronology, command and raw logs are bound.",
+    "Only Matrix archive andSHAmanifest usederived-byte admission; self-consistent forgedarchive/manifest/receipt cannot replace authored recipe.",
+    "Original pairedworkflow SPLIT_EVIDENCE is absolute github.workspace/build/app-split-evidence, matching helper contract.",
+    "Current GHA-only execution admission is explicit; local-Mac use needs a separately genuine equivalent context, not spoofed GHA values.",
+    "Original210min workflow and all existing case/observer limits are preserved."
+  ],
+  "nativeOrHostedExecution": "NOT_RUN",
+  "at": "2026-11-27T20:25:34.945596+00:00"
+}

@@ -1,0 +1,227 @@
+{
+  "status": "PORTABLE_ORIGINAL_PRODUCER_AND_READ_ONLY_RECIPE_PASS",
+  "source": "24fd1e20eb1af2ebab0f4d7dd7f617145217eded",
+  "candidateHelperSHA256": "2c24e64319ffd6547243b445260ef1448588a9c639dfe2a1103d74dc68e1273a",
+  "effectiveInputPatchSHA256": "7f18c1104e4b4feb1883f51148d25d851659eccad73a97842183e74ee628ba3a",
+  "startedAtUTC": "2026-11-27T20:20:55.669248+00:00",
+  "finishedAtUTC": "2026-11-27T20:20:56.285855+00:00",
+  "node": {
+    "path": "/mnt/development/projects/toolchains/node-v24.5.0-linux-arm64/bin/node",
+    "version": "v24.5.0",
+    "bytes": 125906320,
+    "sha256": "47befb5f57df96771ce343d6293349ecf4d46c91110b626423ec3a49d2fee7c1"
+  },
+  "producer": {
+    "argv": [
+      "/mnt/development/projects/toolchains/node-v24.5.0-linux-arm64/bin/node",
+      "Scripts/Widgets/build-sample-packages.mjs"
+    ],
+    "exitCode": 0,
+    "timeoutSeconds": 60,
+    "elapsedSeconds": 0.3724038824439049
+  },
+  "readOnlyRecipe": {
+    "argv": [
+      "/mnt/development/projects/toolchains/node-v24.5.0-linux-arm64/bin/node",
+      "--input-type=module",
+      "-e",
+      "<exact RECIPE source retained in candidate helper>"
+    ],
+    "recipeSHA256": "69f21a6697ea2b3419aab43353dfeb6562f4efc065b8ae311fbdb30446bb864d",
+    "exitCode": 0,
+    "timeoutSeconds": 30,
+    "allProjectionBytesModesInodesMtimesUnchanged": true
+  },
+  "originalCodeBefore": {
+    "Scripts/Widgets/build-sample-packages.mjs": "ab9684c50845292b29f259264425caf70706e0c63eb3ea24a253c2dfe2575c3c",
+    "Scripts/Widgets/samples.mjs": "5c36e26e3b7d86cbb017c67660070e5d3ea2f06faaae807ea72e7ce2c6fa9b82",
+    "Scripts/Widgets/deterministic-zip.mjs": "853b5c831fe3cc80c6c52f87991095930f5084c99d43f5999990782cdd4c1da0",
+    "Scripts/Expo/package.json": "fe71727b4bb3a28f73238ed1381190ef6de3541af323efb1f443ed2a7c685563",
+    "Scripts/Expo/package-lock.json": "b20d9bf2ff4850269f72f79ef4e5b1b274ab648226a0597f671fe59ebb5dcfce",
+    "Scripts/MiniApps/upstream-resolution.json": "a2491cd97db234c8a88e9e21b34538862a76c5e28f13b17678c4e8870968e1ad"
+  },
+  "effectiveInputs": {
+    "Scripts/Widgets/build-sample-packages.mjs": {
+      "bytes": 1360,
+      "sha256": "ab9684c50845292b29f259264425caf70706e0c63eb3ea24a253c2dfe2575c3c"
+    },
+    "Scripts/Widgets/samples.mjs": {
+      "bytes": 11242,
+      "sha256": "5c36e26e3b7d86cbb017c67660070e5d3ea2f06faaae807ea72e7ce2c6fa9b82"
+    },
+    "Scripts/Widgets/deterministic-zip.mjs": {
+      "bytes": 2215,
+      "sha256": "853b5c831fe3cc80c6c52f87991095930f5084c99d43f5999990782cdd4c1da0"
+    },
+    "Scripts/Expo/package.json": {
+      "bytes": 1758,
+      "sha256": "e3459dd3aca98733fb8cf671bf404cd8f971bc8fe356f3d5651bfab2c879e552"
+    },
+    "Scripts/Expo/package-lock.json": {
+      "bytes": 335402,
+      "sha256": "34d5f69c56017fdd664022613f440ba4e02c30285098dfa58168f17e8829eb83"
+    },
+    "Scripts/MiniApps/upstream-resolution.json": {
+      "bytes": 15772,
+      "sha256": "ab3e49c191c4618bf432c5e98f47d3dbaddacb4e5ff186d1c0918573d4152ae5"
+    }
+  },
+  "outputs": {
+    "Fixtures/Widgets/Hanlin-Widget-Invalid-Cases.hanlinExpo": {
+      "bytes": 948,
+      "sha256": "33eac8a5a34f1bd74e62daf71b008a8e52cf37b22f0831d4974b5da8c7a27521"
+    },
+    "Fixtures/Widgets/SHA256.json": {
+      "bytes": 4241,
+      "sha256": "0f02871aa80953aa17a98a77dcd40218e0383f5a1e07fbccd5d1107e45d26030"
+    },
+    "Fixtures/Widgets/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo": {
+      "bytes": 1951,
+      "sha256": "d84d699bc839ba8ee512beac4f0117480d3920015051a847d76a4b0bd7d3f946"
+    },
+    "Fixtures/Widgets/Hanlin-Expo-Widget-Counter.hanlinExpo": {
+      "bytes": 1148,
+      "sha256": "9013bfd4a1ada6c95590c86a45d5bead1dafd64cde3e230569335fa9141fd5f2"
+    },
+    "Fixtures/Widgets/Hanlin-ScriptWidget-Actions.scripting": {
+      "bytes": 825,
+      "sha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb"
+    },
+    "Fixtures/Widgets/Hanlin-Widget-Legacy-Regression.scripting": {
+      "bytes": 444,
+      "sha256": "787bf97e48164d7b9021c64bfa7122e48131a82b388efc3bad26c58276f4bb2f"
+    },
+    "Fixtures/Widgets/Hanlin-ScriptWidget-Dashboard.scripting": {
+      "bytes": 968,
+      "sha256": "478cd567e9731cc7342aefa9024ea498edf8d12d340cc5c558484e60a210dace"
+    },
+    "Fixtures/Widgets/Hanlin-Expo-Widget-Visuals.hanlinExpo": {
+      "bytes": 1281,
+      "sha256": "422432991bafbe8f8f3f82d99a9d6f17b199e617165e6a2d2be471070e780a11"
+    },
+    "Fixtures/Widgets/Hanlin-Mixed-Native-Widget.hanlinExpo": {
+      "bytes": 999,
+      "sha256": "781281603813908aaafcaa062fb2838362534be32823f36a081c2a88bf1b72d6"
+    },
+    "AI_HLYUITests/Fixtures/Hanlin-Widget-Invalid-Cases.hanlinExpo": {
+      "bytes": 948,
+      "sha256": "33eac8a5a34f1bd74e62daf71b008a8e52cf37b22f0831d4974b5da8c7a27521"
+    },
+    "AI_HLYUITests/Fixtures/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo": {
+      "bytes": 1951,
+      "sha256": "d84d699bc839ba8ee512beac4f0117480d3920015051a847d76a4b0bd7d3f946"
+    },
+    "AI_HLYUITests/Fixtures/Hanlin-Expo-Widget-Counter.hanlinExpo": {
+      "bytes": 1148,
+      "sha256": "9013bfd4a1ada6c95590c86a45d5bead1dafd64cde3e230569335fa9141fd5f2"
+    },
+    "AI_HLYUITests/Fixtures/Hanlin-ScriptWidget-Actions.scripting": {
+      "bytes": 825,
+      "sha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb"
+    },
+    "AI_HLYUITests/Fixtures/Hanlin-Widget-Legacy-Regression.scripting": {
+      "bytes": 444,
+      "sha256": "787bf97e48164d7b9021c64bfa7122e48131a82b388efc3bad26c58276f4bb2f"
+    },
+    "AI_HLYUITests/Fixtures/Hanlin-ScriptWidget-Dashboard.scripting": {
+      "bytes": 968,
+      "sha256": "478cd567e9731cc7342aefa9024ea498edf8d12d340cc5c558484e60a210dace"
+    },
+    "AI_HLYUITests/Fixtures/Hanlin-Expo-Widget-Visuals.hanlinExpo": {
+      "bytes": 1281,
+      "sha256": "422432991bafbe8f8f3f82d99a9d6f17b199e617165e6a2d2be471070e780a11"
+    },
+    "AI_HLYUITests/Fixtures/Hanlin-Mixed-Native-Widget.hanlinExpo": {
+      "bytes": 999,
+      "sha256": "781281603813908aaafcaa062fb2838362534be32823f36a081c2a88bf1b72d6"
+    },
+    "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Widget-Invalid-Cases.hanlinExpo": {
+      "bytes": 948,
+      "sha256": "33eac8a5a34f1bd74e62daf71b008a8e52cf37b22f0831d4974b5da8c7a27521"
+    },
+    "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo": {
+      "bytes": 1951,
+      "sha256": "d84d699bc839ba8ee512beac4f0117480d3920015051a847d76a4b0bd7d3f946"
+    },
+    "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Expo-Widget-Counter.hanlinExpo": {
+      "bytes": 1148,
+      "sha256": "9013bfd4a1ada6c95590c86a45d5bead1dafd64cde3e230569335fa9141fd5f2"
+    },
+    "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-ScriptWidget-Actions.scripting": {
+      "bytes": 825,
+      "sha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb"
+    },
+    "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Widget-Legacy-Regression.scripting": {
+      "bytes": 444,
+      "sha256": "787bf97e48164d7b9021c64bfa7122e48131a82b388efc3bad26c58276f4bb2f"
+    },
+    "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-ScriptWidget-Dashboard.scripting": {
+      "bytes": 968,
+      "sha256": "478cd567e9731cc7342aefa9024ea498edf8d12d340cc5c558484e60a210dace"
+    },
+    "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Expo-Widget-Visuals.hanlinExpo": {
+      "bytes": 1281,
+      "sha256": "422432991bafbe8f8f3f82d99a9d6f17b199e617165e6a2d2be471070e780a11"
+    },
+    "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Mixed-Native-Widget.hanlinExpo": {
+      "bytes": 999,
+      "sha256": "781281603813908aaafcaa062fb2838362534be32823f36a081c2a88bf1b72d6"
+    }
+  },
+  "actualRetainedCeOutputsEqual": {
+    "Fixtures/Widgets/Hanlin-Widget-Invalid-Cases.hanlinExpo": true,
+    "Fixtures/Widgets/SHA256.json": true,
+    "Fixtures/Widgets/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo": true,
+    "Fixtures/Widgets/Hanlin-Expo-Widget-Counter.hanlinExpo": true,
+    "Fixtures/Widgets/Hanlin-ScriptWidget-Actions.scripting": true,
+    "Fixtures/Widgets/Hanlin-Widget-Legacy-Regression.scripting": true,
+    "Fixtures/Widgets/Hanlin-ScriptWidget-Dashboard.scripting": true,
+    "Fixtures/Widgets/Hanlin-Expo-Widget-Visuals.hanlinExpo": true,
+    "Fixtures/Widgets/Hanlin-Mixed-Native-Widget.hanlinExpo": true,
+    "AI_HLYUITests/Fixtures/Hanlin-Widget-Invalid-Cases.hanlinExpo": true,
+    "AI_HLYUITests/Fixtures/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo": true,
+    "AI_HLYUITests/Fixtures/Hanlin-Expo-Widget-Counter.hanlinExpo": true,
+    "AI_HLYUITests/Fixtures/Hanlin-ScriptWidget-Actions.scripting": true,
+    "AI_HLYUITests/Fixtures/Hanlin-Widget-Legacy-Regression.scripting": true,
+    "AI_HLYUITests/Fixtures/Hanlin-ScriptWidget-Dashboard.scripting": true,
+    "AI_HLYUITests/Fixtures/Hanlin-Expo-Widget-Visuals.hanlinExpo": true,
+    "AI_HLYUITests/Fixtures/Hanlin-Mixed-Native-Widget.hanlinExpo": true,
+    "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Widget-Invalid-Cases.hanlinExpo": true,
+    "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo": true,
+    "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Expo-Widget-Counter.hanlinExpo": true,
+    "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-ScriptWidget-Actions.scripting": true,
+    "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Widget-Legacy-Regression.scripting": true,
+    "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-ScriptWidget-Dashboard.scripting": true,
+    "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Expo-Widget-Visuals.hanlinExpo": true,
+    "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Mixed-Native-Widget.hanlinExpo": true
+  },
+  "inputReadbackUnchanged": true,
+  "githubWorkflowExecuted": false,
+  "syntheticGitHubIdentityUsed": false,
+  "nativeExecutions": 0,
+  "originalProducerInvocationCount": 1,
+  "producer.stdout.log": {
+    "bytes": 753,
+    "sha256": "4835423745c5d8a7e6d7a6301a7e47b68b7c77c8429a3d0c543ac98e7a93cdab"
+  },
+  "producer.stderr.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "recipe.stdout.json": {
+    "bytes": 4055,
+    "sha256": "ce6e2e086f6aabbbe6ea81b53afd78c0a57230e9ab9196aa48db2ba2640cf1c9"
+  },
+  "recipe.stderr.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "patch.stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "patch.stderr": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+}
