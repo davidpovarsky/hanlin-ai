@@ -1,0 +1,20 @@
+{
+  "base": "39006ce6586c1be056f53de9483bfd907cea6cbd",
+  "path": ".github/workflows/validate-app-split.yml",
+  "beforeSHA256": "c76bd7dfe73c46fdc3d1836ea4313bc6d3055e7d5c788e855dcbcbf52ac6d07d",
+  "afterSHA256": "67cfaef7d04a1787a0abefb755061788e7d1c01a252e632d0888e29263463bf7",
+  "patchSHA256": "5215b9cfc690de130da23d1e59dc184fa9b6932b9a454d1f239c46b09af93e1b",
+  "wholeOriginalWorkflowSemanticInverse": true,
+  "changes": [
+    "Add explicit family scope choice",
+    "Include only that scope in existing original Widget producer preparation",
+    "Include only that scope in existing always UI attachment upload"
+  ],
+  "priorScopesDevicesSelectorsBudgetsUnchanged": true,
+  "rootJobTimeout": "${{ inputs.signed_release_archives && 150 || inputs.paired_product_acceptance && inputs.paired_test_scope == 'miniapp_complete_with_extra26' && 250 || inputs.paired_product_acceptance && 210 || 90 }}",
+  "existingProducerCommandUnchanged": true,
+  "sourceRouterMapModified": false,
+  "nativeDispatches": 0,
+  "at": "2026-11-27T21:02:26.836436+00:00",
+  "status": "PREPARED_FOR_INDEPENDENT_REVIEW"
+}

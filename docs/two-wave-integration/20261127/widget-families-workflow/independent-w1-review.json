@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "recordedAt": "2026-11-27T21:06:43.641156+00:00",
+  "reviewer": "/root/w1_review_resume",
+  "status": "APPROVED_SOURCE_ONLY",
+  "base": "39006ce6586c1be056f53de9483bfd907cea6cbd",
+  "path": ".github/workflows/validate-app-split.yml",
+  "beforeSHA256": "c76bd7dfe73c46fdc3d1836ea4313bc6d3055e7d5c788e855dcbcbf52ac6d07d",
+  "afterSHA256": "67cfaef7d04a1787a0abefb755061788e7d1c01a252e632d0888e29263463bf7",
+  "patchSHA256": "5215b9cfc690de130da23d1e59dc184fa9b6932b9a454d1f239c46b09af93e1b",
+  "independentWholeFileByteInverse": true,
+  "independentParsedYAMLInverse": true,
+  "exactAdditions": {
+    "scopeChoice": "miniapp_widget_families_os",
+    "producerCondition": "Only add family to the existing recovery/state/VoiceOver opt-in condition; original resolver ordering, exact producer argv and receipt export remain byte-identical.",
+    "evidenceCondition": "Only add family to the existing always-on paired UI attachment condition."
+  },
+  "preservation": {
+    "allOriginalYAMLBytesRecoverExactly": true,
+    "defaultScopeAndAllOldScopeChoicesUnchanged": true,
+    "jobAndTestBudgetsUnchanged": true,
+    "sourceAndArtifactReuseInputsUnchanged": true,
+    "concurrencyGroupLogicAndCancellationPolicyUnchanged": true,
+    "originalProducerCommandAndEnvironmentUnchanged": true,
+    "routerMapUnchanged": true
+  },
+  "execution": {
+    "controlsRerun": 0,
+    "nativeCommands": 0,
+    "dispatches": 0
+  },
+  "limits": "Approval is the additive workflow wiring only. It does not qualify native compilation, physical WidgetKit placement, family/orientation identity or any runtime acceptance."
+}
