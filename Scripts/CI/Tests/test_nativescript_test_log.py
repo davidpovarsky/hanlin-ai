@@ -1,9 +1,32 @@
 from Scripts.CI import verify_nativescript_test_log as checks
 from pathlib import Path
+import os
+import shutil
+import subprocess
+import tempfile
 import unittest
+import yaml
+
+ROOT = Path(__file__).resolve().parents[3]
 
 
 class NativeScriptTestLogTests(unittest.TestCase):
+    def workflow_run(self):
+        workflow = yaml.safe_load((ROOT / ".github/workflows/build-ios26-unsigned-ipa.yml").read_text(encoding="utf-8"))
+        job = next(j for j in workflow["jobs"].values() if j.get("name") == "Launch full app on iPad Simulator")
+        return next(s["run"] for s in job["steps"] if s.get("name") == "Run simulator test suite")
+
+    def assert_cohort_log_check(self, run):
+        start = run.index('if [ "$cohort_test_status" -eq 0 ]; then')
+        end = run.index('printf \'%s\\n\' "$cohort_test_status"', start)
+        check = run[start:end]
+        self.assertIn("if ! python3 Scripts/CI/verify_nativescript_test_log.py", check)
+        self.assertIn('--log "$LOG_DIR/$cohort_native_log"', check)
+        self.assertIn('--selectors "$cohort_selectors"', check)
+        self.assertIn("cohort_test_status=65", check)
+        self.assertIn('if [ "$cohort_test_status" -ne 0 ]; then nativescript_e2e_status="$cohort_test_status"; fi', run[end:])
+        return check
+
     def log(self, markers):
         return "HANLIN_NS_INITIALIZED_EXTERNAL_ROOT path=/sim/App/Library/Application Support/Packages\n" + "\n".join(markers)
 
@@ -46,11 +69,56 @@ class NativeScriptTestLogTests(unittest.TestCase):
         self.assertEqual(checks.required_markers(selectors), checks.required_markers(checks.CORE))
 
     def test_actual_workflow_checks_the_original_log_with_the_exact_selection(self):
-        workflow = (Path(__file__).resolve().parents[3] / ".github/workflows/build-ios26-unsigned-ipa.yml").read_text(encoding="utf-8")
-        check = workflow.split('if [ "$nativescript_e2e_status" -eq 0 ]; then', 1)[1].split("\n              fi", 1)[0]
-        self.assertIn("python3 Scripts/CI/verify_nativescript_test_log.py", check)
-        self.assertIn('--log "$LOG_DIR/08-nativescript-production.log"', check)
-        self.assertIn('--selectors "${SIMULATOR_UI_FILTER:-AI_HLYUITests}"', check)
+        run = self.workflow_run()
+        self.assert_cohort_log_check(run)
+        self.assertIn('cohort_native_log="08-nativescript-production.log"', run)
+        self.assertIn('cohort_native_log="08-$cohort_id-production.log"', run)
+        self.assertIn('"$log_window_minutes" "$cohort_native_log" "$cohort_capture_status"', run)
+
+    def test_each_cohort_uses_its_own_log_and_selection_and_retains_failure(self):
+        check = self.assert_cohort_log_check(self.workflow_run())
+        shell = "bash"
+        if os.name == "nt":
+            git = Path(shutil.which("git") or "")
+            shell = str(git.parent.parent / "bin/bash.exe")
+            self.assertTrue(Path(shell).is_file(), "Native Git Bash is required for this Windows check")
+        with tempfile.TemporaryDirectory() as folder:
+            logs = Path(folder)
+            complete = self.log([*checks.CORE_MARKERS, "HANLIN_NS_PRODUCTION_SHUTDOWN_OK"])
+            cases = [
+                ("08-nativescript-production.log", checks.CORE, complete, 0, 0),
+                ("08-compact-production.log", checks.SUITE + "/testDirectUIKitTabBarBridge", self.log([]), 0, 0),
+                ("08-nativescript-production.log", checks.CORE, self.log([]), 0, 65),
+                ("unreadable-prior-failure.log", checks.CORE, None, 65, 65),
+            ]
+            for filename, selectors, contents, original_status, expected in cases:
+                with self.subTest(filename=filename, selectors=selectors, original_status=original_status):
+                    if contents is not None:
+                        (logs / filename).write_text(contents, encoding="utf-8")
+                    result = subprocess.run(
+                        [shell, "-c", 'set -eu\n' + check + '\nprintf "\\nCOHORT_STATUS=%s\\n" "$cohort_test_status"'],
+                        cwd=ROOT, env={**os.environ, "LOG_DIR": logs.as_posix(),
+                            "cohort_native_log": filename, "cohort_selectors": selectors,
+                            "cohort_test_status": str(original_status),
+                            # A global full-suite filter must not leak into a compact cohort.
+                            "SIMULATOR_UI_FILTER": checks.SWIFTUI},
+                        capture_output=True, text=True, timeout=10)
+                    self.assertEqual(result.returncode, 0, result.stderr)
+                    self.assertEqual(result.stdout.splitlines()[-1], "COHORT_STATUS=" + str(expected))
+
+    def test_wrong_log_global_selection_or_swallowed_failure_cannot_satisfy_the_workflow_contract(self):
+        run = self.workflow_run()
+        for old, new in [
+            ('--log "$LOG_DIR/$cohort_native_log"', '--log "$LOG_DIR/08-nativescript-production.log"'),
+            ('--selectors "$cohort_selectors"', '--selectors "${SIMULATOR_UI_FILTER:-AI_HLYUITests}"'),
+            ("if ! python3 Scripts/CI/verify_nativescript_test_log.py",
+             "if python3 Scripts/CI/verify_nativescript_test_log.py"),
+        ]:
+            with self.subTest(replacement=new):
+                changed = run.replace(old, new)
+                self.assertNotEqual(changed, run)
+                with self.assertRaises(AssertionError):
+                    self.assert_cohort_log_check(changed)
 
 
 if __name__ == "__main__":
