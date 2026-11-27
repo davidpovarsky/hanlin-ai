@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "/root/w1_review_resume",
+  "reviewedAt": "2026-11-27T04:04:15.453174+00:00",
+  "base": "9c0879ee168b6aec78a4cc80fd071514c8787887",
+  "sourceCommit": "fb1e15992eaddfde42c88b20738ae8d543d48ba0",
+  "status": "SOURCE_APPROVED_NATIVE_AND_OS_NOT_RUN",
+  "sourceHashes": {
+    "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo": "e076a8543641d9721152d063b58e63a17d722a9d326a9dec742910496cb0a995",
+    "AI_HLYUITests/Fixtures/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo": "e076a8543641d9721152d063b58e63a17d722a9d326a9dec742910496cb0a995",
+    "Fixtures/Widgets/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo": "e076a8543641d9721152d063b58e63a17d722a9d326a9dec742910496cb0a995",
+    "Fixtures/Widgets/SHA256.json": "2c3fac22ca5647ab476bbbfddd6286565959da7b9c1a21438a956c94b64d0466",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinPreparedWidget.swift": "c6de1ead190c0228ea9cb9a842ecbe4d840c53f7bffaa69bf1770fef71d14115",
+    "Scripts/Widgets/Tests/interactive-toggle.test.mjs": "2228d3e1492d56391c32ed59b13a415bcae95f9f761f03530a57340fdff06010",
+    "Scripts/Widgets/samples.mjs": "5c36e26e3b7d86cbb017c67660070e5d3ea2f06faaae807ea72e7ce2c6fa9b82"
+  },
+  "proof": {
+    "portable-receipt.json": {
+      "sha256": "0a69b6e3725948f88d582a0bcac764b049c8e38c82121b71369c1533b2ecea31",
+      "bytes": 1783
+    },
+    "clock-correction-receipt.json": {
+      "sha256": "187c9bf8b98a597ae0f3b53f1bc49421c9062de901cc3edce8c74effbfa92633",
+      "bytes": 1951
+    },
+    "original-interactive-toggle.stdout": {
+      "sha256": "1ef4df72a32fb1a8f1fdfb71292f9da1b2daee1bc31071fe251470704f704029",
+      "bytes": 3161
+    },
+    "original-matrix-clock-correction.stdout": {
+      "sha256": "388849c35cba618e83b8f0f0c755181df540274c34350f3d32e13d2f4e5f03a3",
+      "bytes": 366
+    }
+  },
+  "allOriginalTestBodiesAndAssertionsBytePreserved": true,
+  "unchangedArchiveMirrors": 21,
+  "actualTestEvidence": {
+    "firstOriginal10": {
+      "passed": 8,
+      "failed": 2
+    },
+    "correctedAffectedOriginalAndPreparedMatrix": {
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0
+    },
+    "freshFull10RunClaimed": false
+  },
+  "findings": [
+    "Diagnostic runs only after the original active identity, engine, family, program, settings and cached artifact validation; preparation result and snapshot/write behavior are unchanged.",
+    "Length-prefixed hashed identity includes authoritative variant/instance ID; expo is explicit. No raw names, settings, props, authored output or error text is logged.",
+    "Both callbacks are declared and already visible in the cached good node. Original fail=true negative remains; premature recovery genuinely throws. Public render clock makes recovery reachable without runtime alteration.",
+    "All three Matrix archives match actual manifest/member hashes. Seven other fixtures and 21 mirrors are byte-identical.",
+    "Later OS proof must use actual clock and genuine OS actions, bind fresh process/revision/identity/settings/program/render evidence, and require actual Recover mutation rather than passive timer expiry.",
+    "Changed production HanlinPlatform source requires original native gates on integrated source; old broad package/SDK reuse does not cover it."
+  ],
+  "native": "NOT_RUN",
+  "OS": "NOT_RUN",
+  "testsExecutedByReviewer": [],
+  "packageMetadata": {
+    "Packages/HanlinPlatform/Package.swift": {
+      "sha256": "78d7081d0e197c3e99746e5b3e476b41280fc5b32110035fab31a3e949cb4dab",
+      "platformLines": [
+        "    platforms: [",
+        "        .macOS(.v26),",
+        "        .iOS(\"27.0\")",
+        "            swiftSettings: [.unsafeFlags([\"-application-extension\"], .when(platforms: [.iOS]))],",
+        "            linkerSettings: [.unsafeFlags([\"-Xlinker\", \"-application_extension\"], .when(platforms: [.iOS]))]",
+        "            linkerSettings: [.linkedFramework(\"JavaScriptCore\", .when(platforms: [.iOS, .macOS]))]"
+      ]
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Common/ScriptWidgetPackage.swift": {
+      "sha256": "3aa2274d41edd3e7e87edd91697a4a204489d0efc6a2efaa00ea82d517af16fd",
+      "platformLines": []
+    }
+  }
+}
