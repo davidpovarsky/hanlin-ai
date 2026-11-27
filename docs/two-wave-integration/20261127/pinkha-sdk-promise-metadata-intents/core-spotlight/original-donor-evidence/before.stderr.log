@@ -1,0 +1,14 @@
+test_host_baseline_keeps_real_host_headers_without_expanding_expo_cpp_roots (test_nativescript_metadata_wrapper.NativeScriptMetadataWrapperTests.test_host_baseline_keeps_real_host_headers_without_expanding_expo_cpp_roots) ... FAIL
+
+======================================================================
+FAIL: test_host_baseline_keeps_real_host_headers_without_expanding_expo_cpp_roots (test_nativescript_metadata_wrapper.NativeScriptMetadataWrapperTests.test_host_baseline_keeps_real_host_headers_without_expanding_expo_cpp_roots)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/workspace/scratch/d49eec8920ef/root-spotlight-metadata/candidate/Scripts/CI/Tests/test_nativescript_metadata_wrapper.py", line 49, in test_host_baseline_keeps_real_host_headers_without_expanding_expo_cpp_roots
+    self.assertIn(str(header), host.read_text())
+AssertionError: '/tmp/tmpqff4yxxj/sdk/System/Library/Frameworks/CoreSpotlight.framework/Headers/Entry.h' not found in '#import <UIKit/UIKit.h>\n#import "/tmp/tmpqff4yxxj/sdk/System/Library/Frameworks/AVFoundation.framework/Headers/Entry.h"\n#import "/tmp/tmpqff4yxxj/sdk/System/Library/Frameworks/CoreLocation.framework/Headers/Entry.h"\n#import "/tmp/tmpqff4yxxj/sdk/System/Library/Frameworks/Foundation.framework/Headers/Entry.h"\n#import "/tmp/tmpqff4yxxj/sdk/System/Library/Frameworks/Speech.framework/Headers/Entry.h"\n#import "/tmp/tmpqff4yxxj/sdk/System/Library/Frameworks/UIKit.framework/Headers/Entry.h"\n#import "/tmp/tmpqff4yxxj/sdk/System/Library/Frameworks/WebKit.framework/Headers/Entry.h"\n#import "/tmp/tmpqff4yxxj/ActualProvider-Swift.h"\n'
+
+----------------------------------------------------------------------
+Ran 1 test in 0.007s
+
+FAILED (failures=1)

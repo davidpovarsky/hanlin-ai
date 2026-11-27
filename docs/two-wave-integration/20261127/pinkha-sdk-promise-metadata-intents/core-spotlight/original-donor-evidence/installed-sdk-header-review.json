@@ -1,0 +1,24 @@
+{
+  "receiptSHA256": "0aefcee1c972f1cbcf597e0792fa861171acfb7e3315921fb330611471927693",
+  "scope": "READ_ONLY_INSTALLED_IPHONE_SIMULATOR_SDK_HEADERS_NO_COMPILE",
+  "sdk": {
+    "CanonicalName": "iphonesimulator27.0",
+    "DisplayName": "Simulator - iOS 27.0",
+    "Version": "27.0",
+    "ProductBuildVersion": null
+  },
+  "sdkBuild": "24A430",
+  "headers": [
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/System/Library/Frameworks/CoreSpotlight.framework/Headers/CoreSpotlight.h",
+      "bytes": 945,
+      "sha256": "5ae1ac850a8dca462746ee89b9b244b2aa71c7f090fc09e9c9fec31c2bcc8c34"
+    },
+    {
+      "path": "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator.sdk/System/Library/Frameworks/CoreSpotlight.framework/Headers/CSSearchableItemAttributeSet.h",
+      "bytes": 4091,
+      "sha256": "61e0c2f016486bad8e0d1dd4ba940b39d58e8cef03164deac010d08e966ee6ba"
+    }
+  ],
+  "finding": "Installed public CoreSpotlight umbrella imports CSSearchableItemAttributeSet.h, which declares the original Objective-C class. Native app metadata compilation remains pending."
+}

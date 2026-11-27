@@ -2150,7 +2150,7 @@
       "upstream": "Shared/ScriptWidgetRuntime/Widget/API/ScriptWidgetRuntimePromise.swift",
       "upstreamBlob": "ab1967940453be0901d492fa5bcb0d5f14b4edc4",
       "local": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimePromise.swift",
-      "localSHA256": "13f8c1563e906edd2fd9f96b372cace3e15be58e18c583ba60100f2ad842d8d5",
+      "localSHA256": "98d40a32ac40bb4488dc21205b852aea2c552e80294657ab6dcb6fe44285dd4f",
       "byteIdentical": false,
       "adaptation": "Original API/core source compiled in an isolated Swift 5 module. Host adaptations configure product storage, native bundle resources, the existing ZIPFoundation archive backend, and externally prepared JavaScript sessions. Original OS providers and JSExport contracts are retained. Trailing-space normalization preserves native source behavior."
     },
@@ -2350,7 +2350,7 @@
       "upstream": "Shared/ScriptWidgetRuntime/Widget/Runtime/ScriptWidgetRunningState.swift",
       "upstreamBlob": "9bceec3b5b0c059afaf4c8601dcf5147516b1f3d",
       "local": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRunningState.swift",
-      "localSHA256": "f7b50ceacdf034833c92554a769fe692abebe296b87e55091e7a2fb09146d9da",
+      "localSHA256": "eab1f759ee1a5cb7b72af88883154225891a424cbab7ccbdc5a9c8f618544142",
       "byteIdentical": false,
       "adaptation": "Original API/core source compiled in an isolated Swift 5 module. Host adaptations configure product storage, native bundle resources, the existing ZIPFoundation archive backend, and externally prepared JavaScript sessions. Original OS providers and JSExport contracts are retained. Trailing-space normalization preserves native source behavior."
     },

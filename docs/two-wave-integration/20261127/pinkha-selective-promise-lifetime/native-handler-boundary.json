@@ -1,0 +1,58 @@
+{
+  "actualHandlerSelector": {
+    "bytes": 5480,
+    "selector": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptActionDeclarationsPreserveRegisteredJavaScriptState()",
+    "sha256": "acd8d9b44c685f271b6c0b5a5085783edf25b6aadebe4038f00de76f7208ac96"
+  },
+  "actualRuntimeOrNewSourceBuilds": 0,
+  "base": "4cb6454c1c6e110ead73179c06ada9e909bf250b",
+  "donor": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+  "interpretation": "Promise ownership is the original ScriptWidget JavaScriptCore lifetime. CoreSpotlight is a native metadata producer prerequisite. Neither changes the explicit-handler bridge or proves current NativeScript JS-state/no-handler runtime acceptance.",
+  "originalBridge": "7bbc804da241fe31d6e860eaedd064a192b97e49 retained by unchanged NativeScriptRuntime package tree",
+  "originalPrimaryAPI": {
+    "bytes": 139130,
+    "gitBlob": "2766f1fa02dc2dc85d413f2c4d51d952c916d656",
+    "path": "/workspace/scratch/ae335eba85e3/hanlin-pr23-promise-spotlight-review/package-primary-api.json",
+    "sha256": "04d4b6496509072b11e6e3cda4a904502f4a4a61a3a9683666af823ae101be15"
+  },
+  "packageTrees": [
+    {
+      "baseTree": "bbe6a0e4387f3f33d6592e24c1927182a1aceb22",
+      "donorTree": "498032fa42a1bccbbbfcd0335ee61533af3ad086",
+      "identical": false,
+      "package": "HanlinAgentSDK"
+    },
+    {
+      "baseTree": "db6e9533242f08bb1bb7accdf6970a436aa953d1",
+      "donorTree": "b1e54c6d1aa3c4ef2dd761e15b7b6df9d946a29a",
+      "identical": false,
+      "package": "HanlinPlatform"
+    },
+    {
+      "baseTree": "3fdc8170b9a749797f4d97c796405306d21ed438",
+      "donorTree": "711b6c97867dd928afd5b11035d5d5a42e00b004",
+      "identical": false,
+      "package": "HanlinPresentationSDK"
+    },
+    {
+      "baseTree": "98ef5d2b47c03f4ea98319a851abae183f500a40",
+      "donorTree": "98ef5d2b47c03f4ea98319a851abae183f500a40",
+      "identical": true,
+      "package": "HanlinMiniAppsBridge"
+    },
+    {
+      "baseTree": "14373dc81171600079e458087872d4e8ea7bbc1c",
+      "donorTree": "14373dc81171600079e458087872d4e8ea7bbc1c",
+      "identical": true,
+      "package": "HanlinNativeScriptRuntime"
+    }
+  ],
+  "schema": "pinkha-promise-versus-native-handler-source-boundary-v1",
+  "wholeDonorMerge": "Not proposed: donor differs from canonical Agent/Platform/Presentation; canonical cancellation, payload quota, scrolling, actions and original ABI/source are retained by selective projection.",
+  "wireTest": {
+    "bytes": 23501,
+    "gitBlob": "ab113355ec8b87b34bc07216806b08f005dc1c36",
+    "path": "/workspace/scratch/ae335eba85e3/hanlin-pr23-promise-spotlight-review/source/1ee9c45796f41893c3b59745864de3412c17ddb4/AI_HLYTests/NativeScriptRuntimeWireTests.swift",
+    "sha256": "c184923313576d396bbf3ee44759a42905145990011352383ca9935f134597db"
+  }
+}

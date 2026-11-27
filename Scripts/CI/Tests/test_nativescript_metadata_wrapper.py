@@ -34,16 +34,21 @@ class NativeScriptMetadataWrapperTests(unittest.TestCase):
             capture = self.framework(frameworks, "AVFoundation")
             location = self.framework(frameworks, "CoreLocation")
             speech = self.framework(frameworks, "Speech")
+            spotlight = self.framework(frameworks, "CoreSpotlight")
+            (spotlight / "Headers/Exported.h").write_text("@interface CSSearchableItemAttributeSet\n@end\n")
             expo = self.framework(root / "products", "ExpoModulesCore")
             (expo / "Headers/Exported.h").write_text("namespace facebook { class CallInvoker; }\n")
             provider = root / "ActualProvider-Swift.h"
-            provider.write_text("@interface SwiftUIProvider\n@end\n")
+            provider.write_text("@interface SwiftUIProvider\n@end\n"
+                                "extern CSSearchableItemAttributeSet *installedMiniAppAttributeSet(void);\n")
             host = root / "host.h"
             records = HEADERS.write_public_umbrella(
                 sdk, host, [provider], [expo.parent], framework_names=WRAPPER.HOST_FRAMEWORKS)
             self.assertEqual({record["framework"] for record in records}, WRAPPER.HOST_FRAMEWORKS)
-            for header in [p / "Headers/Entry.h" for p in [ui, foundation, webkit, capture, location, speech]] + [provider]:
+            for header in [p / "Headers/Entry.h" for p in [ui, foundation, webkit, capture, location, speech, spotlight]] + [provider]:
                 self.assertIn(str(header), host.read_text())
+            self.assertLess(host.read_text().index(str(spotlight / "Headers/Entry.h")),
+                            host.read_text().index(str(provider)))
             self.assertNotIn(str(expo), host.read_text())
             # The explicit full-SDK path remains unchanged and observable.
             full = root / "full.h"

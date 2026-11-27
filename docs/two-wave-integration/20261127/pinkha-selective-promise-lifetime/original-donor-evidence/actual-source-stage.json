@@ -1,0 +1,52 @@
+{
+  "status": "EXACT_REVIEWED_PACKAGE_SOURCE_STAGED",
+  "source": "778ed7e597a2fe19708e1dde5598350b56b25d6d",
+  "base": "6bee646231c4915bbfdb86d8fc301870bbe0fcfb",
+  "sourceClean": true,
+  "at": "2026-11-27T11:51:33.338776+00:00",
+  "packageTrees": {
+    "Packages/HanlinPlatform": "69e51bd378b8b93071be37bb21e85bcd50113257",
+    "Packages/HanlinPlatform/Sources": "f32c746b0c9e922365223d272cca7cac4ef807c4",
+    "Packages/HanlinPlatform/Tests": "eeeeed8ca8cc87e47fb839818c444f9bcc577009",
+    "Fixtures/Widgets": "a0b7b0b1cb9e1ce756ccff40593a325ffffa73d6"
+  },
+  "pins": {
+    "Packages/HanlinPlatform/Package.resolved": "453087cb3345b7c6bb24c00a682f41ffa9708ebd328e60b583f6e04276bf789d",
+    "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved": "56d19a4b8c677831fb91e1f8155a68e411b42fd4807ad618d6f169569e1bb5a4"
+  },
+  "warmBuildInode": 71920668,
+  "testSources": {
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift": "50cfade071616aac0c3757f7fce4141e8017716aaa68d9ae092493c8321badb2",
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinOriginalPromiseLifetimeTests.swift": "527fba708cfbf5a6e365776650235a39ae115bde54a848b5f54d7c35636fde2c"
+  },
+  "originalFileManagerProductionAndTestHashes": {
+    "Packages/HanlinPlatform/Sources/HanlinScriptingApplicationRuntime/HanlinScriptingRuntimeServices.swift": "a1ead7e7e54c6d4e578fd9f3b7b6696f966ab1050540908c4e9d70ba75493cf3",
+    "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift": "fafee829073998c78fc466ed767df87b3717342d170fdf7f334fc331b35a8076"
+  },
+  "debugObservationSourceHashes": {
+    "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimePromise.swift": "9cfc569a213595e7e39fbfaf70e37e3a2006fa9737c75cd6923cd3d3e3b68d3a",
+    "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift": "f8c4adb4cf19e9302ae69167ac7a6e654460423e8cbea25cf763ddbc0259b0df",
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift": "50cfade071616aac0c3757f7fce4141e8017716aaa68d9ae092493c8321badb2",
+    "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json": "68c029c3a8af0d667f4d4117da95c47da4d275f0cd37073c1d029a829ab43133"
+  },
+  "productionSourcesUnchangedFrom33": false,
+  "productionChangeScope": "Existing root-reviewed6bee DEBUG observations unchanged; this boundary changes only the test-only main-queue logger reader.",
+  "fullScope": "One original unfiltered603 DEBUG diagnostic; original601 plus2 meaningful Promise controls; original assertions5s HTTP and3600s gate unchanged.",
+  "host188ActualSource": "226e7cfcc60a9ace99241f009d3586b9cea7e65e",
+  "hostSDKSourceSealRetainedInGitRef": "refs/heads/codex/mac-host226-sdk-source-seal",
+  "hostArchiveSHA256": "47a386c7eeb510a17e292cc78321f851ffd5109984180524387723d7d9093b88",
+  "hostScopeQualification": "Historical226 Host188 retained; no refresh or reuse of its archive claimed for this DEBUG diagnostic source.",
+  "manifestSHA256": "2756158a9fc646f156ab859bc21c4cb1120108cf3433d74860696fbe1d4ede9e",
+  "bundleSHA256": "2a8dac6231efb9488badaeaabeb16f99351f85879afd229799577dba6ad3e067",
+  "callbackReviewSHA256": "83695abdb3f762031e95d3e925449159191e67b9b5538e04be023ff72f92030f",
+  "historicalObserverReviewSHA256": "8131df5ea9e05e8deee3ea2009b4cc1f5bb2df1c88543dc947dd8f73cb97cc24",
+  "observerHelperSHA256": "3f4f209aff835e2cd555e7bb3a8ee8ef94be76e8eccbf8461ce84877b1e2d6c6",
+  "sampleBlockSHA256": "1e8872583d4ad9e7de4dd61ed7ba35b70f21a91777b5ce516b154d9977c20522",
+  "loggerReaderReviewSHA256": "12f80cc2f1c45c29a6796cf83bb7f034a09e2d5849c65dfc842230fe7817999c",
+  "runtimeDiagnosticReviewSHA256": "83695abdb3f762031e95d3e925449159191e67b9b5538e04be023ff72f92030f",
+  "productionSourcesUnchangedFrom6bee": true,
+  "packageDeltaFrom6bee": [
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift"
+  ],
+  "historical6beeCompileFailureSHA256": "68f865166934a7f9385f5e83e7b50a474fe07014909640e4b0937d7d2bc8efa3"
+}

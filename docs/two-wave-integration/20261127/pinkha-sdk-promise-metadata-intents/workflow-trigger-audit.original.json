@@ -1,0 +1,194 @@
+{
+  "branch": "codex/pinkha-sdk-producer-ownership-20261127",
+  "rows": [
+    {
+      "automaticEvents": {},
+      "blob": "2dce378d6f1b516b2da7f6b2ebba9a77151d3a95",
+      "bytes": 3947,
+      "path": ".github/workflows/build-expo-native-search-miniapp.yml",
+      "sha256": "1570c52bbb4cb7c899bd4f0c108bd39a898f4d22e8521906014e1b33bbad5501"
+    },
+    {
+      "automaticEvents": {
+        "push": {
+          "branches": [
+            "main"
+          ]
+        }
+      },
+      "blob": "7600e5f36484120ecb476a8e0c5c770b46cf3dce",
+      "bytes": 216739,
+      "path": ".github/workflows/build-ios26-unsigned-ipa.yml",
+      "sha256": "f88489d966e676b051076898eccf8c56b4bdeca689d92846240fbf286d6952e6"
+    },
+    {
+      "automaticEvents": {},
+      "blob": "649d0512656591f09fa37feb62385729984ce44d",
+      "bytes": 46917,
+      "path": ".github/workflows/build-runtime-bundle.yml",
+      "sha256": "b7cb1d1afb5cf52abd7bab654ceac1da89d08076db6ce6ae95e3f8ab12335d61"
+    },
+    {
+      "automaticEvents": {
+        "schedule": [
+          {
+            "cron": "23 4 * * 2"
+          }
+        ]
+      },
+      "blob": "42f2233a198c34a2ca97864598ac7bc2ccebe5a3",
+      "bytes": 22970,
+      "path": ".github/workflows/check-runtime-dependency-updates.yml",
+      "sha256": "98e0a82d986aa69149d8ef118260f3ce48c55a40ee38a3e450d407655843e05a"
+    },
+    {
+      "automaticEvents": {
+        "workflow_run": {
+          "types": [
+            "in_progress",
+            "completed"
+          ],
+          "workflows": [
+            "Build iOS 26 Unsigned IPA",
+            "Build isolated NativeScript test pack",
+            "Prepare SideStore IPA",
+            "Validate Expo Runtime Spike"
+          ]
+        }
+      },
+      "blob": "0cc79f4feec92e1826817736de6a7ad0de882a26",
+      "bytes": 1350,
+      "path": ".github/workflows/live-activity-bridge.yml",
+      "sha256": "7f801ecefa7af2ecbce07f19ac15182dd4266ece2dd43caa7d35fe031500b1e0"
+    },
+    {
+      "automaticEvents": {},
+      "blob": "f688f17a3a9c5d5d0d6fa37c888c33d76de3504c",
+      "bytes": 3695,
+      "path": ".github/workflows/lorvex-apple-account-preflight.yml",
+      "sha256": "2cb416af674f00a2a502c6a2793b08dec3dc93d1abfe02fdc060037746aa3884"
+    },
+    {
+      "automaticEvents": {},
+      "blob": "0efb8aaa105e9a65d5cb118aeb3922af5ab4fed2",
+      "bytes": 6739,
+      "path": ".github/workflows/lorvex-apple-provision-profiles.yml",
+      "sha256": "81f0d49bf322ddb824c97dc0757c517601001e22ea2f2e333c35af6fe239da3a"
+    },
+    {
+      "automaticEvents": {},
+      "blob": "938f756d1d9d65f773c2838030b26cdd336aed61",
+      "bytes": 4444,
+      "path": ".github/workflows/lorvex-apple-register-identifiers.yml",
+      "sha256": "169c96c495a5cb1858e06121ea080c6ccb394c0ee98b32db8a345f7cae8d5f37"
+    },
+    {
+      "automaticEvents": {},
+      "blob": "4c27b11999f83260323ddeb37670a9bd6cedf9e7",
+      "bytes": 5443,
+      "path": ".github/workflows/lorvex-beta-internal.yml",
+      "sha256": "626103d424ce511bd3ed1f30370b4b724081f128837d75d6652343a0bdeb363d"
+    },
+    {
+      "automaticEvents": {},
+      "blob": "40310d94aa2cf0f5ea5474eb5e423cd4cc4728a7",
+      "bytes": 2174,
+      "path": ".github/workflows/lorvex-secure-secret-transfer.yml",
+      "sha256": "e0a0f4c8d1d51a047432bbf6479bf120867f2664400dc7cfcb75448f06c8228f"
+    },
+    {
+      "automaticEvents": {},
+      "blob": "c7952a1316a51ea664c96503f5ea4c0f6fe9344c",
+      "bytes": 14253,
+      "path": ".github/workflows/lorvex-signed-testflight.yml",
+      "sha256": "1ca44c999f83df05964194ee57a5121957d413393e0d8f731e0cacf0198cd7a8"
+    },
+    {
+      "automaticEvents": {},
+      "blob": "7bfd42334e1f15789bb1c725913eb5c0e59abb9c",
+      "bytes": 2922,
+      "path": ".github/workflows/lorvex-tester-account-probe.yml",
+      "sha256": "abda23b7e8e89e991f255e6caa58e671a6565dba0d87966990528281f11db407"
+    },
+    {
+      "automaticEvents": {},
+      "blob": "240d6f485ba53550614e60bcf6d2a6e358866051",
+      "bytes": 3785,
+      "path": ".github/workflows/publish-sdk-native-artifacts.yml",
+      "sha256": "11e560f7ae2333360ca334907e162f45815e65a7a07b5c7eea011da84496aae5"
+    },
+    {
+      "automaticEvents": {},
+      "blob": "a863844639a0af9c490162067dd3f0c4e8d97372",
+      "bytes": 44328,
+      "path": ".github/workflows/testflight.yml",
+      "sha256": "8994965cfd5979831092e7d139d654074e051ce85fd635de1879e4af6866db8e"
+    },
+    {
+      "automaticEvents": {
+        "workflow_run": {
+          "types": [
+            "completed"
+          ],
+          "workflows": [
+            "Check RuntimeCore Dependency Updates"
+          ]
+        }
+      },
+      "blob": "27dc650f55c6c940eb41947031614144ff53097d",
+      "bytes": 2556,
+      "path": ".github/workflows/upstream-candidate-proof.yml",
+      "sha256": "a428742fa4ac70c6f395e6231cc0d72697b5c4207767aeeb83c6ca8c2db0c592"
+    },
+    {
+      "automaticEvents": {},
+      "blob": "44bd8550b790d76c39ead08c17bba29d0ff910dc",
+      "bytes": 31721,
+      "path": ".github/workflows/validate-app-split.yml",
+      "sha256": "062a32f28e96578c542e8244186174a810d60f1f7c787bababd738049c30d113"
+    },
+    {
+      "automaticEvents": {},
+      "blob": "6dfeaa3f224a78c724791e6e24528f765487ba42",
+      "bytes": 4192,
+      "path": ".github/workflows/validate-chat-code-fences.yml",
+      "sha256": "de644f5fe302eba6a9cf30d62d5be9a8fc309b6707d45103e683377f021a055d"
+    },
+    {
+      "automaticEvents": {},
+      "blob": "7a35ed1c49b7bb262b37dabe4b06e98793898e01",
+      "bytes": 9066,
+      "path": ".github/workflows/validate-chat-diagnostics.yml",
+      "sha256": "7e30e1f6c0fbc23e6c7d003a0cae933f534c2a51a67f98ff088062a60e020806"
+    },
+    {
+      "automaticEvents": {},
+      "blob": "a048a11e954e1b512eabb70859a8dad9bcd32990",
+      "bytes": 5072,
+      "path": ".github/workflows/validate-chat-markdown.yml",
+      "sha256": "ebfce6f6f06568ff958123844f3f3da358d0ef5e2fdbaf7e7c777e4d49f252c7"
+    },
+    {
+      "automaticEvents": {},
+      "blob": "d9774602b7b49fde12db60dd70cfc76ce20bd3bb",
+      "bytes": 34832,
+      "path": ".github/workflows/validate-expo-runtime-spike.yml",
+      "sha256": "410596b035e364b7e8b9111673b04c33ed7d1bd917179060e4a75d3538521295"
+    },
+    {
+      "automaticEvents": {},
+      "blob": "39c1f086025777f7145d71d4b9683f57b8c5f9aa",
+      "bytes": 22888,
+      "path": ".github/workflows/validate-performance-regression.yml",
+      "sha256": "90ce9ef75b3349f21d82b4b4bf807b2944a050758b9e945b7f33a146cded15bd"
+    },
+    {
+      "automaticEvents": {},
+      "blob": "cdd1819fe94aa9630d5fe17fd4fd981d33fa1312",
+      "bytes": 10010,
+      "path": ".github/workflows/validate-scripting-runtime.yml",
+      "sha256": "395ea6430af04b1ca8c66386af45073a1b0abc4d0c6ed20a1c46b30854fe0016"
+    }
+  ],
+  "source": "0ae1920d316b9592cbad0462bea96a07fd1ca351"
+}

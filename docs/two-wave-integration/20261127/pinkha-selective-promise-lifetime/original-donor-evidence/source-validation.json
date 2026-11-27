@@ -1,0 +1,62 @@
+{
+  "status": "FRESH_SOURCE_CANDIDATE_FOR_REVIEW_NATIVE_NOT_RUN",
+  "observedSource": "778ed7e597a2fe19708e1dde5598350b56b25d6d",
+  "actualEvidenceManifestSHA256": "7bb6741149899e5cd8de9f6da341ce0679394c99a3794d909df4152eb2849326",
+  "files": {
+    "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRunningState.swift": {
+      "beforeSHA256": "f7b50ceacdf034833c92554a769fe692abebe296b87e55091e7a2fb09146d9da",
+      "afterSHA256": "eab1f759ee1a5cb7b72af88883154225891a424cbab7ccbdc5a9c8f618544142",
+      "bytes": 17319
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimePromise.swift": {
+      "beforeSHA256": "9cfc569a213595e7e39fbfaf70e37e3a2006fa9737c75cd6923cd3d3e3b68d3a",
+      "afterSHA256": "98d40a32ac40bb4488dc21205b852aea2c552e80294657ab6dcb6fe44285dd4f",
+      "bytes": 3999
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift": {
+      "beforeSHA256": "f8c4adb4cf19e9302ae69167ac7a6e654460423e8cbea25cf763ddbc0259b0df",
+      "afterSHA256": "8a7bb65bffe0390ac719e33b0ece71e19b20e9be96841e422a3a4c37f09352b3",
+      "bytes": 17207
+    },
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift": {
+      "beforeSHA256": "50cfade071616aac0c3757f7fce4141e8017716aaa68d9ae092493c8321badb2",
+      "afterSHA256": "433703973e69d764686c6761ad1851c40d76f5e53afa4561d1720d873a5a1ae4",
+      "bytes": 100904
+    },
+    "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json": {
+      "beforeSHA256": "68c029c3a8af0d667f4d4117da95c47da4d275f0cd37073c1d029a829ab43133",
+      "afterSHA256": "9f734715989941ac4cdb8bfdb3196b5f36cce4d06ffadcf9aa645b9589516cc9",
+      "bytes": 255664
+    }
+  },
+  "lifetimeRepairPatchSHA256": "1f2d7dd290652d6d04e458a4e3cc85ed5eda6634b4030daa83f47053df1941a6",
+  "nativeTestsRun": false,
+  "expectedOriginalTestCount": 603,
+  "httpBudgetSeconds": 5,
+  "fetchAndHTTPRestoredExactlyToPrediagnosticBytes": true,
+  "createdAt": "2026-11-27T12:13:12.774551+00:00",
+  "parent": "778ed7e597a2fe19708e1dde5598350b56b25d6d",
+  "sourcePatchSHA256": "96615634d62b4988375c3a4d43650d39ebbac73637ee9d9f92137ade08459c06",
+  "manifestChangedFields": [
+    {
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimePromise.swift",
+      "before": "9cfc569a213595e7e39fbfaf70e37e3a2006fa9737c75cd6923cd3d3e3b68d3a",
+      "after": "98d40a32ac40bb4488dc21205b852aea2c552e80294657ab6dcb6fe44285dd4f"
+    },
+    {
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift",
+      "before": "f8c4adb4cf19e9302ae69167ac7a6e654460423e8cbea25cf763ddbc0259b0df",
+      "after": "8a7bb65bffe0390ac719e33b0ece71e19b20e9be96841e422a3a4c37f09352b3"
+    },
+    {
+      "local": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRunningState.swift",
+      "before": "f7b50ceacdf034833c92554a769fe692abebe296b87e55091e7a2fb09146d9da",
+      "after": "eab1f759ee1a5cb7b72af88883154225891a424cbab7ccbdc5a9c8f618544142"
+    }
+  ],
+  "canonicalManifestEntries": 259,
+  "canonicalManifestAllMatch": true,
+  "allOriginal601AssertionsPreserved": true,
+  "existingTwoPromiseControlsUnchanged": "527fba708cfbf5a6e365776650235a39ae115bde54a848b5f54d7c35636fde2c",
+  "diagnosticRuntimeAndTestLoggerRemoved": true
+}

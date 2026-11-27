@@ -1,0 +1,135 @@
+{
+  "base": "4cb6454c1c6e110ead73179c06ada9e909bf250b",
+  "buildsTestsRemoteMutations": 0,
+  "donor": "f768d634bfa8a102cf63b32c7ab9d129cafc671d",
+  "files": [
+    {
+      "after": {
+        "bytes": 4321,
+        "gitBlob": "621ed01a3b2d625eed229c31ac4d82fa74ebe84a",
+        "sha256": "10f0ae12345b996c282a9b5e7027e07081f86b438a8424c0133a5ecd055c6300"
+      },
+      "before": {
+        "bytes": 4392,
+        "gitBlob": "bae6bdefe86ea93e50638c6a881f478caf3456c1",
+        "sha256": "114cdb71d067a0cf3139fe373af2b25617e275fa5aa040a0be71a0801e1283f8"
+      },
+      "fullOriginalRestored": true,
+      "literalInverse": [
+        {
+          "newBase64": "",
+          "newEndByte": 4321,
+          "newStartByte": 4321,
+          "oldBase64": "CnB1YmxpYyBzdHJ1Y3QgSGFubGluTWluaUFwcFN5c3RlbUludGVudHNQYWNrYWdlOiBBcHBJbnRlbnRzUGFja2FnZSB7fQo=",
+          "oldEndByte": 4392,
+          "oldStartByte": 4321
+        }
+      ],
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift"
+    },
+    {
+      "after": {
+        "bytes": 13148,
+        "gitBlob": "6794037a24c7eaf977dc18624794164213d781f1",
+        "sha256": "4d34e6a1a7f50373ccfba3890c547d2df9ab66bb5172deb26afd3fdffa075585"
+      },
+      "before": {
+        "bytes": 13188,
+        "gitBlob": "c8a267c561e1ced5b99d973642b9564380f05706",
+        "sha256": "65792c17c4dd40c9893b441f746fd13bcd4c471c7c49dabdde1f7e5f7adf6e3b"
+      },
+      "fullOriginalRestored": true,
+      "literalInverse": [
+        {
+          "newBase64": "ICAgICAgICBbSGFubGluV2lkZ2V0SW50ZW50c1BhY2thZ2Uuc2VsZiwgSGFubGluTmF0aXZlUHJlc2VudGF0aW9uSW50ZW50c1BhY2thZ2Uuc2VsZiwgSGFubGluRXhwb1dpZGdldHNJbnRlbnRzUGFja2FnZS5zZWxmLCBIYW5saW5DYW1lcmFDYXB0dXJlSW50ZW50c1BhY2thZ2Uuc2VsZl0K",
+          "newEndByte": 13140,
+          "newStartByte": 12975,
+          "oldBase64": "ICAgICAgICBbSGFubGluV2lkZ2V0SW50ZW50c1BhY2thZ2Uuc2VsZiwgSGFubGluTmF0aXZlUHJlc2VudGF0aW9uSW50ZW50c1BhY2thZ2Uuc2VsZiwgSGFubGluRXhwb1dpZGdldHNJbnRlbnRzUGFja2FnZS5zZWxmLCBIYW5saW5NaW5pQXBwU3lzdGVtSW50ZW50c1BhY2thZ2Uuc2VsZiwgSGFubGluQ2FtZXJhQ2FwdHVyZUludGVudHNQYWNrYWdlLnNlbGZdCg==",
+          "oldEndByte": 13180,
+          "oldStartByte": 12975
+        }
+      ],
+      "path": "HanlinMiniAppsApp/HanlinMiniAppsApp.swift"
+    },
+    {
+      "after": {
+        "bytes": 14930,
+        "gitBlob": "a1b9359d07bc299bd1100ae6eff1eb7f7aa99bc2",
+        "sha256": "959f0d685856fb2a52987f1ab2efeb03541a4dfb5d9ed5475a4e4f6fee9cf0f8"
+      },
+      "before": {
+        "bytes": 13569,
+        "gitBlob": "4b4a9fd1825686098bd8599847e6962f519761f7",
+        "sha256": "ea3a0405dd27ace649421d367e4134cd99e0f4eb85cdade1f75d1ec5d4044a80"
+      },
+      "fullOriginalRestored": true,
+      "literalInverse": [
+        {
+          "newBase64": "aW1wb3J0IHJlCg==",
+          "newEndByte": 132,
+          "newStartByte": 122,
+          "oldBase64": "",
+          "oldEndByte": 122,
+          "oldStartByte": 122
+        },
+        {
+          "newBase64": "ICAgICAgICBwYWNrYWdlX3BhdHRlcm4gPSByIlxiKD86c3RydWN0fGNsYXNzfGVudW18ZXh0ZW5zaW9uKVxzKyhcdyspXHMqOlxzKkFwcEludGVudHNQYWNrYWdlXGIiCiAgICAgICAgc2VsZi5hc3NlcnRFcXVhbChyZS5maW5kYWxsKHBhY2thZ2VfcGF0dGVybiwgbWluaSksIFsiSGFubGluTWluaUFwcHNJbnRlbnRzIl0pCiAgICAgICAgc2VsZi5hc3NlcnRFcXVhbChyZS5maW5kYWxsKHBhY2thZ2VfcGF0dGVybiwgaW50ZW50cyksIFsiSGFubGluQXBwbGljYXRpb25JbnRlbnRzUGFja2FnZSJdKQogICAgICAgIHNlbGYuYXNzZXJ0Tm90SW4oIkhhbmxpbk1pbmlBcHBTeXN0ZW1JbnRlbnRzUGFja2FnZS5zZWxmIiwgbWluaSkKICAgICAgICBvYmplY3RzID0gc2VsZi5wcm9qZWN0WyJvYmplY3RzIl0KICAgICAgICBtaW5pX3NvdXJjZXMgPSB7CiAgICAgICAgICAgIG9iamVjdHNbb2JqZWN0c1tmaWxlXVsiZmlsZVJlZiJdXS5nZXQoInBhdGgiKQogICAgICAgICAgICBmb3IgcGhhc2UgaW4gc2VsZi50YXJnZXQoc2VsZi5wcm9qZWN0LCAiSGFubGluTWluaUFwcHMiKVsiYnVpbGRQaGFzZXMiXQogICAgICAgICAgICBpZiBvYmplY3RzW3BoYXNlXVsiaXNhIl0gPT0gIlBCWFNvdXJjZXNCdWlsZFBoYXNlIgogICAgICAgICAgICBmb3IgZmlsZSBpbiBvYmplY3RzW3BoYXNlXVsiZmlsZXMiXSBpZiAiZmlsZVJlZiIgaW4gb2JqZWN0c1tmaWxlXQogICAgICAgIH0KICAgICAgICBlbnRpdHlfcGF0aCA9ICJBSV9ITFkvRG93bnN0cmVhbS9TY3JpcHRpbmdQbGF0Zm9ybS9IYW5saW5JbnN0YWxsZWRNaW5pQXBwRW50aXR5LnN3aWZ0IgogICAgICAgIHNlbGYuYXNzZXJ0SW4oZW50aXR5X3BhdGgsIG1pbmlfc291cmNlcykKICAgICAgICBlbnRpdHkgPSAoUk9PVCAvIGVudGl0eV9wYXRoKS5yZWFkX3RleHQoKQogICAgICAgIHNlbGYuYXNzZXJ0SW4oInB1YmxpYyBzdHJ1Y3QgSGFubGluSW5zdGFsbGVkTWluaUFwcEVudGl0eTogSW5kZXhlZEVudGl0eSIsIGVudGl0eSkKICAgICAgICBzZWxmLmFzc2VydEluKCJwdWJsaWMgc3RydWN0IEhhbmxpbkluc3RhbGxlZE1pbmlBcHBRdWVyeTogRW51bWVyYWJsZUVudGl0eVF1ZXJ5LCBFbnRpdHlTdHJpbmdRdWVyeSwgSW5kZXhlZEVudGl0eVF1ZXJ5IiwgZW50aXR5KQogICAgICAgIHNlbGYuYXNzZXJ0SW4oInB1YmxpYyBzdHJ1Y3QgSGFubGluT3Blbkluc3RhbGxlZE1pbmlBcHBJbnRlbnQ6IE9wZW5JbnRlbnQiLCBlbnRpdHkpCiAgICAgICAgc2VsZi5hc3NlcnRFcXVhbChyZS5maW5kYWxsKHBhY2thZ2VfcGF0dGVybiwgZW50aXR5KSwgW10pCiAgICAgICAgYXBwID0gKFJPT1QgLyAiQUlfSExZL0FJX0hMWS5zd2lmdCIpLnJlYWRfdGV4dCgpCiAgICAgICAgc2VsZi5hc3NlcnRJbigiSGFubGluQXBwbGljYXRpb25JbnRlbnRzUGFja2FnZS5zZWxmIiwgYXBwKQo=",
+          "newEndByte": 6256,
+          "newStartByte": 4835,
+          "oldBase64": "ICAgICAgICBzZWxmLmFzc2VydEluKCJIYW5saW5NaW5pQXBwU3lzdGVtSW50ZW50c1BhY2thZ2Uuc2VsZiIsIG1pbmkpCg==",
+          "oldEndByte": 4895,
+          "oldStartByte": 4825
+        }
+      ],
+      "path": "Scripts/SDK/tests/test_system_extension_targets.py"
+    }
+  ],
+  "nativeProjectGraph": {
+    "buildFile": "AC1CED5DAE1E76828E6393FA",
+    "entityQueryAndOpenIntentDirectlyCompiledInMiniApps": true,
+    "fileReference": "AC1CD38ECCBFC21EA49C84D4",
+    "projectMutated": false,
+    "source": {
+      "bytes": 273984,
+      "gitBlob": "8fe2fd8b1ed20fde42547f2a8f9ac29a61b6ef20",
+      "path": "AI_HLY.xcodeproj/project.pbxproj",
+      "sha256": "52bd71e97d08c1982fe0547d2b0c80374c373533d9abcaf885591adab87dccdb"
+    },
+    "sourcePhase": "F8000000000000000000000A",
+    "target": "F80000000000000000000001"
+  },
+  "nativeRuntimeAcceptance": "NOT_RUN",
+  "next": "Root approval of complete3-file original closure is required before combining with its acceptedPromise29+CoreSpotlight2 source packet.",
+  "packageTreeImpacts": 0,
+  "schema": "pinkha-original-appintents-complete-reference-closure-v1",
+  "singletonPackageRetained": {
+    "completeDonorBytesEqual": true,
+    "mainAppIncludesSingleton": {
+      "bytes": 1057,
+      "gitBlob": "0285f242e65c25158fd30b459d2ba7bc22fabdd0",
+      "path": "AI_HLY/AI_HLY.swift",
+      "sha256": "68e1f6a51fdc9bf9a313c5fea760085844d3980fd54a937075b2e3ca42879bd7"
+    },
+    "source": {
+      "bytes": 5780,
+      "gitBlob": "3153a6f429551dbb24d2c732cd4b3191903b280e",
+      "path": "AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift",
+      "sha256": "29793c75803318c10d9abcd2b02945b16852f32ec3cebeabe1742a9a4746b702"
+    }
+  },
+  "status": "SOURCE_PROPOSAL_NOT_APPLIED",
+  "testScope": {
+    "allOriginalMethodNamesRetained": 12,
+    "change": "Original donor adds re import and singleton/direct-entity graph assertions; replaces only the obsolete duplicate-package-presence assertion. No new tests executed.",
+    "changedOriginalMethod": "test_new_system_surfaces_do_not_acquire_hanlin_shipping_or_registration",
+    "otherMethodBodiesByteIdentical": 11
+  },
+  "wholeSourceReferenceRead": {
+    "actualCompanionReference": "HanlinMiniAppsApp/HanlinMiniAppsApp.swift:274",
+    "declaration": "AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift:106",
+    "oneFileProposalRejected": true,
+    "path": "original4cb-marker-references.json",
+    "sha256": "b2e690a20cac54a518e050859b3bb54906ba68da98de72b73cf480112899450f",
+    "testReferences": "Scripts/SDK/tests/test_system_extension_targets.py:62,67"
+  }
+}

@@ -1,0 +1,137 @@
+{
+  "artifacts": [
+    {
+      "id": 15200670049,
+      "name": "ci-performance-report",
+      "size_in_bytes": 2132,
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/15200670049",
+      "archive_download_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/15200670049/zip",
+      "expired": false,
+      "created_at": "2026-11-27T13:03:32Z",
+      "expires_at": "2026-12-27T13:03:31Z",
+      "updated_at": "2026-11-27T13:03:32Z",
+      "digest": "sha256:5489ba183b1bc61c3b2d46147904536ff5abc7fef8590567d2b8142e288d2010",
+      "workflow_run": {
+        "id": 45997289566,
+        "repository_id": 1295277723,
+        "head_repository_id": 1295277723,
+        "head_branch": "codex/pinkha-sdk-producer-ownership-20261127",
+        "head_sha": "4cb6454c1c6e110ead73179c06ada9e909bf250b"
+      }
+    },
+    {
+      "id": 15200555079,
+      "name": "provider-conformance-summary",
+      "size_in_bytes": 2277,
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/15200555079",
+      "archive_download_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/15200555079/zip",
+      "expired": false,
+      "created_at": "2026-11-27T13:03:30Z",
+      "expires_at": "2026-12-27T13:03:29Z",
+      "updated_at": "2026-11-27T13:03:30Z",
+      "digest": "sha256:33c6eed56e56700c1db26f19d9ac04c4407a708a24c796de920f86194f03484f",
+      "workflow_run": {
+        "id": 45997289566,
+        "repository_id": 1295277723,
+        "head_repository_id": 1295277723,
+        "head_branch": "codex/pinkha-sdk-producer-ownership-20261127",
+        "head_sha": "4cb6454c1c6e110ead73179c06ada9e909bf250b"
+      }
+    },
+    {
+      "id": 15199148273,
+      "name": "AI_Hanlin-iOS26-simulator-smoke-logs",
+      "size_in_bytes": 1927038,
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/15199148273",
+      "archive_download_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/15199148273/zip",
+      "expired": false,
+      "created_at": "2026-11-27T13:03:02Z",
+      "expires_at": "2026-12-11T13:03:00Z",
+      "updated_at": "2026-11-27T13:03:02Z",
+      "digest": "sha256:2eaf6408f65c69f47f0d0df76a5a1df0c4772b9e39a039c83fd4e81373da5364",
+      "workflow_run": {
+        "id": 45997289566,
+        "repository_id": 1295277723,
+        "head_repository_id": 1295277723,
+        "head_branch": "codex/pinkha-sdk-producer-ownership-20261127",
+        "head_sha": "4cb6454c1c6e110ead73179c06ada9e909bf250b"
+      }
+    },
+    {
+      "id": 15197792450,
+      "name": "hanlin-sdk-native-prepared",
+      "size_in_bytes": 261715804,
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/15197792450",
+      "archive_download_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/15197792450/zip",
+      "expired": false,
+      "created_at": "2026-11-27T12:38:42Z",
+      "expires_at": "2026-12-27T12:38:36Z",
+      "updated_at": "2026-11-27T12:38:42Z",
+      "digest": "sha256:515329a128c3ed815c41acb5ed60761cbc91660f4c8700fe9c86122a3f27f9c4",
+      "workflow_run": {
+        "id": 45997289566,
+        "repository_id": 1295277723,
+        "head_repository_id": 1295277723,
+        "head_branch": "codex/pinkha-sdk-producer-ownership-20261127",
+        "head_sha": "4cb6454c1c6e110ead73179c06ada9e909bf250b"
+      }
+    },
+    {
+      "id": 15197155700,
+      "name": "hanlin-foundation-models-interface",
+      "size_in_bytes": 29954,
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/15197155700",
+      "archive_download_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/15197155700/zip",
+      "expired": false,
+      "created_at": "2026-11-27T12:18:11Z",
+      "expires_at": "2026-12-11T12:18:10Z",
+      "updated_at": "2026-11-27T12:18:11Z",
+      "digest": "sha256:d28bf949fc1f92c9fb6bb3700c525d0e9d972ad2a3adeaec3da5747cb1aff952",
+      "workflow_run": {
+        "id": 45997289566,
+        "repository_id": 1295277723,
+        "head_repository_id": 1295277723,
+        "head_branch": "codex/pinkha-sdk-producer-ownership-20261127",
+        "head_sha": "4cb6454c1c6e110ead73179c06ada9e909bf250b"
+      }
+    },
+    {
+      "id": 15197026069,
+      "name": "miniapp-upstream-inputs-full-app-simulator-smoke-45997289566",
+      "size_in_bytes": 34259,
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/15197026069",
+      "archive_download_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/15197026069/zip",
+      "expired": false,
+      "created_at": "2026-11-27T12:19:33Z",
+      "expires_at": "2026-12-27T12:19:31Z",
+      "updated_at": "2026-11-27T12:19:33Z",
+      "digest": "sha256:285e51a391204c185375ae030fe83ce07587133451d119aa8f9794f27de6f768",
+      "workflow_run": {
+        "id": 45997289566,
+        "repository_id": 1295277723,
+        "head_repository_id": 1295277723,
+        "head_branch": "codex/pinkha-sdk-producer-ownership-20261127",
+        "head_sha": "4cb6454c1c6e110ead73179c06ada9e909bf250b"
+      }
+    },
+    {
+      "id": 15196147880,
+      "name": "ci-validation-plan",
+      "size_in_bytes": 3984,
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/15196147880",
+      "archive_download_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/actions/artifacts/15196147880/zip",
+      "expired": false,
+      "created_at": "2026-11-27T12:17:02Z",
+      "expires_at": "2026-12-11T12:17:01Z",
+      "updated_at": "2026-11-27T12:17:02Z",
+      "digest": "sha256:924027b0a0b96d5fcfbe204393e634d711d32bd968616c7d0d56a1e685c4ad73",
+      "workflow_run": {
+        "id": 45997289566,
+        "repository_id": 1295277723,
+        "head_repository_id": 1295277723,
+        "head_branch": "codex/pinkha-sdk-producer-ownership-20261127",
+        "head_sha": "4cb6454c1c6e110ead73179c06ada9e909bf250b"
+      }
+    }
+  ]
+}

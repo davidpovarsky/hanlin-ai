@@ -1,0 +1,6 @@
+{
+  "ok": true,
+  "output": "{\"argv\": [\"--no-optional-locks\", \"--no-replace-objects\", \"-c\", \"gc.auto=0\", \"-C\", \"/mnt/development/projects/git-mirrors/hanlin-ai.git\", \"grep\", \"-n\", \"-F\", \"HanlinMiniAppSystemIntentsPackage\", \"4cb6454c1c6e110ead73179c06ada9e909bf250b\", \"--\", \".\"], \"exit\": 0, \"stderr\": \"\", \"stdout\": \"4cb6454c1c6e110ead73179c06ada9e909bf250b:AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift:106:public struct HanlinMiniAppSystemIntentsPackage: AppIntentsPackage {}\\n4cb6454c1c6e110ead73179c06ada9e909bf250b:HanlinMiniAppsApp/HanlinMiniAppsApp.swift:274:        [HanlinWidgetIntentsPackage.self, HanlinNativePresentationIntentsPackage.self, HanlinExpoWidgetsIntentsPackage.self, HanlinMiniAppSystemIntentsPackage.self, HanlinCameraCaptureIntentsPackage.self]\\n4cb6454c1c6e110ead73179c06ada9e909bf250b:Scripts/SDK/tests/test_system_extension_targets.py:62:        self.assertNotIn(\\\"HanlinMiniAppSystemIntentsPackage.self\\\", intents)\\n4cb6454c1c6e110ead73179c06ada9e909bf250b:Scripts/SDK/tests/test_system_extension_targets.py:67:        self.assertIn(\\\"HanlinMiniAppSystemIntentsPackage.self\\\", mini)\\n\"}",
+  "duration": 1.85,
+  "returncode": 0
+}

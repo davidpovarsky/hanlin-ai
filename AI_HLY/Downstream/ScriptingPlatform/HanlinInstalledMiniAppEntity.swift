@@ -102,5 +102,3 @@ public struct HanlinOpenInstalledMiniAppIntent: OpenIntent {
         return .result()
     }
 }
-
-public struct HanlinMiniAppSystemIntentsPackage: AppIntentsPackage {}

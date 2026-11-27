@@ -1,0 +1,207 @@
+{
+  "actions": [
+    {
+      "conclusion": null,
+      "created_at": "2026-11-27T12:38:47Z",
+      "head_sha": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+      "id": 46000370807,
+      "name": "Validate standalone MiniApps target",
+      "run_attempt": 1,
+      "status": "queued",
+      "updated_at": "2026-11-27T12:38:47Z"
+    },
+    {
+      "conclusion": null,
+      "created_at": "2026-11-27T12:38:42Z",
+      "head_sha": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+      "id": 46000360931,
+      "name": "Validate standalone MiniApps target",
+      "run_attempt": 1,
+      "status": "queued",
+      "updated_at": "2026-11-27T12:38:42Z"
+    },
+    {
+      "conclusion": null,
+      "created_at": "2026-11-27T12:38:36Z",
+      "head_sha": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+      "id": 46000347780,
+      "name": "Validate standalone MiniApps target",
+      "run_attempt": 1,
+      "status": "queued",
+      "updated_at": "2026-11-27T12:38:36Z"
+    },
+    {
+      "conclusion": null,
+      "created_at": "2026-11-27T12:38:32Z",
+      "head_sha": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+      "id": 46000338354,
+      "name": "Validate standalone MiniApps target",
+      "run_attempt": 1,
+      "status": "queued",
+      "updated_at": "2026-11-27T12:38:32Z"
+    },
+    {
+      "conclusion": null,
+      "created_at": "2026-11-27T12:38:26Z",
+      "head_sha": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+      "id": 46000325286,
+      "name": "Validate standalone MiniApps target",
+      "run_attempt": 1,
+      "status": "queued",
+      "updated_at": "2026-11-27T12:38:26Z"
+    },
+    {
+      "conclusion": null,
+      "created_at": "2026-11-27T12:38:21Z",
+      "head_sha": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+      "id": 46000312643,
+      "name": "Validate standalone MiniApps target",
+      "run_attempt": 1,
+      "status": "queued",
+      "updated_at": "2026-11-27T12:38:21Z"
+    },
+    {
+      "conclusion": null,
+      "created_at": "2026-11-27T12:38:15Z",
+      "head_sha": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+      "id": 46000299446,
+      "name": "Validate standalone MiniApps target",
+      "run_attempt": 1,
+      "status": "in_progress",
+      "updated_at": "2026-11-27T12:51:50Z"
+    },
+    {
+      "conclusion": null,
+      "created_at": "2026-11-27T12:38:09Z",
+      "head_sha": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+      "id": 46000285780,
+      "name": "Validate standalone MiniApps target",
+      "run_attempt": 1,
+      "status": "in_progress",
+      "updated_at": "2026-11-27T12:44:41Z"
+    }
+  ],
+  "meaning": "No terminal native or test success for this source observed in the exact returned head runs. Published repair source validation remains NOT_RUN. Current unrelated UIKit20 was not polled or changed.",
+  "originalResponse": {
+    "bytes": 583926,
+    "gitBlob": "52f9f95a0d921d25c3c042ffc2a5ff3c5e9cb574",
+    "path": "/workspace/scratch/ae335eba85e3/hanlin-pr23-promise-spotlight-review/current-owner-read.json",
+    "sha256": "d16b626159023ba1c0c11b8c50f2fa326b8c7cae23dbb8868a46d6f4612fdc7c"
+  },
+  "schema": "pinkha-promise-source-status-snapshot-v1",
+  "source": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+  "tasks": [
+    {
+      "commentIDsAndTimes": [
+        {
+          "created_at": "2026-11-25T19:42:28.619Z",
+          "id": "1220912722550480"
+        },
+        {
+          "created_at": "2026-11-25T19:46:24.939Z",
+          "id": "1220912930937885"
+        },
+        {
+          "created_at": "2026-11-25T20:03:10.118Z",
+          "id": "1220913297828209"
+        },
+        {
+          "created_at": "2026-11-25T20:19:14.006Z",
+          "id": "1220913281228390"
+        },
+        {
+          "created_at": "2026-11-25T23:06:18.670Z",
+          "id": "1220916398495132"
+        },
+        {
+          "created_at": "2026-11-27T04:54:41.571Z",
+          "id": "1220943800746846"
+        },
+        {
+          "created_at": "2026-11-27T05:24:33.729Z",
+          "id": "1220944169751488"
+        },
+        {
+          "created_at": "2026-11-27T06:03:23.794Z",
+          "id": "1220944453414496"
+        },
+        {
+          "created_at": "2026-11-27T06:41:27.854Z",
+          "id": "1220944984128171"
+        },
+        {
+          "created_at": "2026-11-27T11:07:44.332Z",
+          "id": "1220951087059874"
+        },
+        {
+          "created_at": "2026-11-27T11:16:48.923Z",
+          "id": "1220951380466652"
+        },
+        {
+          "created_at": "2026-11-27T11:43:24.660Z",
+          "id": "1220951979104692"
+        }
+      ],
+      "commentsReturned": 12,
+      "name": "[P0][CURRENT WAVE][IN PROGRESS] Hanlin Chat & Agent SDK — SwiftUI משותף + Host API לאוצריא ול־Anytype",
+      "scope": "Only returned task/comment window; not proof of unseen owner work",
+      "task": "1219613181643838"
+    },
+    {
+      "commentIDsAndTimes": [
+        {
+          "created_at": "2026-11-27T01:03:53.285Z",
+          "id": "1220941455520190"
+        },
+        {
+          "created_at": "2026-11-27T01:15:39.398Z",
+          "id": "1220941559581315"
+        },
+        {
+          "created_at": "2026-11-27T01:32:50.558Z",
+          "id": "1220941633444299"
+        },
+        {
+          "created_at": "2026-11-27T01:43:12.503Z",
+          "id": "1220941944433003"
+        },
+        {
+          "created_at": "2026-11-27T02:32:22.050Z",
+          "id": "1220942203673046"
+        },
+        {
+          "created_at": "2026-11-27T02:51:31.840Z",
+          "id": "1220942509577302"
+        },
+        {
+          "created_at": "2026-11-27T03:03:58.302Z",
+          "id": "1220942684933806"
+        },
+        {
+          "created_at": "2026-11-27T03:39:05.450Z",
+          "id": "1220942915159908"
+        },
+        {
+          "created_at": "2026-11-27T04:06:04.963Z",
+          "id": "1220943163570746"
+        },
+        {
+          "created_at": "2026-11-27T05:20:42.301Z",
+          "id": "1220944028513298"
+        },
+        {
+          "created_at": "2026-11-27T07:23:18.707Z",
+          "id": "1220945764754412"
+        },
+        {
+          "created_at": "2026-11-27T07:31:29.501Z",
+          "id": "1220945990933134"
+        }
+      ],
+      "commentsReturned": 12,
+      "name": "[P0][IN PROGRESS] Hanlin + MiniApps — ביצוע שני גלי ההשלמה והאינטגרציה",
+      "scope": "Only returned task/comment window; not proof of unseen owner work",
+      "task": "1220916800603484"
+    }
+  ]
+}

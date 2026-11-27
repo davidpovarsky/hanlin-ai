@@ -1,0 +1,125 @@
+{
+  "baseTree": "500ece4e329fe325d0bb699fcb383fb7fc0ea6e5",
+  "donorParent": "36ad5c3205700153300539750ed66e8030f806cc",
+  "donorTree": "51de8b7d33319d9b805e4604412fdfc474748461",
+  "evidenceLimit": "Full donor15-member manifest is retained, but this review independently reads the exact published raw JSONL/source/binding subset. Unretrieved complete controller/sample/swift-test logs remain owner references, not newly qualified here.",
+  "findings": [
+    {
+      "evidence": "Original diagnostic source778 raw native-stages and wire streams independently decompressed and length/SHA-verified. Request37 returned2097152B, both managed continuations were absent at delivery, then original5s timeout; this observed callsite explains one real failure, not every historical failure.",
+      "finding": "Real continuation loss in an unchanged baseline delivery implementation",
+      "proof": {
+        "bytes": 7124,
+        "gitBlob": "d16db84340a97a2d08b2400ed6db767935dd350b",
+        "path": "/workspace/scratch/ae335eba85e3/hanlin-pr23-promise-spotlight-review/selective-sdk-proposal/after/docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/independent-original-failure-read.json",
+        "sha256": "336b3cdc2a97864cf4a2b016973e4de7839ab9274aaeaf3ccd553aabdaf536fc"
+      }
+    },
+    {
+      "finding": "Strong pending pair with an explicit original-session cancellation boundary",
+      "review": "Callbacks are extracted/cleared exactly once under the delivery lock. Session removal happens after delivery unlock. Session cancellation snapshots live weak entries and unlocks before cancelling deliveries; original URLSession cancellation and query handlers keep their original relative order. JSValue release and invocation occur outside both locks. Registration against already-cancelled session cancels the pair. Queued delivery keeps its registration until extraction, allowing cancellation during queue wait."
+    },
+    {
+      "finding": "Original authority and teardown preserved",
+      "review": "Existing execution-active and current snapshot/generation checks remain. Entire original ScriptWidgetRuntime, HanlinOriginalScriptWidgetSession and HanlinScriptWidgetRuntime files are identical at4cb and1ee. Original widget/DynamicIsland/function defer-finish and timeout cancellation remain; shipping wrapper still cancels then drains the same callback queue before context teardown. Existing 8 concurrent/32 total network and8 native query budgets unchanged. No host permission, workspace or account alias is added."
+    },
+    {
+      "finding": "Required original test fixture selected without unrelated test replacement",
+      "review": "The original HTTP method in4cb still has a local-address fixture and obsolete4-request/1MiB expectation. Only its published source method plus three macOS imports is transplanted: owned CONNECT proxy to transport.hanlin.invalid preserves shipping URL policy; actual32-request/2MiB limits, slow timeout/redirect/private-host rejection, wire counts and original5s native bound are asserted. All33 other methods and bytes are preserved, including the independent4cb archive case. The two original Promise tests are exact527f bytes, not rewritten or duplicated."
+    },
+    {
+      "finding": "No public source ABI surface altered",
+      "review": "Original exported then/callback/session API, Swift package products/dependencies/language settings/locks and all other packages remain exact. Private implementation changes still require real affected module compilation/linking; this is not a binary ABI compatibility claim."
+    },
+    {
+      "finding": "NativeScript handler source remains separate and unchanged",
+      "proof": {
+        "bytes": 2787,
+        "gitBlob": "abb730fc303fa0dc709d80e20a70720b3906cac0",
+        "path": "/workspace/scratch/ae335eba85e3/hanlin-pr23-promise-spotlight-review/selective-sdk-proposal/after/docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/native-handler-boundary.json",
+        "sha256": "d6981b8867a94112c408eeb208f9b73e19722052d48c8e3dcd1876f66553958e"
+      },
+      "review": "Whole package14373 and testab113 remain exact. The current real explicit-handler test selector is AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptActionDeclarationsPreserveRegisteredJavaScriptState(). Historical c34 results are not promoted to this source or a new companion."
+    }
+  ],
+  "futureAcceptanceObligations": [
+    {
+      "methods": [
+        "originalPromiseRetainsPendingContinuationThroughGarbageCollection",
+        "originalPromiseCancellationReleasesPendingContinuationAndDisposesContext"
+      ],
+      "module": "HanlinScriptExtensionsTests",
+      "source": "Exact newly added527f file; macOS-only original JavaScriptCore. Require actual enumeration/two executed results, raw observation rows, exactly-once/late-cancel/context-disposal assertions, no skip or manufactured result.",
+      "suite": "HanlinOriginalPromiseLifetimeTests"
+    },
+    {
+      "methods": [
+        "originalScriptWidgetHTTPUsesBoundedRealTransport"
+      ],
+      "module": "HanlinScriptExtensionsTests",
+      "source": "Exact selectively transplanted donor method and retained native dependencies. Require actual native request/response wire rows, supported2MiB body,39 real requests, no forbidden/local/over-budget native request, actual original5s limit and raw process/result closure. Do not replace by a mock Promise or increase a deadline.",
+      "suite": "HanlinDualWidgetEnginesTests"
+    },
+    {
+      "requirement": "Mint exact successor source/manifest/Platform tree and original compiled product receipt. Preserve original1009 lineage and include new test source in its real native compiler inputs. Reuse unaffected prior proofs only where their full source/dependency closure remains valid. Existing4cb UIKit20 result stays attributed to4cb.",
+      "scope": "Affected original producer and shared SDK product"
+    },
+    {
+      "requirement": "Original metadata generation/complete App build, correct E2E-suite handler method with real JS counter and missing-handler refusal, and existing original MiniApps request/result/ACK/account-switch tests remain pending their own exact source/product custody. No new qualification follows from this source proposal.",
+      "scope": "Current companion explicit handler and Anytype cross-app acceptance"
+    }
+  ],
+  "mechanicalProof": {
+    "completeFourPackageProjection": {
+      "bytes": 210561,
+      "gitBlob": "33f4df9d583a50a830e59705d5546526181c6b3e",
+      "path": "/workspace/scratch/ae335eba85e3/hanlin-pr23-promise-spotlight-review/selective-sdk-proposal/after/docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/complete-four-package-closure.json",
+      "sha256": "4879091e362326125f544b87b069095eef493f288014f1c4bf294f87c026fc57"
+    },
+    "literalInverse": {
+      "bytes": 40301,
+      "gitBlob": "469f55e0848f1740725531a3b129ba64a7c174e2",
+      "path": "/workspace/scratch/ae335eba85e3/hanlin-pr23-promise-spotlight-review/selective-sdk-proposal/after/docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/source-inverse.json",
+      "sha256": "a4cb2401972d7d97cfe2a40c82e323b22536658b274b41a6fc2b45adbf528bc7"
+    },
+    "literalInverseHunks": 40,
+    "originalBlobCount": 1009,
+    "originalProductionBlobsChanged": 2,
+    "proposedBlobCount": 1010,
+    "proposedPlatformTree": "4c82574ed393dca14a4a99ca9ef67a3b0be58417",
+    "unchangedOriginalBlobs": 1006,
+    "unchangedTrees": [
+      "HanlinAgentSDK bbe6a0e4387f3f33d6592e24c1927182a1aceb22",
+      "HanlinPresentationSDK 3fdc8170b9a749797f4d97c796405306d21ed438",
+      "HanlinMiniAppsBridge 98ef5d2b47c03f4ea98319a851abae183f500a40"
+    ]
+  },
+  "noRepairSuccessClaim": {
+    "bytes": 6443,
+    "gitBlob": "50ae354c4bc93a7fad46a3b430feaad33c7ce057",
+    "path": "/workspace/scratch/ae335eba85e3/hanlin-pr23-promise-spotlight-review/selective-sdk-proposal/after/docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/latest-source-observation.json",
+    "sha256": "23b94d308d594282be6a0074f71077ae730de756172e2977679ec3b5d8ee5eb9"
+  },
+  "productionActivation": false,
+  "proposedSoleParent": "4cb6454c1c6e110ead73179c06ada9e909bf250b",
+  "publicPrimarySemantics": [
+    "https://developer.apple.com/documentation/javascriptcore/jsmanagedvalue.md",
+    "https://developer.apple.com/documentation/javascriptcore/jsvirtualmachine/addmanagedreference(_:withowner:).md"
+  ],
+  "repository": "davidpovarsky/hanlin-ai",
+  "reviewer": "/root/miniapps_otzaria",
+  "schema": "pinkha-selective-original-promise-independent-source-review-v1",
+  "scope": {
+    "addedOriginalTestFiles": 1,
+    "externalProvenanceManifest": "All 227 baseline rows retained; exactly two localSHA256 strings updated",
+    "modifiedOriginalTestFiles": 1,
+    "pinsChanged": 0,
+    "productionFiles": 2,
+    "remoteOrGitWrites": 0,
+    "testsBuildsNativeRuns": 0,
+    "wholeDonorBranchNotMerged": true,
+    "wholeDonorManifestNotCopied": true,
+    "workflowsChanged": 0
+  },
+  "sourceDonor": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+  "status": "SOURCE_REVIEW_READY_UNPUBLISHED_NOT_COMPILED_NOT_RUNTIME_ACCEPTANCE"
+}

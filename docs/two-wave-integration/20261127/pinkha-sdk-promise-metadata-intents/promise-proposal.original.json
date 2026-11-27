@@ -1,0 +1,215 @@
+{
+  "allSourceAndEvidenceBytes": 1000818,
+  "base": "4cb6454c1c6e110ead73179c06ada9e909bf250b",
+  "baseTree": "500ece4e329fe325d0bb699fcb383fb7fc0ea6e5",
+  "files": [
+    {
+      "bytes": 3999,
+      "gitBlob": "bc003400aae0f91c7c4eda87073d7120be855ffd",
+      "mode": "100644",
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimePromise.swift",
+      "sha256": "98d40a32ac40bb4488dc21205b852aea2c552e80294657ab6dcb6fe44285dd4f"
+    },
+    {
+      "bytes": 17319,
+      "gitBlob": "a21b35880ed3e964d4c6117e95d461b730a16366",
+      "mode": "100644",
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRunningState.swift",
+      "sha256": "eab1f759ee1a5cb7b72af88883154225891a424cbab7ccbdc5a9c8f618544142"
+    },
+    {
+      "bytes": 99811,
+      "gitBlob": "03cf235dc826173e96e6b222d115fefad8a79ce3",
+      "mode": "100644",
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+      "sha256": "160c07c90095dd73c0d68e6fff6007a9230ace84a092cb394b90337df03e70bb"
+    },
+    {
+      "bytes": 8330,
+      "gitBlob": "bddd4956c68488d9c5b526bf13957eb64430e9ff",
+      "mode": "100644",
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinOriginalPromiseLifetimeTests.swift",
+      "sha256": "527fba708cfbf5a6e365776650235a39ae115bde54a848b5f54d7c35636fde2c"
+    },
+    {
+      "bytes": 210561,
+      "gitBlob": "33f4df9d583a50a830e59705d5546526181c6b3e",
+      "mode": "100644",
+      "path": "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/complete-four-package-closure.json",
+      "sha256": "4879091e362326125f544b87b069095eef493f288014f1c4bf294f87c026fc57"
+    },
+    {
+      "bytes": 7124,
+      "gitBlob": "d16db84340a97a2d08b2400ed6db767935dd350b",
+      "mode": "100644",
+      "path": "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/independent-original-failure-read.json",
+      "sha256": "336b3cdc2a97864cf4a2b016973e4de7839ab9274aaeaf3ccd553aabdaf536fc"
+    },
+    {
+      "bytes": 9197,
+      "gitBlob": "b7ed5631a36ba5b6dbfaec23fdc365b5041a63de",
+      "mode": "100644",
+      "path": "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/independent-review.json",
+      "sha256": "1ab16d2ffb4bda5cfa8439d3b334f9beabd1bb9cafb1a07fe61dc4f0b8218895"
+    },
+    {
+      "bytes": 6443,
+      "gitBlob": "50ae354c4bc93a7fad46a3b430feaad33c7ce057",
+      "mode": "100644",
+      "path": "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/latest-source-observation.json",
+      "sha256": "23b94d308d594282be6a0074f71077ae730de756172e2977679ec3b5d8ee5eb9"
+    },
+    {
+      "bytes": 2787,
+      "gitBlob": "abb730fc303fa0dc709d80e20a70720b3906cac0",
+      "mode": "100644",
+      "path": "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/native-handler-boundary.json",
+      "sha256": "d6981b8867a94112c408eeb208f9b73e19722052d48c8e3dcd1876f66553958e"
+    },
+    {
+      "bytes": 3750,
+      "gitBlob": "032eb335e6bae2bba7a404c8b2d2a5e4f192afb4",
+      "mode": "100644",
+      "path": "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-4cb/Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimePromise.swift",
+      "sha256": "13f8c1563e906edd2fd9f96b372cace3e15be58e18c583ba60100f2ad842d8d5"
+    },
+    {
+      "bytes": 16248,
+      "gitBlob": "a8190d7dad118593ede61818838785a2107ecad3",
+      "mode": "100644",
+      "path": "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-4cb/Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRunningState.swift",
+      "sha256": "f7b50ceacdf034833c92554a769fe692abebe296b87e55091e7a2fb09146d9da"
+    },
+    {
+      "bytes": 83986,
+      "gitBlob": "c108823a9409264882e7870cc822cccf569bac3c",
+      "mode": "100644",
+      "path": "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-4cb/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+      "sha256": "53bc610452297522b67593dc6a63e201aa5287acc8ed5b0e5769d94f381b7b5f"
+    },
+    {
+      "bytes": 210998,
+      "gitBlob": "38a88719ba7d8d45e63f05843a4ad88eeb14ee07",
+      "mode": "100644",
+      "path": "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-4cb/docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json",
+      "sha256": "4d06d0dfaca462fc21257c8053d3250b7cc0e78c4d77b4eb2e98f64bf7cbe83b"
+    },
+    {
+      "bytes": 5120,
+      "gitBlob": "c762d598e6749146c4742eb686337ddd23a05fa5",
+      "mode": "100644",
+      "path": "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/README.md",
+      "sha256": "69f40f3a5e2d2ecb6ac8fe99539b41473322c44a3fbc51b85c766cace321a6e8"
+    },
+    {
+      "bytes": 886,
+      "gitBlob": "17b105f4c61b6767dd37eb4fd5c387163d2771d4",
+      "mode": "100644",
+      "path": "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/actual-controller-binding.json",
+      "sha256": "7ef6c6475f10b59406e1fb782f6ae4094b9872a4bbf5bb71c1652d6e03ca1270"
+    },
+    {
+      "bytes": 2461,
+      "gitBlob": "4af5c072da5569dd8da9416445448610a24c5183",
+      "mode": "100644",
+      "path": "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/actual-manifest.json",
+      "sha256": "7bb6741149899e5cd8de9f6da341ce0679394c99a3794d909df4152eb2849326"
+    },
+    {
+      "bytes": 4158,
+      "gitBlob": "f485e62f92ea38383e068742f349c0c890cd2973",
+      "mode": "100644",
+      "path": "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/actual-source-stage.json",
+      "sha256": "06c6bfee224732926b99a1dda6c5c534c2062381d378ab47e67b07ed29a0b675"
+    },
+    {
+      "bytes": 4869,
+      "gitBlob": "2f73ca05b6a6e487de32ad18ddc4fc36dfe01c7a",
+      "mode": "100644",
+      "path": "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/independent-w1-lifetime-review.json",
+      "sha256": "337e89babe60db647f229beb1e105b2460043b5ff8e352d09e52b79e81aa50c3"
+    },
+    {
+      "bytes": 6258,
+      "gitBlob": "733e7c28e049514fc3c795f5371faec2ec2904c3",
+      "mode": "100644",
+      "path": "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/native-stages.jsonl.gz",
+      "sha256": "a581f3c69b667423e79a660204e31f12ed883c20aa9b1c1c785226e09ad2037e"
+    },
+    {
+      "bytes": 910,
+      "gitBlob": "99a156651204e3b265962ade9bd32a48737dc6b5",
+      "mode": "100644",
+      "path": "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/raw-log-encoding.json",
+      "sha256": "20fba70b4f50c24a22c5f3b4d874c235dd3bfc2b1a8bc6103459631b0a6e48f8"
+    },
+    {
+      "bytes": 2954,
+      "gitBlob": "a1d5fee72461be083b0b1ecba598d5e8dd894242",
+      "mode": "100644",
+      "path": "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/raw-packet-verification.json",
+      "sha256": "5119529ca79e169cb92a550fe82bec0d93b1441ab72b80117767702784d76249"
+    },
+    {
+      "bytes": 2417,
+      "gitBlob": "af7d513abf6000b46bec84b1e08631769287cec4",
+      "mode": "100644",
+      "path": "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/root-independent-lifetime-review.json",
+      "sha256": "dd2d1d4fdaf46f856960d0dc393a021c4b057649d22723cf02842b0bc0ceb32a"
+    },
+    {
+      "bytes": 976,
+      "gitBlob": "7db87cacd3146e0230de4864ef8b8fd2b3f86a7f",
+      "mode": "100644",
+      "path": "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/sdk-input-impact.json",
+      "sha256": "86fadfee0c923480b9a3c96eb113321fa58277fecdabc16bd339374347372960"
+    },
+    {
+      "bytes": 3490,
+      "gitBlob": "2eabff1014555ff75ec526b329279326c52df4bc",
+      "mode": "100644",
+      "path": "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/source-validation.json",
+      "sha256": "2898eb037176b5d034e8167c00f1889cef03d41199e7c5b043f8c8875f40ba45"
+    },
+    {
+      "bytes": 10256,
+      "gitBlob": "45e9dcf2ee8c7061f8411e321126cfc6f7c27d69",
+      "mode": "100644",
+      "path": "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/teardown-callers.json",
+      "sha256": "1cc4f0782543253076f1dbfc2f0aebebb78282dcb4d79586ec9ec3e182fbfa0d"
+    },
+    {
+      "bytes": 1023,
+      "gitBlob": "b55a8450f1cb2c6e58b2f0407b2df8ee70461d98",
+      "mode": "100644",
+      "path": "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/wire.jsonl.gz",
+      "sha256": "44bd1be2482a8b146d5ae4b9f96cd71c0faeaf1e9ed805f8273ea06ceb739344"
+    },
+    {
+      "bytes": 23188,
+      "gitBlob": "1e07df27e9e818ced74ee4ae3d7a88427c11146a",
+      "mode": "100644",
+      "path": "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/primary-source-identities.json",
+      "sha256": "508f53a7660b274e87a89032ee4863af1f16b6b38fb5bccda6c789abfe6a9847"
+    },
+    {
+      "bytes": 40301,
+      "gitBlob": "469f55e0848f1740725531a3b129ba64a7c174e2",
+      "mode": "100644",
+      "path": "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/source-inverse.json",
+      "sha256": "a4cb2401972d7d97cfe2a40c82e323b22536658b274b41a6fc2b45adbf528bc7"
+    },
+    {
+      "bytes": 210998,
+      "gitBlob": "fe3c10439374fd2894b669b582b774307a05a058",
+      "mode": "100644",
+      "path": "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json",
+      "sha256": "fdb3e579110a4d6a5e8af650a1cdc2c7229399ba37042e935d4dd3aec38a1d2c"
+    }
+  ],
+  "published": false,
+  "root": "/workspace/scratch/ae335eba85e3/hanlin-pr23-promise-spotlight-review/selective-sdk-proposal/after",
+  "runtimeTestsBuildsOrDispatches": 0,
+  "schema": "pinkha-immutable-local-source-proposal-v1",
+  "sourceOnly": true
+}

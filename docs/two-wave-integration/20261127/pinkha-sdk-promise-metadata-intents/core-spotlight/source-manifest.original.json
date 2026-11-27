@@ -1,0 +1,26 @@
+{
+  "allSourceAndEvidenceBytes": 37348,
+  "base": "4cb6454c1c6e110ead73179c06ada9e909bf250b",
+  "baseTree": "500ece4e329fe325d0bb699fcb383fb7fc0ea6e5",
+  "files": [
+    {
+      "bytes": 25028,
+      "gitBlob": "77faf27ecb87ab3c7f973e6d1ed2dcd4091b8753",
+      "mode": "100644",
+      "path": "Scripts/CI/Tests/test_nativescript_metadata_wrapper.py",
+      "sha256": "a15bef4c3db22813538a684859034c4d18f90f407f71df70591f9bd6519cebeb"
+    },
+    {
+      "bytes": 12320,
+      "gitBlob": "847f7a56ac3eaf5033b370ce5d7e8acbaca9fa72",
+      "mode": "100644",
+      "path": "Scripts/NativeScript/build-step-metadata-generator-wrapper.py",
+      "sha256": "9e45c0aa8d951a6a59afa1eb4dbcad6e524fc1f408d2406d6c8e5a9efcdd7f8c"
+    }
+  ],
+  "published": false,
+  "root": "/workspace/scratch/ae335eba85e3/hanlin-pr23-promise-spotlight-review/separate-metadata-proposal/after",
+  "runtimeTestsBuildsOrDispatches": 0,
+  "schema": "pinkha-immutable-local-source-proposal-v1",
+  "sourceOnly": true
+}

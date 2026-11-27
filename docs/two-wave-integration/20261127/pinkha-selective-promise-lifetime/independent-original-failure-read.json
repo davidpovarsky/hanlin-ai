@@ -1,0 +1,165 @@
+{
+  "actualCallsiteBoundaries": [
+    {
+      "at": 1795780824.039637,
+      "boundary": "fetch-native-completion",
+      "dataBytes": 2097152,
+      "errorPresent": false,
+      "isMainThread": false,
+      "pid": 22526,
+      "session": "CD0B812C-F4D9-4C0A-9229-A099BE8DBE9C",
+      "task": 37,
+      "uptime": 264638.833168125
+    },
+    {
+      "at": 1795780824.041466,
+      "boundary": "fetch-completion-current",
+      "isMainThread": false,
+      "pid": 22526,
+      "session": "CD0B812C-F4D9-4C0A-9229-A099BE8DBE9C",
+      "task": 37,
+      "uptime": 264638.83499916666
+    },
+    {
+      "at": 1795780824.041562,
+      "boundary": "fetch-raw-string-handoff",
+      "dataBytes": 2097152,
+      "isMainThread": false,
+      "pid": 22526,
+      "session": "CD0B812C-F4D9-4C0A-9229-A099BE8DBE9C",
+      "task": 37,
+      "uptime": 264638.83509508334
+    },
+    {
+      "at": 1795780824.0427098,
+      "boundary": "promise-finish",
+      "delivery": "ObjectIdentifier(0x0000007c8d8fd8c0)",
+      "isMainThread": false,
+      "pid": 22526,
+      "rejected": false,
+      "session": "CD0B812C-F4D9-4C0A-9229-A099BE8DBE9C",
+      "uptime": 264638.83624254167
+    },
+    {
+      "at": 1795780824.042762,
+      "boundary": "promise-deliver",
+      "delivery": "ObjectIdentifier(0x0000007c8d8fd8c0)",
+      "isMainThread": false,
+      "pid": 22526,
+      "rejected": false,
+      "session": "CD0B812C-F4D9-4C0A-9229-A099BE8DBE9C",
+      "uptime": 264638.83629483334
+    },
+    {
+      "at": 1795780824.042797,
+      "boundary": "promise-continuations",
+      "delivery": "ObjectIdentifier(0x0000007c8d8fd8c0)",
+      "isMainThread": false,
+      "pid": 22526,
+      "rejectPresent": false,
+      "rejected": false,
+      "resolvePresent": false,
+      "session": "CD0B812C-F4D9-4C0A-9229-A099BE8DBE9C",
+      "uptime": 264638.836329625
+    },
+    {
+      "at": 1795780824.0446649,
+      "boundary": "promise-current-call-attempt",
+      "delivery": "ObjectIdentifier(0x0000007c8d8fd8c0)",
+      "isMainThread": false,
+      "pid": 22526,
+      "rejected": false,
+      "session": "CD0B812C-F4D9-4C0A-9229-A099BE8DBE9C",
+      "uptime": 264638.83819779166
+    },
+    {
+      "at": 1795780824.0446858,
+      "boundary": "promise-call-site-returned",
+      "delivery": "ObjectIdentifier(0x0000007c8d8fd8c0)",
+      "isMainThread": false,
+      "pid": 22526,
+      "session": "CD0B812C-F4D9-4C0A-9229-A099BE8DBE9C",
+      "uptime": 264638.8382190833
+    }
+  ],
+  "actualDiagnosticSource": "778ed7e597a2fe19708e1dde5598350b56b25d6d",
+  "actualLimitsRows": [
+    {
+      "at": 1795780823.938724,
+      "isMainThread": false,
+      "label": "limits",
+      "phase": "preparing",
+      "pid": 22526
+    },
+    {
+      "at": 1795780824.031371,
+      "isMainThread": false,
+      "label": "limits",
+      "phase": "evaluating",
+      "pid": 22526
+    },
+    {
+      "at": 1795780824.0317168,
+      "isMainThread": false,
+      "label": "limits",
+      "phase": "javascript",
+      "pid": 22526,
+      "requests": 0,
+      "stage": "within-limit"
+    },
+    {
+      "at": 1795780829.044822,
+      "executionTimeout": 5,
+      "isMainThread": false,
+      "label": "limits",
+      "phase": "timeout",
+      "pid": 22526
+    },
+    {
+      "at": 1795780829.045341,
+      "isMainThread": false,
+      "label": "limits",
+      "messages": [
+        "Original HTTP boundary {\"at\":1795780824.0396371,\"boundary\":\"fetch-native-completion\",\"dataBytes\":2097152,\"errorPresent\":false,\"isMainThread\":false,\"pid\":22526,\"session\":\"CD0B812C-F4D9-4C0A-9229-A099BE8DBE9C\",\"task\":37,\"uptime\":264638.83316812501}",
+        "Original HTTP boundary {\"at\":1795780824.041466,\"boundary\":\"fetch-completion-current\",\"isMainThread\":false,\"pid\":22526,\"session\":\"CD0B812C-F4D9-4C0A-9229-A099BE8DBE9C\",\"task\":37,\"uptime\":264638.83499916666}",
+        "Original HTTP boundary {\"at\":1795780824.0415621,\"boundary\":\"fetch-raw-string-handoff\",\"dataBytes\":2097152,\"isMainThread\":false,\"pid\":22526,\"session\":\"CD0B812C-F4D9-4C0A-9229-A099BE8DBE9C\",\"task\":37,\"uptime\":264638.83509508334}",
+        "Original HTTP boundary {\"at\":1795780824.0427098,\"boundary\":\"promise-finish\",\"delivery\":\"ObjectIdentifier(0x0000007c8d8fd8c0)\",\"isMainThread\":false,\"pid\":22526,\"rejected\":false,\"session\":\"CD0B812C-F4D9-4C0A-9229-A099BE8DBE9C\",\"uptime\":264638.83624254167}",
+        "Original HTTP boundary {\"at\":1795780824.042762,\"boundary\":\"promise-deliver\",\"delivery\":\"ObjectIdentifier(0x0000007c8d8fd8c0)\",\"isMainThread\":false,\"pid\":22526,\"rejected\":false,\"session\":\"CD0B812C-F4D9-4C0A-9229-A099BE8DBE9C\",\"uptime\":264638.83629483334}",
+        "Original HTTP boundary {\"at\":1795780824.0427971,\"boundary\":\"promise-continuations\",\"delivery\":\"ObjectIdentifier(0x0000007c8d8fd8c0)\",\"isMainThread\":false,\"pid\":22526,\"rejected\":false,\"rejectPresent\":false,\"resolvePresent\":false,\"session\":\"CD0B812C-F4D9-4C0A-9229-A099BE8DBE9C\",\"uptime\":264638.83632962499}",
+        "Original HTTP boundary {\"at\":1795780824.0446649,\"boundary\":\"promise-current-call-attempt\",\"delivery\":\"ObjectIdentifier(0x0000007c8d8fd8c0)\",\"isMainThread\":false,\"pid\":22526,\"rejected\":false,\"session\":\"CD0B812C-F4D9-4C0A-9229-A099BE8DBE9C\",\"uptime\":264638.83819779166}",
+        "Original HTTP boundary {\"at\":1795780824.0446858,\"boundary\":\"promise-call-site-returned\",\"delivery\":\"ObjectIdentifier(0x0000007c8d8fd8c0)\",\"isMainThread\":false,\"pid\":22526,\"session\":\"CD0B812C-F4D9-4C0A-9229-A099BE8DBE9C\",\"uptime\":264638.83821908332}"
+      ],
+      "phase": "original-callback-boundaries",
+      "pid": 22526
+    }
+  ],
+  "freshTests": 0,
+  "interpretation": "Original native response and guarded delivery occurred; both managed JS continuations were absent at that observed callsite. Original active/current guards and optional invocation returned before original execution timeout.",
+  "limits": "This is the failed original diagnostic, not a success for the repair or every historical failure. Other packet members are manifest references unless explicitly retained; no historical process was probed.",
+  "originalPID": 22526,
+  "rawCustody": [
+    {
+      "encoding": "lossless gzip, mtime=0",
+      "exactRawBytesIndependentlyReconstructed": true,
+      "gzipBytes": 6258,
+      "gzipSHA256": "a581f3c69b667423e79a660204e31f12ed883c20aa9b1c1c785226e09ad2037e",
+      "lines": 56,
+      "path": "native-stages.jsonl.gz",
+      "rawBytes": 86714,
+      "rawSHA256": "4274c49d0a97466a32f67a0c41ca7f2871dc274e5678e7611e8f520c0eea12cb"
+    },
+    {
+      "encoding": "lossless gzip, mtime=0",
+      "exactRawBytesIndependentlyReconstructed": true,
+      "gzipBytes": 1023,
+      "gzipSHA256": "44bd1be2482a8b146d5ae4b9f96cd71c0faeaf1e9ed805f8273ea06ceb739344",
+      "lines": 75,
+      "path": "wire.jsonl.gz",
+      "rawBytes": 11001,
+      "rawSHA256": "daad4ccc876b14cd3189b565775f74c11e9f8e7e466e697bb2b0f9cc05cf6bc3"
+    }
+  ],
+  "request": 37,
+  "schema": "pinkha-original-promise-raw-observation-v1",
+  "session": "CD0B812C-F4D9-4C0A-9229-A099BE8DBE9C"
+}

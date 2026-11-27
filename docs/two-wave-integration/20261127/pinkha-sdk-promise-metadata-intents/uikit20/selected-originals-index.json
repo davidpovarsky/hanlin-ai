@@ -1,0 +1,37 @@
+[
+  {
+    "name": "simulator-logs/06-xcodebuild-simulator.log",
+    "bytes": 14508691,
+    "sha256": "42bdde2a3b6591395c62cb5c3ab98db2f18f08b86f0208f08ccd6a81d373139f"
+  },
+  {
+    "name": "simulator-logs/06-current-unit-xctestrun.json",
+    "bytes": 3794,
+    "sha256": "7d1b5ab34c9338212336d3338d440dd80ed8de5f25e2607a28b909d08c7484d0"
+  },
+  {
+    "name": "simulator-logs/06-diagnostics-build-provenance.json",
+    "bytes": 7046,
+    "sha256": "4fb8fbeb6dde6a775c16a6794a3932c4e17e14b0a7f17e3a99b0fa7ab085401e"
+  },
+  {
+    "name": "simulator-logs/01-environment.log",
+    "bytes": 963,
+    "sha256": "3b668dcda21f7e87d5347b8dc8e7c8df185996680caf8451bf4ded423cab9b26"
+  },
+  {
+    "name": "simulator-logs/Resolved-Package.resolved",
+    "bytes": 10518,
+    "sha256": "56d19a4b8c677831fb91e1f8155a68e411b42fd4807ad618d6f169569e1bb5a4"
+  },
+  {
+    "name": "simulator-logs/foundation-models-interface/availability-query/compiler-version.stdout.log",
+    "bytes": 98,
+    "sha256": "4b59da256292ae42e3f04ef6d06ea3e139678613a3cd3d0dc37a6757c0bd290a"
+  },
+  {
+    "name": "simulator-logs/foundation-models-interface/availability-query/xcode-version.stdout.log",
+    "bytes": 31,
+    "sha256": "67c5b47bcf0e788aecae2f9b3af345813bdf7fe736faefb9666a7f4b2bf27ba7"
+  }
+]

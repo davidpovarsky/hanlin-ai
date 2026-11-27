@@ -1,0 +1,15 @@
+{
+  "at": "2026-11-27T11:58:45.101885+00:00",
+  "source": "778ed7e597a2fe19708e1dde5598350b56b25d6d",
+  "priorControllerSHA256": "777c43e505a18a043d986c0dac9056b81ec9d2882e33b806b892aff65dc50059",
+  "controllerSHA256": "b5d3f7d1e925b69fd35aa4384607035ba2bb107121a5351e76eb87741afd28ad",
+  "onlyChangedAttemptAndCapacityPathConstants": true,
+  "entireOriginalControllerOtherwiseByteIdentical": true,
+  "originalDeadlineSeconds": 3600,
+  "originalHTTPTimeoutSeconds": 5,
+  "capacitySHA256": "be1bbd3baa88db323546020d2fb85bbb73c461e5663c20ab022c75273c0de329",
+  "healthReceiptSHA256": "b0dc48a1fa0884a5aa310ea523a7c309f6b1609f4263c4faa3794574ff8bf7d1",
+  "r1RawOracleManifestSHA256": "ff5fe9c185df02709b721722bd22404ba7f09e11df63d425e2d3830a18469f51",
+  "r1RawOracleTransferReceiptSHA256": "60fdad1467544e40646f84d1798f0076b1c42ff80ab63eefa48dbd15596901e5",
+  "warmBuildInode": 71920668
+}

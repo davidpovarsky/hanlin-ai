@@ -1,0 +1,936 @@
+{
+  "actualFailureScope": {
+    "artifact15199148273SHA256": "2eaf6408f65c69f47f0d0df76a5a1df0c4772b9e39a039c83fd4e81373da5364",
+    "attempt": 1,
+    "firstFailure": "Duplicate AppIntentsPackage metadata export in AI_Hanlin",
+    "logSHA256": "42bdde2a3b6591395c62cb5c3ab98db2f18f08b86f0208f08ccd6a81d373139f",
+    "producerPreparationOverlaySHA256": "caf78a85e5e8fdaa187f873972a203413e0231e883a3256dd5ee9fb40c1f522b",
+    "run": 45997289566,
+    "runtimeTests": 0,
+    "source": "4cb6454c1c6e110ead73179c06ada9e909bf250b",
+    "toolchain": "Xcode27.2/27B52, Swift6.4.2",
+    "validatedCurrentProducts": false
+  },
+  "compilerInvocations": 0,
+  "dispatches": 0,
+  "filesBeforeThisIntake": {
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift": {
+      "after": {
+        "bytes": 4321,
+        "gitBlob": "621ed01a3b2d625eed229c31ac4d82fa74ebe84a",
+        "mode": "100644",
+        "sha256": "10f0ae12345b996c282a9b5e7027e07081f86b438a8424c0133a5ecd055c6300"
+      },
+      "before": {
+        "bytes": 4392,
+        "gitBlob": "bae6bdefe86ea93e50638c6a881f478caf3456c1",
+        "mode": "100644",
+        "sha256": "114cdb71d067a0cf3139fe373af2b25617e275fa5aa040a0be71a0801e1283f8"
+      },
+      "beforeGitBlob": "bae6bdefe86ea93e50638c6a881f478caf3456c1",
+      "origin": "Complete original f768 AppIntents reference closure",
+      "status": "M"
+    },
+    "HanlinMiniAppsApp/HanlinMiniAppsApp.swift": {
+      "after": {
+        "bytes": 13148,
+        "gitBlob": "6794037a24c7eaf977dc18624794164213d781f1",
+        "mode": "100644",
+        "sha256": "4d34e6a1a7f50373ccfba3890c547d2df9ab66bb5172deb26afd3fdffa075585"
+      },
+      "before": {
+        "bytes": 13188,
+        "gitBlob": "c8a267c561e1ced5b99d973642b9564380f05706",
+        "mode": "100644",
+        "sha256": "65792c17c4dd40c9893b441f746fd13bcd4c471c7c49dabdde1f7e5f7adf6e3b"
+      },
+      "beforeGitBlob": "c8a267c561e1ced5b99d973642b9564380f05706",
+      "origin": "Complete original f768 AppIntents reference closure",
+      "status": "M"
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimePromise.swift": {
+      "after": {
+        "bytes": 3999,
+        "gitBlob": "bc003400aae0f91c7c4eda87073d7120be855ffd",
+        "mode": "100644",
+        "sha256": "98d40a32ac40bb4488dc21205b852aea2c552e80294657ab6dcb6fe44285dd4f"
+      },
+      "before": {
+        "bytes": 3750,
+        "gitBlob": "032eb335e6bae2bba7a404c8b2d2a5e4f192afb4",
+        "mode": "100644",
+        "sha256": "13f8c1563e906edd2fd9f96b372cace3e15be58e18c583ba60100f2ad842d8d5"
+      },
+      "beforeGitBlob": "032eb335e6bae2bba7a404c8b2d2a5e4f192afb4",
+      "origin": "Reviewed selective Promise29",
+      "status": "M"
+    },
+    "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRunningState.swift": {
+      "after": {
+        "bytes": 17319,
+        "gitBlob": "a21b35880ed3e964d4c6117e95d461b730a16366",
+        "mode": "100644",
+        "sha256": "eab1f759ee1a5cb7b72af88883154225891a424cbab7ccbdc5a9c8f618544142"
+      },
+      "before": {
+        "bytes": 16248,
+        "gitBlob": "a8190d7dad118593ede61818838785a2107ecad3",
+        "mode": "100644",
+        "sha256": "f7b50ceacdf034833c92554a769fe692abebe296b87e55091e7a2fb09146d9da"
+      },
+      "beforeGitBlob": "a8190d7dad118593ede61818838785a2107ecad3",
+      "origin": "Reviewed selective Promise29",
+      "status": "M"
+    },
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift": {
+      "after": {
+        "bytes": 99811,
+        "gitBlob": "03cf235dc826173e96e6b222d115fefad8a79ce3",
+        "mode": "100644",
+        "sha256": "160c07c90095dd73c0d68e6fff6007a9230ace84a092cb394b90337df03e70bb"
+      },
+      "before": {
+        "bytes": 83986,
+        "gitBlob": "c108823a9409264882e7870cc822cccf569bac3c",
+        "mode": "100644",
+        "sha256": "53bc610452297522b67593dc6a63e201aa5287acc8ed5b0e5769d94f381b7b5f"
+      },
+      "beforeGitBlob": "c108823a9409264882e7870cc822cccf569bac3c",
+      "origin": "Reviewed selective Promise29",
+      "status": "M"
+    },
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinOriginalPromiseLifetimeTests.swift": {
+      "after": {
+        "bytes": 8330,
+        "gitBlob": "bddd4956c68488d9c5b526bf13957eb64430e9ff",
+        "mode": "100644",
+        "sha256": "527fba708cfbf5a6e365776650235a39ae115bde54a848b5f54d7c35636fde2c"
+      },
+      "beforeGitBlob": null,
+      "origin": "Reviewed selective Promise29",
+      "status": "A"
+    },
+    "Scripts/CI/Tests/test_nativescript_metadata_wrapper.py": {
+      "after": {
+        "bytes": 25028,
+        "gitBlob": "77faf27ecb87ab3c7f973e6d1ed2dcd4091b8753",
+        "mode": "100644",
+        "sha256": "a15bef4c3db22813538a684859034c4d18f90f407f71df70591f9bd6519cebeb"
+      },
+      "before": {
+        "bytes": 24576,
+        "gitBlob": "258d4408bbe015b9500e66d3fcf8b3f980aa5296",
+        "mode": "100644",
+        "sha256": "0580017fd708751f845631732bc9f6c6b3a4e334f32d13a0142693f257fb4b84"
+      },
+      "beforeGitBlob": "258d4408bbe015b9500e66d3fcf8b3f980aa5296",
+      "origin": "Reviewed original CoreSpotlight producer source",
+      "status": "M"
+    },
+    "Scripts/NativeScript/build-step-metadata-generator-wrapper.py": {
+      "after": {
+        "bytes": 12320,
+        "gitBlob": "847f7a56ac3eaf5033b370ce5d7e8acbaca9fa72",
+        "mode": "100755",
+        "sha256": "9e45c0aa8d951a6a59afa1eb4dbcad6e524fc1f408d2406d6c8e5a9efcdd7f8c"
+      },
+      "before": {
+        "bytes": 12293,
+        "gitBlob": "1c9176dce7998dbfb42a4cd49c7e87262cedc315",
+        "mode": "100755",
+        "sha256": "577e4d58a3bebd29e379918938199aacff0a4c775cfb1c4923e1f7735686238c"
+      },
+      "beforeGitBlob": "1c9176dce7998dbfb42a4cd49c7e87262cedc315",
+      "origin": "Reviewed original CoreSpotlight producer source",
+      "status": "M"
+    },
+    "Scripts/SDK/tests/test_system_extension_targets.py": {
+      "after": {
+        "bytes": 14930,
+        "gitBlob": "a1b9359d07bc299bd1100ae6eff1eb7f7aa99bc2",
+        "mode": "100644",
+        "sha256": "959f0d685856fb2a52987f1ab2efeb03541a4dfb5d9ed5475a4e4f6fee9cf0f8"
+      },
+      "before": {
+        "bytes": 13569,
+        "gitBlob": "4b4a9fd1825686098bd8599847e6962f519761f7",
+        "mode": "100644",
+        "sha256": "ea3a0405dd27ace649421d367e4134cd99e0f4eb85cdade1f75d1ec5d4044a80"
+      },
+      "beforeGitBlob": "4b4a9fd1825686098bd8599847e6962f519761f7",
+      "origin": "Complete original f768 AppIntents reference closure",
+      "status": "M"
+    },
+    "docs/two-wave-integration/20261127/pinkha-sdk-promise-metadata-intents/app-intents/complete-reference-closure.original.json": {
+      "after": {
+        "bytes": 7528,
+        "gitBlob": "bb27ce58ca3760c2db7c840070b927e30415c25c",
+        "mode": "100644",
+        "sha256": "aed4bd7c58a5e2dccd958f8c6571f55845c7c75d88ea55870bbdf550a450fba3"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original review/inverse/failure/source evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-sdk-promise-metadata-intents/app-intents/original-4cb/AI_HLY.xcodeproj/project.pbxproj": {
+      "after": {
+        "bytes": 273984,
+        "gitBlob": "8fe2fd8b1ed20fde42547f2a8f9ac29a61b6ef20",
+        "mode": "100644",
+        "sha256": "52bd71e97d08c1982fe0547d2b0c80374c373533d9abcaf885591adab87dccdb"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original review/inverse/failure/source evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-sdk-promise-metadata-intents/app-intents/original-4cb/AI_HLY/AI_HLY.swift": {
+      "after": {
+        "bytes": 1057,
+        "gitBlob": "0285f242e65c25158fd30b459d2ba7bc22fabdd0",
+        "mode": "100644",
+        "sha256": "68e1f6a51fdc9bf9a313c5fea760085844d3980fd54a937075b2e3ca42879bd7"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original review/inverse/failure/source evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-sdk-promise-metadata-intents/app-intents/original-4cb/AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift": {
+      "after": {
+        "bytes": 4392,
+        "gitBlob": "bae6bdefe86ea93e50638c6a881f478caf3456c1",
+        "mode": "100644",
+        "sha256": "114cdb71d067a0cf3139fe373af2b25617e275fa5aa040a0be71a0801e1283f8"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original review/inverse/failure/source evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-sdk-promise-metadata-intents/app-intents/original-4cb/AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift": {
+      "after": {
+        "bytes": 5780,
+        "gitBlob": "3153a6f429551dbb24d2c732cd4b3191903b280e",
+        "mode": "100644",
+        "sha256": "29793c75803318c10d9abcd2b02945b16852f32ec3cebeabe1742a9a4746b702"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original review/inverse/failure/source evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-sdk-promise-metadata-intents/app-intents/original-4cb/HanlinMiniAppsApp/HanlinMiniAppsApp.swift": {
+      "after": {
+        "bytes": 13188,
+        "gitBlob": "c8a267c561e1ced5b99d973642b9564380f05706",
+        "mode": "100644",
+        "sha256": "65792c17c4dd40c9893b441f746fd13bcd4c471c7c49dabdde1f7e5f7adf6e3b"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original review/inverse/failure/source evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-sdk-promise-metadata-intents/app-intents/original-4cb/Scripts/SDK/tests/test_system_extension_targets.py": {
+      "after": {
+        "bytes": 13569,
+        "gitBlob": "4b4a9fd1825686098bd8599847e6962f519761f7",
+        "mode": "100644",
+        "sha256": "ea3a0405dd27ace649421d367e4134cd99e0f4eb85cdade1f75d1ec5d4044a80"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original review/inverse/failure/source evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-sdk-promise-metadata-intents/app-intents/whole4cb-reference-read.original.json": {
+      "after": {
+        "bytes": 1232,
+        "gitBlob": "962d03573fd1c06e847ce08f0b61657873411613",
+        "mode": "100644",
+        "sha256": "b2e690a20cac54a518e050859b3bb54906ba68da98de72b73cf480112899450f"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original review/inverse/failure/source evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-sdk-promise-metadata-intents/core-spotlight/independent-review.original.json": {
+      "after": {
+        "bytes": 2332,
+        "gitBlob": "3a06c5d520398ed10162ab55ea4af13825fbadf0",
+        "mode": "100644",
+        "sha256": "460f60c85f3388d16207bfd9293a3960a8b9fcadba4e59c54e16b73002b274f9"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original review/inverse/failure/source evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-sdk-promise-metadata-intents/core-spotlight/original-4cb/Scripts/CI/Tests/test_nativescript_metadata_wrapper.py": {
+      "after": {
+        "bytes": 24576,
+        "gitBlob": "258d4408bbe015b9500e66d3fcf8b3f980aa5296",
+        "mode": "100644",
+        "sha256": "0580017fd708751f845631732bc9f6c6b3a4e334f32d13a0142693f257fb4b84"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original review/inverse/failure/source evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-sdk-promise-metadata-intents/core-spotlight/original-4cb/Scripts/NativeScript/build-step-metadata-generator-wrapper.py": {
+      "after": {
+        "bytes": 12293,
+        "gitBlob": "1c9176dce7998dbfb42a4cd49c7e87262cedc315",
+        "mode": "100644",
+        "sha256": "577e4d58a3bebd29e379918938199aacff0a4c775cfb1c4923e1f7735686238c"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original review/inverse/failure/source evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-sdk-promise-metadata-intents/core-spotlight/original-donor-evidence/after.stderr.log": {
+      "after": {
+        "bytes": 326,
+        "gitBlob": "a3e38a93020396d97da91c2dc0e455de7e3b1314",
+        "mode": "100644",
+        "sha256": "0b66fdacc72c444c8bdbe7b3c05b34767260c98b28df0c01a9e883c88119ce9f"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original review/inverse/failure/source evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-sdk-promise-metadata-intents/core-spotlight/original-donor-evidence/before.stderr.log": {
+      "after": {
+        "bytes": 1777,
+        "gitBlob": "fd085ca88bb72601469d878dc33c90eeb8053cc3",
+        "mode": "100644",
+        "sha256": "b43ba495c62a4296124bf6c6b0c107fa9b1228918e5820527e6cc23a5a82660e"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original review/inverse/failure/source evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-sdk-promise-metadata-intents/core-spotlight/original-donor-evidence/independent-w1-source-review.json": {
+      "after": {
+        "bytes": 2484,
+        "gitBlob": "2928e5e19f6dc2e0cd3ead84b343fb7d9f21d0bc",
+        "mode": "100644",
+        "sha256": "e4ce0837cbc91875e660fcc88e3d355ca4746068d431a3d4c420624c1c4863e9"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original review/inverse/failure/source evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-sdk-promise-metadata-intents/core-spotlight/original-donor-evidence/installed-sdk-header-review.json": {
+      "after": {
+        "bytes": 1213,
+        "gitBlob": "0cb6cbb670833ac5d11d666772a07343ae887b4e",
+        "mode": "100644",
+        "sha256": "2d2922af861a474f6940b45d23396ba7c251e69a98ec0fd04b506106a5c8044e"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original review/inverse/failure/source evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-sdk-promise-metadata-intents/core-spotlight/original-donor-evidence/original-ci-diagnostics.json": {
+      "after": {
+        "bytes": 1318,
+        "gitBlob": "8dbbd850d071e1d806651334cd9ae30632ac288e",
+        "mode": "100644",
+        "sha256": "e9c9ca022189ccf76213c758de1bb41e3a22dc0058df2bad6926740409e05217"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original review/inverse/failure/source evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-sdk-promise-metadata-intents/core-spotlight/original-donor-evidence/red-green-receipt.json": {
+      "after": {
+        "bytes": 1818,
+        "gitBlob": "f46736cabd8a9db3490c68dd1ec8ce9f814981c0",
+        "mode": "100644",
+        "sha256": "8db463493e647b943c597b19f18c71e77980cf5a21564bafb53e23b7fc7de387"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original review/inverse/failure/source evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-sdk-promise-metadata-intents/core-spotlight/original-donor-evidence/source-validation.json": {
+      "after": {
+        "bytes": 1116,
+        "gitBlob": "6aa0ad280344e3a006d07f5b4e7b0f045f3d82ea",
+        "mode": "100644",
+        "sha256": "45bea7c506c338549160517ced1b23bf2f89bbfaf59e56ac9339669b46e4ed6b"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original review/inverse/failure/source evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-sdk-promise-metadata-intents/core-spotlight/source-inverse-and-overlay-proof.original.json": {
+      "after": {
+        "bytes": 5357,
+        "gitBlob": "f5ce8d0364290e794fc4a67eb3d84c8d753bca73",
+        "mode": "100644",
+        "sha256": "52c216f91c64d6a2445719b218fac47006633f0425ffddaa701c3849f2dad9eb"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original review/inverse/failure/source evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-sdk-promise-metadata-intents/core-spotlight/source-manifest.original.json": {
+      "after": {
+        "bytes": 982,
+        "gitBlob": "d0a1aafc6bb7867fcdcb27506997b2e087f12864",
+        "mode": "100644",
+        "sha256": "fe3bf4f575ccbc05a50d39d44ad87673e447061fa75d9c5dfa83029a46376800"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original review/inverse/failure/source evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-sdk-promise-metadata-intents/promise-proposal.original.json": {
+      "after": {
+        "bytes": 10166,
+        "gitBlob": "86f34d07afc004bdb609ec87e70182e2655dcf0c",
+        "mode": "100644",
+        "sha256": "25d5bfb311787e6c6410a6c27f62dfe37e27abe143bb98ae921dd82fce1d25ea"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original review/inverse/failure/source evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-sdk-promise-metadata-intents/uikit20/failed4cb-original-correction-review.json": {
+      "after": {
+        "bytes": 17067,
+        "gitBlob": "c3054923d888bede41fb04179d81cc44f99689d2",
+        "mode": "100644",
+        "sha256": "193eb05a9b41ef97f49c29ded1766e255740d953b40724afee25397b20ebf0cf"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original review/inverse/failure/source evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-sdk-promise-metadata-intents/uikit20/job-log-transport-failure.original.json": {
+      "after": {
+        "bytes": 210,
+        "gitBlob": "c701e3d00536096d456f8b2730f755914e32ebeb",
+        "mode": "100644",
+        "sha256": "94706eab5bc599a6309f59bd5b1923c166c13dc39ca3a08038dbaf0b15c51b01"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original review/inverse/failure/source evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-sdk-promise-metadata-intents/uikit20/original-smoke-artifact15199148273.zip": {
+      "after": {
+        "bytes": 1927038,
+        "gitBlob": "59c25f69494fdc5f9269ce8a90c8f8a1bec6d1f0",
+        "mode": "100644",
+        "sha256": "2eaf6408f65c69f47f0d0df76a5a1df0c4772b9e39a039c83fd4e81373da5364"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original review/inverse/failure/source evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-sdk-promise-metadata-intents/uikit20/selected-originals-index.json": {
+      "after": {
+        "bytes": 1264,
+        "gitBlob": "947c339218d6527f6901d4674f6b2efb5948adbe",
+        "mode": "100644",
+        "sha256": "95f15f33f440f5cc5c350568f3d7fb6cb58798cebf6cc04a8c14a80500c509cd"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original review/inverse/failure/source evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-sdk-promise-metadata-intents/uikit20/terminal-artifacts.original.json": {
+      "after": {
+        "bytes": 6018,
+        "gitBlob": "abf67a0408614f43d3e43ce977c21e12ab044500",
+        "mode": "100644",
+        "sha256": "57fd0faa2e2ff3273a7146f20dc10cb2670b8e12f6d19b04dac26cf4a2ea62b7"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original review/inverse/failure/source evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-sdk-promise-metadata-intents/uikit20/terminal-jobs.original.json": {
+      "after": {
+        "bytes": 20452,
+        "gitBlob": "8eb0481e8f75e9a4b23b45a7a62f7d558b47ccef",
+        "mode": "100644",
+        "sha256": "7d6e2c4d2e3ac334639f8a65161d2522bf1bf3cb555680ab458ae95b8f72a434"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original review/inverse/failure/source evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-sdk-promise-metadata-intents/workflow-trigger-audit.original.json": {
+      "after": {
+        "bytes": 6784,
+        "gitBlob": "dda6254fcf24639d2bf89613990195c18642eb40",
+        "mode": "100644",
+        "sha256": "51454f8236e05921b73a761377c2f6cf0d2a0fb5cab3ad2f6d321a0a4511a2b2"
+      },
+      "beforeGitBlob": null,
+      "origin": "Unchanged original review/inverse/failure/source evidence",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/complete-four-package-closure.json": {
+      "after": {
+        "bytes": 210561,
+        "gitBlob": "33f4df9d583a50a830e59705d5546526181c6b3e",
+        "mode": "100644",
+        "sha256": "4879091e362326125f544b87b069095eef493f288014f1c4bf294f87c026fc57"
+      },
+      "beforeGitBlob": null,
+      "origin": "Reviewed selective Promise29",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/independent-original-failure-read.json": {
+      "after": {
+        "bytes": 7124,
+        "gitBlob": "d16db84340a97a2d08b2400ed6db767935dd350b",
+        "mode": "100644",
+        "sha256": "336b3cdc2a97864cf4a2b016973e4de7839ab9274aaeaf3ccd553aabdaf536fc"
+      },
+      "beforeGitBlob": null,
+      "origin": "Reviewed selective Promise29",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/independent-review.json": {
+      "after": {
+        "bytes": 9197,
+        "gitBlob": "b7ed5631a36ba5b6dbfaec23fdc365b5041a63de",
+        "mode": "100644",
+        "sha256": "1ab16d2ffb4bda5cfa8439d3b334f9beabd1bb9cafb1a07fe61dc4f0b8218895"
+      },
+      "beforeGitBlob": null,
+      "origin": "Reviewed selective Promise29",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/latest-source-observation.json": {
+      "after": {
+        "bytes": 6443,
+        "gitBlob": "50ae354c4bc93a7fad46a3b430feaad33c7ce057",
+        "mode": "100644",
+        "sha256": "23b94d308d594282be6a0074f71077ae730de756172e2977679ec3b5d8ee5eb9"
+      },
+      "beforeGitBlob": null,
+      "origin": "Reviewed selective Promise29",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/native-handler-boundary.json": {
+      "after": {
+        "bytes": 2787,
+        "gitBlob": "abb730fc303fa0dc709d80e20a70720b3906cac0",
+        "mode": "100644",
+        "sha256": "d6981b8867a94112c408eeb208f9b73e19722052d48c8e3dcd1876f66553958e"
+      },
+      "beforeGitBlob": null,
+      "origin": "Reviewed selective Promise29",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-4cb/Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimePromise.swift": {
+      "after": {
+        "bytes": 3750,
+        "gitBlob": "032eb335e6bae2bba7a404c8b2d2a5e4f192afb4",
+        "mode": "100644",
+        "sha256": "13f8c1563e906edd2fd9f96b372cace3e15be58e18c583ba60100f2ad842d8d5"
+      },
+      "beforeGitBlob": null,
+      "origin": "Reviewed selective Promise29",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-4cb/Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRunningState.swift": {
+      "after": {
+        "bytes": 16248,
+        "gitBlob": "a8190d7dad118593ede61818838785a2107ecad3",
+        "mode": "100644",
+        "sha256": "f7b50ceacdf034833c92554a769fe692abebe296b87e55091e7a2fb09146d9da"
+      },
+      "beforeGitBlob": null,
+      "origin": "Reviewed selective Promise29",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-4cb/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift": {
+      "after": {
+        "bytes": 83986,
+        "gitBlob": "c108823a9409264882e7870cc822cccf569bac3c",
+        "mode": "100644",
+        "sha256": "53bc610452297522b67593dc6a63e201aa5287acc8ed5b0e5769d94f381b7b5f"
+      },
+      "beforeGitBlob": null,
+      "origin": "Reviewed selective Promise29",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-4cb/docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json": {
+      "after": {
+        "bytes": 210998,
+        "gitBlob": "38a88719ba7d8d45e63f05843a4ad88eeb14ee07",
+        "mode": "100644",
+        "sha256": "4d06d0dfaca462fc21257c8053d3250b7cc0e78c4d77b4eb2e98f64bf7cbe83b"
+      },
+      "beforeGitBlob": null,
+      "origin": "Reviewed selective Promise29",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/README.md": {
+      "after": {
+        "bytes": 5120,
+        "gitBlob": "c762d598e6749146c4742eb686337ddd23a05fa5",
+        "mode": "100644",
+        "sha256": "69f40f3a5e2d2ecb6ac8fe99539b41473322c44a3fbc51b85c766cace321a6e8"
+      },
+      "beforeGitBlob": null,
+      "origin": "Reviewed selective Promise29",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/actual-controller-binding.json": {
+      "after": {
+        "bytes": 886,
+        "gitBlob": "17b105f4c61b6767dd37eb4fd5c387163d2771d4",
+        "mode": "100644",
+        "sha256": "7ef6c6475f10b59406e1fb782f6ae4094b9872a4bbf5bb71c1652d6e03ca1270"
+      },
+      "beforeGitBlob": null,
+      "origin": "Reviewed selective Promise29",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/actual-manifest.json": {
+      "after": {
+        "bytes": 2461,
+        "gitBlob": "4af5c072da5569dd8da9416445448610a24c5183",
+        "mode": "100644",
+        "sha256": "7bb6741149899e5cd8de9f6da341ce0679394c99a3794d909df4152eb2849326"
+      },
+      "beforeGitBlob": null,
+      "origin": "Reviewed selective Promise29",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/actual-source-stage.json": {
+      "after": {
+        "bytes": 4158,
+        "gitBlob": "f485e62f92ea38383e068742f349c0c890cd2973",
+        "mode": "100644",
+        "sha256": "06c6bfee224732926b99a1dda6c5c534c2062381d378ab47e67b07ed29a0b675"
+      },
+      "beforeGitBlob": null,
+      "origin": "Reviewed selective Promise29",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/independent-w1-lifetime-review.json": {
+      "after": {
+        "bytes": 4869,
+        "gitBlob": "2f73ca05b6a6e487de32ad18ddc4fc36dfe01c7a",
+        "mode": "100644",
+        "sha256": "337e89babe60db647f229beb1e105b2460043b5ff8e352d09e52b79e81aa50c3"
+      },
+      "beforeGitBlob": null,
+      "origin": "Reviewed selective Promise29",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/native-stages.jsonl.gz": {
+      "after": {
+        "bytes": 6258,
+        "gitBlob": "733e7c28e049514fc3c795f5371faec2ec2904c3",
+        "mode": "100644",
+        "sha256": "a581f3c69b667423e79a660204e31f12ed883c20aa9b1c1c785226e09ad2037e"
+      },
+      "beforeGitBlob": null,
+      "origin": "Reviewed selective Promise29",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/raw-log-encoding.json": {
+      "after": {
+        "bytes": 910,
+        "gitBlob": "99a156651204e3b265962ade9bd32a48737dc6b5",
+        "mode": "100644",
+        "sha256": "20fba70b4f50c24a22c5f3b4d874c235dd3bfc2b1a8bc6103459631b0a6e48f8"
+      },
+      "beforeGitBlob": null,
+      "origin": "Reviewed selective Promise29",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/raw-packet-verification.json": {
+      "after": {
+        "bytes": 2954,
+        "gitBlob": "a1d5fee72461be083b0b1ecba598d5e8dd894242",
+        "mode": "100644",
+        "sha256": "5119529ca79e169cb92a550fe82bec0d93b1441ab72b80117767702784d76249"
+      },
+      "beforeGitBlob": null,
+      "origin": "Reviewed selective Promise29",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/root-independent-lifetime-review.json": {
+      "after": {
+        "bytes": 2417,
+        "gitBlob": "af7d513abf6000b46bec84b1e08631769287cec4",
+        "mode": "100644",
+        "sha256": "dd2d1d4fdaf46f856960d0dc393a021c4b057649d22723cf02842b0bc0ceb32a"
+      },
+      "beforeGitBlob": null,
+      "origin": "Reviewed selective Promise29",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/sdk-input-impact.json": {
+      "after": {
+        "bytes": 976,
+        "gitBlob": "7db87cacd3146e0230de4864ef8b8fd2b3f86a7f",
+        "mode": "100644",
+        "sha256": "86fadfee0c923480b9a3c96eb113321fa58277fecdabc16bd339374347372960"
+      },
+      "beforeGitBlob": null,
+      "origin": "Reviewed selective Promise29",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/source-validation.json": {
+      "after": {
+        "bytes": 3490,
+        "gitBlob": "2eabff1014555ff75ec526b329279326c52df4bc",
+        "mode": "100644",
+        "sha256": "2898eb037176b5d034e8167c00f1889cef03d41199e7c5b043f8c8875f40ba45"
+      },
+      "beforeGitBlob": null,
+      "origin": "Reviewed selective Promise29",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/teardown-callers.json": {
+      "after": {
+        "bytes": 10256,
+        "gitBlob": "45e9dcf2ee8c7061f8411e321126cfc6f7c27d69",
+        "mode": "100644",
+        "sha256": "1cc4f0782543253076f1dbfc2f0aebebb78282dcb4d79586ec9ec3e182fbfa0d"
+      },
+      "beforeGitBlob": null,
+      "origin": "Reviewed selective Promise29",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/wire.jsonl.gz": {
+      "after": {
+        "bytes": 1023,
+        "gitBlob": "b55a8450f1cb2c6e58b2f0407b2df8ee70461d98",
+        "mode": "100644",
+        "sha256": "44bd1be2482a8b146d5ae4b9f96cd71c0faeaf1e9ed805f8273ea06ceb739344"
+      },
+      "beforeGitBlob": null,
+      "origin": "Reviewed selective Promise29",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/primary-source-identities.json": {
+      "after": {
+        "bytes": 23188,
+        "gitBlob": "1e07df27e9e818ced74ee4ae3d7a88427c11146a",
+        "mode": "100644",
+        "sha256": "508f53a7660b274e87a89032ee4863af1f16b6b38fb5bccda6c789abfe6a9847"
+      },
+      "beforeGitBlob": null,
+      "origin": "Reviewed selective Promise29",
+      "status": "A"
+    },
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/source-inverse.json": {
+      "after": {
+        "bytes": 40301,
+        "gitBlob": "469f55e0848f1740725531a3b129ba64a7c174e2",
+        "mode": "100644",
+        "sha256": "a4cb2401972d7d97cfe2a40c82e323b22536658b274b41a6fc2b45adbf528bc7"
+      },
+      "beforeGitBlob": null,
+      "origin": "Reviewed selective Promise29",
+      "status": "A"
+    },
+    "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json": {
+      "after": {
+        "bytes": 210998,
+        "gitBlob": "fe3c10439374fd2894b669b582b774307a05a058",
+        "mode": "100644",
+        "sha256": "fdb3e579110a4d6a5e8af650a1cdc2c7229399ba37042e935d4dd3aec38a1d2c"
+      },
+      "before": {
+        "bytes": 210998,
+        "gitBlob": "38a88719ba7d8d45e63f05843a4ad88eeb14ee07",
+        "mode": "100644",
+        "sha256": "4d06d0dfaca462fc21257c8053d3250b7cc0e78c4d77b4eb2e98f64bf7cbe83b"
+      },
+      "beforeGitBlob": "38a88719ba7d8d45e63f05843a4ad88eeb14ee07",
+      "origin": "Reviewed selective Promise29",
+      "status": "M"
+    }
+  },
+  "futureAcceptance": [
+    "Original2 Promise lifetime methods and the original bounded HTTP method on the changed Platform source: NOT_RUN.",
+    "Original20 UIKit methods on the next coherent real Apple host: NOT_RUN.",
+    "Original NativeScript explicit-handler/JS-state/no-handler and companion MiniApps acceptance remain separate current-product gates.",
+    "Prior Agent/quota/Widget evidence remains scoped to its original declared source/dependency closure."
+  ],
+  "materializations": 0,
+  "newTestsExecuted": 0,
+  "originalGitModePreservation": [
+    {
+      "candidateGitMode": "100755",
+      "localProposalMode": "100644",
+      "originalGitMode": "100755",
+      "path": "Scripts/NativeScript/build-step-metadata-generator-wrapper.py",
+      "reason": "Retain actual immutable4cb executable mode; do not adopt local manifest mode inference.",
+      "sourceBytesUnchanged": true
+    }
+  ],
+  "packageFileCounts": {
+    "after": 1010,
+    "before": 1009
+  },
+  "packageProjection": [
+    {
+      "allOriginalMerkleRootsReconstructed": true,
+      "baseTree": "bbe6a0e4387f3f33d6592e24c1927182a1aceb22",
+      "changedEntries": [],
+      "originalBlobCount": 167,
+      "package": "Packages/HanlinAgentSDK",
+      "proposedBlobCount": 167,
+      "proposedTree": "bbe6a0e4387f3f33d6592e24c1927182a1aceb22",
+      "unchangedManifestsAndLocks": {
+        "Package.resolved": "2b7ba99b77a93905bd2cee70069cb5a7dcfcbc57",
+        "Package.swift": "fcf99a97a6fab9fa5885c44521e950da37467405",
+        "Vendor/Swift-JSON/Package.swift": "088e256101f1f5f330e20ba5c915cd5e188ba11f"
+      }
+    },
+    {
+      "allOriginalMerkleRootsReconstructed": true,
+      "baseTree": "db6e9533242f08bb1bb7accdf6970a436aa953d1",
+      "changedEntries": [
+        {
+          "after": {
+            "mode": "100644",
+            "sha": "bc003400aae0f91c7c4eda87073d7120be855ffd"
+          },
+          "before": {
+            "mode": "100644",
+            "sha": "032eb335e6bae2bba7a404c8b2d2a5e4f192afb4"
+          },
+          "path": "Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimePromise.swift"
+        },
+        {
+          "after": {
+            "mode": "100644",
+            "sha": "a21b35880ed3e964d4c6117e95d461b730a16366"
+          },
+          "before": {
+            "mode": "100644",
+            "sha": "a8190d7dad118593ede61818838785a2107ecad3"
+          },
+          "path": "Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRunningState.swift"
+        },
+        {
+          "after": {
+            "mode": "100644",
+            "sha": "03cf235dc826173e96e6b222d115fefad8a79ce3"
+          },
+          "before": {
+            "mode": "100644",
+            "sha": "c108823a9409264882e7870cc822cccf569bac3c"
+          },
+          "path": "Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift"
+        },
+        {
+          "after": {
+            "mode": "100644",
+            "sha": "bddd4956c68488d9c5b526bf13957eb64430e9ff"
+          },
+          "before": null,
+          "path": "Tests/HanlinScriptExtensionsTests/HanlinOriginalPromiseLifetimeTests.swift"
+        }
+      ],
+      "originalBlobCount": 371,
+      "package": "Packages/HanlinPlatform",
+      "proposedBlobCount": 372,
+      "proposedTree": "4c82574ed393dca14a4a99ca9ef67a3b0be58417",
+      "unchangedManifestsAndLocks": {
+        "Package.resolved": "09c0181f5a6df0c2d1b21237c717bfae8f60cca5",
+        "Package.swift": "2d4e529c825939fbc302539852da52cdf7cbbaf9"
+      }
+    },
+    {
+      "allOriginalMerkleRootsReconstructed": true,
+      "baseTree": "3fdc8170b9a749797f4d97c796405306d21ed438",
+      "changedEntries": [],
+      "originalBlobCount": 455,
+      "package": "Packages/HanlinPresentationSDK",
+      "proposedBlobCount": 455,
+      "proposedTree": "3fdc8170b9a749797f4d97c796405306d21ed438",
+      "unchangedManifestsAndLocks": {
+        "Package.swift": "ef1e46be07c7b0cba7b5796b3395e6cabdb89484"
+      }
+    },
+    {
+      "allOriginalMerkleRootsReconstructed": true,
+      "baseTree": "98ef5d2b47c03f4ea98319a851abae183f500a40",
+      "changedEntries": [],
+      "originalBlobCount": 16,
+      "package": "Packages/HanlinMiniAppsBridge",
+      "proposedBlobCount": 16,
+      "proposedTree": "98ef5d2b47c03f4ea98319a851abae183f500a40",
+      "unchangedManifestsAndLocks": {
+        "Package.swift": "927b2801029268b21f42b663452ee4a9f6f2876b"
+      }
+    }
+  ],
+  "parent": "4cb6454c1c6e110ead73179c06ada9e909bf250b",
+  "parentTree": "500ece4e329fe325d0bb699fcb383fb7fc0ea6e5",
+  "preservation": [
+    "Entire4cb source tree is the parent and base of the full private index.",
+    "Agent/Presentation/Bridge and NativeScript package trees, WireTests, all package manifests/locks, current scroll ownership, cancellation/drain, renderer quota and workflows remain exact.",
+    "All original33 other dual-widget methods and the complete original shared entity/query/action bytes are retained.",
+    "The other four companion includedPackages and original singleton HanlinApplicationIntentsPackage remain exact."
+  ],
+  "primaryDonors": {
+    "appIntents": "f768d634bfa8a102cf63b32c7ab9d129cafc671d",
+    "metadata": "af48482a7d94f85b19b99c4500ee4ed4420c9def",
+    "promise": "1ee9c45796f41893c3b59745864de3412c17ddb4"
+  },
+  "proposedBranch": "codex/pinkha-sdk-promise-metadata-intents-20261127",
+  "reviewedInputCount": 34,
+  "reviewedInputPaths": [
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift",
+    "HanlinMiniAppsApp/HanlinMiniAppsApp.swift",
+    "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimePromise.swift",
+    "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRunningState.swift",
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinOriginalPromiseLifetimeTests.swift",
+    "Scripts/CI/Tests/test_nativescript_metadata_wrapper.py",
+    "Scripts/NativeScript/build-step-metadata-generator-wrapper.py",
+    "Scripts/SDK/tests/test_system_extension_targets.py",
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/complete-four-package-closure.json",
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/independent-original-failure-read.json",
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/independent-review.json",
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/latest-source-observation.json",
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/native-handler-boundary.json",
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-4cb/Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimePromise.swift",
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-4cb/Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRunningState.swift",
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-4cb/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-4cb/docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json",
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/README.md",
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/actual-controller-binding.json",
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/actual-manifest.json",
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/actual-source-stage.json",
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/independent-w1-lifetime-review.json",
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/native-stages.jsonl.gz",
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/raw-log-encoding.json",
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/raw-packet-verification.json",
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/root-independent-lifetime-review.json",
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/sdk-input-impact.json",
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/source-validation.json",
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/teardown-callers.json",
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/original-donor-evidence/wire.jsonl.gz",
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/primary-source-identities.json",
+    "docs/two-wave-integration/20261127/pinkha-selective-promise-lifetime/source-inverse.json",
+    "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json"
+  ],
+  "rootDecision": "Combine the reviewed Promise29, separate CoreSpotlight2 producer paths and complete original3-file AppIntents reference closure. No wholesale donor branch or manifest adoption.",
+  "schema": "pinkha-root-selective-sdk-promise-metadata-intents-intake/v1",
+  "sourceChanges": {
+    "hostAndCompanionAppIntentsSource": 2,
+    "originalAppIntentsGraphTest": 1,
+    "originalSDKTestFiles": 2,
+    "producerMetadataTest": 1,
+    "producerMetadataWrapper": 1,
+    "provenanceHashChanges": 2,
+    "provenanceRows": 227,
+    "sharedSDKProduction": 2,
+    "upstreamProvenanceFile": 1
+  },
+  "sourceOnly": true
+}

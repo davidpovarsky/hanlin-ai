@@ -1,0 +1,444 @@
+{
+  "base": "4cb6454c1c6e110ead73179c06ada9e909bf250b",
+  "donor": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+  "manifest": {
+    "allOtherBytesAndUpstreamIdentityFieldsUnchanged": true,
+    "changedFields": [
+      {
+        "local": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimePromise.swift",
+        "newSHA256": "98d40a32ac40bb4488dc21205b852aea2c552e80294657ab6dcb6fe44285dd4f",
+        "oldSHA256": "13f8c1563e906edd2fd9f96b372cace3e15be58e18c583ba60100f2ad842d8d5"
+      },
+      {
+        "local": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRunningState.swift",
+        "newSHA256": "eab1f759ee1a5cb7b72af88883154225891a424cbab7ccbdc5a9c8f618544142",
+        "oldSHA256": "f7b50ceacdf034833c92554a769fe692abebe296b87e55091e7a2fb09146d9da"
+      }
+    ],
+    "preservedEntries": 227
+  },
+  "modified": [
+    {
+      "after": {
+        "bytes": 3999,
+        "gitBlob": "bc003400aae0f91c7c4eda87073d7120be855ffd",
+        "sha256": "98d40a32ac40bb4488dc21205b852aea2c552e80294657ab6dcb6fe44285dd4f"
+      },
+      "before": {
+        "bytes": 3750,
+        "gitBlob": "032eb335e6bae2bba7a404c8b2d2a5e4f192afb4",
+        "sha256": "13f8c1563e906edd2fd9f96b372cace3e15be58e18c583ba60100f2ad842d8d5"
+      },
+      "literalInverse": [
+        {
+          "newEndLine": 36,
+          "newStartLine": 35,
+          "newText": "            delivery.cancel()\n",
+          "oldEndLine": 35,
+          "oldStartLine": 35,
+          "oldText": ""
+        },
+        {
+          "newEndLine": 50,
+          "newStartLine": 46,
+          "newText": "    private struct Callbacks {\n        let resolve: JSValue\n        let reject: JSValue\n    }\n",
+          "oldEndLine": 45,
+          "oldStartLine": 45,
+          "oldText": ""
+        },
+        {
+          "newEndLine": 52,
+          "newStartLine": 51,
+          "newText": "    private var callbacks: Callbacks?\n",
+          "oldEndLine": 49,
+          "oldStartLine": 46,
+          "oldText": "    private let resolve: JSManagedValue\n    private let reject: JSManagedValue\n    private weak var virtualMachine: JSVirtualMachine?\n"
+        },
+        {
+          "newEndLine": 58,
+          "newStartLine": 57,
+          "newText": "        self.callbacks = Callbacks(resolve: resolve, reject: reject)\n",
+          "oldEndLine": 57,
+          "oldStartLine": 54,
+          "oldText": "        self.resolve = JSManagedValue(value: resolve)\n        self.reject = JSManagedValue(value: reject)\n        self.virtualMachine = resolve.context?.virtualMachine\n"
+        },
+        {
+          "newEndLine": 64,
+          "newStartLine": 59,
+          "newText": "        // Native retention of the guarded blocks is not a JS-reachable managed\n        // ownership graph. Keep pending continuations until settlement or\n        // cancellation; the weak session entry can break this temporary VM\n        // cycle even while delivery is waiting on the callback queue.\n        if !state.executionSession.registerPromiseDelivery(self) { cancel() }\n",
+          "oldEndLine": 62,
+          "oldStartLine": 58,
+          "oldText": "        // The VM owns the native callback blocks, which own this delivery.\n        // Strong JSValues here would root that same VM through a native cycle.\n        virtualMachine?.addManagedReference(self.resolve, withOwner: self)\n        virtualMachine?.addManagedReference(self.reject, withOwner: self)\n"
+        },
+        {
+          "newEndLine": 68,
+          "newStartLine": 67,
+          "newText": "        state.executionSession.completePromiseDelivery(self)\n",
+          "oldEndLine": 67,
+          "oldStartLine": 65,
+          "oldText": "        virtualMachine?.removeManagedReference(resolve, withOwner: self)\n        virtualMachine?.removeManagedReference(reject, withOwner: self)\n"
+        },
+        {
+          "newEndLine": 92,
+          "newStartLine": 74,
+          "newText": "    func cancel() {\n        // Release JSValues outside both locks: their final release may dispose\n        // of the VM and its native callback blocks.\n        let callbacks = takeCallbacks()\n        withExtendedLifetime(callbacks) {}\n    }\n\n    private func takeCallbacks() -> Callbacks? {\n        lock.lock()\n        guard !settled else { lock.unlock(); return nil }\n        settled = true\n        let callbacks = self.callbacks\n        self.callbacks = nil\n        lock.unlock()\n        state.executionSession.completePromiseDelivery(self)\n        return callbacks\n    }\n\n",
+          "oldEndLine": 73,
+          "oldStartLine": 73,
+          "oldText": ""
+        },
+        {
+          "newEndLine": 94,
+          "newStartLine": 93,
+          "newText": "        guard let callbacks = takeCallbacks() else { return }\n",
+          "oldEndLine": 82,
+          "oldStartLine": 74,
+          "oldText": "        lock.lock()\n        guard !settled else { lock.unlock(); return }\n        settled = true\n        lock.unlock()\n        let success = resolve.value\n        let failure = reject.value\n        virtualMachine?.removeManagedReference(resolve, withOwner: self)\n        virtualMachine?.removeManagedReference(reject, withOwner: self)\n"
+        },
+        {
+          "newEndLine": 97,
+          "newStartLine": 96,
+          "newText": "            callbacks.reject.call(withArguments: [\"[execution_identity_changed] Reload the widget before continuing\"])\n",
+          "oldEndLine": 85,
+          "oldStartLine": 84,
+          "oldText": "            failure?.call(withArguments: [\"[execution_identity_changed] Reload the widget before continuing\"])\n"
+        },
+        {
+          "newEndLine": 100,
+          "newStartLine": 99,
+          "newText": "        (rejected ? callbacks.reject : callbacks.resolve).call(withArguments: [value])\n",
+          "oldEndLine": 88,
+          "oldStartLine": 87,
+          "oldText": "        (rejected ? failure : success)?.call(withArguments: [value])\n"
+        }
+      ],
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimePromise.swift",
+      "restoresEntireOriginal": true
+    },
+    {
+      "after": {
+        "bytes": 17319,
+        "gitBlob": "a21b35880ed3e964d4c6117e95d461b730a16366",
+        "sha256": "eab1f759ee1a5cb7b72af88883154225891a424cbab7ccbdc5a9c8f618544142"
+      },
+      "before": {
+        "bytes": 16248,
+        "gitBlob": "a8190d7dad118593ede61818838785a2107ecad3",
+        "sha256": "f7b50ceacdf034833c92554a769fe692abebe296b87e55091e7a2fb09146d9da"
+      },
+      "literalInverse": [
+        {
+          "newEndLine": 40,
+          "newStartLine": 35,
+          "newText": "    private final class WeakPromiseDelivery {\n        weak var value: ScriptWidgetPromiseDelivery?\n        init(_ value: ScriptWidgetPromiseDelivery) { self.value = value }\n    }\n    private var promiseDeliveries: [ObjectIdentifier: WeakPromiseDelivery] = [:]\n",
+          "oldEndLine": 35,
+          "oldStartLine": 35,
+          "oldText": ""
+        },
+        {
+          "newEndLine": 114,
+          "newStartLine": 100,
+          "newText": "    /// Promise lifetime is independent of the existing native-query quota.\n    /// Weak entries permit cancellation without keeping finished operations alive.\n    func registerPromiseDelivery(_ delivery: ScriptWidgetPromiseDelivery) -> Bool {\n        lock.lock(); defer { lock.unlock() }\n        guard cancellation == nil else { return false }\n        promiseDeliveries[ObjectIdentifier(delivery)] = WeakPromiseDelivery(delivery)\n        return true\n    }\n\n    func completePromiseDelivery(_ delivery: ScriptWidgetPromiseDelivery) {\n        lock.lock(); defer { lock.unlock() }\n        promiseDeliveries.removeValue(forKey: ObjectIdentifier(delivery))\n    }\n\n",
+          "oldEndLine": 95,
+          "oldStartLine": 95,
+          "oldText": ""
+        },
+        {
+          "newEndLine": 124,
+          "newStartLine": 123,
+          "newText": "        let deliveries = promiseDeliveries.values.compactMap(\\.value)\n",
+          "oldEndLine": 104,
+          "oldStartLine": 104,
+          "oldText": ""
+        },
+        {
+          "newEndLine": 128,
+          "newStartLine": 127,
+          "newText": "        promiseDeliveries.removeAll()\n",
+          "oldEndLine": 107,
+          "oldStartLine": 107,
+          "oldText": ""
+        },
+        {
+          "newEndLine": 130,
+          "newStartLine": 129,
+          "newText": "        deliveries.forEach { $0.cancel() }\n",
+          "oldEndLine": 108,
+          "oldStartLine": 108,
+          "oldText": ""
+        }
+      ],
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRunningState.swift",
+      "restoresEntireOriginal": true
+    },
+    {
+      "after": {
+        "bytes": 210998,
+        "gitBlob": "fe3c10439374fd2894b669b582b774307a05a058",
+        "sha256": "fdb3e579110a4d6a5e8af650a1cdc2c7229399ba37042e935d4dd3aec38a1d2c"
+      },
+      "before": {
+        "bytes": 210998,
+        "gitBlob": "38a88719ba7d8d45e63f05843a4ad88eeb14ee07",
+        "sha256": "4d06d0dfaca462fc21257c8053d3250b7cc0e78c4d77b4eb2e98f64bf7cbe83b"
+      },
+      "literalInverse": [
+        {
+          "newEndLine": 2153,
+          "newStartLine": 2152,
+          "newText": "      \"localSHA256\": \"98d40a32ac40bb4488dc21205b852aea2c552e80294657ab6dcb6fe44285dd4f\",\n",
+          "oldEndLine": 2153,
+          "oldStartLine": 2152,
+          "oldText": "      \"localSHA256\": \"13f8c1563e906edd2fd9f96b372cace3e15be58e18c583ba60100f2ad842d8d5\",\n"
+        },
+        {
+          "newEndLine": 2353,
+          "newStartLine": 2352,
+          "newText": "      \"localSHA256\": \"eab1f759ee1a5cb7b72af88883154225891a424cbab7ccbdc5a9c8f618544142\",\n",
+          "oldEndLine": 2353,
+          "oldStartLine": 2352,
+          "oldText": "      \"localSHA256\": \"f7b50ceacdf034833c92554a769fe692abebe296b87e55091e7a2fb09146d9da\",\n"
+        }
+      ],
+      "path": "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json",
+      "restoresEntireOriginal": true
+    },
+    {
+      "after": {
+        "bytes": 99811,
+        "gitBlob": "03cf235dc826173e96e6b222d115fefad8a79ce3",
+        "sha256": "160c07c90095dd73c0d68e6fff6007a9230ace84a092cb394b90337df03e70bb"
+      },
+      "before": {
+        "bytes": 83986,
+        "gitBlob": "c108823a9409264882e7870cc822cccf569bac3c",
+        "sha256": "53bc610452297522b67593dc6a63e201aa5287acc8ed5b0e5769d94f381b7b5f"
+      },
+      "literalInverse": [
+        {
+          "newEndLine": 16,
+          "newStartLine": 13,
+          "newText": "import JavaScriptCore\nimport Network\n@testable import HanlinScriptWidgetOriginal\n",
+          "oldEndLine": 13,
+          "oldStartLine": 13,
+          "oldText": ""
+        },
+        {
+          "newEndLine": 180,
+          "newStartLine": 132,
+          "newText": "        let stagesFile = root.appending(path: \"native-stages.jsonl\")\n        let stagesLock = NSLock()\n        var reachedFinalAssertion = false\n        func recordStage(_ label: String, _ phase: String, _ details: [String: Any] = [:]) {\n            stagesLock.lock()\n            defer { stagesLock.unlock() }\n            do {\n                var event = details\n                event[\"label\"] = label\n                event[\"phase\"] = phase\n                event[\"at\"] = Date().timeIntervalSince1970\n                event[\"pid\"] = ProcessInfo.processInfo.processIdentifier\n                event[\"isMainThread\"] = Thread.isMainThread\n                var bytes = try JSONSerialization.data(withJSONObject: event, options: [.sortedKeys])\n                bytes.append(0x0a)\n                if !FileManager.default.fileExists(atPath: stagesFile.path) {\n                    try Data().write(to: stagesFile)\n                }\n                let output = try FileHandle(forWritingTo: stagesFile)\n                defer { try? output.close() }\n                try output.seekToEnd()\n                try output.write(contentsOf: bytes)\n            } catch {\n                print(\"Original HTTP diagnostic could not record \\(label)/\\(phase): \\(error)\")\n            }\n        }\n        defer {\n            recordStage(\"test\", reachedFinalAssertion ? \"assertions-reached-end\" : \"exited-before-end\")\n            if let directory = ProcessInfo.processInfo.environment[\"HANLIN_WIDGET_EVIDENCE_DIR\"] {\n                let retained = URL(filePath: directory).appending(path: \"original-http-\" + root.lastPathComponent)\n                do {\n                    try FileManager.default.createDirectory(at: retained, withIntermediateDirectories: true)\n                    for name in [\"native-stages.jsonl\", \"wire.jsonl\", \"server.stdout\", \"server.stderr\", \"port\"] {\n                        let source = root.appending(path: name)\n                        if FileManager.default.fileExists(atPath: source.path) {\n                            try FileManager.default.copyItem(at: source, to: retained.appending(path: name))\n                        }\n                    }\n                    print(\"Original HTTP native evidence retained at \\(retained.path)\")\n                    try FileManager.default.removeItem(at: root)\n                } catch {\n                    print(\"Original HTTP evidence copy failed; source retained at \\(root.path): \\(error)\")\n                }\n            } else {\n                print(\"Original HTTP native evidence retained at \\(root.path)\")\n            }\n        }\n        recordStage(\"test\", \"started\", [\"executionTimeout\": HanlinOriginalScriptWidgetSession.executionTimeout])\n",
+          "oldEndLine": 130,
+          "oldStartLine": 129,
+          "oldText": "        defer { try? FileManager.default.removeItem(at: root) }\n"
+        },
+        {
+          "newEndLine": 206,
+          "newStartLine": 181,
+          "newText": "        let wireFile = root.appending(path: \"wire.jsonl\")\n        if let directory = ProcessInfo.processInfo.environment[\"HANLIN_WIDGET_EVIDENCE_DIR\"] {\n            let retained = URL(filePath: directory).appending(path: \"original-http-\" + root.lastPathComponent)\n            do {\n                let sourceFile = URL(filePath: #filePath)\n                let descriptor: [String: Any] = [\n                    \"schema\": 1, \"kind\": \"hanlin.original-http.live-paths\",\n                    \"test\": \"originalScriptWidgetHTTPUsesBoundedRealTransport\",\n                    \"pid\": ProcessInfo.processInfo.processIdentifier,\n                    \"at\": Date().timeIntervalSince1970,\n                    \"runDirectory\": URL(filePath: directory).standardizedFileURL.path,\n                    \"instanceID\": root.lastPathComponent,\n                    \"sourceFile\": sourceFile.path,\n                    \"sourceSHA256\": sha(try Data(contentsOf: sourceFile)),\n                    \"temporaryRoot\": root.path,\n                    \"stagesFile\": stagesFile.path, \"wireFile\": wireFile.path,\n                ]\n                try FileManager.default.createDirectory(at: retained, withIntermediateDirectories: true)\n                try JSONSerialization.data(withJSONObject: descriptor, options: [.sortedKeys])\n                    .write(to: retained.appending(path: \"live-paths.json\"), options: [.atomic])\n            } catch {\n                print(\"Original HTTP live-path publication failed: \\(error)\")\n            }\n        }\n        let authority = \"transport.hanlin.invalid:80\"\n",
+          "oldEndLine": 131,
+          "oldStartLine": 131,
+          "oldText": ""
+        },
+        {
+          "newEndLine": 215,
+          "newStartLine": 209,
+          "newText": "            import http.server, json, pathlib, sys, threading, time, urllib.parse\n            authority, wire_path = sys.argv[3], pathlib.Path(sys.argv[2])\n            wire_lock = threading.Lock()\n            def record(value):\n                with wire_lock, wire_path.open('a', encoding='utf-8') as output:\n                    output.write(json.dumps(value, sort_keys=True) + '\\n')\n",
+          "oldEndLine": 135,
+          "oldStartLine": 134,
+          "oldText": "            import http.server, json, pathlib, sys, time\n"
+        },
+        {
+          "newEndLine": 217,
+          "newStartLine": 216,
+          "newText": "                protocol_version = 'HTTP/1.1'\n",
+          "oldEndLine": 136,
+          "oldStartLine": 136,
+          "oldText": ""
+        },
+        {
+          "newEndLine": 226,
+          "newStartLine": 218,
+          "newText": "                def do_CONNECT(self):\n                    record({'phase': 'connect', 'authority': self.path})\n                    if self.path != authority:\n                        self.send_error(403); return\n                    self.tunnel_authority = self.path\n                    self.send_response(200, 'Connection Established')\n                    self.end_headers()\n                    self.close_connection = False\n",
+          "oldEndLine": 137,
+          "oldStartLine": 137,
+          "oldText": ""
+        },
+        {
+          "newEndLine": 230,
+          "newStartLine": 227,
+          "newText": "                    if getattr(self, 'tunnel_authority', None) != authority:\n                        self.send_error(403); return\n                    path = urllib.parse.urlsplit(self.path).path\n",
+          "oldEndLine": 143,
+          "oldStartLine": 138,
+          "oldText": "                    if self.path == '/slow': time.sleep(0.5)\n                    if self.path == '/redirect':\n                        self.send_response(302); self.send_header('Location', 'file:///etc/hosts'); self.end_headers(); return\n                    if self.path == '/large':\n                        self.send_response(200); self.send_header('Content-Length', str(1024*1024+1)); self.end_headers(); return\n"
+        },
+        {
+          "newEndLine": 252,
+          "newStartLine": 231,
+          "newText": "                    record({'phase': 'request', 'authority': self.tunnel_authority,\n                            'path': path, 'method': self.command, 'host': self.headers.get('Host'),\n                            'body': body, 'header': self.headers.get('X-Widget'),\n                            'type': self.headers.get('Content-Type'), 'at': time.monotonic()})\n                    if path.endswith('/slow'): time.sleep(3)\n                    if path.endswith('/redirect'):\n                        self.send_response(302)\n                        self.send_header('Location', 'file:///etc/hosts')\n                        self.send_header('Content-Length', '0'); self.end_headers(); return\n                    if path.endswith('/large'): data = b'x' * (2*1024*1024+1)\n                    elif path.endswith('/within-limit'): data = b'x' * (2*1024*1024)\n                    elif path.endswith('/binary'): data = bytes([0,127,255])\n                    else: data = json.dumps({'method': self.command, 'body': body,\n                        'header': self.headers.get('X-Widget'), 'type': self.headers.get('Content-Type')}).encode()\n                    self.send_response(503 if path.endswith('/status') else 200)\n                    self.send_header('Content-Type', 'application/json')\n                    self.send_header('Retry-After', '3')\n                    self.send_header('Content-Length', str(len(data))); self.end_headers()\n                    try:\n                        self.wfile.write(data); self.wfile.flush()\n                        record({'phase': 'response', 'path': path, 'bytes': len(data), 'at': time.monotonic()})\n",
+          "oldEndLine": 148,
+          "oldStartLine": 144,
+          "oldText": "                    data = bytes([0, 127, 255]) if self.path == '/binary' else json.dumps({'method': self.command, 'body': body, 'header': self.headers.get('X-Widget'), 'type': self.headers.get('Content-Type')}).encode()\n                    self.send_response(503 if self.path == '/status' else 200)\n                    self.send_header('Content-Type', 'application/json'); self.send_header('Retry-After', '3'); self.send_header('Content-Length', str(len(data))); self.end_headers()\n                    try: self.wfile.write(data)\n"
+        },
+        {
+          "newEndLine": 267,
+          "newStartLine": 257,
+          "newText": "            \"\"\"#, portFile.path, wireFile.path, authority]\n        let stdoutFile = root.appending(path: \"server.stdout\")\n        let stderrFile = root.appending(path: \"server.stderr\")\n        try Data().write(to: stdoutFile)\n        try Data().write(to: stderrFile)\n        let serverOutput = try FileHandle(forWritingTo: stdoutFile)\n        let serverError = try FileHandle(forWritingTo: stderrFile)\n        defer { try? serverOutput.close(); try? serverError.close() }\n        server.standardOutput = serverOutput\n        server.standardError = serverError\n",
+          "oldEndLine": 156,
+          "oldStartLine": 153,
+          "oldText": "            \"\"\"#, portFile.path]\n        server.standardOutput = FileHandle.nullDevice\n        server.standardError = FileHandle.nullDevice\n"
+        },
+        {
+          "newEndLine": 276,
+          "newStartLine": 268,
+          "newText": "        recordStage(\"server\", \"started\", [\"serverPID\": server.processIdentifier])\n        defer {\n            if server.isRunning { server.terminate(); server.waitUntilExit() }\n            recordStage(\"server\", \"terminated\", [\"terminationStatus\": server.terminationStatus,\n                \"terminationReason\": server.terminationReason.rawValue])\n        }\n        let startupDeadline = Date().addingTimeInterval(5)\n        while !FileManager.default.fileExists(atPath: portFile.path), Date() < startupDeadline {\n",
+          "oldEndLine": 160,
+          "oldStartLine": 157,
+          "oldText": "        defer { if server.isRunning { server.terminate(); server.waitUntilExit() } }\n        let startDeadline = ContinuousClock.now.advanced(by: .seconds(5))\n        while !FileManager.default.fileExists(atPath: portFile.path), server.isRunning, ContinuousClock.now < startDeadline {\n"
+        },
+        {
+          "newEndLine": 290,
+          "newStartLine": 278,
+          "newText": "        let port = try #require(UInt16(String(contentsOf: portFile, encoding: .utf8)))\n        recordStage(\"server\", \"ready\", [\"port\": Int(port)])\n        // Keep the original URL/domain policy active. Only this test's real\n        // URLSession uses the owned CONNECT proxy; no system proxy is changed.\n        let configuration = URLSessionConfiguration.ephemeral\n        configuration.proxyConfigurations = [ProxyConfiguration(httpCONNECTProxy:\n            .hostPort(host: \"127.0.0.1\", port: try #require(NWEndpoint.Port(rawValue: port))))]\n        let transport = HanlinScriptWidgetOriginal.ScriptWidgetFetchManager(configuration: configuration)\n        typealias HTTPResult = (tag: String, children: [String], values: [String: HanlinValue], requests: Int)\n        func execute(_ label: String, _ source: String) throws -> HTTPResult {\n            recordStage(label, \"preparing\")\n            let base = \"http://transport.hanlin.invalid/\\(label)\"\n",
+          "oldEndLine": 165,
+          "oldStartLine": 162,
+          "oldText": "        let port = try String(contentsOf: portFile, encoding: .utf8)\n        let base = \"http://127.0.0.1:\\(port)\"\n        func execute(_ source: String) throws -> HanlinScriptWidgetExecution {\n"
+        },
+        {
+          "newEndLine": 293,
+          "newStartLine": 292,
+          "newText": "                javaScript: \"async function $main() { const base='\\(base)'; \\(source); $render(ScriptWidget.createElement('text',{},'Transport verified')); }\",\n",
+          "oldEndLine": 168,
+          "oldStartLine": 167,
+          "oldText": "                javaScript: \"async function $main() { const base = '\\(base)'; \\(source); $render(ScriptWidget.createElement('text', {}, 'Transport verified')); }\",\n"
+        },
+        {
+          "newEndLine": 375,
+          "newStartLine": 294,
+          "newText": "            try program.validate(engine: .scriptwidget)\n            try HanlinOriginalScriptWidgetSession.validatePreparedJavaScript(program.javaScript)\n            let context = try #require(JSContext())\n            let native = try HanlinOriginalScriptWidgetSession(context: context,\n                root: root.appending(path: label), identity: UUID().uuidString,\n                preparedJavaScript: program.javaScript, files: program.resources,\n                values: [:], environment: [:], isUserInitiatedAction: false)\n            let completed = DispatchSemaphore(value: 0)\n            var result: Result<HTTPResult, Error>?\n            var rendered: (String, [String])?\n            defer {\n                native.cancel()\n                native.onJavaScriptQueue {\n                    native.finish()\n                    context.exceptionHandler = nil\n                    for key in [\"$render\", \"__httpTestDone\", \"__httpTestFailed\", \"__httpTestStore\", \"__httpTestStage\"] {\n                        context.setObject(nil, forKeyedSubscript: key as NSString)\n                    }\n                }\n            }\n            try native.onJavaScriptQueue {\n                let state = try #require(context.scriptWidgetRunningState)\n                state.fetchManagerForTesting = transport\n                native.installAPIs()\n                let failed: @convention(block) (String) -> Void = { message in\n                    guard result == nil else { return }\n                    recordStage(label, \"rejected\", [\"message\": message])\n                    result = .failure(HanlinScriptWidgetError(message)); completed.signal()\n                }\n                let render: @convention(block) (HanlinScriptWidgetOriginal.ScriptWidgetRuntimeElement) -> Void = { element in\n                    if let error = HanlinScriptWidgetOriginal.ScriptWidgetRuntimeContract.validateElementTree(element) {\n                        failed(error.localizedDescription); return\n                    }\n                    guard let tag = element.tagAsString(), let children = element.getChildren() as? [String] else {\n                        failed(\"The transport fixture did not render its actual text element\"); return\n                    }\n                    rendered = (tag, children)\n                    recordStage(label, \"rendered\", [\"tag\": tag, \"childCount\": children.count])\n                }\n                // Same compatibility alias as the shipping adapter; storage is\n                // still the original session's real transaction and namespace.\n                let store: @convention(block) (String, Any) -> Bool = { [weak native] key, value in\n                    guard let native else { return false }\n                    do { try native.setValue(value, forKey: key); return true }\n                    catch { failed(error.localizedDescription); return false }\n                }\n                let finished: @convention(block) () -> Void = { [weak native] in\n                    guard result == nil else { return }\n                    do {\n                        let native = try #require(native)\n                        let rendered = try #require(rendered)\n                        result = .success((rendered.0, rendered.1,\n                            try HanlinWidgetJSON.dictionary(native.values()), state.executionSession.totalNetworkRequests))\n                        recordStage(label, \"resolved\", [\"requests\": state.executionSession.totalNetworkRequests])\n                    } catch {\n                        recordStage(label, \"completion-error\", [\"message\": String(describing: error)])\n                        result = .failure(error)\n                    }\n                    completed.signal()\n                }\n                let stage: @convention(block) (String) -> Void = { name in\n                    recordStage(label, \"javascript\", [\"stage\": name,\n                        \"requests\": state.executionSession.totalNetworkRequests])\n                }\n                context.setObject(render, forKeyedSubscript: \"$render\" as NSString)\n                context.setObject(store, forKeyedSubscript: \"__httpTestStore\" as NSString)\n                context.setObject(finished, forKeyedSubscript: \"__httpTestDone\" as NSString)\n                context.setObject(failed, forKeyedSubscript: \"__httpTestFailed\" as NSString)\n                context.setObject(stage, forKeyedSubscript: \"__httpTestStage\" as NSString)\n                context.exceptionHandler = { _, error in failed(error?.toString() ?? \"Native HTTP fixture exception\") }\n                context.evaluateScript(\"globalThis.$storage = {set: __httpTestStore};\")\n                context.evaluateScript(try #require(HanlinOriginalScriptWidgetSession.supportScript(\"util.js\")))\n                context.evaluateScript(program.javaScript)\n                recordStage(label, \"evaluating\")\n                context.evaluateScript(\"$main().then(__httpTestDone, e => __httpTestFailed(String(e)));\")\n            }\n            guard completed.wait(timeout: .now() + HanlinOriginalScriptWidgetSession.executionTimeout) == .success else {\n                recordStage(label, \"timeout\", [\"executionTimeout\": HanlinOriginalScriptWidgetSession.executionTimeout])\n                throw HanlinScriptWidgetError(\"The original HTTP execution did not finish within its native budget (stage: \\(label); evidence: \\(root.path))\")\n            }\n            return try native.onJavaScriptQueue { try #require(result).get() }\n",
+          "oldEndLine": 170,
+          "oldStartLine": 169,
+          "oldText": "            return try HanlinScriptWidgetRuntime.shared.run(program: program, values: [:], environment: [:])\n"
+        },
+        {
+          "newEndLine": 380,
+          "newStartLine": 376,
+          "newText": "        let verbs = try execute(\"verbs\", #\"\"\"\n            for (const method of ['get','post','put','patch']) {\n              __httpTestStage('verb:'+method);\n              const result = JSON.parse(await $http[method](base+'/echo', {headers:{'X-Widget':'source'},body:method==='get'?undefined:{count:7}}));\n",
+          "oldEndLine": 174,
+          "oldStartLine": 171,
+          "oldText": "        let verbs = try execute(#\"\"\"\n            for (const method of ['get', 'post', 'put', 'patch']) {\n              const result = JSON.parse(await $http[method](base + '/echo', {headers:{'X-Widget':'source'}, body:method === 'get' ? undefined : {count:7}}));\n"
+        },
+        {
+          "newEndLine": 389,
+          "newStartLine": 384,
+          "newText": "            for (let index=4; index<32; index++) {\n              __httpTestStage('budget:'+index);\n              const result = JSON.parse(await $fetch(base+'/budget/'+index));\n              if (result.method !== 'GET') throw Error('An admitted request did not reach the real transport');\n            }\n",
+          "oldEndLine": 178,
+          "oldStartLine": 178,
+          "oldText": ""
+        },
+        {
+          "newEndLine": 394,
+          "newStartLine": 390,
+          "newText": "            __httpTestStage('over-budget');\n            try { await $fetch(base+'/over-budget'); }\n            catch (error) { rejected = String(error).includes('Network request budget exceeded'); }\n            if (!rejected) throw Error('Thirty-third request exceeded budget');\n",
+          "oldEndLine": 181,
+          "oldStartLine": 179,
+          "oldText": "            try { await $fetch(base + '/echo'); } catch (_) { rejected = true; }\n            if (!rejected) throw Error('Fifth request exceeded budget');\n"
+        },
+        {
+          "newEndLine": 400,
+          "newStartLine": 396,
+          "newText": "        #expect(verbs.requests == 32)\n        let response = try execute(\"response\", #\"\"\"\n            __httpTestStage('delete');\n            const deleted = JSON.parse(await $http.delete(base+'/echo', {body:'raw source'}));\n",
+          "oldEndLine": 185,
+          "oldStartLine": 183,
+          "oldText": "        let response = try execute(#\"\"\"\n            const deleted = JSON.parse(await $http.delete(base + '/echo', {body:'raw source'}));\n"
+        },
+        {
+          "newEndLine": 403,
+          "newStartLine": 401,
+          "newText": "            __httpTestStage('status');\n            const status = await $http.getResponse(base+'/status');\n",
+          "oldEndLine": 187,
+          "oldStartLine": 186,
+          "oldText": "            const status = await $http.getResponse(base + '/status');\n"
+        },
+        {
+          "newEndLine": 406,
+          "newStartLine": 404,
+          "newText": "            __httpTestStage('binary');\n            const bytes = await $fetch(base+'/binary', {responseType:'base64'});\n",
+          "oldEndLine": 189,
+          "oldStartLine": 188,
+          "oldText": "            const bytes = await $fetch(base + '/binary', {responseType:'base64'});\n"
+        },
+        {
+          "newEndLine": 419,
+          "newStartLine": 410,
+          "newText": "        let limits = try execute(\"limits\", #\"\"\"\n            __httpTestStage('within-limit');\n            const admitted = await $http.get(base+'/within-limit');\n            __httpTestStage('within-limit-received');\n            if (admitted.length !== 2*1024*1024 || !/^x+$/.test(admitted)) throw Error('The supported response boundary was rejected or changed');\n            __httpTestStage('within-limit-validated');\n            for (const [path,params] of [['/large',{}],['/redirect',{}],['/slow',{timeoutInterval:0.05}]]) {\n              __httpTestStage('limit:'+path);\n              const started = Date.now();\n",
+          "oldEndLine": 195,
+          "oldStartLine": 193,
+          "oldText": "        let limits = try execute(#\"\"\"\n            for (const [path, params] of [['/large', {}], ['/redirect', {}], ['/slow', {timeoutInterval:0.05}]]) {\n"
+        },
+        {
+          "newEndLine": 428,
+          "newStartLine": 420,
+          "newText": "              try { await $http.get(base+path, params); }\n              catch (error) {\n                rejected = true;\n                if (path === '/large' && !String(error).includes('Response exceeds the 2097152-byte limit')) throw error;\n              }\n              if (!rejected) throw Error('Unsafe or over-budget transport accepted: '+path);\n              const elapsed = Date.now()-started;\n              if (path === '/slow' && (elapsed < 900 || elapsed >= 2500)) throw Error('The one-second timeout floor was not applied to the real slow request');\n",
+          "oldEndLine": 198,
+          "oldStartLine": 196,
+          "oldText": "              try { await $http.get(base + path, params); } catch (_) { rejected = true; }\n              if (!rejected) throw Error('Unsafe or over-budget transport accepted: ' + path);\n"
+        },
+        {
+          "newEndLine": 435,
+          "newStartLine": 429,
+          "newText": "            for (const [url,reason] of [['file:///etc/hosts','Only HTTP and HTTPS URLs are allowed'],['http://127.0.0.1/private','Local and private network hosts are not allowed']]) {\n              __httpTestStage('policy:'+url);\n              let rejected = false;\n              try { await $fetch(url); } catch (error) { rejected = String(error).includes(reason); }\n              if (!rejected) throw Error('Disallowed transport accepted: '+url);\n            }\n",
+          "oldEndLine": 202,
+          "oldStartLine": 199,
+          "oldText": "            let rejected = false;\n            try { await $fetch('file:///etc/hosts'); } catch (_) { rejected = true; }\n            if (!rejected) throw Error('File transport accepted');\n"
+        },
+        {
+          "newEndLine": 455,
+          "newStartLine": 436,
+          "newText": "        #expect(limits.tag == \"text\")\n        #expect(limits.children == [\"Transport verified\"])\n        #expect(response.requests == 3)\n        #expect(limits.requests == 4)\n        let wire = try String(contentsOf: wireFile, encoding: .utf8).split(separator: \"\\n\").map {\n            try #require(JSONSerialization.jsonObject(with: Data($0.utf8)) as? [String: Any])\n        }\n        let requests = wire.filter { $0[\"phase\"] as? String == \"request\" }\n        #expect(wire.contains { $0[\"phase\"] as? String == \"connect\" && $0[\"authority\"] as? String == authority })\n        #expect(requests.count == 39)\n        #expect(requests.allSatisfy {\n            $0[\"authority\"] as? String == authority && [\"transport.hanlin.invalid\", \"transport.hanlin.invalid:80\"].contains($0[\"host\"] as? String ?? \"\")\n        })\n        #expect(requests.filter { ($0[\"path\"] as? String)?.hasPrefix(\"/verbs/\") == true }.count == 32)\n        #expect(requests.filter { $0[\"path\"] as? String == \"/response/echo\" && $0[\"method\"] as? String == \"DELETE\" && $0[\"body\"] as? String == \"raw source\" }.count == 1)\n        #expect(requests.filter { $0[\"path\"] as? String == \"/limits/slow\" }.count == 1)\n        #expect(!requests.contains { ($0[\"path\"] as? String)?.contains(\"over-budget\") == true || $0[\"path\"] as? String == \"/private\" })\n        #expect(!wire.contains { $0[\"phase\"] as? String == \"response\" && $0[\"path\"] as? String == \"/limits/slow\" })\n        reachedFinalAssertion = true\n",
+          "oldEndLine": 204,
+          "oldStartLine": 203,
+          "oldText": "        #expect(limits.node.children == [.value(.string(\"Transport verified\"))])\n"
+        }
+      ],
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+      "restoresEntireOriginal": true
+    }
+  ],
+  "newOriginalTest": {
+    "baseAbsence": "Original explicit-ref GitHub 404 retained in primary intake",
+    "bytes": 8330,
+    "gitBlob": "bddd4956c68488d9c5b526bf13957eb64430e9ff",
+    "inverse": "Remove only this newly added file",
+    "methods": [
+      "originalPromiseRetainsPendingContinuationThroughGarbageCollection",
+      "originalPromiseCancellationReleasesPendingContinuationAndDisposesContext"
+    ],
+    "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinOriginalPromiseLifetimeTests.swift",
+    "runtime": "NOT_RUN_BY_THIS_REVIEW",
+    "sha256": "527fba708cfbf5a6e365776650235a39ae115bde54a848b5f54d7c35636fde2c"
+  },
+  "originalHTTPMethod": {
+    "assertionEvolution": "Original method/body/header/status/binary/redirect/timeout/render obligations retained; stale 4-request/1MiB/local-host fixture replaced by original 32-request/2MiB CONNECT fixture without weakening URL policy",
+    "donorFullFile": {
+      "bytes": 100904,
+      "gitBlob": "52bcab97417133c6be60123c63e243f38666dea2",
+      "sha256": "433703973e69d764686c6761ad1851c40d76f5e53afa4561d1720d873a5a1ae4"
+    },
+    "donorMethod": {
+      "bytes": 21261,
+      "gitBlob": "01b104edf1250c1d231c62e89f464484f8ed661d",
+      "sha256": "64eba284472d36be3dba67f2566ac0adfd4f7ba39b92b4005d2fdb92d1555496"
+    },
+    "nativeDeadlineSeconds": 5,
+    "originalMethod": {
+      "bytes": 5517,
+      "gitBlob": "8e98e25434e0d50b8fa6065ad7af5b244f2a4fe1",
+      "sha256": "98671cdc6546944b910505726ddc50799e702cc26743654ab6156fc783b089ec"
+    },
+    "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+    "scope": "Only original method and its three macOS imports transplanted; all other 33 methods and every other byte preserved",
+    "selector": "HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/originalScriptWidgetHTTPUsesBoundedRealTransport",
+    "unrelatedInstalledArchiveMethodChangeIncluded": false
+  },
+  "schema": "pinkha-original-promise-literal-inverse-v1",
+  "sourcePublicAPI": "Original exported API and all package manifests/locks unchanged; no binary ABI qualification claimed"
+}

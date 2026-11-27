@@ -1,0 +1,479 @@
+{
+  "actualInputContext": {
+    "context": {
+      "configuration": "Debug",
+      "developer_directory": "/Applications/Xcode_27.2.app/Contents/Developer",
+      "diagnostics_provenance_sha256": "4fb8fbeb6dde6a775c16a6794a3932c4e17e14b0a7f17e3a99b0fa7ab085401e",
+      "diagnostics_tracked_workspace_modified": true,
+      "products_root": "/Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products",
+      "run_attempt": "1",
+      "run_id": "45997289566",
+      "run_provider": "github",
+      "selectors": [
+        "AI_HLYTests/ChatScrollViewHandleTests/positiveGeometryWithoutAWindowCannotPositionATranscript()",
+        "AI_HLYTests/ChatScrollViewHandleTests/everyReadRechecksWindowDimensionsAndConversation()",
+        "AI_HLYTests/ChatScrollViewHandleTests/detachAndReplacementInvalidateCapturedRequestsWithoutRetainingViews()",
+        "AI_HLYTests/ChatScrollViewHandleTests/lateWindowAttachmentDeliversOneDeferredReadinessCallback()",
+        "AI_HLYTests/ChatScrollViewHandleTests/cancelledReadinessCannotRestoreAPreviousConversation()",
+        "AI_HLYTests/ChatScrollViewHandleTests/resizedViewportRejectsARequestBeforeTheNextBridgeCallback()",
+        "AI_HLYTests/ChatScrollViewHandleTests/movingTheSameScrollViewToAnotherWindowInvalidatesQueuedPositioning()",
+        "AI_HLYTests/ChatScrollViewHandleTests/contentGrowthAndUserScrollingKeepTheViewportLifetime()",
+        "AI_HLYTests/ChatScrollViewHandleTests/outgoingConversationCallbacksCannotUnbindOrCancelTheCurrentViewport()",
+        "AI_HLYTests/ChatScrollViewHandleTests/sameConversationProducerReplacementOwnsDetachAndPendingCallbacks()",
+        "AI_HLYTests/ChatScrollViewHandleTests/stagedProducerOwnershipSurvivesUnresolvedAndOutgoingCallbacks()",
+        "AI_HLYTests/ChatScrollViewHandleTests/deferredReadinessRechecksResizeAndCanRecoverAtTheNewViewport()",
+        "AI_HLYTests/ChatScrollViewHandleTests/settledPositionReadsTheCurrentOffsetWithoutMutatingTheViewport()",
+        "AI_HLYTests/ChatScrollViewHandleTests/diagnosticPeekCannotAdvanceGenerationOrCancelPendingReadiness()",
+        "AI_HLYTests/ChatScrollViewHandleTests/incomingBindingBeforeActivationDoesNotNeedAnotherBridgeCallback()",
+        "AI_HLYTests/ChatScrollViewHandleTests/postLayoutReadReconcilesLazyContentAtTheSameOffsetWithoutAnotherIdle()",
+        "AI_HLYTests/ChatScrollViewHandleTests/olderFittingNativePositionCannotCancelAlreadyAdmittedGrowth()",
+        "AI_HLYTests/ChatScrollViewHandleTests/postLayoutReadRejectsStaleViewportAndConversation()",
+        "AI_HLYTests/ChatAutoFollowTests/equalVisibilitySamplesDoNotInvalidateTheTranscriptOrExternalComposer()",
+        "AI_HLYTests/ChatAutoFollowTests/fittingAndInvalidatedSamplesDoNotPublishRepeatedHiddenArrowState()"
+      ],
+      "source_sha": "4cb6454c1c6e110ead73179c06ada9e909bf250b",
+      "tracked_diff_sha256": "29e685b6fece225eb8d11ef09742d3640e37e890e0db2bc2cdc61a83a852aba7",
+      "tracked_workspace_modified": true,
+      "xcode_identity": {
+        "developer_dir_override": "",
+        "executable_path": "/Applications/Xcode_27.2.app/Contents/Developer/usr/bin/xcodebuild",
+        "executable_sha256": "0b012a2917e0b5b5eb613c22823c0a785c27e23ff6fe1aa3fd118d7903eacb24",
+        "info_plist_sha256": "f2d3a11a2d6efcd6c5da80214b33fc2d2ce38aa72d4281867f5157a3dbe5cfc6",
+        "launcher_path": "/usr/bin/xcodebuild",
+        "launcher_sha256": "7d9561a7f8e3c5d70a571422a4522de986c003879dab3bf7562963b6cdc3e658",
+        "method": "selected_bundle_files_v1",
+        "toolchains_override": "",
+        "version_plist_sha256": "93b253c224fee82d869beb7a0462f2e90138cad83bcdc64784c614eee6f8ba2d"
+      },
+      "xcode_version": "Xcode 27.2\nBuild version 27B52"
+    },
+    "prior_descriptors": [],
+    "qualification": "Current build-for-testing may reuse validated compiler products; no fresh-compilation claim.",
+    "schema_version": 1,
+    "status": "PREPARED"
+  },
+  "actualPreparationOverlay": {
+    "laterWholeTrackedDiffSHA256": "29e685b6fece225eb8d11ef09742d3640e37e890e0db2bc2cdc61a83a852aba7",
+    "scope": "Actual prepared4cb plus original recorded producer overlay, not a clean4cb full-product claim.",
+    "trackedPatchSHA256": "caf78a85e5e8fdaa187f873972a203413e0231e883a3256dd5ee9fb40c1f522b",
+    "trackedPaths": 19
+  },
+  "actualTerminalJob": {
+    "conclusion": "failure",
+    "id": 140499955134,
+    "logs_url": null,
+    "name": "Launch full app on iPad Simulator",
+    "run_id": 45997289566,
+    "status": "completed",
+    "steps": [
+      {
+        "conclusion": "success",
+        "name": "Set up job",
+        "number": 1,
+        "status": "completed"
+      },
+      {
+        "conclusion": "skipped",
+        "name": "Live Activity \u00c3\u201a\u00c2\u00b7 refresh",
+        "number": 2,
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Checkout repository",
+        "number": 3,
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Set up pinned RuntimeCore host Node",
+        "number": 4,
+        "status": "completed"
+      },
+      {
+        "conclusion": "skipped",
+        "name": "Verify original OpenClaw source closure and parity",
+        "number": 5,
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Prepare simulator logs and select stable Xcode",
+        "number": 6,
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Read the installed FoundationModels tool continuation interface",
+        "number": 7,
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Retain FoundationModels declarations before the application build",
+        "number": 8,
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Resolve current original MiniApp sources and exact build graph",
+        "number": 9,
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Preserve current original MiniApp build inputs",
+        "number": 10,
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Prepare declaration-only metadata tool",
+        "number": 11,
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Prepare resolved original MiniApp native dependencies",
+        "number": 12,
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Restore simulator cloned Swift package dependencies",
+        "number": 13,
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Restore compatible simulator compiler state",
+        "number": 14,
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Report simulator cache mode",
+        "number": 15,
+        "status": "completed"
+      },
+      {
+        "conclusion": "skipped",
+        "name": "Discard simulator compiler state for forced clean build",
+        "number": 16,
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Create CI Config.xcconfig",
+        "number": 17,
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Prepare verified embedded RuntimeCore",
+        "number": 18,
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Package current RuntimeCore host resources",
+        "number": 19,
+        "status": "completed"
+      },
+      {
+        "conclusion": "skipped",
+        "name": "Run RuntimeCore preflight",
+        "number": 20,
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Export original prepared Hanlin SDK native artifacts",
+        "number": 21,
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Retain prepared Hanlin SDK native artifacts",
+        "number": 22,
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Resolve Swift Package dependencies",
+        "number": 23,
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Record resolved diagnostics build provenance",
+        "number": 24,
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Save validated simulator Swift package dependencies",
+        "number": 25,
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Record simulator SourcePackages save status",
+        "number": 26,
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Restore unchanged simulator build input metadata",
+        "number": 27,
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Capture simulator build input metadata",
+        "number": 28,
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Stage modular headers into simulator Swift Package checkouts",
+        "number": 29,
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Stage exact original A2UI plugin schemas for the combined app graph",
+        "number": 30,
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Retain prior unit manifests before the current test build",
+        "number": 31,
+        "status": "completed"
+      },
+      {
+        "conclusion": "failure",
+        "name": "Build full arm64 simulator app",
+        "number": 32,
+        "status": "completed"
+      },
+      {
+        "conclusion": "skipped",
+        "name": "Measure same-run simulator no-op rebuild",
+        "number": 33,
+        "status": "completed"
+      },
+      {
+        "conclusion": "skipped",
+        "name": "Validate the current build-for-testing unit products",
+        "number": 34,
+        "status": "completed"
+      },
+      {
+        "conclusion": "skipped",
+        "name": "Save successful simulator compiler state",
+        "number": 35,
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Record simulator DerivedData save status",
+        "number": 36,
+        "status": "completed"
+      },
+      {
+        "conclusion": "skipped",
+        "name": "Locate and scan simulator app",
+        "number": 37,
+        "status": "completed"
+      },
+      {
+        "conclusion": "skipped",
+        "name": "Live Activity \u00c3\u201a\u00c2\u00b7 refresh",
+        "number": 38,
+        "status": "completed"
+      },
+      {
+        "conclusion": "skipped",
+        "name": "Boot iPad Simulator and stage fixtures",
+        "number": 39,
+        "status": "completed"
+      },
+      {
+        "conclusion": "skipped",
+        "name": "Live Activity \u00c3\u201a\u00c2\u00b7 refresh",
+        "number": 40,
+        "status": "completed"
+      },
+      {
+        "conclusion": "skipped",
+        "name": "Stage the existing live provider account privately",
+        "number": 41,
+        "status": "completed"
+      },
+      {
+        "conclusion": "skipped",
+        "name": "Run simulator test suite",
+        "number": 42,
+        "status": "completed"
+      },
+      {
+        "conclusion": "skipped",
+        "name": "Verify bounded live evidence and remove the owned private account",
+        "number": 43,
+        "status": "completed"
+      },
+      {
+        "conclusion": "skipped",
+        "name": "Upload sanitized original live-provider acceptance",
+        "number": 44,
+        "status": "completed"
+      },
+      {
+        "conclusion": "skipped",
+        "name": "Verify affected Motion on the prepared app simulator",
+        "number": 45,
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Analyze performance benchmark results",
+        "number": 46,
+        "status": "completed"
+      },
+      {
+        "conclusion": "skipped",
+        "name": "Run full Runtime Tooling acceptance and collect every group",
+        "number": 47,
+        "status": "completed"
+      },
+      {
+        "conclusion": "skipped",
+        "name": "Launch full app and verify runtime acceptance",
+        "number": 48,
+        "status": "completed"
+      },
+      {
+        "conclusion": "skipped",
+        "name": "Live Activity \u00c3\u201a\u00c2\u00b7 refresh",
+        "number": 49,
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Collect simulator diagnostics",
+        "number": 50,
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Clean up the owned compact UI simulator",
+        "number": 51,
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Upload simulator smoke evidence",
+        "number": 52,
+        "status": "completed"
+      },
+      {
+        "conclusion": "skipped",
+        "name": "Post Set up pinned RuntimeCore host Node",
+        "number": 103,
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Post Checkout repository",
+        "number": 104,
+        "status": "completed"
+      },
+      {
+        "conclusion": "success",
+        "name": "Complete job",
+        "number": 105,
+        "status": "completed"
+      }
+    ]
+  },
+  "artifact": {
+    "allZIPMembersCRCVerified": true,
+    "bytes": 1927038,
+    "id": 15199148273,
+    "sha256": "2eaf6408f65c69f47f0d0df76a5a1df0c4772b9e39a039c83fd4e81373da5364"
+  },
+  "attempt": 1,
+  "existingOriginalCorrection": {
+    "affectedSDKPackageTrees": 0,
+    "after": {
+      "bytes": 4321,
+      "gitBlob": "621ed01a3b2d625eed229c31ac4d82fa74ebe84a",
+      "sha256": "10f0ae12345b996c282a9b5e7027e07081f86b438a8424c0133a5ecd055c6300"
+    },
+    "allOtherOriginalFileBytesPreserved": true,
+    "before": {
+      "bytes": 4392,
+      "gitBlob": "bae6bdefe86ea93e50638c6a881f478caf3456c1",
+      "sha256": "114cdb71d067a0cf3139fe373af2b25617e275fa5aa040a0be71a0801e1283f8"
+    },
+    "donor": "f768d634bfa8a102cf63b32c7ab9d129cafc671d",
+    "literalInverse": {
+      "newText": "",
+      "offset": 4321,
+      "originalText": "\npublic struct HanlinMiniAppSystemIntentsPackage: AppIntentsPackage {}\n"
+    },
+    "notApplied": true,
+    "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift",
+    "retainedApplicationPackageFile": {
+      "bytes": 5780,
+      "gitBlob": "3153a6f429551dbb24d2c732cd4b3191903b280e",
+      "identicalAtDonor": true,
+      "path": "AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift",
+      "sha256": "29793c75803318c10d9abcd2b02945b16852f32ec3cebeabe1742a9a4746b702"
+    },
+    "sourceOnly": true
+  },
+  "firstFatalDiagnostic": {
+    "command": "ExtractAppIntentsMetadata",
+    "diagnosis": "The same target contains two AppIntentsPackage conformances; metadata processor requires exactly one. Actual compiler log contains this failure, not a failed scrolling test or a CoreSpotlight unknown-type diagnostic.",
+    "sites": [
+      {
+        "line": 106,
+        "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift",
+        "symbol": "HanlinMiniAppSystemIntentsPackage"
+      },
+      {
+        "line": 115,
+        "path": "AI_HLY/Downstream/SystemIntegrations/ChavrusaSystemIntegrations.swift",
+        "symbol": "HanlinApplicationIntentsPackage"
+      }
+    ],
+    "target": "AI_Hanlin from HanlinSDK"
+  },
+  "job": 140499955134,
+  "limits": [
+    "All20 selected UIKit methods remain NOT_RUN. The original xctestrun record is PREPARED, not validated current product admission.",
+    "Existing prior7Agent/6quota/2Widget acceptance is neither rerun nor extended by this failedApp build.",
+    "Original producer CoreSpotlight repair and shared Promise repair are separate proposed source changes, not the cause of this observed failure.",
+    "No build/test/cancel/redispatch or SDK pin/materialization action was performed by this review.",
+    "A job-log connector Transport closed failure is retained separately; classification uses the fully verified original smoke ZIP."
+  ],
+  "originalEnvironment": {
+    "Swift": "6.4.2 (swiftlang-6.4.2.1.9 clang-2100.4.1.1)",
+    "Xcode": "27.2 (27B52)",
+    "developerDirectory": "/Applications/Xcode_27.2.app/Contents/Developer",
+    "macOS": "27.0.1 (26A434)"
+  },
+  "originalLog": {
+    "bytes": 14508691,
+    "gitBlob": "17af87827de995d395fdfc5cf64f093e307704ea",
+    "sha256": "42bdde2a3b6591395c62cb5c3ab98db2f18f08b86f0208f08ccd6a81d373139f"
+  },
+  "run": 45997289566,
+  "schema": "pinkha-uikit20-original-compiler-failure-and-donor-source-review/v1",
+  "source": "4cb6454c1c6e110ead73179c06ada9e909bf250b",
+  "sourceTree": "500ece4e329fe325d0bb699fcb383fb7fc0ea6e5",
+  "status": "ACTUAL_APP_METADATA_EXPORT_FAILED_TESTS_NOT_RUN"
+}

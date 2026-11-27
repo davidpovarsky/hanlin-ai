@@ -1,6 +1,7 @@
 """Portable graph and signed-bundle ownership checks for real extension targets."""
 from copy import deepcopy
 import json
+import re
 from pathlib import Path
 import subprocess
 import sys
@@ -64,7 +65,26 @@ class SystemExtensionTargetsTests(unittest.TestCase):
         self.assertNotIn("HanlinCameraCaptureControl", widget)
         mini = (ROOT / "HanlinMiniAppsApp/HanlinMiniAppsApp.swift").read_text()
         self.assertIn(".hanlinMiniAppSystemEntrypoints(", mini)
-        self.assertIn("HanlinMiniAppSystemIntentsPackage.self", mini)
+        package_pattern = r"\b(?:struct|class|enum|extension)\s+(\w+)\s*:\s*AppIntentsPackage\b"
+        self.assertEqual(re.findall(package_pattern, mini), ["HanlinMiniAppsIntents"])
+        self.assertEqual(re.findall(package_pattern, intents), ["HanlinApplicationIntentsPackage"])
+        self.assertNotIn("HanlinMiniAppSystemIntentsPackage.self", mini)
+        objects = self.project["objects"]
+        mini_sources = {
+            objects[objects[file]["fileRef"]].get("path")
+            for phase in self.target(self.project, "HanlinMiniApps")["buildPhases"]
+            if objects[phase]["isa"] == "PBXSourcesBuildPhase"
+            for file in objects[phase]["files"] if "fileRef" in objects[file]
+        }
+        entity_path = "AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift"
+        self.assertIn(entity_path, mini_sources)
+        entity = (ROOT / entity_path).read_text()
+        self.assertIn("public struct HanlinInstalledMiniAppEntity: IndexedEntity", entity)
+        self.assertIn("public struct HanlinInstalledMiniAppQuery: EnumerableEntityQuery, EntityStringQuery, IndexedEntityQuery", entity)
+        self.assertIn("public struct HanlinOpenInstalledMiniAppIntent: OpenIntent", entity)
+        self.assertEqual(re.findall(package_pattern, entity), [])
+        app = (ROOT / "AI_HLY/AI_HLY.swift").read_text()
+        self.assertIn("HanlinApplicationIntentsPackage.self", app)
         self.assertIn("HanlinCameraCaptureIntentsPackage.self", mini)
         project = deepcopy(self.project)
         objects = project["objects"]

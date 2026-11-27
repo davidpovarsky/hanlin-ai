@@ -1,0 +1,724 @@
+{
+  "jobs": [
+    {
+      "id": 140499774181,
+      "name": "Plan affected validation and tests",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 45997289566,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Live Activity Ã‚Â· refresh",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 2
+        },
+        {
+          "name": "Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Set up Python 3.12",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Run affected validation planner",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 5
+        },
+        {
+          "name": "Upload validation plan artifact",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Post Set up Python 3.12",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Post Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        }
+      ]
+    },
+    {
+      "id": 140499775840,
+      "name": "Verify whole Composer and UIKit components on iOS 27",
+      "status": "completed",
+      "conclusion": "skipped",
+      "run_id": 45997289566,
+      "logs_url": null,
+      "steps": null
+    },
+    {
+      "id": 140499775883,
+      "name": "Inspect existing native failure evidence only",
+      "status": "completed",
+      "conclusion": "skipped",
+      "run_id": 45997289566,
+      "logs_url": null,
+      "steps": null
+    },
+    {
+      "id": 140499775924,
+      "name": "Two frozen Composer metadata queries only",
+      "status": "completed",
+      "conclusion": "skipped",
+      "run_id": 45997289566,
+      "logs_url": null,
+      "steps": null
+    },
+    {
+      "id": 140499776018,
+      "name": "Probe pinned NativeScript SDK metadata",
+      "status": "completed",
+      "conclusion": "skipped",
+      "run_id": 45997289566,
+      "logs_url": null,
+      "steps": null
+    },
+    {
+      "id": 140499776104,
+      "name": "Native chat regression before and after sources",
+      "status": "completed",
+      "conclusion": "skipped",
+      "run_id": 45997289566,
+      "logs_url": null,
+      "steps": null
+    },
+    {
+      "id": 140499776228,
+      "name": "inputs.target_validation_group != 'product_split_integration' && 'Verify exact-pin A2UI on macOS 27' || 'Verify MiniApps provider and focused tests on iOS 27'",
+      "status": "completed",
+      "conclusion": "skipped",
+      "run_id": 45997289566,
+      "logs_url": null,
+      "steps": null
+    },
+    {
+      "id": 140499776252,
+      "name": "Actual compiled Swift Mini App UI on iPhone and iPad 27",
+      "status": "completed",
+      "conclusion": "skipped",
+      "run_id": 45997289566,
+      "logs_url": null,
+      "steps": null
+    },
+    {
+      "id": 140499776298,
+      "name": "Read installed stable simulator environment only",
+      "status": "completed",
+      "conclusion": "skipped",
+      "run_id": 45997289566,
+      "logs_url": null,
+      "steps": null
+    },
+    {
+      "id": 140499776311,
+      "name": "inputs.exact_test_selector == 'MotionUITests/testDRapidInputDiagnosticOnly' && 'Original Motion input diagnostic (D)' || inputs.exact_test_selector == 'MotionUITests/testAAllFivePresetsTwentyCompleteCyclesEach' && 'Original Motion preset cycles (A)' || inputs.exact_test_selector == 'MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion' && 'Original Motion visual capture (C)' || inputs.exact_test_selector == 'MotionUITests/testBRapidReversalPresetSwitchAndPersistence' && 'Original Motion reversal acceptance (B)' || 'Original Motion interaction acceptance (B and C)'",
+      "status": "completed",
+      "conclusion": "skipped",
+      "run_id": 45997289566,
+      "logs_url": null,
+      "steps": null
+    },
+    {
+      "id": 140499776431,
+      "name": "focused-diagnostics-capture-tests",
+      "status": "completed",
+      "conclusion": "skipped",
+      "run_id": 45997289566,
+      "logs_url": null,
+      "steps": null
+    },
+    {
+      "id": 140499776444,
+      "name": "Verify original media lifecycle controls on current native sources",
+      "status": "completed",
+      "conclusion": "skipped",
+      "run_id": 45997289566,
+      "logs_url": null,
+      "steps": null
+    },
+    {
+      "id": 140499776448,
+      "name": "focused-code-fence-webkit-tests",
+      "status": "completed",
+      "conclusion": "skipped",
+      "run_id": 45997289566,
+      "logs_url": null,
+      "steps": null
+    },
+    {
+      "id": 140499776490,
+      "name": "One guarded native hosted Composer component diagnostic",
+      "status": "completed",
+      "conclusion": "skipped",
+      "run_id": 45997289566,
+      "logs_url": null,
+      "steps": null
+    },
+    {
+      "id": 140499776646,
+      "name": "focused-markdown-renderer-tests",
+      "status": "completed",
+      "conclusion": "skipped",
+      "run_id": 45997289566,
+      "logs_url": null,
+      "steps": null
+    },
+    {
+      "id": 140499776692,
+      "name": "Compile reusable presentation on iOS 27 and test isolated state",
+      "status": "completed",
+      "conclusion": "skipped",
+      "run_id": 45997289566,
+      "logs_url": null,
+      "steps": null
+    },
+    {
+      "id": 140499776917,
+      "name": "Resolve exact SDK producer in all six existing Apple package graphs",
+      "status": "completed",
+      "conclusion": "skipped",
+      "run_id": 45997289566,
+      "logs_url": null,
+      "steps": null
+    },
+    {
+      "id": 140499826266,
+      "name": "Exact-source Agent SDK Apple tests",
+      "status": "completed",
+      "conclusion": "skipped",
+      "run_id": 45997289566,
+      "logs_url": null,
+      "steps": null
+    },
+    {
+      "id": 140499839249,
+      "name": "One SDK-explicit eligibility-gated frozen Composer diagnostic",
+      "status": "completed",
+      "conclusion": "skipped",
+      "run_id": 45997289566,
+      "logs_url": null,
+      "steps": null
+    },
+    {
+      "id": 140499839897,
+      "name": "Resolve original Yams in the actual app graph only",
+      "status": "completed",
+      "conclusion": "skipped",
+      "run_id": 45997289566,
+      "logs_url": null,
+      "steps": null
+    },
+    {
+      "id": 140499851988,
+      "name": "upload-chavrusachat-to-testflight",
+      "status": "completed",
+      "conclusion": "skipped",
+      "run_id": 45997289566,
+      "logs_url": null,
+      "steps": null
+    },
+    {
+      "id": 140499852493,
+      "name": "focused-scripting-package-tests",
+      "status": "completed",
+      "conclusion": "skipped",
+      "run_id": 45997289566,
+      "logs_url": null,
+      "steps": null
+    },
+    {
+      "id": 140499955134,
+      "name": "Launch full app on iPad Simulator",
+      "status": "completed",
+      "conclusion": "failure",
+      "run_id": 45997289566,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Live Activity Ã‚Â· refresh",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 2
+        },
+        {
+          "name": "Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Set up pinned RuntimeCore host Node",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Verify original OpenClaw source closure and parity",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 5
+        },
+        {
+          "name": "Prepare simulator logs and select stable Xcode",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Read the installed FoundationModels tool continuation interface",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Retain FoundationModels declarations before the application build",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 8
+        },
+        {
+          "name": "Resolve current original MiniApp sources and exact build graph",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Preserve current original MiniApp build inputs",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10
+        },
+        {
+          "name": "Prepare declaration-only metadata tool",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Prepare resolved original MiniApp native dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Restore simulator cloned Swift package dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 13
+        },
+        {
+          "name": "Restore compatible simulator compiler state",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 14
+        },
+        {
+          "name": "Report simulator cache mode",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 15
+        },
+        {
+          "name": "Discard simulator compiler state for forced clean build",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 16
+        },
+        {
+          "name": "Create CI Config.xcconfig",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 17
+        },
+        {
+          "name": "Prepare verified embedded RuntimeCore",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 18
+        },
+        {
+          "name": "Package current RuntimeCore host resources",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 19
+        },
+        {
+          "name": "Run RuntimeCore preflight",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 20
+        },
+        {
+          "name": "Export original prepared Hanlin SDK native artifacts",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 21
+        },
+        {
+          "name": "Retain prepared Hanlin SDK native artifacts",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 22
+        },
+        {
+          "name": "Resolve Swift Package dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 23
+        },
+        {
+          "name": "Record resolved diagnostics build provenance",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 24
+        },
+        {
+          "name": "Save validated simulator Swift package dependencies",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 25
+        },
+        {
+          "name": "Record simulator SourcePackages save status",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 26
+        },
+        {
+          "name": "Restore unchanged simulator build input metadata",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 27
+        },
+        {
+          "name": "Capture simulator build input metadata",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 28
+        },
+        {
+          "name": "Stage modular headers into simulator Swift Package checkouts",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 29
+        },
+        {
+          "name": "Stage exact original A2UI plugin schemas for the combined app graph",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 30
+        },
+        {
+          "name": "Retain prior unit manifests before the current test build",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 31
+        },
+        {
+          "name": "Build full arm64 simulator app",
+          "status": "completed",
+          "conclusion": "failure",
+          "number": 32
+        },
+        {
+          "name": "Measure same-run simulator no-op rebuild",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 33
+        },
+        {
+          "name": "Validate the current build-for-testing unit products",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 34
+        },
+        {
+          "name": "Save successful simulator compiler state",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 35
+        },
+        {
+          "name": "Record simulator DerivedData save status",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 36
+        },
+        {
+          "name": "Locate and scan simulator app",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 37
+        },
+        {
+          "name": "Live Activity Ã‚Â· refresh",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 38
+        },
+        {
+          "name": "Boot iPad Simulator and stage fixtures",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 39
+        },
+        {
+          "name": "Live Activity Ã‚Â· refresh",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 40
+        },
+        {
+          "name": "Stage the existing live provider account privately",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 41
+        },
+        {
+          "name": "Run simulator test suite",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 42
+        },
+        {
+          "name": "Verify bounded live evidence and remove the owned private account",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 43
+        },
+        {
+          "name": "Upload sanitized original live-provider acceptance",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 44
+        },
+        {
+          "name": "Verify affected Motion on the prepared app simulator",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 45
+        },
+        {
+          "name": "Analyze performance benchmark results",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 46
+        },
+        {
+          "name": "Run full Runtime Tooling acceptance and collect every group",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 47
+        },
+        {
+          "name": "Launch full app and verify runtime acceptance",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 48
+        },
+        {
+          "name": "Live Activity Ã‚Â· refresh",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 49
+        },
+        {
+          "name": "Collect simulator diagnostics",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 50
+        },
+        {
+          "name": "Clean up the owned compact UI simulator",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 51
+        },
+        {
+          "name": "Upload simulator smoke evidence",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 52
+        },
+        {
+          "name": "Post Set up pinned RuntimeCore host Node",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 103
+        },
+        {
+          "name": "Post Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 104
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 105
+        }
+      ]
+    },
+    {
+      "id": 140499957210,
+      "name": "Validate baseline, contracts, tests, and iOS compilation",
+      "status": "completed",
+      "conclusion": "skipped",
+      "run_id": 45997289566,
+      "logs_url": null,
+      "steps": null
+    },
+    {
+      "id": 140499957235,
+      "name": "Build unsigned IPA with Xcode 26",
+      "status": "completed",
+      "conclusion": "skipped",
+      "run_id": 45997289566,
+      "logs_url": null,
+      "steps": null
+    },
+    {
+      "id": 140499958351,
+      "name": "Run split RuntimeCore bundle pipeline",
+      "status": "completed",
+      "conclusion": "skipped",
+      "run_id": 45997289566,
+      "logs_url": null,
+      "steps": null
+    },
+    {
+      "id": 140521693098,
+      "name": "Verify provider conformance test summary",
+      "status": "completed",
+      "conclusion": "success",
+      "run_id": 45997289566,
+      "logs_url": null,
+      "steps": [
+        {
+          "name": "Set up job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 1
+        },
+        {
+          "name": "Live Activity Ã‚Â· refresh",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 2
+        },
+        {
+          "name": "Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 3
+        },
+        {
+          "name": "Set up Python",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 4
+        },
+        {
+          "name": "Download Phase 1 validation logs",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 5
+        },
+        {
+          "name": "Download simulator test logs",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 6
+        },
+        {
+          "name": "Generate provider conformance summary",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 7
+        },
+        {
+          "name": "Live Activity Ã‚Â· refresh",
+          "status": "completed",
+          "conclusion": "skipped",
+          "number": 8
+        },
+        {
+          "name": "Upload provider conformance summary artifact",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 9
+        },
+        {
+          "name": "Download validation plan",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 10
+        },
+        {
+          "name": "Generate CI performance report",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 11
+        },
+        {
+          "name": "Upload CI performance report artifact",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 12
+        },
+        {
+          "name": "Post Set up Python",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 23
+        },
+        {
+          "name": "Post Checkout repository",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 24
+        },
+        {
+          "name": "Complete job",
+          "status": "completed",
+          "conclusion": "success",
+          "number": 25
+        }
+      ]
+    }
+  ]
+}

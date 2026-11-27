@@ -1,0 +1,401 @@
+[
+  {
+    "bytes": 3750,
+    "gitBlobSHA1": "032eb335e6bae2bba7a404c8b2d2a5e4f192afb4",
+    "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimePromise.swift",
+    "ref": "4cb6454c1c6e110ead73179c06ada9e909bf250b",
+    "sha256": "13f8c1563e906edd2fd9f96b372cace3e15be58e18c583ba60100f2ad842d8d5",
+    "status": "GIT_BLOB_VERIFIED",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/blob/4cb6454c1c6e110ead73179c06ada9e909bf250b/Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimePromise.swift"
+  },
+  {
+    "bytes": 16248,
+    "gitBlobSHA1": "a8190d7dad118593ede61818838785a2107ecad3",
+    "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRunningState.swift",
+    "ref": "4cb6454c1c6e110ead73179c06ada9e909bf250b",
+    "sha256": "f7b50ceacdf034833c92554a769fe692abebe296b87e55091e7a2fb09146d9da",
+    "status": "GIT_BLOB_VERIFIED",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/blob/4cb6454c1c6e110ead73179c06ada9e909bf250b/Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRunningState.swift"
+  },
+  {
+    "bytes": 17207,
+    "gitBlobSHA1": "1d7385f0baa6de9b64e2e93b97d53b1a35bf390d",
+    "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift",
+    "ref": "4cb6454c1c6e110ead73179c06ada9e909bf250b",
+    "sha256": "8a7bb65bffe0390ac719e33b0ece71e19b20e9be96841e422a3a4c37f09352b3",
+    "status": "GIT_BLOB_VERIFIED",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/blob/4cb6454c1c6e110ead73179c06ada9e909bf250b/Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift"
+  },
+  {
+    "bytes": 210998,
+    "gitBlobSHA1": "38a88719ba7d8d45e63f05843a4ad88eeb14ee07",
+    "path": "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json",
+    "ref": "4cb6454c1c6e110ead73179c06ada9e909bf250b",
+    "sha256": "4d06d0dfaca462fc21257c8053d3250b7cc0e78c4d77b4eb2e98f64bf7cbe83b",
+    "status": "GIT_BLOB_VERIFIED",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/blob/4cb6454c1c6e110ead73179c06ada9e909bf250b/docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json"
+  },
+  {
+    "bytes": 12293,
+    "gitBlobSHA1": "1c9176dce7998dbfb42a4cd49c7e87262cedc315",
+    "path": "Scripts/NativeScript/build-step-metadata-generator-wrapper.py",
+    "ref": "4cb6454c1c6e110ead73179c06ada9e909bf250b",
+    "sha256": "577e4d58a3bebd29e379918938199aacff0a4c775cfb1c4923e1f7735686238c",
+    "status": "GIT_BLOB_VERIFIED",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/blob/4cb6454c1c6e110ead73179c06ada9e909bf250b/Scripts/NativeScript/build-step-metadata-generator-wrapper.py"
+  },
+  {
+    "bytes": 24576,
+    "gitBlobSHA1": "258d4408bbe015b9500e66d3fcf8b3f980aa5296",
+    "path": "Scripts/CI/Tests/test_nativescript_metadata_wrapper.py",
+    "ref": "4cb6454c1c6e110ead73179c06ada9e909bf250b",
+    "sha256": "0580017fd708751f845631732bc9f6c6b3a4e334f32d13a0142693f257fb4b84",
+    "status": "GIT_BLOB_VERIFIED",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/blob/4cb6454c1c6e110ead73179c06ada9e909bf250b/Scripts/CI/Tests/test_nativescript_metadata_wrapper.py"
+  },
+  {
+    "error": {
+      "error": "GitHub API error 404: {\"message\":\"Not Found\",\"documentation_url\":\"https://docs.github.com/rest/repos/contents#get-repository-content\",\"status\":\"404\"}",
+      "error_code": "NOT_FOUND",
+      "error_data": {
+        "documentation_url": "https://docs.github.com/rest/repos/contents#get-repository-content",
+        "message": "Not Found",
+        "status": "404"
+      }
+    },
+    "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinOriginalPromiseLifetimeTests.swift",
+    "ref": "4cb6454c1c6e110ead73179c06ada9e909bf250b",
+    "status": "PRIMARY_READ_ERROR"
+  },
+  {
+    "bytes": 10823,
+    "gitBlobSHA1": "2d4e529c825939fbc302539852da52cdf7cbbaf9",
+    "path": "Packages/HanlinPlatform/Package.swift",
+    "ref": "4cb6454c1c6e110ead73179c06ada9e909bf250b",
+    "sha256": "78d7081d0e197c3e99746e5b3e476b41280fc5b32110035fab31a3e949cb4dab",
+    "status": "GIT_BLOB_VERIFIED",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/blob/4cb6454c1c6e110ead73179c06ada9e909bf250b/Packages/HanlinPlatform/Package.swift"
+  },
+  {
+    "bytes": 3999,
+    "gitBlobSHA1": "bc003400aae0f91c7c4eda87073d7120be855ffd",
+    "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimePromise.swift",
+    "ref": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+    "sha256": "98d40a32ac40bb4488dc21205b852aea2c552e80294657ab6dcb6fe44285dd4f",
+    "status": "GIT_BLOB_VERIFIED",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/blob/1ee9c45796f41893c3b59745864de3412c17ddb4/Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimePromise.swift"
+  },
+  {
+    "bytes": 17319,
+    "gitBlobSHA1": "a21b35880ed3e964d4c6117e95d461b730a16366",
+    "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRunningState.swift",
+    "ref": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+    "sha256": "eab1f759ee1a5cb7b72af88883154225891a424cbab7ccbdc5a9c8f618544142",
+    "status": "GIT_BLOB_VERIFIED",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/blob/1ee9c45796f41893c3b59745864de3412c17ddb4/Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRunningState.swift"
+  },
+  {
+    "bytes": 17207,
+    "gitBlobSHA1": "1d7385f0baa6de9b64e2e93b97d53b1a35bf390d",
+    "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift",
+    "ref": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+    "sha256": "8a7bb65bffe0390ac719e33b0ece71e19b20e9be96841e422a3a4c37f09352b3",
+    "status": "GIT_BLOB_VERIFIED",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/blob/1ee9c45796f41893c3b59745864de3412c17ddb4/Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift"
+  },
+  {
+    "bytes": 255664,
+    "gitBlobSHA1": "19ee1c1100ab6200aea9817b65fcc3c5d0d866a2",
+    "path": "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json",
+    "ref": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+    "sha256": "9f734715989941ac4cdb8bfdb3196b5f36cce4d06ffadcf9aa645b9589516cc9",
+    "status": "GIT_BLOB_VERIFIED",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/blob/1ee9c45796f41893c3b59745864de3412c17ddb4/docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json"
+  },
+  {
+    "bytes": 12320,
+    "gitBlobSHA1": "847f7a56ac3eaf5033b370ce5d7e8acbaca9fa72",
+    "path": "Scripts/NativeScript/build-step-metadata-generator-wrapper.py",
+    "ref": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+    "sha256": "9e45c0aa8d951a6a59afa1eb4dbcad6e524fc1f408d2406d6c8e5a9efcdd7f8c",
+    "status": "GIT_BLOB_VERIFIED",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/blob/1ee9c45796f41893c3b59745864de3412c17ddb4/Scripts/NativeScript/build-step-metadata-generator-wrapper.py"
+  },
+  {
+    "bytes": 25028,
+    "gitBlobSHA1": "77faf27ecb87ab3c7f973e6d1ed2dcd4091b8753",
+    "path": "Scripts/CI/Tests/test_nativescript_metadata_wrapper.py",
+    "ref": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+    "sha256": "a15bef4c3db22813538a684859034c4d18f90f407f71df70591f9bd6519cebeb",
+    "status": "GIT_BLOB_VERIFIED",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/blob/1ee9c45796f41893c3b59745864de3412c17ddb4/Scripts/CI/Tests/test_nativescript_metadata_wrapper.py"
+  },
+  {
+    "bytes": 8330,
+    "gitBlobSHA1": "bddd4956c68488d9c5b526bf13957eb64430e9ff",
+    "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinOriginalPromiseLifetimeTests.swift",
+    "ref": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+    "sha256": "527fba708cfbf5a6e365776650235a39ae115bde54a848b5f54d7c35636fde2c",
+    "status": "GIT_BLOB_VERIFIED",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/blob/1ee9c45796f41893c3b59745864de3412c17ddb4/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinOriginalPromiseLifetimeTests.swift"
+  },
+  {
+    "bytes": 10823,
+    "gitBlobSHA1": "2d4e529c825939fbc302539852da52cdf7cbbaf9",
+    "path": "Packages/HanlinPlatform/Package.swift",
+    "ref": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+    "sha256": "78d7081d0e197c3e99746e5b3e476b41280fc5b32110035fab31a3e949cb4dab",
+    "status": "GIT_BLOB_VERIFIED",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/blob/1ee9c45796f41893c3b59745864de3412c17ddb4/Packages/HanlinPlatform/Package.swift"
+  },
+  {
+    "bytes": 5120,
+    "gitBlobSHA1": "c762d598e6749146c4742eb686337ddd23a05fa5",
+    "path": "docs/two-wave-integration/20261127/original-promise-ownership-repair/README.md",
+    "ref": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+    "sha256": "69f40f3a5e2d2ecb6ac8fe99539b41473322c44a3fbc51b85c766cace321a6e8",
+    "status": "GIT_BLOB_VERIFIED",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/blob/1ee9c45796f41893c3b59745864de3412c17ddb4/docs/two-wave-integration/20261127/original-promise-ownership-repair/README.md"
+  },
+  {
+    "bytes": 886,
+    "gitBlobSHA1": "17b105f4c61b6767dd37eb4fd5c387163d2771d4",
+    "path": "docs/two-wave-integration/20261127/original-promise-ownership-repair/actual-controller-binding.json",
+    "ref": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+    "sha256": "7ef6c6475f10b59406e1fb782f6ae4094b9872a4bbf5bb71c1652d6e03ca1270",
+    "status": "GIT_BLOB_VERIFIED",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/blob/1ee9c45796f41893c3b59745864de3412c17ddb4/docs/two-wave-integration/20261127/original-promise-ownership-repair/actual-controller-binding.json"
+  },
+  {
+    "bytes": 2461,
+    "gitBlobSHA1": "4af5c072da5569dd8da9416445448610a24c5183",
+    "path": "docs/two-wave-integration/20261127/original-promise-ownership-repair/actual-manifest.json",
+    "ref": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+    "sha256": "7bb6741149899e5cd8de9f6da341ce0679394c99a3794d909df4152eb2849326",
+    "status": "GIT_BLOB_VERIFIED",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/blob/1ee9c45796f41893c3b59745864de3412c17ddb4/docs/two-wave-integration/20261127/original-promise-ownership-repair/actual-manifest.json"
+  },
+  {
+    "bytes": 4158,
+    "gitBlobSHA1": "f485e62f92ea38383e068742f349c0c890cd2973",
+    "path": "docs/two-wave-integration/20261127/original-promise-ownership-repair/actual-source-stage.json",
+    "ref": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+    "sha256": "06c6bfee224732926b99a1dda6c5c534c2062381d378ab47e67b07ed29a0b675",
+    "status": "GIT_BLOB_VERIFIED",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/blob/1ee9c45796f41893c3b59745864de3412c17ddb4/docs/two-wave-integration/20261127/original-promise-ownership-repair/actual-source-stage.json"
+  },
+  {
+    "bytes": 2954,
+    "gitBlobSHA1": "a1d5fee72461be083b0b1ecba598d5e8dd894242",
+    "path": "docs/two-wave-integration/20261127/original-promise-ownership-repair/raw-packet-verification.json",
+    "ref": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+    "sha256": "5119529ca79e169cb92a550fe82bec0d93b1441ab72b80117767702784d76249",
+    "status": "GIT_BLOB_VERIFIED",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/blob/1ee9c45796f41893c3b59745864de3412c17ddb4/docs/two-wave-integration/20261127/original-promise-ownership-repair/raw-packet-verification.json"
+  },
+  {
+    "bytes": 4869,
+    "gitBlobSHA1": "2f73ca05b6a6e487de32ad18ddc4fc36dfe01c7a",
+    "path": "docs/two-wave-integration/20261127/original-promise-ownership-repair/independent-w1-lifetime-review.json",
+    "ref": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+    "sha256": "337e89babe60db647f229beb1e105b2460043b5ff8e352d09e52b79e81aa50c3",
+    "status": "GIT_BLOB_VERIFIED",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/blob/1ee9c45796f41893c3b59745864de3412c17ddb4/docs/two-wave-integration/20261127/original-promise-ownership-repair/independent-w1-lifetime-review.json"
+  },
+  {
+    "bytes": 2417,
+    "gitBlobSHA1": "af7d513abf6000b46bec84b1e08631769287cec4",
+    "path": "docs/two-wave-integration/20261127/original-promise-ownership-repair/root-independent-lifetime-review.json",
+    "ref": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+    "sha256": "dd2d1d4fdaf46f856960d0dc393a021c4b057649d22723cf02842b0bc0ceb32a",
+    "status": "GIT_BLOB_VERIFIED",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/blob/1ee9c45796f41893c3b59745864de3412c17ddb4/docs/two-wave-integration/20261127/original-promise-ownership-repair/root-independent-lifetime-review.json"
+  },
+  {
+    "bytes": 910,
+    "gitBlobSHA1": "99a156651204e3b265962ade9bd32a48737dc6b5",
+    "path": "docs/two-wave-integration/20261127/original-promise-ownership-repair/raw-log-encoding.json",
+    "ref": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+    "sha256": "20fba70b4f50c24a22c5f3b4d874c235dd3bfc2b1a8bc6103459631b0a6e48f8",
+    "status": "GIT_BLOB_VERIFIED",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/blob/1ee9c45796f41893c3b59745864de3412c17ddb4/docs/two-wave-integration/20261127/original-promise-ownership-repair/raw-log-encoding.json"
+  },
+  {
+    "bytes": 3490,
+    "gitBlobSHA1": "2eabff1014555ff75ec526b329279326c52df4bc",
+    "path": "docs/two-wave-integration/20261127/original-promise-ownership-repair/source-validation.json",
+    "ref": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+    "sha256": "2898eb037176b5d034e8167c00f1889cef03d41199e7c5b043f8c8875f40ba45",
+    "status": "GIT_BLOB_VERIFIED",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/blob/1ee9c45796f41893c3b59745864de3412c17ddb4/docs/two-wave-integration/20261127/original-promise-ownership-repair/source-validation.json"
+  },
+  {
+    "bytes": 976,
+    "gitBlobSHA1": "7db87cacd3146e0230de4864ef8b8fd2b3f86a7f",
+    "path": "docs/two-wave-integration/20261127/original-promise-ownership-repair/sdk-input-impact.json",
+    "ref": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+    "sha256": "86fadfee0c923480b9a3c96eb113321fa58277fecdabc16bd339374347372960",
+    "status": "GIT_BLOB_VERIFIED",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/blob/1ee9c45796f41893c3b59745864de3412c17ddb4/docs/two-wave-integration/20261127/original-promise-ownership-repair/sdk-input-impact.json"
+  },
+  {
+    "bytes": 10256,
+    "gitBlobSHA1": "45e9dcf2ee8c7061f8411e321126cfc6f7c27d69",
+    "path": "docs/two-wave-integration/20261127/original-promise-ownership-repair/teardown-callers.json",
+    "ref": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+    "sha256": "1cc4f0782543253076f1dbfc2f0aebebb78282dcb4d79586ec9ec3e182fbfa0d",
+    "status": "GIT_BLOB_VERIFIED",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/blob/1ee9c45796f41893c3b59745864de3412c17ddb4/docs/two-wave-integration/20261127/original-promise-ownership-repair/teardown-callers.json"
+  },
+  {
+    "bytes": 6258,
+    "gitBlobSHA1": "733e7c28e049514fc3c795f5371faec2ec2904c3",
+    "path": "docs/two-wave-integration/20261127/original-promise-ownership-repair/native-stages.jsonl.gz",
+    "ref": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+    "sha256": "a581f3c69b667423e79a660204e31f12ed883c20aa9b1c1c785226e09ad2037e",
+    "status": "GIT_BLOB_VERIFIED",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/blob/1ee9c45796f41893c3b59745864de3412c17ddb4/docs/two-wave-integration/20261127/original-promise-ownership-repair/native-stages.jsonl.gz"
+  },
+  {
+    "bytes": 1023,
+    "gitBlobSHA1": "b55a8450f1cb2c6e58b2f0407b2df8ee70461d98",
+    "path": "docs/two-wave-integration/20261127/original-promise-ownership-repair/wire.jsonl.gz",
+    "ref": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+    "sha256": "44bd1be2482a8b146d5ae4b9f96cd71c0faeaf1e9ed805f8273ea06ceb739344",
+    "status": "GIT_BLOB_VERIFIED",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/blob/1ee9c45796f41893c3b59745864de3412c17ddb4/docs/two-wave-integration/20261127/original-promise-ownership-repair/wire.jsonl.gz"
+  },
+  {
+    "bytes": 1818,
+    "gitBlobSHA1": "f46736cabd8a9db3490c68dd1ec8ce9f814981c0",
+    "path": "docs/two-wave-integration/20261127/core-spotlight-metadata/red-green-receipt.json",
+    "ref": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+    "sha256": "8db463493e647b943c597b19f18c71e77980cf5a21564bafb53e23b7fc7de387",
+    "status": "GIT_BLOB_VERIFIED",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/blob/1ee9c45796f41893c3b59745864de3412c17ddb4/docs/two-wave-integration/20261127/core-spotlight-metadata/red-green-receipt.json"
+  },
+  {
+    "bytes": 1318,
+    "gitBlobSHA1": "8dbbd850d071e1d806651334cd9ae30632ac288e",
+    "path": "docs/two-wave-integration/20261127/core-spotlight-metadata/original-ci-diagnostics.json",
+    "ref": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+    "sha256": "e9c9ca022189ccf76213c758de1bb41e3a22dc0058df2bad6926740409e05217",
+    "status": "GIT_BLOB_VERIFIED",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/blob/1ee9c45796f41893c3b59745864de3412c17ddb4/docs/two-wave-integration/20261127/core-spotlight-metadata/original-ci-diagnostics.json"
+  },
+  {
+    "bytes": 1213,
+    "gitBlobSHA1": "0cb6cbb670833ac5d11d666772a07343ae887b4e",
+    "path": "docs/two-wave-integration/20261127/core-spotlight-metadata/installed-sdk-header-review.json",
+    "ref": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+    "sha256": "2d2922af861a474f6940b45d23396ba7c251e69a98ec0fd04b506106a5c8044e",
+    "status": "GIT_BLOB_VERIFIED",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/blob/1ee9c45796f41893c3b59745864de3412c17ddb4/docs/two-wave-integration/20261127/core-spotlight-metadata/installed-sdk-header-review.json"
+  },
+  {
+    "bytes": 1116,
+    "gitBlobSHA1": "6aa0ad280344e3a006d07f5b4e7b0f045f3d82ea",
+    "path": "docs/two-wave-integration/20261127/core-spotlight-metadata/source-validation.json",
+    "ref": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+    "sha256": "45bea7c506c338549160517ced1b23bf2f89bbfaf59e56ac9339669b46e4ed6b",
+    "status": "GIT_BLOB_VERIFIED",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/blob/1ee9c45796f41893c3b59745864de3412c17ddb4/docs/two-wave-integration/20261127/core-spotlight-metadata/source-validation.json"
+  },
+  {
+    "bytes": 1777,
+    "gitBlobSHA1": "fd085ca88bb72601469d878dc33c90eeb8053cc3",
+    "path": "docs/two-wave-integration/20261127/core-spotlight-metadata/before.stderr.log",
+    "ref": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+    "sha256": "b43ba495c62a4296124bf6c6b0c107fa9b1228918e5820527e6cc23a5a82660e",
+    "status": "GIT_BLOB_VERIFIED",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/blob/1ee9c45796f41893c3b59745864de3412c17ddb4/docs/two-wave-integration/20261127/core-spotlight-metadata/before.stderr.log"
+  },
+  {
+    "bytes": 326,
+    "gitBlobSHA1": "a3e38a93020396d97da91c2dc0e455de7e3b1314",
+    "path": "docs/two-wave-integration/20261127/core-spotlight-metadata/after.stderr.log",
+    "ref": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+    "sha256": "0b66fdacc72c444c8bdbe7b3c05b34767260c98b28df0c01a9e883c88119ce9f",
+    "status": "GIT_BLOB_VERIFIED",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/blob/1ee9c45796f41893c3b59745864de3412c17ddb4/docs/two-wave-integration/20261127/core-spotlight-metadata/after.stderr.log"
+  },
+  {
+    "bytes": 2484,
+    "gitBlobSHA1": "2928e5e19f6dc2e0cd3ead84b343fb7d9f21d0bc",
+    "path": "docs/two-wave-integration/20261127/core-spotlight-metadata/independent-w1-source-review.json",
+    "ref": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+    "sha256": "e4ce0837cbc91875e660fcc88e3d355ca4746068d431a3d4c420624c1c4863e9",
+    "status": "GIT_BLOB_VERIFIED",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/blob/1ee9c45796f41893c3b59745864de3412c17ddb4/docs/two-wave-integration/20261127/core-spotlight-metadata/independent-w1-source-review.json"
+  },
+  {
+    "bytes": 69622,
+    "gitBlob": "da61e2e35344664497af67b941d072abd417583d",
+    "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRuntime.swift",
+    "ref": "4cb6454c1c6e110ead73179c06ada9e909bf250b",
+    "sha256": "15a60ffc1a6171dde86fa442a7a51764fd073eee4f615e329b6593dc5cf9b34a"
+  },
+  {
+    "bytes": 69622,
+    "gitBlob": "da61e2e35344664497af67b941d072abd417583d",
+    "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRuntime.swift",
+    "ref": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+    "sha256": "15a60ffc1a6171dde86fa442a7a51764fd073eee4f615e329b6593dc5cf9b34a"
+  },
+  {
+    "bytes": 13303,
+    "gitBlob": "e981c08e7fa8440404ac595101241f935b4c736d",
+    "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/HanlinOriginalScriptWidgetSession.swift",
+    "ref": "4cb6454c1c6e110ead73179c06ada9e909bf250b",
+    "sha256": "aaba22894ddd8bf7863a5ddd4e1e61cece90081b579bb8ce7b2a084f751f8f9b"
+  },
+  {
+    "bytes": 13303,
+    "gitBlob": "e981c08e7fa8440404ac595101241f935b4c736d",
+    "path": "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/HanlinOriginalScriptWidgetSession.swift",
+    "ref": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+    "sha256": "aaba22894ddd8bf7863a5ddd4e1e61cece90081b579bb8ce7b2a084f751f8f9b"
+  },
+  {
+    "bytes": 26538,
+    "gitBlob": "d8e08ee47b18410dfc497e3603005290bae5debf",
+    "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift",
+    "ref": "4cb6454c1c6e110ead73179c06ada9e909bf250b",
+    "sha256": "fa62de1025c7ae06406794e9c397e3f64ed0e32a8fb0fc3584e43fa2e28bd066"
+  },
+  {
+    "bytes": 26538,
+    "gitBlob": "d8e08ee47b18410dfc497e3603005290bae5debf",
+    "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/ScriptWidget/HanlinScriptWidgetRuntime.swift",
+    "ref": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+    "sha256": "fa62de1025c7ae06406794e9c397e3f64ed0e32a8fb0fc3584e43fa2e28bd066"
+  },
+  {
+    "bytes": 1771,
+    "gitBlob": "09c0181f5a6df0c2d1b21237c717bfae8f60cca5",
+    "path": "Packages/HanlinPlatform/Package.resolved",
+    "ref": "4cb6454c1c6e110ead73179c06ada9e909bf250b",
+    "sha256": "453087cb3345b7c6bb24c00a682f41ffa9708ebd328e60b583f6e04276bf789d"
+  },
+  {
+    "bytes": 1771,
+    "gitBlob": "09c0181f5a6df0c2d1b21237c717bfae8f60cca5",
+    "path": "Packages/HanlinPlatform/Package.resolved",
+    "ref": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+    "sha256": "453087cb3345b7c6bb24c00a682f41ffa9708ebd328e60b583f6e04276bf789d"
+  },
+  {
+    "bytes": 83986,
+    "gitBlob": "c108823a9409264882e7870cc822cccf569bac3c",
+    "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+    "ref": "4cb6454c1c6e110ead73179c06ada9e909bf250b",
+    "sha256": "53bc610452297522b67593dc6a63e201aa5287acc8ed5b0e5769d94f381b7b5f"
+  },
+  {
+    "bytes": 100904,
+    "gitBlob": "52bcab97417133c6be60123c63e243f38666dea2",
+    "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+    "ref": "1ee9c45796f41893c3b59745864de3412c17ddb4",
+    "sha256": "433703973e69d764686c6761ad1851c40d76f5e53afa4561d1720d873a5a1ae4"
+  }
+]

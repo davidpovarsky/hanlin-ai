@@ -1,0 +1,23 @@
+{
+  "base": "4cb6454c1c6e110ead73179c06ada9e909bf250b",
+  "donor": "af48482a7d94f85b19b99c4500ee4ed4420c9def",
+  "findings": [
+    "Only CoreSpotlight.framework is added to the original HOST_FRAMEWORKS. Every wrapper function body remains exact, including pinned tool provenance, actual umbrella inventory, required metadata strings and rejection of clang errors despite a zero generator exit.",
+    "Actual UIKit20 preparation overlay caf78 has19 tracked paths and does not touch the wrapper/test; the proposed one-framework delta therefore binds the actual4cb producer preimage without changing or relabeling the active overlay.",
+    "The original focused host-baseline Python control really failed before and passed after; original stderr byte hashes and receipt were independently matched, not rerun. Published claim that all16 portable methods passed was not independently expanded into a new test claim.",
+    "Original source-bound CI diagnostic excerpt reports unknown CSSearchableItemAttributeSet in generated HanlinMiniApps-Swift.h. Installed SDK public umbrella observation supports the chosen framework. Full raw CI diagnostics are references in this packet; actual fresh metadata/App/native qualification is still required.",
+    "This producer fix is outside the four SDK package trees and does not change the explicit-handler implementation. It belongs in the separately reviewed real companion/native producer overlay, not a claim that a host runtime test passed."
+  ],
+  "futureAcceptance": "Re-run only the already-owned affected real metadata/App continuation on its exact future source as root directs, retaining actual required symbols/no-error proof and original explicit-handler E2E test. No dispatch is included.",
+  "nativeBuildsOrRuntime": 0,
+  "schema": "pinkha-original-core-spotlight-metadata-source-review-v1",
+  "sourceInverseAndActualOverlay": {
+    "bytes": 5357,
+    "gitBlob": "f5ce8d0364290e794fc4a67eb3d84c8d753bca73",
+    "path": "/workspace/scratch/ae335eba85e3/hanlin-pr23-promise-spotlight-review/separate-metadata-proposal/source-inverse-and-overlay-proof.json",
+    "sha256": "52c216f91c64d6a2445719b218fac47006633f0425ffddaa701c3849f2dad9eb"
+  },
+  "status": "SEPARATE_PRODUCER_SOURCE_PROPOSAL_NOT_APPLIED_NOT_NATIVE_ACCEPTANCE",
+  "testsRunByReviewer": 0,
+  "workflowOrPinChanges": 0
+}

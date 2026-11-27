@@ -33,6 +33,11 @@ final class ScriptWidgetExecutionSession {
     private var tasks: [ObjectIdentifier: URLSessionTask] = [:]
     private var serviceNetworkRequests: Set<UUID> = []
     private var cancellationHandlers: [UUID: () -> Void] = [:]
+    private final class WeakPromiseDelivery {
+        weak var value: ScriptWidgetPromiseDelivery?
+        init(_ value: ScriptWidgetPromiseDelivery) { self.value = value }
+    }
+    private var promiseDeliveries: [ObjectIdentifier: WeakPromiseDelivery] = [:]
     private(set) var totalDataQueries = 0
     private(set) var totalNetworkRequests = 0
     private(set) var cancellation: ScriptWidgetExecutionCancellation?
@@ -93,6 +98,20 @@ final class ScriptWidgetExecutionSession {
         cancellationHandlers.removeValue(forKey: id)
     }
 
+    /// Promise lifetime is independent of the existing native-query quota.
+    /// Weak entries permit cancellation without keeping finished operations alive.
+    func registerPromiseDelivery(_ delivery: ScriptWidgetPromiseDelivery) -> Bool {
+        lock.lock(); defer { lock.unlock() }
+        guard cancellation == nil else { return false }
+        promiseDeliveries[ObjectIdentifier(delivery)] = WeakPromiseDelivery(delivery)
+        return true
+    }
+
+    func completePromiseDelivery(_ delivery: ScriptWidgetPromiseDelivery) {
+        lock.lock(); defer { lock.unlock() }
+        promiseDeliveries.removeValue(forKey: ObjectIdentifier(delivery))
+    }
+
     func cancel(_ reason: ScriptWidgetExecutionCancellation) {
         lock.lock()
         guard cancellation == nil else {
@@ -102,10 +121,13 @@ final class ScriptWidgetExecutionSession {
         cancellation = reason
         let activeTasks = Array(tasks.values)
         let handlers = Array(cancellationHandlers.values)
+        let deliveries = promiseDeliveries.values.compactMap(\.value)
         tasks.removeAll()
         serviceNetworkRequests.removeAll()
         cancellationHandlers.removeAll()
+        promiseDeliveries.removeAll()
         lock.unlock()
+        deliveries.forEach { $0.cancel() }
         activeTasks.forEach { $0.cancel() }
         handlers.forEach { $0() }
     }

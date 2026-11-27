@@ -1,0 +1,15 @@
+{
+  "sourceManifestPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/host-2a0b19b7-pass-and-native-seal/sdk/miniapp-sdk.json",
+  "sourceManifestSHA256": "0433011cae7beb42504e4bb29b18bb722e21d9a31cc5aae7324eba67b70afcc7",
+  "inputCount": 392,
+  "pathSetIntersection": [
+    "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift",
+    "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimePromise.swift",
+    "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRunningState.swift",
+    "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json"
+  ],
+  "pathSetOutside": [
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift"
+  ],
+  "claim": "Path membership from the retained original392 manifest; no current SDK byte-equivalence or producer PASS inferred."
+}

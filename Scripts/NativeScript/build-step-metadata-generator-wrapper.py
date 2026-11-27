@@ -23,7 +23,7 @@ REQUIRED_METADATA_NAMES = ["HanlinNativeServicesBridge", "HanlinNativeServicesSe
 # Importing unrelated Expo/React umbrellas into the ObjC parser remains the
 # separate full-SDK probe; Core's actual native dependencies belong in this host.
 HOST_FRAMEWORKS = {"Foundation.framework", "UIKit.framework", "WebKit.framework",
-    "AVFoundation.framework", "CoreLocation.framework", "Speech.framework"}
+    "AVFoundation.framework", "CoreLocation.framework", "Speech.framework", "CoreSpotlight.framework"}
 
 
 def original_core_frameworks(root: Path, sdk: Path, search_paths: list[Path]) -> set[str]:

@@ -1,0 +1,121 @@
+{
+  "actualProducerOverlay": {
+    "bytes": 163755,
+    "gitBlob": "ad7ad68474e67b64a751256c22f6b78b02be7e65",
+    "path": "/workspace/scratch/ae335eba85e3/hanlin-scroll-producer-ownership-review/actual-run-45997289566-1/native-preparation-originals/15197026069/simulator-logs/miniapp-upstream-inputs.patch",
+    "sha256": "caf78a85e5e8fdaa187f873972a203413e0231e883a3256dd5ee9fb40c1f522b",
+    "trackedPaths": [
+      "Fixtures/ExpoNativeAPIProbe/package.json",
+      "Fixtures/ExpoSwiftUIProbe/package.json",
+      "Fixtures/ExpoWidgetsProbe/package.json",
+      "Generated/SwiftUIBridge/HanlinGeneratedViews.swift",
+      "Generated/SwiftUIBridge/bridge-manifest.ts",
+      "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedViews.swift",
+      "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoHostVersions.swift",
+      "Packages/HanlinExpoUI/package.json",
+      "Packages/HanlinExpoUI/src/generated/bridge-manifest.ts",
+      "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/ViewModifierRegistry.swift",
+      "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift",
+      "Scripts/Expo/dependency-lock.json",
+      "Scripts/Expo/package-lock.json",
+      "Scripts/Expo/package.json",
+      "Scripts/ExpoNativeAPI/dependency-lock.json",
+      "Scripts/MiniApps/upstream-resolution.json",
+      "Scripts/NativeScript/package-lock.json",
+      "Tools/SwiftUIBridge/configuration.json",
+      "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json"
+    ],
+    "wrapperOrRegressionTestTouched": false
+  },
+  "allWrapperFunctionBodiesIdentical": [
+    "original_core_frameworks",
+    "required_env",
+    "build_intermediates_root",
+    "write_swift_module_map",
+    "metadata_flags",
+    "explicit_input_adapter",
+    "retain_and_check_metadata",
+    "main"
+  ],
+  "base": "4cb6454c1c6e110ead73179c06ada9e909bf250b",
+  "donor": "af48482a7d94f85b19b99c4500ee4ed4420c9def",
+  "fourSdkPackagesChanged": 0,
+  "modified": [
+    {
+      "after": {
+        "bytes": 12320,
+        "gitBlob": "847f7a56ac3eaf5033b370ce5d7e8acbaca9fa72",
+        "sha256": "9e45c0aa8d951a6a59afa1eb4dbcad6e524fc1f408d2406d6c8e5a9efcdd7f8c"
+      },
+      "before": {
+        "bytes": 12293,
+        "gitBlob": "1c9176dce7998dbfb42a4cd49c7e87262cedc315",
+        "sha256": "577e4d58a3bebd29e379918938199aacff0a4c775cfb1c4923e1f7735686238c"
+      },
+      "literalInverse": [
+        {
+          "newEndLine": 26,
+          "newStartLine": 25,
+          "newText": "    \"AVFoundation.framework\", \"CoreLocation.framework\", \"Speech.framework\", \"CoreSpotlight.framework\"}\n",
+          "oldEndLine": 26,
+          "oldStartLine": 25,
+          "oldText": "    \"AVFoundation.framework\", \"CoreLocation.framework\", \"Speech.framework\"}\n"
+        }
+      ],
+      "path": "Scripts/NativeScript/build-step-metadata-generator-wrapper.py",
+      "restoresEntireOriginal": true
+    },
+    {
+      "after": {
+        "bytes": 25028,
+        "gitBlob": "77faf27ecb87ab3c7f973e6d1ed2dcd4091b8753",
+        "sha256": "a15bef4c3db22813538a684859034c4d18f90f407f71df70591f9bd6519cebeb"
+      },
+      "before": {
+        "bytes": 24576,
+        "gitBlob": "258d4408bbe015b9500e66d3fcf8b3f980aa5296",
+        "sha256": "0580017fd708751f845631732bc9f6c6b3a4e334f32d13a0142693f257fb4b84"
+      },
+      "literalInverse": [
+        {
+          "newEndLine": 38,
+          "newStartLine": 36,
+          "newText": "            spotlight = self.framework(frameworks, \"CoreSpotlight\")\n            (spotlight / \"Headers/Exported.h\").write_text(\"@interface CSSearchableItemAttributeSet\\n@end\\n\")\n",
+          "oldEndLine": 36,
+          "oldStartLine": 36,
+          "oldText": ""
+        },
+        {
+          "newEndLine": 43,
+          "newStartLine": 41,
+          "newText": "            provider.write_text(\"@interface SwiftUIProvider\\n@end\\n\"\n                                \"extern CSSearchableItemAttributeSet *installedMiniAppAttributeSet(void);\\n\")\n",
+          "oldEndLine": 40,
+          "oldStartLine": 39,
+          "oldText": "            provider.write_text(\"@interface SwiftUIProvider\\n@end\\n\")\n"
+        },
+        {
+          "newEndLine": 48,
+          "newStartLine": 47,
+          "newText": "            for header in [p / \"Headers/Entry.h\" for p in [ui, foundation, webkit, capture, location, speech, spotlight]] + [provider]:\n",
+          "oldEndLine": 45,
+          "oldStartLine": 44,
+          "oldText": "            for header in [p / \"Headers/Entry.h\" for p in [ui, foundation, webkit, capture, location, speech]] + [provider]:\n"
+        },
+        {
+          "newEndLine": 51,
+          "newStartLine": 49,
+          "newText": "            self.assertLess(host.read_text().index(str(spotlight / \"Headers/Entry.h\")),\n                            host.read_text().index(str(provider)))\n",
+          "oldEndLine": 46,
+          "oldStartLine": 46,
+          "oldText": ""
+        }
+      ],
+      "path": "Scripts/CI/Tests/test_nativescript_metadata_wrapper.py",
+      "restoresEntireOriginal": true
+    }
+  ],
+  "originalTestMethods": 16,
+  "schema": "pinkha-separate-native-metadata-source-proposal-v1",
+  "status": "SEPARATE_SOURCE_PROPOSAL_NOT_APPLIED_TO_PRODUCER_NOT_NATIVE_ACCEPTANCE",
+  "unchangedWholeTestMethods": 15
+}

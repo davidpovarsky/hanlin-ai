@@ -11,6 +11,9 @@ import Testing
 import SwiftUI
 #if os(macOS)
 import AppKit
+import JavaScriptCore
+import Network
+@testable import HanlinScriptWidgetOriginal
 #endif
 
 private typealias Store = HanlinScriptExtensions.HanlinScriptExtensionStore
@@ -127,81 +130,329 @@ struct HanlinDualWidgetEnginesTests {
     #if os(macOS)
     @Test func originalScriptWidgetHTTPUsesBoundedRealTransport() throws {
         let root = try temporary()
-        defer { try? FileManager.default.removeItem(at: root) }
+        let stagesFile = root.appending(path: "native-stages.jsonl")
+        let stagesLock = NSLock()
+        var reachedFinalAssertion = false
+        func recordStage(_ label: String, _ phase: String, _ details: [String: Any] = [:]) {
+            stagesLock.lock()
+            defer { stagesLock.unlock() }
+            do {
+                var event = details
+                event["label"] = label
+                event["phase"] = phase
+                event["at"] = Date().timeIntervalSince1970
+                event["pid"] = ProcessInfo.processInfo.processIdentifier
+                event["isMainThread"] = Thread.isMainThread
+                var bytes = try JSONSerialization.data(withJSONObject: event, options: [.sortedKeys])
+                bytes.append(0x0a)
+                if !FileManager.default.fileExists(atPath: stagesFile.path) {
+                    try Data().write(to: stagesFile)
+                }
+                let output = try FileHandle(forWritingTo: stagesFile)
+                defer { try? output.close() }
+                try output.seekToEnd()
+                try output.write(contentsOf: bytes)
+            } catch {
+                print("Original HTTP diagnostic could not record \(label)/\(phase): \(error)")
+            }
+        }
+        defer {
+            recordStage("test", reachedFinalAssertion ? "assertions-reached-end" : "exited-before-end")
+            if let directory = ProcessInfo.processInfo.environment["HANLIN_WIDGET_EVIDENCE_DIR"] {
+                let retained = URL(filePath: directory).appending(path: "original-http-" + root.lastPathComponent)
+                do {
+                    try FileManager.default.createDirectory(at: retained, withIntermediateDirectories: true)
+                    for name in ["native-stages.jsonl", "wire.jsonl", "server.stdout", "server.stderr", "port"] {
+                        let source = root.appending(path: name)
+                        if FileManager.default.fileExists(atPath: source.path) {
+                            try FileManager.default.copyItem(at: source, to: retained.appending(path: name))
+                        }
+                    }
+                    print("Original HTTP native evidence retained at \(retained.path)")
+                    try FileManager.default.removeItem(at: root)
+                } catch {
+                    print("Original HTTP evidence copy failed; source retained at \(root.path): \(error)")
+                }
+            } else {
+                print("Original HTTP native evidence retained at \(root.path)")
+            }
+        }
+        recordStage("test", "started", ["executionTimeout": HanlinOriginalScriptWidgetSession.executionTimeout])
         let portFile = root.appending(path: "port")
+        let wireFile = root.appending(path: "wire.jsonl")
+        if let directory = ProcessInfo.processInfo.environment["HANLIN_WIDGET_EVIDENCE_DIR"] {
+            let retained = URL(filePath: directory).appending(path: "original-http-" + root.lastPathComponent)
+            do {
+                let sourceFile = URL(filePath: #filePath)
+                let descriptor: [String: Any] = [
+                    "schema": 1, "kind": "hanlin.original-http.live-paths",
+                    "test": "originalScriptWidgetHTTPUsesBoundedRealTransport",
+                    "pid": ProcessInfo.processInfo.processIdentifier,
+                    "at": Date().timeIntervalSince1970,
+                    "runDirectory": URL(filePath: directory).standardizedFileURL.path,
+                    "instanceID": root.lastPathComponent,
+                    "sourceFile": sourceFile.path,
+                    "sourceSHA256": sha(try Data(contentsOf: sourceFile)),
+                    "temporaryRoot": root.path,
+                    "stagesFile": stagesFile.path, "wireFile": wireFile.path,
+                ]
+                try FileManager.default.createDirectory(at: retained, withIntermediateDirectories: true)
+                try JSONSerialization.data(withJSONObject: descriptor, options: [.sortedKeys])
+                    .write(to: retained.appending(path: "live-paths.json"), options: [.atomic])
+            } catch {
+                print("Original HTTP live-path publication failed: \(error)")
+            }
+        }
+        let authority = "transport.hanlin.invalid:80"
         let server = Process()
         server.executableURL = URL(fileURLWithPath: "/usr/bin/env")
         server.arguments = ["python3", "-u", "-c", #"""
-            import http.server, json, pathlib, sys, time
+            import http.server, json, pathlib, sys, threading, time, urllib.parse
+            authority, wire_path = sys.argv[3], pathlib.Path(sys.argv[2])
+            wire_lock = threading.Lock()
+            def record(value):
+                with wire_lock, wire_path.open('a', encoding='utf-8') as output:
+                    output.write(json.dumps(value, sort_keys=True) + '\n')
             class Handler(http.server.BaseHTTPRequestHandler):
+                protocol_version = 'HTTP/1.1'
                 def log_message(self, *args): pass
+                def do_CONNECT(self):
+                    record({'phase': 'connect', 'authority': self.path})
+                    if self.path != authority:
+                        self.send_error(403); return
+                    self.tunnel_authority = self.path
+                    self.send_response(200, 'Connection Established')
+                    self.end_headers()
+                    self.close_connection = False
                 def handle_request(self):
-                    if self.path == '/slow': time.sleep(0.5)
-                    if self.path == '/redirect':
-                        self.send_response(302); self.send_header('Location', 'file:///etc/hosts'); self.end_headers(); return
-                    if self.path == '/large':
-                        self.send_response(200); self.send_header('Content-Length', str(1024*1024+1)); self.end_headers(); return
+                    if getattr(self, 'tunnel_authority', None) != authority:
+                        self.send_error(403); return
+                    path = urllib.parse.urlsplit(self.path).path
                     body = self.rfile.read(int(self.headers.get('Content-Length', '0'))).decode()
-                    data = bytes([0, 127, 255]) if self.path == '/binary' else json.dumps({'method': self.command, 'body': body, 'header': self.headers.get('X-Widget'), 'type': self.headers.get('Content-Type')}).encode()
-                    self.send_response(503 if self.path == '/status' else 200)
-                    self.send_header('Content-Type', 'application/json'); self.send_header('Retry-After', '3'); self.send_header('Content-Length', str(len(data))); self.end_headers()
-                    try: self.wfile.write(data)
+                    record({'phase': 'request', 'authority': self.tunnel_authority,
+                            'path': path, 'method': self.command, 'host': self.headers.get('Host'),
+                            'body': body, 'header': self.headers.get('X-Widget'),
+                            'type': self.headers.get('Content-Type'), 'at': time.monotonic()})
+                    if path.endswith('/slow'): time.sleep(3)
+                    if path.endswith('/redirect'):
+                        self.send_response(302)
+                        self.send_header('Location', 'file:///etc/hosts')
+                        self.send_header('Content-Length', '0'); self.end_headers(); return
+                    if path.endswith('/large'): data = b'x' * (2*1024*1024+1)
+                    elif path.endswith('/within-limit'): data = b'x' * (2*1024*1024)
+                    elif path.endswith('/binary'): data = bytes([0,127,255])
+                    else: data = json.dumps({'method': self.command, 'body': body,
+                        'header': self.headers.get('X-Widget'), 'type': self.headers.get('Content-Type')}).encode()
+                    self.send_response(503 if path.endswith('/status') else 200)
+                    self.send_header('Content-Type', 'application/json')
+                    self.send_header('Retry-After', '3')
+                    self.send_header('Content-Length', str(len(data))); self.end_headers()
+                    try:
+                        self.wfile.write(data); self.wfile.flush()
+                        record({'phase': 'response', 'path': path, 'bytes': len(data), 'at': time.monotonic()})
                     except (BrokenPipeError, ConnectionResetError): pass
                 do_GET = do_POST = do_PUT = do_PATCH = do_DELETE = handle_request
             server = http.server.ThreadingHTTPServer(('127.0.0.1', 0), Handler)
             pathlib.Path(sys.argv[1]).write_text(str(server.server_port))
             server.serve_forever()
-            """#, portFile.path]
-        server.standardOutput = FileHandle.nullDevice
-        server.standardError = FileHandle.nullDevice
+            """#, portFile.path, wireFile.path, authority]
+        let stdoutFile = root.appending(path: "server.stdout")
+        let stderrFile = root.appending(path: "server.stderr")
+        try Data().write(to: stdoutFile)
+        try Data().write(to: stderrFile)
+        let serverOutput = try FileHandle(forWritingTo: stdoutFile)
+        let serverError = try FileHandle(forWritingTo: stderrFile)
+        defer { try? serverOutput.close(); try? serverError.close() }
+        server.standardOutput = serverOutput
+        server.standardError = serverError
         try server.run()
-        defer { if server.isRunning { server.terminate(); server.waitUntilExit() } }
-        let startDeadline = ContinuousClock.now.advanced(by: .seconds(5))
-        while !FileManager.default.fileExists(atPath: portFile.path), server.isRunning, ContinuousClock.now < startDeadline {
+        recordStage("server", "started", ["serverPID": server.processIdentifier])
+        defer {
+            if server.isRunning { server.terminate(); server.waitUntilExit() }
+            recordStage("server", "terminated", ["terminationStatus": server.terminationStatus,
+                "terminationReason": server.terminationReason.rawValue])
+        }
+        let startupDeadline = Date().addingTimeInterval(5)
+        while !FileManager.default.fileExists(atPath: portFile.path), Date() < startupDeadline {
             Thread.sleep(forTimeInterval: 0.01)
         }
-        let port = try String(contentsOf: portFile, encoding: .utf8)
-        let base = "http://127.0.0.1:\(port)"
-        func execute(_ source: String) throws -> HanlinScriptWidgetExecution {
+        let port = try #require(UInt16(String(contentsOf: portFile, encoding: .utf8)))
+        recordStage("server", "ready", ["port": Int(port)])
+        // Keep the original URL/domain policy active. Only this test's real
+        // URLSession uses the owned CONNECT proxy; no system proxy is changed.
+        let configuration = URLSessionConfiguration.ephemeral
+        configuration.proxyConfigurations = [ProxyConfiguration(httpCONNECTProxy:
+            .hostPort(host: "127.0.0.1", port: try #require(NWEndpoint.Port(rawValue: port))))]
+        let transport = HanlinScriptWidgetOriginal.ScriptWidgetFetchManager(configuration: configuration)
+        typealias HTTPResult = (tag: String, children: [String], values: [String: HanlinValue], requests: Int)
+        func execute(_ label: String, _ source: String) throws -> HTTPResult {
+            recordStage(label, "preparing")
+            let base = "http://transport.hanlin.invalid/\(label)"
             let program = HanlinWidgetProgram(engine: .scriptwidget,
                 sourceSHA256: String(repeating: "a", count: 64), compilerSHA256: String(repeating: "b", count: 64),
-                javaScript: "async function $main() { const base = '\(base)'; \(source); $render(ScriptWidget.createElement('text', {}, 'Transport verified')); }",
+                javaScript: "async function $main() { const base='\(base)'; \(source); $render(ScriptWidget.createElement('text',{},'Transport verified')); }",
                 actions: [], families: ["systemMedium"])
-            return try HanlinScriptWidgetRuntime.shared.run(program: program, values: [:], environment: [:])
+            try program.validate(engine: .scriptwidget)
+            try HanlinOriginalScriptWidgetSession.validatePreparedJavaScript(program.javaScript)
+            let context = try #require(JSContext())
+            let native = try HanlinOriginalScriptWidgetSession(context: context,
+                root: root.appending(path: label), identity: UUID().uuidString,
+                preparedJavaScript: program.javaScript, files: program.resources,
+                values: [:], environment: [:], isUserInitiatedAction: false)
+            let completed = DispatchSemaphore(value: 0)
+            var result: Result<HTTPResult, Error>?
+            var rendered: (String, [String])?
+            defer {
+                native.cancel()
+                native.onJavaScriptQueue {
+                    native.finish()
+                    context.exceptionHandler = nil
+                    for key in ["$render", "__httpTestDone", "__httpTestFailed", "__httpTestStore", "__httpTestStage"] {
+                        context.setObject(nil, forKeyedSubscript: key as NSString)
+                    }
+                }
+            }
+            try native.onJavaScriptQueue {
+                let state = try #require(context.scriptWidgetRunningState)
+                state.fetchManagerForTesting = transport
+                native.installAPIs()
+                let failed: @convention(block) (String) -> Void = { message in
+                    guard result == nil else { return }
+                    recordStage(label, "rejected", ["message": message])
+                    result = .failure(HanlinScriptWidgetError(message)); completed.signal()
+                }
+                let render: @convention(block) (HanlinScriptWidgetOriginal.ScriptWidgetRuntimeElement) -> Void = { element in
+                    if let error = HanlinScriptWidgetOriginal.ScriptWidgetRuntimeContract.validateElementTree(element) {
+                        failed(error.localizedDescription); return
+                    }
+                    guard let tag = element.tagAsString(), let children = element.getChildren() as? [String] else {
+                        failed("The transport fixture did not render its actual text element"); return
+                    }
+                    rendered = (tag, children)
+                    recordStage(label, "rendered", ["tag": tag, "childCount": children.count])
+                }
+                // Same compatibility alias as the shipping adapter; storage is
+                // still the original session's real transaction and namespace.
+                let store: @convention(block) (String, Any) -> Bool = { [weak native] key, value in
+                    guard let native else { return false }
+                    do { try native.setValue(value, forKey: key); return true }
+                    catch { failed(error.localizedDescription); return false }
+                }
+                let finished: @convention(block) () -> Void = { [weak native] in
+                    guard result == nil else { return }
+                    do {
+                        let native = try #require(native)
+                        let rendered = try #require(rendered)
+                        result = .success((rendered.0, rendered.1,
+                            try HanlinWidgetJSON.dictionary(native.values()), state.executionSession.totalNetworkRequests))
+                        recordStage(label, "resolved", ["requests": state.executionSession.totalNetworkRequests])
+                    } catch {
+                        recordStage(label, "completion-error", ["message": String(describing: error)])
+                        result = .failure(error)
+                    }
+                    completed.signal()
+                }
+                let stage: @convention(block) (String) -> Void = { name in
+                    recordStage(label, "javascript", ["stage": name,
+                        "requests": state.executionSession.totalNetworkRequests])
+                }
+                context.setObject(render, forKeyedSubscript: "$render" as NSString)
+                context.setObject(store, forKeyedSubscript: "__httpTestStore" as NSString)
+                context.setObject(finished, forKeyedSubscript: "__httpTestDone" as NSString)
+                context.setObject(failed, forKeyedSubscript: "__httpTestFailed" as NSString)
+                context.setObject(stage, forKeyedSubscript: "__httpTestStage" as NSString)
+                context.exceptionHandler = { _, error in failed(error?.toString() ?? "Native HTTP fixture exception") }
+                context.evaluateScript("globalThis.$storage = {set: __httpTestStore};")
+                context.evaluateScript(try #require(HanlinOriginalScriptWidgetSession.supportScript("util.js")))
+                context.evaluateScript(program.javaScript)
+                recordStage(label, "evaluating")
+                context.evaluateScript("$main().then(__httpTestDone, e => __httpTestFailed(String(e)));")
+            }
+            guard completed.wait(timeout: .now() + HanlinOriginalScriptWidgetSession.executionTimeout) == .success else {
+                recordStage(label, "timeout", ["executionTimeout": HanlinOriginalScriptWidgetSession.executionTimeout])
+                throw HanlinScriptWidgetError("The original HTTP execution did not finish within its native budget (stage: \(label); evidence: \(root.path))")
+            }
+            return try native.onJavaScriptQueue { try #require(result).get() }
         }
-        let verbs = try execute(#"""
-            for (const method of ['get', 'post', 'put', 'patch']) {
-              const result = JSON.parse(await $http[method](base + '/echo', {headers:{'X-Widget':'source'}, body:method === 'get' ? undefined : {count:7}}));
+        let verbs = try execute("verbs", #"""
+            for (const method of ['get','post','put','patch']) {
+              __httpTestStage('verb:'+method);
+              const result = JSON.parse(await $http[method](base+'/echo', {headers:{'X-Widget':'source'},body:method==='get'?undefined:{count:7}}));
               if (result.method !== method.toUpperCase() || result.header !== 'source') throw Error('HTTP method/header lost');
               if (method !== 'get' && (JSON.parse(result.body).count !== 7 || result.type !== 'application/json')) throw Error('JSON body lost');
               $storage.set(method, result.method);
             }
+            for (let index=4; index<32; index++) {
+              __httpTestStage('budget:'+index);
+              const result = JSON.parse(await $fetch(base+'/budget/'+index));
+              if (result.method !== 'GET') throw Error('An admitted request did not reach the real transport');
+            }
             let rejected = false;
-            try { await $fetch(base + '/echo'); } catch (_) { rejected = true; }
-            if (!rejected) throw Error('Fifth request exceeded budget');
+            __httpTestStage('over-budget');
+            try { await $fetch(base+'/over-budget'); }
+            catch (error) { rejected = String(error).includes('Network request budget exceeded'); }
+            if (!rejected) throw Error('Thirty-third request exceeded budget');
             """#)
         #expect(verbs.values["post"] == .string("POST"))
-        let response = try execute(#"""
-            const deleted = JSON.parse(await $http.delete(base + '/echo', {body:'raw source'}));
+        #expect(verbs.requests == 32)
+        let response = try execute("response", #"""
+            __httpTestStage('delete');
+            const deleted = JSON.parse(await $http.delete(base+'/echo', {body:'raw source'}));
             if (deleted.method !== 'DELETE' || deleted.body !== 'raw source') throw Error('DELETE body lost');
-            const status = await $http.getResponse(base + '/status');
+            __httpTestStage('status');
+            const status = await $http.getResponse(base+'/status');
             if (status.status !== 503 || status.headers['retry-after'] !== '3' || JSON.parse(status.body).method !== 'GET') throw Error('Response metadata lost');
-            const bytes = await $fetch(base + '/binary', {responseType:'base64'});
+            __httpTestStage('binary');
+            const bytes = await $fetch(base+'/binary', {responseType:'base64'});
             if (bytes !== 'AH//') throw Error('Binary response lost');
             $storage.set('status', status.status);
             """#)
         #expect(response.values["status"] == .integer(503))
-        let limits = try execute(#"""
-            for (const [path, params] of [['/large', {}], ['/redirect', {}], ['/slow', {timeoutInterval:0.05}]]) {
+        let limits = try execute("limits", #"""
+            __httpTestStage('within-limit');
+            const admitted = await $http.get(base+'/within-limit');
+            __httpTestStage('within-limit-received');
+            if (admitted.length !== 2*1024*1024 || !/^x+$/.test(admitted)) throw Error('The supported response boundary was rejected or changed');
+            __httpTestStage('within-limit-validated');
+            for (const [path,params] of [['/large',{}],['/redirect',{}],['/slow',{timeoutInterval:0.05}]]) {
+              __httpTestStage('limit:'+path);
+              const started = Date.now();
               let rejected = false;
-              try { await $http.get(base + path, params); } catch (_) { rejected = true; }
-              if (!rejected) throw Error('Unsafe or over-budget transport accepted: ' + path);
+              try { await $http.get(base+path, params); }
+              catch (error) {
+                rejected = true;
+                if (path === '/large' && !String(error).includes('Response exceeds the 2097152-byte limit')) throw error;
+              }
+              if (!rejected) throw Error('Unsafe or over-budget transport accepted: '+path);
+              const elapsed = Date.now()-started;
+              if (path === '/slow' && (elapsed < 900 || elapsed >= 2500)) throw Error('The one-second timeout floor was not applied to the real slow request');
             }
-            let rejected = false;
-            try { await $fetch('file:///etc/hosts'); } catch (_) { rejected = true; }
-            if (!rejected) throw Error('File transport accepted');
+            for (const [url,reason] of [['file:///etc/hosts','Only HTTP and HTTPS URLs are allowed'],['http://127.0.0.1/private','Local and private network hosts are not allowed']]) {
+              __httpTestStage('policy:'+url);
+              let rejected = false;
+              try { await $fetch(url); } catch (error) { rejected = String(error).includes(reason); }
+              if (!rejected) throw Error('Disallowed transport accepted: '+url);
+            }
             """#)
-        #expect(limits.node.children == [.value(.string("Transport verified"))])
+        #expect(limits.tag == "text")
+        #expect(limits.children == ["Transport verified"])
+        #expect(response.requests == 3)
+        #expect(limits.requests == 4)
+        let wire = try String(contentsOf: wireFile, encoding: .utf8).split(separator: "\n").map {
+            try #require(JSONSerialization.jsonObject(with: Data($0.utf8)) as? [String: Any])
+        }
+        let requests = wire.filter { $0["phase"] as? String == "request" }
+        #expect(wire.contains { $0["phase"] as? String == "connect" && $0["authority"] as? String == authority })
+        #expect(requests.count == 39)
+        #expect(requests.allSatisfy {
+            $0["authority"] as? String == authority && ["transport.hanlin.invalid", "transport.hanlin.invalid:80"].contains($0["host"] as? String ?? "")
+        })
+        #expect(requests.filter { ($0["path"] as? String)?.hasPrefix("/verbs/") == true }.count == 32)
+        #expect(requests.filter { $0["path"] as? String == "/response/echo" && $0["method"] as? String == "DELETE" && $0["body"] as? String == "raw source" }.count == 1)
+        #expect(requests.filter { $0["path"] as? String == "/limits/slow" }.count == 1)
+        #expect(!requests.contains { ($0["path"] as? String)?.contains("over-budget") == true || $0["path"] as? String == "/private" })
+        #expect(!wire.contains { $0["phase"] as? String == "response" && $0["path"] as? String == "/limits/slow" })
+        reachedFinalAssertion = true
     }
     #endif
     @Test func passiveLegacyNavigationCannotCoverNativeOrNestedButtons() throws {
