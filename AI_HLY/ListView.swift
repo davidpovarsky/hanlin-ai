@@ -181,15 +181,10 @@ struct ListView: View {
                         ContentUnavailableView(hanlin: "请选择一个对话", systemImage: "bubble.left.and.bubble.right")
                     }
                 }
-                .hanlinFollowLatestOverlayHost(selectedConversationID: Binding(
+                .hanlinFollowLatestOverlaySource(selectedConversationID: Binding(
                     get: { useCompactWorkspace ? nil : selectedChatRecord?.id },
                     set: { _ in }
-                )) { request in
-                    HanlinFollowLatestButton(isTemporaryRecord: request.isTemporaryRecord) {
-                        traceFollowLatestHostAction(request)
-                        request.perform()
-                    }
-                }
+                ), onActionAttempt: traceFollowLatestHostAction)
             } else {
                 HanlinCompactChatWorkspace(
                     chatRecords: chatRecords,

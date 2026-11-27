@@ -92,7 +92,106 @@ private struct FollowLatestOverlayHost<Control: View>: ViewModifier {
     }
 }
 
+/// Export only the selected wide conversation. The scene host owns placement;
+/// this source keeps the live selection guard next to the conversation owner.
+@MainActor
+private struct FollowLatestOverlaySource: ViewModifier {
+    let selectedConversationID: Binding<UUID?>
+    let onActionAttempt: (@MainActor (HanlinFollowLatestOverlayRequest) -> Void)?
+
+    func body(content: Content) -> some View {
+        content
+            .environment(\.hanlinFollowLatestHostedExternally, true)
+            .transformPreference(HanlinFollowLatestOverlayPreferenceKey.self) { requests in
+                guard let selected = selectedConversationID.wrappedValue else {
+                    requests.removeAll()
+                    return
+                }
+                requests = requests.filter { $0.conversationID == selected }.map { request in
+                    HanlinFollowLatestOverlayRequest(
+                        conversationID: request.conversationID, ownerToken: request.ownerToken,
+                        bounds: request.bounds, isTemporaryRecord: request.isTemporaryRecord
+                    ) {
+                        onActionAttempt?(request)
+                        guard selectedConversationID.wrappedValue == request.conversationID else { return }
+                        request.perform()
+                    }
+                }
+            }
+    }
+}
+
+/// Consume exported anchors above the native tab container. This host does not
+/// change descendant environments, so compact conversations keep their local control.
+@MainActor
+private struct FollowLatestSceneOverlayHost<Control: View>: ViewModifier {
+    let isEnabled: Binding<Bool>
+    let control: @MainActor (HanlinFollowLatestOverlayRequest) -> Control
+
+    func body(content: Content) -> some View {
+        content
+            .overlayPreferenceValue(HanlinFollowLatestOverlayPreferenceKey.self) { requests in
+                GeometryReader { geometry in
+                    let request = currentRequest(in: requests)
+                    Group {
+                        if let request {
+                            let frame = geometry[request.bounds]
+                            if frame.minX.isFinite, frame.minY.isFinite,
+                               frame.width.isFinite, frame.height.isFinite,
+                               frame.width > 0, frame.height > 0 {
+                                control(guarded(request))
+                                    .id(request.ownerToken)
+                                    .position(x: frame.midX, y: frame.midY)
+                            }
+                        }
+                    }
+                    .animation(.spring(response: 0.5, dampingFraction: 0.7),
+                               value: request?.ownerToken)
+                }
+            }
+    }
+
+    private func currentRequest(in requests: [HanlinFollowLatestOverlayRequest])
+        -> HanlinFollowLatestOverlayRequest? {
+        guard isEnabled.wrappedValue, requests.count == 1 else { return nil }
+        return requests[0]
+    }
+
+    private func guarded(_ request: HanlinFollowLatestOverlayRequest)
+        -> HanlinFollowLatestOverlayRequest {
+        HanlinFollowLatestOverlayRequest(
+            conversationID: request.conversationID, ownerToken: request.ownerToken,
+            bounds: request.bounds, isTemporaryRecord: request.isTemporaryRecord
+        ) {
+            // Re-read the current tab before invoking the source's live selection guard.
+            guard isEnabled.wrappedValue else { return }
+            request.perform()
+        }
+    }
+}
+
 public extension View {
+    /// Export a wide conversation's anchor and action to an enclosing scene host.
+    /// The optional callback observes an action attempt before the live selection guard.
+    @MainActor
+    func hanlinFollowLatestOverlaySource(
+        selectedConversationID: Binding<UUID?>,
+        onActionAttempt: (@MainActor (HanlinFollowLatestOverlayRequest) -> Void)? = nil
+    ) -> some View {
+        modifier(FollowLatestOverlaySource(selectedConversationID: selectedConversationID,
+                                           onActionAttempt: onActionAttempt))
+    }
+
+    /// Mount one exported control outside a native tab container. Only sources
+    /// explicitly opting into external hosting publish requests; no geometry is cached.
+    @MainActor
+    func hanlinFollowLatestSceneOverlayHost<Control: View>(
+        isEnabled: Binding<Bool>,
+        @ViewBuilder control: @escaping @MainActor (HanlinFollowLatestOverlayRequest) -> Control
+    ) -> some View {
+        modifier(FollowLatestSceneOverlayHost(isEnabled: isEnabled, control: control))
+    }
+
     /// Place the one follow-latest control outside a navigation container while
     /// retaining its transcript-relative anchor, style and current scroll action.
     /// Preferences are consumed directly; no copied geometry or stored proxy is

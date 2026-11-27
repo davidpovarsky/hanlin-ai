@@ -9,6 +9,7 @@ import HanlinLocalization
 import SwiftUI
 import SwiftData
 import HanlinProductSplit
+import HanlinChatUI
 
 struct MainTabView: View {
     @Binding var deepLinkTarget: String?
@@ -63,6 +64,15 @@ struct MainTabView: View {
                         .accessibilityIdentifier("hanlin-library-tab")
                 }
                 .tag(2)
+        }
+        // Host outside TabView's native tab-item wrapper, while keeping the
+        // conversation's live anchor and action in the selected wide source.
+        .hanlinFollowLatestSceneOverlayHost(isEnabled: Binding(
+            get: { selectedTab == 0 }, set: { _ in }
+        )) { request in
+            HanlinFollowLatestButton(isTemporaryRecord: request.isTemporaryRecord) {
+                request.perform()
+            }
         }
         .sheet(item: $modal) { destination in
             switch destination {
