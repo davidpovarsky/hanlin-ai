@@ -1,5 +1,5 @@
 {
-  "sourceCommit": "f768d634bfa8a102cf63b32c7ab9d129cafc671d",
+  "sourceCommit": "226e7cfcc60a9ace99241f009d3586b9cea7e65e",
   "uncommittedSourcePaths": [],
   "schemaVersion": 1,
   "auditParser": {
@@ -9662,8 +9662,8 @@
             },
             {
               "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift",
-              "sha256": "852828b5e9548de003195cef2253b892a5b4a1c039e71946bb0e7fb0b61d7107",
-              "line": 184
+              "sha256": "8de104715db099ce1087971032575e3a29d42f0feb940b5a70765ab72d44e9b5",
+              "line": 185
             }
           ]
         },
@@ -9821,8 +9821,8 @@
             },
             {
               "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift",
-              "sha256": "852828b5e9548de003195cef2253b892a5b4a1c039e71946bb0e7fb0b61d7107",
-              "line": 179
+              "sha256": "8de104715db099ce1087971032575e3a29d42f0feb940b5a70765ab72d44e9b5",
+              "line": 180
             },
             {
               "path": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinPreparedRuntimeVersion.swift",
@@ -9868,8 +9868,8 @@
           "sources": [
             {
               "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift",
-              "sha256": "852828b5e9548de003195cef2253b892a5b4a1c039e71946bb0e7fb0b61d7107",
-              "line": 216
+              "sha256": "8de104715db099ce1087971032575e3a29d42f0feb940b5a70765ab72d44e9b5",
+              "line": 217
             }
           ]
         }
@@ -9877,8 +9877,8 @@
       "additionalAuthorities": [
         {
           "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift",
-          "sha256": "852828b5e9548de003195cef2253b892a5b4a1c039e71946bb0e7fb0b61d7107",
-          "line": 162
+          "sha256": "8de104715db099ce1087971032575e3a29d42f0feb940b5a70765ab72d44e9b5",
+          "line": 163
         },
         {
           "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift",
@@ -15589,7 +15589,7 @@
     },
     {
       "path": "Package.swift",
-      "sha256": "fb08c64bd016c1d5f2c3d4c6665f5911d4d888b5486ab73479f6e35940c591bc"
+      "sha256": "e90a1d5608bc800c94c3eb9c912e317b3409618cc16c5d53fe5fc36fb2c4f2df"
     },
     {
       "path": "Packages/HanlinExpoNativeAPI/Package.swift",
@@ -15613,7 +15613,7 @@
     },
     {
       "path": "Packages/HanlinExpoRuntime/Package.swift",
-      "sha256": "6a4169ffd1975358466068c3f7776d8ac88fab4b6c0b883005669522086cda0e"
+      "sha256": "b9613156b0b047e2afede71761043e1ccfe661f557fc232abc8bc207cca40490"
     },
     {
       "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedModifiers.swift",
@@ -15637,7 +15637,7 @@
     },
     {
       "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift",
-      "sha256": "852828b5e9548de003195cef2253b892a5b4a1c039e71946bb0e7fb0b61d7107"
+      "sha256": "8de104715db099ce1087971032575e3a29d42f0feb940b5a70765ab72d44e9b5"
     },
     {
       "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinHostServicesModule.swift",

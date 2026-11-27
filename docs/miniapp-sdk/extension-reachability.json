@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "f768d634bfa8a102cf63b32c7ab9d129cafc671d",
+  "sourceCommit": "226e7cfcc60a9ace99241f009d3586b9cea7e65e",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
   "uncommittedSourcePaths": [],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
@@ -76,7 +76,7 @@
     },
     {
       "path": "Package.swift",
-      "sha256": "fb08c64bd016c1d5f2c3d4c6665f5911d4d888b5486ab73479f6e35940c591bc"
+      "sha256": "e90a1d5608bc800c94c3eb9c912e317b3409618cc16c5d53fe5fc36fb2c4f2df"
     },
     {
       "path": "Packages/HanlinExpoNativeAPI/Package.swift",
@@ -100,7 +100,7 @@
     },
     {
       "path": "Packages/HanlinExpoRuntime/Package.swift",
-      "sha256": "6a4169ffd1975358466068c3f7776d8ac88fab4b6c0b883005669522086cda0e"
+      "sha256": "b9613156b0b047e2afede71761043e1ccfe661f557fc232abc8bc207cca40490"
     },
     {
       "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedModifiers.swift",
@@ -124,7 +124,7 @@
     },
     {
       "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoSession.swift",
-      "sha256": "852828b5e9548de003195cef2253b892a5b4a1c039e71946bb0e7fb0b61d7107"
+      "sha256": "8de104715db099ce1087971032575e3a29d42f0feb940b5a70765ab72d44e9b5"
     },
     {
       "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinHostServicesModule.swift",
@@ -977,9 +977,9 @@
     },
     "projectTargets": {
       "file": "AI_HLY.xcodeproj/project.pbxproj",
-      "line": 3053,
+      "line": 3061,
       "anchor": "/* Begin PBXNativeTarget section */",
-      "sha256": "52bd71e97d08c1982fe0547d2b0c80374c373533d9abcaf885591adab87dccdb"
+      "sha256": "4f1afea0f0d166c55962b619d187efdc59b3c394a4b6c246af0f120260d74d80"
     },
     "audit": {
       "file": "Scripts/Audit/audit_miniapp_reachability.py",
@@ -1087,13 +1087,13 @@
       "file": "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json",
       "line": 3150,
       "anchor": "ScriptWidgetControls/Original/ScriptWidgetControlWidget.swift",
-      "sha256": "4d06d0dfaca462fc21257c8053d3250b7cc0e78c4d77b4eb2e98f64bf7cbe83b"
+      "sha256": "b325e5f841b517326a5aeecf4bb8b3f5b342f02a85ec9fa7a248e11e63ae962c"
     },
     "controlSourceRefresh": {
       "file": "Scripts/MiniApps/refresh-original-sources.mjs",
-      "line": 382,
+      "line": 377,
       "anchor": "const controlTargetRoot=",
-      "sha256": "9b367c79ece68771e1ab193cc22c218feb72d2f519ffb410fc560b6fca59a7e8"
+      "sha256": "2c05b6b7273e13fac12c520e3e33659c2ba67c572bc50d884e2d897911cf6987"
     },
     "scriptWidgetLiveActivity": {
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptWidgetLiveActivity.swift",
@@ -1115,21 +1115,21 @@
     },
     "originalExpoModule": {
       "file": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsModule.swift",
-      "line": 13,
+      "line": 12,
       "anchor": "public final class WidgetsModule: Module",
-      "sha256": "153e723f0e7a75cb325dc74333efe3788010a1f74319a09ddb386853232634a5"
+      "sha256": "8ab0a5dc30ab82e8f4f5f28cebe203586febaf22dd28ab9486476be78509cf17"
     },
     "originalExpoActivity": {
       "file": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/Widgets/WidgetLiveActivity.swift",
-      "line": 22,
+      "line": 27,
       "anchor": "public struct WidgetLiveActivity",
-      "sha256": "0f6d6b8e994d06e4acb69b8e793ded04143b3db96c2e89ba384890bbad176c11"
+      "sha256": "143662ae2dfb28feb18c0433130917b82861da8161decce231c811f173d8b45f"
     },
     "originalExpoRegistry": {
       "file": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/HanlinExpoWidgetsIntegration.swift",
-      "line": 20,
+      "line": 19,
       "anchor": "public enum HanlinExpoWidgetsIntegration",
-      "sha256": "ea189d45e4c15aedb9a8e7a9cb593b1bd03d8aac1d9b9db4844778664f48a475"
+      "sha256": "31eb63c6009caea2bf403a1b85ea3c059e86f65494d6150c9a8bb6e6597ac31d"
     },
     "shareSDKFacade": {
       "file": "AI_HLY/Downstream/SDK/HanlinApplicationComponents.swift",
