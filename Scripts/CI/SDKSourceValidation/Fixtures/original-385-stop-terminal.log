@@ -1,0 +1,20 @@
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite AgentSessionTests started.
+◇ Test stopBeforeProducerInstallationJoinsPreparationAndPreservesStoredConversation() started.
+◇ Test stopAtEOFJoinsConfirmedReceiptWorkerBeforeReleasingRun(stopAtEOF:) started.
+◇ Test stopDoesNotConvertUncertainReceiptIntoPermissionToRetry() started.
+◇ Test stopWaitsForOriginalNativeWorkerAndKeepsAccountFence(changeAccount:) started.
+◇ Test case passing 1 argument stopAtEOF → true to stopAtEOFJoinsConfirmedReceiptWorkerBeforeReleasingRun(stopAtEOF:) started.
+◇ Test stopPreservesPartialTranscriptAndNewRunWhileOldConsumerTerminates() started.
+◇ Test case passing 1 argument stopAtEOF → false to stopAtEOFJoinsConfirmedReceiptWorkerBeforeReleasingRun(stopAtEOF:) started.
+◇ Test case passing 1 argument changeAccount → true to stopWaitsForOriginalNativeWorkerAndKeepsAccountFence(changeAccount:) started.
+◇ Test case passing 1 argument changeAccount → false to stopWaitsForOriginalNativeWorkerAndKeepsAccountFence(changeAccount:) started.
+✔ Test stopPreservesPartialTranscriptAndNewRunWhileOldConsumerTerminates() passed after 0.033 seconds.
+✔ Test stopDoesNotConvertUncertainReceiptIntoPermissionToRetry() passed after 0.043 seconds.
+✔ Test stopBeforeProducerInstallationJoinsPreparationAndPreservesStoredConversation() passed after 0.043 seconds.
+✔ Test stopWaitsForOriginalNativeWorkerAndKeepsAccountFence(changeAccount:) with 2 test cases passed after 0.053 seconds.
+✔ Test stopAtEOFJoinsConfirmedReceiptWorkerBeforeReleasingRun(stopAtEOF:) with 2 test cases passed after 0.053 seconds.
+✔ Suite AgentSessionTests passed after 0.053 seconds.
+✔ Test run with 5 tests in 1 suite passed after 0.053 seconds.

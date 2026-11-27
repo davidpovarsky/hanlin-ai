@@ -1,0 +1,9 @@
+{
+  "purpose": "Parser-control fixture only; not execution on20a or on the new workflow",
+  "originalSource": "38528941720d9b4f2da8dce7afbc788c2e554a0c",
+  "originalLogLocalPath": "hanlin-sdk-cancellation/mac-proof-385289/tests.log",
+  "originalLogSHA256": "d9d13b209bfe28d7e682324fd1aead823caa3cc15fb567193e3d4b8c59017b79",
+  "terminalOriginalByteOffset": 10926,
+  "terminalBytes": 1789,
+  "terminalSHA256": "96c38e730051956590b7be1082d1a801f9f26480055cd9a41d073f865a739f38"
+}

@@ -1,0 +1,110 @@
+{
+  "schema": "hanlin-original-sdk-hosted-control-source-v1",
+  "repository": "davidpovarsky/hanlin-ai",
+  "parent": "20a1e6fa33ed261ba11e83a0b84a157029822e5e",
+  "status": "SOURCE_CONTROL_READY_SWIFT_APP_AND_NATIVE_NOT_RUN",
+  "files": [
+    {
+      "path": ".github/workflows/build-ios26-unsigned-ipa.yml",
+      "bytes": 218761,
+      "sha256": "b64caef8e3b91485fb9e7f22d88bdf17da00857ac3447ea031de4c993e8aeac3",
+      "blob": "ec92b5310a020daad266d2b345b04df70b0889fb"
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/run.py",
+      "bytes": 28419,
+      "sha256": "e269c858a58ae8e55e15b6d4a109c3e48fd244fa349d6006809be4048107e91e",
+      "blob": "4359102c6b89334478303840f9c44c0e108ae2bb"
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/obligations.json",
+      "bytes": 7657,
+      "sha256": "fc6bf51c942d7cb6a668110b023d95a36f3ff0fd0a7bc04dc7d2a88a03530253",
+      "blob": "874d6d1ff7b7b0c1da127ccb7cc8b97e327e2e91"
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/test_control.py",
+      "bytes": 10112,
+      "sha256": "b7e18ac888cc84b189c1c9a8663449cfd9fb42092a5ea94a384e67ec7094e08e",
+      "blob": "e7b96230d6db23ec942ecdf4e6ec72f6ae1ca71e"
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/README.md",
+      "bytes": 10805,
+      "sha256": "a9eb742fcbb142707072c82408ba3d483cc920e66c7ea224d8d5d9d54bbcac81",
+      "blob": "22736d1f04e9f63c953e3842b60bcd5c8d42a360"
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/Fixtures/original-385-stop-terminal.log",
+      "bytes": 1789,
+      "sha256": "96c38e730051956590b7be1082d1a801f9f26480055cd9a41d073f865a739f38",
+      "blob": "ffdfa9a8040379513143f71bd6d61d61f7dbb550"
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/Fixtures/original-385-stop-terminal-provenance.json",
+      "bytes": 478,
+      "sha256": "303540a924f4224af6fd1b8382a7376ab8675a27809f4150bfd920f02ddc0964",
+      "blob": "2098ee7743f9ed8d4e45ff9c616660c1003f626f"
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/Fixtures/original-workflow-conditions.json",
+      "bytes": 14512,
+      "sha256": "df254ac49706d8ce3c7792ca9c8a99806b7ec12c9c88c8b4a11dfd2acd231e7f",
+      "blob": "fa0630a73649caee74bc41c0effe446031026288"
+    }
+  ],
+  "originalWorkflow": {
+    "blob": "7600e5f36484120ecb476a8e0c5c770b46cf3dce",
+    "sha256": "f88489d966e676b051076898eccf8c56b4bdeca689d92846240fbf286d6952e6",
+    "bytes": 216739
+  },
+  "literalInverseOperations": [
+    {
+      "after_start_byte": 319,
+      "after_end_byte": 437,
+      "after": "        description: Exact immutable source SHA for isolated Composer or HanlinSDKCancellationQuotaWidgets validation\n",
+      "before": "        description: Exact commit SHA expected by isolated Composer validation\n"
+    },
+    {
+      "after_start_byte": 5588,
+      "after_end_byte": 8284,
+      "after": "  group: ${{ github.workflow }}-${{ github.ref }}-${{ (github.event_name == 'workflow_dispatch' && inputs.target_validation_group == 'agent_sdk_session_only_proof' && inputs.exact_test_selector == 'HanlinSDKCancellationQuotaWidgets') && format('original-sdk-{0}', github.run_id) || (github.event_name == 'workflow_dispatch' && inputs.target_validation_group == 'exact_test_selector') && format('exact-test-run-{0}', github.run_id) || (inputs.target_validation_group == 'phase2_app_with_motion') && 'phase2-combined-native' || (inputs.target_validation_group == 'exact_test_selector' && contains(inputs.exact_test_selector, 'AgentSkillsEmbeddedResultsUITests')) && 'embedded-result-acceptance' || (inputs.target_validation_group == 'exact_test_selector' && contains(inputs.exact_test_selector, 'HanlinMorphComposerUITests/testCompact')) && 'explicit-compact-composer' || (inputs.target_validation_group == 'exact_test_selector' && contains(inputs.exact_test_selector, 'testLiveGeminiPythonConsentAndColdReopen')) && 'live-provider-original-app' || (inputs.target_validation_group == 'chat_regression_native' || inputs.target_validation_group == 'simulator_environment_probe' || inputs.target_validation_group == 'device_build' || inputs.target_validation_group == 'project_packaging' || inputs.target_validation_group == 'chat_motion_product' || inputs.target_validation_group == 'a2ui_media_replay_ui' || inputs.target_validation_group == 'native_result_inspection' || inputs.target_validation_group == 'skill_format_app_resolve' || inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks' || inputs.target_validation_group == 'agent_sdk_session_only_proof' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he' || inputs.target_validation_group == 'composer_metadata_only' || inputs.target_validation_group == 'composer_sdk_eligibility_diagnostic' || inputs.target_validation_group == 'composer_native_host_diagnostic') && inputs.target_validation_group || inputs.composer_validation_only && 'composer-isolated' || inputs.nativescript_metadata_validation_only && 'nativescript-metadata' || inputs.diagnostics_capture_validation_only && 'diagnostics-capture' || (inputs.code_fence_webkit_validation_only && 'code-fence-webkit' || (inputs.markdown_renderer_validation_only && 'markdown-renderer' || inputs.runtime_bundle_only && 'runtime-bundle' || (inputs.testflight_upload && 'testflight' || 'validation'))) }}\n",
+      "before": "  group: ${{ github.workflow }}-${{ github.ref }}-${{ (github.event_name == 'workflow_dispatch' && inputs.target_validation_group == 'exact_test_selector') && format('exact-test-run-{0}', github.run_id) || (inputs.target_validation_group == 'phase2_app_with_motion') && 'phase2-combined-native' || (inputs.target_validation_group == 'exact_test_selector' && contains(inputs.exact_test_selector, 'AgentSkillsEmbeddedResultsUITests')) && 'embedded-result-acceptance' || (inputs.target_validation_group == 'exact_test_selector' && contains(inputs.exact_test_selector, 'HanlinMorphComposerUITests/testCompact')) && 'explicit-compact-composer' || (inputs.target_validation_group == 'exact_test_selector' && contains(inputs.exact_test_selector, 'testLiveGeminiPythonConsentAndColdReopen')) && 'live-provider-original-app' || (inputs.target_validation_group == 'chat_regression_native' || inputs.target_validation_group == 'simulator_environment_probe' || inputs.target_validation_group == 'device_build' || inputs.target_validation_group == 'project_packaging' || inputs.target_validation_group == 'chat_motion_product' || inputs.target_validation_group == 'a2ui_media_replay_ui' || inputs.target_validation_group == 'native_result_inspection' || inputs.target_validation_group == 'skill_format_app_resolve' || inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks' || inputs.target_validation_group == 'agent_sdk_session_only_proof' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he' || inputs.target_validation_group == 'composer_metadata_only' || inputs.target_validation_group == 'composer_sdk_eligibility_diagnostic' || inputs.target_validation_group == 'composer_native_host_diagnostic') && inputs.target_validation_group || inputs.composer_validation_only && 'composer-isolated' || inputs.nativescript_metadata_validation_only && 'nativescript-metadata' || inputs.diagnostics_capture_validation_only && 'diagnostics-capture' || (inputs.code_fence_webkit_validation_only && 'code-fence-webkit' || (inputs.markdown_renderer_validation_only && 'markdown-renderer' || inputs.runtime_bundle_only && 'runtime-bundle' || (inputs.testflight_upload && 'testflight' || 'validation'))) }}\n"
+    },
+    {
+      "after_start_byte": 19436,
+      "after_end_byte": 21053,
+      "after": "  sdk-original-obligations:\n    if: ${{ github.event_name == 'workflow_dispatch' && inputs.target_validation_group == 'agent_sdk_session_only_proof' && inputs.exact_test_selector == 'HanlinSDKCancellationQuotaWidgets' && !inputs.testflight_upload }}\n    name: Original SDK cancellation, payload ownership and affected Widget cases\n    runs-on: xcode-27\n    timeout-minutes: 90\n    concurrency:\n      group: hanlin-original-sdk-${{ github.run_id }}-${{ github.run_attempt }}\n      cancel-in-progress: false\n    steps:\n      - uses: actions/checkout@v7.0.1\n      - name: Verify closed controller without Apple or native operations\n        run: |\n          set -euo pipefail\n          mkdir -p build/sdk-original-obligations\n          set +e\n          python3 -m unittest discover -s Scripts/CI/SDKSourceValidation -p 'test_control.py' -v > build/sdk-original-obligations/controller-tests.log 2>&1\n          status=$?\n          set -e\n          cat build/sdk-original-obligations/controller-tests.log\n          exit \"$status\"\n      - name: Test the explicit immutable original package source\n        env:\n          HANLIN_SDK_SOURCE_SHA: ${{ inputs.composer_expected_sha }}\n          PYTHONUNBUFFERED: '1'\n        run: python3 Scripts/CI/SDKSourceValidation/run.py\n      - name: Preserve original source, locks, logs, products and every failure\n        if: always()\n        uses: actions/upload-artifact@v7.0.2\n        with:\n          name: hanlin-original-sdk-${{ github.run_id }}-${{ github.run_attempt }}\n          path: build/sdk-original-obligations\n          if-no-files-found: error\n          retention-days: 30\n\n",
+      "before": ""
+    },
+    {
+      "after_start_byte": 21072,
+      "after_end_byte": 21658,
+      "after": "    if: ${{ inputs.exact_test_selector != 'HanlinSDKCancellationQuotaWidgets' && inputs.exact_test_selector != 'HanlinPresentationSDK' && inputs.target_validation_group != 'skill_format_app_resolve' && (inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && ((inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_session_only_proof') && !inputs.testflight_upload))) ) }}\n",
+      "before": "    if: ${{ inputs.exact_test_selector != 'HanlinPresentationSDK' && inputs.target_validation_group != 'skill_format_app_resolve' && (inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && ((inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_session_only_proof') && !inputs.testflight_upload))) ) }}\n"
+    },
+    {
+      "after_start_byte": 23329,
+      "after_end_byte": 23583,
+      "after": "    if: ${{ inputs.exact_test_selector != 'HanlinSDKCancellationQuotaWidgets' && inputs.target_validation_group == 'agent_sdk_session_only_proof' && inputs.exact_test_selector != 'HanlinAgentCoreTests,HanlinChatCoreTests' && !inputs.testflight_upload }}\n",
+      "before": "    if: ${{ inputs.target_validation_group == 'agent_sdk_session_only_proof' && inputs.exact_test_selector != 'HanlinAgentCoreTests,HanlinChatCoreTests' && !inputs.testflight_upload }}\n"
+    }
+  ],
+  "originalWorkflowRecoveredExactly": true,
+  "localControlTests": {
+    "methods": 7,
+    "exit": 0,
+    "logSHA256": "4452c8de0c5a345f271573c8b7e6ee2e4970d2f1bb8192352ebf4a2eb3a0cd46",
+    "receiptSHA256": "68f91668b90f811ebe39a73e7da9bc41eb8cfa10465a81188d8a4acd686df83b"
+  },
+  "reviewCorrections": [
+    "Original command process-group absence is positively checked; original leader success cannot hide surviving children; abnormal cleanup fails and preserves the exit/log.",
+    "Python3.9 extraction remains bounded to fully checked relative regular files and directories; no reliance on unavailable tarfile filter keyword.",
+    "Both original SwiftPM debug and Apple SwiftBuild Products layouts are preserved; no successful outcome without all original test bundles and iOS products."
+  ],
+  "sourcePolicy": "Only explicit full SHA and reviewed tree entries for20a/caa0; actual archive and pin closure recorded, never relabel historical evidence.",
+  "swiftTests": "NOT_RUN",
+  "iosProductBuild": "NOT_RUN",
+  "workflowDispatch": "NOT_PERFORMED",
+  "nativeAppTests": "NOT_RUN"
+}

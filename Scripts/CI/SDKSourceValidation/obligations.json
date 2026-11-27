@@ -1,0 +1,133 @@
+{
+  "schema": "hanlin-original-sdk-obligations-v1",
+  "referenceSource": "20a1e6fa33ed261ba11e83a0b84a157029822e5e",
+  "group": "agent_sdk_session_only_proof",
+  "selector": "HanlinSDKCancellationQuotaWidgets",
+  "sourceInput": "composer_expected_sha",
+  "archivePaths": [
+    "Packages/HanlinAgentSDK",
+    "Packages/HanlinPlatform",
+    "Packages/HanlinPresentationSDK",
+    "Fixtures/Widgets",
+    "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+    "Scripts/CI/select_stable_xcode.py",
+    "Scripts/CI/verify_exact_json_vendor.py"
+  ],
+  "protectedBlobs": {
+    "Packages/HanlinAgentSDK/Package.swift": "fcf99a97a6fab9fa5885c44521e950da37467405",
+    "Packages/HanlinPlatform/Package.swift": "2d4e529c825939fbc302539852da52cdf7cbbaf9",
+    "Packages/HanlinPresentationSDK/Package.swift": "ef1e46be07c7b0cba7b5796b3395e6cabdb89484",
+    "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved": "d6ba25194dd3bb6b0f07c997f5fa275f467b7dc3",
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift": "c108823a9409264882e7870cc822cccf569bac3c",
+    "Packages/HanlinAgentSDK/Package.resolved": "2b7ba99b77a93905bd2cee70069cb5a7dcfcbc57",
+    "Packages/HanlinPlatform/Package.resolved": "09c0181f5a6df0c2d1b21237c717bfae8f60cca5",
+    "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/AgentSessionTests.swift": "2428a9af588a64b40f0016e84e5ee8f6b3b93fdf",
+    "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/ChatCodeFencePayloadRetentionTests.swift": "45baf575d666c580c8e7b79cfe6591adb82aac7e",
+    "Fixtures/Widgets/Hanlin-Expo-Widget-Counter.hanlinExpo": "939b67f0349c3fa1c772b2c8d55643def1cdfd77",
+    "Fixtures/Widgets/Hanlin-Expo-Widget-Visuals.hanlinExpo": "c7d3f6d00440987240d377e6fa889afb57c89e0c",
+    "Fixtures/Widgets/Hanlin-ScriptWidget-Actions.scripting": "60b75892d301552659e5de4b7df6813186b527e7",
+    "Fixtures/Widgets/Hanlin-ScriptWidget-Dashboard.scripting": "6f64a02b3f7d355e6452b1b753b1e42c79f0d81d",
+    "Fixtures/Widgets/Hanlin-Widget-Legacy-Regression.scripting": "31bd2a33d7d078d70b54d1861e3c74cad766fcba",
+    "Packages/HanlinPlatform/Tests/Fixtures/LegacyWidgetStore/HanlinScriptExtensionContracts.swift": "de9574023203fa460fe73b12bf489daa5cbda876",
+    "Packages/HanlinPlatform/Tests/Fixtures/LegacyWidgetStore/HanlinScriptExtensionStore.swift": "daf503528209735803973871aa283805ed3c77e1",
+    "Packages/HanlinPlatform/Tests/Fixtures/LegacyWidgetStore/PROVENANCE.txt": "7d7328062c5d7b68059bfb9744fe9857ca5c2c39",
+    "Scripts/CI/select_stable_xcode.py": "dae108410eb539603159e45e29e45d4f6cf80a91",
+    "Scripts/CI/verify_exact_json_vendor.py": "a220077dfe1121570b709809f392207ed530d364"
+  },
+  "widgetArchives": [
+    "Fixtures/Widgets/Hanlin-Expo-Widget-Counter.hanlinExpo",
+    "Fixtures/Widgets/Hanlin-Expo-Widget-Visuals.hanlinExpo",
+    "Fixtures/Widgets/Hanlin-ScriptWidget-Actions.scripting",
+    "Fixtures/Widgets/Hanlin-ScriptWidget-Dashboard.scripting",
+    "Fixtures/Widgets/Hanlin-Widget-Legacy-Regression.scripting"
+  ],
+  "suites": [
+    {
+      "name": "agent-stop",
+      "package": "HanlinAgentSDK",
+      "testModule": "HanlinAgentCoreTests",
+      "suite": "AgentSessionTests",
+      "filter": "AgentSessionTests/stop",
+      "expectedMethods": {
+        "stopPreservesPartialTranscriptAndNewRunWhileOldConsumerTerminates()": 1,
+        "stopBeforeProducerInstallationJoinsPreparationAndPreservesStoredConversation()": 1,
+        "stopWaitsForOriginalNativeWorkerAndKeepsAccountFence(changeAccount:)": 2,
+        "stopDoesNotConvertUncertainReceiptIntoPermissionToRetry()": 1,
+        "stopAtEOFJoinsConfirmedReceiptWorkerBeforeReleasingRun(stopAtEOF:)": 2
+      },
+      "parameterArguments": {
+        "stopWaitsForOriginalNativeWorkerAndKeepsAccountFence(changeAccount:)": {
+          "parameter": "changeAccount",
+          "values": [
+            "false",
+            "true"
+          ]
+        },
+        "stopAtEOFJoinsConfirmedReceiptWorkerBeforeReleasingRun(stopAtEOF:)": {
+          "parameter": "stopAtEOF",
+          "values": [
+            "false",
+            "true"
+          ]
+        }
+      },
+      "scope": "Original shared SDK controlled host/producer tests: 5 methods and 7 actual cases. Not Anytype native Save runtime."
+    },
+    {
+      "name": "payload-quota",
+      "package": "HanlinPresentationSDK",
+      "testModule": "HanlinChatUITests",
+      "suite": "ChatCodeFencePayloadRetentionTests",
+      "filter": "ChatCodeFencePayloadRetentionTests",
+      "expectedMethods": {
+        "countsUTF8OutputBytesOnceAcrossInlineAndExpandedCopies()": 1,
+        "cacheEvictionDoesNotFreeInlineOwnershipAndRemountDoesNotDoubleCharge()": 1,
+        "byteAndCountExhaustionPreserveExistingPayloadAndPermitLaterReuse()": 1,
+        "cancelledUnpublishedResultKeepsLeaseUntilActualWorkDrains()": 1,
+        "distinctBudgetsCannotAdoptAnAlreadyOwnedPayloadAndInvalidCostsDoNotOverflow()": 1,
+        "simultaneousOwnersCannotExceedOneSharedQuota()": 1
+      },
+      "parameterArguments": {},
+      "scope": "Original HanlinChatUI payload lease accounting: 6 methods. UTF-8 payload bytes and owner count, not WebKit/RSS peak."
+    },
+    {
+      "name": "widgets",
+      "package": "HanlinPlatform",
+      "testModule": "HanlinScriptExtensionsTests",
+      "suite": "HanlinDualWidgetEnginesTests",
+      "filter": "HanlinDualWidgetEnginesTests/(installedProgramPreparationAndActionMeasurements|v1ShadowProjectsHistoricalFieldsWithoutLosingCurrentMetadata)",
+      "expectedMethods": {
+        "installedProgramPreparationAndActionMeasurements()": 1,
+        "v1ShadowProjectsHistoricalFieldsWithoutLosingCurrentMetadata()": 1
+      },
+      "parameterArguments": {},
+      "scope": "Original prepared program and historical store projection in isolated macOS installations, not configured OS widgets or an iOS runtime generation."
+    }
+  ],
+  "iosBuild": {
+    "package": "HanlinPresentationSDK",
+    "scheme": "HanlinChatUI",
+    "destination": "generic/platform=iOS Simulator",
+    "scope": "Actual original iOS HanlinChatUI product build, no simulator launch or UI runtime acceptance."
+  },
+  "notCovered": [
+    "Original NativeScript action handler: requires actual AI_HLY iOS runtime graph",
+    "Anytype native Save/Stop/engine or account replacement",
+    "Full Hanlin app/extension integration",
+    "Device, signing, IPA, TestFlight"
+  ],
+  "priorEvidenceReuse": "The prior 16b79 V1 shadow proof and unchanged385 cancellation evidence retain their own original scope; this route does not relabel them. Running this route produces new evidence only for its selected immutable source.",
+  "reviewedSources": {
+    "20a1e6fa33ed261ba11e83a0b84a157029822e5e": {
+      "tree": "14e860ce3f7d2b8623085f16d99d34b8b347a48c",
+      "sourceScope": "Published original canonical SDK union reviewed by the integration owner. Selected tests and native-free package scope only; no prior runtime result is transferred."
+    },
+    "caa0dac32afa18e58bba55fb4f0fdd262f181835": {
+      "tree": "3c1f540131152aacc87a2249e0d938cb592a852c",
+      "presentationTree": "ae9c38acacb2da5824d0c36e1f9d3923597dd515",
+      "parent": "20a1e6fa33ed261ba11e83a0b84a157029822e5e",
+      "sourceScope": "Root-reviewed selective successor: three shared scrolling sources, one additive locale entry preserving1294 originals, six additive App/UIKit regression methods and original evidence. Other five package trees and locks unchanged. The six App/UIKit regressions are NOT selected by this package route.",
+      "integrationReceiptSHA256": "ac0504faf07be3f094a24749eeace46b60f1b87215f941c70a9ec3f74fcb2bde"
+    }
+  }
+}

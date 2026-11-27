@@ -1,0 +1,12 @@
+test_actual_dependency_revision_and_repository_must_match_published_lock (test_control.ControlTests.test_actual_dependency_revision_and_repository_must_match_published_lock) ... ok
+test_actual_original_terminal_has_five_methods_and_seven_cases (test_control.ControlTests.test_actual_original_terminal_has_five_methods_and_seven_cases) ... ok
+test_exited_leader_does_not_hide_its_remaining_original_group (test_control.ControlTests.test_exited_leader_does_not_hide_its_remaining_original_group) ... ok
+test_explicit_source_and_side_effect_inputs_fail_closed (test_control.ControlTests.test_explicit_source_and_side_effect_inputs_fail_closed) ... ok
+test_new_selector_preserves_every_legacy_job_and_only_selects_one_new_job (test_control.ControlTests.test_new_selector_preserves_every_legacy_job_and_only_selects_one_new_job) ... ok
+test_original_apple_swift_build_products_are_retained (test_control.ControlTests.test_original_apple_swift_build_products_are_retained) ... ok
+test_partial_duplicate_skipped_or_zero_test_output_is_never_acceptance (test_control.ControlTests.test_partial_duplicate_skipped_or_zero_test_output_is_never_acceptance) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.046s
+
+OK

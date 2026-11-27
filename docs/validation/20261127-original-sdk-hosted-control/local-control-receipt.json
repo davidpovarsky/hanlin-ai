@@ -1,0 +1,73 @@
+{
+  "status": "PASS_CONTROL_ONLY",
+  "atUTC": "2026-11-27T06:46:21.276148+00:00",
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "hanlin-hosted-sdk-control/after/Scripts/CI/SDKSourceValidation",
+    "-p",
+    "test_control.py",
+    "-v"
+  ],
+  "exit": 0,
+  "originalLogSHA256": "4452c8de0c5a345f271573c8b7e6ee2e4970d2f1bb8192352ebf4a2eb3a0cd46",
+  "testMethods": 7,
+  "testedSourceFiles": [
+    {
+      "path": ".github/workflows/build-ios26-unsigned-ipa.yml",
+      "bytes": 218761,
+      "sha256": "b64caef8e3b91485fb9e7f22d88bdf17da00857ac3447ea031de4c993e8aeac3",
+      "blob": "ec92b5310a020daad266d2b345b04df70b0889fb"
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/run.py",
+      "bytes": 28419,
+      "sha256": "e269c858a58ae8e55e15b6d4a109c3e48fd244fa349d6006809be4048107e91e",
+      "blob": "4359102c6b89334478303840f9c44c0e108ae2bb"
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/obligations.json",
+      "bytes": 7657,
+      "sha256": "fc6bf51c942d7cb6a668110b023d95a36f3ff0fd0a7bc04dc7d2a88a03530253",
+      "blob": "874d6d1ff7b7b0c1da127ccb7cc8b97e327e2e91"
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/test_control.py",
+      "bytes": 10112,
+      "sha256": "b7e18ac888cc84b189c1c9a8663449cfd9fb42092a5ea94a384e67ec7094e08e",
+      "blob": "e7b96230d6db23ec942ecdf4e6ec72f6ae1ca71e"
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/README.md",
+      "bytes": 10805,
+      "sha256": "a9eb742fcbb142707072c82408ba3d483cc920e66c7ea224d8d5d9d54bbcac81",
+      "blob": "22736d1f04e9f63c953e3842b60bcd5c8d42a360"
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/Fixtures/original-385-stop-terminal.log",
+      "bytes": 1789,
+      "sha256": "96c38e730051956590b7be1082d1a801f9f26480055cd9a41d073f865a739f38",
+      "blob": "ffdfa9a8040379513143f71bd6d61d61f7dbb550"
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/Fixtures/original-385-stop-terminal-provenance.json",
+      "bytes": 478,
+      "sha256": "303540a924f4224af6fd1b8382a7376ab8675a27809f4150bfd920f02ddc0964",
+      "blob": "2098ee7743f9ed8d4e45ff9c616660c1003f626f"
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/Fixtures/original-workflow-conditions.json",
+      "bytes": 14512,
+      "sha256": "df254ac49706d8ce3c7792ca9c8a99806b7ec12c9c88c8b4a11dfd2acd231e7f",
+      "blob": "fa0630a73649caee74bc41c0effe446031026288"
+    }
+  ],
+  "workflowInputs": 25,
+  "workflowJobs": 28,
+  "swiftOrAppleCommandsExecuted": false,
+  "nativeOrAccountOperations": false,
+  "sourceDispatches": 0
+}

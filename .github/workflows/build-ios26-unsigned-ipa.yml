@@ -9,7 +9,7 @@ on:
         default: false
         type: boolean
       composer_expected_sha:
-        description: Exact commit SHA expected by isolated Composer validation
+        description: Exact immutable source SHA for isolated Composer or HanlinSDKCancellationQuotaWidgets validation
         required: false
         default: ''
         type: string
@@ -138,7 +138,7 @@ permissions:
 
 concurrency:
   # Independent explicit test obligations must not cancel one another while waiting for a native runner.
-  group: ${{ github.workflow }}-${{ github.ref }}-${{ (github.event_name == 'workflow_dispatch' && inputs.target_validation_group == 'exact_test_selector') && format('exact-test-run-{0}', github.run_id) || (inputs.target_validation_group == 'phase2_app_with_motion') && 'phase2-combined-native' || (inputs.target_validation_group == 'exact_test_selector' && contains(inputs.exact_test_selector, 'AgentSkillsEmbeddedResultsUITests')) && 'embedded-result-acceptance' || (inputs.target_validation_group == 'exact_test_selector' && contains(inputs.exact_test_selector, 'HanlinMorphComposerUITests/testCompact')) && 'explicit-compact-composer' || (inputs.target_validation_group == 'exact_test_selector' && contains(inputs.exact_test_selector, 'testLiveGeminiPythonConsentAndColdReopen')) && 'live-provider-original-app' || (inputs.target_validation_group == 'chat_regression_native' || inputs.target_validation_group == 'simulator_environment_probe' || inputs.target_validation_group == 'device_build' || inputs.target_validation_group == 'project_packaging' || inputs.target_validation_group == 'chat_motion_product' || inputs.target_validation_group == 'a2ui_media_replay_ui' || inputs.target_validation_group == 'native_result_inspection' || inputs.target_validation_group == 'skill_format_app_resolve' || inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks' || inputs.target_validation_group == 'agent_sdk_session_only_proof' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he' || inputs.target_validation_group == 'composer_metadata_only' || inputs.target_validation_group == 'composer_sdk_eligibility_diagnostic' || inputs.target_validation_group == 'composer_native_host_diagnostic') && inputs.target_validation_group || inputs.composer_validation_only && 'composer-isolated' || inputs.nativescript_metadata_validation_only && 'nativescript-metadata' || inputs.diagnostics_capture_validation_only && 'diagnostics-capture' || (inputs.code_fence_webkit_validation_only && 'code-fence-webkit' || (inputs.markdown_renderer_validation_only && 'markdown-renderer' || inputs.runtime_bundle_only && 'runtime-bundle' || (inputs.testflight_upload && 'testflight' || 'validation'))) }}
+  group: ${{ github.workflow }}-${{ github.ref }}-${{ (github.event_name == 'workflow_dispatch' && inputs.target_validation_group == 'agent_sdk_session_only_proof' && inputs.exact_test_selector == 'HanlinSDKCancellationQuotaWidgets') && format('original-sdk-{0}', github.run_id) || (github.event_name == 'workflow_dispatch' && inputs.target_validation_group == 'exact_test_selector') && format('exact-test-run-{0}', github.run_id) || (inputs.target_validation_group == 'phase2_app_with_motion') && 'phase2-combined-native' || (inputs.target_validation_group == 'exact_test_selector' && contains(inputs.exact_test_selector, 'AgentSkillsEmbeddedResultsUITests')) && 'embedded-result-acceptance' || (inputs.target_validation_group == 'exact_test_selector' && contains(inputs.exact_test_selector, 'HanlinMorphComposerUITests/testCompact')) && 'explicit-compact-composer' || (inputs.target_validation_group == 'exact_test_selector' && contains(inputs.exact_test_selector, 'testLiveGeminiPythonConsentAndColdReopen')) && 'live-provider-original-app' || (inputs.target_validation_group == 'chat_regression_native' || inputs.target_validation_group == 'simulator_environment_probe' || inputs.target_validation_group == 'device_build' || inputs.target_validation_group == 'project_packaging' || inputs.target_validation_group == 'chat_motion_product' || inputs.target_validation_group == 'a2ui_media_replay_ui' || inputs.target_validation_group == 'native_result_inspection' || inputs.target_validation_group == 'skill_format_app_resolve' || inputs.target_validation_group == 'product_split_integration' || inputs.target_validation_group == 'a2ui_exact_pin_proof' || inputs.target_validation_group == 'simulator_acceptance_parity' || inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_resolve_locks' || inputs.target_validation_group == 'agent_sdk_session_only_proof' || inputs.target_validation_group == 'simulator_acceptance_parity_ipad_he' || inputs.target_validation_group == 'composer_metadata_only' || inputs.target_validation_group == 'composer_sdk_eligibility_diagnostic' || inputs.target_validation_group == 'composer_native_host_diagnostic') && inputs.target_validation_group || inputs.composer_validation_only && 'composer-isolated' || inputs.nativescript_metadata_validation_only && 'nativescript-metadata' || inputs.diagnostics_capture_validation_only && 'diagnostics-capture' || (inputs.code_fence_webkit_validation_only && 'code-fence-webkit' || (inputs.markdown_renderer_validation_only && 'markdown-renderer' || inputs.runtime_bundle_only && 'runtime-bundle' || (inputs.testflight_upload && 'testflight' || 'validation'))) }}
   cancel-in-progress: true
 
 jobs:
@@ -360,8 +360,42 @@ jobs:
           if-no-files-found: error
           retention-days: 14
 
+  sdk-original-obligations:
+    if: ${{ github.event_name == 'workflow_dispatch' && inputs.target_validation_group == 'agent_sdk_session_only_proof' && inputs.exact_test_selector == 'HanlinSDKCancellationQuotaWidgets' && !inputs.testflight_upload }}
+    name: Original SDK cancellation, payload ownership and affected Widget cases
+    runs-on: xcode-27
+    timeout-minutes: 90
+    concurrency:
+      group: hanlin-original-sdk-${{ github.run_id }}-${{ github.run_attempt }}
+      cancel-in-progress: false
+    steps:
+      - uses: actions/checkout@v7.0.1
+      - name: Verify closed controller without Apple or native operations
+        run: |
+          set -euo pipefail
+          mkdir -p build/sdk-original-obligations
+          set +e
+          python3 -m unittest discover -s Scripts/CI/SDKSourceValidation -p 'test_control.py' -v > build/sdk-original-obligations/controller-tests.log 2>&1
+          status=$?
+          set -e
+          cat build/sdk-original-obligations/controller-tests.log
+          exit "$status"
+      - name: Test the explicit immutable original package source
+        env:
+          HANLIN_SDK_SOURCE_SHA: ${{ inputs.composer_expected_sha }}
+          PYTHONUNBUFFERED: '1'
+        run: python3 Scripts/CI/SDKSourceValidation/run.py
+      - name: Preserve original source, locks, logs, products and every failure
+        if: always()
+        uses: actions/upload-artifact@v7.0.2
+        with:
+          name: hanlin-original-sdk-${{ github.run_id }}-${{ github.run_attempt }}
+          path: build/sdk-original-obligations
+          if-no-files-found: error
+          retention-days: 30
+
   agent-sdk-proof:
-    if: ${{ inputs.exact_test_selector != 'HanlinPresentationSDK' && inputs.target_validation_group != 'skill_format_app_resolve' && (inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && ((inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_session_only_proof') && !inputs.testflight_upload))) ) }}
+    if: ${{ inputs.exact_test_selector != 'HanlinSDKCancellationQuotaWidgets' && inputs.exact_test_selector != 'HanlinPresentationSDK' && inputs.target_validation_group != 'skill_format_app_resolve' && (inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && ((inputs.target_validation_group == 'agent_sdk_exact_source_proof' || inputs.target_validation_group == 'agent_sdk_session_only_proof') && !inputs.testflight_upload))) ) }}
     name: Exact-source Agent SDK Apple tests
     env:
       HANLIN_SDK_SESSION_ONLY: ${{ inputs.target_validation_group == 'agent_sdk_session_only_proof' && '1' || '0' }}
@@ -392,7 +426,7 @@ jobs:
           retention-days: 30
 
   presentation-sdk-proof:
-    if: ${{ inputs.target_validation_group == 'agent_sdk_session_only_proof' && inputs.exact_test_selector != 'HanlinAgentCoreTests,HanlinChatCoreTests' && !inputs.testflight_upload }}
+    if: ${{ inputs.exact_test_selector != 'HanlinSDKCancellationQuotaWidgets' && inputs.target_validation_group == 'agent_sdk_session_only_proof' && inputs.exact_test_selector != 'HanlinAgentCoreTests,HanlinChatCoreTests' && !inputs.testflight_upload }}
     name: Compile reusable presentation on iOS 27 and test isolated state
     runs-on: xcode-27
     timeout-minutes: 15
