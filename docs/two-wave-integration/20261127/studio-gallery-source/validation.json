@@ -1,0 +1,54 @@
+{
+  "schema": 1,
+  "sourceBase": "ff20af0d965cf005751932b56dbec4912bdc326e",
+  "status": "SOURCE_CANDIDATE_WITH_PORTABLE_CONTROLS",
+  "scope": "miniapp_studio_gallery_os",
+  "uiSelectors": 5,
+  "sourceHashes": {
+    "Scripts/ProductSplit/run_paired_acceptance.py": "95d0e220974a59adc3a08c4df6f429aadcd05a949c8fc5b3922ee7a58981cfdf",
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": "8b6f2ce75677a20819e42ca4deb416cdef6ce0b3a2eb7fd28ab8c399a61db81b",
+    "Scripts/ProductSplit/observe_studio_gallery.py": "c64e13a04d86e628742e0472fc7c2776ba036ff72b9ecb14480b59c5587f78e8",
+    "Scripts/ProductSplit/Tests/test_studio_gallery_observer.py": "f901da7e28e5863a70cc7586b9eb9ac549f697d75f2cfb8ae816077ad6089ba2",
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift": "06c35ecf0850d77bde08964360c6c0f7def0f5addf0ec13ed5f4513fdb14db53"
+  },
+  "sourceProofSHA256": "bf37889a23e59db00f3fca5a77c8afae3d82a7cab0512a3c2caf622c05391ffc",
+  "sourcePatchSHA256": "90fb432e2e52e03b7a5c9faa7e17464a95ece3f1e4ee6008564a9dcb303dd616",
+  "portable": {
+    "testsPassed": 16,
+    "failures": 0,
+    "skips": 0,
+    "receiptSHA256": "9869a2d1851986788cf9d8ca1dc63f3e4396e23707f782087f616309c897df6d",
+    "stderrSHA256": "b088e781430206bf0a5edf9917b08efd27d777d5eb811208a95b5c7496bbf8e0",
+    "runtime": "Python3.12.14",
+    "execution": "Pure read-only file-validator controls in local temporary directories; no compiler, native or simulator invocation"
+  },
+  "sourcePreservation": {
+    "oldUI": 17,
+    "oldPlanAssignments": 6,
+    "oldObserverFunctionsExceptDispatcher": 38,
+    "exactGitEOF": true
+  },
+  "dependencies": [
+    {
+      "commit": "aea34fc0dd594fa4d0b4153fe37332e6343aa921",
+      "file": "Scripts/ProductSplit/observe_share_translation_surfaces.py",
+      "sha256": "6702a1bb58c11b9f2e6d285eb62dee7db9f12ad1ddd6d466396d36cda91bee0a",
+      "reason": "Unchanged canonical safe raw reader and original archive-to-installed-source binder"
+    }
+  ],
+  "producerInputImpact": {
+    "intersection": [],
+    "inputCount": 392,
+    "manifestSHA256": "0433011cae7beb42504e4bb29b18bb722e21d9a31cc5aae7324eba67b70afcc7",
+    "qualification": "Path intersection only; no new SDK/Host qualification or test inferred."
+  },
+  "reviewMessages": "independent-review-messages.json",
+  "matrix": "../STUDIO_OS_ACCEPTANCE_GAPS.md",
+  "nextOriginalCommand": "SPLIT_EVIDENCE=<fresh-owned-evidence-root> PAIRED_TEST_SCOPE=miniapp_studio_gallery_os python3 Scripts/ProductSplit/run_paired_acceptance.py",
+  "native": "NOT_RUN",
+  "iCloud": "NOT_RUN",
+  "physicalDevice": "NOT_RUN",
+  "drawingPixelReview": "NOT_RUN",
+  "remainingTask10": "Editor assistance, fonts/themes, folders/moves/styles, Files folder import, real logs/export, actual second-writer conflict/recovery, device/account acceptance remain separate.",
+  "eofQualification": "Leaf/test bytes unchanged. Three provisional local copies contained one extra final LF; final existing files preserve exact Git EOF. Actual tested common Python AST is identical; no duplicate control run. Provisional source-r1 preservation was against those local copies, superseded by this Git-bound source-r2."
+}

@@ -1229,4 +1229,291 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
         return formatter.string(from: Date())
     }
 
+    // Additive local Studio acceptance. Every project write below is a real
+    // shipping gallery/editor action; the companion observer is read-only.
+    private enum StudioExample: String {
+        case expoHello = "expo-hello-world"
+        case departureBudget = "sdk-only-departure-budget"
+        case nativeHello = "nativescript-hello-world"
+        case tableShare = "sdk-only-table-share"
+        case imageDrawing = "nativescript-image-drawing"
+
+        var engine: String {
+            self == .expoHello || self == .departureBudget ? "expo" : "nativescript"
+        }
+        var sourceFile: String { engine == "expo" ? "App.tsx" : "index.ts" }
+        var originalHeading: String {
+            switch self {
+            case .expoHello: "Hello from Expo!"
+            case .departureBudget: "Departure Budget"
+            case .nativeHello: "Hello from NativeScript!"
+            case .tableShare: "Table Share"
+            case .imageDrawing: "Native image drawing"
+            }
+        }
+        var before: String {
+            switch self {
+            case .expoHello, .nativeHello: "Button taps: 0"
+            case .departureBudget: "55 minutes reserved before the target"
+            case .tableShare: "3 people pay $35.42 each."
+            case .imageDrawing: "0° clockwise • 8 invalid inputs rejected"
+            }
+        }
+        var after: String {
+            switch self {
+            case .expoHello, .nativeHello: "Button taps: 1"
+            case .departureBudget: "35 minutes reserved before the target"
+            case .tableShare: "2 pay $26.57; 2 pay $26.56."
+            case .imageDrawing: "180° clockwise • 8 invalid inputs rejected"
+            }
+        }
+    }
+
+    func testStudioExpoHelloWorldCopiesEditsBuildsInstallsAndRuns() throws {
+        try observeStudioGallery(.expoHello)
+    }
+    func testStudioDepartureBudgetCopiesEditsBuildsInstallsAndRuns() throws {
+        try observeStudioGallery(.departureBudget)
+    }
+    func testStudioNativeScriptHelloWorldCopiesEditsBuildsInstallsAndRuns() throws {
+        try observeStudioGallery(.nativeHello)
+    }
+    func testStudioTableShareCopiesEditsBuildsInstallsAndRuns() throws {
+        try observeStudioGallery(.tableShare)
+    }
+    func testStudioNativeImageDrawingCopiesEditsBuildsInstallsAndRuns() throws {
+        try observeStudioGallery(.imageDrawing)
+    }
+
+    private func observeStudioGallery(_ example: StudioExample) throws {
+        continueAfterFailure = false
+        executionTimeAllowance = 1200
+        deadline = Date().addingTimeInterval(1140)
+        let runID = UUID().uuidString.lowercased()
+        let marker = "שלום Studio " + runID.prefix(8)
+        let packageTitle = "Studio " + example.rawValue + " " + runID.prefix(8)
+        let documents = try XCTUnwrap(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first)
+        let root = documents.appendingPathComponent("HanlinSystemSurfaceObservation", isDirectory: true)
+        let directory = root.appendingPathComponent(runID, isDirectory: true)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        exchange = root
+        runDirectory = directory
+        record = ["schema": 1, "runID": runID, "engine": example.engine, "surface": "studioGallery",
+                  "exampleID": example.rawValue, "marker": marker, "packageTitle": packageTitle,
+                  "status": "RUNNING", "test": name, "startedAt": timestamp(), "phase": "preparing"]
+        try checkpoint("preparing")
+        defer {
+            capture(mini, "studio-final-app")
+            record["finishedAt"] = timestamp()
+            try? writeJSON(record, filename: "case.json")
+            try? checkpoint("finished")
+        }
+        do {
+            mini.terminate()
+            mini.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+            mini.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+            mini.launch()
+            let studio = mini.buttons["miniapps-open-studio"].firstMatch
+            try require(studio.waitForExistence(timeout: bounded(60)), "The shipping MiniApps catalog has no Developer Studio entry.")
+            try tap(studio, "Open Developer Studio from the standalone MiniApps catalog.")
+            try require(mini.descendants(matching: .any)["miniapps-studio"].firstMatch.waitForExistence(timeout: bounded(20)),
+                        "The shipping Developer Studio screen did not open.")
+            try tap(mini.buttons["On this device"].firstMatch, "Open the actual local project library.")
+            try openStudioGallery(example)
+            record["galleryLoaded"] = true
+            capture(mini, "studio-gallery")
+            try checkpoint("gallery-ready")
+            let admitted = try response("identity.json", timeout: 45)
+            try require(admitted["status"] as? String == "READY" && admitted["exampleID"] as? String == example.rawValue,
+                        "The observer must bind the app's actual shipped SDK and selected example.")
+
+            try copyStudioExample(example)
+            record["copyOneObserved"] = true
+            try checkpoint("copy-one")
+            let first = try response("studio-copy-one.json", timeout: 30)
+            let firstNames = try XCTUnwrap(first["projectNames"] as? [String])
+            try require(first["status"] as? String == "READY" && firstNames.count == 1,
+                        "Exactly one real independent copy must be observed.")
+            let projectName = firstNames[0]
+            try openStudioGallery(example)
+            try copyStudioExample(example)
+            record["copyTwoObserved"] = true
+            try checkpoint("copy-two")
+            let second = try response("studio-copy-two.json", timeout: 30)
+            let projectNames = try XCTUnwrap(second["projectNames"] as? [String])
+            try require(second["status"] as? String == "READY" && projectNames.count == 2 &&
+                        projectNames[0] == projectName && projectNames[1] != projectName,
+                        "The gallery must create two distinct original project copies.")
+            record["projectNames"] = projectNames
+            capture(mini, "studio-two-project-copies")
+            let row = mini.descendants(matching: .any).matching(NSPredicate(format: "label == %@", projectName)).firstMatch
+            try reveal(row, in: mini.collectionViews.firstMatch, message: "The first actual gallery copy is not visible in My Projects.")
+            try tap(row, "Open the first independently copied project in the original editor.")
+            try selectStudioFile(example.sourceFile)
+            let editor = mini.textViews["miniapps-studio-editor"].firstMatch
+            let original = try XCTUnwrap(editor.value as? String)
+            try require(original.components(separatedBy: example.originalHeading).count == 2,
+                        "The original gallery heading must occur exactly once in the editable source.")
+            try replaceStudioEditorText(original.replacingOccurrences(of: example.originalHeading, with: marker))
+            try selectStudioFile("script.json")
+            let manifestText = try XCTUnwrap(editor.value as? String)
+            var manifest = try XCTUnwrap(JSONSerialization.jsonObject(with: Data(manifestText.utf8)) as? [String: Any])
+            manifest["name"] = packageTitle
+            let editedManifest = String(decoding: try JSONSerialization.data(withJSONObject: manifest,
+                options: [.prettyPrinted, .sortedKeys]), as: UTF8.self) + "\n"
+            try replaceStudioEditorText(editedManifest)
+            record["editorReplacementObserved"] = true
+            capture(mini, "studio-edited-source")
+            try checkpoint("source-edited")
+            let edited = try response("studio-source.json", timeout: 30)
+            try require(edited["status"] as? String == "READY",
+                        "The actual autosaved source, untouched second copy and shipped SDK must agree.")
+
+            try tap(mini.buttons["miniapps-studio-validate"].firstMatch, "Validate the edited source with the original shipped compiler.")
+            record["validatePressed"] = true
+            let success = mini.buttons["Validation succeeded"].firstMatch
+            let editorError = mini.alerts["Editor"].firstMatch
+            try require(wait(240) { success.exists || editorError.exists }, "Original source validation produced no concrete UI outcome.")
+            try require(success.exists && !editorError.exists, "The original source validator rejected the edited gallery project.")
+            record["validationSucceededObserved"] = true
+            capture(mini, "studio-original-validation")
+            try tap(mini.buttons["miniapps-studio-build-install"].firstMatch, "Build and install through the shipping Studio action.")
+            record["buildPressed"] = true
+            let install = mini.buttons["hanlin-package-install"].firstMatch
+            let importError = mini.descendants(matching: .any)["hanlin-import-error-message"].firstMatch
+            let diagnostics = mini.descendants(matching: .any)["hanlin-import-diagnostics-sheet"].firstMatch
+            try require(wait(360) { install.exists || importError.exists || diagnostics.exists || editorError.exists },
+                        "The original Studio build did not reach a real import preview or error.")
+            capture(mini, "studio-original-build-preview")
+            try require(install.exists && !importError.exists && !diagnostics.exists && !editorError.exists,
+                        "The actual compiler/importer rejected the newly authored project.")
+            record["importPreviewObserved"] = true
+            try checkpoint("build-preview")
+            let built = try response("studio-build.json", timeout: 45)
+            try require(built["status"] as? String == "READY" && built["independentCopyUnchanged"] as? Bool == true &&
+                        built["shippedExampleUnchanged"] as? Bool == true,
+                        "The actual compiled archive must bind the edited copy and unchanged original SDK.")
+            try tap(install, "Install the real Studio-produced archive through the original import preview.")
+            record["installPressed"] = true
+            try require(wait(90) { !install.exists || importError.exists }, "The original installer did not finish.")
+            try require(!importError.exists, "The real Studio package installation failed.")
+            try tap(mini.buttons["hanlin-package-import-done"].firstMatch, "Return from the original import preview to Studio.")
+            try tap(mini.navigationBars.buttons["My Projects"].firstMatch, "Return from the editor to the actual local project library.")
+            try tap(mini.navigationBars.buttons["Developer Studio"].firstMatch, "Return to the shipping Studio root.")
+            try tap(mini.navigationBars["Developer Studio"].buttons["Done"].firstMatch, "Close Studio and return to the standalone catalog.")
+            let card = mini.buttons["hanlin-package-card-" + packageTitle].firstMatch
+            try require(card.waitForExistence(timeout: bounded(30)), "The newly named Studio package is absent from the real catalog.")
+            record["catalogCardObserved"] = true
+            try reveal(card, in: mini.collectionViews.firstMatch, message: "The actual Studio-installed catalog card is not tappable.")
+            try tap(card, "Launch the newly built MiniApp through its original installed card.")
+            try observeStudioRuntime(example, marker: marker)
+            try checkpoint("runtime-observed")
+            let completion = try response("completion.json", timeout: 60)
+            try require(completion["status"] as? String == "EXECUTED_PASS" &&
+                        completion["independentCopyUnchanged"] as? Bool == true &&
+                        completion["shippedExampleUnchanged"] as? Bool == true,
+                        "The current installed source and actual runtime callback did not match this Studio build.")
+            record["observerCompletion"] = completion
+            record["status"] = "EXECUTED_PASS"
+        } catch {
+            record["status"] = "FAILED"
+            record["reason"] = String(describing: error)
+            throw error
+        }
+    }
+
+    private func openStudioGallery(_ example: StudioExample) throws {
+        try tap(mini.buttons["miniapps-studio-add"].firstMatch, "Open the original local library's create/import menu.")
+        try tap(mini.buttons["Gallery"].firstMatch, "Open the actual SDK-backed Example Gallery.")
+        try require(mini.buttons["miniapps-gallery-" + example.rawValue].firstMatch.waitForExistence(timeout: bounded(120)),
+                    "The actual shipped SDK example did not appear in the gallery.")
+    }
+
+    private func copyStudioExample(_ example: StudioExample) throws {
+        try tap(mini.buttons["miniapps-gallery-" + example.rawValue].firstMatch,
+                "Copy the selected example through the real gallery action.")
+        let copied = mini.alerts["Project copied"].firstMatch
+        try require(copied.waitForExistence(timeout: bounded(30)), "The original project-copy operation did not succeed.")
+        try tap(copied.buttons["Open library"].firstMatch, "Return to My Projects after the actual copy.")
+        try require(mini.navigationBars["My Projects"].waitForExistence(timeout: bounded(20)),
+                    "The actual local library did not reopen after copying.")
+    }
+
+    private func selectStudioFile(_ path: String) throws {
+        let files = mini.buttons["miniapps-studio-files"].firstMatch
+        try require(files.waitForExistence(timeout: bounded(25)), "The original project editor did not open.")
+        try tap(files, "Open the original editor's actual source-file menu.")
+        try tap(mini.buttons[path].firstMatch, "Select the actual project file " + path + ".")
+        try require(mini.textViews["miniapps-studio-editor"].firstMatch.waitForExistence(timeout: bounded(15)),
+                    "The original native source editor is unavailable.")
+    }
+
+    private func replaceStudioEditorText(_ value: String) throws {
+        let editor = mini.textViews["miniapps-studio-editor"].firstMatch
+        try tap(editor, "Focus the original native source text view.")
+        editor.press(forDuration: 1.2)
+        let selectAll = mini.menuItems["Select All"].firstMatch
+        let selectAllButton = mini.buttons["Select All"].firstMatch
+        try require(wait(10) { selectAll.exists || selectAllButton.exists },
+                    "The native text-selection menu did not expose Select All.")
+        try tap(selectAll.exists ? selectAll : selectAllButton, "Select all current source through the actual editor menu.")
+        editor.typeText(value)
+        try require(wait(15) { editor.value as? String == value },
+                    "The native editor did not retain the exact typed source, including Hebrew text.")
+    }
+
+    private func studioRuntimeText(_ value: String) -> XCUIElement {
+        mini.staticTexts.matching(NSPredicate(format: "label == %@", value)).firstMatch
+    }
+
+    private func revealStudioRuntime(_ element: XCUIElement, towardEnd: Bool) throws {
+        try require(element.waitForExistence(timeout: bounded(30)), "The original runtime did not expose the expected control or result.")
+        for _ in 0..<8 {
+            if element.isHittable { break }
+            if towardEnd { mini.swipeUp() } else { mini.swipeDown() }
+        }
+        try require(element.exists && element.isHittable, "The actual original runtime control or result is not visible.")
+    }
+
+    private func observeStudioRuntime(_ example: StudioExample, marker: String) throws {
+        let heading = studioRuntimeText(marker)
+        try require(heading.waitForExistence(timeout: bounded(45)), "The installed runtime did not render the actual edited Hebrew heading.")
+        record["runtimeHeadingObserved"] = true
+        record["runtimeProcessID"] = try observedConcurrencyPID("studio-runtime")
+        let before = studioRuntimeText(example.before)
+        try revealStudioRuntime(before, towardEnd: true)
+        record["runtimeBefore"] = example.before
+        if example == .imageDrawing {
+            let image = mini.descendants(matching: .any)["miniapps-drawing-image"].firstMatch
+            try require(image.exists && image.isHittable && image.frame.width > 0 && image.frame.height > 0,
+                        "The original native image view did not display a drawable image region.")
+            record["nativeImageObserved"] = true
+            var angles = [0]
+            capture(mini, "studio-drawing-0")
+            for angle in [45, 90, 180] {
+                try tap(mini.buttons["miniapps-drawing-rotate"].firstMatch, "Run the original native Rotate image callback.")
+                try require(studioRuntimeText("\(angle)° clockwise • 8 invalid inputs rejected").waitForExistence(timeout: bounded(15)),
+                            "The actual native drawing callback did not show the next angle and original guard result.")
+                angles.append(angle)
+                capture(mini, "studio-drawing-" + String(angle))
+            }
+            record["drawingAnglesObserved"] = angles
+        } else {
+            capture(mini, "studio-runtime-before")
+            let title = example == .departureBudget ? "Local" : example == .tableShare ? "+" : "Say hello"
+            let action = mini.buttons[title].firstMatch
+            try revealStudioRuntime(action, towardEnd: example == .departureBudget)
+            try tap(action, "Run the original installed example's native callback.")
+            try revealStudioRuntime(studioRuntimeText(example.after), towardEnd: example == .tableShare)
+            capture(mini, "studio-runtime-after")
+        }
+        try require(studioRuntimeText(example.after).exists && heading.exists && mini.state == .runningForeground,
+                    "The original runtime did not retain its edited heading and actual callback result.")
+        let finalProcessID = try observedConcurrencyPID("studio-after")
+        try require(finalProcessID == record["runtimeProcessID"] as? Int,
+                    "The actual MiniApps process changed across the original runtime callback.")
+        record["runtimeAfter"] = example.after
+        record["runtimeActionObserved"] = true
+    }
+
 }

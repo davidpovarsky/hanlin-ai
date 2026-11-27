@@ -1,0 +1,47 @@
+{
+  "schema": 1,
+  "base": "ff20af0d965cf005751932b56dbec4912bdc326e",
+  "sourceHashes": {
+    "Scripts/ProductSplit/run_paired_acceptance.py": "95d0e220974a59adc3a08c4df6f429aadcd05a949c8fc5b3922ee7a58981cfdf",
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": "8b6f2ce75677a20819e42ca4deb416cdef6ce0b3a2eb7fd28ab8c399a61db81b",
+    "Scripts/ProductSplit/observe_studio_gallery.py": "c64e13a04d86e628742e0472fc7c2776ba036ff72b9ecb14480b59c5587f78e8",
+    "Scripts/ProductSplit/Tests/test_studio_gallery_observer.py": "f901da7e28e5863a70cc7586b9eb9ac549f697d75f2cfb8ae816077ad6089ba2",
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift": "06c35ecf0850d77bde08964360c6c0f7def0f5addf0ec13ed5f4513fdb14db53"
+  },
+  "actualGitBaseHashes": {
+    "Scripts/ProductSplit/run_paired_acceptance.py": "c26854c9737a085f907a352a724bad42dcf364fe1514d9a731d8768c45df686f",
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": "c857061c584eca56a97ede1b750347096213887bfa0c72c38b91ba5ca6c4dcb3",
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift": "c757994e7644db5bcf3aa480e2d126a794634e030a6626e6489cf2ea684ebde0"
+  },
+  "patchSHA256": "90fb432e2e52e03b7a5c9faa7e17464a95ece3f1e4ee6008564a9dcb303dd616",
+  "originalObserverFunctionsExceptDispatcherASTEqual": 38,
+  "originalPlansASTEqual": 6,
+  "originalWholeUIRecoveredAfterRemovingOnlyAddition": true,
+  "originalUITestMethods": [
+    "testExpoPlacedWidgetInvokesAllFiveRuntimes",
+    "testNativeScriptPlacedWidgetInvokesAllFiveRuntimes",
+    "testExpoLiveActivityInvokesAllFiveRuntimes",
+    "testNativeScriptLiveActivityInvokesAllFiveRuntimes",
+    "testExpoShortcutInvokesAllFiveRuntimes",
+    "testNativeScriptShortcutInvokesAllFiveRuntimes",
+    "testExpoSystemShareInvokesAllFiveRuntimes",
+    "testNativeScriptSystemShareInvokesAllFiveRuntimes",
+    "testExpoSystemTranslationInvokesAllFiveRuntimes",
+    "testNativeScriptSystemTranslationInvokesAllFiveRuntimes",
+    "testExpoRunMiniAppActionSavedBackgroundReturnsTypedResult",
+    "testNativeScriptRunMiniAppActionSavedBackgroundReturnsTypedResult",
+    "testExpoRunMiniAppActionSavedForegroundReturnsTypedResult",
+    "testNativeScriptRunMiniAppActionSavedForegroundReturnsTypedResult",
+    "testMiniAppsPlacedWidgetRetainsLastGoodAfterRealFailureAndRecovers",
+    "testNativeScriptOwnerSurvivesThreeOverlappingBackgroundShortcutsInReverseOrder",
+    "testNativeScriptOwnerSurvivesCancellingOneOfThreeOverlappingBackgroundShortcuts"
+  ],
+  "newUISelectors": 5,
+  "sdkInputIntersection": [],
+  "sdkInputCount": 392,
+  "referenceSDKManifestSHA256": "0433011cae7beb42504e4bb29b18bb722e21d9a31cc5aae7324eba67b70afcc7",
+  "portable16ReceiptSHA256": "9869a2d1851986788cf9d8ca1dc63f3e4396e23707f782087f616309c897df6d",
+  "portableSourceQualification": "Leaf/test bytes unchanged. Three provisional local copies contained one extra final LF; final existing files preserve exact Git EOF. Actual tested common Python AST is identical; no duplicate control run. Provisional source-r1 preservation was against those local copies, superseded by this Git-bound source-r2.",
+  "native": "NOT_RUN",
+  "sourceChangedAfterThisProof": false
+}

@@ -1,0 +1,63 @@
+# Studio and gallery OS acceptance: current source and missing cases
+
+Initial source examined: `866d2d3c60525e32eae27564869e6dba024e625c`; initial continuation `6ed918c9ffe94fddb1992b4b338564db4c109f4e`. The five-case source candidate below is based on `ff20af0d965cf005751932b56dbec4912bdc326e` and retained in `studio-gallery-source/source-r2.json`.
+Task: [SCRIPTABLE-1.8-10](https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220917894278244), read with `modified_at=2026-11-27T04:34:27.367Z`.
+
+This is a source and acceptance map. It is not an OS, signed-app, iCloud-account or physical-device pass. Native execution remains owned by the original Mac controller.
+
+## Existing coverage and concrete gaps
+
+| Requirement | Current shipping route and existing original check | Missing genuine UI/system observation | Intended acceptance source |
+|---|---|---|---|
+| Five gallery examples, independent editable versions | `MiniAppsStudioGallery` loads the bundled SDK through `MiniAppAuthoringService.sdk()` and copies one example to `<id>-<UUID-prefix>`. `exampleCopyKeepsOriginalAndIndependentVersions()` checks workspace behavior. The original SDK producer stages all five examples. | Copy each actual shipped example through Gallery; edit its visible source and manifest through the editor; validate, build, confirm the original import preview, install and interact with the resulting app. Verify the SDK original and other copies remain unchanged. | Five additive example-specific methods in the existing `HanlinEntrypointSystemSurfaceUITests`, with the original paired runner and read-only observation exchange. |
+| Completion, parameter hints, inline documentation, API reference | `MiniAppsStudioProject.inspect/apply` calls the original embedded TypeScript inspection route. The original `miniapp-editor.test.mjs` has four actual-compiler tests with a minimal fixture SDK for member completion/docs, UTF-16 parameter hints, unsaved diagnostics and path/cursor rejection. | Actual keyboard edit, visible completion, documented selection, insertion at the current caret, visible parameter help, and actual reference-link handling. | A bounded editor scenario using a UI-created source file in an independent gallery copy. It must retain the original compiler and current SDK; no fake help panel. |
+| Font picker, size and themes | Shipping `UIFontPickerViewController`, UITextView font assignment and AppStorage-backed theme/size already exist. | Choose and retain font/size/theme through actual controls; reopen the editor and retain screenshots/current preferences. Preferences alone are insufficient to assert visual layout. | Existing Studio editor controls; genuine visual confirmation remains part of the Mac pilot. |
+| Nested folders, open-file rename/move, colors/SF Symbols | Four original workspace tests cover conflicts, nested moves/style, path boundaries and independent copying. Six project invocations cover open-file rebinding, outer/inner descriptors, damaged recovery and stale validate/build results. | Create nested folders/files through UI; rename the selected file, continue editing and reopen it; verify no lost or overwritten files; save/reopen the selected folder/project appearance. | An additive local-editor/file-management case; read-only tree/hash verification complements actual UI assertions. |
+| Source-folder import through Files | Shipping `.fileImporter(allowedContentTypes: [.folder])` calls the existing coordinated workspace copy. Existing catalog package-import UI does not cover this folder route. | Select an authored source folder through the actual document picker, then edit the independent imported copy. | A separate existing-runner input fixture, staged only in Documents; the actual UI performs the copy. No workspace/catalog seeding by an observer. |
+| Recovery drafts and conflict resolution | Original native tests cover preserving two versions and a damaged draft without hiding another window's draft. Shipping UI offers Reload file, Save a copy, Recovered drafts and original-file export. | A second actual writer/scene or File Provider changes the open file; observe conflict and both retained versions. A forced observer write cannot qualify this. | Requires an actual owned second scene or real File Provider route. Keep open until that route is exercised; do not replace it with generated conflict receipts. |
+| Live logs and search | Shipping `MiniAppsStudioLogs` reads actual runtime log files off the main actor, caps the tail at512KB, refreshes and searches displayed lines. | Open a real log, search an actual observed line, verify no-match behavior and complete-log export. | Reuse the actual runtime's current log path and existing UI; do not plant a log line to manufacture success. |
+| iCloud open/save/reopen, placeholders, offline and sync conflicts | Current c9623629 entitlement change declares the existing container; the original entitlement regression has7 portable passes and the actual existing profile grant was read. Studio resolves `iCloud.com.itorah.chavrusachat/Documents/MiniAppsStudio` and reports a real unavailable-library error if Foundation returns no container. | Signed shipping app with an actual eligible account; real document creation/save/reopen and second-device/File Provider conflict/offline behavior. | Account/device-dependent gate remains NOT_RUN. No synthetic ubiquity path, account receipt, credential workaround or new login request. |
+| Files tags | The task already records that `NSURLTagNamesKey` is unavailable on iOS. Coordinated atomic replacement preserves existing file metadata where supported. | Actual Files/File Provider metadata behavior on a supported route. | Do not invent an unavailable tags API or count unsupported metadata as implemented. |
+| Native drawing/large and invalid dimensions | Original ScriptWidget image tests have4 definitions/9 native invocations in the earlier qualified package gate. The fifth shipped gallery example calls real UIKit `UIGraphicsImageRenderer/CGContext`, checks eight invalid inputs, and verifies128×128 native output. | Actually install/run the drawing example, observe its invalid-input result, interact through0/45/90/180-degree rotations and retain real images. The earlier ScriptWidget image gate is not a gallery UI pass. | The fifth gallery method retains original drawing code and real screenshots; no replacement renderer. |
+| iPhone/iPad layouts, rotation and Hebrew | Existing preferences and catalog UI checks are separate; no Studio selector existed in either original UI target at866. | Studio editor/browser layout, keyboard/panels, portrait/landscape and supported-device behavior. | Add only observed supported UI paths after the first genuine pilot. A simulator screenshot is not physical-device acceptance. |
+
+## Exact five gallery inputs and runtime observations
+
+| SDK example ID | Current entry and editable visible source | Genuine runtime interaction after the authored edit |
+|---|---|---|
+| `expo-hello-world` | `index.ts` registers `App.tsx`; replace only the greeting in `App.tsx` with the run-specific marker. | Marker is visible; Say hello changes Button taps from0 to1 through the original React callback. |
+| `sdk-only-departure-budget` | `index.ts` registers `App.tsx`; replace the Departure Budget section title only. | Original Local preset changes reserved time from55 to35minutes; original toggle/checklist controls remain. |
+| `nativescript-hello-world` | `index.ts`; replace only Hello from NativeScript. | Marker is visible; Say hello changes the original native label from0 to1. The original UIDevice metadata code is retained, but a separate metadata assertion is not claimed. |
+| `sdk-only-table-share` | `index.ts`; replace only the Table Share heading. | The actual displayed split changes from `3 people pay $35.42 each.` to `2 pay $26.57; 2 pay $26.56.` after the original `+` control. Reset and rounding remain separate existing runtime tests. |
+| `nativescript-image-drawing` | `index.ts`; replace only Native image drawing. | Original native check reports8 rejected inputs; Rotate image advances the actual image and angle at0,45,90,180degrees. |
+
+The manifest name is edited through the same editor to a fresh per-run name so an existing package cannot satisfy the catalog/run assertions. The copied source, original build's retained `sourceHashes`, current enabled installation/generation and actual displayed marker must agree.
+
+## Original source boundaries
+
+- `HanlinMiniAppsApp/MiniAppsDeveloperStudio.swift` SHA256: `ee4df962e7f05b3cf402ae366c50582f70342133b783d625f4d6cc0766d786ea`.
+- `HanlinMiniAppsApp/MiniAppsStudioProject.swift` SHA256: `849851553729e4bbcedd623441a5e75c5320d76bdf0a0f48130c9bfe6ff20df1`.
+- `HanlinMiniAppsApp/MiniAppsDeveloperWorkspace.swift` SHA256: `0dd7f82fc9f8bc3e10a1dfcfaf77a4addaed26cb8844a0a7665048c5033ddb2a`.
+- `Scripts/MiniApps/Examples/index.json` SHA256: `6eda46c41c3abdf43706f53299bf706a87c9eea731b5ef17cd59bef0a6b064e0`.
+- Local Studio root follows `RuntimeFileLayout.default.workspace(client: .tools, identifier: "miniapp-studio")`, within this actual MiniApps data container at `Library/Application Support/HanlinRuntime/v1/clients/tools/miniapp-studio`.
+- The shipped authoring SDK is selected by the actual bundled RuntimeHostResources ZIP digest: `runtime/node/host-<zipSHA256>/MiniAppSDK`, with its original `.ready` marker. Reading another host's or stale SDK folder cannot qualify.
+- `miniapp-authoring.mjs` writes the original successful build to a fresh `.hanlin-build/<UUID>/package`, with `hanlin.authoring.json` source/compiled hashes and `hanlin.validation.json`. The observer may verify these original outputs but must never produce them.
+- The current14 Studio invocations belong to the original extra26 controller. These new UI cases must not rerun or replace those14, the original paired54, CI90, Shortcuts4 or Widget recovery1.
+
+## Current status
+
+The five gallery cases are implemented as the additive `miniapp_studio_gallery_os` scope in the original paired runner. They use the shipping UI to create two copies per example, type the actual source/manifest edits, validate/build/install, and tap the unchanged example controls. The read-only observer binds the exact app-bundled Host ZIP and SDK, every original selected compiler/declaration/tooling file, actual project overrides, copies, original prepared archive and current installed `source/` entry. Native image pixels are retained as genuine screenshots for later review, without a pixel-correctness claim.
+
+Sixteen meaningful pure file-reader controls passed on Python 3.12.14. The actual raw receipt and stderr are retained in `studio-gallery-source/portable-r1`. They include rejection of changed compiler bytes with an unchanged version, unlisted tooling, changed second copy, weakened source policy, changed retained source, mismatched ZIP and wrong installed entry. No compiler, simulator or OS acceptance was executed by these controls.
+
+Git-bound preservation verifies all 17 prior UI method bodies (the entire original file is recovered by removing only the additive block), all six original test-plan assignments and all 38 existing observer functions except its additive dispatcher. The five changed source paths intersect zero of the retained canonical 392 SDK producer inputs. The temporary local snapshot's extra trailing LF was removed from three existing files; exact original Git EOF and unchanged tested Python AST are documented, without rerunning controls.
+
+```sh
+SPLIT_EVIDENCE=<fresh-owned-evidence-root> \
+PAIRED_TEST_SCOPE=miniapp_studio_gallery_os \
+python3 Scripts/ProductSplit/run_paired_acceptance.py
+```
+
+The original runner builds and installs the shipping products, owns one supported iPad simulator, selects exactly the five new methods, starts the same observation exchange, retains XCTest attachments, and requires the original selected-test verifier plus all five correlated completions. Existing native/paired/OS plans remain unchanged.
+
+**Actual Studio UI, iCloud account, physical device and native drawing pixel review remain NOT_RUN.** The rows above for editor assistance, fonts/themes, folders/moves/styles, genuine Files import, logs/export and real two-writer conflict/recovery remain separate unfinished OS gates. The five-gallery scope does not close all of Task10. Native execution and source publication remain owned by the original Mac/CI controllers.

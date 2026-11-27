@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "reviews": [
+    {
+      "reviewer": "/root",
+      "scope": "Final five-case UI, original runner and shared dispatch; source-r2 preservation proof",
+      "message": "Root has read final source-r2 proof, entire additive287-line Studio UI block and exact runner/shared-dispatch diff. Original17 UI/all6 plans preserved; five new cases drive shipping copy/edit/validate/build/install/run and remain separate from broader Task10/account requirements. No blocker found in those paths. Please seal exact source-r2 with actual16-control raw evidence and your acceptance-gaps matrix now; no repeated tests for EOF normalization. Send commit/hash. Then own broader Task10 missing UI/folder/editor/draft/conflict acceptance source using same shared-file ownership, coordinate known W1 findings; native execution remains Mac/CI owners.",
+      "decision": "Approved boundary source and requested candidate seal"
+    },
+    {
+      "reviewer": "/root/w1_review_resume",
+      "scope": "Frozen initial leaf0631; actual shipping producer/source contracts",
+      "finding": "Installed app entry must be source/ + compiled manifest entry; original HanlinWidgetPackagePreparation applies this prefix. Actual unpacked compiler/declaration/tooling bytes must be verified, not only version/manifest metadata. Project overrides must affect the expected policy.",
+      "correction": "Final leafc64e13a0 uses the original source/ entry, verifies every selected original tooling file against actual bundled ZIP/manifest at admission and terminal, rejects unlisted files and follows original project options. Targeted negatives are part of the actual16 control receipt.",
+      "otherFindings": "The .ready bytes, uppercase8 copy names, lowercaseUUID build stage, source retention/compiledHashes/report/sourceRoot and original archive names agreed with actual shipping source.",
+      "finalLeafReview": "Not yet claimed; reviewer was reassigned to actual CI/device diagnostics."
+    }
+  ],
+  "native": "NOT_RUN",
+  "noReviewerTestsRun": true
+}

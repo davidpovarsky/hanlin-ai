@@ -954,6 +954,12 @@ def observe(args, stopping=lambda: False):
             if request.get("phase") in ("preparing", "finished"):
                 time.sleep(0.25)
                 continue
+            if request.get("surface") == "studioGallery":
+                from observe_studio_gallery import observe_case
+                observe_case(args, request, directory, evidence, seen)
+                last_error = None
+                time.sleep(0.25)
+                continue
             if request.get("surface") == "widgetRecovery":
                 observe_widget_case(args, request, directory, evidence, seen, widget_fixture)
                 last_error = None
