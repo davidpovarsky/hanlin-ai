@@ -1,0 +1,53 @@
+{
+  "caseCount": 7,
+  "methodCount": 5,
+  "origin": {
+    "artifactID": 15178855568,
+    "artifactSHA256": "266836f5a18a7977489cbd1e4624ff06b6ccc8d0bff872657ffc7885f0de4ca3",
+    "attempt": 1,
+    "controller": "35b504095406476799b76a9593d04ba11900d112",
+    "jobID": 140358668934,
+    "rawLogSHA256": "a141517e1366496b39dd43796a0611dbc292e9146052534760b8937982c1f709",
+    "reexecuted": false,
+    "runID": 45954793309,
+    "source": "caa0dac32afa18e58bba55fb4f0fdd262f181835",
+    "toolchainScope": "Xcode27.2 / Swift6.4.2 / Swift Testing2403 / macOS27.0.1; no Xcode27.0 binary compatibility claim"
+  },
+  "originalCommandCount": 34,
+  "originalDependencyCount": 6,
+  "originalError": "Wrong executed method count",
+  "originalFailedResultPreserved": true,
+  "originalProductFiles": 203,
+  "originalResultStatus": "FAILED_BEFORE_COMPLETION",
+  "scope": "Original compile-input Git/archive identities, actual dependency pre/post checks, normal process-group absence, exact named terminal and compiled products. Original controller failed before its final all-suite source check; it is never relabeled as an overall successful run. New remaining suites and final current-source check are separate.",
+  "sourceContinuity": {
+    "currentInventoryCanonicalSHA256": "c4f6fc4a154e1916c0825fcba364a0390cf9dbe162b6ab188af425e142b71218",
+    "currentSource": "35d26911f70794a41361cee710b1fed24a35e269",
+    "currentSourceFiles": 1005,
+    "originalInventoryCanonicalSHA256": "9aeb55bea1fafa9bb128ca74833bce812f337f737364093df78b7db15d7554b0",
+    "originalSource": "caa0dac32afa18e58bba55fb4f0fdd262f181835",
+    "originalSourceFiles": 1005,
+    "reviewedInventoryChanges": [
+      {
+        "after": {
+          "blob": "db073980f3a2968af9f9b1fdbd102dd022088b78",
+          "bytes": 7501,
+          "mode": "100644",
+          "path": "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/ChatCodeFencePayloadRetentionTests.swift",
+          "sha256": "2838bf7cd353b80cea82f72ac30851059d6998728c5ed5876cacafb0a3957d18"
+        },
+        "before": {
+          "blob": "45baf575d666c580c8e7b79cfe6591adb82aac7e",
+          "bytes": 7001,
+          "mode": "100644",
+          "path": "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/ChatCodeFencePayloadRetentionTests.swift",
+          "sha256": "5781153ac5b7b85476b0c8b1e6f1d73df409a728657d247ad78a9584e46d75dd"
+        }
+      }
+    ],
+    "scope": "Full original inventory stays bound to the actually executed source archive. Current inventory is independently bound to its selected Git source; only the explicit reviewed rows may differ. No changed test result is reused.",
+    "unchangedSourceFiles": 1004
+  },
+  "sourceFiles": 1005,
+  "status": "PASS_REPARSED_ORIGINAL_AGENT_EXECUTION_ONLY"
+}

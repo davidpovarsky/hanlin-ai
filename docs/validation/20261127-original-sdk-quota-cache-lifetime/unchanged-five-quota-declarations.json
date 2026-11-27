@@ -1,0 +1,53 @@
+{
+  "schema": "hanlin-unchanged-original-quota-declarations-v1",
+  "originalSource": "35d26911f70794a41361cee710b1fed24a35e269",
+  "sourcePath": "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/ChatCodeFencePayloadRetentionTests.swift",
+  "originalFile": {
+    "bytes": 7501,
+    "sha256": "2838bf7cd353b80cea82f72ac30851059d6998728c5ed5876cacafb0a3957d18",
+    "blob": "db073980f3a2968af9f9b1fdbd102dd022088b78"
+  },
+  "candidateFile": {
+    "bytes": 8535,
+    "sha256": "b4504b8c1c08a6c91204a3c0521f82c64822db4c6f28561f18cdab5d4b534de6",
+    "blob": "506bc4a51ad2f78e668d321db139e1c2a9a5d986"
+  },
+  "declarations": [
+    {
+      "method": "countsUTF8OutputBytesOnceAcrossInlineAndExpandedCopies()",
+      "bytes": 982,
+      "sha256": "830f205de2d1eb60405b9badb495f5c2ff3032f17dac68da56c33ab8a654504d",
+      "blob": "639ffd1a2538ea2e019322be711826faf6715814",
+      "originalDeclaration": "@Test func countsUTF8OutputBytesOnceAcrossInlineAndExpandedCopies() throws {\n        let budget = ChatCodeFencePayloadRetention(maximumBytes: 1_024, maximumPayloads: 4)\n        var payload: ChatCodeFencePayload? = makePayload(html: \"\u05e9\u05dc\u05d5\u05dd\", css: \"\u00e9\", display: \"\ud83d\udc69\ud83c\udffd\u200d\ud83d\udcbb\")\n        let expected = \"\u05e9\u05dc\u05d5\u05dd\".utf8.count + \"\u00e9\".utf8.count + \"\ud83d\udc69\ud83c\udffd\u200d\ud83d\udcbb\".utf8.count\n        #expect(payload?.retain(in: budget) == true)\n        var copies = [try #require(payload), try #require(payload)]\n        payload = nil\n        let retainedCopy = copies[0].retain(in: budget)\n        #expect(retainedCopy)\n        withExtendedLifetime(copies) {\n            #expect(budget.snapshot == .init(bytes: expected, payloads: 1))\n        }\n        copies.removeFirst()\n        withExtendedLifetime(copies) {\n            #expect(budget.snapshot == .init(bytes: expected, payloads: 1))\n        }\n        copies.removeAll()\n        #expect(budget.snapshot == .init(bytes: 0, payloads: 0))\n    }"
+    },
+    {
+      "method": "byteAndCountExhaustionPreserveExistingPayloadAndPermitLaterReuse()",
+      "bytes": 1625,
+      "sha256": "127f79865adaf7bb817b90f4d33f8846527d2ec9585e2627e03f7f78c7394a1e",
+      "blob": "47adcad78f4c31629c1c603484ed71c93093e9e8",
+      "originalDeclaration": "@Test func byteAndCountExhaustionPreserveExistingPayloadAndPermitLaterReuse() throws {\n        let budget = ChatCodeFencePayloadRetention(maximumBytes: 20, maximumPayloads: 2)\n        var held = [makePayload(html: String(repeating: \"a\", count: 10)),\n                    makePayload(html: String(repeating: \"b\", count: 10))]\n        let firstHeldRetained = held[0].retain(in: budget)\n        #expect(firstHeldRetained)\n        let secondHeldRetained = held[1].retain(in: budget)\n        #expect(secondHeldRetained)\n        var next: ChatCodeFencePayload? = makePayload(html: \"c\")\n        #expect(next?.retain(in: budget) == false)\n        #expect(next?.html == \"c\") // Failure does not truncate or rewrite original source/output.\n        withExtendedLifetime(held) { #expect(budget.snapshot == .init(bytes: 20, payloads: 2)) }\n        held.removeLast()\n        #expect(next?.retain(in: budget) == true)\n        withExtendedLifetime((held, next)) { #expect(budget.snapshot == .init(bytes: 11, payloads: 2)) }\n        held.removeAll(); next = nil\n        #expect(budget.snapshot == .init(bytes: 0, payloads: 0))\n\n        let countBudget = ChatCodeFencePayloadRetention(maximumBytes: 1_024, maximumPayloads: 1)\n        var first: ChatCodeFencePayload? = makePayload(html: \"x\")\n        var second = makePayload(html: \"y\")\n        #expect(first?.retain(in: countBudget) == true)\n        let secondRetainedWhileFull = second.retain(in: countBudget)\n        #expect(!secondRetainedWhileFull)\n        first = nil\n        let secondRetainedAfterRelease = second.retain(in: countBudget)\n        #expect(secondRetainedAfterRelease)\n    }"
+    },
+    {
+      "method": "cancelledUnpublishedResultKeepsLeaseUntilActualWorkDrains()",
+      "bytes": 1158,
+      "sha256": "cd52c9234eebbce019ccba6368f1184e89a5b8d775e1d72187bed2fb35b5071a",
+      "blob": "29529b2ac754d66a8574b691d08e4ae75f115a32",
+      "originalDeclaration": "@Test(.timeLimit(.minutes(1))) func cancelledUnpublishedResultKeepsLeaseUntilActualWorkDrains() async throws {\n        let budget = ChatCodeFencePayloadRetention(maximumBytes: 1_024, maximumPayloads: 1)\n        let entered = Latch(), release = Latch()\n        let task = Task { () async throws -> ChatCodeFencePayload in\n            var payload = makePayload(html: \"owned-before-publication\")\n            guard payload.retain(in: budget) else { throw CancellationError() }\n            await entered.open()\n            await release.wait()\n            try Task.checkCancellation()\n            return payload\n        }\n        await entered.wait()\n        task.cancel()\n        #expect(budget.snapshot.payloads == 1)\n        var other = makePayload(html: \"next\")\n        let otherRetainedWhileDraining = other.retain(in: budget)\n        #expect(!otherRetainedWhileDraining)\n        await release.open()\n        await #expect(throws: CancellationError.self) { _ = try await task.value }\n        #expect(budget.snapshot == .init(bytes: 0, payloads: 0))\n        let otherRetainedAfterDrain = other.retain(in: budget)\n        #expect(otherRetainedAfterDrain)\n    }"
+    },
+    {
+      "method": "distinctBudgetsCannotAdoptAnAlreadyOwnedPayloadAndInvalidCostsDoNotOverflow()",
+      "bytes": 919,
+      "sha256": "fcc05dcf9f8e1c646a689b9d383f2a0ad31a1d672f4521fce8723ca225546a21",
+      "blob": "d67699843e7a58f7a19bc9e10a572925b4681408",
+      "originalDeclaration": "@Test func distinctBudgetsCannotAdoptAnAlreadyOwnedPayloadAndInvalidCostsDoNotOverflow() {\n        let original = ChatCodeFencePayloadRetention(maximumBytes: 16, maximumPayloads: 2)\n        let other = ChatCodeFencePayloadRetention(maximumBytes: 16, maximumPayloads: 2)\n        var payload = makePayload(html: \"original\")\n        let retainedByOriginal = payload.retain(in: original)\n        #expect(retainedByOriginal)\n        let retainedByOther = payload.retain(in: other)\n        #expect(!retainedByOther)\n        withExtendedLifetime(payload) {\n            #expect(original.snapshot == .init(bytes: 8, payloads: 1))\n            #expect(other.snapshot == .init(bytes: 0, payloads: 0))\n        }\n        #expect(other.acquire(bytes: 0) == nil)\n        #expect(other.acquire(bytes: -1) == nil)\n        #expect(other.acquire(bytes: Int.max) == nil)\n        #expect(other.snapshot == .init(bytes: 0, payloads: 0))\n    }"
+    },
+    {
+      "method": "simultaneousOwnersCannotExceedOneSharedQuota()",
+      "bytes": 749,
+      "sha256": "f321eb55a9f9ae0929d75537389540be12e5d3f7a6851031c2e60c01f297980d",
+      "blob": "0858763de1865e13f6f29825cc055a93bcd50171",
+      "originalDeclaration": "@Test(.timeLimit(.minutes(1))) func simultaneousOwnersCannotExceedOneSharedQuota() async {\n        let budget = ChatCodeFencePayloadRetention(maximumBytes: 70, maximumPayloads: 7)\n        var leases: [ChatCodeFencePayloadRetention.Lease] = []\n        await withTaskGroup(of: ChatCodeFencePayloadRetention.Lease?.self) { group in\n            for _ in 0..<64 { group.addTask { budget.acquire(bytes: 10) } }\n            for await lease in group { if let lease { leases.append(lease) } }\n        }\n        withExtendedLifetime(leases) {\n            #expect(leases.count == 7)\n            #expect(budget.snapshot == .init(bytes: 70, payloads: 7))\n        }\n        leases.removeAll()\n        #expect(budget.snapshot == .init(bytes: 0, payloads: 0))\n    }"
+    }
+  ],
+  "scope": "Five complete original @Test declarations are byte-identical. Their shared makePayload/Box/Latch declarations and production remain unchanged by the two literal edits. This is source closure, not a new execution result."
+}

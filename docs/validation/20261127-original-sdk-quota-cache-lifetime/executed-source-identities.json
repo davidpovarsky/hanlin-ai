@@ -1,0 +1,30 @@
+[
+  {
+    "blob": "3035f918160aaf205ade268f7984fc46f4967e94",
+    "bytes": 5048,
+    "mode": "100644",
+    "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/CodeFences/ChatCodeFenceDocument.swift",
+    "sha256": "d0697232f0e0be61bee17cac86323709f71cd3461bbec14293bc50c906e0302d"
+  },
+  {
+    "blob": "fb3d299c8ecd0b8ff09ec56edb36b46c773a2048",
+    "bytes": 10124,
+    "mode": "100644",
+    "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/CodeFences/ChatCodeFenceEngine.swift",
+    "sha256": "6315493e9f32898274c3e2663abf19ce8dd4483e92b2e6db2ce7d943972b4977"
+  },
+  {
+    "blob": "9ca4020fb047fb09dd6cf8a6d3a527107dfc624d",
+    "bytes": 2078,
+    "mode": "100644",
+    "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/CodeFences/ChatCodeFencePayloadRetention.swift",
+    "sha256": "e41b2bb16fe36dbece8fff2bf0c7074244a7ab8c13244d0a1571f60044e79b4c"
+  },
+  {
+    "blob": "db073980f3a2968af9f9b1fdbd102dd022088b78",
+    "bytes": 7501,
+    "mode": "100644",
+    "path": "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/ChatCodeFencePayloadRetentionTests.swift",
+    "sha256": "2838bf7cd353b80cea82f72ac30851059d6998728c5ed5876cacafb0a3957d18"
+  }
+]

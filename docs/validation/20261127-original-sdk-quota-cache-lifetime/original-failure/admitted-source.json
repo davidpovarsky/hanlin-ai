@@ -1,0 +1,42 @@
+{
+  "notCovered": [
+    "Original NativeScript action handler: requires actual AI_HLY iOS runtime graph",
+    "Anytype native Save/Stop/engine or account replacement",
+    "Full Hanlin app/extension integration",
+    "Device, signing, IPA, TestFlight"
+  ],
+  "priorEvidenceReuse": "The prior 16b79 V1 shadow proof and unchanged385 cancellation evidence retain their own original scope; this route does not relabel them. Running this route produces new evidence only for its selected immutable source.",
+  "protectedBlobs": {
+    "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved": "d6ba25194dd3bb6b0f07c997f5fa275f467b7dc3",
+    "Fixtures/Widgets/Hanlin-Expo-Widget-Counter.hanlinExpo": "939b67f0349c3fa1c772b2c8d55643def1cdfd77",
+    "Fixtures/Widgets/Hanlin-Expo-Widget-Visuals.hanlinExpo": "c7d3f6d00440987240d377e6fa889afb57c89e0c",
+    "Fixtures/Widgets/Hanlin-ScriptWidget-Actions.scripting": "60b75892d301552659e5de4b7df6813186b527e7",
+    "Fixtures/Widgets/Hanlin-ScriptWidget-Dashboard.scripting": "6f64a02b3f7d355e6452b1b753b1e42c79f0d81d",
+    "Fixtures/Widgets/Hanlin-Widget-Legacy-Regression.scripting": "31bd2a33d7d078d70b54d1861e3c74cad766fcba",
+    "Packages/HanlinAgentSDK/Package.resolved": "2b7ba99b77a93905bd2cee70069cb5a7dcfcbc57",
+    "Packages/HanlinAgentSDK/Package.swift": "fcf99a97a6fab9fa5885c44521e950da37467405",
+    "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/AgentSessionTests.swift": "2428a9af588a64b40f0016e84e5ee8f6b3b93fdf",
+    "Packages/HanlinPlatform/Package.resolved": "09c0181f5a6df0c2d1b21237c717bfae8f60cca5",
+    "Packages/HanlinPlatform/Package.swift": "2d4e529c825939fbc302539852da52cdf7cbbaf9",
+    "Packages/HanlinPlatform/Tests/Fixtures/LegacyWidgetStore/HanlinScriptExtensionContracts.swift": "de9574023203fa460fe73b12bf489daa5cbda876",
+    "Packages/HanlinPlatform/Tests/Fixtures/LegacyWidgetStore/HanlinScriptExtensionStore.swift": "daf503528209735803973871aa283805ed3c77e1",
+    "Packages/HanlinPlatform/Tests/Fixtures/LegacyWidgetStore/PROVENANCE.txt": "7d7328062c5d7b68059bfb9744fe9857ca5c2c39",
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift": "c108823a9409264882e7870cc822cccf569bac3c",
+    "Packages/HanlinPresentationSDK/Package.swift": "ef1e46be07c7b0cba7b5796b3395e6cabdb89484",
+    "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/ChatCodeFencePayloadRetentionTests.swift": "db073980f3a2968af9f9b1fdbd102dd022088b78",
+    "Scripts/CI/select_stable_xcode.py": "dae108410eb539603159e45e29e45d4f6cf80a91",
+    "Scripts/CI/verify_exact_json_vendor.py": "a220077dfe1121570b709809f392207ed530d364"
+  },
+  "referenceSource": "20a1e6fa33ed261ba11e83a0b84a157029822e5e",
+  "reviewedSource": {
+    "parent": "caa0dac32afa18e58bba55fb4f0fdd262f181835",
+    "protectedBlobOverrides": {
+      "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/ChatCodeFencePayloadRetentionTests.swift": "db073980f3a2968af9f9b1fdbd102dd022088b78"
+    },
+    "sourceIntakeSHA256": "608b064340224b6a9da62de68c8452a86d9ab3843cd0d0bbb65b641fb61ff877",
+    "sourceScope": "Reviewed test-only successor: nine direct mutating retain calls evaluated once into local Bool values immediately before the unchanged expectations. All 16 ordered retain calls, six methods, 37 assertions, production sources, package declarations and locks preserved; 15 original evidence documents added outside the selected source archive. No Swift result is implied by this entry.",
+    "tree": "e982eb1e5f4bb6759b8c18663b716abee65b6cc4"
+  },
+  "source": "35d26911f70794a41361cee710b1fed24a35e269",
+  "tree": "e982eb1e5f4bb6759b8c18663b716abee65b6cc4"
+}

@@ -28,14 +28,28 @@ struct ChatCodeFencePayloadRetentionTests: Sendable {
     @Test func cacheEvictionDoesNotFreeInlineOwnershipAndRemountDoesNotDoubleCharge() throws {
         let budget = ChatCodeFencePayloadRetention(maximumBytes: 1_024, maximumPayloads: 4)
         let cache = NSCache<NSString, Box>()
-        var payload: ChatCodeFencePayload? = makePayload(html: "native-result")
-        #expect(payload?.retain(in: budget) == true)
-        cache.setObject(Box(try #require(payload)), forKey: "original")
-        var inline: ChatCodeFencePayload? = cache.object(forKey: "original")?.payload
-        payload = nil
-        let retained = budget.snapshot
-        cache.removeAllObjects()
-        withExtendedLifetime(inline) { #expect(budget.snapshot == retained) }
+        weak var cachedBox: Box?
+        var inline: ChatCodeFencePayload?
+        let retained = try withCacheLookupScope {
+            var payload: ChatCodeFencePayload? = makePayload(html: "native-result")
+            #expect(payload?.retain(in: budget) == true)
+            cache.setObject(Box(try #require(payload)), forKey: "original")
+            let originalBox = try #require(cache.object(forKey: "original"))
+            cachedBox = originalBox
+            inline = originalBox.payload
+            payload = nil
+            let retained = budget.snapshot
+            cache.removeAllObjects()
+            return retained
+        }
+        // Prove the actual cache box has died before crediting inline ownership.
+        // A live Foundation lookup temporary must not stand in for that owner.
+        let cacheOwnerReleased = cachedBox == nil
+        #expect(cacheOwnerReleased)
+        withExtendedLifetime(inline) {
+            #expect(budget.snapshot == retained)
+            #expect(budget.snapshot == .init(bytes: "native-result".utf8.count, payloads: 1))
+        }
         var expanded: ChatCodeFencePayload? = inline
         inline = nil
         #expect(expanded?.retain(in: budget) == true)
@@ -128,6 +142,17 @@ struct ChatCodeFencePayloadRetentionTests: Sendable {
         }
         leases.removeAll()
         #expect(budget.snapshot == .init(bytes: 0, payloads: 0))
+    }
+
+    // A distinct call scope bounds Swift lookup temporaries; on Objective-C
+    // platforms also drain any autoreleased Foundation owners before the proof.
+    @inline(never)
+    private func withCacheLookupScope<Value>(_ body: () throws -> Value) rethrows -> Value {
+        #if canImport(ObjectiveC)
+        return try autoreleasepool(invoking: body)
+        #else
+        return try body()
+        #endif
     }
 
     private func makePayload(html: String, css: String = "", display: String? = nil) -> ChatCodeFencePayload {

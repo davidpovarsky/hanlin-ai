@@ -1,0 +1,177 @@
+{
+  "schema": "hanlin-original-quota-lifetime-failure-verification-v1",
+  "status": "PASS_EVIDENCE_INTEGRITY_ORIGINAL_APPLE_TEST_RESULT_REMAINS_FAILED",
+  "runID": 45963272356,
+  "attempt": 1,
+  "jobID": 140385861324,
+  "controller": "bd41cf7878c5f4df117af7bfcb67636bdff2eafa",
+  "source": "35d26911f70794a41361cee710b1fed24a35e269",
+  "artifactID": 15181687501,
+  "artifactBytes": 295142941,
+  "artifactSHA256": "e1ee86a9f2d75aa6abcf8695af9a39ba2e1d898ce31f2d93f26c2b20583f558d",
+  "originalResult": {
+    "bytes": 40098,
+    "sha256": "97520269a6834717be90a32c1bf021089bb28da182c383e4d566cf696f95c21b"
+  },
+  "rawLog": {
+    "bytes": 1036587,
+    "sha256": "c025761afe06b69a895bad9b698ed3dc6e6cba5c9daadadeca03eaef86a1bf88"
+  },
+  "failedCommand": {
+    "argv": [
+      "xcrun",
+      "swift",
+      "test",
+      "--package-path",
+      "/Users/runner/work/_temp/hanlin-original-sdk-kcndy740/source/Packages/HanlinPresentationSDK",
+      "--scratch-path",
+      "/Users/runner/work/_temp/hanlin-original-sdk-kcndy740/payload-quota-build",
+      "--force-resolved-versions",
+      "--skip-update",
+      "--jobs",
+      "2",
+      "--verbose",
+      "--filter",
+      "ChatCodeFencePayloadRetentionTests"
+    ],
+    "cwd": "/Users/runner/work/hanlin-ai/hanlin-ai",
+    "elapsedSeconds": 159.467,
+    "exitCode": 1,
+    "groupCustody": {
+      "abnormalCleanup": false,
+      "groupAbsent": true,
+      "pgid": 13753,
+      "signals": []
+    },
+    "label": "payload-quota-tests",
+    "log": "payload-quota-tests.log",
+    "logSHA256": "c025761afe06b69a895bad9b698ed3dc6e6cba5c9daadadeca03eaef86a1bf88",
+    "pgid": 13753,
+    "pid": 13753,
+    "startedUTC": "2026-11-27T08:10:59Z",
+    "timeoutSeconds": 1800
+  },
+  "compile": {
+    "observed": "Build complete!",
+    "seconds": 120.6
+  },
+  "quotaMethods": {
+    "executed": 6,
+    "passed": [
+      [
+        "byteAndCountExhaustionPreserveExistingPayloadAndPermitLaterReuse()",
+        "0.003"
+      ],
+      [
+        "countsUTF8OutputBytesOnceAcrossInlineAndExpandedCopies()",
+        "0.003"
+      ],
+      [
+        "simultaneousOwnersCannotExceedOneSharedQuota()",
+        "0.006"
+      ],
+      [
+        "cancelledUnpublishedResultKeepsLeaseUntilActualWorkDrains()",
+        "0.006"
+      ],
+      [
+        "distinctBudgetsCannotAdoptAnAlreadyOwnedPayloadAndInvalidCostsDoNotOverflow()",
+        "0.006"
+      ]
+    ],
+    "failed": [
+      [
+        "cacheEvictionDoesNotFreeInlineOwnershipAndRemountDoesNotDoubleCharge()",
+        "0.006"
+      ]
+    ],
+    "suiteSeconds": 0.006,
+    "observedFinalSnapshot": {
+      "bytes": 13,
+      "payloads": 1
+    },
+    "requiredFinalSnapshot": {
+      "bytes": 0,
+      "payloads": 0
+    }
+  },
+  "sourceArchive": {
+    "bytes": 40611840,
+    "sha256": "cfbbfc010a380e4170261ce82ca5e7135530c99542f49be88492fe95caae75ac"
+  },
+  "sourceFilesVerified": 1005,
+  "originalCommandsVerified": 50,
+  "originalProcessGroupsAbsentNormally": 50,
+  "dependencyScope": "Original actual 18 dependency checkouts and lock were verified before the test. Post-test checkout/source verification was NOT_REACHED because the genuine test command exited1; do not invent a post-test receipt.",
+  "products": [
+    {
+      "label": "agent-stop",
+      "archive": "agent-stop-original-products.tar",
+      "bytes": 413972480,
+      "sha256": "afa0e58b6a1d986e0e215f928671dda6a3e852d4fb4466518029b1b41f4769fc",
+      "verifiedRegularFiles": 203,
+      "originalTestBinaries": [
+        {
+          "bytes": 64436976,
+          "path": "out/Products/Debug/HanlinAgentCoreTests.xctest/Contents/MacOS/HanlinAgentCoreTests",
+          "sha256": "4511e04e97206191fe67e99d09d55220ee191f0251fa1693b10b64011e2aba6b"
+        },
+        {
+          "bytes": 7622048,
+          "path": "out/Products/Debug/HanlinHostConcurrencyTests.xctest/Contents/MacOS/HanlinHostConcurrencyTests",
+          "sha256": "a00a96a0cf85da6b2e3c0d387a51191596c541cafc0dc8e97a9fd4286712da88"
+        },
+        {
+          "bytes": 7754144,
+          "path": "out/Products/Debug/HanlinHostContractsTests.xctest/Contents/MacOS/HanlinHostContractsTests",
+          "sha256": "201d2f0df90b3a47ce7d2b0ac5564fe0a51470b248bac2dbbffabde433e416fe"
+        },
+        {
+          "bytes": 7909408,
+          "path": "out/Products/Debug/HanlinPersistenceAdaptersTests.xctest/Contents/MacOS/HanlinPersistenceAdaptersTests",
+          "sha256": "6364fe71c11b1b88038e96f27f18ebf5ec570f0b2bd0f77f548a1368bd1c5d3a"
+        }
+      ]
+    },
+    {
+      "label": "payload-quota",
+      "archive": "payload-quota-original-products.tar",
+      "bytes": 191774720,
+      "sha256": "b68b3413f671ff3eb6fd197278766d172ba5d9dfe98eadcede43a75bc21e319c",
+      "verifiedRegularFiles": 267,
+      "originalTestBinaries": [
+        {
+          "bytes": 185424,
+          "path": "out/Products/Debug/HanlinChatPresentationTests.xctest/Contents/MacOS/HanlinChatPresentationTests",
+          "sha256": "b2a67f0521574b9a88272c29e90f14c097a46bc5b4b5bca345e65b8de8ce4736"
+        },
+        {
+          "bytes": 12601200,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/MacOS/HanlinChatUITests",
+          "sha256": "660b1a8b72e2e10d11cf5161c88615c396fe5a04d773162682024e759a9328bb"
+        },
+        {
+          "bytes": 908512,
+          "path": "out/Products/Debug/HanlinLocalizationTests.xctest/Contents/MacOS/HanlinLocalizationTests",
+          "sha256": "1e559ea002007016d9ce32f1a879a59c52136248431315d077eed854babfd3a6"
+        },
+        {
+          "bytes": 1338704,
+          "path": "out/Products/Debug/HanlinPresentationKitTests.xctest/Contents/MacOS/HanlinPresentationKitTests",
+          "sha256": "e7d4082247b42d4db37301e27a42bb2308b6ccd42ff9d2678af9ae54f97205dc"
+        }
+      ]
+    }
+  ],
+  "agentScope": "Original run45954793309 Agent5/7 reused without rerun, with original source and actual package/product closure.",
+  "remaining": {
+    "correctedCacheFixture": "NOT_RUN",
+    "Widget2": "NOT_REACHED",
+    "iOSProduct": "NOT_REACHED"
+  },
+  "hypothesis": "The failed test did not positively delimit/observe the NSObject cache lookup owner's lifetime. Source alone does not prove autorelease/scoped ownership caused this particular failure; the added weak-owner witness is pending actual Apple execution.",
+  "backgroundReference": "https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/MemoryMgmt/Articles/mmAutoreleasePools.html",
+  "backgroundLimit": "Apple documents deferred owner release at autoreleasepool drain. This general mechanism is not independent evidence of this exact NSCache temporary.",
+  "verificationSeconds": 6.077334,
+  "swiftOrNativeRuns": 0
+}

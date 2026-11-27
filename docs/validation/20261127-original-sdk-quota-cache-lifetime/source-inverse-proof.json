@@ -1,0 +1,97 @@
+{
+  "schema": "hanlin-quota-cache-lookup-lifetime-source-proof-v1",
+  "parent": "35d26911f70794a41361cee710b1fed24a35e269",
+  "path": "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/ChatCodeFencePayloadRetentionTests.swift",
+  "before": {
+    "bytes": 7501,
+    "sha256": "2838bf7cd353b80cea82f72ac30851059d6998728c5ed5876cacafb0a3957d18",
+    "blob": "db073980f3a2968af9f9b1fdbd102dd022088b78"
+  },
+  "after": {
+    "bytes": 8535,
+    "sha256": "b4504b8c1c08a6c91204a3c0521f82c64822db4c6f28561f18cdab5d4b534de6",
+    "blob": "506bc4a51ad2f78e668d321db139e1c2a9a5d986"
+  },
+  "literalInverseOperations": [
+    {
+      "before": "        var payload: ChatCodeFencePayload? = makePayload(html: \"native-result\")\n        #expect(payload?.retain(in: budget) == true)\n        cache.setObject(Box(try #require(payload)), forKey: \"original\")\n        var inline: ChatCodeFencePayload? = cache.object(forKey: \"original\")?.payload\n        payload = nil\n        let retained = budget.snapshot\n        cache.removeAllObjects()\n        withExtendedLifetime(inline) { #expect(budget.snapshot == retained) }\n",
+      "after": "        weak var cachedBox: Box?\n        var inline: ChatCodeFencePayload?\n        let retained = try withCacheLookupScope {\n            var payload: ChatCodeFencePayload? = makePayload(html: \"native-result\")\n            #expect(payload?.retain(in: budget) == true)\n            cache.setObject(Box(try #require(payload)), forKey: \"original\")\n            let originalBox = try #require(cache.object(forKey: \"original\"))\n            cachedBox = originalBox\n            inline = originalBox.payload\n            payload = nil\n            let retained = budget.snapshot\n            cache.removeAllObjects()\n            return retained\n        }\n        // Prove the actual cache box has died before crediting inline ownership.\n        // A live Foundation lookup temporary must not stand in for that owner.\n        let cacheOwnerReleased = cachedBox == nil\n        #expect(cacheOwnerReleased)\n        withExtendedLifetime(inline) {\n            #expect(budget.snapshot == retained)\n            #expect(budget.snapshot == .init(bytes: \"native-result\".utf8.count, payloads: 1))\n        }\n"
+    },
+    {
+      "before": "    private func makePayload(html: String, css: String = \"\", display: String? = nil) -> ChatCodeFencePayload {\n",
+      "after": "    // A distinct call scope bounds Swift lookup temporaries; on Objective-C\n    // platforms also drain any autoreleased Foundation owners before the proof.\n    @inline(never)\n    private func withCacheLookupScope<Value>(_ body: () throws -> Value) rethrows -> Value {\n        #if canImport(ObjectiveC)\n        return try autoreleasepool(invoking: body)\n        #else\n        return try body()\n        #endif\n    }\n\n    private func makePayload(html: String, css: String = \"\", display: String? = nil) -> ChatCodeFencePayload {\n"
+    }
+  ],
+  "completeOriginalRestored": true,
+  "originalMethodNames": [
+    "countsUTF8OutputBytesOnceAcrossInlineAndExpandedCopies",
+    "cacheEvictionDoesNotFreeInlineOwnershipAndRemountDoesNotDoubleCharge",
+    "byteAndCountExhaustionPreserveExistingPayloadAndPermitLaterReuse",
+    "cancelledUnpublishedResultKeepsLeaseUntilActualWorkDrains",
+    "distinctBudgetsCannotAdoptAnAlreadyOwnedPayloadAndInvalidCostsDoNotOverflow",
+    "simultaneousOwnersCannotExceedOneSharedQuota"
+  ],
+  "orderedRetainCalls": [
+    "payload?.retain(in: budget)",
+    "copies[0].retain(in: budget)",
+    "payload?.retain(in: budget)",
+    "expanded?.retain(in: budget)",
+    "held[0].retain(in: budget)",
+    "held[1].retain(in: budget)",
+    "next?.retain(in: budget)",
+    "next?.retain(in: budget)",
+    "first?.retain(in: countBudget)",
+    "second.retain(in: countBudget)",
+    "second.retain(in: countBudget)",
+    "payload.retain(in: budget)",
+    "other.retain(in: budget)",
+    "other.retain(in: budget)",
+    "payload.retain(in: original)",
+    "payload.retain(in: other)"
+  ],
+  "originalExpectations": [
+    "payload?.retain(in:budget)==true",
+    "retainedCopy",
+    "budget.snapshot==.init(bytes:expected,payloads:1)",
+    "budget.snapshot==.init(bytes:expected,payloads:1)",
+    "budget.snapshot==.init(bytes:0,payloads:0)",
+    "payload?.retain(in:budget)==true",
+    "budget.snapshot==retained",
+    "expanded?.retain(in:budget)==true",
+    "budget.snapshot==retained",
+    "budget.snapshot==.init(bytes:0,payloads:0)",
+    "firstHeldRetained",
+    "secondHeldRetained",
+    "next?.retain(in:budget)==false",
+    "next?.html==\"c\"",
+    "budget.snapshot==.init(bytes:20,payloads:2)",
+    "next?.retain(in:budget)==true",
+    "budget.snapshot==.init(bytes:11,payloads:2)",
+    "budget.snapshot==.init(bytes:0,payloads:0)",
+    "first?.retain(in:countBudget)==true",
+    "!secondRetainedWhileFull",
+    "secondRetainedAfterRelease",
+    "budget.snapshot.payloads==1",
+    "!otherRetainedWhileDraining",
+    "throws:CancellationError.self",
+    "budget.snapshot==.init(bytes:0,payloads:0)",
+    "otherRetainedAfterDrain",
+    "retainedByOriginal",
+    "!retainedByOther",
+    "original.snapshot==.init(bytes:8,payloads:1)",
+    "other.snapshot==.init(bytes:0,payloads:0)",
+    "other.acquire(bytes:0)==nil",
+    "other.acquire(bytes:-1)==nil",
+    "other.acquire(bytes:Int.max)==nil",
+    "other.snapshot==.init(bytes:0,payloads:0)",
+    "leases.count==7",
+    "budget.snapshot==.init(bytes:70,payloads:7)",
+    "budget.snapshot==.init(bytes:0,payloads:0)"
+  ],
+  "originalExpectationsRetained": 37,
+  "additiveExpectations": 2,
+  "objectiveCPath": "Explicit non-inlined call scope plus Foundation autoreleasepool",
+  "otherPlatforms": "Identical non-inlined call/closure lifetime, no unavailable autoreleasepool call",
+  "scope": "One test fixture only. Production accounting/cache sources are unchanged. Autorelease/scoped-owner cause remains a hypothesis; the new weak-box and positive inline charge witnesses require actual Apple execution. No sleeps, reset, synthetic release or acceptance threshold change.",
+  "swiftOrNativeRuns": 0
+}

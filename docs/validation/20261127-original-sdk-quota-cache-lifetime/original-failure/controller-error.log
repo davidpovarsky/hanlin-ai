@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/Users/runner/work/hanlin-ai/hanlin-ai/Scripts/CI/SDKSourceValidation/run.py", line 563, in main
+    result = execute(run, source, inputs["exact_test_selector"] == CONFIG["continuation"]["selector"])
+  File "/Users/runner/work/hanlin-ai/hanlin-ai/Scripts/CI/SDKSourceValidation/run.py", line 504, in execute
+    log = run.command(label + "-tests", ["xcrun", "swift", "test", "--package-path", str(package),
+                "--scratch-path", str(scratch), "--force-resolved-versions", "--skip-update", "--jobs", "2", "--verbose",
+                "--filter", suite["filter"]], timeout=1800)
+  File "/Users/runner/work/hanlin-ai/hanlin-ai/Scripts/CI/SDKSourceValidation/run.py", line 291, in command
+    require(record["exitCode"] == 0 and not record.get("timedOut"), f"{label} failed; original log retained")
+    ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/runner/work/hanlin-ai/hanlin-ai/Scripts/CI/SDKSourceValidation/run.py", line 47, in require
+    raise RuntimeError(message)
+RuntimeError: payload-quota-tests failed; original log retained
