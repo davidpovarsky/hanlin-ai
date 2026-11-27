@@ -1,0 +1,276 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-11-27T14:17:23.410778+00:00",
+  "integrationSource": "9019ddf57fc7fd712e2e8587a53cdfef1fcb4612",
+  "outcome": "Original RuntimeCore preparation recovery on b723338e, independently verified across all 49 declared members. The four actual Node/Python binary slices already matched the checksum-locked archive; missing Python support files were restored. An incidental default producer run returned 187 PASS plus one original skip and remains uncredited as Host188. Only three generated commit annotations changed; exact approved b723 documents and accepted d837 Host artifacts were restored, then all 392 source inputs and original guards passed. Raw unexpected output and the initial guard failure remain retained. Large Host ZIPs remain at the producer with the hashes in the original qualification receipt.",
+  "archive": {
+    "path": "original-evidence.tar.gz",
+    "bytes": 5627901,
+    "sha256": "65a7e55978e963016f777b7ef1539e37bf7082b6bfe1dea935e9fe5f48c35977",
+    "memberCount": 51,
+    "rawBytes": 37808139,
+    "encoding": "lossless tar.gz of complete retained technical original files; round-trip verified"
+  },
+  "excludedTransportWrappers": [
+    "original-packet.tar.gz",
+    "transfer-receipt.json"
+  ],
+  "publicCredentialPatternPreflight": "PASS",
+  "members": [
+    {
+      "path": "original/cleanup/receipt.json",
+      "bytes": 19374,
+      "sha256": "62c764f476b8c78537e34dffeb8b10ad64dfaf0b246a58dccd7ad7842a816c6c"
+    },
+    {
+      "path": "original/cleanup/target-01-inventory.json",
+      "bytes": 3473854,
+      "sha256": "64188d77426a863d8e8d1b8f3643afb77ec1f3de20567cb86f1097a261b7a1b0"
+    },
+    {
+      "path": "original/cleanup/target-02-inventory.json",
+      "bytes": 1485585,
+      "sha256": "0dc46d34ebd1b88786c2f0cd24eac71a313a762eaafc4b371eababa323cde88d"
+    },
+    {
+      "path": "original/cleanup/target-03-inventory.json",
+      "bytes": 446799,
+      "sha256": "e2691d71985ebb915686762fcdbced3fdb40dc83f4f0500620db1a7eea5722e6"
+    },
+    {
+      "path": "original/cleanup/target-04-inventory.json",
+      "bytes": 230,
+      "sha256": "a54d8013bf38f7aea4180c9af08873ec8cce1bba136c7ea3ec07519a937fc4e3"
+    },
+    {
+      "path": "original/cleanup/target-05-inventory.json",
+      "bytes": 1760120,
+      "sha256": "4f710a0c759c98b213ccebfc763768ff8081da05afd4c615115b27b51101cf5c"
+    },
+    {
+      "path": "original/cleanup/target-06-inventory.json",
+      "bytes": 1191730,
+      "sha256": "06f282b85fa19e6cd9422b3105fdcd8d2301a734d1d8a13d2378d6c7a9077259"
+    },
+    {
+      "path": "original/cleanup/target-07-inventory.json",
+      "bytes": 223701,
+      "sha256": "2a4832474fb851ccbc00d97474b9c1a0d1f14d3ea2c6da5e1ba391bd68e7939f"
+    },
+    {
+      "path": "original/cleanup/target-08-inventory.json",
+      "bytes": 223,
+      "sha256": "bf0745997b5f2c4d33ee97352b8abaa01be8e3d3b80ca510b708216cecd76281"
+    },
+    {
+      "path": "original/cleanup/target-09-inventory.json",
+      "bytes": 2008019,
+      "sha256": "cc5b5ecd02f265de5297480abe9420f706df5e016cb211bd9677ecd787b91780"
+    },
+    {
+      "path": "original/cleanup/target-10-inventory.json",
+      "bytes": 1219420,
+      "sha256": "0b6d9bc323646a5b632f4c4e5a2e60e427e1243047e723ec57193353a63577d6"
+    },
+    {
+      "path": "original/cleanup/target-11-inventory.json",
+      "bytes": 350105,
+      "sha256": "631e556338ad2f44e99b051598d185994016a2a8e90c2b13c4d7643fac9cc2f9"
+    },
+    {
+      "path": "original/cleanup/target-12-inventory.json",
+      "bytes": 230,
+      "sha256": "f2d49ce8729ea53dd83368e955b85939bbda034f6cbfd9f3a6e186cd72dc7310"
+    },
+    {
+      "path": "original/cleanup/target-13-inventory.json",
+      "bytes": 1641846,
+      "sha256": "c10dda59f66f12cade2d211e79f8079b740245fc4db28c0aab719b2cfb2c4bfd"
+    },
+    {
+      "path": "original/cleanup/target-14-inventory.json",
+      "bytes": 1063670,
+      "sha256": "d0f127770cc2a46d139637a97e895a8fec9de133cf91af2588230d34d414af52"
+    },
+    {
+      "path": "original/cleanup/target-15-inventory.json",
+      "bytes": 266900,
+      "sha256": "f38c157f0279d0ee403fbc383ce5b444c64895f88c9f2d826f971e2e1183a226"
+    },
+    {
+      "path": "original/cleanup/target-16-inventory.json",
+      "bytes": 386,
+      "sha256": "c862dd2f49d51304b948855ff97c331a5d78da384f3b30565fb5e587ffb1f958"
+    },
+    {
+      "path": "original/cleanup/target-17-inventory.json",
+      "bytes": 6244390,
+      "sha256": "ae0abdcd1a5aef2d609978c26ce32da3e05579f8b285833d571b4b6342a2e884"
+    },
+    {
+      "path": "original/cleanup/target-18-inventory.json",
+      "bytes": 2274602,
+      "sha256": "fd0b1a3c51c081e0891b63a95de2435f3c40bc39549d2b6c3b2465f3e0cae327"
+    },
+    {
+      "path": "original/cleanup/target-19-inventory.json",
+      "bytes": 1145328,
+      "sha256": "a572f1a34b3991218a8ca3e3c19fa266229ea0a0781d7893d6351f9cc1828af2"
+    },
+    {
+      "path": "original/cleanup/target-20-inventory.json",
+      "bytes": 579,
+      "sha256": "7caab95c3b239a3c4d17bdeda1e25056a59135962fc50f958bf380998b5e85f2"
+    },
+    {
+      "path": "original/cleanup/target-21-inventory.json",
+      "bytes": 801715,
+      "sha256": "aca6f8bed13c9a28934b83d4d0697a860f26a50bf662bfc99386565757e0b482"
+    },
+    {
+      "path": "original/cleanup/target-22-inventory.json",
+      "bytes": 385,
+      "sha256": "fa88105b871ae427229d77a5cd149623b005ad11778b1bfc163c387794cb61db"
+    },
+    {
+      "path": "original/locked-release/RuntimeProvenance.json",
+      "bytes": 2062,
+      "sha256": "f829c24da20ca914186b41b23866229f51c5527917dc3de775a33192eac01c45"
+    },
+    {
+      "path": "original/locked-release/download-receipt.json",
+      "bytes": 3171,
+      "sha256": "9e80645c86a443877846c4f8e4996557f9c01b069aa6473e1c3f47cc616c0bd5"
+    },
+    {
+      "path": "original/locked-release/node-xcframework.sha256",
+      "bytes": 93,
+      "sha256": "9ae89508107207c03f6b5dc55bdf71288c29ee14b388473266fcab6b7606b1c3"
+    },
+    {
+      "path": "original/locked-release/release-metadata.json",
+      "bytes": 1817,
+      "sha256": "09a7f77da71fb1846a34a83ab9688590949b50c8dcb831a7c0947ded3ad790b1"
+    },
+    {
+      "path": "original/locked-release/runtime-bundle.sha256",
+      "bytes": 150,
+      "sha256": "d1f1110aeb0714024338f11375c5f759a834ae7bf749b8f7d97409c212306a7a"
+    },
+    {
+      "path": "original/manifest.json",
+      "bytes": 8661,
+      "sha256": "2431bf5193e5ef8df084d165db2efcf80ccf4403c5275ca264718cc7f4a9455a"
+    },
+    {
+      "path": "original/qualification.json",
+      "bytes": 1890,
+      "sha256": "2413efcaf75a88af2f8f570adfb19300fa5370b0a62dad2568e13be3614625e2"
+    },
+    {
+      "path": "original/recovery/NodeMobile.xcframework.before-inventory.json",
+      "bytes": 1750,
+      "sha256": "2882e3d22bd32714e7a27117f965931663fc6966b70b51aa5d388b79fe194cb0"
+    },
+    {
+      "path": "original/recovery/Python.xcframework.before-inventory.json",
+      "bytes": 676995,
+      "sha256": "3f14e839501d41196c928777026ec0cca51877f120ee81e43a90a350e42bc74f"
+    },
+    {
+      "path": "original/recovery/accepted-sdk-manifest.json",
+      "bytes": 5266087,
+      "sha256": "e7aa424015d509dc7d99b3158b85f6dbcbcc72fc17b3671d247382331e87e649"
+    },
+    {
+      "path": "original/recovery/generated-docs-and-native-binding.json",
+      "bytes": 4886,
+      "sha256": "4d72b2851ef82041628d4884575e965c523527aa4ba4caba01f4bdedb39f9a65"
+    },
+    {
+      "path": "original/recovery/metadata-only-recovery.json",
+      "bytes": 5994,
+      "sha256": "68987449ba6aca50b5d7dce122c334530eeac768657ee2beb0620c01a32ad394"
+    },
+    {
+      "path": "original/recovery/node-fingerprint.log",
+      "bytes": 518,
+      "sha256": "5d9368cd4b939d652aab8afbd31375396f6312d3f7b6b30c4843c40aab2f32fe"
+    },
+    {
+      "path": "original/recovery/original-current-host-reuse-before.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "original/recovery/original-host-reuse-restored.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "original/recovery/original-host-sync-output-diagnostic.json",
+      "bytes": 30202,
+      "sha256": "7d1c4880c5651d03f3b96bc6be22b2f9a5710b96ddb6e83624a654383c32ed86"
+    },
+    {
+      "path": "original/recovery/original-native-identity.log",
+      "bytes": 65,
+      "sha256": "d48c98ae009d8e434051fd99b84ba6f19be426bb45268bfb4ac3a46ad556ae23"
+    },
+    {
+      "path": "original/recovery/original-prepare-runtime-core.log",
+      "bytes": 22068,
+      "sha256": "64fdd5d638c7943cedc7d00934d1f0928e1b475c033edf61c90992767e7f6fed"
+    },
+    {
+      "path": "original/recovery/original-producer-generated-docs.diff",
+      "bytes": 2288,
+      "sha256": "89817c04db328297e7f0e08c9d0340a41a0e1635ee212c8eb689b8681f00d9d2"
+    },
+    {
+      "path": "original/recovery/receipt.json",
+      "bytes": 5634,
+      "sha256": "6bdde9688707838558e6e2cefe15259f0754a6c28a2b8fec14af4e52d852d8f6"
+    },
+    {
+      "path": "original/recovery/sdk-fingerprint-restored.log",
+      "bytes": 66409,
+      "sha256": "2be6ed37a6708577fbdcd946f3ba1f528c902612085fdd208f1a2072a3c6f22f"
+    },
+    {
+      "path": "original/recovery/uncredited-default-producer-output/host-metadata.json",
+      "bytes": 358,
+      "sha256": "4771294ba70cfeb6afef12abeea0d3d829cb22ba7017eff3b5dbd28c5364e74c"
+    },
+    {
+      "path": "original/recovery/uncredited-default-producer-output/runtime-host.sha256",
+      "bytes": 91,
+      "sha256": "a870cc80a6705b1e4a61442b833b0d1696f782d8e901edcbc281b464ab028a4c"
+    },
+    {
+      "path": "original/recovery/unexpected-docs/docs/miniapp-sdk/extension-reachability.json",
+      "bytes": 213458,
+      "sha256": "2e1527a630c162c242484036ddc36016dd2dcdf032fbfe3ee361a5d5d57ffca5"
+    },
+    {
+      "path": "original/recovery/unexpected-docs/docs/miniapp-sdk/extension-reachability.md",
+      "bytes": 37881,
+      "sha256": "a4d7897a8e196d15012220d7fdaa7350071680eab3f5d072dd9ba3781ca49cf4"
+    },
+    {
+      "path": "original/recovery/unexpected-docs/docs/miniapp-sdk/source-inventory.json",
+      "bytes": 569738,
+      "sha256": "b3bf7a0390e9a9a74f030ca664e503ad3bd93116b923dda44aca12b3ae748168"
+    },
+    {
+      "path": "original/recovery/unexpected-sdk-manifest.json",
+      "bytes": 5266087,
+      "sha256": "63ecf96e8e84ac2994b135eb673167d234ec66f534ecbdf4e724ac98c88820bb"
+    },
+    {
+      "path": "root-independent-review.json",
+      "bytes": 595,
+      "sha256": "5e33fa1d53109fd3c6b16de29acebaa0b501aff6b6716ccf79c696149f31ba82"
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-11-27T14:17:18.594310+00:00",
+  "integrationSource": "9019ddf57fc7fd712e2e8587a53cdfef1fcb4612",
+  "outcome": "Original full CI discovery on 9019ddf5: 506 discovered, 504 PASS, two unchanged original skips, zero failures/errors. Actual 2026-11-27 14:06:43\u201314:07:09 UTC. Original command/environment/controller and clean source/sparse restoration retained. The original skips are unstaged Expo artifacts and explicit real PyPI/backend opt-in. No native test was executed by this controller.",
+  "archive": {
+    "path": "original-evidence.tar.gz",
+    "bytes": 854389,
+    "sha256": "38c5c3c30f3263e0123d30f7f10c5065396d65fc6d0463fae760ea2e51f6eab1",
+    "memberCount": 14,
+    "rawBytes": 5212331,
+    "encoding": "lossless tar.gz of complete retained technical original files; round-trip verified"
+  },
+  "excludedTransportWrappers": [
+    "original-packet.tar.gz",
+    "transfer-receipt.json"
+  ],
+  "publicCredentialPatternPreflight": "PASS",
+  "members": [
+    {
+      "path": "original/receipt.json",
+      "bytes": 2333,
+      "sha256": "4e66e37ab06de53e4a8ac10351f991ebfacb91a010ee71143bef34c8fb9d66c2"
+    },
+    {
+      "path": "original/source-inputs.json",
+      "bytes": 5074174,
+      "sha256": "7555f74ffdb38976fef7dff1874a61dd086b7be2f4fec896562d206fa49654e6"
+    },
+    {
+      "path": "original/start.json",
+      "bytes": 856,
+      "sha256": "d181c811da5195d75795e21365b6911d804c4c20ddd98b77864ec41a67e62497"
+    },
+    {
+      "path": "original/stderr.log",
+      "bytes": 100556,
+      "sha256": "df707aed9400b51fe017606cd8a8535d822be4d103afd0a0393a8475f3bf2082"
+    },
+    {
+      "path": "original/stderr.log.gz",
+      "bytes": 16278,
+      "sha256": "1c3a10362fd998ad8f00b168a52127e33095c59c865eb0e8aadf9c93e5da670f"
+    },
+    {
+      "path": "original/stdout.log",
+      "bytes": 4882,
+      "sha256": "e4f85e0ea7f37a48568ec95b699eea642f45e4510001148fde80fd93ee0de8fe"
+    },
+    {
+      "path": "original/stdout.log.gz",
+      "bytes": 913,
+      "sha256": "8b95f815a79b7833c0c04c217141751996290c4ed529c4e8fa327d6513dc99fc"
+    },
+    {
+      "path": "controller/admission.json",
+      "bytes": 574,
+      "sha256": "d6ece86f03f5d52e94f1be51f0a8db904af2afa6c212fe8f2781b23fb25fe14e"
+    },
+    {
+      "path": "controller/controller.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "controller/controller.stdout",
+      "bytes": 1212,
+      "sha256": "31cc466aeec2210cfdcaefa458af6b9d1f56ecd11293bee4156929f3d724497d"
+    },
+    {
+      "path": "controller/lease.json",
+      "bytes": 184,
+      "sha256": "2a9e13a3c5862539bb7b85db3fd215105ecff1d87dfdf6d5d66ce63e72bbadc0"
+    },
+    {
+      "path": "controller/receipt.json",
+      "bytes": 2332,
+      "sha256": "11e8f811bbb5a0125578c5092a2a22ec58ae93e14b6223fd5d7ca20c98532763"
+    },
+    {
+      "path": "controller/sparse-checkout.before",
+      "bytes": 2220,
+      "sha256": "fd9faf02165766a7ff4055132a8ecb65ac0038dc9ab5b163fd5e211e16eaf732"
+    },
+    {
+      "path": "original-controller.py",
+      "bytes": 5817,
+      "sha256": "2664765f1ca1593087760259a77389ba4c54152b5667f6f77edcbe1bae65ceae"
+    }
+  ]
+}
