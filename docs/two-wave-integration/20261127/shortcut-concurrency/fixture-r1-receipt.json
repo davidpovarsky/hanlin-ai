@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "sourceHead": "866d2d3c60525e32eae27564869e6dba024e625c",
+  "argv": [
+    "/mnt/development/projects/toolchains/node-v24.5.0-linux-arm64/bin/node",
+    "--experimental-strip-types",
+    "--test",
+    "Scripts/ProductSplit/Tests/test_shortcut_concurrency_fixture.mjs"
+  ],
+  "nodeVersion": "v24.5.0",
+  "startedAtUTC": "2026-11-27T04:51:26.705514+00:00",
+  "elapsedSeconds": 0.6092018121853471,
+  "exitCode": 0,
+  "native": "NOT_RUN",
+  "OS": "NOT_RUN",
+  "scope": "Authored fixture unit controls with mocked facade replies; no production or OS receipt is seeded. Original authoring CLI against the actual shipping SDK remains required.",
+  "files": {
+    "Fixtures/HostActionSurfaces/expo/proof.ts": "8500ec2ddd4d6b102f8bf40b2039eafe24f66f4e816c44a6b13480374b4db486",
+    "Fixtures/HostActionSurfaces/nativescript/proof.ts": "041c2fb9bf1305cbc894ad53ef519312f5a4f50c84a234c47710e6d2ebb526c2",
+    "Fixtures/HostActionSurfaces/expo/App.tsx": "7d09e80c5f24291e6375d76def7b7d0208de2607db62a04225cc08f89881dfae",
+    "Fixtures/HostActionSurfaces/nativescript/index.ts": "6d904389d7665c9e9e0fe055afcfc401ff7796dd81dfed74d5202da3d099d4c1",
+    "Scripts/ProductSplit/Tests/test_shortcut_concurrency_fixture.mjs": "286735cf749d7055dfb94eabed98869e3e02e0b565c2563cb4d3ae0a530e1c67"
+  },
+  "logs": {
+    "stdout": {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shortcut-concurrency-source-866d2d3c/fixture-r1.stdout",
+      "sha256": "ba11b848b18020be7198a95ab06e51c2800963b11a3318f7c80617e330f116fc"
+    },
+    "stderr": {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shortcut-concurrency-source-866d2d3c/fixture-r1.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  }
+}

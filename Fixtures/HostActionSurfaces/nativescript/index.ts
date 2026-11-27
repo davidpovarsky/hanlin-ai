@@ -14,10 +14,14 @@ registerWindowFactory(({id, environment, services: host, storage}) => {
     appID, executeRuntime: (kind, source, options) => host.executeRuntime(kind, source, options),
     readText: () => File.exists(statePath) ? File.fromPath(statePath).readText() : Promise.resolve(null),
     writeText: text => File.fromPath(statePath).writeText(text),
+    writeInvocation: (name, text) => {
+      if (!/^surface-invocation-[a-z0-9-]+\.json$/.test(name)) throw new Error('Invalid observation filename.');
+      return File.fromPath(storage.state + '/' + name).writeText(text);
+    },
     acceptInputChallenge: true,
     reportProgress: async progress => { await host.miniapps.reportShortcutProgress(progress); },
-    samplePresentation: () => ({
-      windowID: id, statePath,
+    samplePresentation: (name = 'surface-proof.json') => ({
+      windowID: id, statePath: storage.state + '/' + name,
       executionMode: environment.HANLIN_EXECUTION_MODE ?? 'foreground',
       attached: observedRoot?.ios?.window != null
     })
@@ -38,6 +42,7 @@ function createPage(): Page {
   const status = label('Loading actual private state…', 'surface-status');
   label('Installed Package / Generation: read the current published Hanlin catalog; not invented by this JavaScript app.');
   label('State file: ' + statePath);
+  label('Owner window: ' + id);
   const message = label('Ready. Prepare a fresh challenge before a real system-surface attempt.', 'surface-message');
   const activity = label('Live Activity: not started', 'surface-activity-status');
   const resultView = new TextView();

@@ -1,0 +1,35 @@
+{
+  "schema": 1,
+  "sourceHead": "866d2d3c60525e32eae27564869e6dba024e625c",
+  "argv": [
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "Scripts/ProductSplit/Tests",
+    "-p",
+    "test_shortcut_concurrency_observer.py",
+    "-v"
+  ],
+  "startedAtUTC": "2026-11-27T04:48:40.957354+00:00",
+  "elapsedSeconds": 0.21924391202628613,
+  "exitCode": 0,
+  "native": "NOT_RUN",
+  "OS": "NOT_RUN",
+  "files": {
+    "Scripts/ProductSplit/observe_shortcut_concurrency.py": "95d5788a0f0cb69862102bd886055f516f9b43090f38828562cc0fd63c57a872",
+    "Scripts/ProductSplit/Tests/test_shortcut_concurrency_observer.py": "3fed82744c116e2985b022d377714b1c1e0c124f75186709ef3877c0c18d282f"
+  },
+  "logs": {
+    "stdout": {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shortcut-concurrency-source-866d2d3c/observer-r1.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stderr": {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shortcut-concurrency-source-866d2d3c/observer-r1.stderr",
+      "sha256": "71320bba8036f470c06890a5f97449b3c803f7de5f747f93f07bd86b60af04fd"
+    }
+  }
+}

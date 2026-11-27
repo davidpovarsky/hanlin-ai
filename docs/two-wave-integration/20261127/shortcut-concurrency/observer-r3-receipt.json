@@ -1,0 +1,41 @@
+{
+  "schema": 1,
+  "sourceHead": "866d2d3c60525e32eae27564869e6dba024e625c",
+  "argv": [
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "Scripts/ProductSplit/Tests",
+    "-p",
+    "test_shortcut_concurrency_observer.py",
+    "-v"
+  ],
+  "startedAtUTC": "2026-11-27T05:07:34.881818+00:00",
+  "elapsedSeconds": 0.24763763509690762,
+  "exitCode": 0,
+  "native": "NOT_RUN",
+  "OS": "NOT_RUN",
+  "reason": "Root review: bind initial actual owner window even for root State path; reject cancelled handler successful completion both at terminal observation and after owner callback; Stop inside actual hold, conservative late-hold wait; original15 controls plus2 targeted methods.",
+  "testWriteRecovery": {
+    "priorSHA256": "60a1fc0a1ecb1d2775abf204af049795ea83da3179eb32eccb87fb86f2599fe7",
+    "alreadyMatched": false
+  },
+  "files": {
+    "Scripts/ProductSplit/observe_shortcut_concurrency.py": "d32fc2b40cd6649cf01fe1a774b29579e8f898dddd8bda4da1fb166a537bf183",
+    "Scripts/ProductSplit/Tests/test_shortcut_concurrency_observer.py": "69ff828b1f87da80bb406d74501ded01e17572f3c9f96039d6fd2f257565c4d2",
+    "Fixtures/HostActionSurfaces/nativescript/index.ts": "a4f8274693fcd9b9604a37667f2d48449ef1ce9541bfbeca8ef06d3057b1c0ee"
+  },
+  "logs": {
+    "stdout": {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shortcut-concurrency-source-866d2d3c/observer-r3.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stderr": {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shortcut-concurrency-source-866d2d3c/observer-r3.stderr",
+      "sha256": "7659f0cc83c7931d9b05bb4155b690364d2a46d2c4d14d65dbcbbda69f3da431"
+    }
+  }
+}

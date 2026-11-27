@@ -8,6 +8,14 @@ const filename = 'surface-proof.json';
 const proof = createSurfaceProof({
   appID, executeRuntime: (kind, source, options) => hostServices.executeRuntime(kind, source, options),
   reportProgress: async progress => { await hostServices.miniapps.reportShortcutProgress(progress); },
+  writeInvocation: async (name, text) => {
+    if (!/^surface-invocation-[a-z0-9-]+\.json$/.test(name)) throw new Error('Invalid observation filename.');
+    const ascii = text.replace(/[\u007f-\uffff]/g,
+      value => '\\u' + value.charCodeAt(0).toString(16).padStart(4, '0'));
+    const receipt = await hostServices.writeFile(name,
+      Uint8Array.from(ascii, value => value.charCodeAt(0)), 'state');
+    if (!receipt.ok) throw new Error('The actual invocation journal write failed.');
+  },
   readText: async () => {
     const bytes = await hostServices.readFile(filename, 'state');
     return bytes === null ? null : Array.from(bytes, value => String.fromCharCode(value)).join('');

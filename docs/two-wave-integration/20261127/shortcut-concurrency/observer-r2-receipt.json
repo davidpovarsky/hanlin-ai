@@ -1,0 +1,36 @@
+{
+  "schema": 1,
+  "sourceHead": "866d2d3c60525e32eae27564869e6dba024e625c",
+  "argv": [
+    "python3",
+    "-B",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "Scripts/ProductSplit/Tests",
+    "-p",
+    "test_shortcut_concurrency_observer.py",
+    "-v"
+  ],
+  "startedAtUTC": "2026-11-27T05:00:57.955143+00:00",
+  "elapsedSeconds": 0.6476087141782045,
+  "exitCode": 0,
+  "native": "NOT_RUN",
+  "OS": "NOT_RUN",
+  "reason": "Exact final-three-row cardinality, immutable private handler ownership, owner callback chronology and immediate preterminal MCM/catalog recheck. Original14 controls preserved plus one new negative-control method.",
+  "files": {
+    "Scripts/ProductSplit/observe_shortcut_concurrency.py": "3a68492d1861c517d96ad7a35459d87ba5522804d395c83d095e160271adec96",
+    "Scripts/ProductSplit/Tests/test_shortcut_concurrency_observer.py": "925f8297b9193a8c8d26f2fd8e69a34f0c1f099c3336c51c4938bfd2c6a653c5"
+  },
+  "logs": {
+    "stdout": {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shortcut-concurrency-source-866d2d3c/observer-r2.stdout",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "stderr": {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shortcut-concurrency-source-866d2d3c/observer-r2.stderr",
+      "sha256": "fcf5a94ee326c30303a240677be31f582400876fb3c03c10930874fd6c44fe15"
+    }
+  }
+}

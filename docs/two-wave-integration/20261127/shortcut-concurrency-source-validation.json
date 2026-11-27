@@ -1,0 +1,356 @@
+{
+  "schema": 1,
+  "sourceBase": "866d2d3c60525e32eae27564869e6dba024e625c",
+  "status": "CANDIDATE_SOURCE_AND_PORTABLE_CONTROLS_PASSED_NATIVE_OS_NOT_RUN",
+  "recordedAtUTC": "2026-11-27T05:10:45.068735+00:00",
+  "files": {
+    "Fixtures/HostActionSurfaces/expo/App.tsx": "7d09e80c5f24291e6375d76def7b7d0208de2607db62a04225cc08f89881dfae",
+    "Fixtures/HostActionSurfaces/expo/proof.ts": "8500ec2ddd4d6b102f8bf40b2039eafe24f66f4e816c44a6b13480374b4db486",
+    "Fixtures/HostActionSurfaces/nativescript/index.ts": "a4f8274693fcd9b9604a37667f2d48449ef1ce9541bfbeca8ef06d3057b1c0ee",
+    "Fixtures/HostActionSurfaces/nativescript/proof.ts": "041c2fb9bf1305cbc894ad53ef519312f5a4f50c84a234c47710e6d2ebb526c2",
+    "Scripts/ProductSplit/observe_shortcut_concurrency.py": "d32fc2b40cd6649cf01fe1a774b29579e8f898dddd8bda4da1fb166a537bf183",
+    "Scripts/ProductSplit/Tests/test_shortcut_concurrency_observer.py": "69ff828b1f87da80bb406d74501ded01e17572f3c9f96039d6fd2f257565c4d2",
+    "Scripts/ProductSplit/Tests/test_shortcut_concurrency_fixture.mjs": "286735cf749d7055dfb94eabed98869e3e02e0b565c2563cb4d3ae0a530e1c67"
+  },
+  "scope": "Existing HostActionSurfaces optional authored observation route plus an isolated read-only observer. Two real NS-owner/three-background-NS Shortcuts UI cases are handed to the existing shared companion owner.",
+  "observerControls": {
+    "receipt": {
+      "schema": 1,
+      "sourceHead": "866d2d3c60525e32eae27564869e6dba024e625c",
+      "argv": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "Scripts/ProductSplit/Tests",
+        "-p",
+        "test_shortcut_concurrency_observer.py",
+        "-v"
+      ],
+      "startedAtUTC": "2026-11-27T05:07:34.881818+00:00",
+      "elapsedSeconds": 0.24763763509690762,
+      "exitCode": 0,
+      "native": "NOT_RUN",
+      "OS": "NOT_RUN",
+      "reason": "Root review: bind initial actual owner window even for root State path; reject cancelled handler successful completion both at terminal observation and after owner callback; Stop inside actual hold, conservative late-hold wait; original15 controls plus2 targeted methods.",
+      "testWriteRecovery": {
+        "priorSHA256": "60a1fc0a1ecb1d2775abf204af049795ea83da3179eb32eccb87fb86f2599fe7",
+        "alreadyMatched": false
+      },
+      "files": {
+        "Scripts/ProductSplit/observe_shortcut_concurrency.py": "d32fc2b40cd6649cf01fe1a774b29579e8f898dddd8bda4da1fb166a537bf183",
+        "Scripts/ProductSplit/Tests/test_shortcut_concurrency_observer.py": "69ff828b1f87da80bb406d74501ded01e17572f3c9f96039d6fd2f257565c4d2",
+        "Fixtures/HostActionSurfaces/nativescript/index.ts": "a4f8274693fcd9b9604a37667f2d48449ef1ce9541bfbeca8ef06d3057b1c0ee"
+      },
+      "logs": {
+        "stdout": {
+          "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shortcut-concurrency-source-866d2d3c/observer-r3.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "stderr": {
+          "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shortcut-concurrency-source-866d2d3c/observer-r3.stderr",
+          "sha256": "7659f0cc83c7931d9b05bb4155b690364d2a46d2c4d14d65dbcbbda69f3da431"
+        }
+      }
+    },
+    "tests": 17,
+    "passed": 17,
+    "skipped": 0
+  },
+  "fixtureControls": {
+    "receipt": {
+      "schema": 1,
+      "sourceHead": "866d2d3c60525e32eae27564869e6dba024e625c",
+      "argv": [
+        "/mnt/development/projects/toolchains/node-v24.5.0-linux-arm64/bin/node",
+        "--experimental-strip-types",
+        "--test",
+        "Scripts/ProductSplit/Tests/test_shortcut_concurrency_fixture.mjs"
+      ],
+      "nodeVersion": "v24.5.0",
+      "startedAtUTC": "2026-11-27T04:51:26.705514+00:00",
+      "elapsedSeconds": 0.6092018121853471,
+      "exitCode": 0,
+      "native": "NOT_RUN",
+      "OS": "NOT_RUN",
+      "scope": "Authored fixture unit controls with mocked facade replies; no production or OS receipt is seeded. Original authoring CLI against the actual shipping SDK remains required.",
+      "files": {
+        "Fixtures/HostActionSurfaces/expo/proof.ts": "8500ec2ddd4d6b102f8bf40b2039eafe24f66f4e816c44a6b13480374b4db486",
+        "Fixtures/HostActionSurfaces/nativescript/proof.ts": "041c2fb9bf1305cbc894ad53ef519312f5a4f50c84a234c47710e6d2ebb526c2",
+        "Fixtures/HostActionSurfaces/expo/App.tsx": "7d09e80c5f24291e6375d76def7b7d0208de2607db62a04225cc08f89881dfae",
+        "Fixtures/HostActionSurfaces/nativescript/index.ts": "6d904389d7665c9e9e0fe055afcfc401ff7796dd81dfed74d5202da3d099d4c1",
+        "Scripts/ProductSplit/Tests/test_shortcut_concurrency_fixture.mjs": "286735cf749d7055dfb94eabed98869e3e02e0b565c2563cb4d3ae0a530e1c67"
+      },
+      "logs": {
+        "stdout": {
+          "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shortcut-concurrency-source-866d2d3c/fixture-r1.stdout",
+          "sha256": "ba11b848b18020be7198a95ab06e51c2800963b11a3318f7c80617e330f116fc"
+        },
+        "stderr": {
+          "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shortcut-concurrency-source-866d2d3c/fixture-r1.stderr",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      }
+    },
+    "tests": 12,
+    "passed": 12,
+    "skipped": 0,
+    "nativeRuntimeCalls": "Mocked unit facade responses only; never an OS/native acceptance claim.",
+    "currentClosureQualification": {
+      "actualImportedModuleAndTestHashesUnchanged": true,
+      "nativeScriptIndexDeltaAfterRun": "One visible Owner window label from the existing registerWindowFactory id; the Node unit module does not import index.ts.",
+      "previousIndexSHA256": "6d904389d7665c9e9e0fe055afcfc401ff7796dd81dfed74d5202da3d099d4c1",
+      "currentIndexSHA256": "a4f8274693fcd9b9604a37667f2d48449ef1ce9541bfbeca8ef06d3057b1c0ee",
+      "originalNormalRunBodiesUnchanged": true
+    }
+  },
+  "sourceReview": {
+    "fixtureReviewer": "/root/w2_source_resume",
+    "reviewedFourFileCheckpoint": {
+      "Fixtures/HostActionSurfaces/expo/App.tsx": "7d09e80c5f24291e6375d76def7b7d0208de2607db62a04225cc08f89881dfae",
+      "Fixtures/HostActionSurfaces/expo/proof.ts": "8500ec2ddd4d6b102f8bf40b2039eafe24f66f4e816c44a6b13480374b4db486",
+      "Fixtures/HostActionSurfaces/nativescript/index.ts": "6d904389d7665c9e9e0fe055afcfc401ff7796dd81dfed74d5202da3d099d4c1",
+      "Fixtures/HostActionSurfaces/nativescript/proof.ts": "041c2fb9bf1305cbc894ad53ef519312f5a4f50c84a234c47710e6d2ebb526c2"
+    },
+    "assessment": "Original normal run body byte-identical in BOTH proof.ts files; only explicit miniAppShortcutConcurrency bypasses the fixture serial tail; bounded options, fresh per-handler journals, original five runtime calls and window-private storage preserved. Native cancellation must come from the real native receipt.",
+    "rootFindingsAddressed": [
+      "Exact final-three-row cardinality and immutable terminal ownership",
+      "Initial visible native owner window identity even for root State paths",
+      "Reject successful cancelled handler both before actions completion and after owner callback"
+    ],
+    "finalRootReview": "PENDING; final reviewer may seal separately",
+    "finalOwnerLabelAndUIReview": {
+      "reviewer": "/root/w2_source_resume",
+      "decision": "APPROVED_ADDITIVE_INITIAL_OWNER_WINDOW_BINDING",
+      "nativeScriptIndexSHA256": "a4f8274693fcd9b9604a37667f2d48449ef1ce9541bfbeca8ef06d3057b1c0ee",
+      "UIInsertionSHA256": "87d6040b2e2646d72e906306cbe584de3122aeea4628cdf6ada39535561243dc",
+      "resultingSharedUISHA256": "c757994e7644db5bcf3aa480e2d126a794634e030a6626e6489cf2ea684ebde0",
+      "sharedRunnerSHA256": "efb9738edeafd21868ce232343a2db4634e370d47d267d160c86f927847a8836",
+      "preservation": "Actual factory id label is the sole new fixture delta. All15 current shared UI method/source bytes reconstruct identically after removing the additive two-case block; no tests or Swift/native execution by reviewer."
+    }
+  },
+  "sdkInputImpact": {
+    "schema": 1,
+    "candidateBase": "866d2d3c60525e32eae27564869e6dba024e625c",
+    "historicalSDKManifest": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/host-2a0b19b7-pass-and-native-seal/sdk/miniapp-sdk.json",
+    "historicalSDKManifestSHA256": "0433011cae7beb42504e4bb29b18bb722e21d9a31cc5aae7324eba67b70afcc7",
+    "historicalPathCount": 392,
+    "inputEnumeratorGitBlob": "5376d912d8d39b38481d6f4eada7e3fe492c6d77",
+    "enumeratorUnchangedFromRecorded2a0b19b7": true,
+    "candidatePaths": [
+      "Fixtures/HostActionSurfaces/expo/App.tsx",
+      "Fixtures/HostActionSurfaces/expo/proof.ts",
+      "Fixtures/HostActionSurfaces/nativescript/index.ts",
+      "Fixtures/HostActionSurfaces/nativescript/proof.ts",
+      "Scripts/ProductSplit/observe_shortcut_concurrency.py",
+      "Scripts/ProductSplit/Tests/test_shortcut_concurrency_observer.py",
+      "Scripts/ProductSplit/Tests/test_shortcut_concurrency_fixture.mjs",
+      "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+      "Scripts/ProductSplit/run_paired_acceptance.py",
+      "docs/two-wave-integration/20261127/shortcut-concurrency-source-validation.json"
+    ],
+    "historicalRecordedPathIntersection": [],
+    "currentExplicitOrRecursiveRootEligibility": [],
+    "boundary": "Static input-path impact only. No fresh866 SDK fingerprint or Host/native result is claimed; Mac owner will qualify actual current closure."
+  },
+  "handoff": {
+    "UI": {
+      "path": "concurrency-ui-methods.swift",
+      "sha256": "87d6040b2e2646d72e906306cbe584de3122aeea4628cdf6ada39535561243dc"
+    },
+    "runnerPatch": {
+      "path": "concurrency-runner-addition.patch",
+      "sha256": "a07b8b281f3f5c2bea181bd5572a754e3eec8df4c949083010742d0a49117815"
+    },
+    "runnerCandidate": {
+      "path": "concurrency-runner-candidate.py",
+      "sha256": "efb9738edeafd21868ce232343a2db4634e370d47d267d160c86f927847a8836"
+    },
+    "contract": {
+      "schema": 1,
+      "baseWidgetSource": "91f7121a572e3d8543823d279b65cde76f1a81f9",
+      "scope": "miniapp_shortcut_concurrency_os",
+      "selectors": [
+        "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptOwnerSurvivesThreeOverlappingBackgroundShortcutsInReverseOrder",
+        "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptOwnerSurvivesCancellingOneOfThreeOverlappingBackgroundShortcuts"
+      ],
+      "expectedTests": 2,
+      "deviceFamily": "iPad",
+      "UI": {
+        "insertInside": "HanlinEntrypointSystemSurfaceUITests",
+        "snippet": "concurrency-ui-methods.swift",
+        "sha256": "87d6040b2e2646d72e906306cbe584de3122aeea4628cdf6ada39535561243dc",
+        "existingMethods": "Preserve all current methods, selectors, asserts, helper bodies and scopes byte-for-byte."
+      },
+      "observer": {
+        "script": "Scripts/ProductSplit/observe_shortcut_concurrency.py",
+        "runnerBundle": "Same actual AI_HLYUITests xctrunner selected by start_shortcut_observer",
+        "argv": [
+          "--device",
+          "<existing-owned-simulator>",
+          "--runner-bundle-id",
+          "<actual-xctrunner>",
+          "--output",
+          "<EVIDENCE>/shortcut-concurrency-observer",
+          "--duration",
+          "2100"
+        ],
+        "exchange": "Documents/HanlinShortcutConcurrencyObservation/<runID>",
+        "responses": [
+          "identity.json",
+          "overlap.json",
+          "actions-complete.json",
+          "completion.json"
+        ],
+        "report": "<EVIDENCE>/shortcut-concurrency-observer/observer.json",
+        "completion": "Use original allSelectedCasesObserved check: exit0, exactly2 runs, each completionWritten true. Any failed/blocked/missing case fails the native scope."
+      },
+      "staging": "Extend existing shortcut_surface_fixtures(documents) branch to this scope. It must validate and build both actual HostActionSurfaces projects using the original CLI and the exact SDK extracted from the current shipping RuntimeHostResources.zip, retaining source/archive/report hashes, then stage only input archives in standalone MiniApps Documents. No direct command, receipt, catalog, result or private-state setup.",
+      "runnerChanges": [
+        "Add the two selectors as one new TEST_PLANS assignment; do not alter any original plan or count.",
+        "Add this scope to existing iPad choice and attachment export sets.",
+        "Add this scope to the existing surface input-staging, observer-start and final observer-completion guard sets.",
+        "In start_shortcut_observer select the new script/output only for this scope; retain existing script/widget arguments for original scopes.",
+        "Record the chosen observer outputDirectory in existing state and have finish_shortcut_observer read that outputDirectory/observer.json, preserving ownership/stop behavior.",
+        "Retain original source/SDK/build/install/OS namespace checks, nonparallel native test flags, exact selector reconciliation and zero-skip success."
+      ],
+      "scopeText": "Two additive genuine Shortcuts cases: one visible NS owner and three background NS actions; actual simultaneous handlers/leases and isolated windows; reverse completion, or selected system Stop with native cancellation, followed by the original owner's real callback.",
+      "acceptanceBoundary": "Only observed NS-owner/NS-background iPad Simulator pilot. Does not discharge Expo↔Expo/Expo↔NS, iPhone, multi-scene restoration, duplicate URLs, foreground-vs-background/cold-warm matrix, device locking or actual timeout gates. Original NS5/paired54/extras26 and original four Shortcuts cases remain separate.",
+      "native": "NOT_RUN",
+      "OS": "NOT_RUN",
+      "ownerIdentity": "The visible initial Owner window label uses the actual registerWindowFactory id; terminal callback samples must retain that same id even for shared root State paths."
+    },
+    "sharedSourceOwner": "/root/w2_source_resume"
+  },
+  "sourceHistory": {
+    "directory": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/shortcut-concurrency-source-866d2d3c/source-history",
+    "files": [
+      {
+        "name": "observe_shortcut_concurrency.py.bak.20261127-044803-120342-43b60a6efd80",
+        "sha256": "43b60a6efd80c6563e4e044a6927b1830e6633c73322e76ffea77aa008990736"
+      },
+      {
+        "name": "observe_shortcut_concurrency.py.bak.20261127-050032-738605-95d5788a0f0c",
+        "sha256": "95d5788a0f0cb69862102bd886055f516f9b43090f38828562cc0fd63c57a872"
+      },
+      {
+        "name": "observe_shortcut_concurrency.py.bak.20261127-050657-324288-91a5169ce304",
+        "sha256": "91a5169ce3045d458406449ae53966e54343016781d846fcdd5e52f6358e5249"
+      },
+      {
+        "name": "test_shortcut_concurrency_observer.py.bak.20261127-050036-793227-3fed82744c11",
+        "sha256": "3fed82744c116e2985b022d377714b1c1e0c124f75186709ef3877c0c18d282f"
+      }
+    ]
+  },
+  "unchangedOriginalGates": [
+    "Original5 native NativeScript concurrency methods",
+    "Original paired54 selectors",
+    "Original extra26 selectors",
+    "Original4 real Shortcuts mode/result selectors"
+  ],
+  "pending": [
+    "Original shipping-SDK authoring validate/build of both exact fixture inputs",
+    "Actual Swift compilation and original native app builds",
+    "Two actual iPad Simulator OS cases including gallery controls/public URLs/real Stop",
+    "Remaining full SCRIPTABLE06 engine/device/window/lifecycle matrix"
+  ],
+  "native": "NOT_RUN",
+  "OS": "NOT_RUN",
+  "diffCheck": {
+    "command": "git diff --check",
+    "exitCode": 0
+  },
+  "retainedOriginalLogsAndReceipts": [
+    {
+      "path": "docs/two-wave-integration/20261127/shortcut-concurrency/observer-r1-receipt.json",
+      "bytes": 1233,
+      "sha256": "7112c8d4f4dea9e2d2c5a2d9a48ba60b2fc1f820afc792fba69aa45c51ccb296"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/shortcut-concurrency/observer-r1.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/shortcut-concurrency/observer-r1.stderr",
+      "bytes": 2935,
+      "sha256": "71320bba8036f470c06890a5f97449b3c803f7de5f747f93f07bd86b60af04fd"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/shortcut-concurrency/observer-r2-receipt.json",
+      "bytes": 1460,
+      "sha256": "8e46fb416e88d444e30b71c2be135e64a55edcd2d5cacf88bb524744d736abce"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/shortcut-concurrency/observer-r2.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/shortcut-concurrency/observer-r2.stderr",
+      "bytes": 3165,
+      "sha256": "fcf5a94ee326c30303a240677be31f582400876fb3c03c10930874fd6c44fe15"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/shortcut-concurrency/observer-r3-receipt.json",
+      "bytes": 1790,
+      "sha256": "2c117673fc3305ef795f153ae512147fa0e5f55469d6b08077c6a8f3f22fa898"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/shortcut-concurrency/observer-r3.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/shortcut-concurrency/observer-r3.stderr",
+      "bytes": 3561,
+      "sha256": "7659f0cc83c7931d9b05bb4155b690364d2a46d2c4d14d65dbcbbda69f3da431"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/shortcut-concurrency/fixture-r1-receipt.json",
+      "bytes": 1820,
+      "sha256": "08a2ef4cdba0b85395bd293b8246075e8e6f370bfacae9c04e7dd73ccf14407a"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/shortcut-concurrency/fixture-r1.stdout",
+      "bytes": 5557,
+      "sha256": "ba11b848b18020be7198a95ab06e51c2800963b11a3318f7c80617e330f116fc"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/shortcut-concurrency/fixture-r1.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "currentSharedReaderQualification": {
+    "priorSHA256": "3273ebb10864c8e7703db3a70d4036e07fa587c1f5e8826fce47e03eaf4afc71",
+    "currentSHA256": "72530c9c8f70b6eb35572e2d4180ac2d0161d1a641c08d1e49505554d021b65c",
+    "originalReferencedFunctionClosureASTEqual": {
+      "ObservationError": true,
+      "_epoch_milliseconds": true,
+      "_members": true,
+      "_validate_five_receipts": true,
+      "action_identity": true,
+      "command": true,
+      "decode_value": true,
+      "digest": true,
+      "equal_typed_json": true,
+      "installed_catalog": true,
+      "os_container": true,
+      "parse_json": true,
+      "prepared_proof": true,
+      "product_roots": true,
+      "proof_documents": true,
+      "queue_documents": true,
+      "read_document": true,
+      "require": true,
+      "snapshot_document": true,
+      "system_app_observation": true,
+      "validate_request": true
+    },
+    "scope": "The original helper definitions actually referenced by the new observer are unchanged across the independently reviewed Widget addition; no repeated reader test run."
+  }
+}
