@@ -130,7 +130,53 @@ struct HanlinDualWidgetEnginesTests {
     #if os(macOS)
     @Test func originalScriptWidgetHTTPUsesBoundedRealTransport() throws {
         let root = try temporary()
-        defer { try? FileManager.default.removeItem(at: root) }
+        let stagesFile = root.appending(path: "native-stages.jsonl")
+        let stagesLock = NSLock()
+        var reachedFinalAssertion = false
+        func recordStage(_ label: String, _ phase: String, _ details: [String: Any] = [:]) {
+            stagesLock.lock()
+            defer { stagesLock.unlock() }
+            do {
+                var event = details
+                event["label"] = label
+                event["phase"] = phase
+                event["at"] = Date().timeIntervalSince1970
+                event["pid"] = ProcessInfo.processInfo.processIdentifier
+                var bytes = try JSONSerialization.data(withJSONObject: event, options: [.sortedKeys])
+                bytes.append(0x0a)
+                if !FileManager.default.fileExists(atPath: stagesFile.path) {
+                    try Data().write(to: stagesFile)
+                }
+                let output = try FileHandle(forWritingTo: stagesFile)
+                defer { try? output.close() }
+                try output.seekToEnd()
+                try output.write(contentsOf: bytes)
+            } catch {
+                print("Original HTTP diagnostic could not record \(label)/\(phase): \(error)")
+            }
+        }
+        defer {
+            recordStage("test", reachedFinalAssertion ? "assertions-reached-end" : "exited-before-end")
+            if let directory = ProcessInfo.processInfo.environment["HANLIN_WIDGET_EVIDENCE_DIR"] {
+                let retained = URL(filePath: directory).appending(path: "original-http-" + root.lastPathComponent)
+                do {
+                    try FileManager.default.createDirectory(at: retained, withIntermediateDirectories: true)
+                    for name in ["native-stages.jsonl", "wire.jsonl", "server.stdout", "server.stderr", "port"] {
+                        let source = root.appending(path: name)
+                        if FileManager.default.fileExists(atPath: source.path) {
+                            try FileManager.default.copyItem(at: source, to: retained.appending(path: name))
+                        }
+                    }
+                    print("Original HTTP native evidence retained at \(retained.path)")
+                    try FileManager.default.removeItem(at: root)
+                } catch {
+                    print("Original HTTP evidence copy failed; source retained at \(root.path): \(error)")
+                }
+            } else {
+                print("Original HTTP native evidence retained at \(root.path)")
+            }
+        }
+        recordStage("test", "started", ["executionTimeout": HanlinOriginalScriptWidgetSession.executionTimeout])
         let portFile = root.appending(path: "port")
         let wireFile = root.appending(path: "wire.jsonl")
         let authority = "transport.hanlin.invalid:80"
@@ -189,15 +235,28 @@ struct HanlinDualWidgetEnginesTests {
             pathlib.Path(sys.argv[1]).write_text(str(server.server_port))
             server.serve_forever()
             """#, portFile.path, wireFile.path, authority]
-        server.standardOutput = FileHandle.nullDevice
-        server.standardError = FileHandle.nullDevice
+        let stdoutFile = root.appending(path: "server.stdout")
+        let stderrFile = root.appending(path: "server.stderr")
+        try Data().write(to: stdoutFile)
+        try Data().write(to: stderrFile)
+        let serverOutput = try FileHandle(forWritingTo: stdoutFile)
+        let serverError = try FileHandle(forWritingTo: stderrFile)
+        defer { try? serverOutput.close(); try? serverError.close() }
+        server.standardOutput = serverOutput
+        server.standardError = serverError
         try server.run()
-        defer { if server.isRunning { server.terminate(); server.waitUntilExit() } }
+        recordStage("server", "started", ["serverPID": server.processIdentifier])
+        defer {
+            if server.isRunning { server.terminate(); server.waitUntilExit() }
+            recordStage("server", "terminated", ["terminationStatus": server.terminationStatus,
+                "terminationReason": server.terminationReason.rawValue])
+        }
         let startupDeadline = Date().addingTimeInterval(5)
         while !FileManager.default.fileExists(atPath: portFile.path), Date() < startupDeadline {
             Thread.sleep(forTimeInterval: 0.01)
         }
         let port = try #require(UInt16(String(contentsOf: portFile, encoding: .utf8)))
+        recordStage("server", "ready", ["port": Int(port)])
         // Keep the original URL/domain policy active. Only this test's real
         // URLSession uses the owned CONNECT proxy; no system proxy is changed.
         let configuration = URLSessionConfiguration.ephemeral
@@ -206,6 +265,7 @@ struct HanlinDualWidgetEnginesTests {
         let transport = HanlinScriptWidgetOriginal.ScriptWidgetFetchManager(configuration: configuration)
         typealias HTTPResult = (tag: String, children: [String], values: [String: HanlinValue], requests: Int)
         func execute(_ label: String, _ source: String) throws -> HTTPResult {
+            recordStage(label, "preparing")
             let base = "http://transport.hanlin.invalid/\(label)"
             let program = HanlinWidgetProgram(engine: .scriptwidget,
                 sourceSHA256: String(repeating: "a", count: 64), compilerSHA256: String(repeating: "b", count: 64),
@@ -226,7 +286,7 @@ struct HanlinDualWidgetEnginesTests {
                 native.onJavaScriptQueue {
                     native.finish()
                     context.exceptionHandler = nil
-                    for key in ["$render", "__httpTestDone", "__httpTestFailed", "__httpTestStore"] {
+                    for key in ["$render", "__httpTestDone", "__httpTestFailed", "__httpTestStore", "__httpTestStage"] {
                         context.setObject(nil, forKeyedSubscript: key as NSString)
                     }
                 }
@@ -237,6 +297,7 @@ struct HanlinDualWidgetEnginesTests {
                 native.installAPIs()
                 let failed: @convention(block) (String) -> Void = { message in
                     guard result == nil else { return }
+                    recordStage(label, "rejected", ["message": message])
                     result = .failure(HanlinScriptWidgetError(message)); completed.signal()
                 }
                 let render: @convention(block) (HanlinScriptWidgetOriginal.ScriptWidgetRuntimeElement) -> Void = { element in
@@ -247,6 +308,7 @@ struct HanlinDualWidgetEnginesTests {
                         failed("The transport fixture did not render its actual text element"); return
                     }
                     rendered = (tag, children)
+                    recordStage(label, "rendered", ["tag": tag, "childCount": children.count])
                 }
                 // Same compatibility alias as the shipping adapter; storage is
                 // still the original session's real transaction and namespace.
@@ -262,36 +324,50 @@ struct HanlinDualWidgetEnginesTests {
                         let rendered = try #require(rendered)
                         result = .success((rendered.0, rendered.1,
                             try HanlinWidgetJSON.dictionary(native.values()), state.executionSession.totalNetworkRequests))
-                    } catch { result = .failure(error) }
+                        recordStage(label, "resolved", ["requests": state.executionSession.totalNetworkRequests])
+                    } catch {
+                        recordStage(label, "completion-error", ["message": String(describing: error)])
+                        result = .failure(error)
+                    }
                     completed.signal()
+                }
+                let stage: @convention(block) (String) -> Void = { name in
+                    recordStage(label, "javascript", ["stage": name,
+                        "requests": state.executionSession.totalNetworkRequests])
                 }
                 context.setObject(render, forKeyedSubscript: "$render" as NSString)
                 context.setObject(store, forKeyedSubscript: "__httpTestStore" as NSString)
                 context.setObject(finished, forKeyedSubscript: "__httpTestDone" as NSString)
                 context.setObject(failed, forKeyedSubscript: "__httpTestFailed" as NSString)
+                context.setObject(stage, forKeyedSubscript: "__httpTestStage" as NSString)
                 context.exceptionHandler = { _, error in failed(error?.toString() ?? "Native HTTP fixture exception") }
                 context.evaluateScript("globalThis.$storage = {set: __httpTestStore};")
                 context.evaluateScript(try #require(HanlinOriginalScriptWidgetSession.supportScript("util.js")))
                 context.evaluateScript(program.javaScript)
+                recordStage(label, "evaluating")
                 context.evaluateScript("$main().then(__httpTestDone, e => __httpTestFailed(String(e)));")
             }
             guard completed.wait(timeout: .now() + HanlinOriginalScriptWidgetSession.executionTimeout) == .success else {
-                throw HanlinScriptWidgetError("The original HTTP execution did not finish within its native budget")
+                recordStage(label, "timeout", ["executionTimeout": HanlinOriginalScriptWidgetSession.executionTimeout])
+                throw HanlinScriptWidgetError("The original HTTP execution did not finish within its native budget (stage: \(label); evidence: \(root.path))")
             }
             return try native.onJavaScriptQueue { try #require(result).get() }
         }
         let verbs = try execute("verbs", #"""
             for (const method of ['get','post','put','patch']) {
+              __httpTestStage('verb:'+method);
               const result = JSON.parse(await $http[method](base+'/echo', {headers:{'X-Widget':'source'},body:method==='get'?undefined:{count:7}}));
               if (result.method !== method.toUpperCase() || result.header !== 'source') throw Error('HTTP method/header lost');
               if (method !== 'get' && (JSON.parse(result.body).count !== 7 || result.type !== 'application/json')) throw Error('JSON body lost');
               $storage.set(method, result.method);
             }
             for (let index=4; index<32; index++) {
+              __httpTestStage('budget:'+index);
               const result = JSON.parse(await $fetch(base+'/budget/'+index));
               if (result.method !== 'GET') throw Error('An admitted request did not reach the real transport');
             }
             let rejected = false;
+            __httpTestStage('over-budget');
             try { await $fetch(base+'/over-budget'); }
             catch (error) { rejected = String(error).includes('Network request budget exceeded'); }
             if (!rejected) throw Error('Thirty-third request exceeded budget');
@@ -299,19 +375,24 @@ struct HanlinDualWidgetEnginesTests {
         #expect(verbs.values["post"] == .string("POST"))
         #expect(verbs.requests == 32)
         let response = try execute("response", #"""
+            __httpTestStage('delete');
             const deleted = JSON.parse(await $http.delete(base+'/echo', {body:'raw source'}));
             if (deleted.method !== 'DELETE' || deleted.body !== 'raw source') throw Error('DELETE body lost');
+            __httpTestStage('status');
             const status = await $http.getResponse(base+'/status');
             if (status.status !== 503 || status.headers['retry-after'] !== '3' || JSON.parse(status.body).method !== 'GET') throw Error('Response metadata lost');
+            __httpTestStage('binary');
             const bytes = await $fetch(base+'/binary', {responseType:'base64'});
             if (bytes !== 'AH//') throw Error('Binary response lost');
             $storage.set('status', status.status);
             """#)
         #expect(response.values["status"] == .integer(503))
         let limits = try execute("limits", #"""
+            __httpTestStage('within-limit');
             const admitted = await $http.get(base+'/within-limit');
             if (admitted.length !== 2*1024*1024 || !/^x+$/.test(admitted)) throw Error('The supported response boundary was rejected or changed');
             for (const [path,params] of [['/large',{}],['/redirect',{}],['/slow',{timeoutInterval:0.05}]]) {
+              __httpTestStage('limit:'+path);
               const started = Date.now();
               let rejected = false;
               try { await $http.get(base+path, params); }
@@ -324,6 +405,7 @@ struct HanlinDualWidgetEnginesTests {
               if (path === '/slow' && (elapsed < 900 || elapsed >= 2500)) throw Error('The one-second timeout floor was not applied to the real slow request');
             }
             for (const [url,reason] of [['file:///etc/hosts','Only HTTP and HTTPS URLs are allowed'],['http://127.0.0.1/private','Local and private network hosts are not allowed']]) {
+              __httpTestStage('policy:'+url);
               let rejected = false;
               try { await $fetch(url); } catch (error) { rejected = String(error).includes(reason); }
               if (!rejected) throw Error('Disallowed transport accepted: '+url);
@@ -347,6 +429,7 @@ struct HanlinDualWidgetEnginesTests {
         #expect(requests.filter { $0["path"] as? String == "/limits/slow" }.count == 1)
         #expect(!requests.contains { ($0["path"] as? String)?.contains("over-budget") == true || $0["path"] as? String == "/private" })
         #expect(!wire.contains { $0["phase"] as? String == "response" && $0["path"] as? String == "/limits/slow" })
+        reachedFinalAssertion = true
     }
     #endif
     @Test func passiveLegacyNavigationCannotCoverNativeOrNestedButtons() throws {
