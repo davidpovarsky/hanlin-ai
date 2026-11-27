@@ -1,0 +1,20 @@
+{
+  "scope": "NEW_LOCAL_PARTIAL_INDEX_SOURCE_WHITESPACE_ONLY",
+  "partialBeforeTree": "be5844c186101aabc50a8981fcc6a47aa475f0ac",
+  "argv": [
+    "git",
+    "--no-pager",
+    "diff",
+    "--cached",
+    "--check",
+    "be5844c186101aabc50a8981fcc6a47aa475f0ac",
+    "--"
+  ],
+  "cwd": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/partial-git",
+  "exit": 0,
+  "stdout": "",
+  "stderr": "",
+  "remoteActions": 0,
+  "commitsCreated": 0,
+  "softwareTests": 0
+}

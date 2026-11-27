@@ -1,0 +1,70 @@
+{
+  "schema": 1,
+  "base": "95c12227097f73d5755a6ff20ced43c9e2691c45",
+  "sourcePatchSHA256": "0437b690eae2e20ed1bea8862ffdc0ca585d767e2e50050e663a5d7a200a47ee",
+  "sourceRows": [
+    {
+      "path": "AI_HLY/Downstream/MCP/Runtime/MCPClientSession.swift",
+      "beforeSHA256": "3496fc24615db8e482aa6b62fc210d916c0b6b3ad28056875df50f9d96ec0bd9",
+      "afterSHA256": "3b331e200237598147def7fed0875b3b5ae62a5581ba85da09a4d6c4b058fc13",
+      "bytes": 7251
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinHostSchemaValidation.swift",
+      "beforeSHA256": "0b8d1e3ff747b156d73a7bb67e80f95fc348ae9269f8dd3ae40a702d9da57432",
+      "afterSHA256": "622c7380bb066002a48bb46e6c76a6f919c41060392d891ac17c34f411b1a040",
+      "bytes": 12292
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HostMCPWireComparisonTests.swift",
+      "beforeSHA256": null,
+      "afterSHA256": "bbcae5565bdcbc7eba72c7d5c272eac5227af9106f00c50589901013f22830c7",
+      "bytes": 9813
+    }
+  ],
+  "evidenceAtUTC": "2026-11-27T15:14:56.341500+00:00",
+  "sourcePreservation": {
+    "allExistingHostSchemaBytesRecovered": true,
+    "MCPCallerOnlyOneMethodNameChanged": true,
+    "originalAcceptanceAndHostSchemaTestFilesUnchanged": {
+      "AI_HLYTests/RuntimeAutonomyV3Tests.swift": "b72a5d8ec0c51144e864776a2e1d4537cbfd0e28e27074b47280af5b108fba7d",
+      "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HostSchemaValidationTests.swift": "32c7d2350bc871bc87fa45d0536d81e2c631af594bff7d5f941f6f3f0e4cb327",
+      "Packages/HanlinAgentSDK/Package.swift": "16becff5f9e626f171d21f0277684c249c773f3169334fc9a63a37876c44a36e",
+      "Packages/HanlinAgentSDK/Vendor/Swift-JSON/PROVENANCE.json": "8e316afb8eb29cd906693e040def2fea90b3c898237c1dc5a86f8d3c05703b8e"
+    },
+    "pinnedJSONTreeUnchanged": "708bdb044c16fb962411560c704c0fd5434a3288",
+    "all14LocalCostSourcesMatchCurrentGit": true
+  },
+  "portableEvidence": {
+    "classification": "PORTABLE_SOURCE_AND_ARITHMETIC_ONLY",
+    "sourceAndArithmeticCases": 14,
+    "swiftParserExecuted": false,
+    "inputBoundaries": "all modeled cases matched expected finite admission/rejection"
+  },
+  "sdkImpact": {
+    "manifestSHA256": "e7aa424015d509dc7d99b3158b85f6dbcbcc72fc17b3671d247382331e87e649",
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/host-sdk-1ee9c457-complete-pass-proof/miniapp-sdk.json",
+    "inputCount": 392,
+    "intersection": []
+  },
+  "independentReviewSHA256": "965397b9f11667a10c2d7aeae80e534c992b202ae35ff8411cb57c45b0353fe1",
+  "native": {
+    "status": "NOT_RUN",
+    "owner": "/root/mac_build_resume",
+    "focusedCommand": [
+      "swift",
+      "test",
+      "--package-path",
+      "Packages/HanlinAgentSDK",
+      "--filter",
+      "HostMCPWireComparisonTests"
+    ],
+    "expectedNewTestCount": 11,
+    "originalRealMCPAcceptanceStillRequired": true
+  },
+  "limitations": [
+    "No Swift compilation or parser execution occurred in this lane.",
+    "The proportional policy is finite and does not guarantee admission of adversarial structural/numeric work.",
+    "The logical three-ledger allowance is not an RSS bound or a bound on prior MCP/Foundation decoding."
+  ]
+}

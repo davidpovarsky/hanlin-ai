@@ -1,0 +1,113 @@
+{
+  "sha": "583620ff16205eaf79e31fe178b0e8f11fe404d4",
+  "node_id": "C_kwDOTTRem9oAKDU4MzYyMGZmMTYyMDVlYWY3OWUzMWZlMTc4YjBlOGYxMWZlNDA0ZDQ",
+  "commit": {
+    "author": {
+      "name": "ChatGPT",
+      "email": "noreply@openai.com",
+      "date": "2026-11-27T15:05:25Z"
+    },
+    "committer": {
+      "name": "ChatGPT",
+      "email": "noreply@openai.com",
+      "date": "2026-11-27T15:08:04Z"
+    },
+    "message": "fix: preserve explicit failed execution titles safely",
+    "tree": {
+      "sha": "82f2f63a29a39bf31e0268cc34ac7fe362f0cc87",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/git/trees/82f2f63a29a39bf31e0268cc34ac7fe362f0cc87"
+    },
+    "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/git/commits/583620ff16205eaf79e31fe178b0e8f11fe404d4",
+    "comment_count": 0,
+    "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+    }
+  },
+  "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/commits/583620ff16205eaf79e31fe178b0e8f11fe404d4",
+  "html_url": "https://github.com/davidpovarsky/hanlin-ai/commit/583620ff16205eaf79e31fe178b0e8f11fe404d4",
+  "comments_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/commits/583620ff16205eaf79e31fe178b0e8f11fe404d4/comments",
+  "author": {
+    "login": "codex",
+    "id": 267193182,
+    "node_id": "U_kgDOD-0LXg",
+    "avatar_url": "https://avatars.githubusercontent.com/u/267193182?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/codex",
+    "html_url": "https://github.com/codex",
+    "followers_url": "https://api.github.com/users/codex/followers",
+    "following_url": "https://api.github.com/users/codex/following{/other_user}",
+    "gists_url": "https://api.github.com/users/codex/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/codex/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/codex/subscriptions",
+    "organizations_url": "https://api.github.com/users/codex/orgs",
+    "repos_url": "https://api.github.com/users/codex/repos",
+    "events_url": "https://api.github.com/users/codex/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/codex/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+  },
+  "committer": {
+    "login": "codex",
+    "id": 267193182,
+    "node_id": "U_kgDOD-0LXg",
+    "avatar_url": "https://avatars.githubusercontent.com/u/267193182?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/codex",
+    "html_url": "https://github.com/codex",
+    "followers_url": "https://api.github.com/users/codex/followers",
+    "following_url": "https://api.github.com/users/codex/following{/other_user}",
+    "gists_url": "https://api.github.com/users/codex/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/codex/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/codex/subscriptions",
+    "organizations_url": "https://api.github.com/users/codex/orgs",
+    "repos_url": "https://api.github.com/users/codex/repos",
+    "events_url": "https://api.github.com/users/codex/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/codex/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+  },
+  "parents": [
+    {
+      "sha": "69c9823dabf25c35bfa8930ab7c56365a8ad6cf7",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/commits/69c9823dabf25c35bfa8930ab7c56365a8ad6cf7",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/commit/69c9823dabf25c35bfa8930ab7c56365a8ad6cf7"
+    }
+  ],
+  "stats": {
+    "total": 122,
+    "additions": 119,
+    "deletions": 3
+  },
+  "files": [
+    {
+      "sha": "e7e88142af68c11a43bd6af1e07903c1a31778c3",
+      "filename": "AI_HLYTests/ChatCanonicalPresentationSurvivalTests.swift",
+      "status": "modified",
+      "additions": 93,
+      "deletions": 0,
+      "changes": 93,
+      "blob_url": "https://github.com/davidpovarsky/hanlin-ai/blob/583620ff16205eaf79e31fe178b0e8f11fe404d4/AI_HLYTests%2FChatCanonicalPresentationSurvivalTests.swift",
+      "raw_url": "https://github.com/davidpovarsky/hanlin-ai/raw/583620ff16205eaf79e31fe178b0e8f11fe404d4/AI_HLYTests%2FChatCanonicalPresentationSurvivalTests.swift",
+      "contents_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/contents/AI_HLYTests%2FChatCanonicalPresentationSurvivalTests.swift?ref=583620ff16205eaf79e31fe178b0e8f11fe404d4",
+      "patch": "@@ -42,6 +42,99 @@ struct ChatCanonicalPresentationSurvivalTests {\n     #expect(activity.title == \"Invalid arguments\")\n   }\n \n+  @Test(\"Failed activity does not retain an earlier running label\")\n+  func failedTitleDoesNotRetainEarlierRunningLabel() throws {\n+    let title = try composedTerminalActivityTitle(\n+      \"Fetching invoice records\", earlierRunningTitle: \"Fetching invoice records\"\n+    )\n+    #expect(title == terminalOperationTitle)\n+  }\n+\n+  @Test(\"Failed activity does not reuse canonical lifecycle labels\")\n+  func failedTitleDoesNotReuseCanonicalLifecycleLabels() throws {\n+    let presentation = ToolPresentationRegistry.presentation(\n+      for: \"execute_shell_command\", profile: .generic(toolName: \"execute_shell_command\")\n+    )\n+    for retained in [presentation.runningDescription, presentation.completedDescription] {\n+      #expect(try composedTerminalActivityTitle(retained) == terminalOperationTitle)\n+    }\n+  }\n+\n+  @Test(\"Failed activity does not infer shared history from absent call identities\")\n+  func failedTitleDoesNotInferHistoryFromUnidentifiedSteps() {\n+    let toolName = \"execute_shell_command\"\n+    let profile = ToolPresentationProfile.generic(toolName: toolName)\n+    let steps = [\n+      AgentActivityStep(sequence: 0, kind: .toolCall, presentationProfile: profile,\n+        title: \"Invalid arguments\", subtitle: toolName, status: .completed),\n+      AgentActivityStep(sequence: 1, kind: .toolExecution, presentationProfile: profile,\n+        title: \"Invalid arguments\", subtitle: toolName, status: .failed),\n+    ]\n+    #expect(AgentActivityTitleBuilder.title(for: steps, kind: .tool, queries: [], status: .failed)\n+      == \"Invalid arguments\")\n+  }\n+\n+  @Test(\"Cancelled activity keeps the operation title\")\n+  func cancelledActivityKeepsOperationTitle() throws {\n+    #expect(try composedTerminalActivityTitle(\"Invalid arguments\", status: .cancelled)\n+      == terminalOperationTitle)\n+  }\n+\n+  @Test(\"Failed activity excludes generic and approval labels\")\n+  func failedTitleRejectsGenericAndApprovalLabels() throws {\n+    for label in [\"Done\", \"Using a tool\", \"Allowed once\", \"Allowed and remembered\",\n+      \"Awaiting approval\", \"Not approved\"] {\n+      #expect(try composedTerminalActivityTitle(label) == terminalOperationTitle)\n+    }\n+  }\n+\n+  @Test(\"Failed activity excludes unsafe presentation text\")\n+  func failedTitleRejectsUnsafePresentationText() throws {\n+    for label in [\"\", \"   \", #\"{\"error\":\"private diagnostic\"}\"#,\n+      \"Failure at https://example.invalid/private\", \"password: private-value\",\n+      String(repeating: \"x\", count: 281)] {\n+      #expect(try composedTerminalActivityTitle(label) == terminalOperationTitle)\n+    }\n+  }\n+\n+  private var terminalOperationTitle: String {\n+    ToolPresentationRegistry.presentation(\n+      for: \"execute_shell_command\", profile: .generic(toolName: \"execute_shell_command\")\n+    ).title\n+  }\n+\n+  private func composedTerminalActivityTitle(\n+    _ terminalTitle: String,\n+    status: AgentActivityStatus = .failed,\n+    earlierRunningTitle: String? = nil\n+  ) throws -> String {\n+    let toolName = \"execute_shell_command\"\n+    let profile = ToolPresentationProfile.generic(toolName: toolName)\n+    var steps = [AgentActivityStep(\n+      externalID: \"call:terminal-title-control\", sequence: 0, kind: .toolCall,\n+      presentationProfile: profile, title: \"Using Shell\", subtitle: toolName,\n+      status: .completed\n+    )]\n+    if let earlierRunningTitle {\n+      steps.append(AgentActivityStep(\n+        externalID: \"execution:terminal-title-control\", sequence: 1, kind: .toolExecution,\n+        presentationProfile: profile, title: earlierRunningTitle, subtitle: toolName,\n+        status: .running\n+      ))\n+    }\n+    steps.append(AgentActivityStep(\n+      externalID: \"execution:terminal-title-control\", sequence: 2, kind: .toolExecution,\n+      presentationProfile: profile, title: terminalTitle, subtitle: toolName, status: status,\n+      errorDescription: \"Unknown shell argument.\"\n+    ))\n+    let timeline = AgentActivityComposer.compose(\n+      AgentRun(groupID: UUID(), status: .completed, steps: steps)\n+    )\n+    let activity = try #require(timeline.activities.first)\n+    #expect(activity.status == status)\n+    return activity.title\n+  }\n+\n   @MainActor\n   @Test(\n     \"Dynamic non-builtin tool preserves presentation descriptors across entire event and transcript pipeline\""
+    },
+    {
+      "sha": "0b4668f652e5c75373fccaed49795cc338534c2b",
+      "filename": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityTitleBuilder.swift",
+      "status": "modified",
+      "additions": 26,
+      "deletions": 3,
+      "changes": 29,
+      "blob_url": "https://github.com/davidpovarsky/hanlin-ai/blob/583620ff16205eaf79e31fe178b0e8f11fe404d4/Packages%2FHanlinPresentationSDK%2FSources%2FHanlinAgentActivityCore%2FPresentation%2FAgentActivityTitleBuilder.swift",
+      "raw_url": "https://github.com/davidpovarsky/hanlin-ai/raw/583620ff16205eaf79e31fe178b0e8f11fe404d4/Packages%2FHanlinPresentationSDK%2FSources%2FHanlinAgentActivityCore%2FPresentation%2FAgentActivityTitleBuilder.swift",
+      "contents_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/contents/Packages%2FHanlinPresentationSDK%2FSources%2FHanlinAgentActivityCore%2FPresentation%2FAgentActivityTitleBuilder.swift?ref=583620ff16205eaf79e31fe178b0e8f11fe404d4",
+      "patch": "@@ -9,11 +9,34 @@ public enum AgentActivityTitleBuilder {\n         status: AgentActivityStatus\n     ) -> String {\n         if status == .failed || status == .cancelled {\n-            // A terminal update may retain its earlier running title. Name the\n-            // actual operation; the row separately presents the real outcome.\n             let name = steps.compactMap(\\.subtitle).first ?? \"\"\n             let profile = steps.compactMap(\\.presentationProfile).first\n-            return ToolPresentationRegistry.presentation(for: name, profile: profile).title\n+            let presentation = ToolPresentationRegistry.presentation(for: name, profile: profile)\n+            if status == .failed,\n+               let terminal = steps.last(where: { $0.status == .failed && $0.isExecutionLifecycleStep }),\n+               let title = ProgressSummarySanitizer.sanitize(terminal.title),\n+               let normalizedTitle = AgentActivityDeduplicator.normalized(title),\n+               !isGeneric(title) {\n+                // Preserve an explicit failure outcome, but not an operation or\n+                // an earlier running label retained by the terminal update.\n+                let operationLabels = [presentation.title, presentation.runningDescription,\n+                    presentation.completedDescription]\n+                let isOperationLabel = operationLabels.contains {\n+                    AgentActivityDeduplicator.normalized($0) == normalizedTitle\n+                }\n+                let isRetainedLabel = terminal.toolCallID.map { callID in\n+                    steps.contains {\n+                        $0.sequence < terminal.sequence && $0.status != .failed\n+                            && $0.toolCallID == callID\n+                            && AgentActivityDeduplicator.normalized(\n+                                ProgressSummarySanitizer.sanitize($0.title)) == normalizedTitle\n+                    }\n+                } ?? false\n+                if !isOperationLabel && !isRetainedLabel { return title }\n+            }\n+            // Cancellation and non-semantic terminal labels name the operation;\n+            // the row separately presents the actual outcome and diagnostics.\n+            return presentation.title\n         }\n \n         // Historical completion uses the completed presentation below, never"
+    }
+  ]
+}

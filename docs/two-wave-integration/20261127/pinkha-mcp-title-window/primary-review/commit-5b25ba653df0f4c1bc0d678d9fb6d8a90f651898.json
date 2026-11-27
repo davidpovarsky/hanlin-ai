@@ -1,0 +1,113 @@
+{
+  "sha": "5b25ba653df0f4c1bc0d678d9fb6d8a90f651898",
+  "node_id": "C_kwDOTTRem9oAKDViMjViYTY1M2RmMGY0YzFiYzBkNjc4ZDlmYjZkOGE5MGY2NTE4OTg",
+  "commit": {
+    "author": {
+      "name": "ChatGPT",
+      "email": "noreply@openai.com",
+      "date": "2026-11-27T15:12:42Z"
+    },
+    "committer": {
+      "name": "ChatGPT",
+      "email": "noreply@openai.com",
+      "date": "2026-11-27T15:16:05Z"
+    },
+    "message": "fix: include the existing NativeScript window factory in the authoring SDK",
+    "tree": {
+      "sha": "6f66f1948d88bcdad84f1880726253d13a61fda3",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/git/trees/6f66f1948d88bcdad84f1880726253d13a61fda3"
+    },
+    "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/git/commits/5b25ba653df0f4c1bc0d678d9fb6d8a90f651898",
+    "comment_count": 0,
+    "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+    }
+  },
+  "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/commits/5b25ba653df0f4c1bc0d678d9fb6d8a90f651898",
+  "html_url": "https://github.com/davidpovarsky/hanlin-ai/commit/5b25ba653df0f4c1bc0d678d9fb6d8a90f651898",
+  "comments_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/commits/5b25ba653df0f4c1bc0d678d9fb6d8a90f651898/comments",
+  "author": {
+    "login": "codex",
+    "id": 267193182,
+    "node_id": "U_kgDOD-0LXg",
+    "avatar_url": "https://avatars.githubusercontent.com/u/267193182?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/codex",
+    "html_url": "https://github.com/codex",
+    "followers_url": "https://api.github.com/users/codex/followers",
+    "following_url": "https://api.github.com/users/codex/following{/other_user}",
+    "gists_url": "https://api.github.com/users/codex/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/codex/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/codex/subscriptions",
+    "organizations_url": "https://api.github.com/users/codex/orgs",
+    "repos_url": "https://api.github.com/users/codex/repos",
+    "events_url": "https://api.github.com/users/codex/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/codex/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+  },
+  "committer": {
+    "login": "codex",
+    "id": 267193182,
+    "node_id": "U_kgDOD-0LXg",
+    "avatar_url": "https://avatars.githubusercontent.com/u/267193182?v=4",
+    "gravatar_id": "",
+    "url": "https://api.github.com/users/codex",
+    "html_url": "https://github.com/codex",
+    "followers_url": "https://api.github.com/users/codex/followers",
+    "following_url": "https://api.github.com/users/codex/following{/other_user}",
+    "gists_url": "https://api.github.com/users/codex/gists{/gist_id}",
+    "starred_url": "https://api.github.com/users/codex/starred{/owner}{/repo}",
+    "subscriptions_url": "https://api.github.com/users/codex/subscriptions",
+    "organizations_url": "https://api.github.com/users/codex/orgs",
+    "repos_url": "https://api.github.com/users/codex/repos",
+    "events_url": "https://api.github.com/users/codex/events{/privacy}",
+    "received_events_url": "https://api.github.com/users/codex/received_events",
+    "type": "User",
+    "user_view_type": "public",
+    "site_admin": false
+  },
+  "parents": [
+    {
+      "sha": "5d988db853b0fd3f5357ec34ac4f15d66e84f0a9",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/commits/5d988db853b0fd3f5357ec34ac4f15d66e84f0a9",
+      "html_url": "https://github.com/davidpovarsky/hanlin-ai/commit/5d988db853b0fd3f5357ec34ac4f15d66e84f0a9"
+    }
+  ],
+  "stats": {
+    "total": 13,
+    "additions": 8,
+    "deletions": 5
+  },
+  "files": [
+    {
+      "sha": "b7f39bb5a702c85949b042f6c96ff06221f71ec9",
+      "filename": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+      "status": "modified",
+      "additions": 2,
+      "deletions": 2,
+      "changes": 4,
+      "blob_url": "https://github.com/davidpovarsky/hanlin-ai/blob/5b25ba653df0f4c1bc0d678d9fb6d8a90f651898/AI_HLY%2FDownstream%2FRuntimeCore%2FNode%2FHost%2Fminiapp-authoring.mjs",
+      "raw_url": "https://github.com/davidpovarsky/hanlin-ai/raw/5b25ba653df0f4c1bc0d678d9fb6d8a90f651898/AI_HLY%2FDownstream%2FRuntimeCore%2FNode%2FHost%2Fminiapp-authoring.mjs",
+      "contents_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/contents/AI_HLY%2FDownstream%2FRuntimeCore%2FNode%2FHost%2Fminiapp-authoring.mjs?ref=5b25ba653df0f4c1bc0d678d9fb6d8a90f651898",
+      "patch": "@@ -612,8 +612,8 @@ async function installedPackage(name, from, fallback, boundary) {\n   return null;\n }\n async function copyNativeScriptDependencies(ts, input, parsed, app, emittedSources) {\n-  // The exact shared Core and host-services modules are linked by the original host.\n-  const provided = new Set(['@nativescript/core', '@hanlin/host-services']);\n+  // These exact shared modules are linked by the original NativeScript host.\n+  const provided = new Set(['@nativescript/core', '@hanlin/host-services', '@hanlin/window-factory']);\n   const names = new Set([...Object.keys(input.pkg.dependencies ?? {}),\n     ...Object.keys(input.pkg.hanlinNativeScript?.plugins ?? {}), ...runtimeImports(ts, emittedSources)]);\n   const locations = new Map();"
+    },
+    {
+      "sha": "98882a8ce4fe6e5eb2208897e0c1f962826da2be",
+      "filename": "Scripts/MiniApps/stage-sdk.mjs",
+      "status": "modified",
+      "additions": 6,
+      "deletions": 3,
+      "changes": 9,
+      "blob_url": "https://github.com/davidpovarsky/hanlin-ai/blob/5b25ba653df0f4c1bc0d678d9fb6d8a90f651898/Scripts%2FMiniApps%2Fstage-sdk.mjs",
+      "raw_url": "https://github.com/davidpovarsky/hanlin-ai/raw/5b25ba653df0f4c1bc0d678d9fb6d8a90f651898/Scripts%2FMiniApps%2Fstage-sdk.mjs",
+      "contents_url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/contents/Scripts%2FMiniApps%2Fstage-sdk.mjs?ref=5b25ba653df0f4c1bc0d678d9fb6d8a90f651898",
+      "patch": "@@ -191,6 +191,7 @@ export async function inputReceipt(root=repositoryRoot) {\n   }\n   for(const relative of ['Scripts/MiniApps','Packages/HanlinExpoUI','Packages/HanlinExpoNativeAPIJS',\n     'Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services',\n+    'Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/window-factory',\n     'Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal',\n     'Packages/HanlinPlatform/Sources/HanlinScriptExtensions',\n     'Packages/HanlinAppExtensionsSDK/Sources',\n@@ -237,9 +238,11 @@ export async function stageSDK({root=repositoryRoot,output,engines:requestedEngi\n       const systemSurfaces=await stageSystemSurfaceTypes(root,destination,files,engine);\n       graph.versions[systemSurfaces.packageName]=systemSurfaces.version;\n       if(engine==='nativescript') {\n-        const hostServices=path.join(root,'Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services');\n-        await copyAuthoringTree(hostServices,path.join(destination,'node_modules/@hanlin/host-services'),files,'nativescript/node_modules/@hanlin/host-services');\n-        graph.versions['@hanlin/host-services']=(await readJSON(path.join(hostServices,'package.json'))).version;\n+        for (const packageName of ['@hanlin/host-services','@hanlin/window-factory']) {\n+          const packageSource=path.join(root,'Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime',packageName);\n+          await copyAuthoringTree(packageSource,path.join(destination,'node_modules',packageName),files,'nativescript/node_modules/'+packageName);\n+          graph.versions[packageName]=(await readJSON(path.join(packageSource,'package.json'))).version;\n+        }\n       }\n \n       const assistantTypesRoot=path.join(destination,'node_modules/@hanlin/assistant-tools');"
+    }
+  ]
+}

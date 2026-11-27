@@ -1,0 +1,27 @@
+{
+  "schema": 1,
+  "base": "5b39e0efb107331f9be8200b99924467e75bcd26",
+  "sources": [
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityTitleBuilder.swift",
+      "beforeSHA256": "eaa6333472b5a0685d6955ad683c9211bcdf258802c272c83010f98c647831b4",
+      "afterSHA256": "ad7094967bad20ff7a703dc233df2d3b4222b9777f3749caeeeca91ec983956e"
+    },
+    {
+      "path": "AI_HLYTests/ChatCanonicalPresentationSurvivalTests.swift",
+      "beforeSHA256": "3fe797b05de9a8876a07b0e11757d71f5229871374b5b943e54c5fb8f514fc68",
+      "afterSHA256": "4b1a651c7acf911b23ddd6056fdddd06f5e552eaf41e026f9723237dc3b5bcb6"
+    }
+  ],
+  "patchSHA256": "4bb925c9974a6375a23bba48063fccaa1200caf370f540b2d7c382fdb222b3cb",
+  "originalTestFileRecoveredByRemovingOnlyAddition": true,
+  "originalFailedActivityTitleMethodUnchanged": true,
+  "existingNonTerminalAndCancelledBehaviorPreserved": true,
+  "addedNativeTestMethods": 6,
+  "retainedHistoricalLabelRejectionRequiresObservedSameCallStep": true,
+  "nativeStatus": "NOT_RUN",
+  "scope": "Explicit sanitized failed execution title only; never errorDescription; canonical running/completed, earlier nonfailed and approval labels retain operation fallback.",
+  "sourceCommit": "2506d71896f870639e684200dae7916c0f359c78",
+  "parent": "6dbecc74df083add00ac103934497abd91fb1609",
+  "scopeLimit": "Arbitrary earlier running-title rejection requires an actual earlier same-call step in the supplied group; no history is inferred from missing or nil identities."
+}

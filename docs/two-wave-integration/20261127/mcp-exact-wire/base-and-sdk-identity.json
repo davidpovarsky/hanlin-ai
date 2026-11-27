@@ -1,0 +1,17 @@
+{
+  "base": "95c12227097f73d5755a6ff20ced43c9e2691c45",
+  "trackedStatus": "",
+  "originalSourceHashes": {
+    "AI_HLYTests/RuntimeAutonomyV3Tests.swift": "b72a5d8ec0c51144e864776a2e1d4537cbfd0e28e27074b47280af5b108fba7d",
+    "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HostSchemaValidationTests.swift": "32c7d2350bc871bc87fa45d0536d81e2c631af594bff7d5f941f6f3f0e4cb327",
+    "Packages/HanlinAgentSDK/Package.swift": "16becff5f9e626f171d21f0277684c249c773f3169334fc9a63a37876c44a36e",
+    "Packages/HanlinAgentSDK/Vendor/Swift-JSON/PROVENANCE.json": "8e316afb8eb29cd906693e040def2fea90b3c898237c1dc5a86f8d3c05703b8e"
+  },
+  "pinnedJSONTree": "708bdb044c16fb962411560c704c0fd5434a3288",
+  "currentSDK": {
+    "manifestSHA256": "e7aa424015d509dc7d99b3158b85f6dbcbcc72fc17b3671d247382331e87e649",
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/host-sdk-1ee9c457-complete-pass-proof/miniapp-sdk.json",
+    "inputCount": 392,
+    "intersection": []
+  }
+}

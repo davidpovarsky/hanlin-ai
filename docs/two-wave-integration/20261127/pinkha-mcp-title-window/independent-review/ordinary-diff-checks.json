@@ -1,0 +1,370 @@
+[
+  {
+    "path": "AI_HLY/Downstream/MCP/Runtime/MCPClientSession.swift",
+    "argv": [
+      "git",
+      "--no-pager",
+      "diff",
+      "--no-index",
+      "--check",
+      "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/before/AI_HLY/Downstream/MCP/Runtime/MCPClientSession.swift",
+      "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/candidate/AI_HLY/Downstream/MCP/Runtime/MCPClientSession.swift"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "scope": "ORIGINAL_SOURCE_WHITESPACE_ONLY_NOT_TEST_EXECUTION"
+  },
+  {
+    "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinHostSchemaValidation.swift",
+    "argv": [
+      "git",
+      "--no-pager",
+      "diff",
+      "--no-index",
+      "--check",
+      "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/before/Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinHostSchemaValidation.swift",
+      "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/candidate/Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinHostSchemaValidation.swift"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "scope": "ORIGINAL_SOURCE_WHITESPACE_ONLY_NOT_TEST_EXECUTION"
+  },
+  {
+    "path": "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HostMCPWireComparisonTests.swift",
+    "argv": [
+      "git",
+      "--no-pager",
+      "diff",
+      "--no-index",
+      "--check",
+      "/dev/null",
+      "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/candidate/Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HostMCPWireComparisonTests.swift"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "scope": "ORIGINAL_SOURCE_WHITESPACE_ONLY_NOT_TEST_EXECUTION"
+  },
+  {
+    "path": "docs/two-wave-integration/20261127/mcp-exact-wire/COST_DERIVATION.md",
+    "argv": [
+      "git",
+      "--no-pager",
+      "diff",
+      "--no-index",
+      "--check",
+      "/dev/null",
+      "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/candidate/docs/two-wave-integration/20261127/mcp-exact-wire/COST_DERIVATION.md"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "scope": "ORIGINAL_SOURCE_WHITESPACE_ONLY_NOT_TEST_EXECUTION"
+  },
+  {
+    "path": "docs/two-wave-integration/20261127/mcp-exact-wire/base-and-sdk-identity.json",
+    "argv": [
+      "git",
+      "--no-pager",
+      "diff",
+      "--no-index",
+      "--check",
+      "/dev/null",
+      "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/candidate/docs/two-wave-integration/20261127/mcp-exact-wire/base-and-sdk-identity.json"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "scope": "ORIGINAL_SOURCE_WHITESPACE_ONLY_NOT_TEST_EXECUTION"
+  },
+  {
+    "path": "docs/two-wave-integration/20261127/mcp-exact-wire/independent-w1-source-review.json",
+    "argv": [
+      "git",
+      "--no-pager",
+      "diff",
+      "--no-index",
+      "--check",
+      "/dev/null",
+      "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/candidate/docs/two-wave-integration/20261127/mcp-exact-wire/independent-w1-source-review.json"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "scope": "ORIGINAL_SOURCE_WHITESPACE_ONLY_NOT_TEST_EXECUTION"
+  },
+  {
+    "path": "docs/two-wave-integration/20261127/mcp-exact-wire/pinned-source-costs.json",
+    "argv": [
+      "git",
+      "--no-pager",
+      "diff",
+      "--no-index",
+      "--check",
+      "/dev/null",
+      "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/candidate/docs/two-wave-integration/20261127/mcp-exact-wire/pinned-source-costs.json"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "scope": "ORIGINAL_SOURCE_WHITESPACE_ONLY_NOT_TEST_EXECUTION"
+  },
+  {
+    "path": "docs/two-wave-integration/20261127/mcp-exact-wire/portable-policy-checks.json",
+    "argv": [
+      "git",
+      "--no-pager",
+      "diff",
+      "--no-index",
+      "--check",
+      "/dev/null",
+      "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/candidate/docs/two-wave-integration/20261127/mcp-exact-wire/portable-policy-checks.json"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "scope": "ORIGINAL_SOURCE_WHITESPACE_ONLY_NOT_TEST_EXECUTION"
+  },
+  {
+    "path": "docs/two-wave-integration/20261127/mcp-exact-wire/root-source-review.json",
+    "argv": [
+      "git",
+      "--no-pager",
+      "diff",
+      "--no-index",
+      "--check",
+      "/dev/null",
+      "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/candidate/docs/two-wave-integration/20261127/mcp-exact-wire/root-source-review.json"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "scope": "ORIGINAL_SOURCE_WHITESPACE_ONLY_NOT_TEST_EXECUTION"
+  },
+  {
+    "path": "docs/two-wave-integration/20261127/mcp-exact-wire/source-validation.json",
+    "argv": [
+      "git",
+      "--no-pager",
+      "diff",
+      "--no-index",
+      "--check",
+      "/dev/null",
+      "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/candidate/docs/two-wave-integration/20261127/mcp-exact-wire/source-validation.json"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "scope": "ORIGINAL_SOURCE_WHITESPACE_ONLY_NOT_TEST_EXECUTION"
+  },
+  {
+    "path": "docs/two-wave-integration/20261127/mcp-exact-wire/source.json",
+    "argv": [
+      "git",
+      "--no-pager",
+      "diff",
+      "--no-index",
+      "--check",
+      "/dev/null",
+      "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/candidate/docs/two-wave-integration/20261127/mcp-exact-wire/source.json"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "scope": "ORIGINAL_SOURCE_WHITESPACE_ONLY_NOT_TEST_EXECUTION"
+  },
+  {
+    "path": "AI_HLYTests/ChatCanonicalPresentationSurvivalTests.swift",
+    "argv": [
+      "git",
+      "--no-pager",
+      "diff",
+      "--no-index",
+      "--check",
+      "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/before/AI_HLYTests/ChatCanonicalPresentationSurvivalTests.swift",
+      "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/candidate/AI_HLYTests/ChatCanonicalPresentationSurvivalTests.swift"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "scope": "ORIGINAL_SOURCE_WHITESPACE_ONLY_NOT_TEST_EXECUTION"
+  },
+  {
+    "path": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityTitleBuilder.swift",
+    "argv": [
+      "git",
+      "--no-pager",
+      "diff",
+      "--no-index",
+      "--check",
+      "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/before/Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityTitleBuilder.swift",
+      "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/candidate/Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityTitleBuilder.swift"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "scope": "ORIGINAL_SOURCE_WHITESPACE_ONLY_NOT_TEST_EXECUTION"
+  },
+  {
+    "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+    "argv": [
+      "git",
+      "--no-pager",
+      "diff",
+      "--no-index",
+      "--check",
+      "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/before/AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+      "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/candidate/AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "scope": "ORIGINAL_SOURCE_WHITESPACE_ONLY_NOT_TEST_EXECUTION"
+  },
+  {
+    "path": "Scripts/MiniApps/stage-sdk.mjs",
+    "argv": [
+      "git",
+      "--no-pager",
+      "diff",
+      "--no-index",
+      "--check",
+      "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/before/Scripts/MiniApps/stage-sdk.mjs",
+      "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/candidate/Scripts/MiniApps/stage-sdk.mjs"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "scope": "ORIGINAL_SOURCE_WHITESPACE_ONLY_NOT_TEST_EXECUTION"
+  },
+  {
+    "path": "docs/two-wave-integration/20261127/failed-terminal-activity-title/README.md",
+    "argv": [
+      "git",
+      "--no-pager",
+      "diff",
+      "--no-index",
+      "--check",
+      "/dev/null",
+      "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/candidate/docs/two-wave-integration/20261127/failed-terminal-activity-title/README.md"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "scope": "ORIGINAL_SOURCE_WHITESPACE_ONLY_NOT_TEST_EXECUTION"
+  },
+  {
+    "path": "docs/two-wave-integration/20261127/failed-terminal-activity-title/independent-w2-source-review.json",
+    "argv": [
+      "git",
+      "--no-pager",
+      "diff",
+      "--no-index",
+      "--check",
+      "/dev/null",
+      "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/candidate/docs/two-wave-integration/20261127/failed-terminal-activity-title/independent-w2-source-review.json"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "scope": "ORIGINAL_SOURCE_WHITESPACE_ONLY_NOT_TEST_EXECUTION"
+  },
+  {
+    "path": "docs/two-wave-integration/20261127/failed-terminal-activity-title/sdk-input-impact.json",
+    "argv": [
+      "git",
+      "--no-pager",
+      "diff",
+      "--no-index",
+      "--check",
+      "/dev/null",
+      "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/candidate/docs/two-wave-integration/20261127/failed-terminal-activity-title/sdk-input-impact.json"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "scope": "ORIGINAL_SOURCE_WHITESPACE_ONLY_NOT_TEST_EXECUTION"
+  },
+  {
+    "path": "docs/two-wave-integration/20261127/failed-terminal-activity-title/source-validation.json",
+    "argv": [
+      "git",
+      "--no-pager",
+      "diff",
+      "--no-index",
+      "--check",
+      "/dev/null",
+      "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/candidate/docs/two-wave-integration/20261127/failed-terminal-activity-title/source-validation.json"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "scope": "ORIGINAL_SOURCE_WHITESPACE_ONLY_NOT_TEST_EXECUTION"
+  },
+  {
+    "path": "docs/two-wave-integration/20261127/nativescript-window-factory-sdk/README.md",
+    "argv": [
+      "git",
+      "--no-pager",
+      "diff",
+      "--no-index",
+      "--check",
+      "/dev/null",
+      "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/candidate/docs/two-wave-integration/20261127/nativescript-window-factory-sdk/README.md"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "scope": "ORIGINAL_SOURCE_WHITESPACE_ONLY_NOT_TEST_EXECUTION"
+  },
+  {
+    "path": "docs/two-wave-integration/20261127/nativescript-window-factory-sdk/independent-mac-source-review.json",
+    "argv": [
+      "git",
+      "--no-pager",
+      "diff",
+      "--no-index",
+      "--check",
+      "/dev/null",
+      "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/candidate/docs/two-wave-integration/20261127/nativescript-window-factory-sdk/independent-mac-source-review.json"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "scope": "ORIGINAL_SOURCE_WHITESPACE_ONLY_NOT_TEST_EXECUTION"
+  },
+  {
+    "path": "docs/two-wave-integration/20261127/nativescript-window-factory-sdk/sdk-input-impact.json",
+    "argv": [
+      "git",
+      "--no-pager",
+      "diff",
+      "--no-index",
+      "--check",
+      "/dev/null",
+      "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/candidate/docs/two-wave-integration/20261127/nativescript-window-factory-sdk/sdk-input-impact.json"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "scope": "ORIGINAL_SOURCE_WHITESPACE_ONLY_NOT_TEST_EXECUTION"
+  },
+  {
+    "path": "docs/two-wave-integration/20261127/nativescript-window-factory-sdk/source.json",
+    "argv": [
+      "git",
+      "--no-pager",
+      "diff",
+      "--no-index",
+      "--check",
+      "/dev/null",
+      "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/candidate/docs/two-wave-integration/20261127/nativescript-window-factory-sdk/source.json"
+    ],
+    "exit": 1,
+    "stdout": "",
+    "stderr": "",
+    "scope": "ORIGINAL_SOURCE_WHITESPACE_ONLY_NOT_TEST_EXECUTION"
+  }
+]

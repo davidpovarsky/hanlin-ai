@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "reviewer": "/root/w2_source_resume",
+  "reviewedAtUTC": "2026-11-27T15:04:26.656773+00:00",
+  "assessment": "APPROVED_BOUNDED_SOURCE_CORRECTION_NATIVE_NOT_RUN",
+  "base": "5b39e0efb107331f9be8200b99924467e75bcd26",
+  "sources": [
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityTitleBuilder.swift",
+      "beforeSHA256": "eaa6333472b5a0685d6955ad683c9211bcdf258802c272c83010f98c647831b4",
+      "afterSHA256": "ad7094967bad20ff7a703dc233df2d3b4222b9777f3749caeeeca91ec983956e"
+    },
+    {
+      "path": "AI_HLYTests/ChatCanonicalPresentationSurvivalTests.swift",
+      "beforeSHA256": "3fe797b05de9a8876a07b0e11757d71f5229871374b5b943e54c5fb8f514fc68",
+      "afterSHA256": "4b1a651c7acf911b23ddd6056fdddd06f5e552eaf41e026f9723237dc3b5bcb6"
+    }
+  ],
+  "patchSHA256": "4bb925c9974a6375a23bba48063fccaa1200caf370f540b2d7c382fdb222b3cb",
+  "independentlyVerified": {
+    "originalTestsRecoveredByRemovingOnlyAddition": true,
+    "originalNonterminalAndHelpersTailByteIdentical": true,
+    "sixAdditiveRegressions": true
+  },
+  "findings": [
+    "Composer sorts by sequence and groups only actual equal toolCallIDs before title selection; actual failed execution is selected without accepting approval-only status.",
+    "Retained-title rejection now requires a nonnil actual toolCallID; unrelated nil identities are not conflated.",
+    "Sanitizer, generic-label filter and canonical operation/running/completed exclusions precede explicit failure-title return. Error descriptions are not promoted.",
+    "Cancelled rows retain the same original operation fallback; all original test methods and nonterminal source remain unchanged."
+  ],
+  "limitations": [
+    "Source/API and structural review only; no Swift compilation, tests or native acceptance executed by reviewer."
+  ]
+}

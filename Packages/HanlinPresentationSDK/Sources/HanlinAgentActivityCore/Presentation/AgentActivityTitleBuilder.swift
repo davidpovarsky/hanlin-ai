@@ -9,11 +9,34 @@ public enum AgentActivityTitleBuilder {
         status: AgentActivityStatus
     ) -> String {
         if status == .failed || status == .cancelled {
-            // A terminal update may retain its earlier running title. Name the
-            // actual operation; the row separately presents the real outcome.
             let name = steps.compactMap(\.subtitle).first ?? ""
             let profile = steps.compactMap(\.presentationProfile).first
-            return ToolPresentationRegistry.presentation(for: name, profile: profile).title
+            let presentation = ToolPresentationRegistry.presentation(for: name, profile: profile)
+            if status == .failed,
+               let terminal = steps.last(where: { $0.status == .failed && $0.isExecutionLifecycleStep }),
+               let title = ProgressSummarySanitizer.sanitize(terminal.title),
+               let normalizedTitle = AgentActivityDeduplicator.normalized(title),
+               !isGeneric(title) {
+                // Preserve an explicit failure outcome, but not an operation or
+                // an earlier running label retained by the terminal update.
+                let operationLabels = [presentation.title, presentation.runningDescription,
+                    presentation.completedDescription]
+                let isOperationLabel = operationLabels.contains {
+                    AgentActivityDeduplicator.normalized($0) == normalizedTitle
+                }
+                let isRetainedLabel = terminal.toolCallID.map { callID in
+                    steps.contains {
+                        $0.sequence < terminal.sequence && $0.status != .failed
+                            && $0.toolCallID == callID
+                            && AgentActivityDeduplicator.normalized(
+                                ProgressSummarySanitizer.sanitize($0.title)) == normalizedTitle
+                    }
+                } ?? false
+                if !isOperationLabel && !isRetainedLabel { return title }
+            }
+            // Cancellation and non-semantic terminal labels name the operation;
+            // the row separately presents the actual outcome and diagnostics.
+            return presentation.title
         }
 
         // Historical completion uses the completed presentation below, never

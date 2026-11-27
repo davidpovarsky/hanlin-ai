@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "atUTC": "2026-11-27T15:08:32.471382+00:00",
+  "reviewer": "/root/mac_build_resume",
+  "base": "95c12227097f73d5755a6ff20ced43c9e2691c45",
+  "patchSHA256": "81265339b47cdd7237c6787d0f09f7879110cde725148442a93333e3a8f39162",
+  "sourceHashes": {
+    "Scripts/MiniApps/stage-sdk.mjs": {
+      "beforeSHA256": "a375457668c88aac01634b94b8529c63d4edc072a6f7af37af75ad7fb8bcdee2",
+      "afterSHA256": "60b6b9496330d4605f60f56587170b06c7eced31a6b3d79ef04aa8faa548022c"
+    },
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs": {
+      "beforeSHA256": "cea114769522eaaaceee804b89b26549c2335b3ebca16037a64f97724f2e92fc",
+      "afterSHA256": "06fbe72f889da3befe00c2dfe9b286f062decd59a50c1df9c961df3bcb46b745"
+    }
+  },
+  "decision": "APPROVED_SOURCE_FOR_ORIGINAL_PRODUCER_AND_NATIVE_GATES",
+  "exactInverseRecoversBothOriginalFiles": true,
+  "reviewedProviderContracts": {
+    "originalResourceOwner": "HanlinNativeScriptRuntime Package.swift copies complete Resources/NativeScriptSharedRuntime; existing native window host uses its original window-factory/host.mjs.",
+    "authoringBytes": "Existing copyAuthoringTree copies each retained original authoring byte and hashes it. Its unchanged isAuthoringFile filter includes all four package files (.mjs, .d.ts and .json).",
+    "declarations": "Existing window-factory package.json types=index.d.ts, main=index.mjs; existing declarations import @nativescript/core and @hanlin/host-services, both already staged.",
+    "fingerprint": "The exact existing package directory now participates in inputReceipt, so source/staged-file/graph-version receipts include its actual immutable original bytes.",
+    "runtimeClosure": "runtimeImports normalizes scoped packages; provided guard excludes only the exact third existing shared package at both direct and transitive copying points. No duplicate private package implementation is added."
+  },
+  "unchangedOriginalPackageFiles": [
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/window-factory/host.mjs",
+      "sha256": "90438aad900ca2b612460381243aed29acce688222e2c8949e15d8c18a8afe73",
+      "alreadyInAcceptedSDKInputs": false
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/window-factory/index.d.ts",
+      "sha256": "309a6d7efd838ddc7631b80daa975ee613d95977047e2718b4f7c38905f9c36a",
+      "alreadyInAcceptedSDKInputs": false
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/window-factory/index.mjs",
+      "sha256": "22e2fac403d3b6f5431b662424d9cba6c4cd9f121d943328616d778746950062",
+      "alreadyInAcceptedSDKInputs": false
+    },
+    {
+      "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/window-factory/package.json",
+      "sha256": "585bf89d89e626bff514cb2f8a4c982c9e89a09088a8c728b10d1fa08cfb440c",
+      "alreadyInAcceptedSDKInputs": false
+    }
+  ],
+  "acceptedSDKManifestSHA256": "e7aa424015d509dc7d99b3158b85f6dbcbcc72fc17b3671d247382331e87e649",
+  "actualOldSDKInputCount": 392,
+  "changedExistingSDKMembers": [
+    "Scripts/MiniApps/stage-sdk.mjs"
+  ],
+  "addedSDKPathsExpected": [
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/window-factory/host.mjs",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/window-factory/index.d.ts",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/window-factory/index.mjs",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/window-factory/package.json"
+  ],
+  "freshSDKAndHostArchiveQualificationRequired": true,
+  "runtimeAndDeclarationBytesChanged": false,
+  "pinsOrTestsChanged": false,
+  "nativeOrPortableTestJobsExecutedByReviewer": 0,
+  "limitations": [
+    "Current live Shell/MCP remains exact64 with actual binaryb723; this source candidate was not staged on Mac.",
+    "Actual portable CLI reproduction, original SDK/Host producer and downstream native acceptance remain separate required evidence."
+  ]
+}

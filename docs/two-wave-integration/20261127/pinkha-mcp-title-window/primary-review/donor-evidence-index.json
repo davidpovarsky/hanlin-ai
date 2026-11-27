@@ -1,0 +1,74 @@
+[
+  {
+    "ref": "b1cab938d08af6eb3a544192699797bbbe70ca99",
+    "path": "docs/two-wave-integration/20261127/failed-terminal-activity-title/README.md",
+    "gitBlob": "20dee079c523610639664979d309c26f4b249885",
+    "bytes": 1403,
+    "sha256": "e49b3bdc6b1b0b8a378c14b857a60ddc6716a55edfba11d518aeb8982677eb27",
+    "localPath": "hanlin-latest-three-source-review/donor-evidence/docs/two-wave-integration/20261127/failed-terminal-activity-title/README.md",
+    "originalResponse": "hanlin-latest-three-source-review/evidence-responses/0.json"
+  },
+  {
+    "ref": "b1cab938d08af6eb3a544192699797bbbe70ca99",
+    "path": "docs/two-wave-integration/20261127/failed-terminal-activity-title/independent-w2-source-review.json",
+    "gitBlob": "4e5ba5f85f99c7267e46d2ef2392a3512cd740d6",
+    "bytes": 1862,
+    "sha256": "4ccfa6258a41ccefa2de54eb0c27e551fd54939ecf19a76e742e9e5b47c13ad2",
+    "localPath": "hanlin-latest-three-source-review/donor-evidence/docs/two-wave-integration/20261127/failed-terminal-activity-title/independent-w2-source-review.json",
+    "originalResponse": "hanlin-latest-three-source-review/evidence-responses/1.json"
+  },
+  {
+    "ref": "b1cab938d08af6eb3a544192699797bbbe70ca99",
+    "path": "docs/two-wave-integration/20261127/failed-terminal-activity-title/sdk-input-impact.json",
+    "gitBlob": "fd54bc614d4dad0975b45302c9d5dc5c595a89fb",
+    "bytes": 456,
+    "sha256": "b5e69893fcd1fd4964915a555097d2ca826836d4f9e591a4da34dfcefc9e1054",
+    "localPath": "hanlin-latest-three-source-review/donor-evidence/docs/two-wave-integration/20261127/failed-terminal-activity-title/sdk-input-impact.json",
+    "originalResponse": "hanlin-latest-three-source-review/evidence-responses/2.json"
+  },
+  {
+    "ref": "b1cab938d08af6eb3a544192699797bbbe70ca99",
+    "path": "docs/two-wave-integration/20261127/failed-terminal-activity-title/source-validation.json",
+    "gitBlob": "2e97665158492877a9c1641053b087c208ad2ad9",
+    "bytes": 1541,
+    "sha256": "493c4e3b7ad8584129a5d0d1bf35ec03ca8ae12a3a02ef1e684e7f44fd69e8dc",
+    "localPath": "hanlin-latest-three-source-review/donor-evidence/docs/two-wave-integration/20261127/failed-terminal-activity-title/source-validation.json",
+    "originalResponse": "hanlin-latest-three-source-review/evidence-responses/3.json"
+  },
+  {
+    "ref": "5b66a4911e2354968575f7ca46d178c26f8b6540",
+    "path": "docs/two-wave-integration/20261127/nativescript-window-factory-sdk/README.md",
+    "gitBlob": "98a08fc880d4a2bee4ab6ad109f1b2f2d1493cf6",
+    "bytes": 1590,
+    "sha256": "0afddc15cf859f1b8bceb071a88320ceeb25b5bd78876ddeaf0fe997e06459ef",
+    "localPath": "hanlin-latest-three-source-review/donor-evidence/docs/two-wave-integration/20261127/nativescript-window-factory-sdk/README.md",
+    "originalResponse": "hanlin-latest-three-source-review/evidence-responses/4.json"
+  },
+  {
+    "ref": "5b66a4911e2354968575f7ca46d178c26f8b6540",
+    "path": "docs/two-wave-integration/20261127/nativescript-window-factory-sdk/independent-mac-source-review.json",
+    "gitBlob": "7243fdd6a71adfb40e9b7541583e24860a4a94ec",
+    "bytes": 4426,
+    "sha256": "ba2f397a8b44aed6ec2290fae258ae625a2d149f590973e12744e1b64408cc7e",
+    "localPath": "hanlin-latest-three-source-review/donor-evidence/docs/two-wave-integration/20261127/nativescript-window-factory-sdk/independent-mac-source-review.json",
+    "originalResponse": "hanlin-latest-three-source-review/evidence-responses/5.json"
+  },
+  {
+    "ref": "5b66a4911e2354968575f7ca46d178c26f8b6540",
+    "path": "docs/two-wave-integration/20261127/nativescript-window-factory-sdk/sdk-input-impact.json",
+    "gitBlob": "e195e0880d2f2dd68ef6c18f4e92d12a77b3241e",
+    "bytes": 902,
+    "sha256": "8e9db050b03a080353eb8b9e12f23270cb00ce4d9f4c6010d6e94adebb2117ec",
+    "localPath": "hanlin-latest-three-source-review/donor-evidence/docs/two-wave-integration/20261127/nativescript-window-factory-sdk/sdk-input-impact.json",
+    "originalResponse": "hanlin-latest-three-source-review/evidence-responses/6.json"
+  },
+  {
+    "ref": "5b66a4911e2354968575f7ca46d178c26f8b6540",
+    "path": "docs/two-wave-integration/20261127/nativescript-window-factory-sdk/source.json",
+    "gitBlob": "43682267484e5620a5f970c1a9ba5315c4951552",
+    "bytes": 1242,
+    "sha256": "02e13ddbd1b3858c4680d4342b4b0ddd1a84a9859a69f44139689bd6b2dfd095",
+    "localPath": "hanlin-latest-three-source-review/donor-evidence/docs/two-wave-integration/20261127/nativescript-window-factory-sdk/source.json",
+    "originalResponse": "hanlin-latest-three-source-review/evidence-responses/7.json"
+  }
+]

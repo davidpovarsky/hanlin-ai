@@ -1,0 +1,18 @@
+{
+  "oldInputCount": 392,
+  "newInputCount": 396,
+  "added": [
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/window-factory/host.mjs",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/window-factory/index.d.ts",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/window-factory/index.mjs",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/window-factory/package.json"
+  ],
+  "changed": [
+    "Scripts/MiniApps/stage-sdk.mjs"
+  ],
+  "removed": [],
+  "newInputSHA256": "c8ba03a71f5f0d4f2330589a87ccb3522daafcab418ae4db01b959c37f98ce83",
+  "nodeVersion": "v24.5.0",
+  "nativeStatus": "NOT_RUN",
+  "packagingStatus": "NOT_RUN"
+}

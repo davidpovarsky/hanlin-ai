@@ -612,8 +612,8 @@ async function installedPackage(name, from, fallback, boundary) {
   return null;
 }
 async function copyNativeScriptDependencies(ts, input, parsed, app, emittedSources) {
-  // The exact shared Core and host-services modules are linked by the original host.
-  const provided = new Set(['@nativescript/core', '@hanlin/host-services']);
+  // These exact shared modules are linked by the original NativeScript host.
+  const provided = new Set(['@nativescript/core', '@hanlin/host-services', '@hanlin/window-factory']);
   const names = new Set([...Object.keys(input.pkg.dependencies ?? {}),
     ...Object.keys(input.pkg.hanlinNativeScript?.plugins ?? {}), ...runtimeImports(ts, emittedSources)]);
   const locations = new Map();

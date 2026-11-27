@@ -1,0 +1,263 @@
+{
+  "base": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+  "files": [
+    {
+      "label": "donor-764ed325b3b3bbf1be4ce471b3a7574db2c44bc7",
+      "ref": "764ed325b3b3bbf1be4ce471b3a7574db2c44bc7",
+      "path": "AI_HLY/Downstream/MCP/Runtime/MCPClientSession.swift",
+      "sha": "3c24eb83459673eea7a5df2a47d81f3bd538fde8",
+      "bytes": 7251,
+      "sha256": "3b331e200237598147def7fed0875b3b5ae62a5581ba85da09a4d6c4b058fc13",
+      "gitBlob": "3c24eb83459673eea7a5df2a47d81f3bd538fde8",
+      "localPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/source/donor-764ed325b3b3bbf1be4ce471b3a7574db2c44bc7/AI_HLY/Downstream/MCP/Runtime/MCPClientSession.swift"
+    },
+    {
+      "label": "base5fff",
+      "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+      "path": "AI_HLY/Downstream/MCP/Runtime/MCPClientSession.swift",
+      "bytes": 7244,
+      "sha256": "3496fc24615db8e482aa6b62fc210d916c0b6b3ad28056875df50f9d96ec0bd9",
+      "gitBlob": "097cabdf4b33890a8c94d65f6f541b6e8760d7ef",
+      "localPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/source/base5fff/AI_HLY/Downstream/MCP/Runtime/MCPClientSession.swift"
+    },
+    {
+      "label": "parent-764ed325b3b3bbf1be4ce471b3a7574db2c44bc7",
+      "ref": "5b66a4911e2354968575f7ca46d178c26f8b6540",
+      "path": "AI_HLY/Downstream/MCP/Runtime/MCPClientSession.swift",
+      "bytes": 7244,
+      "sha256": "3496fc24615db8e482aa6b62fc210d916c0b6b3ad28056875df50f9d96ec0bd9",
+      "gitBlob": "097cabdf4b33890a8c94d65f6f541b6e8760d7ef",
+      "localPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/source/parent-764ed325b3b3bbf1be4ce471b3a7574db2c44bc7/AI_HLY/Downstream/MCP/Runtime/MCPClientSession.swift"
+    },
+    {
+      "label": "donor-764ed325b3b3bbf1be4ce471b3a7574db2c44bc7",
+      "ref": "764ed325b3b3bbf1be4ce471b3a7574db2c44bc7",
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinHostSchemaValidation.swift",
+      "sha": "7ddbfa20d5fb7463b7885c4b4ca30d2427bd1b5b",
+      "bytes": 12292,
+      "sha256": "622c7380bb066002a48bb46e6c76a6f919c41060392d891ac17c34f411b1a040",
+      "gitBlob": "7ddbfa20d5fb7463b7885c4b4ca30d2427bd1b5b",
+      "localPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/source/donor-764ed325b3b3bbf1be4ce471b3a7574db2c44bc7/Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinHostSchemaValidation.swift"
+    },
+    {
+      "label": "base5fff",
+      "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinHostSchemaValidation.swift",
+      "bytes": 8506,
+      "sha256": "0b8d1e3ff747b156d73a7bb67e80f95fc348ae9269f8dd3ae40a702d9da57432",
+      "gitBlob": "099e4be2b44523ef0cad4635be519be3fde10414",
+      "localPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/source/base5fff/Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinHostSchemaValidation.swift"
+    },
+    {
+      "label": "parent-764ed325b3b3bbf1be4ce471b3a7574db2c44bc7",
+      "ref": "5b66a4911e2354968575f7ca46d178c26f8b6540",
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinHostSchemaValidation.swift",
+      "bytes": 8506,
+      "sha256": "0b8d1e3ff747b156d73a7bb67e80f95fc348ae9269f8dd3ae40a702d9da57432",
+      "gitBlob": "099e4be2b44523ef0cad4635be519be3fde10414",
+      "localPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/source/parent-764ed325b3b3bbf1be4ce471b3a7574db2c44bc7/Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinHostSchemaValidation.swift"
+    },
+    {
+      "label": "donor-764ed325b3b3bbf1be4ce471b3a7574db2c44bc7",
+      "ref": "764ed325b3b3bbf1be4ce471b3a7574db2c44bc7",
+      "path": "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HostMCPWireComparisonTests.swift",
+      "sha": "5d5965f3e718499215b7333444d47c8ba6d44d4c",
+      "bytes": 9813,
+      "sha256": "bbcae5565bdcbc7eba72c7d5c272eac5227af9106f00c50589901013f22830c7",
+      "gitBlob": "5d5965f3e718499215b7333444d47c8ba6d44d4c",
+      "localPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/source/donor-764ed325b3b3bbf1be4ce471b3a7574db2c44bc7/Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HostMCPWireComparisonTests.swift"
+    },
+    {
+      "label": "donor-764ed325b3b3bbf1be4ce471b3a7574db2c44bc7",
+      "ref": "764ed325b3b3bbf1be4ce471b3a7574db2c44bc7",
+      "path": "docs/two-wave-integration/20261127/mcp-exact-wire/COST_DERIVATION.md",
+      "sha": "0d444e51cd21aaa97075d1573c2707aff0043cd2",
+      "bytes": 8020,
+      "sha256": "11fdd79a2f226a2e883414dcfc846e37d4dee2a3c0532580fac8f8563e4d3262",
+      "gitBlob": "0d444e51cd21aaa97075d1573c2707aff0043cd2",
+      "localPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/source/donor-764ed325b3b3bbf1be4ce471b3a7574db2c44bc7/docs/two-wave-integration/20261127/mcp-exact-wire/COST_DERIVATION.md"
+    },
+    {
+      "label": "donor-764ed325b3b3bbf1be4ce471b3a7574db2c44bc7",
+      "ref": "764ed325b3b3bbf1be4ce471b3a7574db2c44bc7",
+      "path": "docs/two-wave-integration/20261127/mcp-exact-wire/base-and-sdk-identity.json",
+      "sha": "58d6b444f88bf7b18e662d6de23732f27c2e6a35",
+      "bytes": 1000,
+      "sha256": "77d45dd9dbe9fa2dfcbb6106930d566cfa005760be8540a695dd8492d7f7e3e6",
+      "gitBlob": "58d6b444f88bf7b18e662d6de23732f27c2e6a35",
+      "localPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/source/donor-764ed325b3b3bbf1be4ce471b3a7574db2c44bc7/docs/two-wave-integration/20261127/mcp-exact-wire/base-and-sdk-identity.json"
+    },
+    {
+      "label": "donor-764ed325b3b3bbf1be4ce471b3a7574db2c44bc7",
+      "ref": "764ed325b3b3bbf1be4ce471b3a7574db2c44bc7",
+      "path": "docs/two-wave-integration/20261127/mcp-exact-wire/independent-w1-source-review.json",
+      "sha": "0b21597eba512ab4748de9d8dd1119784cfa3cd6",
+      "bytes": 3221,
+      "sha256": "965397b9f11667a10c2d7aeae80e534c992b202ae35ff8411cb57c45b0353fe1",
+      "gitBlob": "0b21597eba512ab4748de9d8dd1119784cfa3cd6",
+      "localPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/source/donor-764ed325b3b3bbf1be4ce471b3a7574db2c44bc7/docs/two-wave-integration/20261127/mcp-exact-wire/independent-w1-source-review.json"
+    },
+    {
+      "label": "donor-764ed325b3b3bbf1be4ce471b3a7574db2c44bc7",
+      "ref": "764ed325b3b3bbf1be4ce471b3a7574db2c44bc7",
+      "path": "docs/two-wave-integration/20261127/mcp-exact-wire/pinned-source-costs.json",
+      "sha": "619a11cabafdfa564e9812536e665c3d21c45052",
+      "bytes": 2607,
+      "sha256": "c86de832d9733714d3af463f1f00a319d5a7933c9d02ebb6e807a6fb60855d14",
+      "gitBlob": "619a11cabafdfa564e9812536e665c3d21c45052",
+      "localPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/source/donor-764ed325b3b3bbf1be4ce471b3a7574db2c44bc7/docs/two-wave-integration/20261127/mcp-exact-wire/pinned-source-costs.json"
+    },
+    {
+      "label": "donor-764ed325b3b3bbf1be4ce471b3a7574db2c44bc7",
+      "ref": "764ed325b3b3bbf1be4ce471b3a7574db2c44bc7",
+      "path": "docs/two-wave-integration/20261127/mcp-exact-wire/portable-policy-checks.json",
+      "sha": "4759f3b1087f444f250ccb5e1be445113ecd0f45",
+      "bytes": 3856,
+      "sha256": "faac6181c75f5d9a24b38b928032caf096d4cd7ed4add44c3b8fbfdf45254252",
+      "gitBlob": "4759f3b1087f444f250ccb5e1be445113ecd0f45",
+      "localPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/source/donor-764ed325b3b3bbf1be4ce471b3a7574db2c44bc7/docs/two-wave-integration/20261127/mcp-exact-wire/portable-policy-checks.json"
+    },
+    {
+      "label": "donor-764ed325b3b3bbf1be4ce471b3a7574db2c44bc7",
+      "ref": "764ed325b3b3bbf1be4ce471b3a7574db2c44bc7",
+      "path": "docs/two-wave-integration/20261127/mcp-exact-wire/root-source-review.json",
+      "sha": "b59d85bb8e36206c9b3aa5bf9c6db686888c79fc",
+      "bytes": 692,
+      "sha256": "042967ac4dcf3ce326ec4afa1c0eb0b81da6d48903020c0b01376d0bebd63ec1",
+      "gitBlob": "b59d85bb8e36206c9b3aa5bf9c6db686888c79fc",
+      "localPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/source/donor-764ed325b3b3bbf1be4ce471b3a7574db2c44bc7/docs/two-wave-integration/20261127/mcp-exact-wire/root-source-review.json"
+    },
+    {
+      "label": "donor-764ed325b3b3bbf1be4ce471b3a7574db2c44bc7",
+      "ref": "764ed325b3b3bbf1be4ce471b3a7574db2c44bc7",
+      "path": "docs/two-wave-integration/20261127/mcp-exact-wire/source-validation.json",
+      "sha": "97da8989b84ebb437f90d23d7de9bfcd5ce98ba2",
+      "bytes": 3226,
+      "sha256": "a48cba425e4ccac2b67db28d39357da69aeade2bb4fdb4c9ba6109761c142817",
+      "gitBlob": "97da8989b84ebb437f90d23d7de9bfcd5ce98ba2",
+      "localPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/source/donor-764ed325b3b3bbf1be4ce471b3a7574db2c44bc7/docs/two-wave-integration/20261127/mcp-exact-wire/source-validation.json"
+    },
+    {
+      "label": "donor-764ed325b3b3bbf1be4ce471b3a7574db2c44bc7",
+      "ref": "764ed325b3b3bbf1be4ce471b3a7574db2c44bc7",
+      "path": "docs/two-wave-integration/20261127/mcp-exact-wire/source.json",
+      "sha": "6af3c27d7047964f22b1c680792f63e3f1e88db3",
+      "bytes": 2263,
+      "sha256": "97a2cae05c24d7024ca9d61c4086e8401fa2f8dd1c435b802cc06898303dc094",
+      "gitBlob": "6af3c27d7047964f22b1c680792f63e3f1e88db3",
+      "localPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/source/donor-764ed325b3b3bbf1be4ce471b3a7574db2c44bc7/docs/two-wave-integration/20261127/mcp-exact-wire/source.json"
+    },
+    {
+      "label": "donor-583620ff16205eaf79e31fe178b0e8f11fe404d4",
+      "ref": "583620ff16205eaf79e31fe178b0e8f11fe404d4",
+      "path": "AI_HLYTests/ChatCanonicalPresentationSurvivalTests.swift",
+      "sha": "e7e88142af68c11a43bd6af1e07903c1a31778c3",
+      "bytes": 18257,
+      "sha256": "4b1a651c7acf911b23ddd6056fdddd06f5e552eaf41e026f9723237dc3b5bcb6",
+      "gitBlob": "e7e88142af68c11a43bd6af1e07903c1a31778c3",
+      "localPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/source/donor-583620ff16205eaf79e31fe178b0e8f11fe404d4/AI_HLYTests/ChatCanonicalPresentationSurvivalTests.swift"
+    },
+    {
+      "label": "base5fff",
+      "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+      "path": "AI_HLYTests/ChatCanonicalPresentationSurvivalTests.swift",
+      "bytes": 14203,
+      "sha256": "3fe797b05de9a8876a07b0e11757d71f5229871374b5b943e54c5fb8f514fc68",
+      "gitBlob": "42bfcc5f720dc6e24334e27ef5bf77b2049cb1c3",
+      "localPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/source/base5fff/AI_HLYTests/ChatCanonicalPresentationSurvivalTests.swift"
+    },
+    {
+      "label": "parent-583620ff16205eaf79e31fe178b0e8f11fe404d4",
+      "ref": "69c9823dabf25c35bfa8930ab7c56365a8ad6cf7",
+      "path": "AI_HLYTests/ChatCanonicalPresentationSurvivalTests.swift",
+      "bytes": 14203,
+      "sha256": "3fe797b05de9a8876a07b0e11757d71f5229871374b5b943e54c5fb8f514fc68",
+      "gitBlob": "42bfcc5f720dc6e24334e27ef5bf77b2049cb1c3",
+      "localPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/source/parent-583620ff16205eaf79e31fe178b0e8f11fe404d4/AI_HLYTests/ChatCanonicalPresentationSurvivalTests.swift"
+    },
+    {
+      "label": "donor-583620ff16205eaf79e31fe178b0e8f11fe404d4",
+      "ref": "583620ff16205eaf79e31fe178b0e8f11fe404d4",
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityTitleBuilder.swift",
+      "sha": "0b4668f652e5c75373fccaed49795cc338534c2b",
+      "bytes": 4935,
+      "sha256": "ad7094967bad20ff7a703dc233df2d3b4222b9777f3749caeeeca91ec983956e",
+      "gitBlob": "0b4668f652e5c75373fccaed49795cc338534c2b",
+      "localPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/source/donor-583620ff16205eaf79e31fe178b0e8f11fe404d4/Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityTitleBuilder.swift"
+    },
+    {
+      "label": "base5fff",
+      "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityTitleBuilder.swift",
+      "bytes": 3538,
+      "sha256": "eaa6333472b5a0685d6955ad683c9211bcdf258802c272c83010f98c647831b4",
+      "gitBlob": "d3445bf15024b19728f1ba2686e06d6730d62cff",
+      "localPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/source/base5fff/Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityTitleBuilder.swift"
+    },
+    {
+      "label": "parent-583620ff16205eaf79e31fe178b0e8f11fe404d4",
+      "ref": "69c9823dabf25c35bfa8930ab7c56365a8ad6cf7",
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityTitleBuilder.swift",
+      "bytes": 3538,
+      "sha256": "eaa6333472b5a0685d6955ad683c9211bcdf258802c272c83010f98c647831b4",
+      "gitBlob": "d3445bf15024b19728f1ba2686e06d6730d62cff",
+      "localPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/source/parent-583620ff16205eaf79e31fe178b0e8f11fe404d4/Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityTitleBuilder.swift"
+    },
+    {
+      "label": "donor-5b25ba653df0f4c1bc0d678d9fb6d8a90f651898",
+      "ref": "5b25ba653df0f4c1bc0d678d9fb6d8a90f651898",
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+      "sha": "b7f39bb5a702c85949b042f6c96ff06221f71ec9",
+      "bytes": 66879,
+      "sha256": "06fbe72f889da3befe00c2dfe9b286f062decd59a50c1df9c961df3bcb46b745",
+      "gitBlob": "b7f39bb5a702c85949b042f6c96ff06221f71ec9",
+      "localPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/source/donor-5b25ba653df0f4c1bc0d678d9fb6d8a90f651898/AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs"
+    },
+    {
+      "label": "base5fff",
+      "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+      "bytes": 66861,
+      "sha256": "cea114769522eaaaceee804b89b26549c2335b3ebca16037a64f97724f2e92fc",
+      "gitBlob": "fb2057587517d1a1ad444a245f75b802f1cbd108",
+      "localPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/source/base5fff/AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs"
+    },
+    {
+      "label": "parent-5b25ba653df0f4c1bc0d678d9fb6d8a90f651898",
+      "ref": "5d988db853b0fd3f5357ec34ac4f15d66e84f0a9",
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+      "bytes": 66861,
+      "sha256": "cea114769522eaaaceee804b89b26549c2335b3ebca16037a64f97724f2e92fc",
+      "gitBlob": "fb2057587517d1a1ad444a245f75b802f1cbd108",
+      "localPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/source/parent-5b25ba653df0f4c1bc0d678d9fb6d8a90f651898/AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs"
+    },
+    {
+      "label": "donor-5b25ba653df0f4c1bc0d678d9fb6d8a90f651898",
+      "ref": "5b25ba653df0f4c1bc0d678d9fb6d8a90f651898",
+      "path": "Scripts/MiniApps/stage-sdk.mjs",
+      "sha": "98882a8ce4fe6e5eb2208897e0c1f962826da2be",
+      "bytes": 27535,
+      "sha256": "60b6b9496330d4605f60f56587170b06c7eced31a6b3d79ef04aa8faa548022c",
+      "gitBlob": "98882a8ce4fe6e5eb2208897e0c1f962826da2be",
+      "localPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/source/donor-5b25ba653df0f4c1bc0d678d9fb6d8a90f651898/Scripts/MiniApps/stage-sdk.mjs"
+    },
+    {
+      "label": "base5fff",
+      "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+      "path": "Scripts/MiniApps/stage-sdk.mjs",
+      "bytes": 27334,
+      "sha256": "a375457668c88aac01634b94b8529c63d4edc072a6f7af37af75ad7fb8bcdee2",
+      "gitBlob": "5376d912d8d39b38481d6f4eada7e3fe492c6d77",
+      "localPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/source/base5fff/Scripts/MiniApps/stage-sdk.mjs"
+    },
+    {
+      "label": "parent-5b25ba653df0f4c1bc0d678d9fb6d8a90f651898",
+      "ref": "5d988db853b0fd3f5357ec34ac4f15d66e84f0a9",
+      "path": "Scripts/MiniApps/stage-sdk.mjs",
+      "bytes": 27334,
+      "sha256": "a375457668c88aac01634b94b8529c63d4edc072a6f7af37af75ad7fb8bcdee2",
+      "gitBlob": "5376d912d8d39b38481d6f4eada7e3fe492c6d77",
+      "localPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/source/parent-5b25ba653df0f4c1bc0d678d9fb6d8a90f651898/Scripts/MiniApps/stage-sdk.mjs"
+    }
+  ]
+}

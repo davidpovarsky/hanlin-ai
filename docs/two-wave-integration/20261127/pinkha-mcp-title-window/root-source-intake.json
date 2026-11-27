@@ -1,0 +1,283 @@
+{
+  "addedSourcePaths": [
+    "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HostMCPWireComparisonTests.swift"
+  ],
+  "all227ProvenanceRowsUnchanged": true,
+  "allManifestsAndLocksUnchanged": true,
+  "allPrior47PathsUnchanged": true,
+  "base": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+  "baseTree": "a52fdb359190930d23a76877baf2fe8fa25101d6",
+  "branch": "codex/pinkha-sdk-mcp-title-window-20261127",
+  "compilerInvocations": 0,
+  "fullSixFileInverseSHA256": "6085c25804ee0ab42502cd452f633cad32fab5b68117bc095360c494add74896",
+  "handlerBlob": "7bbc804da241fe31d6e860eaedd064a192b97e49",
+  "materializations": 0,
+  "modifiedPaths": [
+    "AI_HLY/Downstream/MCP/Runtime/MCPClientSession.swift",
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+    "AI_HLYTests/ChatCanonicalPresentationSurvivalTests.swift",
+    "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinHostSchemaValidation.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityTitleBuilder.swift",
+    "Scripts/MiniApps/stage-sdk.mjs"
+  ],
+  "nativeScriptTree": "14373dc81171600079e458087872d4e8ea7bbc1c",
+  "packageFiles": 1011,
+  "packageSourceBytes": 39812364,
+  "priorFailureTreatment": "The exact earlier75 original evidence diagnostics remain accepted only as the historical5fff receipt scope, never relabelled a whole-diff pass. This new closed diff must be clean.",
+  "priorWholeEvidenceDiff": {
+    "classification": "EXACT_75_ORIGINAL_EVIDENCE_DIAGNOSTICS_PRESERVED_NOT_PASS",
+    "exitCode": 2,
+    "originalDonorEvidenceWhitespaceWarnings": 67,
+    "rawPatchContextWarnings": 8,
+    "stderrSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stdoutSHA256": "11934f25a50be1c8c4e42662b11f807eebcfac260412d46bfd94af9870c96a4d"
+  },
+  "retainedInputs": [
+    {
+      "bytes": 263303,
+      "gitBlob": "0d07e8ad900a7ecf96233726244fc65728b07730",
+      "mode": "100644",
+      "originalPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/source-inputs.json",
+      "repositoryPath": "docs/two-wave-integration/20261127/pinkha-mcp-title-window/independent-review/source-inputs.json",
+      "sha256": "1515118b70f7a323845a35767cbdcb191d6d74fbff648071200f5f2018712ee9"
+    },
+    {
+      "bytes": 20445,
+      "gitBlob": "9b9ebf953d144911b3ff963843e23667e9729e74",
+      "mode": "100644",
+      "originalPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/source-inverses.json",
+      "repositoryPath": "docs/two-wave-integration/20261127/pinkha-mcp-title-window/independent-review/source-inverses.json",
+      "sha256": "6085c25804ee0ab42502cd452f633cad32fab5b68117bc095360c494add74896"
+    },
+    {
+      "bytes": 73519,
+      "gitBlob": "9a839714c079ce8c63b998a3db371f5692a96f74",
+      "mode": "100644",
+      "originalPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/source-diffs.lossless.json",
+      "repositoryPath": "docs/two-wave-integration/20261127/pinkha-mcp-title-window/independent-review/source-diffs.lossless.json",
+      "sha256": "93538fe9b30d2652b320ee57b6e95463f838c4e0f4b090ca70ed1a9eb4e8118b"
+    },
+    {
+      "bytes": 650589,
+      "gitBlob": "9456976e0aa9910b4cd4a42396c19bdfc8f12aab",
+      "mode": "100644",
+      "originalPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/whole-tree-preservation.json",
+      "repositoryPath": "docs/two-wave-integration/20261127/pinkha-mcp-title-window/independent-review/whole-tree-preservation.json",
+      "sha256": "a86f50c2226eb5dae2e5a61f7d19eebabc2623835e8a952b6e929103d9f140ad"
+    },
+    {
+      "bytes": 489,
+      "gitBlob": "42408488ec9f5c44b968d931f192bbfb6f172b23",
+      "mode": "100644",
+      "originalPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/ordinary-complete-diff-check.json",
+      "repositoryPath": "docs/two-wave-integration/20261127/pinkha-mcp-title-window/independent-review/ordinary-complete-diff-check.json",
+      "sha256": "4994d00cffd97487448ab884860fcdf28d50d33032cbac98905e60deb8e454b7"
+    },
+    {
+      "bytes": 12626,
+      "gitBlob": "52726093e8c3248a776ebd50742ef22646fa0b6a",
+      "mode": "100644",
+      "originalPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/ordinary-diff-checks.json",
+      "repositoryPath": "docs/two-wave-integration/20261127/pinkha-mcp-title-window/independent-review/ordinary-diff-checks.json",
+      "sha256": "e13fd14cb56be47eb7586c49aeb59f131eda32af52125ab02185f45259b1b0e9"
+    },
+    {
+      "bytes": 15574,
+      "gitBlob": "580bd6bc09d663f80ebcbbe533f7fe834c77e828",
+      "mode": "100644",
+      "originalPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/independent-source-review.json",
+      "repositoryPath": "docs/two-wave-integration/20261127/pinkha-mcp-title-window/independent-review/independent-source-review.json",
+      "sha256": "28573bb41363374a1d9f654752af6d6a09a6cc29ba0761f05b3654d0a3228b40"
+    },
+    {
+      "bytes": 2331,
+      "gitBlob": "7b33fd32c21ec7d68913ed54e361902ccb23a9e2",
+      "mode": "100644",
+      "originalPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/handoff.json",
+      "repositoryPath": "docs/two-wave-integration/20261127/pinkha-mcp-title-window/independent-review/handoff.json",
+      "sha256": "302b0a26167aeacc3b15506523b10ea83736a888758441ea02cd623b80bed5e7"
+    },
+    {
+      "bytes": 16591,
+      "gitBlob": "8bb2c6ba557c8374a48c4017a9ebfcabc1b94430",
+      "mode": "100644",
+      "originalPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/primary-source-index.json",
+      "repositoryPath": "docs/two-wave-integration/20261127/pinkha-mcp-title-window/primary-review/primary-source-index.json",
+      "sha256": "3e055caebecdcf318689dccd6200b117928073d24b4311b5a9af85e105fc36a6"
+    },
+    {
+      "bytes": 20022,
+      "gitBlob": "42277962a6eb1626eab30456d49633617a7a2b1b",
+      "mode": "100644",
+      "originalPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/dependency-source-index.json",
+      "repositoryPath": "docs/two-wave-integration/20261127/pinkha-mcp-title-window/primary-review/dependency-source-index.json",
+      "sha256": "996a3b49cd660ad4881b6d1f828a93e31671c8a955b365b1028008f46b251922"
+    },
+    {
+      "bytes": 4553,
+      "gitBlob": "b8406ebe3dd0edfca242297027b5f4d76a9e6f16",
+      "mode": "100644",
+      "originalPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/donor-evidence-index.json",
+      "repositoryPath": "docs/two-wave-integration/20261127/pinkha-mcp-title-window/primary-review/donor-evidence-index.json",
+      "sha256": "00bfa29e2c549aeede6202dc0f5b8832d954b6f7b4e725118cbb696fb7e9afa6"
+    },
+    {
+      "bytes": 218019,
+      "gitBlob": "5fdf8d9c3a937ae95cba6574997ff30fb23f7f08",
+      "mode": "100644",
+      "originalPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/base5fff-four-package-tree.json",
+      "repositoryPath": "docs/two-wave-integration/20261127/pinkha-mcp-title-window/primary-review/base5fff-four-package-tree.json",
+      "sha256": "36225e8e3c768ce9a4fd8aa0aa06526ec7e1bb9bc5eb2a010ff9518775fbe8fb"
+    },
+    {
+      "bytes": 1405,
+      "gitBlob": "f8bee760277e619de3fdce088a5773c5cfb73f55",
+      "mode": "100644",
+      "originalPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/preparation1-observed-failure.json",
+      "repositoryPath": "docs/two-wave-integration/20261127/pinkha-mcp-title-window/primary-review/preparation1-observed-failure.json",
+      "sha256": "56f4fd588142880246beb92f040679b346eac6eb45fd39419c9dcbd492289fac"
+    },
+    {
+      "bytes": 55486,
+      "gitBlob": "cfd9b71dbe77a2af047079c65f41ffb9ad166f8b",
+      "mode": "100644",
+      "originalPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/primary/commit-764ed325b3b3bbf1be4ce471b3a7574db2c44bc7.json",
+      "repositoryPath": "docs/two-wave-integration/20261127/pinkha-mcp-title-window/primary-review/commit-764ed325b3b3bbf1be4ce471b3a7574db2c44bc7.json",
+      "sha256": "745ff66e01f5b9fe6968a6259e263ab57660f2cd20e4f0d89e98be6df11249eb"
+    },
+    {
+      "bytes": 12543,
+      "gitBlob": "7e44eb4c9c251d73acb5b9b94532ce2ecef99ce2",
+      "mode": "100644",
+      "originalPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/primary/commit-583620ff16205eaf79e31fe178b0e8f11fe404d4.json",
+      "repositoryPath": "docs/two-wave-integration/20261127/pinkha-mcp-title-window/primary-review/commit-583620ff16205eaf79e31fe178b0e8f11fe404d4.json",
+      "sha256": "e46948da5e47bc167450a3c174739df4fa7c31a32742c91b7928d089f6435dc9"
+    },
+    {
+      "bytes": 8122,
+      "gitBlob": "f91c7a68c1cb0ac37acba6df7fa06441c858d0a7",
+      "mode": "100644",
+      "originalPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/primary/commit-5b25ba653df0f4c1bc0d678d9fb6d8a90f651898.json",
+      "repositoryPath": "docs/two-wave-integration/20261127/pinkha-mcp-title-window/primary-review/commit-5b25ba653df0f4c1bc0d678d9fb6d8a90f651898.json",
+      "sha256": "7033d1e485a083c33d4ef10ff040923e9b873bd5a69917ad1b4a5fe73dd631db"
+    },
+    {
+      "bytes": 12276,
+      "gitBlob": "c96b72b427d771e4a0023456f1a20a0da631b533",
+      "mode": "100644",
+      "originalPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/primary/commit-b1cab938d08af6eb3a544192699797bbbe70ca99.json",
+      "repositoryPath": "docs/two-wave-integration/20261127/pinkha-mcp-title-window/primary-review/commit-b1cab938d08af6eb3a544192699797bbbe70ca99.json",
+      "sha256": "08d8bc46f087a3e1cca4ca7ac135556a9e63fb32cfb7cf8d46147efbdf8ae41f"
+    },
+    {
+      "bytes": 15314,
+      "gitBlob": "3ed3009f55a18b3bce713d204da7d7078300b212",
+      "mode": "100644",
+      "originalPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/primary/commit-5b66a4911e2354968575f7ca46d178c26f8b6540.json",
+      "repositoryPath": "docs/two-wave-integration/20261127/pinkha-mcp-title-window/primary-review/commit-5b66a4911e2354968575f7ca46d178c26f8b6540.json",
+      "sha256": "c3847a0ba64300665e00594753d450f77b650c72264207f86ad08f0323f2f148"
+    },
+    {
+      "bytes": 154463,
+      "gitBlob": "43090feaeca072427ae85ddc7134787e581e9125",
+      "mode": "100644",
+      "originalPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/dependency-responses/tree-runtimecore.json",
+      "repositoryPath": "docs/two-wave-integration/20261127/pinkha-mcp-title-window/primary-review/tree-runtimecore.json",
+      "sha256": "79c22d23b97edd6edbd74449d02d5799f8a1c6d1af94bb12bf30093c94080e82"
+    },
+    {
+      "bytes": 63729,
+      "gitBlob": "e056e880a9b8e93328676152e0b5db09c7a5e0d1",
+      "mode": "100644",
+      "originalPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/dependency-responses/tree-miniapps.json",
+      "repositoryPath": "docs/two-wave-integration/20261127/pinkha-mcp-title-window/primary-review/tree-miniapps.json",
+      "sha256": "fce091a7e094badd52266ba9b4a6151f4fb381d8e6b3a73fdd4e7e7ba6709db4"
+    },
+    {
+      "bytes": 33531,
+      "gitBlob": "efbc9ca2a9f2cd760c69a68f49662aa9763babfe",
+      "mode": "100644",
+      "originalPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/dependency-responses/tree-mcp.json",
+      "repositoryPath": "docs/two-wave-integration/20261127/pinkha-mcp-title-window/primary-review/tree-mcp.json",
+      "sha256": "94165a7d938c70d52690ccac0af77fa78d8d7453e910e658d619a7c5a6e3cf3c"
+    },
+    {
+      "bytes": 778543,
+      "gitBlob": "80499971d34dc2f4b43221528420d295b4777743",
+      "mode": "100644",
+      "originalPath": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/dependency-responses/nativescript-tree.json",
+      "repositoryPath": "docs/two-wave-integration/20261127/pinkha-mcp-title-window/primary-review/nativescript-tree.json",
+      "sha256": "8734ff86ae7a0b7d8de850a292f729a27327664b94f8aa9b14506dabd2e56aca"
+    },
+    {
+      "bytes": 35913,
+      "gitBlob": "318ea8aa8a88b0e1992d28705ab135c18449a88a",
+      "mode": "100644",
+      "originalPath": "/workspace/scratch/ae335eba85e3/hanlin-sdk-native-follow-binding-publication/publish_once.py",
+      "repositoryPath": "docs/two-wave-integration/20261127/pinkha-mcp-title-window/actual5fff-publication/publish_once.py",
+      "sha256": "e03bf9046ed18e4a72958c7067666dc600534fd9c707ed909ef501b408408a13"
+    },
+    {
+      "bytes": 2500802,
+      "gitBlob": "9cc12c4710320727a2e4f542e290d9ea3ad09908",
+      "mode": "100644",
+      "originalPath": "/workspace/scratch/ae335eba85e3/hanlin-sdk-native-follow-binding-publication/payload.json",
+      "repositoryPath": "docs/two-wave-integration/20261127/pinkha-mcp-title-window/actual5fff-publication/payload.json",
+      "sha256": "bf3abf99798e11ed06d3189d5fda105839400d03b39fda5169e358a2cd4d9bd5"
+    },
+    {
+      "bytes": 179072,
+      "gitBlob": "b3b7b73bfa8a71ed4da42cc3645750c2d27a3d72",
+      "mode": "100644",
+      "originalPath": "/workspace/scratch/ae335eba85e3/hanlin-sdk-native-follow-binding-publication/integration.original.json",
+      "repositoryPath": "docs/two-wave-integration/20261127/pinkha-mcp-title-window/actual5fff-publication/integration.original.json",
+      "sha256": "5c1c9a5de6632945f0ff7d85fa7723f17b4eb66e4360cea4d46405a8ea676bc9"
+    },
+    {
+      "bytes": 4680,
+      "gitBlob": "a3dfe0b2a19d247f1957b8fa9b1d2f22ec8f1eac",
+      "mode": "100644",
+      "originalPath": "/workspace/scratch/ae335eba85e3/hanlin-sdk-native-follow-binding-publication/handoff.json",
+      "repositoryPath": "docs/two-wave-integration/20261127/pinkha-mcp-title-window/actual5fff-publication/handoff.json",
+      "sha256": "ce9341bf542a328e920da57f81667dbb9b880bf25c501404e2af630eb35042d9"
+    },
+    {
+      "bytes": 19424,
+      "gitBlob": "f82904ec462385e62823a1b0ae17af726b5c91e7",
+      "mode": "100644",
+      "originalPath": "/workspace/scratch/ae335eba85e3/hanlin-sdk-native-follow-binding-publication/source-files.json",
+      "repositoryPath": "docs/two-wave-integration/20261127/pinkha-mcp-title-window/actual5fff-publication/source-files.json",
+      "sha256": "c368afa4961f9378b4baddeae740751c809acf8b7c66f731a7becad93173cc02"
+    },
+    {
+      "bytes": 132696,
+      "gitBlob": "3cb6aa382b9b8af6d4c0354f4d737f14d2b85193",
+      "mode": "100644",
+      "originalPath": "/workspace/scratch/ae335eba85e3/hanlin-sdk-native-follow-binding-publication/controller-full-inverse.json",
+      "repositoryPath": "docs/two-wave-integration/20261127/pinkha-mcp-title-window/actual5fff-publication/controller-full-inverse.json",
+      "sha256": "5907ed360e8021f031a909051e492e1236eaad33226ffeb81fc953125a26b3d2"
+    }
+  ],
+  "reviewedSourceInputPaths": [
+    "AI_HLY/Downstream/MCP/Runtime/MCPClientSession.swift",
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+    "AI_HLYTests/ChatCanonicalPresentationSurvivalTests.swift",
+    "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinHostSchemaValidation.swift",
+    "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HostMCPWireComparisonTests.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityTitleBuilder.swift",
+    "Scripts/MiniApps/stage-sdk.mjs"
+  ],
+  "schema": "pinkha-mcp-title-window-source-intake/v1",
+  "scope": "Two shared Swift production deltas plus one original MCP test; original App MCP/test and authoring-SDK fixes retained separately. Native/ABI/packaging acceptance remains pending.",
+  "sourceCommit": null,
+  "sourceDonors": [
+    "764ed325b3b3bbf1be4ce471b3a7574db2c44bc7",
+    "583620ff16205eaf79e31fe178b0e8f11fe404d4",
+    "5b25ba653df0f4c1bc0d678d9fb6d8a90f651898"
+  ],
+  "sourceReviewSHA256": "28573bb41363374a1d9f654752af6d6a09a6cc29ba0761f05b3654d0a3228b40",
+  "state": "SOURCE_ONLY_ROOT_EXECUTION_PENDING",
+  "testsExecuted": 0,
+  "wireTestBlob": "ab113355ec8b87b34bc07216806b08f005dc1c36",
+  "workflowDispatches": 0
+}

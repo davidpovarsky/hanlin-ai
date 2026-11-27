@@ -1,0 +1,242 @@
+{
+  "schema": "pinkha-hanlin-three-source-independent-review/v1",
+  "state": "PASS_SOURCE_ONLY_SELECTIVE_COMPOSITION_FOR_ROOT_REVIEW",
+  "reviewedAtUTC": "2026-11-27T15:45:23.288398+00:00",
+  "base": {
+    "commit": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+    "tree": "a52fdb359190930d23a76877baf2fe8fa25101d6",
+    "publicationReceipt": {
+      "path": "/workspace/scratch/ae335eba85e3/hanlin-sdk-native-follow-binding-publication/integration.original.json",
+      "bytes": 179072,
+      "sha256": "5c1c9a5de6632945f0ff7d85fa7723f17b4eb66e4360cea4d46405a8ea676bc9"
+    }
+  },
+  "observedDonorHead": "c929ebc14434523edfa78c4b0764fe8eb0fd47e6",
+  "decision": {
+    "concreteSourceBlockers": [],
+    "proposedNormalParent": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+    "candidateCommit": null,
+    "candidate23DonorPathTree": "cfcf3e254e0f7c6296baca06e90785e7d452cfc5",
+    "wholePRReplacement": false,
+    "sourceBodies": "Exact original donor bodies; no new implementation or test rewrites."
+  },
+  "closure": {
+    "sourcePaths": 7,
+    "modifiedExisting": 6,
+    "newOriginalTestFile": 1,
+    "originalEvidenceAdditions": 16,
+    "allDonorPaths": 23,
+    "completeInverses": 6,
+    "literalOperations": 8,
+    "fourPackageCounts": {
+      "before": 1010,
+      "after": 1011,
+      "unchangedExisting": 1008,
+      "modified": 2,
+      "addedTest": 1,
+      "removed": 0
+    },
+    "fourPackageTrees": {
+      "HanlinAgentSDK": "198b871fa6fc713cb54d34a0275a2a22c5e85849",
+      "HanlinPresentationSDK": "52cefb72315526a5c25a82940497985f2111fb7d",
+      "HanlinPlatform": "4c82574ed393dca14a4a99ca9ef67a3b0be58417",
+      "HanlinMiniAppsBridge": "98ef5d2b47c03f4ea98319a851abae183f500a40"
+    },
+    "allOtherPackageTreesUnchanged": true,
+    "allPackageManifestsAndLocksUnchanged": true,
+    "wholeSourceProof": {
+      "path": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/whole-tree-preservation.json",
+      "bytes": 650589,
+      "sha256": "a86f50c2226eb5dae2e5a61f7d19eebabc2623835e8a952b6e929103d9f140ad"
+    }
+  },
+  "reviews": [
+    {
+      "commit": "764ed325b3b3bbf1be4ce471b3a7574db2c44bc7",
+      "result": "SOURCE_READY_NATIVE_NOT_RUN",
+      "changedProduction": [
+        "AI_HLY/Downstream/MCP/Runtime/MCPClientSession.swift",
+        "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinHostSchemaValidation.swift"
+      ],
+      "findings": [
+        "The actual MCP call still decodes its actual MCP.Value object and compares its JSONEncoder projection before client.send. Only the comparison API name changes; transport, request ownership, result rendering and cancellation bodies are preserved.",
+        "The new comparison accepts both complete already-owned wire documents and no metadata-removal argument. Exact decimal numbers, scalar keys/strings, JSON kinds, all metadata and strict syntax remain checked by the original pinned parser/comparator.",
+        "Each parser receives finite actual-input-derived input/string/aggregate/retention/work quotas. All multiplications, additions and Int-to-UInt64 conversions are checked, and all three policies validate before parsing. The comparator admits both values into its own finite ledger.",
+        "Independent inspection of exact14 original JSON cost files confirms actual input copying/scanning, string copy/escape/key fingerprint costs and non-owned comparison admission. All14 SHA values match the published source-cost index and actual5fff.",
+        "Original49 resource fields remain explicit: parse changes5 metrics and preserves44; comparison changes3 and preserves46. Original depth64, nodes100000, object20000, keys16384, number limits, numeric work and cancellationQuantum1024 stay fixed. Conservative residual structural/collision/numeric work may still reject adversarial inputs.",
+        "All existing schema validation, consent scope, provider projection, metadata removal and deterministic JSON API bodies are recovered by the complete additive inverse. Their original1MiB admission is unchanged.",
+        "No claim of bounded total RSS or bounded preexisting Foundation/MCP decode/encoding is made. The policy meters three separate JSON operations; it is not one cumulative execution ledger."
+      ],
+      "existingRegressionInputs": [
+        {
+          "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+          "path": "AI_HLYTests/RuntimeAutonomyV3Tests.swift",
+          "bytes": 93441,
+          "sha256": "b72a5d8ec0c51144e864776a2e1d4537cbfd0e28e27074b47280af5b108fba7d",
+          "gitBlob": "6dd78dbc86dc0e7e8d1ec65bc7f5550b8b618d3f",
+          "localPath": "hanlin-latest-three-source-review/dependencies/AI_HLYTests/RuntimeAutonomyV3Tests.swift"
+        },
+        {
+          "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+          "path": "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HostSchemaValidationTests.swift",
+          "bytes": 11436,
+          "sha256": "32c7d2350bc871bc87fa45d0536d81e2c631af594bff7d5f941f6f3f0e4cb327",
+          "gitBlob": "1d6add8bb4ea93884c127a6e67194f3fe9301910",
+          "localPath": "hanlin-latest-three-source-review/dependencies/Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HostSchemaValidationTests.swift"
+        },
+        {
+          "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+          "path": "Packages/HanlinAgentSDK/Package.swift",
+          "bytes": 3056,
+          "sha256": "16becff5f9e626f171d21f0277684c249c773f3169334fc9a63a37876c44a36e",
+          "gitBlob": "fcf99a97a6fab9fa5885c44521e950da37467405",
+          "localPath": "hanlin-latest-three-source-review/dependencies/Packages/HanlinAgentSDK/Package.swift"
+        },
+        {
+          "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+          "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/PROVENANCE.json",
+          "bytes": 33485,
+          "sha256": "8e316afb8eb29cd906693e040def2fea90b3c898237c1dc5a86f8d3c05703b8e",
+          "gitBlob": "1d1dd13944b23f750a6d9b00a5f31ceefc9fa0ab",
+          "localPath": "hanlin-latest-three-source-review/dependencies/Packages/HanlinAgentSDK/Vendor/Swift-JSON/PROVENANCE.json"
+        }
+      ],
+      "originalEvidence": "14 published portable source/arithmetic model cases only. Swift parser/11 new native tests/original real MCP acceptance NOT_RUN at donor checkpoint; reviewer executed none.",
+      "requiredAcceptance": {
+        "newPackageSuite": "HanlinAgentCoreTests/HostMCPWireComparisonTests",
+        "expectedNewMethods": 11,
+        "largeMethodLimitsSeconds": 120,
+        "unchangedOriginalAppSelector": "AI_HLYTests/RuntimeAutonomyV3Tests/actualMCPTransportPreservesLargeStructuredResultsThroughTheOriginalRendererAndStore",
+        "unchangedOriginalAppLimitSeconds": 120,
+        "requiresActualTransportRendererAndStore": true
+      }
+    },
+    {
+      "commit": "583620ff16205eaf79e31fe178b0e8f11fe404d4",
+      "result": "SOURCE_READY_NATIVE_NOT_RUN",
+      "changedProduction": [
+        "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityTitleBuilder.swift"
+      ],
+      "findings": [
+        "Only failed/cancelled title selection changes. Explicit title comes from the actual failed execution-lifecycle step, passes the unchanged sanitizer and generic-label rejection, and differs from original canonical operation/running/completed labels.",
+        "Earlier running-title rejection requires an actual matching nonnil toolCallID and earlier sequence. Missing call identities are not conflated. Original Composer sorts by sequence and groups the original observed steps by call identity before invoking this builder.",
+        "Cancellation keeps its original operation-title fallback. Raw errorDescription is never promoted. The sanitizer rejects private reasoning patterns, raw JSON, URLs, credentials, excess lines and over280-character labels.",
+        "All original nonterminal title behavior, helper bodies and five original App test methods remain byte-identical. Six additive regression methods use real Composer/AgentRun and cover retained labels, canonical labels, nil identities, cancellation, generic/approval labels and unsafe text."
+      ],
+      "requiredAcceptance": {
+        "suite": "AI_HLYTests/ChatCanonicalPresentationSurvivalTests",
+        "existingAffectedMethod": "failedActivityTitle",
+        "newMethods": [
+          "failedTitleDoesNotRetainEarlierRunningLabel",
+          "failedTitleDoesNotReuseCanonicalLifecycleLabels",
+          "failedTitleDoesNotInferHistoryFromUnidentifiedSteps",
+          "cancelledActivityKeepsOperationTitle",
+          "failedTitleRejectsGenericAndApprovalLabels",
+          "failedTitleRejectsUnsafePresentationText"
+        ],
+        "allOriginalSuiteMethods": 5,
+        "fullSuiteMethodsAfter": 11,
+        "status": "NOT_RUN"
+      },
+      "scopeLimit": "History-based rejection depends on an actual earlier same-call step being retained. No inferred history or alternate diagnostic text is used."
+    },
+    {
+      "commit": "5b25ba653df0f4c1bc0d678d9fb6d8a90f651898",
+      "result": "SOURCE_READY_NEW_AUTHORING_PRODUCER_NOT_RUN",
+      "changedProduction": [
+        "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+        "Scripts/MiniApps/stage-sdk.mjs"
+      ],
+      "findings": [
+        "The original window-factory already exists under unchanged NativeScript14373. Its package.json/types/index/host files and native window package/session/shared-module-link implementations are exact5fff primary bytes.",
+        "The stage source now includes the four original factory files in input provenance and copies them with the existing unchanged authoring-file filter beside host-services, retaining exact package version and original bytes.",
+        "The only authoring compiler change adds @hanlin/window-factory to the exact host-provided package set. Direct and transitive copying checks therefore continue using the original shared runtime implementation instead of bundling a duplicate.",
+        "No NativeScript Objective-C/Swift/runtime JavaScript/declaration body or upstream dependency/pin changes. Original scope-specific window loader, package namespace, services, lifecycle and window identity remain intact.",
+        "Existing six stage-sdk source tests and six authoring-examples source tests are unchanged; no new test file or assertion relaxation was introduced."
+      ],
+      "originalEvidence": {
+        "publishedOwnerFailures": [
+          46000299446,
+          46000312643
+        ],
+        "publishedDiagnosticBytes": 2686,
+        "publishedDiagnosticSHA256": "b96a7079000d51cbb9a455b87515c1a21ecc196db0b0a33d4d963e50b0ab9135",
+        "diagnostic": "TS2307 missing @hanlin/window-factory then six inferred-any diagnostics; owner reports both stopped before UI validation.",
+        "rawDiagnosticReadByThisReview": false,
+        "publishedNodeSyntaxVersion": "v24.5.0",
+        "originalAuthoringInputChange": "392→396; four unchanged runtime package files added, only stage-sdk digest changed among old input members.",
+        "newSDKPackagingAndNativeStatus": "NOT_RUN"
+      },
+      "requiredAcceptance": [
+        "Fresh original authoring SDK provenance and staged package bytes must qualify the396-input contract; old392 receipt cannot certify this corrected stage.",
+        "Original source validate/build must resolve @hanlin/window-factory and retain the real shared implementation.",
+        "Continue original owner concurrency/Shortcuts/native-window scenarios from the already-owned route; no UI success is inferred from a source fix or earlier install/App Group checks."
+      ]
+    }
+  ],
+  "consumerApplicability": [
+    {
+      "surface": "Anytype four-package Swift consumer",
+      "effect": "Direct shared HanlinAgentActivityCore title correction and additive HanlinAgentCore exact-wire API. The actual MCPClientSession caller remains in standalone AI_HLY outside the four-package extraction. No new Anytype MCP caller or authority is invented.",
+      "source": "Original Modules/PinkhaAnyHanlin/Package.swift at1786 explicitly imports AgentSDK,Platform,PresentationSDK,MiniAppsBridge plus ActivityCore/UI; this architecture is separate from the native companion."
+    },
+    {
+      "surface": "Standalone Hanlin/NativeScript authoring and companion",
+      "effect": "MCP actual transport call-site correction and window-factory authoring provenance/copy correction. The native runtime package is unchanged; a newly qualified authoring archive is still required."
+    },
+    {
+      "surface": "Two different SDK receipt families",
+      "effect": "The donor docs392→396 refer to the TypeScript authoring SDK. This proposal changes the Swift four-package source inventory1010→1011. Neither receipt family substitutes for the other."
+    }
+  ],
+  "preservedNativeHandler": {
+    "packageTree": "14373dc81171600079e458087872d4e8ea7bbc1c",
+    "bridgeBlob": "7bbc804da241fe31d6e860eaedd064a192b97e49",
+    "originalWireTestBlob": "ab113355ec8b87b34bc07216806b08f005dc1c36",
+    "actualSuiteSelector": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptActionDeclarationsPreserveRegisteredJavaScriptState",
+    "status": "SOURCE_UNCHANGED_NO_NEW_RUNTIME_QUALIFICATION",
+    "syntheticHandlerRegressionAdopted": false
+  },
+  "provenanceLimits": [
+    "The original donor docs retain their original worktree/base/cherry-pick source identities. Their bytes/hashes match these published donor bodies, but those old identity strings are not relabelled as5fff ancestry.",
+    "No original failure, build, test, producer or ABI receipt is replaced. Binary ABI/native behavior requires the actual later compiled source/dependency closure.",
+    "The proposed root tree includes only23 exact donor paths, before the root may add this independent review as new evidence. No final commit SHA is invented."
+  ],
+  "validation": {
+    "ordinaryCompleteDiffCheck": {
+      "path": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/ordinary-complete-diff-check.json",
+      "bytes": 489,
+      "sha256": "4994d00cffd97487448ab884860fcdf28d50d33032cbac98905e60deb8e454b7"
+    },
+    "sourceInverse": {
+      "path": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/source-inverses.json",
+      "bytes": 20445,
+      "sha256": "6085c25804ee0ab42502cd452f633cad32fab5b68117bc095360c494add74896"
+    },
+    "primarySourceIndex": {
+      "path": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/primary-source-index.json",
+      "bytes": 16591,
+      "sha256": "3e055caebecdcf318689dccd6200b117928073d24b4311b5a9af85e105fc36a6"
+    },
+    "dependencyIndex": {
+      "path": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/dependency-source-index.json",
+      "bytes": 20022,
+      "sha256": "996a3b49cd660ad4881b6d1f828a93e31671c8a955b365b1028008f46b251922"
+    },
+    "donorEvidenceIndex": {
+      "path": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/donor-evidence-index.json",
+      "bytes": 4553,
+      "sha256": "00bfa29e2c549aeede6202dc0f5b8832d954b6f7b4e725118cbb696fb7e9afa6"
+    },
+    "localPreparationFailurePreserved": {
+      "path": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/preparation1-observed-failure.json",
+      "bytes": 1405,
+      "sha256": "56f4fd588142880246beb92f040679b346eac6eb45fd39419c9dcbd492289fac"
+    },
+    "softwareTests": 0,
+    "compilerInvocations": 0,
+    "nativeOrAccountActions": 0,
+    "hostActions": 0,
+    "publicationActions": 0
+  }
+}

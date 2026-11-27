@@ -1,0 +1,317 @@
+[
+  {
+    "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+    "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Codec/JSONLexer.swift",
+    "bytes": 8519,
+    "sha256": "0bfe86c1044068dfa5481b219ca85e9713e307494dd5818b056219b8f7157edf",
+    "gitBlob": "8e00322d6b0528fdc207bf4a115339fa89e3512a",
+    "localPath": "hanlin-latest-three-source-review/dependencies/Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Codec/JSONLexer.swift",
+    "originalResponse": "hanlin-latest-three-source-review/dependency-responses/json-0.json"
+  },
+  {
+    "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+    "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Codec/JSONParser.swift",
+    "bytes": 3884,
+    "sha256": "9cf5f49d6902d4b837249415a8981f1d9da16f9c6f1dc56e8f68821e1788fee9",
+    "gitBlob": "0d91d64f3bbcb05547a021a6ac745cc2c544f495",
+    "localPath": "hanlin-latest-three-source-review/dependencies/Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Codec/JSONParser.swift",
+    "originalResponse": "hanlin-latest-three-source-review/dependency-responses/json-1.json"
+  },
+  {
+    "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+    "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Value/JSONExactKeyIndex.swift",
+    "bytes": 5591,
+    "sha256": "0c1d712ebdec398192cdd2200f4996aed132563b23eee8ba2a307796852dcfb2",
+    "gitBlob": "ab77da668ccf3d3ecb7bad9b2a2ef03acbd21f78",
+    "localPath": "hanlin-latest-three-source-review/dependencies/Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Value/JSONExactKeyIndex.swift",
+    "originalResponse": "hanlin-latest-three-source-review/dependency-responses/json-10.json"
+  },
+  {
+    "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+    "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Value/JSONFingerprint.swift",
+    "bytes": 3317,
+    "sha256": "afc4df472eaae6f6979a7b6caa113bc327e4f2213da359ff8cd9d8300ba03b3d",
+    "gitBlob": "33c7fd09395a5fa659bba1da1e8130d41f5f3c02",
+    "localPath": "hanlin-latest-three-source-review/dependencies/Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Value/JSONFingerprint.swift",
+    "originalResponse": "hanlin-latest-three-source-review/dependency-responses/json-11.json"
+  },
+  {
+    "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+    "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Value/JSONKey.swift",
+    "bytes": 3676,
+    "sha256": "2b3760d60ba265a975dcf4eb8277269a3fa069e25d4ef2105a7b94e64620b3ce",
+    "gitBlob": "9cd9dc066a3c52809d04ad136b002b322406a2b9",
+    "localPath": "hanlin-latest-three-source-review/dependencies/Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Value/JSONKey.swift",
+    "originalResponse": "hanlin-latest-three-source-review/dependency-responses/json-12.json"
+  },
+  {
+    "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+    "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Value/JSONObject.swift",
+    "bytes": 7506,
+    "sha256": "a418915f32a4c17cc1ebec6f21ae2e53c955e294e209cdfa130704dd4c14a9db",
+    "gitBlob": "818ba93f23f4fa86b5078a426a49db8f47a9843a",
+    "localPath": "hanlin-latest-three-source-review/dependencies/Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Value/JSONObject.swift",
+    "originalResponse": "hanlin-latest-three-source-review/dependency-responses/json-13.json"
+  },
+  {
+    "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+    "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/PROVENANCE.json",
+    "bytes": 33485,
+    "sha256": "8e316afb8eb29cd906693e040def2fea90b3c898237c1dc5a86f8d3c05703b8e",
+    "gitBlob": "1d1dd13944b23f750a6d9b00a5f31ceefc9fa0ab",
+    "localPath": "hanlin-latest-three-source-review/dependencies/Packages/HanlinAgentSDK/Vendor/Swift-JSON/PROVENANCE.json",
+    "originalResponse": "hanlin-latest-three-source-review/dependency-responses/json-14.json"
+  },
+  {
+    "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+    "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Codec/JSONParsingOptions.swift",
+    "bytes": 515,
+    "sha256": "bc524c7443e1503235fed3344e67c74d74c9eeb804d4a45052944223c6313278",
+    "gitBlob": "50e9b0477f7778094e4f5378d72885d0334c4772",
+    "localPath": "hanlin-latest-three-source-review/dependencies/Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Codec/JSONParsingOptions.swift",
+    "originalResponse": "hanlin-latest-three-source-review/dependency-responses/json-2.json"
+  },
+  {
+    "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+    "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Codec/JSONTokenMachine.swift",
+    "bytes": 9952,
+    "sha256": "200a84cd2f4173ec42fb27a8b71d16f2e21c6f268c8ba851cdc78a5ca633ac71",
+    "gitBlob": "4702b135c5852a4669cfa9060bbf37e52fed97a8",
+    "localPath": "hanlin-latest-three-source-review/dependencies/Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Codec/JSONTokenMachine.swift",
+    "originalResponse": "hanlin-latest-three-source-review/dependency-responses/json-3.json"
+  },
+  {
+    "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+    "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Errors/JSONFailure.swift",
+    "bytes": 3773,
+    "sha256": "5937e7c9053734c3efe6e837df7b939a7b8840024370c8d85b9b2aca74ebdce3",
+    "gitBlob": "5602afd8a65909a95ba62491708dd42503014f96",
+    "localPath": "hanlin-latest-three-source-review/dependencies/Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Errors/JSONFailure.swift",
+    "originalResponse": "hanlin-latest-three-source-review/dependency-responses/json-4.json"
+  },
+  {
+    "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+    "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Limits/JSONLimits.swift",
+    "bytes": 13317,
+    "sha256": "4d1fbd123f0e36867ca5d61c2d9c56a7475e022ea2ca692353fbf127d8d90935",
+    "gitBlob": "476535779853f29167ab1389b03c283a786f8700",
+    "localPath": "hanlin-latest-three-source-review/dependencies/Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Limits/JSONLimits.swift",
+    "originalResponse": "hanlin-latest-three-source-review/dependency-responses/json-5.json"
+  },
+  {
+    "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+    "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Limits/JSONWorkMeter.swift",
+    "bytes": 14710,
+    "sha256": "01eafd1d592f7d0de4770075366c6c49145c5617052ba86a368ba6503b974905",
+    "gitBlob": "73b19cd18e2ca88c561a7e5d06f27008472793da",
+    "localPath": "hanlin-latest-three-source-review/dependencies/Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Limits/JSONWorkMeter.swift",
+    "originalResponse": "hanlin-latest-three-source-review/dependency-responses/json-6.json"
+  },
+  {
+    "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+    "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Number/DecimalComponents.swift",
+    "bytes": 3359,
+    "sha256": "218b42a151efc078af9bf19236b057ac1954ba945f96af789269cb66706935fb",
+    "gitBlob": "f8ae80b7414ef06e62f6b4c237f552135850bdb1",
+    "localPath": "hanlin-latest-three-source-review/dependencies/Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Number/DecimalComponents.swift",
+    "originalResponse": "hanlin-latest-three-source-review/dependency-responses/json-7.json"
+  },
+  {
+    "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+    "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Number/JSONNumber.swift",
+    "bytes": 8015,
+    "sha256": "d981ecaaa6ca0e9db513020eb44521c53dc28662c51a173565c31fb6eca3d8f7",
+    "gitBlob": "64c5763b6c88f05f2effa0669dbf1af1de90683b",
+    "localPath": "hanlin-latest-three-source-review/dependencies/Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Number/JSONNumber.swift",
+    "originalResponse": "hanlin-latest-three-source-review/dependency-responses/json-8.json"
+  },
+  {
+    "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+    "path": "Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Value/JSONComparison.swift",
+    "bytes": 5999,
+    "sha256": "b7e2766ee075385b6d18e7bfeb4f0d9b5a9d7b8fc4b54e3f0cb1086064bdfa18",
+    "gitBlob": "22694cc59b11c07ccd386aa00a67013f00174e53",
+    "localPath": "hanlin-latest-three-source-review/dependencies/Packages/HanlinAgentSDK/Vendor/Swift-JSON/Sources/JSON/Value/JSONComparison.swift",
+    "originalResponse": "hanlin-latest-three-source-review/dependency-responses/json-9.json"
+  },
+  {
+    "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+    "path": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Models/AgentActivityModels.swift",
+    "bytes": 13566,
+    "sha256": "cc49ec07cd8c2207b899ff7a32a7c1334db3d300dd411fbabbe7b1e201672aeb",
+    "gitBlob": "79f4d9d83e823c1f1975edf2dda968bb32128fb4",
+    "localPath": "hanlin-latest-three-source-review/dependencies/Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Models/AgentActivityModels.swift",
+    "originalResponse": "hanlin-latest-three-source-review/dependency-responses/main-0.json"
+  },
+  {
+    "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+    "path": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Models/ToolPresentationRegistry.swift",
+    "bytes": 4437,
+    "sha256": "e5f2943035b4e24e036e73cc2ca6fb9fcae8a96140f36ef6aeedd8b8a9ccdd02",
+    "gitBlob": "e2cddc9873021052d0e6e47ea7c52b97d68acbfd",
+    "localPath": "hanlin-latest-three-source-review/dependencies/Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Models/ToolPresentationRegistry.swift",
+    "originalResponse": "hanlin-latest-three-source-review/dependency-responses/main-1.json"
+  },
+  {
+    "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+    "path": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityDeduplicator.swift",
+    "bytes": 1184,
+    "sha256": "d4c6be6a6ff544919d5267fc433e60b047a4fddc24a05446d07bb5bb146d300a",
+    "gitBlob": "98ffdca9bdf4b900d9736347effa594f0cea7cf2",
+    "localPath": "hanlin-latest-three-source-review/dependencies/Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityDeduplicator.swift",
+    "originalResponse": "hanlin-latest-three-source-review/dependency-responses/main-2.json"
+  },
+  {
+    "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+    "path": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Progress/ProgressSummarySanitizer.swift",
+    "bytes": 6690,
+    "sha256": "63f2388f52c5a9c7ee6996a5d5df8c3a34d4a4c3a336b39b99c0be299671c05b",
+    "gitBlob": "7ef98fc201c651ff967527d789a31e064178b424",
+    "localPath": "hanlin-latest-three-source-review/dependencies/Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Progress/ProgressSummarySanitizer.swift",
+    "originalResponse": "hanlin-latest-three-source-review/dependency-responses/main-3.json"
+  },
+  {
+    "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+    "path": "Packages/HanlinAgentSDK/Package.swift",
+    "bytes": 3056,
+    "sha256": "16becff5f9e626f171d21f0277684c249c773f3169334fc9a63a37876c44a36e",
+    "gitBlob": "fcf99a97a6fab9fa5885c44521e950da37467405",
+    "localPath": "hanlin-latest-three-source-review/dependencies/Packages/HanlinAgentSDK/Package.swift",
+    "originalResponse": "hanlin-latest-three-source-review/dependency-responses/main-4.json"
+  },
+  {
+    "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+    "path": "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HostSchemaValidationTests.swift",
+    "bytes": 11436,
+    "sha256": "32c7d2350bc871bc87fa45d0536d81e2c631af594bff7d5f941f6f3f0e4cb327",
+    "gitBlob": "1d6add8bb4ea93884c127a6e67194f3fe9301910",
+    "localPath": "hanlin-latest-three-source-review/dependencies/Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HostSchemaValidationTests.swift",
+    "originalResponse": "hanlin-latest-three-source-review/dependency-responses/main-5.json"
+  },
+  {
+    "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+    "path": "AI_HLYTests/RuntimeAutonomyV3Tests.swift",
+    "bytes": 93441,
+    "sha256": "b72a5d8ec0c51144e864776a2e1d4537cbfd0e28e27074b47280af5b108fba7d",
+    "gitBlob": "6dd78dbc86dc0e7e8d1ec65bc7f5550b8b618d3f",
+    "localPath": "hanlin-latest-three-source-review/dependencies/AI_HLYTests/RuntimeAutonomyV3Tests.swift",
+    "originalResponse": "hanlin-latest-three-source-review/dependency-responses/main-6.json"
+  },
+  {
+    "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+    "path": "Packages/HanlinNativeScriptRuntime/Package.swift",
+    "bytes": 1695,
+    "sha256": "88a4926e884e6804246a7d077efed3837271886a9825585b1e561b4ce1576120",
+    "gitBlob": "8c8005bb9c821c4f99e9739755225c8717890629",
+    "localPath": "hanlin-latest-three-source-review/dependencies/Packages/HanlinNativeScriptRuntime/Package.swift",
+    "originalResponse": "hanlin-latest-three-source-review/dependency-responses/window-0.json"
+  },
+  {
+    "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+    "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSharedModuleLinks.swift",
+    "bytes": 4220,
+    "sha256": "96940eee048fb84e9df319032a4c5aa16191d6d78d763d3525fd0a6d315fd5a2",
+    "gitBlob": "9bd2382968c2e07e2bed214c744de1be0c7f1ab4",
+    "localPath": "hanlin-latest-three-source-review/dependencies/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptSharedModuleLinks.swift",
+    "originalResponse": "hanlin-latest-three-source-review/dependency-responses/window-1.json"
+  },
+  {
+    "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+    "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptWindowPackage.swift",
+    "bytes": 10256,
+    "sha256": "c3dcbebc91c63f666134670a3900deee0a9d41381808abd6770496e673bb34e5",
+    "gitBlob": "ff37a73f4a4b3b16d1fb2f464c310a15cf8f0057",
+    "localPath": "hanlin-latest-three-source-review/dependencies/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptWindowPackage.swift",
+    "originalResponse": "hanlin-latest-three-source-review/dependency-responses/window-2.json"
+  },
+  {
+    "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+    "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptWindowSession.swift",
+    "bytes": 8707,
+    "sha256": "de1329ae3359e51f0c101083f76733712076a7689a059ea60241f51516c91f8e",
+    "gitBlob": "ed2d606d7eac301362779123298b0c5fc5083bd7",
+    "localPath": "hanlin-latest-three-source-review/dependencies/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptWindowSession.swift",
+    "originalResponse": "hanlin-latest-three-source-review/dependency-responses/window-3.json"
+  },
+  {
+    "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+    "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/window-factory/host.mjs",
+    "bytes": 1357,
+    "sha256": "90438aad900ca2b612460381243aed29acce688222e2c8949e15d8c18a8afe73",
+    "gitBlob": "a4dce668c75eec23680092e06f487d123a17a90a",
+    "localPath": "hanlin-latest-three-source-review/dependencies/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/window-factory/host.mjs",
+    "originalResponse": "hanlin-latest-three-source-review/dependency-responses/window-4.json"
+  },
+  {
+    "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+    "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/window-factory/index.d.ts",
+    "bytes": 1124,
+    "sha256": "309a6d7efd838ddc7631b80daa975ee613d95977047e2718b4f7c38905f9c36a",
+    "gitBlob": "d6fa1e32f77f57d869491808392caa0297c28fbf",
+    "localPath": "hanlin-latest-three-source-review/dependencies/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/window-factory/index.d.ts",
+    "originalResponse": "hanlin-latest-three-source-review/dependency-responses/window-5.json"
+  },
+  {
+    "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+    "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/window-factory/index.mjs",
+    "bytes": 5554,
+    "sha256": "22e2fac403d3b6f5431b662424d9cba6c4cd9f121d943328616d778746950062",
+    "gitBlob": "3e341b8bedc4499213c3826b8db45c51802a58a1",
+    "localPath": "hanlin-latest-three-source-review/dependencies/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/window-factory/index.mjs",
+    "originalResponse": "hanlin-latest-three-source-review/dependency-responses/window-6.json"
+  },
+  {
+    "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+    "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/window-factory/package.json",
+    "bytes": 148,
+    "sha256": "585bf89d89e626bff514cb2f8a4c982c9e89a09088a8c728b10d1fa08cfb440c",
+    "gitBlob": "4029ac49ac72a4ae038e2d0af38de9a03a2403ae",
+    "localPath": "hanlin-latest-three-source-review/dependencies/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/window-factory/package.json",
+    "originalResponse": "hanlin-latest-three-source-review/dependency-responses/window-7.json"
+  },
+  {
+    "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+    "path": "Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityComposer.swift",
+    "bytes": 11712,
+    "sha256": "dd6aabe1ea9ce317c17fd57d8cb6cc9563669f24ed02ef6bb91fb790de96c63e",
+    "gitBlob": "732f28d32f67932f19d48e585504049b3ba1fbc5",
+    "localPath": "hanlin-latest-three-source-review/dependencies/Packages/HanlinPresentationSDK/Sources/HanlinAgentActivityCore/Presentation/AgentActivityComposer.swift",
+    "originalResponse": "hanlin-latest-three-source-review/dependency-responses/caller-0.json"
+  },
+  {
+    "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+    "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinHostDispatcher.swift",
+    "bytes": 20452,
+    "sha256": "1fdebf5bfd0b08d35b68a7f3103a5a8addfe3c780aa491e28ba56e147e552796",
+    "gitBlob": "912fbb41d3053f85a01cf6d3556f534a13e83fa8",
+    "localPath": "hanlin-latest-three-source-review/dependencies/Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinHostDispatcher.swift",
+    "originalResponse": "hanlin-latest-three-source-review/dependency-responses/caller-1.json"
+  },
+  {
+    "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+    "path": "Scripts/MiniApps/install-tooling.mjs",
+    "bytes": 10914,
+    "sha256": "6fb5f130d1a381d628ffa5042eff7ce36d48431ed7636a36c28fec20e5b79120",
+    "gitBlob": "b7689a96c3760d896d547f77c2fbcbd52c692594",
+    "localPath": "hanlin-latest-three-source-review/dependencies/Scripts/MiniApps/install-tooling.mjs",
+    "originalResponse": "hanlin-latest-three-source-review/dependency-responses/caller-2.json"
+  },
+  {
+    "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+    "path": "Scripts/MiniApps/Tests/stage-sdk.test.mjs",
+    "bytes": 11432,
+    "sha256": "b64daa4c0a11d3750c1724f220c97d455ff715012704594d0479b34e521cf176",
+    "gitBlob": "bc57a939a956bad2302ab1ebef54f69841282b04",
+    "localPath": "hanlin-latest-three-source-review/dependencies/Scripts/MiniApps/Tests/stage-sdk.test.mjs",
+    "originalResponse": "hanlin-latest-three-source-review/dependency-responses/authoringtest-0.json"
+  },
+  {
+    "ref": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+    "path": "Scripts/MiniApps/Tests/authoring-examples.test.mjs",
+    "bytes": 8683,
+    "sha256": "e40ace95a429ba0ee013f2832a00e1d0d004106a18e2f7709ecd6275726c682e",
+    "gitBlob": "9c18648c2928ed4e68e6b4836eccd7630e9e9248",
+    "localPath": "hanlin-latest-three-source-review/dependencies/Scripts/MiniApps/Tests/authoring-examples.test.mjs",
+    "originalResponse": "hanlin-latest-three-source-review/dependency-responses/authoringtest-1.json"
+  }
+]

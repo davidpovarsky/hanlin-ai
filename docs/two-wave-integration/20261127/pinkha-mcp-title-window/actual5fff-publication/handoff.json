@@ -1,0 +1,109 @@
+{
+  "actualParentReceipt": {
+    "bytes": 208809,
+    "path": "hanlin-sdk-promise-metadata-intents-publication/integration.original.json",
+    "sha256": "3afc5bbe91fee176fab2ba0323ad7be5381e1b3c068335716c95f1ab4a723c4f"
+  },
+  "anytypeHostProposal": {
+    "applied": false,
+    "bytes": 21227,
+    "gitBlob": "9ec594dc3021aeee39d49ba641f7be3919f475ad",
+    "path": "Modules/PinkhaAnyHanlin/Sources/PinkhaHanlinUI/PinkhaHanlinChatView.swift",
+    "sha256": "b60b4a02c5ca8e282016e07af5aa753bb0e438e662f8b95529ccfda1789e746a"
+  },
+  "baseTree": "c381d5c97207b30dfd0494bd54b74919010c7b1e",
+  "controller": {
+    "bytes": 35913,
+    "path": "hanlin-sdk-native-follow-binding-publication/publish_once.py",
+    "sha256": "e03bf9046ed18e4a72958c7067666dc600534fd9c707ed909ef501b408408a13"
+  },
+  "custody": {
+    "defaultCommandSeconds": 25,
+    "directInverseOperationsToFrozen19": 14,
+    "expectedSourceWorktree": "0ae1920d316b9592cbad0462bea96a07fd1ca351",
+    "fullInverseOperationsToActual78287": 31,
+    "normalNewRefOnly": true,
+    "originalPublisherSHA256": "78287bad76049927f80a136e9683abbe6f6c9ad9af8efb44f7c8619bf1b814eb",
+    "overallSeconds": 300,
+    "positiveActual63ReceiptGuardUnchanged": true,
+    "preservesBothIndexesAndAllExistingRefs": true,
+    "pushSeconds": 90,
+    "remoteReadSeconds": 45,
+    "unchangedCompleteDeclarations": 16
+  },
+  "expectedCompleteTree": "a52fdb359190930d23a76877baf2fe8fa25101d6",
+  "holds": [
+    "Root reviews and executes this finite publisher; no child remote action has occurred.",
+    "All 23 original UIKit methods and current Anytype overlay/viewport behavior remain NOT_RUN.",
+    "The failed original 4cb UIKit20 build and owner G26 rotated-viewport failure remain separately retained.",
+    "No accepted Agent7, payload-quota6 or Widget2 replay is requested.",
+    "Materializer988 remains immutable and unexecuted until the actual final SDK and Anytype pin receipts exist."
+  ],
+  "localDerivation": "AST parse, full literal inverses, complete Git tree projection and exact local diff diagnostics only; no compiler or new test suite.",
+  "nativeSelection": {
+    "cases": 23,
+    "inventory": {
+      "bytes": 13397,
+      "path": "hanlin-g27-native-binding-review/original-uikit23-source-inventory.json",
+      "sha256": "7686badb43841819d13749cc6a2055170a21b37bf5bdf662c1f6d03faee21e2b"
+    },
+    "methods": 23,
+    "newOriginalMethods": 3,
+    "previous20DeclarationsRetainedByteExact": true,
+    "status": "NOT_RUN"
+  },
+  "packages": {
+    "afterFiles": 1010,
+    "afterSourceBytes": 39797368,
+    "all227ProvenanceRowsUnchanged": true,
+    "allManifestsAndLocksUnchanged": true,
+    "beforeFiles": 1010,
+    "beforeSourceBytes": 39792490,
+    "otherPackagesUnchanged": true,
+    "presentationAfterTree": "5c9daeab42def7d5b7594ebc9c6d79df6ed34743",
+    "presentationBeforeTree": "3fdc8170b9a749797f4d97c796405306d21ed438",
+    "presentationLeaves": 455,
+    "unchangedPresentationLeaves": 453
+  },
+  "packedPayload": {
+    "bytes": 496226,
+    "path": "hanlin-sdk-native-follow-binding-publication/payload.json.gz",
+    "sha256": "a2582b4390c95047b63ed04df77cea720520c8f57cfb3ecc17c7601619d341e3"
+  },
+  "pathScope": {
+    "addedEvidence": 44,
+    "exactModifiedPaths": [
+      "AI_HLYTests/ChatScrollViewHandleTests.swift",
+      "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/ChatScrollViewHandle.swift",
+      "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/HanlinFollowLatestOverlay.swift"
+    ],
+    "frozen19RetainedByteExact": true,
+    "modified": 3,
+    "paths": 47,
+    "sourceAndEvidenceBytes": 1431168
+  },
+  "payload": {
+    "bytes": 2500802,
+    "path": "hanlin-sdk-native-follow-binding-publication/payload.json",
+    "sha256": "bf3abf99798e11ed06d3189d5fda105839400d03b39fda5169e358a2cd4d9bd5"
+  },
+  "proposedRef": "refs/heads/codex/pinkha-sdk-native-follow-binding-20261127",
+  "repository": "davidpovarsky/hanlin-ai",
+  "reviewIndex": {
+    "bytes": 2665,
+    "path": "hanlin-sdk-native-follow-binding-publication/review-index.json",
+    "sha256": "97b010d61ce203805730e5cbf169d89b656f0e52de0f20cf5c1972193f221f43"
+  },
+  "schema": "pinkha-native-follow-binding-publication-handoff/v1",
+  "soleParent": "8b548bbe5b1340a48e741191c41d6b30c73537df",
+  "state": "FROZEN_PREPARED_NOT_EXECUTED",
+  "whitespace": {
+    "classification": "PRESERVED_NOT_PASS",
+    "differentFailureOrAbnormalProcessCleanup": "STOP",
+    "ordinaryWholeTreeExit": 2,
+    "originalDonorSourceEvidenceDiagnostics": 67,
+    "originalRawPatchContextDiagnostics": 8,
+    "stdoutSHA256": "11934f25a50be1c8c4e42662b11f807eebcfac260412d46bfd94af9870c96a4d",
+    "threeActualSwiftFilesOnlyExit": 0
+  }
+}

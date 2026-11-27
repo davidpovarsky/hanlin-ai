@@ -1,0 +1,34 @@
+{
+  "scope": "LOCAL_PREPARATION_ONLY_NOT_RUNTIME",
+  "beforeScript": {
+    "path": "hanlin-latest-three-source-review/prepare_selective_proposal.py",
+    "bytes": 13656,
+    "sha256": "f4728cd347861cde0b187ef2a8f0a0f4b8bcc4fed02554c07447d3f025321550"
+  },
+  "afterScript": {
+    "path": "hanlin-latest-three-source-review/prepare_selective_proposal2.py",
+    "bytes": 15415,
+    "sha256": "994471ce55f70b571eaff85d448e165562250e034fcd9c7c8d64a4095c836d37"
+  },
+  "originalObservation": {
+    "command": [
+      "python3",
+      "-B",
+      "hanlin-latest-three-source-review/prepare_selective_proposal.py"
+    ],
+    "exitCode": 1,
+    "cause": "Assertion expected git diff --no-index --check to return0; no-index implies exit-code and actual changed source returned1 with empty stdout/stderr. Candidate source was not executed.",
+    "exactFollowupCommand": [
+      "git",
+      "--no-pager",
+      "diff",
+      "--no-index",
+      "--check",
+      "hanlin-latest-three-source-review/proposal1/before/AI_HLY/Downstream/MCP/Runtime/MCPClientSession.swift",
+      "hanlin-latest-three-source-review/proposal1/candidate/AI_HLY/Downstream/MCP/Runtime/MCPClientSession.swift"
+    ],
+    "followupExitCode": 1,
+    "followupOutput": ""
+  },
+  "preserved": "proposal1 and original script remain unchanged; successor uses fresh proposal2 and ordinary staged full-diff check in its own new partial Git index."
+}

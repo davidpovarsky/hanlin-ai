@@ -1,0 +1,50 @@
+{
+  "schema": "pinkha-hanlin-three-source-composition-handoff/v1",
+  "state": "SEALED_SOURCE_ONLY_ROOT_REVIEW_PENDING",
+  "baseCommit": "5fffe60fbcec8b12ae2cc14bcb092884677f19b0",
+  "baseTree": "a52fdb359190930d23a76877baf2fe8fa25101d6",
+  "candidateCommit": null,
+  "proposed23DonorPathTree": "cfcf3e254e0f7c6296baca06e90785e7d452cfc5",
+  "sourceRows": 7,
+  "donorRows": 23,
+  "files": {
+    "source-inputs.json": {
+      "path": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/source-inputs.json",
+      "bytes": 263303,
+      "sha256": "1515118b70f7a323845a35767cbdcb191d6d74fbff648071200f5f2018712ee9"
+    },
+    "source-inverses.json": {
+      "path": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/source-inverses.json",
+      "bytes": 20445,
+      "sha256": "6085c25804ee0ab42502cd452f633cad32fab5b68117bc095360c494add74896"
+    },
+    "source-diffs.lossless.json": {
+      "path": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/source-diffs.lossless.json",
+      "bytes": 73519,
+      "sha256": "93538fe9b30d2652b320ee57b6e95463f838c4e0f4b090ca70ed1a9eb4e8118b"
+    },
+    "whole-tree-preservation.json": {
+      "path": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/whole-tree-preservation.json",
+      "bytes": 650589,
+      "sha256": "a86f50c2226eb5dae2e5a61f7d19eebabc2623835e8a952b6e929103d9f140ad"
+    },
+    "ordinary-complete-diff-check.json": {
+      "path": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/ordinary-complete-diff-check.json",
+      "bytes": 489,
+      "sha256": "4994d00cffd97487448ab884860fcdf28d50d33032cbac98905e60deb8e454b7"
+    },
+    "ordinary-diff-checks.json": {
+      "path": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/ordinary-diff-checks.json",
+      "bytes": 12626,
+      "sha256": "e13fd14cb56be47eb7586c49aeb59f131eda32af52125ab02185f45259b1b0e9"
+    },
+    "independent-source-review.json": {
+      "path": "/workspace/scratch/ae335eba85e3/hanlin-latest-three-source-review/proposal2/independent-source-review.json",
+      "bytes": 15574,
+      "sha256": "28573bb41363374a1d9f654752af6d6a09a6cc29ba0761f05b3654d0a3228b40"
+    }
+  },
+  "testsRun": 0,
+  "buildsRun": 0,
+  "sourcePublication": false
+}

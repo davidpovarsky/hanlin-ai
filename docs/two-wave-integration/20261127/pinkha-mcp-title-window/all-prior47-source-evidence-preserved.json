@@ -1,0 +1,331 @@
+[
+  {
+    "bytes": 36681,
+    "gitBlob": "ad2e0f75f296eedc39399d03c098c36164a2744c",
+    "mode": "100644",
+    "path": "AI_HLYTests/ChatScrollViewHandleTests.swift",
+    "sha256": "6618623245564706cc3bb377f6f54f7c7e1eba66ddc602989e72ec69a80eeed4"
+  },
+  {
+    "bytes": 15086,
+    "gitBlob": "756010d67b1ebb1ad5abb536cfbde125530d51da",
+    "mode": "100644",
+    "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/ChatScrollViewHandle.swift",
+    "sha256": "6c32cd42b665bd96bcd256161564d92fbee5cdf2b6947faf577734ace12efad0"
+  },
+  {
+    "bytes": 6567,
+    "gitBlob": "3ca835668cbc6bd9e26bb3a0ddfde165c0693e80",
+    "mode": "100644",
+    "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/HanlinFollowLatestOverlay.swift",
+    "sha256": "56d9b799c8f1c23c651aa64fd731a60808bac1b459a829786d3ab5663b297b3f"
+  },
+  {
+    "bytes": 209797,
+    "gitBlob": "3ac8a829740beefaffa70eda7804f2cdaabd6164",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-binding/complete-four-package-projection.json",
+    "sha256": "1c0a660bd6a5fe9b6b56c1c506a69527230dfc25f2b6154b4d633a9be77f0aaf"
+  },
+  {
+    "bytes": 30330,
+    "gitBlob": "77ddcdb88caa21e8e02b9d97685ef4855527f266",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-binding/original-g27-review/commit.original.json",
+    "sha256": "190f96bc9e3e53c04628ae6e33f629c60fde6e2b014c6b6d12c599e002f8f44e"
+  },
+  {
+    "bytes": 2681,
+    "gitBlob": "108ca4c42c1ccb3a0192b07daef04bd4410068c6",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-binding/original-g27-review/minimal-anytype-host.patch",
+    "sha256": "3cf38aedc507dc8636d39dd6dfe8ef521f2e3a41b67928ef933dcef3eed19a83"
+  },
+  {
+    "bytes": 20155,
+    "gitBlob": "62a240799b0c55a28e35fb5ee42aa9c06e28d7b4",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-binding/original-g27-review/minimal-sdk-and-test.patch",
+    "sha256": "bd35cac2b571a00886c5500c21a1e65c3b3f3b99adbb51f88fe6a9cfff8a7575"
+  },
+  {
+    "bytes": 13397,
+    "gitBlob": "de8ac76be6ff4966bb20e1a4687dc47c4cb8897a",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-binding/original-g27-review/original-uikit23-source-inventory.json",
+    "sha256": "7686badb43841819d13749cc6a2055170a21b37bf5bdf662c1f6d03faee21e2b"
+  },
+  {
+    "bytes": 42279,
+    "gitBlob": "5a4304d4c12ebe1d83b978fa4970c41f45a1999c",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-binding/original-g27-review/owner-task.original.json",
+    "sha256": "c39271fab0f13e3619a8deb287515d539640a928e49ce3c693bd43837dc4c85a"
+  },
+  {
+    "bytes": 13618,
+    "gitBlob": "102d48fe42e247d295732f9b18f6e7f246ef1dd7",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-binding/original-g27-review/prepare_proposal.py",
+    "sha256": "1d7505fdb66587a92b1bdd5769dee6717d5fa966a90a0e80bdc410b8cc2bd684"
+  },
+  {
+    "bytes": 28385,
+    "gitBlob": "ae35ab0ba03cec5dea4182159cc6c6d71028c895",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-binding/original-g27-review/primary/2b9ef06cc0fdb89e43ef646e040346948a5ba36e/AI_HLYTests/ChatScrollViewHandleTests.swift",
+    "sha256": "97ae3b4da1231de4b45526545b3c9c213fc2ff8970845cdacbdc0e3b48ca47e9"
+  },
+  {
+    "bytes": 12163,
+    "gitBlob": "b5c9b7a2374672906d9550714cdb36a8fde785f7",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-binding/original-g27-review/primary/2b9ef06cc0fdb89e43ef646e040346948a5ba36e/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/ChatScrollViewHandle.swift",
+    "sha256": "6a43ca9ea760bfb695e0cc81a16a6d9fd25d229f09695a43d9fbb14671f30398"
+  },
+  {
+    "bytes": 128650,
+    "gitBlob": "ea2c0908b83cb00ff4cc76e3616860c53f5db8c3",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-binding/original-g27-review/primary/abd1434f8674fd58129c93be5bf33933eda48e1d/AI_HLY/ChatView.swift",
+    "sha256": "702777d9b222f40cff38f31cfd06c3e7bfaefcdd050c248b23f27756d82d3ff9"
+  },
+  {
+    "bytes": 36681,
+    "gitBlob": "ad2e0f75f296eedc39399d03c098c36164a2744c",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-binding/original-g27-review/primary/abd1434f8674fd58129c93be5bf33933eda48e1d/AI_HLYTests/ChatScrollViewHandleTests.swift",
+    "sha256": "6618623245564706cc3bb377f6f54f7c7e1eba66ddc602989e72ec69a80eeed4"
+  },
+  {
+    "bytes": 15086,
+    "gitBlob": "756010d67b1ebb1ad5abb536cfbde125530d51da",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-binding/original-g27-review/primary/abd1434f8674fd58129c93be5bf33933eda48e1d/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/ChatScrollViewHandle.swift",
+    "sha256": "6c32cd42b665bd96bcd256161564d92fbee5cdf2b6947faf577734ace12efad0"
+  },
+  {
+    "bytes": 21227,
+    "gitBlob": "9ec594dc3021aeee39d49ba641f7be3919f475ad",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-binding/original-g27-review/proposed-anytype/Modules/PinkhaAnyHanlin/Sources/PinkhaHanlinUI/PinkhaHanlinChatView.swift",
+    "sha256": "b60b4a02c5ca8e282016e07af5aa753bb0e438e662f8b95529ccfda1789e746a"
+  },
+  {
+    "bytes": 36681,
+    "gitBlob": "ad2e0f75f296eedc39399d03c098c36164a2744c",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-binding/original-g27-review/proposed-sdk/AI_HLYTests/ChatScrollViewHandleTests.swift",
+    "sha256": "6618623245564706cc3bb377f6f54f7c7e1eba66ddc602989e72ec69a80eeed4"
+  },
+  {
+    "bytes": 15086,
+    "gitBlob": "756010d67b1ebb1ad5abb536cfbde125530d51da",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-binding/original-g27-review/proposed-sdk/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/ChatScrollViewHandle.swift",
+    "sha256": "6c32cd42b665bd96bcd256161564d92fbee5cdf2b6947faf577734ace12efad0"
+  },
+  {
+    "bytes": 4322,
+    "gitBlob": "1e7b789abe0e8031b2ce9e78528b688c6ac7355e",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-binding/original-g27-review/review-index.json",
+    "sha256": "a34605b60b983ed762a9750fbd00d13fb10481097b6f64e1599ab343823f77cd"
+  },
+  {
+    "bytes": 5278,
+    "gitBlob": "683fbc2fc2c408e8be112d87a14529bee8f9154e",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-binding/original-g27-review/review.json",
+    "sha256": "62e31262271b398ed70ad2107bf2d8ee036ccf218fd8cc6c925317b19b377f7e"
+  },
+  {
+    "bytes": 26759,
+    "gitBlob": "cd8a1c70b3006ccc0d6aff92cdf143835db78b8b",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-binding/original-g27-review/source-full-inverses.json",
+    "sha256": "69a4023618d0d49eb8b80bd7ecedfcf4629fd65e4e75e5502649195a6ae2b39e"
+  },
+  {
+    "bytes": 2297,
+    "gitBlob": "1927f4f85c5f35263a5d9002cd208d12557075ba",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-binding/root-source-intake.json",
+    "sha256": "96a65d63eafb11a0bc3b129d7c0ff1ea5ac38353fb1f6a329517173f7f87868d"
+  },
+  {
+    "bytes": 45951,
+    "gitBlob": "4d30ea1c118b465a868afa64851f9e2759f47eaf",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-binding/unexecuted19-publication-proposal/controller-full-inverse.json",
+    "sha256": "3b2633a73ef52978967cc92259746bacc65d41bfc66ecb9014906af468a8e0c3"
+  },
+  {
+    "bytes": 3187,
+    "gitBlob": "8c2cd3af61a5cf529a87e1571a26fb4c22ebbcd5",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-binding/unexecuted19-publication-proposal/handoff.json",
+    "sha256": "cc527e2ff7cca06b3d921e05ae2da7c1fbddabd0d0353661e409645613f22e32"
+  },
+  {
+    "bytes": 778,
+    "gitBlob": "71bd79c747f385ed5e31349cbde1507f0ffd619d",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-binding/unexecuted19-publication-proposal/ordinary-diff-check.original.json",
+    "sha256": "4986d076d5567fdb9b5fae5311305a8fe79243dd3d190976d4f0841501fcbeae"
+  },
+  {
+    "bytes": 398,
+    "gitBlob": "207a8206c5fb37794b352bbfd39236c10a958632",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-binding/unexecuted19-publication-proposal/product-diff-check.original.json",
+    "sha256": "3c3e8931ceef77c158e9752cb22b86698c2c9f0781bc34bd435c4ebc3f3871a5"
+  },
+  {
+    "bytes": 35283,
+    "gitBlob": "cd8e09f6e199e5983fae92f6b1aa380f60da57c5",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-binding/unexecuted19-publication-proposal/publish_once.py",
+    "sha256": "21a40606656b6ebb11c15a288ca43387de2347dd5ab69c14c2668bb7329003d3"
+  },
+  {
+    "bytes": 2430,
+    "gitBlob": "4067d6a385de6b2dd38f87811cd09dcdc65e2899",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-binding/unexecuted19-publication-proposal/review-index.json",
+    "sha256": "3db73a93b5bb74f9477a30f6a834047bb9e378dc7462b23ef580f42eaad8c12b"
+  },
+  {
+    "bytes": 9968,
+    "gitBlob": "8244cad8e3efde20b3cc563c8afd671819f0b3dc",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-binding/unexecuted19-publication-proposal/source-files.json",
+    "sha256": "cd785f075f6a2a57951e3c5d8addda8d9811caa4781177bdcfbf773d7d34af24"
+  },
+  {
+    "bytes": 209521,
+    "gitBlob": "90281ba885da6cdabe5f7ffac5cc164c06aca071",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-host/complete-four-package-source-projection.json",
+    "sha256": "dde198d15cfcbd8ed7bf9c6d7ce51aa886a78b5d48e7720ae943a47c1e83fbf9"
+  },
+  {
+    "bytes": 9327,
+    "gitBlob": "5c832bd047312f35d70eba29a462b7cd6dc59e92",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-host/original-review/commit.original.json",
+    "sha256": "c23e094b5c03c9e1a202b0a92df72e05f4bfebe1fe05be90acb9600a27ceba8e"
+  },
+  {
+    "bytes": 602,
+    "gitBlob": "87dc1ba88f23f85a7396df6590aca8cd9162002f",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-host/original-review/local-preparation-history.json",
+    "sha256": "515c85b523ec74eed994e7f06a9724822b0bb7d1fe54b285ba1095ad5510a57a"
+  },
+  {
+    "bytes": 3120,
+    "gitBlob": "1d04054177cabf4d4bc8362f3a3349e13afda195",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-host/original-review/minimal-one-file.patch",
+    "sha256": "65bf8b6c0aac748ff21a4d7e9241e8c7a09e436e5e31e2e8936aaef0925f63aa"
+  },
+  {
+    "bytes": 8133,
+    "gitBlob": "4eec7fab8f582884c62424d611687845d5fc82df",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-host/original-review/minimal-source-and-consumer-proof.json",
+    "sha256": "ffadc059a08101b36467b5847b10f489875a0bf4fb84a02ed83148b9472f01b8"
+  },
+  {
+    "bytes": 9661,
+    "gitBlob": "8eaeada40aeacd738a3f339263f7db4a2adccd79",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-host/original-review/original-owner-scope-excerpts.json",
+    "sha256": "332d662dcfe53e146302ac51735cd6e65dae7e91181564efd6174fca4298fc02"
+  },
+  {
+    "bytes": 47998,
+    "gitBlob": "cd9b8b1782591ad0b7418c382319587c8e990389",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-host/original-review/positive-anytype919-source-receipt.original.json",
+    "sha256": "7efdf7e39beecfdd701c382db1afa07167706cfd9822ec877f262353ee34f2a6"
+  },
+  {
+    "bytes": 11920,
+    "gitBlob": "e62f8cfa75205b335ac886c3c574ba1e0d3b259d",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-host/original-review/prepare_minimal_proposal.py",
+    "sha256": "4cdf858f4789f8e3957fa7a2cc07c3dd6055a617cb617660735ecd25b9fd6a96"
+  },
+  {
+    "bytes": 31164,
+    "gitBlob": "9ce7511c912b5488a78b086cc1f5dfc78ff7600a",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-host/original-review/primary-responses.original.json",
+    "sha256": "bcfa456398b511bfc180e740b432435c24a4e431365282ebeca0e2987c5b63e9"
+  },
+  {
+    "bytes": 9230,
+    "gitBlob": "49bbec51f1e7198fadfb687c6e95ab32be6f22bf",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-host/original-review/primary/08be9aa5e16b59094e2bc690c583f09f540c41bd/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/HanlinFollowLatestOverlay.swift",
+    "sha256": "0874dbee713362f5058e5185502d5fe4e013baa5a3e51da0e1c90622de5d868b"
+  },
+  {
+    "bytes": 3755,
+    "gitBlob": "ced8131b2d0bed8623b0494acc332bdaa6434d34",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-host/original-review/primary/2b9ef06cc0fdb89e43ef646e040346948a5ba36e/Packages/HanlinPresentationSDK/Package.swift",
+    "sha256": "462479a3660edd652181ad339238c29f270ec9bfd8203d2f1310681d8029ecc4"
+  },
+  {
+    "bytes": 11306,
+    "gitBlob": "07010a5c97cc6d1663b92feb9c1dfdd6fdbc2abe",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-host/original-review/primary/2b9ef06cc0fdb89e43ef646e040346948a5ba36e/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/HanlinFollowLatestOverlay.swift",
+    "sha256": "a23774ca6dfc01abc39b4517dc5c5366da8e10e182583c42f93fc8558f3f8186"
+  },
+  {
+    "bytes": 4077,
+    "gitBlob": "ef1e46be07c7b0cba7b5796b3395e6cabdb89484",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-host/original-review/primary/4cb6454c1c6e110ead73179c06ada9e909bf250b/Packages/HanlinPresentationSDK/Package.swift",
+    "sha256": "951afd5b85422e7d6ed99cf497602e7122b988c1d956132bd9c00e04c695b4c3"
+  },
+  {
+    "bytes": 4612,
+    "gitBlob": "111be2b204ec04ac4b8649af239c60d0879300f6",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-host/original-review/primary/4cb6454c1c6e110ead73179c06ada9e909bf250b/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/HanlinFollowLatestOverlay.swift",
+    "sha256": "87fc88fbd778a9e91f3dc068b8bcfd0fba646cc81d7c0a005be7685520c3e85c"
+  },
+  {
+    "bytes": 20726,
+    "gitBlob": "00108593ef058d881b522f606c8818bbaf974f0e",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-host/original-review/primary/anytype919/Modules/PinkhaAnyHanlin/Sources/PinkhaHanlinUI/PinkhaHanlinChatView.swift",
+    "sha256": "7942241949bb2f6b0ff7639e093791033712c88f2882856daab95f670eb05dec"
+  },
+  {
+    "bytes": 4175,
+    "gitBlob": "9d433de23bcaf359afc57b81c38b43d01bafffdd",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-host/original-review/review-index.json",
+    "sha256": "031443d99c8d1f4ed606eab8ec8c5c8c04b2ae095ea59d5005709aa0e0812b44"
+  },
+  {
+    "bytes": 208809,
+    "gitBlob": "7355c13cb00af407a677ee5d9d4561aa728d181b",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-host/original63-publication-receipt.json",
+    "sha256": "3afc5bbe91fee176fab2ba0323ad7be5381e1b3c068335716c95f1ab4a723c4f"
+  },
+  {
+    "bytes": 11831,
+    "gitBlob": "8e657f141812c2739b499f26162bebf31a9006ee",
+    "mode": "100644",
+    "path": "docs/two-wave-integration/20261127/pinkha-native-follow-host/root-source-intake.json",
+    "sha256": "19f2f17d36234bda64070e20a1595142d3017ede707d1be46d4c051cdbc2be7f"
+  }
+]

@@ -191,6 +191,7 @@ export async function inputReceipt(root=repositoryRoot) {
   }
   for(const relative of ['Scripts/MiniApps','Packages/HanlinExpoUI','Packages/HanlinExpoNativeAPIJS',
     'Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services',
+    'Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/window-factory',
     'Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal',
     'Packages/HanlinPlatform/Sources/HanlinScriptExtensions',
     'Packages/HanlinAppExtensionsSDK/Sources',
@@ -237,9 +238,11 @@ export async function stageSDK({root=repositoryRoot,output,engines:requestedEngi
       const systemSurfaces=await stageSystemSurfaceTypes(root,destination,files,engine);
       graph.versions[systemSurfaces.packageName]=systemSurfaces.version;
       if(engine==='nativescript') {
-        const hostServices=path.join(root,'Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services');
-        await copyAuthoringTree(hostServices,path.join(destination,'node_modules/@hanlin/host-services'),files,'nativescript/node_modules/@hanlin/host-services');
-        graph.versions['@hanlin/host-services']=(await readJSON(path.join(hostServices,'package.json'))).version;
+        for (const packageName of ['@hanlin/host-services','@hanlin/window-factory']) {
+          const packageSource=path.join(root,'Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime',packageName);
+          await copyAuthoringTree(packageSource,path.join(destination,'node_modules',packageName),files,'nativescript/node_modules/'+packageName);
+          graph.versions[packageName]=(await readJSON(path.join(packageSource,'package.json'))).version;
+        }
       }
 
       const assistantTypesRoot=path.join(destination,'node_modules/@hanlin/assistant-tools');
