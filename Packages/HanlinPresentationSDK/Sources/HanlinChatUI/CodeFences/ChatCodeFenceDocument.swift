@@ -11,6 +11,9 @@ public struct ChatCodeFencePayload: Sendable, Identifiable {
     public let fontSize: Double
     public let dark: Bool
     public var displayHTML: String? = nil
+    // Value copies share this immutable ownership token. Cache eviction, view
+    // remount, zoom or caller cancellation cannot release another live copy.
+    private var retention: ChatCodeFencePayloadRetention.Lease? = nil
 
     public init(html: String, css: String, width: Double, height: Double, fontSize: Double,
                 dark: Bool, displayHTML: String? = nil) {
@@ -21,6 +24,15 @@ public struct ChatCodeFencePayload: Sendable, Identifiable {
         self.fontSize = fontSize
         self.dark = dark
         self.displayHTML = displayHTML
+    }
+
+    var retainedUTF8Bytes: Int { html.utf8.count + css.utf8.count + (displayHTML?.utf8.count ?? 0) }
+
+    mutating func retain(in budget: ChatCodeFencePayloadRetention) -> Bool {
+        if let retention { return retention.owner === budget && retention.bytes == retainedUTF8Bytes }
+        guard let lease = budget.acquire(bytes: retainedUTF8Bytes) else { return false }
+        retention = lease
+        return true
     }
 }
 

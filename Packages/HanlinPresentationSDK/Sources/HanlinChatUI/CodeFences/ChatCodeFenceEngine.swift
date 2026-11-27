@@ -99,8 +99,18 @@ public final class ChatCodeFenceEngine: NSObject, WKNavigationDelegate {
         let snapshot = result
         result.displayHTML = await Task.detached(priority: .utility) { ChatCodeFenceDocument.readonlyHTML(snapshot) }.value
         try Task.checkCancellation()
-        let cost = result.html.utf8.count + result.css.utf8.count + (result.displayHTML?.utf8.count ?? 0)
+        let cost = result.retainedUTF8Bytes
         removeCached(identity)
+        // An NSCache bound alone misses payloads retained by views or completed
+        // task results. Evict only our cache ownership; live copies keep their
+        // lease. Exhaustion falls back to the original complete source UI.
+        var admitted = result.retain(in: .shared)
+        while !admitted, let oldest = cacheOrder.first {
+            removeCached(oldest)
+            admitted = result.retain(in: .shared)
+        }
+        guard admitted else { throw Failure.busy }
+        try Task.checkCancellation()
         if cost <= 8 * 1024 * 1024 {
             while retainedBytes + cost > 8 * 1024 * 1024 || cacheCosts.count >= 32 {
                 guard let oldest = cacheOrder.first else { break }
