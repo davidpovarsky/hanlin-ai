@@ -24,11 +24,13 @@ struct HanlinOriginalPromiseLifetimeTests {
     @Test func originalPromiseCancellationReleasesPendingContinuationAndDisposesContext() throws {
         try withProbe("cancel-pending") { probe in
             probe.native.cancel()
-            #expect(try probe.collectAndObserve("cancelled-after-gc") == false,
+            let retained = try probe.collectAndObserve("cancelled-after-gc")
+            #expect(retained == false,
                     "Cancellation retained the original pending JavaScript continuation")
             probe.resolve("late resolution")
             probe.reject("late rejection")
-            #expect(try probe.settlements("cancelled-after-late-callbacks").isEmpty,
+            let values = try probe.settlements("cancelled-after-late-callbacks")
+            #expect(values.isEmpty,
                     "A cancelled original execution delivered a late JavaScript callback")
         }
     }

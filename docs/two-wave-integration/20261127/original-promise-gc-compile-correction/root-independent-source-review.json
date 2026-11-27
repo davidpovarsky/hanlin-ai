@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "reviewer": "/root",
+  "assessment": "APPROVED_TEST_ONLY_SWIFT_COMPILER_CORRECTION",
+  "sourceSHA256": "65e0f9cb4d9063922bfa92717ff89cdd5b5d9a5220bf40fdc323fd04d8651147",
+  "patchSHA256": "d4c520317c5e5226d28c81924b26e41bd593323db43915c5f9c1cf9e05982092",
+  "actualMessageExcerpt": "Root read exact patch d4c520317c5e5226d28c81924b26e41bd593323db43915c5f9c1cf9e05982092 and APPROVES candidate65e0f9cb4d9063922bfa92717ff89cdd5b5d9a5220bf40fdc323fd04d8651147: two explicit throwing local bindings before unchanged cancellation assertions; all other bytes unchanged.",
+  "native": "BUILD609_FAILED_BEFORE_TESTS; corrected test native outcome NOT_RUN",
+  "production": "UNCHANGED"
+}

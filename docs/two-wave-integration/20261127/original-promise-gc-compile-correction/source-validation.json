@@ -1,0 +1,16 @@
+{
+  "schema": 1,
+  "base": "e3c164fc71c4e1eae4d20417b4574c827841f025",
+  "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinOriginalPromiseLifetimeTests.swift",
+  "originalSHA256": "2f7f8d4bccb94e9f2957067d48ac9e96bd7ababf9491788bd71f33b7f0623394",
+  "sourceSHA256": "65e0f9cb4d9063922bfa92717ff89cdd5b5d9a5220bf40fdc323fd04d8651147",
+  "patchSHA256": "d4c520317c5e5226d28c81924b26e41bd593323db43915c5f9c1cf9e05982092",
+  "outsideTwoThrowingBindingsByteExact": true,
+  "assertionsAndOperationOrder": "UNCHANGED",
+  "productionSourceChanges": 0,
+  "SDKInputChanges": 0,
+  "actual609": "BUILD_FAILED_TEST_METHODS_NOT_RUN",
+  "classificationSHA256": "4efa3b6ff8fc4b3bfbb356606dd58a70a76ea89fab633e7c986ccf40f2abcdc7",
+  "nativeLogSHA256": "0fe3d0af8a9fd57a889e92eb518a3860a8aa81ff42ac09b7da17addbee4b0a79",
+  "correctedNative": "NOT_RUN"
+}
