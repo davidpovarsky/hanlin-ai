@@ -1,0 +1,57 @@
+{
+  "schema": 1,
+  "sourceBase": "39006ce6586c1be056f53de9483bfd907cea6cbd",
+  "sourceCommit": "088c71509cd80e521d3d613f96f1396aab61755d",
+  "changedSource": "Scripts/Expo/miniapps/modular-text-search/assistant-tool.ts",
+  "beforeSHA256": "035eeb0e7e7eff4e316d0b93431999cbb87b54585375aeb42cc6e03a8800789b",
+  "afterSHA256": "6152a4e57babe9cfaca5ab6d43ccf495cc9d1fa8ebd8426c9ce810c861185748",
+  "patchSHA256": "ab98cf5ba3014b19f253877da4b9c223c32514781fda204963792be6caaeabc6",
+  "wholeFileInverseExact": true,
+  "runtimeASTEqual": true,
+  "emittedBytesEqual": false,
+  "originalRuntimeStatementsAndResponseFieldsPreserved": true,
+  "sourceSDKPathIntersection": [],
+  "sdkSourceInputCount": 396,
+  "sdkManifestSHA256": "7f2702e52587fe1d126cef37f068ab3a9e3a26adb275ffafb687cb38a2db9b87",
+  "sdkFilesUnchanged": 25707,
+  "originalCLIOutcomes": [
+    {
+      "phase": "original-validate",
+      "exit": 1,
+      "elapsedSeconds": 16.83680928684771,
+      "timeoutSeconds": 300,
+      "compilerVersion": "6.0.3"
+    },
+    {
+      "phase": "candidate-validate",
+      "exit": 0,
+      "elapsedSeconds": 17.88973023556173,
+      "timeoutSeconds": 300,
+      "compilerVersion": "6.0.3"
+    },
+    {
+      "phase": "candidate-build",
+      "exit": 0,
+      "elapsedSeconds": 72.0545142358169,
+      "timeoutSeconds": 300,
+      "compilerVersion": "6.0.3"
+    }
+  ],
+  "portableReceiptSHA256": "7d09ece76e6428514d0bc6e74d4dde5bf9837d59df9977917f41a4d8a8191e15",
+  "rootSourceReviewSHA256": "499ae054d9dba826f44f4f531c29a1d8f7dd10956789809dc18e88ee722a29b7",
+  "rawArchiveSHA256": "d558d30cd01ecb33ac0fd9d1199504d01dde6eff09291a8277c2bc71d9e8e313",
+  "rawMemberCount": 18,
+  "generatedOutputRetention": {
+    "originalPath": "/mnt/development/projects/worktrees/hanlin-modular-search-types-20261127/Scripts/Expo/miniapps/modular-text-search/.hanlin-build",
+    "retainedPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/modular-search-types-ce896542/portable-original-r2/retained-generated-build-output",
+    "fileCount": 59,
+    "completeBytesModesUnchanged": true
+  },
+  "hostedPreparationAndNativeAcceptance": "NOT_RUN",
+  "nativeExecutions": 0,
+  "runtimeFixtureExecution": false,
+  "proofEncoding": {
+    "source.patch.gz": "Lossless gzip of the exact reviewed patch; Git whitespace checker flags context-only blank diff lines in raw patch files",
+    "portable-raw-logs.tar.gz": "Lossless tar/gzip; every raw member is bound by raw-member-manifest.json"
+  }
+}

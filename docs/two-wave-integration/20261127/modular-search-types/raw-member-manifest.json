@@ -1,0 +1,74 @@
+{
+  "candidate-build.json": {
+    "bytes": 1792,
+    "sha256": "12d1fccfa414cf987320aadadae5e4b6cbcb0906a48a9115c5c599c6fd648594"
+  },
+  "candidate-build.start.json": {
+    "bytes": 927,
+    "sha256": "1d0b945d547006f623174822e3be6c76745727eb5cda177e6661d9ecc7edd705"
+  },
+  "candidate-build.stderr.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "candidate-build.stdout.log": {
+    "bytes": 1792,
+    "sha256": "12d1fccfa414cf987320aadadae5e4b6cbcb0906a48a9115c5c599c6fd648594"
+  },
+  "candidate-validate.json": {
+    "bytes": 1418,
+    "sha256": "8d7da56ae63cbe009033fd0d0b461b38f839ea9482d700fc7cdc0e10dfef2e51"
+  },
+  "candidate-validate.start.json": {
+    "bytes": 754,
+    "sha256": "02efd665ea8acd17f104b73bd88d695f4aa7a02860fe18d8a5e70e206e5d1f19"
+  },
+  "candidate-validate.stderr.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "candidate-validate.stdout.log": {
+    "bytes": 1418,
+    "sha256": "8d7da56ae63cbe009033fd0d0b461b38f839ea9482d700fc7cdc0e10dfef2e51"
+  },
+  "commands.json": {
+    "bytes": 8552,
+    "sha256": "7da0d5b208403226900f3e74cce67bb22d69fd26e233cfa396567fc362b4eb7b"
+  },
+  "controller.py": {
+    "bytes": 6952,
+    "sha256": "311b0b1a0d748f8edc119a9e17ee4681756a1c9b8b7ce045b599fd06c844ff8a"
+  },
+  "controller.stderr.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "controller.stdout.log": {
+    "bytes": 681,
+    "sha256": "bcfffabab9cc49a1b296549554cec1c76aa166cc0fd0d7856ee7d157f6c8861a"
+  },
+  "generated-output-retention.json": {
+    "bytes": 390,
+    "sha256": "63f9c84b98c419b97917d386c1ba2eba409d7d3927637d23608eaab4c65621f7"
+  },
+  "original-validate.json": {
+    "bytes": 1737,
+    "sha256": "1083898a2c5fd00a4cd027d2b04525690e756c39f3427ec015a44b6a8a32c351"
+  },
+  "original-validate.start.json": {
+    "bytes": 822,
+    "sha256": "6fd9fcb5042e31292faf149eb697feaadce8449d9aac6d139da062d57296965e"
+  },
+  "original-validate.stderr.log": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "original-validate.stdout.log": {
+    "bytes": 1737,
+    "sha256": "1083898a2c5fd00a4cd027d2b04525690e756c39f3427ec015a44b6a8a32c351"
+  },
+  "type-erasure-source-comparison.mjs": {
+    "bytes": 1567,
+    "sha256": "b736a22f5b7d08469935110599e56a142a3013ce82973f96b57dd510bb83dc0c"
+  }
+}

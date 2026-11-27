@@ -1,0 +1,22 @@
+{
+  "compilerVersion": "6.0.3",
+  "compilerSHA256": "d3f3cd2b04b7f466f4484df921b744223f7bd1f3e353ec9110bdf52695b983d5",
+  "compilerOptions": {
+    "module": "ESNext",
+    "target": "ES2022",
+    "verbatimModuleSyntax": true
+  },
+  "before": {
+    "inputSHA256": "035eeb0e7e7eff4e316d0b93431999cbb87b54585375aeb42cc6e03a8800789b",
+    "emittedSHA256": "76bf116d969cd0eb449130c7aa769b64242a8731e5b9fd94ffb95631fecce9f2",
+    "runtimeASTSHA256": "eb6b97ea6c0706dc6f4e1d64b8845b9d1eb8eea4b3de80ff77a3d44623b08653"
+  },
+  "after": {
+    "inputSHA256": "6152a4e57babe9cfaca5ab6d43ccf495cc9d1fa8ebd8426c9ce810c861185748",
+    "emittedSHA256": "9b0a22555de474acffa1550e4fd48a621377d42b62bb19f654a367b453bd89b4",
+    "runtimeASTSHA256": "eb6b97ea6c0706dc6f4e1d64b8845b9d1eb8eea4b3de80ff77a3d44623b08653"
+  },
+  "emittedBytesEqual": false,
+  "runtimeASTEqual": true,
+  "applicationCodeExecuted": false
+}
