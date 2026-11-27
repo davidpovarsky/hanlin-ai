@@ -396,16 +396,16 @@ private struct HanlinFollowLatestActionTarget: UIViewRepresentable {
                 "stage": stage, "category": category.rawValue, "sample": sample + 1,
                 "buttonID": String(describing: ObjectIdentifier(self)),
                 "uptime": ProcessInfo.processInfo.systemUptime,
-                "frame": NSStringFromCGRect(frame), "bounds": NSStringFromCGRect(bounds),
+                "frame": NSCoder.string(for: frame), "bounds": NSCoder.string(for: bounds),
                 "enabled": isEnabled, "interactionEnabled": isUserInteractionEnabled,
                 "hidden": isHidden, "alpha": alpha, "attached": window != nil
             ]
             if let window {
                 fields["windowID"] = String(describing: ObjectIdentifier(window))
                 fields["windowClass"] = String(reflecting: type(of: window))
-                fields["windowFrame"] = NSStringFromCGRect(window.frame)
-                fields["windowBounds"] = NSStringFromCGRect(window.bounds)
-                fields["buttonBoundsInWindow"] = NSStringFromCGRect(convert(bounds, to: window))
+                fields["windowFrame"] = NSCoder.string(for: window.frame)
+                fields["windowBounds"] = NSCoder.string(for: window.bounds)
+                fields["buttonBoundsInWindow"] = NSCoder.string(for: convert(bounds, to: window))
                 fields["windowLevel"] = window.windowLevel.rawValue
                 fields["windowIsKey"] = window.isKeyWindow
                 fields["windowHidden"] = window.isHidden
@@ -433,8 +433,8 @@ private struct HanlinFollowLatestActionTarget: UIViewRepresentable {
                 var entry: [String: Any] = [
                     "class": String(reflecting: type(of: current)),
                     "id": String(describing: ObjectIdentifier(current)),
-                    "frame": NSStringFromCGRect(current.frame),
-                    "bounds": NSStringFromCGRect(current.bounds),
+                    "frame": NSCoder.string(for: current.frame),
+                    "bounds": NSCoder.string(for: current.bounds),
                     "hidden": current.isHidden, "alpha": current.alpha,
                     "interactionEnabled": current.isUserInteractionEnabled,
                     "clipsToBounds": current.clipsToBounds
