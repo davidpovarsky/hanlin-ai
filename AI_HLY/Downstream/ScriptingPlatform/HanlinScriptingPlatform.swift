@@ -503,26 +503,69 @@ final class HanlinScriptingPlatform {
     }
 
     func restore() async {
+        #if DEBUG || HANLIN_TESTING
+        let traceID = UUID().uuidString
+        let traceStart = ProcessInfo.processInfo.systemUptime
+        func trace(_ phase: String) {
+            let elapsed = ProcessInfo.processInfo.systemUptime - traceStart
+            Self.logger.notice("miniapps.catalog.restore id=\(traceID, privacy: .public) pid=\(ProcessInfo.processInfo.processIdentifier, privacy: .public) elapsed=\(elapsed, privacy: .public) phase=\(phase, privacy: .public)")
+        }
+        trace("begin")
+        defer { trace("exit") }
+        #endif
         guard !isTransferringProductData else { return }
+        #if DEBUG || HANLIN_TESTING
+        trace("notification-events.persist.begin")
+        #endif
         persistPendingNotificationEvents()
+        #if DEBUG || HANLIN_TESTING
+        trace("notification-events.persist.end")
+        #endif
         activeStoreOperations += 1
         defer { activeStoreOperations -= 1 }
         guard let store else { return }
         do {
+            #if DEBUG || HANLIN_TESTING
+            trace("grant-store.bind.begin")
+            #endif
             await HanlinHostCapabilityAuthority.shared.usePackageGrantStore(store)
+            #if DEBUG || HANLIN_TESTING
+            trace("grant-store.bind.end")
+            trace("package-store.restore.begin")
+            #endif
             installedPackages = try await store.restore()
+            #if DEBUG || HANLIN_TESTING
+            trace("package-store.restore.end")
+            trace("pending-commands.scan.begin")
+            #endif
             let scan = try extensionStore?.scanPendingCommands(limit: 128)
             pendingResumeCommands = scan?.commands ?? []
             resumeCommandRejections = scan?.rejections ?? []
+            #if DEBUG || HANLIN_TESTING
+            trace("pending-commands.scan.end")
+            #endif
             if !resumeCommandRejections.isEmpty {
                 NativeToolTraceLogger.shared.log("miniapp.invocation.records_unreadable", [
                     "count": resumeCommandRejections.count,
                     "invocationIDs": resumeCommandRejections.compactMap { $0.invocationID?.uuidString }
                 ])
             }
+            #if DEBUG || HANLIN_TESTING
+            trace("extension-snapshot.refresh.begin")
+            #endif
             try await refreshExtensionSnapshot()
+            #if DEBUG || HANLIN_TESTING
+            trace("extension-snapshot.refresh.end")
+            trace("resume-commands.process.begin")
+            #endif
             try await processPendingResumeCommands()
+            #if DEBUG || HANLIN_TESTING
+            trace("resume-commands.process.end")
+            #endif
         } catch {
+            #if DEBUG || HANLIN_TESTING
+            trace("failed")
+            #endif
             bootstrapError = Self.safeMessage(error)
         }
     }

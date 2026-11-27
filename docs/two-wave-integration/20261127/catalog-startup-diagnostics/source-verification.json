@@ -1,0 +1,33 @@
+{
+  "baseSource": "97ebeb20074928e875b675005b0e1804b9dcc0c8",
+  "paths": [
+    {
+      "path": "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsProvider.swift",
+      "beforeSHA256": "aa5480c70a5eb10ec6f57261cc830b51548b0c360eb5cfd2d9a1d6379d01f466",
+      "afterSHA256": "416b7a39e1a2ccd11c2761639ace808d731edd5ec25b6725e69ed1cd9ce3bd67"
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "beforeSHA256": "e53341f9f5e62702f3b2703d2ac4367f6921164dc43980a85ac2e0d4d2bddd65",
+      "afterSHA256": "16bfb5943ff77a21ab3a06a1cd61a82d1c473d7b6bd5024946286c32ba8e4ca9"
+    },
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "beforeSHA256": "0911b606567504151a1c2a3202e6fa41ccc281b574c40092a9b0081fdad3cfe3",
+      "afterSHA256": "1aa2abbcf7d462b57b1b9df68a04e0af74a789cf5840fca8dee513d63d5dab7f"
+    }
+  ],
+  "sourcePatchSHA256": "19f802d45722804003d779c95ffb43d00e4295415fc2f76400fbc026315d172c",
+  "originalAsyncBodiesByteEqualAfterRemovingOnlyNewDebugScopes": true,
+  "wholeFileInverse": true,
+  "originalRunnerASTPreserved": true,
+  "independentSourceReviewSHA256": "5ed8b36819a0de6a3ef9d3df210c8c5cd54357c648871f54fcb4160a0ba77483",
+  "sourceReviewStatus": "APPROVED_FOR_BOUNDED_DIAGNOSTIC_ADMISSION",
+  "nativeStatus": "NOT_RUN",
+  "causeStatus": "UNKNOWN",
+  "correlationLimit": "UUIDs distinguish each method invocation. Cross-method association requires actual PID and timestamp/order evidence; no parent-child correlation is asserted.",
+  "sdkSourceInputChanged": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+  "originalSDKInputCount": 396,
+  "newSDKProducerStatus": "NOT_RUN",
+  "atUTC": "2026-11-27T17:05:42.149757+00:00"
+}

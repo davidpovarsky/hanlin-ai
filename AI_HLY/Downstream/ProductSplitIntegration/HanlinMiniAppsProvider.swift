@@ -1,3 +1,5 @@
+import Foundation
+import OSLog
 import HanlinLocalization
 import HanlinMiniAppCore
 import HanlinMiniAppsUI
@@ -13,6 +15,11 @@ final class HanlinMiniAppsProvider {
     private let host: HanlinMiniAppHost
     let platform: HanlinScriptingPlatform
     private var launching = false
+
+    #if DEBUG || HANLIN_TESTING
+    private static let catalogLogger = Logger(
+        subsystem: Bundle.main.bundleIdentifier ?? "com.hanlin", category: "MiniAppsCatalog")
+    #endif
 
     enum Failure: LocalizedError {
         case unavailable(String), staleSelection, launchInProgress, launchDidNotProduceApplication
@@ -38,14 +45,49 @@ final class HanlinMiniAppsProvider {
     }
 
     func refreshCatalog() async throws {
+        #if DEBUG || HANLIN_TESTING
+        let traceID = UUID().uuidString
+        let traceStart = ProcessInfo.processInfo.systemUptime
+        func trace(_ phase: String) {
+            let elapsed = ProcessInfo.processInfo.systemUptime - traceStart
+            Self.catalogLogger.notice("miniapps.catalog.refresh id=\(traceID, privacy: .public) pid=\(ProcessInfo.processInfo.processIdentifier, privacy: .public) elapsed=\(elapsed, privacy: .public) phase=\(phase, privacy: .public)")
+        }
+        trace("begin")
+        defer { trace("exit") }
+        trace("platform.restore.begin")
+        #endif
         await platform.restore()
+        #if DEBUG || HANLIN_TESTING
+        trace("platform.restore.end")
+        trace("package-services.require.begin")
+        #endif
         try requirePackageServices()
+        #if DEBUG || HANLIN_TESTING
+        trace("package-services.require.end")
+        trace("host.refresh.begin")
+        #endif
         await host.refresh(installedPackages: platform.installedPackages)
+        #if DEBUG || HANLIN_TESTING
+        trace("host.refresh.end")
+        #endif
         if let error = host.lastError { throw Failure.unavailable(error) }
         if Bundle.main.bundleIdentifier == SplitAppStorageLayout.miniAppsBundleIdentifier {
+            #if DEBUG || HANLIN_TESTING
+            trace("live-catalog.export.begin")
+            #endif
             try? HanlinSplitLiveTarget.exportCatalog()
+            #if DEBUG || HANLIN_TESTING
+            trace("live-catalog.export.end")
+            trace("external-catalog.publish.begin")
+            #endif
             try HanlinExternalMiniAppCatalog.publish(host.items)
+            #if DEBUG || HANLIN_TESTING
+            trace("external-catalog.publish.end")
+            #endif
         }
+        #if DEBUG || HANLIN_TESTING
+        trace("success")
+        #endif
     }
 
     func launch(_ selected: HanlinMiniAppCatalogItem, includesDismissControl: Bool = true,

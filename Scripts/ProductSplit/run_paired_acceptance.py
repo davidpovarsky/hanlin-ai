@@ -1304,6 +1304,10 @@ def main():
                 (["vm_stat"], "failure-memory.txt"),
                 (["xcrun", "simctl", "io", simulator, "screenshot",
                   str(EVIDENCE / "failure.png")], "screenshot.log"),
+                (["xcrun", "simctl", "spawn", simulator, "log", "show",
+                  "--last", "15m", "--style", "compact", "--info", "--predicate",
+                  'process == "HanlinMiniApps" AND (category == "MiniAppsCatalog" OR eventMessage BEGINSWITH "miniapps.catalog.restore ")'],
+                 "failure-catalog-startup.log"),
             ]
             state["diagnostic_errors"] = []
             for argv, name in diagnostics:
