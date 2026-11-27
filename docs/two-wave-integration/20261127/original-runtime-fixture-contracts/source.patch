@@ -1,0 +1,68 @@
+diff --git a/AI_HLYTests/MasterScenarioSemanticAcceptanceTests.swift b/AI_HLYTests/MasterScenarioSemanticAcceptanceTests.swift
+index c5b02e4ce..79594be07 100644
+--- a/AI_HLYTests/MasterScenarioSemanticAcceptanceTests.swift
++++ b/AI_HLYTests/MasterScenarioSemanticAcceptanceTests.swift
+@@ -1458,7 +1458,13 @@ struct MasterScenarioSemanticAcceptanceTests {
+             context: NativeToolExecutionContext(localeIdentifier: "en_US")
+         )
+         #expect(!toolResult.isError)
+-        #expect(toolResult.modelText.trimmingCharacters(in: .whitespacesAndNewlines) == "alpha\nbeta\nalpha")
++        #expect(toolResult.userText == "alpha\nbeta\nalpha\n")
++        #expect(toolResult.diagnostics.exitCode == 0)
++        #expect(toolResult.diagnostics.stdoutByteCount == 17)
++        #expect(toolResult.diagnostics.stderrByteCount == 0)
++        #expect(!toolResult.diagnostics.outputWasTruncated)
++        #expect(!toolResult.diagnostics.didTimeOut)
++        #expect(!toolResult.diagnostics.wasCancelled)
+ 
+         // 3. Negative case: missing file reports error and non-zero exit
+         let missingDirect = try await core.shell.execute(
+@@ -1523,10 +1529,18 @@ struct MasterScenarioSemanticAcceptanceTests {
+         """
+         let wheelRecordData = Data(wheelRecord.utf8)
+ 
++        func wheelRecordRow(_ path: String, data: Data) -> String {
++            let digest = Data(SHA256.hash(data: data)).base64EncodedString()
++                .replacingOccurrences(of: "+", with: "-")
++                .replacingOccurrences(of: "/", with: "_")
++                .replacingOccurrences(of: "=", with: "")
++            return "\(path),sha256=\(digest),\(data.count)"
++        }
++
+         let recordFileContent = """
+-        \(importName)/__init__.py,,
+-        \(normalizedDist)-\(version).dist-info/METADATA,,
+-        \(normalizedDist)-\(version).dist-info/WHEEL,,
++        \(wheelRecordRow("\(importName)/__init__.py", data: pyCodeData))
++        \(wheelRecordRow("\(normalizedDist)-\(version).dist-info/METADATA", data: metadataData))
++        \(wheelRecordRow("\(normalizedDist)-\(version).dist-info/WHEEL", data: wheelRecordData))
+         \(normalizedDist)-\(version).dist-info/RECORD,,
+         """
+         let recordFileData = Data(recordFileContent.utf8)
+diff --git a/AI_HLYTests/RuntimeAutonomyV3Tests.swift b/AI_HLYTests/RuntimeAutonomyV3Tests.swift
+index 6dd78dbc8..1ce7613a9 100644
+--- a/AI_HLYTests/RuntimeAutonomyV3Tests.swift
++++ b/AI_HLYTests/RuntimeAutonomyV3Tests.swift
+@@ -542,7 +542,7 @@ struct RuntimeAutonomyV3Tests {
+             .write(to: root.appending(path: "node_modules/required/build.py"))
+         try JSONSerialization.data(withJSONObject: ["lockfileVersion": 3, "packages": packages])
+             .write(to: root.appending(path: "package-lock.json"))
+-        let archive = try #require(Bundle.main.url(forResource: "RuntimeHostResources", withExtension: "zip"))
++        let archive = try #require(HanlinApplicationResources.bundle.url(forResource: "RuntimeHostResources", withExtension: "zip"))
+         let digest = SHA256.hash(data: try Data(contentsOf: archive)).map { String(format: "%02x", $0) }.joined()
+         let host = RuntimeFileLayout.default.nodeRuntime.appending(path: "host-\(digest)", directoryHint: .isDirectory)
+         let literal: (String) throws -> String = { String(decoding: try JSONEncoder().encode($0), as: UTF8.self) }
+diff --git a/AI_HLYTests/SkillStoreAndImportTests.swift b/AI_HLYTests/SkillStoreAndImportTests.swift
+index 230f0f6e9..4aee829b5 100644
+--- a/AI_HLYTests/SkillStoreAndImportTests.swift
++++ b/AI_HLYTests/SkillStoreAndImportTests.swift
+@@ -574,7 +574,8 @@ struct SkillStoreAndImportTests {
+             HanlinArchiveEntryMetadata(path: "SKILL.md", kind: .file, compressedBytes: 10, uncompressedBytes: 20),
+             HanlinArchiveEntryMetadata(path: "bomb.txt", kind: .file, compressedBytes: 1, uncompressedBytes: 1000)
+         ]
+-        let bombResult = policy.inspectSkillArchive(entries: bombEntries, centralDirectoryEntryCount: 2, archiveBytes: 100)
++        let ratioPolicy = HanlinArchivePolicy(limits: .init(maximumCompressionRatio: 100))
++        let bombResult = ratioPolicy.inspectSkillArchive(entries: bombEntries, centralDirectoryEntryCount: 2, archiveBytes: 100)
+         #expect(!bombResult.isInstallable)
+         #expect(bombResult.findings.contains { $0.code == .compressionRatioLimit })
+ 

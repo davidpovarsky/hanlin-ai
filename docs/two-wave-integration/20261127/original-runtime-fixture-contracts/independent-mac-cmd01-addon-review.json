@@ -1,0 +1,23 @@
+{
+  "atUTC": "2026-11-27T15:02:41.681755+00:00",
+  "reviewer": "/root/mac_build_resume",
+  "decision": "APPROVED_SOURCE_ONLY_FOR_ORIGINAL_NATIVE_GATE",
+  "patchSHA256": "10ea8cc842531c43acc6c324c1c26c78db9e780cb8fb28c4d58556c0747e0186",
+  "afterSHA256": "73e7e542ce1d6068b4caef455a5f34e47619cb71fbbd4215ba13d218b8020380",
+  "exactInverseSHA256": "02218a97c3f0c5150746db506fe5f94e05f81ab83c073e909b1298ed5ff877a3",
+  "previousCandidateSHA256": "02218a97c3f0c5150746db506fe5f94e05f81ab83c073e909b1298ed5ff877a3",
+  "authoritativeContracts": {
+    "AI_HLY/Downstream/RuntimeCore/Tools/RuntimeToolSupport.swift": "318aafd2fcea288abdfc333e3103e66af4f409daadb54a96d33d57b2fbf82ce9",
+    "AI_HLY/NativeAgentExtensions/ToolRuntime/NativeToolResult.swift": "d7d0dc48fde8e1e63ca0fc0098cc085f2648b38eb81c8ab6968a8c33b59a2321"
+  },
+  "findings": [
+    "NativeToolResult.userText is optional String; direct equality requires the exact17-byte stdout including final newline.",
+    "RuntimeToolSupport.userText is the stdout/stderr/value presentation body; only modelText appends durable job lookup metadata.",
+    "Nonoptional typed diagnostics preserve exact exit0/stdout17/stderr0 and require no truncation, timeout or cancellation.",
+    "Inverse recovers the independently approved earlier candidate exactly; original !isError/direct native output/negative missing-file behavior and all other source remain."
+  ],
+  "priorThreeFileReviewSHA256": "594e44b48e6c289bed314f3b4e8f25eb467345586c1c2aaba76ea3ea634683f9",
+  "testsOrNativeJobsExecuted": 0,
+  "productChanged": false,
+  "actualNativeExecutionStillRequired": true
+}

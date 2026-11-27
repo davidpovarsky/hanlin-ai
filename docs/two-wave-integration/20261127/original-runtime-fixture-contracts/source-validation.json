@@ -1,0 +1,45 @@
+{
+  "base": "5b39e0efb107331f9be8200b99924467e75bcd26",
+  "sourceCommit": "d8ff5b9e19ada705cf24ea936dee8a17586d1d71",
+  "atUTC": "2026-11-27T15:04:11.945033+00:00",
+  "files": {
+    "AI_HLYTests/MasterScenarioSemanticAcceptanceTests.swift": {
+      "beforeSHA256": "fa552eed7a9a15883266f9984ea0f0ae65a40dcea42ba9ab16cc0bad66a27c41",
+      "afterSHA256": "73e7e542ce1d6068b4caef455a5f34e47619cb71fbbd4215ba13d218b8020380",
+      "functionSelectorsPreserved": true,
+      "originalExpectCount": 179,
+      "currentExpectCount": 185,
+      "originalRequireCount": 17,
+      "currentRequireCount": 17
+    },
+    "AI_HLYTests/RuntimeAutonomyV3Tests.swift": {
+      "beforeSHA256": "b72a5d8ec0c51144e864776a2e1d4537cbfd0e28e27074b47280af5b108fba7d",
+      "afterSHA256": "b7a9d76ca340f66e176f42c55c4e110c84e8cf2cc028c134355ab6fb9f95dcc4",
+      "functionSelectorsPreserved": true,
+      "originalExpectCount": 242,
+      "currentExpectCount": 242,
+      "originalRequireCount": 52,
+      "currentRequireCount": 52
+    },
+    "AI_HLYTests/SkillStoreAndImportTests.swift": {
+      "beforeSHA256": "d88842e5e9262196d7a4c287c0dd3457f8d82d057e8b32155058142acfcdf75d",
+      "afterSHA256": "db5fdf3e2a1685fce5afd546d7c85299015be269e6e13d7140008afb51c06739",
+      "functionSelectorsPreserved": true,
+      "originalExpectCount": 139,
+      "currentExpectCount": 139,
+      "originalRequireCount": 13,
+      "currentRequireCount": 13
+    }
+  },
+  "patchSHA256": "da282d78f75e961f5d4b97bf33845bb4e8e40df1c39f9cda16d1e08cb3dbad84",
+  "independentReviewSHA256": {
+    "independent-mac-source-review.json": "594e44b48e6c289bed314f3b4e8f25eb467345586c1c2aaba76ea3ea634683f9",
+    "independent-mac-cmd01-addon-review.json": "71e4e7f8173ecb403c2d7140e2339092f4c197e2417b68108b6564f05be7f1af"
+  },
+  "diffCheck": "PASS",
+  "nativeStatus": "NOT_RUN",
+  "productionChanged": false,
+  "originalLargeMCPInputOrTestBodyChanged": false,
+  "final12Changed": false,
+  "originalDeadlinesChanged": false
+}

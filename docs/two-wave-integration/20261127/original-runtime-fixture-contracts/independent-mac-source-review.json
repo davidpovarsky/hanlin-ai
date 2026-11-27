@@ -1,0 +1,43 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "/root/mac_build_resume",
+  "atUTC": "2026-11-27T14:37:23.016730+00:00",
+  "base": "5b39e0efb107331f9be8200b99924467e75bcd26",
+  "candidateSHA256": "31ff1564e434c85d9f24877753d1feda62de594707d2e10789748104d46c71cf",
+  "patchSHA256": "0639543e1fd77227fc1fed656ecd708df9db73f345d308682889f6281367786d",
+  "sourcePaths": [
+    {
+      "path": "AI_HLYTests/MasterScenarioSemanticAcceptanceTests.swift",
+      "beforeSHA256": "fa552eed7a9a15883266f9984ea0f0ae65a40dcea42ba9ab16cc0bad66a27c41",
+      "afterSHA256": "02218a97c3f0c5150746db506fe5f94e05f81ab83c073e909b1298ed5ff877a3",
+      "assertionAndTestDeclarationLinesPreserved": 215
+    },
+    {
+      "path": "AI_HLYTests/RuntimeAutonomyV3Tests.swift",
+      "beforeSHA256": "b72a5d8ec0c51144e864776a2e1d4537cbfd0e28e27074b47280af5b108fba7d",
+      "afterSHA256": "b7a9d76ca340f66e176f42c55c4e110c84e8cf2cc028c134355ab6fb9f95dcc4",
+      "assertionAndTestDeclarationLinesPreserved": 337
+    },
+    {
+      "path": "AI_HLYTests/SkillStoreAndImportTests.swift",
+      "beforeSHA256": "d88842e5e9262196d7a4c287c0dd3457f8d82d057e8b32155058142acfcdf75d",
+      "afterSHA256": "db5fdf3e2a1685fce5afd546d7c85299015be269e6e13d7140008afb51c06739",
+      "assertionAndTestDeclarationLinesPreserved": 171
+    }
+  ],
+  "contracts": {
+    "PY02": "Pinned installer1.1.0 validate_record requires sha256 URL-safe base64 without padding and exact byte size for each non-RECORD member. CryptoKit/Foundation already imported. Three helper calls hash and count the same Data captured by the unchanged ZIP entry writers; RECORD remains blank as required. Nested Swift string interpolation is syntactically conventional; no native compile is claimed.",
+    "lifecycle": "Archive resource owner and digest now exactly match existing NodeRuntimeService.prepareHostRuntime lines931-940. The actual archive remains required and all lifecycle actions/assertions remain.",
+    "compression": "Existing HanlinArchiveLimits defaults .max and explicitly supports caller-configured limits. Only the hostile ratio fixture now supplies100, matching existing package hostileEntries method. The original1000/1 bomb and rejection assertions remain; no shipping default or metadata changed."
+  },
+  "authoritativeReadReceipt": "mac-read-only-contract-excerpts.json",
+  "authoritativeReadSHA256": "d794bdd54d6200c10f445e31b9a79e52b83f39a08136b9a59905bbe503398e4e",
+  "productionInstallerCallContext": "307:            except ResolutionTooDeep:\n308:                # Library iteration batching is not an installation permission/cap.\n309:                # Retry with cached artifacts and a larger batch until solved or cancelled.\n310:                rounds *= 2\n311:\n312:    def install(self, candidates, destination, overwrite=False):\n313:        from installer import install\n314:        from installer.destinations import SchemeDictionaryDestination\n315:        from installer.sources import WheelFile\n316:        destination = Path(destination).resolve()\n317:        destination.mkdir(parents=True, exist_ok=True)\n318:        scheme = {name: str(destination) for name in (\"purelib\", \"platlib\", \"headers\", \"data\")}\n319:        scheme[\"scripts\"] = str(destination / \"bin\")\n320:        target = SchemeDictionaryDestination(scheme, sys.executable or \"python3\", \"posix\", overwrite_existing=overwrite)\n321:        for candidate in candidates.values():\n322:            print(\"Installing\", candidate.name, candidate.version, flush=True)\n323:            with WheelFile.open(candidate.wheel) as source:\n324:                source.validate_record()\n325:                install(source, target, {\"INSTALLER\": b\"Hanlin standards packaging\\n\"})\n326:\n327:\n328:class IncompatibleDistribution(ValueError):\n329:    pass\n330:\n331:\n332:# Construct the public resolvelib provider only after checksum-verified bootstrap.\n333:def make_provider():\n334:    from resolvelib.providers import AbstractProvider\n335:    from packaging.requirements import Requirement",
+  "decision": "APPROVED_SOURCE_FOR_ORIGINAL_NATIVE_GATE",
+  "testsOrNativeJobsExecuted": 0,
+  "productFilesChanged": 0,
+  "limitations": [
+    "Source review only; actual original native compilation and execution remain required.",
+    "No review or mutation of later CMD01/FINAL12/MCP8MiB candidates is implied."
+  ]
+}
