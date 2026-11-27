@@ -1,5 +1,5 @@
 {
-  "sourceCommit": "2a0b19b79f3da0fef092ca8b0762b9b0e7001caa",
+  "sourceCommit": "866d2d3c60525e32eae27564869e6dba024e625c",
   "uncommittedSourcePaths": [],
   "schemaVersion": 1,
   "auditParser": {
@@ -1329,7 +1329,7 @@
       },
       "consumer": {
         "source": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinPreparedWidget.swift",
-        "sha256": "2d6151c0b5fbda807db99b874c1d8601aa86d7fcc1df2a9bf24c0c403cb3404a"
+        "sha256": "c6de1ead190c0228ea9cb9a842ecbe4d840c53f7bffaa69bf1770fef71d14115"
       },
       "status": "source authorities; installed JS/native/store/prepared-consumer execution is separate evidence",
       "osRendering": "not inferred from state commit or reload request"
@@ -15785,7 +15785,7 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinPreparedWidget.swift",
-      "sha256": "2d6151c0b5fbda807db99b874c1d8601aa86d7fcc1df2a9bf24c0c403cb3404a"
+      "sha256": "c6de1ead190c0228ea9cb9a842ecbe4d840c53f7bffaa69bf1770fef71d14115"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",

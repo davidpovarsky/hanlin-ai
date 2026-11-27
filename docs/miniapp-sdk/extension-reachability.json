@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "2a0b19b79f3da0fef092ca8b0762b9b0e7001caa",
+  "sourceCommit": "866d2d3c60525e32eae27564869e6dba024e625c",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
   "uncommittedSourcePaths": [],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
@@ -272,7 +272,7 @@
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinPreparedWidget.swift",
-      "sha256": "2d6151c0b5fbda807db99b874c1d8601aa86d7fcc1df2a9bf24c0c403cb3404a"
+      "sha256": "c6de1ead190c0228ea9cb9a842ecbe4d840c53f7bffaa69bf1770fef71d14115"
     },
     {
       "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinStoredPackageSnapshot+MiniAppRegistration.swift",
@@ -485,6 +485,9 @@
         "com.apple.developer.icloud-container-identifiers": [
           "iCloud.com.itorah.chavrusachat"
         ],
+        "com.apple.developer.ubiquity-container-identifiers": [
+          "iCloud.com.itorah.chavrusachat"
+        ],
         "com.apple.developer.icloud-services": [
           "CloudKit",
           "CloudDocuments"
@@ -493,7 +496,7 @@
           "$(AppIdentifierPrefix)com.itorah.hanlinminiapps.scriptwidget.services"
         ]
       },
-      "sha256": "6458e58ace4b853a4e291986962c305e54b948173752e98a2932d5d553c8d4ba",
+      "sha256": "3b41191835437afb791dd7d9bfc9287e2051c059ef8c2c368377e8063f31292e",
       "exportedSignatureVerified": false
     },
     "ChavrusaChatShare/ChavrusaChatShare.entitlements": {
