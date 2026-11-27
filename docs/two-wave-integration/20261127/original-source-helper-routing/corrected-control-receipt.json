@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "startedAtUTC": "2026-11-27T17:08:41.765488+00:00",
+  "finishedAtUTC": "2026-11-27T17:08:41.961869+00:00",
+  "elapsedSeconds": 0.19636946264654398,
+  "command": [
+    "python3",
+    "-m",
+    "unittest",
+    "-v",
+    "Scripts.CI.Tests.test_affected_validation.AffectedValidationPlannerTests.test_original_source_fixture_helper_selects_its_existing_consumers"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-original-source-fixture-routing-20261127",
+  "exitCode": 1,
+  "stderrSHA256": "b7cfb3dbff42711bf725e307442cfa79e336240d128d5936b01f83adbfc6bbfb",
+  "reason": "Only the new ownership assertion corrected to the actual dictionary representation; initial failed3-method receipt retained."
+}

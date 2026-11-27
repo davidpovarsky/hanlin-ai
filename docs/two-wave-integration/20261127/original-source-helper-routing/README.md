@@ -1,0 +1,9 @@
+# Explicit ownership for the original source-fixture helper
+
+The actual fresh-widget workflow failed in its unchanged affected-validation planner because `AI_HLYTests/OriginalSourceFixtures.swift` had no owner. This patch assigns only that exact path to the two existing native suites that call it: `OriginalSourceNonRegressionTests` and `MasterScenarioSemanticAcceptanceTests`. The ordinary plan selects those consumers; an explicit legacy request remains exactly its single existing method. Unknown sibling helpers continue to fail closed, including under explicit selection.
+
+All103 pre-existing router test methods and helpers are AST-identical. Three additive controls qualify the route: the legacy-selection and four unknown-sibling subcases passed in the first run; the corrected exact owner/reason dictionary assertion passed in its final focused run. Both earlier new-assertion shape failures are retained rather than recast as passing executions. No existing assertion changed.
+
+The attempted real local legacy planner command hit its150-second subprocess envelope. The exact inner blocked operation is unknown; no plan was produced, and the queued local full90 reproduction was not started. Fresh readback found no process using this exact worktree CWD or original planner command. No budget was increased and no retry or unowned process stop was performed. The actual integrated CI discovery and the unchanged GitHub workflow planner remain the next gates.
+
+The original90 request still contains the same90 unique selectors (80 unit,10 UI), including both consumers. This change does not execute or claim native acceptance, modify the helper itself, or change any workflow, native assertion, deadline or source producer. Both changed paths are outside the accepted396 SDK source-input paths.

@@ -1,0 +1,90 @@
+{
+  "schema": 1,
+  "sourceCommit": "83ef9f4a45ed099a4e4e695ac0013ca1e15a158d",
+  "parent": "97ebeb20074928e875b675005b0e1804b9dcc0c8",
+  "status": "SOURCE_AND_FOCUSED_ROUTING_CONTROLS_QUALIFIED_LOCAL_FULL_REQUEST_INFRA_TIMEOUT",
+  "changes": [
+    {
+      "path": "Scripts/CI/affected-validation-map.json",
+      "sha256": "31683c2073e88618132e4fdb579b6a26be6988223f4074ec7f5a710a32122b62"
+    },
+    {
+      "path": "Scripts/CI/Tests/test_affected_validation.py",
+      "sha256": "6860f668c496a7107c2562473dd4af1d3a5e560c15fb09a8940f7ac3182e3c7b"
+    }
+  ],
+  "patchSHA256": "bfb644275eb0137e0642708ebf020300be8dc062b7990a1087d3e404b79b1f70",
+  "original103MethodsAndAllHelpersASTPreserved": true,
+  "component": {
+    "description": "Build-bound original source fixture reader shared by the existing source-parity and FINAL12 tests",
+    "patterns": [
+      "AI_HLYTests/OriginalSourceFixtures.swift"
+    ],
+    "direct_validation_groups": [
+      "app_unit_tests"
+    ],
+    "unit_suites": [
+      "AI_HLYTests/OriginalSourceNonRegressionTests",
+      "AI_HLYTests/MasterScenarioSemanticAcceptanceTests"
+    ],
+    "consumers": []
+  },
+  "actualConsumers": [
+    {
+      "file": "AI_HLYTests/HanlinOrganizerDockParityTests.swift",
+      "suite": "AI_HLYTests/OriginalSourceNonRegressionTests",
+      "calls": 2
+    },
+    {
+      "file": "AI_HLYTests/MasterScenarioSemanticAcceptanceTests.swift",
+      "suite": "AI_HLYTests/MasterScenarioSemanticAcceptanceTests",
+      "calls": 1
+    }
+  ],
+  "originalFailure": {
+    "run": 46036222443,
+    "job": 140632206522,
+    "rawJobLogBytes": 56490,
+    "rawJobLogSHA256": "9fb77ced697be48c9635d2c58c691c1a17235f6cc35817944a6bb6dd060f8db0",
+    "cause": "The unchanged planner failed closed on the unmapped AI_HLYTests/OriginalSourceFixtures.swift before native work."
+  },
+  "focusedControls": {
+    "executedPassOnFinalAssertion": 1,
+    "earlierPassesQualifiedByUnchangedMethodAndSharedInputASTs": 2,
+    "unknownSiblingNegativeSubcases": 4,
+    "initialAttempt": "Three methods: two pass, one new ownership assertion used a list instead of the actual dictionary.",
+    "secondAttempt": "Only that new assertion: corrected dictionary still omitted the original directly-modified reason prefix.",
+    "finalAttempt": "Only corrected ownership method: PASS; exact owner and actual reason/path now checked.",
+    "allOriginalAssertionsUntouched": true,
+    "earlierSourceReconstructedSHA256": "457a8965dd2e0ffd8f745070c87e27eae4d15fab80651c7044a62f1c920aad1f",
+    "unchangedEarlierPassedMethodASTs": [
+      "test_original_source_fixture_helper_keeps_the_exact_legacy_request",
+      "test_unowned_source_fixture_helper_siblings_still_fail_closed"
+    ]
+  },
+  "originalRequestReproduction": {
+    "legacy": "INFRA_TIMEOUT at unchanged local150-second subprocess envelope; no plan generated.",
+    "full90": "NOT_RUN; sequential controller stopped after the first timeout.",
+    "requestSHA256": "1f25b34979712a0881b36c6e227967737d74d248064df89be9654946cb22662b",
+    "actualInnerBlockedOperation": "Unknown; no causation inferred from subprocess.communicate traceback.",
+    "currentOwnedProcessReadback": "No exact owned worktree CWD or original planner command remains. No signal or retry was sent.",
+    "authoritativeNextGates": "Original complete CI discovery and unchanged real GitHub workflow planner on integrated source."
+  },
+  "original90SelectorsPreserved": {
+    "requestSHA256": "9d8b2f79587165581d5408ba4738fef011fb73f55bc6878a8d6e4d24678b867c",
+    "count": 90,
+    "unit": 80,
+    "ui": 10,
+    "bothHelperConsumersAlreadyIncluded": true
+  },
+  "sdkImpact": {
+    "manifestSHA256": "fde01eda875902fd4b399921902ad8589f03f6c7926d3298fcb4f4c929339838",
+    "sourceInputCount": 396,
+    "intersection": []
+  },
+  "scopeLimits": [
+    "No product, helper implementation, original native test, selector, timeout, workflow or planner implementation changed.",
+    "No full-validation fallback, unmapped-path suppression, native test execution or passing real workflow result claimed.",
+    "Parent approved the exact functional owner route; the new dictionary assertion was corrected transparently with both failed attempts retained."
+  ]
+}

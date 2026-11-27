@@ -1,0 +1,24 @@
+{
+  "id": "job_e0a98255bd9d",
+  "type": "job_result",
+  "source": "script_run@host_299cf75f6b338ecd",
+  "severity": "warning",
+  "tool": "script_run",
+  "host": "host_299cf75f6b338ecd",
+  "status": "failed",
+  "exit_code": 1,
+  "created_at": 1795799564.756479,
+  "started_at": null,
+  "finished_at": "2026-11-27T17:14:30.618179+00:00",
+  "duration_s": 150.29,
+  "error": null,
+  "output_truncated": false,
+  "timeout_s": 195,
+  "read": true,
+  "notified": {
+    "telegram": null,
+    "resend": null
+  },
+  "notify_spec": {},
+  "output": "Traceback (most recent call last):\n  File \"/var/lib/sentinelx/uploads/.sentinelx_uploads/script_job_c9dea93c30674c0682cf94a28607c7c9/script.py\", line 14, in <module>\n    args+=['--json-output',str(out)];started=datetime.datetime.now(datetime.timezone.utc).isoformat();begin=time.monotonic();r=subprocess.run(['runuser','-u','chatgpt-agent','--',*args],cwd=W,env=env,capture_output=True,timeout=150)\n                                                                                                                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/subprocess.py\", line 550, in run\n    stdout, stderr = process.communicate(input, timeout=timeout)\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/subprocess.py\", line 1209, in communicate\n    stdout, stderr = self._communicate(input, endtime, timeout)\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/subprocess.py\", line 2116, in _communicate\n    self._check_timeout(endtime, orig_timeout, stdout, stderr)\n  File \"/usr/lib/python3.12/subprocess.py\", line 1253, in _check_timeout\n    raise TimeoutExpired(\nsubprocess.TimeoutExpired: Command '['runuser', '-u', 'chatgpt-agent', '--', 'python3', 'Scripts/CI/plan_affected_validation.py', '--event-name', 'workflow_dispatch', '--event-path', '/mnt/development/projects/worktrees/hanlin-original-source-fixture-routing-20261127/build/source-helper-routing/legacy-request.json', '--target-group', 'exact_test_selector', '--simulator-e2e-only', '--exact-test-selector', 'AI_HLYUITests/HanlinExpoProductionE2ETests/testNativeLegacyWidgetWithHostTerminated', '--json-output', '/mnt/development/projects/worktrees/hanlin-original-source-fixture-routing-20261127/build/source-helper-routing/legacy-plan.json']' timed out after 150 seconds"
+}
