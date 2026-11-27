@@ -1,0 +1,11 @@
+{
+  "encoding": "gzip",
+  "originalFile": "source.patch",
+  "originalBytes": 1429,
+  "originalSHA256": "01e9d06c3c1ff271f826928fdb84652c8839ad47181f74e2f3f85aa10a1b8c89",
+  "retainedOriginal": "handoff/standalone-native-cardinality-fbf92dc3/source.patch",
+  "encodedFile": "source.patch.gz",
+  "encodedSHA256": "b2251c8c81f0d341756cf142086eec0a04d23eaad2440b3ba22b9db09015f479",
+  "roundTripVerified": true,
+  "reason": "Retain original unified-diff context whitespace losslessly without treating it as new product whitespace."
+}

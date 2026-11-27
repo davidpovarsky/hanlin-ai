@@ -1,0 +1,144 @@
+{
+  "status": "SOURCE_ENUMERATION_ONLY_NOT_EXECUTED",
+  "base": "fbf92dc3bf3bc780a5308d8b994d50dee81ad8f6",
+  "perSelector": [
+    {
+      "selector": "HanlinMiniAppsTests/CrossAppInvocationTests",
+      "source": "HanlinMiniAppsTests/CrossAppInvocationTests.swift",
+      "sourceSHA256": "22f91c12d0953f0d1e08ee1a1157bd595a6da01adb85ac8a104c069c4073b936",
+      "methods": [
+        "HanlinMiniAppsTests/CrossAppInvocationTests/testCompletionIsSavedBeforeSourceOpensAndSurvivesColdRestore",
+        "HanlinMiniAppsTests/CrossAppInvocationTests/testTwoWindowsKeepTheirOwnInputOutputAndCallbacks",
+        "HanlinMiniAppsTests/CrossAppInvocationTests/testCancelAndDisplayDoneReturnNoDocumentMutation",
+        "HanlinMiniAppsTests/CrossAppInvocationTests/testActualProducerAttachmentOperationsPreserveBytes",
+        "HanlinMiniAppsTests/CrossAppInvocationTests/testUnavailableCallbackRetainsResultForSourceRecovery",
+        "HanlinMiniAppsTests/CrossAppInvocationTests/testTextStudioWindowsRestoreTheirOwnDrafts",
+        "HanlinMiniAppsTests/CrossAppInvocationTests/testReusingValueWindowKeepsItsInvocationBindingCurrent",
+        "HanlinMiniAppsTests/CrossAppInvocationTests/testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained",
+        "HanlinMiniAppsTests/CrossAppInvocationTests/testActualIncomingRequestsCreateDistinctIPadScenes"
+      ],
+      "count": 9
+    },
+    {
+      "selector": "HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests",
+      "source": "HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests.swift",
+      "sourceSHA256": "1cc69028a11ee5b2276a87931684658e6e726e1bcc77dee0153f274084d49910",
+      "methods": [
+        "HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests/testSharedNewWindowPreferencePersistsAfterProcessRestart",
+        "HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests/testAppleStyleEditorAddsFavoriteWithNativeEditControls",
+        "HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests/testPreferencesUsesEnglishAndHebrewNativeToolbarLayouts",
+        "HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests/testNativeFavoriteDragRemovalAndVisibilityPersistAfterColdRelaunch"
+      ],
+      "count": 4
+    },
+    {
+      "selector": "HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests",
+      "source": "HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests.swift",
+      "sourceSHA256": "76bd2441ee618b5d0cc6db88902f5985408a7b77842b6724fa991cee4c24ef83",
+      "methods": [
+        "HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests/testExternalInvocationSurvivesNestedFullScreenModal"
+      ],
+      "count": 1
+    },
+    {
+      "selector": "HanlinMiniAppsTests/NativeScriptWindowOwnershipTests",
+      "source": "HanlinMiniAppsTests/NativeScriptWindowOwnershipTests.swift",
+      "sourceSHA256": "fdb3f0d3a54e8c25e437ce97faeb728d1f6b904ad9f73516dd5118a15eac1396",
+      "methods": [
+        "HanlinMiniAppsTests/NativeScriptWindowOwnershipTests/testUnrelatedAndLateWindowCleanupPreservesNativeScriptOwner",
+        "HanlinMiniAppsTests/NativeScriptWindowOwnershipTests/testClosingWindowReleasesLifecycleCaptureBeforeRuntimeStops"
+      ],
+      "count": 2
+    },
+    {
+      "selector": "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests",
+      "source": "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests.swift",
+      "sourceSHA256": "fac1a7336a3b233a18015f56df18fe615c04f56064029af2d292a7f8ea9d4386",
+      "methods": [
+        "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testBridgeInvalidationReleasesPendingCallbacksBeforeProviderCancellation",
+        "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testInvalidationReleasesHandlersAndRejectsLateActions"
+      ],
+      "count": 2
+    },
+    {
+      "selector": "HanlinMiniAppsUITests/MiniAppsNativeScriptWindowUITests",
+      "source": "HanlinMiniAppsUITests/MiniAppsNativeScriptWindowUITests.swift",
+      "sourceSHA256": "74042d7ae01eb7cc880e8c5c26e99a8d2ca2619c4012c0519726c253c97a871d",
+      "methods": [
+        "HanlinMiniAppsUITests/MiniAppsNativeScriptWindowUITests/testTwoNativeWindowsCompleteInReverseOrderWithoutContextMixing",
+        "HanlinMiniAppsUITests/MiniAppsNativeScriptWindowUITests/testCancellingOneNativeWindowKeepsOtherWindowAndPreparedCallbackAlive"
+      ],
+      "count": 2
+    },
+    {
+      "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch",
+      "source": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "sourceSHA256": "87be423d2e5bbe9e8fbd4ab97182f2dc1415ca7538f6a705a5bec46d85cf9cc0",
+      "methods": [
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch"
+      ],
+      "count": 1
+    },
+    {
+      "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents",
+      "source": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "sourceSHA256": "87be423d2e5bbe9e8fbd4ab97182f2dc1415ca7538f6a705a5bec46d85cf9cc0",
+      "methods": [
+        "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents"
+      ],
+      "count": 1
+    },
+    {
+      "selector": "HanlinMiniAppsUITests/MiniAppsNativeScriptPackageWindowUITests",
+      "source": "HanlinMiniAppsUITests/MiniAppsNativeScriptPackageWindowUITests.swift",
+      "sourceSHA256": "fc1464986b44e13f560e03404ca271f72797ce3d5af73714058fb3b20d2de9ed",
+      "methods": [
+        "HanlinMiniAppsUITests/MiniAppsNativeScriptPackageWindowUITests/testDifferentPackagesKeepModulesResourcesAndCallbacksWhenCompletingInReverseOrder",
+        "HanlinMiniAppsUITests/MiniAppsNativeScriptPackageWindowUITests/testCancellingOnePackageKeepsOtherPackageAndItsPreparedCallbackAlive",
+        "HanlinMiniAppsUITests/MiniAppsNativeScriptPackageWindowUITests/testReturningToCatalogKeepsPendingRequestInExistingRootWindow"
+      ],
+      "count": 3
+    }
+  ],
+  "totalDefinitions": 25,
+  "allAreXCTestMethods": true,
+  "crossAppDefinitions": 23,
+  "overlapOriginalPaired54": [
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testActualIncomingRequestsCreateDistinctIPadScenes",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testCancelAndDisplayDoneReturnNoDocumentMutation",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testRemovingInvocationOwnerCancelsWhileSessionIsStillRetained",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testReusingValueWindowKeepsItsInvocationBindingCurrent",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testUnavailableCallbackRetainsResultForSourceRecovery",
+    "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testBridgeInvalidationReleasesPendingCallbacksBeforeProviderCancellation",
+    "HanlinMiniAppsTests/NativeScriptHostServicesLifetimeTests/testInvalidationReleasesHandlersAndRejectsLateActions",
+    "HanlinMiniAppsTests/NativeScriptWindowOwnershipTests/testUnrelatedAndLateWindowCleanupPreservesNativeScriptOwner",
+    "HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests/testExternalInvocationSurvivesNestedFullScreenModal",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents",
+    "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch"
+  ],
+  "overlapOriginalExtra26": [
+    "HanlinMiniAppsTests/NativeScriptWindowOwnershipTests/testClosingWindowReleasesLifecycleCaptureBeforeRuntimeStops"
+  ],
+  "uniqueBeyond54And26": [
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testActualProducerAttachmentOperationsPreserveBytes",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testCompletionIsSavedBeforeSourceOpensAndSurvivesColdRestore",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testTextStudioWindowsRestoreTheirOwnDrafts",
+    "HanlinMiniAppsTests/CrossAppInvocationTests/testTwoWindowsKeepTheirOwnInputOutputAndCallbacks",
+    "HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests/testAppleStyleEditorAddsFavoriteWithNativeEditControls",
+    "HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests/testNativeFavoriteDragRemovalAndVisibilityPersistAfterColdRelaunch",
+    "HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests/testPreferencesUsesEnglishAndHebrewNativeToolbarLayouts",
+    "HanlinMiniAppsUITests/MiniAppsCrossAppPreferencesUITests/testSharedNewWindowPreferencePersistsAfterProcessRestart",
+    "HanlinMiniAppsUITests/MiniAppsNativeScriptPackageWindowUITests/testCancellingOnePackageKeepsOtherPackageAndItsPreparedCallbackAlive",
+    "HanlinMiniAppsUITests/MiniAppsNativeScriptPackageWindowUITests/testDifferentPackagesKeepModulesResourcesAndCallbacksWhenCompletingInReverseOrder",
+    "HanlinMiniAppsUITests/MiniAppsNativeScriptPackageWindowUITests/testReturningToCatalogKeepsPendingRequestInExistingRootWindow",
+    "HanlinMiniAppsUITests/MiniAppsNativeScriptWindowUITests/testCancellingOneNativeWindowKeepsOtherWindowAndPreparedCallbackAlive",
+    "HanlinMiniAppsUITests/MiniAppsNativeScriptWindowUITests/testTwoNativeWindowsCompleteInReverseOrderWithoutContextMixing"
+  ],
+  "overlapSixActiveOS27": [],
+  "existingReuseBoundary": "Existing optional verifier targets its fixed historical CrossApp origin only; no54/26 reuse has been admitted. Keep its default disabled.",
+  "noNativeRuns": true,
+  "noTestEdits": true,
+  "selectorArraysUnchanged": true,
+  "allOtherASTUnchanged": true,
+  "directExistingExpectationSearch": "No references in Tests, Scripts/Tests, Scripts/CI/Tests or Scripts/ProductSplit/Tests."
+}
