@@ -968,9 +968,11 @@ private actor CancellationDrainHost: HanlinHostCancellationDrainSource {
     private(set) var nativeCompletions = 0
     private(set) var cancellationRequests = 0
     let resolvesEffect: Bool
+    let receiptBeforeCancellation: Bool
 
-    init(context: HanlinHostContext, resolvesEffect: Bool = true) {
+    init(context: HanlinHostContext, resolvesEffect: Bool = true, receiptBeforeCancellation: Bool = false) {
         current = context; base = .init(context: context); self.resolvesEffect = resolvesEffect
+        self.receiptBeforeCancellation = receiptBeforeCancellation
     }
     func context(for session: HanlinHostSession) -> HanlinHostContext { current }
     func changeContext(_ value: HanlinHostContext) { current = value }
@@ -981,8 +983,8 @@ private actor CancellationDrainHost: HanlinHostCancellationDrainSource {
         self.invocation = invocation
         executions += 1
         await entered.open()
-        await cancelled.wait()
-        return receipt(invocation, effect: .uncertain)
+        if !receiptBeforeCancellation { await cancelled.wait() }
+        return receipt(invocation, effect: receiptBeforeCancellation ? .confirmedCommitted : .uncertain)
     }
     func cancel(_ invocation: HanlinToolInvocationID) async {
         guard self.invocation?.request.id == invocation else { return }
@@ -1184,6 +1186,64 @@ extension AgentSessionTests {
             _ = try await session.stream(messages: [.init(role: .user, text: "retry")], modelReference: model)
             Issue.record("Uncertain native receipt was silently cleared by Stop")
         } catch { #expect(error as? HanlinHostError == .unresolvedWrite) }
+        #expect(await host.executions == 1)
+    }
+}
+
+
+extension AgentSessionTests {
+    @Test(.timeLimit(.minutes(1)), arguments: [false, true]) @MainActor
+    func stopAtEOFJoinsConfirmedReceiptWorkerBeforeReleasingRun(stopAtEOF: Bool) async throws {
+        let ns = try HanlinConversationNamespace(app: "fixture", account: "a", workspace: "w", space: "s")
+        let context = HanlinHostContext(namespace: ns, sceneID: UUID(), generation: UUID())
+        let identity = HanlinHostSession(conversationID: UUID(), context: context)
+        let host = CancellationDrainHost(context: context, receiptBeforeCancellation: true)
+        let config = HanlinChatModelConfiguration(modelID: "fixture", endpoint: URL(filePath: "/fixture"), apiKey: "")
+        let engine = HanlinAISDKAgentEngine(configuration: config, model: .v3(ToolScriptModel()))
+        let store = HanlinInMemoryConversationStore()
+        let session = HanlinAgentSession(identity: identity, host: host, engine: engine, store: store)
+        let model = HanlinModelReference(provider: "fixture", modelID: "scripted")
+        var consumerEnded = false, completed = 0, cancelled = 0
+        session.onRunCompletion = {
+            switch $0.outcome {
+            case .completed: completed += 1
+            case .cancelled: cancelled += 1
+            case .failed: Issue.record("Confirmed original completion unexpectedly failed")
+            }
+        }
+        let stream = try await session.stream(messages: [.init(role: .user, text: "write")], modelReference: model)
+        let consumer = Task { @MainActor in
+            do { for try await _ in stream {} } catch { if !stopAtEOF { Issue.record(error) } }
+            consumerEnded = true
+        }
+        await host.draining.wait() // The provider has ended; only its original native lease remains.
+        #expect(session.isRunning && !consumerEnded && completed == 0 && cancelled == 0)
+        #expect(await host.nativeCompletions == 0)
+        #expect(await host.executions == 1)
+        do {
+            _ = try await session.stream(messages: [.init(role: .user, text: "too early")], modelReference: model)
+            Issue.record("Provider EOF released the run while the native worker was still alive")
+        } catch { #expect(error as? HanlinHostError == .duplicateInvocation) }
+        if stopAtEOF {
+            let release = Task { @MainActor in
+                #expect(session.isRunning && !consumerEnded)
+                await host.released.open()
+            }
+            let stopped = try #require(await session.cancelCurrentRun())
+            await release.value
+            #expect(!stopped.requiresReconciliation && stopped.session == identity)
+        } else {
+            await host.released.open()
+        }
+        await consumer.value
+        #expect(!session.isRunning && consumerEnded)
+        #expect(completed == (stopAtEOF ? 0 : 1) && cancelled == (stopAtEOF ? 1 : 0))
+        #expect(await host.nativeCompletions == 1)
+        #expect(await host.cancellationRequests == 0)
+        let saved = try #require(await store.load(identity.conversationID, namespace: ns))
+        #expect(saved.entries.contains { if case .toolResult(_, let result) = $0.payload { return result.effectState == .confirmedCommitted }; return false })
+        let next = try await session.stream(messages: [.init(role: .user, text: "continue")], modelReference: model)
+        for try await _ in next {}
         #expect(await host.executions == 1)
     }
 }

@@ -21,6 +21,7 @@ public actor HanlinHostDispatcher {
     private var cancelledRuns = Set<RunKey>()
     private var executingCalls = Set<CallKey>()
     private var drainWaiters: [RunKey: [CheckedContinuation<Void, Never>]] = [:]
+    private var hostDrainTasks: [RunKey: Task<[HanlinHostResultEvent], Never>] = [:]
     private struct NavigationKey: Hashable { let session: UUID; let request: UUID }
     private struct NavigationState {
         let session: HanlinHostSession
@@ -163,14 +164,32 @@ public actor HanlinHostDispatcher {
     /// is retained even when current-account authority has already disappeared.
     public func cancelAndDrain(runID: UUID, session: HanlinHostSession) async -> [HanlinHostResultEvent] {
         let run = RunKey(session: session.id, run: runID)
-        cancelledRuns.insert(run)
-        let reserved = calls.filter { $0.key.session == session.id && $0.key.run == runID }
-        for state in reserved.values where state.result == nil {
-            await host.cancel(state.invocationID)
+        if cancelledRuns.insert(run).inserted {
+            let reserved = calls.filter { $0.key.session == session.id && $0.key.run == runID }
+            for state in reserved.values where state.result == nil {
+                await host.cancel(state.invocationID)
+            }
         }
+        return await drainOriginalWorkers(runID: runID, session: session)
+    }
+
+    /// A confirmed receipt can precede release of the native worker's lease.
+    /// EOF and explicit Stop share one original-worker join per run; normal EOF
+    /// does not cancel the host or turn successful completion into cancellation.
+    public func drainOriginalWorkers(runID: UUID, session: HanlinHostSession) async -> [HanlinHostResultEvent] {
+        let run = RunKey(session: session.id, run: runID)
+        if let task = hostDrainTasks[run] { return await task.value }
+        let task = Task { await self.joinOriginalWorkers(runID: runID, session: session) }
+        hostDrainTasks[run] = task
+        return await task.value
+    }
+
+    private func joinOriginalWorkers(runID: UUID, session: HanlinHostSession) async -> [HanlinHostResultEvent] {
+        let run = RunKey(session: session.id, run: runID)
         if executingCalls.contains(where: { $0.session == session.id && $0.run == runID }) {
             await withCheckedContinuation { drainWaiters[run, default: []].append($0) }
         }
+        let reserved = calls.filter { $0.key.session == session.id && $0.key.run == runID }
         if let drain = host as? any HanlinHostCancellationDrainSource {
             for (key, state) in reserved {
                 if let receipt = await drain.drainCancelledInvocation(state.invocationID),

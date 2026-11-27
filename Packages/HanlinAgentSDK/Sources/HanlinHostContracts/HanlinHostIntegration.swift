@@ -104,7 +104,9 @@ public protocol HanlinHostIntegration: Sendable {
 }
 
 /// Optional completion boundary for hosts whose native worker can outlive an
-/// uncertain execute() result. Cancellation remains a request, never rollback.
+/// execute() result, including a receipt delivered before its native lease ends.
+/// The SDK also joins this boundary at normal EOF without requesting cancellation.
+/// Cancellation remains a request, never rollback.
 /// Implementations wait for the ORIGINAL worker and return only its original
 /// scoped metadata receipt. They must remain callable after account revocation;
 /// draining grants no authority to read, write, navigate or retry in a new scope.

@@ -243,6 +243,10 @@ public final class HanlinAgentSession {
                                 runID: run, step: streamStep, sequence: eventSequence, event: event))
                             eventSequence += 1
                         }
+                        await runControl.waitUntilFinished()
+                        await self.waitForToolExecutions(run)
+                        _ = await self.dispatcher.drainOriginalWorkers(runID: run, session: self.identity)
+                        try self.requireActive(run: run)
                         try await self.persist(model: modelReference)
                         try self.requireActive(run: run)
                         self.finishRun(run)
@@ -257,6 +261,10 @@ public final class HanlinAgentSession {
                         await self.diagnostics?.record(.init(kind: .runFinished, runID: run))
                         continuation.finish()
                     } catch {
+                        runControl.cancel()
+                        _ = await self.dispatcher.cancelAndDrain(runID: run, session: self.identity)
+                        await runControl.waitUntilFinished()
+                        await self.waitForToolExecutions(run)
                         self.revokeInteractions(run: run)
                         if let interactionOrigin { self.revokeInteraction(interactionOrigin) }
                         if !self.cancelledRuns.contains(run) {
@@ -310,9 +318,7 @@ public final class HanlinAgentSession {
                 await withCheckedContinuation { self.runWaiters[run, default: []].append($0) }
             }
             await control?.waitUntilFinished()
-            if self.toolExecutions[run, default: 0] > 0 {
-                await withCheckedContinuation { self.toolWaiters[run, default: []].append($0) }
-            }
+            await self.waitForToolExecutions(run)
             try await self.persistenceTail?.value
             if self.transcriptRun == run, let model = self.record?.model {
                 for event in receipts {
@@ -360,6 +366,12 @@ public final class HanlinAgentSession {
         producerTask = nil
         activeRunControl = nil
         for waiter in runWaiters.removeValue(forKey: run) ?? [] { waiter.resume() }
+    }
+
+    private func waitForToolExecutions(_ run: UUID) async {
+        if toolExecutions[run, default: 0] > 0 {
+            await withCheckedContinuation { toolWaiters[run, default: []].append($0) }
+        }
     }
 
     private func finishToolExecution(_ run: UUID) {
@@ -451,11 +463,13 @@ public final class HanlinAgentSession {
             // The bridge has normalized JSON. Preserve the original input guard;
             // do not manufacture a provider-original provenance assertion.
             let result = try await definition.execute(argumentsJSON, request.requestID.uuidString)
+            _ = await dispatcher.drainOriginalWorkers(runID: run, session: identity)
             try await requireCurrent(run: run)
             finishRun(run)
             onRunCompletion?(.init(session: identity, runID: run, outcome: .completed))
             return result
         } catch {
+            _ = await dispatcher.cancelAndDrain(runID: run, session: identity)
             let safe = (error as? HanlinHostError) ?? (Task.isCancelled ? .cancelled : .denied)
             if !cancelledRuns.contains(run) {
                 onRunCompletion?(.init(session: identity, runID: run, outcome: .failed(safe)))
