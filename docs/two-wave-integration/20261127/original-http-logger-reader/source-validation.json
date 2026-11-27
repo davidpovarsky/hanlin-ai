@@ -1,0 +1,27 @@
+{
+  "base": "6bee646231c4915bbfdb86d8fc301870bbe0fcfb",
+  "status": "SOURCE_ONLY_NOT_COMPILED_NOT_EXECUTED",
+  "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+  "originalSHA256": "9e14ca1f36323df4afcc7df09f7f32bedd4ba55dae667fa1c9d46c81fdbe1993",
+  "candidateSHA256": "50cfade071616aac0c3757f7fce4141e8017716aaa68d9ae092493c8321badb2",
+  "patchSHA256": "2edd429e91d51483739bb06cfeb02022dbde03ce93bc89ff5fa509d9d866918a",
+  "inverseRecoversEntireOriginalFile": true,
+  "actualCompilerFailure": {
+    "source": "6bee646231c4915bbfdb86d8fc301870bbe0fcfb",
+    "location": "HanlinDualWidgetEnginesTests.swift:322:39",
+    "diagnostic": "sending 'boundaryLogger' risks causing data races",
+    "originalLogSHA256": "68f865166934a7f9385f5e83e7b50a474fe07014909640e4b0937d7d2bc8efa3",
+    "testsExecuted": 0,
+    "reportedBy": "/root/mac_build_resume"
+  },
+  "scope": [
+    "One test file only; no runtime/State/Session/logger/provenance change.",
+    "Unchecked Sendable is restricted to a private test-only reader owning only the existing string-only logger.",
+    "The reference is immutable and private; its only read method is private and called exclusively by the synchronous main-confined snapshot.",
+    "Logger mutations remain the existing addLog/clear main-queue operations; no mutable log array is read outside main or returned by reference.",
+    "No JSValue, JSManagedValue, context, state, callback or native session is captured or stored by the reader.",
+    "The original cancellation, finish, global cleanup and callback-queue return precede creation/use of the reader; main.sync is outside the held JS callback queue and original five-second wait.",
+    "The same filtered diagnostic strings are recorded through the same stage recorder.",
+    "Original603 selectors/assertions, transport, five-second executionTimeout and all previously reviewed DEBUG boundary events remain unchanged."
+  ]
+}

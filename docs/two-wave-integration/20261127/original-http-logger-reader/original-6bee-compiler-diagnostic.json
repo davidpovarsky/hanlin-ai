@@ -1,0 +1,48 @@
+{
+  "status": "COMPILE_FAILURE_BEFORE_ORIGINAL_603_EXECUTION",
+  "source": "6bee646231c4915bbfdb86d8fc301870bbe0fcfb",
+  "startedAt": "2026-11-27T11:33:03.316725+00:00",
+  "finishedAt": "2026-11-27T11:33:28.007376+00:00",
+  "nativeExitCode": 1,
+  "stopReason": null,
+  "command": [
+    "/usr/bin/swift",
+    "test",
+    "--package-path",
+    "Packages/HanlinPlatform",
+    "--parallel"
+  ],
+  "sourceUnchanged": true,
+  "testStarts": 0,
+  "testTerminals": 0,
+  "callbackObservations": 0,
+  "samples": 0,
+  "rawLogBytes": 31975,
+  "rawLogSHA256": "68f865166934a7f9385f5e83e7b50a474fe07014909640e4b0937d7d2bc8efa3",
+  "rawReceiptSHA256": "52ba4270297b1bc198c6230cb8899487948f97d6355217eef7eaf68593879d4c",
+  "file": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+  "fileSHA256": "9e14ca1f36323df4afcc7df09f7f32bedd4ba55dae667fa1c9d46c81fdbe1993",
+  "nativeCompilerError": "sending 'boundaryLogger' risks causing data races",
+  "nativeCompilerLocation": {
+    "line": 322,
+    "column": 39
+  },
+  "compilerNotes": "boundaryLogger is captured by a main actor-isolated closure; main actor uses may race with current isolation context",
+  "nativeDiagnosticExcerpts": [
+    {
+      "lineInRawLog": 164,
+      "text": "     |                         `- warning: '#require(_:_:)' is redundant because 'NSBitmapImageRep(cgImage: image).representation(using: .png, properties: [:])' never equals 'nil' (from macro 'require')\n1491 | }\n1492 | #endif\n\n/Users/m1/builds/hanlin-two-wave-root-20261126/source/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift:322:39: error: sending 'boundaryLogger' risks causing data races [#RegionIsolation::SendingRisksDataRace]\n 320 |                 } else {\n 321 |                     boundaryMessages = DispatchQueue.main.sync {\n 322 |                         boundaryLogger?.logs.filter { $0.hasPrefix(\"Original HTTP boundary \") } ?? []\n     |                                       |- error: sending 'boundaryLogger' risks causing data races [#RegionIsolation::SendingRisksDataRace]\n     |                                       `- note: 'boundaryLogger' is captured by a main actor-isolated closure. main actor-isolated uses in closure may race against code in the current isolation context"
+    },
+    {
+      "lineInRawLog": 168,
+      "text": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift:322:39: error: sending 'boundaryLogger' risks causing data races [#RegionIsolation::SendingRisksDataRace]\n 320 |                 } else {\n 321 |                     boundaryMessages = DispatchQueue.main.sync {\n 322 |                         boundaryLogger?.logs.filter { $0.hasPrefix(\"Original HTTP boundary \") } ?? []\n     |                                       |- error: sending 'boundaryLogger' risks causing data races [#RegionIsolation::SendingRisksDataRace]\n     |                                       `- note: 'boundaryLogger' is captured by a main actor-isolated closure. main actor-isolated uses in closure may race against code in the current isolation context\n 323 |                     }\n 324 |                 }\n\n[#RegionIsolation]: <https://docs.swift.org/compiler/documentation/diagnostics/region-isolation>"
+    }
+  ],
+  "sourceContext": {
+    "firstLine": 308,
+    "text": "                    native.finish()\n                    context.exceptionHandler = nil\n                    for key in [\"$render\", \"__httpTestDone\", \"__httpTestFailed\", \"__httpTestStore\", \"__httpTestStage\"] {\n                        context.setObject(nil, forKeyedSubscript: key as NSString)\n                    }\n                    return context.scriptWidgetRunningState?.logger\n                }\n                // Snapshot only bounded diagnostic strings after the original\n                // cancellation/cleanup. The logger owns no JS context or state.\n                let boundaryMessages: [String]\n                if Thread.isMainThread {\n                    boundaryMessages = boundaryLogger?.logs.filter { $0.hasPrefix(\"Original HTTP boundary \") } ?? []\n                } else {\n                    boundaryMessages = DispatchQueue.main.sync {\n                        boundaryLogger?.logs.filter { $0.hasPrefix(\"Original HTTP boundary \") } ?? []\n                    }\n                }\n                recordStage(label, \"original-callback-boundaries\", [\"messages\": boundaryMessages])\n            }\n            try native.onJavaScriptQueue {\n                let state = try #require(context.scriptWidgetRunningState)"
+  },
+  "testRuntimeNotInferred": true,
+  "allPriorNativeFailuresPreserved": true,
+  "fullGateStatus": "FAILED; original603 runtime remains NOT_RUN on this diagnostic source"
+}
