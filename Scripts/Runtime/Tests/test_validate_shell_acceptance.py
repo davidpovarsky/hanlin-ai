@@ -5,13 +5,21 @@ import unittest
 
 from Scripts.Runtime.validate_ios_system_resources import EXPECTED_ENTRIES
 from Scripts.Runtime.validate_shell_acceptance import (
-    EXPECTED_POLICIES,
     AcceptanceValidationError,
     validate_acceptance,
 )
 
 
 COMMANDS = sorted(EXPECTED_ENTRIES)
+# Keep this native-producer fixture independent of the validator constant.
+# A stale expected set must fail the positive fixture, rather than rewrite it.
+CURRENT_PRODUCER_POLICIES = (
+    "verified_command_catalog",
+    "native_pipeline_and_redirection",
+    "portable_command_chaining",
+    "curl_http_native_dispatch",
+    "curl_https_native_dispatch",
+)
 
 
 def valid_payload() -> dict[str, object]:
@@ -52,7 +60,7 @@ def valid_payload() -> dict[str, object]:
             ],
             "policyResults": [
                 {"policy": policy, "passed": True, "detail": "ok"}
-                for policy in sorted(EXPECTED_POLICIES)
+                for policy in CURRENT_PRODUCER_POLICIES
             ],
         },
     }
@@ -60,7 +68,9 @@ def valid_payload() -> dict[str, object]:
 
 class ShellAcceptanceValidationTests(unittest.TestCase):
     def test_valid_result_passes(self) -> None:
-        self.assertEqual(validate_acceptance(valid_payload())["commandCount"], 23)
+        summary = validate_acceptance(valid_payload())
+        self.assertEqual(summary["commandCount"], 23)
+        self.assertEqual(summary["policyCount"], 5)
 
     def test_missing_command_fails(self) -> None:
         payload = valid_payload()
@@ -97,6 +107,70 @@ class ShellAcceptanceValidationTests(unittest.TestCase):
         )
         summary = validate_acceptance(payload)
         self.assertEqual(summary["commandCount"], 24)
+
+    def test_missing_current_policy_fails(self) -> None:
+        for policy in CURRENT_PRODUCER_POLICIES:
+            with self.subTest(policy=policy):
+                payload = valid_payload()
+                payload["smoke"]["policyResults"] = [
+                    row for row in payload["smoke"]["policyResults"] if row["policy"] != policy
+                ]
+                with self.assertRaisesRegex(AcceptanceValidationError, "policy coverage"):
+                    validate_acceptance(payload)
+
+    def test_legacy_policy_contract_fails(self) -> None:
+        payload = valid_payload()
+        payload["smoke"]["policyResults"] = [
+            {"policy": policy, "passed": True, "detail": "legacy"}
+            for policy in (
+                "unknown_command", "pipeline", "redirection", "command_chaining",
+                "curl_https_permission", "curl_http", "curl_offline_version",
+            )
+        ]
+        with self.assertRaisesRegex(AcceptanceValidationError, "policy coverage"):
+            validate_acceptance(payload)
+
+    def test_unexpected_policy_fails(self) -> None:
+        payload = valid_payload()
+        payload["smoke"]["policyResults"].append(
+            {"policy": "unapproved_policy", "passed": True, "detail": "unexpected"}
+        )
+        with self.assertRaisesRegex(AcceptanceValidationError, "policy coverage"):
+            validate_acceptance(payload)
+
+    def test_duplicate_current_policy_fails(self) -> None:
+        for index, policy in enumerate(CURRENT_PRODUCER_POLICIES):
+            with self.subTest(policy=policy):
+                payload = valid_payload()
+                payload["smoke"]["policyResults"].append(
+                    copy.deepcopy(payload["smoke"]["policyResults"][index])
+                )
+                with self.assertRaisesRegex(AcceptanceValidationError, "duplicates"):
+                    validate_acceptance(payload)
+
+    def test_failed_current_policy_fails(self) -> None:
+        for index, policy in enumerate(CURRENT_PRODUCER_POLICIES):
+            with self.subTest(policy=policy):
+                payload = valid_payload()
+                payload["smoke"]["policyResults"][index]["passed"] = False
+                with self.assertRaisesRegex(AcceptanceValidationError, "policy check failed"):
+                    validate_acceptance(payload)
+
+    def test_nonboolean_current_policy_success_fails(self) -> None:
+        for index, policy in enumerate(CURRENT_PRODUCER_POLICIES):
+            for value in (1, "true", None):
+                with self.subTest(policy=policy, value=value):
+                    payload = valid_payload()
+                    payload["smoke"]["policyResults"][index]["passed"] = value
+                    with self.assertRaisesRegex(AcceptanceValidationError, "policy check failed"):
+                        validate_acceptance(payload)
+
+    def test_offline_curl_output_must_identify_curl(self) -> None:
+        payload = valid_payload()
+        result = next(row for row in payload["smoke"]["commandResults"] if row["command"] == "curl")
+        result["representativeOutput"] = "unrelated output"
+        with self.assertRaisesRegex(AcceptanceValidationError, "does not identify curl"):
+            validate_acceptance(payload)
 
 
 if __name__ == "__main__":

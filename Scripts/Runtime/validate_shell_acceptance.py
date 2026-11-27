@@ -15,14 +15,15 @@ except ImportError:
 
 
 EXPECTED_COMMANDS = set(EXPECTED_ENTRIES)
+# These are the current ShellRuntimeSmokeSuite policy identities, also required
+# by HanlinUnifiedHostServicesAgentAcceptanceTests. The producer exercises real
+# native pipes/redirection, portable chaining, and offline curl URL dispatch.
 EXPECTED_POLICIES = {
-    "unknown_command",
-    "pipeline",
-    "redirection",
-    "command_chaining",
-    "curl_https_permission",
-    "curl_http",
-    "curl_offline_version",
+    "verified_command_catalog",
+    "native_pipeline_and_redirection",
+    "portable_command_chaining",
+    "curl_http_native_dispatch",
+    "curl_https_native_dispatch",
 }
 
 
@@ -81,6 +82,7 @@ def validate_acceptance(payload: dict[str, Any]) -> dict[str, Any]:
 
     policy_results = smoke.get("policyResults") or []
     policies_by_name = {result.get("policy"): result for result in policy_results}
+    require(len(policy_results) == len(policies_by_name), "Shell policy rows contain duplicates")
     require(set(policies_by_name) == EXPECTED_POLICIES, "Shell policy coverage is incomplete or unexpected")
     for policy, result in policies_by_name.items():
         require(result.get("passed") is True, f"Shell policy check failed: {policy}")
