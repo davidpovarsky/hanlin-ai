@@ -1,0 +1,28 @@
+{
+  "admission": {
+    "startedAt": "2026-11-27T15:55:19.080854+00:00",
+    "head": "d077babf9ba9312199aa41cef18f40581edbc52c",
+    "status": "",
+    "sparsePath": "/mnt/development/projects/git-mirrors/hanlin-ai.git/worktrees/hanlin-two-wave-integration-20261126/info/sparse-checkout",
+    "sparseSHA256": "fd9faf02165766a7ff4055132a8ecb65ac0038dc9ab5b163fd5e211e16eaf732",
+    "sparseConfig": {
+      "core.sparseCheckout": "true",
+      "core.sparseCheckoutCone": "false"
+    },
+    "freeBytes": 17074024448,
+    "originalControllerSHA256": "2664765f1ca1593087760259a77389ba4c54152b5667f6f77edcbe1bae65ceae"
+  },
+  "controllerOutput": "{\"sourceCommit\": \"d077babf9ba9312199aa41cef18f40581edbc52c\", \"command\": [\"runuser\", \"-u\", \"chatgpt-agent\", \"--\", \"python3\", \"-m\", \"unittest\", \"discover\", \"-s\", \"Scripts/CI/Tests\", \"-p\", \"test_*.py\", \"-v\"], \"cwd\": \"/mnt/development/projects/worktrees/hanlin-two-wave-integration-20261126\", \"startedAt\": \"2026-11-27T15:55:40.830330+00:00\", \"finishedAt\": \"2026-11-27T15:56:05.367136+00:00\", \"durationSeconds\": 24.536788925528526, \"exitCode\": 0, \"originalRunnerSummary\": [\"Ran 531 tests in 23.388s\", \"OK (skipped=2)\"], \"skips\": [\"test_staged_artifacts_have_valid_plists_only_ios_slices_and_no_broken_links (test_expo_xcframework_preparation.TestExpoXCFrameworkPreparation.test_staged_artifacts_have_valid_plists_only_ios_slices_and_no_broken_links) ... skipped 'Artifacts directory is not staged'\", \"test_real_flit_backend_download_build_install_and_import (hanlin_python_packaging_acceptance.PythonPackagingTests.test_real_flit_backend_download_build_install_and_import) ... skipped 'explicit real PyPI/backend integration'\"], \"statusAfter\": \"\", \"headAfter\": \"d077babf9ba9312199aa41cef18f40581edbc52c\", \"nativeExecutedByController\": false, \"originalTestCommandChanged\": false, \"controllerImposedTestTimeout\": null}\n",
+  "exitCode": 0,
+  "materializedAt": "2026-11-27T15:55:25.005227+00:00",
+  "materializedFreeBytes": 16493297664,
+  "headAfter": "d077babf9ba9312199aa41cef18f40581edbc52c",
+  "statusAfter": "",
+  "sparseRestored": true,
+  "configAfter": {
+    "core.sparseCheckout": "true",
+    "core.sparseCheckoutCone": "false"
+  },
+  "finishedAt": "2026-11-27T15:56:06.181066+00:00",
+  "freeBytesAfter": 17058619392
+}

@@ -1,0 +1,12 @@
+{
+  "packet": "host-sdk-764ed325-complete-pass-proof",
+  "manifestSHA256": "af1debc79e2d54fe9e33c06c1578ae77d8be8e29bb2c51da9f775b22b8f7a55f",
+  "archiveSHA256": "b1a838163fa92603e122cdf40e12ecbc0ca0f802f9bdf85c3fc0ff0ad3cb1f73",
+  "payloadFiles": 38,
+  "payloadBytes": 19733504,
+  "exactArchivePayloadVerified": true,
+  "exactIncludedManifest": true,
+  "credentialPatternPreflight": "PASS",
+  "rawNativeStatus": "ORIGINAL_HOST188_AND_FRESH_SDK396_PASS",
+  "atUTC": "2026-11-27T15:56:14.230588+00:00"
+}

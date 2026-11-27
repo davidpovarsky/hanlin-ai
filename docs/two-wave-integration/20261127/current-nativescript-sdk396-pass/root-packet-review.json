@@ -1,0 +1,12 @@
+{
+  "packet": "ns-surface-764ed325-sdk396-proof",
+  "manifestSHA256": "d6a9e0d7e6b946388572f081a0385030a65c3ee8b37e3036722950d9ace9590c",
+  "archiveSHA256": "4a035718bd0f805afd71f31b2f01f75d4de8306cb29d000942f68cd782f6392a",
+  "payloadFiles": 36,
+  "payloadBytes": 203044,
+  "exactArchivePayloadVerified": true,
+  "exactIncludedManifest": true,
+  "credentialPatternPreflight": "PASS",
+  "rawNativeStatus": "ORIGINAL_STRICT_NATIVE_SCRIPT_SURFACE_VALIDATE_BUILD_SOURCE_RECONCILED_PASS",
+  "atUTC": "2026-11-27T15:56:14.264846+00:00"
+}

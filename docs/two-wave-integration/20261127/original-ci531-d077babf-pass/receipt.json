@@ -1,0 +1,66 @@
+{
+  "sourceCommit": "d077babf9ba9312199aa41cef18f40581edbc52c",
+  "command": [
+    "runuser",
+    "-u",
+    "chatgpt-agent",
+    "--",
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "Scripts/CI/Tests",
+    "-p",
+    "test_*.py",
+    "-v"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-two-wave-integration-20261126",
+  "startedAt": "2026-11-27T15:55:40.830330+00:00",
+  "finishedAt": "2026-11-27T15:56:05.367136+00:00",
+  "durationSeconds": 24.536788925528526,
+  "exitCode": 0,
+  "originalRunnerSummary": [
+    "Ran 531 tests in 23.388s",
+    "OK (skipped=2)"
+  ],
+  "skips": [
+    "test_staged_artifacts_have_valid_plists_only_ios_slices_and_no_broken_links (test_expo_xcframework_preparation.TestExpoXCFrameworkPreparation.test_staged_artifacts_have_valid_plists_only_ios_slices_and_no_broken_links) ... skipped 'Artifacts directory is not staged'",
+    "test_real_flit_backend_download_build_install_and_import (hanlin_python_packaging_acceptance.PythonPackagingTests.test_real_flit_backend_download_build_install_and_import) ... skipped 'explicit real PyPI/backend integration'"
+  ],
+  "statusAfter": "",
+  "headAfter": "d077babf9ba9312199aa41cef18f40581edbc52c",
+  "files": {
+    "stdout.log": {
+      "bytes": 4882,
+      "sha256": "e79cd927e9e79a7136626e11acfd12a24cb3cf65646dd67c6b7fec17661a8f85",
+      "gzip": {
+        "path": "stdout.log.gz",
+        "bytes": 916,
+        "sha256": "e813762f3bda3cc09c9baa6d8f487a175438c6b96007ee46fe04cbec5e428c4a",
+        "encoding": "lossless gzip; original bytes unchanged"
+      }
+    },
+    "stderr.log": {
+      "bytes": 105304,
+      "sha256": "3cbee9b90e604044267e53f305b4dd56c0ed359d8689d1b252ae148376f5c4b5",
+      "gzip": {
+        "path": "stderr.log.gz",
+        "bytes": 16969,
+        "sha256": "6050eab982fe7fd45f827e1dc7967aac9b0ef89715ce22cd92916baceab2de17",
+        "encoding": "lossless gzip; original bytes unchanged"
+      }
+    },
+    "source-inputs.json": {
+      "bytes": 5097866,
+      "sha256": "89ab9790a0ec347befec45e37eba57bd4934f26b0aecfd6659d9ed1f8f81bc01"
+    },
+    "start.json": {
+      "bytes": 858,
+      "sha256": "de30731d12e7a79462408bf808c75ee8b4497ac5c17c5679673c9c0fd509f389"
+    }
+  },
+  "nativeExecutedByController": false,
+  "originalTestCommandChanged": false,
+  "controllerImposedTestTimeout": null
+}

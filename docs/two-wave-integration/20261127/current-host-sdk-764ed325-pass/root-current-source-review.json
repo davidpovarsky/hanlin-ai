@@ -1,0 +1,29 @@
+{
+  "atUTC": "2026-11-27T16:00:27.294954+00:00",
+  "qualifiedGitSource": "d077babf9ba9312199aa41cef18f40581edbc52c",
+  "actualHostExecutionSource": "764ed325b3b3bbf1be4ce471b3a7574db2c44bc7",
+  "generatedDocSourceSeal": "78ec8f97a607f5e1f8c01de5109ae850791b9e04",
+  "all396SDKSourceInputsMatchGit": true,
+  "sdkInputSHA256": "7e2d370d0753b37bb1c589e4c2b28e3e8383c6fb948b09b0556e651efcfa4a9e",
+  "all12OriginalPhaseExitCodes": 0,
+  "tests": {
+    "tests": 188,
+    "pass": 188,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "actualLongJobProof": {
+    "proof": "actual-node-job-over-300-seconds",
+    "elapsedMilliseconds": 305023.16687500005,
+    "executionID": "0afef886-b456-4204-bca7-9662a8cb8cd0"
+  },
+  "all7OriginalNativeScriptFixtureInputsMatchGit": true,
+  "strictNSNativeExitCodes": [
+    0,
+    0
+  ],
+  "originalNSRawWrapperFailurePreserved": true,
+  "NSReconciliationWithoutNativeRerun": true,
+  "appOrOSAcceptanceClaimed": false
+}

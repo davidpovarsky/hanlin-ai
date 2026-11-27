@@ -1,0 +1,13 @@
+{
+  "startedAt": "2026-11-27T15:55:19.080854+00:00",
+  "head": "d077babf9ba9312199aa41cef18f40581edbc52c",
+  "status": "",
+  "sparsePath": "/mnt/development/projects/git-mirrors/hanlin-ai.git/worktrees/hanlin-two-wave-integration-20261126/info/sparse-checkout",
+  "sparseSHA256": "fd9faf02165766a7ff4055132a8ecb65ac0038dc9ab5b163fd5e211e16eaf732",
+  "sparseConfig": {
+    "core.sparseCheckout": "true",
+    "core.sparseCheckoutCone": "false"
+  },
+  "freeBytes": 17074024448,
+  "originalControllerSHA256": "2664765f1ca1593087760259a77389ba4c54152b5667f6f77edcbe1bae65ceae"
+}

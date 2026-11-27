@@ -1,0 +1,28 @@
+{
+  "admission": {
+    "startedAt": "2026-11-27T15:51:43.163861+00:00",
+    "head": "d077babf9ba9312199aa41cef18f40581edbc52c",
+    "status": "",
+    "sparsePath": "/mnt/development/projects/git-mirrors/hanlin-ai.git/worktrees/hanlin-two-wave-integration-20261126/info/sparse-checkout",
+    "sparseSHA256": "fd9faf02165766a7ff4055132a8ecb65ac0038dc9ab5b163fd5e211e16eaf732",
+    "sparseConfig": {
+      "core.sparseCheckout": "true",
+      "core.sparseCheckoutCone": "false"
+    },
+    "freeBytes": 17208860672,
+    "originalControllerSHA256": "2664765f1ca1593087760259a77389ba4c54152b5667f6f77edcbe1bae65ceae"
+  },
+  "controllerOutput": null,
+  "exitCode": null,
+  "error": "Command '['runuser', '-u', 'chatgpt-agent', '--', 'git', '-c', 'gc.auto=0', '-C', '/mnt/development/projects/worktrees/hanlin-two-wave-integration-20261126', 'sparse-checkout', 'disable']' returned non-zero exit status 128.",
+  "traceback": "Traceback (most recent call last):\n  File \"/var/lib/sentinelx/uploads/.sentinelx_uploads/script_job_0a56d8622d334332b0c107d7325e5165/script.py\", line 28, in <module>\n    git(\"sparse-checkout\",\"disable\")\n  File \"/var/lib/sentinelx/uploads/.sentinelx_uploads/script_job_0a56d8622d334332b0c107d7325e5165/script.py\", line 9, in git\n    p=subprocess.run(PREFIX+list(a),input=input,capture_output=True,check=check)\n      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/subprocess.py\", line 571, in run\n    raise CalledProcessError(retcode, process.args,\nsubprocess.CalledProcessError: Command '['runuser', '-u', 'chatgpt-agent', '--', 'git', '-c', 'gc.auto=0', '-C', '/mnt/development/projects/worktrees/hanlin-two-wave-integration-20261126', 'sparse-checkout', 'disable']' returned non-zero exit status 128.\n",
+  "headAfter": "d077babf9ba9312199aa41cef18f40581edbc52c",
+  "statusAfter": "",
+  "sparseRestored": true,
+  "configAfter": {
+    "core.sparseCheckout": "true",
+    "core.sparseCheckoutCone": "false"
+  },
+  "finishedAt": "2026-11-27T15:51:44.226055+00:00",
+  "freeBytesAfter": 17208856576
+}

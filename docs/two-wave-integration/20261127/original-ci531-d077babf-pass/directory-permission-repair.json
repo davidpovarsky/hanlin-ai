@@ -1,0 +1,76 @@
+{
+  "source": "d077babf9ba9312199aa41cef18f40581edbc52c",
+  "actualAdmissionExit": 128,
+  "stderrSHA256": "fadb38bc8e5de118333c0b7913ef15f15a9821de7182376041cdd3ece451a72f",
+  "changedDirectories": [
+    {
+      "path": "AI_HLYTests",
+      "before": {
+        "uid": 0,
+        "gid": 1002,
+        "mode": "0o755"
+      },
+      "after": {
+        "uid": 1002,
+        "gid": 1002,
+        "mode": "0o755"
+      }
+    },
+    {
+      "path": "docs/two-wave-integration/20261126/affected-routing-9819697c",
+      "before": {
+        "uid": 0,
+        "gid": 1002,
+        "mode": "0o755"
+      },
+      "after": {
+        "uid": 1002,
+        "gid": 1002,
+        "mode": "0o755"
+      }
+    },
+    {
+      "path": "docs/two-wave-integration/20261126/original-source-guard-migration",
+      "before": {
+        "uid": 0,
+        "gid": 1002,
+        "mode": "0o755"
+      },
+      "after": {
+        "uid": 1002,
+        "gid": 1002,
+        "mode": "0o755"
+      }
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/host764-generated-sdk-source",
+      "before": {
+        "uid": 0,
+        "gid": 1002,
+        "mode": "0o755"
+      },
+      "after": {
+        "uid": 1002,
+        "gid": 1002,
+        "mode": "0o755"
+      }
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/original-shell-mcp-64fdbd34-pass",
+      "before": {
+        "uid": 0,
+        "gid": 1002,
+        "mode": "0o755"
+      },
+      "after": {
+        "uid": 1002,
+        "gid": 1002,
+        "mode": "0o755"
+      }
+    }
+  ],
+  "fileBytesChanged": false,
+  "testCommandExecuted": false,
+  "sparseRestored": true,
+  "atUTC": "2026-11-27T15:54:54.704817+00:00"
+}
