@@ -1,0 +1,34 @@
+{
+  "sourceBase": "5b39e0efb107331f9be8200b99924467e75bcd26",
+  "failedNativeSource": "466c6187309f86da9d20b389de3c424cd93c9bdd",
+  "files": [
+    {
+      "path": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests.swift",
+      "beforeSHA256": "85efedee4ec94c5ecc4e727847401fda1ab72a66e7cf9ab2403f909f23a18210",
+      "afterSHA256": "e389035a7b8b54b50784babba7143f6d438661c6b99018799484235d2d0c5a80",
+      "exactInverseRecoversOriginal": true,
+      "replacementCount": 1
+    },
+    {
+      "path": "AI_HLYTests/HanlinApplicationEmbeddingTests.swift",
+      "beforeSHA256": "d647361dbef8f576f18e13fc852df7f61b7d06a7f5757e5b29bfd503aafc4463",
+      "afterSHA256": "fb77279d1a58cb3226513d1ea5ec4a0083ad05d5f27d8f0656df781c4495cb38",
+      "exactInverseRecoversOriginal": true,
+      "replacementCount": 2
+    }
+  ],
+  "nativeStatus": "NOT_RUN",
+  "review": {
+    "reviewer": "/root",
+    "status": "APPROVED_SOURCE_ONLY",
+    "basis": "Parent independently reviewed the complete two-file diff, the adapter canonical RuntimeKind validation and HanlinConversationMutation localization expression; exact candidate hashes are unchanged."
+  },
+  "validation": {
+    "kind": "source-preservation verification",
+    "nativeExecution": "NOT_RUN",
+    "productionPathsChanged": [],
+    "existingTestMethodsAndSelectors": "unchanged",
+    "exactLocalizedExpectedMessageExpression": "corrected to current public shared catalog contract",
+    "globalLocaleMutation": false
+  }
+}
