@@ -193,12 +193,12 @@ final class HanlinExpoProductionE2ETests: XCTestCase {
         let search = springboard.searchFields.firstMatch
         XCTAssertTrue(search.waitForExistence(timeout: 10))
         search.tap()
-        search.typeText("ChavrusaChat")
+        search.typeText("Hanlin AI")
         // The underlying Home Screen icon remains in SpringBoard's hierarchy.
         // Select the actual gallery row, never an identically named app icon.
         let gallery = springboard.collectionViews["add-sheet-collection-view"].firstMatch
         XCTAssertTrue(gallery.waitForExistence(timeout: 10))
-        let galleryItem = gallery.cells.matching(NSPredicate(format: "label == 'ChavrusaChat' OR label == 'Hanlin Script' OR label == 'AI Hanlin' OR label == 'Hanlin'")).firstMatch
+        let galleryItem = gallery.cells.matching(NSPredicate(format: "label == 'Hanlin AI'")).firstMatch
         XCTAssertTrue(galleryItem.waitForExistence(timeout: 10))
         recordWidgetEvidence(springboard, name: "gallery-search-\(instance)")
         galleryItem.tap()
