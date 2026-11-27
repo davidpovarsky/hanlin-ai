@@ -1923,6 +1923,28 @@
       ],
       "consumers": []
     },
+    "original_widget_native_primitives": {
+      "description": "Original native SwiftUI primitives shared by original ExpoWidgets and prepared widgets; preserve native renderer/action consumers and packaged extension closure",
+      "patterns": [
+        "Packages/HanlinExpoWidgetSubset/Package.swift",
+        "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/**"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests",
+        "runtimecore_host",
+        "simulator_targeted_ui",
+        "device_build",
+        "ipa_packaging"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinNativeWidgetRendererTests",
+        "AI_HLYTests/HanlinOriginalExpoWidgetTests"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinExpoProductionE2ETests/testNativeExpoWidgetSourceActionsWithHostTerminated"
+      ],
+      "consumers": []
+    },
     "original_widget_contracts": {
       "description": "Original Expo and ScriptWidget native renderers, ActivityKit actions, shared widget fixture and typed authoring contract",
       "patterns": [

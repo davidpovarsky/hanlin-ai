@@ -214,6 +214,58 @@ class AffectedValidationPlannerTests(unittest.TestCase):
                 self.plan_files([path])
             self.assertEqual(ctx.exception.unmapped_paths, [path])
 
+    def test_original_widget_native_primitives_route_actual_consumers_and_packaging(self) -> None:
+        prefix = "Packages/HanlinExpoWidgetSubset/"
+        paths = (
+            "Package.swift",
+            "Sources/HanlinExpoWidgetSubset/DictionaryContext.swift",
+            "Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/ViewModifierRegistry.swift",
+            "Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/GlassEffectModifier.swift",
+            "Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/HingeObservationModifiers.swift",
+        )
+        for relative in paths:
+            with self.subTest(path=relative):
+                path = prefix + relative
+                plan = self.plan_files([path])
+                self.assertIn("original_widget_native_primitives", plan.affected_components)
+                self.assertNotIn(path, plan.no_impact_files)
+                expected_units = {
+                    "AI_HLYTests/HanlinNativeWidgetRendererTests",
+                    "AI_HLYTests/HanlinOriginalExpoWidgetTests",
+                }
+                if relative == "Package.swift":
+                    # Preserve the independent canonical application-SDK manifest
+                    # owner as well as adding the original native widget consumers.
+                    original_mapping = json.loads(json.dumps(self.mapping_config))
+                    del original_mapping["components"]["original_widget_native_primitives"]
+                    original = planner.plan_affected_validation(
+                        mapping_config=original_mapping, changed_files=[path],
+                        base_sha="abc123", head_sha="def456", event_name="workflow_dispatch",
+                    )
+                    expected_units.update(filter(None, original.step_outputs["simulator_unit_filter"].split(",")))
+                    self.assertEqual(plan.step_outputs["run_simulator_smoke_launch"],
+                                     original.step_outputs["run_simulator_smoke_launch"])
+                self.assertEqual(set(plan.step_outputs["simulator_unit_filter"].split(",")), expected_units)
+                self.assertEqual(plan.step_outputs["simulator_ui_filter"],
+                                 "AI_HLYUITests/HanlinExpoProductionE2ETests/testNativeExpoWidgetSourceActionsWithHostTerminated")
+                for flag in ("run_simulator_unit", "run_simulator_targeted_ui", "stage_scriptui_fixtures",
+                             "run_runtimecore_host", "run_device_build", "run_ipa_packaging"):
+                    self.assertTrue(plan.step_outputs[flag], flag)
+                self.assertEqual(plan.step_outputs["simulator_configuration"], "Release")
+                self.assertFalse(plan.step_outputs["run_full_validation"])
+                self.assertFalse(plan.step_outputs["run_platform_contracts"])
+                self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+
+    def test_unowned_widget_native_sibling_still_fails_closed(self) -> None:
+        for path in (
+            "Packages/HanlinExpoWidgetSubset/Sources/UnreviewedSibling/Widget.swift",
+            "Packages/HanlinExpoWidgetSubset/Unreviewed.swift",
+            "Packages/HanlinExpoWidgetSubsetSibling/Sources/HanlinExpoWidgetSubset/Widget.swift",
+        ):
+            with self.subTest(path=path), self.assertRaises(planner.UnmappedPathsError) as ctx:
+                self.plan_files([path])
+            self.assertEqual(ctx.exception.unmapped_paths, [path])
+
     def test_original_widget_archives_select_their_existing_consumers(self) -> None:
         renderer_suite = "AI_HLYTests/HanlinNativeWidgetRendererTests"
         counter_ui = "AI_HLYUITests/HanlinExpoProductionE2ETests/testNativeExpoWidgetSourceActionsWithHostTerminated"
