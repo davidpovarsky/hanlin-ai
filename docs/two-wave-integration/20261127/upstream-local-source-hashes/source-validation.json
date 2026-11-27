@@ -1,0 +1,17 @@
+{
+  "status": "SOURCE_HASH_RECONCILIATION_PASSED_NO_NATIVE_CLAIM",
+  "sourceCommit": "2c98cbcf1f6feb20cd670ed9eaa71e1c854f98d2",
+  "beforeMatching": 251,
+  "afterMatching": 259,
+  "recordCount": 259,
+  "uniquePaths": 258,
+  "sourcePathsChanged": [
+    "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json"
+  ],
+  "executableDelta": false,
+  "pinsChanged": false,
+  "sdkDeclaredInputChanged": true,
+  "independentRootReview": "PENDING_SEPARATE_RECEIPT",
+  "proofManifestSHA256": "28c608aa6c6ae88690f71306480a7a037ebb9f8b87319f9b2a4bcd27911322f6",
+  "recordedAtUTC": "2026-11-27T10:28:26.509932+00:00"
+}

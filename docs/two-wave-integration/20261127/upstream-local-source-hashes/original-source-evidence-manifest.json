@@ -1,0 +1,96 @@
+{
+  "schema": 1,
+  "status": "EXACT_ORIGINAL_SOURCE_EVIDENCE_RETAINED",
+  "sourceCommit": "2c98cbcf1f6feb20cd670ed9eaa71e1c854f98d2",
+  "base": "4cce12cfe277ba5849c5de0b0d5bc43eb564f7f1",
+  "archive": "original-source-evidence.tar.gz",
+  "archiveSHA256": "a7e5a39d603cc5e092e08cb8ff9ce30f2afe381a4b5773cba9bfee20d245147b",
+  "archiveBytes": 41139,
+  "members": [
+    {
+      "path": "HanlinExpoWidgetNative.swift.historical-source.patch",
+      "bytes": 1973,
+      "sha256": "d46f5813ea19b1125d9854284c78d5c65b56138517ea53486760e2836ae98ceb",
+      "encoding": "UTF-8"
+    },
+    {
+      "path": "HanlinScriptWidgetRuntime.swift.historical-source.patch",
+      "bytes": 4765,
+      "sha256": "54afc3af648acd3964b8be685c86d366ce94a546d4721c6e76f6005617acb144",
+      "encoding": "UTF-8"
+    },
+    {
+      "path": "REVIEW_NOTES.md",
+      "bytes": 3583,
+      "sha256": "ac09512b68e8c5f4c814f4056986ec4d9f8d886a0565cc2dd4ea338fbac8d69f",
+      "encoding": "UTF-8"
+    },
+    {
+      "path": "ScriptWidgetAttributeFrameModifier.swift.historical-source.patch",
+      "bytes": 1454,
+      "sha256": "5a8e5928bebdbd56256b3a33003a7ddf0673356c1dd049b392b2dfd766cde884",
+      "encoding": "UTF-8"
+    },
+    {
+      "path": "ScriptWidgetAttributeImageModifier.swift.historical-source.patch",
+      "bytes": 1098,
+      "sha256": "4df14a47e953b1844565b7a0a5a5323d8fe4d1c340d5fa3afd8d6fa5c57a9d9d",
+      "encoding": "UTF-8"
+    },
+    {
+      "path": "ScriptWidgetAttributeRotationEffectModifier.swift.historical-source.patch",
+      "bytes": 1414,
+      "sha256": "faf9722a1928d7aa87fd36eb67acf2b8c7ccb4b3429759a10c4f8cdb192133ec",
+      "encoding": "UTF-8"
+    },
+    {
+      "path": "ScriptWidgetElementView.swift.historical-source.patch",
+      "bytes": 2199,
+      "sha256": "81be92a34ed906bbb894b8797b7f8120167c7d4f68d4c75486ac3b89a4bd51d8",
+      "encoding": "UTF-8"
+    },
+    {
+      "path": "ViewRenderer.swift.historical-source.patch",
+      "bytes": 2360,
+      "sha256": "c17658543dd2c4c763789a105a8e431c1a5fa37fee1dca368b7e9e9bd243e4da",
+      "encoding": "UTF-8"
+    },
+    {
+      "path": "evidence-manifest.json",
+      "bytes": 2328,
+      "sha256": "156f7e9204d150da5ce81bfb8d52a8b9e4cb02ad8c6ede694c8e44cd2f1f577e",
+      "encoding": "UTF-8"
+    },
+    {
+      "path": "manifest-hash-correction-raw-receipts.json.gz",
+      "bytes": 28465,
+      "sha256": "5a40d3db83089b0d32b592d8d777396e90e1c69746ffd68da17dfe7a19681b33",
+      "encoding": "gzip of original UTF-8 JSON"
+    },
+    {
+      "path": "source-commit.json",
+      "bytes": 556,
+      "sha256": "23f9624f7424197b793a8475776b473edfdada31422c2328e55c3442b46e0e1b",
+      "encoding": "UTF-8"
+    },
+    {
+      "path": "source-history.json",
+      "bytes": 7764,
+      "sha256": "7204de777f7cc30566bb64956ec54770ebdc0a6c085eea4b9ddbe3197fc5a473",
+      "encoding": "UTF-8"
+    },
+    {
+      "path": "source.json",
+      "bytes": 4009,
+      "sha256": "7fb58fc93c049190cbe0c039915cc5a07193d9119ebdb77e117f26cf103bc938",
+      "encoding": "UTF-8"
+    },
+    {
+      "path": "source.patch",
+      "bytes": 7367,
+      "sha256": "9dcf3c532f00a85f69a7b3f4b0041c536aba0a5adcb9e70f4bd374183c03c8e9",
+      "encoding": "UTF-8"
+    }
+  ],
+  "nativeJobs": 0
+}
