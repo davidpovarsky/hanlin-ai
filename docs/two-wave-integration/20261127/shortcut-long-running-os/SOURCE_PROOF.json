@@ -1,0 +1,339 @@
+{
+  "R1ToR2PatchSHA256": "3a369625e60f3b2da6ba7fad8abe0b093f6eaea7c083d0f2786abbe35c3aefaf",
+  "actualNativeAuthoring": "NOT_RUN",
+  "actualOSAcceptance": "NOT_RUN",
+  "actualSwiftCompilation": "NOT_RUN",
+  "changedSourceFiles": [
+    {
+      "beforeSHA256": "82a683b05433ddc872f6428495d2883b0e66e46fab16b2df604b125267c5b1ca",
+      "bytes": 176844,
+      "path": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+      "sha256": "7ba73f651fb9fa326f6a4787e5ac8f4739ca00922ce79f57967c4b309b8c27fd"
+    },
+    {
+      "beforeSHA256": null,
+      "bytes": 3047,
+      "path": "Fixtures/ShortcutLongRunning/expo/App.tsx",
+      "sha256": "3306a9446bae91dc54a53048e058845053d1c8fb6bbe4812d0b541f5bfdb2081"
+    },
+    {
+      "beforeSHA256": null,
+      "bytes": 118,
+      "path": "Fixtures/ShortcutLongRunning/expo/hanlin.authoring.json",
+      "sha256": "57239928efb0bd0e6760bf64443e70bf021eb963f074908332de3f5b7959a5a3"
+    },
+    {
+      "beforeSHA256": null,
+      "bytes": 117,
+      "path": "Fixtures/ShortcutLongRunning/expo/index.ts",
+      "sha256": "e6ff990a5f73c39cebfecc539611b23872e530f1287c6b0d0d8447fbc9a832ee"
+    },
+    {
+      "beforeSHA256": null,
+      "bytes": 296,
+      "path": "Fixtures/ShortcutLongRunning/expo/package.json",
+      "sha256": "7f98541b8391b1f84b2728b35144921e855db9c28c20cda94d11e68d5272bb67"
+    },
+    {
+      "beforeSHA256": null,
+      "bytes": 8645,
+      "path": "Fixtures/ShortcutLongRunning/expo/proof.ts",
+      "sha256": "1a5bea7578bda901dbd41cc89142b67a1b12cfe53bc1e945721f50628b482293"
+    },
+    {
+      "beforeSHA256": null,
+      "bytes": 855,
+      "path": "Fixtures/ShortcutLongRunning/expo/script.json",
+      "sha256": "362023c59de412ae476e4b32f3d8a39a70dcc8fdec4c5e1edd1c684551d142bc"
+    },
+    {
+      "beforeSHA256": null,
+      "bytes": 69,
+      "path": "Fixtures/ShortcutLongRunning/expo/tsconfig.json",
+      "sha256": "40d7c93d27898a4c2f676e917017a532edd471abbe9e76b620104ef272d7d466"
+    },
+    {
+      "beforeSHA256": null,
+      "bytes": 126,
+      "path": "Fixtures/ShortcutLongRunning/nativescript/hanlin.authoring.json",
+      "sha256": "5c45d2ab2cfce588d3758665eff52a9511613b2070a9946be001e32f87d517d9"
+    },
+    {
+      "beforeSHA256": null,
+      "bytes": 4040,
+      "path": "Fixtures/ShortcutLongRunning/nativescript/index.ts",
+      "sha256": "9752d2e84665fbc08ed17a733ec68d9f83cf4082408cf8fc268f68dafc6cfe52"
+    },
+    {
+      "beforeSHA256": null,
+      "bytes": 286,
+      "path": "Fixtures/ShortcutLongRunning/nativescript/package.json",
+      "sha256": "0c64e8a08b4b5985a9ed3e5d73bb46f2384da8bc2ac892b47f2c89505559410c"
+    },
+    {
+      "beforeSHA256": null,
+      "bytes": 8678,
+      "path": "Fixtures/ShortcutLongRunning/nativescript/proof.ts",
+      "sha256": "95dc082de18e5fbcfc8aaa10be5397e188ea4df9c24e4896d94794f31c6aca13"
+    },
+    {
+      "beforeSHA256": null,
+      "bytes": 941,
+      "path": "Fixtures/ShortcutLongRunning/nativescript/script.json",
+      "sha256": "e860896ff737ae9b3cc1d80675898a340f959ad8b69d24322600a2b9642c8af6"
+    },
+    {
+      "beforeSHA256": null,
+      "bytes": 54,
+      "path": "Fixtures/ShortcutLongRunning/nativescript/tsconfig.json",
+      "sha256": "32212ba114edcbc3f0f923db351e65c228b1c0bc4f2a2339a1bd2eaa90e24e75"
+    },
+    {
+      "beforeSHA256": null,
+      "bytes": 18471,
+      "path": "Scripts/CI/Tests/test_shortcut_long_running_observer.py",
+      "sha256": "c0c94d90457294a5e5461d88ad850c46faf75f6b2c3c342dd9c2f1d2cf6d2667"
+    },
+    {
+      "beforeSHA256": null,
+      "bytes": 43857,
+      "path": "Scripts/ProductSplit/observe_shortcut_long_running.py",
+      "sha256": "03a7561fec390039544e1540e1401daf1cad27c430eb35e84536e91f928f3cba"
+    },
+    {
+      "beforeSHA256": "1aa2abbcf7d462b57b1b9df68a04e0af74a789cf5840fca8dee513d63d5dab7f",
+      "bytes": 93591,
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "sha256": "77f339cb70b6294a94d8cc8162f2816fb8c4fb21c3f838c94978281707d6d0d1"
+    }
+  ],
+  "claimLimits": [
+    "35 real runtime calls separated by 340 seconds of finite authored pacing; no CPU/network-duration claim",
+    "Four Simulator background-mode cases only; no physical lock/power, real network/AI, APNs/account, expiration/recovery or extended foreground acceptance",
+    "17 initial controls plus3 affected controls are portable source validation, not18 unique final native successes",
+    "Actual saved settings, progress UI, returned JSON, Stop, lease release and NativeScript close still require genuine OS execution"
+  ],
+  "controls": [
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "Scripts/CI/Tests",
+        "-p",
+        "test_shortcut_long_running_observer.py",
+        "-v"
+      ],
+      "exitCode": 0,
+      "label": "portable-r1",
+      "logs": [
+        {
+          "bytes": 0,
+          "encoding": "Original unmodified bytes",
+          "path": "portable-r1-stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 3479,
+          "encoding": "Original unmodified bytes",
+          "path": "portable-r1-stderr.log",
+          "sha256": "90916f6fbfe332b484ee79fffa07174b4b6d236e1a5010f025ffe63fbe96195f"
+        }
+      ],
+      "originalReceiptSHA256": "fa8b4ae4be27320d649d209fd10b26e88bcc7b14e62f8d42303f3521001af9df",
+      "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+      "scope": "Full initial observer module",
+      "seconds": 0.21652447000087705,
+      "sourceHashes": {
+        "Scripts/CI/Tests/test_shortcut_long_running_observer.py": "dd80c3ef802414f1ef6aa829f5c3d094c0275bde0eb66abf012409faaf261ca9",
+        "Scripts/ProductSplit/observe_runtime_image_origin.py": "fab2f99e9ee1cdb251c949453d8cfcef23a9b38a26d034c0b31d82e7831bc9e1",
+        "Scripts/ProductSplit/observe_share_translation_surfaces.py": "6702a1bb58c11b9f2e6d285eb62dee7db9f12ad1ddd6d466396d36cda91bee0a",
+        "Scripts/ProductSplit/observe_shortcut_concurrency.py": "d32fc2b40cd6649cf01fe1a774b29579e8f898dddd8bda4da1fb166a537bf183",
+        "Scripts/ProductSplit/observe_shortcut_long_running.py": "62afae9403fd0d84f7fc942ca14a561834b40363a853f822a40ae5e45a8c29f2",
+        "Scripts/ProductSplit/observe_shortcut_surfaces.py": "d0c5304fe391893e17877f704956e9563f20b72358f25f00f661851bdd9ca6ab"
+      },
+      "testCount": 17
+    },
+    {
+      "command": [
+        "python3",
+        "-m",
+        "unittest",
+        "-v",
+        "Scripts.CI.Tests.test_shortcut_long_running_observer.LongRunningObserverTests.test_cancel_requires_actual_selected_stop_after_the_long_interval",
+        "Scripts.CI.Tests.test_shortcut_long_running_observer.LongRunningObserverTests.test_cancelled_receipt_never_hides_a_late_successful_handler",
+        "Scripts.CI.Tests.test_shortcut_long_running_observer.LongRunningObserverTests.test_partial_late_success_after_cancellation_is_rejected_below_thirty_five"
+      ],
+      "exitCode": 0,
+      "label": "portable-r2",
+      "logs": [
+        {
+          "bytes": 0,
+          "encoding": "Original unmodified bytes",
+          "path": "portable-r2-stdout.log",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 763,
+          "encoding": "Original unmodified bytes",
+          "path": "portable-r2-stderr.log",
+          "sha256": "40993c2a1830869c9a7f61013857128564a84792e7bc677b1a85274fa60715fd"
+        }
+      ],
+      "originalReceiptSHA256": "0240bdbd44794f2e42a8731e784d1bc0e64d580aa77915ec7c6b44dbf25b07cf",
+      "python": "3.12.14 (main, Aug 25 2026, 14:00:49) [Clang 22.1.3 ]",
+      "scope": "Affected cancellation controls including 1 new partial-late-success negative",
+      "seconds": 0.18911367500550114,
+      "sourceHashes": {
+        "Scripts/CI/Tests/test_shortcut_long_running_observer.py": "c0c94d90457294a5e5461d88ad850c46faf75f6b2c3c342dd9c2f1d2cf6d2667",
+        "Scripts/ProductSplit/observe_shortcut_long_running.py": "03a7561fec390039544e1540e1401daf1cad27c430eb35e84536e91f928f3cba"
+      },
+      "testCount": 3
+    }
+  ],
+  "fullReviewedPatchSHA256": "9765c4060732713b9642210ae85c1dca30715808e9baf45599d04c81e12eea27",
+  "nativeCloseSourceContractSHA256": "c02e611fdba98e610b51ed824e1bdacd9ff09581c95e5de34dde79c0915f4807",
+  "parent": "5c7e81d7cfaec125f4dee6b673c705f2851fd1bb",
+  "preservation": {
+    "addedUISelectors": [
+      "testExpoSavedLongRunningBackgroundActionReturnsAfterThreeHundredSeconds",
+      "testNativeScriptSavedLongRunningBackgroundActionReturnsAfterThreeHundredSeconds",
+      "testExpoSavedLongRunningBackgroundActionCancelsAfterThreeHundredSeconds",
+      "testNativeScriptSavedLongRunningBackgroundActionCancelsAfterThreeHundredSeconds"
+    ],
+    "existingHostActionSurfacesNotEdited": true,
+    "old600SecondCaseAnd2100SecondScopeBudgetPreserved": true,
+    "onlyChangedOriginalFunctions": [
+      "start_shortcut_observer",
+      "main"
+    ],
+    "originalTestPlanAssignments": 9,
+    "originalUISelectors": [
+      "testExpoPlacedWidgetInvokesAllFiveRuntimes",
+      "testNativeScriptPlacedWidgetInvokesAllFiveRuntimes",
+      "testExpoLiveActivityInvokesAllFiveRuntimes",
+      "testNativeScriptLiveActivityInvokesAllFiveRuntimes",
+      "testExpoShortcutInvokesAllFiveRuntimes",
+      "testNativeScriptShortcutInvokesAllFiveRuntimes",
+      "testExpoSystemShareInvokesAllFiveRuntimes",
+      "testNativeScriptSystemShareInvokesAllFiveRuntimes",
+      "testExpoSystemTranslationInvokesAllFiveRuntimes",
+      "testNativeScriptSystemTranslationInvokesAllFiveRuntimes",
+      "testExpoRunMiniAppActionSavedBackgroundReturnsTypedResult",
+      "testNativeScriptRunMiniAppActionSavedBackgroundReturnsTypedResult",
+      "testExpoRunMiniAppActionSavedForegroundReturnsTypedResult",
+      "testNativeScriptRunMiniAppActionSavedForegroundReturnsTypedResult",
+      "testMiniAppsPlacedWidgetRetainsLastGoodAfterRealFailureAndRecovers",
+      "testMiniAppsPlacedWidgetToggleKeepsIndependentInstanceState",
+      "testNativeScriptOwnerSurvivesThreeOverlappingBackgroundShortcutsInReverseOrder",
+      "testNativeScriptOwnerSurvivesCancellingOneOfThreeOverlappingBackgroundShortcuts",
+      "testStudioExpoHelloWorldCopiesEditsBuildsInstallsAndRuns",
+      "testStudioDepartureBudgetCopiesEditsBuildsInstallsAndRuns",
+      "testStudioNativeScriptHelloWorldCopiesEditsBuildsInstallsAndRuns",
+      "testStudioTableShareCopiesEditsBuildsInstallsAndRuns",
+      "testStudioNativeImageDrawingCopiesEditsBuildsInstallsAndRuns",
+      "testStudioExpoCreatesMovesStylesAndReopensSource",
+      "testStudioNativeScriptCreatesMovesStylesAndReopensSource",
+      "testStudioOriginalTypeScriptHelpPreferencesAndLiveLogExport",
+      "testStudioImportsActualFilesSourceAndReopensIndependentEdit",
+      "testStudioTwoRealWindowsConflictReloadAndRecoverSeparateCopy"
+    ],
+    "unchangedOriginalFunctionASTs": 16,
+    "wholeOriginalRunnerRecoveredByteExactly": true,
+    "wholeOriginalUIRecoveredByteExactly": true
+  },
+  "recordedAt": "2026-11-27T19:05:50.396793+00:00",
+  "reviews": [
+    {
+      "qualification": "Source approval only; native/OS execution required",
+      "reviewer": "/root",
+      "scope": "All observer/runner source, R2 cancellation correction and17-source hashes",
+      "sha256": "e9c27025392a0912c04d997f3361380697b012f2fd51d844c35073ccbb4094cc"
+    },
+    {
+      "qualification": "Source approval only; native/OS execution required",
+      "reviewer": "/root/w1_review_resume",
+      "scope": "13 independent fixtures and additive UI; original28 bodies preserved",
+      "sha256": "bfeae9748fe8ee23f127dd4337a9a1ca3b490bd6b881a82b17ebb158fb7ef3f2"
+    }
+  ],
+  "schema": 1,
+  "scope": "miniapp_shortcut_long_running_os",
+  "sourceCommit": "a369ada63a8c21c0c4e88299023910ad94ec6aba",
+  "sourceImpact": {
+    "actualSDKInputFingerprint": "9e397ad525cf254598f8b35256816d1519ae2adfb02f3e5692fc91c21a1a3ab1",
+    "actualSDKManifestSHA256": "7f2702e52587fe1d126cef37f068ab3a9e3a26adb275ffafb687cb38a2db9b87",
+    "intersection": [],
+    "originalFixtureChanges": [],
+    "originalHostActionSurfacesInputs": [
+      {
+        "path": "Fixtures/HostActionSurfaces/README.md",
+        "sha256": "32a0dbb938e3bb8ea40b18f791c3536640c3d7b8d4e34510e916241165eacb23"
+      },
+      {
+        "path": "Fixtures/HostActionSurfaces/expo/App.tsx",
+        "sha256": "7d09e80c5f24291e6375d76def7b7d0208de2607db62a04225cc08f89881dfae"
+      },
+      {
+        "path": "Fixtures/HostActionSurfaces/expo/hanlin.authoring.json",
+        "sha256": "304ece316823d98d40004b6935d3d86e2b5460ffcbea8d844015f9750735ccfa"
+      },
+      {
+        "path": "Fixtures/HostActionSurfaces/expo/index.ts",
+        "sha256": "e6ff990a5f73c39cebfecc539611b23872e530f1287c6b0d0d8447fbc9a832ee"
+      },
+      {
+        "path": "Fixtures/HostActionSurfaces/expo/package.json",
+        "sha256": "b531306bfc0a72ea51a5b6d4a06da2e4cb11b3fb37ff221fbc9b4f309f6d032f"
+      },
+      {
+        "path": "Fixtures/HostActionSurfaces/expo/proof.ts",
+        "sha256": "8500ec2ddd4d6b102f8bf40b2039eafe24f66f4e816c44a6b13480374b4db486"
+      },
+      {
+        "path": "Fixtures/HostActionSurfaces/expo/script.json",
+        "sha256": "68a345460b4af4cec4e2fecaa5a602b665ef5561f28d1edbb5ab9176f31a8fe7"
+      },
+      {
+        "path": "Fixtures/HostActionSurfaces/expo/tsconfig.json",
+        "sha256": "88b2b6ccb56ebcf0a718686fda327921cf7475c707e6c6c63fb270a5abd822af"
+      },
+      {
+        "path": "Fixtures/HostActionSurfaces/expo/widget.json",
+        "sha256": "8aaeb330827651453d60466993ed7252130cadc49873e840bf33a112bd8c4925"
+      },
+      {
+        "path": "Fixtures/HostActionSurfaces/nativescript/hanlin.authoring.json",
+        "sha256": "228cd8d7c2d312b4f5c1ef2ba89a4c4a2e02f9b750a82411346c0da9885971c5"
+      },
+      {
+        "path": "Fixtures/HostActionSurfaces/nativescript/index.ts",
+        "sha256": "22312e186a363920e470437571e8bdddef2b753372758b66f9a363bfef637a2e"
+      },
+      {
+        "path": "Fixtures/HostActionSurfaces/nativescript/package.json",
+        "sha256": "048e5efb91e28f9d198c885297cfdf7c7a0081b6e4c3c7b945398797dc283e4a"
+      },
+      {
+        "path": "Fixtures/HostActionSurfaces/nativescript/proof.ts",
+        "sha256": "19925e21c3f63170e4cf1284702fd675130b5674ffd2289ab36da6e6640b9d28"
+      },
+      {
+        "path": "Fixtures/HostActionSurfaces/nativescript/script.json",
+        "sha256": "1169067328625b7475d527b0e2e8f454e0b31bc474157b182377d9aad15de07f"
+      },
+      {
+        "path": "Fixtures/HostActionSurfaces/nativescript/tsconfig.json",
+        "sha256": "445e657d8cb59b84146fa8b52b768b67fa9c4ec58e0e601e9e14deb0e922c5e5"
+      },
+      {
+        "path": "Fixtures/HostActionSurfaces/nativescript/widget.jsx",
+        "sha256": "e2f6676b1de3b9130aeb93176c5c8463b03b75d9a3b8fa7cb863ad32409eabb5"
+      }
+    ],
+    "sdkInputCount": 396
+  },
+  "status": "APPROVED_SOURCE_NATIVE_NOT_RUN"
+}

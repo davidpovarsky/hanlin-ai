@@ -1,0 +1,8 @@
+test_cancel_requires_actual_selected_stop_after_the_long_interval (Scripts.CI.Tests.test_shortcut_long_running_observer.LongRunningObserverTests.test_cancel_requires_actual_selected_stop_after_the_long_interval) ... ok
+test_cancelled_receipt_never_hides_a_late_successful_handler (Scripts.CI.Tests.test_shortcut_long_running_observer.LongRunningObserverTests.test_cancelled_receipt_never_hides_a_late_successful_handler) ... ok
+test_partial_late_success_after_cancellation_is_rejected_below_thirty_five (Scripts.CI.Tests.test_shortcut_long_running_observer.LongRunningObserverTests.test_partial_late_success_after_cancellation_is_rejected_below_thirty_five) ... ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.011s
+
+OK
