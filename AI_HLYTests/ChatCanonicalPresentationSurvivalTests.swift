@@ -42,6 +42,99 @@ struct ChatCanonicalPresentationSurvivalTests {
     #expect(activity.title == "Invalid arguments")
   }
 
+  @Test("Failed activity does not retain an earlier running label")
+  func failedTitleDoesNotRetainEarlierRunningLabel() throws {
+    let title = try composedTerminalActivityTitle(
+      "Fetching invoice records", earlierRunningTitle: "Fetching invoice records"
+    )
+    #expect(title == terminalOperationTitle)
+  }
+
+  @Test("Failed activity does not reuse canonical lifecycle labels")
+  func failedTitleDoesNotReuseCanonicalLifecycleLabels() throws {
+    let presentation = ToolPresentationRegistry.presentation(
+      for: "execute_shell_command", profile: .generic(toolName: "execute_shell_command")
+    )
+    for retained in [presentation.runningDescription, presentation.completedDescription] {
+      #expect(try composedTerminalActivityTitle(retained) == terminalOperationTitle)
+    }
+  }
+
+  @Test("Failed activity does not infer shared history from absent call identities")
+  func failedTitleDoesNotInferHistoryFromUnidentifiedSteps() {
+    let toolName = "execute_shell_command"
+    let profile = ToolPresentationProfile.generic(toolName: toolName)
+    let steps = [
+      AgentActivityStep(sequence: 0, kind: .toolCall, presentationProfile: profile,
+        title: "Invalid arguments", subtitle: toolName, status: .completed),
+      AgentActivityStep(sequence: 1, kind: .toolExecution, presentationProfile: profile,
+        title: "Invalid arguments", subtitle: toolName, status: .failed),
+    ]
+    #expect(AgentActivityTitleBuilder.title(for: steps, kind: .tool, queries: [], status: .failed)
+      == "Invalid arguments")
+  }
+
+  @Test("Cancelled activity keeps the operation title")
+  func cancelledActivityKeepsOperationTitle() throws {
+    #expect(try composedTerminalActivityTitle("Invalid arguments", status: .cancelled)
+      == terminalOperationTitle)
+  }
+
+  @Test("Failed activity excludes generic and approval labels")
+  func failedTitleRejectsGenericAndApprovalLabels() throws {
+    for label in ["Done", "Using a tool", "Allowed once", "Allowed and remembered",
+      "Awaiting approval", "Not approved"] {
+      #expect(try composedTerminalActivityTitle(label) == terminalOperationTitle)
+    }
+  }
+
+  @Test("Failed activity excludes unsafe presentation text")
+  func failedTitleRejectsUnsafePresentationText() throws {
+    for label in ["", "   ", #"{"error":"private diagnostic"}"#,
+      "Failure at https://example.invalid/private", "password: private-value",
+      String(repeating: "x", count: 281)] {
+      #expect(try composedTerminalActivityTitle(label) == terminalOperationTitle)
+    }
+  }
+
+  private var terminalOperationTitle: String {
+    ToolPresentationRegistry.presentation(
+      for: "execute_shell_command", profile: .generic(toolName: "execute_shell_command")
+    ).title
+  }
+
+  private func composedTerminalActivityTitle(
+    _ terminalTitle: String,
+    status: AgentActivityStatus = .failed,
+    earlierRunningTitle: String? = nil
+  ) throws -> String {
+    let toolName = "execute_shell_command"
+    let profile = ToolPresentationProfile.generic(toolName: toolName)
+    var steps = [AgentActivityStep(
+      externalID: "call:terminal-title-control", sequence: 0, kind: .toolCall,
+      presentationProfile: profile, title: "Using Shell", subtitle: toolName,
+      status: .completed
+    )]
+    if let earlierRunningTitle {
+      steps.append(AgentActivityStep(
+        externalID: "execution:terminal-title-control", sequence: 1, kind: .toolExecution,
+        presentationProfile: profile, title: earlierRunningTitle, subtitle: toolName,
+        status: .running
+      ))
+    }
+    steps.append(AgentActivityStep(
+      externalID: "execution:terminal-title-control", sequence: 2, kind: .toolExecution,
+      presentationProfile: profile, title: terminalTitle, subtitle: toolName, status: status,
+      errorDescription: "Unknown shell argument."
+    ))
+    let timeline = AgentActivityComposer.compose(
+      AgentRun(groupID: UUID(), status: .completed, steps: steps)
+    )
+    let activity = try #require(timeline.activities.first)
+    #expect(activity.status == status)
+    return activity.title
+  }
+
   @MainActor
   @Test(
     "Dynamic non-builtin tool preserves presentation descriptors across entire event and transcript pipeline"
