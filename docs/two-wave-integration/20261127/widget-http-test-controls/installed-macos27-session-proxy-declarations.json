@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "kind": "INSTALLED_NATIVE_MACOS_SDK_DECLARATION_READ_ONLY",
+  "foundation": {
+    "path": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk/System/Library/Frameworks/Foundation.framework/Headers/NSURLSession.h",
+    "sha256": "98337d03056125aea179ff96d0e7d047ded099505f11379f7c7e67b160206711",
+    "sections": [
+      {
+        "first": 1418,
+        "last": 1432,
+        "text": "1418: /// iOS app in the background when the session's tasks finish or require authentication.\n1419: ///\n1420: /// > Note: macOS apps based on AppKit do not support background launch.\n1421: @property BOOL sessionSendsLaunchEvents API_AVAILABLE(macos(11.0), ios(7.0), watchos(2.0), tvos(9.0));\n1422: \n1423: /// A dictionary containing information about the proxy to use within this session.\n1424: ///\n1425: /// Prefer using `proxyConfigurations`, which supports secure proxy and relay types.\n1426: ///\n1427: /// The default value is `NULL`, which means that tasks use the default system settings.\n1428: @property (nullable, copy) NSDictionary *connectionProxyDictionary;\n1429: \n1430: /// The minimum TLS protocol to accept during protocol negotiation.\n1431: @property SSLProtocol TLSMinimumSupportedProtocol API_DEPRECATED_WITH_REPLACEMENT(\"TLSMinimumSupportedProtocolVersion\", macos(10.9, API_TO_BE_DEPRECATED), ios(7.0, API_TO_BE_DEPRECATED), watchos(2.0, API_TO_BE_DEPRECATED), tvos(9.0, API_TO_BE_DEPRECATED));\n1432: "
+      },
+      {
+        "first": 1421,
+        "last": 1435,
+        "text": "1421: @property BOOL sessionSendsLaunchEvents API_AVAILABLE(macos(11.0), ios(7.0), watchos(2.0), tvos(9.0));\n1422: \n1423: /// A dictionary containing information about the proxy to use within this session.\n1424: ///\n1425: /// Prefer using `proxyConfigurations`, which supports secure proxy and relay types.\n1426: ///\n1427: /// The default value is `NULL`, which means that tasks use the default system settings.\n1428: @property (nullable, copy) NSDictionary *connectionProxyDictionary;\n1429: \n1430: /// The minimum TLS protocol to accept during protocol negotiation.\n1431: @property SSLProtocol TLSMinimumSupportedProtocol API_DEPRECATED_WITH_REPLACEMENT(\"TLSMinimumSupportedProtocolVersion\", macos(10.9, API_TO_BE_DEPRECATED), ios(7.0, API_TO_BE_DEPRECATED), watchos(2.0, API_TO_BE_DEPRECATED), tvos(9.0, API_TO_BE_DEPRECATED));\n1432: \n1433: /// The maximum TLS protocol version that the client should request when making connections\n1434: /// in this session.\n1435: @property SSLProtocol TLSMaximumSupportedProtocol API_DEPRECATED_WITH_REPLACEMENT(\"TLSMaximumSupportedProtocolVersion\", macos(10.9, API_TO_BE_DEPRECATED), ios(7.0, API_TO_BE_DEPRECATED), watchos(2.0, API_TO_BE_DEPRECATED), tvos(9.0, API_TO_BE_DEPRECATED));"
+      }
+    ]
+  },
+  "network": {
+    "nativeMacOSInterface": "/Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX27.0.sdk/System/Library/Frameworks/Network.framework/Modules/Network.swiftmodule/arm64e-apple-macos.swiftinterface",
+    "sha256": "3ed5403fb25d253a917ff367f6b6f581737cbee7baf2b086d29e72fab754614f",
+    "availablePublicInterfaceNames": [
+      "arm64e-apple-ios-macabi.swiftinterface",
+      "arm64e-apple-macos.swiftinterface",
+      "x86_64-apple-ios-macabi.swiftinterface",
+      "x86_64-apple-macos.swiftinterface"
+    ],
+    "sections": [
+      {
+        "first": 2648,
+        "last": 2657,
+        "text": "2648:       case https(_: Foundation::URL, serverAddresses: [Network::NWEndpoint])\n2649:     }\n2650:     public func requireEncryptedNameResolution(_ requireEncryption: Swift::Bool, fallbackResolver: Network::NWParameters.Network::PrivacyContext.Network::ResolverConfiguration?)\n2651:     @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)\n2652:     public var proxyConfigurations: [Network::ProxyConfiguration] {\n2653:       get\n2654:       set\n2655:     }\n2656:     @objc deinit\n2657:   }"
+      },
+      {
+        "first": 2675,
+        "last": 2684,
+        "text": "2675:   }\n2676:   @objc deinit\n2677: }\n2678: @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)\n2679: public struct ProxyConfiguration : Swift::CustomDebugStringConvertible, Swift::Sendable {\n2680:   public var debugDescription: Swift::String {\n2681:     get\n2682:   }\n2683:   @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)\n2684:   public init(_nw: Network::nw_proxy_config_t)"
+      },
+      {
+        "first": 2699,
+        "last": 2708,
+        "text": "2699:     set\n2700:   }\n2701:   public func applyCredential(username: Swift::String, password: Swift::String)\n2702:   public init(socksv5Proxy: Network::NWEndpoint)\n2703:   public init(httpCONNECTProxy: Network::NWEndpoint, tlsOptions: Network::NWProtocolTLS.Network::Options? = nil)\n2704:   public struct RelayHop : Swift::CustomDebugStringConvertible, Swift::Sendable {\n2705:     public var debugDescription: Swift::String {\n2706:       get\n2707:     }\n2708:     public init(http3RelayEndpoint: Network::NWEndpoint, http2RelayEndpoint: Network::NWEndpoint? = nil, tlsOptions: Network::NWProtocolTLS.Network::Options = .init(), additionalHTTPHeaderFields: [Swift::String : Swift::String] = [:])"
+      },
+      {
+        "first": 2717,
+        "last": 2726,
+        "text": "2717: @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)\n2718: extension Network::NWParameters.Network::ProtocolStack : @unchecked Swift::Sendable {\n2719: }\n2720: @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)\n2721: extension Foundation::URLSessionConfiguration {\n2722:   @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)\n2723:   public var proxyConfigurations: [Network::ProxyConfiguration] {\n2724:     get\n2725:     set\n2726:   }"
+      },
+      {
+        "first": 2719,
+        "last": 2728,
+        "text": "2719: }\n2720: @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)\n2721: extension Foundation::URLSessionConfiguration {\n2722:   @available(macOS 14.0, iOS 17.0, watchOS 10.0, tvOS 17.0, *)\n2723:   public var proxyConfigurations: [Network::ProxyConfiguration] {\n2724:     get\n2725:     set\n2726:   }\n2727: }\n2728: @available(macOS 10.15, iOS 13.0, watchOS 6.0, tvOS 13.0, *)"
+      }
+    ]
+  },
+  "boundary": "Availability declarations only. No native compile, Session request, proxy or OS setting was executed or changed."
+}

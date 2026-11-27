@@ -1,0 +1,81 @@
+{"authority": "transport.hanlin.invalid:80", "phase": "connect"}
+{"at": 30933.849539455, "authority": "transport.hanlin.invalid:80", "body": "", "header": "source", "host": "transport.hanlin.invalid", "method": "GET", "path": "/verbs/echo", "phase": "request", "type": null}
+{"at": 30933.849759645, "bytes": 63, "path": "/verbs/echo", "phase": "response"}
+{"at": 30933.892520239, "authority": "transport.hanlin.invalid:80", "body": "{\"count\": 7}", "header": "source", "host": "transport.hanlin.invalid", "method": "POST", "path": "/verbs/echo", "phase": "request", "type": "application/json"}
+{"at": 30933.892723898, "bytes": 92, "path": "/verbs/echo", "phase": "response"}
+{"at": 30933.936503731, "authority": "transport.hanlin.invalid:80", "body": "{\"count\": 7}", "header": "source", "host": "transport.hanlin.invalid", "method": "PUT", "path": "/verbs/echo", "phase": "request", "type": "application/json"}
+{"at": 30933.936644142, "bytes": 91, "path": "/verbs/echo", "phase": "response"}
+{"at": 30933.982360015, "authority": "transport.hanlin.invalid:80", "body": "{\"count\": 7}", "header": "source", "host": "transport.hanlin.invalid", "method": "PATCH", "path": "/verbs/echo", "phase": "request", "type": "application/json"}
+{"at": 30933.982887227, "bytes": 93, "path": "/verbs/echo", "phase": "response"}
+{"at": 30934.024330808, "authority": "transport.hanlin.invalid:80", "body": "", "header": null, "host": "transport.hanlin.invalid", "method": "GET", "path": "/verbs/budget/4", "phase": "request", "type": null}
+{"at": 30934.024489474, "bytes": 59, "path": "/verbs/budget/4", "phase": "response"}
+{"at": 30934.068304831, "authority": "transport.hanlin.invalid:80", "body": "", "header": null, "host": "transport.hanlin.invalid", "method": "GET", "path": "/verbs/budget/5", "phase": "request", "type": null}
+{"at": 30934.068470009, "bytes": 59, "path": "/verbs/budget/5", "phase": "response"}
+{"at": 30934.112468315, "authority": "transport.hanlin.invalid:80", "body": "", "header": null, "host": "transport.hanlin.invalid", "method": "GET", "path": "/verbs/budget/6", "phase": "request", "type": null}
+{"at": 30934.112671995, "bytes": 59, "path": "/verbs/budget/6", "phase": "response"}
+{"at": 30934.156533254, "authority": "transport.hanlin.invalid:80", "body": "", "header": null, "host": "transport.hanlin.invalid", "method": "GET", "path": "/verbs/budget/7", "phase": "request", "type": null}
+{"at": 30934.156882524, "bytes": 59, "path": "/verbs/budget/7", "phase": "response"}
+{"at": 30934.200445612, "authority": "transport.hanlin.invalid:80", "body": "", "header": null, "host": "transport.hanlin.invalid", "method": "GET", "path": "/verbs/budget/8", "phase": "request", "type": null}
+{"at": 30934.2006166, "bytes": 59, "path": "/verbs/budget/8", "phase": "response"}
+{"at": 30934.244451013, "authority": "transport.hanlin.invalid:80", "body": "", "header": null, "host": "transport.hanlin.invalid", "method": "GET", "path": "/verbs/budget/9", "phase": "request", "type": null}
+{"at": 30934.244641156, "bytes": 59, "path": "/verbs/budget/9", "phase": "response"}
+{"at": 30934.292551085, "authority": "transport.hanlin.invalid:80", "body": "", "header": null, "host": "transport.hanlin.invalid", "method": "GET", "path": "/verbs/budget/10", "phase": "request", "type": null}
+{"at": 30934.292778669, "bytes": 59, "path": "/verbs/budget/10", "phase": "response"}
+{"at": 30934.336408911, "authority": "transport.hanlin.invalid:80", "body": "", "header": null, "host": "transport.hanlin.invalid", "method": "GET", "path": "/verbs/budget/11", "phase": "request", "type": null}
+{"at": 30934.33658018, "bytes": 59, "path": "/verbs/budget/11", "phase": "response"}
+{"at": 30934.380366892, "authority": "transport.hanlin.invalid:80", "body": "", "header": null, "host": "transport.hanlin.invalid", "method": "GET", "path": "/verbs/budget/12", "phase": "request", "type": null}
+{"at": 30934.380554902, "bytes": 59, "path": "/verbs/budget/12", "phase": "response"}
+{"at": 30934.42434915, "authority": "transport.hanlin.invalid:80", "body": "", "header": null, "host": "transport.hanlin.invalid", "method": "GET", "path": "/verbs/budget/13", "phase": "request", "type": null}
+{"at": 30934.424627378, "bytes": 59, "path": "/verbs/budget/13", "phase": "response"}
+{"at": 30934.468397642, "authority": "transport.hanlin.invalid:80", "body": "", "header": null, "host": "transport.hanlin.invalid", "method": "GET", "path": "/verbs/budget/14", "phase": "request", "type": null}
+{"at": 30934.468564342, "bytes": 59, "path": "/verbs/budget/14", "phase": "response"}
+{"at": 30934.512330999, "authority": "transport.hanlin.invalid:80", "body": "", "header": null, "host": "transport.hanlin.invalid", "method": "GET", "path": "/verbs/budget/15", "phase": "request", "type": null}
+{"at": 30934.512513899, "bytes": 59, "path": "/verbs/budget/15", "phase": "response"}
+{"at": 30934.556395116, "authority": "transport.hanlin.invalid:80", "body": "", "header": null, "host": "transport.hanlin.invalid", "method": "GET", "path": "/verbs/budget/16", "phase": "request", "type": null}
+{"at": 30934.556553941, "bytes": 59, "path": "/verbs/budget/16", "phase": "response"}
+{"at": 30934.60049743, "authority": "transport.hanlin.invalid:80", "body": "", "header": null, "host": "transport.hanlin.invalid", "method": "GET", "path": "/verbs/budget/17", "phase": "request", "type": null}
+{"at": 30934.60073416, "bytes": 59, "path": "/verbs/budget/17", "phase": "response"}
+{"at": 30934.644474901, "authority": "transport.hanlin.invalid:80", "body": "", "header": null, "host": "transport.hanlin.invalid", "method": "GET", "path": "/verbs/budget/18", "phase": "request", "type": null}
+{"at": 30934.644659865, "bytes": 59, "path": "/verbs/budget/18", "phase": "response"}
+{"at": 30934.688399418, "authority": "transport.hanlin.invalid:80", "body": "", "header": null, "host": "transport.hanlin.invalid", "method": "GET", "path": "/verbs/budget/19", "phase": "request", "type": null}
+{"at": 30934.688567932, "bytes": 59, "path": "/verbs/budget/19", "phase": "response"}
+{"at": 30934.732373891, "authority": "transport.hanlin.invalid:80", "body": "", "header": null, "host": "transport.hanlin.invalid", "method": "GET", "path": "/verbs/budget/20", "phase": "request", "type": null}
+{"at": 30934.732542535, "bytes": 59, "path": "/verbs/budget/20", "phase": "response"}
+{"at": 30934.776410379, "authority": "transport.hanlin.invalid:80", "body": "", "header": null, "host": "transport.hanlin.invalid", "method": "GET", "path": "/verbs/budget/21", "phase": "request", "type": null}
+{"at": 30934.776628444, "bytes": 59, "path": "/verbs/budget/21", "phase": "response"}
+{"at": 30934.820374441, "authority": "transport.hanlin.invalid:80", "body": "", "header": null, "host": "transport.hanlin.invalid", "method": "GET", "path": "/verbs/budget/22", "phase": "request", "type": null}
+{"at": 30934.820554486, "bytes": 59, "path": "/verbs/budget/22", "phase": "response"}
+{"at": 30934.864419033, "authority": "transport.hanlin.invalid:80", "body": "", "header": null, "host": "transport.hanlin.invalid", "method": "GET", "path": "/verbs/budget/23", "phase": "request", "type": null}
+{"at": 30934.864606242, "bytes": 59, "path": "/verbs/budget/23", "phase": "response"}
+{"at": 30934.912488738, "authority": "transport.hanlin.invalid:80", "body": "", "header": null, "host": "transport.hanlin.invalid", "method": "GET", "path": "/verbs/budget/24", "phase": "request", "type": null}
+{"at": 30934.9127639, "bytes": 59, "path": "/verbs/budget/24", "phase": "response"}
+{"at": 30934.956410232, "authority": "transport.hanlin.invalid:80", "body": "", "header": null, "host": "transport.hanlin.invalid", "method": "GET", "path": "/verbs/budget/25", "phase": "request", "type": null}
+{"at": 30934.956584497, "bytes": 59, "path": "/verbs/budget/25", "phase": "response"}
+{"at": 30935.000350299, "authority": "transport.hanlin.invalid:80", "body": "", "header": null, "host": "transport.hanlin.invalid", "method": "GET", "path": "/verbs/budget/26", "phase": "request", "type": null}
+{"at": 30935.000496361, "bytes": 59, "path": "/verbs/budget/26", "phase": "response"}
+{"at": 30935.044429558, "authority": "transport.hanlin.invalid:80", "body": "", "header": null, "host": "transport.hanlin.invalid", "method": "GET", "path": "/verbs/budget/27", "phase": "request", "type": null}
+{"at": 30935.044621295, "bytes": 59, "path": "/verbs/budget/27", "phase": "response"}
+{"at": 30935.088368925, "authority": "transport.hanlin.invalid:80", "body": "", "header": null, "host": "transport.hanlin.invalid", "method": "GET", "path": "/verbs/budget/28", "phase": "request", "type": null}
+{"at": 30935.088541757, "bytes": 59, "path": "/verbs/budget/28", "phase": "response"}
+{"at": 30935.132399969, "authority": "transport.hanlin.invalid:80", "body": "", "header": null, "host": "transport.hanlin.invalid", "method": "GET", "path": "/verbs/budget/29", "phase": "request", "type": null}
+{"at": 30935.132573482, "bytes": 59, "path": "/verbs/budget/29", "phase": "response"}
+{"at": 30935.176345418, "authority": "transport.hanlin.invalid:80", "body": "", "header": null, "host": "transport.hanlin.invalid", "method": "GET", "path": "/verbs/budget/30", "phase": "request", "type": null}
+{"at": 30935.176517839, "bytes": 59, "path": "/verbs/budget/30", "phase": "response"}
+{"at": 30935.220327463, "authority": "transport.hanlin.invalid:80", "body": "", "header": null, "host": "transport.hanlin.invalid", "method": "GET", "path": "/verbs/budget/31", "phase": "request", "type": null}
+{"at": 30935.220477372, "bytes": 59, "path": "/verbs/budget/31", "phase": "response"}
+{"authority": "transport.hanlin.invalid:80", "phase": "connect"}
+{"at": 30935.265496547, "authority": "transport.hanlin.invalid:80", "body": "raw source", "header": null, "host": "transport.hanlin.invalid", "method": "DELETE", "path": "/response/echo", "phase": "request", "type": null}
+{"at": 30935.265646616, "bytes": 72, "path": "/response/echo", "phase": "response"}
+{"at": 30935.308444533, "authority": "transport.hanlin.invalid:80", "body": "", "header": null, "host": "transport.hanlin.invalid", "method": "GET", "path": "/response/status", "phase": "request", "type": null}
+{"at": 30935.308613036, "bytes": 59, "path": "/response/status", "phase": "response"}
+{"at": 30935.35242254, "authority": "transport.hanlin.invalid:80", "body": "", "header": null, "host": "transport.hanlin.invalid", "method": "GET", "path": "/response/binary", "phase": "request", "type": null}
+{"at": 30935.352579723, "bytes": 3, "path": "/response/binary", "phase": "response"}
+{"authority": "transport.hanlin.invalid:80", "phase": "connect"}
+{"at": 30935.397255612, "authority": "transport.hanlin.invalid:80", "body": "", "header": null, "host": "transport.hanlin.invalid", "method": "GET", "path": "/limits/within-limit", "phase": "request", "type": null}
+{"at": 30935.403774666, "bytes": 2097152, "path": "/limits/within-limit", "phase": "response"}
+{"at": 30935.408151783, "authority": "transport.hanlin.invalid:80", "body": "", "header": null, "host": "transport.hanlin.invalid", "method": "GET", "path": "/limits/large", "phase": "request", "type": null}
+{"authority": "transport.hanlin.invalid:80", "phase": "connect"}
+{"at": 30935.409202456, "authority": "transport.hanlin.invalid:80", "body": "", "header": null, "host": "transport.hanlin.invalid", "method": "GET", "path": "/limits/redirect", "phase": "request", "type": null}
+{"authority": "transport.hanlin.invalid:80", "phase": "connect"}
+{"at": 30935.410290241, "authority": "transport.hanlin.invalid:80", "body": "", "header": null, "host": "transport.hanlin.invalid", "method": "GET", "path": "/limits/slow", "phase": "request", "type": null}
+{"authority": "127.0.0.1:80", "phase": "connect"}
