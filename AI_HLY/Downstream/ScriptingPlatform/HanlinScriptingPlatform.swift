@@ -1921,6 +1921,17 @@ final class HanlinScriptingPlatform {
     }
 
     func refreshExtensionSnapshot() async throws {
+        #if DEBUG || HANLIN_TESTING
+        let traceLogger = Logger(subsystem: "com.hanlin.ai", category: "MiniAppsCatalog")
+        let traceID = UUID().uuidString
+        let traceStart = ProcessInfo.processInfo.systemUptime
+        func trace(_ phase: String) {
+            let elapsed = ProcessInfo.processInfo.systemUptime - traceStart
+            traceLogger.notice("miniapps.catalog.snapshot id=\(traceID, privacy: .public) pid=\(ProcessInfo.processInfo.processIdentifier, privacy: .public) elapsed=\(elapsed, privacy: .public) phase=\(phase, privacy: .public)")
+        }
+        trace("begin")
+        defer { trace("exit") }
+        #endif
         guard !isTransferringProductData else { throw HanlinProductTransferError.busy }
         activeStoreOperations += 1
         defer { activeStoreOperations -= 1 }
@@ -1944,7 +1955,13 @@ final class HanlinScriptingPlatform {
 
         for package in installedPackages where package.enabled {
             do {
+                #if DEBUG || HANLIN_TESTING
+                trace("artifact-root.begin")
+                #endif
                 let artifactRoot = try await store.activeArtifactURL(for: package.record.installedPackageID)
+                #if DEBUG || HANLIN_TESTING
+                trace("artifact-root.returned")
+                #endif
                 let displayName = package.manifest?.name ?? package.record.packageID.rawValue
                 let nativeDeclarations = try package.manifest.map(HanlinNativePresentationMetadata.declarations) ?? [:]
                 func publishNativePresentation(_ entrypointID: String) throws -> HanlinNativePresentationDescriptor? {
@@ -2245,6 +2262,9 @@ final class HanlinScriptingPlatform {
                     }
                 }
             } catch {
+                #if DEBUG || HANLIN_TESTING
+                trace("package-publication.error")
+                #endif
                 let diag = Self.makePublicationDiagnostic(
                     for: package.record.installedPackageID,
                     phase: .hostPublishWidgetProgram,
@@ -2271,7 +2291,13 @@ final class HanlinScriptingPlatform {
                 let displayName = descriptor.name.preferredValue(forLocale: Locale.current.identifier)
                 for family in ["systemSmall", "systemMedium", "systemLarge", "systemExtraLarge"] {
                     do {
+                        #if DEBUG || HANLIN_TESTING
+                        trace("compiled-widget.begin")
+                        #endif
                         let rootNode = try await provider.widget(family)
+                        #if DEBUG || HANLIN_TESTING
+                        trace("compiled-widget.returned")
+                        #endif
                         widgets.append(.init(
                             identity: widgetIdentity,
                             displayName: displayName,
@@ -2281,6 +2307,9 @@ final class HanlinScriptingPlatform {
                             root: rootNode
                         ))
                     } catch {
+                        #if DEBUG || HANLIN_TESTING
+                        trace("compiled-widget.error")
+                        #endif
                         Self.logger.info("Widget provider \(provider.descriptor.id.rawValue) did not produce widget for \(family): \(Self.safeMessage(error))")
                     }
                 }
@@ -2297,7 +2326,13 @@ final class HanlinScriptingPlatform {
 
         let previousSnapshot: HanlinScriptExtensionSnapshot?
         do {
+            #if DEBUG || HANLIN_TESTING
+            trace("snapshot-load.begin")
+            #endif
             previousSnapshot = try extensionStore.load()
+            #if DEBUG || HANLIN_TESTING
+            trace("snapshot-load.returned")
+            #endif
         } catch {
             let diag = Self.makePublicationDiagnostic(
                 for: nil,
@@ -2329,6 +2364,9 @@ final class HanlinScriptingPlatform {
 
         let newSnapshot: HanlinScriptExtensionSnapshot
         do {
+            #if DEBUG || HANLIN_TESTING
+            trace("snapshot-publish.begin")
+            #endif
             newSnapshot = try extensionStore.publishWidgetTemplates(
                 widgets,
                 intentEntities: intentEntities,
@@ -2336,7 +2374,13 @@ final class HanlinScriptingPlatform {
                 nativePresentations: nativePresentations,
                 installedPackageIDs: Set(installedPackages.map { $0.record.installedPackageID })
             )
+            #if DEBUG || HANLIN_TESTING
+            trace("snapshot-publish.returned")
+            #endif
         } catch {
+            #if DEBUG || HANLIN_TESTING
+            trace("snapshot-publish.error")
+            #endif
             let diag = Self.makePublicationDiagnostic(
                 for: nil,
                 phase: .hostPublishSnapshot,
@@ -2351,7 +2395,13 @@ final class HanlinScriptingPlatform {
             throw error
         }
 
+        #if DEBUG || HANLIN_TESTING
+        trace("live-activity.begin")
+        #endif
         await HanlinScriptWidgetLiveActivityController.reconcile(snapshot: newSnapshot)
+        #if DEBUG || HANLIN_TESTING
+        trace("live-activity.returned")
+        #endif
 
         for package in installedPackages where package.enabled {
             let hasNativeWidget = package.entrypoints.contains {
@@ -2383,9 +2433,24 @@ final class HanlinScriptingPlatform {
             ControlCenter.shared.reloadControls(ofKind: HanlinScriptWidgetControlCatalog.toggleKind)
         }
         if HanlinMiniAppSystemEntrypoints.isAvailableForCurrentProduct {
+            #if DEBUG || HANLIN_TESTING
+            trace("system-entrypoints.begin")
+            #endif
             await HanlinMiniAppSystemEntrypoints.shared.reconcile(packages: installedPackages, platform: self)
+            #if DEBUG || HANLIN_TESTING
+            trace("system-entrypoints.returned")
+            #endif
         }
+        #if DEBUG || HANLIN_TESTING
+        trace("compact-config.begin")
+        #endif
         await publishCompactAgentConfig()
+        #if DEBUG || HANLIN_TESTING
+        trace("compact-config.returned")
+        #endif
+        #if DEBUG || HANLIN_TESTING
+        trace("return.ready")
+        #endif
     }
 
     nonisolated static func makePublicationDiagnostic(

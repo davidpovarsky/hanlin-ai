@@ -2,6 +2,9 @@ import AppIntents
 import CoreSpotlight
 import Foundation
 import UniformTypeIdentifiers
+#if DEBUG || HANLIN_TESTING
+import OSLog
+#endif
 
 /// An installed package's declared Spotlight entrypoint, independent of widgets.
 public struct HanlinInstalledMiniAppEntity: IndexedEntity {
@@ -63,26 +66,109 @@ public struct HanlinInstalledMiniAppQuery: EnumerableEntityQuery, EntityStringQu
     }
 
     public nonisolated func reindexEntities(for identifiers: [String], indexDescription: CSSearchableIndexDescription) async throws {
+        #if DEBUG || HANLIN_TESTING
+        let traceLogger = Logger(subsystem: "com.hanlin.ai", category: "MiniAppsCatalog")
+        let traceID = UUID().uuidString
+        let traceStart = ProcessInfo.processInfo.systemUptime
+        func trace(_ phase: String) {
+            let elapsed = ProcessInfo.processInfo.systemUptime - traceStart
+            traceLogger.notice("miniapps.catalog.spotlight.callback-selected id=\(traceID, privacy: .public) pid=\(ProcessInfo.processInfo.processIdentifier, privacy: .public) elapsed=\(elapsed, privacy: .public) phase=\(phase, privacy: .public)")
+        }
+        trace("begin")
+        defer { trace("exit") }
+        #endif
+        #if DEBUG || HANLIN_TESTING
+        trace("reconcile.begin")
+        #endif
         try await reconcileSpotlight()
+        #if DEBUG || HANLIN_TESTING
+        trace("reconcile.returned")
+        #endif
+        #if DEBUG || HANLIN_TESTING
+        trace("ack.return.ready")
+        #endif
     }
 
     public nonisolated func reindexAllEntities(indexDescription: CSSearchableIndexDescription) async throws {
+        #if DEBUG || HANLIN_TESTING
+        let traceLogger = Logger(subsystem: "com.hanlin.ai", category: "MiniAppsCatalog")
+        let traceID = UUID().uuidString
+        let traceStart = ProcessInfo.processInfo.systemUptime
+        func trace(_ phase: String) {
+            let elapsed = ProcessInfo.processInfo.systemUptime - traceStart
+            traceLogger.notice("miniapps.catalog.spotlight.callback-all id=\(traceID, privacy: .public) pid=\(ProcessInfo.processInfo.processIdentifier, privacy: .public) elapsed=\(elapsed, privacy: .public) phase=\(phase, privacy: .public)")
+        }
+        trace("begin")
+        defer { trace("exit") }
+        #endif
+        #if DEBUG || HANLIN_TESTING
+        trace("reconcile.begin")
+        #endif
         try await reconcileSpotlight()
+        #if DEBUG || HANLIN_TESTING
+        trace("reconcile.returned")
+        #endif
+        #if DEBUG || HANLIN_TESTING
+        trace("ack.return.ready")
+        #endif
     }
 
     @MainActor
     private func reconcileSpotlight() async throws {
+        #if DEBUG || HANLIN_TESTING
+        let traceLogger = Logger(subsystem: "com.hanlin.ai", category: "MiniAppsCatalog")
+        let traceID = UUID().uuidString
+        let traceStart = ProcessInfo.processInfo.systemUptime
+        func trace(_ phase: String) {
+            let elapsed = ProcessInfo.processInfo.systemUptime - traceStart
+            traceLogger.notice("miniapps.catalog.spotlight.query-reconcile id=\(traceID, privacy: .public) pid=\(ProcessInfo.processInfo.processIdentifier, privacy: .public) elapsed=\(elapsed, privacy: .public) phase=\(phase, privacy: .public)")
+        }
+        trace("begin")
+        defer { trace("exit") }
+        #endif
         // The SDK's non-Sendable index description stays with the protocol
         // caller. Only the existing catalog/index work enters the main actor.
         // A complete reconciliation also removes entities that were disabled or
         // uninstalled while Spotlight retained an older identifier.
+        #if DEBUG || HANLIN_TESTING
+        trace("current-records.begin")
+        #endif
         _ = await currentRecords()
+        #if DEBUG || HANLIN_TESTING
+        trace("current-records.returned")
+        #endif
+        #if DEBUG || HANLIN_TESTING
+        trace("reindex.begin")
+        #endif
         try await HanlinMiniAppSystemEntrypoints.shared.reindexSpotlight()
+        #if DEBUG || HANLIN_TESTING
+        trace("reindex.returned")
+        #endif
     }
 
     @MainActor
     private func currentRecords() async -> [HanlinMiniAppSystemRecord] {
+        #if DEBUG || HANLIN_TESTING
+        let traceLogger = Logger(subsystem: "com.hanlin.ai", category: "MiniAppsCatalog")
+        let traceID = UUID().uuidString
+        let traceStart = ProcessInfo.processInfo.systemUptime
+        func trace(_ phase: String) {
+            let elapsed = ProcessInfo.processInfo.systemUptime - traceStart
+            traceLogger.notice("miniapps.catalog.spotlight.current-records id=\(traceID, privacy: .public) pid=\(ProcessInfo.processInfo.processIdentifier, privacy: .public) elapsed=\(elapsed, privacy: .public) phase=\(phase, privacy: .public)")
+        }
+        trace("begin")
+        defer { trace("exit") }
+        #endif
+        #if DEBUG || HANLIN_TESTING
+        trace("restore.begin")
+        #endif
         await HanlinScriptingPlatform.shared.restore()
+        #if DEBUG || HANLIN_TESTING
+        trace("restore.returned")
+        #endif
+        #if DEBUG || HANLIN_TESTING
+        trace("return.ready")
+        #endif
         return HanlinMiniAppSystemEntrypoints.shared.spotlightRecords
     }
 }

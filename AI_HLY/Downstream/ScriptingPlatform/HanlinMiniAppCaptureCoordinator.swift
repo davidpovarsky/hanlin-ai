@@ -8,6 +8,9 @@ import HanlinScriptExtensions
 import LockedCameraCapture
 import Observation
 import UIKit
+#if DEBUG || HANLIN_TESTING
+import OSLog
+#endif
 
 struct HanlinMiniAppCameraPresentation: Identifiable {
     let id = UUID()
@@ -57,17 +60,50 @@ final class HanlinMiniAppCaptureCoordinator {
     }
 
     func reconcile(records: [HanlinMiniAppSystemRecord]) async {
+        #if DEBUG || HANLIN_TESTING
+        let traceLogger = Logger(subsystem: "com.hanlin.ai", category: "MiniAppsCatalog")
+        let traceID = UUID().uuidString
+        let traceStart = ProcessInfo.processInfo.systemUptime
+        func trace(_ phase: String) {
+            let elapsed = ProcessInfo.processInfo.systemUptime - traceStart
+            traceLogger.notice("miniapps.catalog.capture-reconcile id=\(traceID, privacy: .public) pid=\(ProcessInfo.processInfo.processIdentifier, privacy: .public) elapsed=\(elapsed, privacy: .public) phase=\(phase, privacy: .public)")
+        }
+        trace("begin")
+        defer { trace("exit") }
+        #endif
         do {
+            #if DEBUG || HANLIN_TESTING
+            trace("app-context.read.begin")
+            #endif
             let previous = try await HanlinCameraCaptureIntent.appContext
+            #if DEBUG || HANLIN_TESTING
+            trace("app-context.read.returned")
+            #endif
             let current = previous.flatMap { prior in records.first {
                 $0.productIdentifier == prior.productIdentifier &&
                 $0.installedPackageID.rawValue == prior.installedPackageID &&
                 $0.packageID.rawValue == prior.packageID && $0.entrypoint.id == prior.entrypointID &&
                 $0.entrypoint.exportedSymbol == prior.actionID
             }?.cameraTarget }
-            if previous != current { try await HanlinCameraCaptureIntent.updateAppContext(current) }
+            if previous != current {
+                #if DEBUG || HANLIN_TESTING
+                trace("app-context.update.begin")
+                #endif
+                try await HanlinCameraCaptureIntent.updateAppContext(current)
+                #if DEBUG || HANLIN_TESTING
+                trace("app-context.update.returned")
+                #endif
+            }
             selectedTarget = current
-        } catch { self.error = error.localizedDescription }
+            #if DEBUG || HANLIN_TESTING
+            trace("return.ready")
+            #endif
+        } catch {
+            self.error = error.localizedDescription
+            #if DEBUG || HANLIN_TESTING
+            trace("error")
+            #endif
+        }
     }
 
     func select(_ record: HanlinMiniAppSystemRecord) async throws {
