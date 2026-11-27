@@ -5,6 +5,12 @@ type Receipt = Awaited<ReturnType<Execute>>;
 type RuntimeKind = Parameters<Execute>[0];
 export type JSONValue = null | boolean | number | string | JSONValue[] | {[key: string]: JSONValue};
 
+export interface PresentationSample {
+  windowID: string;
+  statePath: string;
+  executionMode: string;
+  attached: boolean;
+}
 export interface SurfaceResult {
   schemaVersion: 1;
   appID: string;
@@ -22,6 +28,8 @@ export interface SurfaceResult {
   status: 'running' | 'completed' | 'failed';
   receipts: Array<{kind: RuntimeKind; marker: string; receipt: Receipt}>;
   error?: string;
+  summary?: string;
+  presentationSamples?: PresentationSample[];
 }
 export interface SurfaceState {
   schemaVersion: 1;
@@ -55,6 +63,12 @@ export function createSurfaceProof(input: {
   executeRuntime: Execute;
   readText(): Promise<string | null>;
   writeText(text: string): Promise<void>;
+  /** A fresh headless window starts from the actual Shortcut input. The
+   * observer independently binds that input to the challenge prepared in UI;
+   * no other window's private state is read or written. */
+  acceptInputChallenge?: boolean;
+  samplePresentation?(): PresentationSample;
+  reportProgress?(progress: {completedUnitCount: number; totalUnitCount: number; message: string}): Promise<void>;
 }) {
   let tail: Promise<unknown> = Promise.resolve();
   let observer: ((state: SurfaceState) => void) | undefined;
@@ -97,7 +111,16 @@ export function createSurfaceProof(input: {
     }),
     run: (request: JSONValue, invocation: {id?: string; caller: string}) => serial(async () => {
       const state = await read();
+      const payload = request && !Array.isArray(request) && typeof request === 'object' ? request : undefined;
+      const inputChallenge = payload?.challenge;
+      if (!state.challenge && input.acceptInputChallenge && typeof inputChallenge === 'string' &&
+          /^[a-z0-9]+-[a-z0-9]+-[a-z0-9]+$/.test(inputChallenge)) {
+        state.challenge = inputChallenge;
+      }
       if (!state.challenge) throw new Error('Use Prepare challenge in this proof app before the system-surface attempt.');
+      if (inputChallenge !== undefined && inputChallenge !== state.challenge) {
+        throw new Error('The actual incoming challenge differs from this invocation state.');
+      }
       const nonce = freshID();
       const result: SurfaceResult = {
         schemaVersion: 1, appID: input.appID, action: 'surface.run', challenge: state.challenge, nonce,
@@ -106,11 +129,16 @@ export function createSurfaceProof(input: {
         caller: invocation.caller, request, requestedSurface: requestedSurface(request),
         counter: state.counter + 1, startedAt: new Date().toISOString(), status: 'running', receipts: []
       };
+      if (input.samplePresentation) result.presentationSamples = [input.samplePresentation()];
       state.counter = result.counter;
       state.lastResult = result;
       await save(state);
       try {
         const kinds: RuntimeKind[] = ['node', 'typeScript', 'localPython', 'javaScriptCore', 'shell'];
+        if (result.requestedSurface === 'miniAppShortcut' && input.reportProgress) {
+          await input.reportProgress({completedUnitCount: 0, totalUnitCount: kinds.length,
+            message: 'Starting ' + state.challenge});
+        }
         for (const kind of kinds) {
           // IDs are fresh ASCII clock/random tokens, never payload-supplied code.
           const marker = input.appID + ':' + state.challenge + ':' + nonce + ':' + result.counter + ':' + kind + ':42';
@@ -122,6 +150,7 @@ export function createSurfaceProof(input: {
             : "printf '%s\\n' '" + marker + "'";
           const receipt = await input.executeRuntime(kind, source);
           result.receipts.push({kind, marker, receipt});
+          if (input.samplePresentation) result.presentationSamples!.push(input.samplePresentation());
           await save(state);
           if (!receipt.executionID || !Number.isFinite(receipt.durationMilliseconds) ||
               receipt.didTimeOut || receipt.wasCancelled || receipt.outputWasTruncated ||
@@ -132,9 +161,14 @@ export function createSurfaceProof(input: {
               : !receipt.stdout.split(/\r?\n/).includes(marker)) {
             throw new Error(kind + " did not return this invocation's actual challenge/nonce marker.");
           }
+          if (result.requestedSurface === 'miniAppShortcut' && input.reportProgress) {
+            await input.reportProgress({completedUnitCount: result.receipts.length,
+              totalUnitCount: kinds.length, message: kind + ' ' + state.challenge});
+          }
         }
         result.status = 'completed';
         result.finishedAt = new Date().toISOString();
+        result.summary = 'Surface result ' + input.appID + ' ' + state.challenge + ' ' + nonce + ' ' + result.counter;
         await save(state);
         return result;
       } catch (error) {

@@ -7,6 +7,7 @@ const appID = 'hanlin.surface.expo';
 const filename = 'surface-proof.json';
 const proof = createSurfaceProof({
   appID, executeRuntime: (kind, source, options) => hostServices.executeRuntime(kind, source, options),
+  reportProgress: async progress => { await hostServices.miniapps.reportShortcutProgress(progress); },
   readText: async () => {
     const bytes = await hostServices.readFile(filename, 'state');
     return bytes === null ? null : Array.from(bytes, value => String.fromCharCode(value)).join('');
