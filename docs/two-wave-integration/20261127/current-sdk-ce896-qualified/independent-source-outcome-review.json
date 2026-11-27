@@ -1,0 +1,115 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "/root/w1_review_resume",
+  "recordedAt": "2026-11-27T18:56:15.615932+00:00",
+  "status": "APPROVED_SCOPED_METADATA_REFRESH_AND_RETAINED_OUTCOME",
+  "source": "ce8965429942901b54e43f9e1efd2c9ae1f73b3e",
+  "controllerSHA256": "bb3632e9ebbd609cac9c0583e060ff33f7613657501442ff5c89c82dc92cf82d",
+  "unchangedOriginalHelperASTs": [
+    "closure",
+    "digest",
+    "free",
+    "phase",
+    "save"
+  ],
+  "verifiedPackets": [
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/sdk-metadata-ce896542-pass-proof",
+      "manifestSHA256": "e5adee020c6f6ec38f6c07a18a01c926a92d238b91dfda6ce2921d7614c70e25",
+      "members": 36
+    },
+    {
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ns-surface-ce896542-actual-sdk396-pass-proof",
+      "manifestSHA256": "e78d14e28a6f2a3275d5d953812c4496fdb669a6520a7f91ddcfd48beac63ee0",
+      "members": 36
+    }
+  ],
+  "sourceQualification": {
+    "sevenTreesEqual": [
+      {
+        "path": "AI_HLY/Downstream/RuntimeCore/Node/Host",
+        "tree": "d460ae6fa03c5d28c8a1fbfacc5c57d27662e6bd"
+      },
+      {
+        "path": "Scripts/Runtime",
+        "tree": "913f864e06a67b7cbdf42e7959ffb37cfde7a25e"
+      },
+      {
+        "path": "AI_HLYTests/Fixtures/RuntimeNetworkFixtures.bundle",
+        "tree": "c1314caa55af5971ba13fc976948b79a050457eb"
+      },
+      {
+        "path": "Scripts/MiniApps",
+        "tree": "4a1f34faf9454a5972543de45393ec2323420284"
+      },
+      {
+        "path": "Fixtures/HostActionSurfaces/nativescript",
+        "tree": "10213eccc90704d8a0a5bde2f4b33f62e95d14fd"
+      },
+      {
+        "path": "Scripts/Expo",
+        "tree": "1e33d10ad566c396478f567ea516bba7191084b0"
+      },
+      {
+        "path": "Scripts/NativeScript",
+        "tree": "c12221f5beda89c6f1afb2287346c92f6fce8779"
+      }
+    ],
+    "currentSDK396GitBlobsVerified": 396,
+    "originalHost99GitBlobsVerified": 99,
+    "nodeProducerAndArchiveToolGuardsReviewed": true
+  },
+  "metadataReceiptSHA256": "a8008a114ad9ece345244c850740036a1a1ae4e314727d7c4ca4f86ca83509dc",
+  "independentlyRecomputedPayloadCount": 28810,
+  "changedPayloadPaths": [
+    "MiniAppSDK/docs/miniapp-sdk/extension-reachability.json",
+    "MiniAppSDK/docs/miniapp-sdk/extension-reachability.md",
+    "MiniAppSDK/miniapp-sdk.json"
+  ],
+  "normalizedSDKManifestEqualsOriginal": true,
+  "actualNewRefreshChecks": {
+    "count": 13,
+    "allExitZero": true,
+    "noOuterStop": true,
+    "logHashesVerified": true
+  },
+  "original188": {
+    "status": "REUSED_VERIFIED",
+    "actualExecutionSource": "b5475156e7b0253b24c0a4385236b60da21f6f7e",
+    "actualExecutionReceiptSHA256": "ae96e1b3f5cbeafed5645fd26bbd3edfd1a74fd264c5a5dda4837fb1990d43a9",
+    "newInvocations": 0,
+    "freshFullOriginalTwelvePhasePassClaimed": false
+  },
+  "currentSDK": {
+    "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/fresh-sdk-ce896542-metadata-r1/MiniAppSDK",
+    "manifestSHA256": "7f2702e52587fe1d126cef37f068ab3a9e3a26adb275ffafb687cb38a2db9b87",
+    "sourceInputHash": "9e397ad525cf254598f8b35256816d1519ae2adfb02f3e5692fc91c21a1a3ab1",
+    "sourceInputsCount": 396
+  },
+  "currentArchive": {
+    "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/build/runtime-host-ce896542-metadata-r1/RuntimeHostResources.zip",
+    "canonicalPath": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/build/runtime-host/RuntimeHostResources.zip",
+    "bytes": 81905747,
+    "sha256": "a088d98b8f85ae1e1ad767fca92132c03f0155d5ddd379d57b8cc98c38f19383",
+    "testReuseQualificationSHA256": "febe292133e951031e9b7c84ea51252bc0c9a6caf42bd698f8a4a295c9f93619"
+  },
+  "strictNativeScript": {
+    "status": "ACTUAL_ORIGINAL_VALIDATE_BUILD_PASS",
+    "receiptSHA256": "d219dfb0ff8dae51013b6fbf699dee701217139e049af6cc769cfbde5bfa1025",
+    "source": "ce8965429942901b54e43f9e1efd2c9ae1f73b3e",
+    "budgets": [
+      300,
+      600
+    ],
+    "authoredInputsVerified": 7,
+    "archiveSHA256": "34bcb521459067cafe7e8a91492229c1e29cede772793154d8b8b3131f75584a",
+    "appOrOSCredit": false
+  },
+  "reviewNotes": [
+    "Full 278-line controller read; current/accepted source, exact admitted document delta, locks, phase stop checks, capacity formula, post-stage closure, unchanged producer extraction and final source/fingerprint gates reviewed.",
+    "All 72 exported packet members rehashed locally on Oracle. Payload and normalized manifest comparisons independently recomputed from retained complete before/after inventories.",
+    "Staged payload mode equality and packed archive equality are enforced by the reviewed successful Mac controller. The 81.9 MB archive itself was not transferred or rehashed again in this review; its reported hash is bound through the actual receipt and packed/reuse validation.",
+    "The unchanged original producer metadata tests=passed is explicitly qualified by the retained test-reuse sidecar; no new188 or app/OS execution is inferred.",
+    "Only read-only source/evidence verification and this review receipt write were performed. No original producer/build/test command, native job, product source change, dispatch or cancellation was executed by this reviewer."
+  ]
+}
