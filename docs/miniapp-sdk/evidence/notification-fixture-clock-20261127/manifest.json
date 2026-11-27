@@ -4,8 +4,8 @@
   "files": [
     {
       "path": "SOURCE_PROOF.json",
-      "bytes": 5880,
-      "sha256": "447a12226041bc577dcb507376359efe539f1af75982f6323af87c611e6d23c2"
+      "bytes": 6249,
+      "sha256": "85eaf8ea7766ef0474299c4c3ab0fd5541f324a938e7a411f8019e6d6912b705"
     },
     {
       "path": "affected-case-receipt.json",
@@ -58,9 +58,9 @@
       "sha256": "8ccf0dbca5a9756662ae505eab1032b3e4f61465cface009a93bd3d26051cd30"
     },
     {
-      "path": "source.patch",
-      "bytes": 2052,
-      "sha256": "b0c27cf1ebecd9edd83e1540899a4882760923604e253a78ad344e32c94c6c34"
+      "path": "source.patch.gz",
+      "bytes": 925,
+      "sha256": "0efc59555b585286b6e2f0c55f64df723ee77f155c9fada4e87ac1ee735d501c"
     }
   ]
 }

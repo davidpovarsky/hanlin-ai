@@ -85,5 +85,12 @@
     "uncompressedSHA256": "e3de91e7e964ecbabf139404deabbbc399d758cb9cdd815d2f9b6fa972f291c2",
     "uncompressedBytes": 4864
   },
-  "at": "2026-11-27T22:15:56.949005+00:00"
+  "at": "2026-11-27T22:15:56.949005+00:00",
+  "sourcePatchEncoding": {
+    "stored": "source.patch.gz",
+    "encoding": "gzip lossless, mtime=0",
+    "uncompressedBytes": 2052,
+    "uncompressedSHA256": "b0c27cf1ebecd9edd83e1540899a4882760923604e253a78ad344e32c94c6c34",
+    "reason": "Preserve raw unified-diff context bytes without committing their single-space context lines as text trailing whitespace."
+  }
 }
