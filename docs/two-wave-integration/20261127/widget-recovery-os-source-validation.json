@@ -1,0 +1,187 @@
+{
+  "schemaVersion": 1,
+  "scope": "Standalone MiniApps real WidgetKit failure and recovery, one systemMedium Simulator pilot",
+  "parentSourceCommit": "8ec36373651c8cdb28a62cbdfd202d2a0bc09b13",
+  "fixtureSourceCommit": "fb1e15992eaddfde42c88b20738ae8d543d48ba0",
+  "pinnedFixtureQualificationCommit": "8ec36373651c8cdb28a62cbdfd202d2a0bc09b13",
+  "nativeStatus": "NOT_RUN",
+  "osStatus": "NOT_RUN",
+  "originalRunner": {
+    "command": "PAIRED_TEST_SCOPE=miniapp_widget_recovery_os python3 Scripts/ProductSplit/run_paired_acceptance.py",
+    "selector": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testMiniAppsPlacedWidgetRetainsLastGoodAfterRealFailureAndRecovers",
+    "shippingBundle": "com.itorah.hanlinminiapps",
+    "executionOwner": "/root/mac_build_resume",
+    "fixtureArchive": "Fixtures/Widgets/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo",
+    "fixtureArchiveSHA256": "e076a8543641d9721152d063b58e63a17d722a9d326a9dec742910496cb0a995",
+    "observationExchange": "Documents/HanlinSystemSurfaceObservation",
+    "behavior": "Imports through the real MiniApps UI, creates a fresh instance, places and configures an actual medium WidgetKit widget, terminates the host, taps Fail refresh, verifies fresh correlated fallback, waits for the authored retry boundary, then taps the cached Recover control.",
+    "requiredEnvironment": {
+      "SPLIT_EVIDENCE": "A fresh absolute evidence root owned by the original Mac controller; the runner creates paired-product with exist_ok=False."
+    },
+    "runtimeSelection": "Use the actual owned installed runtime through the original PAIRED_SIM_RUNTIME option. The last independently observed runtime was com.apple.CoreSimulator.SimRuntime.iOS-27-2; admission remains with the Mac owner."
+  },
+  "observationBoundary": [
+    "Current installed app, data container, configured AppGroup, canonical enabled catalog, installed generation, fresh instance, exact fixture source, eight published families, program and cached render are verified read-only.",
+    "The observer starts only its own read-only Simulator system log stream. The native fallback event must bind exact identity, generation, family, program, failed state revision, retained render, actual PID and installed WidgetKit process path.",
+    "The failed state must commit one fresh action nonce while the previously verified cache remains unchanged. Recovery requires the actual second UI callback, second nonce, count 2, fail false, retryAfter 0 and a new render after recovery was armed.",
+    "A passive render after the authored 90-second retry boundary cannot qualify recovery.",
+    "Immediately before terminal output, actual MCM roots, configuration, app Info digest and installed extension path/configuration are resolved again and must match the admitted identity.",
+    "Only the original XCTest runner observation response and external evidence are written; no production catalog, grants, commands, queues, snapshots or native receipts are seeded."
+  ],
+  "preserved": [
+    "All fourteen existing system-surface UI test methods and their helper behavior remain; one additive method is selected only by the new scope.",
+    "The original paired 54 selectors, other existing scopes and original verify_selected_tests.py verifier remain.",
+    "The existing fourteen observer unit methods remain, with six additional pure negative controls. Unit fixture records are not Simulator evidence.",
+    "This four-file acceptance-only patch does not change the native product, runtime producer, package source, dependency pins, frozen ScriptWidget or ScriptUI engines."
+  ],
+  "pilotLimits": [
+    "The Swift UI additions have not yet compiled or executed in Xcode.",
+    "Actual gallery/medium-family/configuration locators and NDJSON record field provenance must be confirmed by the genuine Mac pilot.",
+    "This one systemMedium Simulator case does not close the other seven Widget families, portrait/tint modes, network or corrupt-package failures, ActivityKit regions, physical-device acceptance or the complete Asana matrix."
+  ],
+  "reviewHistory": [
+    "Independent reviewer identified a final container-readback gap and missing strict catalog generation type; both were corrected before final review and the final portable receipt."
+  ],
+  "sourceClosure": {
+    "manifestPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/host-2a0b19b7-pass-and-native-seal/sdk/miniapp-sdk.json",
+    "manifestSHA256": "0433011cae7beb42504e4bb29b18bb722e21d9a31cc5aae7324eba67b70afcc7",
+    "sourceInputs": 392,
+    "actualChangedPaths": [
+      "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+      "Scripts/ProductSplit/Tests/test_shortcut_surface_observer.py",
+      "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+      "Scripts/ProductSplit/run_paired_acceptance.py"
+    ],
+    "intersection": [],
+    "diffSHA256": "32c2c7bdcc71b706c1c7b9c0e7c9ac0a5561e6411dcb5ce1d45572b0442ba696",
+    "boundary": "This compares exact changed-path membership against the retained actual 392-input producer manifest. It does not claim the older runtime artifact qualifies the newer native diagnostic; the Mac owner owns that fresh qualification."
+  },
+  "recordedAtUTC": "2026-11-27T04:40:48.126029+00:00",
+  "actualPortableValidation": {
+    "receipt": {
+      "schema": 1,
+      "sourceHead": "8ec36373651c8cdb28a62cbdfd202d2a0bc09b13",
+      "elapsedSeconds": 0.17466941569000483,
+      "command": [
+        "python3",
+        "-B",
+        "-m",
+        "unittest",
+        "discover",
+        "-s",
+        "Scripts/ProductSplit/Tests",
+        "-p",
+        "test_shortcut_surface_observer.py",
+        "-v"
+      ],
+      "returncode": 0,
+      "files": {
+        "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift": "13d5196e224fd7f2dfe251d8fbef45f31c5a773134de258f3adcda89eacf40a9",
+        "Scripts/ProductSplit/Tests/test_shortcut_surface_observer.py": "4581c3cf410440a8dd6d279dab30c4d5c384d055ee49e8a84ea06f582dfd7e85",
+        "Scripts/ProductSplit/observe_shortcut_surfaces.py": "72530c9c8f70b6eb35572e2d4180ac2d0161d1a641c08d1e49505554d021b65c",
+        "Scripts/ProductSplit/run_paired_acceptance.py": "0c1f348c310c7654ceb9eb600f27ae1ead0247161ae144eb644a9f0343efb9fa"
+      },
+      "logs": {
+        "observer-tests.stdout": {
+          "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/widget-recovery-os-candidate-8ec36373/final-review/observer-tests.stdout",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        "observer-tests.stderr": {
+          "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/widget-recovery-os-candidate-8ec36373/final-review/observer-tests.stderr",
+          "sha256": "e39727f14c35a011282fb44c77e27462b71347cbfa3bd9d26b20d70e7a7de2a8"
+        }
+      },
+      "native": "NOT_RUN",
+      "OS": "NOT_RUN",
+      "recordedAtUTC": "2026-11-27T04:30:42.405482+00:00"
+    },
+    "receiptSHA256": "546d2e46ae73b8f5ac11fa4e8ccc5bcc0fd389b9da9372bd6cb899c85cf4547b",
+    "assertedResult": {
+      "tests": 20,
+      "failures": 0,
+      "errors": 0,
+      "skips": 0
+    },
+    "logs": {
+      "observer-tests.stdout": {
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "text": ""
+      },
+      "observer-tests.stderr": {
+        "sha256": "e39727f14c35a011282fb44c77e27462b71347cbfa3bd9d26b20d70e7a7de2a8",
+        "text": "test_current_expo_result_qualifies_only_its_exact_challenge (test_shortcut_surface_observer.ShortcutEvidenceControls.test_current_expo_result_qualifies_only_its_exact_challenge) ... ok\ntest_current_identity_and_exact_native_payload_are_required (test_shortcut_surface_observer.ShortcutEvidenceControls.test_current_identity_and_exact_native_payload_are_required) ... ok\ntest_duplicate_execution_and_unmatched_private_result_fail (test_shortcut_surface_observer.ShortcutEvidenceControls.test_duplicate_execution_and_unmatched_private_result_fail) ... ok\ntest_native_window_and_mode_are_independently_bound (test_shortcut_surface_observer.ShortcutEvidenceControls.test_native_window_and_mode_are_independently_bound) ... ok\ntest_original_wire_format_preserves_unicode_and_types (test_shortcut_surface_observer.ShortcutEvidenceControls.test_original_wire_format_preserves_unicode_and_types) ... ok\ntest_os_delivery_and_mode_cannot_be_inferred (test_shortcut_surface_observer.ShortcutEvidenceControls.test_os_delivery_and_mode_cannot_be_inferred) ... ok\ntest_pending_and_preexisting_invocations_cannot_pass (test_shortcut_surface_observer.ShortcutEvidenceControls.test_pending_and_preexisting_invocations_cannot_pass) ... ok\ntest_primary_catalog_requires_enabled_current_supported_action (test_shortcut_surface_observer.ShortcutEvidenceControls.test_primary_catalog_requires_enabled_current_supported_action) ... ok\ntest_returned_and_private_scalar_types_cannot_coerce (test_shortcut_surface_observer.ShortcutEvidenceControls.test_returned_and_private_scalar_types_cannot_coerce) ... ok\ntest_run_path_and_preparation_schema_are_strict (test_shortcut_surface_observer.ShortcutEvidenceControls.test_run_path_and_preparation_schema_are_strict) ... ok\ntest_self_reported_engine_labels_without_outputs_cannot_pass (test_shortcut_surface_observer.ShortcutEvidenceControls.test_self_reported_engine_labels_without_outputs_cannot_pass) ... ok\ntest_snapshot_hash_and_links_are_checked (test_shortcut_surface_observer.ShortcutEvidenceControls.test_snapshot_hash_and_links_are_checked) ... ok\ntest_terminal_failure_or_cancellation_never_qualifies (test_shortcut_surface_observer.ShortcutEvidenceControls.test_terminal_failure_or_cancellation_never_qualifies) ... ok\ntest_ui_configured_input_rejects_consistently_coerced_native_results (test_shortcut_surface_observer.ShortcutEvidenceControls.test_ui_configured_input_rejects_consistently_coerced_native_results) ... ok\ntest_actual_event_fields_must_match_one_current_failed_render (test_shortcut_surface_observer.WidgetRecoveryObservationTests.test_actual_event_fields_must_match_one_current_failed_render) ... ok\ntest_foreign_identity_generation_family_program_revision_render_and_process_are_rejected (test_shortcut_surface_observer.WidgetRecoveryObservationTests.test_foreign_identity_generation_family_program_revision_render_and_process_are_rejected) ... ok\ntest_nonce_and_other_instance_changes_cannot_self_validate (test_shortcut_surface_observer.WidgetRecoveryObservationTests.test_nonce_and_other_instance_changes_cannot_self_validate) ... ok\ntest_old_event_and_event_after_authored_failure_window_are_rejected (test_shortcut_surface_observer.WidgetRecoveryObservationTests.test_old_event_and_event_after_authored_failure_window_are_rejected) ... ok\ntest_passive_clock_expiry_cannot_satisfy_a_recover_callback (test_shortcut_surface_observer.WidgetRecoveryObservationTests.test_passive_clock_expiry_cannot_satisfy_a_recover_callback) ... ok\ntest_widget_request_requires_its_fresh_ui_created_instance_and_exact_scope (test_shortcut_surface_observer.WidgetRecoveryObservationTests.test_widget_request_requires_its_fresh_ui_created_instance_and_exact_scope) ... ok\n\n----------------------------------------------------------------------\nRan 20 tests in 0.028s\n\nOK\n"
+      }
+    }
+  },
+  "independentReview": {
+    "reviewer": "/root/w1_review_resume",
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/widget-recovery-os-candidate-8ec36373/final-review/independent-w1-source-review.json",
+    "sha256": "307fefad5082f42cc7b625304b4a83481874d29f1332f4e6e166847d714e32a0",
+    "receipt": {
+      "schema": 1,
+      "reviewer": "/root/w1_review_resume",
+      "sourceHead": "8ec36373651c8cdb28a62cbdfd202d2a0bc09b13",
+      "decision": "APPROVED_ADDITIVE_WIDGET_OS_ACCEPTANCE_SOURCE_NATIVE_OS_PENDING",
+      "files": {
+        "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift": "13d5196e224fd7f2dfe251d8fbef45f31c5a773134de258f3adcda89eacf40a9",
+        "Scripts/ProductSplit/Tests/test_shortcut_surface_observer.py": "4581c3cf410440a8dd6d279dab30c4d5c384d055ee49e8a84ea06f582dfd7e85",
+        "Scripts/ProductSplit/observe_shortcut_surfaces.py": "72530c9c8f70b6eb35572e2d4180ac2d0161d1a641c08d1e49505554d021b65c",
+        "Scripts/ProductSplit/run_paired_acceptance.py": "0c1f348c310c7654ceb9eb600f27ae1ead0247161ae144eb644a9f0343efb9fa"
+      },
+      "proof": {
+        "receiptSHA256": "546d2e46ae73b8f5ac11fa4e8ccc5bcc0fd389b9da9372bd6cb899c85cf4547b",
+        "stderrSHA256": "e39727f14c35a011282fb44c77e27462b71347cbfa3bd9d26b20d70e7a7de2a8",
+        "originalCommand": [
+          "python3",
+          "-B",
+          "-m",
+          "unittest",
+          "discover",
+          "-s",
+          "Scripts/ProductSplit/Tests",
+          "-p",
+          "test_shortcut_surface_observer.py",
+          "-v"
+        ],
+        "executedBy": "/root/w2_source_resume",
+        "tests": 20,
+        "failures": 0,
+        "skips": 0,
+        "exitCode": 0,
+        "unitSeconds": 0.028,
+        "reviewerReranTests": false
+      },
+      "preservation": {
+        "originalTestPlansASTEqual": true,
+        "originalReaderTestDefinitionsASTEqual": true,
+        "all14OriginalUIMethodBodiesBytePreserved": true,
+        "original54SelectorsUnchanged": true,
+        "productionWritesByObserver": false
+      },
+      "reviewed": [
+        "Current primary catalog, supported entrypoint and source artifact SHA are bound to the UI-created instance; generation is an exact integer.",
+        "Failure requires a fresh actual WidgetKit process event matching identity, generation, family, program, revision, render and PID/path, plus the exact retained last-good cache.",
+        "Recovery requires an actual Recover action nonce, revision/count update, clearing fail/retryAfter and a fresh rendered artifact; passive clock expiry does not pass.",
+        "Immediately before terminal completion, actual app/data/group/extensions/configuration/infoSHA256 and installed widget extension executable identity are re-resolved and compared.",
+        "Only the existing runner exchange and separate evidence are written; no production queue, receipts, widget state or success evidence is seeded.",
+        "Original read-only artifact schema was checked against HanlinScriptExtensionStore.storeArtifact and the existing last-successful cache Codable contract."
+      ],
+      "limits": {
+        "native": "NOT_RUN",
+        "OS": "NOT_RUN",
+        "acceptanceScope": "One systemMedium Matrix widget in the existing standalone MiniApps iPad Simulator companion. Real gallery placement/configuration, observed family, process log and interaction require the original native pilot. Other families, appearance/orientation, device, network and corrupt-input gates remain separate."
+      }
+    }
+  },
+  "installedLogFormatEvidence": {
+    "owner": "/root/mac_build_resume",
+    "source": "Actual installed iOS27.2 runtime24B8117 /usr/bin/log help strings, read-only; no Simulator boot or log stream was run for this lookup.",
+    "binarySHA256": "49ac442bec9beb3a00801f9ee17976eb0e7637b0007fb2f475913721942ccdc4",
+    "supportedStyle": "ndjson",
+    "fieldStrings": [
+      "processImagePath",
+      "processID"
+    ],
+    "actualRecordStatus": "NOT_YET_OBSERVED"
+  }
+}

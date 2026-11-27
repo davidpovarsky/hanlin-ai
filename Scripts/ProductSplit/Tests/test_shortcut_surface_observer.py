@@ -324,5 +324,104 @@ class ShortcutEvidenceControls(unittest.TestCase):
                     observer.validate_request(request)
 
 
+
+
+def widget_example():
+    identity = {"installedPackageID": "installation-1", "packageID": "matrix-package",
+                "generation": 3, "entrypointID": "widget",
+                "variantID": "87654321-1234-1234-1234-123456789abc"}
+    before = {"state": {"revision": 0, "committedNonces": []}, "otherStatesSHA256": "other"}
+    facts = {"identity": identity, "identitySHA256": observer.widget_identity_digest(identity),
+             "program": {"sha256": "a" * 64}, "state": {"revision": 1, "committedNonces": ["native-fail"]},
+             "values": {"count": 1, "fail": True, "retryAfter": 1795747290000},
+             "cache": {"record": {"family": "systemMedium", "renderSHA256": "b" * 64}},
+             "otherStatesSHA256": "other"}
+    extension = {"path": str(Path("/unit-fixture/MiniAppsWidgets.appex/Widget").resolve())}
+    event = {"subsystem": "com.hanlin.ai", "category": "WidgetRender",
+             "timestamp": "2026-11-27 04:00:01.000+0000", "processID": 123,
+             "processImagePath": extension["path"]}
+    event["eventMessage"] = (
+        "widget_render_retained v=1 engine=expo identitySHA256=" + facts["identitySHA256"] +
+        " generation=3 family=systemMedium programSHA256=" + "a" * 64 +
+        " stateRevision=1 renderSHA256=" + "b" * 64 + " pid=123")
+    start = observer._epoch_milliseconds("2026-11-27T04:00:00Z")
+    facts["values"]["retryAfter"] = start + 90000
+    return before, facts, extension, event, start
+
+
+class WidgetRecoveryObservationTests(unittest.TestCase):
+    """Pure negative controls, never Simulator or system-log acceptance evidence."""
+
+    def test_actual_event_fields_must_match_one_current_failed_render(self):
+        baseline, facts, extension, event, start = widget_example()
+        observer.require_widget_transition(facts, baseline, recovered=False)
+        self.assertTrue(observer.matching_widget_fallback(event, facts, extension, start, start + 90000))
+
+    def test_foreign_identity_generation_family_program_revision_render_and_process_are_rejected(self):
+        _, facts, extension, event, start = widget_example()
+        substitutions = [
+            (facts["identitySHA256"], "c" * 64), ("generation=3", "generation=4"),
+            ("family=systemMedium", "family=systemSmall"), ("programSHA256=" + "a" * 64, "programSHA256=" + "d" * 64),
+            ("stateRevision=1", "stateRevision=0"), ("renderSHA256=" + "b" * 64, "renderSHA256=" + "e" * 64),
+            ("pid=123", "pid=124"),
+        ]
+        for old, new in substitutions:
+            with self.subTest(field=old):
+                changed = copy.deepcopy(event)
+                changed["eventMessage"] = changed["eventMessage"].replace(old, new)
+                self.assertFalse(observer.matching_widget_fallback(changed, facts, extension, start, start + 90000))
+        for key, value in [("processID", True), ("processID", 124),
+                           ("processImagePath", "/unit-fixture/HanlinAI.app/Hanlin")]:
+            with self.subTest(field=key, value=value):
+                changed = {**event, key: value}
+                self.assertFalse(observer.matching_widget_fallback(changed, facts, extension, start, start + 90000))
+
+    def test_old_event_and_event_after_authored_failure_window_are_rejected(self):
+        _, facts, extension, event, start = widget_example()
+        for stamp in ["2026-11-27T03:59:59Z", "2026-11-27T04:01:30Z"]:
+            with self.subTest(timestamp=stamp):
+                self.assertFalse(observer.matching_widget_fallback(
+                    {**event, "timestamp": stamp}, facts, extension, start, start + 90000))
+
+    def test_passive_clock_expiry_cannot_satisfy_a_recover_callback(self):
+        baseline, failed, _, _, _ = widget_example()
+        recovered = copy.deepcopy(failed)
+        recovered["state"] = {"revision": 2, "committedNonces": ["native-fail", "native-recover"]}
+        recovered["values"] = {"count": 2, "fail": False, "retryAfter": 0}
+        observer.require_widget_transition(recovered, baseline, recovered=True)
+        for field, value in [("fail", True), ("retryAfter", failed["values"]["retryAfter"]),
+                             ("count", True), ("count", 1)]:
+            with self.subTest(field=field):
+                changed = copy.deepcopy(recovered)
+                changed["values"][field] = value
+                with self.assertRaises(observer.ObservationError):
+                    observer.require_widget_transition(changed, baseline, recovered=True)
+
+    def test_nonce_and_other_instance_changes_cannot_self_validate(self):
+        baseline, failed, _, _, _ = widget_example()
+        recovered = copy.deepcopy(failed)
+        recovered["state"] = {"revision": 2, "committedNonces": ["native-fail", "native-recover"]}
+        recovered["values"] = {"count": 2, "fail": False, "retryAfter": 0}
+        for state, other in [({"revision": 1, "committedNonces": ["native-fail"]}, "other"),
+                             ({"revision": 2, "committedNonces": ["native-fail"]}, "other"),
+                             (recovered["state"], "changed-other-instance")]:
+            with self.subTest(state=state, other=other):
+                changed = {**recovered, "state": state, "otherStatesSHA256": other}
+                with self.assertRaises(observer.ObservationError):
+                    observer.require_widget_transition(changed, baseline, recovered=True)
+
+    def test_widget_request_requires_its_fresh_ui_created_instance_and_exact_scope(self):
+        run_id = str(uuid.uuid4())
+        request = {"schema": 1, "runID": run_id, "surface": "widgetRecovery", "engine": "expo",
+                   "instanceName": "Recovery-" + run_id, "fixtureTitle": "Interactive Widget Matrix",
+                   "expectedFamily": "systemMedium"}
+        self.assertEqual(observer.validate_widget_request(request), run_id)
+        for key, value in [("schema", True), ("instanceName", "Default"), ("expectedFamily", "systemLarge"),
+                           ("fixtureTitle", "Another package"), ("engine", "nativescript")]:
+            with self.subTest(field=key):
+                with self.assertRaises(observer.ObservationError):
+                    observer.validate_widget_request({**request, key: value})
+
+
 if __name__ == "__main__":
     unittest.main()

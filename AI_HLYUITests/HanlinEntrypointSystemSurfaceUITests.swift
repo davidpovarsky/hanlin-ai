@@ -55,6 +55,200 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
         try observe(.nativescript, .miniAppShortcut, canPresentUI: true)
     }
 
+
+    func testMiniAppsPlacedWidgetRetainsLastGoodAfterRealFailureAndRecovers() throws {
+        continueAfterFailure = false
+        executionTimeAllowance = 420
+        deadline = Date().addingTimeInterval(420)
+        let runID = UUID().uuidString.lowercased()
+        let instanceName = "Recovery-" + runID
+        let documents = try XCTUnwrap(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first)
+        let root = documents.appendingPathComponent("HanlinSystemSurfaceObservation", isDirectory: true)
+        let directory = root.appendingPathComponent(runID, isDirectory: true)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        exchange = root
+        runDirectory = directory
+        record = ["schema": 1, "runID": runID, "engine": "expo", "surface": "widgetRecovery",
+                  "fixtureTitle": "Interactive Widget Matrix", "instanceName": instanceName,
+                  "expectedFamily": "systemMedium", "status": "RUNNING", "test": name,
+                  "startedAt": timestamp(), "phase": "preparing"]
+        try checkpoint("preparing")
+        defer {
+            capture(mini, "widget-final-mini")
+            capture(springboard, "widget-final-system")
+            record["finishedAt"] = timestamp()
+            try? writeJSON(record, filename: "case.json")
+            try? checkpoint("finished")
+        }
+        do {
+            mini.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+            mini.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+            mini.launch()
+            try importMatrixWidgetAndCreateInstance(named: instanceName)
+            capture(mini, "widget-created-instance")
+            try checkpoint("widget-installed")
+            let identity = try response("identity.json", timeout: 25)
+            try require(identity["status"] as? String == "READY",
+                        "The observer must bind the actual current Matrix program and fresh instance.")
+            record["installedIdentity"] = identity
+            try placeMatrixWidget(selecting: instanceName)
+            let baselineText = springboard.staticTexts["Matrix count: 0"].firstMatch
+            let fail = springboard.buttons["Fail refresh"].firstMatch
+            let recover = springboard.buttons["Recover"].firstMatch
+            try require(baselineText.waitForExistence(timeout: bounded(30)) &&
+                        fail.exists && recover.exists && fail.isHittable && recover.isHittable,
+                        "The actual placed Matrix must expose its zero-count layout and both authored controls.")
+            try require(mini.state == .notRunning, "The widget test must begin with the MiniApps host terminated.")
+            record["placedWidgetObserved"] = true
+            record["visibleCount"] = 0
+            capture(springboard, "widget-before-failure")
+            try checkpoint("widget-baseline")
+            let baseline = try response("widget-baseline.json", timeout: 30)
+            try require(baseline["status"] as? String == "READY",
+                        "An actual verified last-good render for this current configuration is required.")
+            record["baseline"] = baseline
+            try checkpoint("before-widget-failure")
+            let armed = try response("widget-armed.json", timeout: 15)
+            try require(armed["status"] as? String == "READY", "The real log observation was not armed.")
+            try tap(fail, "Tap Fail refresh on the genuine placed WidgetKit widget.")
+            record["failActionObserved"] = true
+            try checkpoint("widget-failure-requested")
+            let failure = try response("widget-failure.json", timeout: 60)
+            try require(failure["status"] as? String == "RETAINED_AFTER_REAL_FAILURE",
+                        "Unchanged UI alone is insufficient: the actual extension must report a matching failed-render fallback.")
+            try require(baselineText.exists && recover.exists && mini.state == .notRunning,
+                        "The last-good layout and Recover control must remain visible without opening MiniApps.")
+            record["failure"] = failure
+            capture(springboard, "widget-after-real-failure")
+            let retryAfter = try XCTUnwrap(failure["retryAfter"] as? NSNumber).doubleValue
+            try require(retryAfter.isFinite && retryAfter > 0,
+                        "The real authored callback did not provide its finite recovery boundary.")
+            var hostStarted = false
+            let remaining = max(0, retryAfter / 1000 - Date().timeIntervalSince1970) + 2
+            try require(wait(min(95, remaining)) {
+                if self.mini.state != .notRunning { hostStarted = true }
+                return Date().timeIntervalSince1970 * 1000 >= retryAfter + 250
+            }, "The authored temporary failure window did not reach its recovery boundary.")
+            try require(!hostStarted && mini.state == .notRunning && baselineText.exists,
+                        "The host must remain terminated and passive time expiry must not substitute for the observed recovery action.")
+            try checkpoint("before-widget-recovery")
+            let ready = try response("widget-recovery-ready.json", timeout: 15)
+            try require(ready["status"] as? String == "READY",
+                        "The same failed state and last-good layout must still precede Recover.")
+            try tap(recover, "Tap the original Recover callback on the retained WidgetKit layout.")
+            record["recoverActionObserved"] = true
+            let recoveredText = springboard.staticTexts["Matrix count: 2"].firstMatch
+            try require(recoveredText.waitForExistence(timeout: bounded(40)) && mini.state == .notRunning,
+                        "The actual Recover callback must publish and display the new count without launching the host.")
+            record["visibleRecoveredCount"] = 2
+            capture(springboard, "widget-after-recovery")
+            try checkpoint("widget-recovery-requested")
+            let completion = try response("completion.json", timeout: 25)
+            try require(completion["status"] as? String == "EXECUTED_PASS" &&
+                        completion["sameGeneration"] as? Bool == true &&
+                        completion["family"] as? String == "systemMedium",
+                        "The actual medium-family failure and recovery must retain the exact installation/generation/settings.")
+            record["observerCompletion"] = completion
+            record["status"] = "EXECUTED_PASS"
+        } catch {
+            record["status"] = "FAILED"
+            record["reason"] = String(describing: error)
+            throw error
+        }
+    }
+
+    private func importMatrixWidgetAndCreateInstance(named instanceName: String) throws {
+        try tap(mini.buttons["hanlin-apps-add"].firstMatch, "Open the shipping MiniApps package catalog.")
+        try tap(mini.buttons["hanlin-import-script-package"].firstMatch, "Open the original package importer.")
+        let list = mini.collectionViews["hanlin-package-import-list"].firstMatch
+        try require(list.waitForExistence(timeout: bounded(15)), "The original import list is unavailable.")
+        let archive = list.buttons["Hanlin-Expo-Widget-Interactive-Matrix"].firstMatch
+        try reveal(archive, in: list, message: "The exact original Matrix archive was not staged.")
+        try tap(archive, "Import the authored Matrix through the original compiler.")
+        let install = mini.buttons["hanlin-package-install"].firstMatch
+        let importError = mini.descendants(matching: .any)["hanlin-import-error-message"].firstMatch
+        let diagnostics = mini.descendants(matching: .any)["hanlin-import-diagnostics-sheet"].firstMatch
+        try require(wait(120) { install.exists || importError.exists || diagnostics.exists },
+                    "The original Matrix import did not reach a concrete outcome.")
+        capture(mini, "widget-import-preview")
+        try require(!importError.exists && !diagnostics.exists && install.exists,
+                    "The real compiler rejected the authored Matrix fixture.")
+        try tap(install, "Install through the original production preview.")
+        try require(wait(45) { !install.exists || importError.exists }, "The real installer did not finish.")
+        try require(!importError.exists, "The original installer reported an error.")
+        try tap(mini.buttons["hanlin-package-import-done"].firstMatch, "Return to the installed package list.")
+        let card = mini.buttons["hanlin-package-card-Interactive Widget Matrix"].firstMatch
+        try reveal(card, in: mini, message: "The installed widget-only package is absent.")
+        try tap(card, "Open the widget-only package's original Package Information.")
+        let field = mini.textFields["hanlin-widget-instance-name"].firstMatch
+        try reveal(field, in: mini, message: "The original independent-instance editor is unavailable.")
+        try tap(field, "Name a new independent widget instance.")
+        field.typeText(instanceName)
+        let create = mini.buttons["hanlin-widget-create-instance"].firstMatch
+        try reveal(create, in: mini, message: "The original create-instance action is unavailable.")
+        try tap(create, "Create an independent instance through production UI.")
+        try require(mini.staticTexts[instanceName].firstMatch.waitForExistence(timeout: bounded(15)),
+                    "The actual new instance was not published in Package Information.")
+    }
+
+    private func placeMatrixWidget(selecting instanceName: String) throws {
+        // This reuses the original SpringBoard gallery/configuration path.
+        // A fresh matching native fallback event later proves the actual family.
+        XCUIDevice.shared.press(.home)
+        let screen = springboard.frame
+        var selectedIcon: XCUIElement?
+        for _ in 0..<5 {
+            selectedIcon = springboard.icons.matching(NSPredicate(format: "label == %@", "Hanlin MiniApps"))
+                .allElementsBoundByIndex.first { icon in
+                    let frame = icon.frame
+                    return icon.isHittable && frame.minX >= screen.minX && frame.maxX <= screen.maxX &&
+                        frame.minY >= screen.minY && frame.maxY < screen.maxY - 140
+                }
+            if selectedIcon != nil { break }
+            springboard.swipeLeft()
+        }
+        let icon = try XCTUnwrap(selectedIcon, "The installed MiniApps Home Screen icon is absent.")
+        icon.press(forDuration: 1.2)
+        let editHome = springboard.buttons["Edit Home Screen"].firstMatch
+        if !editHome.exists && springboard.buttons["Options"].firstMatch.exists {
+            springboard.buttons["Options"].firstMatch.tap()
+        }
+        try tap(editHome, "Open the real Home Screen edit mode.")
+        if springboard.buttons["Edit"].firstMatch.exists { springboard.buttons["Edit"].firstMatch.tap() }
+        try tap(firstButton(springboard, ["Add Widget", "Add Widgets"]), "Open the real system widget gallery.")
+        let search = springboard.searchFields.firstMatch
+        try tap(search, "Search the functioning system widget gallery.")
+        search.typeText("Hanlin MiniApps")
+        let gallery = springboard.collectionViews["add-sheet-collection-view"].firstMatch
+        try require(gallery.waitForExistence(timeout: bounded(15)), "The system widget gallery list is unavailable.")
+        let app = gallery.cells.matching(NSPredicate(format: "label == %@", "Hanlin MiniApps")).firstMatch
+        try tap(app, "Select the installed standalone MiniApps widget provider.")
+        capture(springboard, "widget-gallery-first-family")
+        let add = springboard.buttons.matching(NSPredicate(format: "label MATCHES %@", "\\s*Add Widget\\s*")).firstMatch
+        try require(add.waitForExistence(timeout: bounded(15)), "The real WidgetKit family preview is unavailable.")
+        springboard.swipeLeft()
+        capture(springboard, "widget-gallery-medium-request")
+        try tap(add, "Place the requested medium widget using the real gallery.")
+        if springboard.buttons["Done"].firstMatch.exists { springboard.buttons["Done"].firstMatch.tap() }
+        let placeholder = springboard.descendants(matching: .any).matching(
+            NSPredicate(format: "label CONTAINS %@", "Choose a widget instance")).firstMatch
+        try require(placeholder.waitForExistence(timeout: bounded(25)),
+                    "The new placed widget did not expose its original configuration placeholder.")
+        placeholder.press(forDuration: 1.5)
+        try tap(springboard.buttons["Edit Widget"].firstMatch, "Configure the genuine placed widget.")
+        let choose = springboard.descendants(matching: .any).matching(
+            NSPredicate(format: "label == 'Choose' OR label == 'Widget instance'")).firstMatch
+        try tap(choose, "Open the original installed-instance entity query.")
+        let entity = springboard.descendants(matching: .any).matching(
+            NSPredicate(format: "label CONTAINS %@", instanceName)).firstMatch
+        try tap(entity, "Choose the exact fresh instance created by the MiniApps UI.")
+        XCUIDevice.shared.press(.home)
+        mini.terminate()
+        try require(mini.state == .notRunning, "Terminate the host after the real entity query before native widget actions.")
+        capture(springboard, "widget-configured")
+    }
+
+
     private func observe(_ engine: Engine, _ surface: Surface, canPresentUI: Bool? = nil) throws {
         continueAfterFailure = false
         let allowance: TimeInterval = surface == .miniAppShortcut ? 360 : 240
