@@ -1,0 +1,9 @@
+{
+  "rawPath": "docs/two-wave-integration/20261127/original-promise-gc-compile-correction/native609-original-selector.log",
+  "storedPath": "docs/two-wave-integration/20261127/original-promise-gc-compile-correction/native609-original-selector.log.gz",
+  "rawBytes": 19123,
+  "rawSHA256": "0fe3d0af8a9fd57a889e92eb518a3860a8aa81ff42ac09b7da17addbee4b0a79",
+  "storedSHA256": "f1ccbb27cd3d36ab2d47d0ce61a106553c2729123180d7180cf2fbc90798b6e1",
+  "encoding": "lossless gzip",
+  "note": "Preserves exact original ANSI compiler log whitespace; source receipts remain unmodified."
+}
