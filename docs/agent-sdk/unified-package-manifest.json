@@ -2,7 +2,9 @@
   "schemaVersion": 1,
   "sourceOwnership": "one original source path per target",
   "applicationModule": "AI_Hanlin",
-  "applicationSourceCount": 524,
+  "applicationSourceCount": 539,
+  "applicationSourceProfile": "full",
+  "applicationSources": null,
   "selectedProducts": null,
   "products": [
     "HanlinHostContracts",
@@ -51,10 +53,154 @@
     "HanlinWikipediaMiniApp",
     "IOSSystemLite",
     "TorahLibraryKit",
-    "HanlinApplication"
+    "HanlinApplication",
+    "HanlinAssistantCapabilities"
   ],
   "targets": 114,
+  "packageLayout": "unified",
+  "nestedPackages": [],
   "localPackageEdgesRemaining": 0,
+  "applicationPackageRequirements": {
+    "swift-sdk": {
+      "objectID": "A10000000000000000000040",
+      "repositoryURL": "https://github.com/modelcontextprotocol/swift-sdk.git",
+      "requirement": {
+        "kind": "exactVersion",
+        "version": "0.12.1"
+      },
+      "resolvedRevision": "a0ae212ebf6eab5f754c3129608bc5557637e605"
+    },
+    "swcompression": {
+      "objectID": "A10000000000000000000041",
+      "repositoryURL": "https://github.com/tsolomko/SWCompression.git",
+      "requirement": {
+        "kind": "exactVersion",
+        "version": "4.9.0"
+      },
+      "resolvedRevision": "c729f0baa49e91bafef3921fea663db2b75acc46"
+    },
+    "swift-log": {
+      "objectID": "A10000000000000000000042",
+      "repositoryURL": "https://github.com/apple/swift-log.git",
+      "requirement": {
+        "kind": "exactVersion",
+        "version": "1.6.2"
+      },
+      "resolvedRevision": "96a2f8a0fa41e9e09af4585e2724c4e825410b91"
+    },
+    "llm.swift": {
+      "objectID": "D786F6AE2E63DE70004DAC20",
+      "repositoryURL": "https://github.com/eastriverlee/LLM.swift/",
+      "requirement": {
+        "kind": "upToNextMajorVersion",
+        "minimumVersion": "1.4.3"
+      },
+      "resolvedRevision": "4b2517839f24498bea0695bae8967b359b9a35c4"
+    },
+    "corexlsx": {
+      "objectID": "D7D5EE3A2DD58CF000B89AAD",
+      "repositoryURL": "https://github.com/CoreOffice/CoreXLSX",
+      "requirement": {
+        "kind": "upToNextMajorVersion",
+        "minimumVersion": "0.14.2"
+      },
+      "resolvedRevision": "1391f3832ea2eeee5186ea8abb81ea49ed0609cc"
+    },
+    "richtextkit": {
+      "objectID": "D7D5EE3D2DD58D0600B89AAD",
+      "repositoryURL": "https://github.com/danielsaidi/RichTextKit.git",
+      "requirement": {
+        "kind": "upToNextMajorVersion",
+        "minimumVersion": "1.2.0"
+      },
+      "resolvedRevision": "8aa44cfa645404ad84e52e3ab7723ecf4b82f92b"
+    },
+    "latexswiftui": {
+      "objectID": "D7D5EE402DD58D3800B89AAD",
+      "repositoryURL": "https://github.com/colinc86/LaTeXSwiftUI",
+      "requirement": {
+        "kind": "upToNextMajorVersion",
+        "minimumVersion": "1.0.0"
+      },
+      "resolvedRevision": "c45e0fd45f64923c49c5904a9f9626bc8939f05f"
+    },
+    "markdownui": {
+      "objectID": "D7D5EE492DD590A100B89AAD",
+      "repositoryURL": "https://github.com/gonzalezreal/MarkdownUI.git",
+      "requirement": {
+        "kind": "upToNextMajorVersion",
+        "minimumVersion": "2.4.1"
+      },
+      "resolvedRevision": "5f613358148239d0292c0cef674a3c2314737f9e"
+    },
+    "swift-tree-sitter": {
+      "objectID": "AC170000000000000000000E",
+      "repositoryURL": "https://github.com/tree-sitter/swift-tree-sitter",
+      "requirement": {
+        "kind": "revision",
+        "revision": "08ef81eb8620617b55b08868126707ad72bf754f"
+      },
+      "resolvedRevision": "08ef81eb8620617b55b08868126707ad72bf754f"
+    },
+    "tree-sitter": {
+      "objectID": "AC1700000000000000000012",
+      "repositoryURL": "https://github.com/tree-sitter/tree-sitter",
+      "requirement": {
+        "kind": "revision",
+        "revision": "da6fe9beb4f7f67beb75914ca8e0d48ae48d6406"
+      },
+      "resolvedRevision": "da6fe9beb4f7f67beb75914ca8e0d48ae48d6406"
+    },
+    "tree-sitter-bash": {
+      "objectID": "AC1700000000000000000016",
+      "repositoryURL": "https://github.com/tree-sitter/tree-sitter-bash",
+      "requirement": {
+        "kind": "revision",
+        "revision": "a06c2e4415e9bc0346c6b86d401879ffb44058f7"
+      },
+      "resolvedRevision": "a06c2e4415e9bc0346c6b86d401879ffb44058f7"
+    }
+  },
+  "applicationResourcePaths": [
+    "AI_HLY/RuntimeHostResources.zip",
+    "AI_HLY/Downstream/AgentDiagnostics/HanlinDiagnosticsBuildProvenance.json",
+    "AI_HLY/Downstream/AgentSkills/Analysis/Resources/LICENSE.OpenClaw.JSON5.txt",
+    "AI_HLY/Downstream/AgentSkills/Analysis/Resources/LICENSE.OpenClaw.Semver.txt",
+    "AI_HLY/Downstream/AgentSkills/Analysis/Resources/LICENSE.OpenClaw.txt",
+    "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_native_contract.mjs",
+    "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_native_probe.mjs",
+    "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_policy.mjs",
+    "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_policy_native_contract.mjs",
+    "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_policy_native_probe.mjs",
+    "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_policy_probe.mjs",
+    "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_policy_provenance.json",
+    "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_policy_test_selection.json",
+    "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_policy_upstream_shim.mjs",
+    "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_policy_upstream_tests.mjs",
+    "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_provenance.json",
+    "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_requirements.js",
+    "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_openclaw_upstream_requirements_tests.js",
+    "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_python_ast.py",
+    "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_python_manifest.py",
+    "AI_HLY/Downstream/AgentSkills/Analysis/Resources/hanlin_typescript_ast.mjs",
+    "AI_HLY/Downstream/RuntimeCore/Python/Resources/HanlinPythonCACertificates.LICENSE.txt",
+    "AI_HLY/Downstream/RuntimeCore/Python/Resources/HanlinPythonCACertificates.json",
+    "AI_HLY/Downstream/RuntimeCore/Python/Resources/HanlinPythonCACertificates.pem",
+    "AI_HLY/Downstream/RuntimeCore/Python/Resources/HanlinPythonExecution.py",
+    "AI_HLY/Downstream/RuntimeCore/Python/Resources/HanlinPythonNativeExtensions.json",
+    "AI_HLY/Downstream/RuntimeCore/Python/Resources/HanlinPythonPackaging.lock.json",
+    "AI_HLY/Downstream/RuntimeCore/Python/Resources/HanlinPythonPackaging.py",
+    "AI_HLY/Downstream/RuntimeCore/Python/Resources/Vendor/installer-1.1.0-py3-none-any.whl",
+    "AI_HLY/Downstream/RuntimeCore/Python/Resources/Vendor/packaging-26.3-py3-none-any.whl",
+    "AI_HLY/Downstream/RuntimeCore/Python/Resources/Vendor/pyproject_hooks-1.3.3-py3-none-any.whl",
+    "AI_HLY/Downstream/RuntimeCore/Python/Resources/Vendor/resolvelib-1.2.1-py3-none-any.whl",
+    "AI_HLY/Downstream/RuntimeCore/Python/Resources/hanlin_native-1.0.0-py3-none-any.whl",
+    "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeLinkDependencyNotices.txt",
+    "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeManifest.json",
+    "AI_HLY/Resource/Refinement.json",
+    "AI_HLY/Resource/UpdateNotes.json"
+  ],
+  "applicationSourceSHA256": null,
   "inputs": {
     "Packages/HanlinAgentSDK/Package.swift": "16becff5f9e626f171d21f0277684c249c773f3169334fc9a63a37876c44a36e",
     "Packages/HanlinAppExtensionsSDK/Package.swift": "23056fa7df2e2aca75c3195452085a42151aa113f54370aeceb5a07df269d9bc",
@@ -75,6 +221,11 @@
     "Packages/HanlinWikipediaMiniApp/Package.swift": "01b8cc014f8a5e853b644947fd6684df56b65b37feb08ef23f410fb56c902d8e",
     "Packages/IOSSystemLite/Package.swift": "06c6721c4b59328ba4f78997c9a8b23330357db12d3a619207dc1bac8cb76bab",
     "Packages/TorahLibraryKit/Package.swift": "4423074f870fe146b8914dc275db77aedef4cc1b6c0b856dfad844b65c3a21d6",
-    "Scripts/SDK/application_products.json": "c301cb773e8044810f0575ded0dd0a040593b65246b578ebfad286f22827600a"
+    "Scripts/SDK/application_products.json": "c301cb773e8044810f0575ded0dd0a040593b65246b578ebfad286f22827600a",
+    "Scripts/SDK/assistant_capabilities.json": "67dc04a4b978ba95f68e339d35b2ab9ef5eed2ce90503b7a1eb1cf7a9c26cb01",
+    "Scripts/SDK/generate_manifest.py": "28ea52e5654d7abd2841c8bfaa034b856d44bfe632b71134b21ee63d39dcbec3",
+    "Scripts/CI/IntegrationValidation/project_graph.py": "fc46f1e5266f054794811a0756fa51677a291b0533f816f1342a5d42f9ba85b8",
+    "AI_HLY.xcodeproj/project.pbxproj": "af8150be711c5b5faa1175302b49e3a43a192fc75f014278efa1d70e6ccb11e0",
+    "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved": "0dd6abbd4f31d4187a4a69caf97f92aa6d3cf19b241d300be5d19cd32e3aa037"
   }
 }

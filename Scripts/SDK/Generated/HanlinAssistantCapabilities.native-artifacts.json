@@ -1,0 +1,165 @@
+{
+  "acceptance": {
+    "appleBuild": "reuse-producer-evidence; this exporter does not build or test runtimes",
+    "nativeSlices": "validated-existing-binaries",
+    "ordinaryVersionDependency": "requires original host acceptance; prepared Expo header paths and host build phases need integration"
+  },
+  "artifacts": [
+    {
+      "archive": "NodeMobile.xcframework.zip",
+      "bytes": 35086561,
+      "checksum": "ac34a0dc0e0ee5c40efcc7ac67d3e39e6e271b7490ef46aabd6ef7ab35e13534",
+      "installPath": "Vendor/NodeMobile/NodeMobile.xcframework",
+      "kind": "xcframework",
+      "libraries": [
+        {
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64-simulator/NodeMobile.framework/NodeMobile",
+          "binarySHA256": "a0daa0ebeb6a1f819726fff5228f2efadd58be9b8475ffe142edc992194bb8a0",
+          "identifier": "ios-arm64-simulator",
+          "platform": "ios",
+          "variant": "simulator"
+        },
+        {
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64/NodeMobile.framework/NodeMobile",
+          "binarySHA256": "86492ee2e27c580f38747522a443094b5db02aa74b9460b3a593545f5bc2a23c",
+          "identifier": "ios-arm64",
+          "platform": "ios",
+          "variant": null
+        }
+      ],
+      "root": "NodeMobile.xcframework",
+      "target": "NodeMobile",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/releases/download/sdk-native-v1-dfc187ca2a8b05996e5afaf370c40d82851596a7b8d54fd2fa103e39cbcbc9bb/NodeMobile.xcframework.zip"
+    },
+    {
+      "archive": "Python.xcframework.zip",
+      "bytes": 38395469,
+      "checksum": "2763371026f221ea5c391325ed3e1a0923c751913b6d2ea69ae0c73815957cd5",
+      "installPath": "Vendor/Python/Python.xcframework",
+      "kind": "xcframework",
+      "libraries": [
+        {
+          "architectures": [
+            "arm64"
+          ],
+          "binary": "ios-arm64/Python.framework/Python",
+          "binarySHA256": "bab15643505f43f9902515f48f8d198161e1a0207303c454860eed8337375df5",
+          "identifier": "ios-arm64",
+          "platform": "ios",
+          "variant": null
+        },
+        {
+          "architectures": [
+            "arm64",
+            "x86_64"
+          ],
+          "binary": "ios-arm64_x86_64-simulator/Python.framework/Python",
+          "binarySHA256": "3503ecf5bbf78bfb9aed1918b5ac386ea837917967b9d32b53bf98340ac792bc",
+          "identifier": "ios-arm64_x86_64-simulator",
+          "platform": "ios",
+          "variant": "simulator"
+        }
+      ],
+      "root": "Python.xcframework",
+      "target": "Python",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/releases/download/sdk-native-v1-dfc187ca2a8b05996e5afaf370c40d82851596a7b8d54fd2fa103e39cbcbc9bb/Python.xcframework.zip"
+    }
+  ],
+  "contentSHA256": "dfc187ca2a8b05996e5afaf370c40d82851596a7b8d54fd2fa103e39cbcbc9bb",
+  "inputSHA256": {
+    "RuntimeDependencies.lock.json": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a",
+    "Scripts/Expo/babel.config.cjs": "62581fd5caf7b97cb36290093b7bbf7103e1c1b1300e0e11a1b3eaaf96c998ba",
+    "Scripts/Expo/build-original-expo-source.mjs": "855a9a79f1c27a2ba2f3796cf784ebb66a4a48df928b2ea8f6ca1ffd9e886c03",
+    "Scripts/Expo/build-original-widget-runtime.mjs": "5928bb12ed2fd2f6b2ecfeb6d8fc309d46e5837c58dcc4272d73af13434eb549",
+    "Scripts/Expo/dependency-lock.json": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65",
+    "Scripts/Expo/package-lock.json": "c08757cf46ac4d5c86a873f676af4a3be585db64ae2e1aa1e8288277d4eb63b8",
+    "Scripts/Expo/prepare-ios-dependencies.mjs": "97069b0e1ec619d906f4b6d196e38e6527790c3661f798abcca6258dacf18163",
+    "Scripts/ExpoNativeAPI/dependency-lock.json": "08657d657c1f4efa36149075b632cfc75685fc1ca9af0397fc1168fe9253b768",
+    "Scripts/ExpoNativeAPI/multiscene-patch.mjs": "cafa8348a764155789169c411eb59555c6c7a2d3ef363b870e36f8d6b52c7cbd",
+    "Scripts/ExpoNativeAPI/prepare-ios-dependencies.mjs": "950a2eb6e8713bdd1a395eee6df1779d91f63864af95c33658efa6d090676f66",
+    "Scripts/NativeScript/build-metadata-tool.py": "f4318f38b1c6a9c56ba54edb0d270a6374178fa5a8e024ebfddb9790f7ae3cf5",
+    "Scripts/NativeScript/build-step-metadata-generator-wrapper.py": "71bf1d521abff7cc29c1e8d397a9ef2a55b09f758afb36f0a148be12350b664f",
+    "Scripts/NativeScript/dependency-lock.json": "8499976a4ea0a069ed654b09b597d8fabede4bbbfb62227451a68707b851e8e5",
+    "Scripts/NativeScript/package-lock.json": "fccc5039c760759c5a5751b2056300cd23204f897e5d1ce26408c4a108e4de78",
+    "Scripts/NativeScript/prepare-ios-dependencies.mjs": "d8b92b178857001d13d32359444a5301b32a1dd7a553341d1f0b7f7fbb27ff75",
+    "Scripts/Runtime/prepare-runtime-core.sh": "1ff99fabcbf8f40d515f3f1b944299286c1094a19520f9892a97f99cf8b64540"
+  },
+  "missingTargets": [
+    "ExpoAsset",
+    "ExpoBrownfield",
+    "ExpoModulesCore",
+    "ExpoModulesJSI",
+    "ExpoModulesWorklets",
+    "ExpoUI",
+    "Libffi",
+    "NSCWinterTC",
+    "React",
+    "ReactNativeDependencies",
+    "ReactNativeHeaders",
+    "TNSWidgets",
+    "hermesvm"
+  ],
+  "releaseTag": "sdk-native-v1-dfc187ca2a8b05996e5afaf370c40d82851596a7b8d54fd2fa103e39cbcbc9bb",
+  "repository": "davidpovarsky/hanlin-ai",
+  "requiredTargets": [
+    "ReactNativeHeaders",
+    "React",
+    "ReactNativeDependencies",
+    "hermesvm",
+    "ExpoModulesJSI",
+    "ExpoModulesCore",
+    "ExpoModulesWorklets",
+    "ExpoUI",
+    "ExpoAsset",
+    "ExpoBrownfield",
+    "Libffi",
+    "TNSWidgets",
+    "NSCWinterTC",
+    "NodeMobile",
+    "Python"
+  ],
+  "schemaVersion": 1,
+  "scope": "selected-targets",
+  "sourceCommit": "c5aab9df32b2e910f3ba6beb5ec0849c23285ca2",
+  "state": "published",
+  "supportArtifacts": [
+    {
+      "archive": "HanlinNodeHostSupport.zip",
+      "bytes": 76310070,
+      "checksum": "1b1263eb98b416b2259d3c3520efef7038ece5815bebcdfb36ae1eb11abcb5a7",
+      "installPaths": [
+        "AI_HLY/RuntimeHostResources.zip"
+      ],
+      "kind": "host-support",
+      "metadataTool": null,
+      "requiredBy": [
+        "NodeMobile"
+      ],
+      "root": "HanlinNodeHostSupport",
+      "target": "HanlinNodeHostSupport",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/releases/download/sdk-native-v1-dfc187ca2a8b05996e5afaf370c40d82851596a7b8d54fd2fa103e39cbcbc9bb/HanlinNodeHostSupport.zip"
+    },
+    {
+      "archive": "HanlinPythonHostSupport.zip",
+      "bytes": 360,
+      "checksum": "9a69b3ab8a633dfa68df54bc94a780593372eec8305ca6df6962d4ff0aae89a8",
+      "installPaths": [
+        "Vendor/Python/Python-VERSIONS"
+      ],
+      "kind": "host-support",
+      "metadataTool": null,
+      "requiredBy": [
+        "Python"
+      ],
+      "root": "HanlinPythonHostSupport",
+      "target": "HanlinPythonHostSupport",
+      "url": "https://github.com/davidpovarsky/hanlin-ai/releases/download/sdk-native-v1-dfc187ca2a8b05996e5afaf370c40d82851596a7b8d54fd2fa103e39cbcbc9bb/HanlinPythonHostSupport.zip"
+    }
+  ]
+}
