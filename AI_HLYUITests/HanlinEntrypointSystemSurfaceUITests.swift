@@ -1,6 +1,7 @@
 import CoreFoundation
 import Foundation
 import XCTest
+import XCUIAutomation
 
 /// Genuine system surfaces, selected separately from the original 52 cases.
 /// The external observer only reads real installed state/receipts and writes
@@ -258,6 +259,273 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
             throw error
         }
     }
+
+    // Additive English/medium VoiceOver pilot. Only A is physically placed;
+    // B remains an independently named, unchanged native-state control.
+    func testMiniAppsPlacedWidgetToggleVoiceOverAnnouncesAndSetsBothValues() throws {
+        continueAfterFailure = false
+        executionTimeAllowance = 420
+        deadline = Date().addingTimeInterval(420)
+        guard #available(iOS 27.0, *) else {
+            throw ObservationFailure(description: "The actual iOS 27 public VoiceOver service is required.")
+        }
+        let service = XCUIDevice.shared.voiceOverService
+        let priorEnabled = service.isEnabled
+        let runID = UUID().uuidString.lowercased()
+        let names = ["A": "VoiceOver-A-" + runID, "B": "VoiceOver-B-" + runID]
+        let documents = try XCTUnwrap(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first)
+        let root = documents.appendingPathComponent("HanlinSystemSurfaceObservation", isDirectory: true)
+        let directory = root.appendingPathComponent(runID, isDirectory: true)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        exchange = root
+        runDirectory = directory
+        record = ["schema": 1, "runID": runID, "engine": "expo", "surface": "widgetVoiceOver",
+                  "fixtureTitle": "Interactive Widget Matrix", "instanceNames": names,
+                  "expectedFamily": "systemMedium", "requestedSpeechLocale": "en_US",
+                  "priorVoiceOverEnabled": priorEnabled, "voiceOverEvents": [[String: Any]](),
+                  "startedAt": widgetStateTimestamp(), "test": name, "status": "RUNNING",
+                  "placed": [String](), "phase": "preparing"]
+        defer {
+            capture(springboard, "widget-voiceover-final-system")
+            capture(mini, "widget-voiceover-final-host")
+            record["finishedAt"] = widgetStateTimestamp()
+            try? retainWidgetVoiceOverJSON(record, filename: "case.json")
+            try? checkpoint("finished")
+        }
+        do {
+            try checkpoint("preparing")
+            try setWidgetVoiceOver(false, reason: "setup")
+            mini.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+            mini.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+            mini.launch()
+            try importMatrixWidgetAndCreateInstance(named: try XCTUnwrap(names["A"]))
+            try createSecondWidgetStateInstance(named: try XCTUnwrap(names["B"]))
+            capture(mini, "widget-voiceover-created-both-variants")
+            try checkpoint("widget-voiceover-instances-created")
+            let identity = try response("identity.json", timeout: 25)
+            try require(identity["status"] as? String == "READY", "Both actual fresh named variants must be admitted.")
+            record["attemptID"] = try string(identity, "attemptID")
+            record["sourceSHA"] = try string(identity, "sourceSHA")
+            record["installedIdentity"] = identity
+
+            try placeMatrixWidget(selecting: try XCTUnwrap(names["A"]))
+            record["configurationBindings"] = ["A": try confirmWidgetStateConfiguration("A", count: 0, names: names)]
+            record["placed"] = ["A"]
+            record["ui"] = try widgetStateObservations(["A": 0])
+            record["hostTerminated"] = mini.state == .notRunning
+            try checkpoint("widget-voiceover-placement")
+            let placement = try response("placement-A.json", timeout: 25)
+            try require(placement["status"] as? String == "READY", "The actual named A placement was not bound.")
+
+            try setWidgetVoiceOver(true, reason: "exercise")
+            try performWidgetVoiceOverToggle(1, desired: true)
+            try performWidgetVoiceOverToggle(2, desired: false)
+
+            // Read the same physical selection through the existing ordinary
+            // configuration UI, then restore the actual prior service state.
+            try setWidgetVoiceOver(false, reason: "final-configuration")
+            record["configurationBindings"] = ["A": try confirmWidgetStateConfiguration("A", count: 2, names: names)]
+            record["ui"] = try widgetStateObservations(["A": 2])
+            record["hostTerminated"] = mini.state == .notRunning
+            try restoreWidgetVoiceOver(priorEnabled)
+            try checkpoint("widget-voiceover-complete")
+            let completion = try response("completion.json", timeout: 30)
+            try require(completion["status"] as? String == "EXECUTED_PASS"
+                        && completion["attemptID"] as? String == record["attemptID"] as? String
+                        && completion["sourceSHA"] as? String == record["sourceSHA"] as? String,
+                        "Both real spoken states, gestures, native transitions and prior-state restoration are required.")
+            try require(service.isEnabled == priorEnabled && mini.state == .notRunning,
+                        "The final public service state or terminated host changed before completion.")
+            record["observerCompletion"] = completion
+            record["status"] = "EXECUTED_PASS"
+        } catch {
+            let originalError = error
+            record["status"] = "FAILED"
+            record["reason"] = String(describing: originalError)
+            do {
+                try restoreWidgetVoiceOver(priorEnabled)
+            } catch {
+                record["restorationFailure"] = String(describing: error)
+                throw ObservationFailure(description: "Original failure: \(originalError); VoiceOver restoration failure: \(error)")
+            }
+            throw originalError
+        }
+    }
+
+    private func retainWidgetVoiceOverJSON(_ value: [String: Any], filename: String) throws {
+        try writeJSON(value, filename: filename)
+        let attachment = XCTAttachment(string: try jsonString(value))
+        attachment.name = filename
+        attachment.lifetime = .keepAlways
+        add(attachment)
+    }
+
+    @available(iOS 27.0, *)
+    private func setWidgetVoiceOver(_ enabled: Bool, reason: String) throws {
+        let service = XCUIDevice.shared.voiceOverService
+        let before = service.isEnabled
+        let startedAt = widgetStateTimestamp()
+        let startedUptime = ProcessInfo.processInfo.systemUptime
+        var operationError: Error?
+        do {
+            if before != enabled {
+                if enabled { try service.enable() } else { try service.disable() }
+            }
+        } catch { operationError = error }
+        let after = service.isEnabled
+        var event: [String: Any] = ["reason": reason, "requestedEnabled": enabled,
+            "beforeEnabled": before, "afterEnabled": after,
+            "operation": before == enabled ? "unchanged" : (enabled ? "enable" : "disable"),
+            "startedAt": startedAt, "finishedAt": widgetStateTimestamp(),
+            "startedUptime": startedUptime, "finishedUptime": ProcessInfo.processInfo.systemUptime,
+            "status": operationError == nil && after == enabled ? "OK" : "FAILED"]
+        if let operationError { event["error"] = String(describing: operationError) }
+        var events = record["voiceOverEvents"] as? [[String: Any]] ?? []
+        events.append(event)
+        record["voiceOverEvents"] = events
+        try retainWidgetVoiceOverJSON(["schema": 1, "runID": try string(record, "runID"), "events": events],
+                                      filename: "voiceover-service-events.json")
+        if let operationError { throw operationError }
+        try require(after == enabled, "The actual VoiceOver service did not reach the requested state.")
+    }
+
+    @available(iOS 27.0, *)
+    private func restoreWidgetVoiceOver(_ prior: Bool) throws {
+        try setWidgetVoiceOver(prior, reason: "restore-prior")
+        let current = XCUIDevice.shared.voiceOverService.isEnabled
+        try require(current == prior, "The actual prior VoiceOver state was not restored.")
+        record["voiceOverRestoration"] = ["priorEnabled": prior, "afterEnabled": current,
+            "restoredAt": widgetStateTimestamp(), "restoredUptime": ProcessInfo.processInfo.systemUptime]
+    }
+
+    private func widgetVoiceOverSpokenValue(_ utterance: String) -> Bool? {
+        let words = utterance.lowercased().components(separatedBy: CharacterSet.alphanumerics.inverted).filter { !$0.isEmpty }
+        let labelCount = zip(words, words.dropFirst()).filter { $0.0 == "widget" && $0.1 == "notifications" }.count
+        guard labelCount == 1, words.contains("on") != words.contains("off") else { return nil }
+        return words.contains("on")
+    }
+
+    private func uniqueWidgetVoiceOverControls(count: Int) throws -> WidgetStateControls {
+        let controls = try widgetStateControls(count: count)
+        let matches = springboard.switches.matching(NSPredicate(format: "label == %@", "Widget notifications"))
+            .allElementsBoundByIndex.filter { $0.exists && $0.isHittable }
+        try require(matches.count == 1 && matches[0].frame == controls.toggle.frame
+                    && controls.toggle.label == "Widget notifications" && controls.toggle.isEnabled,
+                    "The spoken label must belong to one current physical native switch, with no competing visible match.")
+        return controls
+    }
+
+    @available(iOS 27.0, *)
+    private func widgetVoiceOverSpeech(_ phase: String, count: Int, expected: Bool, until end: Date) throws -> [String: Any] {
+        let service = XCUIDevice.shared.voiceOverService
+        let controls = try uniqueWidgetVoiceOverControls(count: count)
+        var trace: [[String: Any]] = []
+        let startedAt = widgetStateTimestamp()
+        let startedUptime = ProcessInfo.processInfo.systemUptime
+        do {
+            for index in 0..<128 {
+                try require(Date() < end && Date() < deadline, "Actual VoiceOver traversal exceeded the existing phase deadline.")
+                try require(service.isEnabled && mini.state == .notRunning,
+                            "VoiceOver or host state changed during actual public speech observation.")
+                let output: XCUIVoiceOverService.Output
+                if index == 0 { output = try service.currentSpeech() }
+                else { output = try service.moveForward() }
+                let row: [String: Any] = ["index": index, "operation": index == 0 ? "currentSpeech" : "moveForward",
+                    "utterance": output.utterance, "at": widgetStateTimestamp(),
+                    "uptime": ProcessInfo.processInfo.systemUptime,
+                    "serviceEnabled": service.isEnabled, "hostTerminated": mini.state == .notRunning]
+                trace.append(row)
+                record["lastVoiceOverTrace"] = ["phase": phase, "trace": trace]
+                try require(output.utterance.count <= 4096 && service.isEnabled && mini.state == .notRunning,
+                            "The actual speech observation is unbounded or its service/host changed.")
+                if widgetVoiceOverSpokenValue(output.utterance) == expected {
+                    let current = try uniqueWidgetVoiceOverControls(count: count)
+                    try require(current.container.frame == controls.container.frame
+                                && current.toggle.frame == controls.toggle.frame
+                                && current.toggle.value as? String == (expected ? "1" : "0"),
+                                "The actual spoken value must agree with this same physical switch.")
+                    let value: [String: Any] = ["schema": 1, "runID": try string(record, "runID"),
+                        "attemptID": try string(record, "attemptID"), "sourceSHA": try string(record, "sourceSHA"),
+                        "phase": phase, "startedAt": startedAt, "startedUptime": startedUptime,
+                        "label": current.toggle.label, "visibleMatchingSwitchCount": 1,
+                        "ui": try widgetStateObservations(["A": count]), "trace": trace,
+                        "focusAssociation": "Inferred from public current speech and the unique named physical switch"]
+                    try retainWidgetVoiceOverJSON(value, filename: "voiceover-" + phase + ".json")
+                    return value
+                }
+            }
+            throw ObservationFailure(description: "The bounded public VoiceOver traversal did not speak the unique switch and required English value.")
+        } catch {
+            try? retainWidgetVoiceOverJSON(["schema": 1, "runID": try string(record, "runID"),
+                "phase": phase, "trace": trace, "error": String(describing: error)], filename: "voiceover-" + phase + "-failure.json")
+            throw error
+        }
+    }
+
+    @available(iOS 27.0, *)
+    private func performWidgetVoiceOverToggle(_ index: Int, desired: Bool) throws {
+        let service = XCUIDevice.shared.voiceOverService
+        let actionID = UUID().uuidString.lowercased()
+        let beforeCount = index - 1
+        let step: [String: Any] = ["index": index, "actionID": actionID, "instance": "A",
+                                  "action": "toggle", "desiredValue": desired]
+        let before = try widgetVoiceOverSpeech("before-" + String(index), count: beforeCount,
+                                              expected: !desired, until: Date().addingTimeInterval(bounded(20)))
+        record["step"] = step
+        record["voiceOverBefore"] = before
+        record["ui"] = try widgetStateObservations(["A": beforeCount])
+        record["hostTerminated"] = mini.state == .notRunning
+        try checkpoint("widget-voiceover-arm")
+        let armed = try response("armed-" + String(index) + ".json", timeout: 20)
+        let armedStep = try XCTUnwrap(armed["step"] as? [String: Any])
+        try require(armed["status"] as? String == "READY" && armedStep["actionID"] as? String == actionID,
+                    "The actual gesture must be armed against the current two native variants.")
+        let controls = try uniqueWidgetVoiceOverControls(count: beforeCount)
+        let currentSpeech = try service.currentSpeech()
+        let speechAt = widgetStateTimestamp()
+        let speechUptime = ProcessInfo.processInfo.systemUptime
+        try require(service.isEnabled && mini.state == .notRunning
+                    && widgetVoiceOverSpokenValue(currentSpeech.utterance) == !desired
+                    && controls.toggle.value as? String == (desired ? "0" : "1"),
+                    "The actual currently spoken switch and intended value changed before the double tap.")
+        let actionEnd = Date().addingTimeInterval(bounded(35))
+        var gesture: [String: Any] = ["schema": 1, "runID": try string(record, "runID"),
+            "attemptID": try string(record, "attemptID"), "sourceSHA": try string(record, "sourceSHA"),
+            "index": index, "actionID": actionID, "method": "XCUIElement.doubleTap",
+            "label": controls.toggle.label, "visibleMatchingSwitchCount": 1,
+            "beforeUI": try widgetStateObservations(["A": beforeCount]),
+            "currentSpeech": ["utterance": currentSpeech.utterance, "at": speechAt, "uptime": speechUptime],
+            "serviceEnabledBefore": service.isEnabled, "hostTerminatedBefore": mini.state == .notRunning,
+            "startedAt": widgetStateTimestamp(), "startedUptime": ProcessInfo.processInfo.systemUptime]
+        controls.toggle.doubleTap()
+        gesture["finishedAt"] = widgetStateTimestamp()
+        gesture["finishedUptime"] = ProcessInfo.processInfo.systemUptime
+        gesture["serviceEnabledAfter"] = service.isEnabled
+        gesture["hostTerminatedAfter"] = mini.state == .notRunning
+        try retainWidgetVoiceOverJSON(gesture, filename: "voiceover-gesture-" + String(index) + ".json")
+        var hostStarted = mini.state != .notRunning
+        var serviceStopped = !service.isEnabled
+        try require(wait(max(0, actionEnd.timeIntervalSinceNow)) {
+            if self.mini.state != .notRunning { hostStarted = true }
+            if !service.isEnabled { serviceStopped = true }
+            return self.springboard.staticTexts["Matrix count: " + String(index)].firstMatch.exists
+        }, "The actual VoiceOver gesture did not reach its expected visible native count.")
+        try require(!hostStarted && !serviceStopped && mini.state == .notRunning && service.isEnabled,
+                    "The host or VoiceOver service changed during the actual gesture/readback.")
+        let after = try widgetVoiceOverSpeech("after-" + String(index), count: index,
+                                             expected: desired, until: actionEnd)
+        record["voiceOverGesture"] = gesture
+        record["voiceOverAfter"] = after
+        record["ui"] = try widgetStateObservations(["A": index])
+        record["hostTerminated"] = mini.state == .notRunning
+        capture(springboard, "widget-voiceover-step-" + String(index))
+        try checkpoint("widget-voiceover-applied")
+        let applied = try response("applied-" + String(index) + ".json", timeout: 35)
+        let appliedStep = try XCTUnwrap(applied["step"] as? [String: Any])
+        try require(applied["status"] as? String == "APPLIED" && appliedStep["actionID"] as? String == actionID,
+                    "Actual speech and one fresh native nonce/revision must agree while B remains unchanged.")
+    }
+
 
     private struct WidgetStateControls {
         let container: XCUIElement

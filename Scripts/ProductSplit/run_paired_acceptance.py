@@ -77,6 +77,11 @@ TEST_PLANS["miniapp_widget_state_os"] = ([
     "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testMiniAppsPlacedWidgetToggleKeepsIndependentInstanceState",
 ], 1)
 
+# One physically placed A, an untouched native B and actual public VoiceOver.
+TEST_PLANS["miniapp_widget_voiceover_os"] = ([
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testMiniAppsPlacedWidgetToggleVoiceOverAnnouncesAndSetsBothValues",
+], 1)
+
 # Additive NS-owner/three-background-action OS pilot; original plans stay intact.
 TEST_PLANS["miniapp_shortcut_concurrency_os"] = ([
     "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptOwnerSurvivesThreeOverlappingBackgroundShortcutsInReverseOrder",
@@ -926,12 +931,16 @@ def start_shortcut_observer(derived, simulator, state):
         argv += ["--system-inputs", state["system_surface_inputs"]["path"]]
     if TEST_SCOPE == "miniapp_studio_editor_os":
         argv += ["--studio-inputs", state["studio_inputs_manifest"]["path"]]
-    if TEST_SCOPE in {"miniapp_widget_recovery_os", "miniapp_widget_state_os"}:
+    if TEST_SCOPE in {"miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_widget_voiceover_os"}:
         argv += ["--widget-fixture", str(ROOT / "Fixtures/Widgets/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo")]
     if TEST_SCOPE == "miniapp_widget_state_os":
         from observe_widget_state import create_inputs
         state["widget_state_inputs"] = create_inputs(ROOT, derived, EVIDENCE, runner, test, state, simulator)
         argv += ["--widget-state-inputs", state["widget_state_inputs"]["path"]]
+    if TEST_SCOPE == "miniapp_widget_voiceover_os":
+        from observe_widget_voiceover import create_inputs
+        state["widget_voiceover_inputs"] = create_inputs(ROOT, derived, EVIDENCE, runner, test, state, simulator)
+        argv += ["--widget-voiceover-inputs", state["widget_voiceover_inputs"]["path"]]
     output = (EVIDENCE / (observer_name + ".log")).open("w")
     process = subprocess.Popen(argv, cwd=ROOT, stdout=output, stderr=subprocess.STDOUT)
     state["shortcut_observer"] = {"argv": argv, "runnerBundleIdentifier": bundle,
@@ -1003,6 +1012,10 @@ def main():
             state["scope"] = "Two independently named standalone medium widgets; six genuine sequential Toggle/Add/Refresh actions with host termination observed"
             state["model_boundary"] = "Original Matrix archive, importer, WidgetKit gallery/configuration, real native controls and read-only current state/cache/nonces; no production-state writes"
             state["acceptance_boundary"] = "One iPad Simulator case only; no concurrent/replayed delivery, cold start, disabled controls, VoiceOver, other families/appearance or physical-device claim"
+        if TEST_SCOPE == "miniapp_widget_voiceover_os":
+            state["scope"] = "One standalone medium widget through actual English public VoiceOver off/on/off and two native Toggle actions; one untouched native B variant"
+            state["model_boundary"] = "Original Matrix/importer, real gallery/configuration, public speech and doubleTap, current native state/cache/nonces and prior VoiceOver restoration"
+            state["acceptance_boundary"] = "One iPad Simulator pilot only; no second physical placement, private focus API, concurrent delivery, cold start, disabled controls, other languages/families or physical-device claim"
         if TEST_SCOPE == "miniapp_shortcut_concurrency_os":
             state["scope"] = "Two additional genuine Shortcuts cases: one live NativeScript owner plus three background NS actions, actual handler/lease overlap and separate windows, reverse completion or selected system Stop, followed by the original owner callback"
             state["model_boundary"] = "Original authoring/importer, actual OS URLs/Stop UI, real native commands and per-window journals; no production queue, receipt or state seeding"
@@ -1049,7 +1062,7 @@ def main():
         }
         _, raw = command(["xcrun", "simctl", "list", "devicetypes", "-j"], "device-types.json")
         supported = {item["identifier"] for item in runtime["supportedDeviceTypes"]}
-        device_family = "iPad" if TEST_SCOPE in {"miniapp_authoring", "miniapp_sdk04", "miniapp_complete", "miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_shortcut_long_running_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os"} else "iPhone"
+        device_family = "iPad" if TEST_SCOPE in {"miniapp_authoring", "miniapp_sdk04", "miniapp_complete", "miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_shortcut_long_running_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_widget_voiceover_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os"} else "iPhone"
         device = next(item for item in json.loads(raw)["devicetypes"]
             if item.get("productFamily") == device_family and item["identifier"] in supported)
         _, raw = command(["xcrun", "simctl", "create",
@@ -1174,7 +1187,7 @@ def main():
         if RUN_EXTRA26:
             from paired_extra26 import capture_products
             extra26_products = capture_products(derived, EVIDENCE, state)
-        if TEST_SCOPE in {"miniapp_widget_recovery_os", "miniapp_widget_state_os"}:
+        if TEST_SCOPE in {"miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_widget_voiceover_os"}:
             _, raw = command(["xcrun", "simctl", "get_app_container", simulator,
                 "com.itorah.hanlinminiapps", "data"], "widget-recovery-mini-data-container.txt")
             documents = Path(raw.strip()) / "Documents"
@@ -1296,7 +1309,7 @@ def main():
             if (documents / archive.name).exists():
                 raise RuntimeError("The fresh owned simulator already has a transfer package input")
             shutil.copy2(archive, documents / archive.name)
-        if TEST_SCOPE in {"miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_shortcut_long_running_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os"}:
+        if TEST_SCOPE in {"miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_shortcut_long_running_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_widget_voiceover_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os"}:
             if TEST_SCOPE == "miniapp_system_surfaces_os":
                 adapter_assets = start_native_adapter_assets(
                     state, system_resources, state["system_surface_inputs"]["value"]["transportLog"])
@@ -1348,7 +1361,7 @@ def main():
                 state.update(status="EXECUTED_PASS", ui="EXECUTED_PASS")
             elif summary.get("failedTests", 0):
                 state.update(status="TEST_FAILED", ui="TEST_FAILED")
-        if TEST_SCOPE in {"miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_shortcut_long_running_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os"} and not state["shortcut_observer"].get("allSelectedCasesObserved"):
+        if TEST_SCOPE in {"miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_shortcut_long_running_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_widget_voiceover_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os"} and not state["shortcut_observer"].get("allSelectedCasesObserved"):
             state["status"] = "INFRA_ERROR"
             raise RuntimeError("The real system-surface observer did not retain every correlated terminal result")
         if TEST_SCOPE == "miniapp_system_surfaces_os" and not state["system_surface_share_inputs"].get("allSelectedInputsStaged"):
@@ -1408,7 +1421,7 @@ def main():
             thread.join(timeout=5)
         # Retain the actual test attachments for visual inspection of the sheet
         # and repaired app; a final simulator screenshot is not a substitute.
-        if TEST_SCOPE in {"miniapp_authoring", "miniapp_sdk04", "miniapp_complete", "miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_shortcut_long_running_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os"}:
+        if TEST_SCOPE in {"miniapp_authoring", "miniapp_sdk04", "miniapp_complete", "miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_shortcut_long_running_os", "miniapp_widget_recovery_os", "miniapp_widget_state_os", "miniapp_widget_voiceover_os", "miniapp_system_surfaces_os", "miniapp_studio_gallery_os", "miniapp_studio_editor_os"}:
             state["attachment_exports"] = []
             for name in ["OriginalRuntimes", "Paired"]:
                 bundle = EVIDENCE / (name + ".xcresult")
