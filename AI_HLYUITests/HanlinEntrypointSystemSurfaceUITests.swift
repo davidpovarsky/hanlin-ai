@@ -157,6 +157,267 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
         }
     }
 
+    func testMiniAppsPlacedWidgetToggleKeepsIndependentInstanceState() throws {
+        continueAfterFailure = false
+        executionTimeAllowance = 420
+        deadline = Date().addingTimeInterval(420)
+        let runID = UUID().uuidString.lowercased()
+        let names = ["A": "State-A-" + runID, "B": "State-B-" + runID]
+        let documents = try XCTUnwrap(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first)
+        let root = documents.appendingPathComponent("HanlinSystemSurfaceObservation", isDirectory: true)
+        let directory = root.appendingPathComponent(runID, isDirectory: true)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        exchange = root
+        runDirectory = directory
+        record = ["schema": 1, "runID": runID, "engine": "expo", "surface": "widgetState",
+                  "fixtureTitle": "Interactive Widget Matrix", "instanceNames": names,
+                  "expectedFamily": "systemMedium", "startedAt": widgetStateTimestamp(), "test": name,
+                  "status": "RUNNING", "placed": [String](), "phase": "preparing"]
+        try checkpoint("preparing")
+        defer {
+            capture(springboard, "widget-state-final-system")
+            capture(mini, "widget-state-final-host")
+            record["finishedAt"] = timestamp()
+            try? writeJSON(record, filename: "case.json")
+            try? checkpoint("finished")
+        }
+        do {
+            mini.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+            mini.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+            mini.launch()
+            try importMatrixWidgetAndCreateInstance(named: try XCTUnwrap(names["A"]))
+            try createSecondWidgetStateInstance(named: try XCTUnwrap(names["B"]))
+            capture(mini, "widget-state-created-both-variants")
+            try checkpoint("widget-instances-created")
+            let identity = try response("identity.json", timeout: 25)
+            try require(identity["status"] as? String == "READY", "Both actual fresh widget variants must be admitted.")
+            record["attemptID"] = try string(identity, "attemptID")
+            record["sourceSHA"] = try string(identity, "sourceSHA")
+            record["installedIdentity"] = identity
+
+            // Only A is placed while both native states are zero. A's actual
+            // configuration is read before the first Toggle; counts alone are
+            // never used to claim which named variant a placement selected.
+            try placeMatrixWidget(selecting: try XCTUnwrap(names["A"]))
+            var bindings: [String: Any] = [:]
+            bindings["A"] = try confirmWidgetStateConfiguration("A", count: 0, names: names)
+            record["configurationBindings"] = bindings
+            record["placed"] = ["A"]
+            record["ui"] = try widgetStateObservations(["A": 0])
+            record["hostTerminated"] = mini.state == .notRunning
+            try checkpoint("widget-state-placement")
+            let placementA = try response("placement-A.json", timeout: 25)
+            try require(placementA["status"] as? String == "READY",
+                        "The actual first named placement and zero-state render were not observed.")
+            try performWidgetStateAction(1, instance: "A", action: "toggle", desired: true,
+                                         before: ["A": 0], after: ["A": 1])
+
+            // Now counts1 and0 are distinct navigation anchors. Reopen BOTH
+            // real configuration panels to bind their current physical frames
+            // to the fresh named variants after Home Screen reflow.
+            try placeMatrixWidget(selecting: try XCTUnwrap(names["B"]))
+            bindings["A"] = try confirmWidgetStateConfiguration("A", count: 1, names: names)
+            bindings["B"] = try confirmWidgetStateConfiguration("B", count: 0, names: names)
+            record["configurationBindings"] = bindings
+            record["placed"] = ["A", "B"]
+            record["ui"] = try widgetStateObservations(["A": 1, "B": 0])
+            record["hostTerminated"] = mini.state == .notRunning
+            try checkpoint("widget-state-placement")
+            let placementB = try response("placement-B.json", timeout: 25)
+            try require(placementB["status"] as? String == "READY",
+                        "Both actual named placements must be bound before the remaining controls.")
+            try performWidgetStateAction(2, instance: "A", action: "toggle", desired: false,
+                                         before: ["A": 1, "B": 0], after: ["A": 2, "B": 0])
+            try performWidgetStateAction(3, instance: "A", action: "add", desired: nil,
+                                         before: ["A": 2, "B": 0], after: ["A": 3, "B": 0])
+            try performWidgetStateAction(4, instance: "B", action: "toggle", desired: true,
+                                         before: ["A": 3, "B": 0], after: ["A": 3, "B": 1])
+            try performWidgetStateAction(5, instance: "B", action: "toggle", desired: false,
+                                         before: ["A": 3, "B": 1], after: ["A": 3, "B": 2])
+            try performWidgetStateAction(6, instance: "B", action: "refresh", desired: nil,
+                                         before: ["A": 3, "B": 2], after: ["A": 3, "B": 2])
+
+            bindings["A"] = try confirmWidgetStateConfiguration("A", count: 3, names: names)
+            bindings["B"] = try confirmWidgetStateConfiguration("B", count: 2, names: names)
+            record["configurationBindings"] = bindings
+            record["ui"] = try widgetStateObservations(["A": 3, "B": 2])
+            record["hostTerminated"] = mini.state == .notRunning
+            try checkpoint("widget-state-complete")
+            let completion = try response("completion.json", timeout: 30)
+            try require(completion["status"] as? String == "EXECUTED_PASS"
+                        && completion["attemptID"] as? String == record["attemptID"] as? String
+                        && completion["sourceSHA"] as? String == record["sourceSHA"] as? String,
+                        "Final evidence must retain both exact current named variants and all six original actions.")
+            _ = try widgetStateObservations(["A": 3, "B": 2])
+            try require(mini.state == .notRunning, "The actual widget controls must leave the MiniApps host terminated.")
+            record["observerCompletion"] = completion
+            record["status"] = "EXECUTED_PASS"
+        } catch {
+            record["status"] = "FAILED"
+            record["reason"] = String(describing: error)
+            throw error
+        }
+    }
+
+    private struct WidgetStateControls {
+        let container: XCUIElement
+        let toggle: XCUIElement
+        let add: XCUIElement
+        let refresh: XCUIElement
+    }
+
+    private func createSecondWidgetStateInstance(named name: String) throws {
+        let field = mini.textFields["hanlin-widget-instance-name"].firstMatch
+        try reveal(field, in: mini, message: "The shipping independent-instance editor is unavailable.")
+        try tap(field, "Name the second independent widget variant.")
+        try require((field.value as? String ?? "").isEmpty || field.value as? String == field.placeholderValue,
+                    "The original instance-name field did not reset after creating A.")
+        field.typeText(name)
+        let create = mini.buttons["hanlin-widget-create-instance"].firstMatch
+        try reveal(create, in: mini, message: "The shipping create-instance action is unavailable.")
+        try tap(create, "Create B through the original instance API.")
+        try require(mini.staticTexts[name].firstMatch.waitForExistence(timeout: bounded(15)),
+                    "The actual second independent variant was not published.")
+    }
+
+    private func widgetStateControls(count: Int) throws -> WidgetStateControls {
+        let text = "Matrix count: " + String(count)
+        let counts = springboard.staticTexts.matching(NSPredicate(format: "label == %@", text))
+        try require(wait(25) { counts.count == 1 && counts.firstMatch.isHittable },
+                    "The actual placed Matrix count is absent or ambiguous: " + text)
+        let grouped = springboard.descendants(matching: .any).containing(.staticText, identifier: text)
+        var choices: [WidgetStateControls] = []
+        for container in grouped.allElementsBoundByIndex {
+            let countLabels = container.staticTexts.matching(NSPredicate(format: "label BEGINSWITH %@", "Matrix count: "))
+            let toggles = container.switches.matching(NSPredicate(format: "label == %@", "Widget notifications"))
+            let adds = container.buttons.matching(NSPredicate(format: "label == %@", "Add"))
+            let refreshes = container.buttons.matching(NSPredicate(format: "label == %@", "Refresh"))
+            if countLabels.count == 1 && toggles.count == 1 && adds.count == 1 && refreshes.count == 1
+                && toggles.firstMatch.isHittable && adds.firstMatch.isHittable && refreshes.firstMatch.isHittable {
+                let bounds = container.frame
+                if bounds.width > 0 && bounds.height > 0 && bounds.contains(toggles.firstMatch.frame)
+                    && bounds.contains(adds.firstMatch.frame) && bounds.contains(refreshes.firstMatch.frame) {
+                    choices.append(.init(container: container, toggle: toggles.firstMatch,
+                                         add: adds.firstMatch, refresh: refreshes.firstMatch))
+                }
+            }
+        }
+        choices.sort { $0.container.frame.width * $0.container.frame.height < $1.container.frame.width * $1.container.frame.height }
+        let selected = try XCTUnwrap(choices.first, "The live AX tree does not group one real Toggle/Add/Refresh with this widget.")
+        let area = selected.container.frame.width * selected.container.frame.height
+        try require(choices.filter { $0.container.frame.width * $0.container.frame.height == area }
+            .allSatisfy { $0.container.frame == selected.container.frame },
+                    "The smallest real AX widget container is physically ambiguous.")
+        return selected
+    }
+
+    private func widgetStateFrame(_ frame: CGRect) -> [Double] {
+        [Double(frame.minX), Double(frame.minY), Double(frame.width), Double(frame.height)]
+    }
+
+    private func widgetStateObservations(_ counts: [String: Int]) throws -> [String: Any] {
+        try require(mini.state == .notRunning, "MiniApps opened during a genuine widget action.")
+        var result: [String: Any] = [:]
+        var frames: [CGRect] = []
+        for key in counts.keys.sorted() {
+            let count = try XCTUnwrap(counts[key])
+            let controls = try widgetStateControls(count: count)
+            let value = try XCTUnwrap(controls.toggle.value as? String,
+                                     "The actual native switch did not expose a string AX value.")
+            try require(value == "0" || value == "1", "Unrecognized actual native switch value: " + value)
+            try require(!frames.contains(where: { $0.intersects(controls.container.frame) }),
+                        "The two named variants must occupy distinct visible physical containers.")
+            frames.append(controls.container.frame)
+            result[key] = ["count": count, "switchValue": value, "switchEnabled": controls.toggle.isEnabled,
+                           "switchHittable": controls.toggle.isHittable, "addHittable": controls.add.isHittable,
+                           "refreshHittable": controls.refresh.isHittable,
+                           "frame": widgetStateFrame(controls.container.frame),
+                           "switchFrame": widgetStateFrame(controls.toggle.frame),
+                           "addFrame": widgetStateFrame(controls.add.frame),
+                           "refreshFrame": widgetStateFrame(controls.refresh.frame)]
+        }
+        return result
+    }
+
+    private func confirmWidgetStateConfiguration(_ key: String, count: Int,
+                                                names: [String: String]) throws -> [String: Any] {
+        let expected = try XCTUnwrap(names[key])
+        let other = try XCTUnwrap(names[key == "A" ? "B" : "A"])
+        let controls = try widgetStateControls(count: count)
+        let before = controls.container.frame
+        controls.container.press(forDuration: 1.5)
+        try tap(springboard.buttons["Edit Widget"].firstMatch, "Read this physical widget's actual saved instance selection.")
+        let selected = springboard.descendants(matching: .any).matching(
+            NSPredicate(format: "label CONTAINS %@ OR value CONTAINS %@", expected, expected))
+        try require(wait(15) { selected.allElementsBoundByIndex.contains { $0.exists && $0.isHittable } },
+                    "The real Edit Widget panel does not expose the expected saved named instance.")
+        let element = try XCTUnwrap(selected.allElementsBoundByIndex.first { $0.exists && $0.isHittable })
+        let label = element.label
+        let value = element.value as? String ?? ""
+        try require((label.contains(expected) || value.contains(expected))
+                    && !label.contains(other) && !value.contains(other),
+                    "The actual configuration does not uniquely select this fresh named variant.")
+        capture(springboard, "widget-state-" + key + "-configuration-" + String(count))
+        XCUIDevice.shared.press(.home)
+        let after = try widgetStateControls(count: count)
+        try require(after.container.frame == before && mini.state == .notRunning,
+                    "Reading the actual configuration changed the physical widget or opened MiniApps.")
+        return ["instanceName": expected, "count": count, "label": label, "value": value,
+                "frame": widgetStateFrame(before), "verifiedAt": widgetStateTimestamp()]
+    }
+
+    private func performWidgetStateAction(_ index: Int, instance: String, action: String, desired: Bool?,
+                                          before: [String: Int], after: [String: Int]) throws {
+        let actionID = UUID().uuidString.lowercased()
+        let step: [String: Any] = ["index": index, "actionID": actionID, "instance": instance,
+                                  "action": action, "desiredValue": desired.map { $0 as Any } ?? NSNull()]
+        record["step"] = step
+        record["tapObserved"] = false
+        record["ui"] = try widgetStateObservations(before)
+        record["hostTerminated"] = mini.state == .notRunning
+        try checkpoint("widget-state-arm")
+        let armed = try response("armed-" + String(index) + ".json", timeout: 20)
+        let armedStep = try XCTUnwrap(armed["step"] as? [String: Any])
+        try require(armed["status"] as? String == "READY" && armedStep["actionID"] as? String == actionID,
+                    "The exact fresh action must be armed against both current native states.")
+        let controls = try widgetStateControls(count: try XCTUnwrap(before[instance]))
+        let element: XCUIElement
+        switch action {
+        case "toggle":
+            let current = try XCTUnwrap(controls.toggle.value as? String)
+            try require(current == (desired == true ? "0" : "1"), "The real Toggle must receive the opposite intended value.")
+            element = controls.toggle
+        case "add": element = controls.add
+        case "refresh": element = controls.refresh
+        default: throw ObservationFailure(description: "Unknown widget-state action.")
+        }
+        try tap(element, "Invoke the original " + action + " control on physical widget " + instance + ".")
+        var hostStarted = mini.state != .notRunning
+        try require(wait(35) {
+            if self.mini.state != .notRunning { hostStarted = true }
+            return after.values.allSatisfy {
+                self.springboard.staticTexts["Matrix count: " + String($0)].firstMatch.exists
+            }
+        }, "The actual placed widgets did not reach the expected visible counts.")
+        try require(!hostStarted && mini.state == .notRunning, "The original widget action opened MiniApps.")
+        record["tapObserved"] = true
+        record["tapObservedAt"] = widgetStateTimestamp()
+        record["ui"] = try widgetStateObservations(after)
+        record["hostTerminated"] = true
+        capture(springboard, "widget-state-step-" + String(index))
+        try checkpoint("widget-state-applied")
+        let applied = try response("applied-" + String(index) + ".json", timeout: 35)
+        let appliedStep = try XCTUnwrap(applied["step"] as? [String: Any])
+        try require(applied["status"] as? String == "APPLIED" && appliedStep["actionID"] as? String == actionID,
+                    "The actual AppIntent must commit one fresh nonce/revision and preserve the other variant.")
+    }
+
+    private func widgetStateTimestamp() -> String {
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        return formatter.string(from: Date())
+    }
+
     private func importMatrixWidgetAndCreateInstance(named instanceName: String) throws {
         try tap(mini.buttons["hanlin-apps-add"].firstMatch, "Open the shipping MiniApps package catalog.")
         try tap(mini.buttons["hanlin-import-script-package"].firstMatch, "Open the original package importer.")

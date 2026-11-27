@@ -966,6 +966,12 @@ def observe(args, stopping=lambda: False):
                 last_error = None
                 time.sleep(0.25)
                 continue
+            if request.get("surface") == "widgetState":
+                from observe_widget_state import observe_case
+                observe_case(args, request, directory, evidence, seen, widget_fixture)
+                last_error = None
+                time.sleep(0.25)
+                continue
             if request.get("surface") == "widgetRecovery":
                 observe_widget_case(args, request, directory, evidence, seen, widget_fixture)
                 last_error = None
@@ -1097,7 +1103,9 @@ def main():
     parser.add_argument("--output", required=True)
     parser.add_argument("--duration", type=float, default=1200)
     parser.add_argument("--widget-fixture", type=Path,
-                        help="Exact original Matrix archive, only for the separate widget recovery scope")
+                        help="Exact original Matrix archive, for the separate widget recovery or state scopes")
+    parser.add_argument("--widget-state-inputs", type=Path,
+                        help="Original source/product attempt manifest, only for two-instance WidgetKit state acceptance")
     parser.add_argument("--system-inputs", type=Path,
                         help="Original runner input manifest, only for the original ten system-surface methods")
     parser.add_argument("--studio-inputs", type=Path,

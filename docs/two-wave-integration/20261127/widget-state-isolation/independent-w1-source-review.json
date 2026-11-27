@@ -1,0 +1,52 @@
+{
+  "schema": 1,
+  "reviewer": "/root/w1_review_resume",
+  "recordedAtUTC": "2026-11-27T14:50:50.136254+00:00",
+  "decision": "APPROVED_FOR_ORIGINAL_NATIVE_PILOT",
+  "nativeStatus": "NOT_RUN",
+  "scope": "Source review of the additive two independently placed WidgetKit-instance acceptance; no concurrency, cold-start, VoiceOver or physical-device completion claim.",
+  "sources": [
+    {
+      "path": "Scripts/ProductSplit/observe_widget_state.py",
+      "sha256": "22b0cc0357b018a0911b8fd8cf4d5d89c0945b1fa1b9aeb93865690b11d46fcf"
+    },
+    {
+      "path": "Scripts/CI/Tests/test_widget_state_observer.py",
+      "sha256": "7e265e61b41ebd46df37dde7306ac7f9549201540e2e5d5cf8eb1311dd21dc2c"
+    },
+    {
+      "path": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+      "sha256": "7afb1614ee417a1657f2705900cbf78df90d651c575f27f5dddc5808b757f779"
+    },
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "sha256": "0911b606567504151a1c2a3202e6fa41ccc281b574c40092a9b0081fdad3cfe3"
+    },
+    {
+      "path": "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+      "sha256": "d0c5304fe391893e17877f704956e9563f20b72358f25f00f661851bdd9ca6ab"
+    }
+  ],
+  "reviewedBoundaries": [
+    "The observer reads actual current MiniApps/catalog/package/program/widget state and the installed app/extension/XCTest/MCM identities; it does not write production state.",
+    "The prepared Matrix archive digest is bound through the actual PackageCenter source contentSHA256, preparedSourceBundle packageContentDigest and installation plan sourceDigest chain, rather than assuming widget.jsx is the package digest.",
+    "Both actual Edit Widget selections and distinct physical accessibility frames are retained before and after six sequential native actions.",
+    "Every successful action requires one fresh native invocation UUID and exactly one revision increase; typed boolean/count values, current cache, immutable other-instance state and the otherStatesSHA remain bound.",
+    "Fresh final configuration/state and current MCM/app/extension checks precede terminal completion.",
+    "The existing UI methods, runner plans and shared helper bodies are retained; R2 only relocates the new controls into original Scripts/CI/Tests discovery and updates the observer source path."
+  ],
+  "controls": {
+    "originalReceiptSHA256": "e258e3c9f618468f4543b86a7f3783d2c5d962b902d4b0f2cf923535a0bc27c1",
+    "actualPriorResult": {
+      "tests": 16,
+      "passed": 16,
+      "failed": 0
+    },
+    "all16MethodAndHelperASTsPreservedByRelocation": true,
+    "executedByReviewer": false
+  },
+  "limits": [
+    "Actual WidgetKit gallery/placement/accessibility behavior must pass the original native pilot; source review is not OS success.",
+    "Legacy failed-gallery evidence does not establish a successfully placed widget."
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "base": "110e25bf5006469fadb6e2cf22c1ff9c7d24dd05",
+  "changedPaths": [
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+    "Scripts/ProductSplit/run_paired_acceptance.py",
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+    "Scripts/ProductSplit/observe_widget_state.py",
+    "Scripts/CI/Tests/test_widget_state_observer.py"
+  ],
+  "inputCount": 392,
+  "inputFingerprint": "0a9d3ca8f320af72485cab3d998be4861c1d858fe758c5f79e7b15d555937c50",
+  "intersection": [],
+  "manifestPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/host-sdk-1ee9c457-complete-pass-proof/miniapp-sdk.json",
+  "manifestSHA256": "e7aa424015d509dc7d99b3158b85f6dbcbcc72fc17b3671d247382331e87e649"
+}

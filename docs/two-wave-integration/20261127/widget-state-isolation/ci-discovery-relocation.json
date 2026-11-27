@@ -1,0 +1,29 @@
+{
+  "allOriginalTestAndHelperASTsEqual": true,
+  "discoveredTests": [
+    "test_widget_state_observer.WidgetStateEvidenceControls.test_both_containers_and_every_control_must_remain_physically_bound",
+    "test_widget_state_observer.WidgetStateEvidenceControls.test_cache_requires_current_boolean_and_fresh_real_render",
+    "test_widget_state_observer.WidgetStateEvidenceControls.test_completion_requires_both_current_identities_and_request_attempt",
+    "test_widget_state_observer.WidgetStateEvidenceControls.test_consistently_coerced_boolean_cannot_self_validate",
+    "test_widget_state_observer.WidgetStateEvidenceControls.test_current_variant_generation_program_and_settings_are_required",
+    "test_widget_state_observer.WidgetStateEvidenceControls.test_duplicate_or_cross_instance_nonce_cannot_count_as_one_tap",
+    "test_widget_state_observer.WidgetStateEvidenceControls.test_exact_xctest_ax_and_png_are_retained_without_following_links",
+    "test_widget_state_observer.WidgetStateEvidenceControls.test_final_saved_selection_must_be_fresh_for_both_instances",
+    "test_widget_state_observer.WidgetStateEvidenceControls.test_installed_test_binary_mutation_is_not_hidden_by_unchanged_bundle_info",
+    "test_widget_state_observer.WidgetStateEvidenceControls.test_refresh_must_keep_values_and_append_its_own_native_invocation",
+    "test_widget_state_observer.WidgetStateEvidenceControls.test_six_sequential_boolean_add_refresh_outcomes_and_other_instance",
+    "test_widget_state_observer.WidgetStateEvidenceControls.test_swapped_physical_selection_or_unrelated_frame_is_rejected",
+    "test_widget_state_observer.WidgetStateEvidenceControls.test_terminal_mcm_and_installed_extension_replacement_never_write_completion",
+    "test_widget_state_observer.WidgetStateEvidenceControls.test_untouched_instance_state_and_other_namespace_cannot_change",
+    "test_widget_state_observer.WidgetStateEvidenceControls.test_wrong_scope_and_out_of_range_action_are_rejected",
+    "test_widget_state_observer.WidgetStateEvidenceControls.test_zero_counts_are_not_saved_variant_identity"
+  ],
+  "newObserverSHA256": "22b0cc0357b018a0911b8fd8cf4d5d89c0945b1fa1b9aeb93865690b11d46fcf",
+  "newPath": "Scripts/CI/Tests/test_widget_state_observer.py",
+  "newTestSHA256": "7e265e61b41ebd46df37dde7306ac7f9549201540e2e5d5cf8eb1311dd21dc2c",
+  "oldPath": "Scripts/ProductSplit/Tests/test_widget_state_observer.py",
+  "oldTestSHA256": "210b22c143fbbfacb9a4bfbe2b293e24400cbdde67af81659b22a3bc05459752",
+  "originalPortableReceiptSHA256": "e258e3c9f618468f4543b86a7f3783d2c5d962b902d4b0f2cf923535a0bc27c1",
+  "status": "RELOCATED_ORIGINAL_CONTROLS_AND_DISCOVERY_QUALIFIED_NO_TEST_RERUN",
+  "testCount": 16
+}

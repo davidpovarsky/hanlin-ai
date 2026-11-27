@@ -1,0 +1,34 @@
+{
+  "base": "110e25bf5006469fadb6e2cf22c1ff9c7d24dd05",
+  "chain": [
+    {
+      "lines": "94-96,145-149",
+      "operation": "Copy archive, SHA256(archiveData), source.contentSHA256=digest",
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinPackageCenter.swift",
+      "sha256": "cd98b6ffb24ec4c0463d021a30204b68bcb96f1bd8dc3e2749ca5862f21dac2b"
+    },
+    {
+      "line": 337,
+      "operation": "preview source: package.source",
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift"
+    },
+    {
+      "lines": "963-966,976-990,3493",
+      "operation": "Expo preparedSourceBundle keeps preview.source.contentSHA256 as packageContentDigest; actual Widget programs added; plan.sourceDigest same preview value",
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "sha256": "e53341f9f5e62702f3b2703d2ac4367f6921164dc43980a85ac2e0d4d2bddd65"
+    },
+    {
+      "line": 446,
+      "operation": "writeInstallArtifact preserves compiled.packageContentDigest",
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptingBundler.swift",
+      "sha256": "307afa1ce693a21d812686f7aae776eab452437a55aa29d28c44f0042ddc37ae"
+    },
+    {
+      "lines": "577,601,619",
+      "operation": "Require plan.sourceDigest==artifactManifest.packageContentDigest, then persist the same sourceDigest in generation metadata and installed record",
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptStore/HanlinAtomicScriptStore.swift"
+    }
+  ],
+  "conclusion": "Widget sourceDigest is SHA256 of original imported archive bytes, not widget.jsx SHA256"
+}

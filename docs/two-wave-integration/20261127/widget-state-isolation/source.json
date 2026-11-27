@@ -1,0 +1,44 @@
+{
+  "base": "110e25bf5006469fadb6e2cf22c1ff9c7d24dd05",
+  "files": {
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift": {
+      "afterSHA256": "7afb1614ee417a1657f2705900cbf78df90d651c575f27f5dddc5808b757f779",
+      "beforeSHA256": "03a1dcef7b1031f98bd8d6218cab079dbc9f1433e90f7fb157be383ef1cf8948",
+      "bytes": 152356
+    },
+    "Scripts/CI/Tests/test_widget_state_observer.py": {
+      "afterSHA256": "7e265e61b41ebd46df37dde7306ac7f9549201540e2e5d5cf8eb1311dd21dc2c",
+      "beforeSHA256": null,
+      "bytes": 18517
+    },
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": {
+      "afterSHA256": "d0c5304fe391893e17877f704956e9563f20b72358f25f00f661851bdd9ca6ab",
+      "beforeSHA256": "240bdcfe3c4ad557e59643bbdbdd1a02369d0504cd6701467e9d30fcc167508c",
+      "bytes": 64250
+    },
+    "Scripts/ProductSplit/observe_widget_state.py": {
+      "afterSHA256": "22b0cc0357b018a0911b8fd8cf4d5d89c0945b1fa1b9aeb93865690b11d46fcf",
+      "beforeSHA256": null,
+      "bytes": 29632
+    },
+    "Scripts/ProductSplit/run_paired_acceptance.py": {
+      "afterSHA256": "0911b606567504151a1c2a3202e6fa41ccc281b574c40092a9b0081fdad3cfe3",
+      "beforeSHA256": "a74c87bc753f12db25c34069695f5290bcc53e70eed932361a9717e8ad886278",
+      "bytes": 87765
+    }
+  },
+  "independentReviewSHA256": "23ad58e19333564f60a89d3b6438cbf186ce8ddced7185536cd74e7144ece829",
+  "patchBytes": 76491,
+  "patchSHA256": "83cb5da1e97982a4c9f1b6532635a4c60c5db17b6ab7213aa102bc43cc8df8e9",
+  "portableQualification": {
+    "all16TestAndHelperBodiesUnchanged": true,
+    "original16PASSReceiptSHA256": "e258e3c9f618468f4543b86a7f3783d2c5d962b902d4b0f2cf923535a0bc27c1",
+    "originalCIDiscoveryLoaded": 16,
+    "postRelocationExecution": "NOT_RERUN",
+    "relocationProofSHA256": "37ad828cfcb37332355612224ce5455ff38a674ff9ed1bede04c45010cd0ff9f"
+  },
+  "portableReceiptSHA256": "e258e3c9f618468f4543b86a7f3783d2c5d962b902d4b0f2cf923535a0bc27c1",
+  "preservationSHA256": "049a5f66492e303bb706a02ba514911e277a7cbe1a7c84cf51b5bfdc3294bbf9",
+  "sdkInputImpactSHA256": "643761fbd5da8bb25f147a5496a57211168ca08625c3d4d359b38197323240c0",
+  "status": "SOURCE_CANDIDATE_PORTABLE_CONTROLS_PASS_NATIVE_OS_NOT_RUN"
+}
