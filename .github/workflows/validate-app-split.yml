@@ -34,7 +34,8 @@ on:
         default: ''
       runtime_bundle_artifact_run_id:
         type: string
-        required: true
+        required: false
+        default: ''
       paired_product_acceptance:
         type: boolean
         required: false
@@ -87,10 +88,10 @@ on:
         required: false
         default: ''
       runtime_bundle_artifact_run_id:
-        description: Existing successful checksum-pinned RuntimeCore candidate
+        description: Optional exact RuntimeCore artifact run; empty uses the checksum-pinned lockfile release
         type: string
-        default: '42926628418'
-        required: true
+        default: ''
+        required: false
 
       native_test_scope:
         description: Original standalone storage/UI or actual NativeScript and Expo companion controls
