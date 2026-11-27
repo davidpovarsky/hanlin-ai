@@ -30,7 +30,9 @@ class NativePinBuildAdmissionTests(unittest.TestCase):
             (e / name).write_text(manifest["source_pin_commit"] + "\n")
         (e / "producer-commit.txt").write_text(report.PRODUCER + "\n")
         write(e / "tested-source-sha256.json", report.expected_source(manifest, proof))
-        write(e / "workflow-sha256.json", {name: report.sha(ROOT / name) for name in
+        # The synthetic positive control retains its authenticated historical guards.
+        frozen_workflow = report.read(self.old / "workflow-sha256.json")
+        write(e / "workflow-sha256.json", {name: frozen_workflow[name] for name in
               ("Scripts/CI/IntegrationValidation/verify_native_tool_candidate.py",
                "Scripts/CI/IntegrationValidation/verify_native_tool_cancellation_recheck.py",
                "Scripts/CI/IntegrationValidation/xcresult_to_xunit.py", "Scripts/CI/select_stable_xcode.py")})
@@ -123,6 +125,17 @@ class NativePinBuildAdmissionTests(unittest.TestCase):
             return result
         finally:
             path.write_bytes(raw)
+
+    def test_changed_frozen_workflow_guards_still_block_reuse(self):
+        self.assertEqual(report.summarize(self.evidence)["status"], "PASS")
+        guards = report.read(self.evidence / "workflow-sha256.json")
+        for guard in guards:
+            with self.subTest(guard=guard):
+                self.reject_json(
+                    "workflow-sha256.json",
+                    lambda value, path=guard: value.update({path: "0" * 64}),
+                    "old strict guard/toolchain selector changed",
+                )
 
     def test_original_fifteen_and_prior_twentyone_keep_sources_with_zero_current_tests(self):
         result = report.summarize(self.evidence)
