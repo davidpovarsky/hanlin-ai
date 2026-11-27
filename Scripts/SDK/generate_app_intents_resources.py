@@ -74,6 +74,14 @@ KEYS += (
     "The MiniApp action did not complete successfully (%@).",
 )
 
+# Optional native List parameters use the same canonical translations.
+KEYS += (
+    "Text List",
+    "Integer List",
+    "Number List",
+    "Boolean List",
+)
+
 def render():
     catalog = json.loads(SOURCE.read_text())
     selected = {}

@@ -30,17 +30,60 @@ struct HanlinRunMiniAppShortcutIntent: LongRunningIntent, CancellableIntent {
     @Parameter(title: LocalizedStringResource("Allow Long Running", table: "HanlinAppIntents"), default: false)
     var allowLongRunning: Bool
 
+    // Optional additions preserve previously saved actions with no list fields.
+    @Parameter(title: LocalizedStringResource("Text List", table: "HanlinAppIntents"))
+    var textItems: [String]?
+
+    @Parameter(title: LocalizedStringResource("Integer List", table: "HanlinAppIntents"))
+    var integerItems: [Int]?
+
+    @Parameter(title: LocalizedStringResource("Number List", table: "HanlinAppIntents"))
+    var numberItems: [Double]?
+
+    @Parameter(title: LocalizedStringResource("Boolean List", table: "HanlinAppIntents"))
+    var booleanItems: [Bool]?
+
     static var parameterSummary: some ParameterSummary {
-        Summary("Run \(\.$action) with \(\.$input)") {
-            \.$inputType
-            \.$jsonFile
-            \.$allowLongRunning
+        Switch(\.$inputType) {
+            Case(.textList) {
+                Summary("Run \(\.$action) with \(\.$textItems)") {
+                    \.$inputType
+                    \.$allowLongRunning
+                }
+            }
+            Case(.integerList) {
+                Summary("Run \(\.$action) with \(\.$integerItems)") {
+                    \.$inputType
+                    \.$allowLongRunning
+                }
+            }
+            Case(.numberList) {
+                Summary("Run \(\.$action) with \(\.$numberItems)") {
+                    \.$inputType
+                    \.$allowLongRunning
+                }
+            }
+            Case(.booleanList) {
+                Summary("Run \(\.$action) with \(\.$booleanItems)") {
+                    \.$inputType
+                    \.$allowLongRunning
+                }
+            }
+            DefaultCase() {
+                Summary("Run \(\.$action) with \(\.$input)") {
+                    \.$inputType
+                    \.$jsonFile
+                    \.$allowLongRunning
+                }
+            }
         }
     }
 
     init() {}
 
-    func perform() async throws -> some IntentResult & ReturnsValue<IntentFile> & ShowsSnippetIntent {
+    /// Decode before creating a command or lease. Only the selected input is read;
+    /// an absent optional native list is the same empty array as an explicit [].
+    func decodedInputValue() throws -> HanlinValue {
         let inputValue: HanlinValue
         switch inputType {
         case .text:
@@ -53,7 +96,20 @@ struct HanlinRunMiniAppShortcutIntent: LongRunningIntent, CancellableIntent {
                 throw MiniAppsShortcutError.invalidUTF8
             }
             inputValue = try HanlinShortcutValueCodec.decode(text, as: .dictionaryOrList)
+        case .textList:
+            inputValue = try HanlinShortcutValueCodec.decodeNativeList(.text(textItems ?? []))
+        case .integerList:
+            inputValue = try HanlinShortcutValueCodec.decodeNativeList(.integers(integerItems ?? []))
+        case .numberList:
+            inputValue = try HanlinShortcutValueCodec.decodeNativeList(.numbers(numberItems ?? []))
+        case .booleanList:
+            inputValue = try HanlinShortcutValueCodec.decodeNativeList(.booleans(booleanItems ?? []))
         }
+        return inputValue
+    }
+
+    func perform() async throws -> some IntentResult & ReturnsValue<IntentFile> & ShowsSnippetIntent {
+        let inputValue = try decodedInputValue()
 
         let runsInForeground = systemContext.currentMode == .foreground
         let store = try await HanlinScriptingPlatform.productExtensionStore()
@@ -121,12 +177,17 @@ struct HanlinRunMiniAppShortcutIntent: LongRunningIntent, CancellableIntent {
 
 enum MiniAppsShortcutInputType: String, AppEnum {
     case text, json, jsonFile
+    case textList, integerList, numberList, booleanList
 
     static let typeDisplayRepresentation = TypeDisplayRepresentation(name: LocalizedStringResource("MiniApp Input", table: "HanlinAppIntents"))
     static let caseDisplayRepresentations: [Self: DisplayRepresentation] = [
         .text: DisplayRepresentation(title: LocalizedStringResource("Text", table: "HanlinAppIntents")),
         .json: DisplayRepresentation(title: LocalizedStringResource("Dictionary or List (JSON)", table: "HanlinAppIntents")),
-        .jsonFile: DisplayRepresentation(title: LocalizedStringResource("JSON File", table: "HanlinAppIntents"))
+        .jsonFile: DisplayRepresentation(title: LocalizedStringResource("JSON File", table: "HanlinAppIntents")),
+        .textList: DisplayRepresentation(title: LocalizedStringResource("Text List", table: "HanlinAppIntents")),
+        .integerList: DisplayRepresentation(title: LocalizedStringResource("Integer List", table: "HanlinAppIntents")),
+        .numberList: DisplayRepresentation(title: LocalizedStringResource("Number List", table: "HanlinAppIntents")),
+        .booleanList: DisplayRepresentation(title: LocalizedStringResource("Boolean List", table: "HanlinAppIntents"))
     ]
 }
 
