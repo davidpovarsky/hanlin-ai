@@ -10,11 +10,16 @@ class RuntimeMemoryEntitlementTests(unittest.TestCase):
     def test_actual_repository_main_requests_the_cage_requirement_without_changing_extension_memory(self):
         root = Path(__file__).parents[3]
         lock = json.loads((root / "RuntimeDependencies.lock.json").read_bytes())
-        requested = plistlib.loads((root / "AI_HLY/AI_HLY.entitlements").read_bytes())
+        applications = {
+            root / "AI_HLY/AI_HLY.entitlements",
+            root / "HanlinMiniAppsApp/HanlinMiniApps.entitlements",
+        }
         self.assertTrue(lock["node"]["buildConfiguration"]["pointerCompression"])
-        self.assertIs(requested.get(EXTENDED_VA), True)
+        for path in applications:
+            with self.subTest(application=str(path)):
+                self.assertIs(plistlib.loads(path.read_bytes()).get(EXTENDED_VA), True)
         for path in root.glob("*/*.entitlements"):
-            if path.parent.name != "AI_HLY":
+            if path not in applications:
                 self.assertNotIn(EXTENDED_VA, plistlib.loads(path.read_bytes()), str(path))
 
     def test_requested_entitlement_alone_is_not_signing_or_physical_acceptance(self):

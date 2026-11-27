@@ -39,7 +39,9 @@ class NativeCancellationAdmissionTests(unittest.TestCase):
         shutil.copy2(reference / "current-source-sha256.json", evidence / "tested-source-sha256.json")
         common = ["Scripts/CI/IntegrationValidation/verify_native_tool_candidate.py",
                   "Scripts/CI/IntegrationValidation/xcresult_to_xunit.py", "Scripts/CI/select_stable_xcode.py"]
-        write(evidence / "workflow-sha256.json", {p: report.sha(ROOT / p) for p in common})
+        # Preserve the frozen source/toolchain recorded by this fixture.
+        frozen_workflow = report.read(reference / "c93/workflow-sha256.json")
+        write(evidence / "workflow-sha256.json", {p: frozen_workflow[p] for p in common})
         for package in ("core", "sdk"):
             shutil.copy2(reference / "delta" / (package + "-Package.resolved"), evidence / (package + "-Package.resolved"))
         commands = []
@@ -115,6 +117,16 @@ class NativeCancellationAdmissionTests(unittest.TestCase):
         write(path, data)
         self.assertEqual(report.summarize(self.evidence)["status"], "BLOCKED")
         path.write_bytes(original)
+
+    def test_changed_frozen_workflow_guards_still_block_reuse(self):
+        self.assertEqual(report.summarize(self.evidence)["status"], "PASS")
+        guards = report.read(self.evidence / "workflow-sha256.json")
+        for guard in guards:
+            with self.subTest(guard=guard):
+                self.mutate_and_reject(
+                    "workflow-sha256.json",
+                    lambda value, path=guard: value.update({path: "0" * 64}),
+                )
 
     def test_complete_partition_preserves_original_attribution(self):
         result = report.summarize(self.evidence)
