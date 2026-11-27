@@ -1210,6 +1210,7 @@ jobs:
           mkdir -p "$LOG_DIR" build/acceptance/miniapp-upstreams
           trap 'cp build/acceptance/miniapp-upstreams/resolution.json "$LOG_DIR/miniapp-upstream-resolution.json" 2>/dev/null || true; git diff --binary > "$LOG_DIR/miniapp-upstream-inputs.patch"' EXIT
           node Scripts/MiniApps/resolve-upstreams.mjs --apply --cache="$RUNNER_TEMP/hanlin-miniapp-upstreams" 2>&1 | tee "$LOG_DIR/miniapp-upstream-resolution.log"
+          node Scripts/Widgets/build-sample-packages.mjs
 
       - name: Preserve current original MiniApp build inputs
         if: always()
@@ -2121,6 +2122,7 @@ jobs:
           mkdir -p "$LOG_DIR" build/acceptance/miniapp-upstreams
           trap 'cp build/acceptance/miniapp-upstreams/resolution.json "$LOG_DIR/miniapp-upstream-resolution.json" 2>/dev/null || true; git diff --binary > "$LOG_DIR/miniapp-upstream-inputs.patch"' EXIT
           node Scripts/MiniApps/resolve-upstreams.mjs --apply --cache="$RUNNER_TEMP/hanlin-miniapp-upstreams" 2>&1 | tee "$LOG_DIR/miniapp-upstream-resolution.log"
+          node Scripts/Widgets/build-sample-packages.mjs
 
       - name: Preserve current original MiniApp build inputs
         if: always()
