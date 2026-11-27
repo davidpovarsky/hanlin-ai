@@ -1,0 +1,258 @@
+{
+  "atUTC": "2026-11-27T13:44:57.820670+00:00",
+  "encoding": "Lossless original member bytes; normalized tar headers",
+  "members": [
+    {
+      "path": "manifest.json",
+      "bytes": 10969,
+      "sha256": "cecd162c6c0b331bb51977459fe93516c50fe3dfbd8271fd30a8b1e31f0c61df"
+    },
+    {
+      "path": "original-generic-b723338e-inputs/binding.json",
+      "bytes": 12994,
+      "sha256": "0e25bf628431e4880e9b200de9478f81edce8e33af4c3fd16c251018f24ea91c"
+    },
+    {
+      "path": "original-generic-b723338e-inputs/compile-contracts-for-generic-ios-device.sh",
+      "bytes": 699,
+      "sha256": "6eccd074df8f11b5805203c84072e0e236aa84f1175a3adf2121e889aa85e610"
+    },
+    {
+      "path": "original-generic-b723338e-inputs/compile-contracts-for-generic-ios-device.sh.executed",
+      "bytes": 673,
+      "sha256": "3a686b7ee8f27f6a6a510dddf1e6cca938e704a7f80c78b947a7d62667255549"
+    },
+    {
+      "path": "original-generic-b723338e-inputs/compile-contracts-for-generic-ios-simulator.sh",
+      "bytes": 731,
+      "sha256": "724c81cd6870b6fc5cabe6eb7e967644716c1c4981cea1f4e1087c55723d695f"
+    },
+    {
+      "path": "original-generic-b723338e-inputs/compile-contracts-for-generic-ios-simulator.sh.executed",
+      "bytes": 705,
+      "sha256": "50d89c44c7eabd809f98b4668cc13f6a19661c656442fe84a448527ac6dc9175"
+    },
+    {
+      "path": "original-generic-b723338e-inputs/compile-the-phase-1-swift-package.sh",
+      "bytes": 108,
+      "sha256": "89c3f21a4b9fcb4bb4ec5fb74158d531a16f28c0dda1aa79bac20ab192883567"
+    },
+    {
+      "path": "original-generic-b723338e-inputs/compile-the-phase-1-swift-package.sh.executed",
+      "bytes": 108,
+      "sha256": "89c3f21a4b9fcb4bb4ec5fb74158d531a16f28c0dda1aa79bac20ab192883567"
+    },
+    {
+      "path": "original-generic-b723338e-inputs/discover-the-generated-xcode-package-scheme.sh",
+      "bytes": 833,
+      "sha256": "90a8ec05a2c3fdaea307ac2531fecd335ce08c1509f01fae5e59263314a63527"
+    },
+    {
+      "path": "original-generic-b723338e-inputs/discover-the-generated-xcode-package-scheme.sh.executed",
+      "bytes": 833,
+      "sha256": "90a8ec05a2c3fdaea307ac2531fecd335ce08c1509f01fae5e59263314a63527"
+    },
+    {
+      "path": "original-generic-b723338e-inputs/resolve-the-phase-1-swift-package.sh",
+      "bytes": 128,
+      "sha256": "52090107ffa7552467e2360cb80bc6893b3d5118f9a0c2e22c0e8ff66160e344"
+    },
+    {
+      "path": "original-generic-b723338e-inputs/resolve-the-phase-1-swift-package.sh.executed",
+      "bytes": 128,
+      "sha256": "52090107ffa7552467e2360cb80bc6893b3d5118f9a0c2e22c0e8ff66160e344"
+    },
+    {
+      "path": "original-generic-b723338e-r1-launch.json",
+      "bytes": 406,
+      "sha256": "bf5446ab7d2eb2fcc5a66f64139defdbb3e8b49b1be9fd9e10f2c3cb1aacb5b7"
+    },
+    {
+      "path": "original-generic-b723338e-r1-supervisor.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "original-generic-b723338e-r1.json",
+      "bytes": 472889,
+      "sha256": "538601c203f8a42e72f7a33eb50f147850dfc39f8bd743acf5b0960c22ae4b72"
+    },
+    {
+      "path": "qualification.json",
+      "bytes": 1172,
+      "sha256": "c2266173e57fce0cdcf33c489836c85ee98341e8b7b6bbb71653714632728107"
+    },
+    {
+      "path": "retained-generic-products.json",
+      "bytes": 121813,
+      "sha256": "e5a74ce151c1e24ba3aab9798d041b8380943abae815e86bbf86af64f81b5c3e"
+    },
+    {
+      "path": "root-independent-member-review.json",
+      "bytes": 2091,
+      "sha256": "4ce53783e05cafe2564fb76461e01df68be58dc713fe7d9241a0a8f01ae36dab"
+    },
+    {
+      "path": "run-original-generic-b723338e-r1.py",
+      "bytes": 8355,
+      "sha256": "30f58703c233974c348ea037ebbca45e7a4226f2a87ddde5dc1bfbce860c216d"
+    },
+    {
+      "path": "source/AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "bytes": 10518,
+      "sha256": "56d19a4b8c677831fb91e1f8155a68e411b42fd4807ad618d6f169569e1bb5a4"
+    },
+    {
+      "path": "source/Packages/HanlinPlatform/Package.resolved",
+      "bytes": 1771,
+      "sha256": "453087cb3345b7c6bb24c00a682f41ffa9708ebd328e60b583f6e04276bf789d"
+    },
+    {
+      "path": "source/Packages/HanlinPlatform/Package.swift",
+      "bytes": 10823,
+      "sha256": "78d7081d0e197c3e99746e5b3e476b41280fc5b32110035fab31a3e949cb4dab"
+    },
+    {
+      "path": "validation/original-generic-b723338e-r1/03-swift-package-resolve.log",
+      "bytes": 1320,
+      "sha256": "1a7ff22ea2441743470e6aae7c75b17050f1798c055a87b52a7f08dcf11d6641"
+    },
+    {
+      "path": "validation/original-generic-b723338e-r1/04-swift-build.log",
+      "bytes": 269,
+      "sha256": "b4195b40ff59e87d07343aeee17cbcf5a78741f8e5bc9073da734949862923f8"
+    },
+    {
+      "path": "validation/original-generic-b723338e-r1/06-xcodebuild-list.json",
+      "bytes": 540,
+      "sha256": "2db829f1cb61eaf750ba73f8369586e87e86f37f18a52d6192752ccec77f44ff"
+    },
+    {
+      "path": "validation/original-generic-b723338e-r1/06-xcodebuild-list.stderr.log",
+      "bytes": 146,
+      "sha256": "5a555bcfa6acfc9198c568613f5f8cb8f15cf62c51c265999e4453cde8a5aede"
+    },
+    {
+      "path": "validation/original-generic-b723338e-r1/07-ios-simulator-duration-seconds.txt",
+      "bytes": 4,
+      "sha256": "af489f7170eaf213b960628333c4752e3907304303ed0b052b43d864d2653c2e"
+    },
+    {
+      "path": "validation/original-generic-b723338e-r1/07-ios-simulator.log",
+      "bytes": 4972592,
+      "sha256": "479189ae4ad6c8611f1d1a0f1c4eede2b50fa1999c81869d442a87166fea5c5b"
+    },
+    {
+      "path": "validation/original-generic-b723338e-r1/08-ios-device-duration-seconds.txt",
+      "bytes": 3,
+      "sha256": "6442bc26a7c562f5afe6467dab36365c709909f6a81afcecfc0c25cff0f1bab0"
+    },
+    {
+      "path": "validation/original-generic-b723338e-r1/08-ios-device.log",
+      "bytes": 2548151,
+      "sha256": "0a9eb0e4a19b82c38c9a1a42f233976fd2c7f487ea46452645f98eb9091966b5"
+    },
+    {
+      "path": "validation/original-generic-b723338e-r1/Phase1Device.xcresult/Data/data.0~0Dis5cQWy3elOQoqb9kRdMil7MytWLFvAovKdLDzFEbs4m9ymIz2-PvSwGmpWgmqOk0t8aq7-_Y5FNTJTk-HLA==",
+      "bytes": 10780,
+      "sha256": "52a2e6ed1af886483374849c57db62427e4777684bd2930b4b13130e9c11658f"
+    },
+    {
+      "path": "validation/original-generic-b723338e-r1/Phase1Device.xcresult/Data/data.0~oovrPlgfExI3c7r5GVdHUaqQMT5ebWQm5g_l9cZ5V0KXynDgJT3G5uG8bwfK0J-WYzUW0jZZQJSAtXmCjMeang==",
+      "bytes": 277957,
+      "sha256": "1d6f55faa36e94eb8118fa3aac0c86d92ec188be5ee67d9ec0bc1744b97bbdee"
+    },
+    {
+      "path": "validation/original-generic-b723338e-r1/Phase1Device.xcresult/Data/data.0~z_kvs0qK072WYiSSaGpIpOAB95wMuDi6ZDs-qR_PXxseBqMd82CJRj-TUt7XwjmY0gnlE84Y4spIOig_CAr8KA==",
+      "bytes": 301,
+      "sha256": "61cb7d822cb7d2e234a9f0fe3dd27550b45cf2d0c6f00064904ff0ad844283e2"
+    },
+    {
+      "path": "validation/original-generic-b723338e-r1/Phase1Device.xcresult/Data/refs.0~0Dis5cQWy3elOQoqb9kRdMil7MytWLFvAovKdLDzFEbs4m9ymIz2-PvSwGmpWgmqOk0t8aq7-_Y5FNTJTk-HLA==",
+      "bytes": 133,
+      "sha256": "598d87567e0409d21f3121ad58c2c462b5bcec5c021a00e17b3c36c3bb77ead9"
+    },
+    {
+      "path": "validation/original-generic-b723338e-r1/Phase1Device.xcresult/Data/refs.0~oovrPlgfExI3c7r5GVdHUaqQMT5ebWQm5g_l9cZ5V0KXynDgJT3G5uG8bwfK0J-WYzUW0jZZQJSAtXmCjMeang==",
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    {
+      "path": "validation/original-generic-b723338e-r1/Phase1Device.xcresult/Data/refs.0~z_kvs0qK072WYiSSaGpIpOAB95wMuDi6ZDs-qR_PXxseBqMd82CJRj-TUt7XwjmY0gnlE84Y4spIOig_CAr8KA==",
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    {
+      "path": "validation/original-generic-b723338e-r1/Phase1Device.xcresult/Info.plist",
+      "bytes": 776,
+      "sha256": "9389c18c356d4dc9ddbf4ee55c86d6079acdc1adf6ecb902f4e7c92219789977"
+    },
+    {
+      "path": "validation/original-generic-b723338e-r1/Phase1Simulator.xcresult/Data/data.0~8UrNYWVpeTgfcBeiMyhyAdmL7JNC9m9tqQrCzDuiOb6gJ9D1lM-fnzP-hFuj3YGJPv3dP4Eq3B98zFAR8Ku7zA==",
+      "bytes": 468731,
+      "sha256": "53efbb9f78ecd5bbc8be1a9a551d5d04a400a73deb43e9d71107eeb3b666b3e1"
+    },
+    {
+      "path": "validation/original-generic-b723338e-r1/Phase1Simulator.xcresult/Data/data.0~P3MeK3aDMZAD7IR6db_0lUBW2MXmZWyMmZRUpprkgDRA5Um1VqtEC_2UeH_M1Ca7ZB8KdHcLQB_an-WzSW6JIA==",
+      "bytes": 10827,
+      "sha256": "55ae780ea57f68b737d41a6652218a1da1c55349923e2284e0b3f60e28090a48"
+    },
+    {
+      "path": "validation/original-generic-b723338e-r1/Phase1Simulator.xcresult/Data/data.0~kqltCTMCdCifNNiwmqvc6MKqTsnXvx5crkDjI_LX_PXCKVXaBWVzqGei5_xKom0o716rbdjQDVShZe5j3aVXvg==",
+      "bytes": 302,
+      "sha256": "b93da75d603e549618cc4de23d8b0104eff1a0bb948c9caa7c6816073b9cdbd2"
+    },
+    {
+      "path": "validation/original-generic-b723338e-r1/Phase1Simulator.xcresult/Data/refs.0~8UrNYWVpeTgfcBeiMyhyAdmL7JNC9m9tqQrCzDuiOb6gJ9D1lM-fnzP-hFuj3YGJPv3dP4Eq3B98zFAR8Ku7zA==",
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    {
+      "path": "validation/original-generic-b723338e-r1/Phase1Simulator.xcresult/Data/refs.0~P3MeK3aDMZAD7IR6db_0lUBW2MXmZWyMmZRUpprkgDRA5Um1VqtEC_2UeH_M1Ca7ZB8KdHcLQB_an-WzSW6JIA==",
+      "bytes": 133,
+      "sha256": "1e0c9f2c5cfa8d0e91d851e94ef7f95cbd1390f1dade14e7180d8412405fb2a9"
+    },
+    {
+      "path": "validation/original-generic-b723338e-r1/Phase1Simulator.xcresult/Data/refs.0~kqltCTMCdCifNNiwmqvc6MKqTsnXvx5crkDjI_LX_PXCKVXaBWVzqGei5_xKom0o716rbdjQDVShZe5j3aVXvg==",
+      "bytes": 1,
+      "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d"
+    },
+    {
+      "path": "validation/original-generic-b723338e-r1/Phase1Simulator.xcresult/Info.plist",
+      "bytes": 776,
+      "sha256": "b8fa8de1d490d6f5987a5eeeab66bececb5b92259c3f7ad8ed6dadb642be39a3"
+    },
+    {
+      "path": "validation/original-generic-b723338e-r1/compile-contracts-for-generic-ios-device-controller.log",
+      "bytes": 2548914,
+      "sha256": "3204f0555702885aa0ad9ff423ebcacdb4304803d0dc416bfa0ff460dd88d458"
+    },
+    {
+      "path": "validation/original-generic-b723338e-r1/compile-contracts-for-generic-ios-simulator-controller.log",
+      "bytes": 4973387,
+      "sha256": "602a3c47c056fc4ccd455e05360f19619277519a4884f60046626346de4845ad"
+    },
+    {
+      "path": "validation/original-generic-b723338e-r1/compile-the-phase-1-swift-package-controller.log",
+      "bytes": 434,
+      "sha256": "d1cd9564e65dc104ec404759275718a10a09483c88b00b5b08124aa213ee98fa"
+    },
+    {
+      "path": "validation/original-generic-b723338e-r1/discover-generated-package-scheme-controller.log",
+      "bytes": 1325,
+      "sha256": "a393e59c4c7abbce804caca30d7c4798d1cf3e2eabe1a682cbfe89de56254612"
+    },
+    {
+      "path": "validation/original-generic-b723338e-r1/github-env",
+      "bytes": 44,
+      "sha256": "944b9437550aec773b1bf65ccc4deb338d712ce295d1ed869b86c628fa340b9f"
+    },
+    {
+      "path": "validation/original-generic-b723338e-r1/resolve-the-phase-1-swift-package-controller.log",
+      "bytes": 1505,
+      "sha256": "de434473686ce38c614f043d4a3edfe4195d6fb9ff62831fdb51c9acfe34922a"
+    }
+  ],
+  "archiveBytes": 1610077,
+  "archiveSHA256": "9660b3f76a91cd6bf9f78166ebf6bc32ade47450bbed51aff884affd3de8e8f0"
+}
