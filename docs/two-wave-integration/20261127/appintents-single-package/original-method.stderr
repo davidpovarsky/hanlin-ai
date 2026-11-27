@@ -1,0 +1,6 @@
+test_new_system_surfaces_do_not_acquire_hanlin_shipping_or_registration (Scripts.SDK.tests.test_system_extension_targets.SystemExtensionTargetsTests.test_new_system_surfaces_do_not_acquire_hanlin_shipping_or_registration) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.038s
+
+OK

@@ -1,0 +1,25 @@
+{
+  "controls": [
+    {
+      "case": "duplicate-shared-package",
+      "status": "REJECTED_AS_REQUIRED",
+      "diagnostic": "Lists differ: ['HanlinMiniAppSystemIntentsPackage'] != []\n\nFirst list contains 1 additional elements.\nFirst extra element 0:\n'HanlinMiniAppSystemIntentsPackage'\n\n- ['HanlinMiniAppSystemIntentsPackage']\n+ []"
+    },
+    {
+      "case": "missing-open-intent",
+      "status": "REJECTED_AS_REQUIRED",
+      "diagnostic": "'public struct HanlinOpenInstalledMiniAppIntent: OpenIntent' not found in 'import AppIntents\\nimport CoreSpotlight\\nimport Foundation\\nimport UniformTypeIdentifiers\\n\\n/// An installed package\\'s declared Spotlight entrypoint, independent of widgets.\\npublic struct HanlinInstalle"
+    },
+    {
+      "case": "missing-camera-registration",
+      "status": "REJECTED_AS_REQUIRED",
+      "diagnostic": "'HanlinCameraCaptureIntentsPackage.self' not found in 'import AppIntents\\nimport HanlinCameraCaptureUI\\nimport LockedCameraCapture\\nimport ExpoWidgets\\nimport HanlinTranslationUI\\nimport HanlinScriptExtensions\\nimport HanlinWidgetUI\\nimport SwiftUI\\nimport HanlinProductSplit\\nimp"
+    },
+    {
+      "case": "missing-miniapps-source-membership",
+      "status": "REJECTED_AS_REQUIRED",
+      "diagnostic": "'AI_HLY/Downstream/ScriptingPlatform/HanlinInstalledMiniAppEntity.swift' not found in {'AI_HLY/Downstream/ScriptingPlatform/MiniAppImportDiagnosticsView.swift', 'AI_HLY/Downstream/RuntimeCore/Core/HanlinApplicationRuntimeConfiguration.swift', 'AI_HLY/Downstream/ScriptingPlatform/"
+    }
+  ],
+  "mutations": "In-memory source-reader/project copies only; no tracked source mutation or native execution."
+}

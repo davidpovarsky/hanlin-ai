@@ -271,6 +271,6 @@ private struct HanlinMiniAppsReadyRoot: View {
 /// Index the original shared actions in the foreground app that executes them.
 struct HanlinMiniAppsIntents: AppIntentsPackage {
     static var includedPackages: [any AppIntentsPackage.Type] {
-        [HanlinWidgetIntentsPackage.self, HanlinNativePresentationIntentsPackage.self, HanlinExpoWidgetsIntentsPackage.self, HanlinMiniAppSystemIntentsPackage.self, HanlinCameraCaptureIntentsPackage.self]
+        [HanlinWidgetIntentsPackage.self, HanlinNativePresentationIntentsPackage.self, HanlinExpoWidgetsIntentsPackage.self, HanlinCameraCaptureIntentsPackage.self]
     }
 }
