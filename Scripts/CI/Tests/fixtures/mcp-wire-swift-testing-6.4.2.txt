@@ -1,0 +1,28 @@
+◇ Test run started.
+↳ Testing Library Version: 2403
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite HostMCPWireComparisonTests started.
+◇ Test largeOriginalUTF8SurvivesOrderAndEscapeProjection() started.
+✔ Test largeOriginalUTF8SurvivesOrderAndEscapeProjection() passed after 82.052 seconds.
+◇ Test largeOriginalUTF8RejectsAMutationAtTheTextTail() started.
+✔ Test largeOriginalUTF8RejectsAMutationAtTheTextTail() passed after 66.123 seconds.
+◇ Test metadataIsPartOfTheExactWireValue() started.
+✔ Test metadataIsPartOfTheExactWireValue() passed after 0.001 seconds.
+◇ Test exactDecimalsAndJSONKindsSurviveWithoutBinary64Rounding() started.
+✔ Test exactDecimalsAndJSONKindsSurviveWithoutBinary64Rounding() passed after 0.001 seconds.
+◇ Test scalarKeysAndStringsDoNotUseSwiftCanonicalEquivalence() started.
+✔ Test scalarKeysAndStringsDoNotUseSwiftCanonicalEquivalence() passed after 0.001 seconds.
+◇ Test strictSyntaxAndDuplicateDecodedKeysStillFail() started.
+✔ Test strictSyntaxAndDuplicateDecodedKeysStillFail() passed after 0.003 seconds.
+◇ Test depthKeyAndNumericLimitsRemainTheOriginalPolicy() started.
+✔ Test depthKeyAndNumericLimitsRemainTheOriginalPolicy() passed after 0.024 seconds.
+◇ Test cancellationProducesNoComparisonVerdict() started.
+✔ Test cancellationProducesNoComparisonVerdict() passed after 0.001 seconds.
+◇ Test existingSchemaConsentAndProjectionAdmissionRemainBounded() started.
+✔ Test existingSchemaConsentAndProjectionAdmissionRemainBounded() passed after 0.015 seconds.
+◇ Test finitePoliciesChangeOnlyTheirDeclaredByteAndWorkMetrics() started.
+✔ Test finitePoliciesChangeOnlyTheirDeclaredByteAndWorkMetrics() passed after 0.001 seconds.
+◇ Test checkedPolicyArithmeticRejectsUnrepresentableBudgetsWithoutAllocation() started.
+✔ Test checkedPolicyArithmeticRejectsUnrepresentableBudgetsWithoutAllocation() passed after 0.001 seconds.
+✔ Suite HostMCPWireComparisonTests passed after 148.227 seconds.
+✔ Test run with 11 tests in 1 suite passed after 148.228 seconds.

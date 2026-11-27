@@ -275,8 +275,8 @@ def run_prepared_original_gate():
                 time.sleep(2)
             data["exitCode"]=process.wait(timeout=10)
         final_text=log_path.read_text(errors="replace")
-        starts=collections.Counter(re.findall(r"^.*?\bTest (.+?) started\.$",final_text,re.MULTILINE))
-        terminal_rows=re.findall(r"^.*?\bTest (.+?) (passed|failed|skipped) after ",final_text,re.MULTILINE)
+        starts=collections.Counter(re.findall(r"^.*?\bTest (?!run started\.$)(.+?) started\.$",final_text,re.MULTILINE))
+        terminal_rows=re.findall(r"^.*?\bTest (?!run with \d+ tests?(?: in \d+ suites?)? (?:passed|failed) after )(.+?) (passed|failed|skipped) after ",final_text,re.MULTILINE)
         terminals=collections.Counter(name for name,state in terminal_rows)
         normalize=lambda name:name[:-2] if name.endswith("()") else name
         names_started=collections.Counter({normalize(k):v for k,v in starts.items()})
