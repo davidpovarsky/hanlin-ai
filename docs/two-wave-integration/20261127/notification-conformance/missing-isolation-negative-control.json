@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "python3",
+    "-c",
+    "in-memory original TrackedSources.read_bytes mutation"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-miniapps-notification-conformance-20261127",
+  "exitCode": 0,
+  "stdout": "{\"status\": \"EXPECTED_REJECTION\", \"error\": \"Audit anchor changed: Packages/HanlinAppExtensionsSDK/Sources/HanlinNotificationContentUI/HanlinNotificationContentViewController.swift: open class HanlinNotificationContentViewController: UIViewController, @MainActor UNNotificationContentExtension\", \"productionFileMutated\": false}\n",
+  "stderr": "",
+  "sourceFileMutated": false
+}

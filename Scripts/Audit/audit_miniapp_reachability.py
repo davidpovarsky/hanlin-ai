@@ -199,7 +199,7 @@ def build() -> dict:
     ref("keyboardTextEdit", "Packages/HanlinAppExtensionsSDK/Sources/HanlinKeyboardUI/HanlinKeyboardInputViewController.swift", "case .insertText: textDocumentProxy.insertText(edit.text!)")
     ref("keyboardLocalStorage", "Packages/HanlinAppExtensionsSDK/Sources/HanlinKeyboardUI/HanlinKeyboardInputViewController.swift", "self.model.storage = .extensionLocal(")
     ref("miniAppsNotificationContentPrincipal", "HanlinMiniAppsExtensions/NotificationContent/HanlinMiniAppsNotificationContent.swift", "final class HanlinMiniAppsNotificationContent: HanlinNotificationContentViewController")
-    ref("notificationContentController", "Packages/HanlinAppExtensionsSDK/Sources/HanlinNotificationContentUI/HanlinNotificationContentViewController.swift", "open class HanlinNotificationContentViewController: UIViewController, UNNotificationContentExtension")
+    ref("notificationContentController", "Packages/HanlinAppExtensionsSDK/Sources/HanlinNotificationContentUI/HanlinNotificationContentViewController.swift", "open class HanlinNotificationContentViewController: UIViewController, @MainActor UNNotificationContentExtension")
     ref("notificationContentAction", "Packages/HanlinAppExtensionsSDK/Sources/HanlinNotificationContentUI/HanlinNotificationContentViewController.swift", "extensionContext?.performNotificationDefaultAction()")
     ref("notificationPresentationPayload", "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationPresentation.swift", "public struct HanlinNotificationPresentationPayload")
     ref("notificationPresentationContinuation", "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationPresentation.swift", "return try HanlinNotificationInvocation.enqueue(event, in: store, now: now)")

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "0456adbe395cde2fb986cf058c4a9497c38d1d21",
+  "sourceCommit": "d7d10dff56e9b19b87ee6058ac491987f00b48e6",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
   "uncommittedSourcePaths": [],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
@@ -982,7 +982,7 @@
       "file": "Scripts/Audit/audit_miniapp_reachability.py",
       "line": 2,
       "anchor": "Curated source-backed extension matrix",
-      "sha256": "6e52e25fd78ca4ce6bcd92e4805e66477aee5fab785f816d164a4bb807e51540"
+      "sha256": "f322ad633f53ef50e5cd97f6812c0dbd9573f989df6e3f470ce8a8a055ade57b"
     },
     "miniAppsBootstrap": {
       "file": "HanlinMiniAppsApp/HanlinMiniAppsApp.swift",
@@ -1329,14 +1329,14 @@
     "notificationContentController": {
       "file": "Packages/HanlinAppExtensionsSDK/Sources/HanlinNotificationContentUI/HanlinNotificationContentViewController.swift",
       "line": 15,
-      "anchor": "open class HanlinNotificationContentViewController: UIViewController, UNNotificationContentExtension",
-      "sha256": "82c29170477e865e4ce610ecaa1381058e2e4f22bd4c8db2f501b238fd179a88"
+      "anchor": "open class HanlinNotificationContentViewController: UIViewController, @MainActor UNNotificationContentExtension",
+      "sha256": "51d2d6ebb03b74cbcc26ba1449a70c16ba778c102a814e1cf18683f7d04a4eef"
     },
     "notificationContentAction": {
       "file": "Packages/HanlinAppExtensionsSDK/Sources/HanlinNotificationContentUI/HanlinNotificationContentViewController.swift",
       "line": 133,
       "anchor": "extensionContext?.performNotificationDefaultAction()",
-      "sha256": "82c29170477e865e4ce610ecaa1381058e2e4f22bd4c8db2f501b238fd179a88"
+      "sha256": "51d2d6ebb03b74cbcc26ba1449a70c16ba778c102a814e1cf18683f7d04a4eef"
     },
     "notificationPresentationPayload": {
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationPresentation.swift",

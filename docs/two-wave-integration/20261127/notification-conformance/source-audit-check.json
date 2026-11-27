@@ -1,0 +1,15 @@
+{
+  "name": "source-audit-check",
+  "argv": [
+    "node",
+    "Scripts/Audit/audit-miniapp-sdk.mjs",
+    "--typescript-module",
+    "/mnt/development/projects/worktrees/hanlin-miniapps-sdk-recovery-20261125/Scripts/Expo/node_modules/typescript/lib/typescript.js",
+    "--check"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-miniapps-notification-conformance-20261127",
+  "exitCode": 0,
+  "durationSeconds": 1.8535,
+  "stdout": "PASS: SDK source inventory matches 102 sources and 200 local public exports.\n",
+  "stderr": ""
+}
