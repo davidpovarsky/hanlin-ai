@@ -1,4 +1,4 @@
-import {Button, File, Label, NativeWindowEvents, Page, ScrollView, StackLayout} from '@nativescript/core';
+import {Button, File, Label, NativeWindowEvents, Page, ScrollView, StackLayout, Trace} from '@nativescript/core';
 import {registerWindowFactory} from '@hanlin/window-factory';
 import {createLongRunningProof, statusLine, type JSONValue} from './proof';
 
@@ -21,7 +21,7 @@ registerWindowFactory(({id, window, environment, services: host, storage}) => {
       }));
     } catch (error) {
       // A failed evidence write remains missing evidence; do not alter teardown.
-      console.error('Long-running close observation failed: ' + String(error));
+      Trace.write('Long-running close observation failed: ' + String(error), Trace.categories.Error, Trace.messageType.error);
     }
   });
   const proof = createLongRunningProof({
