@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "sourceBase": "31d5b6780786b7bd3a6de5f3972ea1e6b6495ac4",
+  "sourcePatchSHA256": "775cebe89ba8ebc2b4fdee42b87cb3502e1eed93daa5352d00567d5561f9df1b",
+  "command": [
+    "runuser",
+    "-u",
+    "chatgpt-agent",
+    "--",
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "Scripts/CI/Tests",
+    "-p",
+    "test_affected_validation.py",
+    "-v"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-sdk-resource-test-20261127",
+  "startedAt": "2026-11-27T09:00:23.988367+00:00",
+  "finishedAt": "2026-11-27T09:00:24.203055+00:00",
+  "seconds": 0.215,
+  "exitCode": 1,
+  "nativeExecuted": false,
+  "files": [
+    {
+      "path": "focused.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "focused.stderr",
+      "bytes": 1379,
+      "sha256": "4956b6a5cf9f54afe92ac8c7639dcb56fc96ee2a4f37c9cb6ab859d068bec34c"
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+{
+  "schema": 1,
+  "sourceCommit": "6aa3da405bf555863f81d24c45f1392081dd94ec",
+  "sourceAfter": "6aa3da405bf555863f81d24c45f1392081dd94ec",
+  "inputsUnchanged": true,
+  "inputs": [
+    {
+      "path": "Scripts/CI/plan_affected_validation.py",
+      "sha256": "267df1696402e912c330b726aa9c73b2a1b371d18b39a2717b77a8a2b310f021",
+      "readFrom": "workingTreeAndGit"
+    },
+    {
+      "path": "Scripts/CI/affected-validation-map.json",
+      "sha256": "9eff93c20337ae4330ef4dea0fd4865bc6680631cb6c2f6f0355598c7ebcbec2",
+      "readFrom": "workingTreeAndGit"
+    },
+    {
+      "path": ".github/workflows/build-ios26-unsigned-ipa.yml",
+      "sha256": "f88489d966e676b051076898eccf8c56b4bdeca689d92846240fbf286d6952e6",
+      "readFrom": "workingTreeAndGit"
+    },
+    {
+      "path": ".github/workflows/validate-app-split.yml",
+      "sha256": "3e80e9ec8dda042a80a51f6bc9e346cbbf14511b9fff3b8a711105d3b317b131",
+      "readFrom": "exactGitBlobSparseOmission"
+    },
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "sha256": "95d0e220974a59adc3a08c4df6f429aadcd05a949c8fc5b3922ee7a58981cfdf",
+      "readFrom": "workingTreeAndGit"
+    }
+  ],
+  "command": [
+    "runuser",
+    "-u",
+    "chatgpt-agent",
+    "--",
+    "python3",
+    "Scripts/CI/plan_affected_validation.py",
+    "--repository",
+    "/mnt/development/projects/worktrees/hanlin-sdk-resource-test-20261127",
+    "--event-name",
+    "workflow_dispatch",
+    "--base-sha",
+    "c34dd6ae752b3ab3ebc001743fc62c72fc48a203",
+    "--head-sha",
+    "6aa3da405bf555863f81d24c45f1392081dd94ec",
+    "--json-output",
+    "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/ci-preparation-31d5b678/routing-repair/unforced-plan/plan.json"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-sdk-resource-test-20261127",
+  "startedAt": "2026-11-27T09:06:20.376697+00:00",
+  "finishedAt": "2026-11-27T09:07:36.538179+00:00",
+  "seconds": 76.161,
+  "exitCode": 0,
+  "isForced": false,
+  "nativeExecuted": false,
+  "files": [
+    {
+      "name": "plan.json",
+      "bytes": 1581026,
+      "sha256": "8f1131d89e36c4d8001283850b5a9c8f28849f952010c4a51261fe66fb1776c9"
+    },
+    {
+      "name": "planner.stdout",
+      "bytes": 30633,
+      "sha256": "0346a2183af7c958c941226ab8d6473ea0f879c262f8242ca1f5575cad06d286"
+    },
+    {
+      "name": "planner.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ]
+}

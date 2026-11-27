@@ -1,0 +1,237 @@
+{
+  "schema": 1,
+  "source": "31d5b6780786b7bd3a6de5f3972ea1e6b6495ac4",
+  "restoredUnchangedGitInputs": [
+    {
+      "path": "Scripts/CI/analyze_performance_results.py",
+      "bytes": 15603,
+      "sha256": "be5e871a2a19a12ce880585dda195dd956229bb80da83b3df0298d86288bedf2"
+    },
+    {
+      "path": "Scripts/CI/boot_motion_simulator.py",
+      "bytes": 11190,
+      "sha256": "a8fc556bddcbaa437bae32ebc3af8f1dbe27baeecc14d938fcf6796ca45756b2"
+    },
+    {
+      "path": "Scripts/CI/build_manifest.py",
+      "bytes": 15591,
+      "sha256": "a968bc321bb3b80ed274bec8d2264405b175f759603e2cc7c63ad906855768ca"
+    },
+    {
+      "path": "Scripts/CI/check_composer_domain.py",
+      "bytes": 8381,
+      "sha256": "a8c6567cae4d42a0ee24a40be5a80ef2120c460ecb36671ee885cc64785be943"
+    },
+    {
+      "path": "Scripts/CI/check_composer_layout.py",
+      "bytes": 10457,
+      "sha256": "e86c355a8c4a6ebdc7a8e76f7337cf3fd9d954e6e91f2fb39f55f07b841a2f4b"
+    },
+    {
+      "path": "Scripts/CI/create_scriptui_fixtures.py",
+      "bytes": 3053,
+      "sha256": "9b327b77e234d4b1a74ce43ef27e02886cc78d0c8acec169c5f4b171d5cf9491"
+    },
+    {
+      "path": "Scripts/CI/current_unit_xctestrun.py",
+      "bytes": 21135,
+      "sha256": "271a7dedf2a7026f49efdbf7d5e7f0492d88d6ee90aee36d859a33f2221147a6"
+    },
+    {
+      "path": "Scripts/CI/generate_performance_report.py",
+      "bytes": 22940,
+      "sha256": "26d4fadecb5afee8e86c8fbaf1c7581639001433f6b48e9d29fab24b16bde598"
+    },
+    {
+      "path": "Scripts/CI/generate_provider_conformance_summary.py",
+      "bytes": 17552,
+      "sha256": "c33e31d792cfc4ab28a6b7d46e6de32703dd65f9f06be9543acc8a712797c3a3"
+    },
+    {
+      "path": "Scripts/CI/inspect_foundation_models_interface.py",
+      "bytes": 13922,
+      "sha256": "074697f9c4e2ca92b990e63bfcc818a3d46a79ea7f321561f1e26686d8cf5995"
+    },
+    {
+      "path": "Scripts/CI/inspect_native_result.py",
+      "bytes": 6952,
+      "sha256": "985c07606ddb910a38624b4ce3527fc4f8f67e6e68dc562b430d2798458fbccd"
+    },
+    {
+      "path": "Scripts/CI/observe_notification_os_delivery.py",
+      "bytes": 18899,
+      "sha256": "f6cf4e040f592fa94ebf9fd813b6e03d125d5c7c32dc2d2a43f3b42cdb33d085"
+    },
+    {
+      "path": "Scripts/CI/owned_simulator_receipts.py",
+      "bytes": 12380,
+      "sha256": "3491c9c855aefd6e2bb5f5640eee8559d63f03cf0cbd68ab5cb79cd986a246fd"
+    },
+    {
+      "path": "Scripts/CI/plan_affected_validation.py",
+      "bytes": 84434,
+      "sha256": "267df1696402e912c330b726aa9c73b2a1b371d18b39a2717b77a8a2b310f021"
+    },
+    {
+      "path": "Scripts/CI/prepare_calendar_acceptance.py",
+      "bytes": 4558,
+      "sha256": "e449975b61ec027b7ce54d66f77bb376c8af6f3df2df8fbe170852b3f1e6094b"
+    },
+    {
+      "path": "Scripts/CI/prepare_markdown_consumer_closure.py",
+      "bytes": 5237,
+      "sha256": "92ff54a823efcd5862b37f228fa45d8ba85236560c04e509e9c9109740c147cd"
+    },
+    {
+      "path": "Scripts/CI/probe_simulator_environment.py",
+      "bytes": 1985,
+      "sha256": "df0ff34f413a436c83ecbea08da236a3e43545f564349f3e118472b9191de48f"
+    },
+    {
+      "path": "Scripts/CI/retain_app_intents_metadata.py",
+      "bytes": 1884,
+      "sha256": "049071def53a0c6882c3e2caa1698d9cfa119f585aa0fd02dea0cab35759829a"
+    },
+    {
+      "path": "Scripts/CI/runtime-command-coverage-manifest.json",
+      "bytes": 47184,
+      "sha256": "1d5ad9a5d309ab1c1275d95568740850ed87d665783202121df806c627ca6d84"
+    },
+    {
+      "path": "Scripts/CI/select_installed_simulator.py",
+      "bytes": 5501,
+      "sha256": "96c84db083361488c3feb79dfbc45a898fa48b6aed4cec9a76f90bf0ed8267d1"
+    },
+    {
+      "path": "Scripts/CI/select_stable_xcode.py",
+      "bytes": 1605,
+      "sha256": "cd75030ec922df607480cc3490e41b2630df683adf4032cff2e93046a97e5258"
+    },
+    {
+      "path": "Scripts/CI/simulator_test_allowance.py",
+      "bytes": 670,
+      "sha256": "f2ce6df6635099b9b71f64ded12617a67b62f267f1e5502eecd0de8d49afc857"
+    },
+    {
+      "path": "Scripts/CI/skill_runtime_contract_checks.py",
+      "bytes": 4564,
+      "sha256": "f5bc3be7a3d8f3c3b7d4c516fb48f9b94869c28c08497b46a3626323fa39381e"
+    },
+    {
+      "path": "Scripts/CI/stage_a2ui_schemas.py",
+      "bytes": 4080,
+      "sha256": "dbd8d4f9ec21c113ba2dbb23c05959d10d0ded75ce7bfa302221a711d2bae8b1"
+    },
+    {
+      "path": "Scripts/CI/stage_chat_code_fence_proof.py",
+      "bytes": 3648,
+      "sha256": "1e7ed1d893b48f622fb27dc04897e9a1c111ebab8e85426e943164bc4033ca8a"
+    },
+    {
+      "path": "Scripts/CI/stage_chat_diagnostics_proof.py",
+      "bytes": 2781,
+      "sha256": "0c8c98dcb9c428b3a6e9db375ba6f99f2fd808069803f60f09dba01837dc16f6"
+    },
+    {
+      "path": "Scripts/CI/stage_live_provider_acceptance.py",
+      "bytes": 10188,
+      "sha256": "74668ad310f58162c6908bfab5e7dbe76e53388503b0511bfa560fce9fffc839"
+    },
+    {
+      "path": "Scripts/CI/stage_modular_headers.py",
+      "bytes": 25886,
+      "sha256": "8fd290b0c1970f36394e6bf8e598241c1f2179c253a251d73852ae9ddc870273"
+    },
+    {
+      "path": "Scripts/CI/stage_scriptui_fixtures.py",
+      "bytes": 8377,
+      "sha256": "377e499ef46b9d60576700351de7686aad7aaed77c297c9385e21440b8afe8eb"
+    },
+    {
+      "path": "Scripts/CI/stage_simulator_fixtures.py",
+      "bytes": 12458,
+      "sha256": "7b34752357bc8ad0f1d3cf5f64de3140967a15159748c9046bc11aac3c6ebb72"
+    },
+    {
+      "path": "Scripts/CI/test_foundation_models_availability_inspector.py",
+      "bytes": 5213,
+      "sha256": "0c5d512c50c1aa98a341943e71c916c7e2594eca2a5ce262ee0199d94e8abc6c"
+    },
+    {
+      "path": "Scripts/CI/test_generate_provider_conformance_summary.py",
+      "bytes": 17442,
+      "sha256": "94243fc598655c19d8afece1892c8a93daeef60b29fa48eee2b3db6bf002fa6d"
+    },
+    {
+      "path": "Scripts/CI/test_prepare_calendar_acceptance.py",
+      "bytes": 1077,
+      "sha256": "1f10efc91d2586cb7662454bb18bc383a2ee066c7cad4ef6355ea7efcf85cb9c"
+    },
+    {
+      "path": "Scripts/CI/ui_viewport_cohorts.json",
+      "bytes": 1311,
+      "sha256": "396026ec3818d35bc715156afa0a52fd20e16a523279021b225739e9ed99333a"
+    },
+    {
+      "path": "Scripts/CI/ui_viewport_cohorts.py",
+      "bytes": 9881,
+      "sha256": "ddfaaa62950551560643dcb32dc9d0c2e0949f38cbb9c04bd92278498fada48c"
+    },
+    {
+      "path": "Scripts/CI/validate_chat_localization.py",
+      "bytes": 9218,
+      "sha256": "315c436ea9024ccf5dee53429e3d050ef1f0260f8c992df0b854b5323bb2b6a4"
+    },
+    {
+      "path": "Scripts/CI/validate_command_coverage.py",
+      "bytes": 12667,
+      "sha256": "16f2733340737899606f01675913d7ed37ad02cc459f5fb4a5942b7f260290bf"
+    },
+    {
+      "path": "Scripts/CI/verify_agent_run_read_cache.py",
+      "bytes": 5819,
+      "sha256": "3bbb403173975aea4c102b6d4b7e0f0219d2e384fb3a0717575baa188da54fea"
+    },
+    {
+      "path": "Scripts/CI/verify_chat_stream_buffer.py",
+      "bytes": 1922,
+      "sha256": "4cd82085590eea7525c4cf2bb70a5e13e4aeb1dcb06576fcc8fd04022d2e2da3"
+    },
+    {
+      "path": "Scripts/CI/verify_exact_json_vendor.py",
+      "bytes": 2387,
+      "sha256": "67d90e3bcb9660c719c89f4b54ee62d56bb11aeaae6650d5996c10bc4179165b"
+    },
+    {
+      "path": "Scripts/CI/verify_nativescript_test_log.py",
+      "bytes": 2641,
+      "sha256": "e80c1ae2f4ffadfd1892070a5a7671568c76425fb9a6a0c203fee2232a824682"
+    },
+    {
+      "path": "Scripts/CI/verify_runtime_memory_entitlements.py",
+      "bytes": 2498,
+      "sha256": "f78f0e513f297cbe52781e05a35580ae24116d5989402c67ba51eb940bd3a77b"
+    },
+    {
+      "path": "Scripts/CI/verify_selected_tests.py",
+      "bytes": 2000,
+      "sha256": "4ae4a28934341461b364a9b83fb891ca214da64cf3046635278fb4e6837caad5"
+    },
+    {
+      "path": "Scripts/CI/verify_testflight_build.py",
+      "bytes": 7181,
+      "sha256": "6dd13984681db01225306611cb13029020b97baf92df727c330ebe57fdf955e9"
+    },
+    {
+      "path": "Scripts/CI/write_diagnostics_build_provenance.py",
+      "bytes": 3893,
+      "sha256": "089a7b6755eee4a679355c5c2204cb7e6a9902c1c41736e2bd99d5d973fb3c61"
+    },
+    {
+      "path": "Scripts/CI/xcode_cache_inputs.py",
+      "bytes": 10059,
+      "sha256": "defda7c6b7ca28011f71405cea40ba02d30b3ed6e1c1aa483a8556ea04f793f4"
+    }
+  ],
+  "sourceMutation": false
+}

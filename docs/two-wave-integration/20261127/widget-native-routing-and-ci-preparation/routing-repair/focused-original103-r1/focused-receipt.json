@@ -1,0 +1,36 @@
+{
+  "sourceBase": "31d5b6780786b7bd3a6de5f3972ea1e6b6495ac4",
+  "sourcePatchSHA256": "775cebe89ba8ebc2b4fdee42b87cb3502e1eed93daa5352d00567d5561f9df1b",
+  "command": [
+    "runuser",
+    "-u",
+    "chatgpt-agent",
+    "--",
+    "python3",
+    "-m",
+    "unittest",
+    "discover",
+    "-s",
+    "Scripts/CI/Tests",
+    "-p",
+    "test_affected_validation.py",
+    "-v"
+  ],
+  "startedAt": "2026-11-27T09:03:07.589065+00:00",
+  "finishedAt": "2026-11-27T09:03:10.573696+00:00",
+  "exitCode": 1,
+  "seconds": 2.985,
+  "nativeExecuted": false,
+  "files": [
+    {
+      "path": "focused.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "focused.stderr",
+      "bytes": 23049,
+      "sha256": "ba0d54d5968d13dc302e4bf1ec76bce68961f36012b415c0a37393b6362e8867"
+    }
+  ]
+}

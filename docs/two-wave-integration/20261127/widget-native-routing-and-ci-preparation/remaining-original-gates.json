@@ -1,0 +1,132 @@
+{
+  "schema": 1,
+  "source": "6aa3da405bf555863f81d24c45f1392081dd94ec",
+  "kind": "original-required-gate-execution-map",
+  "notExecutionEvidence": true,
+  "gates": [
+    {
+      "id": "ci_router",
+      "owner": "root",
+      "required": true,
+      "execution": "Original full discovery on final source or exact complete-input-qualified receipt. Focused103 coverage here is not full discovery.",
+      "environment": {
+        "Node": "24.5.0",
+        "Python": "Python3 + PyYAML6.0.1",
+        "HANLIN_RUN_PACKAGING_NETWORK": "unset; preserve original skip"
+      },
+      "command": "python3 -m unittest discover -s Scripts/CI/Tests -p 'test_*.py' -v",
+      "originalWorkflowJobTimeoutMinutes": 60
+    },
+    {
+      "id": "platform_contracts",
+      "owner": "Mac/native CI only",
+      "required": true,
+      "execution": "Original unfiltered SwiftPM resolve/build/parallel tests plus original generic iOS Simulator/device Debug builds. Source33 full601 was reported600PASS/1HTTPtimeout, not PASS. HTTP product decision may change closure. Native79 subset does not cover this gate.",
+      "commands": [
+        "swift package --package-path Packages/HanlinPlatform resolve",
+        "swift build --package-path Packages/HanlinPlatform",
+        "swift test --package-path Packages/HanlinPlatform --parallel",
+        "From Packages/HanlinPlatform: original xcodebuild -list -json scheme resolution; original generic iOS Simulator/device builds with CODE_SIGNING_ALLOWED=NO and SWIFT_STRICT_CONCURRENCY=complete. Exact commands in workflow-source-map.json."
+      ],
+      "originalWorkflowJobTimeoutMinutes": 60
+    },
+    {
+      "id": "nativescript_dependencies_and_runtime",
+      "required": true,
+      "owner": "Root CI",
+      "execution": "Original90 selects dependencies/runtime/Phase1 because it includes HanlinNativeScriptProductionE2ETests. Qualify actual dependency closure and both generic builds; Phase1 title does not prove platform_contracts."
+    },
+    {
+      "id": "runtimecore_bundle",
+      "required": true,
+      "owner": "Root/Mac",
+      "execution": "Qualify original pinned release and all4 assets against current lock/native identity. Required bundle group must be reconciled; do not rebuild/repack only because selected.",
+      "commands": [
+        "node Scripts/Runtime/validate-runtime-lock.mjs RuntimeDependencies.lock.json",
+        "node Scripts/Runtime/compute-runtime-dependency-hash.mjs RuntimeDependencies.lock.json",
+        "python3 Scripts/Runtime/runtime_native_identity.py --repository ROOT --verify-reuse",
+        "bash Scripts/Runtime/prepare-runtime-core.sh",
+        "bash Scripts/Runtime/preflight-runtime-core.sh"
+      ],
+      "status": "Reuse candidate only; no execution or reuse PASS claimed."
+    },
+    {
+      "id": "runtimecore_host",
+      "required": true,
+      "owner": "Mac188 + each CI consumer",
+      "execution": "Canonical preparer refreshes audits, checks actual source fingerprint before reuse, stages SDK and runs original phase sequence. Extension change invalidated22 historical392 inputs. All90/54/device paths independently execute it; fresh committed Mac docs/ZIP are not prerequisite. Later producer-only seal needs exact output qualification.",
+      "command": "bash Scripts/Runtime/prepare-runtime-host.sh",
+      "status": "Fresh final-source188 pending."
+    },
+    {
+      "id": "simulator_scripting_acceptance",
+      "required": true,
+      "owner": "Root CI/Mac",
+      "execution": "Default selected_tests adds whole HanlinScriptingAcceptanceTests via separate flag; original90 also includes it. Successful90 can cover exact cases only after source/product/result reconciliation.",
+      "originalCommandFragment": "xcodebuild test-without-building ... -maximum-test-execution-time-allowance300 -only-testing:AI_HLYTests/HanlinScriptingAcceptanceTests",
+      "source": "Exact original step in workflow-source-map.json."
+    },
+    {
+      "id": "simulator_shell_acceptance",
+      "required": true,
+      "owner": "Mac/Root",
+      "execution": "Actual Release app with shipping runtimes/Host, actual owned simulator/app-container report; original validate_shell_acceptance.py and runtime.core passed/mismatch0. Host188/unit/UI is not substitute.",
+      "environment": {
+        "SIMCTL_CHILD_HANLIN_RUNTIME_ACCEPTANCE": "shell",
+        "SIMCTL_CHILD_HANLIN_CANONICAL_SHADOW_CHECKS": "1"
+      },
+      "originalWaitBound": "120 one-second polls + actual PID alive + original15s alive proof.",
+      "reuse": "Only exact qualified Release app."
+    },
+    {
+      "id": "simulator_mcp_acceptance",
+      "required": true,
+      "owner": "Mac/Root",
+      "execution": "Actual Release app and original validate_mcp_acceptance.py; native.tools/mcp/runtime.core/cross-domain.tools allpassed/mismatch0. Host packed MCP tests do not prove app report.",
+      "environment": {
+        "SIMCTL_CHILD_HANLIN_RUNTIME_ACCEPTANCE": "mcp",
+        "SIMCTL_CHILD_HANLIN_CANONICAL_SHADOW_CHECKS": "1"
+      },
+      "originalWaitBound": "360 one-second polls + actual PID alive + original15s alive proof.",
+      "reuse": "Only exact qualified Release app."
+    },
+    {
+      "id": "simulator_smoke_launch",
+      "required": true,
+      "owner": "Root/Mac",
+      "execution": "Reconcile actual original launch/alive evidence from required acceptance; process creation alone insufficient. Avoid redundant smoke if identical required evidence retained."
+    },
+    {
+      "id": "original54_and_extra26",
+      "required": true,
+      "owner": "Root54CI/Mac26",
+      "execution": "miniapp_complete structurally equals f768. Reconcile actual54 and separately admit extra26 against exact source/products/xctestrun. Literal15 selectors/minimum29 are not observed54 count."
+    },
+    {
+      "id": "device_build_and_ipa_packaging",
+      "required": true,
+      "owner": "Root original workflow",
+      "execution": "Original project_packaging request unchanged. Actual device build/IPA dyld validator must confirm repaired original ExpoWidgets boundary."
+    },
+    {
+      "id": "real_OS_scopes",
+      "required": true,
+      "owner": "Root/Mac original paired workflow",
+      "scopes": {
+        "miniapp_shortcuts_os": 4,
+        "miniapp_widget_recovery_os": 1,
+        "miniapp_shortcut_concurrency_os": 2,
+        "miniapp_system_surfaces_os": 10,
+        "miniapp_studio_gallery_os": 5
+      },
+      "execution": "Separate original-companion native/UI gates. Concurrency2 covers NS owner/three backgrounds only. Studio5 does not close all Task10 editor/account-conflict criteria."
+    },
+    {
+      "id": "scripting_reference_and_compiler",
+      "required": false,
+      "execution": "Both actual default flagsfalse; no frozen Scripting-JSC rerun justified solely by this route."
+    }
+  ],
+  "concurrency": "Exact90, paired54 and device have distinct groups. Default/platform/shell/MCP may share validation group; sequence. New same paired scope cancels predecessor. Root sole dispatcher.",
+  "hold": "Final production source freeze after HTTP/GC decision; no dispatch by this lane."
+}

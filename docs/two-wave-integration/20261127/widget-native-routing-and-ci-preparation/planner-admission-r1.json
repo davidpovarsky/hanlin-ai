@@ -1,0 +1,28 @@
+{
+  "status": "NOT_RUN",
+  "reason": "Controller source-binding preflight hit an unmaterialized unchanged workflow Git blob before invoking the original planner",
+  "job": {
+    "id": "job_275d5df6eb04",
+    "type": "job_result",
+    "source": "script_run@host_299cf75f6b338ecd",
+    "severity": "warning",
+    "tool": "script_run",
+    "host": "host_299cf75f6b338ecd",
+    "status": "failed",
+    "exit_code": 1,
+    "created_at": 1795769335.7067027,
+    "started_at": "2026-11-27T08:48:55.791740+00:00",
+    "finished_at": "2026-11-27T08:48:55.988976+00:00",
+    "duration_s": 0.2,
+    "error": null,
+    "output_truncated": false,
+    "timeout_s": 240,
+    "read": false,
+    "notified": {
+      "telegram": null,
+      "resend": null
+    },
+    "notify_spec": {},
+    "output": "Traceback (most recent call last):\n  File \"/var/lib/sentinelx/uploads/.sentinelx_uploads/script_job_687f7b28c5bc41d18f9901e0527f0c04/script.py\", line 8, in <module>\n    inputs=[{'path':p,'sha256':hashlib.sha256((r/p).read_bytes()).hexdigest()} for p in sourcefiles]\n                                              ^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/pathlib.py\", line 1021, in read_bytes\n    with self.open(mode='rb') as f:\n         ^^^^^^^^^^^^^^^^^^^^\n  File \"/usr/lib/python3.12/pathlib.py\", line 1015, in open\n    return io.open(self, mode, buffering, encoding, errors, newline)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/mnt/development/projects/worktrees/hanlin-two-wave-integration-20261126/.github/workflows/build-ios26-unsigned-ipa.yml'"
+  }
+}

@@ -1,0 +1,42 @@
+{
+  "schema": 1,
+  "sourceBase": "31d5b6780786b7bd3a6de5f3972ea1e6b6495ac4",
+  "sourcePatchSHA256": "f19735cd4b623435b2a9988fd8765d09d2cc06495b9e5a48e07d627275d5b7c1",
+  "command": [
+    "runuser",
+    "-u",
+    "chatgpt-agent",
+    "--",
+    "python3",
+    "-m",
+    "unittest",
+    "-v",
+    "Scripts.CI.Tests.test_affected_validation.AffectedValidationPlannerTests.test_original_widget_native_primitives_route_actual_consumers_and_packaging",
+    "Scripts.CI.Tests.test_affected_validation.ComprehensiveValidationInfrastructureTests.test_i_bounded_diagnostics_timeout",
+    "Scripts.CI.Tests.test_affected_validation.ComprehensiveValidationInfrastructureTests.test_n_workflow_safety_and_permissions"
+  ],
+  "startedAt": "2026-11-27T09:05:39.057986+00:00",
+  "finishedAt": "2026-11-27T09:05:39.374635+00:00",
+  "seconds": 0.317,
+  "exitCode": 0,
+  "priorOriginalRun": {
+    "total": 103,
+    "passed": 100,
+    "failures": 1,
+    "errors": 2
+  },
+  "rerunScope": "Only the corrected new manifest-union control and two original missing-workflow controls",
+  "nativeExecuted": false,
+  "files": [
+    {
+      "path": "focused-final3.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "focused-final3.stderr",
+      "bytes": 668,
+      "sha256": "07d01082383c90d0c5ae30362d77ed73b6ed1b81882fab72e85c87bcaeecdc42"
+    }
+  ]
+}

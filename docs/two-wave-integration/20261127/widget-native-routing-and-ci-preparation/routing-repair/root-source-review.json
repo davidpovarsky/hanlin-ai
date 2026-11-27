@@ -1,0 +1,36 @@
+{
+  "atUTC": "2026-11-27T09:08:20.332130+00:00",
+  "rootHead": "c4232e86d4f359b84add2091d934f079c17fe587",
+  "candidate": "6aa3da405bf555863f81d24c45f1392081dd94ec",
+  "sourcePatchSHA256": "f19735cd4b623435b2a9988fd8765d09d2cc06495b9e5a48e07d627275d5b7c1",
+  "review": "APPROVED_SOURCE",
+  "original101MethodASTsEqual": true,
+  "twoAdditiveMethods": [
+    "test_original_widget_native_primitives_route_actual_consumers_and_packaging",
+    "test_unowned_widget_native_sibling_still_fails_closed"
+  ],
+  "originalMapEqualAfterRemovingNewOwner": true,
+  "owner": {
+    "description": "Original native SwiftUI primitives shared by original ExpoWidgets and prepared widgets; preserve native renderer/action consumers and packaged extension closure",
+    "patterns": [
+      "Packages/HanlinExpoWidgetSubset/Package.swift",
+      "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/**"
+    ],
+    "direct_validation_groups": [
+      "app_unit_tests",
+      "runtimecore_host",
+      "simulator_targeted_ui",
+      "device_build",
+      "ipa_packaging"
+    ],
+    "unit_suites": [
+      "AI_HLYTests/HanlinNativeWidgetRendererTests",
+      "AI_HLYTests/HanlinOriginalExpoWidgetTests"
+    ],
+    "ui_suites": [
+      "AI_HLYUITests/HanlinExpoProductionE2ETests/testNativeExpoWidgetSourceActionsWithHostTerminated"
+    ],
+    "consumers": []
+  },
+  "qualification": "Correct bounded source owner selects actual original renderer/action/UI, Host and unchanged device/IPA gates. Manifest test preserves exact union with pre-existing broad manifest owner; unknown sibling tests remain fail-closed. Owner-reported focused100pass plus3resolved controls; full unforced planner outcome pending. No native PASS inferred."
+}

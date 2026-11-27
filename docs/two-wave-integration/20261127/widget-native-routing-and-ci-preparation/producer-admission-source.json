@@ -1,0 +1,1035 @@
+{
+  "source": "31d5b6780786b7bd3a6de5f3972ea1e6b6495ac4",
+  "consumerJobs": [
+    {
+      "workflow": ".github/workflows/build-ios26-unsigned-ipa.yml",
+      "workflowSHA256": "f88489d966e676b051076898eccf8c56b4bdeca689d92846240fbf286d6952e6",
+      "job": "skill-format-app-resolution",
+      "jobIf": "${{ inputs.target_validation_group == 'skill_format_app_resolve' && !inputs.testflight_upload }}",
+      "env": null,
+      "steps": [
+        {
+          "name": "Stage existing pinned native binary targets",
+          "timeout-minutes": "12",
+          "run": "set -euo pipefail\nSECONDS=0\ntrap 'echo \"$SECONDS\" > build/skill-format-app-resolution/native-staging-duration-seconds.txt' EXIT\n{\n  npm run prepare:ios-dependencies --prefix Scripts/NativeScript\n  node Scripts/MiniApps/install-tooling.mjs --engine=expo\n  node Scripts/Expo/prepare-ios-dependencies.mjs\n} 2>&1 | tee build/skill-format-app-resolution/native-staging.log\n"
+        }
+      ]
+    },
+    {
+      "workflow": ".github/workflows/build-ios26-unsigned-ipa.yml",
+      "workflowSHA256": "f88489d966e676b051076898eccf8c56b4bdeca689d92846240fbf286d6952e6",
+      "job": "build-ios26-unsigned-ipa",
+      "jobIf": "${{ inputs.target_validation_group != 'skill_format_app_resolve' && (inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && (needs.plan-affected-validation.outputs.run_device_build == 'true'))) ) }}",
+      "env": {
+        "PROJECT_PATH": "AI_HLY.xcodeproj",
+        "SCHEME_NAME": "AI_HLY",
+        "APP_NAME": "AI_Hanlin",
+        "CONFIGURATION": "Release",
+        "DERIVED_DATA_PATH": "build/DerivedData",
+        "CLONED_PACKAGES_PATH": "build/SourcePackages",
+        "LOG_DIR": "build-logs",
+        "IPA_NAME": "AI_Hanlin-iOS26-unsigned.ipa",
+        "IOS_DEPLOYMENT_TARGET": "27.0"
+      },
+      "steps": [
+        {
+          "name": "Prepare resolved original MiniApp native dependencies",
+          "run": "set -euxo pipefail\nmkdir -p \"$LOG_DIR\"\nnode Scripts/MiniApps/install-tooling.mjs --engine=nativescript --ignore-scripts\nnpm run prepare:ios-dependencies --prefix Scripts/NativeScript\nnode Scripts/NativeScript/prepare-fixture.mjs\nnpm run preflight:ios-dependencies --prefix Scripts/NativeScript\nnode Scripts/MiniApps/install-tooling.mjs --engine=expo\nnode Scripts/Expo/prepare-ios-dependencies.mjs\nnode Scripts/Expo/prepare-types.mjs\nnode Scripts/Expo/build-probe.mjs\n"
+        },
+        {
+          "name": "Verify MCP host on pinned Node 24.5.0",
+          "run": "set -euxo pipefail\ntest \"$(node --version)\" = \"v24.5.0\"\n# The canonical preparer supplies audited Yarn patches, grammar tools,\n# original fixtures and the full Host tests before producing this archive.\nbash Scripts/Runtime/prepare-runtime-host.sh \\\n  2>&1 | tee \"$LOG_DIR/04-mcp-host-prepare.log\"\nverification_root=\"$(mktemp -d \"$RUNNER_TEMP/mcp-host-verification.XXXXXX\")\"\ntrap 'rm -rf \"$verification_root\"' EXIT\npython3 -m zipfile -e build/runtime-host/RuntimeHostResources.zip \"$verification_root\"\ncp -R AI_HLY/Downstream/RuntimeCore/Node/Host/Tests \"$verification_root/Tests\"\nexport HANLIN_RUNTIME_TEST_FIXTURES=\"$GITHUB_WORKSPACE/AI_HLYTests/Fixtures/RuntimeNetworkFixtures.bundle\"\nnpm run test:integration --prefix \"$verification_root\" \\\n  2>&1 | tee \"$LOG_DIR/04-mcp-server-everything-integration.log\"\nnode Scripts/Runtime/validate-mcp-install-dedup.mjs \\\n  2>&1 | tee \"$LOG_DIR/04-mcp-install-dedup.log\"\n"
+        },
+        {
+          "name": "Package current RuntimeCore host resources",
+          "run": "set -euxo pipefail\nbash Scripts/Runtime/prepare-runtime-host.sh 2>&1 | tee \"$LOG_DIR/04-package-runtime-host.log\"\ncp build/runtime-host/RuntimeHostResources.zip AI_HLY/RuntimeHostResources.zip\nunzip -Z1 AI_HLY/RuntimeHostResources.zip | grep -Fx 'runtime-probe.mjs'\nunzip -p AI_HLY/RuntimeHostResources.zip server-worker.mjs | grep -F 'registerHooks'\nunzip -p AI_HLY/RuntimeHostResources.zip package-compatibility.mjs | grep -F 'inspectArchiveSafety'\n"
+        }
+      ]
+    },
+    {
+      "workflow": ".github/workflows/build-ios26-unsigned-ipa.yml",
+      "workflowSHA256": "f88489d966e676b051076898eccf8c56b4bdeca689d92846240fbf286d6952e6",
+      "job": "full-app-simulator-smoke",
+      "jobIf": "${{ inputs.target_validation_group != 'skill_format_app_resolve' && (inputs.target_validation_group != 'composer_native_host_diagnostic' && (inputs.target_validation_group != 'composer_sdk_eligibility_diagnostic' && (inputs.target_validation_group != 'composer_metadata_only' && (needs.plan-affected-validation.outputs.run_simulator_job == 'true'))) ) }}",
+      "env": {
+        "PROJECT_PATH": "AI_HLY.xcodeproj",
+        "SCHEME_NAME": "AI_HLY",
+        "CONFIGURATION": "${{ needs.plan-affected-validation.outputs.simulator_configuration || ((inputs.fast_validation_only || inputs.nativescript_poc_only) && 'Debug' || 'Release') }}",
+        "DERIVED_DATA_PATH": "build/SimulatorDerivedData",
+        "CLONED_PACKAGES_PATH": "build/SourcePackages",
+        "LOG_DIR": "simulator-logs",
+        "IOS_DEPLOYMENT_TARGET": "27.0",
+        "FAST_VALIDATION_ONLY": "${{ inputs.fast_validation_only }}",
+        "NATIVESCRIPT_POC_ONLY": "${{ inputs.nativescript_poc_only }}",
+        "SIMULATOR_E2E_ONLY": "${{ inputs.simulator_e2e_only }}",
+        "RUN_FULL_VALIDATION": "${{ needs.plan-affected-validation.outputs.run_full_validation }}",
+        "RUN_NATIVESCRIPT_DEPENDENCIES": "${{ needs.plan-affected-validation.outputs.run_nativescript_dependencies }}",
+        "RUN_RUNTIME_HOST": "${{ needs.plan-affected-validation.outputs.run_runtimecore_host }}",
+        "RUN_SIMULATOR_UNIT": "${{ needs.plan-affected-validation.outputs.run_simulator_unit }}",
+        "SIMULATOR_UNIT_FILTER": "${{ needs.plan-affected-validation.outputs.simulator_unit_filter }}",
+        "RUN_SIMULATOR_SCRIPTING_ACCEPTANCE": "${{ needs.plan-affected-validation.outputs.run_simulator_scripting_acceptance }}",
+        "RUN_SIMULATOR_TARGETED_UI": "${{ needs.plan-affected-validation.outputs.run_simulator_targeted_ui }}",
+        "SIMULATOR_UI_FILTER": "${{ needs.plan-affected-validation.outputs.simulator_ui_filter }}",
+        "STAGE_SCRIPTUI_FIXTURES": "${{ needs.plan-affected-validation.outputs.stage_scriptui_fixtures }}",
+        "SIMULATOR_BUILD_FOR_TESTING_ARGS": "${{ needs.plan-affected-validation.outputs.simulator_build_for_testing_args }}",
+        "RUN_SIMULATOR_SHELL_ACCEPTANCE": "${{ needs.plan-affected-validation.outputs.run_simulator_shell_acceptance }}",
+        "RUN_SIMULATOR_MCP_ACCEPTANCE": "${{ needs.plan-affected-validation.outputs.run_simulator_mcp_acceptance }}",
+        "RUN_SIMULATOR_SMOKE_LAUNCH": "${{ needs.plan-affected-validation.outputs.run_simulator_smoke_launch }}",
+        "RUN_SIMULATOR_NATIVESCRIPT_POC": "${{ needs.plan-affected-validation.outputs.run_simulator_nativescript_poc }}",
+        "RUN_RUNTIME_TOOLING_FULL_ACCEPTANCE": "${{ needs.plan-affected-validation.outputs.run_runtime_tooling_full_acceptance }}"
+      },
+      "steps": [
+        {
+          "name": "Prepare resolved original MiniApp native dependencies",
+          "run": "set -euxo pipefail\nmkdir -p \"$LOG_DIR\"\nnode Scripts/MiniApps/install-tooling.mjs --engine=nativescript --ignore-scripts\nnpm run prepare:ios-dependencies --prefix Scripts/NativeScript\nnode Scripts/MiniApps/install-tooling.mjs --engine=expo\nnode Scripts/Expo/prepare-ios-dependencies.mjs\nnode Scripts/Expo/prepare-types.mjs\nnode Scripts/Expo/build-probe.mjs\nif [ \"$RUN_NATIVESCRIPT_DEPENDENCIES\" = \"true\" ] || [ \"$RUN_FULL_VALIDATION\" = \"true\" ] || [ \"$RUN_SIMULATOR_NATIVESCRIPT_POC\" = \"true\" ] || [ \"${{ inputs.nativescript_poc_only }}\" = \"true\" ]; then\n  node Scripts/NativeScript/prepare-fixture.mjs\n  npm run prepare:production-package --prefix Scripts/NativeScript\n  (\n    cd build/NativeScriptE2E/swiftui-package\n    zip -qry ../HanlinNativeScriptSwiftUI.hanlinNativeScript *\n  )\n  (\n    cd build/NativeScriptE2E/core-package\n    zip -qry ../HanlinNativeScriptCore.hanlinNativeScript *\n  )\n  (\n    cd build/NativeScriptE2E/unsupported-package\n    zip -qry ../HanlinNativeScriptUnsupported.hanlinNativeScript *\n  )\n  (\n    cd build/NativeScriptE2E/malformed\n    zip -qry ../HanlinNativeScriptMalformed.hanlinNativeScript *\n  )\n  test -s build/NativeScriptE2E/HanlinNativeScriptSwiftUI.hanlinNativeScript\n  test -s build/NativeScriptE2E/HanlinNativeScriptCore.hanlinNativeScript\n  test -s build/NativeScriptE2E/HanlinNativeScriptUnsupported.hanlinNativeScript\n  test -s build/NativeScriptE2E/HanlinNativeScriptMalformed.hanlinNativeScript\n  test -s build/NativeScriptE2E/sefaria-reader-core.hanlinNativeScript\n  test -s build/NativeScriptE2E/core-unbundled.hanlinNativeScript\n  test -s build/NativeScriptE2E/uikit-tabbar-bridge.hanlinNativeScript\n  test -s build/NativeScriptE2E/core-fixture-a-tabview.hanlinNativeScript\n  test -s build/NativeScriptE2E/core-fixture-b-frame.hanlinNativeScript\n  test -s build/NativeScriptE2E/core-fixture-c-tabview-frame.hanlinNativeScript\n  test -s build/NativeScriptE2E/hanlin-script-parity.hanlinNativeScript\n  npm run preflight:ios-dependencies --prefix Scripts/NativeScript\nelse\n  echo \"Skipping heavy NativeScript E2E fixture generation and preflight for non-NativeScript run.\"\nfi\n"
+        },
+        {
+          "name": "Package current RuntimeCore host resources",
+          "run": "set -euxo pipefail\nbash Scripts/Runtime/prepare-runtime-host.sh 2>&1 | tee \"$LOG_DIR/03-package-runtime-host.log\"\ncp build/runtime-host/RuntimeHostResources.zip AI_HLY/RuntimeHostResources.zip\nfind build/SimulatorDerivedData -name \"RuntimeHostResources.zip\" -path \"*/AI_Hanlin.app/*\" -delete || true\n"
+        }
+      ]
+    },
+    {
+      "workflow": ".github/workflows/validate-app-split.yml",
+      "workflowSHA256": "3e80e9ec8dda042a80a51f6bc9e346cbbf14511b9fff3b8a711105d3b317b131",
+      "job": "miniapps",
+      "jobIf": "${{ !inputs.audit_release_resources && !inputs.prepare_miniapps_registration && !(inputs.paired_product_acceptance && (inputs.paired_test_scope == 'miniapp_contracts' || inputs.paired_test_scope == 'miniapp_lifecycle' || inputs.paired_test_scope == 'miniapp_scriptwidget')) }}",
+      "env": {
+        "SPLIT_EVIDENCE": "${{ github.workspace }}/build/app-split-evidence",
+        "GH_TOKEN": "${{ github.token }}",
+        "RUNTIME_CORE_ARTIFACT_RUN_ID": "${{ inputs.runtime_bundle_artifact_run_id }}",
+        "HOST_PROOF_RUN_ID": "${{ inputs.host_proof_run_id }}",
+        "FOREGROUND_PROOF_RUN_ID": "${{ inputs.paired_product_acceptance && inputs.foreground_proof_run_id || '' }}",
+        "PAIRED_PROOF_REUSE_REQUIRED": "${{ inputs.paired_product_acceptance && inputs.host_proof_run_id != '' && inputs.foreground_proof_run_id != '' }}",
+        "SPLIT_DERIVED_DATA": "${{ github.workspace }}/build/AppSplitDerivedData",
+        "SPLIT_NATIVE_TEST_SCOPE": "${{ inputs.native_test_scope || 'baseline' }}"
+      },
+      "steps": [
+        {
+          "name": "Validate authentic unchanged Host and foreground proofs before reuse",
+          "if": "${{ !inputs.signed_release_archives }}",
+          "id": "host-proof",
+          "shell": "bash",
+          "run": "python3 Scripts/ProductSplit/restore_host_proof.py"
+        },
+        {
+          "name": "Prepare existing native dependencies and Runtime host",
+          "id": "split-native-preparation",
+          "if": "${{ !inputs.signing_preflight_only }}",
+          "shell": "bash",
+          "run": "set -euo pipefail\nsplit_phase_start=$SECONDS\ntrap 'printf \"%s\\n\" \"$(( SECONDS - split_phase_start ))\" > \"$SPLIT_EVIDENCE/native-dependencies-duration-seconds.txt\"' EXIT\n{\nnode Scripts/MiniApps/install-tooling.mjs --engine=nativescript --ignore-scripts\nnpm run prepare:ios-dependencies --prefix Scripts/NativeScript\nnode Scripts/MiniApps/install-tooling.mjs --engine=expo --ignore-scripts\nnode Scripts/Expo/prepare-ios-dependencies.mjs\nnode Scripts/Expo/prepare-types.mjs\nnode Scripts/Expo/build-probe.mjs\nnode Scripts/ExpoNativeAPI/build-probes.mjs\nbash Scripts/Runtime/prepare-runtime-core.sh\nbash Scripts/Runtime/prepare-runtime-host.sh\ncp build/runtime-host/RuntimeHostResources.zip AI_HLY/RuntimeHostResources.zip\n# Check the actual public guide blocks against the exact SDK in the verified shipping ZIP.\n# Static authoring checks do not imply a MiniApp launched or a native service executed.\nnode Scripts/MiniApps/check-authoring-examples.mjs --sdk-archive build/runtime-host/RuntimeHostResources.zip --require-sdk-docs --report \"$SPLIT_EVIDENCE/miniapp-documentation-snippets.json\"\n# The verified ZIP above is the shipping payload. The lifecycle check's\n# temporary npm tree must not enter Xcode's synchronized app resources.\nrm -rf AI_HLY/Downstream/RuntimeCore/Node/Host/node_modules\ntest ! -e AI_HLY/Downstream/RuntimeCore/Node/Host/node_modules\ncat > Config.xcconfig <<'EOF'\nSWIFT_ENABLE_EXPLICIT_MODULES = NO\nSWIFT_OBJC_INTEROP_MODE = objcxx\nCLANG_CXX_LANGUAGE_STANDARD = gnu++20\nCLANG_ALLOW_NON_MODULAR_INCLUDES_IN_FRAMEWORK_MODULES = YES\nCLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO\nEOF\n} 2>&1 | tee \"$SPLIT_EVIDENCE/native-dependencies.log\"\n"
+        },
+        {
+          "name": "Exercise actual request, return, cancellation and transfer across both products",
+          "id": "split-paired-acceptance",
+          "if": "${{ inputs.paired_product_acceptance && !inputs.signed_release_archives }}",
+          "shell": "bash",
+          "env": {
+            "PAIRED_TEST_SCOPE": "${{ inputs.paired_test_scope || 'cross_product' }}"
+          },
+          "run": "python3 Scripts/ProductSplit/run_paired_acceptance.py"
+        }
+      ]
+    }
+  ],
+  "sourceExcerpts": [
+    {
+      "path": "Scripts/Runtime/prepare-runtime-host.sh",
+      "sha256": "af0fda26d53a6b72b495a73e104835af176dccfc39cda2d5bcfffa3f7a04cbd6",
+      "lines": [
+        {
+          "line": 1,
+          "text": "#!/usr/bin/env bash"
+        },
+        {
+          "line": 2,
+          "text": "set -euo pipefail"
+        },
+        {
+          "line": 3,
+          "text": ""
+        },
+        {
+          "line": 4,
+          "text": "readonly SCRIPT_DIR=\"$(cd \"$(dirname \"${BASH_SOURCE[0]}\")\" && pwd)\""
+        },
+        {
+          "line": 5,
+          "text": "readonly REPOSITORY_ROOT=\"$(cd \"${SCRIPT_DIR}/../..\" && pwd)\""
+        },
+        {
+          "line": 6,
+          "text": "readonly HOST_SOURCE=\"${REPOSITORY_ROOT}/AI_HLY/Downstream/RuntimeCore/Node/Host\""
+        },
+        {
+          "line": 7,
+          "text": "readonly WORK_ROOT=\"${RUNNER_TEMP:-${TMPDIR:-/tmp}}/hanlin-runtime-host\""
+        },
+        {
+          "line": 8,
+          "text": "readonly OUTPUT_ROOT=\"${REPOSITORY_ROOT}/build/runtime-host\""
+        },
+        {
+          "line": 9,
+          "text": "readonly GRAMMAR_TOOL_ROOT=\"${WORK_ROOT}-grammar-tools\""
+        },
+        {
+          "line": 10,
+          "text": ""
+        },
+        {
+          "line": 11,
+          "text": "# MiniApp authoring consumes the same original npm packages as the native host."
+        },
+        {
+          "line": 12,
+          "text": "# This is included with the tool implementation, not installed during an agent run."
+        },
+        {
+          "line": 13,
+          "text": "# Refresh documentation from the prepared native inputs before any SDK/Host reuse"
+        },
+        {
+          "line": 14,
+          "text": "# fingerprint; a cache hit must not preserve provenance from an earlier graph."
+        },
+        {
+          "line": 15,
+          "text": "if [[ -f \"${HOST_SOURCE}/miniapp-authoring.mjs\" ]]; then"
+        },
+        {
+          "line": 16,
+          "text": "  for engine in expo nativescript; do"
+        },
+        {
+          "line": 17,
+          "text": "    node \"${REPOSITORY_ROOT}/Scripts/MiniApps/install-tooling.mjs\" --repository=\"${REPOSITORY_ROOT}\" --engine=\"$engine\" --ignore-scripts"
+        },
+        {
+          "line": 18,
+          "text": "  done"
+        },
+        {
+          "line": 19,
+          "text": "  node \"${REPOSITORY_ROOT}/Scripts/Expo/prepare-types.mjs\""
+        },
+        {
+          "line": 20,
+          "text": "  node \"${REPOSITORY_ROOT}/Scripts/MiniApps/generate-scriptwidget-types.mjs\" --check"
+        },
+        {
+          "line": 21,
+          "text": "  node \"${REPOSITORY_ROOT}/Scripts/Audit/audit-miniapp-sdk.mjs\" --write"
+        },
+        {
+          "line": 22,
+          "text": "  node \"${REPOSITORY_ROOT}/Scripts/Audit/audit-miniapp-sdk.mjs\" --check"
+        },
+        {
+          "line": 23,
+          "text": "  python3 \"${REPOSITORY_ROOT}/Scripts/Audit/audit_miniapp_reachability.py\""
+        },
+        {
+          "line": 24,
+          "text": "  python3 \"${REPOSITORY_ROOT}/Scripts/Audit/audit_miniapp_reachability.py\" --check"
+        },
+        {
+          "line": 25,
+          "text": "fi"
+        },
+        {
+          "line": 26,
+          "text": ""
+        },
+        {
+          "line": 27,
+          "text": "readonly NODE_FINGERPRINT=\"$(node -p 'JSON.stringify({ versions: process.versions, platform: process.platform, arch: process.arch })')\""
+        },
+        {
+          "line": 28,
+          "text": "if python3 \"${SCRIPT_DIR}/runtime_host_archive.py\" reuse \"${OUTPUT_ROOT}\" --source-root \"${HOST_SOURCE}\" --node-fingerprint \"${NODE_FINGERPRINT}\"; then"
+        },
+        {
+          "line": 29,
+          "text": "  echo \"Reusing verified current RuntimeHostResources.zip and its completed Host/JITless checks.\""
+        },
+        {
+          "line": 30,
+          "text": "  exit 0"
+        },
+        {
+          "line": 31,
+          "text": "fi"
+        },
+        {
+          "line": 32,
+          "text": ""
+        },
+        {
+          "line": 33,
+          "text": "rm -rf \"${WORK_ROOT}\" \"${OUTPUT_ROOT}\" \"${GRAMMAR_TOOL_ROOT}\""
+        },
+        {
+          "line": 34,
+          "text": "mkdir -p \"${WORK_ROOT}\" \"${OUTPUT_ROOT}\" \"${GRAMMAR_TOOL_ROOT}\""
+        },
+        {
+          "line": 35,
+          "text": "cp \"${SCRIPT_DIR}/HostGrammarTools/package.json\" \"${SCRIPT_DIR}/HostGrammarTools/package-lock.json\" \"${GRAMMAR_TOOL_ROOT}/\""
+        },
+        {
+          "line": 36,
+          "text": "(cd \"${GRAMMAR_TOOL_ROOT}\" && npm ci --ignore-scripts --workspaces=false --no-audit --no-fund)"
+        },
+        {
+          "line": 37,
+          "text": "export HANLIN_HOST_GRAMMAR_COMPILER_ROOT=\"${GRAMMAR_TOOL_ROOT}\""
+        },
+        {
+          "line": 38,
+          "text": "export HANLIN_MINIAPP_REPOSITORY_ROOT=\"${REPOSITORY_ROOT}\""
+        },
+        {
+          "line": 39,
+          "text": "export HANLIN_RUNTIME_TEST_FIXTURES=\"${REPOSITORY_ROOT}/AI_HLYTests/Fixtures/RuntimeNetworkFixtures.bundle\""
+        },
+        {
+          "line": 40,
+          "text": "cp \\"
+        },
+        {
+          "line": 41,
+          "text": "  \"${HOST_SOURCE}\"/*.mjs \\"
+        },
+        {
+          "line": 42,
+          "text": "  \"${HOST_SOURCE}/package.json\" \\"
+        },
+        {
+          "line": 43,
+          "text": "  \"${HOST_SOURCE}/package-lock.json\" \\"
+        },
+        {
+          "line": 44,
+          "text": "  \"${HOST_SOURCE}/runtime-dependency-overrides.json\" \\"
+        },
+        {
+          "line": 45,
+          "text": "  \"${HOST_SOURCE}/host-dependency-patches.json\" \\"
+        },
+        {
+          "line": 46,
+          "text": "  \"${HOST_SOURCE}/UNICODE-LICENSE.txt\" \\"
+        },
+        {
+          "line": 47,
+          "text": "  \"${HOST_SOURCE}/PEGJS-LICENSE.txt\" \\"
+        },
+        {
+          "line": 48,
+          "text": "  \"${WORK_ROOT}/\""
+        },
+        {
+          "line": 49,
+          "text": "cp -R \"${HOST_SOURCE}/Tests\" \"${WORK_ROOT}/Tests\""
+        },
+        {
+          "line": 50,
+          "text": ""
+        },
+        {
+          "line": 51,
+          "text": "if [[ -f \"${HOST_SOURCE}/miniapp-authoring.mjs\" ]]; then"
+        },
+        {
+          "line": 52,
+          "text": "  node \"${REPOSITORY_ROOT}/Scripts/MiniApps/stage-sdk.mjs\" --repository=\"${REPOSITORY_ROOT}\" --output=\"${WORK_ROOT}/MiniAppSDK\""
+        },
+        {
+          "line": 53,
+          "text": "fi"
+        },
+        {
+          "line": 54,
+          "text": ""
+        },
+        {
+          "line": 55,
+          "text": "readonly SOURCE_INPUTS_HASH=\"$(python3 \"${SCRIPT_DIR}/runtime_host_archive.py\" fingerprint --source-root \"${HOST_SOURCE}\" --node-fingerprint \"${NODE_FINGERPRINT}\")\""
+        },
+        {
+          "line": 56,
+          "text": ""
+        },
+        {
+          "line": 57,
+          "text": "("
+        },
+        {
+          "line": 58,
+          "text": "  cd \"${WORK_ROOT}\""
+        },
+        {
+          "line": 59,
+          "text": "  npm ci --omit=dev --ignore-scripts --workspaces=false --no-audit --no-fund"
+        },
+        {
+          "line": 60,
+          "text": "  node apply-host-dependency-patches.mjs"
+        }
+      ]
+    },
+    {
+      "path": "Scripts/ProductSplit/restore_host_proof.py",
+      "sha256": "9f76722ff6518454ccb18ed57993c5962a489bc70345512652dcc88adb2202c8",
+      "lines": [
+        {
+          "line": 68,
+          "text": "                raw[name] = packed.read('app-split-evidence/'+name).decode()"
+        },
+        {
+          "line": 69,
+          "text": "        current = output('sw_vers')+output('uname','-m')+output('xcodebuild','-version')"
+        },
+        {
+          "line": 70,
+          "text": "        if not ' '.join(raw['preflight.log'].split()).startswith(' '.join(current.split())+' '):"
+        },
+        {
+          "line": 71,
+          "text": "            raise ValueError('Mac OS/architecture/Xcode fingerprint changed')"
+        },
+        {
+          "line": 72,
+          "text": "        focused, complete = summary(raw['package-lifecycle.log']), summary(raw['native-dependencies.log'])"
+        },
+        {
+          "line": 73,
+          "text": "        if focused != {'tests':7,'pass':7,'fail':0,'skipped':0} or complete != {'tests':153,'pass':152,'fail':0,'skipped':1}:"
+        },
+        {
+          "line": 74,
+          "text": "            raise ValueError('Original exact Host case counts changed or were incomplete')"
+        },
+        {
+          "line": 75,
+          "text": "        fingerprint = output('node','-p','JSON.stringify({versions:process.versions,platform:process.platform,arch:process.arch})').strip()"
+        },
+        {
+          "line": 76,
+          "text": "        subprocess.run(['python3','Scripts/Runtime/runtime_host_archive.py','reuse',str(host),"
+        },
+        {
+          "line": 77,
+          "text": "                        '--node-fingerprint',fingerprint],cwd=ROOT,check=True)"
+        },
+        {
+          "line": 78,
+          "text": "        # The existing verifier checks every Host/test/fixture/build input,"
+        },
+        {
+          "line": 79,
+          "text": "        # complete Node fingerprint, archive checksum and actual packed modules."
+        },
+        {
+          "line": 80,
+          "text": "        destination = ROOT/'build/runtime-host'"
+        },
+        {
+          "line": 81,
+          "text": "        destination.mkdir(parents=True,exist_ok=True)"
+        },
+        {
+          "line": 82,
+          "text": "        for source in host.iterdir():"
+        },
+        {
+          "line": 83,
+          "text": "            target = destination/source.name"
+        },
+        {
+          "line": 84,
+          "text": "            if target.exists() and target.read_bytes() != source.read_bytes():"
+        },
+        {
+          "line": 85,
+          "text": "                raise ValueError('Existing prepared Host output differs; kept original files')"
+        },
+        {
+          "line": 86,
+          "text": "        for source in host.iterdir():"
+        },
+        {
+          "line": 87,
+          "text": "            shutil.copy2(source,destination/source.name)"
+        },
+        {
+          "line": 88,
+          "text": "        proof = EVIDENCE/'reused-host-origin'/run_id"
+        },
+        {
+          "line": 89,
+          "text": "        proof.mkdir(parents=True,exist_ok=True)"
+        },
+        {
+          "line": 90,
+          "text": "        for name, text in raw.items():"
+        },
+        {
+          "line": 127,
+          "text": "        raise ValueError('Original foreground53 report is incomplete or has the wrong source')"
+        },
+        {
+          "line": 128,
+          "text": "    preflight = member('app-split-evidence/preflight.log')"
+        },
+        {
+          "line": 129,
+          "text": "    if not ' '.join(preflight.decode().split()).startswith(' '.join(platform.split())+' '):"
+        },
+        {
+          "line": 130,
+          "text": "        raise ValueError('Foreground Mac OS/architecture/Xcode fingerprint changed')"
+        },
+        {
+          "line": 131,
+          "text": "    if report['toolchain'] != toolchain.strip() or report['compiler_tools'] != compiler_tools:"
+        },
+        {
+          "line": 132,
+          "text": "        raise ValueError('Foreground Swift version or actual compiler fingerprint changed')"
+        },
+        {
+          "line": 133,
+          "text": "    expected = {p.relative_to(ROOT).as_posix():hashlib.sha256(p.read_bytes()).hexdigest()"
+        },
+        {
+          "line": 134,
+          "text": "                for p in foreground_inputs()}"
+        },
+        {
+          "line": 135,
+          "text": "    if len(expected) != 35 or report.get('source_sha256') != expected:"
+        },
+        {
+          "line": 136,
+          "text": "        raise ValueError('Foreground source/test closure or content changed')"
+        },
+        {
+          "line": 137,
+          "text": "    binaries = report.get('binaries', [])"
+        },
+        {
+          "line": 138,
+          "text": "    if len(binaries) != 1 or binaries[0].get('group') != 'foreground':"
+        },
+        {
+          "line": 139,
+          "text": "        raise ValueError('Missing unique original foreground binary lineage')"
+        },
+        {
+          "line": 140,
+          "text": "    binary = binaries[0]"
+        },
+        {
+          "line": 141,
+          "text": "    origin_root = Path(binary['compile_event']['cwd'])"
+        },
+        {
+          "line": 142,
+          "text": "    def relative(record):"
+        },
+        {
+          "line": 143,
+          "text": "        return Path(record['path']).relative_to(origin_root).as_posix()"
+        },
+        {
+          "line": 305,
+          "text": ""
+        },
+        {
+          "line": 306,
+          "text": "def main():"
+        },
+        {
+          "line": 307,
+          "text": "    EVIDENCE.mkdir(parents=True,exist_ok=True)"
+        },
+        {
+          "line": 308,
+          "text": "    run_id = os.environ.get('HOST_PROOF_RUN_ID','')"
+        },
+        {
+          "line": 309,
+          "text": "    result = {'status':'NOT_REQUESTED','scope':'Host prerequisites only'}"
+        },
+        {
+          "line": 310,
+          "text": "    reused = False"
+        },
+        {
+          "line": 311,
+          "text": "    if run_id:"
+        },
+        {
+          "line": 312,
+          "text": "        try:"
+        },
+        {
+          "line": 313,
+          "text": "            result = restore(run_id)"
+        },
+        {
+          "line": 314,
+          "text": "            reused = True"
+        },
+        {
+          "line": 315,
+          "text": "        except Exception as error:"
+        },
+        {
+          "line": 316,
+          "text": "            result = {'status':'INVALIDATED','origin_run':run_id,"
+        },
+        {
+          "line": 317,
+          "text": "                      'reason':str(error),'next':'Execute actual affected Host prerequisites'}"
+        },
+        {
+          "line": 318,
+          "text": "    (EVIDENCE/'host-reuse.json').write_text(json.dumps(result,indent=2)+'\\n')"
+        },
+        {
+          "line": 319,
+          "text": "    with open(os.environ['GITHUB_OUTPUT'],'a') as stream:"
+        }
+      ]
+    },
+    {
+      "path": "Scripts/Runtime/runtime_host_archive.py",
+      "sha256": "c446a8bcd0bebb30193eab35e6588662d9c989c4e656be020259a94428c0c8c6",
+      "lines": [
+        {
+          "line": 21,
+          "text": "        raise ValueError(\"Invalid Host archive path\")"
+        },
+        {
+          "line": 22,
+          "text": "    return name"
+        },
+        {
+          "line": 23,
+          "text": ""
+        },
+        {
+          "line": 24,
+          "text": "def miniapp_sdk_inputs(source: Path) -> dict | None:"
+        },
+        {
+          "line": 25,
+          "text": "    if not (source / \"miniapp-authoring.mjs\").is_file():"
+        },
+        {
+          "line": 26,
+          "text": "        return None"
+        },
+        {
+          "line": 27,
+          "text": "    result = subprocess.run("
+        },
+        {
+          "line": 28,
+          "text": "        [\"node\", str(REPOSITORY / \"Scripts/MiniApps/stage-sdk.mjs\"), \"--fingerprint\"],"
+        },
+        {
+          "line": 29,
+          "text": "        capture_output=True, text=True, check=True)"
+        },
+        {
+          "line": 30,
+          "text": "    return json.loads(result.stdout)"
+        },
+        {
+          "line": 31,
+          "text": ""
+        },
+        {
+          "line": 32,
+          "text": "def validate_archive(archive: Path, source: Path, *, check_sources: bool = False) -> list[str]:"
+        },
+        {
+          "line": 33,
+          "text": "    errors = []"
+        },
+        {
+          "line": 34,
+          "text": "    try:"
+        },
+        {
+          "line": 35,
+          "text": "        manifest = json.loads((source / \"package.json\").read_text(encoding=\"utf-8\"))"
+        },
+        {
+          "line": 36,
+          "text": "        lock = json.loads((source / \"package-lock.json\").read_text(encoding=\"utf-8\"))"
+        },
+        {
+          "line": 37,
+          "text": "        with zipfile.ZipFile(archive) as packed:"
+        },
+        {
+          "line": 38,
+          "text": "            entries = {}"
+        },
+        {
+          "line": 39,
+          "text": "            for entry in packed.infolist():"
+        },
+        {
+          "line": 76,
+          "text": "                        raise ValueError(\"Invalid Host dependency patch path\")"
+        },
+        {
+          "line": 77,
+          "text": "                    if hashlib.sha256(read(name)).hexdigest() != patch[\"patchedSHA256\"]:"
+        },
+        {
+          "line": 78,
+          "text": "                        errors.append(\"Host dependency patch digest mismatch: \" + name)"
+        },
+        {
+          "line": 79,
+          "text": "            sdk_inputs = miniapp_sdk_inputs(source)"
+        },
+        {
+          "line": 80,
+          "text": "            if sdk_inputs is not None:"
+        },
+        {
+          "line": 81,
+          "text": "                sdk = json.loads(read(\"MiniAppSDK/miniapp-sdk.json\"))"
+        },
+        {
+          "line": 82,
+          "text": "                if sdk.get(\"schemaVersion\") != 1 or sdk.get(\"inputSHA256\") != sdk_inputs[\"sha256\"]:"
+        },
+        {
+          "line": 83,
+          "text": "                    errors.append(\"MiniApp SDK differs from current host source inputs\")"
+        },
+        {
+          "line": 84,
+          "text": "                if set(sdk.get(\"engines\", {})) != {\"expo\", \"nativescript\", \"scriptwidget\"}:"
+        },
+        {
+          "line": 85,
+          "text": "                    errors.append(\"MiniApp SDK is missing an active authoring engine\")"
+        },
+        {
+          "line": 86,
+          "text": "                for item in sdk.get(\"files\", []):"
+        },
+        {
+          "line": 87,
+          "text": "                    name = \"MiniAppSDK/\" + canonical_name(item[\"path\"])"
+        },
+        {
+          "line": 88,
+          "text": "                    if hashlib.sha256(read(name)).hexdigest() != item[\"sha256\"]:"
+        },
+        {
+          "line": 89,
+          "text": "                        errors.append(\"MiniApp SDK source digest mismatch: \" + name)"
+        },
+        {
+          "line": 90,
+          "text": "                for engine in sdk.get(\"engines\", {}).values():"
+        },
+        {
+          "line": 91,
+          "text": "                    for field in (\"tsconfigPath\", \"typescriptPath\"):"
+        },
+        {
+          "line": 92,
+          "text": "                        if \"MiniAppSDK/\" + canonical_name(engine[field]) not in entries:"
+        },
+        {
+          "line": 93,
+          "text": "                            errors.append(\"MiniApp SDK authoring resource missing: \" + engine[field])"
+        },
+        {
+          "line": 94,
+          "text": "            if check_sources:"
+        },
+        {
+          "line": 95,
+          "text": "                expected = {path.name: path.read_bytes() for path in source.glob(\"*.mjs\")}"
+        },
+        {
+          "line": 96,
+          "text": "                actual = {name for name in entries if \"/\" not in name and name.endswith(\".mjs\")}"
+        },
+        {
+          "line": 97,
+          "text": "                if actual != set(expected):"
+        },
+        {
+          "line": 98,
+          "text": "                    errors.append(\"Host module inventory differs from current source\")"
+        },
+        {
+          "line": 99,
+          "text": "                for name in actual & set(expected):"
+        },
+        {
+          "line": 100,
+          "text": "                    if read(name) != expected[name]:"
+        },
+        {
+          "line": 101,
+          "text": "                        errors.append(\"Host module differs from current source: \" + name)"
+        },
+        {
+          "line": 102,
+          "text": "    except (OSError, KeyError, ValueError, subprocess.CalledProcessError, zipfile.BadZipFile) as error:"
+        },
+        {
+          "line": 103,
+          "text": "        errors.append(\"Invalid/incomplete Host archive: \" + str(error))"
+        },
+        {
+          "line": 134,
+          "text": "        temporary.unlink(missing_ok=True)"
+        },
+        {
+          "line": 135,
+          "text": "    return \"updated source modules with unchanged locked dependencies\""
+        },
+        {
+          "line": 136,
+          "text": ""
+        },
+        {
+          "line": 137,
+          "text": "def input_hash(source: Path, node_fingerprint: str) -> str:"
+        },
+        {
+          "line": 138,
+          "text": "    digest = hashlib.sha256(json.dumps(json.loads(node_fingerprint), sort_keys=True).encode())"
+        },
+        {
+          "line": 139,
+          "text": "    sdk_inputs = miniapp_sdk_inputs(source)"
+        },
+        {
+          "line": 140,
+          "text": "    if sdk_inputs is not None:"
+        },
+        {
+          "line": 141,
+          "text": "        digest.update(b\"MiniAppSDK\\0\" + sdk_inputs[\"sha256\"].encode())"
+        },
+        {
+          "line": 142,
+          "text": "    files = []"
+        },
+        {
+          "line": 143,
+          "text": "    for directory, subdirectories, names in os.walk(source):"
+        },
+        {
+          "line": 144,
+          "text": "        subdirectories[:] = sorted(name for name in subdirectories if name not in {\"node_modules\", \".git\"})"
+        },
+        {
+          "line": 145,
+          "text": "        for name in sorted(names):"
+        },
+        {
+          "line": 146,
+          "text": "            if name != \".DS_Store\":"
+        },
+        {
+          "line": 147,
+          "text": "                path = Path(directory) / name"
+        },
+        {
+          "line": 148,
+          "text": "                files.append((path.relative_to(source).as_posix(), path))"
+        },
+        {
+          "line": 149,
+          "text": "    files += [(\"build/prepare-runtime-host.sh\", Path(__file__).with_name(\"prepare-runtime-host.sh\")),"
+        },
+        {
+          "line": 150,
+          "text": "              (\"build/runtime_host_archive.py\", Path(__file__)),"
+        },
+        {
+          "line": 151,
+          "text": "              (\"build/generate-yarn-unicode-patch.mjs\", Path(__file__).with_name(\"generate-yarn-unicode-patch.mjs\")),"
+        },
+        {
+          "line": 152,
+          "text": "              (\"build/generate-yarn-multiline-patch.mjs\", Path(__file__).with_name(\"generate-yarn-multiline-patch.mjs\"))]"
+        },
+        {
+          "line": 160,
+          "text": "        digest.update(name.encode() + b\"\\0\" + hashlib.sha256(path.read_bytes()).digest())"
+        },
+        {
+          "line": 161,
+          "text": "    return digest.hexdigest()"
+        },
+        {
+          "line": 162,
+          "text": ""
+        },
+        {
+          "line": 163,
+          "text": "def reusable_prepared_archive(output: Path, source: Path, fingerprint: str) -> bool:"
+        },
+        {
+          "line": 164,
+          "text": "    try:"
+        },
+        {
+          "line": 165,
+          "text": "        archive = output / \"RuntimeHostResources.zip\""
+        },
+        {
+          "line": 166,
+          "text": "        metadata = json.loads((output / \"host-metadata.json\").read_text(encoding=\"utf-8\"))"
+        },
+        {
+          "line": 167,
+          "text": "        return (metadata.get(\"sourceInputsHash\") == input_hash(source, fingerprint)"
+        },
+        {
+          "line": 168,
+          "text": "                and metadata.get(\"archiveSha256\") == hashlib.sha256(archive.read_bytes()).hexdigest()"
+        },
+        {
+          "line": 169,
+          "text": "                and metadata.get(\"tests\") == \"passed\""
+        },
+        {
+          "line": 170,
+          "text": "                and metadata.get(\"jitlessArchiveSmoke\") == \"passed\""
+        },
+        {
+          "line": 171,
+          "text": "                and not validate_archive(archive, source, check_sources=True))"
+        },
+        {
+          "line": 172,
+          "text": "    except (OSError, ValueError, subprocess.CalledProcessError):"
+        },
+        {
+          "line": 173,
+          "text": "        return False"
+        },
+        {
+          "line": 174,
+          "text": ""
+        },
+        {
+          "line": 175,
+          "text": "def main() -> int:"
+        },
+        {
+          "line": 176,
+          "text": "    parser = argparse.ArgumentParser()"
+        },
+        {
+          "line": 177,
+          "text": "    parser.add_argument(\"command\", choices=[\"validate\", \"sync\", \"fingerprint\", \"reuse\"])"
+        },
+        {
+          "line": 178,
+          "text": "    parser.add_argument(\"path\", nargs=\"?\", type=Path)"
+        },
+        {
+          "line": 179,
+          "text": "    parser.add_argument(\"--source-root\", type=Path, default=DEFAULT_SOURCE)"
+        },
+        {
+          "line": 180,
+          "text": "    parser.add_argument(\"--node-fingerprint\")"
+        },
+        {
+          "line": 181,
+          "text": "    options = parser.parse_args()"
+        },
+        {
+          "line": 182,
+          "text": "    source = options.source_root"
+        },
+        {
+          "line": 183,
+          "text": "    if options.command == \"fingerprint\":"
+        },
+        {
+          "line": 184,
+          "text": "        print(input_hash(source, options.node_fingerprint))"
+        },
+        {
+          "line": 185,
+          "text": "        return 0"
+        },
+        {
+          "line": 186,
+          "text": "    if options.command == \"reuse\":"
+        },
+        {
+          "line": 187,
+          "text": "        return 0 if reusable_prepared_archive(options.path, source, options.node_fingerprint) else 1"
+        },
+        {
+          "line": 188,
+          "text": "    if options.command == \"validate\":"
+        },
+        {
+          "line": 189,
+          "text": "        errors = validate_archive(options.path, source, check_sources=True)"
+        },
+        {
+          "line": 190,
+          "text": "        if errors:"
+        },
+        {
+          "line": 191,
+          "text": "            print(\"; \".join(errors), file=sys.stderr)"
+        },
+        {
+          "line": 192,
+          "text": "        return 1 if errors else 0"
+        },
+        {
+          "line": 193,
+          "text": "    def build():"
+        },
+        {
+          "line": 194,
+          "text": "        subprocess.run([\"bash\", str(Path(__file__).with_name(\"prepare-runtime-host.sh\"))], cwd=REPOSITORY, check=True)"
+        },
+        {
+          "line": 195,
+          "text": "        return REPOSITORY / \"build/runtime-host/RuntimeHostResources.zip\""
+        },
+        {
+          "line": 196,
+          "text": "    print(\"Runtime Host: \" + synchronize_archive(options.path, source, build))"
+        },
+        {
+          "line": 197,
+          "text": "    return 0"
+        },
+        {
+          "line": 198,
+          "text": ""
+        }
+      ]
+    }
+  ]
+}

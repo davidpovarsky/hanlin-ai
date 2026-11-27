@@ -1,0 +1,211 @@
+{
+  "source": "6aa3da405bf555863f81d24c45f1392081dd94ec",
+  "path": "Scripts/CI/plan_affected_validation.py",
+  "sha256": "267df1696402e912c330b726aa9c73b2a1b371d18b39a2717b77a8a2b310f021",
+  "excerpts": [
+    {
+      "line": 420,
+      "text": "            return \"Phase 1 Swift Package & Baseline Validation\""
+    },
+    {
+      "line": 421,
+      "text": "        return \"None (Documentation / Non-Runtime Change)\""
+    },
+    {
+      "line": 422,
+      "text": ""
+    },
+    {
+      "line": 423,
+      "text": "    def get_selected_tests(self) -> List[str]:"
+    },
+    {
+      "line": 424,
+      "text": "        tests = []"
+    },
+    {
+      "line": 425,
+      "text": "        unit_filter = self.step_outputs.get(\"simulator_unit_filter\", \"\")"
+    },
+    {
+      "line": 426,
+      "text": "        if unit_filter:"
+    },
+    {
+      "line": 427,
+      "text": "            tests.extend(u.strip() for u in unit_filter.split(\",\") if u.strip())"
+    },
+    {
+      "line": 428,
+      "text": "        ui_filter = self.step_outputs.get(\"simulator_ui_filter\", \"\")"
+    },
+    {
+      "line": 429,
+      "text": "        if ui_filter:"
+    },
+    {
+      "line": 430,
+      "text": "            tests.extend(u.strip() for u in ui_filter.split(\",\") if u.strip())"
+    },
+    {
+      "line": 431,
+      "text": "        if self.step_outputs.get(\"run_simulator_scripting_acceptance\"):"
+    },
+    {
+      "line": 432,
+      "text": "            tests.append(\"AI_HLYTests/HanlinScriptingAcceptanceTests\")"
+    },
+    {
+      "line": 433,
+      "text": "        if self.step_outputs.get(\"run_runtime_tooling_full_acceptance\"):"
+    },
+    {
+      "line": 434,
+      "text": "            tests.append(\"RuntimeToolingFullAcceptanceCollector\")"
+    },
+    {
+      "line": 435,
+      "text": "        return sorted(set(tests))"
+    },
+    {
+      "line": 1195,
+      "text": "    # 7. Formulate scoped build-for-testing arguments"
+    },
+    {
+      "line": 1196,
+      "text": "    build_for_testing_args: List[str] = []"
+    },
+    {
+      "line": 1197,
+      "text": "    if full_validation:"
+    },
+    {
+      "line": 1198,
+      "text": "        build_for_testing_args = [\"-only-testing:AI_HLYTests\", \"-only-testing:AI_HLYUITests\"]"
+    },
+    {
+      "line": 1199,
+      "text": "    else:"
+    },
+    {
+      "line": 1200,
+      "text": "        if step_outputs.get(\"run_simulator_unit\"):"
+    },
+    {
+      "line": 1201,
+      "text": "            unit_filter = step_outputs.get(\"simulator_unit_filter\", \"\")"
+    },
+    {
+      "line": 1202,
+      "text": "            for u in unit_filter.split(\",\"):"
+    },
+    {
+      "line": 1203,
+      "text": "                u = u.strip()"
+    },
+    {
+      "line": 1204,
+      "text": "                if u:"
+    },
+    {
+      "line": 1205,
+      "text": "                    build_for_testing_args.append(f\"-only-testing:{u}\")"
+    },
+    {
+      "line": 1206,
+      "text": "        if step_outputs.get(\"run_simulator_scripting_acceptance\"):"
+    },
+    {
+      "line": 1207,
+      "text": "            build_for_testing_args.append(\"-only-testing:AI_HLYTests/HanlinScriptingAcceptanceTests\")"
+    },
+    {
+      "line": 1208,
+      "text": "        if step_outputs.get(\"run_simulator_targeted_ui\"):"
+    },
+    {
+      "line": 1209,
+      "text": "            ui_filter = step_outputs.get(\"simulator_ui_filter\", \"\")"
+    },
+    {
+      "line": 1210,
+      "text": "            for s in ui_filter.split(\",\"):"
+    },
+    {
+      "line": 1211,
+      "text": "                s = s.strip()"
+    },
+    {
+      "line": 1212,
+      "text": "                if s:"
+    },
+    {
+      "line": 1213,
+      "text": "                    build_for_testing_args.append(f\"-only-testing:{s}\")"
+    },
+    {
+      "line": 1214,
+      "text": "        if step_outputs.get(\"run_runtime_tooling_full_acceptance\"):"
+    },
+    {
+      "line": 1250,
+      "text": "    for comp in components.values():"
+    },
+    {
+      "line": 1251,
+      "text": "        all_known_suites.update(comp.get(\"unit_suites\", []))"
+    },
+    {
+      "line": 1252,
+      "text": "        all_known_suites.update(comp.get(\"ui_suites\", []))"
+    },
+    {
+      "line": 1253,
+      "text": ""
+    },
+    {
+      "line": 1254,
+      "text": "    selected_tests_set = set()"
+    },
+    {
+      "line": 1255,
+      "text": "    unit_filter = step_outputs.get(\"simulator_unit_filter\", \"\")"
+    },
+    {
+      "line": 1256,
+      "text": "    if unit_filter:"
+    },
+    {
+      "line": 1257,
+      "text": "        selected_tests_set.update(u.strip() for u in unit_filter.split(\",\") if u.strip())"
+    },
+    {
+      "line": 1258,
+      "text": "    ui_filter = step_outputs.get(\"simulator_ui_filter\", \"\")"
+    },
+    {
+      "line": 1259,
+      "text": "    if ui_filter:"
+    },
+    {
+      "line": 1260,
+      "text": "        selected_tests_set.update(u.strip() for u in ui_filter.split(\",\") if u.strip())"
+    },
+    {
+      "line": 1261,
+      "text": "    if step_outputs.get(\"run_simulator_scripting_acceptance\"):"
+    },
+    {
+      "line": 1262,
+      "text": "        selected_tests_set.add(\"AI_HLYTests/HanlinScriptingAcceptanceTests\")"
+    },
+    {
+      "line": 1263,
+      "text": ""
+    },
+    {
+      "line": 1264,
+      "text": "    not_required_tests = sorted(all_known_suites - selected_tests_set)"
+    }
+  ]
+}
