@@ -1,0 +1,13 @@
+{
+  "runID": 45963272356,
+  "attempt": 1,
+  "source": "35d26911f70794a41361cee710b1fed24a35e269",
+  "originalRawLog": {
+    "bytes": 1036587,
+    "sha256": "c025761afe06b69a895bad9b698ed3dc6e6cba5c9daadadeca03eaef86a1bf88"
+  },
+  "startByteOffset": 1034208,
+  "terminalBytes": 2379,
+  "terminalSHA256": "0a1e22fc9a80ec8782f3a97b065a5af126133c5599f24d07c78e090f1cd1b9a3",
+  "scope": "Exact original failed terminal excerpt for local parser controls only; no new Swift execution."
+}

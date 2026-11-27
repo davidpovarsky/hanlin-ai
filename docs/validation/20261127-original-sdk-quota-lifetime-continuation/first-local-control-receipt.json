@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "-m",
+    "unittest",
+    "-v",
+    "test_control.py"
+  ],
+  "cwd": "/workspace/scratch/ae335eba85e3/hanlin-hosted-sdk-control/lifetime-continuation-after/Scripts/CI/SDKSourceValidation",
+  "startedAt": "2026-11-27T08:38:54.951635+00:00",
+  "seconds": 0.365258,
+  "exitCode": 0,
+  "log": "/workspace/scratch/ae335eba85e3/hanlin-hosted-sdk-control/lifetime-continuation-control-tests.log",
+  "logBytes": 3689,
+  "logSHA256": "d589540321d1b7340fb28c3fe2ae453e03be7076a809c68b3410096a10a7ab76",
+  "scope": "Actual Python controller/admission controls only; no Swift, Xcode, simulator or native execution."
+}

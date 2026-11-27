@@ -1,0 +1,30 @@
+{
+  "ref": "codex/hanlin-sdk-hosted-validation-20261127",
+  "inputs": {
+    "composer_validation_only": "false",
+    "nativescript_metadata_validation_only": "false",
+    "runtime_job_foundation_only": "false",
+    "markdown_renderer_validation_only": "false",
+    "code_fence_webkit_validation_only": "false",
+    "diagnostics_capture_validation_only": "false",
+    "testflight_upload": "false",
+    "runtime_bundle_only": "false",
+    "runtime_publish_release": "false",
+    "phase1_validation_only": "false",
+    "fast_validation_only": "false",
+    "nativescript_poc_only": "false",
+    "force_clean_build": "false",
+    "measure_warm_rebuild": "false",
+    "simulator_e2e_only": "false",
+    "full_validation": "false",
+    "scripting_package_test_filter": "",
+    "testflight_existing_build_number": "",
+    "testflight_audience_source_build": "",
+    "runtime_bundle_artifact_run_id": "",
+    "runtime_reuse_artifacts_run_id": "",
+    "compare_base_sha": "",
+    "target_validation_group": "agent_sdk_session_only_proof",
+    "exact_test_selector": "HanlinSDKQuotaWidgetsAfterAgent45954793309",
+    "composer_expected_sha": "0ae1920d316b9592cbad0462bea96a07fd1ca351"
+  }
+}

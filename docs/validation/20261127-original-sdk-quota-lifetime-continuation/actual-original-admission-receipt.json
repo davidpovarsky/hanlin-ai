@@ -1,0 +1,13 @@
+{
+  "argv": [
+    "/opt/codex/runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+    "/workspace/scratch/ae335eba85e3/hanlin-hosted-sdk-control/verify_lifetime_continuation_original.py"
+  ],
+  "startedAt": "2026-11-27T08:39:29.649510+00:00",
+  "seconds": 3.523795,
+  "exitCode": 0,
+  "log": "/workspace/scratch/ae335eba85e3/hanlin-hosted-sdk-control/lifetime-continuation-original-admission.log",
+  "logBytes": 198,
+  "logSHA256": "df6c5bb1b0f6f7bdc84e56b1a072f16a1e40a828d2a35487357d72a616fa4fcb",
+  "scope": "Actual immutable artifact admission using Python only; no Swift/native/product execution."
+}

@@ -1,0 +1,31 @@
+◇ Test run started.
+↳ Swift Standard Library Version: 6.4
+↳ Swift Compiler Version: 6.4.2
+↳ Testing Library Version: 2403
+↳ Target Platform: arm64e-apple-macos14.0
+↳ OS Version: 27.0.1 (26A434)
+◇ Suite "Original code-fence retained payload ownership" (aka 'ChatCodeFencePayloadRetentionTests') started.
+◇ Test simultaneousOwnersCannotExceedOneSharedQuota() started.
+◇ Test cacheEvictionDoesNotFreeInlineOwnershipAndRemountDoesNotDoubleCharge() started.
+◇ Test cancelledUnpublishedResultKeepsLeaseUntilActualWorkDrains() started.
+◇ Test byteAndCountExhaustionPreserveExistingPayloadAndPermitLaterReuse() started.
+◇ Test distinctBudgetsCannotAdoptAnAlreadyOwnedPayloadAndInvalidCostsDoNotOverflow() started.
+◇ Test countsUTF8OutputBytesOnceAcrossInlineAndExpandedCopies() started.
+✔ Test byteAndCountExhaustionPreserveExistingPayloadAndPermitLaterReuse() passed after 0.003 seconds.
+✔ Test countsUTF8OutputBytesOnceAcrossInlineAndExpandedCopies() passed after 0.003 seconds.
+✘ Test cacheEvictionDoesNotFreeInlineOwnershipAndRemountDoesNotDoubleCharge() recorded an issue at ChatCodeFencePayloadRetentionTests.swift:44:9: Expectation failed: budget.snapshot == .init(bytes: 0, payloads: 0)
+↳ budget.snapshot == .init(bytes: 0, payloads: 0): Swift.Bool → false
+↳   budget.snapshot: HanlinChatUI.ChatCodeFencePayloadRetention.Snapshot → Snapshot(bytes: 13, payloads: 1)
+↳     bytes: Swift.Int → 13
+↳     payloads: Swift.Int → 1
+↳   .init(bytes: 0, payloads: 0): HanlinChatUI.ChatCodeFencePayloadRetention.Snapshot → Snapshot(bytes: 0, payloads: 0)
+↳     bytes: Swift.Int → 0
+↳     payloads: Swift.Int → 0
+✔ Test simultaneousOwnersCannotExceedOneSharedQuota() passed after 0.006 seconds.
+✘ Test cacheEvictionDoesNotFreeInlineOwnershipAndRemountDoesNotDoubleCharge() failed after 0.006 seconds with 1 issue.
+✔ Test cancelledUnpublishedResultKeepsLeaseUntilActualWorkDrains() passed after 0.006 seconds.
+✔ Test distinctBudgetsCannotAdoptAnAlreadyOwnedPayloadAndInvalidCostsDoNotOverflow() passed after 0.006 seconds.
+✘ Suite "Original code-fence retained payload ownership" (aka 'ChatCodeFencePayloadRetentionTests') failed after 0.006 seconds with 1 issue.
+✘ Test run with 6 tests in 1 suite failed after 0.006 seconds with 1 issue.
+Note: Some test targets reported failures:
+  - HanlinChatUITests (Swift Testing)

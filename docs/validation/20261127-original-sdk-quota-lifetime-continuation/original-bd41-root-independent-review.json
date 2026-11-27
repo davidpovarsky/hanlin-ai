@@ -1,0 +1,32 @@
+{
+  "SwiftTestsThisReview": 0,
+  "baseControlSHA": "68151b7344645f1831e7683906e0d45e276cfd17",
+  "controlSHA": "bd41cf7878c5f4df117af7bfcb67636bdff2eafa",
+  "dispatchState": "NOT_YET_DISPATCHED",
+  "filesVerified": [
+    "Scripts/CI/SDKSourceValidation/Fixtures/original-45954793309-source-files.json",
+    "Scripts/CI/SDKSourceValidation/README.md",
+    "Scripts/CI/SDKSourceValidation/continuation.py",
+    "Scripts/CI/SDKSourceValidation/obligations.json",
+    "Scripts/CI/SDKSourceValidation/run.py",
+    "Scripts/CI/SDKSourceValidation/test_control.py",
+    "docs/validation/20261127-original-sdk-quota-continuation/actual-original-admission-receipt.json",
+    "docs/validation/20261127-original-sdk-quota-continuation/actual-original-admission.json",
+    "docs/validation/20261127-original-sdk-quota-continuation/literal-inverse-proof.json",
+    "docs/validation/20261127-original-sdk-quota-continuation/local-control-receipt.json",
+    "docs/validation/20261127-original-sdk-quota-continuation/local-control-tests.log",
+    "docs/validation/20261127-original-sdk-quota-continuation/original681-actual-failed-result.json",
+    "docs/validation/20261127-original-sdk-quota-continuation/original681-root-independent-review.json",
+    "docs/validation/20261127-original-sdk-quota-continuation/primary-source-delta-derivation.json",
+    "docs/validation/20261127-original-sdk-quota-continuation/source-intake.json"
+  ],
+  "fullOriginalInverses": 19,
+  "originalFilesFullyRestored": 5,
+  "originalFixtureSHA256": "75c8afbdff3bb555c1d285843fb6f071cee8471f7c0398e875a294bb3c75dacb",
+  "payloadOnlyChangesExactSourceRevision": true,
+  "portableControls": "14 actual PASS reused without rerun",
+  "review": "Exact single reviewed original quota test delta only; complete original Agent source and dependencies/products/commands remain bound to actual run45954793309. Original681 failure preserved. No prior quota acceptance reused; all six quota and two widget methods and iOS product remain required. Protected map key set fixed; new source cannot bypass Git immutable inventory, hash, artifact, parser or process safeguards.",
+  "schema": "root-quota-continuation-independent-review/v1",
+  "source": "35d26911f70794a41361cee710b1fed24a35e269",
+  "workflowByteIdentical": true
+}

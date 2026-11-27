@@ -1,0 +1,1482 @@
+{
+  "status": "PASS_ORIGINAL_ARTIFACT_CONTROL_ADMISSION_ONLY",
+  "currentSource": "0ae1920d316b9592cbad0462bea96a07fd1ca351",
+  "originalFailedRun": 45963272356,
+  "quotaAdmission": {
+    "parsed": {
+      "status": "REUSED_FIVE_ACTUAL_PASSES_FROM_ORIGINAL_FAILED_SIX_CASE_SUITE",
+      "suite": "ChatCodeFencePayloadRetentionTests",
+      "testModule": "HanlinChatUITests",
+      "methods": {
+        "countsUTF8OutputBytesOnceAcrossInlineAndExpandedCopies()": 1,
+        "byteAndCountExhaustionPreserveExistingPayloadAndPermitLaterReuse()": 1,
+        "cancelledUnpublishedResultKeepsLeaseUntilActualWorkDrains()": 1,
+        "distinctBudgetsCannotAdoptAnAlreadyOwnedPayloadAndInvalidCostsDoNotOverflow()": 1,
+        "simultaneousOwnersCannotExceedOneSharedQuota()": 1
+      },
+      "methodCount": 5,
+      "caseCount": 5,
+      "arguments": {},
+      "originalFailedMethod": "cacheEvictionDoesNotFreeInlineOwnershipAndRemountDoesNotDoubleCharge()",
+      "originalSuiteStatus": "FAILED",
+      "scope": "Five original named35d passes only; the failed cache fixture and whole original run are not relabeled.",
+      "evidenceOrigin": {
+        "runID": 45963272356,
+        "attempt": 1,
+        "jobID": 140385861324,
+        "source": "35d26911f70794a41361cee710b1fed24a35e269",
+        "controller": "bd41cf7878c5f4df117af7bfcb67636bdff2eafa",
+        "artifactID": 15181687501,
+        "artifactSHA256": "e1ee86a9f2d75aa6abcf8695af9a39ba2e1d898ce31f2d93f26c2b20583f558d",
+        "rawLogSHA256": "c025761afe06b69a895bad9b698ed3dc6e6cba5c9daadadeca03eaef86a1bf88",
+        "toolchainScope": "Xcode27.2 / Swift6.4.2 / Testing2403 / macOS27.0.1; no Xcode27.0 compatibility claim",
+        "wholeOriginalRunStatus": "FAILED",
+        "reexecuted": false
+      }
+    },
+    "product": {
+      "archive": "prior-quota-original-products.tar",
+      "bytes": 191774720,
+      "files": [
+        {
+          "bytes": 3967976,
+          "path": "out/Products/Debug/A2UICore.o",
+          "sha256": "271f05de78e6ee1efe2a55aa5f9a274e5d7965a5acec9283a9c4096a8464486e"
+        },
+        {
+          "bytes": 247080,
+          "path": "out/Products/Debug/A2UICore.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo",
+          "sha256": "508cedcc18ce048a70459589cfd87d39b671b04e25b4b60832a85fadb950461f"
+        },
+        {
+          "bytes": 149,
+          "path": "out/Products/Debug/A2UICore.swiftmodule/arm64-apple-macos.abi.json",
+          "sha256": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728"
+        },
+        {
+          "bytes": 178832,
+          "path": "out/Products/Debug/A2UICore.swiftmodule/arm64-apple-macos.swiftdoc",
+          "sha256": "cb51667b47587f9e5f07b52e7a8f493684b80331abfd5e83744d6e511166b446"
+        },
+        {
+          "bytes": 801628,
+          "path": "out/Products/Debug/A2UICore.swiftmodule/arm64-apple-macos.swiftmodule",
+          "sha256": "ffd6bded8e3732388a5fe0a6709a00aecc1bb375edf16a4287137c7d49d10259"
+        },
+        {
+          "bytes": 173272,
+          "path": "out/Products/Debug/A2UIJSON.o",
+          "sha256": "533a3e3d02252c9327c824bc4e4b85aaec6776517a9d63fcff2d381aba3d4fb6"
+        },
+        {
+          "bytes": 10180,
+          "path": "out/Products/Debug/A2UIJSON.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo",
+          "sha256": "3116d132aceeb533035adcef9e4e482818f1f1b67a9eba1efd8edb05763e609a"
+        },
+        {
+          "bytes": 149,
+          "path": "out/Products/Debug/A2UIJSON.swiftmodule/arm64-apple-macos.abi.json",
+          "sha256": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728"
+        },
+        {
+          "bytes": 4872,
+          "path": "out/Products/Debug/A2UIJSON.swiftmodule/arm64-apple-macos.swiftdoc",
+          "sha256": "7d5015c1a8ef15e3d223e07a1da18039eef7226a2632a9c434a9796efdbbb2c9"
+        },
+        {
+          "bytes": 65744,
+          "path": "out/Products/Debug/A2UIJSON.swiftmodule/arm64-apple-macos.swiftmodule",
+          "sha256": "a7bdbe14fef702172b8257d9a06d06c1842c0940b2f61215bf8b1b5b04894601"
+        },
+        {
+          "bytes": 170848,
+          "path": "out/Products/Debug/A2UISchemaGenerator",
+          "sha256": "43b80e35c2320b2320bdd2b802c4b887b2f844218ea4aa3338fbd09c8b10d466"
+        },
+        {
+          "bytes": 1137,
+          "path": "out/Products/Debug/A2UISwiftCore_BasicCatalog.bundle/Contents/Info.plist",
+          "sha256": "333cf282abcce9d5e7f6f1d3d584134ba3d451bbaacce461d263686c25f808b5"
+        },
+        {
+          "bytes": 1552,
+          "path": "out/Products/Debug/A2UISwiftCore_BasicCatalog.bundle/Contents/Resources/PluralCategories.stringsdict",
+          "sha256": "58268e6fcc046b0b0e01099a7d968fb7a21e95892d4b8c064f5d35817788cbf8"
+        },
+        {
+          "bytes": 204,
+          "path": "out/Products/Debug/A2UISwiftCore_BasicCatalog.bundle/Contents/_CodeSignature/CodeDirectory",
+          "sha256": "53b3107ed1546d9e5d40a03e89675520ad79e61499980aaa01d2b21bf2a50920"
+        },
+        {
+          "bytes": 12,
+          "path": "out/Products/Debug/A2UISwiftCore_BasicCatalog.bundle/Contents/_CodeSignature/CodeRequirements",
+          "sha256": "987920904eab650e75788c054aa0b0524e6a80bfc71aa32df8d237a61743f986"
+        },
+        {
+          "bytes": 2478,
+          "path": "out/Products/Debug/A2UISwiftCore_BasicCatalog.bundle/Contents/_CodeSignature/CodeResources",
+          "sha256": "fe0c7fd420ae1e84d54d4accbbaf4b76d379e91a87a71c196ead4fba4f54f888"
+        },
+        {
+          "bytes": 0,
+          "path": "out/Products/Debug/A2UISwiftCore_BasicCatalog.bundle/Contents/_CodeSignature/CodeSignature",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 544560,
+          "path": "out/Products/Debug/A2UISwiftUI.o",
+          "sha256": "fb7c9716a29ed80b21f3d2f7ae40c5e6329a4c431272855493732b7d73801eeb"
+        },
+        {
+          "bytes": 37512,
+          "path": "out/Products/Debug/A2UISwiftUI.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo",
+          "sha256": "7feffb41ab4ac938f6d5e0c65920758c0985b0e02fba75e4017e96bf6e68eb10"
+        },
+        {
+          "bytes": 149,
+          "path": "out/Products/Debug/A2UISwiftUI.swiftmodule/arm64-apple-macos.abi.json",
+          "sha256": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728"
+        },
+        {
+          "bytes": 24916,
+          "path": "out/Products/Debug/A2UISwiftUI.swiftmodule/arm64-apple-macos.swiftdoc",
+          "sha256": "81a1c5b631a1dd7bb22011ae6ae2ce7a09beedd37af0dbdbec3a23d846365fac"
+        },
+        {
+          "bytes": 149704,
+          "path": "out/Products/Debug/A2UISwiftUI.swiftmodule/arm64-apple-macos.swiftmodule",
+          "sha256": "d8759a72aa38ed6892a844d333cdcd6136334147bd3f274674486dff98ca2e96"
+        },
+        {
+          "bytes": 862328,
+          "path": "out/Products/Debug/BasicCatalog.o",
+          "sha256": "55c1821e5085f23048ff8f2caf17d305216ddbcf635db41ee322b13e4cfa54a9"
+        },
+        {
+          "bytes": 64212,
+          "path": "out/Products/Debug/BasicCatalog.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo",
+          "sha256": "17daefd7d21b51550047d8e877082f4c5b37b5fcb3fe739a43d579469262cc71"
+        },
+        {
+          "bytes": 149,
+          "path": "out/Products/Debug/BasicCatalog.swiftmodule/arm64-apple-macos.abi.json",
+          "sha256": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728"
+        },
+        {
+          "bytes": 27100,
+          "path": "out/Products/Debug/BasicCatalog.swiftmodule/arm64-apple-macos.swiftdoc",
+          "sha256": "cbf221743b1049263c2d54714adc893991bfe5f0442cc921241c31c675bbe06e"
+        },
+        {
+          "bytes": 261076,
+          "path": "out/Products/Debug/BasicCatalog.swiftmodule/arm64-apple-macos.swiftmodule",
+          "sha256": "e1ed7398f8d4deea1342390c84c358975b8962cb497d009f06aad614ea292694"
+        },
+        {
+          "bytes": 2779424,
+          "path": "out/Products/Debug/BasicCatalogSwiftUI.o",
+          "sha256": "4d2b126004ad402f3804380a6f5522374b486452305fea929b89455feab3efdb"
+        },
+        {
+          "bytes": 79072,
+          "path": "out/Products/Debug/BasicCatalogSwiftUI.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo",
+          "sha256": "68209f332627eb804cf6c31ced5544262aa687881f7383ce779b88a8637f7a0b"
+        },
+        {
+          "bytes": 149,
+          "path": "out/Products/Debug/BasicCatalogSwiftUI.swiftmodule/arm64-apple-macos.abi.json",
+          "sha256": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728"
+        },
+        {
+          "bytes": 32756,
+          "path": "out/Products/Debug/BasicCatalogSwiftUI.swiftmodule/arm64-apple-macos.swiftdoc",
+          "sha256": "edeac98ae0a34633e55f5a48b849571156755050dc7a3de07d0edb1719f99b1e"
+        },
+        {
+          "bytes": 348052,
+          "path": "out/Products/Debug/BasicCatalogSwiftUI.swiftmodule/arm64-apple-macos.swiftmodule",
+          "sha256": "a7d747f4aaf1986550a14d04d67570c7de5280066aeee9ed8ba4ffd48e2ba54a"
+        },
+        {
+          "bytes": 966360,
+          "path": "out/Products/Debug/HanlinA2UI.o",
+          "sha256": "ce3e8fc848a4084fb3690cd82207044d183c2d7f4cadc68e3f75b6744402a88e"
+        },
+        {
+          "bytes": 43388,
+          "path": "out/Products/Debug/HanlinA2UI.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo",
+          "sha256": "6c94e0bb1525110f4755e8eb64bc3b6a6613d31a98eccee4232fdb33519c1e48"
+        },
+        {
+          "bytes": 149,
+          "path": "out/Products/Debug/HanlinA2UI.swiftmodule/arm64-apple-macos.abi.json",
+          "sha256": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728"
+        },
+        {
+          "bytes": 13424,
+          "path": "out/Products/Debug/HanlinA2UI.swiftmodule/arm64-apple-macos.swiftdoc",
+          "sha256": "5b123e72cebc419ef7ef20d14de0b864f953e37e77d20cb6026794c7317eb83f"
+        },
+        {
+          "bytes": 230088,
+          "path": "out/Products/Debug/HanlinA2UI.swiftmodule/arm64-apple-macos.swiftmodule",
+          "sha256": "7f320c277dbccbde6285923b955ba30cd665faa59d5d35a45985f85f37cf81a4"
+        },
+        {
+          "bytes": 2381520,
+          "path": "out/Products/Debug/HanlinAgentActivityCore.o",
+          "sha256": "b8e4fd41af4780a240742e0c0d98975cd2d4f45bdce61ac9d1b10067d165aa6e"
+        },
+        {
+          "bytes": 111952,
+          "path": "out/Products/Debug/HanlinAgentActivityCore.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo",
+          "sha256": "9d1dee07b2a42c8e456f308389fe3c6047c60a245a4399f9cc01b378efa5cb8a"
+        },
+        {
+          "bytes": 149,
+          "path": "out/Products/Debug/HanlinAgentActivityCore.swiftmodule/arm64-apple-macos.abi.json",
+          "sha256": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728"
+        },
+        {
+          "bytes": 12104,
+          "path": "out/Products/Debug/HanlinAgentActivityCore.swiftmodule/arm64-apple-macos.swiftdoc",
+          "sha256": "4c49f12a1cc976ee155bc94289adca802bd0fe201d4c4b1456df3b96c2db631e"
+        },
+        {
+          "bytes": 693928,
+          "path": "out/Products/Debug/HanlinAgentActivityCore.swiftmodule/arm64-apple-macos.swiftmodule",
+          "sha256": "d1187b793ce31c69699dede1b1ba38eaa1a9cb586f384390d42f9120284be4b1"
+        },
+        {
+          "bytes": 794688,
+          "path": "out/Products/Debug/HanlinAgentActivityUI.o",
+          "sha256": "6b640aa3a6afd7f8a254265e65047ed85164ed2771a29b30a4c88d0845d9ba2d"
+        },
+        {
+          "bytes": 7296,
+          "path": "out/Products/Debug/HanlinAgentActivityUI.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo",
+          "sha256": "9dd4b0fce73f4dfe6f97e52d6f357ad2cc2deae6485aaaec1b6a948969a69159"
+        },
+        {
+          "bytes": 149,
+          "path": "out/Products/Debug/HanlinAgentActivityUI.swiftmodule/arm64-apple-macos.abi.json",
+          "sha256": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728"
+        },
+        {
+          "bytes": 820,
+          "path": "out/Products/Debug/HanlinAgentActivityUI.swiftmodule/arm64-apple-macos.swiftdoc",
+          "sha256": "730fc51fa1539e7f044370c0f45e28b465eee82d3dadca2ab9efd3b71e68a70a"
+        },
+        {
+          "bytes": 102336,
+          "path": "out/Products/Debug/HanlinAgentActivityUI.swiftmodule/arm64-apple-macos.swiftmodule",
+          "sha256": "ea0a02a601cf4fcd4330f7ee878147c3705c2c47ef1365f714c501b8a90741f9"
+        },
+        {
+          "bytes": 63800,
+          "path": "out/Products/Debug/HanlinChatPresentation.o",
+          "sha256": "231ca2decb77d2b0ea6a520ecbcd9894d43892597ebb0acd2b5d904b7bae8190"
+        },
+        {
+          "bytes": 8252,
+          "path": "out/Products/Debug/HanlinChatPresentation.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo",
+          "sha256": "4df5fcce3986aedd252aee227b2933c230d4e04563079faa134f48607d8e9660"
+        },
+        {
+          "bytes": 149,
+          "path": "out/Products/Debug/HanlinChatPresentation.swiftmodule/arm64-apple-macos.abi.json",
+          "sha256": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728"
+        },
+        {
+          "bytes": 3204,
+          "path": "out/Products/Debug/HanlinChatPresentation.swiftmodule/arm64-apple-macos.swiftdoc",
+          "sha256": "13942d0862a2dc3a359c9b38706470e006879bf651932ad890b4fba6db2f7027"
+        },
+        {
+          "bytes": 68428,
+          "path": "out/Products/Debug/HanlinChatPresentation.swiftmodule/arm64-apple-macos.swiftmodule",
+          "sha256": "a01ac9e4f27694df442f3acb7fef10e01b51a1a286459575b7bdd1d425435b1d"
+        },
+        {
+          "bytes": 4124,
+          "path": "out/Products/Debug/HanlinChatPresentationTests.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo",
+          "sha256": "4437789be83c5f3a8cb3e33f5bb914220fabebef82d808135cfab63eb63e3568"
+        },
+        {
+          "bytes": 149,
+          "path": "out/Products/Debug/HanlinChatPresentationTests.swiftmodule/arm64-apple-macos.abi.json",
+          "sha256": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728"
+        },
+        {
+          "bytes": 412,
+          "path": "out/Products/Debug/HanlinChatPresentationTests.swiftmodule/arm64-apple-macos.swiftdoc",
+          "sha256": "9d2bc332ff8aca3002839412cc83db4d497150e7be2f34f1e2882cf7712177ff"
+        },
+        {
+          "bytes": 63552,
+          "path": "out/Products/Debug/HanlinChatPresentationTests.swiftmodule/arm64-apple-macos.swiftmodule",
+          "sha256": "b67f99162f0ccfdaaf523030038dc6d9e129ae689b7581d679f8dfd3532e8a76"
+        },
+        {
+          "bytes": 1242,
+          "path": "out/Products/Debug/HanlinChatPresentationTests.xctest/Contents/Info.plist",
+          "sha256": "f316028f3081fd1b1f51620fabd2f89ea4e0ed6e62d803545a29885bb37a4630"
+        },
+        {
+          "bytes": 185424,
+          "path": "out/Products/Debug/HanlinChatPresentationTests.xctest/Contents/MacOS/HanlinChatPresentationTests",
+          "sha256": "b2a67f0521574b9a88272c29e90f14c097a46bc5b4b5bca345e65b8de8ce4736"
+        },
+        {
+          "bytes": 2200,
+          "path": "out/Products/Debug/HanlinChatPresentationTests.xctest/Contents/_CodeSignature/CodeResources",
+          "sha256": "6686de10a28a2fe11b36cbb86dcbacc827cfc4ea116b4dabf1845e5aee629e9b"
+        },
+        {
+          "bytes": 4698128,
+          "path": "out/Products/Debug/HanlinChatUI.o",
+          "sha256": "21b23db873122f4597a8d17b00456a5bc37f9e0ace223db968abf2219d50b0b6"
+        },
+        {
+          "bytes": 96788,
+          "path": "out/Products/Debug/HanlinChatUI.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo",
+          "sha256": "c071d9d7ed58df41c911b92e9f012fc8ebb41368587ccb4e6b8fe8c8ca6c3d60"
+        },
+        {
+          "bytes": 149,
+          "path": "out/Products/Debug/HanlinChatUI.swiftmodule/arm64-apple-macos.abi.json",
+          "sha256": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728"
+        },
+        {
+          "bytes": 21240,
+          "path": "out/Products/Debug/HanlinChatUI.swiftmodule/arm64-apple-macos.swiftdoc",
+          "sha256": "8f763e67f517b31c2536eb7635f4f91f7b7d8965e5ce53071f69c227f0bb3994"
+        },
+        {
+          "bytes": 487812,
+          "path": "out/Products/Debug/HanlinChatUI.swiftmodule/arm64-apple-macos.swiftmodule",
+          "sha256": "b76bf0c6086d958f46d3ce8107d4fdd0c695e466b63468c2cb878dff8df5931d"
+        },
+        {
+          "bytes": 7708,
+          "path": "out/Products/Debug/HanlinChatUITests.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo",
+          "sha256": "ed85c0c430efe1d62fea351da492d65e1866de80d444ca22ca281e40b7eda1cf"
+        },
+        {
+          "bytes": 149,
+          "path": "out/Products/Debug/HanlinChatUITests.swiftmodule/arm64-apple-macos.abi.json",
+          "sha256": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728"
+        },
+        {
+          "bytes": 404,
+          "path": "out/Products/Debug/HanlinChatUITests.swiftmodule/arm64-apple-macos.swiftdoc",
+          "sha256": "7bc5c01c2e3c4f92c8d5ae1d9f63798f196890ebe99810a4492d712cc16ff6c7"
+        },
+        {
+          "bytes": 111568,
+          "path": "out/Products/Debug/HanlinChatUITests.swiftmodule/arm64-apple-macos.swiftmodule",
+          "sha256": "6f8d906ef14e6f854c2889f8e7894c16872a3166493a59d265f5098e7308bc91"
+        },
+        {
+          "bytes": 1212,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Info.plist",
+          "sha256": "463b9210378661644c27e64cad5f518cab3a1bdecb037e894a822e51dc3e55c2"
+        },
+        {
+          "bytes": 12601200,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/MacOS/HanlinChatUITests",
+          "sha256": "660b1a8b72e2e10d11cf5161c88615c396fe5a04d773162682024e759a9328bb"
+        },
+        {
+          "bytes": 1170,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPlatform_HanlinPlatformContracts.bundle/Contents/Info.plist",
+          "sha256": "721e1282abb9503665c65dd873f3c916bfea7b0bf6ff1946197582244f0e270d"
+        },
+        {
+          "bytes": 26653,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPlatform_HanlinPlatformContracts.bundle/Contents/Resources/HanlinAppManifest.schema.json",
+          "sha256": "2fed91226c1e8ebe152bc7445d97306897f95c1bfb75ed125d50af7e7bb55aaf"
+        },
+        {
+          "bytes": 225,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPlatform_HanlinPlatformContracts.bundle/Contents/_CodeSignature/CodeDirectory",
+          "sha256": "2530eb465f231be09abec347d1075632e2c15c7cce293ea0a1a1c67e7b0de1eb"
+        },
+        {
+          "bytes": 12,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPlatform_HanlinPlatformContracts.bundle/Contents/_CodeSignature/CodeRequirements",
+          "sha256": "987920904eab650e75788c054aa0b0524e6a80bfc71aa32df8d237a61743f986"
+        },
+        {
+          "bytes": 2480,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPlatform_HanlinPlatformContracts.bundle/Contents/_CodeSignature/CodeResources",
+          "sha256": "968cefd25430e605e053af1d5007d7111ca16d677c798ca035c02ce06cce43a1"
+        },
+        {
+          "bytes": 0,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPlatform_HanlinPlatformContracts.bundle/Contents/_CodeSignature/CodeSignature",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 1167,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinChatUI.bundle/Contents/Info.plist",
+          "sha256": "3cd180381a6b14680712926d8a170b9ba4f1daaa338f75779af4f08f1558aae3"
+        },
+        {
+          "bytes": 849,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinChatUI.bundle/Contents/Resources/HanlinCodeFenceAssets.json",
+          "sha256": "83fa172883bf5bcb46546cc9d080b9be3550ca348c01ad894d437c37df1b168d"
+        },
+        {
+          "bytes": 18118,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinChatUI.bundle/Contents/Resources/HanlinCodeFenceRenderer.css",
+          "sha256": "e6804c928b954fe3d2945c45b6c45c1c57b631712914c203974f9933216b1648"
+        },
+        {
+          "bytes": 5413583,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinChatUI.bundle/Contents/Resources/HanlinCodeFenceRenderer.js",
+          "sha256": "4a07872b5b1f65ac9003185bd48d258b0a4a0d9590a208bf0efb38bfcba6052e"
+        },
+        {
+          "bytes": 1811,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinChatUI.bundle/Contents/Resources/HanlinCodeFenceRenderer.js.LEGAL.txt",
+          "sha256": "722c5c4b2a604b4fb9a53cf03bed346136f00e4e26d8f0972a2e27538482798e"
+        },
+        {
+          "bytes": 233740,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinChatUI.bundle/Contents/Resources/HanlinCodeFenceThirdPartyLicenses.txt",
+          "sha256": "f399606a509628e5e55c41ddbc5464ccf3b648b358c8aa18f13935b24107ec45"
+        },
+        {
+          "bytes": 221,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinChatUI.bundle/Contents/_CodeSignature/CodeDirectory",
+          "sha256": "cb67c45f5e10d8be1e7a2aa904b0a30335bc1b0cf174fcd2be7084c8599ccb00"
+        },
+        {
+          "bytes": 12,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinChatUI.bundle/Contents/_CodeSignature/CodeRequirements",
+          "sha256": "987920904eab650e75788c054aa0b0524e6a80bfc71aa32df8d237a61743f986"
+        },
+        {
+          "bytes": 3550,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinChatUI.bundle/Contents/_CodeSignature/CodeResources",
+          "sha256": "5aa8a65660afacd28ce4e85bed71c00878f2a223862066d55b660f05f6e5535c"
+        },
+        {
+          "bytes": 0,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinChatUI.bundle/Contents/_CodeSignature/CodeSignature",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 1179,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/Info.plist",
+          "sha256": "b5e5472e91130a6d75f55556e93b2cb647023212d826f6e43c56b4b8fb24d8ac"
+        },
+        {
+          "bytes": 6704600,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/Resources/Assets.car",
+          "sha256": "aca44f98dc557a77bdc2dcf8b21fb22d5751821b4dcf06af67db87c743daa777"
+        },
+        {
+          "bytes": 224944,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/Resources/en.lproj/Localizable.strings",
+          "sha256": "c30671f02364a4aa5c90743b6c524a822d9de3babe7081036250855dbb17c649"
+        },
+        {
+          "bytes": 19294,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/Resources/en.lproj/MCPLocalizable.strings",
+          "sha256": "c3d513ade5f044d0aaac224e500397e9f63ab1f99db5921cfebe734cc34fbdd6"
+        },
+        {
+          "bytes": 77734,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/Resources/en.lproj/RuntimeLocalizable.strings",
+          "sha256": "060c50777f9f0b2c4ca56a791b5fc8da1b58b5013359a4b28d553c54033f52e8"
+        },
+        {
+          "bytes": 211694,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/Resources/he.lproj/Localizable.strings",
+          "sha256": "b6704262c5d63df2dd1248a89b9e7738a6ee186f611a12b3830124bc41c4dcd0"
+        },
+        {
+          "bytes": 18358,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/Resources/he.lproj/MCPLocalizable.strings",
+          "sha256": "cec176764fae94faf8327225d7888d146fe8321bc9033df2e5aa2ff5ea9bde52"
+        },
+        {
+          "bytes": 73300,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/Resources/he.lproj/RuntimeLocalizable.strings",
+          "sha256": "d001264f9163dc4eb8c0a7e852489511b0a5a4a73fef6b66575e46d6e14af6dc"
+        },
+        {
+          "bytes": 112724,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/Resources/zh-Hans.lproj/Localizable.strings",
+          "sha256": "ae8342a92694a1675f8edba6798878ac991b319709271ff0ddd17a8acf4c1ebf"
+        },
+        {
+          "bytes": 16042,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/Resources/zh-Hans.lproj/MCPLocalizable.strings",
+          "sha256": "378fcd3e0eb087e031e6137ff8f1129f8dc5b769d5df6c02b7d57224abebcc2f"
+        },
+        {
+          "bytes": 60726,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/Resources/zh-Hans.lproj/RuntimeLocalizable.strings",
+          "sha256": "01d40260f710580bf8ec3b45d9ccdd18fcb1203313d0866bf47527d29aa6edee"
+        },
+        {
+          "bytes": 227,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/_CodeSignature/CodeDirectory",
+          "sha256": "c9d4014d7989c0e10df3deddc1d12167e183e1b279fd90cae45a233ad0300f17"
+        },
+        {
+          "bytes": 12,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/_CodeSignature/CodeRequirements",
+          "sha256": "987920904eab650e75788c054aa0b0524e6a80bfc71aa32df8d237a61743f986"
+        },
+        {
+          "bytes": 5871,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/_CodeSignature/CodeResources",
+          "sha256": "dd7b3000ea7c1c597d63e754c277bebb112656f3377ab0df7775e40e97484979"
+        },
+        {
+          "bytes": 0,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/_CodeSignature/CodeSignature",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 1167,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinRichUI.bundle/Contents/Info.plist",
+          "sha256": "6c83cbb3563bf05705023970f4d2c7177fefccf4331ffa5e9ad2373b35fc3a16"
+        },
+        {
+          "bytes": 162,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinRichUI.bundle/Contents/Resources/OpenUI/.gitattributes",
+          "sha256": "ef8722d0d0dd44cfb82678da6fd1056f9e9a9c6d943e9125bcd6f6a5460e88e6"
+        },
+        {
+          "bytes": 5693,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinRichUI.bundle/Contents/Resources/OpenUI/THIRD_PARTY_NOTICES.md",
+          "sha256": "84f847d0d98c2956481dafbfa2f42f47e3d2a3e15c1c376fd6a4ab802cca9b56"
+        },
+        {
+          "bytes": 356861,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinRichUI.bundle/Contents/Resources/OpenUI/bridge.css",
+          "sha256": "cab51495b9923c124d303b80f64aee322eaad5133f07cf34fcb02ac7cc1b9a1d"
+        },
+        {
+          "bytes": 3582180,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinRichUI.bundle/Contents/Resources/OpenUI/bridge.js",
+          "sha256": "a1e800746e8281f6e487a0dc279e502bda9d2ae35c5a910a19a28375f9b1c9de"
+        },
+        {
+          "bytes": 76610,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinRichUI.bundle/Contents/Resources/OpenUI/bridge.js.LEGAL.txt",
+          "sha256": "cc72edf544f42b902a91e479860f87404d8408e74e7908b33ff2b78173bc81df"
+        },
+        {
+          "bytes": 4787,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinRichUI.bundle/Contents/Resources/OpenUI/catalog-manifest.json",
+          "sha256": "f0c755d157dd18c5503ddf84710b58f6f7b38c6ba2b65a7cf3810d4d43fcc3df"
+        },
+        {
+          "bytes": 469,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinRichUI.bundle/Contents/Resources/OpenUI/index.html",
+          "sha256": "460c6bdfd6dd964f251954900bbbb34481e3c0f0b25ca3165031fafd643d1b54"
+        },
+        {
+          "bytes": 34202,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinRichUI.bundle/Contents/Resources/OpenUI/original-prompt.txt",
+          "sha256": "aad61ab2488e864b43169df4be7710bea6524efed01df5bf86c7d2172f41e03c"
+        },
+        {
+          "bytes": 34958,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinRichUI.bundle/Contents/Resources/OpenUI/torah-prompt.txt",
+          "sha256": "abc486ddfe23182bbe6f967296645a448a3b2f45e5e7b65a0c30ca8480f59fd9"
+        },
+        {
+          "bytes": 221,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinRichUI.bundle/Contents/_CodeSignature/CodeDirectory",
+          "sha256": "b013c66e052d1ac13e0c2ff2e760f93f8a1708e4fa091b73173032626b910180"
+        },
+        {
+          "bytes": 12,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinRichUI.bundle/Contents/_CodeSignature/CodeRequirements",
+          "sha256": "987920904eab650e75788c054aa0b0524e6a80bfc71aa32df8d237a61743f986"
+        },
+        {
+          "bytes": 4476,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinRichUI.bundle/Contents/_CodeSignature/CodeResources",
+          "sha256": "61966cb387d0ba54f25140d8ea7d8c92d0b9383fe2ee6b4f8a9706a76ef7c9c4"
+        },
+        {
+          "bytes": 0,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinRichUI.bundle/Contents/_CodeSignature/CodeSignature",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 20167,
+          "path": "out/Products/Debug/HanlinChatUITests.xctest/Contents/_CodeSignature/CodeResources",
+          "sha256": "de7c5086b28a68c9bd7332eec4cbc02b7f60df11663af5d60e52054ea4c51dbf"
+        },
+        {
+          "bytes": 864552,
+          "path": "out/Products/Debug/HanlinLocalization.o",
+          "sha256": "5f8026d87e8274fadfae339d444920ed266376aaf14271f0822b7fbe26375875"
+        },
+        {
+          "bytes": 310868,
+          "path": "out/Products/Debug/HanlinLocalization.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo",
+          "sha256": "5af4a9334431ed6ca65a53bc20c414a4738af5eb15653fa5dd471288ae153807"
+        },
+        {
+          "bytes": 149,
+          "path": "out/Products/Debug/HanlinLocalization.swiftmodule/arm64-apple-macos.abi.json",
+          "sha256": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728"
+        },
+        {
+          "bytes": 241064,
+          "path": "out/Products/Debug/HanlinLocalization.swiftmodule/arm64-apple-macos.swiftdoc",
+          "sha256": "809a8f9be8277c8a714ed31ce49c0e5591b92ba3110f9b3e433bc9afa42159ca"
+        },
+        {
+          "bytes": 282308,
+          "path": "out/Products/Debug/HanlinLocalization.swiftmodule/arm64-apple-macos.swiftmodule",
+          "sha256": "3d3861a538904b2872e9dcb51a38fdd7fad090b9d4563ef163a695127705b276"
+        },
+        {
+          "bytes": 2476,
+          "path": "out/Products/Debug/HanlinLocalizationTests.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo",
+          "sha256": "dac94047e51947fa5a9b06c6f965467171ca873aac13cdd3442e8589e6c4b4e2"
+        },
+        {
+          "bytes": 149,
+          "path": "out/Products/Debug/HanlinLocalizationTests.swiftmodule/arm64-apple-macos.abi.json",
+          "sha256": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728"
+        },
+        {
+          "bytes": 408,
+          "path": "out/Products/Debug/HanlinLocalizationTests.swiftmodule/arm64-apple-macos.swiftdoc",
+          "sha256": "7f65ba95e2a8f9921ccf1fc860ceb4363d2119a846da11a6198f74bca7ec9ec6"
+        },
+        {
+          "bytes": 68980,
+          "path": "out/Products/Debug/HanlinLocalizationTests.swiftmodule/arm64-apple-macos.swiftmodule",
+          "sha256": "0751a505312403c3a31965bf21be8b61af4f149c933da914a59bcb447b72c955"
+        },
+        {
+          "bytes": 1230,
+          "path": "out/Products/Debug/HanlinLocalizationTests.xctest/Contents/Info.plist",
+          "sha256": "0f3829f0619572ae91103a9205c6cefdc1e06f15b3c744426b82db45335a34bf"
+        },
+        {
+          "bytes": 908512,
+          "path": "out/Products/Debug/HanlinLocalizationTests.xctest/Contents/MacOS/HanlinLocalizationTests",
+          "sha256": "1e559ea002007016d9ce32f1a879a59c52136248431315d077eed854babfd3a6"
+        },
+        {
+          "bytes": 1179,
+          "path": "out/Products/Debug/HanlinLocalizationTests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/Info.plist",
+          "sha256": "b5e5472e91130a6d75f55556e93b2cb647023212d826f6e43c56b4b8fb24d8ac"
+        },
+        {
+          "bytes": 6704600,
+          "path": "out/Products/Debug/HanlinLocalizationTests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/Resources/Assets.car",
+          "sha256": "aca44f98dc557a77bdc2dcf8b21fb22d5751821b4dcf06af67db87c743daa777"
+        },
+        {
+          "bytes": 224944,
+          "path": "out/Products/Debug/HanlinLocalizationTests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/Resources/en.lproj/Localizable.strings",
+          "sha256": "c30671f02364a4aa5c90743b6c524a822d9de3babe7081036250855dbb17c649"
+        },
+        {
+          "bytes": 19294,
+          "path": "out/Products/Debug/HanlinLocalizationTests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/Resources/en.lproj/MCPLocalizable.strings",
+          "sha256": "c3d513ade5f044d0aaac224e500397e9f63ab1f99db5921cfebe734cc34fbdd6"
+        },
+        {
+          "bytes": 77734,
+          "path": "out/Products/Debug/HanlinLocalizationTests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/Resources/en.lproj/RuntimeLocalizable.strings",
+          "sha256": "060c50777f9f0b2c4ca56a791b5fc8da1b58b5013359a4b28d553c54033f52e8"
+        },
+        {
+          "bytes": 211694,
+          "path": "out/Products/Debug/HanlinLocalizationTests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/Resources/he.lproj/Localizable.strings",
+          "sha256": "b6704262c5d63df2dd1248a89b9e7738a6ee186f611a12b3830124bc41c4dcd0"
+        },
+        {
+          "bytes": 18358,
+          "path": "out/Products/Debug/HanlinLocalizationTests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/Resources/he.lproj/MCPLocalizable.strings",
+          "sha256": "cec176764fae94faf8327225d7888d146fe8321bc9033df2e5aa2ff5ea9bde52"
+        },
+        {
+          "bytes": 73300,
+          "path": "out/Products/Debug/HanlinLocalizationTests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/Resources/he.lproj/RuntimeLocalizable.strings",
+          "sha256": "d001264f9163dc4eb8c0a7e852489511b0a5a4a73fef6b66575e46d6e14af6dc"
+        },
+        {
+          "bytes": 112724,
+          "path": "out/Products/Debug/HanlinLocalizationTests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/Resources/zh-Hans.lproj/Localizable.strings",
+          "sha256": "ae8342a92694a1675f8edba6798878ac991b319709271ff0ddd17a8acf4c1ebf"
+        },
+        {
+          "bytes": 16042,
+          "path": "out/Products/Debug/HanlinLocalizationTests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/Resources/zh-Hans.lproj/MCPLocalizable.strings",
+          "sha256": "378fcd3e0eb087e031e6137ff8f1129f8dc5b769d5df6c02b7d57224abebcc2f"
+        },
+        {
+          "bytes": 60726,
+          "path": "out/Products/Debug/HanlinLocalizationTests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/Resources/zh-Hans.lproj/RuntimeLocalizable.strings",
+          "sha256": "01d40260f710580bf8ec3b45d9ccdd18fcb1203313d0866bf47527d29aa6edee"
+        },
+        {
+          "bytes": 227,
+          "path": "out/Products/Debug/HanlinLocalizationTests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/_CodeSignature/CodeDirectory",
+          "sha256": "c9d4014d7989c0e10df3deddc1d12167e183e1b279fd90cae45a233ad0300f17"
+        },
+        {
+          "bytes": 12,
+          "path": "out/Products/Debug/HanlinLocalizationTests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/_CodeSignature/CodeRequirements",
+          "sha256": "987920904eab650e75788c054aa0b0524e6a80bfc71aa32df8d237a61743f986"
+        },
+        {
+          "bytes": 5871,
+          "path": "out/Products/Debug/HanlinLocalizationTests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/_CodeSignature/CodeResources",
+          "sha256": "dd7b3000ea7c1c597d63e754c277bebb112656f3377ab0df7775e40e97484979"
+        },
+        {
+          "bytes": 0,
+          "path": "out/Products/Debug/HanlinLocalizationTests.xctest/Contents/Resources/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/_CodeSignature/CodeSignature",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 9061,
+          "path": "out/Products/Debug/HanlinLocalizationTests.xctest/Contents/_CodeSignature/CodeResources",
+          "sha256": "1469d686dbbc8102efbad2da42c3c1089d3bd39ea3a0ae14ec6dae015f960072"
+        },
+        {
+          "bytes": 1145200,
+          "path": "out/Products/Debug/HanlinMiniAppCore.o",
+          "sha256": "c1641d84e47635214b17783aafc3c11b193f8a93331649571694730c9520698b"
+        },
+        {
+          "bytes": 53132,
+          "path": "out/Products/Debug/HanlinMiniAppCore.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo",
+          "sha256": "5b890b9da2d033f5b98920c1e372b986415ba824ba3f7b5ddaed9b9edd11c624"
+        },
+        {
+          "bytes": 149,
+          "path": "out/Products/Debug/HanlinMiniAppCore.swiftmodule/arm64-apple-macos.abi.json",
+          "sha256": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728"
+        },
+        {
+          "bytes": 12288,
+          "path": "out/Products/Debug/HanlinMiniAppCore.swiftmodule/arm64-apple-macos.swiftdoc",
+          "sha256": "5bf6c722b9ee358f27df573affdf64b69aa3180d4cad3ed82e63465ecab71423"
+        },
+        {
+          "bytes": 284388,
+          "path": "out/Products/Debug/HanlinMiniAppCore.swiftmodule/arm64-apple-macos.swiftmodule",
+          "sha256": "c7740f6bcb9999ed43c2f04cb91e505e64af3b26329658a13709212f8854f674"
+        },
+        {
+          "bytes": 5904,
+          "path": "out/Products/Debug/HanlinMiniAppsUI.o",
+          "sha256": "d4a96dbe3f6647e36ae855685ae40e347b18795e46715862261fa77c96af6ba0"
+        },
+        {
+          "bytes": 952,
+          "path": "out/Products/Debug/HanlinMiniAppsUI.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo",
+          "sha256": "7ff66f3e552f73ab1865c134a80371a72b3d61ec64db91f471b1f1cb7ab31c48"
+        },
+        {
+          "bytes": 149,
+          "path": "out/Products/Debug/HanlinMiniAppsUI.swiftmodule/arm64-apple-macos.abi.json",
+          "sha256": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728"
+        },
+        {
+          "bytes": 400,
+          "path": "out/Products/Debug/HanlinMiniAppsUI.swiftmodule/arm64-apple-macos.swiftdoc",
+          "sha256": "c86863d160d109cd05d7023d526acd7de6e72c4335450750bf8f9e5532466dfa"
+        },
+        {
+          "bytes": 55636,
+          "path": "out/Products/Debug/HanlinMiniAppsUI.swiftmodule/arm64-apple-macos.swiftmodule",
+          "sha256": "b11a22b8d492915c38224c9d137a7439bef3a2e1cf7d08aa43638ce159dcd2cc"
+        },
+        {
+          "bytes": 8369608,
+          "path": "out/Products/Debug/HanlinPlatformContracts.o",
+          "sha256": "9c8db8d7ceee07a16c3a850006d3996b6cca3a4d19ed36dadeb4a4e03c79be80"
+        },
+        {
+          "bytes": 347316,
+          "path": "out/Products/Debug/HanlinPlatformContracts.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo",
+          "sha256": "b93ef504113d548b5a9c6df5f611f69cde398ff7868b2f3f2080d2a588d4c9a4"
+        },
+        {
+          "bytes": 149,
+          "path": "out/Products/Debug/HanlinPlatformContracts.swiftmodule/arm64-apple-macos.abi.json",
+          "sha256": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728"
+        },
+        {
+          "bytes": 43528,
+          "path": "out/Products/Debug/HanlinPlatformContracts.swiftmodule/arm64-apple-macos.swiftdoc",
+          "sha256": "7a68fa9107efedfcaabad623b30ad3ea8e1d736579e8afadca7d501fe7b99958"
+        },
+        {
+          "bytes": 2266052,
+          "path": "out/Products/Debug/HanlinPlatformContracts.swiftmodule/arm64-apple-macos.swiftmodule",
+          "sha256": "2f6b9d0d8cf52db9489140d00f1785da2099d8d35c0ea630c2ca0c19e989c0c0"
+        },
+        {
+          "bytes": 1170,
+          "path": "out/Products/Debug/HanlinPlatform_HanlinPlatformContracts.bundle/Contents/Info.plist",
+          "sha256": "721e1282abb9503665c65dd873f3c916bfea7b0bf6ff1946197582244f0e270d"
+        },
+        {
+          "bytes": 26653,
+          "path": "out/Products/Debug/HanlinPlatform_HanlinPlatformContracts.bundle/Contents/Resources/HanlinAppManifest.schema.json",
+          "sha256": "2fed91226c1e8ebe152bc7445d97306897f95c1bfb75ed125d50af7e7bb55aaf"
+        },
+        {
+          "bytes": 225,
+          "path": "out/Products/Debug/HanlinPlatform_HanlinPlatformContracts.bundle/Contents/_CodeSignature/CodeDirectory",
+          "sha256": "2530eb465f231be09abec347d1075632e2c15c7cce293ea0a1a1c67e7b0de1eb"
+        },
+        {
+          "bytes": 12,
+          "path": "out/Products/Debug/HanlinPlatform_HanlinPlatformContracts.bundle/Contents/_CodeSignature/CodeRequirements",
+          "sha256": "987920904eab650e75788c054aa0b0524e6a80bfc71aa32df8d237a61743f986"
+        },
+        {
+          "bytes": 2480,
+          "path": "out/Products/Debug/HanlinPlatform_HanlinPlatformContracts.bundle/Contents/_CodeSignature/CodeResources",
+          "sha256": "968cefd25430e605e053af1d5007d7111ca16d677c798ca035c02ce06cce43a1"
+        },
+        {
+          "bytes": 0,
+          "path": "out/Products/Debug/HanlinPlatform_HanlinPlatformContracts.bundle/Contents/_CodeSignature/CodeSignature",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 1188440,
+          "path": "out/Products/Debug/HanlinPresentationKit.o",
+          "sha256": "c108d87cc252dfe54484764baa9698c0f3d8afd7cfaec3d89099aa6a010379b5"
+        },
+        {
+          "bytes": 55204,
+          "path": "out/Products/Debug/HanlinPresentationKit.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo",
+          "sha256": "716dbcfde7bac52f0ed1c7b34278acf28b6757c6b69f90b927cb8ee31eecbdd1"
+        },
+        {
+          "bytes": 149,
+          "path": "out/Products/Debug/HanlinPresentationKit.swiftmodule/arm64-apple-macos.abi.json",
+          "sha256": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728"
+        },
+        {
+          "bytes": 9904,
+          "path": "out/Products/Debug/HanlinPresentationKit.swiftmodule/arm64-apple-macos.swiftdoc",
+          "sha256": "1684153af953e69a81e05b768b97752a347a98b9167b5723bd67697bf0878816"
+        },
+        {
+          "bytes": 326028,
+          "path": "out/Products/Debug/HanlinPresentationKit.swiftmodule/arm64-apple-macos.swiftmodule",
+          "sha256": "c7708bef72f766ec40335f6c5d2ba33dd3a2f0658cd1ab5510590b9d999de496"
+        },
+        {
+          "bytes": 5620,
+          "path": "out/Products/Debug/HanlinPresentationKitTests.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo",
+          "sha256": "a808b8debb833d5bc5ad018a9b799053afd7fa57a05a2701e84ef20528847a57"
+        },
+        {
+          "bytes": 149,
+          "path": "out/Products/Debug/HanlinPresentationKitTests.swiftmodule/arm64-apple-macos.abi.json",
+          "sha256": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728"
+        },
+        {
+          "bytes": 412,
+          "path": "out/Products/Debug/HanlinPresentationKitTests.swiftmodule/arm64-apple-macos.swiftdoc",
+          "sha256": "0ed71d467a00408cbbe09500d69c5fc4fa32a2537e9c72d8b654bbc94ce1c226"
+        },
+        {
+          "bytes": 91672,
+          "path": "out/Products/Debug/HanlinPresentationKitTests.swiftmodule/arm64-apple-macos.swiftmodule",
+          "sha256": "f1d617717c3fe04c78cb66e7a47776fadd2b24913d6e4a67c75293b0657fe5c6"
+        },
+        {
+          "bytes": 1239,
+          "path": "out/Products/Debug/HanlinPresentationKitTests.xctest/Contents/Info.plist",
+          "sha256": "4b0a6e679ed7b64547b655faaec566b36e64c2d5d5f901108e9ea035d28f58d6"
+        },
+        {
+          "bytes": 1338704,
+          "path": "out/Products/Debug/HanlinPresentationKitTests.xctest/Contents/MacOS/HanlinPresentationKitTests",
+          "sha256": "e7d4082247b42d4db37301e27a42bb2308b6ccd42ff9d2678af9ae54f97205dc"
+        },
+        {
+          "bytes": 2200,
+          "path": "out/Products/Debug/HanlinPresentationKitTests.xctest/Contents/_CodeSignature/CodeResources",
+          "sha256": "6686de10a28a2fe11b36cbb86dcbacc827cfc4ea116b4dabf1845e5aee629e9b"
+        },
+        {
+          "bytes": 1167,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinChatUI.bundle/Contents/Info.plist",
+          "sha256": "3cd180381a6b14680712926d8a170b9ba4f1daaa338f75779af4f08f1558aae3"
+        },
+        {
+          "bytes": 849,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinChatUI.bundle/Contents/Resources/HanlinCodeFenceAssets.json",
+          "sha256": "83fa172883bf5bcb46546cc9d080b9be3550ca348c01ad894d437c37df1b168d"
+        },
+        {
+          "bytes": 18118,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinChatUI.bundle/Contents/Resources/HanlinCodeFenceRenderer.css",
+          "sha256": "e6804c928b954fe3d2945c45b6c45c1c57b631712914c203974f9933216b1648"
+        },
+        {
+          "bytes": 5413583,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinChatUI.bundle/Contents/Resources/HanlinCodeFenceRenderer.js",
+          "sha256": "4a07872b5b1f65ac9003185bd48d258b0a4a0d9590a208bf0efb38bfcba6052e"
+        },
+        {
+          "bytes": 1811,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinChatUI.bundle/Contents/Resources/HanlinCodeFenceRenderer.js.LEGAL.txt",
+          "sha256": "722c5c4b2a604b4fb9a53cf03bed346136f00e4e26d8f0972a2e27538482798e"
+        },
+        {
+          "bytes": 233740,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinChatUI.bundle/Contents/Resources/HanlinCodeFenceThirdPartyLicenses.txt",
+          "sha256": "f399606a509628e5e55c41ddbc5464ccf3b648b358c8aa18f13935b24107ec45"
+        },
+        {
+          "bytes": 221,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinChatUI.bundle/Contents/_CodeSignature/CodeDirectory",
+          "sha256": "cb67c45f5e10d8be1e7a2aa904b0a30335bc1b0cf174fcd2be7084c8599ccb00"
+        },
+        {
+          "bytes": 12,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinChatUI.bundle/Contents/_CodeSignature/CodeRequirements",
+          "sha256": "987920904eab650e75788c054aa0b0524e6a80bfc71aa32df8d237a61743f986"
+        },
+        {
+          "bytes": 3550,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinChatUI.bundle/Contents/_CodeSignature/CodeResources",
+          "sha256": "5aa8a65660afacd28ce4e85bed71c00878f2a223862066d55b660f05f6e5535c"
+        },
+        {
+          "bytes": 0,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinChatUI.bundle/Contents/_CodeSignature/CodeSignature",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 1179,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/Info.plist",
+          "sha256": "b5e5472e91130a6d75f55556e93b2cb647023212d826f6e43c56b4b8fb24d8ac"
+        },
+        {
+          "bytes": 6704600,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/Resources/Assets.car",
+          "sha256": "aca44f98dc557a77bdc2dcf8b21fb22d5751821b4dcf06af67db87c743daa777"
+        },
+        {
+          "bytes": 224944,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/Resources/en.lproj/Localizable.strings",
+          "sha256": "c30671f02364a4aa5c90743b6c524a822d9de3babe7081036250855dbb17c649"
+        },
+        {
+          "bytes": 19294,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/Resources/en.lproj/MCPLocalizable.strings",
+          "sha256": "c3d513ade5f044d0aaac224e500397e9f63ab1f99db5921cfebe734cc34fbdd6"
+        },
+        {
+          "bytes": 77734,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/Resources/en.lproj/RuntimeLocalizable.strings",
+          "sha256": "060c50777f9f0b2c4ca56a791b5fc8da1b58b5013359a4b28d553c54033f52e8"
+        },
+        {
+          "bytes": 211694,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/Resources/he.lproj/Localizable.strings",
+          "sha256": "b6704262c5d63df2dd1248a89b9e7738a6ee186f611a12b3830124bc41c4dcd0"
+        },
+        {
+          "bytes": 18358,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/Resources/he.lproj/MCPLocalizable.strings",
+          "sha256": "cec176764fae94faf8327225d7888d146fe8321bc9033df2e5aa2ff5ea9bde52"
+        },
+        {
+          "bytes": 73300,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/Resources/he.lproj/RuntimeLocalizable.strings",
+          "sha256": "d001264f9163dc4eb8c0a7e852489511b0a5a4a73fef6b66575e46d6e14af6dc"
+        },
+        {
+          "bytes": 112724,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/Resources/zh-Hans.lproj/Localizable.strings",
+          "sha256": "ae8342a92694a1675f8edba6798878ac991b319709271ff0ddd17a8acf4c1ebf"
+        },
+        {
+          "bytes": 16042,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/Resources/zh-Hans.lproj/MCPLocalizable.strings",
+          "sha256": "378fcd3e0eb087e031e6137ff8f1129f8dc5b769d5df6c02b7d57224abebcc2f"
+        },
+        {
+          "bytes": 60726,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/Resources/zh-Hans.lproj/RuntimeLocalizable.strings",
+          "sha256": "01d40260f710580bf8ec3b45d9ccdd18fcb1203313d0866bf47527d29aa6edee"
+        },
+        {
+          "bytes": 227,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/_CodeSignature/CodeDirectory",
+          "sha256": "c9d4014d7989c0e10df3deddc1d12167e183e1b279fd90cae45a233ad0300f17"
+        },
+        {
+          "bytes": 12,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/_CodeSignature/CodeRequirements",
+          "sha256": "987920904eab650e75788c054aa0b0524e6a80bfc71aa32df8d237a61743f986"
+        },
+        {
+          "bytes": 5871,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/_CodeSignature/CodeResources",
+          "sha256": "dd7b3000ea7c1c597d63e754c277bebb112656f3377ab0df7775e40e97484979"
+        },
+        {
+          "bytes": 0,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinLocalization.bundle/Contents/_CodeSignature/CodeSignature",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 1167,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinRichUI.bundle/Contents/Info.plist",
+          "sha256": "6c83cbb3563bf05705023970f4d2c7177fefccf4331ffa5e9ad2373b35fc3a16"
+        },
+        {
+          "bytes": 162,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinRichUI.bundle/Contents/Resources/OpenUI/.gitattributes",
+          "sha256": "ef8722d0d0dd44cfb82678da6fd1056f9e9a9c6d943e9125bcd6f6a5460e88e6"
+        },
+        {
+          "bytes": 5693,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinRichUI.bundle/Contents/Resources/OpenUI/THIRD_PARTY_NOTICES.md",
+          "sha256": "84f847d0d98c2956481dafbfa2f42f47e3d2a3e15c1c376fd6a4ab802cca9b56"
+        },
+        {
+          "bytes": 356861,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinRichUI.bundle/Contents/Resources/OpenUI/bridge.css",
+          "sha256": "cab51495b9923c124d303b80f64aee322eaad5133f07cf34fcb02ac7cc1b9a1d"
+        },
+        {
+          "bytes": 3582180,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinRichUI.bundle/Contents/Resources/OpenUI/bridge.js",
+          "sha256": "a1e800746e8281f6e487a0dc279e502bda9d2ae35c5a910a19a28375f9b1c9de"
+        },
+        {
+          "bytes": 76610,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinRichUI.bundle/Contents/Resources/OpenUI/bridge.js.LEGAL.txt",
+          "sha256": "cc72edf544f42b902a91e479860f87404d8408e74e7908b33ff2b78173bc81df"
+        },
+        {
+          "bytes": 4787,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinRichUI.bundle/Contents/Resources/OpenUI/catalog-manifest.json",
+          "sha256": "f0c755d157dd18c5503ddf84710b58f6f7b38c6ba2b65a7cf3810d4d43fcc3df"
+        },
+        {
+          "bytes": 469,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinRichUI.bundle/Contents/Resources/OpenUI/index.html",
+          "sha256": "460c6bdfd6dd964f251954900bbbb34481e3c0f0b25ca3165031fafd643d1b54"
+        },
+        {
+          "bytes": 34202,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinRichUI.bundle/Contents/Resources/OpenUI/original-prompt.txt",
+          "sha256": "aad61ab2488e864b43169df4be7710bea6524efed01df5bf86c7d2172f41e03c"
+        },
+        {
+          "bytes": 34958,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinRichUI.bundle/Contents/Resources/OpenUI/torah-prompt.txt",
+          "sha256": "abc486ddfe23182bbe6f967296645a448a3b2f45e5e7b65a0c30ca8480f59fd9"
+        },
+        {
+          "bytes": 221,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinRichUI.bundle/Contents/_CodeSignature/CodeDirectory",
+          "sha256": "b013c66e052d1ac13e0c2ff2e760f93f8a1708e4fa091b73173032626b910180"
+        },
+        {
+          "bytes": 12,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinRichUI.bundle/Contents/_CodeSignature/CodeRequirements",
+          "sha256": "987920904eab650e75788c054aa0b0524e6a80bfc71aa32df8d237a61743f986"
+        },
+        {
+          "bytes": 4476,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinRichUI.bundle/Contents/_CodeSignature/CodeResources",
+          "sha256": "61966cb387d0ba54f25140d8ea7d8c92d0b9383fe2ee6b4f8a9706a76ef7c9c4"
+        },
+        {
+          "bytes": 0,
+          "path": "out/Products/Debug/HanlinPresentationSDK_HanlinRichUI.bundle/Contents/_CodeSignature/CodeSignature",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "bytes": 126728,
+          "path": "out/Products/Debug/HanlinRichUI.o",
+          "sha256": "94cc9c200d88f457cd4648933c1c00b7d75fd5390decbc686b662406c0fca5ed"
+        },
+        {
+          "bytes": 3392,
+          "path": "out/Products/Debug/HanlinRichUI.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo",
+          "sha256": "6bf44636173e108f4af7d9f88f3b748fd1e690eb172a0717c4df4048af853cbf"
+        },
+        {
+          "bytes": 149,
+          "path": "out/Products/Debug/HanlinRichUI.swiftmodule/arm64-apple-macos.abi.json",
+          "sha256": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728"
+        },
+        {
+          "bytes": 624,
+          "path": "out/Products/Debug/HanlinRichUI.swiftmodule/arm64-apple-macos.swiftdoc",
+          "sha256": "9d19691347120e56e6ec4ce1bdb05693145f19cfac0ba9d37b21848091a9172f"
+        },
+        {
+          "bytes": 69968,
+          "path": "out/Products/Debug/HanlinRichUI.swiftmodule/arm64-apple-macos.swiftmodule",
+          "sha256": "59fd45e1c4c5fddb893b877749323b5e584fca21cd0dbe1f772ac348551acbf2"
+        },
+        {
+          "bytes": 200704,
+          "path": "out/Products/Debug/InternalCollectionsUtilities.o",
+          "sha256": "a2f00a4513e3746c94fccabcc495010892fdbccc81ee9a11a7ec0929dc5aecb1"
+        },
+        {
+          "bytes": 52780,
+          "path": "out/Products/Debug/InternalCollectionsUtilities.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo",
+          "sha256": "b70d1d1c0ead958566f5db925896d2b6b6e501144bfd31c3f7615402d5e56cbd"
+        },
+        {
+          "bytes": 149,
+          "path": "out/Products/Debug/InternalCollectionsUtilities.swiftmodule/arm64-apple-macos.abi.json",
+          "sha256": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728"
+        },
+        {
+          "bytes": 15716,
+          "path": "out/Products/Debug/InternalCollectionsUtilities.swiftmodule/arm64-apple-macos.swiftdoc",
+          "sha256": "f803e57464ab0e19b5d821279a7b3f03c567e6ad5ba0fbfdc7f9a12590ff6c3f"
+        },
+        {
+          "bytes": 267708,
+          "path": "out/Products/Debug/InternalCollectionsUtilities.swiftmodule/arm64-apple-macos.swiftmodule",
+          "sha256": "a973fe3bb0af9845bff8617c25ffe92b3bdc130fe583e31abd7633a1a1dd3da5"
+        },
+        {
+          "bytes": 2820976,
+          "path": "out/Products/Debug/JSONSchema.o",
+          "sha256": "6c4381553bbdc6f3ef6681c55a10b5bb84a7c4b8990ecf757217ee369f6562c2"
+        },
+        {
+          "bytes": 175136,
+          "path": "out/Products/Debug/JSONSchema.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo",
+          "sha256": "d08a42647ded630020cf29fcbb73d2f0c64c753f0a958cb3d8ff09b9c578ab66"
+        },
+        {
+          "bytes": 149,
+          "path": "out/Products/Debug/JSONSchema.swiftmodule/arm64-apple-macos.abi.json",
+          "sha256": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728"
+        },
+        {
+          "bytes": 29456,
+          "path": "out/Products/Debug/JSONSchema.swiftmodule/arm64-apple-macos.swiftdoc",
+          "sha256": "d4fdcc7f36199c5462bd5c5c0a691e84132ba5b4d3a219defb11e4479e5f68b7"
+        },
+        {
+          "bytes": 671332,
+          "path": "out/Products/Debug/JSONSchema.swiftmodule/arm64-apple-macos.swiftmodule",
+          "sha256": "98b3725d59f1ba78fa55e84e58399a5766329b8fbf3a2e3c65fe948f54c56e7b"
+        },
+        {
+          "bytes": 894096,
+          "path": "out/Products/Debug/OrderedCollections.o",
+          "sha256": "cecf76ac81772723cfea4806decf9864ffaa909831f76bdf56a22ea644718cbc"
+        },
+        {
+          "bytes": 335180,
+          "path": "out/Products/Debug/OrderedCollections.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo",
+          "sha256": "d7a439a11a5491c0d16a3a8447168fb1c9a05e7446c6de83a5ce92b6e50972dd"
+        },
+        {
+          "bytes": 149,
+          "path": "out/Products/Debug/OrderedCollections.swiftmodule/arm64-apple-macos.abi.json",
+          "sha256": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728"
+        },
+        {
+          "bytes": 319024,
+          "path": "out/Products/Debug/OrderedCollections.swiftmodule/arm64-apple-macos.swiftdoc",
+          "sha256": "1ddc087b94719c22fd8b0a43df9df8c52c38dd00a51dccce310c57e5fe368e05"
+        },
+        {
+          "bytes": 943168,
+          "path": "out/Products/Debug/OrderedCollections.swiftmodule/arm64-apple-macos.swiftmodule",
+          "sha256": "40f71fc5910c0e56516994dba9b418f9736cf379915187065927c82688c41e4f"
+        },
+        {
+          "bytes": 305536,
+          "path": "out/Products/Debug/OrderedJSON.o",
+          "sha256": "b65e82dd440c8d38357e1c8f9bc53da796f93fad1fa5c8020071da70d153356c"
+        },
+        {
+          "bytes": 23132,
+          "path": "out/Products/Debug/OrderedJSON.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo",
+          "sha256": "89ecfa0ac681682698d77380b2b8727f284bb7f5c9e8b4f18ce10d5df2243647"
+        },
+        {
+          "bytes": 149,
+          "path": "out/Products/Debug/OrderedJSON.swiftmodule/arm64-apple-macos.abi.json",
+          "sha256": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728"
+        },
+        {
+          "bytes": 12912,
+          "path": "out/Products/Debug/OrderedJSON.swiftmodule/arm64-apple-macos.swiftdoc",
+          "sha256": "2a38d09fab9a79234f0192b605123dc5fa4c43ea9ce54210d0e99a7f4a1a629a"
+        },
+        {
+          "bytes": 115632,
+          "path": "out/Products/Debug/OrderedJSON.swiftmodule/arm64-apple-macos.swiftmodule",
+          "sha256": "de347eaadd0a9a33aa52b5d1fd406604e5bd59804c0d72153f91583723f369d2"
+        },
+        {
+          "bytes": 2995376,
+          "path": "out/Products/Debug/SwiftSoup.o",
+          "sha256": "8dee09c01b622d45f9640b279c6eb58ba2d5eea40c34d84dd16ac1fa99613494"
+        },
+        {
+          "bytes": 331428,
+          "path": "out/Products/Debug/SwiftSoup.swiftmodule/Project/arm64-apple-macos.swiftsourceinfo",
+          "sha256": "9ef86b15be639a9473d04f976f526ed858057e7328ad168e926ed18f30b035f9"
+        },
+        {
+          "bytes": 149,
+          "path": "out/Products/Debug/SwiftSoup.swiftmodule/arm64-apple-macos.abi.json",
+          "sha256": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728"
+        },
+        {
+          "bytes": 211092,
+          "path": "out/Products/Debug/SwiftSoup.swiftmodule/arm64-apple-macos.swiftdoc",
+          "sha256": "2c5dd64c8c94477aefdf895ff00eeb13f43d7a3918096db4892fb80afd4912c4"
+        },
+        {
+          "bytes": 1050716,
+          "path": "out/Products/Debug/SwiftSoup.swiftmodule/arm64-apple-macos.swiftmodule",
+          "sha256": "8c4ae04bbff47c5ab12bb4a873ad6b5cbcc81e22bbb462bd1c03ea5aad657494"
+        },
+        {
+          "bytes": 19600072,
+          "path": "out/Products/Debug/libHanlinA2UI.a",
+          "sha256": "2c355f32689fd3aa2dc76d0f0d99efeb374cd7b7db6a45b7f683f517f4958ca5"
+        },
+        {
+          "bytes": 13526088,
+          "path": "out/Products/Debug/libHanlinAgentActivityCore.a",
+          "sha256": "a7a48600c2efe3d1bc45f63495af9dbc34bc0779b128e78328705e6368b33260"
+        },
+        {
+          "bytes": 19230712,
+          "path": "out/Products/Debug/libHanlinAgentActivityUI.a",
+          "sha256": "c6f98df76ef9e51147913674327a4c1121b095873cfb4f54c3a0fb33575f86f6"
+        },
+        {
+          "bytes": 68600,
+          "path": "out/Products/Debug/libHanlinChatPresentation.a",
+          "sha256": "e915dbd2cd042ea11b720e195dd3325fb7c13ef9f61f73728e19b0955e7c6238"
+        },
+        {
+          "bytes": 15919896,
+          "path": "out/Products/Debug/libHanlinChatUI.a",
+          "sha256": "7aad0bfb520b5535c383bf3849ff1a89983ca2ff28c31e51be1d4bcea107402a"
+        },
+        {
+          "bytes": 1024152,
+          "path": "out/Products/Debug/libHanlinLocalization.a",
+          "sha256": "8026d38003d2a0ae5ed5f52ec3f8022b40a125def9f416afbf5dc8c5510d88ce"
+        },
+        {
+          "bytes": 10961240,
+          "path": "out/Products/Debug/libHanlinMiniAppsUI.a",
+          "sha256": "96a2e8a2f3249c0ddc48c159dc13238ec9497924e3d78a3e98e8e4bb2cc8df21"
+        },
+        {
+          "bytes": 1250544,
+          "path": "out/Products/Debug/libHanlinPresentationKit.a",
+          "sha256": "906405803ddb49ce390b506ded051c0102706136d10e23053a4e5daaf9887f33"
+        },
+        {
+          "bytes": 2402304,
+          "path": "out/Products/Debug/libHanlinRichUI.a",
+          "sha256": "98b9f31441db7658a19a281b72f46842078e19fb1b795b16c72cb68192f76327"
+        },
+        {
+          "bytes": 1150,
+          "path": "out/Products/Debug/swift-json-schema_JSONSchema.bundle/Contents/Info.plist",
+          "sha256": "7695d00931be2c9359440628793b6443580bff9e568144bd9cc12a022ead5316"
+        },
+        {
+          "bytes": 1560,
+          "path": "out/Products/Debug/swift-json-schema_JSONSchema.bundle/Contents/Resources/applicator.json",
+          "sha256": "bf273b26f9f735b93ece78f2b61b36676e1d122ce78ab37ad5a2e45dfa1ca2b1"
+        },
+        {
+          "bytes": 423,
+          "path": "out/Products/Debug/swift-json-schema_JSONSchema.bundle/Contents/Resources/content.json",
+          "sha256": "a10456605b2b5bb12a1b4dcfc0300f02f54d3e8bb3646bed7724583866627682"
+        },
+        {
+          "bytes": 1471,
+          "path": "out/Products/Debug/swift-json-schema_JSONSchema.bundle/Contents/Resources/core.json",
+          "sha256": "21f79d143fab1f180245c331e5657057045b36794d41fe151e6e4fed65035299"
+        },
+        {
+          "bytes": 342,
+          "path": "out/Products/Debug/swift-json-schema_JSONSchema.bundle/Contents/Resources/format-annotation.json",
+          "sha256": "5c79404f831dd905c0f40fefac7c6f3e51bf3729b4a876a5c2020178d97f3bcc"
+        },
+        {
+          "bytes": 794,
+          "path": "out/Products/Debug/swift-json-schema_JSONSchema.bundle/Contents/Resources/meta-data.json",
+          "sha256": "c664d438a84d58889c8edecd248ce2f945a4bc0e3b087323b11303dc136abfbe"
+        },
+        {
+          "bytes": 2452,
+          "path": "out/Products/Debug/swift-json-schema_JSONSchema.bundle/Contents/Resources/schema.json",
+          "sha256": "41da76f5afb7ce062d248f762463a92f7ca47e4e0f905b224ba6afeef91ded0f"
+        },
+        {
+          "bytes": 406,
+          "path": "out/Products/Debug/swift-json-schema_JSONSchema.bundle/Contents/Resources/unevaluated.json",
+          "sha256": "fc99f32188da41689a9382af174dd42e8b255e4374965c157b8286556b4ab2bc"
+        },
+        {
+          "bytes": 2735,
+          "path": "out/Products/Debug/swift-json-schema_JSONSchema.bundle/Contents/Resources/validation.json",
+          "sha256": "e921c5b79264d3689af01c1af1ffdf692e09f1c45df90a0f08eb7288c9acdeab"
+        },
+        {
+          "bytes": 215,
+          "path": "out/Products/Debug/swift-json-schema_JSONSchema.bundle/Contents/_CodeSignature/CodeDirectory",
+          "sha256": "da799da31fe563f96d9858843aec1bbf46cfa4ce556e7e85e49465a0b97924d8"
+        },
+        {
+          "bytes": 12,
+          "path": "out/Products/Debug/swift-json-schema_JSONSchema.bundle/Contents/_CodeSignature/CodeRequirements",
+          "sha256": "987920904eab650e75788c054aa0b0524e6a80bfc71aa32df8d237a61743f986"
+        },
+        {
+          "bytes": 4092,
+          "path": "out/Products/Debug/swift-json-schema_JSONSchema.bundle/Contents/_CodeSignature/CodeResources",
+          "sha256": "7f694eff009dfb363694b6a18c7bfda1f247e1bf34bfbfea65f9ff21c356353f"
+        },
+        {
+          "bytes": 0,
+          "path": "out/Products/Debug/swift-json-schema_JSONSchema.bundle/Contents/_CodeSignature/CodeSignature",
+          "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        }
+      ],
+      "label": "prior-quota",
+      "sha256": "b68b3413f671ff3eb6fd197278766d172ba5d9dfe98eadcede43a75bc21e319c",
+      "originalArchiveName": "payload-quota-original-products.tar",
+      "evidenceOrigin": {
+        "runID": 45963272356,
+        "attempt": 1,
+        "jobID": 140385861324,
+        "source": "35d26911f70794a41361cee710b1fed24a35e269",
+        "controller": "bd41cf7878c5f4df117af7bfcb67636bdff2eafa",
+        "artifactID": 15181687501,
+        "artifactSHA256": "e1ee86a9f2d75aa6abcf8695af9a39ba2e1d898ce31f2d93f26c2b20583f558d",
+        "rawLogSHA256": "c025761afe06b69a895bad9b698ed3dc6e6cba5c9daadadeca03eaef86a1bf88",
+        "toolchainScope": "Xcode27.2 / Swift6.4.2 / Testing2403 / macOS27.0.1; no Xcode27.0 compatibility claim",
+        "wholeOriginalRunStatus": "FAILED",
+        "reexecuted": false
+      }
+    },
+    "admission": {
+      "status": "PASS_FIVE_UNCHANGED_ORIGINAL_CASES_ONLY",
+      "origin": {
+        "runID": 45963272356,
+        "attempt": 1,
+        "jobID": 140385861324,
+        "source": "35d26911f70794a41361cee710b1fed24a35e269",
+        "controller": "bd41cf7878c5f4df117af7bfcb67636bdff2eafa",
+        "artifactID": 15181687501,
+        "artifactSHA256": "e1ee86a9f2d75aa6abcf8695af9a39ba2e1d898ce31f2d93f26c2b20583f558d",
+        "rawLogSHA256": "c025761afe06b69a895bad9b698ed3dc6e6cba5c9daadadeca03eaef86a1bf88",
+        "toolchainScope": "Xcode27.2 / Swift6.4.2 / Testing2403 / macOS27.0.1; no Xcode27.0 compatibility claim",
+        "wholeOriginalRunStatus": "FAILED",
+        "reexecuted": false
+      },
+      "sourceContinuity": {
+        "originalSource": "35d26911f70794a41361cee710b1fed24a35e269",
+        "currentSource": "0ae1920d316b9592cbad0462bea96a07fd1ca351",
+        "originalSourceFiles": 1005,
+        "currentSourceFiles": 1005,
+        "unchangedSourceFiles": 1004,
+        "reviewedInventoryChanges": [
+          {
+            "before": {
+              "blob": "db073980f3a2968af9f9b1fdbd102dd022088b78",
+              "bytes": 7501,
+              "mode": "100644",
+              "path": "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/ChatCodeFencePayloadRetentionTests.swift",
+              "sha256": "2838bf7cd353b80cea82f72ac30851059d6998728c5ed5876cacafb0a3957d18"
+            },
+            "after": {
+              "blob": "506bc4a51ad2f78e668d321db139e1c2a9a5d986",
+              "bytes": 8535,
+              "mode": "100644",
+              "path": "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/ChatCodeFencePayloadRetentionTests.swift",
+              "sha256": "b4504b8c1c08a6c91204a3c0521f82c64822db4c6f28561f18cdab5d4b534de6"
+            }
+          }
+        ],
+        "originalInventoryCanonicalSHA256": "c4f6fc4a154e1916c0825fcba364a0390cf9dbe162b6ab188af425e142b71218",
+        "currentInventoryCanonicalSHA256": "abdec6d928719a295273976aeb29d569c176c0b7c1417cdc8f87364680f27a67",
+        "scope": "Full original inventory stays bound to the actually executed source archive. Current inventory is independently bound to its selected Git source; only the explicit reviewed rows may differ. No changed test result is reused."
+      },
+      "unchangedDeclarations": [
+        "countsUTF8OutputBytesOnceAcrossInlineAndExpandedCopies()",
+        "byteAndCountExhaustionPreserveExistingPayloadAndPermitLaterReuse()",
+        "cancelledUnpublishedResultKeepsLeaseUntilActualWorkDrains()",
+        "distinctBudgetsCannotAdoptAnAlreadyOwnedPayloadAndInvalidCostsDoNotOverflow()",
+        "simultaneousOwnersCannotExceedOneSharedQuota()"
+      ],
+      "originalSourceFiles": 1005,
+      "originalCommands": 50,
+      "originalDependencies": 18,
+      "originalProductFiles": 267,
+      "originalQuotaResult": "SIX_EXECUTED_FIVE_PASS_ONE_FAIL",
+      "originalFailedMethod": "cacheEvictionDoesNotFreeInlineOwnershipAndRemountDoesNotDoubleCharge()",
+      "scope": "Original actual pre-test dependency/clean checks, locked command, full source/archive and compiled products are verified. Post-test checkout/source checks were NOT_REACHED after the genuine failure; no post-test receipt is invented. Only the five byte-identical passing declarations are reused; the corrected method must execute in the new source."
+    }
+  },
+  "agentSourceContinuity": {
+    "originalSource": "caa0dac32afa18e58bba55fb4f0fdd262f181835",
+    "currentSource": "0ae1920d316b9592cbad0462bea96a07fd1ca351",
+    "originalSourceFiles": 1005,
+    "currentSourceFiles": 1005,
+    "unchangedSourceFiles": 1004,
+    "reviewedInventoryChanges": [
+      {
+        "before": {
+          "blob": "45baf575d666c580c8e7b79cfe6591adb82aac7e",
+          "bytes": 7001,
+          "mode": "100644",
+          "path": "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/ChatCodeFencePayloadRetentionTests.swift",
+          "sha256": "5781153ac5b7b85476b0c8b1e6f1d73df409a728657d247ad78a9584e46d75dd"
+        },
+        "after": {
+          "blob": "506bc4a51ad2f78e668d321db139e1c2a9a5d986",
+          "bytes": 8535,
+          "mode": "100644",
+          "path": "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/ChatCodeFencePayloadRetentionTests.swift",
+          "sha256": "b4504b8c1c08a6c91204a3c0521f82c64822db4c6f28561f18cdab5d4b534de6"
+        }
+      }
+    ],
+    "originalInventoryCanonicalSHA256": "9aeb55bea1fafa9bb128ca74833bce812f337f737364093df78b7db15d7554b0",
+    "currentInventoryCanonicalSHA256": "abdec6d928719a295273976aeb29d569c176c0b7c1417cdc8f87364680f27a67",
+    "scope": "Full original inventory stays bound to the actually executed source archive. Current inventory is independently bound to its selected Git source; only the explicit reviewed rows may differ. No changed test result is reused."
+  },
+  "scope": "Actual original archive, raw outcomes, dependency and retained product bytes were read and checked. Current source inventory is the exact reviewed one-row fixture. No Swift test, product or compiler was executed; one corrected quota case, Widget2 and iOS remain NOT_RUN."
+}

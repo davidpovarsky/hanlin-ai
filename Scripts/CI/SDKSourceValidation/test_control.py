@@ -18,6 +18,7 @@ spec.loader.exec_module(control)
 CONFIG = control.CONFIG
 
 from continuation import validate_api, admit_archive, validate_source_continuity
+from quota_continuation import parse_original_quota_failure, validate_unchanged_declarations, admit_quota_archive
 
 
 def admitted_inputs():
@@ -120,7 +121,7 @@ class ControlTests(unittest.TestCase):
 
     def test_reviewed_test_only_successor_preserves_all_original_protected_guards(self):
         fixed = CONFIG["continuation"]
-        source, = fixed["reviewedSourceSuccessors"]
+        source = "35d26911f70794a41361cee710b1fed24a35e269"
         inputs = {**admitted_inputs(), "exact_test_selector": fixed["selector"], CONFIG["sourceInput"]: source}
         environment = {"GITHUB_EVENT_NAME": "workflow_dispatch", "GITHUB_REPOSITORY": "davidpovarsky/hanlin-ai",
                        "HANLIN_SDK_SOURCE_SHA": source}
@@ -141,7 +142,7 @@ class ControlTests(unittest.TestCase):
 
     def test_complete_original_inventory_admits_only_the_reviewed_test_row(self):
         fixed = CONFIG["continuation"]
-        source, = fixed["reviewedSourceSuccessors"]
+        source = "35d26911f70794a41361cee710b1fed24a35e269"
         fixture = (HERE / "Fixtures/original-45954793309-source-files.json").read_bytes()
         self.assertEqual(len(fixture), fixed["members"]["original-source-files.json"]["bytes"])
         self.assertEqual(hashlib.sha256(fixture).hexdigest(), fixed["members"]["original-source-files.json"]["sha256"])
@@ -172,6 +173,117 @@ class ControlTests(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             validate_source_continuity(original, current, "f" * 40, fixed)
         self.assertEqual(json.loads(fixture), original)
+
+    def test_actual_failed_quota_terminal_reuses_only_five_exact_passes(self):
+        fixture = HERE / "Fixtures/original-45963272356-quota-terminal.log"
+        provenance = json.loads((HERE / "Fixtures/original-45963272356-quota-terminal-provenance.json").read_text())
+        self.assertEqual(len(fixture.read_bytes()), provenance["terminalBytes"])
+        self.assertEqual(hashlib.sha256(fixture.read_bytes()).hexdigest(), provenance["terminalSHA256"])
+        fixed = CONFIG["quotaContinuation"]
+        result = parse_original_quota_failure(fixture.read_text(), fixed, CONFIG["suites"][1])
+        self.assertEqual((result["methodCount"], result["caseCount"]), (5, 5))
+        self.assertEqual(result["originalSuiteStatus"], "FAILED")
+        self.assertEqual(result["originalFailedMethod"], fixed["failedMethod"])
+        self.assertNotIn(fixed["failedMethod"], result["methods"])
+        self.assertEqual(set(result["methods"]), {x["method"] for x in fixed["unchangedDeclarations"]})
+
+    def test_quota_reuse_refuses_changed_failure_partial_foreign_duplicate_or_skipped_output(self):
+        original = (HERE / "Fixtures/original-45963272356-quota-terminal.log").read_text()
+        passed = next(x for x in original.splitlines(True) if x.startswith("✔ Test "))
+        started = next(x for x in original.splitlines(True) if x.startswith("◇ Test simultaneous"))
+        variants = [original.replace(passed, ""), original + passed, original.replace(started, ""),
+            original + "◇ Test foreign() started.\n", original + "✔ Test foreign() passed after 0.1 seconds.\n",
+            original + "◇ Test foreign(value:) started.\n", original + "◇ Test run started.\n",
+            original + "◇ Test ignored() skipped.\n",
+            original.replace("with 6 tests in 1 suite failed", "with 5 tests in 1 suite failed"),
+            original.replace("ChatCodeFencePayloadRetentionTests.swift:44:9", "ChatCodeFencePayloadRetentionTests.swift:45:9"),
+            original.replace("Snapshot(bytes: 13, payloads: 1)", "Snapshot(bytes: 0, payloads: 0)"),
+            original.replace("with 1 issue.", "with 2 issues.", 1),
+            original.replace("aka 'ChatCodeFencePayloadRetentionTests'", "aka 'ForeignSuite'")]
+        for index, variant in enumerate(variants):
+            with self.subTest(index=index), self.assertRaises(RuntimeError):
+                parse_original_quota_failure(variant, CONFIG["quotaContinuation"], CONFIG["suites"][1])
+
+    def test_lifetime_successor_requires_all_five_full_declarations_and_both_original_source_closures(self):
+        fixed = CONFIG["quotaContinuation"]
+        source, = fixed["reviewedSourceSuccessors"]
+        old_test = (HERE / "Fixtures/original-35d-quota-test.swift").read_bytes()
+        new_test = (HERE / "Fixtures/reviewed-0ae-quota-test.swift").read_bytes()
+        names = validate_unchanged_declarations(old_test, new_test, fixed)
+        self.assertEqual(set(names), set(CONFIG["suites"][1]["expectedMethods"]) - {fixed["failedMethod"]})
+        for row in fixed["unchangedDeclarations"]:
+            variant = new_test.replace(row["originalDeclaration"].encode(), row["originalDeclaration"].replace("#expect", "#require", 1).encode(), 1)
+            with self.subTest(method=row["method"]), self.assertRaises(RuntimeError):
+                validate_unchanged_declarations(old_test, variant, fixed)
+        with self.assertRaises(RuntimeError):
+            validate_unchanged_declarations(old_test, new_test + fixed["unchangedDeclarations"][0]["originalDeclaration"].encode(), fixed)
+        for settings, fixture in ((CONFIG["continuation"], "original-45954793309-source-files.json"),
+                                  (fixed, "original-45963272356-source-files.json")):
+            raw = (HERE / "Fixtures" / fixture).read_bytes()
+            self.assertEqual(hashlib.sha256(raw).hexdigest(), settings["members"]["original-source-files.json"]["sha256"])
+            original = json.loads(raw)
+            change, = settings["reviewedSourceSuccessors"][source]["inventoryChanges"]
+            current = [change["after"] if x["path"] == change["before"]["path"] else x for x in original]
+            self.assertEqual(control.blob_sha(new_test), change["after"]["blob"])
+            self.assertEqual(hashlib.sha256(new_test).hexdigest(), change["after"]["sha256"])
+            result = validate_source_continuity(original, current, source, settings)
+            self.assertEqual((result["originalSourceFiles"], result["unchangedSourceFiles"]), (1005, 1004))
+            self.assertEqual(result["reviewedInventoryChanges"], [change])
+            for prefix in ("Packages/HanlinAgentSDK/Sources/", "Packages/HanlinPlatform/Sources/",
+                           "Packages/HanlinPresentationSDK/Sources/", "AI_HLY.xcodeproj/", change["after"]["path"]):
+                variant = copy.deepcopy(current)
+                next(x for x in variant if x["path"].startswith(prefix))["sha256"] = "0" * 64
+                with self.subTest(original=settings["source"], changed=prefix), self.assertRaises(RuntimeError):
+                    validate_source_continuity(original, variant, source, settings)
+            self.assertEqual(json.loads(raw), original)
+        inputs = {**admitted_inputs(), "exact_test_selector": CONFIG["continuation"]["selector"], CONFIG["sourceInput"]: source}
+        self.assertEqual(control.validate_inputs(inputs, {"GITHUB_EVENT_NAME": "workflow_dispatch",
+            "GITHUB_REPOSITORY": "davidpovarsky/hanlin-ai", "HANLIN_SDK_SOURCE_SHA": source}), source)
+        expected = control.protected_blobs(fixed["source"])
+        observed = control.protected_blobs(source)
+        self.assertEqual(len(observed), 19)
+        self.assertEqual([x for x in expected if expected[x] != observed[x]], [fixed["testPath"]])
+
+    def test_quota_continuation_selects_only_one_new_case_and_preserves_other_routes(self):
+        fixed = CONFIG["quotaContinuation"]
+        suite = CONFIG["suites"][1]
+        original = copy.deepcopy(suite)
+        selected = control.selected_quota_suite(suite, True)
+        self.assertEqual(selected["filter"], suite["suite"] + "/" + fixed["failedMethod"].removesuffix("()"))
+        self.assertEqual(selected["expectedMethods"], {fixed["failedMethod"]: 1})
+        self.assertEqual(suite, original)
+        for item in CONFIG["suites"]:
+            self.assertIs(control.selected_quota_suite(item, False), item)
+            if item["name"] != "payload-quota":
+                self.assertIs(control.selected_quota_suite(item, True), item)
+        prior = parse_original_quota_failure((HERE / "Fixtures/original-45963272356-quota-terminal.log").read_text(), fixed, suite)
+        self.assertFalse(set(prior["methods"]) & set(selected["expectedMethods"]))
+        self.assertEqual({**prior["methods"], **selected["expectedMethods"]}, suite["expectedMethods"])
+
+    def test_original_quota_api_must_bind_failed_run_exact_artifact_and_all_skipped_siblings(self):
+        fixture = json.loads((HERE / "Fixtures/original-45963272356-api-identities.json").read_text())
+        fixed = CONFIG["quotaContinuation"]
+        validate_api(fixture["run"], fixture["jobs"], fixture["artifact"], fixed)
+        for kind, changes in (("run", {"run_attempt": 2}), ("run", {"conclusion": "success"}),
+                              ("run", {"head_sha": CONFIG["continuation"]["controllerSHA"]}),
+                              ("artifact", {"id": CONFIG["continuation"]["artifactID"]}),
+                              ("artifact", {"digest": "sha256:" + "0" * 64}), ("artifact", {"expired": True})):
+            variant = copy.deepcopy(fixture); variant[kind].update(changes)
+            with self.subTest(kind=kind, changes=changes), self.assertRaises(RuntimeError):
+                validate_api(variant["run"], variant["jobs"], variant["artifact"], fixed)
+        variant = copy.deepcopy(fixture)
+        next(x for x in variant["jobs"]["jobs"] if x["id"] != fixed["jobID"])["conclusion"] = "success"
+        with self.assertRaises(RuntimeError):
+            validate_api(variant["run"], variant["jobs"], variant["artifact"], fixed)
+
+    def test_quota_continuation_rejects_wrong_archive_before_any_output(self):
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary); archive = root / "wrong.zip"
+            archive.write_bytes(b"CONTROL_ONLY_NOT_AN_ACTIONS_ARTIFACT")
+            with self.assertRaisesRegex(RuntimeError, "ZIP bytes differ"):
+                admit_quota_archive(archive, root, CONFIG["quotaContinuation"], [], {}, control,
+                    "0ae1920d316b9592cbad0462bea96a07fd1ca351", b"")
+            self.assertEqual(list(root.iterdir()), [archive])
 
     def test_continuation_api_refuses_foreign_attempt_artifact_or_executed_sibling_job(self):
         fixture = json.loads((HERE / "Fixtures/original-45954793309-api-identities.json").read_text())

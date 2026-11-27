@@ -1,0 +1,172 @@
+{
+  "status": "READY_FOR_ROOT_SOURCE_REVIEW_NOT_DISPATCHED",
+  "repository": "davidpovarsky/hanlin-ai",
+  "baseControlSHA": "bd41cf7878c5f4df117af7bfcb67636bdff2eafa",
+  "source": "0ae1920d316b9592cbad0462bea96a07fd1ca351",
+  "sourceTree": "761851ab3909f8b419a0459a2e4739afa2776f7d",
+  "proposedBranch": "codex/hanlin-sdk-hosted-validation-20261127",
+  "workflowID": 310046367,
+  "selector": "HanlinSDKQuotaWidgetsAfterAgent45954793309",
+  "dispatchInputs": 25,
+  "changedExistingFiles": 4,
+  "newControlAndFixtureFiles": 7,
+  "codeAndFixtures": [
+    {
+      "path": "Scripts/CI/SDKSourceValidation/Fixtures/original-35d-quota-test.swift",
+      "bytes": 7501,
+      "sha256": "2838bf7cd353b80cea82f72ac30851059d6998728c5ed5876cacafb0a3957d18",
+      "gitBlob": "db073980f3a2968af9f9b1fdbd102dd022088b78"
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/Fixtures/original-45963272356-api-identities.json",
+      "bytes": 53918,
+      "sha256": "1334575c6954344f8283516dbc262f42459979762a5f8fe06e911b19fd375285",
+      "gitBlob": "33955300ce6501c0e431e7ea19da1163d7e897ac"
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/Fixtures/original-45963272356-quota-terminal-provenance.json",
+      "bytes": 481,
+      "sha256": "8d48e1583e39695efae46779a605a9ba8025114252f3d1e1df2c1afc3fd58352",
+      "gitBlob": "0ae51c0aed56935590ca0c739fc24bc886629964"
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/Fixtures/original-45963272356-quota-terminal.log",
+      "bytes": 2379,
+      "sha256": "0a1e22fc9a80ec8782f3a97b065a5af126133c5599f24d07c78e090f1cd1b9a3",
+      "gitBlob": "d841353121cb867c893df00b07262551dbe607b4"
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/Fixtures/original-45963272356-source-files.json",
+      "bytes": 305259,
+      "sha256": "99f39248ba2037f599b52818e15ff533960e3e0166c7ca40be653146a9d04310",
+      "gitBlob": "b0013391688607a33cf69b3756d6b56cd1dcad85"
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/Fixtures/reviewed-0ae-quota-test.swift",
+      "bytes": 8535,
+      "sha256": "b4504b8c1c08a6c91204a3c0521f82c64822db4c6f28561f18cdab5d4b534de6",
+      "gitBlob": "506bc4a51ad2f78e668d321db139e1c2a9a5d986"
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/README.md",
+      "bytes": 21316,
+      "sha256": "3a40c5d02bb27e6208f36369bcd9bc807abbb93207eed413d34feeace446b8d6",
+      "gitBlob": "b3b66e2d099e01af1d787d9d8896c3429613cf55"
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/obligations.json",
+      "bytes": 26647,
+      "sha256": "85ac7100b4776ad3ef9ccc51d7f8f493258dc0706f0fe96cc06a5e18a2c87af1",
+      "gitBlob": "b4d831449b1642629ae72d0d79f9545f997fd9c1"
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/quota_continuation.py",
+      "bytes": 15805,
+      "sha256": "0d2e8081ecdcb802b3d211b041febd016c603ecdd149eae49e414acc4d5510ca",
+      "gitBlob": "1bb32828b65a9f64437166512fe66e6cf099abce"
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/run.py",
+      "bytes": 38159,
+      "sha256": "42fe6b091114eaef011e94148d855e055391ab0576d999760df513446643134f",
+      "gitBlob": "2719f795f73d6229755c51b402db8d4018d4850d"
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/test_control.py",
+      "bytes": 27915,
+      "sha256": "fdfac125835c8902f8f2aec84493228fe24a0d060648f711b8692d8ad8d35aa8",
+      "gitBlob": "b32f02ecf396391f25004b02464d715fe7ca035f"
+    }
+  ],
+  "unchanged": [
+    {
+      "path": ".github/workflows/build-ios26-unsigned-ipa.yml",
+      "bytes": 219117,
+      "sha256": "e1c50b40b2c93f77c22243c755cb8bcb0f9447b44199f5f2ec2518a1640dc423",
+      "gitBlob": "b819f3a8634a8466f821c7d33f3ba11ba03e8a59"
+    },
+    {
+      "path": "Scripts/CI/SDKSourceValidation/continuation.py",
+      "bytes": 17320,
+      "sha256": "9fd78bf1886e7fda6789a488fb84512c08b6a9826572332f620b9105613c3243",
+      "gitBlob": "c109231b6fa4aac18640657ff17b4d5d4d458645"
+    }
+  ],
+  "literalInverses": {
+    "path": "docs/validation/20261127-original-sdk-quota-lifetime-continuation/literal-inverse-proof.json",
+    "bytes": 68968,
+    "sha256": "e3ffcafc843c03ebb925e4d654a1abc756a74b8ef788894bbc42619e672a7e5c",
+    "gitBlob": "91695b50c85bb5cfb96d7564917199b5f2120545"
+  },
+  "originalAgent": {
+    "runID": 45954793309,
+    "source": "caa0dac32afa18e58bba55fb4f0fdd262f181835",
+    "methods": 5,
+    "cases": 7,
+    "existingAdmissionImplementation": "UNCHANGED",
+    "currentSourceClosure": "All1005 original rows, except the one reviewed complete quota test row; no Agent/source/dependency change."
+  },
+  "originalQuota": {
+    "runID": 45963272356,
+    "attempt": 1,
+    "controller": "bd41cf7878c5f4df117af7bfcb67636bdff2eafa",
+    "source": "35d26911f70794a41361cee710b1fed24a35e269",
+    "artifactID": 15181687501,
+    "artifactBytes": 295142941,
+    "artifactSHA256": "e1ee86a9f2d75aa6abcf8695af9a39ba2e1d898ce31f2d93f26c2b20583f558d",
+    "wholeRunStatus": "FAILED",
+    "wholeSuiteStatus": "SIX_EXECUTED_FIVE_PASS_ONE_FAIL",
+    "failedMethod": "cacheEvictionDoesNotFreeInlineOwnershipAndRemountDoesNotDoubleCharge()",
+    "actualReusedPasses": 5,
+    "unchangedDeclarationSHA256": {
+      "countsUTF8OutputBytesOnceAcrossInlineAndExpandedCopies()": "830f205de2d1eb60405b9badb495f5c2ff3032f17dac68da56c33ab8a654504d",
+      "byteAndCountExhaustionPreserveExistingPayloadAndPermitLaterReuse()": "127f79865adaf7bb817b90f4d33f8846527d2ec9585e2627e03f7f78c7394a1e",
+      "cancelledUnpublishedResultKeepsLeaseUntilActualWorkDrains()": "cd52c9234eebbce019ccba6368f1184e89a5b8d775e1d72187bed2fb35b5071a",
+      "distinctBudgetsCannotAdoptAnAlreadyOwnedPayloadAndInvalidCostsDoNotOverflow()": "fcc05dcf9f8e1c646a689b9d383f2a0ad31a1d672f4521fce8723ca225546a21",
+      "simultaneousOwnersCannotExceedOneSharedQuota()": "f321eb55a9f9ae0929d75537389540be12e5d3f7a6851031c2e60c01f297980d"
+    },
+    "originalSourceFiles": 1005,
+    "originalCommands": 50,
+    "pretestDependencyCheckouts": 18,
+    "originalProductFiles": 267,
+    "posttestDependencyAndSourceChecks": "NOT_REACHED_AFTER_GENUINE_EXIT1"
+  },
+  "futureExecution": {
+    "quotaMethods": [
+      "cacheEvictionDoesNotFreeInlineOwnershipAndRemountDoesNotDoubleCharge()"
+    ],
+    "quotaCases": 1,
+    "widgetMethods": 2,
+    "iosProduct": "Original HanlinChatUI generic iOS Simulator build, no launch",
+    "scope": "Five original35d passes plus one new0ae result, not a six-case0ae run or a relabeled earlier suite."
+  },
+  "actualLocalControls": {
+    "methods": 20,
+    "receipt": {
+      "path": "docs/validation/20261127-original-sdk-quota-lifetime-continuation/local-control-receipt.json",
+      "bytes": 832,
+      "sha256": "e94bbabe73cfd92e1040e395d011bbbc79c30372d76c81f9e1c3f113af580860",
+      "gitBlob": "a02f1ff08c301eed85e5d4e64c10b99eb547309c"
+    },
+    "rawLog": {
+      "path": "docs/validation/20261127-original-sdk-quota-lifetime-continuation/local-control-tests.log",
+      "bytes": 3689,
+      "sha256": "a18171efcd238ebbe6e217a79e9a3fab192a4ca57fdb2892137f29156ec94855",
+      "gitBlob": "9bbba6ff6fa7d5aead73e049fa83064c142cb6a1"
+    },
+    "originalArtifactAdmission": {
+      "path": "docs/validation/20261127-original-sdk-quota-lifetime-continuation/actual-original-admission.json",
+      "bytes": 75007,
+      "sha256": "4952efb692ca5421dee786fd26618e7cd1b893fb73c86824f01012d65002e87f",
+      "gitBlob": "4a32db9c5dce23de8d848dc7918ca0239c55865c"
+    },
+    "executionNote": "The full original artifact admission ran before one additive two-line terminal-start rejection guard. Final20 controls replayed the exact actual terminal through that strengthened guard and rejected duplicate run/parameterized foreign starts. The archive/source/product checking code is byte-unchanged. No Swift was run in either check."
+  },
+  "limits": [
+    "No new Swift, compiler, native runtime, simulator, account, SDK product or application result.",
+    "Original Xcode27.2/Swift6.4.2/Testing2403 scope; no Xcode27.0 compatibility claim.",
+    "Original Agent/quota binaries remain inert and preserved; complete original ZIP bytes stay in their actual Actions artifacts and local retained paths.",
+    "NativeScript handler/companion, six App/UIKit scrolling methods, Anytype Save/Stop, signing and TestFlight remain separate.",
+    "No workflow predicate, dispatch input, old selector, global process kill or token scope change."
+  ]
+}

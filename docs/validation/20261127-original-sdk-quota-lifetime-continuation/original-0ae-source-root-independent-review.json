@@ -1,0 +1,33 @@
+{
+  "afterSHA256": "b4504b8c1c08a6c91204a3c0521f82c64822db4c6f28561f18cdab5d4b534de6",
+  "baseSource": "35d26911f70794a41361cee710b1fed24a35e269",
+  "beforeSHA256": "2838bf7cd353b80cea82f72ac30851059d6998728c5ed5876cacafb0a3957d18",
+  "fiveOtherMethodBodiesByteIdentical": [
+    "countsUTF8OutputBytesOnceAcrossInlineAndExpandedCopies",
+    "byteAndCountExhaustionPreserveExistingPayloadAndPermitLaterReuse",
+    "cancelledUnpublishedResultKeepsLeaseUntilActualWorkDrains",
+    "distinctBudgetsCannotAdoptAnAlreadyOwnedPayloadAndInvalidCostsDoNotOverflow",
+    "simultaneousOwnersCannotExceedOneSharedQuota"
+  ],
+  "fullTwoEditInverseVerified": true,
+  "methodNames": [
+    "countsUTF8OutputBytesOnceAcrossInlineAndExpandedCopies",
+    "cacheEvictionDoesNotFreeInlineOwnershipAndRemountDoesNotDoubleCharge",
+    "byteAndCountExhaustionPreserveExistingPayloadAndPermitLaterReuse",
+    "cancelledUnpublishedResultKeepsLeaseUntilActualWorkDrains",
+    "distinctBudgetsCannotAdoptAnAlreadyOwnedPayloadAndInvalidCostsDoNotOverflow",
+    "simultaneousOwnersCannotExceedOneSharedQuota"
+  ],
+  "newTestsRun": 0,
+  "onlyChangedMethod": "cacheEvictionDoesNotFreeInlineOwnershipAndRemountDoesNotDoubleCharge",
+  "path": "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/ChatCodeFencePayloadRetentionTests.swift",
+  "review": [
+    "The originalNSCache positive lookup could retain an ObjectiveC/Swift temporary beyond removeAllObjects; actualrootcause remains a hypothesis until runtime witnesses execute.",
+    "The proposed synchronous non-inlined helper encloses actual original Box allocation/cachelookup/eviction in an explicit ObjectiveC autoreleasepool on supportedplatforms and an ordinary non-inlined callscope elsewhere. It returns only the original value snapshot; inlinepayload stays outside, and no Box/payload tuple escapes.",
+    "Weak actualBoxnil and positive13-byte inlinecharge are added before original remount/finalzero checks; original37assertions and16retain calls remain. OriginalBox/makePayload/Latch and production code are unchanged.",
+    "Five other independent test method bodies are byte-identical. Exact original5PASS evidence may be reused if the controller proves complete production/dependency/toolchain closure and executes the originalfailedmethod under the successor; originalfailedsuite retainsFAIL.",
+    "No sleep, productionrelease/reset, quotaoverride, syntheticlease or deleted originalassertion. This is source review and potentialfixture-correction, not a runtime acceptance or productiondefect diagnosis."
+  ],
+  "schema": "root-hanlin-cache-fixture-independent-review/v1",
+  "verdict": "SOURCE_REVIEWED_READY_FOR_OWNED_PUBLICATION_AND_EXACT_ONE_METHOD_VALIDATION"
+}

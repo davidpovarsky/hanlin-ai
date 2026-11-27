@@ -1,0 +1,796 @@
+{
+  "schema": "hanlin-cache-lifetime-fixture-publication-v1",
+  "repository": "davidpovarsky/hanlin-ai",
+  "branch": "codex/hanlin-pinkha-quota-test-macro-20261127",
+  "previousHead": "35d26911f70794a41361cee710b1fed24a35e269",
+  "head": "0ae1920d316b9592cbad0462bea96a07fd1ca351",
+  "tree": "761851ab3909f8b419a0459a2e4739afa2776f7d",
+  "primaryRef": {
+    "ref": "refs/heads/codex/hanlin-pinkha-quota-test-macro-20261127",
+    "node_id": "REF_kwDOTTRem9oAOHJlZnMvaGVhZHMvY29kZXgvaGFubGluLXBpbmtoYS1xdW90YS10ZXN0LW1hY3JvLTIwMjYxMTI3",
+    "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/git/refs/heads/codex/hanlin-pinkha-quota-test-macro-20261127",
+    "object": {
+      "sha": "0ae1920d316b9592cbad0462bea96a07fd1ca351",
+      "type": "commit",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/git/commits/0ae1920d316b9592cbad0462bea96a07fd1ca351"
+    }
+  },
+  "primaryCommit": {
+    "sha": "0ae1920d316b9592cbad0462bea96a07fd1ca351",
+    "node_id": "C_kwDOTTRem9oAKDBhZTE5MjBkMzE2Yjk1OTJjYmFkMDQ2MmJlYTk2YTA3ZmQxY2EzNTE",
+    "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/git/commits/0ae1920d316b9592cbad0462bea96a07fd1ca351",
+    "html_url": "https://github.com/davidpovarsky/hanlin-ai/commit/0ae1920d316b9592cbad0462bea96a07fd1ca351",
+    "author": {
+      "name": "davidpovarsky",
+      "email": "davidpovarski1@gmail.com",
+      "date": "2026-11-27T08:28:11Z"
+    },
+    "committer": {
+      "name": "davidpovarsky",
+      "email": "davidpovarski1@gmail.com",
+      "date": "2026-11-27T08:28:11Z"
+    },
+    "tree": {
+      "sha": "761851ab3909f8b419a0459a2e4739afa2776f7d",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/git/trees/761851ab3909f8b419a0459a2e4739afa2776f7d"
+    },
+    "message": "test: prove cache-owner death before inline payload quota checks\n\nScope the original NSCache lookup and its Foundation temporary owners explicitly. Add a weak cache-box death witness and a positive inline charge witness while preserving all six methods, 16 ordered retain calls and 37 original assertions. Production accounting and package locks are unchanged. Retain the original six-case Apple result (five pass, one fail), source/product evidence and independent review. Corrected fixture execution remains pending.",
+    "parents": [
+      {
+        "sha": "35d26911f70794a41361cee710b1fed24a35e269",
+        "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/git/commits/35d26911f70794a41361cee710b1fed24a35e269",
+        "html_url": "https://github.com/davidpovarsky/hanlin-ai/commit/35d26911f70794a41361cee710b1fed24a35e269"
+      }
+    ],
+    "verification": {
+      "verified": false,
+      "reason": "unsigned",
+      "signature": null,
+      "payload": null,
+      "verified_at": null
+    }
+  },
+  "comparison": {
+    "status": "ahead",
+    "ahead_by": 1,
+    "behind_by": 0,
+    "total_commits": 1,
+    "files": [
+      {
+        "path": "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/ChatCodeFencePayloadRetentionTests.swift",
+        "blob": "506bc4a51ad2f78e668d321db139e1c2a9a5d986",
+        "status": "modified",
+        "bytes": 8535
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/actual-failure-verification.json",
+        "blob": "e0061d8549eb7bdc2392f0ba1c3dd405fa26ebfe",
+        "status": "added",
+        "bytes": 6653
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/executed-source-identities.json",
+        "blob": "27a1221f513125914efbf39b07f25414e1b1a014",
+        "status": "added",
+        "bytes": 1187
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/first-local-reader-failure.json",
+        "blob": "fd73706a485951080c83ee2f29e48c428c38e2da",
+        "status": "added",
+        "bytes": 1016
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-evidence-verification-receipt.json",
+        "blob": "e3ccd2b7289a292e73e02a7780824b55cd091d0b",
+        "status": "added",
+        "bytes": 212
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-evidence-verification.log",
+        "blob": "50bae56673b60df0a86d275055497f3e8e55775e",
+        "status": "added",
+        "bytes": 218
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/admitted-source.json",
+        "blob": "8cf5e3c04104f3bffd606fb7eb4a69133be98bd2",
+        "status": "added",
+        "bytes": 3653
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/commands.json",
+        "blob": "a5dccef752bdd41bf9cc60a94d7d9b9b16d0e72c",
+        "status": "added",
+        "bytes": 36129
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/controller-error.log",
+        "blob": "5e8255245efb4d2956eacf82c17a23d7c0b32b07",
+        "status": "added",
+        "bytes": 1163
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/macos.log",
+        "blob": "88752e44750f552adad4172155edd182ed8f4816",
+        "status": "added",
+        "bytes": 66
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/original-products.json",
+        "blob": "2fa59b6040bf9c819516e9faddaada9dba689304",
+        "status": "added",
+        "bytes": 113669
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/original-source-files.json",
+        "blob": "b0013391688607a33cf69b3756d6b56cd1dcad85",
+        "status": "added",
+        "bytes": 305259
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/payload-quota-Package.resolved",
+        "blob": "c19d6b6629800c27848076d99c27efff2cfd1fc7",
+        "status": "added",
+        "bytes": 4880
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/payload-quota-checkouts.json",
+        "blob": "f3f042bebb9d846b0744ccce4f345f269d32f1a8",
+        "status": "added",
+        "bytes": 3521
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/payload-quota-tests.log.gz",
+        "blob": "d646e918807c001e3125be1bf951ed68d5588e70",
+        "status": "added",
+        "bytes": 44872
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/result.json",
+        "blob": "5adeaafc5a43fd3c9e15295c7aea3bacefc5b290",
+        "status": "added",
+        "bytes": 40098
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/reused-agent-admission.json",
+        "blob": "6d1a9e92f875226e43448c4f6fbe443694b1fd0c",
+        "status": "added",
+        "bytes": 2751
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/swift.log",
+        "blob": "079ddd11ea88c5cc3fc55e2d8799a7b5acb507f2",
+        "status": "added",
+        "bytes": 128
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/xcode.log",
+        "blob": "be452d5caed3be6381a461e533eeefc4385442e8",
+        "status": "added",
+        "bytes": 31
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/root-independent-review.json",
+        "blob": "834daadce39f4f058ca570f5ee3fc044d039a7ff",
+        "status": "added",
+        "bytes": 2709
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/source-intake.json",
+        "blob": "cbd84a31a5398aef53f403df15ce2c0f03b28276",
+        "status": "added",
+        "bytes": 8722
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/source-inverse-proof.json",
+        "blob": "d988cf172bab86b8d599f22747953369630ccdc2",
+        "status": "added",
+        "bytes": 6094
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/unchanged-five-quota-declarations.json",
+        "blob": "f7ad56cf7bbe3209192fe26b2dc3c07bfc724486",
+        "status": "added",
+        "bytes": 7960
+      }
+    ]
+  },
+  "leaseResponse": {
+    "content": [
+      {
+        "type": "text",
+        "text": "Action completed."
+      }
+    ],
+    "structuredContent": {
+      "success": true
+    },
+    "isError": false
+  },
+  "blobReceipts": [
+    {
+      "status": "fulfilled",
+      "value": {
+        "path": "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/ChatCodeFencePayloadRetentionTests.swift",
+        "expectedBlob": "506bc4a51ad2f78e668d321db139e1c2a9a5d986",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "Action completed."
+            }
+          ],
+          "structuredContent": {
+            "sha": "506bc4a51ad2f78e668d321db139e1c2a9a5d986"
+          },
+          "isError": false
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/actual-failure-verification.json",
+        "expectedBlob": "e0061d8549eb7bdc2392f0ba1c3dd405fa26ebfe",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "Action completed."
+            }
+          ],
+          "structuredContent": {
+            "sha": "e0061d8549eb7bdc2392f0ba1c3dd405fa26ebfe"
+          },
+          "isError": false
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/executed-source-identities.json",
+        "expectedBlob": "27a1221f513125914efbf39b07f25414e1b1a014",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "Action completed."
+            }
+          ],
+          "structuredContent": {
+            "sha": "27a1221f513125914efbf39b07f25414e1b1a014"
+          },
+          "isError": false
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/first-local-reader-failure.json",
+        "expectedBlob": "fd73706a485951080c83ee2f29e48c428c38e2da",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "Action completed."
+            }
+          ],
+          "structuredContent": {
+            "sha": "fd73706a485951080c83ee2f29e48c428c38e2da"
+          },
+          "isError": false
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-evidence-verification-receipt.json",
+        "expectedBlob": "e3ccd2b7289a292e73e02a7780824b55cd091d0b",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "Action completed."
+            }
+          ],
+          "structuredContent": {
+            "sha": "e3ccd2b7289a292e73e02a7780824b55cd091d0b"
+          },
+          "isError": false
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-evidence-verification.log",
+        "expectedBlob": "50bae56673b60df0a86d275055497f3e8e55775e",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "Action completed."
+            }
+          ],
+          "structuredContent": {
+            "sha": "50bae56673b60df0a86d275055497f3e8e55775e"
+          },
+          "isError": false
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/admitted-source.json",
+        "expectedBlob": "8cf5e3c04104f3bffd606fb7eb4a69133be98bd2",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "Action completed."
+            }
+          ],
+          "structuredContent": {
+            "sha": "8cf5e3c04104f3bffd606fb7eb4a69133be98bd2"
+          },
+          "isError": false
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/commands.json",
+        "expectedBlob": "a5dccef752bdd41bf9cc60a94d7d9b9b16d0e72c",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "Action completed."
+            }
+          ],
+          "structuredContent": {
+            "sha": "a5dccef752bdd41bf9cc60a94d7d9b9b16d0e72c"
+          },
+          "isError": false
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/controller-error.log",
+        "expectedBlob": "5e8255245efb4d2956eacf82c17a23d7c0b32b07",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "Action completed."
+            }
+          ],
+          "structuredContent": {
+            "sha": "5e8255245efb4d2956eacf82c17a23d7c0b32b07"
+          },
+          "isError": false
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/macos.log",
+        "expectedBlob": "88752e44750f552adad4172155edd182ed8f4816",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "Action completed."
+            }
+          ],
+          "structuredContent": {
+            "sha": "88752e44750f552adad4172155edd182ed8f4816"
+          },
+          "isError": false
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/original-products.json",
+        "expectedBlob": "2fa59b6040bf9c819516e9faddaada9dba689304",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "Action completed."
+            }
+          ],
+          "structuredContent": {
+            "sha": "2fa59b6040bf9c819516e9faddaada9dba689304"
+          },
+          "isError": false
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/original-source-files.json",
+        "expectedBlob": "b0013391688607a33cf69b3756d6b56cd1dcad85",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "Action completed."
+            }
+          ],
+          "structuredContent": {
+            "sha": "b0013391688607a33cf69b3756d6b56cd1dcad85"
+          },
+          "isError": false
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/payload-quota-Package.resolved",
+        "expectedBlob": "c19d6b6629800c27848076d99c27efff2cfd1fc7",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "Action completed."
+            }
+          ],
+          "structuredContent": {
+            "sha": "c19d6b6629800c27848076d99c27efff2cfd1fc7"
+          },
+          "isError": false
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/payload-quota-checkouts.json",
+        "expectedBlob": "f3f042bebb9d846b0744ccce4f345f269d32f1a8",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "Action completed."
+            }
+          ],
+          "structuredContent": {
+            "sha": "f3f042bebb9d846b0744ccce4f345f269d32f1a8"
+          },
+          "isError": false
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/payload-quota-tests.log.gz",
+        "expectedBlob": "d646e918807c001e3125be1bf951ed68d5588e70",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "Action completed."
+            }
+          ],
+          "structuredContent": {
+            "sha": "d646e918807c001e3125be1bf951ed68d5588e70"
+          },
+          "isError": false
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/result.json",
+        "expectedBlob": "5adeaafc5a43fd3c9e15295c7aea3bacefc5b290",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "Action completed."
+            }
+          ],
+          "structuredContent": {
+            "sha": "5adeaafc5a43fd3c9e15295c7aea3bacefc5b290"
+          },
+          "isError": false
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/reused-agent-admission.json",
+        "expectedBlob": "6d1a9e92f875226e43448c4f6fbe443694b1fd0c",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "Action completed."
+            }
+          ],
+          "structuredContent": {
+            "sha": "6d1a9e92f875226e43448c4f6fbe443694b1fd0c"
+          },
+          "isError": false
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/swift.log",
+        "expectedBlob": "079ddd11ea88c5cc3fc55e2d8799a7b5acb507f2",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "Action completed."
+            }
+          ],
+          "structuredContent": {
+            "sha": "079ddd11ea88c5cc3fc55e2d8799a7b5acb507f2"
+          },
+          "isError": false
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/xcode.log",
+        "expectedBlob": "be452d5caed3be6381a461e533eeefc4385442e8",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "Action completed."
+            }
+          ],
+          "structuredContent": {
+            "sha": "be452d5caed3be6381a461e533eeefc4385442e8"
+          },
+          "isError": false
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/root-independent-review.json",
+        "expectedBlob": "834daadce39f4f058ca570f5ee3fc044d039a7ff",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "Action completed."
+            }
+          ],
+          "structuredContent": {
+            "sha": "834daadce39f4f058ca570f5ee3fc044d039a7ff"
+          },
+          "isError": false
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/source-inverse-proof.json",
+        "expectedBlob": "d988cf172bab86b8d599f22747953369630ccdc2",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "Action completed."
+            }
+          ],
+          "structuredContent": {
+            "sha": "d988cf172bab86b8d599f22747953369630ccdc2"
+          },
+          "isError": false
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/unchanged-five-quota-declarations.json",
+        "expectedBlob": "f7ad56cf7bbe3209192fe26b2dc3c07bfc724486",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "Action completed."
+            }
+          ],
+          "structuredContent": {
+            "sha": "f7ad56cf7bbe3209192fe26b2dc3c07bfc724486"
+          },
+          "isError": false
+        }
+      }
+    },
+    {
+      "status": "fulfilled",
+      "value": {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/source-intake.json",
+        "expectedBlob": "cbd84a31a5398aef53f403df15ce2c0f03b28276",
+        "result": {
+          "content": [
+            {
+              "type": "text",
+              "text": "Action completed."
+            }
+          ],
+          "structuredContent": {
+            "sha": "cbd84a31a5398aef53f403df15ce2c0f03b28276"
+          },
+          "isError": false
+        }
+      }
+    }
+  ],
+  "index": {
+    "parent": "35d26911f70794a41361cee710b1fed24a35e269",
+    "files": [
+      {
+        "path": "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/ChatCodeFencePayloadRetentionTests.swift",
+        "bytes": 8535,
+        "sha256": "b4504b8c1c08a6c91204a3c0521f82c64822db4c6f28561f18cdab5d4b534de6",
+        "blob": "506bc4a51ad2f78e668d321db139e1c2a9a5d986"
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/actual-failure-verification.json",
+        "bytes": 6653,
+        "sha256": "b00ecb658478bf3d49456665845170f14d205116b6477937398cb506f0b09d8e",
+        "blob": "e0061d8549eb7bdc2392f0ba1c3dd405fa26ebfe"
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/executed-source-identities.json",
+        "bytes": 1187,
+        "sha256": "664098fb49304511b72e6426e9943dca1fe6803e38060d7964428a4e7f1ea0fa",
+        "blob": "27a1221f513125914efbf39b07f25414e1b1a014"
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/first-local-reader-failure.json",
+        "bytes": 1016,
+        "sha256": "9c2cdc64c772c0620be4ef12a515b8f2051d732631ba3f62abd1de3c8ac7929c",
+        "blob": "fd73706a485951080c83ee2f29e48c428c38e2da"
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-evidence-verification-receipt.json",
+        "bytes": 212,
+        "sha256": "1dde2d3fd575fb840eb93989cd930974a2f6f7e863291d644d764909f2773fa9",
+        "blob": "e3ccd2b7289a292e73e02a7780824b55cd091d0b"
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-evidence-verification.log",
+        "bytes": 218,
+        "sha256": "e0ba80e08209ba47161ba3d4c21dcb8de16b59ad2bdee5880a4eed2c165bc996",
+        "blob": "50bae56673b60df0a86d275055497f3e8e55775e"
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/admitted-source.json",
+        "bytes": 3653,
+        "sha256": "ebe5d0545bc6d733a708f52253d39f9271477dddb91c47036f9fde7b4aab4db5",
+        "blob": "8cf5e3c04104f3bffd606fb7eb4a69133be98bd2"
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/commands.json",
+        "bytes": 36129,
+        "sha256": "0b10cecae5d27363aea55fd77443b2d3bb02184d2383d48f78ddfa8f8ae7ee91",
+        "blob": "a5dccef752bdd41bf9cc60a94d7d9b9b16d0e72c"
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/controller-error.log",
+        "bytes": 1163,
+        "sha256": "0759230cde61c7cca2dab0d117933554d944d75008b748057efe59792c5539a3",
+        "blob": "5e8255245efb4d2956eacf82c17a23d7c0b32b07"
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/macos.log",
+        "bytes": 66,
+        "sha256": "4ef10a0fc370704ea84699cf3851e51488598c5f1ab35cb572eb6b96278a8e5c",
+        "blob": "88752e44750f552adad4172155edd182ed8f4816"
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/original-products.json",
+        "bytes": 113669,
+        "sha256": "b3354dc7ac2e5b9c4ae05339d48cd19e62d71c19c033a91c3a14ead2ae8dfa33",
+        "blob": "2fa59b6040bf9c819516e9faddaada9dba689304"
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/original-source-files.json",
+        "bytes": 305259,
+        "sha256": "99f39248ba2037f599b52818e15ff533960e3e0166c7ca40be653146a9d04310",
+        "blob": "b0013391688607a33cf69b3756d6b56cd1dcad85"
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/payload-quota-Package.resolved",
+        "bytes": 4880,
+        "sha256": "2498e965486f4a40ed5aada9745475d785a98117b41caf03b88c5781d1969180",
+        "blob": "c19d6b6629800c27848076d99c27efff2cfd1fc7"
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/payload-quota-checkouts.json",
+        "bytes": 3521,
+        "sha256": "24b15ffc8fa111024bbcaa14874de58cf94fc85b573ff37f5f3d2168e1a22e1a",
+        "blob": "f3f042bebb9d846b0744ccce4f345f269d32f1a8"
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/payload-quota-tests.log.gz",
+        "bytes": 44872,
+        "sha256": "9ab31791aa622ba2f3dbcfe1a6a01264cd078b4ef1c6209df00f0101d5ae95f3",
+        "blob": "d646e918807c001e3125be1bf951ed68d5588e70"
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/result.json",
+        "bytes": 40098,
+        "sha256": "97520269a6834717be90a32c1bf021089bb28da182c383e4d566cf696f95c21b",
+        "blob": "5adeaafc5a43fd3c9e15295c7aea3bacefc5b290"
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/reused-agent-admission.json",
+        "bytes": 2751,
+        "sha256": "03c25aff3c4a2e4f51e900d03a361c3148c0b6995770c327f30b4a3be913d0aa",
+        "blob": "6d1a9e92f875226e43448c4f6fbe443694b1fd0c"
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/swift.log",
+        "bytes": 128,
+        "sha256": "448e3f9c46706640fe62ea0140ecfccbb330baba2076b2916c0423af9642ee06",
+        "blob": "079ddd11ea88c5cc3fc55e2d8799a7b5acb507f2"
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/original-failure/xcode.log",
+        "bytes": 31,
+        "sha256": "67c5b47bcf0e788aecae2f9b3af345813bdf7fe736faefb9666a7f4b2bf27ba7",
+        "blob": "be452d5caed3be6381a461e533eeefc4385442e8"
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/root-independent-review.json",
+        "bytes": 2709,
+        "sha256": "ce25edd453182683f5eed893dba7a68f29a1ddf8b38974de12ffe1daef90a497",
+        "blob": "834daadce39f4f058ca570f5ee3fc044d039a7ff"
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/source-inverse-proof.json",
+        "bytes": 6094,
+        "sha256": "c6e8c424a8d858c25ef4b5104dee6584499d70c058a832c1980faffe637b069b",
+        "blob": "d988cf172bab86b8d599f22747953369630ccdc2"
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/unchanged-five-quota-declarations.json",
+        "bytes": 7960,
+        "sha256": "2613fe0978d9a386176bd9ee320163bfd233057941e5669d97dd348b60f0c750",
+        "blob": "f7ad56cf7bbe3209192fe26b2dc3c07bfc724486"
+      },
+      {
+        "path": "docs/validation/20261127-original-sdk-quota-cache-lifetime/source-intake.json",
+        "bytes": 8722,
+        "sha256": "70c3cb349298a7e3cfdc8f95d723c593c01592183c0ca93be4e50f7df0193dd0",
+        "blob": "cbd84a31a5398aef53f403df15ce2c0f03b28276"
+      }
+    ]
+  },
+  "force": false,
+  "swiftOrNativeRuns": 0,
+  "dispatches": 0
+}

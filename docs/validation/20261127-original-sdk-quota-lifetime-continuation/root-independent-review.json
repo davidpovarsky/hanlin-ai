@@ -1,0 +1,48 @@
+{
+  "baseControl": "bd41cf7878c5f4df117af7bfcb67636bdff2eafa",
+  "fileIdentitiesVerified": 26,
+  "fullExistingOriginalsReconstructed": 4,
+  "fullLiteralInverseOperations": 18,
+  "newTestsExecutedByRoot": 0,
+  "originalAgentAdmissionUnchanged": true,
+  "originalDeclarationsUnchanged": [
+    "require",
+    "write_json",
+    "sha256",
+    "blob_sha",
+    "protected_blobs",
+    "validate_inputs",
+    "parse_swift_testing",
+    "normalized_location",
+    "lock_records",
+    "validate_lock",
+    "finish_original_process_group",
+    "Run",
+    "source_inventory"
+  ],
+  "originalFivePassesSource": "35d26911f70794a41361cee710b1fed24a35e269",
+  "originalQuotaSuiteStatus": "FAILED",
+  "originalSuiteAndIOSObligationsUnchanged": true,
+  "payloadInputs": 25,
+  "payloadSHA256": "523eb9c7e5344de5807421c2b27cc297c074d65dae7b47181ca6aae6d2390211",
+  "remaining": [
+    "Actual failed1 correction witnesses",
+    "Widget2",
+    "Original iOS product",
+    "App/MiniApps/SDK06 integration and TestFlight"
+  ],
+  "review": [
+    "Full actual failed original run/job/artifact identities and all skipped sibling jobs required; original295142941B ZIP,1005source files,50command/log/group records,18pre-testlocked dependencies,267quota product files are bound without executing archived code.",
+    "Full inventory changes exactly one reviewed source row; five passed declarations must occur byte-for-byte in both original and current test. The shared helpers and all production files are unchanged by separately verified0ae inverses.",
+    "Exactly five original passes and one precise failure are parsed; foreign/duplicate/skipped/missing outcomes refused. The original six-case run remains failed; post-test checkout/source checks are explicitly NOT_REACHED.",
+    "New filter runs only original corrected failed1; results must be disjoint from the five old methods and union to the exact original six. Never-reachedWidget2 and iOS build remain unchanged.",
+    "Original Agent admission, Run owned-command lifecycle, parser, all suites and iOS obligations remain byte/structure unchanged. New compiled products, locks, compiler output, original quota product preservation and source guards remain mandatory.",
+    "Final20 portable controls and prior complete artifact check reused from their explicit source scopes; the final two-line start rejection was additionally covered by actual-terminal/negative controls. Root performed source/inverse verification only."
+  ],
+  "reviewIndexSHA256": "940194757d88c217a976ccecd21cfea8a9cf0c0a77c3ba1a3fee154985ff4524",
+  "schema": "root-hanlin-quota-lifetime-continuation-source-review/v1",
+  "selectedNewQuotaMethod": "cacheEvictionDoesNotFreeInlineOwnershipAndRemountDoesNotDoubleCharge()",
+  "source": "0ae1920d316b9592cbad0462bea96a07fd1ca351",
+  "status": "PASS_SOURCE_REVIEW_READY_FOR_OWNED_PUBLICATION_NOT_RUNTIME_ACCEPTANCE",
+  "workflowUnchanged": true
+}

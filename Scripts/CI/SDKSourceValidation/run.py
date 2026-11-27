@@ -22,6 +22,7 @@ import time
 import traceback
 
 from continuation import admit_archive, validate_api, validate_continuation_source
+from quota_continuation import admit_quota_archive
 
 
 HERE = Path(__file__).resolve().parent
@@ -91,6 +92,15 @@ def validate_inputs(inputs: dict, environment: dict) -> str:
     for name in EMPTY_INPUTS:
         require(inputs.get(name, "") == "", f"{name} must be empty")
     return source
+
+
+def selected_quota_suite(suite: dict, reuse_original_quota: bool) -> dict:
+    if not reuse_original_quota or suite["name"] != "payload-quota":
+        return suite
+    failed = CONFIG["quotaContinuation"]["failedMethod"]
+    return {**suite, "filter": suite["suite"] + "/" + failed.removesuffix("()"),
+            "expectedMethods": {failed: 1},
+            "scope": "One corrected original cache-owner lifetime case; the five unchanged original35d passes are admitted separately."}
 
 
 def parse_swift_testing(text: str, suite: dict) -> dict:
@@ -395,7 +405,8 @@ def execute(run: Run, source: str, continue_original_agent: bool = False) -> dic
     require(control == os.environ.get("GITHUB_SHA"), "Actual controller checkout differs from dispatched ref")
     control_paths = [".github/workflows/build-ios26-unsigned-ipa.yml",
                      "Scripts/CI/SDKSourceValidation/run.py", "Scripts/CI/SDKSourceValidation/obligations.json",
-                     "Scripts/CI/SDKSourceValidation/continuation.py"]
+                     "Scripts/CI/SDKSourceValidation/continuation.py",
+                     "Scripts/CI/SDKSourceValidation/quota_continuation.py"]
     controls = {}
     for path in control_paths:
         data = (run.root / path).read_bytes()
@@ -447,6 +458,7 @@ def execute(run: Run, source: str, continue_original_agent: bool = False) -> dic
     published = lock_records(materialized / APP_LOCK)
     suite_results = []
     resolved_locks = {}
+    reused_quota = None
     if continue_original_agent:
         fixed = CONFIG["continuation"]
         validate_continuation_source(source, fixed)
@@ -472,11 +484,27 @@ def execute(run: Run, source: str, continue_original_agent: bool = False) -> dic
         run.products.append(reused["product"])
         write_json(run.output / "reused-agent-admission.json", reused["admission"])
         write_json(run.output / "agent-stop-actual-results.json", reused["parsed"])
+        quota_fixed = CONFIG["quotaContinuation"]
+        if source in quota_fixed["reviewedSourceSuccessors"]:
+            quota_run = api_json("prior-quota-run-api", f'runs/{quota_fixed["runID"]}')
+            quota_jobs = api_json("prior-quota-jobs-api", f'runs/{quota_fixed["runID"]}/jobs?per_page=100')
+            quota_artifact = api_json("prior-quota-artifact-api", f'artifacts/{quota_fixed["artifactID"]}')
+            validate_api(quota_run, quota_jobs, quota_artifact, quota_fixed)
+            run.command("prior-quota-artifact", ["gh", "api", api + f'artifacts/{quota_fixed["artifactID"]}/zip'],
+                timeout=300, binary_output=True, environment=api_environment,
+                maximum_output_bytes=quota_fixed["artifactBytes"])
+            reused_quota = admit_quota_archive(run.output / "prior-quota-artifact.zip", run.output, quota_fixed,
+                before, published, sys.modules[__name__], source, (materialized / quota_fixed["testPath"]).read_bytes())
+            suite_results.append(reused_quota["parsed"])
+            run.products.append(reused_quota["product"])
+            write_json(run.output / "reused-quota-admission.json", reused_quota["admission"])
+            write_json(run.output / "prior-quota-five-actual-results.json", reused_quota["parsed"])
         run.free_floor(2 * 1024**3)
     for suite in CONFIG["suites"]:
         if continue_original_agent and suite["name"] == "agent-stop":
             continue  # The exact original named execution was admitted above; no duplicate compile/test.
         run.free_floor(2 * 1024**3)
+        suite = selected_quota_suite(suite, reused_quota is not None)
         label = suite["name"]
         package = materialized / "Packages" / suite["package"]
         scratch = private / (label + "-build")
@@ -507,6 +535,13 @@ def execute(run: Run, source: str, continue_original_agent: bool = False) -> dic
         require(lock_records(original_lock) == actual, "Dependency revisions changed while testing")
         run.verify_checkouts(package, scratch, actual, label + "-posttest")
         result = parse_swift_testing(log, suite)
+        if reused_quota is not None and label == "payload-quota":
+            old_methods = reused_quota["parsed"]["methods"]
+            require(not set(old_methods).intersection(result["methods"]) and
+                    {**old_methods, **result["methods"]} == CONFIG["suites"][1]["expectedMethods"],
+                    "Five original passes plus one new execution do not cover the exact quota obligation")
+            result["evidenceOrigin"] = {"source": source, "runID": os.environ["GITHUB_RUN_ID"],
+                "attempt": os.environ["GITHUB_RUN_ATTEMPT"], "scope": "Only this one corrected case executed in the current source"}
         suite_results.append(result)
         write_json(run.output / (label + "-actual-results.json"), result)
     measurements = json.loads((run.output / "widget-native-program/native-program-measurements.json").read_text())
@@ -540,9 +575,14 @@ def execute(run: Run, source: str, continue_original_agent: bool = False) -> dic
             continue  # Actual resolved locks above are separately retained/verified.
         require(sha256(materialized / row["path"]) == row["sha256"], "Original source changed during validation")
     write_json(run.output / "resolved-locks.json", resolved_locks)
-    return {"status": "PASS_SELECTED_ORIGINAL_SDK_OBLIGATIONS_AND_IOS_PRODUCT_BUILD", "source": source,
+    result = {"status": "PASS_SELECTED_ORIGINAL_SDK_OBLIGATIONS_AND_IOS_PRODUCT_BUILD", "source": source,
             "controller": control, "suiteResults": suite_results, "iosBuild": ios,
             "notCovered": CONFIG["notCovered"], "priorEvidenceReuse": CONFIG["priorEvidenceReuse"]}
+    if reused_quota is not None:
+        result["quotaEvidenceComposition"] = {"originalFiveSource": CONFIG["quotaContinuation"]["source"],
+            "currentSingleSource": source, "originalSixCaseRunStatus": "FAILED",
+            "scope": "Five exact unchanged declarations retain their original actual pass evidence; only the corrected failed method executed anew. No six-case successor run or prior whole-suite pass is claimed."}
+    return result
 
 
 def main() -> int:
@@ -569,8 +609,13 @@ def main() -> int:
             run.preserve_products()
             if result["status"] == "PASS_SELECTED_ORIGINAL_SDK_OBLIGATIONS_AND_IOS_PRODUCT_BUILD":
                 preserved = {row["label"]: row for row in run.products}
-                require(set(preserved) == {suite["name"] for suite in CONFIG["suites"]} | {"ios"},
-                        "Original compiled product set was not preserved")
+                expected_products = {suite["name"] for suite in CONFIG["suites"]} | {"ios"}
+                if result.get("quotaEvidenceComposition"):
+                    expected_products.add("prior-quota")
+                    require(any("HanlinChatUITests.xctest/Contents/MacOS/" in row["path"]
+                                for row in preserved.get("prior-quota", {}).get("files", [])),
+                            "The original five-case evidence product was not retained")
+                require(set(preserved) == expected_products, "Original compiled product set was not preserved")
                 for suite in CONFIG["suites"]:
                     require(any(".xctest/" in row["path"] for row in preserved[suite["name"]]["files"]),
                             "Original executed test bundle was not retained")

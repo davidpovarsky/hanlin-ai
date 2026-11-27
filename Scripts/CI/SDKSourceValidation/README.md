@@ -14,7 +14,7 @@ separately. No latest branch, current default source or unreviewed full SHA is
 accepted. Every admitted source has its exact reviewed Git tree in
 `obligations.json`, and 19 protected original test/manifest/lock/fixture/helper
 blobs must still match their reviewed source entry. The reference mapping is
-preserved; the sole reviewed successor override is identified below.
+preserved; each reviewed test-only successor override is identified below.
 
 ## Exact source and selection
 
@@ -152,7 +152,7 @@ Local controller tests never invoke Swift, Xcode, a simulator or native APIs.
 
 The separate closed selector `HanlinSDKQuotaWidgetsAfterAgent45954793309`
 admits the original source `caa0dac32afa18e58bba55fb4f0fdd262f181835` and
-only the exact reviewed test-only successor described below. It retrieves
+only the exact reviewed test-only successors described below. It retrieves
 the fixed original run45954793309/attempt1, controller35b504, job140358668934
 and artifact15178855568 using the workflow's existing Actions read token.
 The token is passed only to those bounded `gh api` commands, never to the
@@ -234,6 +234,78 @@ unreviewed deltas; they compile no Swift. Both original failed run artifacts and
 the root's accepted68151 controller review remain preserved. No new workflow,
 source input, runtime artifact substitution, Apple job or dispatch is added by
 this preparation.
+
+## Exact one-case continuation after the cache-owner lifetime failure
+
+Source `0ae1920d316b9592cbad0462bea96a07fd1ca351`, tree
+`761851ab3909f8b419a0459a2e4739afa2776f7d`, is a direct child of `35d26911`.
+Only the existing failed quota test is changed, plus its private lookup-scope
+helper and evidence. It observes the actual cached Box through a weak reference,
+confines the real NSCache lookup to a lexical helper (an autorelease pool on
+Objective-C platforms), and keeps the original final zero-charge assertion.
+All six method identities, 16 ordered retains and 37 original assertions remain;
+two owner/positive-charge witnesses are additive. All five other complete test
+declarations and their shared helpers are byte-identical. Deferred NSCache
+lookup ownership remains a hypothesis to be tested, not a confirmed diagnosis.
+No production accounting, threshold, reset, sleep or manual payload release is
+introduced.
+
+The actual third run45963272356/attempt1, controllerbd41 and source35d, is still
+**failed**. Its original quota command compiled successfully and executed all
+six methods in0.006s: five passed; only
+`cacheEvictionDoesNotFreeInlineOwnershipAndRemountDoesNotDoubleCharge()` failed
+its final zero-charge assertion, observing13 retained bytes and one payload.
+The command exited1 after159.467s and its own process group closed normally.
+Widget2 and the iOS build were not reached. Its original artifact15181687501 is
+295142941 bytes, SHA-256
+`e1ee86a9f2d75aa6abcf8695af9a39ba2e1d898ce31f2d93f26c2b20583f558d`.
+Neither that whole run nor its six-case suite is changed to a pass.
+
+Use the same continuation selector and25 inputs with
+`composer_expected_sha=0ae1920d316b9592cbad0462bea96a07fd1ca351`.
+The existing fixed Agent5/7 admission remains, with the exact single reviewed
+test-row difference from its original caa0 source. The additional quota
+admission independently binds the failed bd41 run/job/attempt, all27 skipped
+sibling jobs, exact ZIP, 14 fixed members, original1005-file source archive,
+all50 command/log/process-group receipts, actual18 locked clean pre-test
+dependency checkouts and all267 original compiled quota product files.
+It compares the complete current source inventory against original35d with
+only the reviewed test row substituted. Each of the five passing complete
+declarations must occur exactly once, byte-for-byte, in both the actual original
+archive and the selected current test source. A changed helper or production
+file outside that fixed reviewed row is refused by the complete inventory.
+
+The original failed raw terminal is parsed as exactly five named passes and
+one specific failed method/issue. Duplicate, skipped, foreign, missing or other
+failed output is refused. The exact source and product archives remain inert;
+no old code is executed. Original post-test checkout and final source checks
+were **NOT_REACHED** after the genuine exit1, and the admission says so. The
+pre-test dependency checks, immutable original source/archive, actual command
+and compiled-product closure are retained without inventing a post-test receipt.
+
+Only after both original admissions succeed, the new quota filter is
+`ChatCodeFencePayloadRetentionTests/cacheEvictionDoesNotFreeInlineOwnershipAndRemountDoesNotDoubleCharge`.
+Its parser requires exactly one actual new method/case. The five old passes
+and one new result must be disjoint and together equal the exact six-method
+obligation. Widget2 and the original iOS product then execute as before.
+SwiftPM may still compile the complete unchanged test target graph; no original
+target or method is removed. Current resolution, dependencies, raw execution,
+products and final-source checks remain mandatory for the new phases.
+
+The final report separates **five actual35d passes + one actual0ae case**;
+it does not claim a six-case0ae run. The original failed raw log, result and
+191774720-byte quota product archive stay preserved, alongside the original
+Agent products and new products. The new final preservation gate requires the
+additional original quota archive as well. Old selectors and their execution
+choices are unchanged. This preparation changes no workflow predicates,
+dispatch input set, Apple job, account fixture, signing or upload route.
+
+Local control fixtures contain the exact failed terminal and API/source
+identities, and the two source test files for declaration continuity. Local
+Python checks qualify parser/admission/control behavior only. The corrected
+Swift case, Widget2 and iOS product remain **NOT_RUN** until the separately
+authorized original hosted continuation actually executes. Original evidence
+uses Xcode27.2/Swift6.4.2/Testing2403, with no Xcode27.0 compatibility claim.
 
 ## Separate original NativeScript and App/UIKit routes
 
