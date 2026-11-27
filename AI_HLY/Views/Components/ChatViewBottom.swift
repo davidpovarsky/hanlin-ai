@@ -10,6 +10,9 @@ import SwiftUI
 import SwiftData
 import UniformTypeIdentifiers
 import UIKit
+#if DEBUG || HANLIN_TESTING
+import OSLog
+#endif
 import HanlinPresentationKit
 import HanlinChatUI
 
@@ -274,6 +277,9 @@ private struct HanlinFollowLatestActionTarget: UIViewRepresentable {
         button.accessibilityIdentifier = "hanlin-chat-follow-latest"
         button.addTarget(context.coordinator, action: #selector(Coordinator.activate(_:)), for: .primaryActionTriggered)
         configure(button, context: context)
+        #if DEBUG || HANLIN_TESTING
+        button.traceLifecycle("make", actionPresent: context.coordinator.action != nil)
+        #endif
         return button
     }
 
@@ -283,6 +289,9 @@ private struct HanlinFollowLatestActionTarget: UIViewRepresentable {
     }
 
     static func dismantleUIView(_ button: CircleButton, coordinator: Coordinator) {
+        #if DEBUG || HANLIN_TESTING
+        button.traceLifecycle("dismantle", actionPresent: coordinator.action != nil)
+        #endif
         button.removeTarget(coordinator, action: #selector(Coordinator.activate(_:)), for: .primaryActionTriggered)
         coordinator.action = nil
     }
@@ -294,11 +303,169 @@ private struct HanlinFollowLatestActionTarget: UIViewRepresentable {
 
     final class CircleButton: UIButton {
         override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
-            super.point(inside: point, with: event) && UIBezierPath(ovalIn: bounds).contains(point)
+            let inside = super.point(inside: point, with: event) && UIBezierPath(ovalIn: bounds).contains(point)
+            #if DEBUG || HANLIN_TESTING
+            if let event, event.type == .touches {
+                traceInputObservation(.hit, "pointInside", event: event, point: point,
+                                      fields: ["accepted": inside])
+            }
+            #endif
+            return inside
         }
 
         #if DEBUG || HANLIN_TESTING
         private var diagnosticEventCount = 0
+
+        private enum InputDiagnosticCategory: String {
+            case lifecycle, hit, rawTouch
+        }
+
+        private static let inputLogger = Logger(
+            subsystem: Bundle.main.bundleIdentifier ?? "com.hanlin",
+            category: "FollowLatestInput")
+        private var inputDiagnosticCounts: [InputDiagnosticCategory: Int] = [:]
+        private var previousDiagnosticWindowID: String?
+
+        override func didMoveToWindow() {
+            super.didMoveToWindow()
+            let previousWindowID = previousDiagnosticWindowID
+            previousDiagnosticWindowID = window.map { String(describing: ObjectIdentifier($0)) }
+            traceInputObservation(.lifecycle, window == nil ? "detach" : "attach",
+                                  fields: ["previousWindowID": previousWindowID ?? "none"])
+        }
+
+        override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+            let hit = super.hitTest(point, with: event)
+            if let event, event.type == .touches {
+                traceInputObservation(.hit, "hitTest", event: event, point: point, fields: [
+                    "hitClass": hit.map { String(reflecting: type(of: $0)) } ?? "nil",
+                    "hitID": hit.map { String(describing: ObjectIdentifier($0)) } ?? "nil",
+                    "hitIsSelf": hit === self
+                ])
+            }
+            return hit
+        }
+
+        override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+            traceRawTouches("touchesBegan", touches: touches, event: event)
+            super.touchesBegan(touches, with: event)
+        }
+
+        override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+            traceRawTouches("touchesEnded", touches: touches, event: event)
+            super.touchesEnded(touches, with: event)
+        }
+
+        override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+            traceRawTouches("touchesCancelled", touches: touches, event: event)
+            super.touchesCancelled(touches, with: event)
+        }
+
+        func traceLifecycle(_ stage: String, actionPresent: Bool) {
+            traceInputObservation(.lifecycle, stage, fields: ["actionPresent": actionPresent])
+        }
+
+        private func traceRawTouches(_ stage: String, touches: Set<UITouch>, event: UIEvent?) {
+            // Read only scalar touch metadata. Never retain UIKit events or inspect text.
+            let first = touches.min {
+                String(describing: ObjectIdentifier($0)) < String(describing: ObjectIdentifier($1))
+            }
+            var fields: [String: Any] = ["callbackTouchCount": touches.count]
+            if let first {
+                fields["touchID"] = String(describing: ObjectIdentifier(first))
+                fields["touchPhase"] = first.phase.rawValue
+                fields["touchType"] = first.type.rawValue
+                fields["touchTimestamp"] = first.timestamp
+            }
+            traceInputObservation(.rawTouch, stage, event: event,
+                                  point: first?.location(in: self), fields: fields)
+        }
+
+        private func traceInputObservation(
+            _ category: InputDiagnosticCategory, _ stage: String,
+            event: UIEvent? = nil, point: CGPoint? = nil,
+            fields additionalFields: [String: Any] = [:]
+        ) {
+            guard ProcessInfo.processInfo.environment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] == "1" else { return }
+            // These separate budgets cannot consume the existing 32 action/tracking records.
+            let limit = category == .lifecycle ? 16 : (category == .hit ? 48 : 24)
+            let sample = inputDiagnosticCounts[category, default: 0]
+            guard sample < limit else { return }
+            inputDiagnosticCounts[category] = sample + 1
+            var fields: [String: Any] = [
+                "stage": stage, "category": category.rawValue, "sample": sample + 1,
+                "buttonID": String(describing: ObjectIdentifier(self)),
+                "uptime": ProcessInfo.processInfo.systemUptime,
+                "frame": NSStringFromCGRect(frame), "bounds": NSStringFromCGRect(bounds),
+                "enabled": isEnabled, "interactionEnabled": isUserInteractionEnabled,
+                "hidden": isHidden, "alpha": alpha, "attached": window != nil
+            ]
+            if let window {
+                fields["windowID"] = String(describing: ObjectIdentifier(window))
+                fields["windowClass"] = String(reflecting: type(of: window))
+                fields["windowFrame"] = NSStringFromCGRect(window.frame)
+                fields["windowBounds"] = NSStringFromCGRect(window.bounds)
+                fields["buttonBoundsInWindow"] = NSStringFromCGRect(convert(bounds, to: window))
+                fields["windowLevel"] = window.windowLevel.rawValue
+                fields["windowIsKey"] = window.isKeyWindow
+                fields["windowHidden"] = window.isHidden
+                fields["windowAlpha"] = window.alpha
+                fields["windowInteractionEnabled"] = window.isUserInteractionEnabled
+            }
+            if let event {
+                fields["eventType"] = event.type.rawValue
+                fields["eventTimestamp"] = event.timestamp
+                fields["eventTouchCount"] = event.allTouches?.count ?? 0
+                fields["eventHasTouchSet"] = event.allTouches != nil
+            }
+            if let point {
+                fields["localX"] = point.x
+                fields["localY"] = point.y
+                if let window {
+                    let windowPoint = convert(point, to: window)
+                    fields["windowX"] = windowPoint.x
+                    fields["windowY"] = windowPoint.y
+                }
+            }
+            var ancestors: [[String: Any]] = []
+            var ancestor = superview
+            while let current = ancestor, ancestors.count < 10 {
+                var entry: [String: Any] = [
+                    "class": String(reflecting: type(of: current)),
+                    "id": String(describing: ObjectIdentifier(current)),
+                    "frame": NSStringFromCGRect(current.frame),
+                    "bounds": NSStringFromCGRect(current.bounds),
+                    "hidden": current.isHidden, "alpha": current.alpha,
+                    "interactionEnabled": current.isUserInteractionEnabled,
+                    "clipsToBounds": current.clipsToBounds
+                ]
+                if let point {
+                    let local = convert(point, to: current)
+                    entry["localX"] = local.x
+                    entry["localY"] = local.y
+                    entry["pointWithinBounds"] = current.bounds.contains(local)
+                }
+                ancestors.append(entry)
+                ancestor = current.superview
+            }
+            fields["ancestors"] = ancestors
+            fields["ancestorLimitReached"] = ancestor != nil
+            fields.merge(additionalFields) { _, new in new }
+            emitDiagnostic("followLatestNativeInput", fields)
+        }
+
+        private func emitDiagnostic(_ event: String, _ fields: [String: Any]) {
+            // Direct OSLog remains independent of the asynchronous JSONL file writer.
+            // Reuse its redactor; only control/event identity and geometry enter here.
+            let safeFields = NativeToolTraceLogger.redactedFields(fields)
+            if let data = try? JSONSerialization.data(withJSONObject: safeFields, options: [.sortedKeys]),
+               let metadata = String(data: data, encoding: .utf8) {
+                let stage = safeFields["stage"] ?? "unknown"
+                let buttonID = safeFields["buttonID"] ?? "unknown"
+                Self.inputLogger.notice("\(event, privacy: .public) stage=\(stage, privacy: .public) buttonID=\(buttonID, privacy: .public) \(metadata, privacy: .public)")
+            }
+            NativeToolTraceLogger.shared.log(event, fields)
+        }
 
         override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {
             let accepted = super.beginTracking(touch, with: event)
@@ -355,7 +522,7 @@ private struct HanlinFollowLatestActionTarget: UIViewRepresentable {
                 fields["touchY"] = point.y
             }
             fields.merge(additionalFields) { _, new in new }
-            NativeToolTraceLogger.shared.log("followLatestNativeControl", fields)
+            emitDiagnostic("followLatestNativeControl", fields)
         }
         #endif
     }
