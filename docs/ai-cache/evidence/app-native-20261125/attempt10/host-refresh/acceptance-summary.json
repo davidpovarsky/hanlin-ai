@@ -1,0 +1,54 @@
+{
+  "status": "PASS",
+  "source": "5a0351f7e452789fd41c715c1ccb7f020cff44c5",
+  "generatedCommit": "c72df9dfd20204abb04b9447c4a375d346cfa8c6",
+  "originalProducerRawLogSHA256": "67a000cd44c75dfe45626eac461bf267190102083492517bc7a914a33489cdd8",
+  "actualHostTests": {
+    "tests": 178,
+    "pass": 177,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 1,
+    "todo": 0
+  },
+  "jitlessActualArchiveSmoke": {
+    "passed": true,
+    "fetchImplementation": "node-fetch@3.3.2+native-web-api",
+    "webAssemblyAvailable": false,
+    "nonce": "54f2ccad-dcaa-41f5-a730-ea6658e05282",
+    "contracts": [
+      "GET",
+      "Request POST Unicode",
+      "redirect",
+      "HTTP error",
+      "ReadableStream",
+      "clone",
+      "gzip",
+      "multipart File",
+      "abort",
+      "HEAD",
+      "204"
+    ]
+  },
+  "generatedFiles": {
+    "docs/miniapp-sdk/extension-reachability.json": {
+      "beforeSHA256": "85fe001255c5649868650c4e36a58d5b6053067ec9c374c94adc6943c82b4787",
+      "afterSHA256": "2cec622b84b693a8a9bfcfc0696a6369a4855963c71292447703fe75cd219b8e"
+    },
+    "docs/miniapp-sdk/extension-reachability.md": {
+      "beforeSHA256": "db3cffc1192537cada11b421838937b118997e4e630cc7321f49a31e5576e980",
+      "afterSHA256": "e5846a55368e8957d5cccc5b125a2c9cf6a8362e590845ab92d173d2806120e2"
+    },
+    "docs/miniapp-sdk/source-inventory.json": {
+      "beforeSHA256": "42ad8e1e1b185eba1b25e9da46199500fb4eff3eb57a2dc4d392701bbe5f39e1",
+      "afterSHA256": "1eeac3bac65029a48ab4487e104b0211baffd8bd923022432e89792ea273965d"
+    }
+  },
+  "sourceInputsHash": "212e401bce8905c47620cd70f6bf7786eb7efa58b6c72ffd0cd35e345d0d80a7",
+  "archive": {
+    "path": "AI_HLY/RuntimeHostResources.zip",
+    "bytes": 81856639,
+    "sha256": "7f0f6cd49c058673ffb9699fd2262ae768ca2843282f88e51d0ade293535df64"
+  },
+  "scope": "Original Host producer once; original opt-in worker skip retained; no live provider claim."
+}

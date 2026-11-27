@@ -1,0 +1,8 @@
+{
+  "test_exit_code": 65,
+  "archive": "ARCHIVED",
+  "readability": "READABLE",
+  "diagnostics": [],
+  "archive_sha256": "c222e996c2c8ef81bd003deb6bd014ba7c595887e01edb5e5f1efb797a478bed",
+  "status": "FINALIZED_READABLE_ARCHIVED"
+}

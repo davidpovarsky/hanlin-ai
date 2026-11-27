@@ -32,9 +32,32 @@ final class MotionUITests: XCTestCase {
             XCTAssertTrue(motion.waitForExistence(timeout: 5)); motion.tap()
         }
         XCTAssertTrue(toggle.waitForExistence(timeout: 5))
-        let wasEnabled = (toggle.value as? String) == "1"
+        guard let initialValue = toggle.value as? String,
+              initialValue == "0" || initialValue == "1" else {
+            XCTFail("Reduce Motion did not expose a native 0/1 value")
+            return
+        }
+        let wasEnabled = initialValue == "1"
         if originalReduceMotion == nil { originalReduceMotion = wasEnabled }
-        if wasEnabled != enabled { toggle.tap() }
+        if wasEnabled != enabled {
+            let frame = toggle.frame
+            guard toggle.isHittable, frame.width.isFinite, frame.height.isFinite,
+                  frame.width > 0, frame.height > 0 else {
+                XCTFail("Reduce Motion has no hittable switch frame")
+                return
+            }
+            // Settings exposes the whole row as the switch; its center can miss the control.
+            let inset = min(frame.height, frame.width / 2)
+            toggle.coordinate(withNormalizedOffset: CGVector(dx: 1, dy: 0.5))
+                .withOffset(CGVector(dx: -inset, dy: 0)).tap()
+        }
+        let expectedValue = enabled ? "1" : "0"
+        let changed = XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "value == %@", expectedValue), object: toggle)
+        guard XCTWaiter.wait(for: [changed], timeout: 5) == .completed else {
+            XCTFail("Reduce Motion did not reach \(expectedValue); actual: \(String(describing: toggle.value))")
+            return
+        }
         app.activate()
     }
 

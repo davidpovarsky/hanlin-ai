@@ -1,0 +1,189 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-26T19:24:14.702737+00:00",
+  "classification": "SOURCE_SCOPE_AND_INTEGRATION_INCOMPATIBILITY_REVIEW_NOT_NATIVE_ACCEPTANCE",
+  "integratedRevision": "fba37e3636da21f897d6a86298b52f2149b462dd",
+  "externalAdditionRevision": "462fe5c579e3fb3d6c394c8fd368faca8792bc6e",
+  "externalSchemaFollowupRevision": "3c47d1a21e23c59ed807dc64a5cf9aa7f153c692",
+  "externalTip": "13bfad937c9e61e0bea839fdf1f3b5b1e7652b69",
+  "originalRequirement": {
+    "asanaGID": "1220882717750164",
+    "name": "[HANLIN-COMPOSER-CAPABILITIES][P0] צירוף מפורש לכל הודעה + assistantTool + ממשק הגדרות בבועה",
+    "url": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220882717750164",
+    "fullCapturedNotesSHA256": "9fe3676d0cfa511e4877b68b3c5a659e7a040516d5b2c045ad67099083575145",
+    "fullCapturedNotesUTF8Bytes": 33784,
+    "exactRequirementLines": [
+      "1. חוזה SDK אחד לצירוף Tool/MiniApp/Skill/MCP: מזהה יציב הכולל מקור/instance, שם להצגה, בחירת פעולה אופציונלית, גרסת סכימה/manifest, הגדרות JSON מובנות. צילום snapshot בעת שליחה ושימור היסטוריה. בידוד בין טיוטות/שיחות ושמירת תאימות לנתונים קודמים.",
+      "2. חיבור manifest assistantTool ל־NativeScript/Expo: אימות declarations, פעולות וסכימות קלט, כניסה ייעודית לשימוש כיכולת assistant; אין fallback ל־app/index בהקשר צ׳אט. שימוש בנתיבי ההרצה וה־rich embedded results הקיימים. תאימות לחבילות ללא יכולת assistant, שממשיכות להיפתח בקטלוג האפליקציות הרגיל.",
+      "3. בחירה מפורשת דרך הבורר וגם @ ו־/ באותו מנגנון; כלים, MiniApps, skills ו־MCP. השארת בחירת מודלי AI זמינה. הצגה ברורה בטיוטה, הסרה/עריכה/מספר צירופים, נגישות, RTL, מקלדת ו־iPad/iPhone. בחירה אינה מריצה פעולת כלי.",
+      "5. הבקשה למודל נושאת את הזהויות וההגדרות שנבחרו במפורש ומכינה את היכולות הנדרשות כבר בצעד הראשון. Skills מטופלים כמקור user בהתאם למדיניות הקיימת; MCP ושמות כלים נשארים scoped. פרמטרי המשתמש מגיעים לפעולה האמיתית. לא לשנות preferences גלובליים עקב צירוף להודעה, ולא לבצע פעולה עסקית לפני שליחה.",
+      "6. אימוץ באפליקציה וב־SDK המשותף, טיפוסי TypeScript/schema/validator, תיעוד מחברים ודוגמאות executable. שימוש חוזר ב־NativeApp/Agent/Presentation SDK, action router ו־embedded result host. Scripting-JSC/ScriptUI נשארים מוקפאים; ScriptWidget אינו חלק מההקפאה.",
+      "7. שילוב הענפים הרלוונטיים, קומפילציה ובדיקות ממוקדות אמיתיות על המק, תיעוד SHA/פקודות/logs ותוצאה לכל שער. אין לייחס הצלחה לכשל/דילוג/בדיקה ממקור אחר."
+    ],
+    "exactRequirementLinesJoinedByNewlineSHA256": "992f4e8575889bd8a605f68d04d361bdaef24160d911958e2cbb022e28a535b6",
+    "scope": "Exact live Asana note read in this session; no task mutation. Only the relevant original numbered requirement lines are reproduced."
+  },
+  "criticalFiles": [
+    {
+      "path": "AI_HLY/Downstream/MCP/ToolIntegration/AssistantToolBridge.swift",
+      "addition": {
+        "exists": true,
+        "bytes": 16063,
+        "sha256": "241c13e3f755aa1eb023460a1df4de355cb8548bbe463428987c88862c721964",
+        "gitBlob": "e120a1b6a752dd18633b235c27e1f46eced8c159"
+      },
+      "externalTip": {
+        "exists": true,
+        "bytes": 16063,
+        "sha256": "241c13e3f755aa1eb023460a1df4de355cb8548bbe463428987c88862c721964",
+        "gitBlob": "e120a1b6a752dd18633b235c27e1f46eced8c159"
+      },
+      "integrated": {
+        "exists": true,
+        "bytes": 17903,
+        "sha256": "fd5d33100cdff4918ebc88af5e530568fc0185546ece6ed3fdbc803d5fb3162c",
+        "gitBlob": "f138e99cb1987fc7e0fd12545e2efa79c02f877e"
+      },
+      "unchangedAdditionToExternalTip": true
+    },
+    {
+      "path": "AI_HLY/Downstream/Scripting/HanlinScriptCanonicalAdapter.swift",
+      "addition": {
+        "exists": true,
+        "bytes": 8852,
+        "sha256": "8291a501294e9d60bc48df1eb0dfac72eb1feb37fad7a01384f3b6f83a71fc9f",
+        "gitBlob": "77d971343e1bba7dd3654975c5032e971e272971"
+      },
+      "externalTip": {
+        "exists": true,
+        "bytes": 8852,
+        "sha256": "8291a501294e9d60bc48df1eb0dfac72eb1feb37fad7a01384f3b6f83a71fc9f",
+        "gitBlob": "77d971343e1bba7dd3654975c5032e971e272971"
+      },
+      "integrated": {
+        "exists": true,
+        "bytes": 3726,
+        "sha256": "bc9e8edb69c9967822721060cd320cecd547a3982490aca63a18729ee9da86be",
+        "gitBlob": "3256875271e6e0f6fa6102723b3018536ca29deb"
+      },
+      "unchangedAdditionToExternalTip": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinScriptAnalyzer.swift",
+      "addition": {
+        "exists": true,
+        "bytes": 57589,
+        "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+        "gitBlob": "56f1e5078f1c58af5d9d6ad47f29b4914bbc7222"
+      },
+      "externalTip": {
+        "exists": true,
+        "bytes": 57589,
+        "sha256": "8f6b7b8a0361df6618dcb624ba25c9ef0ddd65c91eacbbce38d0451d9d52986c",
+        "gitBlob": "56f1e5078f1c58af5d9d6ad47f29b4914bbc7222"
+      },
+      "integrated": {
+        "exists": true,
+        "bytes": 60758,
+        "sha256": "7e3a1ff682abef2b319a4c428c9da6a4069989872cdbab777479e2eced0d1306",
+        "gitBlob": "eabb73fff70ad99f2b880e8145c5d67fc82a4d31"
+      },
+      "unchangedAdditionToExternalTip": true
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+      "addition": {
+        "exists": true,
+        "bytes": 61104,
+        "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+        "gitBlob": "959468f2e328912ddadcdfddd7f1c6ec0cf8a31c"
+      },
+      "externalTip": {
+        "exists": true,
+        "bytes": 61104,
+        "sha256": "3deddf658abdb66d8dba42e4b6678ff00a83e3c1d98f27887fd1b7f37c086d33",
+        "gitBlob": "959468f2e328912ddadcdfddd7f1c6ec0cf8a31c"
+      },
+      "integrated": {
+        "exists": true,
+        "bytes": 66861,
+        "sha256": "cea114769522eaaaceee804b89b26549c2335b3ebca16037a64f97724f2e92fc",
+        "gitBlob": "fb2057587517d1a1ad444a245f75b802f1cbd108"
+      },
+      "unchangedAdditionToExternalTip": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptContracts/HanlinPreparedAssistantToolDeclaration.swift",
+      "addition": {
+        "exists": true,
+        "bytes": 4549,
+        "sha256": "7d19fdeb44909f29e7afce8d53b58e15e40a5b7c4be998e5d1c10924b2bd279a",
+        "gitBlob": "c0b212139594294b15a6ff99615c85891cb9f666"
+      },
+      "externalTip": {
+        "exists": true,
+        "bytes": 4549,
+        "sha256": "7d19fdeb44909f29e7afce8d53b58e15e40a5b7c4be998e5d1c10924b2bd279a",
+        "gitBlob": "c0b212139594294b15a6ff99615c85891cb9f666"
+      },
+      "integrated": {
+        "exists": false
+      },
+      "unchangedAdditionToExternalTip": true
+    }
+  ],
+  "integratedSupportingFiles": {
+    "Scripts/MiniApps/assistant-tools.d.ts": {
+      "exists": true,
+      "bytes": 2784,
+      "sha256": "c5d3bc17148b0ec8c5a2e77a90ff3921a38405e8758398e2b72d7e54e902dba2",
+      "gitBlob": "2be513f663ede7d8ac3d34385f955b9cc1e90382"
+    },
+    "AI_HLY/NativeAgentExtensions/Tools/HanlinMiniAppAssistantToolExports.swift": {
+      "exists": true,
+      "bytes": 12935,
+      "sha256": "e3cb0faced9a6209f9a77e6cfe5053cbf9af6567a391d6f87b3c6e39fb655597",
+      "gitBlob": "eff956f5401235aa57ebf013e99c0a0dbb631454"
+    },
+    "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppAssistantToolRuntime.swift": {
+      "exists": true,
+      "bytes": 10419,
+      "sha256": "cb4a6ecf79ab1e81c03fba9afe10ec30e34728ac48211e82c3b4636087d87fc5",
+      "gitBlob": "acd0495840cf9ca31e05328c92cb2b2cb6a9988e"
+    },
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-assistant-tools.mjs": {
+      "exists": true,
+      "bytes": 13231,
+      "sha256": "721ed8ccf94803776a8d0c2f9ea8e7bb9e9fb7bc9faa27cc216d6ec65512ebcf",
+      "gitBlob": "e083ed19a9b8539f421b3ace23e8cfa3969f0711"
+    }
+  },
+  "findings": [
+    {
+      "id": "selection-boundary",
+      "integrated": "AssistantToolBridge builds MiniApp native contributions from HanlinMiniAppAssistantToolExports.tools(attachments: scope.capabilityAttachments). Export validation checks the selected installation, entrypoint, action and user configuration.",
+      "external": "Both prepared-tools refresh and initial preparation call HanlinPreparedAssistantToolAdapter.catalogContribution() without scope attachments and append its prepared sources to the script catalog. That adapter reads all enabled prepared package declarations.",
+      "implication": "Automatic model-visible inclusion is incompatible with the task requirement for explicit selection per message. It must not be counted as a missing capability in the selected-tool flow."
+    },
+    {
+      "id": "dedicated-entrypoint",
+      "integrated": "assistant-tools.d.ts and miniapp-assistant-tools.mjs require a dedicated assistant source/bundle, distinct from the app entry; current exports reject an assistant entry sharing the app bundle directory.",
+      "external": "HanlinPreparedAssistantToolDeclaration requires policy prepared-foreground-action-v1, exactly one app entrypoint sharing runtime/sourcePath, and exportedSymbol selecting actions[].id.",
+      "implication": "This is an additional foreground-action contract, not an implementation of the approved dedicated entry. Executing the foreground app bundle contradicts the explicit no-app/index-fallback requirement for chat."
+    },
+    {
+      "id": "existing-declaration-rejection",
+      "integrated": "Current dedicated assistantTool declarations have assistantTool metadata, action lists/configuration and policy prepared-assistant-tool-v1; authoring maps IDs to dedicated sources.",
+      "external": "validatePreparedAssistantTools iterates every assistantTool entry and requires exportedSymbol plus the foreground path; the analyzer loops all active-engine assistantTool entries through HanlinPreparedAssistantToolDeclaration without selecting only the new policy.",
+      "implication": "A direct cumulative merge would reject current valid dedicated declarations. This is source-level incompatibility, not a native failure that was executed here."
+    }
+  ],
+  "decision": "Preserve the canonical dedicated contract, explicit per-message selection and user configuration. Do not merge the automatic foreground-action variant. No additional requirement to add this variant was identified in the actual approved Composer task.",
+  "limits": [
+    "This review did not execute Apple or portable tests.",
+    "The external variant uses original runtimes; it is an additional declaration/catalog route, not evidence that a second runtime was introduced.",
+    "No source, runtime, dependency pin or workflow was edited.",
+    "Existing native acceptance for the canonical dedicated tools remains owned by root/Mac/CI.",
+    "The selection finding concerns message-scoped exposure and user configuration; it does not establish that every existing runtime capability or permission check is removed."
+  ]
+}

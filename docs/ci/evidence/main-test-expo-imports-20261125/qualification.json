@@ -1,0 +1,72 @@
+{
+  "baseline": "EXPECTED_REGRESSION_FAILURE_TWO_TEST_CONFIGURATIONS",
+  "canonicalProjectCheck": "EXECUTED_PASS",
+  "changedProjectObjects": [
+    "B10000000000000000000008",
+    "B10000000000000000000009"
+  ],
+  "changedSettingsOnly": [
+    "SWIFT_ENABLE_EXPLICIT_MODULES",
+    "OTHER_SWIFT_FLAGS"
+  ],
+  "correctedRegression": "EXECUTED_PASS_ONE_CASE_SIX_NATIVE_CONSUMER_CONFIGURATIONS",
+  "diffCheck": "EXECUTED_PASS",
+  "logResults": {
+    "baseline-regression": {
+      "output": "test_real_widget_consumers_preserve_original_expo_cpp_import_contract (test_widget_cxx_imports.WidgetCxxImportTests.test_real_widget_consumers_preserve_original_expo_cpp_import_contract) ... \n  test_real_widget_consumers_preserve_original_expo_cpp_import_contract (test_widget_cxx_imports.WidgetCxxImportTests.test_real_widget_consumers_preserve_original_expo_cpp_import_contract) (host='AI_HLYTests', config='Debug') ... FAIL\n  test_real_widget_consumers_preserve_original_expo_cpp_import_contract (test_widget_cxx_imports.WidgetCxxImportTests.test_real_widget_consumers_preserve_original_expo_cpp_import_contract) (host='AI_HLYTests', config='Release') ... FAIL\n\n======================================================================\nFAIL: test_real_widget_consumers_preserve_original_expo_cpp_import_contract (test_widget_cxx_imports.WidgetCxxImportTests.test_real_widget_consumers_preserve_original_expo_cpp_import_contract) (host='AI_HLYTests', config='Debug')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/mnt/development/projects/worktrees/hanlin-main-tests-expo-imports-20261125/Scripts/SDK/tests/test_widget_cxx_imports.py\", line 77, in test_real_widget_consumers_preserve_original_expo_cpp_import_contract\n    self.assertEqual(settings.get(\"SWIFT_ENABLE_EXPLICIT_MODULES\"), \"YES\",\nAssertionError: None != 'YES' : The widget host must preserve the producer's explicit module import context.\n\n======================================================================\nFAIL: test_real_widget_consumers_preserve_original_expo_cpp_import_contract (test_widget_cxx_imports.WidgetCxxImportTests.test_real_widget_consumers_preserve_original_expo_cpp_import_contract) (host='AI_HLYTests', config='Release')\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/mnt/development/projects/worktrees/hanlin-main-tests-expo-imports-20261125/Scripts/SDK/tests/test_widget_cxx_imports.py\", line 77, in test_real_widget_consumers_preserve_original_expo_cpp_import_contract\n    self.assertEqual(settings.get(\"SWIFT_ENABLE_EXPLICIT_MODULES\"), \"YES\",\nAssertionError: None != 'YES' : The widget host must preserve the producer's explicit module import context.\n\n----------------------------------------------------------------------\nRan 1 test in 8.321s\n\nFAILED (failures=2)\n",
+      "path": "/mnt/development/projects/worktrees/hanlin-main-tests-expo-imports-20261125/build/main-test-expo-import-contract-20261125/baseline-regression.log",
+      "sha256": "6afad180f30e6f632d59e1e9edd2dd264584e7b4b8d998052a8ee558c6a8632b"
+    },
+    "canonical-check": {
+      "output": "Original application source ownership: SDK; executable entry point: AI_HLY/AI_HLY.swift\n",
+      "path": "/mnt/development/projects/worktrees/hanlin-main-tests-expo-imports-20261125/build/main-test-expo-import-contract-20261125/canonical-check.log",
+      "sha256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18"
+    },
+    "diff-check": {
+      "output": "",
+      "path": "/mnt/development/projects/worktrees/hanlin-main-tests-expo-imports-20261125/build/main-test-expo-import-contract-20261125/diff-check.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "generate": {
+      "output": "Original application source ownership: SDK; executable entry point: AI_HLY/AI_HLY.swift\n",
+      "path": "/mnt/development/projects/worktrees/hanlin-main-tests-expo-imports-20261125/build/main-test-expo-import-contract-20261125/generate.log",
+      "sha256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18"
+    },
+    "regression": {
+      "output": "test_real_widget_consumers_preserve_original_expo_cpp_import_contract (test_widget_cxx_imports.WidgetCxxImportTests.test_real_widget_consumers_preserve_original_expo_cpp_import_contract) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 1.384s\n\nOK\n",
+      "path": "/mnt/development/projects/worktrees/hanlin-main-tests-expo-imports-20261125/build/main-test-expo-import-contract-20261125/regression.log",
+      "sha256": "1719fa37b968ef4008de40f7b3616c9f7650ac81d181e58e1ad917a18112cab6"
+    }
+  },
+  "nativeBuild": "NOT_RUN",
+  "sourceBase": "403076f1da0c61752e7950911cd9edffd9ad8d3b",
+  "sourceFiles": {
+    "AI_HLY.xcodeproj/project.pbxproj": "f067e527bd20c5b9232f8f05dee78517ab588e81d402d58b20e45d575de47e3b",
+    "Scripts/SDK/tests/test_widget_cxx_imports.py": "c9ac62c6c6f4dc689668f86a7ab2db97ad3330da287663b68d85dfdbf33d5919",
+    "Scripts/SDK/update_project.py": "9633bebbba6c4c4b1e0e1cd789c202ee1963fe699815dd6b370675f0ade48386"
+  },
+  "sourceGraph": {
+    "ai_products": [
+      "HanlinApplication"
+    ],
+    "apple_compilation": "NOT_RUN",
+    "host_sources": [
+      "AI_HLY.swift"
+    ],
+    "linked_application_products": {
+      "AI_HLYTests": [
+        "HanlinApplication"
+      ],
+      "HanlinApp": [
+        "HanlinApplication"
+      ]
+    },
+    "miniapps_agent_products": [],
+    "native_adapter": "Model/HanlinAppleModelCatalogAdapter.swift",
+    "sdk_application_sources": 514,
+    "unit_test_products": [
+      "HanlinApplication"
+    ]
+  },
+  "verificationReportingCorrection": "Initial reporter expected an empty list from validate_agent_sdk_linkage; this function returns a success dictionary. All earlier check logs were retained and reused without rerun. No source/test change was needed."
+}

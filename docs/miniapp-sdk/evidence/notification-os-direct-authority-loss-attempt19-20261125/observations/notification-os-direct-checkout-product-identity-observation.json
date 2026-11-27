@@ -1,0 +1,88 @@
+{
+  "schema": 1,
+  "observedAt": "2026-11-25T20:16:04.681270+00:00",
+  "scope": "read-only exact checkout parent-name/product/device metadata; no restore/deletion/test",
+  "uid": 501,
+  "hostname": "109bcd84-6a7a-475f-9c53-0cf427912d04",
+  "rows": [
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete",
+      "exists": false,
+      "isSymlink": false
+    },
+    {
+      "path": "/Users/m1/builds",
+      "exists": true,
+      "isSymlink": false,
+      "mode": "0o755",
+      "uid": 501,
+      "bytes": 992,
+      "mtimeNs": "1795637529921232736",
+      "realpath": "/Users/m1/builds"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete",
+      "exists": true,
+      "isSymlink": false,
+      "mode": "0o755",
+      "uid": 501,
+      "bytes": 320,
+      "mtimeNs": "1795635460182520042",
+      "realpath": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products",
+      "exists": true,
+      "isSymlink": false,
+      "mode": "0o755",
+      "uid": 501,
+      "bytes": 224,
+      "mtimeNs": "1795626550632901030",
+      "realpath": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/HanlinMiniApps_iphonesimulator27.0-arm64.xctestrun",
+      "exists": true,
+      "isSymlink": false,
+      "mode": "0o644",
+      "uid": 501,
+      "bytes": 16737,
+      "mtimeNs": "1795626389348202019",
+      "realpath": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/HanlinMiniApps_iphonesimulator27.0-arm64.xctestrun",
+      "sha256": "2d6b493aa93663d03e17a15722eab010326b260ccbbb454ed12077cae45cda96"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/Info.plist",
+      "exists": true,
+      "isSymlink": false,
+      "mode": "0o644",
+      "uid": 501,
+      "bytes": 5276,
+      "mtimeNs": "1795555003146011509",
+      "realpath": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/Info.plist",
+      "sha256": "b62620a3005aa50f80052859b4d47183f9e4dec8cee463949a7e62fedae813c0"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app/Info.plist",
+      "exists": true,
+      "isSymlink": false,
+      "mode": "0o644",
+      "uid": 501,
+      "bytes": 10947,
+      "mtimeNs": "1795569508038971954",
+      "realpath": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app/Info.plist",
+      "sha256": "e807c6b2a4c5444448a527d598bb86195f0737209b6c15bc2b8ecc8273f75d87"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/node-v24.5.0-darwin-arm64/bin/node",
+      "exists": false,
+      "isSymlink": false
+    },
+    {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/device.plist",
+      "exists": false,
+      "isSymlink": false
+    }
+  ],
+  "matchingParentNames": []
+}

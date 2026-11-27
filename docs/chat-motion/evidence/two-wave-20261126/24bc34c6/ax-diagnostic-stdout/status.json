@@ -1,0 +1,122 @@
+{
+  "status": "DIAGNOSTIC_CAPTURED",
+  "purpose": "Read-only AX ownership diagnosis; not original B/A/C acceptance",
+  "productionSHA": "24bc34c618615cb75b362d9d64f55e4607fd0e74",
+  "diagnosticOnlyOptions": {
+    "collect-test-diagnostics": "never",
+    "authority": "Installed xcodebuild -help supports on-failure|never; avoid reproduced sysdiagnose finalizer hang. Original B/A/C controller unchanged.",
+    "stdoutAndPNG": "Direct owned runner-container copies in addition to retained raw result"
+  },
+  "steps": [
+    {
+      "name": "xcodegen",
+      "command": [
+        "/opt/homebrew/bin/xcodegen",
+        "generate",
+        "--spec",
+        "project.json"
+      ],
+      "exitCode": 0,
+      "seconds": 0.06684770798892714
+    },
+    {
+      "name": "build",
+      "command": [
+        "xcodebuild",
+        "build-for-testing",
+        "-project",
+        "ChatMotionProof.xcodeproj",
+        "-scheme",
+        "ChatMotionProof",
+        "-derivedDataPath",
+        "/Users/m1/caches/DerivedData/hanlin-motion-dacb4ca5-20261126",
+        "-destination",
+        "platform=iOS Simulator,id=B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D",
+        "-destination-timeout",
+        "60",
+        "-disableAutomaticPackageResolution",
+        "-skipMacroValidation",
+        "CODE_SIGNING_ALLOWED=NO"
+      ],
+      "exitCode": 0,
+      "seconds": 13.004090166999958
+    },
+    {
+      "name": "diagnostic",
+      "command": [
+        "xcodebuild",
+        "test-without-building",
+        "-project",
+        "ChatMotionProof.xcodeproj",
+        "-scheme",
+        "ChatMotionProof",
+        "-derivedDataPath",
+        "/Users/m1/caches/DerivedData/hanlin-motion-dacb4ca5-20261126",
+        "-destination",
+        "platform=iOS Simulator,id=B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D",
+        "-destination-timeout",
+        "60",
+        "-resultBundlePath",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/24bc34c6/ax-diagnostic-stdout/Diagnostic.xcresult",
+        "-disableAutomaticPackageResolution",
+        "-skipMacroValidation",
+        "-parallel-testing-enabled",
+        "NO",
+        "-test-timeouts-enabled",
+        "YES",
+        "-default-test-execution-time-allowance",
+        "600",
+        "-maximum-test-execution-time-allowance",
+        "720",
+        "CODE_SIGNING_ALLOWED=NO",
+        "-collect-test-diagnostics",
+        "never",
+        "-only-testing:ChatMotionProofUITests/MotionAXDiagnosticTests/testCaptureRetainedDisclosureAccessibility"
+      ],
+      "exitCode": 0,
+      "seconds": 31.536481125018327
+    },
+    {
+      "name": "attachments",
+      "command": [
+        "xcrun",
+        "xcresulttool",
+        "export",
+        "attachments",
+        "--path",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/24bc34c6/ax-diagnostic-stdout/Diagnostic.xcresult",
+        "--output-path",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/24bc34c6/ax-diagnostic-stdout/attachments"
+      ],
+      "exitCode": 0,
+      "seconds": 0.13593366602435708
+    },
+    {
+      "name": "tests",
+      "command": [
+        "xcrun",
+        "xcresulttool",
+        "get",
+        "test-results",
+        "tests",
+        "--path",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/24bc34c6/ax-diagnostic-stdout/Diagnostic.xcresult",
+        "--compact"
+      ],
+      "exitCode": 0,
+      "seconds": 0.06795137497829273
+    }
+  ],
+  "pid": 15224,
+  "startedUTC": "2026-11-26T15:36:11.360319+00:00",
+  "freeAtStart": 1939267584,
+  "originalProjectSHA256": "9955d808bbd472cfbca0e1de78828d209fa9c390cc36224903a6bc4381a66558",
+  "testExit": 0,
+  "fixtureRestored": {
+    "originalTestSHA256": "5f714f6ad4fc5db3abec22abc5e520f4bba94d5f66740f69673ed3d401665874",
+    "productionSHA256": "948c6ba85207b017c3819dd27694419e5f195a62fa08d3cfdcbe4f043eba2f7d",
+    "projectSHA256": "9955d808bbd472cfbca0e1de78828d209fa9c390cc36224903a6bc4381a66558",
+    "diagnosticSourceRemoved": true
+  },
+  "finishedUTC": "2026-11-26T15:36:56.181039+00:00"
+}

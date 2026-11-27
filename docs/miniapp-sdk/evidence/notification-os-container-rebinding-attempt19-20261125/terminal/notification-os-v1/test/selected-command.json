@@ -1,0 +1,32 @@
+{
+  "argv": [
+    "xcodebuild",
+    "-project",
+    "AI_HLY.xcodeproj",
+    "-destination",
+    "platform=iOS Simulator,id=E742FBCD-8FF0-4130-B143-7F8328637138",
+    "-parallel-testing-enabled",
+    "NO",
+    "-derivedDataPath",
+    "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete",
+    "-clonedSourcePackagesDirPath",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/SourcePackages",
+    "-skipPackagePluginValidation",
+    "-skipMacroValidation",
+    "CODE_SIGNING_ALLOWED=YES",
+    "CODE_SIGNING_REQUIRED=YES",
+    "CODE_SIGN_IDENTITY=-",
+    "-collect-test-diagnostics",
+    "never",
+    "-scheme",
+    "HanlinMiniApps",
+    "test-without-building",
+    "-resultBundlePath",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v1/test/NotificationOS.xcresult",
+    "-only-testing:HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines"
+  ],
+  "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines",
+  "expectedTests": 1,
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "runnerSHA256": "a99b6194f8dd20bc30998ff2ad9e86ec219415a00615b250c65670f7dfcdba7d"
+}

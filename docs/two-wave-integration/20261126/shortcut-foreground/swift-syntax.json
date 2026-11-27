@@ -1,0 +1,104 @@
+{
+  "toolchain": "Swift version 6.4.3 (swift-6.4.3-RELEASE)\nTarget: aarch64-unknown-linux-gnu\n",
+  "scope": "Linux Swift syntax only; no Apple imports/typecheck/native execution",
+  "command": [
+    "swiftc",
+    "-frontend",
+    "-parse",
+    "-swift-version",
+    "6",
+    "<source>"
+  ],
+  "checks": [
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppSystemEntrypointsView.swift",
+      "exitCode": 0,
+      "output": "",
+      "sha256": "c1a226e995240acf6c200faf15d10cbcb391c0b702f6bc3e77bc25842494a83b",
+      "reusedExactBytes": false
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+      "exitCode": 0,
+      "output": "",
+      "sha256": "e53341f9f5e62702f3b2703d2ac4367f6921164dc43980a85ac2e0d4d2bddd65",
+      "reusedExactBytes": false
+    },
+    {
+      "path": "AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift",
+      "sha256": "b35644d9aa1abd6002f1d00e4c6c009d80ad63eb0b445cd002c96c49f91a6207",
+      "exitCode": 0,
+      "output": "",
+      "reusedExactBytes": false
+    },
+    {
+      "path": "HanlinMiniAppsApp/MiniAppsShortcutIntent.swift",
+      "exitCode": 0,
+      "output": "",
+      "sha256": "b1ed3e326e5fe968671a15900c18cffb3606641674aafa9c47dd36fd49b6b5bd",
+      "reusedExactBytes": false,
+      "source": "559f77b04ff701c4bc50669e25630b2ccbbc0882"
+    },
+    {
+      "path": "HanlinMiniAppsTests/NativeScriptShortcutConcurrencyTests.swift",
+      "exitCode": 0,
+      "output": "",
+      "sha256": "235493a3b33d2a796da655f71c84a6cace6852e9046def2d7562bb162dc4a0f2",
+      "reusedExactBytes": false
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationExecutor.swift",
+      "exitCode": 0,
+      "output": "",
+      "sha256": "450f3a5e0308c5cca03b07d863d71f2c96f04f9ec381fab9f49cc0201a08dcd3",
+      "reusedExactBytes": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift",
+      "exitCode": 0,
+      "output": "",
+      "sha256": "a39e7d674cd4ecba7c95a0162dfd97f4aba7ce9f05af64f194ec2002277e922c",
+      "reusedExactBytes": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationSnippet.swift",
+      "exitCode": 0,
+      "output": "",
+      "sha256": "93b2d3061d90c413c1119a711d01a07dcc095df579a0eb14aa561c95bc753b10",
+      "reusedExactBytes": true
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinInvocationQueueTests.swift",
+      "exitCode": 0,
+      "output": "",
+      "sha256": "23e451c2f4367a12b1a2f1a5cd94a23882ebd51535403b49450a1e213881f4a6",
+      "reusedExactBytes": true
+    },
+    {
+      "path": "HanlinMiniAppsTests/MiniAppsShortcutIntentTests.swift",
+      "exitCode": 0,
+      "output": "",
+      "sha256": "7924240896003356d83cf65d484087719ad01f217e6eb9d90fee28131d652f7e",
+      "reusedExactBytes": false,
+      "source": "559f77b04ff701c4bc50669e25630b2ccbbc0882"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinWidgetLastSuccessfulRender.swift",
+      "exitCode": 0,
+      "output": "",
+      "sha256": "60f21b8917461d7b1b4db94034644d08f11c433bb1b4c1f774388adc0b267787",
+      "checkedAt": "2026-11-26T18:48:28.988228+00:00",
+      "reusedExactBytes": false
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinWidgetLastSuccessfulRenderTests.swift",
+      "sha256": "258a9c3d7a27b5795f4f84bb4109863613faf49bc41ddc072e13d2f94b83c50b",
+      "exitCode": 0,
+      "output": "",
+      "source": "559f77b04ff701c4bc50669e25630b2ccbbc0882",
+      "reusedExactBytes": false
+    }
+  ],
+  "passed": true,
+  "source": "a6eaf6ee77fbc0a48e9997b434dc28d2c15b916d"
+}

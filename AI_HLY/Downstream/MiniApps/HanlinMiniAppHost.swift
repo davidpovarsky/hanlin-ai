@@ -111,7 +111,7 @@ final class HanlinMiniAppHost {
                     guard capabilities.contains(cap) else { continue }
                     let actionID = action.id
                     await broker.register(target: targetID, action: actionID, capability: cap) { request in
-                        return try await HanlinScriptingPlatform.shared.executeHeadlessAction(
+                        return try await HanlinScriptingPlatform.platform(forInvocationID: request.id).executeHeadlessAction(
                             caller: request.caller,
                             targetAppID: targetID,
                             action: actionID,

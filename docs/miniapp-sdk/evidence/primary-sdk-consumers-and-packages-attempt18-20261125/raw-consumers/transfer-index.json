@@ -1,0 +1,63 @@
+{
+  "originalReceiptSHA256": "20350c7e3d9f4d97491aead8dd511177ee9fb2e703fd657368e289b254d92bf1",
+  "owner": "/root/native_execution",
+  "source": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+  "boundary": "Read-only actual completed build, SDK resource, notification implementation, Worklets object and original ios_system validator evidence. Test outcomes remain separate.",
+  "files": [
+    {
+      "path": "AI_Hanlin.app/NotificationService-Info.plist",
+      "bytes": 1220,
+      "sha256": "cf22dfcabc37e0108e7d7a24ed8f7566d0934e60290d16e8427b2370532ae32c"
+    },
+    {
+      "path": "AI_Hanlin.app/notification-codesign.stderr",
+      "bytes": 1145,
+      "sha256": "f8767154099e0c2e966f5c50ad211bd81b790d9bdb75eff6f72ec0b3654c6fce"
+    },
+    {
+      "path": "AI_Hanlin.app/notification-codesign.stdout",
+      "bytes": 184,
+      "sha256": "00491886daae07a5296c8bad50f116bf006b0004d7bf7338ad46669fbd903a4a"
+    },
+    {
+      "path": "HanlinMiniApps.app/NotificationService-Info.plist",
+      "bytes": 1278,
+      "sha256": "176d667ec09408832340ae438a7e26886a9f080625c445c3f192850a7b9a467b"
+    },
+    {
+      "path": "HanlinMiniApps.app/notification-codesign.stderr",
+      "bytes": 1156,
+      "sha256": "ccc754895ae9a52b5a0fbaddcb40d80eee2619a44ab16fcbb7842154e0800e3d"
+    },
+    {
+      "path": "HanlinMiniApps.app/notification-codesign.stdout",
+      "bytes": 184,
+      "sha256": "00491886daae07a5296c8bad50f116bf006b0004d7bf7338ad46669fbd903a4a"
+    },
+    {
+      "path": "WorkletsVersion.o",
+      "bytes": 199440,
+      "sha256": "7132ad932d55d3cde0061cdd6cff0cb00a68a2a762a26116d7ea5bcd90e94a90"
+    },
+    {
+      "path": "com.itorah.chavrusachat-ios-system-resources.json",
+      "bytes": 680,
+      "sha256": "ab76dbb178d86e4445750bd93ee2d859bbe967a97ae73850cae4feac66d6ddec"
+    },
+    {
+      "path": "com.itorah.hanlinminiapps-ios-system-resources.json",
+      "bytes": 685,
+      "sha256": "66a64f501a56bdfb7b708dc49ca33b825f1f6351f69fa38bb087d0f0bea93848"
+    },
+    {
+      "path": "receipt.json",
+      "bytes": 18529,
+      "sha256": "20350c7e3d9f4d97491aead8dd511177ee9fb2e703fd657368e289b254d92bf1"
+    },
+    {
+      "path": "worklets-common-args.resp",
+      "bytes": 3030,
+      "sha256": "a5e0da230d3c8dac3f83e69c514be9b81473c53d9cefff4b55d5fd0fddb26d55"
+    }
+  ]
+}

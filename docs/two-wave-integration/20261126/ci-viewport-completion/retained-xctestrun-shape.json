@@ -1,0 +1,16 @@
+{
+  "qualification": "STRUCTURAL_ONLY: retained native descriptor; not current-source test acceptance",
+  "reported_by": "/root/mac_build_ops",
+  "path": "/Users/m1/caches/DerivedData/hanlin-two-wave-root-20261126/Build/Products/AI_HLY_iphonesimulator27.0-arm64.xctestrun",
+  "sha256": "b2cc79f4b3780daec837e119cc5e4a07d5ecccd618ab793b88bb0b80dbfa2062",
+  "format_version": 1,
+  "ContainerName": "AI_HLY",
+  "SchemeName": "AI_HLY",
+  "target": {
+    "BlueprintName": "AI_HLYUITests",
+    "TestHostPath": "__TESTROOT__/Debug-iphonesimulator/AI_HLYUITests-Runner.app",
+    "TestBundlePath": "__TESTHOST__/PlugIns/AI_HLYUITests.xctest",
+    "UITargetAppPath": "__TESTROOT__/Debug-iphonesimulator/AI_Hanlin.app",
+    "IsUITestBundle": true
+  }
+}

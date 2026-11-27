@@ -1,5 +1,6 @@
 import Foundation
 import JavaScriptCore
+import HanlinScriptContracts
 
 public struct HanlinExpoWidgetError: Error, LocalizedError, Sendable {
     public let message: String
@@ -44,7 +45,8 @@ public struct HanlinExpoWidgetsRuntime: Sendable {
         props: [String: Any] = [:],
         environment: [String: Any] = [:]
     ) -> Result<[String: Any]?, HanlinExpoWidgetError> {
-        call(layout: layout, functionName: "__expoWidgetHandlePress") { _ in
+        call(layout: layout, functionName: environment["__hanlinToggleValue"] == nil
+            ? "__expoWidgetHandlePress" : "__hanlinWidgetHandleToggle") { _ in
             [props, environment]
         }.map { result in
             result as? [String: Any]
@@ -111,6 +113,9 @@ public struct HanlinExpoWidgetsRuntime: Sendable {
         }
 
         ctx.evaluateScript(script)
+        guard ctx.exception == nil else { return nil }
+        do { ctx.evaluateScript(try HanlinExpoWidgetInteractions.script()) }
+        catch { return nil }
         if let exception = ctx.exception {
             print("[HanlinExpoWidgets] Bundle evaluation error: \(exception.toString() ?? "unknown")")
             return nil

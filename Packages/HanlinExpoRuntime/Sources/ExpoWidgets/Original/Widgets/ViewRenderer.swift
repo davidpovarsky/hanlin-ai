@@ -48,21 +48,39 @@ struct WidgetsViewRenderer {
     case "EllipseView":
       return renderWithModifiers(EllipseView.self, EllipseViewProps.self)
     case "LabelView":
-      return renderWithModifiers(LabelView.self, LabelViewProps.self)
+      return renderWithModifiers(LabelView.self, LabelViewProps.self, updateProps: updateChildren)
     case "ProgressView":
-      return renderWithModifiers(ProgressView.self, ProgressViewProps.self)
+      return renderWithModifiers(ProgressView.self, ProgressViewProps.self, updateProps: updateChildren)
     case "SpacerView":
       return renderWithModifiers(SpacerView.self, SpacerViewProps.self)
     case "UnevenRoundedRectangleView":
       return renderWithModifiers(UnevenRoundedRectangleView.self, UnevenRoundedRectangleViewProps.self)
     case "GaugeView":
-      return renderWithModifiers(GaugeView.self, GaugeProps.self)
+      return renderWithModifiers(GaugeView.self, GaugeProps.self, updateProps: updateChildren)
     case "ChartView":
       return renderWithModifiers(ChartView.self, ChartProps.self)
+    case "ToggleView":
+      switch kind {
+      case .widget:
+        return renderWithModifiers(WidgetToggleView.self, WidgetToggleProps.self) { props in
+          try updateChildren(props)
+          props.source = name
+          props.entryIndex = entryIndex
+          props.environmentString = environmentString
+        }
+      case .liveActivity:
+        return makeChild(Text("Toggle is available in widgets").disabled(true))
+      }
     case "Button":
       if #available(iOS 17.0, *) {
         switch kind {
         case .widget:
+          if (node["props"] as? [String: Any])?["widgetRefresh"] as? Bool == true {
+            return renderWithModifiers(WidgetRefreshButtonView.self, ButtonProps.self) { props in
+              try updateChildren(props)
+              props.source = name
+            }
+          }
           return renderWithModifiers(WidgetButtonView.self, ButtonProps.self) { buttonProps in
             try updateChildren(buttonProps)
             buttonProps.source = name

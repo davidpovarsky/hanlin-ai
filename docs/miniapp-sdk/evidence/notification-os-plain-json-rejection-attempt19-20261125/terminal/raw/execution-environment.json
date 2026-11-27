@@ -1,0 +1,15 @@
+{
+  "perRun": {
+    "DEVELOPER_DIR": "/Applications/Xcode.app/Contents/Developer",
+    "GITHUB_WORKSPACE": "/Users/m1/builds/hanlin-notification-os-recovery-20261125",
+    "GITHUB_SHA": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+    "SPLIT_EVIDENCE": "/Users/m1/builds/hanlin-notification-os-recovery-20261125/build/notification-os-recovery-v1",
+    "SPLIT_DERIVED_DATA": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete",
+    "PAIRED_TEST_SCOPE": "miniapp_complete",
+    "RUNNER_TEMP": "/Users/m1/builds/hanlin-notification-os-recovery-20261125/build/primary-temp"
+  },
+  "inheritedPATH": "/opt/homebrew/bin:/usr/bin:/bin:/usr/sbin:/sbin",
+  "python": "/opt/homebrew/opt/python@3.12/bin/python3.12",
+  "externalNodeOrNpmCommand": "NOT_REQUIRED_OR_INVOKED",
+  "plistEnvironment": "Exact original xctestrun bytes; no rewriting"
+}

@@ -1,0 +1,2183 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "8D5EDA99-8A8E-48D2-8490-8180F9C99D45.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "external-modal-accessibility_0_279484A7-3E79-47F1-A83B-2CA34D6E7828.txt",
+        "timestamp" : 1795599075.185
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "FD9E5CAC-2CA0-4CB2-9856-F00BC4781586.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "external-modal-failure_0_9C5B7B54-9F09-4000-95EE-44C62D82FC39.png",
+        "timestamp" : 1795599074.911
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "2911B4D7-6651-44CA-9C1B-982C7868E836.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "external-modal-result-saved_0_BBF88E8C-D536-4F4A-9DA7-E33C6DDE0EA2.png",
+        "timestamp" : 1795599072.108
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "81D0869A-5647-490D-9B81-1F5A5EDB616F.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "external-modal-dismissed_0_D84A7963-2DFE-4A8D-AB99-016A021DFC76.png",
+        "timestamp" : 1795599070.499
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "3EEC1745-29CA-4506-9649-5186CCE58A08.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "external-modal-full-screen_0_B67D032A-7322-4A1D-9279-405369B5BE71.png",
+        "timestamp" : 1795599066.006
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "59E124B1-6529-4BE0-92A8-539F22B8840C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "external-modal-context-before_0_3746C81A-3009-4993-BC35-E3A2BEBC9F20.png",
+        "timestamp" : 1795599064.065
+      }
+    ],
+    "testIdentifier" : "MiniAppsExternalModalLifetimeUITests/testExternalInvocationSurvivesNestedFullScreenModal()",
+    "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsExternalModalLifetimeUITests/testExternalInvocationSurvivesNestedFullScreenModal"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "E6951E4D-2321-46C8-9D17-09162C3A23B0.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-runtime-failure-accessibility_0_601A03C2-BD33-4FC9-AE86-B680AB79661D.txt",
+        "timestamp" : 1795599129.584
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "750955A2-3F5C-43A6-AA71-A2A2B871B9E6.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-runtime-failure_0_520F11BC-653B-443D-9EB6-4288448900F9.png",
+        "timestamp" : 1795599129.137
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "C9D5D1AF-AE12-4789-A7D3-24823D7A5903",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-11-25 at 10.31.57 AM",
+        "timestamp" : 1795599117.124
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "E74691AD-D0B9-4193-B928-AFBC52EF466F",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 10.31.57 AM",
+        "timestamp" : 1795599117.428
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "415F0413-5F48-4575-9FEE-57DA303F7F37",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-11-25 at 10.31.53 AM",
+        "timestamp" : 1795599113.397
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "F20345A5-9B1D-4C44-A7DC-975B03222407",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 10.31.53 AM",
+        "timestamp" : 1795599113.708
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "38FD8EC3-CD38-4949-8216-8401BECEA191",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-11-25 at 10.31.49 AM",
+        "timestamp" : 1795599109.559
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "37E48F18-A538-4B86-A543-D5D1B66DA6E3",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 10.31.49 AM",
+        "timestamp" : 1795599109.862
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "76429368-5BA9-43C5-96E2-D21D8AF02CE1",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-11-25 at 10.31.47 AM",
+        "timestamp" : 1795599107.777
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "7A4705AA-C1D1-4941-88B5-1DDF5627232D",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 10.31.48 AM",
+        "timestamp" : 1795599108.074
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "018B7FF3-5487-4899-9640-4859D5E16485",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-11-25 at 10.31.44 AM",
+        "timestamp" : 1795599104.839
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "D8C16044-A12D-462E-949E-47D4175D3876",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 10.31.45 AM",
+        "timestamp" : 1795599105.145
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "93C63E73-CD28-4DAD-915B-371BE3A647D6.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "App UI hierarchy for com.itorah_0_5836915F-5FE6-4207-A5DA-60021B020E7C.hanlinminiapps",
+        "timestamp" : 1795599104.391
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "CAEA4784-8990-48C1-9F64-6C00A29E9247",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-11-25 at 10.31.44 AM",
+        "timestamp" : 1795599104.391
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "9D88CC21-4911-4E28-9ED9-4F1C5A959E0B.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Open Generated Views Probe\" Button`_0_462FC323-E944-47B9-8DA9-BA6602FE9CB8.txt",
+        "timestamp" : 1795599104.049
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "1F682282-EBF8-4544-AE82-7F8491B3B404.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Open Generated Views Probe\" Button`_0_46E8A831-EF1E-4449-976B-A2944166FEE4.txt",
+        "timestamp" : 1795599103.096
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "0365D8D9-5503-45E9-8890-B98A26E50D74.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Open Generated Views Probe\" Button`_0_946530A9-EAF9-454D-8B29-E65C712EB6A4.txt",
+        "timestamp" : 1795599102.064
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "3EA18751-1065-46C9-BE3A-9541E91AB1A3.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Open Generated Views Probe\" Button`_0_B6DB3D85-3283-4160-B5A9-E0FF8D053F0E.txt",
+        "timestamp" : 1795599101.067
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "28CE334C-2953-4AAE-B6B0-A04DFDEA786D.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Open Generated Views Probe\" Button`_0_54F942FE-F0CE-4DEC-B311-B796DCBD1076.txt",
+        "timestamp" : 1795599100.075
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "5F2C205D-85F4-40ED-8FBD-7CED64DBC242",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-11-25 at 10.31.38 AM",
+        "timestamp" : 1795599098.519
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "0045C2E5-A540-42D5-8B86-1F55DB2D319F",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 10.31.38 AM",
+        "timestamp" : 1795599098.812
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "33FD9249-FC15-47CE-9ADA-9DE16426CC92.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-import-ExpoSwiftUIProbeA-accessibility_0_0904FC7C-DF01-45AB-B6CC-D2D320F39FDA.txt",
+        "timestamp" : 1795599097.084
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "A6355B01-5D1E-4805-9DB6-B7090E78BFCF.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-import-ExpoSwiftUIProbeA_0_FE826A65-B97F-441F-939B-39541FB9FEEC.png",
+        "timestamp" : 1795599096.799
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "F8DFC490-6731-4910-A0A2-D68F48693BDF",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 10.31.35 AM",
+        "timestamp" : 1795599095.108
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "D77433B2-A0F5-4013-858C-BE94CD1C63C2",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 10.31.33 AM",
+        "timestamp" : 1795599093.234
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "97DEEB0E-16A1-4272-A721-A21043028771",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 10.31.31 AM",
+        "timestamp" : 1795599091.22
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "F312D528-CFB7-4F00-BDBE-EA991D2BA7D4",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 10.31.29 AM",
+        "timestamp" : 1795599089.553
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "09CB8F7D-2D08-449A-BDD7-CD710AD07383",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 10.31.26 AM",
+        "timestamp" : 1795599086.074
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "41E4B19C-DF44-489E-B895-4B1A24D62A11",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 10.31.23 AM",
+        "timestamp" : 1795599083.878
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "852D5AD2-5A17-4D66-94A9-89154FFD5C1C.mp4",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Screen Recording 2026-11-25 at 10.31.16 AM.mp4",
+        "timestamp" : 1795599076.636
+      }
+    ],
+    "testIdentifier" : "MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEditButtonEditsOriginalList()",
+    "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEditButtonEditsOriginalList"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "6478596F-DABC-4AE7-BDA7-37C899108137.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-runtime-failure-accessibility_0_155EF8C7-7856-418A-B902-4EC1657D4F15.txt",
+        "timestamp" : 1795599185.706
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "5360B16C-4B1C-47DF-BFC2-C8CA67316EB7.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-runtime-failure_0_BD00C2E0-C6C8-4940-9861-1466467A6E92.png",
+        "timestamp" : 1795599185.418
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "48A68D80-2BF4-4E28-B087-A6B769D5EEBF.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "generated-empty-view-restored-native-size-accessibility_0_B7C0A5FC-3C40-48C6-809B-BDA72172E873.txt",
+        "timestamp" : 1795599176.99
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "E25B0A66-03BD-4145-8D2B-537BD95B0A8D.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "generated-empty-view-restored-native-size_0_3048DA8B-D1DA-4D40-BCF2-C9119576B0BF.png",
+        "timestamp" : 1795599176.639
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "4B875ED1-A34B-488E-BA13-020E0C2F297E.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "generated-empty-view-zero-native-size-accessibility_0_067C36EC-8841-4C98-BF9A-A7CCBEA2D6FB.txt",
+        "timestamp" : 1795599172.314
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "6EF4832B-A005-4C1A-BEA2-FA17EAE6D7C9.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "generated-empty-view-zero-native-size_0_CCC49ADD-BC26-4E44-9DB9-A73134F8490B.png",
+        "timestamp" : 1795599171.965
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "5B8D34E1-4D96-4941-99AA-F8B194B015E6.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-import-ExpoSwiftUIProbeA-accessibility_0_6E867A7F-1950-4896-BF15-D6E1F87B6F97.txt",
+        "timestamp" : 1795599151.733
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "D0A35AB6-DFCF-49C4-9CD5-CFEC48ABA7DE.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-import-ExpoSwiftUIProbeA_0_C08B9A23-45A4-46C3-8979-57C4A51180AD.png",
+        "timestamp" : 1795599151.444
+      }
+    ],
+    "testIdentifier" : "MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEmptyViewReportsNativeLayout()",
+    "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEmptyViewReportsNativeLayout"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "7E3AB73B-9CD4-43B3-8F70-008EEEF3A1BB.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-runtime-failure-accessibility_0_2AE66733-6FD9-4183-BED6-AB84657AC7A3.txt",
+        "timestamp" : 1795599258.234
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "0DD001B5-AA78-4BA6-9751-C81D815685AC.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-runtime-failure_0_B675AED8-CE34-4692-A785-F04FCE722552.png",
+        "timestamp" : 1795599257.941
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "09160F45-2FB9-45BB-BF99-FC5019117316.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "generated-installed-native-bridge-metadata-accessibility_0_6007CE89-4FA2-457B-91DC-A139698C7E21.txt",
+        "timestamp" : 1795599249.507
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "B416E7A9-3492-464D-A8EC-8EAD64E75699.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "generated-installed-native-bridge-metadata_0_02CF47DF-A3FE-4CD7-B244-1E66AEFA6A64.png",
+        "timestamp" : 1795599249.157
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "DCF4D395-8389-48DB-A72E-DA8F4665B990.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "generated-group-box-native-slots-accessibility_0_A54E16B5-79F1-4E52-9FBF-FB67FDD07D01.txt",
+        "timestamp" : 1795599232.79
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "C73E3B55-B2DD-4BD4-883F-A3D74CE412C5.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "generated-group-box-native-slots_0_40E85C5E-7E56-4693-AD29-ACC36FAA54D0.png",
+        "timestamp" : 1795599232.437
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "5A9FD12E-2B04-463F-984E-5B4DC6078CC2.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-import-ExpoSwiftUIProbeA-accessibility_0_1200C980-0C3D-4A3D-AE1B-800850EAD09D.txt",
+        "timestamp" : 1795599207.716
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "62271C41-1153-484E-A6CF-9689B5159F28.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-import-ExpoSwiftUIProbeA_0_C6318745-E2D3-4B0F-8E09-57C2BFBCDF25.png",
+        "timestamp" : 1795599207.427
+      }
+    ],
+    "testIdentifier" : "MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata()",
+    "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "20F566AB-D796-43DD-8312-C6A99E6E43C4.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-runtime-failure-accessibility_0_C8A95E36-BB55-4824-BC93-2DF7745C6E5E.txt",
+        "timestamp" : 1795599323.018
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "1AE6DD23-3C22-4CC1-92C2-DE1CF9ED4143.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-runtime-failure_0_BB759FF3-2D1B-410D-80DB-F378471487A3.png",
+        "timestamp" : 1795599322.728
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "CA81AEF7-FA92-4246-A8A1-5A724CD8D827.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "generated-modifier-native-position-and-tracking-accessibility_0_BB400D99-659D-47A9-9231-981BD0AC4F23.txt",
+        "timestamp" : 1795599314.372
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "9FA33DEE-4689-42C0-8B45-07AEEE8BE61E.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "generated-modifier-native-position-and-tracking_0_0C928364-A285-4CA6-A4D9-7442F10B25B9.png",
+        "timestamp" : 1795599314.004
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "9E5C640B-A28D-4494-921D-38FAAA69A4A0.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "generated-modifier-native-accessibility-value-accessibility_0_FBA8BF26-46AA-4F66-8283-86C34CB732B4.txt",
+        "timestamp" : 1795599302.372
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "D1C1938D-E5CB-4BA5-8460-3156760BE9CF.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "generated-modifier-native-accessibility-value_0_CBA7E018-63D0-4A79-A5C6-EEE02F3313C9.png",
+        "timestamp" : 1795599301.994
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "4293EB49-8F34-4B34-BFE3-D4E39E55CBDF.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-import-ExpoSwiftUIProbeA-accessibility_0_14A86777-048A-4CD1-AF95-C24AA9AF9F74.txt",
+        "timestamp" : 1795599281.091
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "423775DA-AB9A-4427-8402-49F78449FE77.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-import-ExpoSwiftUIProbeA_0_211BDD0B-A80D-4138-8315-378CED8F1862.png",
+        "timestamp" : 1795599280.79
+      }
+    ],
+    "testIdentifier" : "MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierAccessibilityAndGeometry()",
+    "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierAccessibilityAndGeometry"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "B6672F64-86BA-4A96-8999-45326DF519E6.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-runtime-failure-accessibility_0_9EA73FBD-9881-4890-A1F1-CD55EAC1D8B7.txt",
+        "timestamp" : 1795599361.868
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "88EBBB24-4500-4515-8268-EEB23BACB985.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-runtime-failure_0_795E2955-87AE-4CF9-AA8F-BCD189D894CD.png",
+        "timestamp" : 1795599361.517
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "9A932C91-09BD-40B1-BE82-2AF3F81C4F79",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-11-25 at 10.35.58 AM",
+        "timestamp" : 1795599358.53
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "38156AEB-9E14-48B5-9F92-63E980D7A991",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 10.35.58 AM",
+        "timestamp" : 1795599358.832
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "2C763675-DB8C-43F4-A1D5-CBB1A145F5CD",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-11-25 at 10.35.56 AM",
+        "timestamp" : 1795599356.797
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "1667D3B9-AA30-42F7-9E33-653EB6EA5AE1",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 10.35.57 AM",
+        "timestamp" : 1795599357.103
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "16AFB689-F4D2-4FAD-ABBF-531F223EB47E",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-11-25 at 10.35.53 AM",
+        "timestamp" : 1795599353.811
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "20E4123B-F857-4988-B81D-41B0DC3FE160",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 10.35.54 AM",
+        "timestamp" : 1795599354.116
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "97F8F1A2-844A-4F19-BE63-FBF7C3014E4E.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "App UI hierarchy for com.itorah_0_D5896473-86B8-49CF-BDC6-6B3981AC29E0.hanlinminiapps",
+        "timestamp" : 1795599353.359
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "9D70702E-34E1-4017-B3C5-30F728152CFF",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-11-25 at 10.35.53 AM",
+        "timestamp" : 1795599353.359
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "B2718FB5-3CFC-4709-B5EB-DF2F571B6CEE.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Open Generated Modifiers Probe\" Button`_0_FB926E44-A901-4FEA-9C70-871CDA157341.txt",
+        "timestamp" : 1795599353.012
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "1749A7FE-0452-47E7-A326-510DF1F7D14A.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Open Generated Modifiers Probe\" Button`_0_B102B594-427B-4B48-9E20-BEAD22054AF3.txt",
+        "timestamp" : 1795599352.092
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "D523AA23-0030-464D-BBB5-52E9EE20C8E5.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Open Generated Modifiers Probe\" Button`_0_A03BBF5D-191C-40D5-9B99-A0A83F60B051.txt",
+        "timestamp" : 1795599351.07
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "CF9C6B39-958F-41ED-99EE-C64817B4CF8C.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Open Generated Modifiers Probe\" Button`_0_CFA6F17A-333A-4850-A671-7CE892A3EAD6.txt",
+        "timestamp" : 1795599350.123
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "0753B3E3-BDDC-46B0-84A3-46969B1EEEC6.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Open Generated Modifiers Probe\" Button`_0_FA65F6A2-8025-4849-859C-FAE40233617B.txt",
+        "timestamp" : 1795599349.112
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "C7C8F1BD-50DB-4E3D-9861-6517433DE56D",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-11-25 at 10.35.46 AM",
+        "timestamp" : 1795599346.978
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "D0F6FB32-559F-4CCE-AB54-0C49BF0D6B57",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 10.35.47 AM",
+        "timestamp" : 1795599347.274
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "7477A0CD-81FA-4662-8EEC-9C4DD61EE2E8.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-import-ExpoSwiftUIProbeA-accessibility_0_A896AE54-21D9-4E04-92A9-533E464C2998.txt",
+        "timestamp" : 1795599345.543
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "74619862-66AE-4C0E-B40F-EFF38BD75B50.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-import-ExpoSwiftUIProbeA_0_E22E28D0-C27A-4137-B29C-645E75AF6125.png",
+        "timestamp" : 1795599345.258
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "C0EC2B17-9CFB-4664-9346-1394BE3836D7",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 10.35.43 AM",
+        "timestamp" : 1795599343.434
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "A34AE403-F84A-452C-A7DB-5126F6564A86",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 10.35.41 AM",
+        "timestamp" : 1795599341.533
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "1390E7EB-1DC5-4D65-AA8F-FA370ACAA058",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 10.35.39 AM",
+        "timestamp" : 1795599339.491
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "C35DB113-402E-4945-9F7B-D71EF5B9A66A",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 10.35.37 AM",
+        "timestamp" : 1795599337.816
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "D2266AFE-CE6D-475E-AF1C-1F7FB39EAB70",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 10.35.34 AM",
+        "timestamp" : 1795599334.349
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "CEFCD414-6828-4C1A-A4B5-ED3F93D7F57E",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 10.35.32 AM",
+        "timestamp" : 1795599332.106
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "4D3AFF5C-C842-46CE-94C2-AD72B7B564CC.mp4",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Screen Recording 2026-11-25 at 10.35.24 AM.mp4",
+        "timestamp" : 1795599324.356
+      }
+    ],
+    "testIdentifier" : "MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope()",
+    "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "4EE627F6-C845-452B-9E66-607B0FB003EC.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-runtime-failure-accessibility_0_0625126F-BF63-439D-897F-EC9F0D2D2A90.txt",
+        "timestamp" : 1795599476.868
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "88A513A7-A132-436E-8DC3-3065D26A9B62.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-runtime-failure_0_533355F9-1643-48FD-AB5D-20233BEE2D40.png",
+        "timestamp" : 1795599476.583
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "A0968946-D66A-49D9-9189-5CD19A6BBBDC.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "generated-modifier-host-context-boundary-accessibility_0_14AD0730-C5DF-4D32-8E1E-6A4E9474C896.txt",
+        "timestamp" : 1795599468.198
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "E82F1801-07AA-4B94-8478-D6E00E687D29.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "generated-modifier-host-context-boundary_0_BD9C216F-8583-47BF-8941-30A1552F716B.png",
+        "timestamp" : 1795599467.853
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "9F3049D9-139F-457E-BD3F-CCEA8E1D2368.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "generated-modifier-original-inspector-context-accessibility_0_BAE36DDF-D22D-4650-A70F-A163B91FF4DD.txt",
+        "timestamp" : 1795599458.521
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "F2A1070E-E7D9-4702-8A08-8FA33406E882.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "generated-modifier-original-inspector-context_0_55DB6378-4655-49BE-AC84-8EE69BAA329C.png",
+        "timestamp" : 1795599458.137
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "0E9F1FF3-2AF0-4CE3-9D80-52384C2C91BD.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "generated-modifier-native-navigation-back-accessibility_0_FE3ABB2F-AECE-48F7-81B2-90B3EBC9D40D.txt",
+        "timestamp" : 1795599449.442
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "79E41467-D581-4D7E-8AF8-ADFF9D157968.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "generated-modifier-native-navigation-back_0_065AAB74-8675-4BF4-B567-C03202688853.png",
+        "timestamp" : 1795599449.088
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "88F266F3-9F6E-4DF7-9251-A3B5EDC8336B.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "generated-modifier-native-search-completion-accessibility_0_8177662F-04AD-4AEA-9B11-3BB319F56D0B.txt",
+        "timestamp" : 1795599434.786
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "450D1F69-52AE-4949-8576-D08A4CF93216.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "generated-modifier-native-search-completion_0_10D14ED0-8917-4547-B53C-BF58E6804837.png",
+        "timestamp" : 1795599434.398
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "8D227B89-A787-4338-83CC-5E5DFED54FAF.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "generated-modifier-native-table-list-and-swipe-accessibility_0_4FAA5E5B-13BD-4F19-8DBB-B53C4AB7A0F0.txt",
+        "timestamp" : 1795599420.822
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "4A932041-373B-4C3A-BC8A-D7DD4B227F6D.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "generated-modifier-native-table-list-and-swipe_0_DA05E790-AF1E-42A9-8AAE-8FD4AE0A4BA3.png",
+        "timestamp" : 1795599420.304
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "B71923A0-80E2-4FDB-90F2-3FCAB99142D8.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-import-ExpoSwiftUIProbeA-accessibility_0_DE555F83-A5A6-43B7-969F-736ACD3E2807.txt",
+        "timestamp" : 1795599383.768
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "311F0073-6F8A-4D75-988D-E72CA51343DD.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-import-ExpoSwiftUIProbeA_0_8812C95D-4EEE-4F3E-B76A-D56B37CFA5A2.png",
+        "timestamp" : 1795599383.485
+      }
+    ],
+    "testIdentifier" : "MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierNativeContainerContexts()",
+    "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedModifierNativeContainerContexts"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "7523D0BB-B20C-463C-A23C-E9304DC20D12.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-runtime-failure-accessibility_0_CFA8D982-5308-4874-8840-985ED66FF343.txt",
+        "timestamp" : 1795599550.933
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "9C381052-F620-4524-8337-4FF330D4C20A.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-runtime-failure_0_6E6B93A6-C5A3-4573-9EED-B8F50D40198C.png",
+        "timestamp" : 1795599550.57
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "C7E00608-FA38-4D1C-BA49-1FC779574BD8.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "host-services-actual-storage-runtime-and-prepared-widget-state-accessibility_0_3A7C529D-6BAE-4C07-A387-D8422FC178B5.txt",
+        "timestamp" : 1795599543.703
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "1FB65B8B-4CDA-4C62-8682-27EF36A60E15.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "host-services-actual-storage-runtime-and-prepared-widget-state_0_E4B3F935-C9C1-4531-B3A6-D61B54FAF940.png",
+        "timestamp" : 1795599543.281
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "C4B413D2-982E-4023-A47E-20023A30BE59.json",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "expo-original-five-runtime-receipts_0_CAE7B949-7F03-4358-B2C5-A25AD5E46166.json",
+        "timestamp" : 1795599536.969
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "DFB5211E-BDF3-4341-9626-153BFA58AA63.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-import-ExpoSwiftUIProbeA-accessibility_0_E910CAE5-D010-42AC-9B16-FB68462AB6D0.txt",
+        "timestamp" : 1795599499.395
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "5CD9F99D-B2A9-4D89-AF51-BEA8381A8C03.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-import-ExpoSwiftUIProbeA_0_EC31D2B9-0975-41E8-93D4-1942B96F994D.png",
+        "timestamp" : 1795599499.11
+      }
+    ],
+    "testIdentifier" : "MiniAppsProductionRuntimeUITests/testStandaloneExpoHostServicesUseRealStorageRuntimeAndWidgetPublication()",
+    "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoHostServicesUseRealStorageRuntimeAndWidgetPublication"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "963819DA-7DC1-41B1-8C6F-BAB13317A31E.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-runtime-failure-accessibility_0_2D56F2DB-5318-4463-ADEC-2E8AC0DB87C0.txt",
+        "timestamp" : 1795599614.716
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "DA2C0030-C2A1-4564-B87B-AD0E3982EDB3.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-runtime-failure_0_8444AFBE-FF48-4344-8FF4-3541EC993E17.png",
+        "timestamp" : 1795599613.904
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "58827C2F-3389-4582-A18D-CAB9B171DF2D.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "App UI hierarchy for com.itorah_0_3D82C681-3FD3-430C-AADF-0E99A1B021F2.hanlinminiapps",
+        "timestamp" : 1795599613.567
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "A5DBED40-2249-4F28-820B-7D1B3E403179",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-11-25 at 10.40.13 AM",
+        "timestamp" : 1795599613.567
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "918A7FB7-ACC8-432B-B758-B3A48AE0DFF8.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `StaticText (First Match)`_0_525ECB29-F118-40EC-900A-68B2D73B2AE0.txt",
+        "timestamp" : 1795599613.2
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "FC6902FB-7F8B-4521-94AD-6A673BA96454.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `StaticText (First Match)`_0_E32140CB-DB0B-4B42-8667-DB65CEDE6DDB.txt",
+        "timestamp" : 1795599612.209
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "63E7663B-335D-4116-8D35-4600DEB1CC5B.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `StaticText (First Match)`_0_22F22D8E-8FBA-4B25-B941-BDDCC033226F.txt",
+        "timestamp" : 1795599611.278
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "46674F41-3F25-46C7-B240-6510DDBC01AF.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `StaticText (First Match)`_0_2F9780FA-D19A-4833-AAEC-D135846751EF.txt",
+        "timestamp" : 1795599610.279
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "C0BE9AE9-3C6A-468E-83ED-6488923CF074.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `StaticText (First Match)`_0_C0C1EB34-B113-41F2-8015-9DC78C2C3B13.txt",
+        "timestamp" : 1795599609.263
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "20C132DB-9238-4DFC-A4A1-9FA420F77A08.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `StaticText (First Match)`_0_6FF2C017-68E6-41DB-8D08-EB6573DD0ADD.txt",
+        "timestamp" : 1795599608.185
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "BEB42649-D675-4BB5-BF58-B9A59B0C79C0.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `StaticText (First Match)`_0_A4630EA2-512B-4DD0-BBDA-53CA05504198.txt",
+        "timestamp" : 1795599607.191
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "527072EE-061F-4834-90D9-7A1198F9A107.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `StaticText (First Match)`_0_43518B5E-FED1-4628-AE6F-DD027EF366F4.txt",
+        "timestamp" : 1795599606.534
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "B1AF2972-238A-4210-911A-F11C9D498361.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `StaticText (First Match)`_0_B32F9049-5E77-4FA9-AC09-68BE4DDAB2B1.txt",
+        "timestamp" : 1795599605.183
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "C26B690F-C79A-4CBB-916E-B9268F0530A5.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `StaticText (First Match)`_0_DC136BA0-6D0B-4AF3-AD8F-4DBF78CACA17.txt",
+        "timestamp" : 1795599604.192
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "AE2C12FA-090D-4C9E-8547-518BC0B50E0D.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `StaticText (First Match)`_0_C5CD4601-FD59-414A-BC27-29695180DAB1.txt",
+        "timestamp" : 1795599603.305
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "67108EEF-334E-4044-92A1-DE79007B5729.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `StaticText (First Match)`_0_D955DA85-F84D-4012-8D40-6494761F6BF0.txt",
+        "timestamp" : 1795599602.285
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "4E992967-7BE7-4EC9-A1C7-4A593247BF89.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `StaticText (First Match)`_0_6103F419-D411-40C5-AF7D-0D2F1CE60223.txt",
+        "timestamp" : 1795599601.285
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "7EE81431-0662-4708-9FA3-D6F5C0E0D91C.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `StaticText (First Match)`_0_8AAE56F6-3D4B-47BB-BA8C-2221AC84CB75.txt",
+        "timestamp" : 1795599600.493
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "0F45A3E8-8996-4BBE-BA24-DCFD71C8FEC3.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `StaticText (First Match)`_0_C5515E05-DEFF-4099-B996-25C534B938FE.txt",
+        "timestamp" : 1795599599.225
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "96BB896F-0126-40D0-A344-928EF48B563D",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-11-25 at 10.39.57 AM",
+        "timestamp" : 1795599597.71
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "CB8241C9-DC57-44A5-B250-206591DF783C",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 10.39.58 AM",
+        "timestamp" : 1795599598.02
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "69C99930-68A2-427D-AECB-4761BECC712A",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-11-25 at 10.39.54 AM",
+        "timestamp" : 1795599594.541
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "AE917357-59EB-4E93-98A3-C6F7DF7CAD81",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 10.39.54 AM",
+        "timestamp" : 1795599594.85
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "C7F4EBF8-0BAA-4092-B05D-5A68D14A977E",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-11-25 at 10.39.51 AM",
+        "timestamp" : 1795599591.591
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "BE3D00AF-0DA6-4BC5-B5DC-EBE2766DA14F",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 10.39.51 AM",
+        "timestamp" : 1795599591.911
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "0089537F-5688-4807-8F28-FF48187C3C37",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-11-25 at 10.39.48 AM",
+        "timestamp" : 1795599588.4
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "496D94C5-0A2A-4D87-88CE-2409992D7A22",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 10.39.48 AM",
+        "timestamp" : 1795599588.707
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "DC1B6F65-9251-4CCD-9BD6-E6AEC75B9D16",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-11-25 at 10.39.45 AM",
+        "timestamp" : 1795599585.246
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "2A3321AB-C3A9-47A1-868F-18130524BCD0",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 10.39.45 AM",
+        "timestamp" : 1795599585.58
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "54E9F462-BB3A-4679-9DB3-55BD2A8D5E94.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "App UI hierarchy for com.itorah_0_DDA3A966-7A2A-4BDE-AABA-3A78116C1366.hanlinminiapps",
+        "timestamp" : 1795599584.615
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "516648D3-511D-4F48-9F1A-840604960764",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-11-25 at 10.39.44 AM",
+        "timestamp" : 1795599584.615
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "364AB1B4-A2EC-4C29-B7D2-CAACD44189CC.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Open Manual Adapter Probe\" Button`_0_E591DA2D-6682-47E3-A88A-E639AA777625.txt",
+        "timestamp" : 1795599584.2
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "5B25F8D6-FB33-4F2D-9617-C791C2E94642.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Open Manual Adapter Probe\" Button`_0_FED2CB4F-36EB-4CE3-845F-158DF573F31B.txt",
+        "timestamp" : 1795599583.341
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "48ECA2E6-E786-475D-9002-C88A4E4E43CF.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Open Manual Adapter Probe\" Button`_0_548B8CAC-C16F-452E-9089-A2F814A20A2E.txt",
+        "timestamp" : 1795599582.215
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "9629CB73-93CF-4755-92DE-7842A7319FB1.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Open Manual Adapter Probe\" Button`_0_4EDC5760-49BA-42CA-998E-537E3FA81A0D.txt",
+        "timestamp" : 1795599581.194
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "74573CB2-4FFA-41B0-9406-5E572529233C.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Debug description for `\"Open Manual Adapter Probe\" Button`_0_4F3B91BC-ED67-44A8-B576-D7D58059A344.txt",
+        "timestamp" : 1795599580.35
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "EA2795CA-4C8D-485D-92DA-8AA8536F4478",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "UI Snapshot 2026-11-25 at 10.39.38 AM",
+        "timestamp" : 1795599578.558
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "E5E1F1EE-29E3-42B6-A25B-0CDF8FF52BCE",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 10.39.38 AM",
+        "timestamp" : 1795599578.863
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "E848DECE-C5B4-4C34-AB9B-182D47C5B7A3.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-import-ExpoSwiftUIProbeA-accessibility_0_CD13A390-8C61-4931-A785-B3B51FE434F7.txt",
+        "timestamp" : 1795599577.036
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "3FC1A5BF-AAD8-4A53-BAE7-0457EBB9588B.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-import-ExpoSwiftUIProbeA_0_71AC4C85-0B40-4D45-A2D4-B7400A7F1FD4.png",
+        "timestamp" : 1795599576.668
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "6BFD0C80-3936-4E3D-B5BB-9DF6E097CBF5",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 10.39.34 AM",
+        "timestamp" : 1795599574.933
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "6D61F763-F38F-47B8-B3FF-DC3DE28E879C",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 10.39.32 AM",
+        "timestamp" : 1795599572.967
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "7DF9A1E5-8030-4031-A77C-2F539542C38A",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 10.39.30 AM",
+        "timestamp" : 1795599570.612
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "5516D0CA-BF50-4533-BE1A-F1B274E8BAA0",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 10.39.27 AM",
+        "timestamp" : 1795599567.699
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "EDD8B31D-6AC4-4216-9ED8-88D5446A44CE",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 10.39.23 AM",
+        "timestamp" : 1795599563.25
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "3D2FBAF8-4B87-4A80-9F45-580E47C827E8",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Synthesized Event 2026-11-25 at 10.39.20 AM",
+        "timestamp" : 1795599560.71
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "4C962C20-7DAF-420F-A1CD-4FB131592283.mp4",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Screen Recording 2026-11-25 at 10.39.12 AM.mp4",
+        "timestamp" : 1795599552.249
+      }
+    ],
+    "testIdentifier" : "MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters()",
+    "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "F2E98BBA-387C-4982-8154-1E914A82E437.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-runtime-failure-accessibility_0_EB9CFF57-AF8C-42E2-BFAD-7BBC50439561.txt",
+        "timestamp" : 1795599748.14
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "8B90FCA8-3FED-4328-8791-79D57ED0DED9.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-runtime-failure_0_042A317F-3395-482C-B23D-72CA25473A44.png",
+        "timestamp" : 1795599747.831
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "318A5E0F-C216-4C19-875A-506F2EC1C4E0.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Manual Inspector actual native slot-accessibility_0_757CE89C-61CA-41F3-9BCB-F2C17FD69F8C.txt",
+        "timestamp" : 1795599728.037
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "FB2C9436-33CD-4C79-AB05-EAD93488A253.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Manual Inspector actual native slot_0_E12C240F-EAE3-47AB-AAD0-CC5544AEEC06.png",
+        "timestamp" : 1795599727.604
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "B5F54088-2CA2-4605-8C04-C459F757E98E.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Manual Popover exact dismissal callbacks-accessibility_0_06B9DEA1-CA26-46ED-9983-EB8E433F58EE.txt",
+        "timestamp" : 1795599717.612
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "36B449DD-44AC-4D00-995D-F6D1A47A5F47.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Manual Popover exact dismissal callbacks_0_A7672657-A3B2-4688-BFE0-22FD4AE75F86.png",
+        "timestamp" : 1795599717.254
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "5886F40F-4268-400A-A117-D0AE27254541.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Manual Popover native presentation-accessibility_0_7928D771-A109-48A1-BB65-38C897750F60.txt",
+        "timestamp" : 1795599706.052
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "2C08C471-282B-4986-9DFB-9E81D6B1BBF0.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Manual Popover native presentation_0_67A7E41A-D774-426C-89EB-634676C41301.png",
+        "timestamp" : 1795599705.669
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "B1B00C6B-76C5-4971-915B-F8C0388E505D.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Manual FullScreenCover exact dismissal callbacks-accessibility_0_FCF49E7F-037B-4174-9A79-68AE8C73C1D6.txt",
+        "timestamp" : 1795599696.394
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "E5A921BE-7E9D-46DE-815A-9A9A6C46EB82.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Manual FullScreenCover exact dismissal callbacks_0_DE56823E-F766-4F14-A9AC-C741C31EFFE0.png",
+        "timestamp" : 1795599696.014
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "7F3AF894-ED74-400C-B6B7-704B49C36869.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Manual FullScreenCover native presentation-accessibility_0_CEDE82DE-2FDC-493F-AAFD-4F6AE958825E.txt",
+        "timestamp" : 1795599684.331
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "FCA297E4-5BBC-4D07-86E3-9B8FEFEFA97C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Manual FullScreenCover native presentation_0_42802AFC-12C7-49FE-926F-BBD073C93885.png",
+        "timestamp" : 1795599683.912
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "3F97AB68-BCEF-4FE0-9C0A-638DF64CC9F9.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Manual Sheet exact dismissal callbacks-accessibility_0_95CAB2AB-F021-4D77-95F1-708DA907A04C.txt",
+        "timestamp" : 1795599674.607
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "9F8FF568-6CF8-4B9D-909C-1DD264753257.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Manual Sheet exact dismissal callbacks_0_42D8A95A-3C10-4D02-A994-46FCC68D9C2A.png",
+        "timestamp" : 1795599674.23
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "C2DB6BC3-F9B0-4EE0-8F93-ADFE0FA1071A.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Manual Sheet native presentation-accessibility_0_AA791D86-AD44-4A5E-A5D8-12D718D90851.txt",
+        "timestamp" : 1795599661.579
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "B510A40D-274A-4BCA-83F4-05EAEA06BBCA.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Manual Sheet native presentation_0_4665FEEA-7E62-4A5A-AEF5-3B34E5E7C119.png",
+        "timestamp" : 1795599661.151
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "A8B3528A-1980-4043-9388-D79C631C4804.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-import-ExpoSwiftUIProbeA-accessibility_0_1F4A0269-B9E0-4715-93EF-8DD1C5CE1470.txt",
+        "timestamp" : 1795599639.738
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "48AE21F6-A54B-4E41-AAE7-0AD86F983B8D.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-import-ExpoSwiftUIProbeA_0_7C228362-6097-4603-BF22-EEB51F269418.png",
+        "timestamp" : 1795599639.389
+      }
+    ],
+    "testIdentifier" : "MiniAppsProductionRuntimeUITests/testStandaloneExpoManualPresentationAdaptersAndDismissalEvents()",
+    "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualPresentationAdaptersAndDismissalEvents"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "A662CE01-2AE3-44AB-9EC5-4B89D07511CA.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-runtime-failure-accessibility_0_15833584-A437-49BA-93BF-1CD4AE486320.txt",
+        "timestamp" : 1795599791.468
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "8354B732-6918-4AAD-9ABB-B27A53A23186.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-runtime-failure_0_18118820-E2BB-4FE2-B66F-246C8FD5CA63.png",
+        "timestamp" : 1795599791.169
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "BD5BD01E-23E4-4417-ABD4-46AA025222C1.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-import-ExpoNativeAPIProbeA-accessibility_0_5811243F-8210-40FE-B3F4-FF38B6D2F1AD.txt",
+        "timestamp" : 1795599770.258
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "77D14156-7B2A-46B3-8E7F-CE5A5E95D7BD.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-import-ExpoNativeAPIProbeA_0_45E77119-A5A7-42EA-96F8-599AAEB420D5.png",
+        "timestamp" : 1795599769.955
+      }
+    ],
+    "testIdentifier" : "MiniAppsProductionRuntimeUITests/testStandaloneExpoNativeAPIUsesActualUIKitAndWorklets()",
+    "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoNativeAPIUsesActualUIKitAndWorklets"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "0D385428-EF98-495C-A4BC-D9D4CDD9B3A8.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-runtime-failure-accessibility_0_7E996485-8D9A-4ABA-B290-1FD8837C7CFA.txt",
+        "timestamp" : 1795599853.921
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "1288FE30-65D2-412F-B852-41802BBA30FF.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-runtime-failure_0_A5520014-5043-4FC8-BACD-2792A0790281.png",
+        "timestamp" : 1795599853.627
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "A08F6AAF-D097-46C3-9457-C997E2994E27.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-import-ExpoSwiftUIProbeA-accessibility_0_1C41381D-D78C-4D8A-9BEC-336F8B0C4C34.txt",
+        "timestamp" : 1795599813.252
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "E627E16E-73D5-49A0-B040-8C2364D960BF.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-import-ExpoSwiftUIProbeA_0_61A354FA-EE6B-4D3D-94BD-FDDBDC4D45FE.png",
+        "timestamp" : 1795599812.943
+      }
+    ],
+    "testIdentifier" : "MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents()",
+    "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "294724B1-8663-4FA2-B872-3C353182EBCD.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-runtime-failure-accessibility_0_69EDE62E-4105-417E-BF65-A310E1FC01FF.txt",
+        "timestamp" : 1795599924.526
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "769C6E4C-2785-45E8-810D-446CC41611CA.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-runtime-failure_0_16C17E0A-48FF-422F-96B9-B1C612A9038E.png",
+        "timestamp" : 1795599924.199
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "680A461D-7A14-42B8-94BB-4348A3507258.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "original-expo-widgets-relaunch-a-accessibility_0_5D7815A4-CF4C-44B9-A199-6835B424358A.txt",
+        "timestamp" : 1795599919.367
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "9B3902C6-1080-4826-8C14-B6E380250F20.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "original-expo-widgets-relaunch-a_0_11922E82-53C6-4DCA-8BA5-3BD1E2BD24C1.png",
+        "timestamp" : 1795599918.966
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "38AD5005-8B04-4C8F-9F0F-ED227DABA3DC.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "original-expo-widgets-B-accessibility_0_EC53DA87-87E9-40E9-953D-D43FDF73494C.txt",
+        "timestamp" : 1795599910.372
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "4D18944B-4143-46CC-B9EB-82B7D4C7CDA3.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "original-expo-widgets-B_0_44DF3E77-BED8-4C7C-98BD-825EE7B8C957.png",
+        "timestamp" : 1795599909.981
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "55962859-1D0E-4D9C-BCA3-FE73C0A328FB.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-import-ExpoWidgetsProbeB-accessibility_0_755FE20E-5EA3-4F88-A68E-ECBD849EAA37.txt",
+        "timestamp" : 1795599903.532
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "58505857-02CB-4C0D-979C-36766DD02C89.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-import-ExpoWidgetsProbeB_0_545603A9-AD07-405A-93E3-330B58A2765A.png",
+        "timestamp" : 1795599903.207
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "CA4C4A00-7EA3-4C57-AD20-2A4C22FDFCA9.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "original-expo-widgets-A-accessibility_0_AC8B277B-FB76-4DFA-9166-FEC128CF8CCC.txt",
+        "timestamp" : 1795599882.806
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "5E2D872E-7A6B-4FE6-8E67-AC3389AB0F6C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "original-expo-widgets-A_0_E93E4000-5A0F-4D43-ABF9-5A1F1D8B8D61.png",
+        "timestamp" : 1795599882.407
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "EF455499-4652-4073-B267-90D7FCB90CF5.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-import-ExpoWidgetsProbeA-accessibility_0_BC6E8B97-51D9-48B3-ADF4-04182D1A81CA.txt",
+        "timestamp" : 1795599876.025
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "94838FDC-2496-4F1C-9940-0A397CD93E76.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-import-ExpoWidgetsProbeA_0_52031442-52CA-40CD-93E3-FA85ED07E347.png",
+        "timestamp" : 1795599875.705
+      }
+    ],
+    "testIdentifier" : "MiniAppsProductionRuntimeUITests/testStandaloneExpoWidgetsUsesOriginalTimelinesAndLiveActivities()",
+    "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoWidgetsUsesOriginalTimelinesAndLiveActivities"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "750B4FC2-324F-4D6C-AD8D-1FD08B71FEF6.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-runtime-failure-accessibility_0_47AB0CD6-9F43-4349-AE42-CEC5F0992A0D.txt",
+        "timestamp" : 1795600025.485
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "F7F391A8-FF71-4FE5-A05A-FCECE670E0AE.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-runtime-failure_0_9533B379-4D0C-4F7B-ACF3-508582C52331.png",
+        "timestamp" : 1795600025.143
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "36030D2E-A3C8-4CD3-B10B-FDB039E111A9.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "modular-search-live-sefaria-full-text-accessibility_0_9F6E93FF-266F-4915-B80E-CEEE9F82DC95.txt",
+        "timestamp" : 1795600018.075
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "ED4D67EF-0AB3-49BB-9151-31DFD2619C28.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "modular-search-live-sefaria-full-text_0_C0B0117E-2973-4DC9-8F66-EA64A64DEC57.png",
+        "timestamp" : 1795600017.327
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "E80D04B5-8B4F-41DF-918A-B2C82CFA3E10.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "modular-search-actual-sefaria-text_0_A86B94C2-3A28-4DDE-912C-08E4A28F30FB.txt",
+        "timestamp" : 1795600017.093
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "0E22E310-1946-4E8A-8F23-B1EC593B085D.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "modular-search-native-detail-accessibility_0_E450FA49-028E-4496-9B6F-00696F664B96.txt",
+        "timestamp" : 1795600004.739
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "A44FE11C-533C-4562-8AF5-CCF363D2F0B8.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "modular-search-native-detail_0_05ECE42A-FAED-4332-B64D-DDCAFD320D80.png",
+        "timestamp" : 1795600003.945
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "64C3A48E-C802-45BA-A9CD-9650330B637D.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "modular-search-live-sefaria-results-accessibility_0_7077F22D-2F30-4F46-B383-506C4A2EC4A6.txt",
+        "timestamp" : 1795600000.969
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "71E7B128-F3A6-4B5F-8394-BA9169FDA9D5.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "modular-search-live-sefaria-results_0_74F38C7F-F2C5-477F-A8C6-3D759A527E48.png",
+        "timestamp" : 1795600000.264
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "9F42A1A7-7615-4BA6-B172-58A8408DF54E.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-import-ModularTextSearch-accessibility_0_89477D89-B39A-44C2-A28B-023E1B9EB7EE.txt",
+        "timestamp" : 1795599985.276
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "485BE7E9-10F0-4B53-8174-EB3935D457EB.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-import-ModularTextSearch_0_821E8697-5669-4D09-95CA-6C120E6E2751.png",
+        "timestamp" : 1795599984.924
+      }
+    ],
+    "testIdentifier" : "MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText()",
+    "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneModularSearchLoadsActualSefariaText"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "32532264-B3DE-4492-BF74-27B7FA19E4CB.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-runtime-failure-accessibility_0_97FF3C2E-4278-4A34-8EC3-FD592A0D73D8.txt",
+        "timestamp" : 1795600081.598
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "BA3C7F3D-897F-4C47-B9C4-991B5CFB2F78.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-runtime-failure_0_25354EAA-3C81-4E1E-8544-9CE4CCE35D90.png",
+        "timestamp" : 1795600081.244
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "2FE127DC-1104-4DC1-9E69-4F9D17E36A92.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Parity-Relaunched-Successfully-accessibility_0_17993E00-530E-43F8-AEBD-2A0A4F8486AB.txt",
+        "timestamp" : 1795600076.436
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "3E285372-99E1-450E-BFDC-A0A1924D059A.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Parity-Relaunched-Successfully_0_5427EBF8-A955-4FE1-A282-27AD18429A19.png",
+        "timestamp" : 1795600076.008
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "FFF62FDE-8C8B-42D5-83E2-5211A5609B82.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Parity-Runtimes-Verified-accessibility_0_2D462E9A-73D2-4C82-B2CC-1B746FC7CC80.txt",
+        "timestamp" : 1795600059.27
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "E49D5905-E800-4784-A45D-F58B570B63CF.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Parity-Runtimes-Verified_0_B36220C5-ACAC-41CA-9180-F645AB6604FE.png",
+        "timestamp" : 1795600058.85
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "8C5C98D3-F21C-47E4-A0C1-C37790431549.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Parity-App-Launched-accessibility_0_B38B663F-9D66-4B2F-9566-ED1CF5B49E5D.txt",
+        "timestamp" : 1795600052.963
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "CAE62DD0-146D-489A-A3FC-482DC964E478.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Parity-App-Launched_0_701785C8-9A6B-46A4-998B-038D267ABD78.png",
+        "timestamp" : 1795600052.536
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "72A37A31-7F9E-4AF8-9188-9EC901F68DC4.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-import-hanlin-script-parity-accessibility_0_07D78CEB-7A82-47DC-BC6F-2FC503031FE5.txt",
+        "timestamp" : 1795600049.371
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "CC164C13-001C-4C06-9B20-D8E0CF48FF2F.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-import-hanlin-script-parity_0_4E3C897C-56DD-4D91-BF4A-0A121B80DF31.png",
+        "timestamp" : 1795600049.013
+      }
+    ],
+    "testIdentifier" : "MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch()",
+    "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "49F3E451-81B4-4AAC-A931-BEF7CEB238F7.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-runtime-failure-accessibility_0_4ABF3FED-408A-43A9-A5E8-98B9FDC98A70.txt",
+        "timestamp" : 1795600145.092
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "715A2E15-062A-4F7D-9442-696B04F035D2.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-runtime-failure_0_111CD58B-254F-416D-9DEC-5B1DDD03F52A.png",
+        "timestamp" : 1795600144.723
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "90B5D213-1A82-4EC6-845D-FA49E02CBA64.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "SDK-only Expo installed package relaunch-accessibility_0_C44B9C55-A949-4841-8840-90AFEAA5DACC.txt",
+        "timestamp" : 1795600139.731
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "41FFBEC9-F3CD-4B21-BD0E-D7D48C4B257C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "SDK-only Expo installed package relaunch_0_D0745838-DB10-4C3F-98FE-2905734F590C.png",
+        "timestamp" : 1795600138.937
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "6B9F5CBC-7870-4E41-9078-06A84F99A54A.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "SDK-only Expo native Local result-accessibility_0_A21EEC78-9EA7-4FF6-AF4D-32C51E6C8DE1.txt",
+        "timestamp" : 1795600124.167
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "395BF0ED-5122-4570-932E-50A1C3BBE108.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "SDK-only Expo native Local result_0_31759B4C-0F03-45BD-BC95-A129CCFA40CB.png",
+        "timestamp" : 1795600123.38
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "38BB98DD-4385-4FE4-8E31-34B24A953A28.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "SDK-only Expo native City result-accessibility_0_E0B5D234-0F2A-44A8-9FBE-0D1C4AE9BF2A.txt",
+        "timestamp" : 1795600121.514
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "1AD19894-6FFE-48A7-92A8-1F3B4BFCB233.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "SDK-only Expo native City result_0_AA781604-3A68-4B46-8375-40CDAF5752A8.png",
+        "timestamp" : 1795600120.726
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "41D2D158-F250-4B80-B980-F6CF40590B62.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-import-SDKOnlyDepartureBudget-accessibility_0_9433E4A4-8545-4A6D-A375-EF25E0B19785.txt",
+        "timestamp" : 1795600115.369
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "0C5F57F2-3A6E-4182-A973-9A6B70A8BCB7.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-import-SDKOnlyDepartureBudget_0_4E1DFA11-CD59-44CB-89FB-5364C3680389.png",
+        "timestamp" : 1795600114.996
+      }
+    ],
+    "testIdentifier" : "MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyExpoPackageImportsRendersAndHandlesEvents()",
+    "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyExpoPackageImportsRendersAndHandlesEvents"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "315C1E58-3C27-4591-ADD6-A79FE4A88AA2.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-runtime-failure-accessibility_0_9C41A06A-1394-4005-9C58-49A985366B00.txt",
+        "timestamp" : 1795600204.292
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "60C6381A-EE74-4E01-B6A4-A282BDAA7D62.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-runtime-failure_0_F12FA9B4-7009-442C-B977-912DAE3C0F7F.png",
+        "timestamp" : 1795600203.908
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "95F076F8-8756-47C1-8F25-B7CA09EB000D.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "SDK-only NativeScript native reset result-accessibility_0_76651B30-6D6A-4A47-926D-4DA8A19DF6B2.txt",
+        "timestamp" : 1795600198.979
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "934FF4E0-3437-4976-B347-E5160096AFC2.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "SDK-only NativeScript native reset result_0_966651A2-5A33-413A-92EA-A3D75BC35729.png",
+        "timestamp" : 1795600198.503
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "35C122D2-65B9-4E8A-977F-5F7F3939EE65.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "SDK-only NativeScript native rounded result-accessibility_0_8264574D-A381-4B58-9A61-F97C20A19208.txt",
+        "timestamp" : 1795600197.463
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "A216EE1F-B9B7-4D0D-8127-C07229B5FC21.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "SDK-only NativeScript native rounded result_0_37FAF50B-38AF-4631-850F-2DD6CFCBD0E4.png",
+        "timestamp" : 1795600196.984
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "5A0D3305-DFAA-4643-AAE3-9A7102F12921.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-import-SDKOnlyTableShare-accessibility_0_CD95EC92-7B63-4019-AA66-1FD68DB6F70D.txt",
+        "timestamp" : 1795600189.779
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "50D2F667-196E-4382-A86A-802710579EA9",
+        "deviceName" : "HanlinPaired-primary-ce49e30d-20261124",
+        "exportedFileName" : "9C9A8F2C-E84E-431F-AF16-7344B51F50E1.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "companion-import-SDKOnlyTableShare_0_F5758449-63E1-477B-8F09-8C99560E13BE.png",
+        "timestamp" : 1795600189.392
+      }
+    ],
+    "testIdentifier" : "MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyNativeScriptPackageImportsRendersAndHandlesEvents()",
+    "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneSDKOnlyNativeScriptPackageImportsRendersAndHandlesEvents"
+  }
+]

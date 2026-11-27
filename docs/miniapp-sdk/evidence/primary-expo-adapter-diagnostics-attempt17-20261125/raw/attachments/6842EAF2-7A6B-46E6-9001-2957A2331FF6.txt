@@ -1,0 +1,106 @@
+Attributes: Application, 0x113796080, pid: 95391, label: 'Hanlin MiniApps'
+Element subtree:
+ →Application, 0x113796080, pid: 95391, label: 'Hanlin MiniApps'
+    Window (Main), 0x113797ac0, {{0.0, 0.0}, {1032.0, 1376.0}}
+      Other, 0x113794140, {{0.0, 0.0}, {1032.0, 1376.0}}
+        Other, 0x113794280, {{0.0, 0.0}, {1032.0, 1376.0}}
+          Other, 0x113795a40, {{0.0, 0.0}, {1032.0, 1376.0}}
+            Other, 0x113795b80, {{0.0, 0.0}, {1032.0, 1376.0}}
+              Other, 0x113795cc0, {{0.0, 0.0}, {1032.0, 1376.0}}
+                NavigationBar, 0x113795e00, {{0.0, 32.0}, {1032.0, 106.0}}, identifier: 'Apps'
+                  Other, 0x113795f40, {{14.0, 36.0}, {43.5, 36.0}}
+                    Other, 0x113797c00, {{14.0, 36.0}, {43.5, 36.0}}
+                      Button, 0x113797d40, {{14.0, 36.0}, {43.5, 36.0}}, label: 'Edit'
+                  Button, 0x113797e80, {{73.5, 36.0}, {40.0, 36.0}}, identifier: 'hanlin-apps-torah-capture', label: 'לימוד מצילום'
+                  Button, 0x1137957c0, {{618.5, 36.0}, {37.0, 36.0}}, identifier: 'hanlin-apps-add', label: 'hanlin-apps-add'
+                  Other, 0x113796d00, {{671.5, 36.0}, {41.0, 36.0}}
+                    Other, 0x113796e40, {{671.5, 36.0}, {41.0, 36.0}}
+                      Button, 0x113795540, {{671.5, 36.0}, {41.0, 36.0}}, identifier: 'miniapps-preferences', label: 'Edit MiniApps and windows'
+                  Button, 0x113795680, {{728.5, 36.0}, {37.5, 36.0}}, identifier: 'hanlin-miniapps-transfer', label: 'Transfer from Hanlin'
+                  SearchField, 0x1137952c0, {{782.0, 32.0}, {240.0, 44.0}}, label: 'Search Apps', placeholderValue: 'Search Apps'
+                    Image, 0x113795400, {{794.0, 43.5}, {20.5, 20.0}}, identifier: 'magnifyingglass', label: 'Search'
+                  StaticText, 0x1137948c0, {{20.0, 89.5}, {83.0, 41.0}}, label: 'Apps'
+                Other, 0x113794f00, {{0.0, 0.0}, {1032.0, 1376.0}}
+                  Other, 0x113795040, {{0.0, 0.0}, {1032.0, 1376.0}}
+                    Other, 0x113795180, {{0.0, 0.0}, {1032.0, 1376.0}}
+                      Other, 0x113794a00, {{0.0, 0.0}, {1032.0, 1376.0}}
+                        ScrollView, 0x113794dc0, {{0.0, 0.0}, {1032.0, 1376.0}}, identifier: 'hanlin-apps-catalog'
+                          Other, 0x113794c80, {{0.0, 0.0}, {1032.0, 1376.0}}
+                            Other, 0x113794b40, {{0.0, 0.0}, {1032.0, 126.0}}
+                          Other, 0x113794780, {{0.0, 0.0}, {1032.0, 1376.0}}
+                          Other, 0x1137943c0, {{0.0, 138.0}, {1032.0, 509.0}}
+                            Other, 0x113794500, {{23.5, 156.0}, {985.0, 473.5}}
+                              StaticText, 0x113794640, {{24.0, 156.0}, {54.0, 26.5}}, identifier: 'hanlin-miniapps-section-swift', label: 'Swift'
+                              Other, 0x1137966c0, {{23.5, 210.0}, {985.0, 169.0}}
+                                Button, 0x113795900, {{23.5, 210.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Swift Parity', label: 'Swift Parity'
+                                  Image, 0x113796940, {{204.0, 231.0}, {30.5, 27.0}}, identifier: 'swift', label: 'Swift Programming Language Bird Logo'
+                                  StaticText, 0x113796800, {{42.0, 318.0}, {105.5, 24.0}}, label: 'Swift Parity'
+                                  StaticText, 0x113796a80, {{42.0, 346.0}, {139.0, 14.5}}, label: 'Native SwiftPM Mini App'
+                                Button, 0x113796bc0, {{36.0, 222.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-hanlin.demo.swift-parity', label: 'App Actions'
+                                  Button, 0x113796580, {{36.0, 222.5}, {38.0, 38.0}}
+                                    Image, 0x113794000, {{47.0, 239.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                                Button, 0x113797840, {{274.5, 210.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Sefaria', label: 'Sefaria'
+                                  Image, 0x113797980, {{451.0, 231.0}, {34.0, 30.0}}, identifier: 'books.vertical.fill', label: 'Bookshelf'
+                                  StaticText, 0x113797700, {{293.0, 302.0}, {64.5, 24.0}}, label: 'Sefaria'
+                                  StaticText, 0x113797340, {{293.0, 330.0}, {132.0, 30.5}}, label: 'Search, read, save and revisit sources'
+                                Button, 0x113797480, {{287.0, 222.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-nativeapp.sefaria', label: 'App Actions'
+                                  Button, 0x1137975c0, {{287.0, 222.5}, {38.0, 38.0}}
+                                    Image, 0x113797200, {{298.0, 239.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                                Button, 0x1137970c0, {{525.5, 210.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Text Studio', label: 'Text Studio'
+                                  Image, 0x1137961c0, {{702.5, 231.0}, {33.0, 20.5}}, identifier: 'textformat.alt', label: 'Text Formatting'
+                                  StaticText, 0x113796300, {{544.0, 302.0}, {103.0, 24.0}}, label: 'Text Studio'
+                                  StaticText, 0x113796440, {{544.0, 330.0}, {168.5, 30.5}}, label: 'Write, inspect, transform and keep history'
+                                Button, 0x10a237980, {{538.0, 222.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-nativeapp.textstudio', label: 'App Actions'
+                                  Button, 0x10a237e80, {{538.0, 222.5}, {38.0, 38.0}}
+                                    Image, 0x10a236300, {{549.0, 239.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                                Button, 0x10a2361c0, {{776.5, 210.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Wikipedia', label: 'Wikipedia'
+                                  Image, 0x10a237840, {{960.0, 231.0}, {27.5, 27.5}}, identifier: 'globe.americas.fill', label: 'Globe Showing The Americas, Filled'
+                                  StaticText, 0x10a236bc0, {{795.0, 302.0}, {90.5, 24.0}}, label: 'Wikipedia'
+                                  StaticText, 0x10a237c00, {{795.0, 330.0}, {103.0, 30.5}}, label: 'Explore, save and revisit knowledge'
+                                Button, 0x10a2370c0, {{789.0, 222.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-nativeapp.wikipedia', label: 'App Actions'
+                                  Button, 0x10a236a80, {{789.0, 222.5}, {38.0, 38.0}}
+                                    Image, 0x10a237200, {{800.0, 239.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                              StaticText, 0x10a2352c0, {{24.0, 406.5}, {51.0, 26.5}}, identifier: 'hanlin-miniapps-section-expo', label: 'Expo'
+                              Other, 0x10a236580, {{23.5, 460.5}, {232.0, 169.0}}
+                                Button, 0x10a236d00, {{23.5, 460.5}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Expo SwiftUI Probe A', label: 'Expo SwiftUI Probe A'
+                                  Image, 0x10a235a40, {{209.0, 481.5}, {25.5, 30.5}}, identifier: 'sparkles', label: 'Sparkle'
+                                  StaticText, 0x10a234640, {{42.0, 552.5}, {194.5, 24.0}}, label: 'Expo SwiftUI Probe A'
+                                  StaticText, 0x10a234a00, {{42.0, 580.5}, {188.0, 30.5}}, label: 'Dynamic Expo MiniApp Variant A rendering Apple SwiftUI.'
+                                Button, 0x10a235180, {{36.0, 473.0}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-script-ec17057f5a2c82aaed6ab6ca', label: 'App Actions'
+                                  Button, 0x10a235e00, {{36.0, 473.0}, {38.0, 38.0}}
+                                    Image, 0x10a234dc0, {{47.0, 490.0}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                          Other, 0x10a235540, {{999.0, 86.0}, {30.0, 1260.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                            Other, 0x10a235040, {{1026.0, 798.0}, {3.0, 545.0}}
+                          Other, 0x10a2348c0, {{999.0, 86.0}, {30.0, 1260.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                            Other, 0x10a235b80, {{1026.0, 798.0}, {3.0, 545.0}}
+                Toolbar, 0x10a237ac0, {{0.0, 0.0}, {1032.0, 1376.0}}, identifier: 'Toolbar', label: 'Toolbar'
+                  Other, 0x10a2343c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+      Other, 0x10a236440, {{0.0, 0.0}, {1032.0, 1376.0}}
+        Other, 0x10a236940, {{0.0, 0.0}, {1032.0, 1376.0}}
+          Other, 0x10a234140, {{0.0, 0.0}, {1032.0, 1376.0}}
+            Other, 0x10a237d40, {{0.0, 0.0}, {1032.0, 1376.0}}
+              NavigationBar, 0x10a234500, {{0.0, 32.0}, {1032.0, 106.0}}, identifier: 'Manual Native Adapters'
+                Other, 0x10a2366c0, {{951.0, 36.0}, {67.0, 36.0}}
+                  Other, 0x10a235f40, {{951.0, 36.0}, {67.0, 36.0}}
+                    Button, 0x10a235900, {{951.0, 36.0}, {67.0, 36.0}}, identifier: 'hanlin-script-app-close', label: 'Close'
+                StaticText, 0x10a234c80, {{20.0, 89.5}, {377.0, 41.0}}, label: 'Manual Native Adapters'
+              Other, 0x10a236080, {{0.0, 0.0}, {1032.0, 1376.0}}
+                Other, 0x10a236800, {{0.0, 0.0}, {1032.0, 1376.0}}
+                  Other, 0x10a2357c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+                    Other, 0x10a234000, {{0.0, 0.0}, {1032.0, 1376.0}}
+                      Other, 0x10a235680, {{0.0, 138.0}, {1032.0, 1218.0}}
+                        Other, 0x10a234b40, {{0.0, 138.0}, {1032.0, 1218.0}}
+                          Other, 0x10a234780, {{0.0, 138.0}, {1032.0, 1218.0}}
+                            Other, 0x10a235cc0, {{0.0, 138.0}, {1032.0, 1218.0}}
+                              Other, 0x10a235400, {{0.0, 138.0}, {1032.0, 1218.0}}
+                                Other, 0x10a234280, {{0.0, 138.0}, {1032.0, 1218.0}}
+                                  Other, 0x10a234f00, {{0.0, 138.0}, {1032.0, 1218.0}}
+              Toolbar, 0x10a236e40, {{0.0, 0.0}, {1032.0, 1376.0}}, identifier: 'Toolbar', label: 'Toolbar'
+                Other, 0x10a236f80, {{0.0, 0.0}, {1032.0, 1376.0}}
+Path to element:
+ →Application, 0x113796080, pid: 95391, label: 'Hanlin MiniApps'
+Query chain:
+ →Find: Target Application 'com.itorah.hanlinminiapps'
+  Output: {
+    Application, 0x113796f80, pid: 95391, label: 'Hanlin MiniApps'
+  }

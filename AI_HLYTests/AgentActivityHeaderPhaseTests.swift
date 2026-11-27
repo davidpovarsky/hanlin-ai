@@ -1,5 +1,7 @@
 import Foundation
 import Testing
+import HanlinPresentationKit
+import HanlinAgentActivityCore
 @testable import AI_Hanlin
 
 @MainActor
@@ -58,7 +60,7 @@ struct AgentActivityHeaderPhaseTests {
             #expect(title != "Allowed once")
         }
     }
-    @Test func firstAnswerTextStopsWorkingWithoutFalsifyingConcurrentExecution() {
+    @Test func confirmedFinalAnswerStopsWorkingWithoutFalsifyingConcurrentExecution() {
         #expect(AgentActivityHeaderPhase.resolve(isRunActive: true, hasPendingApproval: false,
             hasAnswerText: true, hasActiveOperation: false) == .history)
         #expect(AgentActivityHeaderPhase.resolve(isRunActive: true, hasPendingApproval: false,
@@ -69,18 +71,127 @@ struct AgentActivityHeaderPhaseTests {
             isCurrentMessage: true, hasActivityHeader: false, hasAnswerText: true))
     }
 
-    @Test func shimmerMovesBetweenLeafAndNearestVisibleAncestor() {
+    @Test func activeRunGapsKeepTheRootWithoutInventingAnAnimatedLeaf() {
+        let phase = AgentActivityHeaderPhase.resolve(isRunActive: true, hasPendingApproval: false)
+        #expect(phase == .working)
+        #expect(AgentActivityShimmerOwner.resolve(isWorking: phase.showsShimmer,
+            isHierarchyExpanded: true, activePaths: []) == [.root])
+    }
+
+    @Test func longDisplayableReasoningSurvivesStreamingCompletionAndColdRead() throws {
+        var accumulator = AgentEventAccumulator(run: .init(groupID: UUID()))
+        let first = "Checking the requested calendar dates. I need to check the available appointments too. "
+        let paragraph = String(repeating: first, count: 5).trimmingCharacters(in: .whitespaces)
+        let summary = [paragraph, paragraph, paragraph].joined(separator: "\n\n")
+        accumulator.apply(.reasoningStarted(.init(id: "long-summary", title: "Thinking", startedAt: .now)))
+        accumulator.apply(.reasoningDelta(id: "long-summary", text: first))
+        let liveID = try #require(AgentActivityComposer.compose(accumulator.run).activities.first?.id)
+        accumulator.apply(.reasoningDelta(id: "long-summary", text: String(summary.dropFirst(first.count))))
+        let live = try #require(AgentActivityComposer.compose(accumulator.run).activities.first)
+        #expect(live.id == liveID)
+        #expect(AgentActivityComposer.reasoningDisplayText(for: live, in: accumulator.run) == summary)
+        accumulator.apply(.reasoningCompleted(id: "long-summary"))
+        accumulator.apply(.runCompleted)
+        let stored = try JSONEncoder().encode(accumulator.run)
+        let reopened = try JSONDecoder().decode(AgentRun.self, from: stored)
+        let item = try #require(AgentActivityComposer.compose(reopened).activities.first)
+        #expect(item.id == liveID)
+        #expect(AgentActivityComposer.reasoningDisplayText(for: item, in: reopened) == summary)
+        #expect(item.status == .completed)
+        var legacy = reopened
+        legacy.transcriptItems = []
+        let legacyActivity = try #require(AgentActivityComposer.compose(legacy).activities.first)
+        #expect(AgentActivityComposer.reasoningDisplayText(for: legacyActivity, in: legacy) == summary,
+            "Older saved runs retain their original streamed step output too")
+        #expect(ProgressSummarySanitizer.sanitizeProviderReasoningDisplay(
+            "Internal reasoning: I need to check a secret.") == nil)
+    }
+
+    @Test func displayedProviderTextNeverDisappearsWhenLaterChunksArrive() {
+        let accepted = "Checking the appointments already returned by the calendar."
+        let casual = accepted + "\nI need to check the last appointment before replying."
+        #expect(ProgressSummarySanitizer.sanitizeProviderReasoningDisplay(casual) == casual)
+        let privateOpening = accepted + "\n<think>Private material must not appear"
+        #expect(ProgressSummarySanitizer.sanitizeProviderReasoningDisplay(privateOpening) == accepted)
+        #expect(ProgressSummarySanitizer.sanitizeProviderReasoningDisplay(accepted + "\n<thi") == accepted)
+        let closed = privateOpening + "</think>\nThe requested date is available."
+        let safe = ProgressSummarySanitizer.sanitizeProviderReasoningDisplay(closed) ?? ""
+        #expect(safe.hasPrefix(accepted) && safe.hasSuffix("The requested date is available."))
+        #expect(!safe.contains("Private material"))
+        let redacted = ProgressSummarySanitizer.sanitizeProviderReasoningDisplay(
+            accepted + "\napi_key=sk-testfixture123456789\nThe result is ready.") ?? ""
+        #expect(redacted.hasPrefix(accepted) && redacted.hasSuffix("The result is ready."))
+        #expect(!redacted.contains("sk-testfixture123456789"))
+        #expect(ProgressSummarySanitizer.sanitizeProviderReasoningDisplay(
+            accepted + "\nInternal reasoning:\nPrivate section.") == accepted)
+    }
+
+    @Test func finalAnswerReceiptSurvivesSnapshotButProvisionalTextDoesNotFinishWork() throws {
+        let start = Date(timeIntervalSince1970: 100)
+        var accumulator = AgentEventAccumulator(run: .init(groupID: UUID(), startedAt: start))
+        accumulator.apply(.modelRoundStarted(id: "first"))
+        accumulator.apply(.answerSegmentStarted(.init(id: "commentary", title: "Answer",
+            startedAt: start.addingTimeInterval(2))))
+        accumulator.apply(.answerSegmentDelta(id: "commentary", text: "Checking the calendar now."))
+        #expect(accumulator.run.finalAnswerStartedAt == nil)
+        accumulator.apply(.answerSegmentEnded(id: "commentary", disposition: .interim))
+        accumulator.apply(.modelRoundStarted(id: "second"))
+        #expect(accumulator.run.finalAnswerStartedAt == nil)
+        let finalStart = start.addingTimeInterval(12)
+        accumulator.apply(.answerSegmentStarted(.init(id: "final", title: "Answer", startedAt: finalStart)))
+        accumulator.apply(.answerSegmentDelta(id: "final", text: "The appointment is saved."))
+        #expect(accumulator.run.finalAnswerStartedAt == nil)
+        accumulator.apply(.answerSegmentEnded(id: "final", disposition: .final))
+        #expect(accumulator.run.finalAnswerStartedAt == finalStart)
+        let snapshot = HanlinAgentActivitySnapshot(run: accumulator.run, isActive: true, hasAnswerText: true)
+        #expect(snapshot.run?.transcriptItems.contains(where: { $0.kind == .assistantText }) == false)
+        #expect(snapshot.run?.finalAnswer == nil)
+        #expect(snapshot.run?.finalAnswerStartedAt == finalStart)
+        #expect(snapshot.run.map(AgentActivityComposer.compose)?.totalDuration == 12)
+        let reopened = try JSONDecoder().decode(AgentRun.self, from: JSONEncoder().encode(accumulator.run))
+        #expect(reopened.finalAnswerStartedAt == finalStart)
+        accumulator.apply(.modelRoundStarted(id: "follow-up"))
+        #expect(accumulator.run.finalAnswerStartedAt == nil)
+    }
+
+    @Test func automaticDisclosureRespectsManualChoiceAcrossUpdatesAndRestoration() throws {
+        let runID = UUID()
+        var disclosure = HanlinActivityDisclosureState(runID: runID, phase: .active)
+        #expect(disclosure.isExpanded)
+        disclosure.isExpanded = false
+        for _ in 0..<20 { disclosure = disclosure.reconciled(runID: runID, phase: .active) }
+        #expect(!disclosure.isExpanded)
+        let restored = try JSONDecoder().decode(HanlinActivityDisclosureState.self,
+            from: JSONEncoder().encode(disclosure))
+        #expect(!restored.reconciled(runID: runID, phase: .active).isExpanded)
+        disclosure.isExpanded = true
+        disclosure = disclosure.reconciled(runID: runID, phase: .answering)
+        #expect(!disclosure.isExpanded)
+        disclosure.isExpanded = true
+        disclosure = disclosure.reconciled(runID: runID, phase: .finished)
+        #expect(disclosure.isExpanded, "Finishing answer text does not undo a manual reopening")
+        #expect(disclosure.reconciled(runID: UUID(), phase: .active).isExpanded)
+        #expect(!HanlinActivityDisclosureState(runID: UUID(), phase: .finished).isExpanded)
+    }
+
+    @Test func thinkingRootRemainsVisibleBesideOnlyActualToolMotion() {
         typealias Owner = AgentActivityShimmerOwner
         let leaf = Owner.Path(activityID: "search", roundID: "round", isRoundExpanded: true)
         let closed = Owner.Path(activityID: "search", roundID: "round", isRoundExpanded: false)
         #expect(Owner.resolve(isWorking: true, isHierarchyExpanded: true,
-            activePaths: [leaf]) == [.activity("search")])
+            activePaths: [leaf]) == [.root, .activity("search")])
         #expect(Owner.resolve(isWorking: true, isHierarchyExpanded: true,
-            activePaths: [closed]) == [.round("round")])
+            activePaths: [closed]) == [.root, .round("round")])
         #expect(Owner.resolve(isWorking: true, isHierarchyExpanded: false,
             activePaths: [leaf]) == [.root])
         #expect(Owner.resolve(isWorking: false, isHierarchyExpanded: true,
             activePaths: [leaf]).isEmpty)
+        #expect(Owner.resolve(isWorking: true, isHierarchyExpanded: true,
+            activePaths: []) == [.root], "Thinking stays above reasoning text without a duplicate leaf")
+        #expect(Owner.resolve(isWorking: true, isHierarchyExpanded: false,
+            activePaths: []) == [.root], "The pre-output root remains visible when there are no details")
+        #expect(Owner.resolve(isWorking: false, isHierarchyExpanded: false,
+            activePaths: []).isEmpty, "History and approval wait must not animate")
     }
 
     @Test func internalPreparationDoesNotCreateToolActivityOrRewriteHistory() {

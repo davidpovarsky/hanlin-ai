@@ -1,0 +1,103 @@
+{
+  "sourceSHA": "24bc34c618615cb75b362d9d64f55e4607fd0e74",
+  "status": "FAILED",
+  "files": [
+    {
+      "path": "launch.json",
+      "bytes": 335,
+      "sha256": "9428dc11fac4d4630a896ea2371a2ba06cdb77494aec84c04e8d0adc82ecda07"
+    },
+    {
+      "path": "status.json",
+      "bytes": 14052,
+      "sha256": "96ea5bf487864c13966dff95bbdb418ee245b6af710ce5997ffb4407483756ae"
+    },
+    {
+      "path": "controller.log",
+      "bytes": 560,
+      "sha256": "fad941845937b73daeb23d54b589b5016a7cb0ac299b7c3190400108bff043f9"
+    },
+    {
+      "path": "run-native.py",
+      "bytes": 10933,
+      "sha256": "f93040cb63b0db9057d42783e28d0b766d8adae28610e6ab40404f39ba9d65d2"
+    },
+    {
+      "path": "evidence/build.log",
+      "bytes": 317701,
+      "sha256": "d251401513646418280070f50dd3947a5d5f9f06f0cb1e84d723c7f4e61c748e"
+    },
+    {
+      "path": "evidence/proof-inputs.json",
+      "bytes": 111572,
+      "sha256": "5f684cfc90e8ea26c8c5e69161c5fdf17a3aab2dd3404f399fa15537a159a855"
+    },
+    {
+      "path": "evidence/sdk-resolved-inputs.json",
+      "bytes": 424020,
+      "sha256": "6ae984553884f4d59bfb7754c3846cdf4a0ae9cc79751a603971579a82b92c4c"
+    },
+    {
+      "path": "evidence/record-original-resolved-inputs.log",
+      "bytes": 171,
+      "sha256": "9dff26da7ad983ed9bc0e4a366fbed47952dd7349c03efb919cd67e9346aead6"
+    },
+    {
+      "path": "evidence/macro-source.json",
+      "bytes": 1130,
+      "sha256": "fc49692499c3699702aac76376151fcd44dfa97f4f7e44cfd3f43ba33668c401"
+    },
+    {
+      "path": "evidence/ready-environment.json",
+      "bytes": 66561,
+      "sha256": "699a488741151871e3b72e322e8363720308c0d8d043ead36e22cea87b592533"
+    },
+    {
+      "path": "evidence/B/test-B.log",
+      "bytes": 8048,
+      "sha256": "eb1147f3656843656204f494033418f6c19d02f66e55f6265c10e8d9440892c4"
+    },
+    {
+      "path": "evidence/B/tests.json",
+      "bytes": 2413,
+      "sha256": "ba7650b935b134e724f7397af233f5f24c4872fff669a66ea4ba9934a8bff631"
+    },
+    {
+      "path": "evidence/B/activities.json",
+      "bytes": 9502,
+      "sha256": "063994199e0d6cdd556edbba5880cd670f4e599fa11de1ad81b61e8f73f7aa82"
+    },
+    {
+      "path": "evidence/B/result-validation.json",
+      "bytes": 1022,
+      "sha256": "4a74437abfb2378865f5048a21ca8135307c6ae5653b79ef09e51d20300ffebe"
+    },
+    {
+      "path": "evidence/B/raw-result-status.json",
+      "bytes": 232,
+      "sha256": "2545196f32f433071e783d095829fed980e78eccc7af11ce1d1f8f13815fded7"
+    },
+    {
+      "path": "evidence/B/video-status.json",
+      "bytes": 306,
+      "sha256": "1a195d4f5c85db67cdf8c524d68800be2d42382fbaea48a98d7b38f59010ff30"
+    },
+    {
+      "path": "evidence/B/attachments/manifest.json",
+      "bytes": 1617,
+      "sha256": "da7a0ead8bef9aca5ed4e57530779c093ad84808f09429f334f41df8681fe903"
+    },
+    {
+      "path": "evidence/B/Motion.xcresult.tar.gz",
+      "bytes": 62289420,
+      "sha256": "60b8c8538cdb5bf2a910cdbbc30b56586670766ce922ad190f2a9661d1c44f2c",
+      "retainedOnMac": true
+    },
+    {
+      "path": "evidence/B/motion-first120s.mp4",
+      "bytes": 9970469,
+      "sha256": "1ac7ff16fef50d04b7f001e0be73a1d6b116e9e67fdc0126c1ed9a070d568b8a",
+      "retainedOnMac": true
+    }
+  ]
+}

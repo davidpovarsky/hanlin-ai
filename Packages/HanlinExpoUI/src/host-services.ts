@@ -49,7 +49,14 @@ export interface MiniAppOutput {
   message?: string;
   metadata?: Record<string, string>;
 }
+export interface MiniAppShortcutProgress {
+  completedUnitCount: number;
+  totalUnitCount: number;
+  message?: string;
+}
 export interface MiniAppSharing {
+  /** Report actual completed work inside a long-running Shortcuts action. */
+  reportShortcutProgress(progress: MiniAppShortcutProgress): Promise<{ok: true}>;
   getContext(): Promise<MiniAppSharedContext>;
   complete(output: string | MiniAppOutput): Promise<{ok: true}>;
   cancel(): Promise<{ok: true}>;
@@ -161,6 +168,7 @@ export const hostServices = {
     register: (handlers: MiniAppActionHandlers): Promise<void> => serveMiniAppActions(invoke, handlers),
   },
   miniapps: {
+    reportShortcutProgress: (progress: MiniAppShortcutProgress) => invoke<{ok: true}>('miniapps.shortcutProgress', progress),
     getContext: () => invoke<MiniAppSharedContext>('miniapps.context', {}),
     complete: async (output: string | MiniAppOutput) => {
       const receipt = await invoke<{ok: true}>('miniapps.complete', output);

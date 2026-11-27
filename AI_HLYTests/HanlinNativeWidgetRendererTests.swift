@@ -5,6 +5,7 @@ import Foundation
 import HanlinExpoWidgetNative
 import HanlinPlatformContracts
 import HanlinScriptCompiler
+import HanlinScriptContracts
 import HanlinScriptExtensions
 import HanlinScriptUI
 import HanlinWidgetCompiler
@@ -16,6 +17,130 @@ import UIKit
 /// A successful raster is distinct from a SpringBoard action acceptance test.
 @MainActor
 final class HanlinNativeWidgetRendererTests: XCTestCase {
+    func testDeclaredWidgetHostActionsCompileAndKeepOriginalLocalActions() throws {
+        // Author plain JSON independently of the Swift Codable models. The
+        // ordinary {type,value} object must remain application data.
+        let parameters: [String: Any] = ["text": "שלום🙂", "flag": true, "none": NSNull(),
+            "values": [1, 0.25, false], "ordinary": ["type": "object", "value": ["type": "number", "value": 7]]]
+        let hostAction: [String: Any] = ["id": "host-run", "kind": "hostAction", "hostAction": [
+            "entrypointID": "run-intent", "actionName": "run.all", "parameters": parameters]]
+        let metadata: [String: Any] = ["abiVersion": 1, "sourceFormat": "expo-layout",
+            "families": ["systemMedium"], "actions": [hostAction, ["id": "local-run", "kind": "expoCallback"]]]
+        let declaration: [String: Any] = ["id": "run-intent", "kind": "appIntent", "sourcePath": "bundle.js", "exportedSymbol": "run.all"]
+        var manifest: [String: Any] = ["name": "Widget Host target", "version": "1.0.0", "entry": "bundle.js",
+            "hanlinRuntime": "hanlin-expo", "widgetEngine": "expo", "hanlinWidget": metadata,
+            "entrypoints": [declaration], "actions": [["id": "run.all", "handler": "bundle.js"]]]
+        let expoUIVersion = HanlinMiniAppHostVersions.expoUIVersion
+        let files: [String: Data] = ["bundle.js": Data("console.log('declared handler source');".utf8),
+            "other.js": Data("console.log('unrelated source');".utf8),
+            "package.json": Data(#"{"name":"host-target","main":"bundle.js","hanlinRuntime":"hanlin-expo","hanlinExpo":{"runtimeVersion":"\#(expoUIVersion)","plugins":{"@expo/ui":"\#(expoUIVersion)"}}}"#.utf8),
+            "widget.json": Data(#"(props) => ({type:'Button',props:{target:'host-run',label:'Continue in app'}})"#.utf8)]
+        let analyzer = HanlinScriptAnalyzer(inventory: .init(baselineID: "widget-host-target",
+            baselineDigest: String(repeating: "a", count: 64), symbols: []))
+        func preview(_ object: [String: Any]) throws -> HanlinImportPreview {
+            let root = FileManager.default.temporaryDirectory.appending(path: "widget-host-target-" + UUID().uuidString)
+            try FileManager.default.createDirectory(at: root, withIntermediateDirectories: true)
+            defer { try? FileManager.default.removeItem(at: root) }
+            let manifestData = try JSONSerialization.data(withJSONObject: object, options: [.sortedKeys])
+            try manifestData.write(to: root.appending(path: "script.json"))
+            for (name, data) in files { try data.write(to: root.appending(path: name)) }
+            let staged = HanlinStagedPackage(source: .init(originalFileName: "fixture.hanlinExpo", format: .zip,
+                contentSHA256: String(repeating: "a", count: 64), byteCount: Int64(manifestData.count), importedAt: .now),
+                stagingRoot: root, archiveURL: root.appending(path: "fixture.hanlinExpo"), packageRoot: root,
+                inspection: .init(fileCount: files.count + 1, directoryCount: 1, compressedBytes: 0,
+                    uncompressedBytes: Int64(files.values.reduce(0) { $0 + $1.count } + manifestData.count),
+                    maximumDepth: 1, manifestPath: "script.json"),
+                manifest: try JSONDecoder().decode(HanlinScriptingManifest.self, from: manifestData))
+            return try analyzer.analyze(staged)
+        }
+        let valid = try preview(manifest)
+        XCTAssertTrue(valid.canInstall, valid.findings.map(\.message).joined(separator: "\n"))
+        let decoded = try JSONDecoder().decode(HanlinScriptingManifest.self,
+            from: JSONSerialization.data(withJSONObject: manifest))
+        let program = try HanlinWidgetCompiler.prepare(manifest: decoded, entryPath: "widget.json", files: files)
+        // Admission follows the same native runtime and string/legacy-path
+        // contract as installed action registration.
+        func target(_ path: String, runtime: HanlinRuntimeProfile) -> HanlinPackageEntrypointDescriptor {
+            .init(id: "run-intent", kind: .appIntent, sourcePath: path, exportedSymbol: "run.all",
+                supportedContexts: [.appIntent, .mainApplication], runtimePolicyID: "prepared-foreground-action-v1",
+                runtimeProfile: runtime, compatibility: .partial)
+        }
+        XCTAssertThrowsError(try HanlinWidgetCompiler.validateHostActionTargets(program.actions,
+            manifest: decoded, entrypoints: [target("bundle.js", runtime: .scriptingJSC)]))
+        for nonStringHandler in [NSNull(), 17] as [Any] {
+            var aliasManifest = manifest
+            aliasManifest["actions"] = [["id": "run.all", "handler": nonStringHandler, "entrypoint": "bundle.js"]]
+            let alias = try JSONDecoder().decode(HanlinScriptingManifest.self,
+                from: JSONSerialization.data(withJSONObject: aliasManifest))
+            XCTAssertNoThrow(try HanlinWidgetCompiler.validateHostActionTargets(program.actions,
+                manifest: alias, entrypoints: [target("bundle.js", runtime: .hanlinExpo)]))
+            XCTAssertNoThrow(try HanlinWidgetCompiler.validateHostActionTargets(program.actions,
+                manifest: alias, entrypoints: [target("source/bundle.js", runtime: .hanlinNativeScript)]))
+            XCTAssertThrowsError(try HanlinWidgetCompiler.validateHostActionTargets(program.actions,
+                manifest: alias, entrypoints: [target("another/bundle.js", runtime: .hanlinExpo)]))
+        }
+        var stringWins = manifest
+        stringWins["actions"] = [["id": "run.all", "handler": "other.js", "entrypoint": "bundle.js"]]
+        let selectedHandler = try JSONDecoder().decode(HanlinScriptingManifest.self,
+            from: JSONSerialization.data(withJSONObject: stringWins))
+        XCTAssertThrowsError(try HanlinWidgetCompiler.validateHostActionTargets(program.actions,
+            manifest: selectedHandler, entrypoints: [target("bundle.js", runtime: .hanlinExpo)]))
+        let encoded = try JSONEncoder().encode(program)
+        let encodedObject = try XCTUnwrap(JSONSerialization.jsonObject(with: encoded) as? [String: Any])
+        let encodedActions = try XCTUnwrap(encodedObject["actions"] as? [[String: Any]])
+        let encodedHost = try XCTUnwrap(encodedActions.first?["hostAction"] as? [String: Any])
+        XCTAssertEqual(try XCTUnwrap(encodedHost["parameters"] as? NSDictionary), parameters as NSDictionary)
+        let identity = HanlinScriptExtensionIdentity(installedPackageID: try .init(validating: "installed.host-action"),
+            packageID: try .init(validating: "package.host-action"), generation: 7, entrypointID: "widget")
+        let context = HanlinWidgetActionContext(identity: identity, engine: .expo,
+            artifactSHA256: SHA256.hash(data: encoded).map { String(format: "%02x", $0) }.joined(),
+            family: "systemMedium", actions: program.actions)
+        let foreground = try HanlinExpoWidgetsViewRenderer.hostActionIntent(target: "host-run", context: context)
+        let foregroundCommand = try JSONDecoder().decode(HanlinWidgetActionCommand.self, from: Data(foreground.commandJSON.utf8))
+        XCTAssertEqual(foregroundCommand.context, context)
+        XCTAssertEqual(foregroundCommand.actionID, "host-run")
+        let local = try HanlinExpoWidgetsViewRenderer.actionIntent(target: "local-run", context: context)
+        let localCommand = try JSONDecoder().decode(HanlinWidgetActionCommand.self, from: Data(local.commandJSON.utf8))
+        XCTAssertEqual(localCommand.actionID, "local-run")
+        XCTAssertThrowsError(try HanlinExpoWidgetsViewRenderer.actionIntent(target: "host-run", context: context))
+        XCTAssertThrowsError(try HanlinExpoWidgetsViewRenderer.hostActionIntent(target: "local-run", context: context))
+        XCTAssertThrowsError(try HanlinWidgetCompiler.preparePresentation(.init(engine: .expo,
+            sourcePath: "widget.json", sourceFormat: "expo-layout", actions: program.actions), files: files))
+
+        // Invalid references must be visible import diagnostics, before any tap
+        // or foreground VM can run; source order cannot choose another target.
+        var invalid: [[String: Any]] = []
+        for target in [["entrypointID": "missing", "actionName": "run.all"],
+                       ["entrypointID": "run-intent", "actionName": "missing.action"]] {
+            var bad = manifest; var badMetadata = metadata
+            badMetadata["actions"] = [["id": "host-run", "kind": "hostAction", "hostAction": target]]
+            bad["hanlinWidget"] = badMetadata; invalid.append(bad)
+        }
+        var badHandler = manifest
+        badHandler["actions"] = [["id": "run.all", "handler": "other.js"]]
+        invalid.append(badHandler)
+        var wrongSymbol = manifest; var wrongDeclaration = declaration
+        wrongDeclaration["exportedSymbol"] = "another.action"
+        wrongSymbol["entrypoints"] = [wrongDeclaration]; invalid.append(wrongSymbol)
+        var duplicate = manifest
+        duplicate["actions"] = [["id": "run.all", "handler": "bundle.js"], ["id": "run.all", "handler": "bundle.js"]]
+        invalid.append(duplicate)
+        var wrongKind = manifest; var wrongMetadata = metadata; var localWithTarget = hostAction
+        localWithTarget["kind"] = "expoCallback"; wrongMetadata["actions"] = [localWithTarget]
+        wrongKind["hanlinWidget"] = wrongMetadata; invalid.append(wrongKind)
+        for object in invalid {
+            let result = try preview(object)
+            XCTAssertFalse(result.canInstall)
+            XCTAssertTrue(result.findings.contains { $0.code == "MINIAPP_WIDGET_HOST_ACTION_INVALID" && $0.sourcePath == "script.json" })
+        }
+        // A legacy local callback declaration keeps its existing admission path.
+        var localMetadata = metadata
+        localMetadata["actions"] = [["id": "local-run", "kind": "expoCallback"]]
+        manifest["hanlinWidget"] = localMetadata
+        manifest.removeValue(forKey: "actions"); manifest.removeValue(forKey: "entrypoints")
+        XCTAssertTrue(try preview(manifest).canInstall)
+    }
+
     func testExpoRawTaggedAndDateWireSurvivePublicationAndSourceAction() throws {
         let bundle = Bundle(for: Self.self)
         let fixtures = try XCTUnwrap(bundle.url(forResource: "WidgetEngineFixtures", withExtension: "bundle", subdirectory: "Fixtures") ?? bundle.url(forResource: "WidgetEngineFixtures", withExtension: "bundle"))
@@ -206,7 +331,8 @@ final class HanlinNativeWidgetRendererTests: XCTestCase {
     }
 
     func testInstalledExternalSourceRendersThroughAnyChild() throws {
-      for archive in ["Hanlin-Expo-Widget-Counter.hanlinExpo", "Hanlin-Expo-Widget-Visuals.hanlinExpo"] {
+      for archive in ["Hanlin-Expo-Widget-Counter.hanlinExpo", "Hanlin-Expo-Widget-Visuals.hanlinExpo",
+                      "Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo"] {
         let bundle = Bundle(for: Self.self)
         let fixtures = try XCTUnwrap(bundle.url(forResource: "WidgetEngineFixtures", withExtension: "bundle", subdirectory: "Fixtures") ?? bundle.url(forResource: "WidgetEngineFixtures", withExtension: "bundle"))
         let root = FileManager.default.temporaryDirectory.appending(path: UUID().uuidString)
@@ -220,11 +346,24 @@ final class HanlinNativeWidgetRendererTests: XCTestCase {
             files[String(file.path.dropFirst(staged.packageRoot.path.count + 1))] = try Data(contentsOf: file)
         }
         let program = try HanlinWidgetCompiler.prepare(manifest: staged.manifest, entryPath: entry, files: files)
+        if archive == "Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo" {
+            XCTAssertEqual(Set(program.families), Set(HanlinWidgetProgram.supportedFamilies))
+            for family in program.families {
+                XCTAssertNoThrow(try HanlinExpoWidgetsRuntime.shared.render(layout: program.javaScript,
+                    props: [:], environment: ["widgetFamily": family]).get())
+            }
+        }
         let node = try HanlinExpoWidgetsRuntime.shared.render(layout: program.javaScript, props: [:], environment: ["widgetFamily": "systemMedium"]).get()
         let identity = HanlinScriptExtensionIdentity(installedPackageID: try .init(validating: "installed.native-raster"), packageID: try .init(validating: "package.native-raster"), generation: 1, entrypointID: "widget")
         let context = HanlinWidgetActionContext(identity: identity, engine: .expo, artifactSHA256: String(repeating: "a", count: 64), family: "systemMedium", actions: program.actions)
         var commands: [HanlinWidgetActionCommand] = []
-        let child: any ExpoSwiftUI.AnyChild = HanlinExpoWidgetNative.render(node: node) { target, role, label in
+        let child: any ExpoSwiftUI.AnyChild = HanlinExpoWidgetNative.render(node: node, toggleBuilder: { target, isOn, label in
+            do {
+                let intent = try HanlinExpoWidgetsViewRenderer.toggleIntent(target: target, isOn: isOn, context: context)
+                commands.append(try JSONDecoder().decode(HanlinWidgetActionCommand.self, from: Data(intent.commandJSON.utf8)))
+                return AnyView(SwiftUI.Toggle(isOn: isOn, intent: intent) { label })
+            } catch { XCTFail("Native renderer emitted an invalid Toggle: \(error)"); return AnyView(Text("Invalid Toggle")) }
+        }) { target, role, label in
             do {
                 let intent = try HanlinExpoWidgetsViewRenderer.actionIntent(target: target, context: context)
                 commands.append(try JSONDecoder().decode(HanlinWidgetActionCommand.self, from: Data(intent.commandJSON.utf8)))

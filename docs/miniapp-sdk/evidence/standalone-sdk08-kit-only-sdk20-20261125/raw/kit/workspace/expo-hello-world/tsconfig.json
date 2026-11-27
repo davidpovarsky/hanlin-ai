@@ -1,0 +1,7 @@
+{
+  "include": [
+    "index.ts",
+    "App.tsx",
+    "notification-event.ts"
+  ]
+}

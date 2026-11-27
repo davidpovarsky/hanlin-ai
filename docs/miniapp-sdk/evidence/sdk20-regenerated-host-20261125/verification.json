@@ -1,0 +1,143 @@
+{
+  "schema": 1,
+  "status": "EXECUTED_PASS_ORIGINAL_PREPARATION",
+  "producerSource": "dff3b45c99a57bf8fe8ec721db3fa1fafce7134b",
+  "sourceState": "Exact dff source plus the three recorded original documentation-generator outputs; no runtime, dependency lock, fixture or original test edits.",
+  "generatedTrackedFiles": [
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "beforeBytes": 153644,
+      "beforeSHA256": "84849e4928f42f1b417ad1136c62329e94f7ea9a46f22667177fe6180155b977",
+      "afterBytes": 153602,
+      "afterSHA256": "6fd8aded2b668bb8559b6a685eea3cceaa68595f389a91e13ad85a76a9f1f93d",
+      "payload": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/generated-source/docs/miniapp-sdk/extension-reachability.json",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "beforeBytes": 23332,
+      "beforeSHA256": "3742686d8b088e8c6afcc6b473b2ffa2cf342dae0723ed1365b265d72e120d27",
+      "afterBytes": 23332,
+      "afterSHA256": "6730f12db379df1d0238ca3a003f87aa2e7cb15f3f92e630d7cb72ea5cf988d3",
+      "payload": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/generated-source/docs/miniapp-sdk/extension-reachability.md",
+      "mode": "100644"
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "beforeBytes": 494020,
+      "beforeSHA256": "de8326436f4ecb7f03c7c28e913f00ef3dc6fa331c1c8a7f355406cd9f0c81ea",
+      "afterBytes": 493926,
+      "afterSHA256": "f1373dcc97544c8b3e0f88d1628195252c89c8d999d76dbd0123646c0511baf5",
+      "payload": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/generated-source/docs/miniapp-sdk/source-inventory.json",
+      "mode": "100644"
+    }
+  ],
+  "sdkManifest": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/MiniAppSDK/miniapp-sdk.json",
+    "bytes": 5226713,
+    "sha256": "6f11ed8da3df18627f05932d47b5b68dec54eb26ac396151a21cbc8c3e65800e"
+  },
+  "sdkArchive": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/MiniAppSDK20.zip",
+    "bytes": 68739954,
+    "sha256": "c1c181182d1e47db1f7977a284cea507397dc47e9170645b019dbdec5ab858ca"
+  },
+  "hostArchive": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/source/build/runtime-host/RuntimeHostResources.zip",
+    "bytes": 81839498,
+    "sha256": "ed18d93a88a1020bc2140417cea3847daf3d03472cdd4769d9a5ac4e44f48a22"
+  },
+  "hostMetadata": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/source/build/runtime-host/host-metadata.json",
+    "bytes": 358,
+    "sha256": "5a3d62ec08819eba540b5b14a716ee886ca0241cdc50b643ae810c430adfa827"
+  },
+  "sourceInputCount": 235,
+  "sdkPayloadFiles": 25681,
+  "hostArchiveFiles": 28784,
+  "hostTests": {
+    "total": 170,
+    "passed": 169,
+    "failed": 0,
+    "cancelled": 0,
+    "skipped": 1,
+    "skip": "Original conditional actual Node job crosses 300 seconds with no hidden deadline; no condition changed."
+  },
+  "packedValidation": "PASS_FROM_ORIGINAL_SCRIPT",
+  "jitlessPackedSmoke": "PASS_FROM_ORIGINAL_SCRIPT",
+  "originalPreparationElapsedSeconds": 360.1092938221991,
+  "node": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/tools/node-v24.5.0-linux-arm64/bin/node",
+    "version": "v24.5.0",
+    "archiveBytes": 30984052,
+    "archiveSHA256": "313367534186a8551d68b39fbc2a6cc36638e583fb5dc75dcf5da3c6582bff3b",
+    "binarySHA256": "47befb5f57df96771ce343d6293349ecf4d46c91110b626423ec3a49d2fee7c1",
+    "platform": "linux",
+    "architecture": "arm64"
+  },
+  "upstreamResolution": false,
+  "nativeCompilation": false,
+  "nativeAcceptance": "NOT_RUN_IN_THIS_PHASE",
+  "canonicalChanges": false,
+  "unchangedSDKPayloadFiles": 25641,
+  "addedSDKPayloadFiles": 35,
+  "removedSDKPayloadFiles": 23,
+  "changedCommonSDKPayloadFiles": 5,
+  "hostOutsideSDKChanges": {
+    "added": 0,
+    "removed": 0,
+    "changed": 0
+  },
+  "proofs": [
+    {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/state.json",
+      "bytes": 1881,
+      "sha256": "4f2f578e26fcede460a7dbab072261fd0d765bc03f04fd504428bd9ab9944a43"
+    },
+    {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/launch.json",
+      "bytes": 633,
+      "sha256": "10cdb81782f69f26e7b30ce643512189099a15fc5f2318ae54766f78b2637bdb"
+    },
+    {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/commands.jsonl",
+      "bytes": 1236,
+      "sha256": "d89f5a6f3578accbc337d6eb186e4d3a18139ac5134061236e1c06169bed53cc"
+    },
+    {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/preparation.log",
+      "bytes": 24605,
+      "sha256": "622fc68ee7cc233628e46e4cdcc8ccebb0db06e3cb34ccbaa37f792eaa540b19"
+    },
+    {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/source-fingerprint-command.json",
+      "bytes": 40075,
+      "sha256": "934eac58981e278855a2c6a4947a19061ae98041c4d71060e52caac3fb9b1728"
+    },
+    {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/source-input-verification.json",
+      "bytes": 80615,
+      "sha256": "71d370bc253c0bff8a2f3eff964ee32a53ccfb41f83e9bbaa85a46d349dcfc6b"
+    },
+    {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/sdk19-to-sdk20-content-diff.json",
+      "bytes": 15568,
+      "sha256": "7c8c1ac862242bfd7c953ea4550852775bdc431265770f970df13a735785c0c5"
+    },
+    {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/generated-source.json",
+      "bytes": 1564,
+      "sha256": "57662a29a29893b97a35036217d79dc88ff96177a4924aedeb8ca8e17b31f445"
+    },
+    {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/generated-tracked.diff",
+      "bytes": 3357,
+      "sha256": "90e9d23dbff1e87d8c5870aa2f2bf289e839fd9479a214c71e47baeba26ba6de"
+    },
+    {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk20-dff3b45c/host-archive-members.json",
+      "bytes": 6676819,
+      "sha256": "231f7a88e0f6540d797b5433a28e518152f4f8d3ed0d269170a284aa84dc2c15"
+    }
+  ]
+}

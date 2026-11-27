@@ -1,0 +1,140 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-25T18:49:15.040951+00:00",
+  "scope": "SDK04 current export coverage reconciliation; exact raw reuse and read-only source comparison only.",
+  "originalDoD": "DoD: תוכן .d.ts מדויק + tooling שמגלה drift, typecheck strict ו-Metro bundle, tests לכל public exported adapter, תיעוד מגבלות מכשיר.",
+  "reviewState": "REVIEWED_ROOT_AND_INDEPENDENT_PEER",
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "sourceTree": "f7a6596a1ef53d8d962ceb9f619460ffa19ee91e",
+  "heldParentAtAssembly": "fb943ce9191b2d559aa7e182cae8b0cddeaaaa09",
+  "recommendedDisposition": "SDK04_DOD_COVERED_WITH_DOCUMENTED_CONTEXT_BOUNDARIES",
+  "coreExportCounts": {
+    "manualComponents": 13,
+    "generatedViews": 4,
+    "effectiveGeneratedModifiers": 83,
+    "declaredGeneratedModifiers": 87,
+    "upstreamPrecedenceExclusions": 4,
+    "directNativeAPIValueReexports": 33,
+    "coreExportRows": 133,
+    "observableModifierAssertions": 11,
+    "contextOnlyModifiers": 72,
+    "unmountedDocumentLeaf": 1,
+    "nativeAPIValueReexportsUsedByBoundedFixture": 4,
+    "nativeAPITypeReexports": 22
+  },
+  "actualNativeResults": {
+    "Mini25": "25/0/0",
+    "AI27": "27/0/0",
+    "NativeScript5": "1/0/0"
+  },
+  "sourceComparison": {
+    "baseline": "6c006c948f0a6f371f7fc68b90e393f43734f8dd",
+    "current": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+    "files": 58,
+    "changed": 0,
+    "omittedCandidates": [
+      "Scripts/ExpoNativeAPI/build-probe.mjs"
+    ]
+  },
+  "integrationDependencies": [
+    {
+      "folder": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125",
+      "terminalReceipt": {
+        "path": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125/packet/receipt.json",
+        "bytes": 28097,
+        "sha256": "bc4cee646635399d243e90b2ba77d636522dd463d47fbd95657c7a4a8d3d7a14"
+      },
+      "owner": "root",
+      "reason": "Exact actual original52 node/summary/terminal authority; raw packet intentionally not duplicated."
+    },
+    {
+      "folder": "docs/miniapp-sdk/evidence/nativescript-five-runtime-pass-attempt19-20261125",
+      "terminalReceipt": {
+        "path": "docs/miniapp-sdk/evidence/nativescript-five-runtime-pass-attempt19-20261125/packet/receipt.json",
+        "bytes": 16094,
+        "sha256": "f0232a0473ad580c05e64daf35ab0ae46380b0815a2785a2d28cf15f0047ba68"
+      },
+      "owner": "root",
+      "reason": "Exact independently executed five-runtime companion authority; raw packet intentionally not duplicated."
+    }
+  ],
+  "rawCopies": [
+    {
+      "path": "raw/source-capture/source-conformance-current.json",
+      "bytes": 95561,
+      "sha256": "ee6fd505a35889628adc801bf9028eae4c5e05e0081922da5aa5868f04175dd0",
+      "mode": "100644",
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk04-current-export-reconciliation/source-conformance-current.json",
+      "copy": "BYTE_EXACT"
+    },
+    {
+      "path": "raw/source-capture/source-conformance-current-command.json",
+      "bytes": 1396,
+      "sha256": "19efeff907e16ca906deb1ea3bcd32e0fa5edf58f1a37e103fbeebd1ce3008d8",
+      "mode": "100644",
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk04-current-export-reconciliation/source-conformance-current-command.json",
+      "copy": "BYTE_EXACT"
+    },
+    {
+      "path": "raw/source-capture/source-conformance-current.stderr.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "100644",
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk04-current-export-reconciliation/source-conformance-current.stderr.txt",
+      "copy": "BYTE_EXACT"
+    },
+    {
+      "path": "raw/strict-metro/original-v5-expo-probe.log",
+      "bytes": 1922,
+      "sha256": "8dc9382950955ae0512c91ffb3c9ecfddc17628e7c98f7062bd4969e6d122f22",
+      "mode": "100644",
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk04-current-export-reconciliation/original-v5-expo-probe.log",
+      "copy": "BYTE_EXACT"
+    },
+    {
+      "path": "raw/strict-metro/original-v5-expo-probe-copy-receipt.json",
+      "bytes": 643,
+      "sha256": "0e44a50cb005aa4e4c1e70dd80c5574d549fbd24acf8dcdb3123707427b9b293",
+      "mode": "100644",
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk04-current-export-reconciliation/original-v5-expo-probe-copy-receipt.json",
+      "copy": "BYTE_EXACT"
+    },
+    {
+      "path": "raw/strict-metro/original-v5-commands.jsonl",
+      "bytes": 10923,
+      "sha256": "e0edf79da781f0b942101a3f422fc8ff408243325005c4c56ee5fe7781c5648b",
+      "mode": "100644",
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v5-repair-first-packet/native-result/paired-prefix/commands.jsonl",
+      "copy": "BYTE_EXACT_FULL_STREAM_INCLUDING_HISTORICAL_REPAIR_FAILURE"
+    }
+  ],
+  "workPerformed": {
+    "newCompilerRuns": 0,
+    "newTests": 0,
+    "newNativeActions": 0,
+    "productionEdits": 0,
+    "canonicalWrites": 0,
+    "gitCommit": "OWNED_HELD_EVIDENCE_ONLY"
+  },
+  "readme": {
+    "path": "README.md",
+    "bytes": 13101,
+    "sha256": "9f1e4c663e83046645fe5be6673851c72ec1b512e0ac742c12b978cfe92812e9",
+    "mode": "100644"
+  },
+  "boundaries": [
+    "11 observable modifier assertions and 72 context-only factories, not all83 OS semantics.",
+    "One document-scene leaf unmounted.",
+    "33 direct original NativeAPI names, four bounded used exports, not all33 method execution.",
+    "Modern prepared publication has osRendered:null.",
+    "HostServices ActivityKit start/update/end not established by enabled/list probe.",
+    "Physical device and full Entrypoints matrix are separate."
+  ],
+  "review": {
+    "approvedBy": "/root",
+    "independentPeer": "/root/status_reporting",
+    "status": "CLEAR",
+    "reviewedAtUTC": "2026-11-25T19:09:29.878638+00:00",
+    "scope": "Bounded reconciliation as written; no promotion of context-only, unmounted, forwarding-only, OS-render or HostServices mutation claims."
+  }
+}

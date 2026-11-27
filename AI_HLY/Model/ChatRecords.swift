@@ -33,6 +33,8 @@ class ChatRecords {
     var infoDescription: String?
     var lastEdited: Date = Date()
     var isPinned: Bool = false
+    /// Stops delayed automatic metadata from replacing an explicit user choice.
+    var metadataWasManuallyEdited: Bool = false
     var icon: String?                 // 存储图标名称
     var color: String?                // 颜色的名称
     var input: String? = ""           // 正在输入

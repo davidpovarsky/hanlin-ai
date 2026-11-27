@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "kind": "TEXTEDITOR_SOURCE_CORRECTION_AND_ACTUAL_FAILURE_PROOF",
+  "observedAt": "2026-11-25T09:50:42.881903+00:00",
+  "failedSource": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+  "productionCorrection": "38785cff47b019f15a6304484b5a979406978a14",
+  "nativeCorrectionValidation": "NOT_RUN",
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 3877,
+      "sha256": "670009b497e07ae37aec3c7bdf7de85606cad3d948d67f735f4c357d709118d2"
+    },
+    {
+      "path": "original-reference/@expo/ui/ios/TextFieldView.swift",
+      "bytes": 9493,
+      "sha256": "38489d3129dd69c37c9bff8dfbda4e586a64f9aa1c25e382dcd24fa5c933e867"
+    },
+    {
+      "path": "original-reference/@expo/ui/ios/UIBaseView.swift",
+      "bytes": 4053,
+      "sha256": "654fcc032fd3fa219ddb21ad2789659076571b256f699f9371bafd128de95b0a"
+    },
+    {
+      "path": "original-reference/@expo/ui/ios/UIBaseViewProps.swift",
+      "bytes": 705,
+      "sha256": "50ff7eeda309c0868eb2b8eeb88a984c652c9da0c58a1259300bb48e7f4c35b3"
+    },
+    {
+      "path": "original-reference/@expo/ui/ios/UniversalLayout.swift",
+      "bytes": 27188,
+      "sha256": "4e97e3dba83ad299965580e214eb44bb27b9a511b73563745753578bd68614d8"
+    },
+    {
+      "path": "original-reference/@expo/ui/package.json",
+      "bytes": 6032,
+      "sha256": "5332dd3b83612fcc7e30f50cb2e137f1e0051b6b2032b0d006f5840a13cf5281"
+    },
+    {
+      "path": "original-reference/expo-modules-core/ios/Core/Views/SwiftUI/AnyChild.swift",
+      "bytes": 1621,
+      "sha256": "8815f34a12b9a3246461409db0f8f980713ab857f0cf5006696fde452402e17b"
+    },
+    {
+      "path": "original-reference/expo-modules-core/ios/Core/Views/SwiftUI/SwiftUIViewDefinition.swift",
+      "bytes": 5906,
+      "sha256": "a6d0f75833370aa16cf7a1ee0a91eea3ae0f48101900dedfb0a3c9b641b6b581"
+    },
+    {
+      "path": "original-reference/expo-modules-core/ios/Core/Views/SwiftUI/SwiftUIViewProps.swift",
+      "bytes": 3413,
+      "sha256": "fb8bc6d329eaaf20c80f9871236339ba28ff946aa51886d8d70456b171346c6a"
+    },
+    {
+      "path": "original-reference/expo-modules-core/ios/Core/Views/SwiftUI/SwiftUIVirtualView.swift",
+      "bytes": 13794,
+      "sha256": "b3467a932c999cd5cf3c0d8affbcaec37f31b2c3d0b8d9c946d2c7b265da947e"
+    },
+    {
+      "path": "original-reference/expo-modules-core/package.json",
+      "bytes": 2845,
+      "sha256": "285de31be98571eea2a85f8eac1d30fce6a1474e2dc4b1772dd4465333762004"
+    },
+    {
+      "path": "raw/HanlinMiniAppsUITests.swift",
+      "bytes": 91512,
+      "sha256": "12d0d1c7a3a46044ccc00f995fb8cf0090058a373aca492b181c522238002537"
+    },
+    {
+      "path": "raw/initial-case-capture.json",
+      "bytes": 4264,
+      "sha256": "5740850c4cc7d2d8d101c655cbd2956fcaa15052164d83edfb6d0d347c215bfb"
+    },
+    {
+      "path": "raw/manual-input-case-capture.json",
+      "bytes": 3634,
+      "sha256": "c32160a453f3b0c6b060b5bd21333f456ab51d920a8e3a193130893ceb90ec72"
+    },
+    {
+      "path": "raw/testStandaloneExpoGeneratedEditButtonEditsOriginalList.log",
+      "bytes": 19255,
+      "sha256": "36a9871b161d9ff64bb1c4c773ed4937ddd314379688e45b69d35db3a2c18ad6"
+    },
+    {
+      "path": "raw/testStandaloneExpoGeneratedModifierHitTestingAndSubmitScope.log",
+      "bytes": 13584,
+      "sha256": "7d0cf3c8d531f194f4569e57e8dbcb4fe04e322287a062642c86daed560cd49f"
+    },
+    {
+      "path": "raw/testStandaloneExpoManualInputLayoutAndDataAdapters.log",
+      "bytes": 19098,
+      "sha256": "16cb18d7df9b297d5c20206d20777ec14577d946e35adbb4e828806f705f7ff2"
+    },
+    {
+      "path": "source-bindings.json",
+      "bytes": 7505,
+      "sha256": "f72fa86925659bf7e746e3794419bbb438b70a42b3e9408aa243e6b5e135f4c1"
+    }
+  ],
+  "memberCount": 18,
+  "memberBytes": 237779,
+  "boundary": "Evidence only. Original active-run captures are immutable; finalized native and corrected-case results are separate."
+}

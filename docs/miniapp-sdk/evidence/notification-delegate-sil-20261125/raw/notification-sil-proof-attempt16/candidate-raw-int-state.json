@@ -1,0 +1,30 @@
+{
+  "status": "FAIL",
+  "argv": [
+    "xcrun",
+    "swiftc",
+    "-emit-object",
+    "-parse-as-library",
+    "-sdk",
+    "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk",
+    "-target",
+    "arm64-apple-ios27.0-simulator",
+    "-swift-version",
+    "6",
+    "-cxx-interoperability-mode=default",
+    "-warnings-as-errors",
+    "-module-cache-path",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-signature-proof-attempt14/ModuleCache",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-sil-proof-attempt16/CandidateRawInt.swift",
+    "-o",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-sil-proof-attempt16/CandidateRawInt.o"
+  ],
+  "sourceSHA256": "cbdf1fb3a753a27aaf5f6484d167d1caea317597ed2ea81e6af1bab2da8dd728",
+  "startedAt": "2026-11-25T06:42:29.867625+00:00",
+  "pid": 48014,
+  "exitCode": -11,
+  "elapsedSeconds": 0.27036845800466835,
+  "finishedAt": "2026-11-25T06:42:30.138347+00:00",
+  "logSHA256": "1c4b355faab6f1115ae79555d4a18d23edb445fa2cc411d2ed141eff08b44917",
+  "objectSHA256": null
+}

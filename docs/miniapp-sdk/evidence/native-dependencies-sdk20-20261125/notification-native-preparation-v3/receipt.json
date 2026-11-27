@@ -1,0 +1,167 @@
+{
+  "schema": 1,
+  "capturedAt": "2026-11-25T22:18:27.477170+00:00",
+  "files": [
+    {
+      "name": "config-materialization.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/config-materialization.json",
+      "bytes": 658,
+      "sha256": "d9647613e2110f4bba9afee6b552bf43dff84964e5bb08d16eb3225191a767c0",
+      "storedBytes": 658,
+      "storedSHA256": "d9647613e2110f4bba9afee6b552bf43dff84964e5bb08d16eb3225191a767c0",
+      "gzip": false,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v3/terminal/config-materialization.json"
+    },
+    {
+      "name": "ledger.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/ledger.json",
+      "bytes": 1884,
+      "sha256": "26a4bc05363573082404f43e604678e8126c37afb9493096e2c8764993c92fdd",
+      "storedBytes": 1884,
+      "storedSHA256": "26a4bc05363573082404f43e604678e8126c37afb9493096e2c8764993c92fdd",
+      "gzip": false,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v3/terminal/ledger.json"
+    },
+    {
+      "name": "paired52-readiness-observation.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/paired52-readiness-observation.json",
+      "bytes": 3058,
+      "sha256": "0e3b2cd6c245e65d02a03d4f3b34493f5041a9b41cb64e24ed5c6ed94df24c9f",
+      "storedBytes": 3058,
+      "storedSHA256": "0e3b2cd6c245e65d02a03d4f3b34493f5041a9b41cb64e24ed5c6ed94df24c9f",
+      "gzip": false,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v3/terminal/paired52-readiness-observation.json"
+    },
+    {
+      "name": "prepare-original-nativescript-native.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/prepare-original-nativescript-native.log",
+      "bytes": 5190,
+      "sha256": "53f0f3d540415809a88ba728abf4a1a7ecfc697aab872a4370a9ede18cb03fdf",
+      "storedBytes": 1691,
+      "storedSHA256": "39791bde2087e4b854915901d8206524555fe16f451f0e9420d176f126332e8a",
+      "gzip": true,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v3/terminal/prepare-original-nativescript-native.log.gz"
+    },
+    {
+      "name": "prepared-frameworks.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/prepared-frameworks.json",
+      "bytes": 15613,
+      "sha256": "38b16127d7045ed40051b3c2d968fae5a4ca35655a36cdeef52324da99428993",
+      "storedBytes": 15613,
+      "storedSHA256": "38b16127d7045ed40051b3c2d968fae5a4ca35655a36cdeef52324da99428993",
+      "gzip": false,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v3/terminal/prepared-frameworks.json"
+    },
+    {
+      "name": "prepared-source.diff",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/prepared-source.diff",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 0,
+      "storedSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gzip": false,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v3/terminal/prepared-source.diff"
+    },
+    {
+      "name": "state.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/state.json",
+      "bytes": 15567,
+      "sha256": "0eb409b8ea1853620b8fbc462f67ae3c5a19973e085ba61bfa7149622f2e4d45",
+      "storedBytes": 15567,
+      "storedSHA256": "0eb409b8ea1853620b8fbc462f67ae3c5a19973e085ba61bfa7149622f2e4d45",
+      "gzip": false,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v3/terminal/state.json"
+    },
+    {
+      "name": "tracked-status.txt",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/tracked-status.txt",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 0,
+      "storedSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gzip": false,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v3/terminal/tracked-status.txt"
+    },
+    {
+      "name": "verify-nativeapi-artifacts.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/verify-nativeapi-artifacts.log",
+      "bytes": 357,
+      "sha256": "ea2d894e0c272076abc81ddbc25e981eefa49a6313fcff6a9ecab119a3c28ebd",
+      "storedBytes": 251,
+      "storedSHA256": "5f9f8a6ee392f4fc14ef4484f4e60bf27dc729a731f3f62586988f344b85f12c",
+      "gzip": true,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v3/terminal/verify-nativeapi-artifacts.log.gz"
+    },
+    {
+      "name": "verify-nativeapi-metadata.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/verify-nativeapi-metadata.log",
+      "bytes": 688,
+      "sha256": "89847abdedfb856f3092d073d6c2684124b694bbf3a4ecc91088bda345cc3a31",
+      "storedBytes": 372,
+      "storedSHA256": "831d5b56475f8315280b1b2551cc45c2fea141d12b263c499a9dbb74c3b462db",
+      "gzip": true,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v3/terminal/verify-nativeapi-metadata.log.gz"
+    },
+    {
+      "name": "verify-nativeapi-preflight.log.gz",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/verify-nativeapi-preflight.log",
+      "bytes": 1724,
+      "sha256": "aa9afe7e8c6671008eef6bc51dae9efca4a856d9cd988e9e1aeb294660d9255b",
+      "storedBytes": 593,
+      "storedSHA256": "1ad96b0b6445442252d95096d7f2f0f7311abdcc7756eea0f6ba4e89e3e7a87b",
+      "gzip": true,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v3/terminal/verify-nativeapi-preflight.log.gz"
+    },
+    {
+      "name": "metadata-provenance.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/build/nativescript-metadata-tool/provenance.json",
+      "bytes": 935,
+      "sha256": "f83479c7a5cdf9014fb7b5f2bf8425ecf9809c4de9680666ca255706022b9696",
+      "storedBytes": 935,
+      "storedSHA256": "f83479c7a5cdf9014fb7b5f2bf8425ecf9809c4de9680666ca255706022b9696",
+      "gzip": false,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v3/terminal/metadata-provenance.json"
+    },
+    {
+      "name": "history-focused-wire-unit-state.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-history/focused-wire-unit-state.json",
+      "bytes": 2488,
+      "sha256": "95d72c8829b026d2e61b08c037e0cc6a332c2ccd0cdb5ea13d391b174c7aef80",
+      "storedBytes": 2488,
+      "storedSHA256": "95d72c8829b026d2e61b08c037e0cc6a332c2ccd0cdb5ea13d391b174c7aef80",
+      "gzip": false,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v3/terminal/history-focused-wire-unit-state.json"
+    },
+    {
+      "name": "history-historical-os-recovery-ledger.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-history/historical-os-recovery-ledger.json",
+      "bytes": 3201,
+      "sha256": "cfa1ab524fe4c871268b2b364d3bf73dc0d5fd30bb1e584fa002a934771ac62f",
+      "storedBytes": 3201,
+      "storedSHA256": "cfa1ab524fe4c871268b2b364d3bf73dc0d5fd30bb1e584fa002a934771ac62f",
+      "gzip": false,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v3/terminal/history-historical-os-recovery-ledger.json"
+    },
+    {
+      "name": "history-oracle-sdk20-verification.json",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-history/oracle-sdk20-verification.json",
+      "bytes": 6485,
+      "sha256": "8c33bf22355ab2749f81c8abc5fa0b08ef8fe87fca78077512f35060d789f21d",
+      "storedBytes": 6485,
+      "storedSHA256": "8c33bf22355ab2749f81c8abc5fa0b08ef8fe87fca78077512f35060d789f21d",
+      "gzip": false,
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v3/terminal/history-oracle-sdk20-verification.json"
+    }
+  ],
+  "acceptance": "Original native dependencies PREPARED; no application build or case performed",
+  "readinessAuthority": {
+    "name": "paired52-readiness-observation.json",
+    "sourcePath": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/paired52-readiness-observation.json",
+    "bytes": 3058,
+    "sha256": "0e3b2cd6c245e65d02a03d4f3b34493f5041a9b41cb64e24ed5c6ed94df24c9f",
+    "storedBytes": 3058,
+    "storedSHA256": "0e3b2cd6c245e65d02a03d4f3b34493f5041a9b41cb64e24ed5c6ed94df24c9f",
+    "gzip": false,
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-native-preparation-v3/terminal/paired52-readiness-observation.json"
+  }
+}

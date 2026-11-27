@@ -17,6 +17,9 @@ public struct WidgetsEntryView: View {
     var env: [String: Any] = getWidgetEnvironment(environment: environment)
     env["timestamp"] = Int(entry.date.timeIntervalSince1970 * 1000)
     env["configuration"] = configuration
+    if let proof = entry.snapshotProof {
+      env.merge(proof.environment) { _, captured in captured }
+    }
     return env
   }
 
@@ -29,9 +32,10 @@ public struct WidgetsEntryView: View {
   }
 
   public var body: some View {
-    if let layout = WidgetsLayoutRegistry.layout(for: entry.name) {
-      let node = evaluateLayout(layout: layout, props: entry.props, environment: widgetEnvironment)
-      WidgetsDynamicView(name: entry.name, kind: .widget, node: node, entryIndex: entry.entryIndex, environmentString: widgetEnvironmentString)
+    if let proof = entry.snapshotProof, let layout = WidgetsLayoutRegistry.layout(for: entry.name) {
+      let rendered = HanlinExpoWidgetState.render(name: entry.name, layout: layout, props: entry.props, environment: widgetEnvironment, proof: proof)
+      WidgetsDynamicView(name: entry.name, kind: .widget, node: rendered.node, entryIndex: entry.entryIndex, environmentString: widgetEnvironmentString)
+        .disabled(rendered.retained)
     } else {
       // No layout is stored until the app has run once after install or
       // update. That's an expected state, not an error, so show a neutral,

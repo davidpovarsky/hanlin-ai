@@ -1,0 +1,388 @@
+{
+  "source_sha": "a30c8267c1f5ce2a122889b81dc9fffc0f295758",
+  "started_at": "2026-11-26T12:51:35.571033+00:00",
+  "status": "PASS",
+  "steps": [
+    {
+      "name": "npm-native",
+      "command": [
+        "npm",
+        "ci",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund",
+        "--prefer-offline",
+        "--include=dev",
+        "--include=optional"
+      ],
+      "cwd": "/mnt/development/projects/worktrees/hanlin-wave1-shared-chat-actions-20261126/build/wave1-shared-ui/js-a30c8267/dependencies/native",
+      "exit": 0,
+      "log_sha256": "da13ab9d025b19c91553bc7d4c450975d3e4e36dd7c5fef6f223f8008ba39547"
+    },
+    {
+      "name": "npm-expo",
+      "command": [
+        "npm",
+        "ci",
+        "--ignore-scripts",
+        "--no-audit",
+        "--no-fund",
+        "--prefer-offline",
+        "--include=dev",
+        "--include=optional"
+      ],
+      "cwd": "/mnt/development/projects/worktrees/hanlin-wave1-shared-chat-actions-20261126/build/wave1-shared-ui/js-a30c8267/dependencies/expo",
+      "exit": 0,
+      "log_sha256": "f9ad4f2993c8acab1f54b352b6bd5a4a9ef08f85c585cc105e1bfd94af66e729"
+    },
+    {
+      "name": "nativescript-generated-check",
+      "command": [
+        "node",
+        "Scripts/NativeScript/build-host-services.mjs",
+        "--typescript-module",
+        "/mnt/development/projects/worktrees/hanlin-wave1-shared-chat-actions-20261126/build/wave1-shared-ui/js-a30c8267/dependencies/native/node_modules/typescript/lib/typescript.js",
+        "--check"
+      ],
+      "cwd": "/mnt/development/projects/worktrees/hanlin-wave1-shared-chat-actions-20261126/build/wave1-shared-ui/js-a30c8267/source",
+      "exit": 0,
+      "log_sha256": "480742f18b8ef01a023f07eff2064a34b4a8f65a59deef55e49b505788f8b263"
+    },
+    {
+      "name": "expo-assistant-tests",
+      "command": [
+        "node",
+        "--test",
+        "Packages/HanlinExpoUI/tests/miniapp-assistant.test.mjs",
+        "Packages/HanlinExpoUI/tests/host-services-publication.test.mjs"
+      ],
+      "cwd": "/mnt/development/projects/worktrees/hanlin-wave1-shared-chat-actions-20261126/build/wave1-shared-ui/js-a30c8267/source",
+      "exit": 0,
+      "log_sha256": "a2d175869e981896ed2fd03ee8b06816776c212e62a98ae4a67ddfcb0e7adab6",
+      "counts": {
+        "tests": 7,
+        "pass": 7,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    },
+    {
+      "name": "host-facade-tests",
+      "command": [
+        "node",
+        "--test",
+        "Scripts/NativeScript/Tests/assistant.test.mjs",
+        "Scripts/NativeScript/Tests/miniapps-sharing.test.mjs",
+        "Scripts/NativeScript/Tests/live-activities.test.mjs",
+        "Scripts/Expo/Tests/host-services.test.mjs"
+      ],
+      "cwd": "/mnt/development/projects/worktrees/hanlin-wave1-shared-chat-actions-20261126/build/wave1-shared-ui/js-a30c8267/source",
+      "exit": 0,
+      "log_sha256": "d698d4337dba5a62eb4edc244c641ccfd4b1b3b0b600e42f5631af250b4d70ff",
+      "counts": {
+        "tests": 8,
+        "pass": 8,
+        "fail": 0,
+        "cancelled": 0,
+        "skipped": 0,
+        "todo": 0
+      }
+    }
+  ],
+  "source_archive_sha256": "a85c5c3ab8bcedcad30b03580cd022d789fcd552c96466e3528bc0cf1ab7c971",
+  "source_inputs": {
+    "Packages/HanlinExpoUI/README.md": "4e2965ada75bf9bd6bdf6ffb4ebcfe4a06ba49888bb04e803086e358a2a481df",
+    "Packages/HanlinExpoUI/package.json": "18dbddebb3c641742ca5f83d0492cec1cbbc7bb1affbefe641477b7481110568",
+    "Packages/HanlinExpoUI/src/generated/bridge-manifest.ts": "a56c8a16334bfe76ebe6489fc1f018f25f28f7cadba6c1ef11a268e5336f3b37",
+    "Packages/HanlinExpoUI/src/generated/modifiers.ts": "fee40e3a17dd3466ad2a97301e877501832f044968360684af8e473fe6055483",
+    "Packages/HanlinExpoUI/src/generated/views.tsx": "7c3bf97da0a680dc80d1a1d19f915b67778e17f42021355c5d99ea4f99c85c74",
+    "Packages/HanlinExpoUI/src/host-services.ts": "bb4a8d65fdeb6fe5b0780e856d126360e49f8bdbfc2cc61b6a101ad92653d518",
+    "Packages/HanlinExpoUI/src/index.ts": "d0907d0fd364c9b0621f48099d98ece640ba25d8d40f53cb60aabb3b1dbd3922",
+    "Packages/HanlinExpoUI/src/manual-components.tsx": "b95b387fce797a3c0ffe8c258e1fe0b411e76956e6cd50ae9235267f5b638da6",
+    "Packages/HanlinExpoUI/src/miniapp-actions.ts": "d5d38fc209d8d8dedb2832ffd037e53d4eabd8b8c92320bd79e791fdfef2c607",
+    "Packages/HanlinExpoUI/src/miniapp-assistant.ts": "2e0e25875906f15876b8035d0863482510163ae4a82865eb376b788ff95e3c2c",
+    "Packages/HanlinExpoUI/src/modifiers.ts": "56b1efa29241c519d325682828e944becae6b516887908777661b3a574821782",
+    "Packages/HanlinExpoUI/src/system-surfaces.ts": "3a2c4424ce074056ef76d62a4502fb16c389e10a46967fcde15835efde94543f",
+    "Packages/HanlinExpoUI/tests/generated-views.test.mjs": "03c46a995205ca0b1730fc8aa26bac97771c1f4cd3951665c13f7c2fa2c046fa",
+    "Packages/HanlinExpoUI/tests/host-services-publication.test.mjs": "6a3afe9ee3704d052d7337828763c80eea5c765d50bd217574836df5124b4a57",
+    "Packages/HanlinExpoUI/tests/miniapp-actions.test.mjs": "566e95d9b0ba53fdf576de2000c6e97707fb3b85e6fb014445f1c96546eea4bc",
+    "Packages/HanlinExpoUI/tests/miniapp-assistant.test.mjs": "fc1465119ea944d674b91e00ec6127092dbc3ef6e191a80eb3d6cfffaac969ba",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.d.ts": "6818f3bb452a6ebba09e4cc62ff0b9fa8471c5e794c728a40a5e58fc950c7d45",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/index.mjs": "4ea271749c3ddabc8e5a23f195b1a1f50aa4483646fdbc3aaccc9243c7974199",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/miniapp-assistant.d.ts": "916e67b9e967d3ab15815525ce6b3fd6ace4bbac334077a5ed430aeef2f1ded5",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/miniapp-assistant.mjs": "fadf7564dd34bd4b31529da09383b843853292735c5a3453a373d0420b1cf93b",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/package.json": "c42e3fe3eb38b7289ba3cf49ca0b56bcbd7ac2d27d68955f27e3d5e33e642a7e",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/system-surfaces.d.ts": "79b57d090648059ff537f1e7010e62cf589ef9327dc3c6115fda488f93e0cfd9",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/system-surfaces.mjs": "3491e84f44be4e7c009dbad7ffb4226c35aebbc240fe42465ecc9f761b3265df",
+    "Scripts/Expo/Tests/Fixtures/react-native-headers-0.88.1/headers.tar.gz": "ee710a1aa98a8d54d06b56c04ead95f16bd3f10062e12f24464cba27ccbecacd",
+    "Scripts/Expo/Tests/Fixtures/react-native-headers-0.88.1/provenance.json": "f11946c50bee17884a91301c08a8b16c11ad3e14fc540e616a7dcf96e3017b47",
+    "Scripts/Expo/Tests/host-services.test.mjs": "625d69af766f88690bdb528d17b8aea46ffbed5edfd46fa9c1c471ca9b8339f1",
+    "Scripts/Expo/Tests/native-api-globals.test.mjs": "4a927ff903ae4eb5b8ba18d8d4f2942bce929bb1fe705e772cbdee6fd0eb14c2",
+    "Scripts/Expo/Tests/react-header-map-reuse.test.mjs": "4e3ea95d816169a71f78fdff27e631578c7564e0f791ffbfcca8235b2284a63e",
+    "Scripts/Expo/babel.config.cjs": "62581fd5caf7b97cb36290093b7bbf7103e1c1b1300e0e11a1b3eaaf96c998ba",
+    "Scripts/Expo/build-original-expo-source.mjs": "855a9a79f1c27a2ba2f3796cf784ebb66a4a48df928b2ea8f6ca1ffd9e886c03",
+    "Scripts/Expo/build-original-widget-runtime.mjs": "5928bb12ed2fd2f6b2ecfeb6d8fc309d46e5837c58dcc4272d73af13434eb549",
+    "Scripts/Expo/build-probe.mjs": "cdead47d9914543725e0e3160a14a13d91b31b2d584b737f0eb95c1b5539618c",
+    "Scripts/Expo/check-ui-type-contract.mjs": "5271bdb790f0053b44d912ff227a4fdf63b5cbf50f99999f750893a3798df143",
+    "Scripts/Expo/dependency-lock.json": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65",
+    "Scripts/Expo/inventory-expo-ui.mjs": "db7bd6c61873ae62f006d950499e2d9e8dc226521f9d2d2521f3a9c292b9c184",
+    "Scripts/Expo/metro.config.cjs": "23907e12eb10e51229e3edebab5cacf46f15c8e9eced70eac2411846fb7062a7",
+    "Scripts/Expo/miniapps/modular-text-search/App.tsx": "ac62c2f394dceedb422c0fbe05d4182afba07e1bf78fb15828d3f936d212ae8a",
+    "Scripts/Expo/miniapps/modular-text-search/README.md": "8ceff65d4f7248d58389792f86032bbf74f7228b566ed0e77d02b08e6d93e6ce",
+    "Scripts/Expo/miniapps/modular-text-search/assistant-tool.ts": "035eeb0e7e7eff4e316d0b93431999cbb87b54585375aeb42cc6e03a8800789b",
+    "Scripts/Expo/miniapps/modular-text-search/build.ps1": "394476bb932e3608709fe455af351585fc692d4255acd2f6dc41a1471a7fcd1f",
+    "Scripts/Expo/miniapps/modular-text-search/dist/ModularTextSearch.hanlinExpo": "27e5524cea612c9270b880f89ebcefcb267bff3b72e702a0a415d3d8795a87e8",
+    "Scripts/Expo/miniapps/modular-text-search/hanlin.authoring.json": "1406a4c24b153bacd68d330f5ca492b57be6c29becf474b39248e3d6fc5c6887",
+    "Scripts/Expo/miniapps/modular-text-search/index.ts": "00e02d45f2f2a702f611c680663da217bfca69cd375b1dfe9f8f14562f9fb3e0",
+    "Scripts/Expo/miniapps/modular-text-search/native/original-source-proof.json": "f3622f772c9437a79db1d46d750e5e151818bc7ce44b5abc7729aa6527833765",
+    "Scripts/Expo/miniapps/modular-text-search/native/search.tsx": "e1e94967febb0f8aea8be64296e9ad384b7f65d29f7744d7cd39dcfcf775a15b",
+    "Scripts/Expo/miniapps/modular-text-search/native/src/engines/preferences.js": "124ed5937e1a69f51657d8c9bc58b7326269bc2ea77510fc9a6fafece5cb43ac",
+    "Scripts/Expo/miniapps/modular-text-search/native/src/engines/registry.js": "9be4d34fecd98447cb94585be1b5bd589a5a0cbe47c726905a398bfd3d4a09cb",
+    "Scripts/Expo/miniapps/modular-text-search/native/src/engines/sefaria/client.js": "c2221c450bf897c69f2796e3a9867384abc0fefa3d29f18e59a2bd24c64dfd2f",
+    "Scripts/Expo/miniapps/modular-text-search/native/src/engines/sefaria/constants.js": "f6dc8d774ac727b25c3ff278f514ee6f6d0ddd9b74541c9c96d3fec246f7601d",
+    "Scripts/Expo/miniapps/modular-text-search/native/src/engines/sefaria/engine.js": "0fe3b94e5ef58a668990270761336ed5fe200a7472fe853a5e614b1ad64929c3",
+    "Scripts/Expo/miniapps/modular-text-search/native/src/engines/sefaria/searchPayload.js": "6e4c77c4248d0d1ae84d6172bd184a1d61594250517a545dae53fb09723b85c5",
+    "Scripts/Expo/miniapps/modular-text-search/native/src/intent/snippetDefaults.js": "82b15d94edeeda146e04a90a6fa35e44cfbbff891acdbd0bfc3ab3f4cf212809",
+    "Scripts/Expo/miniapps/modular-text-search/native/src/intent/snippetViewModel.js": "22853b612b79dfe8e3d13822417cf7d63ba55144c29111bf9be533adb6a68787",
+    "Scripts/Expo/miniapps/modular-text-search/native/src/logic/localization.js": "d3469b6512a6b9cf02d87ac0fa348b8d29bae0f21443f85af11965db3e98d873",
+    "Scripts/Expo/miniapps/modular-text-search/native/src/logic/searchGrouping.js": "d7f8fe70f0355878624c2faa356f9cad88032cd7068aa7cef5763dd239af0424",
+    "Scripts/Expo/miniapps/modular-text-search/native/src/logic/textUtils.js": "23a5ed4e316acf547ff7505002e10d451f559b56f957cb45ada6e9da324453e0",
+    "Scripts/Expo/miniapps/modular-text-search/native/tsconfig.json": "04f9897c1e27a4f1bfb0b948d70c482618c84961a61567447ef110ea43dcce93",
+    "Scripts/Expo/miniapps/modular-text-search/package.json": "81664c98d9d9e5e26d5206e96fddb5ace83c6bc810d3f8d4b91585b21ab79dbb",
+    "Scripts/Expo/miniapps/modular-text-search/script.json": "0e3a60518a57f596c0bb932cf529b547980daba390fa19bad7a07f633636371f",
+    "Scripts/Expo/miniapps/modular-text-search/src/engines/preferences.js": "38e699d09b942887b84c200c7b07467f3b28f092f3385d9ba9f756a6fc6f6896",
+    "Scripts/Expo/miniapps/modular-text-search/src/engines/registry.js": "9be4d34fecd98447cb94585be1b5bd589a5a0cbe47c726905a398bfd3d4a09cb",
+    "Scripts/Expo/miniapps/modular-text-search/src/engines/sefaria/client.js": "8d2b61f6eaf6cadf286ea3f97379b009c344badcbea52c06d5a6fc437cb6ba85",
+    "Scripts/Expo/miniapps/modular-text-search/src/engines/sefaria/constants.js": "f6dc8d774ac727b25c3ff278f514ee6f6d0ddd9b74541c9c96d3fec246f7601d",
+    "Scripts/Expo/miniapps/modular-text-search/src/engines/sefaria/engine.js": "0fe3b94e5ef58a668990270761336ed5fe200a7472fe853a5e614b1ad64929c3",
+    "Scripts/Expo/miniapps/modular-text-search/src/engines/sefaria/nativeTransport.js": "d82632b3803c352ea3f4f71aadb6365472e0aa819ef1fad459648e62436d90b5",
+    "Scripts/Expo/miniapps/modular-text-search/src/engines/sefaria/searchPayload.js": "6e4c77c4248d0d1ae84d6172bd184a1d61594250517a545dae53fb09723b85c5",
+    "Scripts/Expo/miniapps/modular-text-search/src/logic/entrypointInput.js": "08329ca5f219ba893cbcb796009fb47000f2ef07fa1e213acb3b15a4004a18c5",
+    "Scripts/Expo/miniapps/modular-text-search/src/logic/localization.js": "d3469b6512a6b9cf02d87ac0fa348b8d29bae0f21443f85af11965db3e98d873",
+    "Scripts/Expo/miniapps/modular-text-search/src/logic/searchGrouping.js": "d7f8fe70f0355878624c2faa356f9cad88032cd7068aa7cef5763dd239af0424",
+    "Scripts/Expo/miniapps/modular-text-search/src/logic/textUtils.js": "23a5ed4e316acf547ff7505002e10d451f559b56f957cb45ada6e9da324453e0",
+    "Scripts/Expo/miniapps/modular-text-search/tests/native-transport.integration.cjs": "2cfc69a1c9f6ac2865971c2494f65ec90aa9c28c507b8709cae16e7e88ce4ae0",
+    "Scripts/Expo/miniapps/modular-text-search/tests/ui-regression.test.cjs": "79f9d4d532ec77e0a393757f6636f6a73737c39c21801931124ede0ef7e5a884",
+    "Scripts/Expo/miniapps/modular-text-search/tsconfig.json": "55a7c670ed7cbb03772ab431e18904fe7a66b801541bd4c6133e87a26685ae8e",
+    "Scripts/Expo/package-lock.json": "b20d9bf2ff4850269f72f79ef4e5b1b274ab648226a0597f671fe59ebb5dcfce",
+    "Scripts/Expo/package.json": "fe71727b4bb3a28f73238ed1381190ef6de3541af323efb1f443ed2a7c685563",
+    "Scripts/Expo/patch-hash-combine.mjs": "f83cdb463321bca7c3046f4bf4778508b7ed9057269fba693b77fb11ab5424ad",
+    "Scripts/Expo/prepare-ios-dependencies.mjs": "97069b0e1ec619d906f4b6d196e38e6527790c3661f798abcca6258dacf18163",
+    "Scripts/Expo/prepare-types.mjs": "e32603c7fd4a24f2c5223155185e35bc59ad87455859cf3bf321a23a5e6f878e",
+    "Scripts/Expo/sync-original-ui-exports.mjs": "0991e011951d7469e29111ae742c1b9479978a6aa5a039c6992762c559504455",
+    "Scripts/NativeScript/Fixtures/App_Resources/iOS/.gitkeep": "01ba4719c80b6fe911b091a7c05124b64eeece964e09c058ef8f9805daca546b",
+    "Scripts/NativeScript/Fixtures/HostServices/assistant.ts": "0c0d2964715e4da0f8418c5925fad3171c6776c64ba310a7be4b54c662965198",
+    "Scripts/NativeScript/Fixtures/HostServices/invalid.ts": "47f20182b5dfe1051d380453ad6b467adf3b439fd07e433500f4a87d5b7cfd8d",
+    "Scripts/NativeScript/Fixtures/HostServices/live-activities.ts": "5d9427bad52584fa0f022658376f2496434e826b144c56e500ce4720bac42efb",
+    "Scripts/NativeScript/Fixtures/HostServices/packaged.ts": "974d868c00ba752b9c62281249be7c11eda63154ed0c98dd32c74a0ff4bd36d1",
+    "Scripts/NativeScript/Fixtures/HostServices/valid.ts": "c99e376b70dc4e0b1ce5442cb86bf3115b11f72cf6154f1e808240392c724466",
+    "Scripts/NativeScript/Fixtures/Source/app.ts": "6af56bbd68e21279ca304c5e425ffbe1dde627c1c9ea38a67615c1b0cd0c8ce2",
+    "Scripts/NativeScript/Fixtures/Source/fixture-resource.txt": "f1e6b20835330d7706ab251ea7cd165728fc153119ab55f299bc925c11e3cd0d",
+    "Scripts/NativeScript/Fixtures/Source/local-module.ts": "5e62edb4d8d5c465366898911a8434fd8c3c15a819b6d04e95a1dfcd012f43b3",
+    "Scripts/NativeScript/Fixtures/Source/swiftui-app.ts": "9e74d5414e9d096fc6f631e08d7ac97a54da1361b4b9b01c22326196eb5844a1",
+    "Scripts/NativeScript/Fixtures/core-fixture-a-tabview-source/nativescript/app/bundle.mjs": "edd6119ec28fd104ddf402465f866a04e9c78dfa8546af0c0d4254912fd2fba0",
+    "Scripts/NativeScript/Fixtures/core-fixture-a-tabview-source/nativescript/app/package.json": "67562408b748a5f9bc9a55f011ad0e3a7ced3165b1374acdc04421de5b316295",
+    "Scripts/NativeScript/Fixtures/core-fixture-a-tabview-source/script.json": "4d54b4806b26329f97cc3fe388211eb9ab72fe0fdb8ef1a48d56bcc93f35ff47",
+    "Scripts/NativeScript/Fixtures/core-fixture-a-tabview.hanlinNativeScript": "fc7b167b751d88b90138c84a915e2037de95b3c4e6c34a60ef8560d9d958f90c",
+    "Scripts/NativeScript/Fixtures/core-fixture-b-frame-source/nativescript/app/bundle.mjs": "f27401535075e5122adf593b3f6ff2c74336aa8f6a78299e6dee7f643e7ae28e",
+    "Scripts/NativeScript/Fixtures/core-fixture-b-frame-source/nativescript/app/package.json": "1ca8ef6d84fcf6e1e2d5d3f3a301dd91508d31ad6df7337c2fa926b15c6603e2",
+    "Scripts/NativeScript/Fixtures/core-fixture-b-frame-source/script.json": "50d65a984deaec9fa642a1d31885ed6d3f8c8372fc6635e7be60419c27fab111",
+    "Scripts/NativeScript/Fixtures/core-fixture-b-frame.hanlinNativeScript": "58fd29a87f4ee9255d6e18e000671ffb27f16f041cb750425421f4c54bda6ca6",
+    "Scripts/NativeScript/Fixtures/core-fixture-c-tabview-frame-source/nativescript/app/bundle.mjs": "0be9ad93fca461cbe71f8b859fd674823bdcc570ed325dff0e91e037a6f686ff",
+    "Scripts/NativeScript/Fixtures/core-fixture-c-tabview-frame-source/nativescript/app/package.json": "95b9997eb5d2b0377120f252f8c2eadf43fb5db49da61fd805308c39dda971da",
+    "Scripts/NativeScript/Fixtures/core-fixture-c-tabview-frame-source/script.json": "fa66dc09527e147106dfe71c209c7a19f1356af02ddda4d71d9f813b9d33ef2b",
+    "Scripts/NativeScript/Fixtures/core-fixture-c-tabview-frame.hanlinNativeScript": "dd7a1c6a7621fea2f90a7e45ac20aefecf453496f75fb5a8335460b500d4a430",
+    "Scripts/NativeScript/Fixtures/core-unbundled-source/nativescript/app/bundle.mjs": "d886cb5219cb093dea465eea8afeae5db6dad789512a6c23132fa5a10f007105",
+    "Scripts/NativeScript/Fixtures/core-unbundled-source/nativescript/app/package.json": "df36db79dfe4bf0b008ade21a8faf97cd23c8a86921a8e8ebee2f99a81991da5",
+    "Scripts/NativeScript/Fixtures/core-unbundled-source/script.json": "848c87284b94dc16d467a19120ff2582c5e42404ba7c48b3d09d60ab1ae24748",
+    "Scripts/NativeScript/Fixtures/core-unbundled.hanlinNativeScript": "2f5948a1fae7e6987dfdfd7bc4b8de9c81c7549209128a509ffde094c1ae14cb",
+    "Scripts/NativeScript/Fixtures/package-window-alpha-source/nativescript/app/app.css": "b7dfa6b44863232069fd2831a9515fc3d65186d97184da32128830fe075f40cc",
+    "Scripts/NativeScript/Fixtures/package-window-alpha-source/nativescript/app/assets/identity.txt": "571add11d745e255bfbfcf2968b4189e3047108bc7edbce939706f3987d5354d",
+    "Scripts/NativeScript/Fixtures/package-window-alpha-source/nativescript/app/bundle.mjs": "39d69f0355a7b96740ce45d6dddf8f1a84b7a1d1bd23c59d62ac27177180f051",
+    "Scripts/NativeScript/Fixtures/package-window-alpha-source/nativescript/app/dynamic.mjs": "b12a5866481298c4d2b49878d606e695b61d34f273c27ebcfafed0dfcf7e6134",
+    "Scripts/NativeScript/Fixtures/package-window-alpha-source/nativescript/app/node_modules/colliding-private-module/index.mjs": "aaff0229b89832e6d17e7c30b05cd982a4ca4a88bcda33e5b056cdc7f819d24a",
+    "Scripts/NativeScript/Fixtures/package-window-alpha-source/nativescript/app/node_modules/colliding-private-module/package.json": "cb459b6e3ad542ed99043d2f67244f8fe3bcd5e9ae84b2e67597a4108f6b9d30",
+    "Scripts/NativeScript/Fixtures/package-window-alpha-source/nativescript/app/package.json": "2af28bc38a32a9ed8f5d7f8ed17e6c18a85d24d55abcf8e5cc104476ebbb0f79",
+    "Scripts/NativeScript/Fixtures/package-window-alpha-source/nativescript/app/relative.mjs": "eb8ec8a6f5b914af8738aebfa9aa0c598c6890cd03517dac2a9b0d91e41d84a8",
+    "Scripts/NativeScript/Fixtures/package-window-alpha-source/script.json": "f4efecb761a784e8ffd6d508eab5336647f1b34b7b3857ca069d07d4c2684cd0",
+    "Scripts/NativeScript/Fixtures/package-window-alpha.hanlinNativeScript": "51a09b7b30a28392d2fb7cb80a0786c781b6687cdd754b468e7cd7e0b886eb5d",
+    "Scripts/NativeScript/Fixtures/package-window-beta-source/nativescript/app/app.css": "dda023575000cf311adad9783e6cbee8260add9ef0b7a3b49f0e92bdc53c3303",
+    "Scripts/NativeScript/Fixtures/package-window-beta-source/nativescript/app/assets/identity.txt": "41abca0c3c1b65965b3136babee66969254e929cdbe7432d3f31a1f4694dbf54",
+    "Scripts/NativeScript/Fixtures/package-window-beta-source/nativescript/app/bundle.mjs": "39d69f0355a7b96740ce45d6dddf8f1a84b7a1d1bd23c59d62ac27177180f051",
+    "Scripts/NativeScript/Fixtures/package-window-beta-source/nativescript/app/dynamic.mjs": "990d22f95d47a4fe8ffc1892d7f99e83add333755e0caacc47cb2cec9f971b33",
+    "Scripts/NativeScript/Fixtures/package-window-beta-source/nativescript/app/node_modules/colliding-private-module/index.mjs": "ee056ef85bb7930e27c173c360a4799e73bca406eb768cebf31e8d8758512fd2",
+    "Scripts/NativeScript/Fixtures/package-window-beta-source/nativescript/app/node_modules/colliding-private-module/package.json": "cb459b6e3ad542ed99043d2f67244f8fe3bcd5e9ae84b2e67597a4108f6b9d30",
+    "Scripts/NativeScript/Fixtures/package-window-beta-source/nativescript/app/package.json": "44282aa97804d6e70c6cac128bc432c20a312ea2f7cec99c042cd817f83d622a",
+    "Scripts/NativeScript/Fixtures/package-window-beta-source/nativescript/app/relative.mjs": "b9fb7726d4f38f2e9b8b9792c4c73e5c07a470418d5cd9a5b672fc0a257a794f",
+    "Scripts/NativeScript/Fixtures/package-window-beta-source/script.json": "73e72dede904605d03086d60e7e43cbde9b70be3d471bd56ff82709f89c132f5",
+    "Scripts/NativeScript/Fixtures/package-window-beta.hanlinNativeScript": "51213860b16b9100e3794c2babddf44dc2db20ccf8238345ef6b690bdcb8f091",
+    "Scripts/NativeScript/Fixtures/sefaria-reader-core-source/README-CORE-TEST.txt": "066d9548bcfb98b793822ac7ce361acd214466604d1a2cc0c7dba252dbfd9838",
+    "Scripts/NativeScript/Fixtures/sefaria-reader-core-source/nativescript/app/bundle.mjs": "bf0756da9b307e131dd27f070f6e1364657fc7b9a97e55f05f6a2405dd4be6f5",
+    "Scripts/NativeScript/Fixtures/sefaria-reader-core-source/nativescript/app/package.json": "a5936cb19dbdd23bd010d21c4d08fb127c177b3bcd4afa312901cad6c14038cb",
+    "Scripts/NativeScript/Fixtures/sefaria-reader-core-source/script.json": "5830c5356bce9d2d0eb3dd4bf6190d55fbaad5df72fc6964052f135e7551089d",
+    "Scripts/NativeScript/Fixtures/sefaria-reader-core.hanlinNativeScript": "ae0174b83bfd0141ab762c3e513dc549575b1ec906bc9c2368f75f1115519a82",
+    "Scripts/NativeScript/Fixtures/uikit-tabbar-bridge-source/nativescript/app/bundle.mjs": "4acd9b875e42971c565bbbff7743ef8047daab8490c5411ac57a7e792bd405ef",
+    "Scripts/NativeScript/Fixtures/uikit-tabbar-bridge-source/nativescript/app/package.json": "4f079d0b39f07f198c9ea7432be1c10e098a3e46c40237aa82f0e58383700a10",
+    "Scripts/NativeScript/Fixtures/uikit-tabbar-bridge-source/script.json": "12d5b7987951f1f6f63c5eca665c2631461f8e5d6c7118ae5e9bb09e1243d833",
+    "Scripts/NativeScript/Fixtures/uikit-tabbar-bridge.hanlinNativeScript": "817ec42cde950c61ca02bcb903c99bf86b1c97bc6c251cc76737e6ded062668c",
+    "Scripts/NativeScript/Fixtures/window-factory-source/nativescript/app/bundle.mjs": "87666853ba4c9cda5ff93cdd28d3eb972fab958f94049cb76ea28075ed1b9919",
+    "Scripts/NativeScript/Fixtures/window-factory-source/nativescript/app/package.json": "8f140ce326b8a5c2d3931249c4f826b66d565a35c5439ae8025b92de21077a04",
+    "Scripts/NativeScript/Fixtures/window-factory-source/script.json": "b7774cbe4a980c5986c014cbb1471961f20e5f2b0b353f2bed97100e19f49f5b",
+    "Scripts/NativeScript/Fixtures/window-factory.hanlinNativeScript": "c4a6500da6b0b5a6e3a29c5806a7c5deaccff1357c494cdd1b06e87b8eb11c20",
+    "Scripts/NativeScript/Prepared/fixture-a/nativescript/app/bundle.mjs": "9f5665b47844272dc366f1e5cc8895023bf3a4e578d5d2629ac96c878b2f16a7",
+    "Scripts/NativeScript/Prepared/fixture-a/nativescript/app/fixture-resource.txt": "f1e6b20835330d7706ab251ea7cd165728fc153119ab55f299bc925c11e3cd0d",
+    "Scripts/NativeScript/Prepared/fixture-a/nativescript/app/package.json": "7aa87d3aa4e96dfcfbaab40b084ee8b4fb51a48357d7d2991e0144a72e0f13c5",
+    "Scripts/NativeScript/Prepared/fixture-a/nativescript/app/rolldown-runtime-KocBV9tG.mjs": "43872bdcbdb13f78bd6f5346b0e96305e0251b702045df0d71ba3b947c5fa68d",
+    "Scripts/NativeScript/Prepared/fixture-a/nativescript/app/vendor.mjs": "8e6e52298d2986b1c470649c00c31905f38300017dcabe08fd00cb727436e9b4",
+    "Scripts/NativeScript/Prepared/fixture-b/nativescript/app/bundle.mjs": "9f5665b47844272dc366f1e5cc8895023bf3a4e578d5d2629ac96c878b2f16a7",
+    "Scripts/NativeScript/Prepared/fixture-b/nativescript/app/fixture-resource.txt": "f1e6b20835330d7706ab251ea7cd165728fc153119ab55f299bc925c11e3cd0d",
+    "Scripts/NativeScript/Prepared/fixture-b/nativescript/app/package.json": "cf1b9ac6138c79f334f26033f50e142c3942540c50176fcdb9fafcdef971811f",
+    "Scripts/NativeScript/Prepared/fixture-b/nativescript/app/rolldown-runtime-KocBV9tG.mjs": "43872bdcbdb13f78bd6f5346b0e96305e0251b702045df0d71ba3b947c5fa68d",
+    "Scripts/NativeScript/Prepared/fixture-b/nativescript/app/vendor.mjs": "8e6e52298d2986b1c470649c00c31905f38300017dcabe08fd00cb727436e9b4",
+    "Scripts/NativeScript/README.md": "facdf9d1e81f6382ba5ac068bf3018435f35cf5ebad5e219799e9e088d4d1fc5",
+    "Scripts/NativeScript/Tests/app-binary-preflight.test.mjs": "85d9896cb61759d17081bd851e626c6c1148eb07e797209892ec7bdf07699ebb",
+    "Scripts/NativeScript/Tests/assistant.test.mjs": "0f39ba3362fcde8c9975c98a2eba5aebc510190f6c8e1fdb3cab4f55a1dcdcd5",
+    "Scripts/NativeScript/Tests/live-activities.test.mjs": "c0e65560079b04441d94f8023a403d41a076e14d1b31437db9ee28410ad862f5",
+    "Scripts/NativeScript/Tests/miniapps-sharing.test.mjs": "f968bca7095d2b80e64a4ecde69316929e062e3754fc62d4362743dff7887ed3",
+    "Scripts/NativeScript/Tests/parity-async-startup.test.mjs": "48af264952dd3ac25729d8ad00df45fa31c8c29499cddc064228a1ec60d440f2",
+    "Scripts/NativeScript/Tests/window-factory.test.mjs": "5ec019c1202eec695355b3eb1ec8498134af3161df485a91b6f163e2ac193cab",
+    "Scripts/NativeScript/app-binary-preflight.mjs": "f7aa0390c863534688b71df86437b0f5583489d6c5e54b2cc097730603216f87",
+    "Scripts/NativeScript/build-controller-fixtures.mjs": "6154be6c9921aae6b976414e433dbc81dbaae917bc94fe032465a1d6aa3f8fb7",
+    "Scripts/NativeScript/build-host-services.mjs": "8b0aebdac8569ed264142221a181991db0c358ec6298f372ff9ef23e2447c9e1",
+    "Scripts/NativeScript/build-metadata-tool.py": "f4318f38b1c6a9c56ba54edb0d270a6374178fa5a8e024ebfddb9790f7ae3cf5",
+    "Scripts/NativeScript/build-sefaria-fixture.mjs": "fbce2ffa1dd7bb35d3f69a73fd8110a6b8c89cda9d3580a877fad8c448845c21",
+    "Scripts/NativeScript/build-step-metadata-generator-wrapper.py": "577e4d58a3bebd29e379918938199aacff0a4c775cfb1c4923e1f7735686238c",
+    "Scripts/NativeScript/build-unbundled-fixture.mjs": "0364a215c96692b7638149658e79e0ebeef78788dc55ea265d8ed109fd7b918e",
+    "Scripts/NativeScript/build-window-factory-fixture.mjs": "25b3b0f68df8cf9fd4aafe06618199cbf0c4555ccbbb23aedd0a6404a5aaa250",
+    "Scripts/NativeScript/build-window-factory.mjs": "c0784286a272e22a3242bfd4ca90aae683e594c557897643aa9fa1e0a4d8f272",
+    "Scripts/NativeScript/build_package_window_fixtures.py": "ee7676ba809fad8b5df4c586ea77349331200585fc82643c59f4b098c24ceba4",
+    "Scripts/NativeScript/dependency-lock.json": "8499976a4ea0a069ed654b09b597d8fabede4bbbfb62227451a68707b851e8e5",
+    "Scripts/NativeScript/hanlin-nsld.sh": "942ec62bda6b70ecb55fe2de29c21deab07b5d8c954ec9b5f63544cc10728f50",
+    "Scripts/NativeScript/host-services.ts": "ab7c9286ee944e9cd22721e44dbb526d3da9ba71661b12c933a1be3d4e0bbb7a",
+    "Scripts/NativeScript/metadata_public_headers.py": "5a8a110a3fe4a692faede3211a22b0326065cd43026a4f47c3e3d7d1d5de4e5f",
+    "Scripts/NativeScript/nativescript.config.ts": "461cd2e75c9b4b4f08a258659b9e8efef9d39909520c678bd58892232610463f",
+    "Scripts/NativeScript/package-lock.json": "fccc5039c760759c5a5751b2056300cd23204f897e5d1ce26408c4a108e4de78",
+    "Scripts/NativeScript/package.json": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b",
+    "Scripts/NativeScript/preflight-ios-dependencies.mjs": "80b6abe07b87aa3a44dbf16d73c79a5ff1c001cd29ff09cd13af038ab6b54c60",
+    "Scripts/NativeScript/prepare-fixture.mjs": "03d54bb10e3b25ec5796e1c7195929b93a7cdb321451985651e82bbaae8270a4",
+    "Scripts/NativeScript/prepare-ios-dependencies.mjs": "d8b92b178857001d13d32359444a5301b32a1dd7a553341d1f0b7f7fbb27ff75",
+    "Scripts/NativeScript/prepare-production-package.mjs": "99e4e33110280f360cdd83978a4cffba0e1f58aee768c6de113504bd31dd9308",
+    "Scripts/NativeScript/probe-sdk-metadata.py": "d2376c82488cd140edcbac01be20e0cbabbd26bbdc9a6e196332fbafa15172ca",
+    "Scripts/NativeScript/tsconfig.json": "ef1e54b41414c08e9dbd09b19dc05716ea5c0b6b531a626ffd1e8077e4e666d4",
+    "Scripts/NativeScript/vite.config.mts": "d4051cddca6c72d7955ca2e3e1a7c6271ae6b223d6df47f9edc341a1ed67d334",
+    "Scripts/NativeScript/window-factory.d.ts": "1074405a24858b34596ef951dbfc4804a5cbc9d6353d67272b3287d0c90674f5",
+    "Scripts/NativeScript/window-factory.mjs": "f21bf759c988c9ae57ce90aaa3a68a8bb5c8696bb3f11551ebca94499c343e2d",
+    "Scripts/NativeScript/window-host.mjs": "dea0cbf557f1b1f04c3ad54d9792e794192e2f58c6c8926764870b6d5fccedeb"
+  },
+  "node": "v24.22.0",
+  "dependency_locks": {
+    "native": {
+      "original_path": "Scripts/NativeScript/package-lock.json",
+      "original_sha256": "fccc5039c760759c5a5751b2056300cd23204f897e5d1ce26408c4a108e4de78",
+      "consumed_entries": {
+        "node_modules/typescript": {
+          "version": "5.9.3",
+          "resolved": "https://registry.npmjs.org/typescript/-/typescript-5.9.3.tgz",
+          "integrity": "sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==",
+          "dev": true,
+          "license": "Apache-2.0",
+          "bin": {
+            "tsc": "bin/tsc",
+            "tsserver": "bin/tsserver"
+          },
+          "engines": {
+            "node": ">=14.17"
+          }
+        }
+      },
+      "installed": {
+        "node_modules/typescript": {
+          "name": "typescript",
+          "version": "5.9.3",
+          "package_json_sha256": "822ef7ca6452205657b6288b066481ecf508bfbf43455d715cf7d3ec457561e6"
+        }
+      }
+    },
+    "expo": {
+      "original_path": "Scripts/Expo/package-lock.json",
+      "original_sha256": "b20d9bf2ff4850269f72f79ef4e5b1b274ab648226a0597f671fe59ebb5dcfce",
+      "consumed_entries": {
+        "node_modules/typescript": {
+          "name": "@typescript/typescript6",
+          "version": "6.0.2",
+          "resolved": "https://registry.npmjs.org/@typescript/typescript6/-/typescript6-6.0.2.tgz",
+          "integrity": "sha512-mbCddXd+jm7hfx7w2YU64/Av4/NqqeG3GoRZgxPcgoTxYjhrcfJRw9ULch71SS4G+Q3bOXFhRvPqjguN0Hyp5w==",
+          "devOptional": true,
+          "license": "Apache-2.0",
+          "dependencies": {
+            "@typescript/old": "npm:typescript@^6"
+          },
+          "bin": {
+            "tsc6": "bin/tsc6"
+          }
+        },
+        "node_modules/@typescript/old": {
+          "name": "typescript",
+          "version": "6.0.3",
+          "resolved": "https://registry.npmjs.org/typescript/-/typescript-6.0.3.tgz",
+          "integrity": "sha512-y2TvuxSZPDyQakkFRPZHKFm+KKVqIisdg9/CZwm9ftvKXLP8NRWj38/ODjNbr43SsoXqNuAisEf1GdCxqWcdBw==",
+          "devOptional": true,
+          "license": "Apache-2.0",
+          "bin": {
+            "tsc": "bin/tsc",
+            "tsserver": "bin/tsserver"
+          },
+          "engines": {
+            "node": ">=14.17"
+          }
+        },
+        "node_modules/base64-js": {
+          "version": "1.5.1",
+          "resolved": "https://registry.npmjs.org/base64-js/-/base64-js-1.5.1.tgz",
+          "integrity": "sha512-AKpaYlHn8t4SVbOHCy+b5+KKgvR4vrsD8vbvrbiQJps7fKDTkjkDry6ji0rUJjC0kzbNePLwzxq8iypo41qeWA==",
+          "funding": [
+            {
+              "type": "github",
+              "url": "https://github.com/sponsors/feross"
+            },
+            {
+              "type": "patreon",
+              "url": "https://www.patreon.com/feross"
+            },
+            {
+              "type": "consulting",
+              "url": "https://feross.org/support"
+            }
+          ],
+          "license": "MIT"
+        }
+      },
+      "installed": {
+        "node_modules/typescript": {
+          "name": "@typescript/typescript6",
+          "version": "6.0.2",
+          "package_json_sha256": "d9b8fb53c67c947fece83bcb73fa8512227ea6a12b110e096fdab8ecdc02b655"
+        },
+        "node_modules/@typescript/old": {
+          "name": "typescript",
+          "version": "6.0.3",
+          "package_json_sha256": "9332e97c30d3e53ed54910b89207ed657fb444066484df6e5b6965bf130865e9"
+        },
+        "node_modules/base64-js": {
+          "name": "base64-js",
+          "version": "1.5.1",
+          "package_json_sha256": "9758f3ab8c45e07bb9a368e32f9a8b3729623bbf47cbbb205b32d674ab2a91f0"
+        }
+      }
+    }
+  },
+  "compiler_sha256": {
+    "native": "3ae902c92cc44dace175c0e69e13a4b0899f6983c6121d76b9ab8dd5795e7675",
+    "expo": "d3f3cd2b04b7f466f4484df921b744223f7bd1f3e353ec9110bdf52695b983d5"
+  },
+  "source_unchanged": true,
+  "all_actual_invocations_passed": true,
+  "finished_at": "2026-11-26T12:51:50.324381+00:00"
+}

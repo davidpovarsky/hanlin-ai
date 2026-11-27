@@ -1,9 +1,11 @@
 ---
-description: "Repository router for the persistent named AI team across Antigravity and Codex."
+description: "Repository router and two-tier execution policy (NORMAL vs TEAM) for the persistent named AI team across Antigravity and Codex."
 trigger: always_on
 ---
 
-# Named AI Team — Repository Router
+# Named AI Team — Repository Router & Execution Policy
+
+The current Hanlin two-wave execution is governed by root `AGENTS.md` and the dated execution note in `docs/ai-team/TEAM.md`: the owner explicitly requested ChatGPT built-in agents. Apply the actual platform API and invocation identifiers; preserve evidence-based acceptance and existing authorization.
 
 This repository is configured with the persistent named AI team:
 - **איתן (eitan)**: Principal architect (boundaries, contracts, migrations)
@@ -14,11 +16,24 @@ This repository is configured with the persistent named AI team:
 - **יעל (yael)**: Research (API capabilities, official specs, unknowns)
 - **דנה (dana)**: Security (permissions, session isolation, privacy, secrets)
 
+## Execution Modes: NORMAL (Default) vs TEAM (Explicit Request Only)
+1. **Logical Identities Active:** The 7 roles are always active with their fixed instructions and project assignments.
+2. **Mode 1: NORMAL (Default):**
+   - Direct execution in the main session without subagents (`invoke_subagent` is NOT used).
+   - Load role instructions from `.agents/roles/<role>.md` and `docs/ai-team/PROJECT_ASSIGNMENTS.md`.
+   - Document progress in Asana as `[<Role> | <Specialty>] [MAIN_SESSION]`.
+   - Task complexity does not authorize subagent invocation.
+3. **Mode 2: TEAM (Explicit Request Only):**
+   - Activated only when user explicitly requests it (e.g., "עבוד במצב צוות", "הפעל סוכני משנה", "חלק את העבודה בין הסוכנים").
+   - Main agent coordinates and invokes required subagents via `invoke_subagent`.
+   - Document progress in Asana as `[<Role> | <Specialty>] [SUBAGENT]` with conversation ID evidence.
+
 ## On-Demand Guidance
 Before acting on a task, load and review:
 - Root `AGENTS.md` and `GEMINI.md`
 - `docs/ai-team/TEAM.md`
 - `docs/ai-team/PROJECT_ASSIGNMENTS.md`
 - `docs/ai-team/ASANA_POLICY.md`
+- Specific role instructions under `.agents/roles/<role>.md`
 
-Select the matching agent from `.agents/agents/` or role from `.agents/roles/`. Preserve existing repo instructions, approval gates, and frozen components.
+Preserve current repository-specific technical instructions, security requirements and unfulfilled acceptance gates; apply existing owner authorization rather than reinstating historical pauses.

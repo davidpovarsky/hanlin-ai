@@ -1,0 +1,58 @@
+{
+  "MockTracer.swift": {
+    "bytes": 5401,
+    "sha256": "a6a51dde8ad9779723a7482d5789e25dd498ee41df449bd8cdd7e33c2fffe864"
+  },
+  "OpenAIPromptCacheControlTests.swift": {
+    "bytes": 6659,
+    "sha256": "623b47a3a43dbf4a57948b5eef7d7df436c4e7f65c222ca3fcf7774f9b08cd7c"
+  },
+  "acceptance.json": {
+    "bytes": 5098,
+    "sha256": "d9facc69c6ba29f023783bd48ea5bf6cffd9b5361a6c0e40b04adcd5c19c7f9f"
+  },
+  "core-dispatch.json": {
+    "bytes": 10056,
+    "sha256": "361476ff6a366526ac163acfd98a63b65e590d1e47a496f7b6cdb5f8b460ee01"
+  },
+  "core-runner.log.gz": {
+    "bytes": 884,
+    "sha256": "0acf547bd11ea339d0d5c48521bb80641394d85a04025010ab3ace1f2cd0a367"
+  },
+  "git-preparation.json": {
+    "bytes": 3943,
+    "sha256": "3446a36ec0eef933ea2fe3a4e28e907ec7cadcc4bf8a9f1200dcca5e0db1965e"
+  },
+  "original-runner-receipt.json": {
+    "bytes": 16366,
+    "sha256": "01585fab28254db38007f4ef1402ed132e9501e8a46902b87647b64bd6627662"
+  },
+  "prepare-producer.py": {
+    "bytes": 2484,
+    "sha256": "227718cd6389b9b9077daa58ab6ae7b28bf0a1943645782987fcf87700ca0e6f"
+  },
+  "producer-preparation.json": {
+    "bytes": 3016,
+    "sha256": "3ccfc81f2b690157903c02d9debedff1fd6277e0f5e651d628716300495ccffd"
+  },
+  "proof-Package.resolved": {
+    "bytes": 1226,
+    "sha256": "94502e6fb2a6c9a406befa7a7c5d3cc9309cfddeaf6bd324857a5bd7e4081d6f"
+  },
+  "proof-Package.swift": {
+    "bytes": 2697,
+    "sha256": "558d4a894abbd3b07b6fa040d8332f54f0ab7f7cc051a415dbdd782da0ae4e3b"
+  },
+  "raw.log.gz": {
+    "bytes": 4550,
+    "sha256": "59baf4d4d7ad7b78e165f6212c974796d39b4b175890a9b0fffc5ee057f8948a"
+  },
+  "run-core.py": {
+    "bytes": 3084,
+    "sha256": "f886c5e2bca89d31a81b1685de155efd936288af0aa479d3b8a8cabbf65539b0"
+  },
+  "transfer.json": {
+    "bytes": 247,
+    "sha256": "185a7672fe15b14226295f716c792140f7433b73b97e42ed4f18d14b49a81281"
+  }
+}

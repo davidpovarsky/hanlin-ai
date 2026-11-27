@@ -1,0 +1,35 @@
+Paired command starting: notification-os-tests.log; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: notification-os-tests.log; pid=52635; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: notification-os-tests.log; pid=52635; elapsed=30.0s; log_bytes=1032; observed_exit=None
+Paired command running: notification-os-tests.log; pid=52635; elapsed=60.0s; log_bytes=4008; observed_exit=None
+Paired command running: notification-os-tests.log; pid=52635; elapsed=90.0s; log_bytes=5904; observed_exit=None
+Paired command running: notification-os-tests.log; pid=52635; elapsed=120.1s; log_bytes=15402; observed_exit=None
+Paired command running: notification-os-tests.log; pid=52635; elapsed=150.1s; log_bytes=23460; observed_exit=None
+Paired command running: notification-os-tests.log; pid=52635; elapsed=180.1s; log_bytes=30408; observed_exit=None
+Paired command running: notification-os-tests.log; pid=52635; elapsed=210.1s; log_bytes=35010; observed_exit=None
+Paired command running: notification-os-tests.log; pid=52635; elapsed=240.1s; log_bytes=35010; observed_exit=None
+Paired command running: notification-os-tests.log; pid=52635; elapsed=270.1s; log_bytes=35010; observed_exit=None
+Paired command running: notification-os-tests.log; pid=52635; elapsed=300.1s; log_bytes=35010; observed_exit=None
+Paired command completed: notification-os-tests.log; pid=52635; elapsed=323.9s; log_bytes=37180; observed_exit=65
+Paired command starting: notification-os-summary.json; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: notification-os-summary.json; pid=56288; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: notification-os-summary.json; pid=56288; elapsed=0.1s; log_bytes=1775; observed_exit=0
+Paired command starting: notification-os-nodes.json; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: notification-os-nodes.json; pid=56296; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: notification-os-nodes.json; pid=56296; elapsed=0.0s; log_bytes=2579; observed_exit=0
+Paired command starting: notification-os-selected-tests.log; pid=None; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command running: notification-os-selected-tests.log; pid=56297; elapsed=0.0s; log_bytes=0; observed_exit=None
+Paired command completed: notification-os-selected-tests.log; pid=56297; elapsed=0.0s; log_bytes=57; observed_exit=0
+Traceback (most recent call last):
+  File "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v6.py", line 577, in <module>
+    raise SystemExit(main())
+                     ^^^^^^
+  File "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v6.py", line 225, in main
+    return child_setup(decision_path) if args.child == "setup" else child_test(decision_path)
+                                                                    ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v6.py", line 160, in child_test
+    summary = r.verify_native_result(result, "notification-os", [SELECTOR], 1, code)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/ProductSplit/run_paired_acceptance.py", line 352, in verify_native_result
+    raise RuntimeError("Original runtime acceptance did not execute every selected case: " + prefix)
+RuntimeError: Original runtime acceptance did not execute every selected case: notification-os

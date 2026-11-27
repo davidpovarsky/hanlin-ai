@@ -1,0 +1,75 @@
+{
+  "originHash": "70fc06b46aeb8fed3855328840647d54fc93f7856915c6e974abadf11311c9d2",
+  "pins": [
+    {
+      "identity": "equatable",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/ordo-one/equatable",
+      "state": {
+        "revision": "597c2bb34af0c51331eb3b5e705f942d8ee20daa",
+        "version": "1.4.1"
+      }
+    },
+    {
+      "identity": "hanlin-streaming-markdown",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/davidpovarsky/hanlin-streaming-markdown",
+      "state": {
+        "revision": "5cbb4b6c950051f98f02a0b0ae56756f5174a9b8"
+      }
+    },
+    {
+      "identity": "highlightswift",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/appstefan/highlightswift",
+      "state": {
+        "revision": "99c431b38a1444a5fd6a4978307fbbefe3a7af53"
+      }
+    },
+    {
+      "identity": "iosmath",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/junyan72/iosMath",
+      "state": {
+        "revision": "ba9ab7729b151329c54fd895a7c1859981d9484c"
+      }
+    },
+    {
+      "identity": "swift-cmark",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/swiftlang/swift-cmark",
+      "state": {
+        "revision": "08ddb528923cc1a6527e02b7a1aee9e516ca749a",
+        "version": "0.9.0"
+      }
+    },
+    {
+      "identity": "swift-markdown",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/swiftlang/swift-markdown.git",
+      "state": {
+        "revision": "7d9a5ce307528578dfa777d505496bd5f544ad94",
+        "version": "0.7.3"
+      }
+    },
+    {
+      "identity": "swift-syntax",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/swiftlang/swift-syntax.git",
+      "state": {
+        "revision": "79e4b74a295b6eb74a8b585e3a39d29e70c1dbd1",
+        "version": "603.0.2"
+      }
+    },
+    {
+      "identity": "swiftui-shimmer",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/markiv/SwiftUI-Shimmer",
+      "state": {
+        "revision": "0226e21f9bf355d40e07e5f5e1c33679d50e167f",
+        "version": "1.5.1"
+      }
+    }
+  ],
+  "version": 3
+}

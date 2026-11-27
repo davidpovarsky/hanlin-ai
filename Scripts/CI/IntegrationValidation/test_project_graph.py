@@ -113,18 +113,29 @@ class ProjectGraphTests(unittest.TestCase):
 
     def test_native_surfaces_share_only_miniapps_namespace(self):
         import plistlib
-        for info in [ROOT / "HanlinMiniAppsApp/Info.plist",
-                     *sorted((ROOT / "HanlinMiniAppsExtensions").glob("*/Info.plist"))]:
-            config = plistlib.loads(info.read_bytes())["HanlinExtensionHost"]
-            self.assertEqual(config["AppGroupIdentifier"], "group.com.itorah.chavrusachat")
-            self.assertEqual(config["StorageNamespace"], "HanlinMiniApps/v1")
-        self.assertEqual(
-            {path.parent.name for path in (ROOT / "HanlinMiniAppsExtensions").glob("*/Info.plist")},
-            {"Notification", "Share", "Translation", "Widgets"},
-        )
+        infos = sorted((ROOT / "HanlinMiniAppsExtensions").glob("*/Info.plist"))
+        self.assertEqual({path.parent.name for path in infos}, {
+            "Widgets", "Share", "Translation", "Notification",
+            "Keyboard", "NotificationContent", "CameraCapture"})
+        for info in [ROOT / "HanlinMiniAppsApp/Info.plist", *infos]:
+            value = plistlib.loads(info.read_bytes())
+            if info.parent.name == "CameraCapture":
+                self.assertNotIn("HanlinExtensionHost", value)
+                self.assertEqual(value["EXAppExtensionAttributes"]["EXExtensionPointIdentifier"],
+                                 "com.apple.securecapture")
+                self.assertEqual(value["HanlinContainingApplicationIdentifier"],
+                                 "com.itorah.hanlinminiapps")
+            else:
+                config = value["HanlinExtensionHost"]
+                self.assertEqual(config["AppGroupIdentifier"], "group.com.itorah.chavrusachat")
+                self.assertEqual(config["StorageNamespace"], "HanlinMiniApps/v1")
         for entitlements in (ROOT / "HanlinMiniAppsExtensions").glob("*/*.entitlements"):
-            self.assertIn("group.com.itorah.chavrusachat",
-                          plistlib.loads(entitlements.read_bytes())["com.apple.security.application-groups"])
+            value = plistlib.loads(entitlements.read_bytes())
+            if entitlements.parent.name == "CameraCapture":
+                self.assertNotIn("com.apple.security.application-groups", value)
+            else:
+                self.assertIn("group.com.itorah.chavrusachat",
+                              value["com.apple.security.application-groups"])
 
     def test_reject_whole_app_source_membership(self):
         self.mini["fileSystemSynchronizedGroups"].append("D7B6C3C32D50A55D004E3AD6")

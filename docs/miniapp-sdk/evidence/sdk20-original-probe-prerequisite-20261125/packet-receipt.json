@@ -1,0 +1,188 @@
+{
+  "schema": 1,
+  "observedAt": "2026-11-25T23:21:06.728793+00:00",
+  "source": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+  "mode": "retained actual producer outputs",
+  "members": [
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/probe-fixture-sdk20-preparation-v1/state.json",
+      "label": "probe/state.json",
+      "bytes": 12255,
+      "sha256": "949660502e1637c5c96aa41372e07d380fe36a0bab586c0f43cc87e7fbcd50d9",
+      "storedBytes": 12255,
+      "storedSHA256": "949660502e1637c5c96aa41372e07d380fe36a0bab586c0f43cc87e7fbcd50d9",
+      "gzip": false,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/probe-fixture-sdk20-preparation-v1/terminal/state.json"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/probe-fixture-sdk20-preparation-v1/ledger.json",
+      "label": "probe/ledger.json",
+      "bytes": 1331,
+      "sha256": "fd4e5beca04d71756853be1b9f0badb74f0d0d58bee6213782c22fac2782b4b1",
+      "storedBytes": 1331,
+      "storedSHA256": "fd4e5beca04d71756853be1b9f0badb74f0d0d58bee6213782c22fac2782b4b1",
+      "gzip": false,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/probe-fixture-sdk20-preparation-v1/terminal/ledger.json"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/probe-fixture-sdk20-preparation-v1/original-build-probe.log",
+      "label": "probe/original-build-probe.log",
+      "bytes": 1936,
+      "sha256": "00c79aac2148416c650fe02b43d3d36687029ea8c7d806bff6473c16656560aa",
+      "storedBytes": 1936,
+      "storedSHA256": "00c79aac2148416c650fe02b43d3d36687029ea8c7d806bff6473c16656560aa",
+      "gzip": false,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/probe-fixture-sdk20-preparation-v1/terminal/original-build-probe.log"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/probe-fixture-sdk20-preparation-v1/prepared-tracked.patch",
+      "label": "probe/prepared-tracked.patch",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "storedBytes": 0,
+      "storedSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "gzip": false,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/probe-fixture-sdk20-preparation-v1/terminal/prepared-tracked.patch"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/probe-fixture-sdk20-preparation-v1/decision.json",
+      "label": "probe/decision.json",
+      "bytes": 5164,
+      "sha256": "c387c4826c7ad9864b2f1cc7ff7aebc82a15b5c98bf8034b769136c57e24e7a7",
+      "storedBytes": 5164,
+      "storedSHA256": "c387c4826c7ad9864b2f1cc7ff7aebc82a15b5c98bf8034b769136c57e24e7a7",
+      "gzip": false,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/probe-fixture-sdk20-preparation-v1/terminal/decision.json"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Fixtures/ExpoWidgetsProbe/ExpoWidgetsProbeA.hanlinExpo",
+      "label": "probe/outputs/Fixtures/ExpoWidgetsProbe/ExpoWidgetsProbeA.hanlinExpo",
+      "bytes": 302853,
+      "sha256": "26f1309c3851a6c5af30b24ce62d94b9dd28501b0075673ffdfadb53bd800eee",
+      "storedBytes": 302853,
+      "storedSHA256": "26f1309c3851a6c5af30b24ce62d94b9dd28501b0075673ffdfadb53bd800eee",
+      "gzip": false,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/probe-fixture-sdk20-preparation-v1/terminal/outputs/Fixtures/ExpoWidgetsProbe/ExpoWidgetsProbeA.hanlinExpo"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Fixtures/ExpoWidgetsProbe/ExpoWidgetsProbeB.hanlinExpo",
+      "label": "probe/outputs/Fixtures/ExpoWidgetsProbe/ExpoWidgetsProbeB.hanlinExpo",
+      "bytes": 302853,
+      "sha256": "af76fc6c37297bddc7e70bc2499694edb92d5d6ee18a51a584dca9feca8e0385",
+      "storedBytes": 302853,
+      "storedSHA256": "af76fc6c37297bddc7e70bc2499694edb92d5d6ee18a51a584dca9feca8e0385",
+      "gzip": false,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/probe-fixture-sdk20-preparation-v1/terminal/outputs/Fixtures/ExpoWidgetsProbe/ExpoWidgetsProbeB.hanlinExpo"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/AI_HLYUITests/Fixtures/ExpoWidgetsProbeA.hanlinExpo",
+      "label": "probe/outputs/AI_HLYUITests/Fixtures/ExpoWidgetsProbeA.hanlinExpo",
+      "bytes": 302853,
+      "sha256": "26f1309c3851a6c5af30b24ce62d94b9dd28501b0075673ffdfadb53bd800eee",
+      "storedBytes": 302853,
+      "storedSHA256": "26f1309c3851a6c5af30b24ce62d94b9dd28501b0075673ffdfadb53bd800eee",
+      "gzip": false,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/probe-fixture-sdk20-preparation-v1/terminal/outputs/AI_HLYUITests/Fixtures/ExpoWidgetsProbeA.hanlinExpo"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/AI_HLYUITests/Fixtures/ExpoWidgetsProbeB.hanlinExpo",
+      "label": "probe/outputs/AI_HLYUITests/Fixtures/ExpoWidgetsProbeB.hanlinExpo",
+      "bytes": 302853,
+      "sha256": "af76fc6c37297bddc7e70bc2499694edb92d5d6ee18a51a584dca9feca8e0385",
+      "storedBytes": 302853,
+      "storedSHA256": "af76fc6c37297bddc7e70bc2499694edb92d5d6ee18a51a584dca9feca8e0385",
+      "gzip": false,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/probe-fixture-sdk20-preparation-v1/terminal/outputs/AI_HLYUITests/Fixtures/ExpoWidgetsProbeB.hanlinExpo"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeA.hanlinExpo",
+      "label": "probe/outputs/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeA.hanlinExpo",
+      "bytes": 325929,
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+      "storedBytes": 325929,
+      "storedSHA256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+      "gzip": false,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/probe-fixture-sdk20-preparation-v1/terminal/outputs/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeA.hanlinExpo"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeB.hanlinExpo",
+      "label": "probe/outputs/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeB.hanlinExpo",
+      "bytes": 325930,
+      "sha256": "c60e7d88f759118cf52c9ed50f464031a61402367e02e7fe45b50e37ee0bc016",
+      "storedBytes": 325930,
+      "storedSHA256": "c60e7d88f759118cf52c9ed50f464031a61402367e02e7fe45b50e37ee0bc016",
+      "gzip": false,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/probe-fixture-sdk20-preparation-v1/terminal/outputs/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeB.hanlinExpo"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbe.hanlinExpo",
+      "label": "probe/outputs/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbe.hanlinExpo",
+      "bytes": 325929,
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+      "storedBytes": 325929,
+      "storedSHA256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+      "gzip": false,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/probe-fixture-sdk20-preparation-v1/terminal/outputs/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbe.hanlinExpo"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIMalformed.hanlinExpo",
+      "label": "probe/outputs/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIMalformed.hanlinExpo",
+      "bytes": 274,
+      "sha256": "a2115ad2fc9395154e793c15fc0c42fffb056e7b259b6c63852b7b61531313e4",
+      "storedBytes": 274,
+      "storedSHA256": "a2115ad2fc9395154e793c15fc0c42fffb056e7b259b6c63852b7b61531313e4",
+      "gzip": false,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/probe-fixture-sdk20-preparation-v1/terminal/outputs/Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIMalformed.hanlinExpo"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
+      "label": "probe/outputs/AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
+      "bytes": 325929,
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+      "storedBytes": 325929,
+      "storedSHA256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+      "gzip": false,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/probe-fixture-sdk20-preparation-v1/terminal/outputs/AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/AI_HLYUITests/Fixtures/ExpoSwiftUIProbeB.hanlinExpo",
+      "label": "probe/outputs/AI_HLYUITests/Fixtures/ExpoSwiftUIProbeB.hanlinExpo",
+      "bytes": 325930,
+      "sha256": "c60e7d88f759118cf52c9ed50f464031a61402367e02e7fe45b50e37ee0bc016",
+      "storedBytes": 325930,
+      "storedSHA256": "c60e7d88f759118cf52c9ed50f464031a61402367e02e7fe45b50e37ee0bc016",
+      "gzip": false,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/probe-fixture-sdk20-preparation-v1/terminal/outputs/AI_HLYUITests/Fixtures/ExpoSwiftUIProbeB.hanlinExpo"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/AI_HLYUITests/Fixtures/ExpoSwiftUIProbe.hanlinExpo",
+      "label": "probe/outputs/AI_HLYUITests/Fixtures/ExpoSwiftUIProbe.hanlinExpo",
+      "bytes": 325929,
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+      "storedBytes": 325929,
+      "storedSHA256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+      "gzip": false,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/probe-fixture-sdk20-preparation-v1/terminal/outputs/AI_HLYUITests/Fixtures/ExpoSwiftUIProbe.hanlinExpo"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/AI_HLYUITests/Fixtures/ExpoSwiftUIMalformed.hanlinExpo",
+      "label": "probe/outputs/AI_HLYUITests/Fixtures/ExpoSwiftUIMalformed.hanlinExpo",
+      "bytes": 274,
+      "sha256": "a2115ad2fc9395154e793c15fc0c42fffb056e7b259b6c63852b7b61531313e4",
+      "storedBytes": 274,
+      "storedSHA256": "a2115ad2fc9395154e793c15fc0c42fffb056e7b259b6c63852b7b61531313e4",
+      "gzip": false,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/probe-fixture-sdk20-preparation-v1/terminal/outputs/AI_HLYUITests/Fixtures/ExpoSwiftUIMalformed.hanlinExpo"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/AI_HLYTests/Fixtures/HostServicesProbe.bundle/ExpoSwiftUIProbeA.hanlinExpo",
+      "label": "probe/outputs/AI_HLYTests/Fixtures/HostServicesProbe.bundle/ExpoSwiftUIProbeA.hanlinExpo",
+      "bytes": 325929,
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+      "storedBytes": 325929,
+      "storedSHA256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+      "gzip": false,
+      "oraclePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/probe-fixture-sdk20-preparation-v1/terminal/outputs/AI_HLYTests/Fixtures/HostServicesProbe.bundle/ExpoSwiftUIProbeA.hanlinExpo"
+    }
+  ]
+}

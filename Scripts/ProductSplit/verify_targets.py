@@ -9,6 +9,7 @@ import xml.etree.ElementTree as ET
 ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(ROOT / "Scripts/CI/IntegrationValidation"))
 from project_graph import parse_project, validate_graph, validate_agent_sdk_linkage
+from extension_inventory import EXTENSIONS, NEW_EXTENSION_KEYS, SIGNING_TARGETS, APP_BUNDLES
 
 
 def validate_native_test_membership():
@@ -74,9 +75,47 @@ def native_ui_typecheck_command(architecture, sdk_path, platform_path, sources):
         command += ["-strict-concurrency=" + settings["SWIFT_STRICT_CONCURRENCY"]]
     return command + list(sources)
 
+def validate_system_extension_sources(root=ROOT):
+    """Validate actual MiniApps entrypoints and entitlement ownership before Xcode."""
+    for target in SIGNING_TARGETS:
+        assert (root / target.entitlements).is_file(), target.entitlements
+    principals = {
+        "HanlinMiniAppsKeyboard": "HanlinMiniAppsKeyboard",
+        "HanlinMiniAppsNotificationContent": "HanlinMiniAppsNotificationContent",
+    }
+    for spec in EXTENSIONS:
+        if spec.key not in NEW_EXTENSION_KEYS:
+            continue
+        assert spec.ai_target is None, "New native surfaces belong only to MiniApps"
+        name = spec.mini_target
+        path = root / "HanlinMiniAppsExtensions" / spec.mini_folder
+        info = plistlib.loads((path / "Info.plist").read_bytes())
+        entitlements = plistlib.loads((path / (name + ".entitlements")).read_bytes())
+        assert list(path.glob("*.swift")), "Missing native extension entrypoint: " + name
+        if spec.key == "camera-capture":
+            assert info["EXAppExtensionAttributes"]["EXExtensionPointIdentifier"] == "com.apple.securecapture"
+            assert "NSExtension" not in info, "Capture uses ExtensionKit metadata"
+            assert info["HanlinContainingApplicationIdentifier"] == APP_BUNDLES["miniapps"]
+            assert not entitlements, "Locked capture cannot use App Groups or additional capabilities"
+        else:
+            extension = info["NSExtension"]
+            point = ("com.apple.keyboard-service" if spec.key == "keyboard"
+                     else "com.apple.usernotifications.content-extension")
+            assert extension["NSExtensionPointIdentifier"] == point
+            assert extension["NSExtensionPrincipalClass"] == "$(PRODUCT_MODULE_NAME)." + principals[name]
+            assert entitlements["com.apple.security.application-groups"] == ["group.com.itorah.chavrusachat"]
+            assert info["HanlinExtensionHost"]["AppGroupIdentifier"] == "group.com.itorah.chavrusachat"
+            if spec.key == "keyboard":
+                assert extension["NSExtensionAttributes"]["RequestsOpenAccess"] is True
+            else:
+                assert extension["NSExtensionAttributes"]["UNNotificationExtensionCategory"] == info["HanlinExtensionHost"]["NotificationCategoryIdentifier"]
+            assert info["HanlinExtensionHost"]["StorageNamespace"] == "HanlinMiniApps/v1"
+    return {"newExtensionEntryPoints": 3, "signingTargets": len(SIGNING_TARGETS)}
+
 
 def main():
     validate_native_test_membership()
+    validate_system_extension_sources()
     # The parser rejects duplicate IDs/keys and reads quoted and ordinary OpenStep alike.
     project_text = (ROOT / "AI_HLY.xcodeproj/project.pbxproj").read_text(encoding="utf-8")
     project = parse_project(project_text)

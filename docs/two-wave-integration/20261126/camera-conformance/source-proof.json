@@ -1,0 +1,27 @@
+{
+  "sourceBase": "628dbe083a5ceffc28b026e5701cd8c71c8734ff",
+  "commit": "c3f9076d3d8c5d0c29b002b6e20de2fb16f009bf",
+  "worktree": "/mnt/development/projects/worktrees/hanlin-miniapps-camera-conformance-20261126",
+  "branch": "codex/hanlin-miniapps-camera-conformance-20261126",
+  "path": "HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.swift",
+  "beforeSHA256": "ee8a54ba3150ca5cdabc99f55f245e64c5b68087d8e7559a149575fba65cf448",
+  "afterSHA256": "6c8bdb75e50a1958d717752610d697393aa7229f93fd73e8a26143f6f94f616e",
+  "beforeEqualsOriginal1177": true,
+  "afterEqualsOriginal13bf": true,
+  "originalFixes": [
+    "8eb6e54d003c0be82ea511a214b81a93a5a25f51",
+    "6cc92728e54f7382c017386ce22d4b08f187b104"
+  ],
+  "checks": {
+    "exactScope": "PASS",
+    "diffCheck": "PASS",
+    "appleBuild": "NOT_RUN",
+    "sourcePinsChanged": false,
+    "newShippingTargets": false
+  },
+  "bundle": "/tmp/hanlin-miniapps-camera-conformance-20261126-c2x04nwz/camera-conformance.bundle",
+  "bundleBytes": 868,
+  "bundleSHA256": "5c73643fea682821ace4ffa256e58e30d94fe974e6c57ff1fbcaad3f41bf6b5e",
+  "diff": "diff --git a/HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.swift b/HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.swift\nindex 14948c6b8..27629f82e 100644\n--- a/HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.swift\n+++ b/HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.swift\n@@ -1,10 +1,11 @@\n import AppIntents\n+import ExtensionKit\n import HanlinCameraCaptureUI\n import LockedCameraCapture\n import SwiftUI\n \n @main\n-struct HanlinMiniAppsCameraCaptureExtension: LockedCameraCaptureExtension {\n+struct HanlinMiniAppsCameraCaptureExtension: @MainActor LockedCameraCaptureExtension {\n     var body: some LockedCameraCaptureExtensionScene {\n         LockedCameraCaptureUIScene { session in\n             HanlinLockedCameraCaptureView(session: session)\n",
+  "worktreeStatus": ""
+}

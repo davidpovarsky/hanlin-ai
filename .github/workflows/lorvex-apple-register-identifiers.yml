@@ -1,0 +1,85 @@
+name: Lorvex Apple Register Bundle Identifiers
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  register:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Create explicit Lorvex identifiers and App Groups capabilities through Apple API
+        shell: bash
+        env:
+          ASC_KEY_P8: ${{ secrets.ASC_KEY_P8 }}
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+        run: |
+          set -euo pipefail
+          python3 -m pip install -q 'PyJWT[crypto]==2.10.1'
+          python3 - <<'PY'
+          import os,base64,time,json,urllib.request,urllib.error,urllib.parse,jwt
+          key=base64.b64decode(os.environ["ASC_KEY_P8"]).decode("utf-8")
+          now=int(time.time())
+          token=jwt.encode({"iss":os.environ["ASC_ISSUER_ID"],"iat":now-15,"exp":now+600,"aud":"appstoreconnect-v1"},key,algorithm="ES256",headers={"kid":os.environ["ASC_KEY_ID"],"typ":"JWT"})
+          root="https://api.appstoreconnect.apple.com/v1"
+          def api(method,path,body=None):
+            headers={"Authorization":"Bearer "+token,"Accept":"application/json","Content-Type":"application/json"}
+            payload=json.dumps(body).encode() if body is not None else None
+            req=urllib.request.Request(root+path,data=payload,headers=headers,method=method)
+            try:
+              with urllib.request.urlopen(req,timeout=25) as r:return r.status,json.load(r)
+            except urllib.error.HTTPError as e:
+              err=e.read(4096)
+              try:
+                clean=[{"status":x.get("status"),"code":x.get("code"),"title":x.get("title"),"detail":str(x.get("detail",""))[:150]} for x in json.loads(err).get("errors",[])]
+              except:clean=[]
+              print("APPLE_REJECTED",method,path.split("?")[0],"STATUS",e.code,"DETAILS",clean)
+              return e.code,{"errors":clean}
+          labels=[
+           ("com.itorah.lorvex","Lorvex AI Planner"),
+           ("com.itorah.lorvex.widgets","Lorvex AI Widgets"),
+           ("com.itorah.lorvex.focusfilter","Lorvex AI Focus Filter"),
+           ("com.itorah.lorvex.watchkitapp","Lorvex AI Watch App"),
+           ("com.itorah.lorvex.watchkitapp.widgets","Lorvex AI Watch Widgets")
+          ]
+          manifest={"prefix":"com.itorah.lorvex","appGroup":"group.com.itorah.lorvex","bundles":{}}
+          for ident,label in labels:
+            query=urllib.parse.urlencode({"filter[identifier]":ident,"limit":5})
+            rc,data=api("GET","/bundleIds?"+query)
+            if rc!=200:raise SystemExit("LOOKUP_FAILED_"+ident)
+            matches=[x for x in data.get("data",[]) if x.get("attributes",{}).get("identifier")==ident]
+            if matches:
+              b=matches[0]
+              print("BUNDLE_REUSED",ident,b["id"])
+            else:
+              body={"data":{"type":"bundleIds","attributes":{"identifier":ident,"name":label,"platform":"UNIVERSAL"}}}
+              rc,data=api("POST","/bundleIds",body)
+              if rc!=201:raise SystemExit("REGISTER_BUNDLE_FAILED_"+ident)
+              b=data["data"]
+              print("BUNDLE_CREATED",ident,b["id"])
+            id=b["id"]
+            manifest["bundles"][ident]={"bundleResourceId":id}
+            rc,cap=api("GET",f"/bundleIds/{id}/bundleIdCapabilities")
+            if rc!=200:raise SystemExit("CAPABILITIES_LOOKUP_FAILED_"+ident)
+            existing={x.get("attributes",{}).get("capabilityType") for x in cap.get("data",[])}
+            if "APP_GROUPS" in existing:
+              print("APP_GROUPS_CAPABILITY_EXISTS",ident)
+            else:
+              add={"data":{"type":"bundleIdCapabilities","attributes":{"capabilityType":"APP_GROUPS"},"relationships":{"bundleId":{"data":{"type":"bundleIds","id":id}}}}}
+              rc,resp=api("POST","/bundleIdCapabilities",add)
+              if rc!=201:raise SystemExit("APP_GROUPS_CAPABILITY_FAILED_"+ident)
+              print("APP_GROUPS_ENABLED",ident)
+          path=os.environ.get("GITHUB_WORKSPACE",".")+"/lorvex-identifiers-manifest.json"
+          with open(path,"w",encoding="utf8") as f:json.dump(manifest,f,indent=2)
+          print("REGISTERED_TOTAL",len(manifest["bundles"]))
+          PY
+      - name: Record registered Apple identifiers
+        uses: actions/upload-artifact@v4
+        with:
+          name: lorvex-apple-identifiers
+          path: lorvex-identifiers-manifest.json
+          if-no-files-found: error

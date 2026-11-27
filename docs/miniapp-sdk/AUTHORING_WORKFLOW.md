@@ -39,6 +39,8 @@ For complete starting projects, read [the installed SDK example index](EXAMPLES.
 
 ## Original types and compiler policy
 
+The same SDK exports `@hanlin/system-surfaces` for Hanlin widget/presentation metadata. `selectedEngine.systemSurfaces` points to its exact declarations and [action contract](SYSTEM_SURFACE_ACTIONS.md). Use these types with the original engine APIs; the validator and native compiler also check declared foreground targets and parameter JSON.
+
 Module resolution is performed by the original TypeScript resolver, including package `exports`, conditional `types`, and exported subpaths. The SDK contains original installed dependency files and exact package versions used by the host build. SDK metadata distinguishes npm package versions from native bridge contract versions; those versions are not interchangeable.
 
 The report records the effective `typecheck.strict`, `skipLibCheck`, and `dependencyDeclarationsChecked` values. Expo's checked template uses strict source checking and checks declaration bodies. NativeScript uses its original consumer configuration: strict source checking, original Core/platform globals, and `skipLibCheck: true`. This still typechecks project code against the original NativeScript and UIKit declarations. It does not certify that the upstream declaration packages are internally free of errors. An explicit project `skipLibCheck: false` remains honored and reports those library diagnostics.

@@ -337,7 +337,8 @@
             "hanlin-quickjs",
             "hanlin-node",
             "hanlin-python",
-            "hanlin-nativescript"
+            "hanlin-nativescript",
+            "hanlin-expo"
           ],
           "type": "string"
         },
@@ -366,7 +367,8 @@
         "translationUI",
         "backgroundTask",
         "spotlight",
-        "shareExtension"
+        "shareExtension",
+        "capture"
       ],
       "type": "string"
     },

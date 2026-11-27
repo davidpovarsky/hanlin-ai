@@ -1,0 +1,89 @@
+{
+  "status": "APPLIED_COMMITTED_NOT_YET_COMPILED",
+  "createdAt": "2026-11-25T21:05:17.949074+00:00",
+  "beforeHead": "8ac230b386674528805feaf330c4ccf85fe088ce",
+  "head": "dff3b45c99a57bf8fe8ec721db3fa1fafce7134b",
+  "tree": "52619d4ca19658c559c8378abe320e7b5cd736e3",
+  "files": [
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationEvent.swift",
+      "beforeBytes": 5280,
+      "beforeSHA256": "982bbdff39e2baeb944ab476bc16d8f826f36ca38e9a3e6a75e6efaeaf3b318b",
+      "afterBytes": 6159,
+      "afterSHA256": "867613ea9cf2785e6eff3caad96c620a8c50d16fd22d266eeda899b7ab784f69",
+      "candidate": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-json-wire-fix/candidate/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationEvent.swift"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinNotificationInvocationTests.swift",
+      "beforeBytes": 16840,
+      "beforeSHA256": "918dac76ba987164dfc80ea47ff3365d4a4fa42cecc87ee36db863721c9e1667",
+      "afterBytes": 22137,
+      "afterSHA256": "7ee626a9f4e53cfa5c74d9f123d367eb43f5d6de21dfb152047ab75e4cb0e066",
+      "candidate": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-json-wire-fix/candidate/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinNotificationInvocationTests.swift"
+    }
+  ],
+  "protectedBefore": {
+    "AGENTS.md": {
+      "mode": 33188,
+      "inode": 6230605,
+      "device": 2064,
+      "uid": 0,
+      "gid": 1002,
+      "mtime_ns": 1795519460975321880,
+      "bytes": 13886,
+      "sha256": "f27d4554d8dda88996d1511b361e8b8e5520cb08e8198c5fbc7816b1fbc9aa9f"
+    },
+    "Scripts/Expo/node_modules": {
+      "mode": 41471,
+      "inode": 6347703,
+      "device": 2064,
+      "uid": 0,
+      "gid": 1002,
+      "mtime_ns": 1795479960656971300,
+      "link": "/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules"
+    },
+    "Scripts/NativeScript/node_modules": {
+      "mode": 41471,
+      "inode": 6347709,
+      "device": 2064,
+      "uid": 0,
+      "gid": 1002,
+      "mtime_ns": 1795472668515606156,
+      "link": "/dev/shm/hanlin-nativescript-sdk-20261123/node_modules"
+    }
+  },
+  "protectedAfter": {
+    "AGENTS.md": {
+      "mode": 33188,
+      "inode": 6230605,
+      "device": 2064,
+      "uid": 0,
+      "gid": 1002,
+      "mtime_ns": 1795519460975321880,
+      "bytes": 13886,
+      "sha256": "f27d4554d8dda88996d1511b361e8b8e5520cb08e8198c5fbc7816b1fbc9aa9f"
+    },
+    "Scripts/Expo/node_modules": {
+      "mode": 41471,
+      "inode": 6347703,
+      "device": 2064,
+      "uid": 0,
+      "gid": 1002,
+      "mtime_ns": 1795479960656971300,
+      "link": "/dev/shm/hanlin-expo-widgets-sdk-20261124/Scripts/Expo/node_modules"
+    },
+    "Scripts/NativeScript/node_modules": {
+      "mode": 41471,
+      "inode": 6347709,
+      "device": 2064,
+      "uid": 0,
+      "gid": 1002,
+      "mtime_ns": 1795472668515606156,
+      "link": "/dev/shm/hanlin-nativescript-sdk-20261123/node_modules"
+    }
+  },
+  "statusAfter": "M AGENTS.md\n?? Scripts/Expo/node_modules\n?? Scripts/NativeScript/node_modules",
+  "indexEmpty": true,
+  "candidateReceiptSHA256": "f1ac6b2b5b99384b0d8e69ea126c0382750d88edafcd3e7633a09f6619485f6e",
+  "review": "Root reviewed full original event/internal tagged Codable/independent regression diff. Only external two boundary methods change; all original tests/harness/worker unchanged."
+}

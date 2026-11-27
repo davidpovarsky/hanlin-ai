@@ -1,0 +1,854 @@
+{
+  "capturedAt": "2026-11-25T08:14:43.035639+00:00",
+  "source": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/terminal-diagnostics-attempt17/export/0_Test_HanlinPaired-primary-ce49e30d-20261124_Diagnostics/HanlinMiniAppsUITests-F0F2DE32-618F-4FB9-AB50-1AED4C8728F0-Configuration-Test Scheme Action-Iteration-1/HanlinMiniAppsUITests-5A3F0665-FF7D-4450-8F9F-8A86B29F7E6B/StandardOutputAndStandardError-com.itorah.hanlinminiapps.txt",
+  "range": [
+    1058760,
+    1058970
+  ],
+  "lines": [
+    {
+      "line": 1058760,
+      "text": "2026-11-25 08:43:10.446413+0100 HanlinMiniApps[94039:4474085] [Default] Replying with attribute values: {"
+    },
+    {
+      "line": 1058761,
+      "text": "    \"XC_kAXXCAttributeWindowDisplayId\" = 0;"
+    },
+    {
+      "line": 1058762,
+      "text": "}"
+    },
+    {
+      "line": 1058763,
+      "text": "2026-11-25 08:43:10.459214+0100 HanlinMiniApps[94039:4474085] [Default] Received attributes request for element: AX element pid: 94039, elementOrHash.elementID: 6025167648.808. Attributes: ("
+    },
+    {
+      "line": 1058764,
+      "text": "    \"XC_kAXXCAttributeVisiblePoint\""
+    },
+    {
+      "line": 1058765,
+      "text": ")"
+    },
+    {
+      "line": 1058766,
+      "text": "2026-11-25 08:43:10.459271+0100 HanlinMiniApps[94039:4474083] [Default] XCTPerformOnMainRunLoop[not MT]: about to CFRunLoopPerform"
+    },
+    {
+      "line": 1058767,
+      "text": "2026-11-25 08:43:10.459317+0100 HanlinMiniApps[94039:4474083] [Default] XCTPerformOnMainRunLoop[not MT]: waiting with 30.00s responsiveness timeout"
+    },
+    {
+      "line": 1058768,
+      "text": "2026-11-25 08:43:10.459323+0100 HanlinMiniApps[94039:4472906] [Default] XCTPerformOnMainRunLoop[MT]: inside CFRunLoopPerform"
+    },
+    {
+      "line": 1058769,
+      "text": "2026-11-25 08:43:10.459361+0100 HanlinMiniApps[94039:4472906] [Default] XCTPerformOnMainRunLoop[MT]: MT responded in time (won the race to the busy flag)"
+    },
+    {
+      "line": 1058770,
+      "text": "2026-11-25 08:43:10.459367+0100 HanlinMiniApps[94039:4474083] [Default] XCTPerformOnMainRunLoop[not MT]: waiting 60.00s for work to complete"
+    },
+    {
+      "line": 1058771,
+      "text": "2026-11-25 08:43:10.459399+0100 HanlinMiniApps[94039:4472906] [Default] Fetching AX attributes XC_kAXXCAttributeVisiblePoint for AX element pid: 94039, elementOrHash.elementID: 6025167648.808"
+    },
+    {
+      "line": 1058772,
+      "text": "2026-11-25 08:43:10.460853+0100 HanlinMiniApps[94039:4472906] [Default] Got attributes, transferring to dictionary for return."
+    },
+    {
+      "line": 1058773,
+      "text": "2026-11-25 08:43:10.460923+0100 HanlinMiniApps[94039:4474083] [Default] Replying with attribute values: {"
+    },
+    {
+      "line": 1058774,
+      "text": "    \"XC_kAXXCAttributeVisiblePoint\" =     {"
+    },
+    {
+      "line": 1058775,
+      "text": "        X = \"274.5\";"
+    },
+    {
+      "line": 1058776,
+      "text": "        Y = \"306.25\";"
+    },
+    {
+      "line": 1058777,
+      "text": "    };"
+    },
+    {
+      "line": 1058778,
+      "text": "}"
+    },
+    {
+      "line": 1058779,
+      "text": "2026-11-25 08:43:10.462996+0100 HanlinMiniApps[94039:4474083] [Default] Received attributes request for element: AX element pid: 94039, elementOrHash.elementID: 6025167648.808. Attributes: ("
+    },
+    {
+      "line": 1058780,
+      "text": "    \"XC_kAXXCAttributeSystemAutomationProperties\""
+    },
+    {
+      "line": 1058781,
+      "text": ")"
+    },
+    {
+      "line": 1058782,
+      "text": "2026-11-25 08:43:10.463046+0100 HanlinMiniApps[94039:4474085] [Default] XCTPerformOnMainRunLoop[not MT]: about to CFRunLoopPerform"
+    },
+    {
+      "line": 1058783,
+      "text": "2026-11-25 08:43:10.463109+0100 HanlinMiniApps[94039:4474085] [Default] XCTPerformOnMainRunLoop[not MT]: waiting with 30.00s responsiveness timeout"
+    },
+    {
+      "line": 1058784,
+      "text": "2026-11-25 08:43:10.463110+0100 HanlinMiniApps[94039:4472906] [Default] XCTPerformOnMainRunLoop[MT]: inside CFRunLoopPerform"
+    },
+    {
+      "line": 1058785,
+      "text": "2026-11-25 08:43:10.463171+0100 HanlinMiniApps[94039:4472906] [Default] XCTPerformOnMainRunLoop[MT]: MT responded in time (won the race to the busy flag)"
+    },
+    {
+      "line": 1058786,
+      "text": "2026-11-25 08:43:10.463176+0100 HanlinMiniApps[94039:4474085] [Default] XCTPerformOnMainRunLoop[not MT]: waiting 60.00s for work to complete"
+    },
+    {
+      "line": 1058787,
+      "text": "2026-11-25 08:43:10.463219+0100 HanlinMiniApps[94039:4472906] [Default] Fetching AX attributes XC_kAXXCAttributeSystemAutomationProperties for AX element pid: 94039, elementOrHash.elementID: 6025167648.808"
+    },
+    {
+      "line": 1058788,
+      "text": "2026-11-25 08:43:10.463283+0100 HanlinMiniApps[94039:4472906] [Default] Got attributes, transferring to dictionary for return."
+    },
+    {
+      "line": 1058789,
+      "text": "2026-11-25 08:43:10.463346+0100 HanlinMiniApps[94039:4474085] [Default] Replying with attribute values: {"
+    },
+    {
+      "line": 1058790,
+      "text": "}"
+    },
+    {
+      "line": 1058791,
+      "text": "2026-11-25 08:43:10.464109+0100 HanlinMiniApps[94039:4474085] [Default] Received attributes request for element: AX element pid: 94039, elementOrHash.elementID: 4604150784.4. Attributes: ("
+    },
+    {
+      "line": 1058792,
+      "text": "    \"XC_kAXXCAttributeFrame\","
+    },
+    {
+      "line": 1058793,
+      "text": "    \"XC_kAXXCAttributeWindowDisplayId\","
+    },
+    {
+      "line": 1058794,
+      "text": "    \"XC_kAXXCAttributeWindowContextId\""
+    },
+    {
+      "line": 1058795,
+      "text": ")"
+    },
+    {
+      "line": 1058796,
+      "text": "2026-11-25 08:43:10.464163+0100 HanlinMiniApps[94039:4474085] [Default] XCTPerformOnMainRunLoop[not MT]: about to CFRunLoopPerform"
+    },
+    {
+      "line": 1058797,
+      "text": "2026-11-25 08:43:10.464207+0100 HanlinMiniApps[94039:4474085] [Default] XCTPerformOnMainRunLoop[not MT]: waiting with 30.00s responsiveness timeout"
+    },
+    {
+      "line": 1058798,
+      "text": "2026-11-25 08:43:10.464212+0100 HanlinMiniApps[94039:4472906] [Default] XCTPerformOnMainRunLoop[MT]: inside CFRunLoopPerform"
+    },
+    {
+      "line": 1058799,
+      "text": "2026-11-25 08:43:10.464251+0100 HanlinMiniApps[94039:4472906] [Default] XCTPerformOnMainRunLoop[MT]: MT responded in time (won the race to the busy flag)"
+    },
+    {
+      "line": 1058800,
+      "text": "2026-11-25 08:43:10.464266+0100 HanlinMiniApps[94039:4474085] [Default] XCTPerformOnMainRunLoop[not MT]: waiting 60.00s for work to complete"
+    },
+    {
+      "line": 1058801,
+      "text": "2026-11-25 08:43:10.464291+0100 HanlinMiniApps[94039:4472906] [Default] Fetching AX attributes XC_kAXXCAttributeFrame, XC_kAXXCAttributeWindowDisplayId, XC_kAXXCAttributeWindowContextId for AX element pid: 94039, elementOrHash.elementID: 4604150784.4"
+    },
+    {
+      "line": 1058802,
+      "text": "2026-11-25 08:43:10.464364+0100 HanlinMiniApps[94039:4472906] [Default] Got attributes, transferring to dictionary for return."
+    },
+    {
+      "line": 1058803,
+      "text": "2026-11-25 08:43:10.464438+0100 HanlinMiniApps[94039:4474085] [Default] Replying with attribute values: {"
+    },
+    {
+      "line": 1058804,
+      "text": "    \"XC_kAXXCAttributeFrame\" =     {"
+    },
+    {
+      "line": 1058805,
+      "text": "        Height = 1376;"
+    },
+    {
+      "line": 1058806,
+      "text": "        Width = 1032;"
+    },
+    {
+      "line": 1058807,
+      "text": "        X = 0;"
+    },
+    {
+      "line": 1058808,
+      "text": "        Y = 0;"
+    },
+    {
+      "line": 1058809,
+      "text": "    };"
+    },
+    {
+      "line": 1058810,
+      "text": "    \"XC_kAXXCAttributeWindowContextId\" = 1790716731;"
+    },
+    {
+      "line": 1058811,
+      "text": "    \"XC_kAXXCAttributeWindowDisplayId\" = 1;"
+    },
+    {
+      "line": 1058812,
+      "text": "}"
+    },
+    {
+      "line": 1058813,
+      "text": "2026-11-25 08:43:10.751803+0100 HanlinMiniApps[94039:4474083] [Default] Received request to notify when the main run loop is idle"
+    },
+    {
+      "line": 1058814,
+      "text": "2026-11-25 08:43:10.751882+0100 HanlinMiniApps[94039:4474083] [Default] Idle notifier finished setting up run loop observer"
+    },
+    {
+      "line": 1058815,
+      "text": "2026-11-25 08:43:10.752242+0100 HanlinMiniApps[94039:4474083] [Default] Received request to notify when animations are idle"
+    },
+    {
+      "line": 1058816,
+      "text": "2026-11-25 08:43:10.752295+0100 HanlinMiniApps[94039:4474083] [Default] Sending animations idle reply with error: (null)"
+    },
+    {
+      "line": 1058817,
+      "text": "2026-11-25 08:43:10.898668+0100 HanlinMiniApps[94039:4472906] *** Terminating app due to uncaught exception 'NSInvalidArgumentException', reason: '-[SwiftUI.UIKitTextField setSelectionAffinity:]: unrecognized selector sent to instance 0x125788000'"
+    },
+    {
+      "line": 1058818,
+      "text": "*** First throw call stack:"
+    },
+    {
+      "line": 1058819,
+      "text": "("
+    },
+    {
+      "line": 1058820,
+      "text": "\t0   CoreFoundation                      0x00000001c0287f24 __exceptionPreprocess + 172"
+    },
+    {
+      "line": 1058821,
+      "text": "\t1   libobjc.A.dylib                     0x00000001c008194c objc_exception_throw + 72"
+    },
+    {
+      "line": 1058822,
+      "text": "\t2   CoreFoundation                      0x00000001c029d9a0 +[NSObject(NSObject) instanceMethodSignatureForSelector:] + 0"
+    },
+    {
+      "line": 1058823,
+      "text": "\t3   UIKitCore                           0x00000001c49115a8 -[UIResponder doesNotRecognizeSelector:] + 232"
+    },
+    {
+      "line": 1058824,
+      "text": "\t4   CoreFoundation                      0x00000001c028bfdc ___forwarding___ + 796"
+    },
+    {
+      "line": 1058825,
+      "text": "\t5   CoreFoundation                      0x00000001c028e68c __forwarding_prep_0___ + 92"
+    },
+    {
+      "line": 1058826,
+      "text": "\t6   SwiftUI                             0x00000001c9b54a54 $s7SwiftUI28PlatformTextFieldCoordinatorC6updateyyF + 2360"
+    },
+    {
+      "line": 1058827,
+      "text": "\t7   SwiftUI                             0x00000001c9b56538 $s7SwiftUI24PlatformTextFieldAdaptor33_B5BBFA0CB2C8606"
+    },
+    {
+      "line": 1058828,
+      "text": "*** Terminating app due to uncaught exception 'NSInvalidArgumentException', reason: '-[SwiftUI.UIKitTextField setSelectionAffinity:]: unrecognized selector sent to instance 0x125788000'"
+    },
+    {
+      "line": 1058829,
+      "text": "*** First throw call stack:"
+    },
+    {
+      "line": 1058830,
+      "text": "("
+    },
+    {
+      "line": 1058831,
+      "text": "\t0   CoreFoundation                      0x00000001c0287f24 __exceptionPreprocess + 172"
+    },
+    {
+      "line": 1058832,
+      "text": "\t1   libobjc.A.dylib                     0x00000001c008194c objc_exception_throw + 72"
+    },
+    {
+      "line": 1058833,
+      "text": "\t2   CoreFoundation                      0x00000001c029d9a0 +[NSObject(NSObject) instanceMethodSignatureForSelector:] + 0"
+    },
+    {
+      "line": 1058834,
+      "text": "\t3   UIKitCore                           0x00000001c49115a8 -[UIResponder doesNotRecognizeSelector:] + 232"
+    },
+    {
+      "line": 1058835,
+      "text": "\t4   CoreFoundation                      0x00000001c028bfdc ___forwarding___ + 796"
+    },
+    {
+      "line": 1058836,
+      "text": "\t5   CoreFoundation                      0x00000001c028e68c __forwarding_prep_0___ + 92"
+    },
+    {
+      "line": 1058837,
+      "text": "\t6   SwiftUI                             0x00000001c9b54a54 $s7SwiftUI28PlatformTextFieldCoordinatorC6updateyyF + 2360"
+    },
+    {
+      "line": 1058838,
+      "text": "\t7   SwiftUI                             0x00000001c9b56538 $s7SwiftUI24PlatformTextFieldAdaptor33_B5BBFA0CB2C8606BFE1A8A9B1471B7CFLLV12updateUIView_7contextySo06UITextE0C_AA0R20RepresentableContextVyADGtF + 508"
+    },
+    {
+      "line": 1058839,
+      "text": "\t8   SwiftUI                             0x00000001ca3d2f04 $s7SwiftUI32PlatformViewRepresentableAdaptor33_19642D833A8FE469B137699ED1426762LLV06updateD8Provider_7contexty10UIViewTypeQz_AA0cdE7ContextVyADyxGGtF + 248"
+    },
+    {
+      "line": 1058840,
+      "text": "\t9   SwiftUICore                         0x00000001c70c1914 $s7SwiftUI17PlatformViewChildV11updateValueyyFyyXEfU_yyXEfU5_yyXEfU_yyXEfU_ + 548"
+    },
+    {
+      "line": 1058841,
+      "text": "\t10  SwiftUICore                         0x00000001c7a3d5c8 $s7SwiftUI16ViewRendererHostPAAE21performExternalUpdateyyyyXEF + 204"
+    },
+    {
+      "line": 1058842,
+      "text": "\t11  SwiftUICore                         0x00000001c70c168c $s7SwiftUI17PlatformViewChildV11updateValueyyFyyXEfU_yyXEfU5_yyXEfU_ + 416"
+    },
+    {
+      "line": 1058843,
+      "text": "\t12  SwiftUICore                         0x00000001c70c03ac $s7SwiftUI17PlatformViewChildV11updateValueyyFyyXEfU_ + 3956"
+    },
+    {
+      "line": 1058844,
+      "text": "\t13  SwiftUICore                         0x00000001c709872c $s14AttributeGraph0A0VyACyxGqd__c5ValueQyd__RszAA12StatefulRuleRd__lufcADSPyqd__GXEfU_ySv_So11AGAttributeatcyXEfU_ySv_AJtcfu_TA + 28"
+    },
+    {
+      "line": 1058845,
+      "text": "\t14  AttributeGraph                      0x00000001c9546134 _ZN2AG5Graph11UpdateStack6updateEv + 512"
+    },
+    {
+      "line": 1058846,
+      "text": "\t15  AttributeGraph                      0x00000001c9546824 _ZN2AG5Graph16update_attributeENS_4data3ptrINS_4NodeEEEj + 352"
+    },
+    {
+      "line": 1058847,
+      "text": "\t16  AttributeGraph                      0x00000001c954e090 _ZN2AG5Graph20input_value_ref_slowENS_4data3ptrINS_4NodeEEENS_11AttributeIDEjjPK15AGSwiftMetadataRhl + 576"
+    },
+    {
+      "line": 1058848,
+      "text": "\t17  AttributeGraph                      0x00000001c9565dd8 AGGraphGetValue + 260"
+    },
+    {
+      "line": 1058849,
+      "text": "\t18  SwiftUICore                         0x00000001c70c4db8 $s7SwiftUI31InvalidatableLeafLayoutComputer33_6401BBC0F2663213443101ED0E1CE437LLV11updateValueyyF + 208"
+    },
+    {
+      "line": 1058850,
+      "text": "\t19  SwiftUICore                         0x00000001c709872c $s14AttributeGraph0A0VyACyxGqd__c5ValueQyd__RszAA12StatefulRuleRd__lufcADSPyqd__GXEfU_ySv_So11AGAttributeatcyXEfU_ySv_AJtcfu_TA + 28"
+    },
+    {
+      "line": 1058851,
+      "text": "\t20  AttributeGraph                      0x00000001c9546134 _ZN2AG5Graph11UpdateStack6updateEv + 512"
+    },
+    {
+      "line": 1058852,
+      "text": "\t21  AttributeGraph                      0x00000001c9546824 _ZN2AG5Graph16update_attributeENS_4data3ptrINS_4NodeEEEj + 352"
+    },
+    {
+      "line": 1058853,
+      "text": "\t22  AttributeGraph                      0x00000001c954e090 _ZN2AG5Graph20input_value_ref_slowENS_4data3ptrINS_4NodeEEENS_11AttributeIDEjjPK15AGSwiftMetadataRhl + 576"
+    },
+    {
+      "line": 1058854,
+      "text": "\t23  AttributeGraph                      0x00000001c9565bdc AGGraphGetInputValue + 276"
+    },
+    {
+      "line": 1058855,
+      "text": "\t24  SwiftUICore                         0x00000001c78c0e7c $s7SwiftUI11StackLayoutV12makeChildren33_00690F480F8D293143B214DBE6D72CD0LLyyF + 956"
+    },
+    {
+      "line": 1058856,
+      "text": "\t25  SwiftUICore                         0x00000001c6f78874 $s7SwiftUI16ViewLayoutEngineV6layout7context8childrenACyxGx_AA21SizeAndSpacingContextVAA0D15ProxyCollectionVtcfCAA07_HStackD0V_Tt3B5Tm + 344"
+    },
+    {
+      "line": 1058857,
+      "text": "\t26  SwiftUICore                         0x00000001c6f74cec $s7SwiftUI6LayoutPAAE06updateC8Computer4rule13layoutContext8childrenyqd__z_AA014SizeAndSpacingH0VAA0C15ProxyCollectionVt14AttributeGraph12StatefulRuleRd__AA0cE0V5ValueRtd__lFAA07_VStackC0V_AA07Dy\t27  SwiftUICore                         0x00000001c6f72938 $s14AttributeGraph12StatefulRuleP7SwiftUIAD14LayoutComputerV5ValueRtzrlE06updategH06layout11environment10attributesyqd___AA0A0VyAD17EnvironmentValuesVGSayAD0G15ProxyAttributesVGtAD0G0Rd__lFAD07Dy\t28  SwiftUICore                         0x00000001c6f76b6c $s7SwiftUI21DynamicLayoutComputer33_FF3C661D9D8317A1C8FE2B7FD4EDE12CLLV11updateValueyyFAA07_HStackD0V_Tg5Tm + 260"
+    },
+    {
+      "line": 1058858,
+      "text": "\t29  SwiftUICore                         0x00000001c6f9d05c $s14AttributeGraph0A0VyACyxGqd__c5ValueQyd__RszAA12StatefulRuleRd__lufcADSPyqd__GXEfU_ySv_So11AGAttributeatcyXEfU_ySv_AJtcfu_7SwiftUI14LayoutComputerV_AK07DynamiciJ033_FF3C661D9D8317A1C8FE2B7FD4E\t30  AttributeGraph                      0x00000001c9546134 _ZN2AG5Graph11UpdateStack6updateEv + 512"
+    },
+    {
+      "line": 1058859,
+      "text": "\t31  AttributeGraph                      0x00000001c9546824 _ZN2AG5Graph16update_attributeENS_4data3ptrINS_4NodeEEEj + 352"
+    },
+    {
+      "line": 1058860,
+      "text": "\t32  AttributeGraph                      0x00000001c954df48 _ZN2AG5Graph20input_value_ref_slowENS_4data3ptrINS_4NodeEEENS_11AttributeIDEjjPK15AGSwiftMetadataRhl + 248"
+    },
+    {
+      "line": 1058861,
+      "text": "\t33  AttributeGraph                      0x00000001c9565bdc AGGraphGetInputValue + 276"
+    },
+    {
+      "line": 1058862,
+      "text": "\t34  SwiftUICore                         0x00000001c75408e8 $s7SwiftUI16_AlignmentLayoutV12sizeThatFits2in7context5childSo6CGSizeVAA13_ProposedSizeV_AA0M17AndSpacingContextVAA0D5ProxyVtF + 172"
+    },
+    {
+      "line": 1058863,
+      "text": "\t35  SwiftUICore                         0x00000001c73f8bf0 $s7SwiftUI17UnaryLayoutEngine33_1C3B77B617AD058A6802F719E38F5D79LLV12sizeThatFitsySo6CGSizeVAA13_ProposedSizeVFTm + 540"
+    },
+    {
+      "line": 1058864,
+      "text": "\t36  SwiftUICore                         0x00000001c73f899c $s7SwiftUI17UnaryLayoutEngine33_1C3B77B617AD058A6802F719E38F5D79LLVyxGAA0dE0A2aFP7spacingAA7SpacingVyFTW + 16"
+    },
+    {
+      "line": 1058865,
+      "text": "\t37  SwiftUICore                         0x00000001c7803668 $s7SwiftUI15LayoutEngineBox33_91FCB5522C30220AE13689E45789FEF2LLC12sizeThatFitsySo6CGSizeVAA13_ProposedSizeVF + 76"
+    },
+    {
+      "line": 1058866,
+      "text": "\t38  SwiftUICore                         0x00000001c702ad7c $s7SwiftUI16_FixedSizeLayoutVAAE12sizeThatFits2in7context5childSo6CGSizeVAA09_ProposedD0V_AA0D17AndSpacingContextVAA0E5ProxyVtF + 232"
+    },
+    {
+      "line": 1058867,
+      "text": "\t39  SwiftUICore                         0x00000001c73f8bf0 $s7SwiftUI17UnaryLayoutEngine33_1C3B77B617AD058A6802F719E38F5D79LLV12sizeThatFitsySo6CGSizeVAA13_ProposedSizeVFTm + 540"
+    },
+    {
+      "line": 1058868,
+      "text": "\t40  SwiftUICore                         0x00000001c73f899c $s7SwiftUI17UnaryLayoutEngine33_1C3B77B617AD058A6802F719E38F5D79LLVyxGAA0dE0A2aFP7spacingAA7SpacingVyFTW + 16"
+    },
+    {
+      "line": 1058869,
+      "text": "\t41  SwiftUICore                         0x00000001c7803668 $s7SwiftUI15LayoutEngineBox33_91FCB5522C30220AE13689E45789FEF2LLC12sizeThatFitsySo6CGSizeVAA13_ProposedSizeVF + 76"
+    },
+    {
+      "line": 1058870,
+      "text": "\t42  SwiftUICore                         0x00000001c764ef0c $s7SwiftUI12_FrameLayoutV12sizeThatFits2in7context5childSo6CGSizeVAA13_ProposedSizeV_AA0M17AndSpacingContextVAA0D5ProxyVtF + 272"
+    },
+    {
+      "line": 1058871,
+      "text": "\t43  SwiftUICore                         0x00000001c73f8bf0 $s7SwiftUI17UnaryLayoutEngine33_1C3B77B617AD058A6802F719E38F5D79LLV12sizeThatFitsySo6CGSizeVAA13_ProposedSizeVFTm + 540"
+    },
+    {
+      "line": 1058872,
+      "text": "\t44  SwiftUICore                         0x00000001c73f899c $s7SwiftUI17UnaryLayoutEngine33_1C3B77B617AD058A6802F719E38F5D79LLVyxGAA0dE0A2aFP7spacingAA7SpacingVyFTW + 16"
+    },
+    {
+      "line": 1058873,
+      "text": "\t45  SwiftUICore                         0x00000001c7803668 $s7SwiftUI15LayoutEngineBox33_91FCB5522C30220AE13689E45789FEF2LLC12sizeThatFitsySo6CGSizeVAA13_ProposedSizeVF + 76"
+    },
+    {
+      "line": 1058874,
+      "text": "\t46  SwiftUICore                         0x00000001c71f4690 $s7SwiftUI11LayoutProxyV10dimensions2inAA14ViewDimensionsVAA13_ProposedSizeV_tF + 204"
+    },
+    {
+      "line": 1058875,
+      "text": "\t47  SwiftUICore                         0x00000001c78c1eac $s7SwiftUI11StackLayoutV23UnmanagedImplementation33_00690F480F8D293143B214DBE6D72CD0LLV6resize_8proposal5proxyyAC5ChildAELLVz_AA16ProposedViewSizeVAA0D7SubviewVtF + 92"
+    },
+    {
+      "line": 1058876,
+      "text": "\t48  SwiftUICore                         0x00000001c78c20d0 $s7SwiftUI11StackLayoutV23UnmanagedImplementation33_00690F480F8D293143B214DBE6D72CD0LLV34sizeChildrenUsingMajorAxisProposal_05minorS8ForChildy12CoreGraphics7CGFloatVSg_AlC0V0AELLVXEtF + 120"
+    },
+    {
+      "line": 1058877,
+      "text": "\t49  SwiftUICore                         0x00000001c78c3994 $s7SwiftUI11StackLayoutV23UnmanagedImplementation33_00690F480F8D293143B214DBE6D72CD0LLV14placeChildren12in21minorProposalForChildyAA16ProposedViewSizeV_12CoreGraphics7CGFloatVSgAC0T0AELLVXEtF03$s\t50  SwiftUICore"
+    },
+    {
+      "line": 1058878,
+      "text": "libc++abi: terminating due to uncaught exception of type NSException"
+    },
+    {
+      "line": 1058879,
+      "text": "Standard output and standard error from com.itorah.hanlinminiapps with process ID 94286 beginning at 2026-11-25 07:43:48 +0000"
+    },
+    {
+      "line": 1058880,
+      "text": ""
+    },
+    {
+      "line": 1058881,
+      "text": "objc[94286]: Class _TtC21HanlinScriptContractsP33_4A86AA17BA15F72FFF84E452F9D796B012BundleFinder is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cf3890) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x11002b588). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058882,
+      "text": "objc[94286]: Class _TtC14HanlinChatCore22HanlinAISDKAgentEngine is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cf5af0) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x11002c5c0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058883,
+      "text": "objc[94286]: Class _TtCC14HanlinChatCore22HanlinAISDKAgentEngineP33_B167859EAB289DB913EE7254B409B5F813StreamStopper is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cf5bd0) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x11002c6a0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058884,
+      "text": "objc[94286]: Class _TtCO14HanlinChatCore26HanlinCapturedStreamReplayP33_BF1B5D5DE3918B87F9D16260980FD53D12ReplaySource is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cf62c8) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x11002cd98). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058885,
+      "text": "objc[94286]: Class _TtC14HanlinChatCore16HanlinChatEngine is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cf63e0) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x11002ceb0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058886,
+      "text": "objc[94286]: Class _TtC14HanlinChatCore22HanlinChatStreamParser is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cf67c8) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x11002d298). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058887,
+      "text": "objc[94286]: Class _TtC14HanlinChatCore27HanlinNonEmptyLanguageModel is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cf6a40) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x11002d510). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058888,
+      "text": "objc[94286]: Class _TtC14HanlinScriptUIP33_A314D15F123FD00C5B4B5C64904C07B412BundleFinder is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cf6b30) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x11002d600). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058889,
+      "text": "objc[94286]: Class _TtC14HanlinScriptUIP33_E5218521959F4DF02544E0BDA578D03F27HanlinSVGValidationDelegate is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ce3068) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110014750). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058890,
+      "text": "objc[94286]: Class _TtC14HanlinScriptUIP33_E5218521959F4DF02544E0BDA578D03F27HanlinSVGNavigationDelegate is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ce3128) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110014810). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058891,
+      "text": "objc[94286]: Class _TtC14HanlinScriptUI19HanlinScriptUIModel is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cf8100) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x11002ebd0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058892,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginalP33_3EEF794DCDF13C2F2026D0835145985212BundleFinder is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ceac80) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x11002faa0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058893,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginalP33_00ACF7BD963E3CFF6424E7142C4701F635HanlinOriginalLocationConfiguration is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ce0fe8) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110014918). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058894,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal33HanlinOriginalScriptWidgetSession is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ceb348) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110030168). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058895,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginalP33_4BB259CB68F3C6207A283344CBFBB15837HanlinOriginalScriptWidgetTransaction is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ceb400) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110030220). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058896,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal33ScriptWidgetPackageStorageContext is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ceb628) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110030448). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058897,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal29ScriptWidgetExecutionSnapshot is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ceb6f0) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110030510). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058898,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal13ScriptManager is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ceb7b8) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x1100305d8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058899,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal26ScriptWidgetCloudJSONStore is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cebe80) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110030ca0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058900,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal25ScriptWidgetDiagnosticLog is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cec4d0) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x1100312f0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058901,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal23StudioEditorSaveRequest is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cecb38) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110031958). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058902,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal27StudioEditorSnapshotRequest is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cecbe0) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110031a00). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058903,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal30StudioEditorReplacementRequest is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cecc88) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110031aa8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058904,
+      "text": "objc[94286]: Class _TtCO26HanlinScriptWidgetOriginal24StudioEditorHostRegistryP33_41D767C194BA7127C7BA3BDB554D85855Entry is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cecd38) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110031b58). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058905,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal24StudioEditorCloseRequest is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cecde0) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110031c00). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058906,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal21StudioDocumentSession is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cece80) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110031ca0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058907,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal16StudioDraftStore is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cecfc8) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110031de8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058908,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal26ScriptWidgetExecutionFiles is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ced220) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110032040). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058909,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal27ScriptWidgetStorageProfiles is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ced5e0) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110032400). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058910,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal32ScriptWidgetLegacyStorageBackend is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ced690) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x1100324b0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058911,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal26ScriptWidgetEditingLibrary is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ced968) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110032788). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058912,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal23DataSourcePluginManager is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cee2d8) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x1100330f8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058913,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal29ScriptWidgetRuntimeDataSource is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ce1508) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110014e38). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058914,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal25ScriptWidgetRuntimeAlarms is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ce15b8) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110014ee8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058915,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal27ScriptWidgetRuntimeCalendar is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ce1668) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110014f98). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058916,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal32ScriptWidgetCalendarSourcesModel is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ceeb30) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110033950). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058917,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal28ScriptWidgetRuntimeCloudJSON is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ce1768) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110015098). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058918,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal26ScriptWidgetRuntimeConsole is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ce1818) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110015148). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058919,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal27ScriptWidgetRuntimeContacts is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ce18d8) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110015208). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058920,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal25ScriptWidgetRuntimeDevice is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ce1988) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x1100152b8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058921,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal28ScriptWidgetRuntimeDocuments is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ce1a38) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110015368). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058922,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal24ScriptWidgetFetchManager is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ce1ae8) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110015418). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058923,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal23ScriptWidgetRuntimeHttp is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ce1bc0) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x1100154f0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058924,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal23ScriptWidgetRuntimeFile is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ce1c70) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x1100155a0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058925,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal25ScriptWidgetRuntimeHealth is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ce1d20) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110015650). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058926,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal40ScriptWidgetExpandedHealthSystemProvider is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cefa30) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110034850). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058927,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal24ScriptWidgetHomeProvider is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ce1dd0) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110015700). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058928,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal23ScriptWidgetRuntimeHome is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ce1e98) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x1100157c8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058929,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal27ScriptWidgetRuntimeLocation is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ce1f48) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110015878). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058930,
+      "text": "objc[94286]: Class _TtCC26HanlinScriptWidgetOriginal27ScriptWidgetRuntimeLocationP33_7A7EA7515BA2A663BB828DEAE50CDCA515LocationRequest is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ce1ff8) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110015928). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058931,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal23ScriptWidgetRuntimeMaps is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ce2110) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110015a40). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058932,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal26ScriptWidgetMusicReadCache is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cf0368) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110035188). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058933,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal24ScriptWidgetRuntimeMusic is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ce2210) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110015b40). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058934,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal32ScriptWidgetRuntimeNotifications is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ce22c0) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110015bf0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058935,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal32ScriptWidgetPhotosSystemProvider is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cf0900) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110035720). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058936,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal25ScriptWidgetRuntimePhotos is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ce2370) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110015ca0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058937,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal29ScriptWidgetPhotosAccessModel is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cf09c8) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x1100357e8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058938,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal26ScriptWidgetRuntimePromise is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ce2470) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110015da0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058939,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal27ScriptWidgetPromiseDelivery is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ce2558) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110015e88). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058940,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal35ScriptWidgetRemindersSystemProvider is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cf0f58) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110035d78). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058941,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal28ScriptWidgetRuntimeReminders is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ce2640) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110015f70). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058942,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal27ScriptWidgetRuntimeServices is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ce26f0) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110016020). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058943,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginalP33_58C8B329EEDB61CC7615D245165F0F5233ScriptWidgetServiceExecutionQuery is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cf1230) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110036050). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058944,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal26ScriptWidgetRuntimeStorage is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ce27f0) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110016120). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058945,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal25ScriptWidgetRuntimeSystem is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ce28a0) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x1100161d0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058946,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal31ScriptWidgetSystemCompletionBox is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cf1468) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110036288). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058947,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal26ScriptWidgetRuntimeWeather is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ce2950) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110016280). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058948,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal32ScriptWidgetServiceAccountsModel is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cf1a38) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110036858). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058949,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal30ScriptWidgetServiceConnections is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cf1e30) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110036c50). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058950,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal32ScriptWidgetServiceRequestHandle is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cf1f98) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110036db8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058951,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal31ScriptWidgetServiceURLTransport is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cf2040) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110036e60). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058952,
+      "text": "objc[94286]: Class _TtCC26HanlinScriptWidgetOriginal31ScriptWidgetServiceURLTransportP33_DC79A365CB46997049FE075D1F6006E96Worker is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ce2a58) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110016388). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058953,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal25ScriptWidgetServiceReader is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cf2110) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110036f30). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058954,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal24ScriptWidgetStorageFiles is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cf22b0) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x1100370d0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058955,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal30ScriptWidgetFileStorageBackend is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cf2370) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110037190). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058956,
+      "text": "objc[94286]: Class _TtCC26HanlinScriptWidgetOriginal30ScriptWidgetFileStorageBackendP33_D5EB0000CA849812C50D8171956D1CBD11Transaction is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cf2428) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110037248). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058957,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal33ScriptWidgetPreviewStorageBackend is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cf2550) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110037370). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058958,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal26ScriptWidgetRuntimeElement is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ce2b98) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x1100164c8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058959,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal20ScriptWidgetAppState is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cf2988) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x1100377a8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058960,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal28ScriptWidgetExecutionSession is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cf2a80) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x1100378a0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058961,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal29ScriptWidgetQueryCancellation is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cf2b60) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110037980). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058962,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal25ScriptWidgetConsoleLogger is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cf2c20) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110037a40). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058963,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal24ScriptWidgetRunningState is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cf2ce8) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110037b08). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058964,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginalP33_62DE6E7DBAF23B78C41422A282988EAE21ScriptWidgetXMLParser is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ce2e50) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110016780). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058965,
+      "text": "objc[94286]: Class _TtCC26HanlinScriptWidgetOriginalP33_62DE6E7DBAF23B78C41422A282988EAE21ScriptWidgetXMLParser4Node is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cf32d0) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x1100380f0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058966,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal19ScriptWidgetRuntime is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cf3388) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x1100381a8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058967,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal25ScriptWidgetPublisherLane is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cf36e8) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110038508). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058968,
+      "text": "objc[94286]: Class _TtC26HanlinScriptWidgetOriginal24ScriptWidgetRuntimeTrace is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cf37b8) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x1100385d8). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058969,
+      "text": "objc[94286]: Class _TtC17HanlinScriptStore23HanlinAtomicScriptStore is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116cf4cc0) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x11003a5c0). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    },
+    {
+      "line": 1058970,
+      "text": "objc[94286]: Class _TtC22HanlinScriptExtensionsP33_564800CA3DC4E51FF4414F9367A017A312BundleFinder is implemented in both /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/PackageFrameworks/HanlinScriptExtensions_-467A798637B376EB_PackageProduct.framework/HanlinScriptExtensions_-467A798637B376EB_PackageProduct (0x116ce3210) and /Users/m1/Library/Developer/CoreSimulator/Devices/1C405200-001E-4284-B486-2F1128A71CBC/data/Containers/Bundle/Application/687B31FF-58A0-4E14-98A3-D3274614083D/HanlinMiniApps.app/HanlinMiniApps.debug.dylib (0x110066450). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed."
+    }
+  ]
+}

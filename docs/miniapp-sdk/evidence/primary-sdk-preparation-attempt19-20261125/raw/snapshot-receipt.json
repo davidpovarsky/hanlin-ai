@@ -1,0 +1,646 @@
+{
+  "capturedAt": "2026-11-25T10:46:50.088286+00:00",
+  "sourceHEAD": "a2c8a1b1be746461272ba77254603304567c309d",
+  "sourceTree": "c3cfefa7775c91e2b2a9eaff980bbde6e681cc37",
+  "phaseReceipts": {
+    "split-host-lifecycle": {
+      "status": "PASS",
+      "startedAt": "2026-11-25T05:18:34.769103+00:00",
+      "argv": [
+        "/bin/bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-host-lifecycle.sh"
+      ],
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/logs-attempt14/split-host-lifecycle.log",
+      "scriptSHA256": "956541d15f45f12b7777b8ebeb800fe14e1686db5fc7ceae397835547953d7bc",
+      "pid": 85173,
+      "exitCode": 0,
+      "elapsedSeconds": 10.690437166995252,
+      "finishedAt": "2026-11-25T05:18:45.460570+00:00",
+      "logBytes": 2341,
+      "logSHA256": "7106614e2ff560b03d3941b9eaa0dd06d410d8917bea9d8322c5910af6210b59",
+      "reusedAfterSourceAdvance": "Private notification forwarding now uses original callback overloads proven to emit object code under the actual Swift6/C++ SDK. Existing canonical project parser is reused by the reachability audit and added to explicit SDK inputs (235). Refresh normal audit/Host/SDK/docs/native catalog and input capture. Original native producer/framework/toolchain inputs and project generator inputs are unchanged, so preserve their exact caches and generation provenance. Preserve all original52 selectors and both failed charges; only remaining4171.486529540984 of4500 is authorized. Existing notification package8-function proof remains unchanged."
+    },
+    "split-native-preparation": {
+      "id": "split-native-preparation",
+      "argv": [
+        "/bin/bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-preparation.sh"
+      ],
+      "originalPhase": true,
+      "status": "PASS",
+      "startedAt": "2026-11-25T10:40:05.816091+00:00",
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt19/logs/split-native-preparation.log",
+      "scriptSHA256": "47635289bc9238f28f65b6f72d4980b5cf0aa6def2cf146cd236261260f65a3e",
+      "pid": 73757,
+      "exitCode": 0,
+      "elapsedSeconds": 195.76897170800657,
+      "finishedAt": "2026-11-25T10:43:21.585804+00:00",
+      "logBytes": 38262,
+      "logSHA256": "b7a699f14667d006d93345379234556e6f8bbb3ad70fdda6bda18511121e8d5f"
+    },
+    "split-native-artifacts": {
+      "id": "split-native-artifacts",
+      "argv": [
+        "/bin/bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-native-artifacts.sh"
+      ],
+      "originalPhase": true,
+      "status": "PASS",
+      "startedAt": "2026-11-25T10:43:21.589440+00:00",
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt19/logs/split-native-artifacts.log",
+      "scriptSHA256": "eb0405f89f5da3d48e1591650d42e2f7a8ff8f86eebac9b82ded2e5c70cefebd",
+      "pid": 78548,
+      "exitCode": 0,
+      "elapsedSeconds": 27.39674404200923,
+      "finishedAt": "2026-11-25T10:43:48.987670+00:00",
+      "logBytes": 1604,
+      "logSHA256": "736937ecf81b8293d1d6d17d08fd19212953607020486c7034153d749199a522"
+    },
+    "split-restore-inputs": {
+      "id": "split-restore-inputs",
+      "argv": [
+        "/bin/bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-restore-inputs.sh"
+      ],
+      "originalPhase": true,
+      "status": "PASS",
+      "startedAt": "2026-11-25T10:43:48.990292+00:00",
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt19/logs/split-restore-inputs.log",
+      "scriptSHA256": "f848273286ad9fdcecc9635ee01148c5f54b45230a5199938ef3d362a709f39a",
+      "pid": 79190,
+      "exitCode": 0,
+      "elapsedSeconds": 8.788124500002596,
+      "finishedAt": "2026-11-25T10:43:57.779940+00:00",
+      "logBytes": 224,
+      "logSHA256": "2a0bfe76e52be5805e095ed49021cce782a2911cdfbd88bba65098496a2007fb"
+    },
+    "split-inputs": {
+      "id": "split-inputs",
+      "argv": [
+        "/bin/bash",
+        "-e",
+        "-o",
+        "pipefail",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/phases/split-inputs.sh"
+      ],
+      "originalPhase": true,
+      "status": "PASS",
+      "startedAt": "2026-11-25T10:43:57.782471+00:00",
+      "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt19/logs/split-inputs.log",
+      "scriptSHA256": "03a05318e9c17e6b2a3fc91dc40ee908b81ee204fb961cda64687179778621bc",
+      "pid": 79331,
+      "exitCode": 0,
+      "elapsedSeconds": 5.392157916998258,
+      "finishedAt": "2026-11-25T10:44:03.176269+00:00",
+      "logBytes": 103,
+      "logSHA256": "afa15e936d420b2974b90d41c9bc2cebdb838d13acba28d377e23cff8ce1ba74"
+    }
+  },
+  "controllerStatusAtCapture": "PAUSED_AFTER_PHASE",
+  "controllerPhaseAtCapture": "split-inputs",
+  "files": [
+    {
+      "path": "Package.swift",
+      "snapshotPath": "files/Package.swift",
+      "bytes": 88328,
+      "sha256": "392ece3430f8e61eb28afdaa925adf006b1a3dbf82a233568c2c279ab768e53b",
+      "mode": "0o644"
+    },
+    {
+      "path": "AI_HLY.xcodeproj/project.pbxproj",
+      "snapshotPath": "files/AI_HLY.xcodeproj/project.pbxproj",
+      "bytes": 252023,
+      "sha256": "a80e2947b4dedf0ce95b326cf44b0efac613b7b044058e3afc3fccb870cb0087",
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/agent-sdk/unified-package-manifest.json",
+      "snapshotPath": "files/docs/agent-sdk/unified-package-manifest.json",
+      "bytes": 3901,
+      "sha256": "dd14c80e4223465e6a600f93c153c0f4c80a290b28520dfb8aa65d33f1862e4d",
+      "mode": "0o644"
+    },
+    {
+      "path": "RuntimeDependencies.lock.json",
+      "snapshotPath": "files/RuntimeDependencies.lock.json",
+      "bytes": 7925,
+      "sha256": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a",
+      "mode": "0o644"
+    },
+    {
+      "path": "Scripts/Expo/package-lock.json",
+      "snapshotPath": "files/Scripts/Expo/package-lock.json",
+      "bytes": 336324,
+      "sha256": "3b31e1c8fd34145df900764a2cda013ab02ecea7f890c969ad5e0a92925d0dd8",
+      "mode": "0o644"
+    },
+    {
+      "path": "Scripts/Expo/package.json",
+      "snapshotPath": "files/Scripts/Expo/package.json",
+      "bytes": 1759,
+      "sha256": "bb447094c0ef2250c445f580fa91c81a55fc3187c7d49e145b84e9c1c3756dce",
+      "mode": "0o644"
+    },
+    {
+      "path": "Scripts/Expo/dependency-lock.json",
+      "snapshotPath": "files/Scripts/Expo/dependency-lock.json",
+      "bytes": 5375,
+      "sha256": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65",
+      "mode": "0o644"
+    },
+    {
+      "path": "Scripts/MiniApps/upstream-resolution.json",
+      "snapshotPath": "files/Scripts/MiniApps/upstream-resolution.json",
+      "bytes": 15092,
+      "sha256": "28a724580a5c7b03268335bfba6a144b7db155198a916305cd00e2e339db1b2e",
+      "mode": "0o644"
+    },
+    {
+      "path": "Scripts/NativeScript/package-lock.json",
+      "snapshotPath": "files/Scripts/NativeScript/package-lock.json",
+      "bytes": 110219,
+      "sha256": "16f569f4bfa6f8806cfe72449866a0dc9a9331f33d2c67170d5292455c48b60b",
+      "mode": "0o644"
+    },
+    {
+      "path": "Scripts/NativeScript/package.json",
+      "snapshotPath": "files/Scripts/NativeScript/package.json",
+      "bytes": 851,
+      "sha256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b",
+      "mode": "0o644"
+    },
+    {
+      "path": "build/runtime-host/RuntimeHostResources.zip",
+      "snapshotPath": "files/build/runtime-host/RuntimeHostResources.zip",
+      "bytes": 81824721,
+      "sha256": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc",
+      "mode": "0o644"
+    },
+    {
+      "path": "build/runtime-host/host-metadata.json",
+      "snapshotPath": "files/build/runtime-host/host-metadata.json",
+      "bytes": 358,
+      "sha256": "3a1c570af2f0e642083ca22e2c846f4c5ca8c49b115b2d70eb2e5a6f05e2fe0f",
+      "mode": "0o644"
+    },
+    {
+      "path": "build/app-split-evidence-attempt19/miniapp-documentation-snippets.json",
+      "snapshotPath": "files/build/app-split-evidence-attempt19/miniapp-documentation-snippets.json",
+      "bytes": 20207,
+      "sha256": "dcbf4dc7316dfbc0b6e7247d52e91ee355a6e388a6ca15259aba80a07c29f101",
+      "mode": "0o644"
+    },
+    {
+      "path": "build/app-split-evidence-attempt19/prepared-native/native-artifacts.json",
+      "snapshotPath": "files/build/app-split-evidence-attempt19/prepared-native/native-artifacts.json",
+      "bytes": 29897,
+      "sha256": "3a8dc08f21556547720111e3ad31df314458f5cf75428adf2d69450965036a0d",
+      "mode": "0o644"
+    },
+    {
+      "path": "build/primary-control/plan.json",
+      "snapshotPath": "files/build/primary-control/plan.json",
+      "bytes": 14622,
+      "sha256": "fb888d78c49d9849f30dd888a7c4e2b6c053963f861137b288ccf6147242a4d3",
+      "mode": "0o644"
+    },
+    {
+      "path": "build/acceptance/expo-type-declarations/corrections.json",
+      "snapshotPath": "files/build/acceptance/expo-type-declarations/corrections.json",
+      "bytes": 3600,
+      "sha256": "c5e5322a6177f36a713380134006d4beb3a0ebd275e435e66b7de93a4cb60f82",
+      "mode": "0o644"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/.source-build-receipt.json",
+      "snapshotPath": "files/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/.source-build-receipt.json",
+      "bytes": 1355,
+      "sha256": "d586a5921bce331c45f35729beadba49ef731558a54f61a7a1096fe002293b4c",
+      "mode": "0o644"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/.artifact-manifest.json",
+      "snapshotPath": "files/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/.artifact-manifest.json",
+      "bytes": 226,
+      "sha256": "9d16ce10fc512cb1378cf24b3e9f626ac7f1b65cbb76812602b125c5e70a3b63",
+      "mode": "0o644"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/Info.plist",
+      "snapshotPath": "files/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/Info.plist",
+      "bytes": 1196,
+      "sha256": "db115db71f445276b867261df90bf4597d77f0de2a87a10e44e101a8d31221c8",
+      "mode": "0o644"
+    },
+    {
+      "path": "build/miniapp-upstreams/expo-native-source/ios/Podfile.lock",
+      "snapshotPath": "files/build/miniapp-upstreams/expo-native-source/ios/Podfile.lock",
+      "bytes": 76498,
+      "sha256": "c012c6f8ee2ca782aea7788349d75a3a57e6e4be8d324037a8b9dce573e4d8e6",
+      "mode": "0o644"
+    },
+    {
+      "path": "Scripts/CI/IntegrationValidation/miniapps_provider_sources.json",
+      "snapshotPath": "files/Scripts/CI/IntegrationValidation/miniapps_provider_sources.json",
+      "bytes": 10135,
+      "sha256": "818ea10dd85bd0b36449dfe93138fd52c438341d8c5864836ebab6a28a188078",
+      "mode": "0o644"
+    },
+    {
+      "path": "docs/product-split/target-membership.json",
+      "snapshotPath": "files/docs/product-split/target-membership.json",
+      "bytes": 8948,
+      "sha256": "799388c58d92d5edfbe4dcd5ff5d79d66ac6c297217dc0a93bcf4dc9583c761f",
+      "mode": "0o644"
+    },
+    {
+      "path": "build/primary-control/source-advance-a2c8a1b1/receipt.json",
+      "snapshotPath": "files/build/primary-control/source-advance-a2c8a1b1/receipt.json",
+      "bytes": 6963,
+      "sha256": "3b0c403d49939507e391241a6c105e548ef6dbc3ac640ae7d9fe91c7d1ff4ebd",
+      "mode": "0o644"
+    },
+    {
+      "path": "build/primary-control/final-prefix-attempt19-launch.json",
+      "snapshotPath": "files/build/primary-control/final-prefix-attempt19-launch.json",
+      "bytes": 336,
+      "sha256": "545e42f0d82927e7e1df39b438824e8d8136aa104c605bc9cb599d75a830bb08",
+      "mode": "0o644"
+    },
+    {
+      "path": "build/primary-control/final-prefix-attempt19-decision.json",
+      "snapshotPath": "files/build/primary-control/final-prefix-attempt19-decision.json",
+      "bytes": 10756,
+      "sha256": "8c23c59be78a089501ee4bbc336147d997c1fde98230b452f09fc1c8424be280",
+      "mode": "0o644"
+    },
+    {
+      "path": "build/primary-control/final-prefix-continuation-attempt19/state.json",
+      "snapshotPath": "files/build/primary-control/final-prefix-continuation-attempt19/state.json",
+      "bytes": 9573,
+      "sha256": "846d7b35087174f0c6d5032dc0615d04f5f50eaedc7e48447438d187da90b954",
+      "mode": "0o644"
+    },
+    {
+      "path": "build/primary-control/final-prefix-continuation-attempt19/logs/split-upstreams.log",
+      "snapshotPath": "files/build/primary-control/final-prefix-continuation-attempt19/logs/split-upstreams.log",
+      "bytes": 7885,
+      "sha256": "43993649d747df00eeb0b3f2bf05cb8bdb13d7ae4f573b0abe2a86bcd6678926",
+      "mode": "0o644"
+    },
+    {
+      "path": "build/primary-control/final-prefix-continuation-attempt19/logs/generate-manifest.log",
+      "snapshotPath": "files/build/primary-control/final-prefix-continuation-attempt19/logs/generate-manifest.log",
+      "bytes": 3605,
+      "sha256": "11ffb997c112dd4c5954bd29a572fb89d05c9048e373d844133bf0580cca034c",
+      "mode": "0o644"
+    },
+    {
+      "path": "build/primary-control/final-prefix-continuation-attempt19/logs/generate-project.log",
+      "snapshotPath": "files/build/primary-control/final-prefix-continuation-attempt19/logs/generate-project.log",
+      "bytes": 88,
+      "sha256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18",
+      "mode": "0o644"
+    },
+    {
+      "path": "build/primary-control/final-prefix-continuation-attempt19/logs/verify-targets.log",
+      "snapshotPath": "files/build/primary-control/final-prefix-continuation-attempt19/logs/verify-targets.log",
+      "bytes": 1438,
+      "sha256": "4f49124a3b6c18a0b8c4540cb46c33b31c436deed0ad97c4084e189157ed9c8e",
+      "mode": "0o644"
+    },
+    {
+      "path": "build/primary-control/final-prefix-continuation-attempt19/logs/lint-generated-project.log",
+      "snapshotPath": "files/build/primary-control/final-prefix-continuation-attempt19/logs/lint-generated-project.log",
+      "bytes": 179,
+      "sha256": "b019c7e18b5b8a4825f382e7c3a04552e29a406d658592b9f6105fe88a6fe18a",
+      "mode": "0o644"
+    },
+    {
+      "path": "build/primary-control/final-prefix-continuation-attempt19/logs/runtime-version-contract8.log",
+      "snapshotPath": "files/build/primary-control/final-prefix-continuation-attempt19/logs/runtime-version-contract8.log",
+      "bytes": 978,
+      "sha256": "9e8ae55d89816de935b976e6b4ee2dfc61a8420b63da4ee36527bdd1f1c05ea7",
+      "mode": "0o644"
+    },
+    {
+      "path": "build/primary-control/final-prefix-continuation-attempt19/logs/split-native-preparation.log",
+      "snapshotPath": "files/build/primary-control/final-prefix-continuation-attempt19/logs/split-native-preparation.log",
+      "bytes": 38262,
+      "sha256": "b7a699f14667d006d93345379234556e6f8bbb3ad70fdda6bda18511121e8d5f",
+      "mode": "0o644"
+    },
+    {
+      "path": "build/primary-control/final-prefix-continuation-attempt19/logs/split-native-artifacts.log",
+      "snapshotPath": "files/build/primary-control/final-prefix-continuation-attempt19/logs/split-native-artifacts.log",
+      "bytes": 1604,
+      "sha256": "736937ecf81b8293d1d6d17d08fd19212953607020486c7034153d749199a522",
+      "mode": "0o644"
+    },
+    {
+      "path": "build/primary-control/final-prefix-continuation-attempt19/logs/split-restore-inputs.log",
+      "snapshotPath": "files/build/primary-control/final-prefix-continuation-attempt19/logs/split-restore-inputs.log",
+      "bytes": 224,
+      "sha256": "2a0bfe76e52be5805e095ed49021cce782a2911cdfbd88bba65098496a2007fb",
+      "mode": "0o644"
+    },
+    {
+      "path": "build/primary-control/final-prefix-continuation-attempt19/logs/split-inputs.log",
+      "snapshotPath": "files/build/primary-control/final-prefix-continuation-attempt19/logs/split-inputs.log",
+      "bytes": 103,
+      "sha256": "afa15e936d420b2974b90d41c9bc2cebdb838d13acba28d377e23cff8ce1ba74",
+      "mode": "0o644"
+    },
+    {
+      "path": "AI_HLY/ChatView.swift",
+      "snapshotPath": "files/AI_HLY/ChatView.swift",
+      "bytes": 115590,
+      "sha256": "d21659cdaa7d3e6141d4677d10ccaee067e7238ba8c4ccc2f689b63db4c41ffe",
+      "mode": "0o644"
+    },
+    {
+      "path": "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift",
+      "snapshotPath": "files/AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift",
+      "bytes": 12639,
+      "sha256": "7d6b159d580636269daf67f6ed04634d586b94d07c960bd099cc9c5f4da9e164",
+      "mode": "0o644"
+    },
+    {
+      "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "snapshotPath": "files/HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "bytes": 91719,
+      "sha256": "da0fa21f26b677f4d18f8e1972208b39e30401a127e9dd2a9643e0fe8d7ad17c",
+      "mode": "0o644"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoUIModule.swift",
+      "snapshotPath": "files/Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoUIModule.swift",
+      "bytes": 21367,
+      "sha256": "3ad8217ce87005fab1fe3dc256e7d7680ced7c330f7cd9dc5561f1a5e5905e09",
+      "mode": "0o644"
+    },
+    {
+      "path": "Packages/HanlinExpoUI/src/manual-components.tsx",
+      "snapshotPath": "files/Packages/HanlinExpoUI/src/manual-components.tsx",
+      "bytes": 11834,
+      "sha256": "b95b387fce797a3c0ffe8c258e1fe0b411e76956e6cd50ae9235267f5b638da6",
+      "mode": "0o644"
+    },
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "snapshotPath": "files/Scripts/ProductSplit/run_paired_acceptance.py",
+      "bytes": 47871,
+      "sha256": "a99b6194f8dd20bc30998ff2ad9e86ec219415a00615b250c65670f7dfcdba7d",
+      "mode": "0o644"
+    },
+    {
+      "path": "Scripts/ProductSplit/test_run_paired_acceptance.py",
+      "snapshotPath": "files/Scripts/ProductSplit/test_run_paired_acceptance.py",
+      "bytes": 19171,
+      "sha256": "3791b4178c5cc49b64c38ead6f913284f29fc990c7223953aa74f2075f3771f1",
+      "mode": "0o644"
+    }
+  ],
+  "trackedDeltaCount": 25,
+  "trackedDeltaPath": "tracked-delta.json",
+  "hostModule": {
+    "archiveMember": "miniapp-authoring.mjs",
+    "bytes": 50327,
+    "sha256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9",
+    "appSourceArchiveSHA256": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc"
+  },
+  "sdkManifest": {
+    "archiveMember": "MiniAppSDK/miniapp-sdk.json",
+    "snapshotPath": "extracted-sdk/miniapp-sdk.json",
+    "bytes": 5224120,
+    "sha256": "4505c28495d8b6ecd1073254e0e395adcc898cc02dd1d40699591f51db4dee92"
+  },
+  "sdkIdentity": {
+    "schemaVersion": 1,
+    "inputSHA256": "ba8f3f1f09054887eed62532fa1d5ca2ac3bd60e6aa99a98ab1035c7653882a2",
+    "sourceInputCount": 235,
+    "fileCount": 25669
+  },
+  "documentationSummary": {
+    "status": "EXECUTED_PASS",
+    "sdk": {
+      "manifestSHA256": "4505c28495d8b6ecd1073254e0e395adcc898cc02dd1d40699591f51db4dee92",
+      "inputSHA256": "ba8f3f1f09054887eed62532fa1d5ca2ac3bd60e6aa99a98ab1035c7653882a2"
+    },
+    "projects": [
+      {
+        "name": "expo-guide",
+        "succeeded": true,
+        "diagnosticCount": 0
+      },
+      {
+        "name": "nativescript-guide",
+        "succeeded": true,
+        "diagnosticCount": 0
+      },
+      {
+        "name": "scriptwidget-guide",
+        "succeeded": true,
+        "diagnosticCount": 0
+      },
+      {
+        "name": "scriptwidget-controls",
+        "succeeded": true,
+        "diagnosticCount": 0
+      }
+    ]
+  },
+  "boundary": "Read-only snapshot of completed native preparation and native artifact export; application acceptance status remains separately recorded in actual controller state.",
+  "generationProvenance": {
+    "status": "PASS",
+    "source": "a2c8a1b1be746461272ba77254603304567c309d",
+    "prefixState": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt19/state.json",
+    "steps": [
+      {
+        "id": "generate-manifest",
+        "argv": [
+          "python3",
+          "Scripts/SDK/generate_manifest.py"
+        ],
+        "status": "PASS",
+        "startedAt": "2026-11-25T10:39:57.270599+00:00",
+        "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt19/logs/generate-manifest.log",
+        "pid": 72848,
+        "exitCode": 0,
+        "elapsedSeconds": 6.252866415990866,
+        "finishedAt": "2026-11-25T10:40:03.524908+00:00",
+        "logBytes": 3605,
+        "logSHA256": "11ffb997c112dd4c5954bd29a572fb89d05c9048e373d844133bf0580cca034c"
+      },
+      {
+        "id": "generate-project",
+        "argv": [
+          "python3",
+          "Scripts/SDK/update_project.py"
+        ],
+        "status": "PASS",
+        "startedAt": "2026-11-25T10:40:03.527266+00:00",
+        "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt19/logs/generate-project.log",
+        "pid": 73600,
+        "exitCode": 0,
+        "elapsedSeconds": 1.8162275000067893,
+        "finishedAt": "2026-11-25T10:40:05.344982+00:00",
+        "logBytes": 88,
+        "logSHA256": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18"
+      },
+      {
+        "id": "verify-targets",
+        "argv": [
+          "python3",
+          "Scripts/ProductSplit/verify_targets.py"
+        ],
+        "status": "PASS",
+        "startedAt": "2026-11-25T10:40:05.347475+00:00",
+        "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt19/logs/verify-targets.log",
+        "pid": 73704,
+        "exitCode": 0,
+        "elapsedSeconds": 0.1608807910088217,
+        "finishedAt": "2026-11-25T10:40:05.509913+00:00",
+        "logBytes": 1438,
+        "logSHA256": "4f49124a3b6c18a0b8c4540cb46c33b31c436deed0ad97c4084e189157ed9c8e"
+      },
+      {
+        "id": "lint-generated-project",
+        "argv": [
+          "plutil",
+          "-lint",
+          "AI_HLY.xcodeproj/project.pbxproj",
+          "HanlinMiniAppsExtensions/Notification/Info.plist",
+          "HanlinMiniAppsExtensions/Notification/HanlinMiniAppsNotificationService.entitlements"
+        ],
+        "status": "PASS",
+        "startedAt": "2026-11-25T10:40:05.512335+00:00",
+        "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt19/logs/lint-generated-project.log",
+        "pid": 73722,
+        "exitCode": 0,
+        "elapsedSeconds": 0.03640599999926053,
+        "finishedAt": "2026-11-25T10:40:05.550199+00:00",
+        "logBytes": 179,
+        "logSHA256": "b019c7e18b5b8a4825f382e7c3a04552e29a406d658592b9f6105fe88a6fe18a"
+      },
+      {
+        "id": "runtime-version-contract8",
+        "argv": [
+          "node",
+          "--test",
+          "Scripts/Audit/Tests/runtime-version-contract.test.mjs"
+        ],
+        "status": "PASS",
+        "startedAt": "2026-11-25T10:40:05.552475+00:00",
+        "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt19/logs/runtime-version-contract8.log",
+        "pid": 73728,
+        "exitCode": 0,
+        "elapsedSeconds": 0.25974308399599977,
+        "finishedAt": "2026-11-25T10:40:05.813655+00:00",
+        "logBytes": 978,
+        "logSHA256": "9e8ae55d89816de935b976e6b4ee2dfc61a8420b63da4ee36527bdd1f1c05ea7"
+      }
+    ]
+  },
+  "packagedTextEditorWrapper": {
+    "archiveMember": "MiniAppSDK/expo/node_modules/@hanlin/expo-ui/src/manual-components.tsx",
+    "bytes": 11834,
+    "sha256": "b95b387fce797a3c0ffe8c258e1fe0b411e76956e6cd50ae9235267f5b638da6"
+  },
+  "actualEnginePackageVersions": {
+    "expo": {
+      "@expo/ui": "58.0.29",
+      "@hanlin/expo-native-api": "1.0.0",
+      "@hanlin/expo-ui": "1.0.0",
+      "@nativescript/react-native": "9.1.2",
+      "expo": "58.0.26",
+      "expo-asset": "58.0.21",
+      "expo-brownfield": "58.0.20",
+      "expo-modules-core": "58.1.0",
+      "expo-modules-jsi": "58.0.23",
+      "react": "19.3.0",
+      "react-native": "0.88.1",
+      "react-native-worklets": "0.13.0",
+      "expo-widgets": "58.0.29",
+      "@babel/core": "7.29.7",
+      "@react-native-community/cli": "20.2.0",
+      "@react-native/codegen": "0.88.1",
+      "@react-native/metro-config": "0.88.1",
+      "@types/react": "19.3.2",
+      "babel-preset-expo": "58.0.26",
+      "esbuild": "0.25.12",
+      "typescript": "6.0.2",
+      "@hanlin/notification-events": "1.0.0"
+    },
+    "nativescript": {
+      "@nativescript/core": "9.1.4",
+      "@nativescript/swift-ui": "4.0.2",
+      "@nativescript/ios": "9.1.1",
+      "@nativescript/types": "9.1.4",
+      "@nativescript/vite": "8.0.24",
+      "typescript": "5.9.3",
+      "vite": "8.0.0",
+      "@hanlin/notification-events": "1.0.0",
+      "@hanlin/host-services": "1.0.0"
+    },
+    "scriptwidget": {
+      "everettjf/scriptwidget": "4da256d58247bbafb9a5cd443a285250b97b3c4b,68f04194f00222558c44d5a832e7617a96f62574"
+    }
+  },
+  "actualSourceBindings": {
+    "AI_HLY/ChatView.swift": "d21659cdaa7d3e6141d4677d10ccaee067e7238ba8c4ccc2f689b63db4c41ffe",
+    "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift": "7d6b159d580636269daf67f6ed04634d586b94d07c960bd099cc9c5f4da9e164",
+    "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift": "da0fa21f26b677f4d18f8e1972208b39e30401a127e9dd2a9643e0fe8d7ad17c",
+    "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoUIModule.swift": "3ad8217ce87005fab1fe3dc256e7d7680ced7c330f7cd9dc5561f1a5e5905e09",
+    "Packages/HanlinExpoUI/src/manual-components.tsx": "b95b387fce797a3c0ffe8c258e1fe0b411e76956e6cd50ae9235267f5b638da6",
+    "Scripts/ProductSplit/run_paired_acceptance.py": "a99b6194f8dd20bc30998ff2ad9e86ec219415a00615b250c65670f7dfcdba7d",
+    "Scripts/ProductSplit/test_run_paired_acceptance.py": "3791b4178c5cc49b64c38ead6f913284f29fc990c7223953aa74f2075f3771f1"
+  },
+  "preparationContinuationCharges": [
+    {
+      "id": "final-prefix-continuation-attempt18",
+      "source": "1d5e598614f2bc7c689f34f5d7b364f67e1d5ae1",
+      "baselineSeconds": 12875.891307207046,
+      "chargedSeconds": 31.645607708996977,
+      "cumulativeSeconds": 12907.536914916043,
+      "allowanceSeconds": 600,
+      "decisionSHA256": "b5a5615a3e962ae8034421d7ab55e2ead27639eca87fba2251c47524d90706ec",
+      "status": "FAILED"
+    },
+    {
+      "id": "final-prefix-continuation-attempt18-recovery",
+      "source": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+      "baselineSeconds": 12907.536914916043,
+      "chargedSeconds": 412.59641520900186,
+      "cumulativeSeconds": 13320.133330125045,
+      "allowanceSeconds": 568.354392291003,
+      "decisionSHA256": "2a2c2a4eccbd557dcd1f1a03705c0eccfbc7d00f1f21c5d3ccca23ace96cf0e6",
+      "status": "PASS"
+    },
+    {
+      "id": "final-prefix-continuation-attempt19",
+      "source": "a2c8a1b1be746461272ba77254603304567c309d",
+      "baselineSeconds": 15206.084556709033,
+      "chargedSeconds": 266.8272158750042,
+      "cumulativeSeconds": 15472.911772584037,
+      "allowanceSeconds": 600,
+      "decisionSHA256": "8c23c59be78a089501ee4bbc336147d997c1fde98230b452f09fc1c8424be280",
+      "status": "PASS"
+    }
+  ],
+  "trackedDeltaSHA256": "31991d2ceeb8e62f8d05e8e1b0c67c095371c1b72e438655a56bacc54705a37d",
+  "expoAssetBindingsSHA256": "174f914456162a4ae501f3244d37b25662f8123a46a98d026ac127ad75ce6282",
+  "expoAssetBindingsPath": "expo-asset-produced-bindings.json"
+}

@@ -1,0 +1,449 @@
+{
+  "schema": 1,
+  "status": "SEALED",
+  "id": "nativescript-five-sdk20-v1",
+  "gate": "nativescript-five",
+  "owner": "/root/native_execution",
+  "authorization": {
+    "by": "/root",
+    "scope": "Original current-source single nativescript-five acceptance case; separate operational allowance; original selectors, assertions, worker and inner limits unchanged."
+  },
+  "root": "/Users/m1/builds/hanlin-notification-wire-fix-20261125",
+  "source": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+  "sourceTree": "c0f027896b1edd67ea824c48b2b3bbf7c4e5e73a",
+  "compiledConsumerSource": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+  "SDKProducerSource": "dff3b45c99a57bf8fe8ec721db3fa1fafce7134b",
+  "SDKSourceCarrier": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+  "sdkManifestSHA256": "6f11ed8da3df18627f05932d47b5b68dec54eb26ac396151a21cbc8c3e65800e",
+  "sdkInputSHA256": "0388d52ec3ceef1adddb21a8718566876db0ef693520bc761e4ec57573a96514",
+  "hostArchiveSHA256": "ed18d93a88a1020bc2140417cea3847daf3d03472cdd4769d9a5ac4e44f48a22",
+  "derivedData": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125",
+  "selector": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualNativeScriptImportsTheGeneratedTypedFacadeAndCallsEveryEngine()",
+  "expectedTests": 1,
+  "allowanceSeconds": 1200,
+  "outputDirectory": "validation/nativescript-five-sdk20-v1",
+  "resourceBoundBytes": 5679053931,
+  "resourceBoundary": "Retained conservative one-case bound; actual free bytes are rechecked at launch. No current capacity is invented.",
+  "controller": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/nativescript-five-sdk20-v1.py",
+    "bytes": 24538,
+    "sha256": "4d5799c415f979feca1ef72da2aea071e7c1b9d803fc463e1002cd51d55d284c"
+  },
+  "pairedController": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v4b.py",
+    "bytes": 25006,
+    "sha256": "a9040dd634acfe7d1d01d6f477771f9033ab305cde9576b1b5d5ad6423726bcb"
+  },
+  "pairedDecision": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2-decision.json",
+    "bytes": 47750,
+    "sha256": "10e76a4916899f9345cb30421cc4b84566b1cf2b0f054005c70e80c52dce5928"
+  },
+  "pairedTerminal": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/state.json",
+    "bytes": 12578,
+    "sha256": "71a93134e5d50959d368d3bec2e10cde7f2214fab05606da702d75cd7da87b6b"
+  },
+  "pairedLedger": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/ledger.json",
+    "bytes": 6158,
+    "sha256": "62fec27bb62ea8be73c70ce3386ab9382aedc82bb75aa4e91f3bde9f0e078ea8"
+  },
+  "simulatorOwnership": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/created-simulator.txt",
+    "bytes": 37,
+    "sha256": "30f36492f55131b3bc1361cd8ad4ba6bb4f337bd54fca300dd881c4df46f57e6"
+  },
+  "simulator": {
+    "dataPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/ED1C7CA0-C85E-41DF-918F-3C9C9033F73E/data",
+    "dataPathSize": 6085431296,
+    "logPath": "/Users/m1/Library/Logs/CoreSimulator/ED1C7CA0-C85E-41DF-918F-3C9C9033F73E",
+    "udid": "ED1C7CA0-C85E-41DF-918F-3C9C9033F73E",
+    "lastUsedAt": "2026-11-25T23:39:08Z",
+    "isAvailable": true,
+    "logPathSize": 323584,
+    "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5-16GB",
+    "state": "Shutdown",
+    "name": "HanlinPaired-paired52-sdk20-v2"
+  },
+  "builtInputs": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/product-capture/built-input-bindings.json",
+    "bytes": 13999,
+    "sha256": "799f464fcd5edae6e7218be4e0d461bbc9a899e1bb07516e298097b1d32bdc47"
+  },
+  "productMetadata": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/product-capture/remaining-native-product-metadata.json",
+    "bytes": 12497,
+    "sha256": "7222a7f3d589d2484a7b7b0eb709b5fc65afce35ddd85a8a2ba8f56afa48ccff"
+  },
+  "productFiles": [
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/Info.plist",
+      "bytes": 5276,
+      "sha256": "b62620a3005aa50f80052859b4d47183f9e4dec8cee463949a7e62fedae813c0"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/HanlinMiniApps",
+      "bytes": 40496,
+      "sha256": "7ea767ff0c107ef7cab0fc25cfb152d2f5aec13fe14002980ac484597d9e6949"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/HanlinMiniApps.debug.dylib",
+      "bytes": 128040336,
+      "sha256": "0f95ca2645e42b65560733953a0daab5756e3026fd96cf90b24ecc1dc9e007f5"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsNotificationService.appex/Info.plist",
+      "bytes": 1278,
+      "sha256": "176d667ec09408832340ae438a7e26886a9f080625c445c3f192850a7b9a467b"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsNotificationService.appex/HanlinMiniAppsNotificationService",
+      "bytes": 37888,
+      "sha256": "ae701ada8246a26cd5ad53fc7f3dbeceda515ff282c6b8f1d6a9ee11a8a321cf"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsNotificationService.appex/HanlinMiniAppsNotificationService.debug.dylib",
+      "bytes": 21564816,
+      "sha256": "29cf896b9153207d4ddd6bc6f411ffa17611c81b13ff691aa5acae3a66039d81"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsShare.appex/Info.plist",
+      "bytes": 1484,
+      "sha256": "5a601d95e10ee6e24eedc25a3ed41523e64becd57a7c38c4a298503f94546b1b"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsShare.appex/HanlinMiniAppsShare",
+      "bytes": 37872,
+      "sha256": "a795ad1f8f392ee0aed7e494f120510d88c5746b418c3151e99db47fb53c42a0"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsShare.appex/HanlinMiniAppsShare.debug.dylib",
+      "bytes": 3333584,
+      "sha256": "cebf99fb802dea789fc89742eb58aa3dd364dab1b089f5615b28d07b0af826f2"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsWidgets.appex/Info.plist",
+      "bytes": 2943,
+      "sha256": "7b80628e4ba87f4583a18bc29c2d3541ea49a8c7fac3ae49e69333fe3b7e4ef8"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsWidgets.appex/HanlinMiniAppsWidgets",
+      "bytes": 40512,
+      "sha256": "f137aa1eb95f3b638dd429c16fcf457de2506d8c733d8ef85ee38a12de670c5a"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsWidgets.appex/HanlinMiniAppsWidgets.debug.dylib",
+      "bytes": 38262848,
+      "sha256": "d793840182f7ff2fa50a672e9f363ceac64c4ce2719eea859b806d909c152cdb"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/RuntimeHostResources.zip",
+      "bytes": 81839498,
+      "sha256": "ed18d93a88a1020bc2140417cea3847daf3d03472cdd4769d9a5ac4e44f48a22"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/Info.plist",
+      "bytes": 5507,
+      "sha256": "2f8fe3fe0643a2fb10cbb032155ff0956612eb1f745899ad7b0c0202015c61ed"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/AI_Hanlin",
+      "bytes": 40496,
+      "sha256": "276373476c4a2ed45652bfb5ebf2129309c300a44c3434221577817441121c83"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/AI_Hanlin.debug.dylib",
+      "bytes": 3473840,
+      "sha256": "b63a0ee78aa75ec4723e56dd4ca4b8107c9dbbec8ac54e56630d828d30fff90c"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/ChavrusaChatNotificationService.appex/Info.plist",
+      "bytes": 1220,
+      "sha256": "cf22dfcabc37e0108e7d7a24ed8f7566d0934e60290d16e8427b2370532ae32c"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/ChavrusaChatNotificationService.appex/ChavrusaChatNotificationService",
+      "bytes": 37888,
+      "sha256": "c77878c236bf825fd77c596b65d313ac28a44c87560fc924e5029dd0f4a840d9"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/ChavrusaChatNotificationService.appex/ChavrusaChatNotificationService.debug.dylib",
+      "bytes": 28195344,
+      "sha256": "85abab1cb33b157626addacea684bf22cdb68df57a3b2acf282b763379975b08"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/ChavrusaChatShare.appex/Info.plist",
+      "bytes": 1423,
+      "sha256": "8b9c19a920eb2d2568cfb4e9e1729f98c7e7d907201b31654e65fb2fdc50b84f"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/ChavrusaChatShare.appex/ChavrusaChatShare",
+      "bytes": 37872,
+      "sha256": "74962cd86515cd17acc78b566c6ac09ca6ceef5972f31cea1628d9c80b137c9a"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/ChavrusaChatShare.appex/ChavrusaChatShare.debug.dylib",
+      "bytes": 10043552,
+      "sha256": "9418e1521af318d18b8177730b96c2eccd5113695db1d2a53bddd698f258ea22"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/HanlinScriptingWidgets.appex/Info.plist",
+      "bytes": 2890,
+      "sha256": "167a82ec3ec7e8a0e773c9854116f15138c3a17a6601a92bc3abac5e78671188"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/HanlinScriptingWidgets.appex/HanlinScriptingWidgets",
+      "bytes": 40512,
+      "sha256": "8e3685263b3beadb812dcdc3016725321583bafa1fdf16b3a04e3aa82057883a"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/HanlinScriptingWidgets.appex/HanlinScriptingWidgets.debug.dylib",
+      "bytes": 44892224,
+      "sha256": "0279a68e80189a8dd677e7f4e62a992b274f38a1f37ce5640b45b00376b18e6f"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/Frameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+      "bytes": 81839498,
+      "sha256": "ed18d93a88a1020bc2140417cea3847daf3d03472cdd4769d9a5ac4e44f48a22"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+      "bytes": 81839498,
+      "sha256": "ed18d93a88a1020bc2140417cea3847daf3d03472cdd4769d9a5ac4e44f48a22"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/Frameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+      "bytes": 81839498,
+      "sha256": "ed18d93a88a1020bc2140417cea3847daf3d03472cdd4769d9a5ac4e44f48a22"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+      "bytes": 81839498,
+      "sha256": "ed18d93a88a1020bc2140417cea3847daf3d03472cdd4769d9a5ac4e44f48a22"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/AI_HLYUITests-Runner.app/PlugIns/AI_HLYUITests.xctest/Info.plist",
+      "bytes": 736,
+      "sha256": "0b74fc1f509103283e23cb6f8e0d0bbfe187a31208762264f2eca905549da81d"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/AI_HLYUITests-Runner.app/PlugIns/AI_HLYUITests.xctest/AI_HLYUITests",
+      "bytes": 2852144,
+      "sha256": "feadd909518cd3169f862e7904e1eeec11f1cee157bfb2923910255358dbb00a"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/Info.plist",
+      "bytes": 704,
+      "sha256": "ef2975aad67dfc02df6ba3d6ffba32fe74b26534b591bbeb8f1062c77d21674a"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests",
+      "bytes": 37680496,
+      "sha256": "fa8ec7637b8eb28c086c173a6c982418615cb77e0a589338df555dac97222363"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app/PlugIns/HanlinMiniAppsUITests.xctest/Info.plist",
+      "bytes": 734,
+      "sha256": "84ccf7641c4a3489fae0321433bdff3d566b116d7e86ef3bc053b614359b441d"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app/PlugIns/HanlinMiniAppsUITests.xctest/HanlinMiniAppsUITests",
+      "bytes": 748400,
+      "sha256": "ad6981a5b47953e184ecefb556940f5d4dfcc6a676aac651396e6f6500ef29bb"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/AI_HLY_iphonesimulator27.0-arm64.xctestrun",
+      "bytes": 10920,
+      "sha256": "b2cc79f4b3780daec837e119cc5e4a07d5ecccd618ab793b88bb0b80dbfa2062"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/HanlinMiniApps_iphonesimulator27.0-arm64.xctestrun",
+      "bytes": 16737,
+      "sha256": "2d6b493aa93663d03e17a15722eab010326b260ccbbb454ed12077cae45cda96"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app/Info.plist",
+      "bytes": 10947,
+      "sha256": "e807c6b2a4c5444448a527d598bb86195f0737209b6c15bc2b8ecc8273f75d87"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app/HanlinMiniAppsUITests-Runner",
+      "bytes": 95248,
+      "sha256": "b8aa680bd899a64118d86302c884e8cdb81fec14a0d40dc2dfb8f6a33362b5bf"
+    }
+  ],
+  "sourceFiles": [
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "bytes": 47871,
+      "sha256": "a99b6194f8dd20bc30998ff2ad9e86ec219415a00615b250c65670f7dfcdba7d",
+      "origin": {
+        "kind": "GIT_BLOB",
+        "commit": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+        "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+        "sameBytesAsHistoricalConsumer": true
+      }
+    },
+    {
+      "path": "Scripts/ProductSplit/simulator_entitlements.py",
+      "bytes": 3658,
+      "sha256": "aa1cfcd4f371dd25a637bc56ab281ef94f8bcdcc2bb415b9125dd0b0aa0b27a8",
+      "origin": {
+        "kind": "GIT_BLOB",
+        "commit": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+        "path": "Scripts/ProductSplit/simulator_entitlements.py",
+        "sameBytesAsHistoricalConsumer": true
+      }
+    },
+    {
+      "path": "Scripts/CI/verify_selected_tests.py",
+      "bytes": 2000,
+      "sha256": "4ae4a28934341461b364a9b83fb891ca214da64cf3046635278fb4e6837caad5",
+      "origin": {
+        "kind": "GIT_BLOB",
+        "commit": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+        "path": "Scripts/CI/verify_selected_tests.py",
+        "sameBytesAsHistoricalConsumer": true
+      }
+    },
+    {
+      "path": "AI_HLYTests/NativeScriptRuntimeWireTests.swift",
+      "bytes": 17996,
+      "sha256": "4ac7ed256f861133e3b84eda85d1f5df659317477c6a42c637a42a59def46835",
+      "origin": {
+        "kind": "GIT_BLOB",
+        "commit": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+        "path": "AI_HLYTests/NativeScriptRuntimeWireTests.swift"
+      }
+    },
+    {
+      "path": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests.swift",
+      "bytes": 61699,
+      "sha256": "85efedee4ec94c5ecc4e727847401fda1ab72a66e7cf9ab2403f909f23a18210",
+      "origin": {
+        "kind": "GIT_BLOB",
+        "commit": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+        "path": "AI_HLYTests/HanlinUnifiedHostServicesE2ETests.swift"
+      }
+    }
+  ],
+  "pendingBindings": [],
+  "actualProductCapture": {
+    "oracleReceipt": {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-built-inputs/receipt.json",
+      "bytes": 2707,
+      "sha256": "31f262c7121f6e84205e22121dfefb4194a4ac644d31ac582f73265fd8e06e68"
+    },
+    "observedAt": "2026-11-25T23:47:27.796963+00:00",
+    "builtProductFiles": 35,
+    "metadataRoles": 4,
+    "uniquePaths": 39,
+    "originalBuildCommands": {
+      "mini-build.log": {
+        "argv": [
+          "xcodebuild",
+          "-project",
+          "AI_HLY.xcodeproj",
+          "-destination",
+          "platform=iOS Simulator,id=ED1C7CA0-C85E-41DF-918F-3C9C9033F73E",
+          "-parallel-testing-enabled",
+          "NO",
+          "-derivedDataPath",
+          "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125",
+          "-clonedSourcePackagesDirPath",
+          "/Users/m1/builds/hanlin-notification-wire-fix-20261125/build/SourcePackages",
+          "-skipPackagePluginValidation",
+          "-skipMacroValidation",
+          "CODE_SIGNING_ALLOWED=YES",
+          "CODE_SIGNING_REQUIRED=YES",
+          "CODE_SIGN_IDENTITY=-",
+          "-scheme",
+          "HanlinMiniApps",
+          "build-for-testing",
+          "-resultBundlePath",
+          "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/MiniBuild.xcresult"
+        ],
+        "exit": 0,
+        "seconds": 106.43737087500631,
+        "log": "mini-build.log",
+        "sha256": "6e4c2db7b01ced367548b2d28192bec3e220c88ae13f059f3cb115a3bcd2adb2"
+      },
+      "ai-build.log": {
+        "argv": [
+          "xcodebuild",
+          "-project",
+          "AI_HLY.xcodeproj",
+          "-destination",
+          "platform=iOS Simulator,id=ED1C7CA0-C85E-41DF-918F-3C9C9033F73E",
+          "-parallel-testing-enabled",
+          "NO",
+          "-derivedDataPath",
+          "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125",
+          "-clonedSourcePackagesDirPath",
+          "/Users/m1/builds/hanlin-notification-wire-fix-20261125/build/SourcePackages",
+          "-skipPackagePluginValidation",
+          "-skipMacroValidation",
+          "CODE_SIGNING_ALLOWED=YES",
+          "CODE_SIGNING_REQUIRED=YES",
+          "CODE_SIGN_IDENTITY=-",
+          "-scheme",
+          "AI_HLY",
+          "build-for-testing",
+          "-resultBundlePath",
+          "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/AIBuild.xcresult"
+        ],
+        "exit": 0,
+        "seconds": 108.90105858302559,
+        "log": "ai-build.log",
+        "sha256": "122b641c2a6951ae5c0d269f6fe3d6593177e856d1d484d51190097de7710abc"
+      }
+    },
+    "hostedFixtureBuiltCheck": {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/hosted-fixture-built-check.json",
+      "bytes": 1418,
+      "sha256": "072304963e1427286dee6365c4541496729de186116f5469405d157423bf1a4f"
+    },
+    "hostedBuiltResource": {
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/HostServicesProbe.bundle/ExpoSwiftUIProbeA.hanlinExpo",
+      "bytes": 325929,
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20"
+    },
+    "boundary": "Both original v2 builds actually exited 0; the original hosted fixture was verified in the newly built XCTest bundle before cases. Full52 final verdict and cleanup remain pending; this decision is not executable."
+  },
+  "environmentAuthority": "The reviewed paired.main authenticates actual Node and Python hashes/versions at launch. paired.source_closure authenticates source, SDK and prepared native inputs before and after the run. This companion inherits the pinned PATH and asserts the actual Python resolved path; it invokes no new producer.",
+  "accountingBoundary": {
+    "newLedgerOnly": true,
+    "historicalAggregateSecondsIncludingBothOldOSScopes": 25438.734638920043,
+    "historicalOSSecondsAlreadyIncluded": 897.3027506670041,
+    "historicalIndependentOSRecoverySecondsAlreadyIncluded": 233.90022650000174,
+    "componentHistorySource": "Exact immutable pairedDecision.componentHistory, each authenticated prior full52 scopeHistory charge once, and the actual completed current paired charge. The cumulative full52 total is validated but not added again as a second history component."
+  },
+  "originalLimitsSeconds": {
+    "testInternal": 120,
+    "xcodeCase": 600,
+    "originalCommandWrapper": 2100
+  },
+  "pairedScopeAccounting": {
+    "combinedAllowanceSeconds": 14400,
+    "priorChargedSeconds": 2551.057537292014,
+    "currentAllowanceSeconds": 11848.942462707986,
+    "currentChargedSeconds": 2367.7255637079943,
+    "boundary": "Actual v2 current charge is bound from its completed immutable terminal/ledger. Prior failed full52 and original probe preparation remain retained once; no prior test counts satisfy current acceptance."
+  },
+  "observedDeviceIdentity": {
+    "udid": "ED1C7CA0-C85E-41DF-918F-3C9C9033F73E",
+    "name": "HanlinPaired-paired52-sdk20-v2",
+    "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5-16GB",
+    "runtimeIdentifier": "com.apple.CoreSimulator.SimRuntime.iOS-27-0",
+    "commandJournalCapture": {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-sdk20-v2-built-inputs/build-commands-through-capture.jsonl",
+      "bytes": 12972,
+      "sha256": "c14b358bbe943fb9e7cb00aad9be35c2ab4d540f618a1a65a631d0228b747043"
+    },
+    "createCommandExitCode": 0,
+    "bootCommandExitCode": 0,
+    "ownershipLogSHA256": "30f36492f55131b3bc1361cd8ad4ba6bb4f337bd54fca300dd881c4df46f57e6",
+    "boundary": "Identity from the immutable captured original create/boot/build commands. Final ownership-file identity and the actual Shutdown simulator object are now bound separately from the completed full52 v2 terminal."
+  }
+}

@@ -166,7 +166,14 @@ struct ChatView: View {
         return matchedMessageID
     }
     var matchedMessageID: UUID?                             // 匹配的消息 ID
-    @State private var showScrollToBottomButton = false     // 控制滚动到底部按钮显示
+    private var showScrollToBottomButton: Bool { autoFollowController.showsScrollToBottomButton }
+
+    private var scrollToBottomVisibility: Binding<Bool> {
+        // The persistent external composer outlives individual ChatView renders.
+        // Capture the shared observable owner, not a State Binding's cached value.
+        Binding(get: { [autoFollowController] in autoFollowController.showsScrollToBottomButton },
+                set: { [autoFollowController] in autoFollowController.updateNearBottom(!$0) })
+    }
     @State private var needScrollToBottomButton = false     // 是否需要显示滚动到底部按钮
     @State private var autoFollowController = ChatAutoFollowController(onTrace: { event, fields in
         #if DEBUG || HANLIN_TESTING
@@ -349,7 +356,7 @@ struct ChatView: View {
             temporaryRecord: TemporaryRecord,
             respondIndex: respondIndex,
             selectedModelIndex: $selectedModelIndex,
-            showScrollToBottomButton: $showScrollToBottomButton,
+            showScrollToBottomButton: scrollToBottomVisibility,
             needScrollToBottomButton: $needScrollToBottomButton,
             isMultiSelectMode: $isMultiSelectMode,
             selectedMessageIDs: $selectedMessageIDs,
@@ -397,6 +404,7 @@ struct ChatView: View {
     }
 
     private struct ComposerBridgeSyncState: Equatable {
+        var showScrollToBottomButton: Bool
         var temporaryRecord: Bool
         var respondIndex: Int
         var isResponding: Bool
@@ -419,6 +427,7 @@ struct ChatView: View {
 
     private var composerBridgeSyncState: ComposerBridgeSyncState {
         ComposerBridgeSyncState(
+            showScrollToBottomButton: showScrollToBottomButton,
             temporaryRecord: TemporaryRecord,
             respondIndex: respondIndex,
             isResponding: isResponding || agentSessionOwner.inlineToolIsRunning,
@@ -1182,28 +1191,20 @@ struct ChatView: View {
                     chatContainerWidth = newWidth
                 }
             }
-            .onScrollGeometryChange(for: Bool?.self) { geometry in
-                ChatAutoFollowLayout(contentHeight: Double(geometry.contentSize.height),
-                    viewportHeight: Double(geometry.containerSize.height),
-                    topInset: Double(geometry.contentInsets.top),
-                    bottomInset: Double(geometry.contentInsets.bottom))
-                    .isNearBottom(contentOffsetY: Double(geometry.contentOffset.y))
-            } action: { _, measuredNearBottom in
-                guard let isScrolledToBottom = measuredNearBottom else { return }
-                autoFollowController.updateNearBottom(isScrolledToBottom)
+            .onScrollGeometryChange(for: ChatAutoFollowPosition.self) { geometry in
+                ChatAutoFollowPosition(
+                    layout: ChatAutoFollowLayout(contentHeight: Double(geometry.contentSize.height).rounded(),
+                        viewportHeight: Double(geometry.containerSize.height).rounded(),
+                        topInset: Double(geometry.contentInsets.top).rounded(),
+                        bottomInset: Double(geometry.contentInsets.bottom).rounded()),
+                    contentOffsetY: Double(geometry.contentOffset.y).rounded())
+            } action: { previous, position in
                 withAnimation(.easeOut(duration: 0.16)) {
-                    showScrollToBottomButton = !isScrolledToBottom
+                    autoFollowController.updatePosition(position)
                 }
-            }
-            .onScrollGeometryChange(for: ChatAutoFollowLayout.self) { geometry in
-                ChatAutoFollowLayout(contentHeight: Double(geometry.contentSize.height).rounded(),
-                    viewportHeight: Double(geometry.containerSize.height).rounded(),
-                    topInset: Double(geometry.contentInsets.top).rounded(),
-                    bottomInset: Double(geometry.contentInsets.bottom).rounded())
-            } action: { _, layout in
-                autoFollowController.updateLayout(layout)
+                guard previous.layout != position.layout else { return }
                 scheduleSourceScroll(using: scrollViewProxy)
-                scheduleAutoFollow(using: scrollViewProxy, animated: false, measuredLayout: layout)
+                scheduleAutoFollow(using: scrollViewProxy, animated: false, measuredLayout: position.layout)
             }
             .onScrollPhaseChange { _, newPhase in
                 switch newPhase {
@@ -1211,6 +1212,7 @@ struct ChatView: View {
                     cancelSourceScroll()
                     autoFollowController.userInteractionBegan()
                 case .idle:
+                    refreshSettledScrollPosition()
                     autoFollowController.userInteractionEnded()
                 case .animating:
                     break
@@ -1239,11 +1241,22 @@ struct ChatView: View {
         let conversationID = effectiveChatSessionID
         transcriptScrollView.whenReady(conversationID: conversationID) {
             guard effectiveChatSessionID == conversationID else { return }
+            refreshSettledScrollPosition()
             scheduleSourceScroll(using: proxy)
             scheduleAutoFollow(using: proxy, animated: false)
         }
     }
     
+    private func refreshSettledScrollPosition() {
+        guard let position = transcriptScrollView.position(conversationID: effectiveChatSessionID) else {
+            autoFollowController.invalidateLayout()
+            return
+        }
+        withAnimation(.easeOut(duration: 0.16)) {
+            autoFollowController.updatePosition(position)
+        }
+    }
+
     // 聊天时滚动到最底层
     private func scrollToLastMessage(using scrollViewProxy: ScrollViewProxy, animated: Bool = true) {
         let target = TranscriptBottomTarget(conversationID: effectiveChatSessionID)
@@ -1726,51 +1739,12 @@ struct ChatView: View {
         }
     }
 
-    // MARK: - 自动生成标题
-    /// 异步独立执行，不阻塞主对话
-    /// 触发条件：chatRecord.name == "新群聊" 且 user 消息数 >= 1 且 <= 3
-    private func autoGenerateTitleIfNeeded() {
-        // 检查是否为新群聊
-        guard ["新群聊", "New Group Chat", String(localized: "新群聊", bundle: HanlinLocalization.bundle)].contains(chatRecord.name ?? "") else { return }
-        
-        // 统计用户消息数量
-        let userMessages = chatTemps.filter { $0.role == "user" }
-        let userCount = userMessages.count
-        guard userCount >= 1 && userCount <= 3 else { return }
-        
-        // 构建历史消息文本
-        let historyMessage = userMessages
-            .map { "- " + ($0.text ?? "") + ($0.images_text ?? "") + ($0.document_text ?? "") }
-            .joined(separator: "\n")
-        guard !historyMessage.isEmpty else { return }
-        
-        // 捕获需要的值，避免在 Task 中访问 MainActor 隔离属性
-        let currentContext = context
-        let record = chatRecord
-        let originalTitle = record.name
-        let temporary = TemporaryRecord
-
-        // 启动异步任务，不阻塞主对话
-        Task {
-            do {
-                let optimizer = SystemOptimizer(context: currentContext)
-                let title = try await optimizer.autoChatName(historyMessage: historyMessage)
-                if !title.isEmpty {
-                    try await MainActor.run {
-                        // A delayed automatic title cannot overwrite a manual rename
-                        // or resurrect a conversation removed while optimization ran.
-                        guard record.name == originalTitle else { return }
-                        try HanlinConversationMutation.rename(record, title: title, announceChange: false,
-                            in: currentContext, temporary: temporary)
-                        chatTitle = title
-                    }
-                }
-            } catch {
-                print("自动命名失败: \(error.localizedDescription)")
-            }
-        }
+    // MARK: - Shared automatic conversation metadata
+    private func autoGenerateTitleIfNeeded(fallbackModelID: UUID?) {
+        HanlinConversationAutoMetadata.schedule(for: chatRecord, messages: chatTemps,
+            in: context, temporary: TemporaryRecord, fallbackModelID: fallbackModelID)
     }
-    
+
     // 处理消息发送
     private func handleMessageSending(ifObservingMode: Bool, continuationText: String? = nil, richInteraction: HanlinHostInteractionRequest? = nil) {
         guard !agentSessionOwner.inlineToolIsRunning else { return }
@@ -1854,8 +1828,6 @@ struct ChatView: View {
                 if let userMessage = userMessage, !isObserving, !isRetry {
                     chatTemps.append(userMessage)
                     context.insert(userMessage)
-                    // 异步自动命名（不阻塞主对话）
-                    autoGenerateTitleIfNeeded()
                 }
                 if continuationText == nil {
                     message = ""
@@ -2046,6 +2018,11 @@ struct ChatView: View {
                     activeAgentCoordinator = nil
                     activeAgentMessage = nil
                     activeTurnProjection = nil
+                    if turnProjection.completionStatus == "completed", !turnLease.isRevoked, !Task.isCancelled {
+                        // Release the primary model before background metadata, especially LOCAL.
+                        turnLease.release()
+                        autoGenerateTitleIfNeeded(fallbackModelID: requestModelID)
+                    }
                 }
                 
             } catch {

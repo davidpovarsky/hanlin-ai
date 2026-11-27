@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 2,
+  "purpose": "Preserve the original chat source and its approved single shared SDK owners; not a substitute for native behavior acceptance.",
+  "acceptedSource": "2a161ec3035c239cb21497f529c1c8f3d2ea92f0",
+  "authorization": "User-approved two-wave original Chat SDK extraction and cache integration; reviewed ownership migration on 2026-11-26.",
+  "lineage": {
+    "extractionBase": "bd42deb1b6fd5884f5c0f2aad8ae2e4ab1dadff4",
+    "extractionCommit": "7d752ba384a1e8eeb998c4229bbe331aac500f93",
+    "priorBubbleExtractions": [
+      "2b53500227070a8a0b180d0fabc9a95f11c8568d",
+      "ca0a9f587e992d70cff940da76c933b7d1b1b3f8"
+    ],
+    "cacheSource": "cf0d26c7cb0df29f0f3e644e125dd6dd6d5172db",
+    "focusedNativeReceipt": "docs/agent-sdk/evidence/shared-chat-interactions-20261126/native/acceptance-r6.json"
+  },
+  "historicalV1": {
+    "components": {
+      "normalized_bytes": 245684,
+      "normalized_sha256": "cbcbdffd5a05abe6889b9eafe83a5266661f61c6440c6e12ac74be4565ba1901"
+    },
+    "api_manager": {
+      "normalized_bytes": 197303,
+      "normalized_sha256": "ec09f12217985b6f37e9f88ea6653eff2823a31f96a9eb0ad6fe1062ea204df4"
+    },
+    "chatandfile_unchanged": true
+  },
+  "files": {
+    "AI_HLY/Views/Components/ChatViewComponents.swift": {
+      "normalizedBytes": 216385,
+      "normalizedSHA256": "15875a20addac6bc43ada66e7c3b929118a0f8ad19159d91ace9a8274e9448c9"
+    },
+    "AI_HLY/Views/Components/ChatandFile.swift": {
+      "normalizedBytes": 1966,
+      "normalizedSHA256": "3260125c5dece237c8775806b21c470275c9cb5a88328fa6fba2f283c8f3e26d"
+    },
+    "AI_HLY/Services/ChatServices/APIManager.swift": {
+      "normalizedBytes": 225611,
+      "normalizedSHA256": "1e65885f3fa5aa398cf6a315cd365705986f092de9838692eb305ce87dc78b12"
+    },
+    "AI_HLY/Downstream/ChatPresentation/ChatMarkdownView.swift": {
+      "normalizedBytes": 9587,
+      "normalizedSHA256": "ae38210d8943e7a76aab9695d3b545666349f45a47d0e6c2ec1e90ad4f0cf99c"
+    },
+    "AI_HLY/Downstream/ChatPresentation/ChatMessagePreview.swift": {
+      "normalizedBytes": 761,
+      "normalizedSHA256": "a5c6ff27cae6a5269fc4b79ef70dee52e5e2ac5cef18772ec3e6425891d44839"
+    },
+    "AI_HLY/Downstream/ChatPresentation/ChatMessagePreviewMetrics.swift": {
+      "normalizedBytes": 87,
+      "normalizedSHA256": "36440a0086cb4a20a9207d037fe14a1d7902c7f2648b40329e333480fa9f2439"
+    },
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinFileContentView.swift": {
+      "normalizedBytes": 3473,
+      "normalizedSHA256": "cae1895609127a867a0a028f5716e602026e5c87d4f669f051e9c4e665457801"
+    },
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinImageViewer.swift": {
+      "normalizedBytes": 7597,
+      "normalizedSHA256": "8427d5bfafea323a84d0f62f9c272aaed848241ed26af6e3f832d767b5a57f13"
+    },
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageActionBar.swift": {
+      "normalizedBytes": 9732,
+      "normalizedSHA256": "f559b1b5fb3ab8f858399a710e79024bd8fe25b6267c84a9ef843ab7150e004e"
+    },
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageActions.swift": {
+      "normalizedBytes": 5256,
+      "normalizedSHA256": "40561523428c78730dc052ed23349669860a3891638981c96a34dc2d68ef8d39"
+    },
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageBubble.swift": {
+      "normalizedBytes": 5601,
+      "normalizedSHA256": "c8ca0b950b08a84e2a8feb73f638668a3e614a28e10fb1667395fb12572f4720"
+    },
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageDocumentAttachments.swift": {
+      "normalizedBytes": 4378,
+      "normalizedSHA256": "02c3a8a8f3560afd95c6638a12ab07e6a05e028b5c0c962df06a2e82367ce733"
+    },
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageImageAttachments.swift": {
+      "normalizedBytes": 4536,
+      "normalizedSHA256": "7d89b9d5a6996f9e6ae36b7d0ff43ed48a0160c1f7d3bd0ac69ae7eae82a4e0f"
+    },
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageMarkdownView.swift": {
+      "normalizedBytes": 4665,
+      "normalizedSHA256": "fd09ce372d0936da5d3388b30c638ad33fce00227f01cb9352294211a8a0b2b6"
+    },
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessagePreview.swift": {
+      "normalizedBytes": 7115,
+      "normalizedSHA256": "3ffe0ba0d520f0a8489388bab991bf51316c9cec21b411986e77e885b6dd73b1"
+    },
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessagePreviewMetrics.swift": {
+      "normalizedBytes": 659,
+      "normalizedSHA256": "5faf31d6d9278f3488cfcf35188c7fe722c7a4f91393d5ac128a659cc6076be8"
+    },
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageSelectionView.swift": {
+      "normalizedBytes": 5909,
+      "normalizedSHA256": "b53108a0ddc25c49eb10ba5992f67e908ae3bba7f5cea3b417adacc5e941c52b"
+    },
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinVisualEffectBlur.swift": {
+      "normalizedBytes": 522,
+      "normalizedSHA256": "9f87a1d6c1a28314d90c49e5e5f0776315ab21e398b32faed8db3f6fb5340a49"
+    },
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinWritingTool.swift": {
+      "normalizedBytes": 523,
+      "normalizedSHA256": "4d6d6679d1669aa0c071223c59af8e4b9ce0a696e6b0966b3aaa4a549e529661"
+    }
+  },
+  "identifierOwners": {
+    "hanlin-user-bubble": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageBubble.swift",
+    "hanlin-assistant-bubble": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageBubble.swift",
+    "hanlin-search-bubble": "AI_HLY/Views/Components/ChatViewComponents.swift",
+    "hanlin-info-bubble": "AI_HLY/Views/Components/ChatViewComponents.swift",
+    "hanlin-action-buttons-row": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageActionBar.swift",
+    "hanlin-code-block-row": "AI_HLY/Views/Components/ChatViewComponents.swift",
+    "hanlin-html-web-bubble": "AI_HLY/Views/Components/ChatViewComponents.swift"
+  },
+  "appDelegations": [
+    "HanlinUserMessageBubble(text:",
+    "HanlinAssistantMessageBubble(isResponding:",
+    "HanlinMessageActionBar(actions: originalMessageActions, state: originalMessageActionState)"
+  ]
+}

@@ -1,0 +1,71 @@
+{
+  "schema": 1,
+  "id": "focused19-v5",
+  "allowanceSeconds": 3600,
+  "continuationAllowanceSeconds": 2216.4666162489884,
+  "continuationElapsedSeconds": 713.0760274589993,
+  "activeElapsedSeconds": 2096.609411210011,
+  "charges": [
+    {
+      "id": "focused19-v1",
+      "source": "a2c8a1b1be746461272ba77254603304567c309d",
+      "status": "FOCUSED_FAILED",
+      "elapsedSeconds": 366.7222996670025,
+      "statePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v1/state.json",
+      "decisionSHA256": "77eef76303d4df1ac274a6cbf3db71b8f7efc4ee7f4e9b623334d565dd3297a3",
+      "logSHA256": "50e1e8e69dc605e6e1b848865df43258820bffe759fce30baafddb4f1e1466aa",
+      "exitCode": 1,
+      "expectedGroups": {
+        "FocusedMini3": 3,
+        "FocusedAI8": 8
+      }
+    },
+    {
+      "id": "focused19-v2",
+      "source": "62dfff9aebd0a272486c7770d4f77ba603d535ab",
+      "status": "FOCUSED_FAILED",
+      "elapsedSeconds": 977.134837125006,
+      "statePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v2/state.json",
+      "decisionSHA256": "72608e39bc0987c619ea24b0eeea53b18cd5cca6f86c4a3dab688699580a315c",
+      "logSHA256": "342ef196929155502518e95854d07595b7d804ae635c8393e0800a028e6a97e4",
+      "exitCode": 1,
+      "expectedGroups": {
+        "FocusedMini3": 3,
+        "FocusedAI8": 8
+      }
+    },
+    {
+      "id": "focused19-v3",
+      "source": "6c006c948f0a6f371f7fc68b90e393f43734f8dd",
+      "status": "FOCUSED_FAILED",
+      "elapsedSeconds": 39.67624695900304,
+      "statePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v3/state.json",
+      "decisionSHA256": "e5317f244c6cf6cecb4b9a9c1b3043b1921fbe646d922f332d7bdcd103fea86a",
+      "logSHA256": "5c3085ba2ea41118eae72f8f33666d910d72dc64ca42f8a873f24b23ed8e755a",
+      "exitCode": 1,
+      "expectedGroups": {
+        "FocusedManual1": 1,
+        "FocusedRepair1": 1
+      }
+    },
+    {
+      "id": "focused19-v5",
+      "source": "6c006c948f0a6f371f7fc68b90e393f43734f8dd",
+      "status": "FOCUSED_FAILED",
+      "elapsedSeconds": 713.0760274589993,
+      "statePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v5/state.json",
+      "decisionSHA256": "288fff0babef0edb6cf02f392285a194d9707a79af6214fe4d1e1396a3dff51b",
+      "logSHA256": "d1ad80a8abe2aaae22be3cf0a654497d8de0f9b6ac2433ef28c2259d6897ca82",
+      "exitCode": 1,
+      "expectedGroups": {
+        "FocusedManual1": 1,
+        "FocusedRepair1": 1
+      }
+    }
+  ],
+  "originalLedger": {
+    "path": "build/primary-control/focused19-v3/ledger.json",
+    "sha256": "c69a3001ec612c74afeaeafcbdf3e8fc2b0ea59fbb96bf18488a2ff641e76ebf"
+  },
+  "otherGrantsUnchanged": true
+}

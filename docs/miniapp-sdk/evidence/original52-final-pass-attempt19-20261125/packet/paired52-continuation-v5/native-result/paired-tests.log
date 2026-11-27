@@ -1,0 +1,814 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project AI_HLY.xcodeproj -destination "platform=iOS Simulator,id=E742FBCD-8FF0-4130-B143-7F8328637138" -parallel-testing-enabled NO -derivedDataPath /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete -clonedSourcePackagesDirPath /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/SourcePackages -skipPackagePluginValidation -skipMacroValidation CODE_SIGNING_ALLOWED=YES CODE_SIGNING_REQUIRED=YES CODE_SIGN_IDENTITY=- -collect-test-diagnostics never -scheme AI_HLY test-without-building -resultBundlePath /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/Paired.xcresult -test-timeouts-enabled YES -maximum-test-execution-time-allowance 600 "-only-testing:AI_HLYTests/PendingFirstTurnTests/importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings()" "-only-testing:AI_HLYTests/PendingFirstTurnTests/cancelledMiniAppRepairPreservesHomeDraft()" "-only-testing:AI_HLYTests/HanlinScriptingPlatformCompositionTests/malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic()" "-only-testing:AI_HLYTests/MiniAppAuthoringToolTests/originalSDKWriteValidateBuildAndRepair()" "-only-testing:AI_HLYTests/MiniAppAuthoringToolTests/sourceWritePreservesUnrelatedFilesAndTargetsRetainedSource()" "-only-testing:AI_HLYTests/MiniAppAuthoringToolTests/originalExpoMetroBuildOnEmbeddedNode()" "-only-testing:AI_HLYTests/HanlinOriginalScriptWidgetAPITests" "-only-testing:AI_HLYTests/HanlinNativePresentationTests" "-only-testing:AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests" "-only-testing:AI_HLYTests/HanlinOriginalScriptWidgetControlTests" "-only-testing:AI_HLYTests/HanlinMiniAppStorageCapacityTests" "-only-testing:AI_HLYTests/HanlinOriginalExpoWidgetTests" "-only-testing:AI_HLYUITests/MiniAppAuthoringUITests" "-only-testing:AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure" "-only-testing:AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer"
+
+Build settings from command line:
+    CODE_SIGN_IDENTITY = -
+    CODE_SIGNING_ALLOWED = YES
+    CODE_SIGNING_REQUIRED = YES
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  SwiftStreamingMarkdown: https://github.com/davidpovarsky/hanlin-streaming-markdown @ 5cbb4b6
+  SWCompression: https://github.com/tsolomko/SWCompression.git @ c729f0b
+  SwiftDraw: https://github.com/swhitty/SwiftDraw @ 0.21.0
+  swift-argument-parser: https://github.com/apple/swift-argument-parser @ 1.8.2
+  swift-markdown: https://github.com/swiftlang/swift-markdown.git @ 0.7.3
+  SwiftUI-Shimmer: https://github.com/markiv/SwiftUI-Shimmer @ 1.5.1
+  swift-markdown-ui: https://github.com/gonzalezreal/MarkdownUI.git @ 5f61335
+  HanlinSDK: /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete @ local
+  NativeScriptSDK: https://github.com/NativeScript/ios-spm.git @ 9.1.1
+  XMLCoder: https://github.com/maxdesiatov/XMLCoder.git @ 0.14.0
+  MathJaxSwift: https://github.com/colinc86/MathJaxSwift @ 3.4.0
+  EventSource: https://github.com/mattt/eventsource.git @ 1.1.0
+  SwiftSoup: https://github.com/scinfu/SwiftSoup @ bba848d
+  swift-log: https://github.com/apple/swift-log.git @ 96a2f8a
+  swift-system: https://github.com/apple/swift-system.git @ 1.4.0
+  ZIPFoundation: https://github.com/weichsel/ZIPFoundation @ 0.9.19
+  Equatable: https://github.com/ordo-one/equatable @ 1.4.1
+  swift-syntax: https://github.com/swiftlang/swift-syntax.git @ 603.0.2
+  BitByteData: https://github.com/tsolomko/BitByteData @ 2.1.0
+  Yams: https://github.com/jpsim/Yams.git @ 6.2.2
+  HighlightSwift: https://github.com/appstefan/highlightswift @ 99c431b
+  LLM: https://github.com/eastriverlee/LLM.swift/ @ 4b25178
+  cmark-gfm: https://github.com/swiftlang/swift-cmark @ 0.9.0
+  SwiftAISDK: https://github.com/davidpovarsky/swift-ai-sdk.git @ 07431ab
+  RichTextKit: https://github.com/danielsaidi/RichTextKit.git @ 8aa44cf
+  SwiftTreeSitter: https://github.com/tree-sitter/swift-tree-sitter @ 08ef81e
+  NetworkImage: https://github.com/gonzalezreal/NetworkImage @ 6.0.1
+  TreeSitter: https://github.com/tree-sitter/tree-sitter @ da6fe9b
+  SwiftyJSON: https://github.com/SwiftyJSON/SwiftyJSON.git @ 5.0.1
+  CoreXLSX: https://github.com/CoreOffice/CoreXLSX @ 1391f38
+  LaTeXSwiftUI: https://github.com/colinc86/LaTeXSwiftUI @ c45e0fd
+  iosMath: https://github.com/junyan72/iosMath @ ba9ab77
+  TreeSitterBash: https://github.com/tree-sitter/tree-sitter-bash @ a06c2e4
+  mcp-swift-sdk: https://github.com/modelcontextprotocol/swift-sdk.git @ a0ae212
+  A2UISwiftCore: https://github.com/a2ui-project/a2ui @ 3ed9601
+  swift-nio: https://github.com/apple/swift-nio.git @ 2.94.0
+  swift-collections: https://github.com/apple/swift-collections.git @ 1.3.0
+  swift-atomics: https://github.com/apple/swift-atomics.git @ 1.3.0
+  HTMLEntities: https://github.com/Kitura/swift-html-entities @ 4.0.1
+  swift-json-schema: https://github.com/ajevans99/swift-json-schema @ 0.13.2
+
+Writing result bundle at path:
+	/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/Paired.xcresult
+
+Resolve Package Graph
+
+2026-11-25 19:11:47.753116+0100 AI_Hanlin[24606:7521798] [error] CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+CoreData: warning: CDCS state transition: Disabled → Initializing (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+2026-11-25 19:11:47.791236+0100 AI_Hanlin[24606:7521798] [error] CoreData: warning: CDCS storeRequiresFullReindex: fullReindex=0 reason=<none> (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+CoreData: warning: CDCS storeRequiresFullReindex: fullReindex=0 reason=<none> (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+2026-11-25 19:11:51.115549+0100 AI_Hanlin[24606:7520571] [API] cannot add handler to 0 from 0 - dropping
+2026-11-25 19:11:51.118267+0100 AI_Hanlin[24606:7520571] [API] cannot add handler to 0 from 0 - dropping
+2026-11-25 19:11:51.178106+0100 AI_Hanlin[24606:7520571] [XPCErrors] non-launching port is incompatible with service identifier "com.apple.PointerUI.pointeruid.default-service"
+2026-11-25 19:11:51.181745+0100 AI_Hanlin[24606:7520571] HANLIN_EXPO_APP_DEFINES_LOADED
+模型数据同步完成
+API 密钥同步完成
+SearchKeys 同步完成
+ToolKeys 同步完成
+UserInfo 同步完成
+PromptRepo 已存在数据，跳过预加载
+孤立的 ChatMessages 清理完成
+孤立的 KnowledgeChunk 清理完成
+孤立数据清理保存成功
+2026-11-25 19:11:54.166893+0100 AI_Hanlin[24606:7520571] [API] cannot add handler to 0 from 0 - dropping
+2026-11-25 19:11:54.167159+0100 AI_Hanlin[24606:7520571] [API] cannot add handler to 0 from 0 - dropping
+2026-11-25 19:11:54.167357+0100 AI_Hanlin[24606:7520571] [API] cannot add handler to 0 from 0 - dropping
+2026-11-25 19:11:54.167479+0100 AI_Hanlin[24606:7520571] [API] cannot add handler to 0 from 0 - dropping
+2026-11-25 19:11:54.167597+0100 AI_Hanlin[24606:7520571] [API] cannot add handler to 0 from 0 - dropping
+Test Suite 'Selected tests' started at 2026-11-25 19:11:54.339.
+Test Suite 'AI_HLYTests.xctest' started at 2026-11-25 19:11:54.343.
+Test Suite 'HanlinExpoHostServicesAcceptanceTests' started at 2026-11-25 19:11:54.343.
+Test Case '-[AI_HLYTests.HanlinExpoHostServicesAcceptanceTests testInstalledExpoActionsReturnActualReplyAndFailure]' started.
+HANLIN_IMPORT_PACKAGE_STARTED: url=/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Bundle/Application/732AAFFC-301B-444C-9CA2-97FD81C39F85/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/HostServicesProbe.bundle/ExpoSwiftUIProbeA.hanlinExpo
+2026-11-25 19:11:54.504245+0100 AI_Hanlin[24606:7522242] [ScriptPackageImport] phase=manifest-resolution root=extracted manifest=script.json format=scripting version=1.0.0
+HANLIN_IMPORT_PACKAGE_PREVIEW: canInstall=true entrypoints=5
+HANLIN_INSTALL_PREVIEW_STARTED: canInstall=true
+2026-11-25 19:11:55.227660+0100 AI_Hanlin[24606:7520571] [expo] 🟡 ViewModifierRegistry: Overwriting existing modifier 'navigationBarTitleDisplayMode'. This may cause unexpected behavior.
+2026-11-25 19:11:55.227908+0100 AI_Hanlin[24606:7520571] [expo] 🟡 ViewModifierRegistry: Overwriting existing modifier 'presentationCornerRadius'. This may cause unexpected behavior.
+2026-11-25 19:11:55.227959+0100 AI_Hanlin[24606:7520571] [expo] 🟡 ViewModifierRegistry: Overwriting existing modifier 'sectionIndexLabel'. This may cause unexpected behavior.
+2026-11-25 19:11:55.228003+0100 AI_Hanlin[24606:7520571] [expo] 🟡 ViewModifierRegistry: Overwriting existing modifier 'preferredColorScheme'. This may cause unexpected behavior.
+2026-11-25 19:11:55.228970+0100 AI_Hanlin[24606:7520571] [HANLIN_EXPO_NATIVEAPI_GATE] Registered session context session=49c80357-bba7-4c44-9508-0cf546780fe8 package=script-ec17057f5a2c82aaed6ab6ca gen=0 granted=1
+2026-11-25 19:11:55.235034+0100 AI_Hanlin[24606:7520571] [expo] 🟢 Registering module 'ExpoModulesCoreJSLogger'
+2026-11-25 19:11:55.235175+0100 AI_Hanlin[24606:7520571] HANLIN_EXPO_APPCONTEXT_CREATED
+2026-11-25 19:11:55.235249+0100 AI_Hanlin[24606:7520571] HANLIN_EXPO_HOSTSERVICES_BOUND
+2026-11-25 19:11:55.238331+0100 AI_Hanlin[24606:7520571] [expo] 🟢 Registering module 'ExpoAsset'
+2026-11-25 19:11:55.353804+0100 AI_Hanlin[24606:7520571] [expo] 🟢 Registering module 'ExpoUI'
+2026-11-25 19:11:55.367367+0100 AI_Hanlin[24606:7520571] [expo] 🟢 Registering module 'ExpoWidgets'
+2026-11-25 19:11:55.379463+0100 AI_Hanlin[24606:7520571] [expo] 🟢 Registering module 'HanlinExpoUI'
+2026-11-25 19:11:55.384183+0100 AI_Hanlin[24606:7520571] [expo] 🟢 Registering module 'HanlinGeneratedExpoUI'
+2026-11-25 19:11:55.384281+0100 AI_Hanlin[24606:7520571] [expo] 🟢 Registering module 'ExpoBrownfieldModule'
+2026-11-25 19:11:55.384333+0100 AI_Hanlin[24606:7520571] [expo] 🟢 Registering module 'ExpoBrownfieldStateModule'
+2026-11-25 19:11:55.384600+0100 AI_Hanlin[24606:7520571] [expo] 🟢 Registering module 'HanlinHostServices'
+2026-11-25 19:11:55.388205+0100 AI_Hanlin[24606:7520571] HANLIN_EXPO_MODULES_REGISTERED
+2026-11-25 19:11:55.388513+0100 AI_Hanlin[24606:7520571] _setUpFeatureFlags called with release level 2
+2026-11-25 19:11:55.389428+0100 AI_Hanlin[24606:7520571] HANLIN_EXPO_REACT_FACTORY_CREATED
+2026-11-25 19:11:55.451028+0100 AI_Hanlin[24606:7522700] HANLIN_EXPO_HOST_DID_INITIALIZE_RUNTIME runtime=0x000000010ce51a00
+2026-11-25 19:11:55.451123+0100 AI_Hanlin[24606:7522700] HANLIN_EXPO_HOST_DID_INITIALIZE_RUNTIME runtime=0x000000010ce51a00
+2026-11-25 19:11:55.452930+0100 AI_Hanlin[24606:7520571] HANLIN_EXPO_ROOTVIEW_CREATED
+2026-11-25 19:11:55.453192+0100 AI_Hanlin[24606:7520571] HANLIN_EXPO_INITIALIZED_EXTERNAL_ROOT path=/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/3DB6AE17-7F85-4D50-8921-7714787343BF/Library/Application Support/Hanlin/ScriptingPlatform/Installed/packages/install-script-ec17057f5a2c82aaed6ab6ca/generations/1/source/ bundle=bundle.js
+2026-11-25 19:11:55.457685+0100 AI_Hanlin[24606:7522700] HANLIN_EXPO_SET_RUNTIME_DONE
+2026-11-25 19:11:55.457765+0100 AI_Hanlin[24606:7522700] HANLIN_EXPO_REGISTERED_MODULES=ExpoUI, HanlinExpoUI, ExpoBrownfieldModule, HanlinGeneratedExpoUI, HanlinHostServices, ExpoModulesCoreJSLogger, ExpoAsset, ExpoBrownfieldStateModule, ExpoWidgets
+WARNING: Logging before InitGoogleLogging() is written to STDERR
+W1125 19:11:55.459628 1887383552 ReactInstance.cpp:312] ReactInstance: evaluateJavaScript() with JS bundle
+[Worklets] [Worklets] More than two instances of WorkletsModule present. This may indicate a memory leak due to a retain cycle.
+[Worklets] [Worklets] More than two instances of WorkletsModule present. This may indicate a memory leak due to a retain cycle.
+[Worklets] [Worklets] More than two instances of WorkletsModule present. This may indicate a memory leak due to a retain cycle.
+[Worklets] [Worklets] More than two instances of WorkletsModule present. This may indicate a memory leak due to a retain cycle.
+2026-11-25 19:11:55.518554+0100 AI_Hanlin[24606:7522700] [javascript] No native ExponentConstants module found, are you sure the expo-constants's module is linked properly?
+[Worklets] [Worklets] More than two instances of WorkletsModule present. This may indicate a memory leak due to a retain cycle.
+[Worklets] [Worklets] More than two instances of WorkletsModule present. This may indicate a memory leak due to a retain cycle.
+[Worklets] [Worklets] More than two instances of WorkletsModule present. This may indicate a memory leak due to a retain cycle.
+[Worklets] [Worklets] More than two instances of WorkletsModule present. This may indicate a memory leak due to a retain cycle.
+2026-11-25 19:11:55.519108+0100 AI_Hanlin[24606:7522700] [expo] 🟢 Creating JS object for module 'ExpoAsset'
+[Worklets] [Worklets] More than two instances of WorkletsModule present. This may indicate a memory leak due to a retain cycle.
+[Worklets] [Worklets] More than two instances of WorkletsModule present. This may indicate a memory leak due to a retain cycle.
+[Worklets] [Worklets] More than two instances of WorkletsModule present. This may indicate a memory leak due to a retain cycle.
+[Worklets] [Worklets] More than two instances of WorkletsModule present. This may indicate a memory leak due to a retain cycle.
+2026-11-25 19:11:55.543972+0100 AI_Hanlin[24606:7522700] [expo] 🟢 Creating JS object for module 'ExpoUI'
+[Worklets] [Worklets] More than two instances of WorkletsModule present. This may indicate a memory leak due to a retain cycle.
+2026-11-25 19:11:55.590105+0100 AI_Hanlin[24606:7522700] [expo] 🟢 Creating JS object for module 'HanlinExpoUI'
+2026-11-25 19:11:55.592597+0100 AI_Hanlin[24606:7522700] [expo] 🟢 Creating JS object for module 'HanlinGeneratedExpoUI'
+2026-11-25 19:11:55.593859+0100 AI_Hanlin[24606:7522700] [expo] 🟢 Creating JS object for module 'HanlinHostServices'
+2026-11-25 19:11:55.598184+0100 AI_Hanlin[24606:7522239] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=actions.register
+2026-11-25 19:11:55.600125+0100 AI_Hanlin[24606:7522700] [javascript] Running "main"
+2026-11-25 19:11:55.711868+0100 AI_Hanlin[24606:7522242] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=actions.next
+2026-11-25 19:11:55.711901+0100 AI_Hanlin[24606:7522637] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.write
+2026-11-25 19:11:55.711928+0100 AI_Hanlin[24606:7522239] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=widgets.publish
+2026-11-25 19:11:55.715992+0100 AI_Hanlin[24606:7522242] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.write
+2026-11-25 19:11:55.717470+0100 AI_Hanlin[24606:7522637] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.read
+2026-11-25 19:11:55.718099+0100 AI_Hanlin[24606:7522242] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.read
+2026-11-25 19:11:55.719982+0100 AI_Hanlin[24606:7522242] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.delete
+2026-11-25 19:11:55.720019+0100 AI_Hanlin[24606:7522637] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.delete
+2026-11-25 19:11:55.720447+0100 AI_Hanlin[24606:7522242] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.read
+2026-11-25 19:11:55.720997+0100 AI_Hanlin[24606:7522637] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=actions.complete
+2026-11-25 19:11:55.721075+0100 AI_Hanlin[24606:7522242] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.write
+2026-11-25 19:11:55.721806+0100 AI_Hanlin[24606:7522242] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.read
+2026-11-25 19:11:55.722252+0100 AI_Hanlin[24606:7522242] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.delete
+2026-11-25 19:11:55.722324+0100 AI_Hanlin[24606:7522637] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=actions.next
+2026-11-25 19:11:55.722666+0100 AI_Hanlin[24606:7522242] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.read
+2026-11-25 19:11:55.737512+0100 AI_Hanlin[24606:7522242] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.write
+2026-11-25 19:11:55.739449+0100 AI_Hanlin[24606:7522242] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.read
+2026-11-25 19:11:55.764922+0100 AI_Hanlin[24606:7522242] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.delete
+2026-11-25 19:11:55.788412+0100 AI_Hanlin[24606:7522242] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.read
+2026-11-25 19:11:55.789830+0100 AI_Hanlin[24606:7522242] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.delete
+2026-11-25 19:11:55.852173+0100 AI_Hanlin[24606:7522635] HANLIN_EXPO_HOSTSERVICES_INVOKE method=hasCapability capability=storage
+2026-11-25 19:11:55.852556+0100 AI_Hanlin[24606:7522635] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=actions.complete
+2026-11-25 19:11:55.853030+0100 AI_Hanlin[24606:7522239] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=actions.next
+2026-11-25 19:11:55.856877+0100 AI_Hanlin[24606:7522635] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.write
+2026-11-25 19:11:55.857938+0100 AI_Hanlin[24606:7522635] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.read
+2026-11-25 19:11:55.859274+0100 AI_Hanlin[24606:7522635] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.delete
+2026-11-25 19:11:55.859878+0100 AI_Hanlin[24606:7522635] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=actions.complete
+2026-11-25 19:11:55.860204+0100 AI_Hanlin[24606:7522635] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=actions.next
+2026-11-25 19:11:55.867465+0100 AI_Hanlin[24606:7522239] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=widgets.publish
+2026-11-25 19:11:55.923780+0100 AI_Hanlin[24606:7522239] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=widgets.publish
+2026-11-25 19:11:55.925463+0100 AI_Hanlin[24606:7522244] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.write
+2026-11-25 19:11:55.928554+0100 AI_Hanlin[24606:7522637] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.read
+2026-11-25 19:11:55.929422+0100 AI_Hanlin[24606:7522637] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.delete
+2026-11-25 19:11:55.930073+0100 AI_Hanlin[24606:7522637] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=actions.complete
+2026-11-25 19:11:55.930527+0100 AI_Hanlin[24606:7522637] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=actions.next
+2026-11-25 19:11:55.942831+0100 AI_Hanlin[24606:7522239] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=widgets.publish
+2026-11-25 19:11:56.007813+0100 AI_Hanlin[24606:7522239] HANLIN_EXPO_HOSTSERVICES_INVOKE method=hasCapability capability=storage
+2026-11-25 19:11:56.007972+0100 AI_Hanlin[24606:7522239] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=actions.complete
+2026-11-25 19:11:56.008142+0100 AI_Hanlin[24606:7522637] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=actions.next
+2026-11-25 19:11:56.042475+0100 AI_Hanlin[24606:7520571] HANLIN_EXPO_PRODUCTION_SHUTDOWN_OK
+2026-11-25 19:11:56.042676+0100 AI_Hanlin[24606:7520571] HANLIN_EXPO_SHUTDOWN_BEGIN
+W1125 19:11:56.092677 6577728 Scheduler.cpp:181] Scheduler::~Scheduler() was called (address: 0x10ce52800).
+2026-11-25 19:11:56.093385+0100 AI_Hanlin[24606:7520571] HANLIN_EXPO_UNBOUND
+2026-11-25 19:11:56.093525+0100 AI_Hanlin[24606:7520571] HANLIN_EXPO_SHUTDOWN_BEGIN
+2026-11-25 19:11:56.095059+0100 AI_Hanlin[24606:7522239] HANLIN_EXPO_HOSTSERVICES_ERROR method=invoke operation=actions.next: closed
+W1125 19:11:56.098527 1889103872 UIManagerBinding.cpp:66] UIManagerBinding::~UIManagerBinding() was called (address: 0x10dfc6bd8).
+W1125 19:11:56.098603 1889103872 UIManager.cpp:57] UIManager::~UIManager() was called (address: 0x12e6e7018).
+2026-11-25 19:11:56.120534+0100 AI_Hanlin[24606:7522239] [expo] 🟢 Posting 'appContextDestroys' event to registered modules
+Test Case '-[AI_HLYTests.HanlinExpoHostServicesAcceptanceTests testInstalledExpoActionsReturnActualReplyAndFailure]' passed (1.786 seconds).
+Test Case '-[AI_HLYTests.HanlinExpoHostServicesAcceptanceTests testPreparedExpoWidgetPublicationReachesExistingConsumer]' started.
+HANLIN_IMPORT_PACKAGE_STARTED: url=/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Bundle/Application/732AAFFC-301B-444C-9CA2-97FD81C39F85/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/HostServicesProbe.bundle/ExpoSwiftUIProbeA.hanlinExpo
+2026-11-25 19:11:56.167339+0100 AI_Hanlin[24606:7522239] [ScriptPackageImport] phase=manifest-resolution root=extracted manifest=script.json format=scripting version=1.0.0
+HANLIN_IMPORT_PACKAGE_PREVIEW: canInstall=true entrypoints=5
+HANLIN_INSTALL_PREVIEW_STARTED: canInstall=true
+2026-11-25 19:11:56.636783+0100 AI_Hanlin[24606:7520571] [HANLIN_EXPO_NATIVEAPI_GATE] Registered session context session=f8cf2a13-7dd5-47a5-9cd8-52fb738ac82f package=script-ec17057f5a2c82aaed6ab6ca gen=0 granted=1
+2026-11-25 19:11:56.639094+0100 AI_Hanlin[24606:7520571] [expo] 🟢 Registering module 'ExpoModulesCoreJSLogger'
+2026-11-25 19:11:56.639198+0100 AI_Hanlin[24606:7520571] HANLIN_EXPO_APPCONTEXT_CREATED
+2026-11-25 19:11:56.639256+0100 AI_Hanlin[24606:7520571] HANLIN_EXPO_HOSTSERVICES_BOUND
+2026-11-25 19:11:56.639328+0100 AI_Hanlin[24606:7520571] [expo] 🟢 Registering module 'ExpoAsset'
+2026-11-25 19:11:56.639504+0100 AI_Hanlin[24606:7520571] [expo] 🟢 Registering module 'ExpoUI'
+2026-11-25 19:11:56.639603+0100 AI_Hanlin[24606:7520571] [expo] 🟢 Registering module 'ExpoWidgets'
+2026-11-25 19:11:56.639674+0100 AI_Hanlin[24606:7520571] [expo] 🟢 Registering module 'HanlinExpoUI'
+2026-11-25 19:11:56.639723+0100 AI_Hanlin[24606:7520571] [expo] 🟢 Registering module 'HanlinGeneratedExpoUI'
+2026-11-25 19:11:56.639781+0100 AI_Hanlin[24606:7520571] [expo] 🟢 Registering module 'ExpoBrownfieldModule'
+2026-11-25 19:11:56.639828+0100 AI_Hanlin[24606:7520571] [expo] 🟢 Registering module 'ExpoBrownfieldStateModule'
+2026-11-25 19:11:56.639889+0100 AI_Hanlin[24606:7520571] [expo] 🟢 Registering module 'HanlinHostServices'
+2026-11-25 19:11:56.641518+0100 AI_Hanlin[24606:7520571] HANLIN_EXPO_MODULES_REGISTERED
+2026-11-25 19:11:56.641582+0100 AI_Hanlin[24606:7520571] _setUpFeatureFlags called with release level 2
+2026-11-25 19:11:56.641644+0100 AI_Hanlin[24606:7520571] HANLIN_EXPO_REACT_FACTORY_CREATED
+2026-11-25 19:11:56.649678+0100 AI_Hanlin[24606:7522771] HANLIN_EXPO_HOST_DID_INITIALIZE_RUNTIME runtime=0x000000010ce51a00
+2026-11-25 19:11:56.649761+0100 AI_Hanlin[24606:7522771] HANLIN_EXPO_HOST_DID_INITIALIZE_RUNTIME runtime=0x000000010ce51a00
+2026-11-25 19:11:56.649780+0100 AI_Hanlin[24606:7520571] HANLIN_EXPO_ROOTVIEW_CREATED
+2026-11-25 19:11:56.649992+0100 AI_Hanlin[24606:7520571] HANLIN_EXPO_INITIALIZED_EXTERNAL_ROOT path=/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/3DB6AE17-7F85-4D50-8921-7714787343BF/tmp/ExpoHostServices-9A3C2F04-381B-4A6F-87B4-47527C769D47/InstalledPlatform/Installed/packages/install-script-ec17057f5a2c82aaed6ab6ca/generations/1/source/ bundle=bundle.js
+2026-11-25 19:11:56.650131+0100 AI_Hanlin[24606:7522771] HANLIN_EXPO_SET_RUNTIME_DONE
+2026-11-25 19:11:56.650172+0100 AI_Hanlin[24606:7522771] HANLIN_EXPO_REGISTERED_MODULES=ExpoBrownfieldStateModule, ExpoUI, HanlinGeneratedExpoUI, ExpoWidgets, ExpoModulesCoreJSLogger, ExpoAsset, ExpoBrownfieldModule, HanlinHostServices, HanlinExpoUI
+W1125 19:11:56.650504 1887383552 ReactInstance.cpp:312] ReactInstance: evaluateJavaScript() with JS bundle
+[Worklets] [Worklets] More than two instances of WorkletsModule present. This may indicate a memory leak due to a retain cycle.
+[Worklets] [Worklets] More than two instances of WorkletsModule present. This may indicate a memory leak due to a retain cycle.
+[Worklets] [Worklets] More than two instances of WorkletsModule present. This may indicate a memory leak due to a retain cycle.
+[Worklets] [Worklets] More than two instances of WorkletsModule present. This may indicate a memory leak due to a retain cycle.
+2026-11-25 19:11:56.707814+0100 AI_Hanlin[24606:7522771] [javascript] No native ExponentConstants module found, are you sure the expo-constants's module is linked properly?
+[Worklets] [Worklets] More than two instances of WorkletsModule present. This may indicate a memory leak due to a retain cycle.
+[Worklets] [Worklets] More than two instances of WorkletsModule present. This may indicate a memory leak due to a retain cycle.
+[Worklets] [Worklets] More than two instances of WorkletsModule present. This may indicate a memory leak due to a retain cycle.
+[Worklets] [Worklets] More than two instances of WorkletsModule present. This may indicate a memory leak due to a retain cycle.
+2026-11-25 19:11:56.708394+0100 AI_Hanlin[24606:7522771] [expo] 🟢 Creating JS object for module 'ExpoAsset'
+[Worklets] [Worklets] More than two instances of WorkletsModule present. This may indicate a memory leak due to a retain cycle.
+[Worklets] [Worklets] More than two instances of WorkletsModule present. This may indicate a memory leak due to a retain cycle.
+[Worklets] [Worklets] More than two instances of WorkletsModule present. This may indicate a memory leak due to a retain cycle.
+[Worklets] [Worklets] More than two instances of WorkletsModule present. This may indicate a memory leak due to a retain cycle.
+2026-11-25 19:11:56.733240+0100 AI_Hanlin[24606:7522771] [expo] 🟢 Creating JS object for module 'ExpoUI'
+[Worklets] [Worklets] More than two instances of WorkletsModule present. This may indicate a memory leak due to a retain cycle.
+2026-11-25 19:11:56.766975+0100 AI_Hanlin[24606:7522771] [expo] 🟢 Creating JS object for module 'HanlinExpoUI'
+2026-11-25 19:11:56.769375+0100 AI_Hanlin[24606:7522771] [expo] 🟢 Creating JS object for module 'HanlinGeneratedExpoUI'
+2026-11-25 19:11:56.770518+0100 AI_Hanlin[24606:7522771] [expo] 🟢 Creating JS object for module 'HanlinHostServices'
+2026-11-25 19:11:56.774485+0100 AI_Hanlin[24606:7522635] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=actions.register
+2026-11-25 19:11:56.774896+0100 AI_Hanlin[24606:7522637] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=actions.next
+2026-11-25 19:11:56.774938+0100 AI_Hanlin[24606:7522771] [javascript] Running "main"
+2026-11-25 19:11:56.820176+0100 AI_Hanlin[24606:7522637] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=widgets.publishPrepared
+2026-11-25 19:11:56.820218+0100 AI_Hanlin[24606:7522242] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=widgets.publish
+2026-11-25 19:11:56.820218+0100 AI_Hanlin[24606:7522635] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.write
+2026-11-25 19:11:56.822087+0100 AI_Hanlin[24606:7522635] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.read
+2026-11-25 19:11:56.824421+0100 AI_Hanlin[24606:7522635] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.delete
+2026-11-25 19:11:56.825233+0100 AI_Hanlin[24606:7522635] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.read
+2026-11-25 19:11:56.825344+0100 AI_Hanlin[24606:7521843] HANLIN_EXPO_HOSTSERVICES_ERROR method=invoke operation=widgets.publish: invalidRequest("Package is not installed or enabled: install-script-ec17057f5a2c82aaed6ab6ca")
+2026-11-25 19:11:56.825661+0100 AI_Hanlin[24606:7522635] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.write
+2026-11-25 19:11:56.826460+0100 AI_Hanlin[24606:7522635] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.read
+2026-11-25 19:11:56.826931+0100 AI_Hanlin[24606:7522635] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.delete
+2026-11-25 19:11:56.827396+0100 AI_Hanlin[24606:7522635] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.read
+2026-11-25 19:11:56.846897+0100 AI_Hanlin[24606:7522771] [javascript] 'Failed to publish widget:', { [Error: Invalid request: Package is not installed or enabled: install-script-ec17057f5a2c82aaed6ab6ca] code: 'ERR_UNEXPECTED' }
+2026-11-25 19:11:56.847143+0100 AI_Hanlin[24606:7522637] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.write
+2026-11-25 19:11:56.847465+0100 AI_Hanlin[24606:7521843] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=actions.complete
+2026-11-25 19:11:56.848062+0100 AI_Hanlin[24606:7522635] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=actions.next
+2026-11-25 19:11:56.848659+0100 AI_Hanlin[24606:7522637] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.read
+2026-11-25 19:11:56.869267+0100 AI_Hanlin[24606:7522637] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.delete
+2026-11-25 19:11:56.870266+0100 AI_Hanlin[24606:7522637] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.read
+2026-11-25 19:11:56.871342+0100 AI_Hanlin[24606:7522637] HANLIN_EXPO_HOSTSERVICES_INVOKE method=invoke operation=files.delete
+2026-11-25 19:11:56.871506+0100 AI_Hanlin[24606:7520571] HANLIN_EXPO_PRODUCTION_SHUTDOWN_OK
+2026-11-25 19:11:56.871592+0100 AI_Hanlin[24606:7520571] HANLIN_EXPO_SHUTDOWN_BEGIN
+W1125 19:11:56.872570 6577728 Scheduler.cpp:181] Scheduler::~Scheduler() was called (address: 0x10ce52200).
+2026-11-25 19:11:56.872662+0100 AI_Hanlin[24606:7520571] HANLIN_EXPO_UNBOUND
+2026-11-25 19:11:56.872761+0100 AI_Hanlin[24606:7520571] HANLIN_EXPO_SHUTDOWN_BEGIN
+Test Case '-[AI_HLYTests.HanlinExpoHostServicesAcceptanceTests testPreparedExpoWidgetPublicationReachesExistingConsumer]' passed (0.750 seconds).
+Test Suite 'HanlinExpoHostServicesAcceptanceTests' passed at 2026-11-25 19:11:56.885.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 2.536 (2.542) seconds
+Test Suite 'HanlinNativePresentationTests' started at 2026-11-25 19:11:56.887.
+Test Case '-[AI_HLYTests.HanlinNativePresentationTests testExpoLayoutEntryUsesItsDeclaredFormatRegardlessOfFileExtension]' started.
+Resolve Package Graph
+Test Case '-[AI_HLYTests.HanlinNativePresentationTests testExpoLayoutEntryUsesItsDeclaredFormatRegardlessOfFileExtension]' passed (0.488 seconds).
+Test Case '-[AI_HLYTests.HanlinNativePresentationTests testNativePresentationRejectsRemovedGenerationAndDifferentProductStore]' started.
+Test Case '-[AI_HLYTests.HanlinNativePresentationTests testNativePresentationRejectsRemovedGenerationAndDifferentProductStore]' passed (0.260 seconds).
+Test Case '-[AI_HLYTests.HanlinNativePresentationTests testNativeSnippetHasIndependentDurableSessionsWithoutWidgetInstances]' started.
+Test Case '-[AI_HLYTests.HanlinNativePresentationTests testNativeSnippetHasIndependentDurableSessionsWithoutWidgetInstances]' passed (0.544 seconds).
+Test Case '-[AI_HLYTests.HanlinNativePresentationTests testOriginalDynamicIslandCapturesAllSevenNativeRegionsAndFunctionComponents]' started.
+2026-11-25 19:11:58.521486+0100 AI_Hanlin[24606:7520571] ScriptWidget component: Region
+Test Case '-[AI_HLYTests.HanlinNativePresentationTests testOriginalDynamicIslandCapturesAllSevenNativeRegionsAndFunctionComponents]' passed (1.278 seconds).
+Test Case '-[AI_HLYTests.HanlinNativePresentationTests testTranslationUsesOriginalAsyncAPIAndReturnsNativeFinishEffect]' started.
+2026-11-25 19:11:59.672885+0100 AI_Hanlin[24606:7522635] HANLIN_EXPO_HOSTSERVICES_ERROR method=invoke operation=actions.next: closed
+2026-11-25 19:11:59.674259+0100 AI_Hanlin[24606:7522785] [expo] 🟢 Posting 'appContextDestroys' event to registered modules
+W1125 19:11:59.677963 1889103872 UIManagerBinding.cpp:66] UIManagerBinding::~UIManagerBinding() was called (address: 0x10d2d5cf8).
+W1125 19:11:59.678025 1889103872 UIManager.cpp:57] UIManager::~UIManager() was called (address: 0x12e6e4f18).
+Test Case '-[AI_HLYTests.HanlinNativePresentationTests testTranslationUsesOriginalAsyncAPIAndReturnsNativeFinishEffect]' passed (0.278 seconds).
+Test Suite 'HanlinNativePresentationTests' passed at 2026-11-25 19:11:59.738.
+	 Executed 5 tests, with 0 failures (0 unexpected) in 2.848 (2.851) seconds
+Test Suite 'HanlinOriginalExpoWidgetTests' started at 2026-11-25 19:11:59.738.
+Test Case '-[AI_HLYTests.HanlinOriginalExpoWidgetTests testOriginalWidgetRegistrationTimelineAndPickerKeepProductAndInstallationIdentity]' started.
+2026-11-25 19:11:59.749166+0100 AI_Hanlin[24606:7520571] [expo] 🟢 Registering module 'ExpoModulesCoreJSLogger'
+2026-11-25 19:11:59.751268+0100 AI_Hanlin[24606:7520571] [expo] 🟢 Registering module 'ExpoModulesCoreJSLogger'
+2026-11-25 19:11:59.753207+0100 AI_Hanlin[24606:7520571] [expo] 🟢 Registering module 'ExpoModulesCoreJSLogger'
+2026-11-25 19:11:59.816899+0100 AI_Hanlin[24606:7520571] [expo] 🟢 Posting 'appContextDestroys' event to registered modules
+2026-11-25 19:11:59.816967+0100 AI_Hanlin[24606:7520571] [expo] 🟢 Posting 'appContextDestroys' event to registered modules
+2026-11-25 19:11:59.817019+0100 AI_Hanlin[24606:7520571] [expo] 🟢 Posting 'appContextDestroys' event to registered modules
+Test Case '-[AI_HLYTests.HanlinOriginalExpoWidgetTests testOriginalWidgetRegistrationTimelineAndPickerKeepProductAndInstallationIdentity]' passed (0.080 seconds).
+Test Suite 'HanlinOriginalExpoWidgetTests' passed at 2026-11-25 19:11:59.819.
+	 Executed 1 test, with 0 failures (0 unexpected) in 0.080 (0.081) seconds
+Test Suite 'AI_HLYTests.xctest' passed at 2026-11-25 19:11:59.819.
+	 Executed 8 tests, with 0 failures (0 unexpected) in 5.465 (5.476) seconds
+Test Suite 'Selected tests' passed at 2026-11-25 19:11:59.819.
+	 Executed 8 tests, with 0 failures (0 unexpected) in 5.465 (5.481) seconds
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64-apple-ios17.0-simulator
+◇ Suite HanlinMiniAppStorageCapacityTests started.
+◇ Test largeArtifactsResourcesAndSnapshotsRetainIntegrity() started.
+2026-11-25 19:12:00.214459+0100 AI_Hanlin[24606:7521798] [error] CoreData: warning: CDCS state transition: Initializing → Active (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+CoreData: warning: CDCS state transition: Initializing → Active (index spotlight_com.itorah.chavrusachat_824037B6-19E9-4B87-9A97-7DA76C8F3E79)
+2026-11-25 19:12:02.960798+0100 AI_Hanlin[24606:7522239] [WidgetStorage] widget_storage_diagnostic id=HWG-802E4E4CB5A0 phase=store.artifact decision=lexicalBoundary relPath=../outside.bin domain=HanlinScriptExtensionStoreError code=8 summary=Resource name failed relative path validation.
+2026-11-25 19:12:02.975038+0100 AI_Hanlin[24606:7522239] [WidgetStorage] widget_storage_diagnostic id=HWG-F4A5B239E9CE phase=store.artifact decision=invalidIdentifier relPath=Packages/installed.capacity/generations/1/artifacts/bf52a176687957541df292538422359f887c8efa1978c82dde2146cbc47ad3ea domain=HanlinScriptExtensionStoreError code=5 summary=Artifact reference did not match package/generation/digest authority.
+2026-11-25 19:12:02.981480+0100 AI_Hanlin[24606:7522239] [WidgetStorage] widget_storage_diagnostic id=HWG-9E229CF5A5D4 phase=store.artifact decision=digestMismatch relPath=Packages/installed.capacity/generations/1/artifacts/bf52a176687957541df292538422359f887c8efa1978c82dde2146cbc47ad3ea domain=HanlinScriptExtensionStoreError code=7 summary=Loaded artifact bytes failed SHA-256 verification.
+✔ Test largeArtifactsResourcesAndSnapshotsRetainIntegrity() passed after 3.146 seconds.
+✔ Suite HanlinMiniAppStorageCapacityTests passed after 3.148 seconds.
+◇ Suite "7A.6 PendingFirstTurnTests — Home First-Send State Machine & Cancellation" started.
+◇ Test "Imported MiniApp repair uses the mounted composer once and preserves Home and conversation settings" started.
+✔ Test "Imported MiniApp repair uses the mounted composer once and preserves Home and conversation settings" passed after 0.008 seconds.
+◇ Test "Cancelled MiniApp handoff preserves the unrelated Home draft and rejects a second in-flight repair" started.
+✔ Test "Cancelled MiniApp handoff preserves the unrelated Home draft and rejects a second in-flight repair" passed after 0.001 seconds.
+✔ Suite "7A.6 PendingFirstTurnTests — Home First-Send State Machine & Cancellation" passed after 0.008 seconds.
+◇ Suite HanlinOriginalScriptWidgetAPITests started.
+◇ Test originalNativeProvidersAreRegisteredAndExposeRealDeviceValues() started.
+✔ Test originalNativeProvidersAreRegisteredAndExposeRealDeviceValues() passed after 0.095 seconds.
+◇ Test originalAsyncDocumentsProviderSettlesBeforeRenderingAndStateCommit() started.
+✔ Test originalAsyncDocumentsProviderSettlesBeforeRenderingAndStateCommit() passed after 0.301 seconds.
+◇ Test upstreamPromiseRejectionIsCatchableWithoutUnsupportedAsyncFailure() started.
+✔ Test upstreamPromiseRejectionIsCatchableWithoutUnsupportedAsyncFailure() passed after 0.151 seconds.
+◇ Test originalStorageAndHanlinCompatibilityValuesShareOneTransaction() started.
+✔ Test originalStorageAndHanlinCompatibilityValuesShareOneTransaction() passed after 0.165 seconds.
+✔ Suite HanlinOriginalScriptWidgetAPITests passed after 0.714 seconds.
+◇ Suite HanlinOriginalScriptWidgetControlTests started.
+◇ Test originalControlsCompileAndRunNativeActionsWithoutRendering() started.
+✔ Test originalControlsCompileAndRunNativeActionsWithoutRendering() passed after 0.822 seconds.
+◇ Test controlSelectionPreservesProductInstallationAndGenerationOwnership() started.
+✔ Test controlSelectionPreservesProductInstallationAndGenerationOwnership() passed after 0.350 seconds.
+◇ Test originalControlEntitiesProvidersAndNativeIntentsUseThePublishedHostStore() started.
+✔ Test originalControlEntitiesProvidersAndNativeIntentsUseThePublishedHostStore() passed after 0.610 seconds.
+✔ Suite HanlinOriginalScriptWidgetControlTests passed after 1.784 seconds.
+◇ Suite HanlinOriginalScriptWidgetLiveActivityTests started.
+◇ Test originalRegionsPersistOutsideActivityContentAndActionsProduceFreshSnapshots() started.
+✔ Test originalRegionsPersistOutsideActivityContentAndActionsProduceFreshSnapshots() passed after 0.190 seconds.
+◇ Test inactiveWidgetCannotProduceOrLoadALiveActivitySnapshot() started.
+✔ Test inactiveWidgetCannotProduceOrLoadALiveActivitySnapshot() passed after 0.132 seconds.
+
+◇ Test actualActivityKitStartsUpdatesAndEndsTheOriginalProgram() started.
+2026-11-25 19:12:06.084769+0100 AI_Hanlin[24606:7522240] [api] Updating content for activity 1A83B42B-F916-450A-B5D7-763C7A12A38F
+✔ Test actualActivityKitStartsUpdatesAndEndsTheOriginalProgram() passed after 0.338 seconds.
+✔ Suite HanlinOriginalScriptWidgetLiveActivityTests passed after 0.661 seconds.
+◇ Suite "Scripting Platform application services" started.
+◇ Test malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic() started.
+HANLIN_IMPORT_PACKAGE_STARTED: url=/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/3DB6AE17-7F85-4D50-8921-7714787343BF/tmp/platform-composition-121A4250-D3D2-4AE5-A6A2-BDD6D7CF5713/invalid-miniapp.zip
+HANLIN_IMPORT_PACKAGE_CATCH_ERROR: unreadableArchive
+✔ Test malformedImportedArchiveRetainsOriginalAndStructuredDiagnostic() passed after 0.054 seconds.
+✔ Suite "Scripting Platform application services" passed after 0.180 seconds.
+◇ Suite "MiniApp Authoring Tools" started.
+◇ Test "Original installed SDK writes, typechecks, repairs and builds a source-preserving archive" started.
+Resolve Package Graph
+
+Resolve Package Graph
+
+Resolve Package Graph
+
+Resolve Package Graph
+
+✔ Test "Original installed SDK writes, typechecks, repairs and builds a source-preserving archive" passed after 427.351 seconds.
+◇ Test "Source edits preserve unrelated files, target retained source and accept exact binary resources" started.
+✔ Test "Source edits preserve unrelated files, target retained source and accept exact binary resources" passed after 0.018 seconds.
+◇ Test "Original Expo Metro builds inside the embedded Node host and retains real image assets" started.
+Resolve Package Graph
+
+✔ Test "Original Expo Metro builds inside the embedded Node host and retains real image assets" passed after 113.386 seconds.
+✔ Suite "MiniApp Authoring Tools" passed after 540.757 seconds.
+✔ Test run with 17 tests in 7 suites passed after 547.257 seconds.
+Resolve Package Graph
+
+2026-11-25 19:22:09.820320+0100 AI_HLYUITests-Runner[30348:7603116] [Default] Running tests...
+2026-11-25 19:22:09.905399+0100 AI_HLYUITests-Runner[30348:7603116] [UIKit App Config] Update the Info.plist: Launch screens will soon be required.
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-11-25 19:22:13.371.
+Test Suite 'AI_HLYUITests.xctest' started at 2026-11-25 19:22:13.375.
+Test Suite 'MiniAppAuthoringUITests' started at 2026-11-25 19:22:13.375.
+Test Case '-[AI_HLYUITests.MiniAppAuthoringUITests testMalformedArchiveShowsOriginalImportDiagnostic]' started.
+    t =     0.00s Start Test at 2026-11-25 19:22:13.377
+    t =     0.17s Set Up
+    t =     0.17s Open com.itorah.hanlinminiapps
+    t =     0.17s     Launch com.itorah.hanlinminiapps
+2026-11-25 19:22:13.824 xcodebuild[24083:7514252] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-25 19:22:13.824 xcodebuild[24083:7514252] [MT] IDELaunchParametersSnapshot: no debugger version
+objc[30348]: Class UIAccessibilityLoaderWebShared is implemented in both /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.dmYYVr/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebKit.axbundle/WebKit (0x105b9c398) and /private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.dmYYVr/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/AccessibilityBundles/WebCore.axbundle/WebCore (0x106e74310). This may cause spurious casting failures and mysterious crashes. One of the duplicates must be removed or renamed.
+Resolve Package Graph
+
+    t =   159.22s         Setting up automation session
+    t =   167.66s         Wait for com.itorah.hanlinminiapps to idle
+<unknown>:0: warning: -[AI_HLYUITests.MiniAppAuthoringUITests testMalformedArchiveShowsOriginalImportDiagnostic] : Update the Info.plist: Support for all orientations will soon be required.
+    t =   171.54s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-apps-add" Button`
+    t =   171.54s     Checking existence of `"hanlin-apps-add" Button`
+    t =   171.72s     Find the "hanlin-apps-add" Button
+    t =   171.77s     Find the "hanlin-apps-add" Button
+    t =   172.67s Tap "hanlin-apps-add" Button
+    t =   172.67s     Wait for com.itorah.hanlinminiapps to idle
+    t =   172.68s     Find the "hanlin-apps-add" Button
+    t =   172.74s     Check for interrupting elements affecting "hanlin-apps-add" Button
+    t =   173.00s         Wait for com.apple.springboard to idle
+    t =   173.05s     Synthesize event
+    t =   173.45s     Wait for com.itorah.hanlinminiapps to idle
+    t =   175.23s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-import-script-package" Button`
+    t =   175.23s     Checking existence of `"hanlin-import-script-package" Button`
+    t =   175.52s     Find the "hanlin-import-script-package" Button
+    t =   175.74s     Find the "hanlin-import-script-package" Button
+    t =   176.09s Tap "hanlin-import-script-package" Button
+    t =   176.09s     Wait for com.itorah.hanlinminiapps to idle
+    t =   176.11s     Find the "hanlin-import-script-package" Button
+    t =   176.34s     Check for interrupting elements affecting "hanlin-import-script-package" Button
+    t =   176.45s         Wait for com.apple.springboard to idle
+    t =   176.49s     Synthesize event
+    t =   176.80s     Wait for com.itorah.hanlinminiapps to idle
+    t =   177.02s Waiting 20.0s for "hanlin-package-import-list" Any to exist
+    t =   178.05s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-import-list" Any`
+    t =   178.05s         Checking existence of `"hanlin-package-import-list" Any`
+    t =   178.24s Checking existence of `"InvalidMiniApp" Button`
+    t =   178.51s Find the "InvalidMiniApp" Button
+    t =   179.08s Waiting 15.0s for "InvalidMiniApp" Button to exist
+    t =   180.11s     Checking `Expect predicate `existsNoRetry == 1` for object "InvalidMiniApp" Button`
+    t =   180.11s         Checking existence of `"InvalidMiniApp" Button`
+    t =   181.40s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "InvalidMiniApp" Button`
+    t =   181.41s     Checking existence of `"InvalidMiniApp" Button`
+    t =   181.81s     Find the "InvalidMiniApp" Button
+    t =   182.20s     Find the "InvalidMiniApp" Button
+    t =   182.47s Tap "InvalidMiniApp" Button
+    t =   182.47s     Wait for com.itorah.hanlinminiapps to idle
+    t =   182.48s     Find the "InvalidMiniApp" Button
+    t =   182.75s     Check for interrupting elements affecting "InvalidMiniApp" Button
+    t =   182.88s         Wait for com.apple.springboard to idle
+    t =   182.93s     Synthesize event
+    t =   183.22s     Wait for com.itorah.hanlinminiapps to idle
+    t =   183.54s Waiting 30.0s for "hanlin-import-diagnostics-sheet" Any to exist
+    t =   184.57s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =   184.57s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   184.80s Checking existence of `Any (First Match)`
+    t =   185.12s Find the Any (First Match)
+    t =   185.44s Waiting 15.0s for "hanlin-import-diagnostic-0" StaticText to exist
+    t =   186.46s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostic-0" StaticText`
+    t =   186.47s         Checking existence of `"hanlin-import-diagnostic-0" StaticText`
+    t =   186.69s Checking existence of `"hanlin-import-diagnostic-0" StaticText`
+    t =   186.93s Find the "hanlin-import-repair-agent" Button
+    t =   187.07s Checking existence of `"hanlin-import-diagnostics-copy" Button`
+    t =   187.21s Tear Down
+    t =   187.21s     Find the Application 'com.itorah.hanlinminiapps'
+    t =   187.62s     Added attachment named 'MiniApps authoring'
+    t =   187.62s     Requesting snapshot of accessibility hierarchy for app with pid 30867
+    t =   188.95s     Requesting snapshot of accessibility hierarchy for app with pid 30867
+    t =   189.17s     Added attachment named 'MiniApps authoring accessibility'
+    t =   189.17s     Terminate com.itorah.hanlinminiapps:30867
+Test Case '-[AI_HLYUITests.MiniAppAuthoringUITests testMalformedArchiveShowsOriginalImportDiagnostic]' passed (190.632 seconds).
+Test Case '-[AI_HLYUITests.MiniAppAuthoringUITests testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport]' started.
+    t =     0.00s Start Test at 2026-11-25 19:25:24.011
+    t =     0.06s Set Up
+Resolve Package Graph
+    t =     0.06s Open com.itorah.chavrusachat
+    t =     0.06s     Launch com.itorah.chavrusachat
+2026-11-25 19:25:24.083 xcodebuild[24083:7514252] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-25 19:25:24.083 xcodebuild[24083:7514252] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     0.50s         Setting up automation session
+
+Resolve Package Graph
+    t =     6.66s         Wait for com.itorah.chavrusachat to idle
+    t =    11.89s Waiting 45.0s for "hanlin-settings-tab" Button to exist
+    t =    12.92s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-settings-tab" Button`
+    t =    12.92s         Checking existence of `"hanlin-settings-tab" Button`
+    t =    13.87s Open com.itorah.hanlinminiapps
+    t =    13.87s     Launch com.itorah.hanlinminiapps
+2026-11-25 19:25:37.899 xcodebuild[24083:7514252] [MT] IDELaunchParametersSnapshot: debugger version lookup failed for path '<nil>': noURL
+2026-11-25 19:25:37.899 xcodebuild[24083:7514252] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =    15.42s         Setting up automation session
+
+    t =    23.12s         Wait for com.itorah.hanlinminiapps to idle
+<unknown>:0: warning: -[AI_HLYUITests.MiniAppAuthoringUITests testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport] : Update the Info.plist: Support for all orientations will soon be required.
+    t =    25.81s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-apps-add" Button`
+    t =    25.82s     Checking existence of `"hanlin-apps-add" Button`
+    t =    25.95s     Find the "hanlin-apps-add" Button
+    t =    26.02s     Find the "hanlin-apps-add" Button
+    t =    26.16s Tap "hanlin-apps-add" Button
+    t =    26.16s     Wait for com.itorah.hanlinminiapps to idle
+    t =    26.18s     Find the "hanlin-apps-add" Button
+    t =    26.23s     Check for interrupting elements affecting "hanlin-apps-add" Button
+    t =    26.46s         Wait for com.apple.springboard to idle
+    t =    26.63s     Synthesize event
+    t =    27.06s     Wait for com.itorah.hanlinminiapps to idle
+    t =    28.98s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-import-script-package" Button`
+    t =    28.98s     Checking existence of `"hanlin-import-script-package" Button`
+    t =    29.23s     Find the "hanlin-import-script-package" Button
+    t =    29.46s     Find the "hanlin-import-script-package" Button
+    t =    29.77s Tap "hanlin-import-script-package" Button
+    t =    29.77s     Wait for com.itorah.hanlinminiapps to idle
+    t =    29.78s     Find the "hanlin-import-script-package" Button
+    t =    30.03s     Check for interrupting elements affecting "hanlin-import-script-package" Button
+    t =    30.16s         Wait for com.apple.springboard to idle
+    t =    30.20s     Synthesize event
+    t =    30.58s     Wait for com.itorah.hanlinminiapps to idle
+    t =    31.03s Waiting 20.0s for "hanlin-package-import-list" Any to exist
+    t =    32.10s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-import-list" Any`
+    t =    32.10s         Checking existence of `"hanlin-package-import-list" Any`
+    t =    32.22s Checking existence of `"MiniAppTypeError" Button`
+    t =    32.45s Find the "MiniAppTypeError" Button
+    t =    32.72s Waiting 15.0s for "MiniAppTypeError" Button to exist
+    t =    33.73s     Checking `Expect predicate `existsNoRetry == 1` for object "MiniAppTypeError" Button`
+    t =    33.73s         Checking existence of `"MiniAppTypeError" Button`
+    t =    34.98s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "MiniAppTypeError" Button`
+    t =    34.98s     Checking existence of `"MiniAppTypeError" Button`
+    t =    35.23s     Find the "MiniAppTypeError" Button
+    t =    35.52s     Find the "MiniAppTypeError" Button
+    t =    35.81s Tap "MiniAppTypeError" Button
+    t =    35.81s     Wait for com.itorah.hanlinminiapps to idle
+    t =    35.83s     Find the "MiniAppTypeError" Button
+    t =    36.20s     Check for interrupting elements affecting "MiniAppTypeError" Button
+    t =    36.36s         Wait for com.apple.springboard to idle
+    t =    36.43s     Synthesize event
+    t =    36.78s     Wait for com.itorah.hanlinminiapps to idle
+    t =    36.80s Waiting 90.0s for "hanlin-import-diagnostics-sheet" Any to exist
+    t =    37.89s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    37.89s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    38.38s         Capturing element debug description
+    t =    38.81s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    38.81s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    39.27s         Capturing element debug description
+    t =    39.82s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    39.82s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    40.29s         Capturing element debug description
+    t =    40.81s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    40.81s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    41.27s         Capturing element debug description
+    t =    41.81s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    41.82s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    42.30s         Capturing element debug description
+    t =    42.86s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    42.87s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    43.33s         Capturing element debug description
+    t =    43.87s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    43.87s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    44.29s         Capturing element debug description
+    t =    44.81s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    44.81s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    45.20s         Capturing element debug description
+    t =    45.85s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    45.85s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    46.32s         Capturing element debug description
+    t =    46.85s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    46.85s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    47.33s         Capturing element debug description
+    t =    47.85s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    47.85s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    48.28s         Capturing element debug description
+    t =    48.83s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    48.83s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    49.26s         Capturing element debug description
+    t =    49.81s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    49.81s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    50.25s         Capturing element debug description
+    t =    50.89s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    50.89s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    51.30s         Capturing element debug description
+    t =    51.84s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    51.84s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    52.28s         Capturing element debug description
+    t =    52.80s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    52.81s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    53.22s         Capturing element debug description
+    t =    53.85s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    53.85s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    54.27s         Capturing element debug description
+    t =    54.83s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    54.83s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    55.34s         Capturing element debug description
+    t =    55.81s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    55.81s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    56.31s         Capturing element debug description
+    t =    56.82s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    56.82s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    57.26s         Capturing element debug description
+    t =    57.89s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    57.89s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    58.53s         Capturing element debug description
+    t =    58.81s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    58.81s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    59.24s         Capturing element debug description
+    t =    59.87s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    59.87s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    60.36s         Capturing element debug description
+    t =    60.87s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    60.87s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    61.33s         Capturing element debug description
+    t =    61.87s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    61.87s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    62.27s         Capturing element debug description
+    t =    62.88s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    62.88s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    63.28s         Capturing element debug description
+    t =    63.89s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    63.89s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    64.35s         Capturing element debug description
+    t =    64.88s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    64.88s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    65.28s         Capturing element debug description
+    t =    65.80s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    65.81s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    66.20s         Capturing element debug description
+    t =    66.81s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    66.81s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    67.25s         Capturing element debug description
+    t =    67.89s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    67.89s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    68.29s         Capturing element debug description
+    t =    68.83s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    68.83s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    69.21s         Capturing element debug description
+    t =    69.83s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    69.83s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    70.32s         Capturing element debug description
+    t =    70.84s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    70.84s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    71.30s         Capturing element debug description
+    t =    71.83s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    71.83s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    72.26s         Capturing element debug description
+    t =    72.90s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    72.90s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    73.33s         Capturing element debug description
+    t =    73.86s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    73.86s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    74.26s         Capturing element debug description
+    t =    74.86s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostics-sheet" Any`
+    t =    74.86s         Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =    75.10s Checking existence of `Any (First Match)`
+    t =    75.39s Find the Any (First Match)
+    t =    75.72s Waiting 15.0s for "hanlin-import-diagnostic-2" StaticText to exist
+    t =    76.75s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-import-diagnostic-2" StaticText`
+    t =    76.75s         Checking existence of `"hanlin-import-diagnostic-2" StaticText`
+    t =    77.02s Checking existence of `"hanlin-import-diagnostic-2" StaticText`
+    t =    77.28s Find the Application 'com.itorah.hanlinminiapps'
+    t =    77.68s Added attachment named 'MiniApp original TypeScript diagnostics'
+    t =    77.68s Find the "hanlin-import-repair-agent" Button
+    t =    79.15s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-import-repair-agent" Button`
+    t =    79.16s     Checking existence of `"hanlin-import-repair-agent" Button`
+    t =    79.62s     Find the "hanlin-import-repair-agent" Button
+    t =    80.00s     Find the "hanlin-import-repair-agent" Button
+    t =    80.51s Tap "hanlin-import-repair-agent" Button
+    t =    80.51s     Wait for com.itorah.hanlinminiapps to idle
+    t =    80.52s     Find the "hanlin-import-repair-agent" Button
+    t =    80.88s     Check for interrupting elements affecting "hanlin-import-repair-agent" Button
+    t =    81.18s         Wait for com.apple.springboard to idle
+    t =    81.28s     Synthesize event
+    t =    81.71s     Wait for com.itorah.hanlinminiapps to idle
+    t =    84.71s Wait for com.itorah.chavrusachat to become Running Foreground
+    t =    87.14s Checking existence of `"MiniApp repair unavailable" Alert`
+<unknown>:0: warning: -[AI_HLYUITests.MiniAppAuthoringUITests testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport] :     AVAudioSession_iOS.mm:978   This method can lead to UI unresponsiveness if called on the main thread. Consider using the asynchronous activate/deactivate API instead for calls from the main thread.
+<unknown>:0: warning: -[AI_HLYUITests.MiniAppAuthoringUITests testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport] :            SessionCore.mm:631   This method can lead to UI unresponsiveness if called on the main thread while the audio session is active.
+    t =    89.91s Waiting 45.0s for StaticText (First Match) to exist
+    t =    90.98s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =    90.98s         Checking existence of `StaticText (First Match)`
+    t =    91.26s Wait for com.itorah.hanlinminiapps to become Running Foreground
+Resolve Package Graph
+
+Resolve Package Graph
+
+    t =   241.25s Checking existence of `"hanlin-file-importer" Button`
+    t =   241.48s Checking existence of `Any (First Match)`
+    t =   242.26s Checking existence of `"hanlin-file-importer" Button`
+    t =   242.44s Checking existence of `Any (First Match)`
+    t =   243.21s Checking existence of `"hanlin-file-importer" Button`
+    t =   243.39s Checking existence of `Any (First Match)`
+    t =   244.26s Checking existence of `"hanlin-file-importer" Button`
+    t =   244.44s Checking existence of `Any (First Match)`
+    t =   245.21s Checking existence of `"hanlin-file-importer" Button`
+    t =   245.40s Checking existence of `Any (First Match)`
+    t =   246.18s Checking existence of `"hanlin-file-importer" Button`
+    t =   246.36s Checking existence of `Any (First Match)`
+    t =   247.25s Checking existence of `"hanlin-file-importer" Button`
+    t =   247.42s Checking existence of `Any (First Match)`
+    t =   248.22s Checking existence of `"hanlin-file-importer" Button`
+    t =   248.43s Checking existence of `Any (First Match)`
+    t =   249.25s Checking existence of `"hanlin-file-importer" Button`
+    t =   249.48s Checking existence of `Any (First Match)`
+    t =   250.19s Checking existence of `"hanlin-file-importer" Button`
+    t =   250.39s Checking existence of `Any (First Match)`
+    t =   251.21s Checking existence of `"hanlin-file-importer" Button`
+    t =   251.40s Checking existence of `Any (First Match)`
+    t =   252.20s Checking existence of `"hanlin-file-importer" Button`
+    t =   252.38s Checking existence of `Any (First Match)`
+    t =   253.18s Checking existence of `"hanlin-file-importer" Button`
+    t =   253.36s Checking existence of `Any (First Match)`
+    t =   254.18s Checking existence of `"hanlin-file-importer" Button`
+    t =   254.40s Checking existence of `Any (First Match)`
+    t =   255.22s Checking existence of `"hanlin-file-importer" Button`
+    t =   255.43s Checking existence of `Any (First Match)`
+    t =   256.26s Checking existence of `"hanlin-file-importer" Button`
+    t =   256.48s Checking existence of `Any (First Match)`
+    t =   257.20s Checking existence of `"hanlin-file-importer" Button`
+    t =   257.40s Checking existence of `Any (First Match)`
+    t =   258.23s Checking existence of `"hanlin-file-importer" Button`
+    t =   258.43s Checking existence of `Any (First Match)`
+    t =   259.25s Checking existence of `"hanlin-file-importer" Button`
+    t =   259.47s Checking existence of `Any (First Match)`
+    t =   260.22s Checking existence of `"hanlin-file-importer" Button`
+    t =   260.42s Checking existence of `Any (First Match)`
+    t =   261.23s Checking existence of `"hanlin-file-importer" Button`
+    t =   261.44s Checking existence of `Any (First Match)`
+    t =   262.19s Checking existence of `"hanlin-file-importer" Button`
+    t =   262.40s Checking existence of `Any (First Match)`
+    t =   263.18s Checking existence of `"hanlin-file-importer" Button`
+    t =   263.37s Checking existence of `Any (First Match)`
+    t =   264.18s Checking existence of `"hanlin-file-importer" Button`
+    t =   264.36s Checking existence of `Any (First Match)`
+    t =   265.18s Checking existence of `"hanlin-file-importer" Button`
+    t =   265.36s Checking existence of `Any (First Match)`
+    t =   265.55s Checking existence of `"hanlin-package-install" Button`
+    t =   265.75s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   266.08s Checking existence of `"hanlin-import-error-message" Any`
+    t =   266.43s Checking existence of `"hanlin-import-diagnostics-sheet" Any`
+    t =   266.78s Checking existence of `"hanlin-package-import-done" Button`
+    t =   266.90s Tap "hanlin-package-import-done" Button
+    t =   266.90s     Wait for com.itorah.hanlinminiapps to idle
+    t =   266.91s     Find the "hanlin-package-import-done" Button
+    t =   267.02s     Check for interrupting elements affecting "hanlin-package-import-done" Button
+    t =   267.22s         Wait for com.apple.springboard to idle
+    t =   267.30s     Synthesize event
+    t =   267.71s     Wait for com.itorah.hanlinminiapps to idle
+    t =   268.11s Checking existence of `"hanlin-apps-add-done" Button`
+    t =   268.23s Tap "hanlin-apps-add-done" Button
+    t =   268.23s     Wait for com.itorah.hanlinminiapps to idle
+    t =   268.27s     Find the "hanlin-apps-add-done" Button
+    t =   268.39s     Check for interrupting elements affecting "hanlin-apps-add-done" Button
+    t =   268.51s         Wait for com.apple.springboard to idle
+    t =   268.53s     Synthesize event
+    t =   268.82s     Wait for com.itorah.hanlinminiapps to idle
+    t =   269.26s Find the "Search Apps" SearchField
+    t =   269.41s Waiting 15.0s for "Search Apps" SearchField to exist
+    t =   270.46s     Checking `Expect predicate `existsNoRetry == 1` for object "Search Apps" SearchField`
+    t =   270.46s         Checking existence of `"Search Apps" SearchField`
+    t =   271.56s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "Search Apps" SearchField`
+    t =   271.56s     Checking existence of `"Search Apps" SearchField`
+    t =   271.60s     Find the "Search Apps" SearchField
+    t =   271.64s     Find the "Search Apps" SearchField
+    t =   271.76s Tap "Search Apps" SearchField
+    t =   271.76s     Wait for com.itorah.hanlinminiapps to idle
+    t =   271.76s     Find the "Search Apps" SearchField
+    t =   271.80s     Check for interrupting elements affecting "Search Apps" SearchField
+    t =   271.88s         Wait for com.apple.springboard to idle
+    t =   271.92s     Synthesize event
+    t =   272.28s     Wait for com.itorah.hanlinminiapps to idle
+    t =   274.17s Type 'MiniApp Authoring ...' into "Search Apps" SearchField
+    t =   274.17s     Wait for com.itorah.hanlinminiapps to idle
+    t =   274.20s     Find the "Search Apps" SearchField
+    t =   274.27s     Check for interrupting elements affecting "Search Apps" SearchField
+    t =   274.37s         Wait for com.apple.springboard to idle
+    t =   274.43s     Synthesize event
+    t =   275.15s     Wait for com.itorah.hanlinminiapps to idle
+    t =   275.18s Waiting 90.0s for "hanlin-package-card-MiniApp Authoring Acceptance" Button to exist
+    t =   276.25s     Checking `Expect predicate `existsNoRetry == 1` for object "hanlin-package-card-MiniApp Authoring Acceptance" Button`
+    t =   276.25s         Checking existence of `"hanlin-package-card-MiniApp Authoring Acceptance" Button`
+    t =   277.41s Checking `Expect predicate `exists == 1 AND enabled == 1 AND hittable == 1` for object "hanlin-package-card-MiniApp Authoring Acceptance" Button`
+    t =   277.41s     Checking existence of `"hanlin-package-card-MiniApp Authoring Acceptance" Button`
+    t =   277.53s     Find the "hanlin-package-card-MiniApp Authoring Acceptance" Button
+    t =   277.65s     Find the "hanlin-package-card-MiniApp Authoring Acceptance" Button
+    t =   277.79s Tap "hanlin-package-card-MiniApp Authoring Acceptance" Button
+    t =   277.79s     Wait for com.itorah.hanlinminiapps to idle
+    t =   277.80s     Find the "hanlin-package-card-MiniApp Authoring Acceptance" Button
+    t =   277.92s     Check for interrupting elements affecting "hanlin-package-card-MiniApp Authoring Acceptance" Button
+    t =   277.99s         Wait for com.apple.springboard to idle
+    t =   278.05s     Synthesize event
+    t =   278.35s     Wait for com.itorah.hanlinminiapps to idle
+    t =   279.73s Waiting 45.0s for "miniapp-authoring-result" StaticText to exist
+    t =   280.82s     Checking `Expect predicate `existsNoRetry == 1` for object "miniapp-authoring-result" StaticText`
+    t =   280.82s         Checking existence of `"miniapp-authoring-result" StaticText`
+    t =   280.89s Find the "miniapp-authoring-result" StaticText
+    t =   280.96s Find the Application 'com.itorah.hanlinminiapps'
+    t =   281.24s Added attachment named 'MiniApp repaired native result'
+    t =   281.24s Open com.itorah.chavrusachat
+    t =   281.24s     Activate com.itorah.chavrusachat
+    t =   281.41s         Wait for com.itorah.chavrusachat to idle
+    t =   281.70s Waiting 90.0s for StaticText (First Match) to exist
+    t =   282.76s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =   282.76s         Checking existence of `StaticText (First Match)`
+    t =   282.97s         Capturing element debug description
+    t =   283.71s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =   283.71s         Checking existence of `StaticText (First Match)`
+    t =   283.85s         Capturing element debug description
+    t =   284.79s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =   284.79s         Checking existence of `StaticText (First Match)`
+    t =   284.95s         Capturing element debug description
+    t =   285.78s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =   285.78s         Checking existence of `StaticText (First Match)`
+    t =   285.94s         Capturing element debug description
+    t =   286.76s     Checking `Expect predicate `existsNoRetry == 1` for object StaticText (First Match)`
+    t =   286.76s         Checking existence of `StaticText (First Match)`
+    t =   286.97s Checking existence of `"hanlin-tool-consent-allow-once" Button`
+    t =   287.13s Tear Down
+    t =   287.13s     Find the Target Application 'com.itorah.chavrusachat'
+    t =   287.44s     Added attachment named 'Hanlin AI authoring'
+    t =   287.44s     Requesting snapshot of accessibility hierarchy for app with pid 32542
+    t =   287.99s     Requesting snapshot of accessibility hierarchy for app with pid 32542
+    t =   288.17s     Added attachment named 'Hanlin AI authoring accessibility'
+    t =   288.17s     Terminate com.itorah.chavrusachat:32542
+    t =   289.18s     Terminate com.itorah.hanlinminiapps:32693
+Test Case '-[AI_HLYUITests.MiniAppAuthoringUITests testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport]' passed (290.692 seconds).
+Test Suite 'MiniAppAuthoringUITests' passed at 2026-11-25 19:30:14.703.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 481.325 (481.329) seconds
+Test Suite 'AI_HLYUITests.xctest' passed at 2026-11-25 19:30:14.715.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 481.325 (481.340) seconds
+Test Suite 'Selected tests' passed at 2026-11-25 19:30:14.715.
+	 Executed 2 tests, with 0 failures (0 unexpected) in 481.325 (481.344) seconds
+Resolve Package Graph
+2026-11-25 19:30:15.060 xcodebuild[24083:7514252] [MT] IDETestOperationsObserverDebug: 1168.321 elapsed -- Testing started completed.
+2026-11-25 19:30:15.060 xcodebuild[24083:7514252] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-11-25 19:30:15.060 xcodebuild[24083:7514252] [MT] IDETestOperationsObserverDebug: 1168.321 sec, +1168.321 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/paired52-continuation-v5/native-result/Paired.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started

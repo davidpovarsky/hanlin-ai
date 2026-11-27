@@ -1,0 +1,1 @@
+Pre-burst baseline: Optional("actions=2;expanded=false;natural=100.0;visible=0.0;gaps=1.4917;intermediate=false;scrollY=0.0;orientation=portrait;actionVisible=0.0,106.0"); geometry: collapsed

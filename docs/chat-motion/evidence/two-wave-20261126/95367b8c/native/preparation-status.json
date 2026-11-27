@@ -1,0 +1,94 @@
+{
+  "schemaVersion": 1,
+  "sourceSHA": "95367b8c06b166873dfab2143a8323a869085af2",
+  "parentSHA": "efb33bf0093981abdf882031ffe56c3044902968",
+  "status": "PREPARED_PASS",
+  "startedUTC": "2026-11-26T16:10:35.148960+00:00",
+  "steps": [
+    {
+      "name": "verify-bundle",
+      "command": [
+        "git",
+        "-C",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/source",
+        "bundle",
+        "verify",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/motion-95367b8c.bundle"
+      ],
+      "exitCode": 0,
+      "seconds": 0.09064416598994285
+    },
+    {
+      "name": "fetch-bundle",
+      "command": [
+        "git",
+        "-C",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/source",
+        "fetch",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/motion-95367b8c.bundle",
+        "refs/heads/codex/hanlin-wave1-motion-acceptance-20261126"
+      ],
+      "exitCode": 0,
+      "seconds": 0.3187299580022227
+    },
+    {
+      "name": "checkout",
+      "command": [
+        "git",
+        "-C",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/source",
+        "checkout",
+        "--detach",
+        "95367b8c06b166873dfab2143a8323a869085af2"
+      ],
+      "exitCode": 0,
+      "seconds": 0.14169787499122322
+    },
+    {
+      "name": "canonical-preparation",
+      "command": [
+        "/opt/homebrew/bin/python3.12",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/source/docs/chat-motion/prepare_motion_ui.py",
+        "--output",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/proof"
+      ],
+      "exitCode": 0,
+      "seconds": 12.246692250017077
+    },
+    {
+      "name": "xcodegen",
+      "command": [
+        "/opt/homebrew/bin/xcodegen",
+        "generate",
+        "--spec",
+        "project.json"
+      ],
+      "exitCode": 0,
+      "seconds": 0.1510612500132993
+    }
+  ],
+  "pid": 41695,
+  "freeAtStart": 7316852736,
+  "sourceFingerprint": "05a2dea2597135566edb0ce28185807198d372102845f79a6af44a77277d8ce9",
+  "sourceFileCount": 418,
+  "sourceChanges": [
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+      "before": {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+        "bytes": 8233,
+        "sha256": "e0e2990e961abe387ea631e60c5288df5b1a6149f5f407506ddc9c673cebfbff"
+      },
+      "after": {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+        "bytes": 14405,
+        "sha256": "f90466b98c617432e6bd2e971fe111cc2f11a7302ae5c67868fb5e1b1882dc1f"
+      }
+    }
+  ],
+  "originalTestSHA256": "5f714f6ad4fc5db3abec22abc5e520f4bba94d5f66740f69673ed3d401665874",
+  "priorProof": "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/proof-efb33bf0-original",
+  "canonicalPinsSHA256": "f40dbb9e76457d436a9e919f6883558d6b955f116c2b6c3702f8275bd53adfb0",
+  "finishedUTC": "2026-11-26T16:10:48.309567+00:00",
+  "freeAtFinish": 7020773376
+}

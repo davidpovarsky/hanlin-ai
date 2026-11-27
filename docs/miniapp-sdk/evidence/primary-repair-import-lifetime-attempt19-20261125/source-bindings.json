@@ -1,0 +1,21 @@
+{
+  "schema": 1,
+  "executedSource": "4cde88df07a2f3cd86cc99ad87786c79ae207390",
+  "correctionSource": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "correctionTree": "f7a6596a1ef53d8d962ceb9f619460ffa19ee91e",
+  "miniBuildProducer": "dc53a6c8ff1bb68bfbc52a64667e14ce688055b0",
+  "aiBuildProducer": "4cde88df07a2f3cd86cc99ad87786c79ae207390",
+  "SDKProducerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+  "file": "AI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift",
+  "beforeBytes": 27662,
+  "beforeSHA256": "ab893036c8b7cc8b8d8313eaef10ab18468adfec95c2ba1ff68944fc83591f4b",
+  "afterBytes": 27898,
+  "afterSHA256": "5d3852f726f180788ba60da91137789c0651ff385232cca4b1ebd0c9ce7d23b7",
+  "UItestSHA256": "60a786ea3864a118710f8814a41f52cc454d35c71e4fb911b611a70ba5c2f565",
+  "compilerAndInstallerChanged": false,
+  "testAssertionsChanged": false,
+  "SDKInputs": 235,
+  "SDKInputMatches": 0,
+  "correctedNativeAcceptance": "NOT_RUN_AT_CAPTURE",
+  "callbackOrdering": "SOURCE_LEVEL_INFERENCE_NOT_OBSERVED_TRACE"
+}

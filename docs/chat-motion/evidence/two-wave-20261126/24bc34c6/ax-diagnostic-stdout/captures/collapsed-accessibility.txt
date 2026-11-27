@@ -1,0 +1,71 @@
+geometry=collapsed
+summaryExists=true
+summaryFrame=(0.0, 292.5, 474.5, 52.5)
+
+Attributes: Application, 0x11106d680, pid: 15798, label: 'ChatMotionProof'
+Element subtree:
+ →Application, 0x11106d680, pid: 15798, label: 'ChatMotionProof'
+    Window (Main), 0x11106cdc0, {{0.0, 0.0}, {1032.0, 1376.0}}
+      Other, 0x11106d540, {{0.0, 0.0}, {1032.0, 1376.0}}
+        Other, 0x11106d400, {{0.0, 0.0}, {1032.0, 1376.0}}
+          Other, 0x11106d040, {{0.0, 0.0}, {1032.0, 1376.0}}
+            Other, 0x11106d2c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+              CollectionView, 0x11106d180, {{0.0, 0.0}, {1032.0, 132.0}}
+                Other, 0x11106cf00, {{-20.0, -232.0}, {1072.0, 635.0}}
+                Other, 0x11106c780, {{0.0, 0.0}, {1032.0, 132.0}}
+                  Other, 0x11106cc80, {{0.0, 0.0}, {1032.0, 72.0}}
+                Other, 0x11106cb40, {{0.0, 0.0}, {1032.0, 132.0}}
+                Cell, 0x11106ca00, {{20.0, 67.0}, {992.0, 52.0}}
+                  Other, 0x11106c8c0, {{20.0, 67.0}, {992.0, 52.0}}
+                    Other, 0x11106c280, {{20.0, 67.0}, {992.0, 52.0}}
+                  Other, 0x11106c140, {{20.0, 67.0}, {992.0, 52.0}}
+                    Other, 0x11106c000, {{20.0, 67.0}, {992.0, 52.0}}
+                      Other, 0x11106e300, {{20.0, 67.0}, {992.0, 52.0}}
+                        Button, 0x11106e440, {{42.0, 76.0}, {950.0, 34.5}}, identifier: 'hanlin-chat-motion-preset', label: 'Chat animations, Smooth and relaxed'
+                          StaticText, 0x11106e580, {{824.0, 83.0}, {152.0, 20.5}}, label: 'Smooth and relaxed'
+                        Image, 0x11106e6c0, {{42.0, 81.0}, {20.0, 24.5}}, identifier: 'sparkles', label: 'Sparkle'
+                        StaticText, 0x11106e800, {{80.0, 82.8}, {123.0, 20.5}}, label: 'Chat animations'
+                Other, 0x11106e940, {{999.0, 30.0}, {30.0, 102.0}}, label: 'Vertical scroll bar, 2 pages', value: 0%
+                  Other, 0x11106fe80, {{1026.0, 122.0}, {3.0, 7.0}}
+                Other, 0x11106fc00, {{999.0, 30.0}, {30.0, 102.0}}, label: 'Vertical scroll bar, 2 pages', value: 0%
+                  Other, 0x11106fd40, {{1026.0, 122.0}, {3.0, 7.0}}
+              StaticText, 0x11106ef80, {{478.0, 140.0}, {76.0, 20.5}}, identifier: 'proof-persisted-preset', label: 'v1.relaxed'
+              Button, 0x11106f340, {{303.0, 168.5}, {70.5, 34.5}}, identifier: 'proof-count', label: 'Count'
+              Button, 0x11106f480, {{381.5, 168.5}, {68.5, 34.5}}, identifier: 'proof-finish', label: 'Finish'
+              Button, 0x11106f5c0, {{458.0, 168.5}, {95.0, 34.5}}, identifier: 'proof-long', label: 'Long text'
+              Button, 0x11106fac0, {{561.0, 168.5}, {54.5, 34.5}}, identifier: 'proof-rtl', label: 'RTL'
+              Button, 0x11106f980, {{623.5, 168.5}, {105.5, 34.5}}, identifier: 'proof-type', label: 'Large type'
+              StaticText, 0x11106f700, {{447.2, 211.0}, {73.5, 20.5}}, identifier: 'proof-geometry-state', label: 'collapsed', value: expanded=false;ori...
+              StaticText, 0x11106f840, {{532.8, 214.5}, {52.0, 13.5}}, identifier: 'proof-action-receipt', label: 'actions=2', value: actions=2;expanded...
+              StaticText, 0x11106f0c0, {{409.0, 239.5}, {214.0, 20.5}}, identifier: 'proof-effective-motion', label: 'shimmer=true;numeric=true'
+              ScrollView, 0x11106f200, {{0.0, 268.0}, {1032.0, 1059.5}}
+                Other, 0x11106ee40, {{0.0, 268.0}, {1032.0, 83.0}}
+                  Other, 0x11106ebc0, {{0.0, 284.0}, {1016.0, 124.5}}
+                    Other, 0x11106ed00, {{0.0, 292.5}, {474.5, 116.0}}
+                      StaticText, 0x11106ea80, {{0.0, 292.5}, {474.5, 52.5}}, identifier: 'proof-summary', label: 'A short visible reasoning summary. שלום עולם. مرحبًا بالعالم.'
+                      Button, 0x105250780, {{16.0, 335.0}, {174.5, 20.5}}, label: 'Repeated tool name', value: Collapsed
+                        StaticText, 0x105251040, {{16.0, 335.0}, {152.5, 20.5}}, label: 'Repeated tool name'
+                        Image, 0x105253840, {{178.0, 342.0}, {11.0, 6.5}}, identifier: 'chevron.down', label: 'Go Down'
+                      StaticText, 0x105253ac0, {{16.0, 361.5}, {357.0, 20.5}}, label: 'source call-2: Repeated tool name — cancelled'
+                      StaticText, 0x105253980, {{16.0, 388.0}, {408.0, 20.5}}, label: 'source call-3: Repeated tool name — failed; no output'
+                    Button, 0x105253700, {{16.0, 284.0}, {1000.0, 24.5}}, identifier: 'proof-thinking', label: 'Thinking, 0'
+                      StaticText, 0x105253480, {{21.0, 289.0}, {48.5, 14.5}}, label: 'Thinking'
+                      Other, 0x1052535c0, {{69.0, 289.0}, {48.5, 14.5}}
+                      StaticText, 0x105252e40, {{976.5, 289.0}, {8.0, 14.5}}, label: '0'
+                      Image, 0x105253200, {{994.5, 292.0}, {14.5, 8.5}}, identifier: 'chevron.down', label: 'Go Down'
+                    StaticText, 0x1053ecf00, {{16.0, 314.5}, {216.0, 20.5}}, identifier: 'proof-footer', label: 'Original content after details'
+                Other, 0x1053ed7c0, {{999.0, 268.0}, {30.0, 1059.5}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                  Other, 0x1053edcc0, {{1026.0, 1141.5}, {3.0, 183.0}}
+                Other, 0x1053eda40, {{999.0, 268.0}, {30.0, 1059.5}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                  Other, 0x1053ed540, {{1026.0, 1141.5}, {3.0, 183.0}}
+              Button, 0x1053edb80, {{427.0, 1335.5}, {178.5, 20.5}}, identifier: 'proof-save-timeline', label: 'Save geometry timeline'
+    Window, 0x1053ede00, {{0.0, 0.0}, {1032.0, 1376.0}}
+      Other, 0x1053ee080, {{0.0, 0.0}, {1032.0, 1376.0}}
+        Other, 0x1053ee1c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+Path to element:
+ →Application, 0x11106d680, pid: 15798, label: 'ChatMotionProof'
+Query chain:
+ →Find: Target Application 'ai.hanlin.motion-proof'
+  Output: {
+    Application, 0x1053ee440, pid: 15798, label: 'ChatMotionProof'
+  }

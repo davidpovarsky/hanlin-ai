@@ -1,0 +1,218 @@
+{
+  "schema": 1,
+  "status": "EXECUTED_PASS",
+  "assembledAt": "2026-11-25T18:44:16.758635+00:00",
+  "owner": "/root",
+  "actualNativeConsumer": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "sdkProducer": "a2c8a1b1be746461272ba77254603304567c309d",
+  "actualTests": {
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "enginesCovered": 5
+  },
+  "packetReceiptSHA256": "f0232a0473ad580c05e64daf35ab0ae46380b0815a2785a2d28cf15f0047ba68",
+  "sourceMutation": false,
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 3124,
+      "sha256": "3c292ece14830b75edc7e7101ea6b4b428a8f6490aca9c3aa15b722f4da0b993",
+      "mode": "100644"
+    },
+    {
+      "path": "packet/companion-native-v1/ledger.json",
+      "bytes": 2144,
+      "sha256": "8b24d810f4a9e3f6d7a5e8440391cdb45c6a6cb0ed2e212d4e59aead0d699301",
+      "mode": "100644"
+    },
+    {
+      "path": "packet/companion-native-v1-ns5/companion-ledger-before.json",
+      "bytes": 1332,
+      "sha256": "0601f21cbf3d2433dec7e5ce7fb66806555bcca6e4577e92b94f265c7a255068",
+      "mode": "100644"
+    },
+    {
+      "path": "packet/companion-native-v1-ns5/controller-child.log",
+      "bytes": 2446,
+      "sha256": "75ee5fa71649889fdf88da25b20e44abbc9050a7b2589b462c0b7ed56b2a5330",
+      "mode": "100644"
+    },
+    {
+      "path": "packet/companion-native-v1-ns5/decision.json.gz",
+      "bytes": 42230,
+      "sha256": "0477684967bfccf660a89d0d4b8eb9ab6f9fa58192970f80fdf99f59a888f25a",
+      "mode": "100644"
+    },
+    {
+      "path": "packet/companion-native-v1-ns5/events.jsonl",
+      "bytes": 1666,
+      "sha256": "dc1459afbf7ff17c29fbef944213e66e9fa0b81d8cb99ec0040d3f238686ab2e",
+      "mode": "100644"
+    },
+    {
+      "path": "packet/companion-native-v1-ns5/native-result/active-command.json",
+      "bytes": 714,
+      "sha256": "f19beae5ad10089c1978187a10e85cc1d5346da5ad2cd4d6fcfba90c23bce7f6",
+      "mode": "100644"
+    },
+    {
+      "path": "packet/companion-native-v1-ns5/native-result/boot-retained-owned-simulator.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "100644"
+    },
+    {
+      "path": "packet/companion-native-v1-ns5/native-result/bootstatus.log",
+      "bytes": 504,
+      "sha256": "4bb35d619a9029f2beed64dd01813e84d5a06381ced129809c522fdea5ff3bbe",
+      "mode": "100644"
+    },
+    {
+      "path": "packet/companion-native-v1-ns5/native-result/command-events.jsonl",
+      "bytes": 16481,
+      "sha256": "8e01426c037fd4b86f9a5462fe4a92726a586072892f764336028eb3a1d95c30",
+      "mode": "100644"
+    },
+    {
+      "path": "packet/companion-native-v1-ns5/native-result/commands.jsonl",
+      "bytes": 3021,
+      "sha256": "c6eee4cc0b932b3596cca86d0cb421f7b33edf0e778c4b2b1e4bb9fa744faf0e",
+      "mode": "100644"
+    },
+    {
+      "path": "packet/companion-native-v1-ns5/native-result/devices-before.json",
+      "bytes": 42956,
+      "sha256": "5b0818692bd7bac2d6c7574158697dcdc526ec1fa1c3f1960184510e0a0f1019",
+      "mode": "100644"
+    },
+    {
+      "path": "packet/companion-native-v1-ns5/native-result/ns5-nodes.json",
+      "bytes": 1794,
+      "sha256": "642c3eae0437a60fd4fb5e92d1e49dbf9f52fee7524cc0010a2627c797a2c8ad",
+      "mode": "100644"
+    },
+    {
+      "path": "packet/companion-native-v1-ns5/native-result/ns5-selected-tests.log",
+      "bytes": 57,
+      "sha256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96",
+      "mode": "100644"
+    },
+    {
+      "path": "packet/companion-native-v1-ns5/native-result/ns5-summary.json",
+      "bytes": 1006,
+      "sha256": "d874cc63dcedb20a62198d815aa4906d3002c2315377ae619587be2c54f31150",
+      "mode": "100644"
+    },
+    {
+      "path": "packet/companion-native-v1-ns5/native-result/ns5-tests.log",
+      "bytes": 7786,
+      "sha256": "4d7163834ae5079e27d7a9da7c7a824b1363459780e463408e89fa220e013c42",
+      "mode": "100644"
+    },
+    {
+      "path": "packet/companion-native-v1-ns5/native-result/result-review.json",
+      "bytes": 1925,
+      "sha256": "ab16b1d1a080c9434c2fefe123ff198f5f5c15f756d5a0096fe207b20014b4b9",
+      "mode": "100644"
+    },
+    {
+      "path": "packet/companion-native-v1-ns5/native-result/selected-command.json",
+      "bytes": 1448,
+      "sha256": "2a882a85afaeede2a16261b17eb1bd19740af889cd351c9b93d20ccf11d7bcf5",
+      "mode": "100644"
+    },
+    {
+      "path": "packet/companion-native-v1-ns5/notification-result-review.json",
+      "bytes": 1308,
+      "sha256": "4396672e8dd3fe2546d89d108c2e57eeb98a48f386171a93bee5e0322ee98999",
+      "mode": "100644"
+    },
+    {
+      "path": "packet/companion-native-v1-ns5/original-companion-decision.json",
+      "bytes": 1830,
+      "sha256": "e4c47637ab828da11bdbd3ba9dc6bc2453dbf9c0214e6640949bd3138de563b3",
+      "mode": "100644"
+    },
+    {
+      "path": "packet/companion-native-v1-ns5/paired-terminal-before.json",
+      "bytes": 28524,
+      "sha256": "796a24bcc641e31409c7d9e68de2f95206264e0211952885aba61d8ca7ee8820",
+      "mode": "100644"
+    },
+    {
+      "path": "packet/companion-native-v1-ns5/primary-state-before.json",
+      "bytes": 124308,
+      "sha256": "36063a9d865126cc8fe31abad97a982bdced62380226079f07592de033e3a7d2",
+      "mode": "100644"
+    },
+    {
+      "path": "packet/companion-native-v1-ns5/state.json",
+      "bytes": 3030,
+      "sha256": "8e20572d909c4d0908a0573685f4e87f80155988ed95c677f6ff3215533f15ab",
+      "mode": "100644"
+    },
+    {
+      "path": "packet/companion-native-v1-ns5-decision-receipt.json",
+      "bytes": 1434,
+      "sha256": "c538ee065e2e36b80d8bdc7a66ed034e29ac99a597ce9237540062046edf435e",
+      "mode": "100644"
+    },
+    {
+      "path": "packet/companion-native-v1-ns5-launch.json",
+      "bytes": 1075,
+      "sha256": "62ec3358556bd12dff8bf6e928377935050b63e73836ef14999cdfea00490a20",
+      "mode": "100644"
+    },
+    {
+      "path": "packet/companion-native-v1-ns5-seal-command-v2.json",
+      "bytes": 1791,
+      "sha256": "71589cc686e0f7c7c06f7cad880fcf76f3d68f0c992c6490e6ef3a8fdcadfbfc",
+      "mode": "100644"
+    },
+    {
+      "path": "packet/companion-native-v1-ns5-seal-command.json",
+      "bytes": 1452,
+      "sha256": "5acfdf9f899dc3e0264f4905bd9e3a9c131dceb49f26ce2c2277e1645ba279e1",
+      "mode": "100644"
+    },
+    {
+      "path": "packet/companion-native-v1-ns5-seal-inputs.json",
+      "bytes": 7114,
+      "sha256": "898a97cf9f26da92aff280313f4573919f52fa7c4bde1a586c40f780582733c2",
+      "mode": "100644"
+    },
+    {
+      "path": "packet/companion-ns5-v6.py",
+      "bytes": 29236,
+      "sha256": "e1e8855b85be3fe99c9fe34c040b4ec73937d3a818994b6f4c56385aae7c6b69",
+      "mode": "100644"
+    },
+    {
+      "path": "packet/node245-restoration-after-full52/receipt.json",
+      "bytes": 3667,
+      "sha256": "5cafb4d715cf5ebfb8072a64f10be550165ca216dcffa5e5bed03d7d49e7fd7a",
+      "mode": "100644"
+    },
+    {
+      "path": "packet/receipt.json",
+      "bytes": 16094,
+      "sha256": "f0232a0473ad580c05e64daf35ab0ae46380b0815a2785a2d28cf15f0047ba68",
+      "mode": "100644"
+    },
+    {
+      "path": "packet/seal-ns5-decision-v4.py",
+      "bytes": 25735,
+      "sha256": "bbb071cacc24c136da576cb48c172b3e8bbf352ce9e4978be82dd1bea01f3dd7",
+      "mode": "100644"
+    },
+    {
+      "path": "packet/state.json",
+      "bytes": 124965,
+      "sha256": "783d3f71a3b6ac01271b68a22280e265062bc6642ba18de9bdd3dc4c4da78af2",
+      "mode": "100644"
+    }
+  ],
+  "fileCountExcludingManifest": 33,
+  "totalBytesExcludingManifest": 502197
+}

@@ -20,10 +20,13 @@ public struct HanlinInvocationDelivery: Codable, Hashable, Sendable {
     /// the installed action registration, never by an incoming extension alone.
     public let idempotent: Bool
     public let maximumAttempts: Int
+    /// Original widget generation/variant/program, retained for Host revalidation.
+    public let widgetOrigin: HanlinWidgetInvocationOrigin?
 
     public init(appID: HanlinAppID, source: Source, expiresAt: Date,
                 expectedResult: ExpectedResult = .value, userGesturePresent: Bool = false,
-                canPresentUI: Bool = false, idempotent: Bool = false, maximumAttempts: Int = 1) {
+                canPresentUI: Bool = false, idempotent: Bool = false, maximumAttempts: Int = 1,
+                widgetOrigin: HanlinWidgetInvocationOrigin? = nil) {
         self.schemaVersion = 1
         self.appID = appID
         self.source = source
@@ -33,6 +36,7 @@ public struct HanlinInvocationDelivery: Codable, Hashable, Sendable {
         self.canPresentUI = canPresentUI
         self.idempotent = idempotent
         self.maximumAttempts = maximumAttempts
+        self.widgetOrigin = widgetOrigin
     }
 }
 

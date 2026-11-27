@@ -1,5 +1,6 @@
 #if canImport(SwiftUI)
 import SwiftUI
+import HanlinLocalization
 
 private struct HanlinActivityBranchVisibilityKey: EnvironmentKey {
     static let defaultValue = true
@@ -13,7 +14,7 @@ public extension EnvironmentValues {
     }
 }
 
-/// The V17 title treatment, shared by reasoning, operational and tool titles.
+/// The original Hanlin blue sweep, shared by reasoning and active tool titles.
 public struct HanlinActivityTitle: View {
     private let title: String
     private let font: Font
@@ -36,7 +37,7 @@ public struct HanlinActivityTitle: View {
     public var body: some View {
         Text(title)
             .font(font)
-            .foregroundStyle(active ? (appearance.activeTitle ?? Color(red: 0.24, green: 0.43, blue: 0.68)) : baseColor)
+            .foregroundStyle(active ? (appearance.activeTitle ?? .gray) : baseColor)
             .chatShimmer(isActive: active, startedAt: startedAt, stoppedAt: stoppedAt)
     }
 }
@@ -69,11 +70,11 @@ struct ChatShimmerModifier: ViewModifier {
                     && scenePhase == .active && motion.showsShimmer {
                     GeometryReader { geometry in
                         TimelineView(.animation(minimumInterval: 1.0 / 24.0, paused: stoppedAt != nil)) { timeline in
-                            // V17 SweepAcrossLetters: the light crosses only the
-                            // letters; no large moving background or frame state.
+                            // Preserve the original full-width blue sweep over
+                            // gray letters, with the shared bounded motion clock.
                             let width = geometry.size.width.isFinite ? max(0, geometry.size.width) : 0
                             let height = geometry.size.height.isFinite ? max(0, geometry.size.height) : 0
-                            let beamWidth = max(CGFloat(32), width * 0.54)
+                            let beamWidth = width
                             let duration = motion.shimmerDuration
                             let seconds = max(0, (stoppedAt ?? timeline.date)
                                 .timeIntervalSince(startedAt ?? Date(timeIntervalSinceReferenceDate: 0)))
@@ -81,12 +82,13 @@ struct ChatShimmerModifier: ViewModifier {
                             let position = CGFloat(progress) * (width + beamWidth) - beamWidth
                             LinearGradient(
                                 colors: colors ?? appearance.shimmerColors ?? [
-                                    .clear,
-                                    Color(red: 0.32, green: 0.65, blue: 0.98).opacity(0.32),
-                                    Color(red: 0.63, green: 0.83, blue: 1.00),
-                                    .white.opacity(0.96),
-                                    Color(red: 0.36, green: 0.66, blue: 0.97).opacity(0.4),
-                                    .clear
+                                    Color.hanlinHLBluefont.opacity(0.0),
+                                    Color.hanlinHLBluefont.opacity(0.2),
+                                    Color.hanlinHLBluefont.opacity(0.6),
+                                    Color.hanlinHLBluefont.opacity(1.0),
+                                    Color.hanlinHLBluefont.opacity(0.6),
+                                    Color.hanlinHLBluefont.opacity(0.2),
+                                    Color.hanlinHLBluefont.opacity(0.0)
                                 ],
                                 startPoint: .leading,
                                 endPoint: .trailing

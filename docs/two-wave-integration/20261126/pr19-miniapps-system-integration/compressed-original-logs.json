@@ -1,0 +1,16 @@
+[
+  {
+    "originalPath": "receipts/canonical-final/manifest-contracts.stdout.log",
+    "storedPath": "receipts/canonical-final/manifest-contracts.stdout.log.gz",
+    "originalBytes": 1396,
+    "originalSHA256": "a1040358e2125807162106cf71f91440306dd8f66e264bfd023fe42d59335008",
+    "gzipSHA256": "85759298d5f4cfeebba3dd02f38c47eea38661eb2a454420e39770ead63eef23"
+  },
+  {
+    "originalPath": "receipts/portable-first/profile-resolution.stderr.log",
+    "storedPath": "receipts/portable-first/profile-resolution.stderr.log.gz",
+    "originalBytes": 12074,
+    "originalSHA256": "6cac7a67bf8b7ae9cfd006cefdfe4599f5b351578d632ded9b3743133bfa5cae",
+    "gzipSHA256": "76db0fc7664704f70e41b3c365ce34acd884f60621cdad5f9f240bc6f5451343"
+  }
+]

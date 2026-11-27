@@ -1,0 +1,18 @@
+{
+  "scope": "Executed environment readiness only; no application build/test/install/upload",
+  "source": "dacf9b70bad5b1d5c279debb473132397b001e9f",
+  "workflow": "build-ios26-unsigned-ipa.yml",
+  "input": {
+    "target_validation_group": "simulator_environment_probe",
+    "testflight_upload": false
+  },
+  "run_id": 45852418888,
+  "job_id": 140021952805,
+  "conclusion": "success",
+  "artifact_id": 15134620447,
+  "artifact_bytes": 9488,
+  "artifact_sha256": "cee89d511e5bc03945d01d2bcff61aa22055270b411fd9df77aad02e3d13a6c9",
+  "selected_developer_dir": "/Applications/Xcode_27.2.app/Contents/Developer",
+  "free_bytes": 38548672512,
+  "source_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45852418888"
+}

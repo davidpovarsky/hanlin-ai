@@ -6,9 +6,9 @@ import SwiftUI
 /// A native system snippet reads the durable invocation receipt. Re-evaluation
 /// never runs the package action again or infers success from queue admission.
 public struct HanlinInvocationSnippetIntent: SnippetIntent {
-    public static let title: LocalizedStringResource = "MiniApp Action Result"
+    public static let title = LocalizedStringResource("MiniApp Action Result", table: "HanlinAppIntents")
 
-    @Parameter(title: "Invocation") public var invocationID: String
+    @Parameter(title: LocalizedStringResource("Invocation", table: "HanlinAppIntents")) public var invocationID: String
 
     public init() { invocationID = "" }
     public init(invocationID: UUID) { self.invocationID = invocationID.uuidString }
@@ -23,9 +23,9 @@ public struct HanlinInvocationSnippetIntent: SnippetIntent {
 }
 
 public struct HanlinRefreshInvocationSnippetIntent: AppIntent {
-    public static let title: LocalizedStringResource = "Refresh MiniApp Result"
+    public static let title = LocalizedStringResource("Refresh MiniApp Result", table: "HanlinAppIntents")
 
-    @Parameter(title: "Invocation") public var invocationID: String
+    @Parameter(title: LocalizedStringResource("Invocation", table: "HanlinAppIntents")) public var invocationID: String
 
     public init() { invocationID = "" }
     public init(invocationID: UUID) { self.invocationID = invocationID.uuidString }
@@ -48,26 +48,26 @@ private struct HanlinInvocationReceiptView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Label(title, systemImage: symbol)
+            Label { Text(title, tableName: "HanlinAppIntents") } icon: { Image(systemName: symbol) }
                 .font(.headline)
             if let receipt {
                 if receipt.status == .succeeded, let value = receipt.value {
                     Text(resultText(value))
                         .textSelection(.enabled)
                 } else if let failure = receipt.failure {
-                    Text(failureText(failure))
+                    Text(failureText(failure), tableName: "HanlinAppIntents")
                         .foregroundStyle(.secondary)
                 }
                 Text(receipt.updatedAt, style: .relative)
                     .font(.caption)
                     .foregroundStyle(.secondary)
             } else {
-                Text("This action receipt is no longer available in this app.")
+                Text("This action receipt is no longer available in this app.", tableName: "HanlinAppIntents")
                     .foregroundStyle(.secondary)
             }
             if receipt?.status == .queued || receipt?.status == .running {
                 Button(intent: HanlinRefreshInvocationSnippetIntent(invocationID: invocationID)) {
-                    Label("Refresh result", systemImage: "arrow.clockwise")
+                    Label { Text("Refresh result", tableName: "HanlinAppIntents") } icon: { Image(systemName: "arrow.clockwise") }
                 }
             }
         }
@@ -109,7 +109,7 @@ private struct HanlinInvocationReceiptView: View {
             return ByteCountFormatter.string(fromByteCount: Int64(data.count), countStyle: .file)
         }
         guard let json = try? value.jsonValue().canonicalJSONData() else {
-            return String(localized: "The action returned a result that is available in the app.")
+            return String(localized: "The action returned a result that is available in the app.", table: "HanlinAppIntents")
         }
         return String(decoding: json, as: UTF8.self)
     }
@@ -137,11 +137,11 @@ private struct HanlinInvocationReceiptView: View {
 /// Compose this after Run Script Action in Shortcuts. The run action returns its
 /// invocation identifier; this action returns only the recorded package result.
 public struct HanlinAwaitInvocationResultIntent: AppIntent {
-    public static let title: LocalizedStringResource = "Wait for MiniApp Result"
-    public static let description = IntentDescription("Waits for an existing MiniApp action and returns its text or JSON result without running it again.")
+    public static let title = LocalizedStringResource("Wait for MiniApp Result", table: "HanlinAppIntents")
+    public static let description = IntentDescription(LocalizedStringResource("Waits for an existing MiniApp action and returns its text or JSON result without running it again.", table: "HanlinAppIntents"))
     public static let openAppWhenRun = true
 
-    @Parameter(title: "Invocation") public var invocationID: String
+    @Parameter(title: LocalizedStringResource("Invocation", table: "HanlinAppIntents")) public var invocationID: String
 
     public init() { invocationID = "" }
 
@@ -186,8 +186,8 @@ private enum HanlinInvocationResultError: LocalizedError {
 
     var errorDescription: String? {
         switch self {
-        case .missing: "This MiniApp invocation could not be found in this app."
-        case .finished(let status): "The MiniApp action did not complete successfully (\(status.rawValue))."
+        case .missing: String(localized: "This MiniApp invocation could not be found in this app.", table: "HanlinAppIntents")
+        case .finished(let status): String(localized: "The MiniApp action did not complete successfully (\(status.rawValue)).", table: "HanlinAppIntents")
         }
     }
 }

@@ -1,0 +1,30 @@
+Attributes: SearchField, 0x10e781400, {{782.0, 32.0}, {240.0, 44.0}}, label: 'Search Apps', placeholderValue: 'Search Apps'
+Element subtree:
+ →SearchField, 0x10e781400, {{782.0, 32.0}, {240.0, 44.0}}, label: 'Search Apps', placeholderValue: 'Search Apps'
+Path to element:
+ →Application, 0x10e780a00, pid: 45227, label: 'Hanlin MiniApps'
+  ↳Window, 0x10e780b40, {{0.0, 0.0}, {1032.0, 1376.0}}
+   ↳Other, 0x10e780c80, {{0.0, 0.0}, {1032.0, 1376.0}}
+    ↳Other, 0x10e780dc0, {{0.0, 0.0}, {1032.0, 1376.0}}
+     ↳Other, 0x10e780f00, {{0.0, 0.0}, {1032.0, 1376.0}}
+      ↳Other, 0x10e781040, {{0.0, 0.0}, {1032.0, 1376.0}}
+       ↳Other, 0x10e781180, {{0.0, 0.0}, {1032.0, 1376.0}}
+        ↳NavigationBar, 0x10e7812c0, {{0.0, 32.0}, {1032.0, 106.0}}, identifier: 'Apps'
+         ↳SearchField, 0x10e781400, {{782.0, 32.0}, {240.0, 44.0}}, label: 'Search Apps', placeholderValue: 'Search Apps'
+Query chain:
+ →Find: Application 'com.itorah.hanlinminiapps'
+  Output: {
+    Application, 0x10e780780, pid: 45227, label: 'Hanlin MiniApps'
+  }
+  ↪︎Find: Descendants matching type SearchField
+    Output: {
+      SearchField, 0x10e6d0a00, {{782.0, 32.0}, {240.0, 44.0}}, label: 'Search Apps', placeholderValue: 'Search Apps'
+    }
+    ↪︎Find: Elements matching predicate '"Search Apps" IN identifiers'
+      Output: {
+        SearchField, 0x10e63a080, {{782.0, 32.0}, {240.0, 44.0}}, label: 'Search Apps', placeholderValue: 'Search Apps'
+      }
+      ↪︎Find: First Match
+        Output: {
+          SearchField, 0x10e782bc0, {{782.0, 32.0}, {240.0, 44.0}}, label: 'Search Apps', placeholderValue: 'Search Apps'
+        }

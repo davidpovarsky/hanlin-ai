@@ -34,8 +34,61 @@ public enum HanlinWidgetCompiler {
                            includesOriginalWidgetManifest: true)
     }
 
+    /// Host targets refer to an installed appIntent action. The authoring
+    /// compiler never embeds a foreground runtime or executable source in a tap.
+    public static func validateHostActionTargets(_ actions: [HanlinWidgetActionDeclaration],
+        manifest: HanlinScriptingManifest, entrypoints: [HanlinPackageEntrypointDescriptor]) throws {
+        for action in actions {
+            guard action.kind == .hostAction else {
+                guard action.hostAction == nil else {
+                    throw HanlinWidgetProgramError.compilationFailed("Only hostAction may declare a Host target: " + action.id)
+                }
+                continue
+            }
+            guard action.handler == nil, action.stateKey == nil, let target = action.hostAction,
+                  !target.entrypointID.isEmpty,
+                  (try? HanlinActionID(validating: target.actionName)) != nil else {
+                throw HanlinWidgetProgramError.compilationFailed("Invalid Host action target: " + action.id)
+            }
+            let entries = entrypoints.filter { $0.id == target.entrypointID && $0.kind == .appIntent }
+            guard entries.count == 1, let entrypoint = entries.first,
+                  entrypoint.runtimeProfile == .hanlinExpo || entrypoint.runtimeProfile == .hanlinNativeScript,
+                  entrypoint.exportedSymbol == nil || entrypoint.exportedSymbol == target.actionName,
+                  case let .array(declarations)? = manifest.unknownFields["actions"] else {
+                throw HanlinWidgetProgramError.compilationFailed("Host action must name a declared appIntent and action: " + action.id)
+            }
+            let targets = declarations.compactMap { declaration -> HanlinObject<HanlinJSONValue>? in
+                guard case let .object(fields) = declaration,
+                      fields["id"] == .string(target.actionName) else { return nil }
+                return fields
+            }
+            guard targets.count == 1, let declaration = targets.first else {
+                throw HanlinWidgetProgramError.compilationFailed("Host action must name one declared package action: " + action.id)
+            }
+            if entrypoint.runtimePolicyID == "prepared-foreground-action-v1" {
+                // Match installed action registration: a non-string handler
+                // does not mask the legacy string entrypoint alias.
+                let declared: String?
+                if case let .string(value)? = declaration["handler"] { declared = value }
+                else if case let .string(value)? = declaration["entrypoint"] { declared = value }
+                else { declared = nil }
+                let handler = declared.map { path in
+                    if entrypoints.contains(where: { $0.sourcePath == path }) { return path }
+                    let installedPath = "source/" + path
+                    return entrypoints.contains(where: { $0.sourcePath == installedPath }) ? installedPath : path
+                }
+                guard handler == entrypoint.sourcePath else {
+                    throw HanlinWidgetProgramError.compilationFailed("Host action handler must match its declared appIntent source: " + action.id)
+                }
+            }
+        }
+    }
+
     public static func preparePresentation(_ declaration: HanlinNativePresentationMetadata,
                                            files: [String: Data]) throws -> HanlinWidgetProgram {
+        guard !declaration.actions.contains(where: { $0.kind == .hostAction }) else {
+            throw HanlinWidgetProgramError.compilationFailed("Host actions are widget and Live Activity handoffs; native presentations use their local actions.")
+        }
         guard declaration.engine != .legacy,
               HanlinPackagePath.normalizedRelativePath(declaration.sourcePath) == declaration.sourcePath,
               let format = HanlinWidgetPackageMetadata.SourceFormat(rawValue: declaration.sourceFormat) else {

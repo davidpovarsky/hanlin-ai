@@ -63,6 +63,22 @@ public struct ChatAutoFollowLayout: Equatable {
     }
 }
 
+/// One sample owns both the layout and its offset. Keeping them together
+/// prevents an older near-bottom Boolean from surviving a resize or reattach.
+public struct ChatAutoFollowPosition: Equatable {
+    public let layout: ChatAutoFollowLayout
+    public let contentOffsetY: Double
+
+    public init(layout: ChatAutoFollowLayout, contentOffsetY: Double) {
+        self.layout = layout
+        self.contentOffsetY = contentOffsetY
+    }
+
+    public var isNearBottom: Bool? {
+        layout.isNearBottom(contentOffsetY: contentOffsetY)
+    }
+}
+
 @MainActor
 @Observable
 public final class ChatAutoFollowController {
@@ -89,6 +105,20 @@ public final class ChatAutoFollowController {
 
     public var mode: ChatAutoFollowMode { state.mode }
 
+    /// Unknown, detached and fitting transcripts have no available "jump".
+    /// Hosts can bind directly to this observable owner rather than retaining
+    /// a snapshot of a separate SwiftUI State value in an external composer.
+    public var showsScrollToBottomButton: Bool { !state.isNearBottom }
+
+    public func updatePosition(_ position: ChatAutoFollowPosition) {
+        guard let isNearBottom = position.isNearBottom else {
+            invalidateLayout()
+            return
+        }
+        updateLayout(position.layout)
+        updateNearBottom(isNearBottom)
+    }
+
     public func beginRun() {
         cancelPendingScroll()
         layoutTraceCount = 0
@@ -104,6 +134,7 @@ public final class ChatAutoFollowController {
         }
         guard latestLayout != layout else { return }
         latestLayout = layout
+        if !layout.hasScrollableContent { state.isNearBottom = true }
         if layoutTraceCount < 64 {
             layoutTraceCount += 1
             trace("autoFollowLayoutObserved", fields: [
@@ -119,6 +150,7 @@ public final class ChatAutoFollowController {
     public func invalidateLayout() {
         cancelPendingScroll()
         latestLayout = nil
+        state.isNearBottom = true
     }
 
     public func updateNearBottom(_ isNearBottom: Bool) {

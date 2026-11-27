@@ -1,0 +1,12 @@
+✔ bound action handlers retain their provider across overlapping async results (3.306219ms)
+✔ malformed input and synchronous or asynchronous handler failures return one owned error (2.929338ms)
+✔ untyped invalid output is rejected at the existing native JSON boundary (0.492163ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 102.31296
+PASS: TypeScript5.9.3 strict native facade, declarations and JS unchanged; native execution is a separate gate.

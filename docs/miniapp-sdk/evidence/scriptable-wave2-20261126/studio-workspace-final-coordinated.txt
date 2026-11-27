@@ -1,0 +1,32 @@
+Building for debugging...
+[Provisioning 4 / 4]
+[1 / 8] HanlinMiniApps
+[2 / 9] HanlinMiniApps
+[8 / 13] HanlinMiniAppsTests-product
+[12 / 18] HanlinMiniApps
+[15 / 19] HanlinMiniApps
+[16 / 19] HanlinMiniAppsTests-product
+[22 / 24] HanlinMiniAppsTests-test-runner
+[23 / 25] HanlinMiniAppsTests-test-runner
+[25 / 25] HanlinMiniAppsTests-test-runner
+Build complete! (4.51 secs)
+Test Suite 'All tests' started at 2026-11-26 12:51:12.965
+Test Suite 'Debug-linux-aarch64.xctest' started at 2026-11-26 12:51:12.976
+Test Suite 'Debug-linux-aarch64.xctest' passed at 2026-11-26 12:51:12.977
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'All tests' passed at 2026-11-26 12:51:12.977
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+◇ Test run started.
+↳ Testing Library Version: 6.4.3 (ba0861fb203553c)
+↳ Target Platform: aarch64-unknown-linux-gnu
+◇ Suite "MiniApps developer source preservation" started.
+◇ Test savingRejectsAnotherWritersChangesAndRetainsBothDrafts() started.
+◇ Test nestedMovesPreserveSourceAndFolderAppearanceWithoutReplacingDestination() started.
+◇ Test exampleCopyKeepsOriginalAndIndependentVersions() started.
+◇ Test boundariesAndExistingFilesCannotBeOverwrittenThroughCreation() started.
+✔ Test savingRejectsAnotherWritersChangesAndRetainsBothDrafts() passed after 0.034 seconds.
+✔ Test nestedMovesPreserveSourceAndFolderAppearanceWithoutReplacingDestination() passed after 0.034 seconds.
+✔ Test exampleCopyKeepsOriginalAndIndependentVersions() passed after 0.034 seconds.
+✔ Test boundariesAndExistingFilesCannotBeOverwrittenThroughCreation() passed after 0.037 seconds.
+✔ Suite "MiniApps developer source preservation" passed after 0.037 seconds.
+✔ Test run with 4 tests in 1 suite passed after 0.038 seconds.

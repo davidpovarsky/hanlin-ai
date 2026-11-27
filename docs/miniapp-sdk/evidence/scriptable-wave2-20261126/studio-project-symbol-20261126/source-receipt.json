@@ -1,0 +1,29 @@
+{
+  "recordedAtUTC": "2026-11-26T19:08:50.704621+00:00",
+  "base": "74bd12a8c4694a3464386ba7e6fe74326cf4b4fa",
+  "taskGID": "1220917894278244",
+  "diagnosis": "The existing icon/color sheet saves a project symbol, but the original row ignores it and always renders curlybraces.square for projects.",
+  "correction": "Use the existing saved FolderStyle symbol in the row. Supply the project or folder default only when no metadata exists; use the same default in the existing style sheet.",
+  "schemaChanged": false,
+  "testsOrAssertionsChanged": false,
+  "affectedProductPaths": [
+    "HanlinMiniAppsApp/MiniAppsDeveloperStudio.swift",
+    "HanlinMiniAppsApp/MiniAppsDeveloperWorkspace.swift"
+  ],
+  "sourceFiles": {
+    "HanlinMiniAppsApp/MiniAppsDeveloperStudio.swift": {
+      "bytes": 34284,
+      "sha256": "1951bbf6033476518a48cf7298a30bb93ee5d8cfd6af7a5b603146448250ed39"
+    },
+    "HanlinMiniAppsApp/MiniAppsDeveloperWorkspace.swift": {
+      "bytes": 14078,
+      "sha256": "0dd7f82fc9f8bc3e10a1dfcfaf77a4addaed26cb8844a0a7665048c5033ddb2a"
+    }
+  },
+  "portableResult": "8 existing tests PASS; Swift6.4.3 Linux; exact original workspace/lifecycle test file unchanged",
+  "nativeResult": "NOT_RUN_BY_THIS_FIX",
+  "nativeInventoryChanged": false,
+  "unchangedNativeStudioInventory": 14,
+  "remainingGate": "Original standalone Studio UI: select a project symbol, return to its library row, reopen it, verify saved symbol/color and default project glyph on an unstyled project.",
+  "testSourceSHA256": "200c2783b7da02fd6c9647326bc1ee81f16b9f37e53418cdeaf46625f245edac"
+}

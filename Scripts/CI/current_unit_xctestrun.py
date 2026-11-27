@@ -27,9 +27,9 @@ import time
 import uuid
 
 try:
-    from .owned_simulator_receipts import verify_owned_simulator
+    from .owned_simulator_receipts import simulator_run_from_environment, verify_owned_simulator
 except ImportError:
-    from owned_simulator_receipts import verify_owned_simulator
+    from owned_simulator_receipts import simulator_run_from_environment, verify_owned_simulator
 
 
 RECEIPT = "06-current-unit-xctestrun.json"
@@ -171,9 +171,8 @@ def build_context(repository, products, log, configuration, selectors):
             "Test products must be in this checkout's owned build directory")
     require(log.is_relative_to(repository) and not log.is_relative_to(products),
             "Test receipts must remain in this checkout outside Build/Products")
-    run_id, attempt = os.environ.get("GITHUB_RUN_ID", ""), os.environ.get("GITHUB_RUN_ATTEMPT", "")
-    require(all(re.fullmatch(r"[1-9][0-9]*", value) for value in (run_id, attempt)),
-            "Current GitHub run and attempt are required")
+    identity = simulator_run_from_environment()
+    run_id, attempt = identity["run_id"], identity["run_attempt"]
 
     def command(arguments):
         # Re-read actual Git state at every phase. Allow a bounded cold process
@@ -201,7 +200,9 @@ def build_context(repository, products, log, configuration, selectors):
             }), file=sys.stderr)
 
     head = command(["git", "rev-parse", "HEAD"]).decode().strip()
-    require(head == os.environ.get("GITHUB_SHA"), "Checkout differs from this run's source SHA")
+    source_variable = ("HANLIN_LOCAL_SOURCE_SHA" if identity["run_provider"] == "local-mac"
+                       else "GITHUB_SHA")
+    require(head == os.environ.get(source_variable), "Checkout differs from this run's source SHA")
     diff = command(["git", "diff", "--binary", "--no-ext-diff", "--no-textconv", "HEAD", "--", "."])
     provenance_path = log / "06-diagnostics-build-provenance.json"
     provenance = json.loads(provenance_path.read_bytes())
@@ -210,6 +211,7 @@ def build_context(repository, products, log, configuration, selectors):
             "Build provenance lacks its tracked-tree qualification")
     require(configuration in ("Debug", "Release"), "Unsupported original app configuration")
     return {
+        "run_provider": identity["run_provider"],
         "run_id": run_id, "run_attempt": attempt, "source_sha": head,
         "configuration": configuration, "selectors": selected_identifiers(selectors),
         "products_root": str(products),
@@ -381,7 +383,8 @@ def admit(products, log, context, simulator):
     receipt = read_receipt(log, context, "SEALED")
     require(inspect_manifest(products, context["configuration"]) == receipt.get("products"),
             "Generated manifest or original test products changed after the successful build")
-    owner = verify_owned_simulator(log, context["run_id"], context["run_attempt"])
+    owner = verify_owned_simulator(log, context["run_id"], context["run_attempt"],
+                                   run_provider=context.get("run_provider", "github"))
     require(owner["simulator"] == simulator.upper(), "Test destination differs from this job's owned device")
     write_json(log / ADMISSION, {
         "schema_version": 1, "status": "ADMITTED_NOT_EXECUTED", "context": context,

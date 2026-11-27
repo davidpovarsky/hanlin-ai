@@ -1,5 +1,7 @@
 # AI Team Validation & Smoke-Test Procedures
 
+The current Hanlin two-wave execution is governed by root `AGENTS.md` and the dated execution note in `docs/ai-team/TEAM.md`: the owner explicitly requested ChatGPT built-in agents. Apply the actual platform API and invocation identifiers; preserve evidence-based acceptance and existing authorization.
+
 This document outlines the automated and manual verification procedures for the named AI team configuration.
 
 ## 1. Static Validation
@@ -12,14 +14,15 @@ This document outlines the automated and manual verification procedures for the 
 3. **Link & Path Verification:**
    - All relative file links in `AGENTS.md`, `GEMINI.md`, and `docs/ai-team/*.md` must resolve to existing files.
 4. **Policy Integrity:**
-   - `ASANA_POLICY.md` must contain the authorized verified completion rule.
+   - `ASANA_POLICY.md` must contain the authorized verified completion rule and the two-tier execution policy (NORMAL vs TEAM).
    - No stale blanket prohibition ("never write/update Asana") should survive in role or agent definitions.
 
 ## 2. Runtime Smoke Tests
-1. **Antigravity Agent Discovery:**
-   - Run a fresh Antigravity session and verify all 7 agents appear in `/agents` or subagent listing.
-   - Verify that subagents can be delegated read-only tasks safely.
-2. **Asana Integration:**
+1. **NORMAL Mode Test (Default):**
+   - Verify that the main session automatically identifies the role, loads its instructions from `.agents/roles/<role>.md`, executes directly in the main session without calling `invoke_subagent`, and logs as `[MAIN_SESSION]`.
+2. **TEAM Mode Test (Explicit Request Only):**
+   - Verify that upon explicit user request, the coordinator delegates via `invoke_subagent`, receives results, and logs as `[SUBAGENT]`.
+3. **Asana Integration:**
    - Verify connection via Asana MCP or REST API (`asana_list_workspaces`).
    - Perform safe read -> meaningful write -> read-back test on designated setup tasks.
    - Verify task completion gating (tasks without physical device proof remain open).

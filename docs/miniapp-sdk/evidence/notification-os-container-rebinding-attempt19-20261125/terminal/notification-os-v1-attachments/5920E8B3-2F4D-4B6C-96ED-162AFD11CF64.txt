@@ -1,0 +1,573 @@
+Attributes: Application, 0x109c67340, pid: 53601, label: 'Hanlin MiniApps'
+Element subtree:
+ →Application, 0x109c67340, pid: 53601, label: 'Hanlin MiniApps'
+    Window (Main), 0x109c66bc0, {{0.0, 0.0}, {1032.0, 1376.0}}
+      Other, 0x109c65cc0, {{0.0, 0.0}, {1032.0, 1376.0}}
+        Other, 0x109c65f40, {{0.0, 0.0}, {1032.0, 1376.0}}
+          Other, 0x109c661c0, {{-1032.0, -1376.0}, {3096.0, 4128.0}}, identifier: 'PopoverDismissRegion', label: 'dismiss popup'
+          Other, 0x109c65e00, {{0.0, 0.0}, {1032.0, 1376.0}}
+            Other, 0x109c66080, {{0.0, 0.0}, {1032.0, 1376.0}}
+              Other, 0x109c66940, {{0.0, 0.0}, {1032.0, 1376.0}}
+                NavigationBar, 0x109c64dc0, {{0.0, 32.0}, {1032.0, 106.0}}, identifier: 'Apps'
+                  Other, 0x109c64c80, {{14.0, 36.0}, {43.5, 36.0}}
+                    Other, 0x109c67e80, {{14.0, 36.0}, {43.5, 36.0}}
+                      Button, 0x109c648c0, {{14.0, 36.0}, {43.5, 36.0}}, label: 'Edit'
+                  Button, 0x109c657c0, {{73.5, 36.0}, {40.0, 36.0}}, identifier: 'hanlin-apps-torah-capture', label: 'לימוד מצילום'
+                  Button, 0x109c65540, {{618.5, 36.0}, {37.0, 36.0}}, identifier: 'hanlin-apps-add', label: 'hanlin-apps-add'
+                  Other, 0x10a730000, {{671.5, 36.0}, {41.0, 36.0}}
+                    Other, 0x10a730140, {{671.5, 36.0}, {41.0, 36.0}}
+                      Button, 0x10a730280, {{671.5, 36.0}, {41.0, 36.0}}, identifier: 'miniapps-preferences', label: 'Edit MiniApps and windows'
+                  Button, 0x10a7303c0, {{728.5, 36.0}, {37.5, 36.0}}, identifier: 'hanlin-miniapps-transfer', label: 'Transfer from Hanlin'
+                  SearchField, 0x10a730500, {{782.0, 32.0}, {240.0, 44.0}}, label: 'Search Apps', placeholderValue: 'Search Apps'
+                    Image, 0x10a730640, {{794.0, 43.5}, {20.5, 20.0}}, identifier: 'magnifyingglass', label: 'Search'
+                  StaticText, 0x10a730780, {{20.0, 89.5}, {83.0, 41.0}}, label: 'Apps'
+                Other, 0x10a7308c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+                  Other, 0x10a730a00, {{0.0, 0.0}, {1032.0, 1376.0}}
+                    Other, 0x10a730b40, {{0.0, 0.0}, {1032.0, 1376.0}}
+                      Other, 0x10a730c80, {{0.0, 0.0}, {1032.0, 1376.0}}
+                        ScrollView, 0x10a730dc0, {{0.0, 0.0}, {1032.0, 1376.0}}, identifier: 'hanlin-apps-catalog'
+                          Other, 0x10a7326c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+                            Other, 0x10a732800, {{0.0, 0.0}, {1032.0, 126.0}}
+                          Other, 0x10a732940, {{0.0, 0.0}, {1032.0, 1376.0}}
+                          Other, 0x10a732a80, {{0.0, 138.0}, {1032.0, 1198.0}}
+                            Other, 0x10a732bc0, {{23.5, 156.0}, {985.0, 1162.5}}
+                              StaticText, 0x10a732d00, {{24.0, 156.0}, {54.0, 26.5}}, identifier: 'hanlin-miniapps-section-swift', label: 'Swift'
+                              Other, 0x10a732e40, {{23.5, 210.0}, {985.0, 169.0}}
+                                Button, 0x106e8bc00, {{23.5, 210.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Swift Parity', label: 'Swift Parity'
+                                  Image, 0x106e89540, {{204.0, 231.0}, {30.5, 27.0}}, identifier: 'swift', label: 'Swift Programming Language Bird Logo'
+                                  StaticText, 0x106e89680, {{42.0, 318.0}, {105.5, 24.0}}, label: 'Swift Parity'
+                                  StaticText, 0x106e8be80, {{42.0, 346.0}, {139.0, 14.5}}, label: 'Native SwiftPM Mini App'
+                                Button, 0x106e8bd40, {{36.0, 222.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-hanlin.demo.swift-parity', label: 'App Actions'
+                                  Button, 0x1140dc000, {{36.0, 222.5}, {38.0, 38.0}}
+                                    Image, 0x1140dc140, {{47.0, 239.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                                Button, 0x1140dc280, {{274.5, 210.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Sefaria', label: 'Sefaria'
+                                  Image, 0x1140dc3c0, {{451.0, 231.0}, {34.0, 30.0}}, identifier: 'books.vertical.fill', label: 'Bookshelf'
+                                  StaticText, 0x1140dc500, {{293.0, 302.0}, {64.5, 24.0}}, label: 'Sefaria'
+                                  StaticText, 0x1140dc640, {{293.0, 330.0}, {132.0, 30.5}}, label: 'Search, read, save and revisit sources'
+                                Button, 0x1140dc780, {{287.0, 222.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-nativeapp.sefaria', label: 'App Actions'
+                                  Button, 0x1140dc8c0, {{287.0, 222.5}, {38.0, 38.0}}
+                                    Image, 0x1140dca00, {{298.0, 239.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                                Button, 0x1140dcb40, {{525.5, 210.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Text Studio', label: 'Text Studio'
+                                  Image, 0x1140dcc80, {{702.5, 231.0}, {33.0, 20.5}}, identifier: 'textformat.alt', label: 'Text Formatting'
+                                  StaticText, 0x1140dcdc0, {{544.0, 302.0}, {103.0, 24.0}}, label: 'Text Studio'
+                                  StaticText, 0x1140dcf00, {{544.0, 330.0}, {168.5, 30.5}}, label: 'Write, inspect, transform and keep history'
+                                Button, 0x1140dd040, {{538.0, 222.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-nativeapp.textstudio', label: 'App Actions'
+                                  Button, 0x1140dd180, {{538.0, 222.5}, {38.0, 38.0}}
+                                    Image, 0x1140dd2c0, {{549.0, 239.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                                Button, 0x1140dd400, {{776.5, 210.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Wikipedia', label: 'Wikipedia'
+                                  Image, 0x1140dd540, {{960.0, 231.0}, {27.5, 27.5}}, identifier: 'globe.americas.fill', label: 'Globe Showing The Americas, Filled'
+                                  StaticText, 0x1140dd680, {{795.0, 302.0}, {90.5, 24.0}}, label: 'Wikipedia'
+                                  StaticText, 0x1140dd7c0, {{795.0, 330.0}, {103.0, 30.5}}, label: 'Explore, save and revisit knowledge'
+                                Button, 0x1140dd900, {{789.0, 222.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-nativeapp.wikipedia', label: 'App Actions'
+                                  Button, 0x1140dda40, {{789.0, 222.5}, {38.0, 38.0}}
+                                    Image, 0x1140ddb80, {{800.0, 239.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                              StaticText, 0x1140ddcc0, {{24.0, 406.5}, {84.0, 26.5}}, identifier: 'hanlin-miniapps-section-scriptingJSC', label: 'ScriptUI'
+                              Other, 0x1140dde00, {{23.5, 460.5}, {232.0, 169.0}}
+                                Button, 0x1140ddf40, {{23.5, 460.5}, {232.0, 169.0}}, identifier: 'hanlin-package-card-External Modal Fixture', label: 'External Modal Fixture'
+                                  Image, 0x1140de080, {{204.0, 481.5}, {29.5, 29.0}}, identifier: 'scroll', label: 'Scroll Document'
+                                  StaticText, 0x1140de1c0, {{42.0, 568.5}, {191.0, 24.0}}, label: 'External Modal Fixture'
+                                  StaticText, 0x1140de300, {{42.0, 596.5}, {126.5, 14.5}}, label: 'External Modal Fixture'
+                                Button, 0x1140de440, {{36.0, 473.0}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-hanlin.fixture.external-modal', label: 'App Actions'
+                                  Button, 0x1140de580, {{36.0, 473.0}, {38.0, 38.0}}
+                                    Image, 0x1140de6c0, {{47.0, 490.0}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                              StaticText, 0x1140de800, {{24.0, 657.0}, {127.5, 26.5}}, identifier: 'hanlin-miniapps-section-nativeScript', label: 'NativeScript'
+                              Other, 0x1140de940, {{23.5, 711.0}, {734.0, 169.0}}
+                                Button, 0x1140dea80, {{23.5, 711.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-HanlinScript Parity', label: 'HanlinScript Parity'
+                                  StaticText, 0x1140debc0, {{49.0, 733.5}, {29.5, 13.5}}, label: 'BETA'
+                                  Image, 0x1140ded00, {{202.0, 732.0}, {31.5, 25.0}}, identifier: 'terminal.fill', label: 'Terminal Command Prompt, Filled'
+                                  StaticText, 0x1140dee40, {{42.0, 803.0}, {171.0, 24.0}}, label: 'HanlinScript Parity'
+                                  StaticText, 0x1140def80, {{42.0, 831.0}, {194.5, 30.5}}, label: 'Real HanlinScript parity MiniApp with deterministic Node, Python, JavaScript, and HTTPS execution.'
+                                Button, 0x1140df0c0, {{36.0, 723.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-hanlin.demo.script-parity', label: 'App Actions'
+                                  Button, 0x1140df200, {{36.0, 723.5}, {38.0, 38.0}}
+                                    Image, 0x1140df340, {{47.0, 740.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                                Button, 0x1140df480, {{274.5, 711.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-MiniApp Authoring Acceptance', label: 'MiniApp Authoring Acceptance'
+                                  Image, 0x1140df5c0, {{461.0, 732.0}, {24.5, 33.5}}, identifier: 'applescript', label: 'Applescript Scroll Document'
+                                  StaticText, 0x1140df700, {{293.0, 819.0}, {187.5, 24.0}}, label: 'MiniApp Authoring Acceptance'
+                                  StaticText, 0x1140df840, {{293.0, 847.0}, {175.0, 14.5}}, label: 'MiniApp Authoring Acceptance'
+                                Button, 0x1140df980, {{287.0, 723.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-script-d7e81598bd3fabb072c5e57c', label: 'App Actions'
+                                  Button, 0x1140dfac0, {{287.0, 723.5}, {38.0, 38.0}}
+                                    Image, 0x1140dfc00, {{298.0, 740.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                                Button, 0x1140dfd40, {{525.5, 711.0}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Table Share', label: 'Table Share'
+                                  Image, 0x1140dfe80, {{684.5, 732.0}, {51.0, 27.0}}, identifier: 'person.3', label: 'Three People'
+                                  StaticText, 0x10a6d0000, {{544.0, 803.0}, {107.5, 24.0}}, label: 'Table Share'
+                                  StaticText, 0x10a6d0140, {{544.0, 831.0}, {193.5, 30.5}}, label: 'Split a restaurant bill exactly, with tax, tip and optional whole-dollar contributions.'
+                                Button, 0x10a6d0280, {{538.0, 723.5}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-script-f742f5767a7a47f8f8d51efd', label: 'App Actions'
+                                  Button, 0x10a6d03c0, {{538.0, 723.5}, {38.0, 38.0}}
+                                    Image, 0x10a6d0500, {{549.0, 740.5}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                              StaticText, 0x10a6d0640, {{24.0, 907.5}, {51.0, 26.5}}, identifier: 'hanlin-miniapps-section-expo', label: 'Expo'
+                              Other, 0x10a6d0780, {{23.5, 961.5}, {985.0, 357.0}}
+                                Button, 0x10a6d08c0, {{23.5, 961.5}, {232.0, 169.0}}, identifier: 'hanlin-package-card-חיפוש טקסטים מודולרי — Expo', label: 'חיפוש טקסטים מודולרי — Expo'
+                                  Image, 0x10a6d0a00, {{207.5, 982.5}, {26.5, 26.5}}, identifier: 'magnifyingglass', label: 'Search'
+                                  StaticText, 0x10a6d0b40, {{42.0, 1053.5}, {195.0, 24.0}}, label: 'חיפוש טקסטים מודולרי — Expo'
+                                  StaticText, 0x10a6d0c80, {{42.0, 1081.5}, {194.5, 30.5}}, label: 'Original native Expo search app, Share, interactive native Shortcuts snippets and editable Translation UI with original ScriptWidget services.'
+                                Button, 0x10a6d0dc0, {{36.0, 974.0}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-script-470d111992ef6fd2dfdc24b6', label: 'App Actions'
+                                  Button, 0x10a6d0f00, {{36.0, 974.0}, {38.0, 38.0}}
+                                    Image, 0x10a6d1040, {{47.0, 991.0}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                                Button, 0x10a6d1180, {{274.5, 961.5}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Original Expo Widgets Probe A', label: 'Original Expo Widgets Probe A'
+                                  Image, 0x10a6d12c0, {{460.0, 982.5}, {25.5, 30.5}}, identifier: 'sparkles', label: 'Sparkle'
+                                  StaticText, 0x10a6d1400, {{293.0, 1069.5}, {190.5, 24.0}}, label: 'Original Expo Widgets Probe A'
+                                  StaticText, 0x10a6d1540, {{293.0, 1097.5}, {194.5, 14.5}}, label: 'Original Expo Widgets native API, timeline, shared directory and Live Activity probe.'
+                                Button, 0x10a6d1680, {{287.0, 974.0}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-script-9a462e5101dab38179a6de6f', label: 'App Actions'
+                                  Button, 0x10a6d17c0, {{287.0, 974.0}, {38.0, 38.0}}
+                                    Image, 0x10a6d1900, {{298.0, 991.0}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                                Button, 0x10a6d1a40, {{525.5, 961.5}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Departure Budget', label: 'Departure Budget'
+                                  Image, 0x10a6d1b80, {{709.0, 982.5}, {27.5, 27.5}}, identifier: 'clock', label: 'Clock'
+                                  StaticText, 0x10a6d1cc0, {{544.0, 1053.5}, {164.5, 24.0}}, label: 'Departure Budget'
+                                  StaticText, 0x10a6d1e00, {{544.0, 1081.5}, {195.0, 30.5}}, label: 'Plan preparation, travel and arrival buffer with native SwiftUI controls.'
+                                Button, 0x10a6d1f40, {{538.0, 974.0}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-script-a19fcce1a9ef912a9ef0721c', label: 'App Actions'
+                                  Button, 0x10a6d2080, {{538.0, 974.0}, {38.0, 38.0}}
+                                    Image, 0x10a6d21c0, {{549.0, 991.0}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                                Button, 0x10a6d2300, {{776.5, 961.5}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Original Expo Widgets Probe B', label: 'Original Expo Widgets Probe B'
+                                  Image, 0x10a6d2440, {{962.0, 982.5}, {25.5, 30.5}}, identifier: 'sparkles', label: 'Sparkle'
+                                  StaticText, 0x10a6d2580, {{795.0, 1069.5}, {190.5, 24.0}}, label: 'Original Expo Widgets Probe B'
+                                  StaticText, 0x10a6d26c0, {{795.0, 1097.5}, {194.5, 14.5}}, label: 'Original Expo Widgets native API, timeline, shared directory and Live Activity probe.'
+                                Button, 0x10a6d2800, {{789.0, 974.0}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-script-bb83bf97e730ecebdebc4427', label: 'App Actions'
+                                  Button, 0x10a6d2940, {{789.0, 974.0}, {38.0, 38.0}}
+                                    Image, 0x10a6d2a80, {{800.0, 991.0}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                                Button, 0x10a6d2bc0, {{23.5, 1149.5}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Hanlin Expo Native API Probe A', label: 'Hanlin Expo Native API Probe A'
+                                  Image, 0x10a6d2d00, {{209.0, 1170.5}, {25.5, 30.5}}, identifier: 'sparkles', label: 'Sparkle'
+                                  StaticText, 0x10a6d2e40, {{42.0, 1257.5}, {188.0, 24.0}}, label: 'Hanlin Expo Native API Probe A'
+                                  StaticText, 0x10a6d2f80, {{42.0, 1285.5}, {192.0, 14.5}}, label: 'Variant A: Real UIKit UILabel + UISwitch inside SwiftUI'
+                                Button, 0x10a6d30c0, {{36.0, 1162.0}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-script-e02ac9a9c44ee3e98502e441', label: 'App Actions'
+                                  Button, 0x10a6d3200, {{36.0, 1162.0}, {38.0, 38.0}}
+                                    Image, 0x10a6d3340, {{47.0, 1179.0}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                                Button, 0x10a6d3480, {{274.5, 1149.5}, {232.0, 169.0}}, identifier: 'hanlin-package-card-Expo SwiftUI Probe A', label: 'Expo SwiftUI Probe A'
+                                  Image, 0x10a6d35c0, {{460.0, 1170.5}, {25.5, 30.5}}, identifier: 'sparkles', label: 'Sparkle'
+                                  StaticText, 0x10a6d3700, {{293.0, 1241.5}, {194.5, 24.0}}, label: 'Expo SwiftUI Probe A'
+                                  StaticText, 0x10a6d3840, {{293.0, 1269.5}, {188.0, 30.5}}, label: 'Dynamic Expo MiniApp Variant A rendering Apple SwiftUI.'
+                                Button, 0x10a6d3980, {{287.0, 1162.0}, {38.0, 38.0}}, identifier: 'hanlin-app-actions-script-ec17057f5a2c82aaed6ab6ca', label: 'App Actions'
+                                  Button, 0x10a6d3ac0, {{287.0, 1162.0}, {38.0, 38.0}}
+                                    Image, 0x10a6d3c00, {{298.0, 1179.0}, {16.0, 4.0}}, identifier: 'ellipsis', label: 'More'
+                          Other, 0x10a6d3d40, {{999.0, 86.0}, {30.0, 1260.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                            Other, 0x10a6d3e80, {{1026.0, 109.0}, {3.0, 1234.0}}
+                          Other, 0x1140e4000, {{999.0, 86.0}, {30.0, 1260.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                            Other, 0x1140e4140, {{1026.0, 109.0}, {3.0, 1234.0}}
+                Toolbar, 0x1140e4280, {{0.0, 0.0}, {1032.0, 1376.0}}, identifier: 'Toolbar', label: 'Toolbar'
+                  Other, 0x1140e43c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+      Other, 0x1140e4500, {{0.0, 0.0}, {1032.0, 1376.0}}
+        Other, 0x1140e4640, {{-1032.0, -1376.0}, {3096.0, 4128.0}}, identifier: 'PopoverDismissRegion', label: 'dismiss popup'
+        Other, 0x1140e4780, {{242.0, 368.0}, {548.0, 623.6}}
+          Image, 0x1140e48c0, {{100.3, 226.3}, {831.4, 907.0}}
+          Other, 0x1140e4a00, {{242.0, 368.0}, {548.0, 623.6}}
+            Other, 0x1140e4b40, {{-306.0, -255.6}, {1644.0, 1870.8}}, identifier: 'PopoverDismissRegion', label: 'dismiss popup'
+            Other, 0x1140e4c80, {{242.0, 368.0}, {548.0, 623.6}}
+              Other, 0x1140e4dc0, {{242.0, 368.0}, {548.0, 623.6}}
+                Other, 0x1140e4f00, {{242.0, 368.0}, {548.0, 623.6}}
+                  NavigationBar, 0x1140e5040, {{242.0, 377.4}, {548.0, 100.2}}, identifier: 'Add Apps'
+                    Other, 0x1140e5180, {{714.4, 381.2}, {62.4, 34.0}}
+                      Other, 0x1140e52c0, {{714.4, 381.2}, {62.4, 34.0}}
+                        Button, 0x1140e5400, {{714.4, 381.2}, {62.4, 34.0}}, identifier: 'hanlin-apps-add-done', label: 'Done'
+                    StaticText, 0x1140e5540, {{257.1, 431.8}, {146.4, 38.7}}, label: 'Add Apps'
+                  Other, 0x1140e5680, {{242.0, 368.0}, {548.0, 623.6}}
+                    Other, 0x1140e57c0, {{242.0, 368.0}, {548.0, 623.6}}
+                      Other, 0x1140e5900, {{242.0, 368.0}, {548.0, 623.6}}
+                        Other, 0x1140e5a40, {{242.0, 368.0}, {548.0, 623.6}}
+                          CollectionView, 0x1140e5b80, {{242.0, 368.0}, {548.0, 623.6}}
+                            Other, 0x1140e5cc0, {{226.9, -769.6}, {578.2, 1377.1}}
+                            Other, 0x1140e5e00, {{242.0, 368.0}, {548.0, 623.6}}
+                              Other, 0x1140e5f40, {{242.0, 368.0}, {548.0, 98.3}}
+                            Other, 0x1140e6080, {{242.0, 368.0}, {548.0, 623.6}}
+                            Cell, 0x1140e61c0, {{257.1, 477.6}, {517.8, 64.2}}
+                              Other, 0x1140e6300, {{257.1, 477.6}, {517.8, 64.2}}
+                                Other, 0x1140e6440, {{257.1, 477.6}, {517.8, 64.2}}
+                              Other, 0x1140e6580, {{257.1, 477.6}, {517.8, 64.2}}
+                                Other, 0x1140e66c0, {{257.1, 477.6}, {517.8, 64.2}}
+                                  Other, 0x1140e6800, {{257.1, 477.6}, {517.8, 64.2}}
+                                    StaticText, 0x1140e6940, {{257.1, 477.6}, {517.8, 64.2}}, label: 'Swift apps are compiled into Hanlin. Dynamic packages (NativeScript, Expo) are importable.'
+                            Cell, 0x1140e6a80, {{257.1, 541.8}, {517.8, 49.1}}
+                              Other, 0x1140e6bc0, {{257.1, 541.8}, {517.8, 49.1}}
+                                Other, 0x1140e6d00, {{257.1, 541.8}, {517.8, 49.1}}
+                              Other, 0x1140e6e40, {{257.1, 541.8}, {517.8, 49.1}}
+                                Other, 0x1140e6f80, {{257.1, 541.8}, {517.8, 49.1}}
+                                  Other, 0x1140e70c0, {{257.1, 541.8}, {517.8, 49.1}}
+                                    Button, 0x1140e7200, {{257.1, 541.8}, {517.8, 49.1}}, identifier: 'hanlin-import-script-package', label: 'Import Package'
+                                      StaticText, 0x1140e7340, {{269.9, 554.1}, {153.1, 25.0}}, label: 'Import Package'
+                                      Image, 0x1140e7480, {{269.9, 554.1}, {22.7, 25.0}}, identifier: 'doc.badge.plus', label: 'Document With A Plus Badge'
+                                      Image, 0x1140e75c0, {{750.8, 560.7}, {6.6, 11.3}}, identifier: 'chevron.forward'
+                            Other, 0x1140e7700, {{272.2, 540.9}, {487.5, 0.9}}
+                            Other, 0x1140e7840, {{226.9, 607.5}, {578.2, 771.9}}
+                            Cell, 0x1140e7980, {{257.1, 607.5}, {517.8, 38.3}}
+                              Other, 0x1140e7ac0, {{257.1, 607.5}, {517.8, 38.3}}
+                              Other, 0x1140e7c00, {{257.1, 607.5}, {517.8, 38.3}}
+                                Other, 0x1140e7d40, {{257.1, 607.5}, {517.8, 38.3}}
+                                  Other, 0x1140e7e80, {{257.1, 607.5}, {517.8, 38.3}}
+                                    StaticText, 0x10a724000, {{257.1, 607.5}, {517.8, 38.3}}, label: 'Scripting Packages'
+                            Cell, 0x10a724140, {{257.1, 645.8}, {517.8, 65.2}}
+                              Other, 0x10a724280, {{257.1, 645.8}, {517.8, 65.2}}
+                                Other, 0x10a7243c0, {{257.1, 645.8}, {517.8, 65.2}}
+                              Other, 0x10a724500, {{257.1, 645.8}, {517.8, 65.2}}
+                                Other, 0x10a724640, {{257.1, 645.8}, {517.8, 65.2}}
+                                  Other, 0x10a724780, {{257.1, 645.8}, {517.8, 65.2}}
+                                    Button, 0x10a7248c0, {{257.1, 645.8}, {517.8, 65.2}}, identifier: 'hanlin-package-card-HanlinScript Parity', label: 'HanlinScript Parity'
+                                      StaticText, 0x10a724a00, {{272.2, 660.0}, {140.3, 19.4}}, label: 'HanlinScript Parity'
+                                      StaticText, 0x10a724b40, {{272.2, 683.1}, {134.6, 13.7}}, label: 'hanlin.demo.script-parity'
+                            Cell, 0x10a724c80, {{257.1, 711.0}, {517.8, 65.2}}
+                              Other, 0x10a724dc0, {{257.1, 711.0}, {517.8, 65.2}}
+                                Other, 0x10a724f00, {{257.1, 711.0}, {517.8, 65.2}}
+                              Other, 0x10a725040, {{257.1, 711.0}, {517.8, 65.2}}
+                                Other, 0x10a725180, {{257.1, 711.0}, {517.8, 65.2}}
+                                  Other, 0x10a7252c0, {{257.1, 711.0}, {517.8, 65.2}}
+                                    Button, 0x10a725400, {{257.1, 711.0}, {517.8, 65.2}}, identifier: 'hanlin-package-card-External Modal Fixture', label: 'External Modal Fixture'
+                                      StaticText, 0x10a725540, {{272.2, 725.1}, {167.7, 19.4}}, label: 'External Modal Fixture'
+                                      StaticText, 0x10a725680, {{272.2, 748.3}, {153.5, 13.7}}, label: 'hanlin.fixture.external-modal'
+                            Other, 0x10a7257c0, {{272.2, 710.0}, {487.5, 0.9}}
+                            Cell, 0x10a725900, {{257.1, 776.2}, {517.8, 65.2}}
+                              Other, 0x10a725a40, {{257.1, 776.2}, {517.8, 65.2}}
+                                Other, 0x10a725b80, {{257.1, 776.2}, {517.8, 65.2}}
+                              Other, 0x10a725cc0, {{257.1, 776.2}, {517.8, 65.2}}
+                                Other, 0x10a725e00, {{257.1, 776.2}, {517.8, 65.2}}
+                                  Other, 0x10a725f40, {{257.1, 776.2}, {517.8, 65.2}}
+                                    Button, 0x10a726080, {{257.1, 776.2}, {517.8, 65.2}}, identifier: 'hanlin-package-card-חיפוש טקסטים מודולרי — Expo', label: 'חיפוש טקסטים מודולרי — Expo'
+                                      StaticText, 0x10a7261c0, {{272.2, 790.3}, {216.8, 19.4}}, label: 'חיפוש טקסטים מודולרי — Expo'
+                                      StaticText, 0x10a726300, {{272.2, 813.5}, {188.0, 13.7}}, label: 'script-470d111992ef6fd2dfdc24b6'
+                            Other, 0x10a726440, {{272.2, 775.2}, {487.5, 0.9}}
+                            Cell, 0x10a726580, {{257.1, 841.4}, {517.8, 65.2}}
+                              Other, 0x10a7266c0, {{257.1, 841.4}, {517.8, 65.2}}
+                                Other, 0x10a726800, {{257.1, 841.4}, {517.8, 65.2}}
+                              Other, 0x10a726940, {{257.1, 841.4}, {517.8, 65.2}}
+                                Other, 0x10a726a80, {{257.1, 841.4}, {517.8, 65.2}}
+                                  Other, 0x10a726bc0, {{257.1, 841.4}, {517.8, 65.2}}
+                                    Button, 0x10a726d00, {{257.1, 841.4}, {517.8, 65.2}}, identifier: 'hanlin-package-card-Original Expo Widgets Probe A', label: 'Original Expo Widgets Probe A'
+                                      StaticText, 0x10a726e40, {{272.2, 855.5}, {229.1, 19.4}}, label: 'Original Expo Widgets Probe A'
+                                      StaticText, 0x10a726f80, {{272.2, 878.7}, {193.2, 13.7}}, label: 'script-9a462e5101dab38179a6de6f'
+                            Other, 0x10a7270c0, {{272.2, 840.4}, {487.5, 0.9}}
+                            Cell, 0x10a727200, {{257.1, 906.6}, {517.8, 65.2}}
+                              Other, 0x10a727340, {{257.1, 906.6}, {517.8, 65.2}}
+                                Other, 0x10a727480, {{257.1, 906.6}, {517.8, 65.2}}
+                              Other, 0x10a7275c0, {{257.1, 906.6}, {517.8, 65.2}}
+                                Other, 0x10a727700, {{257.1, 906.6}, {517.8, 65.2}}
+                                  Other, 0x10a727840, {{257.1, 906.6}, {517.8, 65.2}}
+                                    Button, 0x10a727980, {{257.1, 906.6}, {517.8, 65.2}}, identifier: 'hanlin-package-card-Departure Budget', label: 'Departure Budget'
+                                      StaticText, 0x10a727ac0, {{272.2, 920.7}, {134.6, 19.4}}, label: 'Departure Budget'
+                                      StaticText, 0x10a727c00, {{272.2, 943.9}, {181.4, 13.7}}, label: 'script-a19fcce1a9ef912a9ef0721c'
+                            Other, 0x10a727d40, {{272.2, 905.6}, {487.5, 0.9}}
+                            Cell, 0x10a727e80, {{257.1, 971.7}, {517.8, 65.2}}
+                              Other, 0x10a72c000, {{257.1, 971.7}, {517.8, 65.2}}
+                                Other, 0x10a72c140, {{257.1, 971.7}, {517.8, 65.2}}
+                              Other, 0x10a72c280, {{257.1, 971.7}, {517.8, 65.2}}
+                                Other, 0x10a72c3c0, {{257.1, 971.7}, {517.8, 65.2}}
+                                  Other, 0x10a72c500, {{257.1, 971.7}, {517.8, 65.2}}
+                                    Button, 0x10a72c640, {{257.1, 971.7}, {517.8, 65.2}}, identifier: 'hanlin-package-card-ScriptWidget Actions', label: 'ScriptWidget Actions'
+                                      StaticText, 0x10a72c780, {{272.2, 985.9}, {159.7, 19.4}}, label: 'ScriptWidget Actions'
+                                      StaticText, 0x10a72c8c0, {{272.2, 1009.1}, {189.9, 13.7}}, label: 'script-b567e179bfc7e661414077ad'
+                                      StaticText, 0x10a72ca00, {{723.4, 998.0}, {36.4, 12.8}}, label: 'Widget'
+                            Other, 0x10a72cb40, {{272.2, 970.8}, {487.5, 0.9}}
+                            Cell, 0x10a72cc80, {{257.1, 1036.9}, {517.8, 65.2}}
+                              Other, 0x10a72cdc0, {{257.1, 1036.9}, {517.8, 65.2}}
+                                Other, 0x10a72cf00, {{257.1, 1036.9}, {517.8, 65.2}}
+                              Other, 0x10a72d040, {{257.1, 1036.9}, {517.8, 65.2}}
+                                Other, 0x10a72d180, {{257.1, 1036.9}, {517.8, 65.2}}
+                                  Other, 0x10a72d2c0, {{257.1, 1036.9}, {517.8, 65.2}}
+                                    Button, 0x10a72d400, {{257.1, 1036.9}, {517.8, 65.2}}, identifier: 'hanlin-package-card-Original Expo Widgets Probe B', label: 'Original Expo Widgets Probe B'
+                                      StaticText, 0x10a72d540, {{272.2, 1051.1}, {228.6, 19.4}}, label: 'Original Expo Widgets Probe B'
+                                      StaticText, 0x10a72d680, {{272.2, 1074.3}, {195.6, 13.7}}, label: 'script-bb83bf97e730ecebdebc4427'
+                            Cell, 0x10a72d7c0, {{257.1, 1102.1}, {517.8, 65.2}}
+                              Other, 0x10a72d900, {{257.1, 1102.1}, {517.8, 65.2}}
+                                Other, 0x10a72da40, {{257.1, 1102.1}, {517.8, 65.2}}
+                              Other, 0x10a72db80, {{257.1, 1102.1}, {517.8, 65.2}}
+                                Other, 0x10a72dcc0, {{257.1, 1102.1}, {517.8, 65.2}}
+                                  Other, 0x10a72de00, {{257.1, 1102.1}, {517.8, 65.2}}
+                                    Button, 0x10a72df40, {{257.1, 1102.1}, {517.8, 65.2}}, identifier: 'hanlin-package-card-MiniApp Authoring Acceptance', label: 'MiniApp Authoring Acceptance'
+                                      StaticText, 0x10a72e080, {{272.2, 1116.3}, {233.4, 19.4}}, label: 'MiniApp Authoring Acceptance'
+                                      StaticText, 0x10a72e1c0, {{272.2, 1139.5}, {193.7, 13.7}}, label: 'script-d7e81598bd3fabb072c5e57c'
+                            Cell, 0x10a72e300, {{257.1, 1167.3}, {517.8, 65.2}}
+                              Other, 0x10a72e440, {{257.1, 1167.3}, {517.8, 65.2}}
+                                Other, 0x10a72e580, {{257.1, 1167.3}, {517.8, 65.2}}
+                              Other, 0x10a72e6c0, {{257.1, 1167.3}, {517.8, 65.2}}
+                                Other, 0x10a72e800, {{257.1, 1167.3}, {517.8, 65.2}}
+                                  Other, 0x10a72e940, {{257.1, 1167.3}, {517.8, 65.2}}
+                                    Button, 0x10a72ea80, {{257.1, 1167.3}, {517.8, 65.2}}, identifier: 'hanlin-package-card-Hanlin Expo Native API Probe A', label: 'Hanlin Expo Native API Probe A'
+                                      StaticText, 0x10a72ebc0, {{272.2, 1181.5}, {233.4, 19.4}}, label: 'Hanlin Expo Native API Probe A'
+                                      StaticText, 0x10a72ed00, {{272.2, 1204.6}, {198.4, 13.7}}, label: 'script-e02ac9a9c44ee3e98502e441'
+                            Cell, 0x10a72ee40, {{257.1, 1232.5}, {517.8, 65.2}}
+                              Other, 0x10a72ef80, {{257.1, 1232.5}, {517.8, 65.2}}
+                                Other, 0x10a72f0c0, {{257.1, 1232.5}, {517.8, 65.2}}
+                              Other, 0x10a72f200, {{257.1, 1232.5}, {517.8, 65.2}}
+                                Other, 0x10a72f340, {{257.1, 1232.5}, {517.8, 65.2}}
+                                  Other, 0x10a72f480, {{257.1, 1232.5}, {517.8, 65.2}}
+                                    Button, 0x10a72f5c0, {{257.1, 1232.5}, {517.8, 65.2}}, identifier: 'hanlin-package-card-Expo SwiftUI Probe A', label: 'Expo SwiftUI Probe A'
+                                      StaticText, 0x10a72f700, {{272.2, 1246.7}, {159.2, 19.4}}, label: 'Expo SwiftUI Probe A'
+                                      StaticText, 0x10a72f840, {{272.2, 1269.8}, {191.8, 13.7}}, label: 'script-ec17057f5a2c82aaed6ab6ca'
+                            Cell, 0x10a72f980, {{257.1, 1297.7}, {517.8, 65.2}}
+                              Other, 0x10a72fac0, {{257.1, 1297.7}, {517.8, 65.2}}
+                                Other, 0x10a72fc00, {{257.1, 1297.7}, {517.8, 65.2}}
+                              Other, 0x10a72fd40, {{257.1, 1297.7}, {517.8, 65.2}}
+                                Other, 0x10a72fe80, {{257.1, 1297.7}, {517.8, 65.2}}
+                                  Other, 0x1140e8000, {{257.1, 1297.7}, {517.8, 65.2}}
+                                    Button, 0x1140e8140, {{257.1, 1297.7}, {517.8, 65.2}}, identifier: 'hanlin-package-card-Table Share', label: 'Table Share'
+                                      StaticText, 0x1140e8280, {{272.2, 1311.9}, {87.9, 19.4}}, label: 'Table Share'
+                                      StaticText, 0x1140e83c0, {{272.2, 1335.0}, {181.4, 13.7}}, label: 'script-f742f5767a7a47f8f8d51efd'
+                            Other, 0x1140e8500, {{758.8, 428.5}, {28.3, 532.9}}, label: 'Vertical scroll bar, 3 pages', value: 0%
+                              Other, 0x1140e8640, {{784.3, 431.3}, {2.8, 264.6}}
+                            Other, 0x1140e8780, {{758.8, 428.5}, {28.3, 532.9}}, label: 'Vertical scroll bar, 3 pages', value: 0%
+                              Other, 0x1140e88c0, {{784.3, 431.3}, {2.8, 264.6}}
+                  Toolbar, 0x1140e8a00, {{242.0, 368.0}, {548.0, 623.6}}, identifier: 'Toolbar', label: 'Toolbar'
+                    Other, 0x1140e8b40, {{242.0, 368.0}, {548.0, 623.6}}
+      Other, 0x1140e8c80, {{0.0, 0.0}, {1032.0, 1376.0}}
+        Other, 0x1140e8dc0, {{-1032.0, -1376.0}, {3096.0, 4128.0}}, identifier: 'PopoverDismissRegion', label: 'dismiss popup'
+        Other, 0x1140e8f00, {{242.0, 348.0}, {548.0, 604.7}}
+          Other, 0x1140e9040, {{242.0, 348.0}, {548.0, 604.7}}
+            Other, 0x1140e9180, {{-306.0, -256.7}, {1644.0, 1814.1}}, identifier: 'PopoverDismissRegion', label: 'dismiss popup'
+            Other, 0x1140e92c0, {{242.0, 348.0}, {548.0, 604.7}}
+              Other, 0x1140e9400, {{242.0, 348.0}, {548.0, 604.7}}
+                Other, 0x1140e9540, {{242.0, 348.0}, {548.0, 604.7}}
+                  NavigationBar, 0x1140e9680, {{242.0, 357.4}, {548.0, 51.0}}, identifier: 'Widget Services'
+                    Button, 0x1140e97c0, {{251.4, 357.4}, {41.6, 41.6}}, identifier: 'BackButton', label: 'ScriptWidget Actions'
+                    StaticText, 0x1140e9900, {{454.6, 368.3}, {122.8, 19.8}}, label: 'Widget Services'
+                  Other, 0x1140e9a40, {{242.0, 348.0}, {548.0, 604.7}}
+                    Other, 0x1140e9b80, {{242.0, 348.0}, {548.0, 604.7}}
+                      Other, 0x1140e9cc0, {{242.0, 348.0}, {548.0, 604.7}}
+                        Other, 0x1140e9e00, {{242.0, 348.0}, {548.0, 604.7}}
+                          CollectionView, 0x1140e9f40, {{242.0, 348.0}, {548.0, 604.7}}
+                            Cell, 0x1140ea080, {{257.1, -115.0}, {517.8, 155.9}}
+                              Other, 0x1140ea1c0, {{257.1, -115.0}, {517.8, 155.9}}
+                                Other, 0x1140ea300, {{257.1, -115.0}, {517.8, 155.9}}
+                              Other, 0x1140ea440, {{257.1, -115.0}, {517.8, 155.9}}
+                                Other, 0x1140ea580, {{257.1, -115.0}, {517.8, 155.9}}
+                                  Other, 0x1140ea6c0, {{257.1, -115.0}, {517.8, 155.9}}
+                                    Image, 0x1140ea800, {{273.2, -98.4}, {26.5, 22.2}}, identifier: 'calendar.badge.clock', label: 'Date And Time'
+                                    StaticText, 0x1140ea940, {{273.2, -98.4}, {172.0, 22.2}}, label: 'Connect Calendar'
+                                    StaticText, 0x1140eaa80, {{272.2, -68.2}, {483.8, 49.1}}, label: 'Apple requires full Calendar permission to read events. ScriptWidget reads selected calendars; widgets with separately granted Calendar write access can create events and update their own events through explicit actions.'
+                                    Button, 0x1140eabc0, {{272.2, -9.6}, {186.1, 32.6}}, label: 'Allow Calendar Access'
+                            Cell, 0x1140ead00, {{257.1, 95.7}, {517.8, 118.1}}
+                              Other, 0x1140eae40, {{257.1, 95.7}, {517.8, 118.1}}
+                                Other, 0x1140eaf80, {{257.1, 95.7}, {517.8, 118.1}}
+                              Other, 0x1140eb0c0, {{257.1, 95.7}, {517.8, 118.1}}
+                                Other, 0x1140eb200, {{257.1, 95.7}, {517.8, 118.1}}
+                                  Other, 0x1140eb340, {{257.1, 95.7}, {517.8, 118.1}}
+                                    StaticText, 0x1140eb480, {{271.8, 109.4}, {186.1, 20.8}}, label: 'Connect Reminders'
+                                    Image, 0x1140eb5c0, {{271.8, 109.4}, {23.6, 20.8}}, identifier: 'checklist', label: 'Checklist With Checkmarks'
+                                    StaticText, 0x1140eb700, {{272.2, 138.7}, {487.5, 32.1}}, label: 'Apple requires full Reminders access. Widgets read only the lists you choose. Explicit actions with remindersWrite can create, update or complete reminders in those lists.'
+                                    Button, 0x1140eb840, {{272.2, 180.3}, {175.3, 19.4}}, label: 'Allow Reminders Access'
+                            Other, 0x1140eb980, {{226.9, 230.4}, {578.2, 172.9}}
+                            Cell, 0x1140ebac0, {{257.1, 268.6}, {517.8, 118.1}}
+                              Other, 0x1140ebc00, {{257.1, 268.6}, {517.8, 118.1}}
+                                Other, 0x1140ebd40, {{257.1, 268.6}, {517.8, 118.1}}
+                              Other, 0x1140ebe80, {{257.1, 268.6}, {517.8, 118.1}}
+                                Other, 0x11415c000, {{257.1, 268.6}, {517.8, 118.1}}
+                                  Other, 0x11415c140, {{257.1, 268.6}, {517.8, 118.1}}
+                                    StaticText, 0x11415c280, {{270.8, 281.9}, {183.3, 21.3}}, label: 'Photos for Widgets'
+                                    Image, 0x11415c3c0, {{270.8, 281.9}, {26.0, 21.3}}, identifier: 'photo.on.rectangle', label: 'Photo On A Rectangle'
+                                    StaticText, 0x11415c500, {{272.2, 311.6}, {479.5, 32.1}}, label: 'Choose individual photos or albums. Only selected sources are available to widgets that declare photos. No photos are selected by default.'
+                                    Button, 0x11415c640, {{272.2, 353.2}, {148.8, 19.4}}, label: 'Allow Photos Access'
+                            Other, 0x11415c780, {{242.0, 348.0}, {548.0, 604.7}}
+                              Other, 0x11415c8c0, {{242.0, 348.0}, {548.0, 98.3}}
+                            Other, 0x11415ca00, {{242.0, 348.0}, {548.0, 604.7}}
+                              Other, 0x11415cb40, {{242.0, 348.0}, {548.0, 98.3}}
+                            Other, 0x11415cc80, {{226.9, 403.3}, {578.2, 231.5}}
+                            Cell, 0x11415cdc0, {{257.1, 403.3}, {517.8, 38.3}}
+                              Other, 0x11415cf00, {{257.1, 403.3}, {517.8, 38.3}}
+                              Other, 0x11415d040, {{257.1, 403.3}, {517.8, 38.3}}
+                                Other, 0x11415d180, {{257.1, 403.3}, {517.8, 38.3}}
+                                  Other, 0x11415d2c0, {{257.1, 403.3}, {517.8, 38.3}}
+                                    StaticText, 0x11415d400, {{257.1, 403.3}, {517.8, 38.3}}, label: 'Music'
+                            Cell, 0x11415d540, {{257.1, 441.5}, {517.8, 176.7}}
+                              Other, 0x11415d680, {{257.1, 441.5}, {517.8, 176.7}}
+                                Other, 0x11415d7c0, {{257.1, 441.5}, {517.8, 176.7}}
+                              Other, 0x11415d900, {{257.1, 441.5}, {517.8, 176.7}}
+                                Other, 0x11415da40, {{257.1, 441.5}, {517.8, 176.7}}
+                                  Other, 0x11415db80, {{257.1, 441.5}, {517.8, 176.7}}
+                                    StaticText, 0x11415dcc0, {{277.4, 455.2}, {183.8, 20.8}}, label: 'Music App Playback'
+                                    Image, 0x11415de00, {{277.4, 455.2}, {12.8, 20.8}}, identifier: 'music.note', label: 'Song'
+                                    StaticText, 0x11415df40, {{272.2, 484.5}, {479.0, 49.1}}, label: 'Allow widgets to show the current Music app track. This reads a playback snapshot only; it does not scan your library, start music or change the queue. Each installed widget must declare Music access.'
+                                    Button, 0x11415e080, {{272.2, 543.1}, {141.3, 19.4}}, label: 'Allow Music Access'
+                                    StaticText, 0x11415e1c0, {{272.2, 571.9}, {462.0, 32.1}}, label: 'Only the Music app's shared state is available. Home Sharing or other items may withhold track details. This is not a global now-playing API for every audio app.'
+                            Other, 0x11415e300, {{226.9, 634.8}, {578.2, 103.9}}
+                            Cell, 0x11415e440, {{257.1, 634.8}, {517.8, 38.3}}
+                              Other, 0x11415e580, {{257.1, 634.8}, {517.8, 38.3}}
+                              Other, 0x11415e6c0, {{257.1, 634.8}, {517.8, 38.3}}
+                                Other, 0x11415e800, {{257.1, 634.8}, {517.8, 38.3}}
+                                  Other, 0x11415e940, {{257.1, 634.8}, {517.8, 38.3}}
+                                    StaticText, 0x11415ea80, {{257.1, 634.8}, {517.8, 38.3}}, label: 'Health'
+                            Cell, 0x11415ebc0, {{257.1, 673.0}, {517.8, 49.1}}
+                              Other, 0x11415ed00, {{257.1, 673.0}, {517.8, 49.1}}
+                                Other, 0x11415ee40, {{257.1, 673.0}, {517.8, 49.1}}
+                              Other, 0x11415ef80, {{257.1, 673.0}, {517.8, 49.1}}
+                                Other, 0x11415f0c0, {{257.1, 673.0}, {517.8, 49.1}}
+                                  Other, 0x11415f200, {{257.1, 673.0}, {517.8, 49.1}}
+                                    Button, 0x11415f340, {{257.1, 673.0}, {517.8, 49.1}}, label: 'Choose Health Data'
+                            Other, 0x11415f480, {{226.9, 738.7}, {578.2, 153.1}}
+                            Cell, 0x11415f5c0, {{257.1, 738.7}, {517.8, 38.3}}
+                              Other, 0x11415f700, {{257.1, 738.7}, {517.8, 38.3}}
+                              Other, 0x11415f840, {{257.1, 738.7}, {517.8, 38.3}}
+                                Other, 0x11415f980, {{257.1, 738.7}, {517.8, 38.3}}
+                                  Other, 0x11415fac0, {{257.1, 738.7}, {517.8, 38.3}}
+                                    StaticText, 0x11415fc00, {{257.1, 738.7}, {517.8, 38.3}}, label: 'Location'
+                            Cell, 0x11415fd40, {{257.1, 777.0}, {517.8, 49.1}}
+                              Other, 0x11415fe80, {{257.1, 777.0}, {517.8, 49.1}}
+                                Other, 0x114160000, {{257.1, 777.0}, {517.8, 49.1}}
+                              Other, 0x114160140, {{257.1, 777.0}, {517.8, 49.1}}
+                                Other, 0x114160280, {{257.1, 777.0}, {517.8, 49.1}}
+                                  Other, 0x1141603c0, {{257.1, 777.0}, {517.8, 49.1}}
+                                    StaticText, 0x114160500, {{257.1, 777.0}, {517.8, 49.1}}, label: 'Choose location access to use local features.'
+                            Cell, 0x114160640, {{257.1, 826.1}, {517.8, 49.1}}
+                              Other, 0x114160780, {{257.1, 826.1}, {517.8, 49.1}}
+                                Other, 0x1141608c0, {{257.1, 826.1}, {517.8, 49.1}}
+                              Other, 0x114160a00, {{257.1, 826.1}, {517.8, 49.1}}
+                                Other, 0x114160b40, {{257.1, 826.1}, {517.8, 49.1}}
+                                  Other, 0x114160c80, {{257.1, 826.1}, {517.8, 49.1}}
+                                    Button, 0x114160dc0, {{257.1, 826.1}, {517.8, 49.1}}, label: 'Use Location'
+                            Other, 0x114160f00, {{272.2, 825.1}, {487.5, 0.9}}
+                            Other, 0x114161040, {{226.9, 891.7}, {578.2, 103.9}}
+                            Cell, 0x114161180, {{257.1, 891.7}, {517.8, 38.3}}
+                              Other, 0x1141612c0, {{257.1, 891.7}, {517.8, 38.3}}
+                              Other, 0x114161400, {{257.1, 891.7}, {517.8, 38.3}}
+                                Other, 0x114161540, {{257.1, 891.7}, {517.8, 38.3}}
+                                  Other, 0x114161680, {{257.1, 891.7}, {517.8, 38.3}}
+                                    StaticText, 0x1141617c0, {{257.1, 891.7}, {517.8, 38.3}}, label: 'System Data and Actions'
+                            Cell, 0x114161900, {{257.1, 930.0}, {517.8, 49.1}}
+                              Other, 0x114161a40, {{257.1, 930.0}, {517.8, 49.1}}
+                                Other, 0x114161b80, {{257.1, 930.0}, {517.8, 49.1}}
+                              Other, 0x114161cc0, {{257.1, 930.0}, {517.8, 49.1}}
+                                Other, 0x114161e00, {{257.1, 930.0}, {517.8, 49.1}}
+                                  Other, 0x114161f40, {{257.1, 930.0}, {517.8, 49.1}}
+                                    Button, 0x114162080, {{257.1, 930.0}, {517.8, 49.1}}, label: 'Contacts, Home, Files, Notifications and Alarms'
+                            Cell, 0x1141621c0, {{257.1, 1012.2}, {517.8, 49.1}}
+                              Other, 0x114162300, {{257.1, 1012.2}, {517.8, 49.1}}
+                                Other, 0x114162440, {{257.1, 1012.2}, {517.8, 49.1}}
+                              Other, 0x114162580, {{257.1, 1012.2}, {517.8, 49.1}}
+                                Other, 0x1141626c0, {{257.1, 1012.2}, {517.8, 49.1}}
+                                  Other, 0x114162800, {{257.1, 1012.2}, {517.8, 49.1}}
+                                    Button, 0x114162940, {{257.1, 1012.2}, {517.8, 49.1}}, label: 'Connect Data Store'
+                            Cell, 0x114162a80, {{257.1, 1094.4}, {517.8, 49.1}}
+                              Other, 0x114162bc0, {{257.1, 1094.4}, {517.8, 49.1}}
+                                Other, 0x114162d00, {{257.1, 1094.4}, {517.8, 49.1}}
+                              Other, 0x114162e40, {{257.1, 1094.4}, {517.8, 49.1}}
+                                Other, 0x114162f80, {{257.1, 1094.4}, {517.8, 49.1}}
+                                  Other, 0x1141630c0, {{257.1, 1094.4}, {517.8, 49.1}}
+                                    Button, 0x114163200, {{257.1, 1094.4}, {517.8, 49.1}}, label: 'Service Accounts'
+                                      StaticText, 0x114163340, {{272.2, 1109.3}, {125.2, 19.4}}, label: 'Service Accounts'
+                                      Image, 0x114163480, {{750.8, 1113.3}, {6.6, 11.3}}, identifier: 'chevron.forward'
+                            Other, 0x1141635c0, {{758.8, 408.5}, {28.3, 514.0}}, label: 'Vertical scroll bar, 3 pages', value: 73%
+                              Other, 0x114163700, {{784.3, 618.7}, {2.8, 223.5}}
+                            Other, 0x114163840, {{758.8, 408.5}, {28.3, 514.0}}, label: 'Vertical scroll bar, 3 pages', value: 73%
+                              Other, 0x114163980, {{784.3, 618.7}, {2.8, 223.5}}
+                  Toolbar, 0x114163ac0, {{242.0, 348.0}, {548.0, 604.7}}, identifier: 'Toolbar', label: 'Toolbar'
+                    Other, 0x114163c00, {{242.0, 348.0}, {548.0, 604.7}}
+      Other, 0x114163d40, {{0.0, 0.0}, {1032.0, 1376.0}}
+        Other, 0x114163e80, {{-1032.0, -1376.0}, {3096.0, 4128.0}}, identifier: 'PopoverDismissRegion', label: 'dismiss popup'
+        Other, 0x114164000, {{226.0, 368.0}, {580.0, 640.0}}
+          Other, 0x114164140, {{226.0, 368.0}, {580.0, 640.0}}
+            Other, 0x114164280, {{226.0, 368.0}, {580.0, 640.0}}
+              Other, 0x1141643c0, {{226.0, 368.0}, {580.0, 640.0}}
+                Other, 0x114164500, {{226.0, 368.0}, {580.0, 640.0}}
+                  NavigationBar, 0x114164640, {{226.0, 378.0}, {580.0, 54.0}}, identifier: 'System Access'
+                    StaticText, 0x114164780, {{455.5, 389.5}, {121.0, 21.0}}, label: 'System Access'
+                    Other, 0x1141648c0, {{726.0, 382.0}, {66.0, 36.0}}
+                      Other, 0x114164a00, {{726.0, 382.0}, {66.0, 36.0}}
+                        Button, 0x114164b40, {{726.0, 382.0}, {66.0, 36.0}}, label: 'Done'
+                  Other, 0x114164c80, {{226.0, 368.0}, {580.0, 640.0}}
+                    Other, 0x114164dc0, {{226.0, 368.0}, {580.0, 640.0}}
+                      Other, 0x114164f00, {{226.0, 368.0}, {580.0, 640.0}}
+                        Other, 0x114165040, {{226.0, 368.0}, {580.0, 640.0}}
+                          CollectionView, 0x114165180, {{226.0, 368.0}, {580.0, 640.0}}
+                            Other, 0x1141652c0, {{210.0, -1460.0}, {612.0, 2077.0}}
+                            Other, 0x114165400, {{226.0, 368.0}, {580.0, 640.0}}
+                              Other, 0x114165540, {{226.0, 368.0}, {580.0, 104.0}}
+                            Other, 0x114165680, {{226.0, 368.0}, {580.0, 640.0}}
+                              Other, 0x1141657c0, {{226.0, 368.0}, {580.0, 104.0}}
+                            Cell, 0x114165900, {{242.0, 361.5}, {548.0, 52.0}}
+                              Other, 0x114165a40, {{242.0, 361.5}, {548.0, 52.0}}
+                                Other, 0x114165b80, {{242.0, 361.5}, {548.0, 52.0}}
+                              Other, 0x114165cc0, {{242.0, 361.5}, {548.0, 52.0}}
+                                Other, 0x114165e00, {{242.0, 361.5}, {548.0, 52.0}}
+                                  Other, 0x114165f40, {{242.0, 361.5}, {548.0, 52.0}}
+                                    Switch, 0x114166080, {{242.0, 361.5}, {548.0, 52.0}}, label: 'Read selected contacts', value: 1
+                                      StaticText, 0x1141661c0, {{258.0, 377.2}, {179.0, 20.5}}, label: 'Read selected contacts'
+                                      Switch, 0x114166300, {{713.0, 373.5}, {63.0, 28.0}}, value: 1
+                            Cell, 0x114166440, {{242.0, 413.5}, {548.0, 52.0}}
+                              Other, 0x114166580, {{242.0, 413.5}, {548.0, 52.0}}
+                                Other, 0x1141666c0, {{242.0, 413.5}, {548.0, 52.0}}
+                              Other, 0x114166800, {{242.0, 413.5}, {548.0, 52.0}}
+                                Other, 0x114166940, {{242.0, 413.5}, {548.0, 52.0}}
+                                  Other, 0x114166a80, {{242.0, 413.5}, {548.0, 52.0}}
+                                    Switch, 0x114166bc0, {{242.0, 413.5}, {548.0, 52.0}}, label: 'Read and control selected Home items', value: 1
+                                      StaticText, 0x114166d00, {{258.0, 429.2}, {294.5, 20.5}}, label: 'Read and control selected Home items'
+                                      Switch, 0x114166e40, {{713.0, 425.5}, {63.0, 28.0}}, value: 1
+                            Other, 0x114166f80, {{258.0, 412.5}, {516.0, 1.0}}
+                            Cell, 0x1141670c0, {{242.0, 465.5}, {548.0, 52.0}}
+                              Other, 0x114167200, {{242.0, 465.5}, {548.0, 52.0}}
+                                Other, 0x114167340, {{242.0, 465.5}, {548.0, 52.0}}
+                              Other, 0x114167480, {{242.0, 465.5}, {548.0, 52.0}}
+                                Other, 0x1141675c0, {{242.0, 465.5}, {548.0, 52.0}}
+                                  Other, 0x114167700, {{242.0, 465.5}, {548.0, 52.0}}
+                                    Button, 0x114167840, {{242.0, 465.5}, {548.0, 52.0}}, label: 'Save Access and Selections'
+                            Other, 0x114167980, {{258.0, 464.5}, {516.0, 1.0}}
+                            Cell, 0x114167ac0, {{242.0, 517.5}, {548.0, 82.0}}
+                              Other, 0x114167c00, {{242.0, 517.5}, {548.0, 82.0}}
+                                Other, 0x114167d40, {{242.0, 517.5}, {548.0, 82.0}}
+                              Other, 0x114167e80, {{242.0, 517.5}, {548.0, 82.0}}
+                                Other, 0x114168000, {{242.0, 517.5}, {548.0, 82.0}}
+                                  Other, 0x114168140, {{242.0, 517.5}, {548.0, 82.0}}
+                                    StaticText, 0x114168280, {{242.0, 517.5}, {548.0, 82.0}}, label: 'Turning access off takes effect for subsequent system calls. It does not delete imported files or cancel previously scheduled notifications or alarms; cancel those before revoking access.'
+                            Other, 0x1141683c0, {{258.0, 516.5}, {516.0, 1.0}}
+                            Other, 0x114168500, {{210.0, 617.0}, {612.0, 110.0}}
+                            Cell, 0x114168640, {{242.0, 617.0}, {548.0, 40.5}}
+                              Other, 0x114168780, {{242.0, 617.0}, {548.0, 40.5}}
+                              Other, 0x1141688c0, {{242.0, 617.0}, {548.0, 40.5}}
+                                Other, 0x114168a00, {{242.0, 617.0}, {548.0, 40.5}}
+                                  Other, 0x114168b40, {{242.0, 617.0}, {548.0, 40.5}}
+                                    StaticText, 0x114168c80, {{242.0, 617.0}, {548.0, 40.5}}, label: 'Notifications'
+                            Cell, 0x114168dc0, {{242.0, 657.5}, {548.0, 52.0}}
+                              Other, 0x114168f00, {{242.0, 657.5}, {548.0, 52.0}}
+                                Other, 0x114169040, {{242.0, 657.5}, {548.0, 52.0}}
+                              Other, 0x114169180, {{242.0, 657.5}, {548.0, 52.0}}
+                                Other, 0x1141692c0, {{242.0, 657.5}, {548.0, 52.0}}
+                                  Other, 0x114169400, {{242.0, 657.5}, {548.0, 52.0}}
+                                    Button, 0x114169540, {{242.0, 657.5}, {548.0, 52.0}}, label: 'Authorize Notifications'
+                            Other, 0x114169680, {{210.0, 727.0}, {612.0, 110.0}}
+                            Cell, 0x1141697c0, {{242.0, 727.0}, {548.0, 40.5}}
+                              Other, 0x114169900, {{242.0, 727.0}, {548.0, 40.5}}
+                              Other, 0x114169a40, {{242.0, 727.0}, {548.0, 40.5}}
+                                Other, 0x114169b80, {{242.0, 727.0}, {548.0, 40.5}}
+                                  Other, 0x114169cc0, {{242.0, 727.0}, {548.0, 40.5}}
+                                    StaticText, 0x114169e00, {{242.0, 727.0}, {548.0, 40.5}}, label: 'Alarms'
+                            Cell, 0x114169f40, {{242.0, 767.5}, {548.0, 52.0}}
+                              Other, 0x11416a080, {{242.0, 767.5}, {548.0, 52.0}}
+                                Other, 0x11416a1c0, {{242.0, 767.5}, {548.0, 52.0}}
+                              Other, 0x11416a300, {{242.0, 767.5}, {548.0, 52.0}}
+                                Other, 0x11416a440, {{242.0, 767.5}, {548.0, 52.0}}
+                                  Other, 0x11416a580, {{242.0, 767.5}, {548.0, 52.0}}
+                                    Button, 0x11416a6c0, {{242.0, 767.5}, {548.0, 52.0}}, label: 'Authorize Alarms'
+                            Other, 0x11416a800, {{210.0, 837.0}, {612.0, 256.5}}
+                            Cell, 0x11416a940, {{242.0, 837.0}, {548.0, 40.5}}
+                              Other, 0x11416aa80, {{242.0, 837.0}, {548.0, 40.5}}
+                              Other, 0x11416abc0, {{242.0, 837.0}, {548.0, 40.5}}
+                                Other, 0x11416ad00, {{242.0, 837.0}, {548.0, 40.5}}
+                                  Other, 0x11416ae40, {{242.0, 837.0}, {548.0, 40.5}}
+                                    StaticText, 0x11416af80, {{242.0, 837.0}, {548.0, 40.5}}, label: 'Imported Data Files'
+                            Cell, 0x11416b0c0, {{242.0, 877.5}, {548.0, 94.5}}
+                              Other, 0x11416b200, {{242.0, 877.5}, {548.0, 94.5}}
+                                Other, 0x11416b340, {{242.0, 877.5}, {548.0, 94.5}}
+                              Other, 0x11416b480, {{242.0, 877.5}, {548.0, 94.5}}
+                                Other, 0x11416b5c0, {{242.0, 877.5}, {548.0, 94.5}}
+                                  Other, 0x11416b700, {{242.0, 877.5}, {548.0, 94.5}}
+                                    StaticText, 0x11416b840, {{242.0, 877.5}, {548.0, 94.5}}, label: 'Import JSON or CSV as a private copy, up to 256 KiB per file and eight files per widget. The original file is never modified. Reimport to capture later edits.'
+                            Cell, 0x11416b980, {{242.0, 972.0}, {548.0, 52.0}}
+                              Other, 0x11416bac0, {{242.0, 972.0}, {548.0, 52.0}}
+                                Other, 0x11416bc00, {{242.0, 972.0}, {548.0, 52.0}}
+                              Other, 0x11416bd40, {{242.0, 972.0}, {548.0, 52.0}}
+                                Other, 0x11416be80, {{242.0, 972.0}, {548.0, 52.0}}
+                                  Other, 0x114170000, {{242.0, 972.0}, {548.0, 52.0}}
+                                    Button, 0x114170140, {{242.0, 972.0}, {548.0, 52.0}}, label: 'Import JSON or CSV'
+                            Other, 0x114170280, {{258.0, 971.0}, {516.0, 1.0}}
+                            Cell, 0x1141703c0, {{242.0, 1453.0}, {548.0, 52.0}}
+                              Other, 0x114170500, {{242.0, 1453.0}, {548.0, 52.0}}
+                                Other, 0x114170640, {{242.0, 1453.0}, {548.0, 52.0}}
+                              Other, 0x114170780, {{242.0, 1453.0}, {548.0, 52.0}}
+                                Other, 0x1141708c0, {{242.0, 1453.0}, {548.0, 52.0}}
+                                  Other, 0x114170a00, {{242.0, 1453.0}, {548.0, 52.0}}
+                                    Button, 0x114170b40, {{242.0, 1453.0}, {548.0, 52.0}}, label: 'Authorize and Load Home'
+                            Other, 0x114170c80, {{773.0, 432.0}, {30.0, 544.0}}, label: 'Vertical scroll bar, 4 pages', value: 47%
+                              Other, 0x114170dc0, {{800.0, 619.0}, {3.0, 192.0}}
+                            Other, 0x114170f00, {{773.0, 432.0}, {30.0, 544.0}}, label: 'Vertical scroll bar, 4 pages', value: 47%
+                              Other, 0x114171040, {{800.0, 619.0}, {3.0, 192.0}}
+                  Toolbar, 0x114171180, {{226.0, 368.0}, {580.0, 640.0}}, identifier: 'Toolbar', label: 'Toolbar'
+                    Other, 0x1141712c0, {{226.0, 368.0}, {580.0, 640.0}}
+Path to element:
+ →Application, 0x109c67340, pid: 53601, label: 'Hanlin MiniApps'
+Query chain:
+ →Find: Target Application 'com.itorah.hanlinminiapps'
+  Output: {
+    Application, 0x114171400, pid: 53601, label: 'Hanlin MiniApps'
+  }

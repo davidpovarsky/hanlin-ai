@@ -1,0 +1,46 @@
+{
+  "schemaVersion": 1,
+  "kind": "OWNER_PHYSICAL_INSTALLATION_ROUTE_DOCUMENTATION_NOT_EXECUTION",
+  "status": "SOURCE_AND_ARTIFACT_REFERENCES_VERIFIED",
+  "createdAt": "2026-11-25T09:50:03.242119+00:00",
+  "source": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+  "sdkInputSHA256": "ca69ce053b0d82c258ffd29f1e0ec07eb77da9f8f6893ffe1a68eecdbe02c7ca",
+  "physicalExecution": "NOT_RUN",
+  "newNativeBuildsOrTests": 0,
+  "signingChanges": false,
+  "libraryUploadPerformed": false,
+  "outsideSDKInputs": true,
+  "scope": "Concrete owner Xcode Debug Product>Run route for both original products;3freshpositive archives and1source-bearing negative repair input; actual missing prerequisites explicit.",
+  "members": [
+    {
+      "path": "OWNER_IPAD_INSTALL_AND_VERIFY.md",
+      "bytes": 12258,
+      "sha256": "ffb4f71a22e50aa989bb4701437cdd6544cf3aa24c6f84d57b5b0fb3caad8c5c"
+    },
+    {
+      "path": "artifact-identities.json",
+      "bytes": 3397,
+      "sha256": "71b7d18d88d238d3de697eda88099702c9c886da292faa9462370872b7c80f82"
+    },
+    {
+      "path": "owner-verification-template.json",
+      "bytes": 2658,
+      "sha256": "d1debef3e3faea546dfe33c86b7acf87a3a70efb6d9950efd0a7e2ce93c9cdef"
+    },
+    {
+      "path": "raw/produced-packages-receipt.json",
+      "bytes": 8231,
+      "sha256": "a9a9a05eb3ebddcdaba5b62986a2215887fcba24aaea02df926430ed7992761f"
+    },
+    {
+      "path": "raw/sdk-export-receipt.json",
+      "bytes": 3182,
+      "sha256": "be998b6ad5893f9ddaaa668d7bad8a9a606775807fdd3e9d09011fbede8b4492"
+    },
+    {
+      "path": "source-bindings.json",
+      "bytes": 3896,
+      "sha256": "7e2efcbec2e7a70e9e91d7f380ffd63b0f48251c43b21e57ca2314f4e07389f9"
+    }
+  ]
+}

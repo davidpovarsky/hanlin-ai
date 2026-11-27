@@ -36,6 +36,56 @@ public enum ProgressSummarySanitizer {
         return sanitized
     }
 
+    /// This is the provider's public reasoning-text channel, not a short title.
+    /// Preserve already-visible text as it grows. Explicit private blocks stay
+    /// private; credentials are redacted in place instead of erasing the passage.
+    public static func sanitizeProviderReasoningDisplay(_ value: String?) -> String? {
+        guard let value else { return nil }
+        var visible = removingPrivateBlocks(value)
+        let privateSectionPatterns = [
+            #"(?im)^\s*(?:#{1,6}\s+|\*\*\s*)(?:thinking|thought(?:\s*process)?|reasoning|analysis|plan|internal\s+reasoning|chain\s+of\s+thought)\b.*$"#,
+            #"(?im)^\s*(?:thinking\s+process|thought\s+process|internal\s+reasoning|chain\s+of\s+thought|reasoning\s+process|internal\s+monologue|system\s+prompt|internal\s+policy|תהליך חשיבה|נימוק פנימי|שרשרת חשיבה)\s*:"#
+        ]
+        // A private section has no explicit closing delimiter. Keep preceding
+        // public paragraphs, and never guess where that private section ends.
+        for pattern in privateSectionPatterns {
+            if let range = visible.range(of: pattern, options: .regularExpression) {
+                visible = String(visible[..<range.lowerBound])
+            }
+        }
+        visible = visible.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !visible.isEmpty, !visible.hasPrefix("{"), !visible.hasPrefix("["),
+              !visible.hasPrefix("data:") else { return nil }
+        let redacted = AgentDiagnosticsRedactor.sanitize(visible)
+        return redacted.isEmpty ? nil : redacted
+    }
+
+    private static func removingPrivateBlocks(_ value: String) -> String {
+        let pattern = #"(?i)<\/?(?:think|reasoning|thought)[^>]*>"#
+        guard let expression = try? NSRegularExpression(pattern: pattern) else { return "" }
+        var visible = ""
+        var depth = 0
+        var cursor = value.startIndex
+        for match in expression.matches(in: value, range: NSRange(value.startIndex..., in: value)) {
+            guard let range = Range(match.range, in: value) else { continue }
+            if depth == 0 { visible += value[cursor..<range.lowerBound] }
+            if value[range].hasPrefix("</") { depth = max(0, depth - 1) }
+            else { depth += 1 }
+            cursor = range.upperBound
+        }
+        if depth == 0 { visible += value[cursor...] }
+        // A streaming tag can arrive split across chunks. Do not briefly show
+        // its prefix or expose its following text before the closing '>'.
+        if let opening = visible.lastIndex(of: "<") {
+            let tail = visible[opening...].lowercased()
+            let markers = ["<think", "<reasoning", "<thought", "</think", "</reasoning", "</thought"]
+            if !tail.contains(">"), markers.contains(where: { $0.hasPrefix(tail) || tail.hasPrefix($0) }) {
+                visible = String(visible[..<opening])
+            }
+        }
+        return visible
+    }
+
     public static func looksLikeRawChainOfThought(_ value: String) -> Bool {
         let patterns = [
             "(?i)<\\/?(think|reasoning|thought)[^>]*>",

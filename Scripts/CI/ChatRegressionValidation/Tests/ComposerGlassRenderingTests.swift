@@ -96,8 +96,8 @@ final class ComposerGlassRenderingTests: XCTestCase {
                 add(receipt)
             }
         }
-        // Use the same public activity components as the app, with one visible
-        // active sweep owner: child when expanded, parent when collapsed.
+        // Use the same public activity components as the app: Thinking keeps
+        // its root sweep while actual visible tools retain their own motion.
         for expanded in [true, false] {
             let host = UIHostingController(rootView: ActivityProbeFixture(isExpanded: expanded))
             window.rootViewController = host
@@ -128,8 +128,8 @@ private struct ActivityProbeFixture: View {
                     .accessibilityIdentifier("activity-live-leaf")
             } label: {
                 HanlinActivityHierarchyHeader(
-                    title: isExpanded ? "Thinking & tools" : "Checking the route",
-                    symbol: "sparkles", isExpanded: isExpanded, isActive: !isExpanded)
+                    title: "Thinking",
+                    symbol: "sparkles", isExpanded: isExpanded, isActive: true)
                     .accessibilityIdentifier("activity-root")
             }
             .disclosureGroupStyle(HanlinActivityDisclosureStyle(depth: 0))

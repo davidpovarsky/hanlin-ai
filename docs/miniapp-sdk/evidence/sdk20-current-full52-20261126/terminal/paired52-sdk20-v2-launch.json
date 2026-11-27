@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "id": "paired52-sdk20-v2",
+  "dispatchedAt": "2026-11-25T23:39:05.702360+00:00",
+  "pid": 29196,
+  "argv": [
+    "/opt/homebrew/opt/python@3.12/libexec/bin/python3",
+    "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v4b.py",
+    "--decision",
+    "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2-decision.json"
+  ],
+  "source": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+  "files": [
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v4b.py",
+      "bytes": 25006,
+      "sha256": "a9040dd634acfe7d1d01d6f477771f9033ab305cde9576b1b5d5ad6423726bcb"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/run-original-paired-with-hosted-check-v1.py",
+      "bytes": 3819,
+      "sha256": "a31179f13706cf7a130bef2768afaf316ae541350d3dd439bf4fa6773bd4a825"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2-decision.json",
+      "bytes": 47750,
+      "sha256": "10e76a4916899f9345cb30421cc4b84566b1cf2b0f054005c70e80c52dce5928"
+    }
+  ],
+  "output": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2",
+  "log": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2-launch.log",
+  "actualStatus": "DISPATCHED_NOT_YET_OBSERVED"
+}

@@ -1,0 +1,12 @@
+test_duplicate_identity_across_containers_is_rejected (test_signed_product_bundles.ExportedBundleTargetsTests.test_duplicate_identity_across_containers_is_rejected) ... ok
+test_extension_cannot_duplicate_main_application_identity (test_signed_product_bundles.ExportedBundleTargetsTests.test_extension_cannot_duplicate_main_application_identity) ... ok
+test_miniapps_app_only_cannot_satisfy_source_extension_coverage (test_signed_product_bundles.ExportedBundleTargetsTests.test_miniapps_app_only_cannot_satisfy_source_extension_coverage) ... ok
+test_missing_extensionkit_identity_is_rejected (test_signed_product_bundles.ExportedBundleTargetsTests.test_missing_extensionkit_identity_is_rejected) ... ok
+test_original_ipa_includes_extensionkit_and_plugin_extensions (test_signed_product_bundles.ExportedBundleTargetsTests.test_original_ipa_includes_extensionkit_and_plugin_extensions) ... ok
+test_profile_selection_retains_both_disjoint_original_app_families (test_signed_product_bundles.ExportedBundleTargetsTests.test_profile_selection_retains_both_disjoint_original_app_families) ... ok
+test_unexpected_extension_is_rejected (test_signed_product_bundles.ExportedBundleTargetsTests.test_unexpected_extension_is_rejected) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.014s
+
+OK

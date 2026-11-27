@@ -1,0 +1,367 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "createdAt": "2026-11-25T18:13:12.859011+00:00",
+  "scope": "Complete raw evidence for six actual isolated authoring commands; no full SDK copy, no Mac/native execution.",
+  "root": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only",
+  "productionSource": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "SDKProducerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+  "SDKArchive": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/user-deliverables-sdk19/Hanlin-MiniApp-SDK-2026-11-25.zip",
+    "bytes": 68726642,
+    "sha256": "1bf347311b9547054725f8674419a11b3c502a4994feb6dbd9283c3af7400210"
+  },
+  "SDKManifest": {
+    "path": "MiniAppSDK/miniapp-sdk.json",
+    "sha256": "4505c28495d8b6ecd1073254e0e395adcc898cc02dd1d40699591f51db4dee92"
+  },
+  "summary": {
+    "path": "evidence/verification-summary.json",
+    "bytes": 12347,
+    "sha256": "7d1885c948302bc7a4b8151be968105bc41ffbebee715d2d5cdc4800fea9970f"
+  },
+  "payload": {
+    "path": "payload/Hanlin-MiniApp-Authoring-CLI-2026-11-25.zip",
+    "bytes": 15285,
+    "sha256": "a76b7cc57fc4ff8b2dae653226f095eb136afc91b97785e306378c096ea5b793"
+  },
+  "productionFiles": [
+    {
+      "path": "Scripts/MiniApps/miniapp.mjs",
+      "bytes": 4101,
+      "sha256": "1c256c00392c626a54ebee2abe3ededaa792c5bfa6dd9b6c5aceb89be84e5b30",
+      "gitMode": "100644",
+      "identicalSources": [
+        "d4a0b115b106d4250ea40ad66153d5156847a07c",
+        "a2c8a1b1be746461272ba77254603304567c309d"
+      ]
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+      "bytes": 50327,
+      "sha256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9",
+      "gitMode": "100644",
+      "identicalSources": [
+        "d4a0b115b106d4250ea40ad66153d5156847a07c",
+        "a2c8a1b1be746461272ba77254603304567c309d"
+      ]
+    }
+  ],
+  "commandCount": 6,
+  "expectedOutcomesMatched": 6,
+  "recipeStatus": "AST_VERIFIED_NOT_EXECUTED",
+  "files": [
+    {
+      "path": "evidence/archive-audit.json",
+      "bytes": 6513,
+      "sha256": "63db60d699e695bd590ed21a905d967722f2a0e9404ea37b0fe7405192ac0a46"
+    },
+    {
+      "path": "evidence/expo-build-command.json",
+      "bytes": 1554,
+      "sha256": "45f18c4d07449b55158543a58575c173734a611538bb4d4ad9779cdab9dd01ee"
+    },
+    {
+      "path": "evidence/expo-build.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evidence/expo-build.stdout",
+      "bytes": 1700,
+      "sha256": "9e2c5770d7827e67fd7a681e79f33460922f483f16d9e7ed835c15a22570d169"
+    },
+    {
+      "path": "evidence/expo-build.strace",
+      "bytes": 25596208,
+      "sha256": "2dacbb30d10cd96fc53ef0b5cbe95c2d77ed007c9df776b4ea4b2bd2dbd3ad17"
+    },
+    {
+      "path": "evidence/expo-validate-command.json",
+      "bytes": 1427,
+      "sha256": "a33ba79dcc2a988f06177054863c353225a81073b577a7c976a22e073a93dd84"
+    },
+    {
+      "path": "evidence/expo-validate.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evidence/expo-validate.stdout",
+      "bytes": 1341,
+      "sha256": "906c2db5da607e06f2af58dd1b94be17ceb40062ec03783124ab86cd509b8423"
+    },
+    {
+      "path": "evidence/expo-validate.strace",
+      "bytes": 11688592,
+      "sha256": "7527bc9c8027a8e2f8d9076c570bd0807d515dac7e39adba3b021bdce01afe64"
+    },
+    {
+      "path": "evidence/nativescript-build-command.json",
+      "bytes": 1658,
+      "sha256": "a4f4e40d4b0cc2066fdc69035cac7cb355c6a560500fb603cf2ff434e0b2e9ab"
+    },
+    {
+      "path": "evidence/nativescript-build.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evidence/nativescript-build.stdout",
+      "bytes": 1283,
+      "sha256": "73ef4b1d28557a8c518e553fcfc438ad6a2d908d0eb27c9f4593f5d898ee58f3"
+    },
+    {
+      "path": "evidence/nativescript-build.strace",
+      "bytes": 7099476,
+      "sha256": "244890b9075e9c291f142d28106665760ab7498981f564fe2c53cee2a32e722e"
+    },
+    {
+      "path": "evidence/nativescript-validate-command.json",
+      "bytes": 1520,
+      "sha256": "1748b2cabfc6b4715db96c83268c6c97ec49c5160bd7c5054cff03c842d5e659"
+    },
+    {
+      "path": "evidence/nativescript-validate.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evidence/nativescript-validate.stdout",
+      "bytes": 900,
+      "sha256": "dc4cc50cbfe76543019fae965015e70ddac1d15c89592bf50d40f3172b973779"
+    },
+    {
+      "path": "evidence/nativescript-validate.strace",
+      "bytes": 3513293,
+      "sha256": "ca5e08c34492b486b1a728fc404d0f487e503d34bb7df1c4a9e6ae0407906470"
+    },
+    {
+      "path": "evidence/negative-type-error-build-command.json",
+      "bytes": 1708,
+      "sha256": "22ebff22b72c74c9aad08f73870c72e41c4d0cb39758db9524bef8cd5d5c6875"
+    },
+    {
+      "path": "evidence/negative-type-error-build.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evidence/negative-type-error-build.stdout",
+      "bytes": 1140,
+      "sha256": "114bad215053dad31f0839528511447943b2e7f1209df6934fa5ed97adf70631"
+    },
+    {
+      "path": "evidence/negative-type-error-build.strace",
+      "bytes": 3513298,
+      "sha256": "b10da25da6f771afb0ce1cb52c1569acb5b94f1a145e7eccf5014ec9f8d2c026"
+    },
+    {
+      "path": "evidence/negative-type-error-validate-command.json",
+      "bytes": 1579,
+      "sha256": "1422b5e31f401451b6a594705ec54a09260514961e6deca59478d8a7f37e4f26"
+    },
+    {
+      "path": "evidence/negative-type-error-validate.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "evidence/negative-type-error-validate.stdout",
+      "bytes": 1143,
+      "sha256": "91ebdd410f88d6c72c189e1e1a4c67ae4a98eb3e03afa0a7c4f95d3592acc545"
+    },
+    {
+      "path": "evidence/negative-type-error-validate.strace",
+      "bytes": 3513272,
+      "sha256": "eb145b73f5d6bebe9b9043090b7029a9588c7fc1467a12c3278bde855f31f454"
+    },
+    {
+      "path": "evidence/sdk-member-inventory.json",
+      "bytes": 5453117,
+      "sha256": "db881aa934894f58d34dac4fd51463db3132b865f4ba9aacbcd9aafc06eca776"
+    },
+    {
+      "path": "evidence/staging-receipt.json",
+      "bytes": 2676,
+      "sha256": "c084a18088f0d0707cdc70917dcafa0f1f5a1c16fb694b30d18048c57a19f847"
+    },
+    {
+      "path": "evidence/trace-audit.json",
+      "bytes": 885279,
+      "sha256": "853a9f2ae65c4b020d0ca59f150efe96ece5a098df79ba4109af91f0647e1fdd"
+    },
+    {
+      "path": "evidence/verification-summary.json",
+      "bytes": 12347,
+      "sha256": "7d1885c948302bc7a4b8151be968105bc41ffbebee715d2d5cdc4800fea9970f"
+    },
+    {
+      "path": "kit/artifacts/Expo-Hello-World.hanlinExpo",
+      "bytes": 1949117,
+      "sha256": "b43e974a15b3c3a6b7775438da038d1607e2a464eba1774bc43d27cecd03e58b"
+    },
+    {
+      "path": "kit/artifacts/NativeScript-Hello-World.hanlinNativeScript",
+      "bytes": 7817,
+      "sha256": "36c89d84a0f8105f0449f0b237ac2134a834a8acb9ea669b34ee11ad13c42ea2"
+    },
+    {
+      "path": "kit/artifacts/expo-build.json",
+      "bytes": 1700,
+      "sha256": "9e2c5770d7827e67fd7a681e79f33460922f483f16d9e7ed835c15a22570d169"
+    },
+    {
+      "path": "kit/artifacts/expo-validate.json",
+      "bytes": 1341,
+      "sha256": "906c2db5da607e06f2af58dd1b94be17ceb40062ec03783124ab86cd509b8423"
+    },
+    {
+      "path": "kit/artifacts/nativescript-build.json",
+      "bytes": 1283,
+      "sha256": "73ef4b1d28557a8c518e553fcfc438ad6a2d908d0eb27c9f4593f5d898ee58f3"
+    },
+    {
+      "path": "kit/artifacts/nativescript-validate.json",
+      "bytes": 900,
+      "sha256": "dc4cc50cbfe76543019fae965015e70ddac1d15c89592bf50d40f3172b973779"
+    },
+    {
+      "path": "kit/artifacts/negative-type-error-build.json",
+      "bytes": 1140,
+      "sha256": "114bad215053dad31f0839528511447943b2e7f1209df6934fa5ed97adf70631"
+    },
+    {
+      "path": "kit/artifacts/negative-type-error-validate.json",
+      "bytes": 1143,
+      "sha256": "91ebdd410f88d6c72c189e1e1a4c67ae4a98eb3e03afa0a7c4f95d3592acc545"
+    },
+    {
+      "path": "kit/workspace/expo-hello-world/App.tsx",
+      "bytes": 478,
+      "sha256": "e0ec9b33bbe972668b0be87b6f8263faff0977e5bfea7654334c7f7f68b95531"
+    },
+    {
+      "path": "kit/workspace/expo-hello-world/README.md",
+      "bytes": 831,
+      "sha256": "367e2b77ec0d06230ed8b7a3756cc5ef6bd2b4328c2405977e383f8ecc52b403"
+    },
+    {
+      "path": "kit/workspace/expo-hello-world/hanlin.authoring.json",
+      "bytes": 99,
+      "sha256": "23628daa17919961823da4ebc9a4166ab9e1d7a9b3ec2ff47fdc70d7b444bf94"
+    },
+    {
+      "path": "kit/workspace/expo-hello-world/index.ts",
+      "bytes": 120,
+      "sha256": "f3532a443c0193cbb6866cb1a7474d0f5055917ffdc7f5e60efe35159e544d19"
+    },
+    {
+      "path": "kit/workspace/expo-hello-world/notification-event.ts",
+      "bytes": 650,
+      "sha256": "3faaf31c55f30954b8c3a74cce95d0461bdef531269bcd7832a886be4ac390de"
+    },
+    {
+      "path": "kit/workspace/expo-hello-world/package.json",
+      "bytes": 223,
+      "sha256": "ce6b14d9dd58a68d245000b2d9997086754acba6b3213087e9531b59701cd9bc"
+    },
+    {
+      "path": "kit/workspace/expo-hello-world/script.json",
+      "bytes": 264,
+      "sha256": "308768a8274c3f58254c4f6daafa7b16a07f0c68dc519f17d3e5feae895dcafb"
+    },
+    {
+      "path": "kit/workspace/expo-hello-world/tsconfig.json",
+      "bytes": 82,
+      "sha256": "989df0a97a5ac05cb6b26df1d7f2d18896e2627da8ac72d4d35e66a60da84b19"
+    },
+    {
+      "path": "kit/workspace/nativescript-hello-world/README.md",
+      "bytes": 914,
+      "sha256": "aae06c1b3c963f8a6cf246ea52642d73f5e6ec237cfb19fc4737dd4072570e6a"
+    },
+    {
+      "path": "kit/workspace/nativescript-hello-world/hanlin.authoring.json",
+      "bytes": 107,
+      "sha256": "1bf949fb4ba1fd14481df380299652fe9b587aa5c30afdb6621fe23be6c02094"
+    },
+    {
+      "path": "kit/workspace/nativescript-hello-world/index.ts",
+      "bytes": 991,
+      "sha256": "bfb34d9b7ac0f50488468a5cf8200d55cefbb9d0d345d080bb652323a1df9bf6"
+    },
+    {
+      "path": "kit/workspace/nativescript-hello-world/notification-event.ts",
+      "bytes": 650,
+      "sha256": "3faaf31c55f30954b8c3a74cce95d0461bdef531269bcd7832a886be4ac390de"
+    },
+    {
+      "path": "kit/workspace/nativescript-hello-world/package.json",
+      "bytes": 225,
+      "sha256": "ab65e0e388ac19daf337b29965fd030e6196faf90cee439c786de9e1c3f49cb6"
+    },
+    {
+      "path": "kit/workspace/nativescript-hello-world/script.json",
+      "bytes": 320,
+      "sha256": "521f9d8332544a7858dca222d635cf8530e13d72cfb4e2e62d4196acc3a249cb"
+    },
+    {
+      "path": "kit/workspace/nativescript-hello-world/tsconfig.json",
+      "bytes": 67,
+      "sha256": "089155f616dd73ff0bebb1469f21fda41c51ad93c7b7db83d2745fa5e88ce0e5"
+    },
+    {
+      "path": "kit/workspace/nativescript-type-error/README.md",
+      "bytes": 914,
+      "sha256": "aae06c1b3c963f8a6cf246ea52642d73f5e6ec237cfb19fc4737dd4072570e6a"
+    },
+    {
+      "path": "kit/workspace/nativescript-type-error/hanlin.authoring.json",
+      "bytes": 107,
+      "sha256": "1bf949fb4ba1fd14481df380299652fe9b587aa5c30afdb6621fe23be6c02094"
+    },
+    {
+      "path": "kit/workspace/nativescript-type-error/index.ts",
+      "bytes": 1063,
+      "sha256": "2a252e2317feeb876cb935c0890f841cb108e9fb7973784675437d4d7d968cfe"
+    },
+    {
+      "path": "kit/workspace/nativescript-type-error/notification-event.ts",
+      "bytes": 650,
+      "sha256": "3faaf31c55f30954b8c3a74cce95d0461bdef531269bcd7832a886be4ac390de"
+    },
+    {
+      "path": "kit/workspace/nativescript-type-error/package.json",
+      "bytes": 225,
+      "sha256": "ab65e0e388ac19daf337b29965fd030e6196faf90cee439c786de9e1c3f49cb6"
+    },
+    {
+      "path": "kit/workspace/nativescript-type-error/script.json",
+      "bytes": 320,
+      "sha256": "521f9d8332544a7858dca222d635cf8530e13d72cfb4e2e62d4196acc3a249cb"
+    },
+    {
+      "path": "kit/workspace/nativescript-type-error/tsconfig.json",
+      "bytes": 67,
+      "sha256": "089155f616dd73ff0bebb1469f21fda41c51ad93c7b7db83d2745fa5e88ce0e5"
+    },
+    {
+      "path": "payload/Hanlin-MiniApp-Authoring-CLI-2026-11-25.zip",
+      "bytes": 15285,
+      "sha256": "a76b7cc57fc4ff8b2dae653226f095eb136afc91b97785e306378c096ea5b793"
+    },
+    {
+      "path": "payload/Standalone-Authoring-CLI.md",
+      "bytes": 7236,
+      "sha256": "0e6443ce73bd93c9861686b825bbd7c5da80bd617fcf0e8c3ed339ca62493396"
+    },
+    {
+      "path": "payload/export-standalone-toolchain.py",
+      "bytes": 4944,
+      "sha256": "cbedfdda2acdada007e95514ebc54ffe406640c1671eb0968d882cfdc88bb186"
+    }
+  ],
+  "totalBytes": 63302297,
+  "fileCount": 62
+}

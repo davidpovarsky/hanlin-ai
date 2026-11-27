@@ -1,0 +1,9 @@
+{
+  "include": [
+    "index.ts",
+    "proof.ts"
+  ],
+  "exclude": [
+    "widget.jsx"
+  ]
+}

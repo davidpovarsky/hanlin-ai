@@ -134,10 +134,26 @@ public enum HanlinScriptWidgetLiveActivityPreparation {
 
 #if os(iOS)
 import ActivityKit
+import Synchronization
 
 extension HanlinScriptWidgetLiveActivityAttributes: ActivityAttributes {}
 
 public enum HanlinScriptWidgetLiveActivityController {
+    // ActivityKit content observation can lag the awaited update. Retain the
+    // last submitted immutable state so a following queued mutation cannot
+    // reuse its revision or restore an older title.
+    private static let submittedStates = Mutex<[String: HanlinScriptWidgetLiveActivityAttributes.ContentState]>([:])
+    private static let endedActivityIDs = Mutex<Set<String>>([])
+
+    private static func latestState(for activityID: String,
+                                    observed: HanlinScriptWidgetLiveActivityAttributes.ContentState)
+        -> HanlinScriptWidgetLiveActivityAttributes.ContentState {
+        submittedStates.withLock { states in
+            guard let submitted = states[activityID], submitted.revision > observed.revision else { return observed }
+            return submitted
+        }
+    }
+
     public static func start(store: HanlinScriptExtensionStore, entityID: String, family: String,
                              title: String, values: [String: HanlinValue] = [:],
                              staleDate: Date? = nil, relevanceScore: Double = 0) async throws -> String {
@@ -169,11 +185,25 @@ public enum HanlinScriptWidgetLiveActivityController {
                               installedPackageID: String, title: String? = nil,
                               values: [String: HanlinValue] = [:], staleDate: Date? = nil,
                               relevanceScore: Double = 0) async throws -> Bool {
+        try await HanlinLiveActivityOperationQueue.shared.perform(
+            key: .init(installation: installedPackageID, activity: systemActivityID)) {
+            try await updateSerially(store: store, systemActivityID: systemActivityID,
+                installedPackageID: installedPackageID, title: title, values: values,
+                staleDate: staleDate, relevanceScore: relevanceScore)
+        }
+    }
+
+    private static func updateSerially(store: HanlinScriptExtensionStore, systemActivityID: String,
+                                        installedPackageID: String, title: String?,
+                                        values: [String: HanlinValue], staleDate: Date?,
+                                        relevanceScore: Double) async throws -> Bool {
         guard let activity = Activity<HanlinScriptWidgetLiveActivityAttributes>.activities.first(where: {
             $0.id == systemActivityID && $0.attributes.identity.installedPackageID.rawValue == installedPackageID
         }) else { return false }
+        guard !endedActivityIDs.withLock({ $0.contains(systemActivityID) }),
+              activity.activityState == .active || activity.activityState == .stale else { return false }
         let attributes = activity.attributes
-        let previous = activity.content.state
+        let previous = latestState(for: systemActivityID, observed: activity.content.state)
         guard previous.revision < UInt64.max else { throw HanlinWidgetActionError.invalidState }
         let prepared = try await Task.detached(priority: .userInitiated) {
             try HanlinScriptWidgetLiveActivityPreparation.prepare(store: store,
@@ -184,16 +214,30 @@ public enum HanlinScriptWidgetLiveActivityController {
         guard prepared.attributes == attributes else { throw HanlinWidgetActionError.inactiveInstance }
         _ = try HanlinScriptWidgetLiveActivityPreparation.load(store: store, attributes: attributes, state: prepared.state)
         await activity.update(ActivityContent(state: prepared.state, staleDate: staleDate, relevanceScore: relevanceScore))
+        submittedStates.withLock { $0[systemActivityID] = prepared.state }
         return true
     }
 
     public static func end(store: HanlinScriptExtensionStore, systemActivityID: String,
                            installedPackageID: String, title: String? = nil,
                            values: [String: HanlinValue] = [:], dismissAfterSeconds: Double? = nil) async throws -> Bool {
+        try await HanlinLiveActivityOperationQueue.shared.perform(
+            key: .init(installation: installedPackageID, activity: systemActivityID)) {
+            try await endSerially(store: store, systemActivityID: systemActivityID,
+                installedPackageID: installedPackageID, title: title, values: values,
+                dismissAfterSeconds: dismissAfterSeconds)
+        }
+    }
+
+    private static func endSerially(store: HanlinScriptExtensionStore, systemActivityID: String,
+                                     installedPackageID: String, title: String?,
+                                     values: [String: HanlinValue], dismissAfterSeconds: Double?) async throws -> Bool {
         guard let activity = Activity<HanlinScriptWidgetLiveActivityAttributes>.activities.first(where: {
             $0.id == systemActivityID && $0.attributes.identity.installedPackageID.rawValue == installedPackageID
         }) else { return false }
-        var finalState = activity.content.state
+        guard !endedActivityIDs.withLock({ $0.contains(systemActivityID) }),
+              activity.activityState == .active || activity.activityState == .stale else { return false }
+        var finalState = latestState(for: systemActivityID, observed: activity.content.state)
         if title != nil || !values.isEmpty {
             guard finalState.revision < UInt64.max else { throw HanlinWidgetActionError.invalidState }
             let attributes = activity.attributes
@@ -212,6 +256,8 @@ public enum HanlinScriptWidgetLiveActivityController {
             dismissAfterSeconds <= 0 ? .immediate : .after(.now.addingTimeInterval(dismissAfterSeconds))
         } else { .default }
         await activity.end(ActivityContent(state: finalState, staleDate: nil), dismissalPolicy: dismissalPolicy)
+        submittedStates.withLock { $0[systemActivityID] = nil }
+        endedActivityIDs.withLock { _ = $0.insert(systemActivityID) }
         return true
     }
 
@@ -222,7 +268,20 @@ public enum HanlinScriptWidgetLiveActivityController {
         let inactive = Activity<HanlinScriptWidgetLiveActivityAttributes>.activities.filter {
             !HanlinScriptWidgetLiveActivityPreparation.isActive(attributes: $0.attributes, in: snapshot)
         }
-        for activity in inactive { await activity.end(nil, dismissalPolicy: .immediate) }
+        for activity in inactive {
+            let activityID = activity.id
+            let installedID = activity.attributes.identity.installedPackageID.rawValue
+            _ = try? await HanlinLiveActivityOperationQueue.shared.perform(
+                key: .init(installation: installedID, activity: activityID)) {
+                guard let current = Activity<HanlinScriptWidgetLiveActivityAttributes>.activities.first(where: {
+                    $0.id == activityID && $0.attributes.identity.installedPackageID.rawValue == installedID
+                }) else { return false }
+                await current.end(nil, dismissalPolicy: .immediate)
+                submittedStates.withLock { $0[activityID] = nil }
+                endedActivityIDs.withLock { _ = $0.insert(activityID) }
+                return true
+            }
+        }
         return inactive.count
     }
 

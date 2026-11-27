@@ -1,0 +1,19 @@
+{
+  "source": "d5226769faba122733817a1c85fbd11440abe781",
+  "command": [
+    "runuser",
+    "-u",
+    "chatgpt-agent",
+    "--",
+    "node",
+    "--test",
+    "--test-name-pattern=dedicated assistant|widget Host|invalid widget Host|exported system-surface",
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs"
+  ],
+  "exit": 1,
+  "timedOut": false,
+  "seconds": 33.590322971343994,
+  "log": "/mnt/development/projects/worktrees/hanlin-two-wave-integration-20261126/docs/two-wave-integration/20261126/authoring-affected-test.log",
+  "logSHA256": "d59c8c133823ca11ab2013f8ca98b346701536ffedcb74cf63368db0f98b1adb",
+  "scope": "Four original affected integration tests: assistant authoring, widget Host engines/params, invalid declaration diagnostics, real system-surface compiler. Earlier full suite attempt expired at 45s and is not counted."
+}

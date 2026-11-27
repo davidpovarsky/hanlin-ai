@@ -1,0 +1,82 @@
+{
+  "observedAt": "2026-11-25T04:57:30.987498+00:00",
+  "head": "42e34eff615a6d599ddfd01ea9382d920b5f9a5c",
+  "trackedDirty": [],
+  "untrackedCount": 47,
+  "state.json": {
+    "source": "42e34eff615a6d599ddfd01ea9382d920b5f9a5c",
+    "status": "PAUSED_AFTER_PHASE",
+    "attempt": 13,
+    "controllerPID": 42753,
+    "phase": "split-inputs",
+    "activeElapsedSeconds": 9861.598917747997,
+    "finishedAt": "2026-11-25T03:59:37.147846+00:00"
+  },
+  "focused-launch-attempt13.json": {
+    "source": "42e34eff615a6d599ddfd01ea9382d920b5f9a5c",
+    "status": "FAIL",
+    "pid": 45403,
+    "wrapperPID": 45406,
+    "finishedAt": "2026-11-25T04:14:38.661375+00:00"
+  },
+  "focused-diagnostics-attempt13/state.json": {
+    "source": "42e34eff615a6d599ddfd01ea9382d920b5f9a5c",
+    "status": "DIAGNOSTIC_FAILED",
+    "pid": 45406,
+    "phase": null,
+    "finishedAt": "2026-11-25T04:14:38.572061+00:00",
+    "ownedSimulatorCleanup": {
+      "simulator": "1F3AB83E-F409-4B71-BD56-4669DB61627A",
+      "state": "Shutdown",
+      "remainingOwnedRunners": []
+    },
+    "simulator": "1F3AB83E-F409-4B71-BD56-4669DB61627A"
+  },
+  "df": "Filesystem   1024-blocks      Used Available Capacity iused    ifree %iused  Mounted on\n/dev/disk3s5   482797652 430857292   8055584    99% 5919204 80555840    7%   /System/Volumes/Data\n",
+  "freeBytes": 8248918016,
+  "ownedProcesses": [],
+  "otherXcodeProcesses": [
+    "72026 65246 Rs      02:44 /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -jobs 2 -project AI_HLY.xcodeproj -destination platform=iOS Simulator,id=5F07E63D-58D8-45F1-80BB-5669ABDD8520 -parallel-testing-enabled NO -derivedDataPath /Users/m1/caches/DerivedData/hanlin-three-waves-wave2-sidebar-sim-a146bc7a-20261125 -clonedSourcePackagesDirPath /Users/m1/caches/DerivedData/hanlin-three-w"
+  ],
+  "retainedDevices": [
+    {
+      "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-27-0",
+      "dataPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/4EC498EF-82B7-4FC1-B1CF-20AB8BD5CB25/data",
+      "dataPathSize": 5667504128,
+      "logPath": "/Users/m1/Library/Logs/CoreSimulator/4EC498EF-82B7-4FC1-B1CF-20AB8BD5CB25",
+      "udid": "4EC498EF-82B7-4FC1-B1CF-20AB8BD5CB25",
+      "lastUsedAt": "2026-11-25T03:32:35Z",
+      "isAvailable": true,
+      "logPathSize": 262144,
+      "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5-16GB",
+      "state": "Shutdown",
+      "name": "HanlinPaired-primary-ce49e30d-20261124"
+    },
+    {
+      "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-27-0",
+      "dataPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/AAC01BF1-49E2-4804-9766-BFB53194EBAA/data",
+      "dataPathSize": 5126848512,
+      "logPath": "/Users/m1/Library/Logs/CoreSimulator/AAC01BF1-49E2-4804-9766-BFB53194EBAA",
+      "udid": "AAC01BF1-49E2-4804-9766-BFB53194EBAA",
+      "lastUsedAt": "2026-11-25T03:04:47Z",
+      "isAvailable": true,
+      "logPathSize": 262144,
+      "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5-16GB",
+      "state": "Shutdown",
+      "name": "HanlinPaired-primary-ce49e30d-20261124"
+    },
+    {
+      "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-27-0",
+      "dataPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/1F3AB83E-F409-4B71-BD56-4669DB61627A/data",
+      "dataPathSize": 5634482176,
+      "logPath": "/Users/m1/Library/Logs/CoreSimulator/1F3AB83E-F409-4B71-BD56-4669DB61627A",
+      "udid": "1F3AB83E-F409-4B71-BD56-4669DB61627A",
+      "lastUsedAt": "2026-11-25T04:07:45Z",
+      "isAvailable": true,
+      "logPathSize": 262144,
+      "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5-16GB",
+      "state": "Shutdown",
+      "name": "HanlinPaired-primary-ce49e30d-20261124"
+    }
+  ]
+}

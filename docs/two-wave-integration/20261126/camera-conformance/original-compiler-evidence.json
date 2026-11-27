@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "productCommit": "c3f9076d3d8c5d0c29b002b6e20de2fb16f009bf",
+  "sourceBase": "628dbe083a5ceffc28b026e5701cd8c71c8734ff",
+  "scope": "Only the standalone MiniApps CameraCapture wrapper imports ExtensionKit and isolates LockedCameraCaptureExtension conformance to MainActor. Expo pins and the13-target product boundary are unchanged.",
+  "externalOriginal": {
+    "source": "75c21bec8e709dc4f07f8fde36f1b350f118969e",
+    "status": "FAILED",
+    "exitCode": 65,
+    "startedAtUTC": "2026-11-26T17:45:05Z",
+    "finishedAtUTC": "2026-11-26T17:53:22Z",
+    "ui": "NOT_RUN",
+    "log": {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-builds-v1/original/paired-product/mini-build.log",
+      "bytes": 8129366,
+      "sha256": "76401fab4cc3c610b7bac3e94c2c706ee50abb18dbc611a7203c6aa39b418d1d",
+      "diagnosticLines": [
+        52234,
+        52253
+      ],
+      "diagnostic": "Conformance of HanlinMiniAppsCameraCaptureExtension to protocol LockedCameraCaptureExtension crosses into main actor-isolated code; isolate the conformance to the main actor with @MainActor [#ConformanceIsolation]."
+    },
+    "receipt": {
+      "path": "/Users/m1/builds/hanlin-current-entrypoints-20261126/validation/current-source-builds-v1/build-only-result.json",
+      "sha256": "a0d91169f886c55b61caaa0ce225cac67f7d4aadb8641e55632ad042265a2a6e"
+    }
+  },
+  "independentReadback": {
+    "agent": "/root/mac_build_ops",
+    "scope": "Read-only verification of retained original log and terminal receipt; files remain with their live owner.",
+    "toolchainObservation": {
+      "xcode": "27.0",
+      "xcodeBuild": "27A266a",
+      "swift": "Apple Swift version6.4",
+      "swiftlang": "6.4.0.34.1",
+      "clang": "2100.3.34.1"
+    },
+    "toolchainBoundary": "Current verified installed Mac toolchain observation; not a claim that the build SDK is27.2 or that our current product passed."
+  },
+  "focusedTypechecks": {
+    "status": "ASANA_REPORTED_ONLY",
+    "reportedExitCodes": [
+      1,
+      0,
+      1,
+      0
+    ],
+    "reportedDurationSeconds": 25.2754,
+    "rawReceiptLocated": false,
+    "source": "https://app.asana.com/0/0/1220373832815088",
+    "boundary": "Do not count these reported focused checks as independently verified current-candidate native acceptance."
+  },
+  "currentCandidateValidation": {
+    "exactOriginalBeforeAfterBytes": "PASS",
+    "boundedSourceDiff": "PASS",
+    "gitDiffCheck": "PASS",
+    "appleBuild": "NOT_RUN",
+    "nativeTests": "NOT_RUN",
+    "osAcceptance": "NOT_RUN"
+  },
+  "limitations": [
+    "The external full build failed before UI acceptance.",
+    "Only the MiniApps wrapper is ported; no Hanlin camera extension is added.",
+    "Current full native build, signing and operating-system acceptance remain separate gates."
+  ]
+}

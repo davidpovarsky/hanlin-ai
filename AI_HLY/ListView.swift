@@ -433,7 +433,11 @@ struct ListView: View {
         List(selection: $selectedChatRecord) {
             chatRecordsSection
         }
-        .listStyle(.plain)
+        .listStyle(.sidebar)
+        .scrollContentBackground(.hidden)
+        .background {
+            Color.hanlinHLSidebarBackground.ignoresSafeArea(.container)
+        }
         .searchable(text: $searchText, prompt: Text("搜索聊天与消息内容", bundle: HanlinLocalization.bundle))
         .onChange(of: searchText) {
             searchTask?.cancel()
@@ -456,7 +460,11 @@ struct ListView: View {
         List {
             chatRecordsSection
         }
-        .listStyle(.plain)
+        .listStyle(.sidebar)
+        .scrollContentBackground(.hidden)
+        .background {
+            Color.hanlinHLSidebarBackground.ignoresSafeArea(.container)
+        }
         .searchable(text: $searchText, prompt: Text("搜索聊天与消息内容", bundle: HanlinLocalization.bundle))
         .onChange(of: searchText) {
             // 取消上一次搜索任务
@@ -487,18 +495,6 @@ struct ListView: View {
         }
     }
     
-    @ViewBuilder
-    private func backgroundView(for record: ChatRecords) -> some View {
-        if record.isPinned {
-            BlurView(style: .systemUltraThinMaterial)
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-                .shadow(color: Color.from(name: record.color ?? "hlBlue"), radius: 1)
-                .padding(3)
-        } else {
-            Color.clear
-        }
-    }
-    
     // MARK: - 子视图：聊天记录列表
     @ViewBuilder
     private func chatRecordRow(for record: ChatRecords) -> some View {
@@ -511,7 +507,8 @@ struct ListView: View {
             ChatRowView(
                 record: record,
                 searchText: searchText,
-                matchedSnippet: snippet
+                matchedSnippet: snippet,
+                isSelected: selectedChatRecord === record
             )
             .contentShape(Rectangle())
             .contextMenu {
@@ -540,10 +537,9 @@ struct ListView: View {
             }
         }
         .buttonStyle(.plain)
-        .padding(.horizontal)
-        .padding(.vertical, 5)
-        .listRowInsets(EdgeInsets())
-        .listRowBackground(backgroundView(for: record))
+        .listRowInsets(EdgeInsets(top: 2, leading: 12, bottom: 2, trailing: 12))
+        .listRowBackground(Color.clear)
+        .listRowSeparator(.hidden)
         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
             Button(role: .destructive) {
                 deleteChat(record)
@@ -580,11 +576,17 @@ struct ListView: View {
         .accessibilityIdentifier("hanlin-chat-row-\(record.name ?? "")")
     }
     
-    // 使用 filteredChatRecords 计算属性替代原来的缓存数据
     private var chatRecordsSection: some View {
-        Section {
-            ForEach(filteredChatRecords, id: \.id) { record in
-                chatRecordRow(for: record)
+        ForEach(HanlinConversationHistory.sections(from: filteredChatRecords)) { section in
+            Section {
+                ForEach(section.records, id: \.id) { record in
+                    chatRecordRow(for: record)
+                }
+            } header: {
+                Text(section.title)
+                    .font(HanlinTypography.subheadline.weight(.semibold))
+                    .textCase(nil)
+                    .accessibilityIdentifier("hanlin-history-section-\(section.id.rawValue)")
             }
         }
     }

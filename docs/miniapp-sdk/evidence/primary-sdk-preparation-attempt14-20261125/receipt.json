@@ -1,0 +1,362 @@
+{
+  "schemaVersion": 1,
+  "kind": "SDK_PREPARATION_RECONCILIATION_EVIDENCE_ONLY",
+  "recordedAt": "2026-11-25T05:44:36.129663+00:00",
+  "sourceCommit": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
+  "sourceTree": "1446c01003a90df66bf60b36529f815f02c6621d",
+  "snapshotRoot": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/prepared-snapshot-attempt14",
+  "snapshotCapturedAt": "2026-11-25T05:25:15.260415+00:00",
+  "snapshotControllerStatus": "PAUSED_AFTER_PHASE",
+  "snapshotControllerPhase": "split-inputs",
+  "originalHandoffReceiptSHA256": "57e4fba2ae918a08448b32561be51e3617adf9468f16488439898debae459fb2",
+  "archive": {
+    "snapshotPath": "files/build/runtime-host/RuntimeHostResources.zip",
+    "bytes": 81823821,
+    "sha256": "14fac1d2497efea1041553debf4c60afe2305053b10f8eee94491d50fce0ffa8",
+    "retainedInGit": false,
+    "verifiedInPlace": true
+  },
+  "sdkManifest": {
+    "archiveMember": "MiniAppSDK/miniapp-sdk.json",
+    "snapshotPath": "extracted-sdk/miniapp-sdk.json",
+    "bytes": 5223957,
+    "sha256": "039f061558cc53d51e929f07e2df222709ab078d8417af527bc448750bda5593"
+  },
+  "sdkIdentity": {
+    "schemaVersion": 1,
+    "inputSHA256": "b8a4d934a145530a5a1095d719c19e16f0c790ee234c1999637a42c0f88c4f99",
+    "sourceInputCount": 234,
+    "fileCount": 25669
+  },
+  "hostModule": {
+    "archiveMember": "miniapp-authoring.mjs",
+    "bytes": 50327,
+    "sha256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9",
+    "appSourceArchiveSHA256": "14fac1d2497efea1041553debf4c60afe2305053b10f8eee94491d50fce0ffa8"
+  },
+  "verification": {
+    "rawHandoffFilesVerified": 30,
+    "trackedPreparedPathsVerified": 13,
+    "trackedPreparedBytes": 3088099,
+    "sourceInputsBoundToGitOrPreparedPayload": 234,
+    "archiveInventoryRows": 25669,
+    "actualAddedOrChangedSDKMembersVerified": 14,
+    "sdk10Comparison": {
+      "files": {
+        "unchanged": 25655,
+        "added": 8,
+        "changed": 6,
+        "removed": 0
+      },
+      "sourceInputs": {
+        "unchanged": 215,
+        "added": 12,
+        "changed": 7,
+        "removed": 0
+      }
+    },
+    "originalDocumentationProjects": {
+      "status": "EXECUTED_PASS",
+      "sdk": {
+        "manifestSHA256": "039f061558cc53d51e929f07e2df222709ab078d8417af527bc448750bda5593",
+        "inputSHA256": "b8a4d934a145530a5a1095d719c19e16f0c790ee234c1999637a42c0f88c4f99"
+      },
+      "projects": [
+        {
+          "name": "expo-guide",
+          "succeeded": true,
+          "diagnosticCount": 0
+        },
+        {
+          "name": "nativescript-guide",
+          "succeeded": true,
+          "diagnosticCount": 0
+        },
+        {
+          "name": "scriptwidget-guide",
+          "succeeded": true,
+          "diagnosticCount": 0
+        },
+        {
+          "name": "scriptwidget-controls",
+          "succeeded": true,
+          "diagnosticCount": 0
+        }
+      ]
+    },
+    "vendorNativeRequiredTargets": 15,
+    "vendorNativeMissingTargets": 0,
+    "projectNotificationExtension": "HanlinMiniAppsNotificationService",
+    "declarationCorrectionCount": 5,
+    "correctionReceiptIdenticalToSDK10": true,
+    "retainedExpoAssetStageTargetRowsEqual": 23,
+    "notificationEngineMetadata": [
+      {
+        "engine": "expo",
+        "packageVersion": "1.0.0",
+        "notificationEvents": {
+          "schemaVersion": 1,
+          "packageName": "@hanlin/notification-events",
+          "schemaPath": "docs/miniapp-sdk/notification-event.schema.json",
+          "docsPath": "docs/miniapp-sdk/NOTIFICATION_EVENTS.md",
+          "delivery": "foreground",
+          "entrypointKind": "appIntent"
+        }
+      },
+      {
+        "engine": "nativescript",
+        "packageVersion": "1.0.0",
+        "notificationEvents": {
+          "schemaVersion": 1,
+          "packageName": "@hanlin/notification-events",
+          "schemaPath": "docs/miniapp-sdk/notification-event.schema.json",
+          "docsPath": "docs/miniapp-sdk/NOTIFICATION_EVENTS.md",
+          "delivery": "foreground",
+          "entrypointKind": "appIntent"
+        }
+      }
+    ]
+  },
+  "materializationPlan": {
+    "path": "materialization-plan.json",
+    "sha256": "ed24f73358d21a12ea11f7aee8d6c81d1cf4bc90349496139b08024963128f92",
+    "bindingSHA256": "856b65cbbcc0ba386ee0b3fb8c5a8cd1adc2998c65ece7b13b9aa4cb89f2995f",
+    "materializedByThisAgent": false
+  },
+  "priorSDK10Receipt": "docs/miniapp-sdk/evidence/primary-sdk-attempt10-20261125/receipt.json",
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 10904,
+      "sha256": "a59a84ac9247c514cb256d398a065a4faf9a870cb818745a8401a289c1430dd8"
+    },
+    {
+      "path": "materialization-plan.json",
+      "bytes": 7793,
+      "sha256": "ed24f73358d21a12ea11f7aee8d6c81d1cf4bc90349496139b08024963128f92"
+    },
+    {
+      "path": "raw/handoff/controller-state-at-capture.json",
+      "bytes": 63438,
+      "sha256": "15f53a0ab93a41609e89819acbd56f0b02ac05a19ee32a1a8f355bc31b45130c"
+    },
+    {
+      "path": "raw/handoff/expo-asset-produced-bindings.json",
+      "bytes": 9116,
+      "sha256": "299f617ecc8909c16d2a2776488181b5d399a25abed4f255f6b526f8b78ece52"
+    },
+    {
+      "path": "raw/handoff/files/AI_HLY.xcodeproj/project.pbxproj.gz",
+      "bytes": 33508,
+      "sha256": "ec49e1566490a5cfb71016bea915abd89acc051e5433b819fd0f6b4a3b49c5fd"
+    },
+    {
+      "path": "raw/handoff/files/Package.swift.gz",
+      "bytes": 11504,
+      "sha256": "2cdd8fcddd80aeaa945c5734e833ab9a95fb0d0ee163037ce12164efdd0d1a43"
+    },
+    {
+      "path": "raw/handoff/files/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/.artifact-manifest.json",
+      "bytes": 226,
+      "sha256": "80afcbce26c01da5a63f951e04c6fea5959d3b3a51271d6a24002c35c07ceb47"
+    },
+    {
+      "path": "raw/handoff/files/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/.source-build-receipt.json",
+      "bytes": 1355,
+      "sha256": "78a6b4b85330189dd162c09ae250cb280bf7dbe62608ca6438e6f3fabde6ee3b"
+    },
+    {
+      "path": "raw/handoff/files/Packages/HanlinExpoRuntime/Artifacts/ExpoAsset.xcframework/Info.plist",
+      "bytes": 1196,
+      "sha256": "b239db0645c42fb07b6dd21e54c6012289f62593186b64b880c419d293da984d"
+    },
+    {
+      "path": "raw/handoff/files/RuntimeDependencies.lock.json",
+      "bytes": 7925,
+      "sha256": "6cdbc18a474febbfc912b35ecbf5b0b55438a6a3e6daf2c33a43792cd04bd50a"
+    },
+    {
+      "path": "raw/handoff/files/Scripts/Expo/dependency-lock.json",
+      "bytes": 5375,
+      "sha256": "b9e3ad6d863e3e5136ad93924ce4edcb37da87578b113523640110af347eec65"
+    },
+    {
+      "path": "raw/handoff/files/Scripts/Expo/package-lock.json.gz",
+      "bytes": 75790,
+      "sha256": "6f138b84b43884c0c582fcc281ce881dc83adbb94f2d75bcb2b4282fcf901d04"
+    },
+    {
+      "path": "raw/handoff/files/Scripts/Expo/package.json",
+      "bytes": 1759,
+      "sha256": "e2b50fae013276229c78619bbbe0b63d8c29b00fefde3afeccea98af117aa206"
+    },
+    {
+      "path": "raw/handoff/files/Scripts/MiniApps/upstream-resolution.json",
+      "bytes": 15092,
+      "sha256": "e0c2944ea24c09330825dee58badedcec58606ba603ccdedc888abf1a63a13cb"
+    },
+    {
+      "path": "raw/handoff/files/Scripts/NativeScript/package-lock.json.gz",
+      "bytes": 22999,
+      "sha256": "507a1568c8f21af385539f09d77b95b8dcf5954f4438861e5c63e36f1189dc0f"
+    },
+    {
+      "path": "raw/handoff/files/Scripts/NativeScript/package.json",
+      "bytes": 851,
+      "sha256": "08fc03bfa87cd78f4f21f80e9324a4840061105f6e9ab081ed794c569ca7324b"
+    },
+    {
+      "path": "raw/handoff/files/build/acceptance/expo-type-declarations/corrections.json",
+      "bytes": 3600,
+      "sha256": "c5e5322a6177f36a713380134006d4beb3a0ebd275e435e66b7de93a4cb60f82"
+    },
+    {
+      "path": "raw/handoff/files/build/app-split-evidence-attempt14/miniapp-documentation-snippets.json",
+      "bytes": 20207,
+      "sha256": "c78bb44da34e04c95bc1692633a5c89e80c9f4b0a328acea3d99c69ba0eda23c"
+    },
+    {
+      "path": "raw/handoff/files/build/app-split-evidence-attempt14/prepared-native/native-artifacts.json",
+      "bytes": 29897,
+      "sha256": "e61def99f7e51e3753f0ab084b5c615ce6c86686c229c0ba2568b2e7a082d6a8"
+    },
+    {
+      "path": "raw/handoff/files/build/miniapp-upstreams/expo-native-source/ios/Podfile.lock.gz",
+      "bytes": 8723,
+      "sha256": "1a4724b009336f6470d1c89f013c029ff89b1ac77f290986a37abf67f895e945"
+    },
+    {
+      "path": "raw/handoff/files/build/primary-control/generation-attempt14/1-generate_manifest.py.log.gz",
+      "bytes": 1526,
+      "sha256": "ecd26b5215c8b83b4245e4c2ff59a29d0703e7923b9e81ce15339c75ff36251e"
+    },
+    {
+      "path": "raw/handoff/files/build/primary-control/generation-attempt14/2-update_project.py.log.gz",
+      "bytes": 103,
+      "sha256": "b44fe6e0a9fe538f4926f1682de104830f83fafbeb7a206b936ee8e8d9e48210"
+    },
+    {
+      "path": "raw/handoff/files/build/primary-control/generation-attempt14/3-verify_targets.py.log.gz",
+      "bytes": 596,
+      "sha256": "0618405dacd7a0cb7c11b7547e2025d6f7b8ab3080feffd4e36da12324980745"
+    },
+    {
+      "path": "raw/handoff/files/build/primary-control/generation-attempt14/4--lint.log.gz",
+      "bytes": 126,
+      "sha256": "889beecc9494db624bd1af17d822f5b7c1d621ab58bb3d060fb20e4e89bde2a2"
+    },
+    {
+      "path": "raw/handoff/files/build/primary-control/generation-attempt14/generated-source.patch.gz",
+      "bytes": 9509,
+      "sha256": "67c52a9ea8459b2467e73d2cf60e783cb8d89af278d9a58001101f30cb2c2adb"
+    },
+    {
+      "path": "raw/handoff/files/build/primary-control/generation-attempt14/state.json",
+      "bytes": 3306,
+      "sha256": "28f474759db1388b3c808694c9825920702315827fa8ff8a931ad7fc5c32b5fe"
+    },
+    {
+      "path": "raw/handoff/files/build/primary-control/logs-attempt14/split-native-artifacts.log.gz",
+      "bytes": 844,
+      "sha256": "bc7c73d074184119d9b2d6e034dbb5fe13ee124efb2c0c81c81c84fb633222dc"
+    },
+    {
+      "path": "raw/handoff/files/build/primary-control/logs-attempt14/split-native-preparation.log.gz",
+      "bytes": 10511,
+      "sha256": "371a77286a767a710a65d48fc180b7444ba67517649259e3ec4d655b3d2c88ce"
+    },
+    {
+      "path": "raw/handoff/files/build/primary-control/plan.json",
+      "bytes": 13211,
+      "sha256": "fe2364e9b8726d1f6add63067469aabeb0ef9b8e7df759e6fe00f7ee752c21e9"
+    },
+    {
+      "path": "raw/handoff/files/build/primary-control/prefix-attempt14-resource-basis.json",
+      "bytes": 970,
+      "sha256": "f254102cfaef7bcf9fa26c83cca651a52112b19922d1e262dc6448cc09fdd86e"
+    },
+    {
+      "path": "raw/handoff/files/build/primary-control/source-advance-b0cf26a6/receipt.json.gz",
+      "bytes": 12140,
+      "sha256": "96786d6550626693784d69be4162c84db6c023e5c8e54dc360c802fa2517c86a"
+    },
+    {
+      "path": "raw/handoff/files/build/runtime-host/host-metadata.json",
+      "bytes": 358,
+      "sha256": "0f7eed258abb847a85612368900bf13280be475be7c124e11161f77a0c24ac52"
+    },
+    {
+      "path": "raw/handoff/files/docs/agent-sdk/unified-package-manifest.json",
+      "bytes": 3901,
+      "sha256": "2dce00d3544b324ea9b2df5fa1a744a1bad534e2faa3e54c10195b4ce0a2e66f"
+    },
+    {
+      "path": "raw/handoff/miniapp-sdk.json.gz",
+      "bytes": 1302483,
+      "sha256": "002e204db5e708bc8042ff1633e8075224c6a86d51439332a30896269dd4a149"
+    },
+    {
+      "path": "raw/handoff/receipt.json",
+      "bytes": 15008,
+      "sha256": "57e4fba2ae918a08448b32561be51e3617adf9468f16488439898debae459fb2"
+    },
+    {
+      "path": "raw/handoff/tracked-delta.json",
+      "bytes": 5248,
+      "sha256": "2fd15d6e6bc91b52e6327306f9ff25a3da3d10efc8f09476462793fa8092acc5"
+    },
+    {
+      "path": "raw/manifest-comparison.json",
+      "bytes": 10474,
+      "sha256": "5de9e55320b9bda112049878a88ddf0ba256b9ea7ec678022a668729d8112aea"
+    },
+    {
+      "path": "raw/prepared-content/283c96260a51c095be32f262f9f77ba58bebc5372aa1af994176816c8fb5d538.md.gz",
+      "bytes": 10100,
+      "sha256": "66c442939d019e0a41a8be0b1f61ecc904bb4be6ee21ef0460b645df42f59f7f"
+    },
+    {
+      "path": "raw/prepared-content/54e72317c384d85ca502d3ee5c93080fc438fd9e2dff1735b582eca4d445f8c7.json.gz",
+      "bytes": 16492,
+      "sha256": "b73390a0e2252d813f0124aa458fdb2b2486a448fea5a4a0ef97896c4bcbc1c7"
+    },
+    {
+      "path": "raw/prepared-content/a132faaf5a40550b2c8a843f97a6f094d7c8f288cc9fba9d6c8d0090a38727ff.md",
+      "bytes": 23332,
+      "sha256": "a132faaf5a40550b2c8a843f97a6f094d7c8f288cc9fba9d6c8d0090a38727ff"
+    },
+    {
+      "path": "raw/prepared-content/b4752902d3097f4d1637585e1367e797187063351975e20ea8bfef459ee69baa.json.gz",
+      "bytes": 40639,
+      "sha256": "f4fa7862a26466ed21eb5ac46302d620726ef6bbf3ccc6c222593c569a5e006e"
+    },
+    {
+      "path": "raw/prepared-content/b81e8ecccb8e8495f203b51273787df1ab10d64d4236abfa061dc6cb9dd60b1c.hanlinExpo",
+      "bytes": 325823,
+      "sha256": "b81e8ecccb8e8495f203b51273787df1ab10d64d4236abfa061dc6cb9dd60b1c"
+    },
+    {
+      "path": "raw/prepared-content/cdf1b95be3e210621095a6269f9d17bf6cab11c6b7e6c6d8895265fcb8a4b84b.hanlinExpo",
+      "bytes": 325825,
+      "sha256": "cdf1b95be3e210621095a6269f9d17bf6cab11c6b7e6c6d8895265fcb8a4b84b"
+    },
+    {
+      "path": "raw/project-and-declaration-binding.json",
+      "bytes": 11921,
+      "sha256": "45cb7db1a0d0b762f2b39028ad3083b4ffddac4c694635785a2838ad06df4033"
+    },
+    {
+      "path": "raw/retained-members.json",
+      "bytes": 17144,
+      "sha256": "771ac0bc8770357951e0fda8c67a66409ff07f5df8522f284792653870cc42fa"
+    },
+    {
+      "path": "raw/source-archive-verification.json",
+      "bytes": 63187,
+      "sha256": "8d37cbafb21e381c9551266cf5ef5785b429d12a90f2d2e8c94b6eb59c8a4bbc"
+    }
+  ],
+  "memberCount": 46,
+  "memberBytes": 2556035,
+  "boundary": "Frozen preparation/source/SDK evidence only. No native consumer, installed extension, paired52, OS callback, APNs provider, or physical-device PASS is inferred. Subsequent outcomes must remain separate."
+}

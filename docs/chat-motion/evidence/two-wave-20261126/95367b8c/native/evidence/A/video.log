@@ -1,0 +1,6 @@
+Note: No display specified. Defaulting to display: F842D901-B23D-4B64-B4E0-97E0AB02521C (screenID: 1, name: LCD)
+Recording started
+Recording completed. Writing to disk.
+
+Wrote video to: /Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/A/motion-first120s.mp4
+[record_ui_run] status=CAPTURE_ATTEMPTED exit_code=0 stop_reason=timer_120s elapsed_seconds=120.01 sigint_sent=True timed_out_finalizing=False output_bytes=19881365

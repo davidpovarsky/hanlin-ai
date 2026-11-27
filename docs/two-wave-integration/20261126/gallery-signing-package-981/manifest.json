@@ -1,0 +1,249 @@
+{
+  "schemaVersion": 1,
+  "createdAt": "2026-11-26T18:43:21.133022+00:00",
+  "source": "9819697c1792119a6a93b492d12abad7b3330c93",
+  "files": [
+    {
+      "path": "gallery/controller-receipt.json",
+      "source": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/controller-receipt.json",
+      "bytes": 2726,
+      "sha256": "cd366f1f1896c377c4f350e8957ffe47993e15dfb37f225ace783da23db7cee7"
+    },
+    {
+      "path": "gallery/expo-hello-world-build.json",
+      "source": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/expo-hello-world-build.json",
+      "bytes": 1480,
+      "sha256": "ed3d5c3762112da971f7a7e9be06606e344492cdf1c487ed69bda5eb480b46e5"
+    },
+    {
+      "path": "gallery/expo-hello-world-validate.json",
+      "source": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/expo-hello-world-validate.json",
+      "bytes": 1379,
+      "sha256": "1c204643b3d1cf3bcc923cde2c3e009b76036340b65d6a00164b2ee5bc4a616c"
+    },
+    {
+      "path": "gallery/gallery-original-contract-driver.mjs",
+      "source": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/gallery-original-contract-driver.mjs",
+      "bytes": 4845,
+      "sha256": "5fa4fb708f104cf0b4b5f3409f7fc7d979e38ce4b6844c91b259a6abba95fe58"
+    },
+    {
+      "path": "gallery/gallery-original-contract-receipt.json",
+      "source": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/gallery-original-contract-receipt.json",
+      "bytes": 16644,
+      "sha256": "e0e76e80602f7fc70ce3690eff1d3646fd22857ce8699b3edeb29197a2b0404e"
+    },
+    {
+      "path": "gallery/gallery-original-contract.log",
+      "source": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/gallery-original-contract.log",
+      "bytes": 2937,
+      "sha256": "e933d453e8e16e0e2748e086067a530182a6686f6309b9379d0fb5be22d4bcb1"
+    },
+    {
+      "path": "gallery/nativescript-hello-world-build.json",
+      "source": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/nativescript-hello-world-build.json",
+      "bytes": 1047,
+      "sha256": "2cea35279e68697922601336eef714cfc64ca164f12321ba0155bfcfe8e3383b"
+    },
+    {
+      "path": "gallery/nativescript-hello-world-validate.json",
+      "source": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/nativescript-hello-world-validate.json",
+      "bytes": 938,
+      "sha256": "69d02e3bb8282540aa9056c56ff8af71a1164b4ed6b5b74aadade77ac0bf5148"
+    },
+    {
+      "path": "gallery/nativescript-image-drawing-build.json",
+      "source": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/nativescript-image-drawing-build.json",
+      "bytes": 1051,
+      "sha256": "14e017c813394d0727c9d99438f144bdc8771a6302cb73b47752ff80fb14f50f"
+    },
+    {
+      "path": "gallery/nativescript-image-drawing-validate.json",
+      "source": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/nativescript-image-drawing-validate.json",
+      "bytes": 940,
+      "sha256": "daa8c6fa31795d87dfb0003e64d8c158ee7724fe6c8c33c75cf60480f38884bb"
+    },
+    {
+      "path": "gallery/run-gallery.py",
+      "source": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/run-gallery.py",
+      "bytes": 3604,
+      "sha256": "d98e621c4fdbae3412be70f119f44dd7a2a5453c987a8551ef54e11db064b9a1"
+    },
+    {
+      "path": "gallery/sdk-only-departure-budget-build.json",
+      "source": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/sdk-only-departure-budget-build.json",
+      "bytes": 1498,
+      "sha256": "52d6092367c5eab06c5fd7af53b78acf4707a6686d2063fa44535d0fb37c38ee"
+    },
+    {
+      "path": "gallery/sdk-only-departure-budget-validate.json",
+      "source": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/sdk-only-departure-budget-validate.json",
+      "bytes": 1388,
+      "sha256": "271ad2e902e0f62c8edb0b22403e1abbf33f515de1843e83916eae18f705a9be"
+    },
+    {
+      "path": "gallery/sdk-only-table-share-build.json",
+      "source": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/sdk-only-table-share-build.json",
+      "bytes": 1039,
+      "sha256": "b3abfd1a5278e037ac370b9198450ee414a7fcdfebf06ac4199f9c08fe385dc3"
+    },
+    {
+      "path": "gallery/sdk-only-table-share-validate.json",
+      "source": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/sdk-only-table-share-validate.json",
+      "bytes": 934,
+      "sha256": "1cee4993dbc279ae3b52f34404a6439b19c866815f5d570cc77305819117421b"
+    },
+    {
+      "path": "gallery/prepared-manifests/nativescript-hello-world/hanlin.authoring.json",
+      "source": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/packages/nativescript-hello-world/hanlin.authoring.json",
+      "bytes": 2159,
+      "sha256": "0338ac57db228838fbc9727d804d4b0e72a9547f11422c931e8d54e1e9ef92b6"
+    },
+    {
+      "path": "gallery/prepared-manifests/nativescript-hello-world/script.json",
+      "source": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/packages/nativescript-hello-world/script.json",
+      "bytes": 320,
+      "sha256": "521f9d8332544a7858dca222d635cf8530e13d72cfb4e2e62d4196acc3a249cb"
+    },
+    {
+      "path": "gallery/prepared-manifests/sdk-only-table-share/hanlin.authoring.json",
+      "source": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/packages/sdk-only-table-share/hanlin.authoring.json",
+      "bytes": 2120,
+      "sha256": "5f2d4dcf03e9dd0b838b6d80f575d9c04fc11bebd14188f5f59ac1e62b2fedb1"
+    },
+    {
+      "path": "gallery/prepared-manifests/sdk-only-table-share/script.json",
+      "source": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/packages/sdk-only-table-share/script.json",
+      "bytes": 306,
+      "sha256": "1cd5129c60227b1ab53e2752e27b3acc29b73d8161de9495d46b2470393653f1"
+    },
+    {
+      "path": "gallery/prepared-manifests/nativescript-image-drawing/hanlin.authoring.json",
+      "source": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/packages/nativescript-image-drawing/hanlin.authoring.json",
+      "bytes": 2126,
+      "sha256": "9449a07d88a5ee8656dca5168f1571da9b08c5fd7c8c0aaafa6859f26c567298"
+    },
+    {
+      "path": "gallery/prepared-manifests/nativescript-image-drawing/script.json",
+      "source": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/packages/nativescript-image-drawing/script.json",
+      "bytes": 340,
+      "sha256": "32038032f3bd0f085fb6c0de6647162f2afa1534ca31cbc0363e7cafb2d52773"
+    },
+    {
+      "path": "gallery/prepared-manifests/expo-hello-world/hanlin.authoring.json",
+      "source": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/packages/expo-hello-world/hanlin.authoring.json",
+      "bytes": 2271,
+      "sha256": "455b01c345da48d06bf59a2fd3a22d6bd8ef5518d306d38a183700bc66b94e96"
+    },
+    {
+      "path": "gallery/prepared-manifests/expo-hello-world/script.json",
+      "source": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/packages/expo-hello-world/script.json",
+      "bytes": 264,
+      "sha256": "308768a8274c3f58254c4f6daafa7b16a07f0c68dc519f17d3e5feae895dcafb"
+    },
+    {
+      "path": "gallery/prepared-manifests/sdk-only-departure-budget/hanlin.authoring.json",
+      "source": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/packages/sdk-only-departure-budget/hanlin.authoring.json",
+      "bytes": 2258,
+      "sha256": "32c3af567d9a3897b0c4546edfd59a6fe80cca8566aec15acd1de555d90de8f5"
+    },
+    {
+      "path": "gallery/prepared-manifests/sdk-only-departure-budget/script.json",
+      "source": "/Users/m1/builds/hanlin-gallery-9819697c-20261126/packages/sdk-only-departure-budget/script.json",
+      "bytes": 268,
+      "sha256": "fce829f1ede25e2a95377b3d270c36b974a342c61dd9d8038ae8682d26361a60"
+    },
+    {
+      "path": "signing/release-readiness-9819697c-r3.json",
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/release-readiness-9819697c-r3.json",
+      "bytes": 37929,
+      "sha256": "f7e6f2aa2e10cedb9c4a5de4b7a22d1d2ad15360bd1d21cbc392c2e672aff5bd"
+    },
+    {
+      "path": "signing/release-registration-9819697c.json",
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/release-registration-9819697c.json",
+      "bytes": 7563,
+      "sha256": "fc724efec8b2fe077f17d7f051f0e0cc4755d9e7006f795a8d034fa90108f1ac"
+    },
+    {
+      "path": "signing/release-number-reservation-9819697c.json",
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/release-number-reservation-9819697c.json",
+      "bytes": 1164,
+      "sha256": "6d93c26cbb99f253d378d7f0afefa82588309b39e7916e1db5534cea247c460e"
+    },
+    {
+      "path": "signing/release-queue-readback-9819697c-r2.json",
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/release-queue-readback-9819697c-r2.json",
+      "bytes": 624,
+      "sha256": "5259fa7be7542fe98d760e5e2f9b146e4de6da0de5e1095d555979a21bffb29a"
+    },
+    {
+      "path": "signing/registration/miniapps_camera_capture.json",
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/release-registration-9819697c/miniapps_camera_capture.json",
+      "bytes": 1261,
+      "sha256": "eb1de7868c5265279652757aaac1e6e63ffb294a81e98f4b763c35828a293888"
+    },
+    {
+      "path": "signing/registration/miniapps_keyboard.json",
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/release-registration-9819697c/miniapps_keyboard.json",
+      "bytes": 1436,
+      "sha256": "f47bb0e37ea84c2c64a1e93c921d86d98cfd322218f405fa5d1b3e78f9a61b56"
+    },
+    {
+      "path": "signing/registration/miniapps_notification_content.json",
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/release-registration-9819697c/miniapps_notification_content.json",
+      "bytes": 1480,
+      "sha256": "1dc436b13233794388de967162216a4c82154c76fbeb9d0277ef6e4fece96a6e"
+    },
+    {
+      "path": "native-package/platform-native-build-9819697c-r1.json",
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/platform-native-build-9819697c-r1.json",
+      "bytes": 15511,
+      "sha256": "3aa807b7d7bb903da09b55d4cb0790af5f1c13f1ed7b140bfc0fabd4a797f608"
+    },
+    {
+      "path": "native-package/platform-native-preparation-9819697c.json",
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/platform-native-preparation-9819697c.json",
+      "bytes": 3841,
+      "sha256": "e0014191b40837703acd96c21db70bc61ea57b1b5a3bff187e6fabd3bc954a8e"
+    },
+    {
+      "path": "native-package/platform-test-inventory-9819697c.json",
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/platform-test-inventory-9819697c.json",
+      "bytes": 43164,
+      "sha256": "036425ffad1de26203c7ceaebcf35034937c2a85a9bcb7a59858a11889dd537c"
+    },
+    {
+      "path": "native-package/build-platform-native-9819697c-r1.py",
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/build-platform-native-9819697c-r1.py",
+      "bytes": 7833,
+      "sha256": "91184280d50a99fb76228ba8c3d2678a764201f9a3c302bd73a1a506c497c395"
+    },
+    {
+      "path": "native-package/original-package-build-for-testing.log",
+      "source": "/Users/m1/builds/hanlin-two-wave-root-20261126/validation/platform-9819697c/build-r1/original-package-build-for-testing.log",
+      "bytes": 2973152,
+      "sha256": "3e1876f17892a4f4d5b698d3b362e368816eab9180bf2baba31c64f98b6bd7ef"
+    },
+    {
+      "path": "native-package/diagnostics.json",
+      "source": "derived from retained exact raw log",
+      "bytes": 3139,
+      "sha256": "cfc52c82b0095ffaab0bdea471678040e397cd08b98eb619f2959bb2b449736f"
+    },
+    {
+      "path": "README.md",
+      "source": "execution evidence explanation",
+      "bytes": 1880,
+      "sha256": "03cfb4b7d8aa01eac21c03c957d1245683a71e237d4a6d433bbb67d6dd14e065"
+    }
+  ],
+  "excluded": [
+    "mobileprovision bytes",
+    "private profiles directory",
+    "credentials",
+    "SDK dependency trees",
+    "native build products"
+  ],
+  "scope": "Fresh gallery proof, sanitized signing/resource reservation receipts, original native failure evidence."
+}

@@ -1,0 +1,44 @@
+{
+  "schemaVersion": 1,
+  "status": "EXACT_DELTA_RECONSTRUCTION_PASS",
+  "verifiedAt": "2026-11-25T09:26:21.889742+00:00",
+  "base": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/user-deliverables-sdk16/Hanlin-MiniApp-SDK-2026-11-25.zip",
+    "bytes": 68725893,
+    "sha256": "e2aa6797377c3dc805c9557c73beba7d2d9f60af02285e6d04a6687041ab08ec"
+  },
+  "output": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/user-deliverables-sdk18/Hanlin-MiniApp-SDK-2026-11-25.zip",
+    "bytes": 68726436,
+    "sha256": "78e8a83d42ebfba2c9c8194acf6a0c16d3c7aab92d0ad2fbc4ecc137930226dd"
+  },
+  "delta": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/user-deliverables-sdk18/SDK16-to-SDK18-exact.delta.zip",
+    "bytes": 2910870,
+    "sha256": "04ce394be1e40aa513b4099e1c402961601a36ffe51136c1a2ba55e231b9277d"
+  },
+  "helper": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk-transport-delta-v1/apply_exact_zip_delta.py",
+    "bytes": 4064,
+    "sha256": "a88bbdacbcbb08d9d03dd7ecd4e39d3bcd5108772e734a8679889d2f1305f27e"
+  },
+  "operations": 51281,
+  "reusedBaseBytes": 61154181,
+  "insertedBytesBeforeCompression": 7572255,
+  "recordComparison": {
+    "wholeRecordsCopied": 0,
+    "recordsSplit": 25670,
+    "newRecords": 0
+  },
+  "actualReconstruction": {
+    "status": "EXACT_RECONSTRUCTION_PASS",
+    "output": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/user-deliverables-sdk18/Hanlin-MiniApp-SDK-2026-11-25.reconstructed-verification.zip",
+    "bytes": 68726436,
+    "sha256": "78e8a83d42ebfba2c9c8194acf6a0c16d3c7aab92d0ad2fbc4ecc137930226dd",
+    "baseSHA256": "e2aa6797377c3dc805c9557c73beba7d2d9f60af02285e6d04a6687041ab08ec",
+    "deltaSHA256": "04ce394be1e40aa513b4099e1c402961601a36ffe51136c1a2ba55e231b9277d"
+  },
+  "temporaryVerifiedDuplicateRemoved": true,
+  "elapsedSeconds": 1.8329725535586476,
+  "boundary": "Only a verified transport delta; user-facing SDK is the exact exported ZIP. No Library action, app modification or native execution."
+}

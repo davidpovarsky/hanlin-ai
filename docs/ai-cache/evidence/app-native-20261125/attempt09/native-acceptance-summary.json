@@ -1,0 +1,37 @@
+{
+  "status": "BUILD_FAILED_TESTS_NOT_RUN",
+  "source": "40a778f5faf9df99e692033a2c762d4664d6d8f8",
+  "sourceAfter": "40a778f5faf9df99e692033a2c762d4664d6d8f8",
+  "sourceUnchanged": true,
+  "locksUnchanged": true,
+  "preparationReuse": {
+    "status": "VERIFIED_EXACT_INPUT_REUSE",
+    "source": "40a778f5faf9df99e692033a2c762d4664d6d8f8",
+    "originalPrepareSource": "1ae93941a34cf555f8a7293106efeff80978ebfa",
+    "originalPrepareReceiptSHA256": "78b77f924e18ce3187c9d8fc1b4ccd73f1ab99e6d64fd3f10476e6053520ea6c",
+    "inputCount": 58
+  },
+  "buildExitCode": 65,
+  "expectedMethods": 46,
+  "expectedInvocations": 48,
+  "executedInvocations": 0,
+  "startedAtUTC": "2026-11-25T05:46:04.327128+00:00",
+  "finishedAtUTC": "2026-11-25T05:48:59.431151+00:00",
+  "testReceiptSHA256": "57b67235af0ea53bfa92183c6da892dfb09536063630f8d89f2847eccd3d4b49",
+  "rawBuildLogSHA256": "82922b730b7c33c14224bc6ea7d160bac25d6e6e962175528431d2183c233211",
+  "rawBuildStderrSHA256": "8d434418694b8bb19991976347a11f126b27afa734f643da9963abd8a303cbd6",
+  "compilerErrors": [
+    "/Users/m1/builds/hanlin-ai-cache-native-20261125/AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift:49:52: error: cannot convert value of type 'Int' to expected argument type 'UNNotificationPresentationOptions'"
+  ],
+  "relatedDelegateWarnings": [
+    "/Users/m1/builds/hanlin-ai-cache-native-20261125/AI_HLY/Downstream/ScriptingPlatform/HanlinNotificationApplicationDelegate.swift:37:10: warning: instance method 'userNotificationCenter(_:willPresent:)' nearly matches optional requirement 'userNotificationCenter(_:willPresent:)' of protocol 'UNUserNotificationCenterDelegate'"
+  ],
+  "buildResult": {
+    "path": "test/AppBuild.xcresult",
+    "files": 7,
+    "bytes": 94231,
+    "infoPlistPresent": true,
+    "manifestSHA256": "314a9c7e4590c1830a0ec084060cbb295d0d764d6139b866017e12d1c21718bb"
+  },
+  "scope": "Actual optional callback imports Int; typed async return also nearly matches rather than satisfying the actual imported protocol. No tests ran or assertions changed. Host09 PASS remains a separate original execution."
+}

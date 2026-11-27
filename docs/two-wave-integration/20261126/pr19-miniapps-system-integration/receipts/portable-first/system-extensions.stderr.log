@@ -1,0 +1,49 @@
+test_capture_cannot_be_embedded_in_plugins (test_system_extension_targets.SystemExtensionTargetsTests.test_capture_cannot_be_embedded_in_plugins) ... ok
+test_complete_actual_shipping_graph_and_source_metadata (test_system_extension_targets.SystemExtensionTargetsTests.test_complete_actual_shipping_graph_and_source_metadata) ... FAIL
+test_each_export_selects_exactly_its_five_or_eight_owned_bundles (test_system_extension_targets.SystemExtensionTargetsTests.test_each_export_selects_exactly_its_five_or_eight_owned_bundles) ... ok
+test_generation_is_idempotent_and_preserves_native_shell_phases (test_system_extension_targets.SystemExtensionTargetsTests.test_generation_is_idempotent_and_preserves_native_shell_phases) ... FAIL
+test_missing_target_or_capture_intent_link_is_rejected (test_system_extension_targets.SystemExtensionTargetsTests.test_missing_target_or_capture_intent_link_is_rejected) ... ok
+test_new_system_surfaces_do_not_acquire_hanlin_shipping_or_registration (test_system_extension_targets.SystemExtensionTargetsTests.test_new_system_surfaces_do_not_acquire_hanlin_shipping_or_registration) ... FAIL
+test_original_ten_signing_roles_and_profile_names_are_unchanged (test_system_extension_targets.SystemExtensionTargetsTests.test_original_ten_signing_roles_and_profile_names_are_unchanged) ... ok
+test_registration_scope_and_capture_entitlements_are_exact (test_system_extension_targets.SystemExtensionTargetsTests.test_registration_scope_and_capture_entitlements_are_exact) ... ok
+test_wrong_owner_or_duplicate_embedding_is_rejected (test_system_extension_targets.SystemExtensionTargetsTests.test_wrong_owner_or_duplicate_embedding_is_rejected) ... ok
+
+======================================================================
+FAIL: test_complete_actual_shipping_graph_and_source_metadata (test_system_extension_targets.SystemExtensionTargetsTests.test_complete_actual_shipping_graph_and_source_metadata)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-pr19-system-integration-20261126/Scripts/SDK/tests/test_system_extension_targets.py", line 32, in test_complete_actual_shipping_graph_and_source_metadata
+    self.assertEqual(validate_shipping_extension_inventory(self.project),
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/development/projects/worktrees/hanlin-pr19-system-integration-20261126/Scripts/CI/IntegrationValidation/project_graph.py", line 206, in validate_shipping_extension_inventory
+    assert settings["GENERATE_INFOPLIST_FILE"] == "YES"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+
+======================================================================
+FAIL: test_generation_is_idempotent_and_preserves_native_shell_phases (test_system_extension_targets.SystemExtensionTargetsTests.test_generation_is_idempotent_and_preserves_native_shell_phases)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-pr19-system-integration-20261126/Scripts/SDK/tests/test_system_extension_targets.py", line 102, in test_generation_is_idempotent_and_preserves_native_shell_phases
+    validate_shipping_extension_inventory(parse_project(first))
+  File "/mnt/development/projects/worktrees/hanlin-pr19-system-integration-20261126/Scripts/CI/IntegrationValidation/project_graph.py", line 206, in validate_shipping_extension_inventory
+    assert settings["GENERATE_INFOPLIST_FILE"] == "YES"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+
+======================================================================
+FAIL: test_new_system_surfaces_do_not_acquire_hanlin_shipping_or_registration (test_system_extension_targets.SystemExtensionTargetsTests.test_new_system_surfaces_do_not_acquire_hanlin_shipping_or_registration)
+----------------------------------------------------------------------
+AssertionError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-pr19-system-integration-20261126/Scripts/SDK/tests/test_system_extension_targets.py", line 83, in test_new_system_surfaces_do_not_acquire_hanlin_shipping_or_registration
+    with self.assertRaisesRegex(AssertionError, "remain in MiniApps"):
+AssertionError: "remain in MiniApps" does not match ""
+
+----------------------------------------------------------------------
+Ran 9 tests in 5.374s
+
+FAILED (failures=3)

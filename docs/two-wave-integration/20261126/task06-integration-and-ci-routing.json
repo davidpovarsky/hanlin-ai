@@ -1,0 +1,38 @@
+{
+  "recorded_at": "2026-11-26T14:26:30.194652+00:00",
+  "native_runtime_source": "4d76e6053662957281ffbcb0a2ad28fc4f0c2f89",
+  "native_status": "NOT_RUN",
+  "reason": "Map original main's case-sensitive lower-case team verification script as tooling-only, matching existing upper-case Tools/ai-team policy; explicitly route new facade boundary test to original NativeScript preparation.",
+  "retained": [
+    {
+      "path": "docs/two-wave-integration/20261126/affected-routing-4d76e605-failed-receipt.json",
+      "bytes": 1258,
+      "sha256": "6b3c7de383e2843900b864ef8dd49ccf803f7688c33d10ad1f60059a6fa512f3"
+    },
+    {
+      "path": "docs/two-wave-integration/20261126/affected-routing-4d76e605-failed-raw.log",
+      "bytes": 420,
+      "sha256": "cde459f3799d3cb109aa96c9c3f7ae763ad46c532a2240d2d3a1816c0fa1f954"
+    },
+    {
+      "path": "docs/two-wave-integration/20261126/publication-6d311cb9-rejected-receipt.json",
+      "bytes": 161,
+      "sha256": "8ec3e82c3f24e1577b5ba0b6ea06b5e34c9622a30c79be9a87041b0911372c06"
+    },
+    {
+      "path": "docs/two-wave-integration/20261126/publication-6d311cb9-rejected-push.log",
+      "bytes": 357,
+      "sha256": "c80fcc28550a25add82b84f86103bd568d6cdc998e5154fb4f9d10a3bfc29641"
+    },
+    {
+      "path": "docs/two-wave-integration/20261126/publication-65689c79-success-receipt.json",
+      "bytes": 246,
+      "sha256": "7cfd9c1d1ced89ce1594b287fb1ad68a1fc446fab7c30c17234f3c6d80781262"
+    },
+    {
+      "path": "docs/two-wave-integration/20261126/publication-65689c79-success-push.log",
+      "bytes": 438,
+      "sha256": "3e201785318ccb63baa62e64e4917491b5032d1e5b2a19fe64a749df9c86823d"
+    }
+  ]
+}

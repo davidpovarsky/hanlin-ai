@@ -1,0 +1,50 @@
+{
+  "schema": 1,
+  "status": "PREPARED_NOT_APPLIED_NOT_EXECUTED",
+  "createdAt": "2026-11-25T21:02:18.698550+00:00",
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "carrier": "7f46e9d00fa6b3ef1867c6f174a79b0151a36bcc",
+  "files": [
+    {
+      "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationEvent.swift",
+      "beforeBytes": 5280,
+      "beforeSHA256": "982bbdff39e2baeb944ab476bc16d8f826f36ca38e9a3e6a75e6efaeaf3b318b",
+      "afterBytes": 6159,
+      "afterSHA256": "867613ea9cf2785e6eff3caad96c620a8c50d16fd22d266eeda899b7ab784f69",
+      "candidate": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-json-wire-fix/candidate/Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationEvent.swift"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinNotificationInvocationTests.swift",
+      "beforeBytes": 16840,
+      "beforeSHA256": "918dac76ba987164dfc80ea47ff3365d4a4fa42cecc87ee36db863721c9e1667",
+      "afterBytes": 22137,
+      "afterSHA256": "7ee626a9f4e53cfa5c74d9f123d367eb43f5d6de21dfb152047ab75e4cb0e066",
+      "candidate": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-json-wire-fix/candidate/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinNotificationInvocationTests.swift"
+    }
+  ],
+  "scope": {
+    "productionFiles": 1,
+    "testFiles": 1,
+    "newTestFunctions": 3,
+    "parameterExamples": 8,
+    "missingFieldCases": 8,
+    "malformedFieldCases": 9,
+    "existingTestBodiesUnchanged": true,
+    "internalCodableSourceUnchanged": true,
+    "originalUIAndWorkerChanged": false,
+    "canonicalMutations": false,
+    "testsExecuted": false
+  },
+  "artifacts": [
+    {
+      "path": "notification-json-wire-fix.diff",
+      "bytes": 8194,
+      "sha256": "591748b2298338186993121312fe91a7ea51063116b6460f39e30b8269c03d96"
+    },
+    {
+      "path": "README.md",
+      "bytes": 2839,
+      "sha256": "ecd41d4d405e41709a05ef13dc1dd52737ff61dc9496ba2b30047feb253d7031"
+    }
+  ]
+}

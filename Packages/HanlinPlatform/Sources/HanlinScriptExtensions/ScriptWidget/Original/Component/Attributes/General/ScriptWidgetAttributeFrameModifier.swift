@@ -140,6 +140,17 @@ struct ScriptWidgetAttributeFrameModifier: ViewModifier {
                 }
             }
         }
+        // Multi-component frames have the same numeric contract as a square
+        // frame. SwiftUI must not receive negative or non-finite dimensions.
+        let invalidWidth = !width.isFinite || width < 0
+        let invalidHeight = !height.isFinite || height < 0
+        if (frameMode == .width_height_alignment && (invalidWidth || invalidHeight))
+            || (frameMode == .width_alignment && invalidWidth)
+            || (frameMode == .height_alignment && invalidHeight) {
+            frameMode = .none
+            width = 0
+            height = 0
+        }
         self.frameMode = frameMode
         self.alignment = alignment
         self.width = width

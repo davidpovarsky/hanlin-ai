@@ -8,11 +8,22 @@ Earlier repository-level pauses, local-only directions, phase/command/build/run/
 
 Read [the current authorization record](docs/continuation-20261117/OWNER_AUTHORIZATION_20261118.md) for the current destinations and evidence workflow. Actual service access and observed results determine what has been completed.
 
+## Current two-wave execution — 2026-11-26
+
+The owner explicitly requested completion of both planned waves, Asana updates after significant milestones, and parallel work using ChatGPT's built-in agents. Necessary integration, verification and release work remains covered by the standing authorization above.
+
+- Use the current platform's built-in agent capability for this task; do not launch external AI command-line agents. Record the actual agent/task identifier for delegated work.
+- Keep one writer per worktree and one owner per native job or mutable cache. The coordinating agent integrates immutable commits and records milestone evidence in Asana.
+- Preserve original implementations, test assertions and acceptance requirements. A source change, compiled build, simulator pass and physical-device acceptance are distinct results.
+- Existing authorization does not bypass actual service access controls, secret protection, data integrity or unfulfilled acceptance gates.
+
 Read `PROJECT_AGENT_GUIDANCE.md` if it exists. It contains repository-specific architecture, build, upstream, signing, and workflow guidance and must be followed together with this file. The user's current request has highest priority, then repository-specific guidance, then these shared rules.
 
 ## Working style
 
 - Inspect the repository before editing; preserve its architecture and conventions.
+- Follow existing Swift style: four-space indentation, PascalCase types and filenames, lowerCamelCase members, small view builders and localized user-facing copy.
+- Keep commits focused and explain the affected behavior, exact validation evidence and remaining limits in pull requests; include UI evidence when relevant.
 - Prefer the smallest safe change. Avoid unrelated refactors, formatting, renames, dependency changes, or generated-file churn.
 - Reuse existing extension points and components before creating parallel systems.
 - Validate only what changed unless broader validation is genuinely required or explicitly requested.
@@ -93,9 +104,9 @@ Updating `PROJECT_BOARD.md` as a side effect of another task is allowed and enco
 Use current repository-specific technical guidance together with the standing owner authorization above.
 
 
-## Historical Named Team — Antigravity + Codex
+## Named role map and execution attribution
 
-The following historical role map is retained for provenance. The current owner-authorized completion uses one development agent and does not start or wait for this former team:
+The following logical role map is retained across platforms. The November 18 continuation did not require starting a separate historical team; the current November 26 task explicitly uses built-in ChatGPT agents as described above:
 - **איתן (eitan)**: Principal architect (boundaries, contracts, migrations, technical RFCs)
 - **נועם (noam)**: Engineering (scoped implementation, focused tests, bug fixes)
 - **מיה (maya)**: Native UX (screens, interactions, RTL layouts, accessibility)
@@ -103,6 +114,12 @@ The following historical role map is retained for provenance. The current owner-
 - **תומר (tomer)**: Integration (branches, worktrees, PRs, cross-repo dependencies)
 - **יעל (yael)**: Research (API capabilities, official Apple/upstream documentation, schemas)
 - **דנה (dana)**: Security & Privacy (permissions, session isolation, secrets, entitlements)
+
+### Execution attribution
+
+- Record direct work as `[MAIN_SESSION]` and work actually delegated to a separate agent as `[SUBAGENT]`, with that platform's real invocation identifier.
+- The historical NORMAL/TEAM routing in `docs/ai-team/TEAM.md` distinguishes logical role names from actual separate agents. The current owner explicitly requested TEAM execution through ChatGPT's built-in capability.
+- Never claim independent review when the same agent performed both implementation and review. Preserve any acceptance criterion that specifically requires independent verification.
 
 ### Operating Guidance & Policy
 Before starting work, load and follow:

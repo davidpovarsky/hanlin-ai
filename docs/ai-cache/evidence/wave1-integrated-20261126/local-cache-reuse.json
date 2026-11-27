@@ -1,0 +1,150 @@
+{
+  "classification": "REUSE_ACCEPTED",
+  "target_commit": "a30c8267c1f5ce2a122889b81dc9fffc0f295758",
+  "verified_at": "2026-11-26T12:52:56.654681+00:00",
+  "new_test_execution": false,
+  "checks": {
+    "all_11_source_files_equal": true,
+    "lru_pin_equal": true,
+    "retained_original_log_hash_equal": true,
+    "current_apple_toolchain_equal": true
+  },
+  "source_comparisons": [
+    {
+      "path": "AI_HLY/Services/ChatServices/WebSearchTool.swift",
+      "original_source": "1bb4bdb08bf860f123803e48871a401ef165ab82",
+      "original_sha256": "435a550ab05ef7785113fb8849a0e8019e32427338591a8fd53428a8c19a854b",
+      "recorded_sha256": "435a550ab05ef7785113fb8849a0e8019e32427338591a8fd53428a8c19a854b",
+      "target_sha256": "435a550ab05ef7785113fb8849a0e8019e32427338591a8fd53428a8c19a854b",
+      "equal": true
+    },
+    {
+      "path": "AI_HLY/Downstream/AgentDiagnostics/AgentTokenUsage.swift",
+      "original_source": "1bb4bdb08bf860f123803e48871a401ef165ab82",
+      "original_sha256": "ea9473749962a6c078d36a6972abe2ce30ecf38cd23dffa92231a02b53b7c665",
+      "recorded_sha256": "ea9473749962a6c078d36a6972abe2ce30ecf38cd23dffa92231a02b53b7c665",
+      "target_sha256": "ea9473749962a6c078d36a6972abe2ce30ecf38cd23dffa92231a02b53b7c665",
+      "equal": true
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/AutomaticSearch/AutomaticWebSearchCoordinator.swift",
+      "original_source": "1bb4bdb08bf860f123803e48871a401ef165ab82",
+      "original_sha256": "51196278174564c14b1568c21fcaf0b95adcb31bbcea07a57fe3c045075240fb",
+      "recorded_sha256": "51196278174564c14b1568c21fcaf0b95adcb31bbcea07a57fe3c045075240fb",
+      "target_sha256": "51196278174564c14b1568c21fcaf0b95adcb31bbcea07a57fe3c045075240fb",
+      "equal": true
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/AutomaticSearch/KeenablePublicSearchAdapter.swift",
+      "original_source": "1bb4bdb08bf860f123803e48871a401ef165ab82",
+      "original_sha256": "96c88b7fcc0de48e6b30570850fbd80f82a679499eb339fcf53cd363d4de9c54",
+      "recorded_sha256": "96c88b7fcc0de48e6b30570850fbd80f82a679499eb339fcf53cd363d4de9c54",
+      "target_sha256": "96c88b7fcc0de48e6b30570850fbd80f82a679499eb339fcf53cd363d4de9c54",
+      "equal": true
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/AutomaticSearch/TavilyKeylessSearchAdapter.swift",
+      "original_source": "1bb4bdb08bf860f123803e48871a401ef165ab82",
+      "original_sha256": "8143549a517e6717c85fb64e903a27958fd61cba875899ec38d7fb10a1154a68",
+      "recorded_sha256": "8143549a517e6717c85fb64e903a27958fd61cba875899ec38d7fb10a1154a68",
+      "target_sha256": "8143549a517e6717c85fb64e903a27958fd61cba875899ec38d7fb10a1154a68",
+      "equal": true
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/AutomaticSearch/WebSearchProviderProtocol.swift",
+      "original_source": "1bb4bdb08bf860f123803e48871a401ef165ab82",
+      "original_sha256": "2cb061ddfdd1536a417d630c6f776cf3bb9ec95328452afbbf20dc08337ef537",
+      "recorded_sha256": "2cb061ddfdd1536a417d630c6f776cf3bb9ec95328452afbbf20dc08337ef537",
+      "target_sha256": "2cb061ddfdd1536a417d630c6f776cf3bb9ec95328452afbbf20dc08337ef537",
+      "equal": true
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/AutomaticSearch/WebSearchRelevanceEvaluator.swift",
+      "original_source": "1bb4bdb08bf860f123803e48871a401ef165ab82",
+      "original_sha256": "2ec1352dcce9a19ede76148c540caf98a36dc076f7c2740015395656192a4158",
+      "recorded_sha256": "2ec1352dcce9a19ede76148c540caf98a36dc076f7c2740015395656192a4158",
+      "target_sha256": "2ec1352dcce9a19ede76148c540caf98a36dc076f7c2740015395656192a4158",
+      "equal": true
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/AutomaticSearch/WebSearchResult.swift",
+      "original_source": "1bb4bdb08bf860f123803e48871a401ef165ab82",
+      "original_sha256": "d3b69274d06eb3403c44a2ec1d2a78399baef65bc875b8888bd8af1e3887e751",
+      "recorded_sha256": "d3b69274d06eb3403c44a2ec1d2a78399baef65bc875b8888bd8af1e3887e751",
+      "target_sha256": "d3b69274d06eb3403c44a2ec1d2a78399baef65bc875b8888bd8af1e3887e751",
+      "equal": true
+    },
+    {
+      "path": "AI_HLY/Services/ChatServices/AutomaticSearch/YouKeylessSearchAdapter.swift",
+      "original_source": "1bb4bdb08bf860f123803e48871a401ef165ab82",
+      "original_sha256": "d07f829a5896928f43bbbf4b49fa16e10f98f4d76cd6a6862525cf4d02305520",
+      "recorded_sha256": "d07f829a5896928f43bbbf4b49fa16e10f98f4d76cd6a6862525cf4d02305520",
+      "target_sha256": "d07f829a5896928f43bbbf4b49fa16e10f98f4d76cd6a6862525cf4d02305520",
+      "equal": true
+    },
+    {
+      "path": "AI_HLYTests/AutomaticWebSearchCacheTests.swift",
+      "original_source": "1bb4bdb08bf860f123803e48871a401ef165ab82",
+      "original_sha256": "faa0342db6fe61bac1eb65da32622e47284b00e669ca1ff1d3ebd276f105438c",
+      "recorded_sha256": "faa0342db6fe61bac1eb65da32622e47284b00e669ca1ff1d3ebd276f105438c",
+      "target_sha256": "faa0342db6fe61bac1eb65da32622e47284b00e669ca1ff1d3ebd276f105438c",
+      "equal": true
+    },
+    {
+      "path": "AI_HLYTests/AgentTokenUsageCacheTests.swift",
+      "original_source": "1bb4bdb08bf860f123803e48871a401ef165ab82",
+      "original_sha256": "622fa32878079e11c3f3dcd502b216f270d22ad3a0c277e021b0aa77a3afa33f",
+      "recorded_sha256": "622fa32878079e11c3f3dcd502b216f270d22ad3a0c277e021b0aa77a3afa33f",
+      "target_sha256": "622fa32878079e11c3f3dcd502b216f270d22ad3a0c277e021b0aa77a3afa33f",
+      "equal": true
+    }
+  ],
+  "original_source": "1bb4bdb08bf860f123803e48871a401ef165ab82",
+  "original_command": [
+    "swift",
+    "test",
+    "--package-path",
+    "/Users/m1/builds/hanlin-ai-cache-1bb4bdb0-20261125/local-proof",
+    "--scratch-path",
+    "/Users/m1/caches/DerivedData/hanlin-ai-cache-20261125/local-proof",
+    "--jobs",
+    "2"
+  ],
+  "original_tests": {
+    "cache_lifecycle": 11,
+    "total": 18,
+    "usage_accounting": 7
+  },
+  "original_toolchain": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0\n",
+  "observed_toolchain": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0",
+  "dependency": {
+    "identity": "lrucache",
+    "kind": "remoteSourceControl",
+    "location": "https://github.com/nicklockwood/LRUCache.git",
+    "state": {
+      "revision": "f0570e943ea4445d258113ba73f50cb2b7e564ac",
+      "version": "1.3.0"
+    }
+  },
+  "retained_log": {
+    "path": "docs/ai-cache/evidence/local-cache-20261125/raw.log",
+    "sha256": "90d1ce95dde3db51280b07e098e95f373bbb9ef16d3d173c925cc86231a85ccb"
+  },
+  "scope": "Original HanlinCacheProof macOS source harness, with its nine real production files, two real test files and LRUCache 1.3.0. This does not certify the full iOS app, UI, live providers, SwiftData or billing.",
+  "retained_local_proof": {
+    "retained_fixture_manifest": {
+      "bytes": 449,
+      "git_blob": "583e950b704b746fc2d42c9b9629713d8cc89221",
+      "path": "docs/ai-cache/evidence/local-cache-20261125/proof-Package.swift",
+      "sha256": "90f371dcdaf89a9786ad35d5b9802332bf6bd014106354b21553bbacc6e063d4",
+      "source_commit": "6fbcf703dd9f40f5b1d42592d58a0a69573dcdfa"
+    },
+    "retained_fixture_resolution": {
+      "bytes": 390,
+      "git_blob": "12190cd48f58713a95216cf81ee8cb82dc86d205",
+      "path": "docs/ai-cache/evidence/local-cache-20261125/proof-Package.resolved",
+      "sha256": "cad224f799d21b36089c0bfe38c9808757b8f1752a8b6f7ed746adc8f0b7fc3f",
+      "source_commit": "6fbcf703dd9f40f5b1d42592d58a0a69573dcdfa"
+    }
+  }
+}

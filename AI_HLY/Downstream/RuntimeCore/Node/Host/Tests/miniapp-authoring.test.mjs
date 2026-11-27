@@ -333,3 +333,182 @@ test('dedicated assistant build preserves the app entry without executing it and
   assert.equal(invalid.succeeded, false);
   assert.ok(invalid.diagnostics.some(item => item.code === 'MINIAPP_ASSISTANT_EXPORT_MISSING'));
 });
+
+async function widgetHostActionManifest(f, parameters) {
+  const file = path.join(f.project, 'script.json');
+  const script = JSON.parse(await fs.readFile(file, 'utf8'));
+  const sourcePath = f.engine === 'expo' ? 'bundle.js' : 'nativescript/app/bundle.mjs';
+  script.entrypoints = script.entrypoints.filter(entry => entry.id !== 'widget-target');
+  script.entrypoints.push({id: 'widget-target', kind: 'appIntent', sourcePath, exportedSymbol: 'runtime.Echo'});
+  script.actions = [{id: 'runtime.Echo', handler: sourcePath}];
+  script.widgetEngine = f.engine === 'expo' ? 'expo' : 'scriptwidget';
+  await fs.writeFile(path.join(f.project, 'widget.jsx'), '$render(<text>Host action</text>);\n');
+  const authorFile = path.join(f.project, 'hanlin.authoring.json');
+  const author = JSON.parse(await fs.readFile(authorFile));
+  author.resources = [...new Set([...author.resources, 'widget.jsx'])];
+  await fs.writeFile(authorFile, JSON.stringify(author));
+  script.hanlinWidget = {abiVersion: 1, sourceFormat: 'tsx', families: ['systemSmall'], actions: [
+    {id: 'continue', kind: 'hostAction', hostAction: {entrypointID: 'widget-target', actionName: 'runtime.Echo',
+      ...(parameters === undefined ? {} : {parameters})}},
+    {id: 'local', kind: 'reload'}
+  ]};
+  await fs.writeFile(file, JSON.stringify(script));
+  return script;
+}
+
+test('widget Host metadata validates both app engines and preserves ordinary JSON or explicit null through build', async t => {
+  const payload = {unicode: 'שלום🙂', values: [true, null, 41], type: 'object', value: {ordinary: 'JSON'}};
+  for (const engine of ['nativescript', 'expo']) {
+    const f = {...await fixture(t, engine), engine};
+    for (const parameters of [payload, null, undefined]) {
+      await widgetHostActionManifest(f, parameters);
+      const report = await f.run(engine === 'nativescript' ? 'build' : 'validate');
+      assert.equal(report.succeeded, true, JSON.stringify(report.diagnostics));
+      if (report.preparedPackagePath) {
+        const built = JSON.parse(await fs.readFile(path.join(report.preparedPackagePath, 'script.json')));
+        const target = built.hanlinWidget.actions[0].hostAction;
+        assert.equal(Object.hasOwn(target, 'parameters'), parameters !== undefined);
+        assert.deepEqual(target.parameters, parameters);
+        assert.equal(target.actionName, 'runtime.Echo');
+        assert.equal(built.hanlinWidget.actions[1].kind, 'reload');
+        const widget = await fs.readFile(path.join(f.project, 'widget.jsx'), 'utf8');
+        assert.equal(await fs.readFile(path.join(report.preparedPackagePath, 'widget.jsx'), 'utf8'), widget);
+        assert.equal(await fs.readFile(path.join(report.preparedPackagePath, 'nativescript/app/modules/widget.jsx'), 'utf8'), widget);
+      }
+    }
+  }
+});
+
+test('invalid widget Host declarations return structured diagnostics and never create a package', async t => {
+  const f = {...await fixture(t), engine: 'nativescript'};
+  const original = await widgetHostActionManifest(f, {challenge: 'actual'});
+  const invalid = [
+    ['missing target', script => { delete script.hanlinWidget.actions[0].hostAction; }],
+    ['widget identity UTF-8 contract', script => { script.hanlinWidget.actions[0].id = 'א'.repeat(129); }],
+    ['target identity UTF-8 contract', script => { script.hanlinWidget.actions[0].hostAction.entrypointID = 'א'.repeat(65); }],
+    ['local handler conflict', script => { script.hanlinWidget.actions[0].handler = 'local'; }],
+    ['local kind conflict', script => { script.hanlinWidget.actions[0].kind = 'reload'; }],
+    ['missing entrypoint', script => { script.hanlinWidget.actions[0].hostAction.entrypointID = 'absent'; }],
+    ['non-intent entrypoint', script => { script.entrypoints[1].kind = 'share'; }],
+    ['duplicate entrypoint', script => { script.entrypoints.push({...script.entrypoints[1]}); }],
+    ['undeclared action', script => { script.actions = []; }],
+    ['duplicate action', script => { script.actions.push({...script.actions[0]}); }],
+    ['wrong handler', script => { script.actions[0].handler = 'another/bundle.mjs'; }],
+    ['wrong exported symbol', script => { script.entrypoints[1].exportedSymbol = 'anotherAction'; }],
+    ['invalid canonical action ID', script => {
+      script.actions[0].id = script.entrypoints[1].exportedSymbol =
+        script.hanlinWidget.actions[0].hostAction.actionName = 'two..separators';
+    }],
+    ['duplicate widget action', script => { script.hanlinWidget.actions.push({...script.hanlinWidget.actions[0]}); }],
+    ['native panel', script => {
+      script.nativePresentations = {panel: {engine: 'scriptwidget', sourcePath: 'missing.tsx',
+        sourceFormat: 'tsx', actions: [script.hanlinWidget.actions[0]]}};
+    }]
+  ];
+  for (const [label, change] of invalid) {
+    const script = structuredClone(original);
+    change(script);
+    await fs.writeFile(path.join(f.project, 'script.json'), JSON.stringify(script));
+    const report = await f.run('build');
+    assert.equal(report.succeeded, false, label);
+    assert.equal(report.preparedPackagePath, undefined, label);
+    assert(report.diagnostics.some(item => item.code === 'MINIAPP_WIDGET_HOST_ACTION_INVALID'
+      && item.file === 'script.json' && item.category === 'error'), label + ': ' + JSON.stringify(report));
+  }
+  const overflow = JSON.stringify({...original, marker: 1}).replace('"marker":1', '"marker":1e400')
+    .replace('"challenge":"actual"', '"challenge":1e400');
+  await fs.writeFile(path.join(f.project, 'script.json'), overflow);
+  const report = await f.run('build');
+  assert.equal(report.succeeded, false);
+  assert(report.diagnostics.some(item => item.code === 'MINIAPP_WIDGET_HOST_ACTION_INVALID' && /finite/.test(item.message)));
+  await assert.rejects(fs.stat(path.join(f.project, '.hanlin-build')), {code: 'ENOENT'});
+});
+
+test('the exported system-surface declaration is checked by the real TypeScript compiler', async t => {
+  const f = await fixture(t);
+  const repository = process.env.HANLIN_MINIAPP_REPOSITORY_ROOT
+    ?? fileURLToPath(new URL('../../../../../../', import.meta.url));
+  const directory = path.join(f.sdk, 'original/node_modules/@hanlin/system-surfaces');
+  await fs.mkdir(directory, {recursive: true});
+  await fs.copyFile(path.join(repository, 'Scripts/MiniApps/native-presentations.d.ts'), path.join(directory, 'index.d.ts'));
+  await fs.copyFile(path.join(repository, 'Scripts/MiniApps/system-surfaces/package.json'), path.join(directory, 'package.json'));
+  const manifestPath = path.join(f.sdk, 'miniapp-sdk.json');
+  const manifest = JSON.parse(await fs.readFile(manifestPath));
+  manifest.engines.nativescript.packageVersions['@hanlin/system-surfaces'] = '1.0.0';
+  await fs.writeFile(manifestPath, JSON.stringify(manifest));
+  const valid = 'import type {WidgetAction, NativePresentationAction} from "@hanlin/system-surfaces";\n'
+    + 'export const action: WidgetAction = {id:"run",kind:"hostAction",hostAction:{entrypointID:"intent",actionName:"runtime.Echo",parameters:null}};\n'
+    + 'export const local: NativePresentationAction = {id:"refresh",kind:"reload"};\n';
+  await fs.writeFile(f.entry, valid);
+  assert.equal((await f.run('validate')).succeeded, true);
+  for (const source of [
+    valid.replace('parameters:null', 'parameters:()=>42'),
+    valid.replace('hostAction:{', 'handler:"invented",hostAction:{'),
+    valid.replace('action: WidgetAction', 'action: NativePresentationAction')
+  ]) {
+    await fs.writeFile(f.entry, source);
+    const result = await f.run('validate');
+    assert.equal(result.succeeded, false);
+    assert(result.diagnostics.some(item => ['TS2322', 'TS2353'].includes(item.code)), JSON.stringify(result));
+    assert(!result.diagnostics.some(item => item.code === 'TS2307'), 'The exported original declaration must resolve.');
+  }
+});
+
+test('prepared capture and Spotlight actions validate against each containing app engine', async t => {
+  for (const engine of ['nativescript', 'expo']) {
+    const f = await fixture(t, engine);
+    const file = path.join(f.project, 'script.json');
+    const source = engine === 'expo' ? 'bundle.js' : 'nativescript/app/bundle.mjs';
+    const script = JSON.parse(await fs.readFile(file));
+    script.entrypoints = [
+      {id: 'photo', kind: 'capture', sourcePath: source, exportedSymbol: 'capture.receive'},
+      {id: 'find', kind: 'spotlight', sourcePath: source}
+    ];
+    script.actions = [{id: 'capture.receive', handler: source}];
+    await fs.writeFile(file, JSON.stringify(script));
+    const report = await f.run('validate');
+    assert.equal(report.succeeded, true, JSON.stringify(report.diagnostics));
+  }
+});
+
+test('invalid prepared capture actions stop packaging with actionable source diagnostics', async t => {
+  const f = await fixture(t);
+  const file = path.join(f.project, 'script.json');
+  const original = JSON.parse(await fs.readFile(file));
+  original.entrypoints = [{id: 'photo', kind: 'capture', sourcePath: 'nativescript/app/bundle.mjs', exportedSymbol: 'capture.receive'}];
+  original.actions = [{id: 'capture.receive', handler: 'nativescript/app/bundle.mjs'}];
+  for (const [label, mutate] of [
+    ['missing exported action', s => { delete s.entrypoints[0].exportedSymbol; }],
+    ['undeclared action', s => { s.actions = []; }],
+    ['wrong handler', s => { s.actions[0].handler = 'other.js'; }],
+    ['duplicate action', s => { s.actions.push({...s.actions[0]}); }],
+    ['invalid action ID', s => { s.entrypoints[0].exportedSymbol = s.actions[0].id = 'wrong..id'; }],
+    ['Spotlight wrong action', s => { s.entrypoints[0].kind = 'spotlight'; s.actions[0].handler = 'other.js'; }]
+  ]) {
+    const script = structuredClone(original); mutate(script);
+    await fs.writeFile(file, JSON.stringify(script));
+    const report = await f.run('build');
+    assert.equal(report.succeeded, false, label);
+    assert.equal(report.preparedPackagePath, undefined, label);
+    assert(report.diagnostics.some(d => d.code === 'MINIAPP_SYSTEM_ACTION_INVALID' &&
+      d.file === 'script.json' && d.category === 'error' && d.remediation), label + ': ' + JSON.stringify(report));
+  }
+  await assert.rejects(fs.stat(path.join(f.project, '.hanlin-build')), {code: 'ENOENT'});
+});
+
+test('system native presentations require keyboard and notification source declarations', async t => {
+  const f = await fixture(t);
+  const file = path.join(f.project, 'script.json');
+  const script = JSON.parse(await fs.readFile(file));
+  script.entrypoints = [
+    {id: 'keys', kind: 'keyboard', sourcePath: 'nativescript/app/bundle.mjs'},
+    {id: 'notice', kind: 'notificationUI', sourcePath: 'nativescript/app/bundle.mjs'}
+  ];
+  await fs.writeFile(file, JSON.stringify(script));
+  const report = await f.run('build');
+  assert.equal(report.succeeded, false);
+  const diagnostics = report.diagnostics.filter(d => d.code === 'MINIAPP_SYSTEM_PRESENTATION_REQUIRED');
+  assert.equal(diagnostics.length, 2, JSON.stringify(report.diagnostics));
+  assert(diagnostics.every(d => d.file === 'script.json' && d.category === 'error'));
+  assert.equal(report.preparedPackagePath, undefined);
+});

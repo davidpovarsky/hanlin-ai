@@ -1,0 +1,19 @@
+{
+  "scope": "Read-only real schema3 consumer recomputation; no Host or native test",
+  "finishedAt": "2026-11-25T05:44:01.796205+00:00",
+  "exitCode": 0,
+  "result": {
+    "accepted": true,
+    "provider": "local-mac",
+    "originHead": "a146bc7af248e4fe4d518c74c810474d39baa93e",
+    "counts": {
+      "tests": 170,
+      "pass": 169,
+      "fail": 0,
+      "skipped": 1
+    }
+  },
+  "receiptSHA256": "c77574024f1915b5c9bf6600a621f27f79e4eba09a84a29c80a328d63b6dd6cf",
+  "validatorSHA256": "551e3ae5855346f630f4878e3635dd79dfe52855d50f10f729ccf4a4b44d28fa",
+  "localHelperSHA256": "d5888106170a4404d116d9112d8c54d32c36f49e7cd857b61741583a3020e576"
+}

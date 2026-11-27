@@ -1,0 +1,10 @@
+{
+  "observedAt": "2026-11-25T23:19:36.528201+00:00",
+  "remoteReturncode": 0,
+  "stdout": "{\"schema\": 1, \"id\": \"probe-fixture-sdk20-preparation-v1\", \"dispatchedAt\": \"2026-11-25T23:19:36.479476+00:00\", \"pid\": 25069, \"argv\": [\"/opt/homebrew/opt/python@3.12/libexec/bin/python3\", \"/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/prepare-original-expo-probe-v1.py\", \"--decision\", \"/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/probe-fixture-sdk20-preparation-v1-plan.json\"], \"source\": \"7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f\", \"files\": [{\"path\": \"/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/prepare-original-expo-probe-v1.py\", \"bytes\": 12117, \"sha256\": \"5ed491318ddd72bfeb84414ea0e429cdeb2bca966b5896299fcb0dc15ee262d4\"}, {\"path\": \"/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/probe-fixture-sdk20-preparation-v1-plan.json\", \"bytes\": 5164, \"sha256\": \"c387c4826c7ad9864b2f1cc7ff7aebc82a15b5c98bf8034b769136c57e24e7a7\"}], \"output\": \"/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/probe-fixture-sdk20-preparation-v1\", \"log\": \"/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/probe-fixture-sdk20-preparation-v1-launch.log\", \"actualStatus\": \"DISPATCHED_NOT_YET_OBSERVED\", \"launchReceipt\": {\"path\": \"/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/probe-fixture-sdk20-preparation-v1-launch.json\", \"bytes\": 1292, \"sha256\": \"dabe948eaa99edbf4a61484f80d02ba2f330148e1fccd9117ef5576f614cc5f9\"}}\n",
+  "stderr": "",
+  "launcher": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/probe-fixture-sdk20-preparation-v1/launch-original-expo-probe-v1.py",
+    "sha256": "901690676f95a48fb72b72fcad325aa893e797c4ea04ee05825a3806ccf68001"
+  }
+}

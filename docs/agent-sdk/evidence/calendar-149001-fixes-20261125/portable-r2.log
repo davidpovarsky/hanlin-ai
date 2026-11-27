@@ -1,0 +1,77 @@
+Building for debugging...
+[1 / 5]
+[2 / 6] HanlinScriptDeviceServices
+[3 / 7] HanlinScriptDeviceServices
+[7 / 11] HanlinScriptDeviceServices
+[10 / 11] HanlinScriptDeviceServicesTests-product
+Build complete! (3,20 secs)
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+◇ Suite "Shared calendar requests" started.
+◇ Suite "Calendar callback lifetime" started.
+◇ Suite "Calendar operation contracts" started.
+◇ Test incompleteCalendarCannotReachWrite() started.
+◇ Test alreadyCancelledOperationNeverStartsEventKit() started.
+◇ Test broadSearchRetainsPresentAndFutureInsteadOfEventKitTruncation() started.
+◇ Test validReminderKeepsOriginalAlarmAndPriority() started.
+◇ Test requestedEntitySelectionIsPreserved() started.
+◇ Test cancelledFetchFinishesWithoutOSCallbackAndIgnoresLateResult() started.
+◇ Test nonfiniteDatesCannotReachEventKit(value:) started.
+◇ Test hugeAlarmCannotOverflowIntegerOrCreateInvalidEventKitDate() started.
+◇ Test completionIsConsumedOnceWithoutCancellingSuccessfulRequest() started.
+◇ Test singleEndpointOutsideDefaultWindowKeepsOrderedBounds() started.
+◇ Test reminderEndDayIncludesAfternoonAndExcludesFollowingMidnight() started.
+◇ Test reversedRangeFailsBeforeDateInterval() started.
+◇ Test mutationRequiresAnActualIdentifier(operation:) started.
+◇ Test suppliedMalformedDayDoesNotBecomeUnbounded(value:) started.
+◇ Test inclusiveDayRangeUsesCalendarArithmeticAcrossDST() started.
+◇ Test patchKeepsOmittedFieldsAndExplicitClearDistinct() started.
+◇ Test invalidRecurrenceAndAlarmAreRejected() started.
+◇ Test case passing 1 argument value → nan to nonfiniteDatesCannotReachEventKit(value:) started.
+◇ Test case passing 1 argument value → inf to nonfiniteDatesCannotReachEventKit(value:) started.
+◇ Test missingOSCallbackTimesOutAndNextOperationWorks() started.
+◇ Test case passing 1 argument value → -inf to nonfiniteDatesCannotReachEventKit(value:) started.
+◇ Test completePublicWritablePayloadDecodes() started.
+◇ Test invalidArgumentsCannotReachEventKit(json:) started.
+◇ Test case passing 1 argument operation → "update_event" to mutationRequiresAnActualIdentifier(operation:) started.
+◇ Test case passing 1 argument operation → "delete_event" to mutationRequiresAnActualIdentifier(operation:) started.
+◇ Test case passing 1 argument value → "2026-02-30" to suppliedMalformedDayDoesNotBecomeUnbounded(value:) started.
+◇ Test case passing 1 argument operation → "update_reminder" to mutationRequiresAnActualIdentifier(operation:) started.
+◇ Test case passing 1 argument value → "2026-13-01" to suppliedMalformedDayDoesNotBecomeUnbounded(value:) started.
+◇ Test case passing 1 argument operation → "delete_reminder" to mutationRequiresAnActualIdentifier(operation:) started.
+◇ Test case passing 1 argument value → "2026-11-23tail" to suppliedMalformedDayDoesNotBecomeUnbounded(value:) started.
+◇ Test case passing 1 argument operation → "complete_reminder" to mutationRequiresAnActualIdentifier(operation:) started.
+◇ Test case passing 1 argument value → "2026-11-23T00:00:00Z" to suppliedMalformedDayDoesNotBecomeUnbounded(value:) started.
+◇ Test case passing 1 argument operation → "reopen_reminder" to mutationRequiresAnActualIdentifier(operation:) started.
+✔ Test requestedEntitySelectionIsPreserved() passed after 0.007 seconds.
+◇ Test case passing 1 argument json → "{"operation":"update_event","identifier":"id","item":{"attendees":["a@example.com"]}}" to invalidArgumentsCannotReachEventKit(json:) started.
+◇ Test case passing 1 argument json → "{"operation":"create_event","item":{"title":"A","start_date":"2026-11-27T15:00:00Z"}}" to invalidArgumentsCannotReachEventKit(json:) started.
+◇ Test case passing 1 argument json → "{"operation":"update_reminder","identifier":"id","item":{"is_all_day":true}}" to invalidArgumentsCannotReachEventKit(json:) started.
+◇ Test case passing 1 argument json → "{"operation":"request_access","entity_type":"reminder","access":"write_only"}" to invalidArgumentsCannotReachEventKit(json:) started.
+✔ Test hugeAlarmCannotOverflowIntegerOrCreateInvalidEventKitDate() passed after 0.008 seconds.
+◇ Test case passing 1 argument json → "{"operation":"create_calendar","entity_type":"event","calendar":{"title":"A"}}" to invalidArgumentsCannotReachEventKit(json:) started.
+◇ Test case passing 1 argument json → "{"operation":"list_events","start_date":"2026-11-27","end_date":"2026-11-26"}" to invalidArgumentsCannotReachEventKit(json:) started.
+◇ Test case passing 1 argument json → "{"operation":"update_reminder","identifier":"id","item":{"notes":null}}" to invalidArgumentsCannotReachEventKit(json:) started.
+✔ Test incompleteCalendarCannotReachWrite() passed after 0.009 seconds.
+✔ Test nonfiniteDatesCannotReachEventKit(value:) with 3 test cases passed after 0.009 seconds.
+✔ Test mutationRequiresAnActualIdentifier(operation:) with 6 test cases passed after 0.009 seconds.
+✔ Test suppliedMalformedDayDoesNotBecomeUnbounded(value:) with 4 test cases passed after 0.009 seconds.
+✔ Test patchKeepsOmittedFieldsAndExplicitClearDistinct() passed after 0.009 seconds.
+✔ Test invalidRecurrenceAndAlarmAreRejected() passed after 0.009 seconds.
+✔ Test alreadyCancelledOperationNeverStartsEventKit() passed after 0.010 seconds.
+✔ Test completionIsConsumedOnceWithoutCancellingSuccessfulRequest() passed after 0.010 seconds.
+✔ Test cancelledFetchFinishesWithoutOSCallbackAndIgnoresLateResult() passed after 0.010 seconds.
+✔ Test validReminderKeepsOriginalAlarmAndPriority() passed after 0.010 seconds.
+✔ Test reversedRangeFailsBeforeDateInterval() passed after 0.011 seconds.
+✔ Test broadSearchRetainsPresentAndFutureInsteadOfEventKitTruncation() passed after 0.012 seconds.
+✔ Test singleEndpointOutsideDefaultWindowKeepsOrderedBounds() passed after 0.013 seconds.
+✔ Test invalidArgumentsCannotReachEventKit(json:) with 7 test cases passed after 0.013 seconds.
+✔ Suite "Shared calendar requests" passed after 0.013 seconds.
+✔ Test inclusiveDayRangeUsesCalendarArithmeticAcrossDST() passed after 0.014 seconds.
+✔ Test reminderEndDayIncludesAfternoonAndExcludesFollowingMidnight() passed after 0.015 seconds.
+✔ Test completePublicWritablePayloadDecodes() passed after 0.015 seconds.
+✔ Suite "Calendar operation contracts" passed after 0.016 seconds.
+✔ Test missingOSCallbackTimesOutAndNextOperationWorks() passed after 0.016 seconds.
+✔ Suite "Calendar callback lifetime" passed after 0.016 seconds.
+✔ Test run with 20 tests in 3 suites passed after 0.016 seconds.

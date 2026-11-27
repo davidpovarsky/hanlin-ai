@@ -1,0 +1,23 @@
+{
+  "verified_ref": {
+    "ref": "refs/heads/codex/hanlin-two-wave-integration-20261126",
+    "node_id": "REF_kwDOTTRem9oANXJlZnMvaGVhZHMvY29kZXgvaGFubGluLXR3by13YXZlLWludGVncmF0aW9uLTIwMjYxMTI2",
+    "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/git/refs/heads/codex/hanlin-two-wave-integration-20261126",
+    "object": {
+      "sha": "7f6af7536db3d2aa9ecc9eb51ec82293fc5db3bc",
+      "type": "commit",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/git/commits/7f6af7536db3d2aa9ecc9eb51ec82293fc5db3bc"
+    }
+  },
+  "pr": {
+    "number": 23,
+    "url": "https://github.com/davidpovarsky/hanlin-ai/pull/23",
+    "state": "open",
+    "draft": true,
+    "head_sha": "7f6af7536db3d2aa9ecc9eb51ec82293fc5db3bc",
+    "base_sha": "595e9953e39e2d704f82bd2de31d2d7b369e68c8",
+    "initial_mergeable": false,
+    "initial_mergeable_state": "dirty"
+  },
+  "scope": "Actual GitHub readback; integration/native/release gates remain separate"
+}

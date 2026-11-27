@@ -1,0 +1,25 @@
+{
+  "recorded_at": "2026-11-26T14:24:42.414997+00:00",
+  "head": "4d76e6053662957281ffbcb0a2ad28fc4f0c2f89",
+  "base": "c34dd6ae752b3ab3ebc001743fc62c72fc48a203",
+  "argv": [
+    "runuser",
+    "-u",
+    "chatgpt-agent",
+    "--",
+    "python3",
+    "Scripts/CI/plan_affected_validation.py",
+    "--repository",
+    "/mnt/development/projects/worktrees/hanlin-two-wave-integration-20261126",
+    "--base-sha",
+    "c34dd6ae752b3ab3ebc001743fc62c72fc48a203",
+    "--head-sha",
+    "4d76e6053662957281ffbcb0a2ad28fc4f0c2f89",
+    "--json-output",
+    "/mnt/development/projects/worktrees/hanlin-two-wave-integration-20261126/build/affected-validation-4d76e605/plan.json"
+  ],
+  "returncode": 1,
+  "elapsed_seconds": 53.579,
+  "raw_log_sha256": "cde459f3799d3cb109aa96c9c3f7ae763ad46c532a2240d2d3a1816c0fa1f954",
+  "log_tail": "================================================================================\nROUTING ERROR: Affected-test routing is incomplete.\n\nUnmapped changed paths:\n  - tools/ai-team/ensure-team.ps1\n\nAdd an explicit routing rule in Scripts/CI/affected-validation-map.json before validation can continue.\nDO NOT RUN FULL VALIDATION AS A FALLBACK.\n================================================================================\n"
+}

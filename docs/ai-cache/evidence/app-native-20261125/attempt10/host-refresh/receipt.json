@@ -1,0 +1,109 @@
+{
+  "status": "PASS",
+  "sourceSHA": "5a0351f7e452789fd41c715c1ccb7f020cff44c5",
+  "startedAtUTC": "2026-11-25T06:02:05.895443+00:00",
+  "commands": [
+    {
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "Scripts/Runtime/runtime_host_archive.py",
+        "sync",
+        "AI_HLY/RuntimeHostResources.zip"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-ai-cache-native-20261125",
+      "startedAtUTC": "2026-11-25T06:02:06.029435+00:00",
+      "log": "01-command.log",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T06:07:04.382535+00:00",
+      "logSHA256": "67a000cd44c75dfe45626eac461bf267190102083492517bc7a914a33489cdd8"
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "Scripts/Runtime/runtime_host_archive.py",
+        "validate",
+        "AI_HLY/RuntimeHostResources.zip"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-ai-cache-native-20261125",
+      "startedAtUTC": "2026-11-25T06:07:04.385013+00:00",
+      "log": "02-command.log",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T06:07:08.101178+00:00",
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "argv": [
+        "node",
+        "Scripts/Runtime/generate-runtime-manifest.mjs",
+        "RuntimeDependencies.lock.json",
+        "AI_HLY/Downstream/RuntimeCore/Resources/RuntimeManifest.json"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-ai-cache-native-20261125",
+      "startedAtUTC": "2026-11-25T06:07:08.103217+00:00",
+      "log": "03-command.log",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T06:07:08.163954+00:00",
+      "logSHA256": "e0300c6a4ee73c2d65c9f67597ea4adcb0f6f627c0c7d1e9a7e3d1231d5441f0"
+    },
+    {
+      "argv": [
+        "/opt/homebrew/bin/python3.12",
+        "Scripts/SDK/native_artifacts.py",
+        "inventory",
+        "--root",
+        "."
+      ],
+      "cwd": "/Users/m1/builds/hanlin-ai-cache-native-20261125",
+      "startedAtUTC": "2026-11-25T06:07:08.164560+00:00",
+      "log": "04-command.log",
+      "exitCode": 0,
+      "finishedAtUTC": "2026-11-25T06:07:08.322761+00:00",
+      "logSHA256": "4ff42a8c94bade56b84e2d751b22728e48b68b8197d03340d8b26eeb90236ff3"
+    }
+  ],
+  "freeBytesBefore": 3919474688,
+  "originalProducer": "Scripts/Runtime/prepare-runtime-host.sh via original runtime_host_archive.py sync",
+  "nodeFingerprint": {
+    "versions": {
+      "node": "24.5.0",
+      "acorn": "8.15.0",
+      "ada": "3.2.6",
+      "amaro": "1.1.1",
+      "ares": "1.34.5",
+      "brotli": "1.1.0",
+      "cjs_module_lexer": "2.1.0",
+      "cldr": "47.0",
+      "icu": "77.1",
+      "llhttp": "9.3.0",
+      "modules": "137",
+      "napi": "10",
+      "nbytes": "0.1.1",
+      "ncrypto": "0.0.1",
+      "nghttp2": "1.66.0",
+      "openssl": "3.5.1",
+      "simdjson": "3.13.0",
+      "simdutf": "6.4.0",
+      "sqlite": "3.50.3",
+      "tz": "2025b",
+      "undici": "7.12.0",
+      "unicode": "16.0",
+      "uv": "1.51.0",
+      "uvwasi": "0.0.21",
+      "v8": "13.6.233.10-node.21",
+      "zlib": "1.3.1-470d3a2",
+      "zstd": "1.5.7"
+    },
+    "platform": "darwin",
+    "arch": "arm64"
+  },
+  "archive": {
+    "path": "AI_HLY/RuntimeHostResources.zip",
+    "bytes": 81856639,
+    "sha256": "7f0f6cd49c058673ffb9699fd2262ae768ca2843282f88e51d0ade293535df64"
+  },
+  "sourceInputsHash": "212e401bce8905c47620cd70f6bf7786eb7efa58b6c72ffd0cd35e345d0d80a7",
+  "sourceAfter": "5a0351f7e452789fd41c715c1ccb7f020cff44c5",
+  "trackedStatus": " M docs/miniapp-sdk/extension-reachability.json\n M docs/miniapp-sdk/extension-reachability.md\n M docs/miniapp-sdk/source-inventory.json\n",
+  "finishedAtUTC": "2026-11-25T06:07:08.804084+00:00",
+  "freeBytesAfter": 6229348352
+}

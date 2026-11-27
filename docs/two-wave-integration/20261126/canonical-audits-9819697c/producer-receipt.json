@@ -1,0 +1,44 @@
+{
+  "source": "9819697c1792119a6a93b492d12abad7b3330c93",
+  "at": "2026-11-26T17:54:27.218013+00:00",
+  "status": "ORIGINAL_SOURCE_AUDITS_GENERATED_AND_CHECKED",
+  "route": "Canonical original prepare-runtime-host pretest commands",
+  "hostStatusAtCapture": "RUNNING",
+  "hostAcceptance": "PENDING_SEPARATE_FULL_TEST_PACKING_AND_JITLESS_PROOF",
+  "files": [
+    {
+      "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "bytes": 145496,
+      "sha256": "a7c304738af363e9b786ddf8d90d4d7124089e22ce04a468814f7ce3cf4502c1",
+      "changedFromSource": false
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "bytes": 213318,
+      "sha256": "e10d24062fd7e96e712224733122c555d2bf578468e954f5b53c6aba90e821f2",
+      "changedFromSource": true
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "bytes": 37881,
+      "sha256": "9eb6a4115d59ae72323aa7e76229bcf2008e5ee63da1e3646b6034c3164f5a1a",
+      "changedFromSource": true
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "bytes": 569313,
+      "sha256": "6eff7cc0c77a44660a839d226a165cb18fba9b12ecf31b20bbd79afce9c11a2a",
+      "changedFromSource": true
+    }
+  ],
+  "generators": [
+    {
+      "path": "Scripts/Audit/audit-miniapp-sdk.mjs",
+      "sha256": "d896e6c51af5d499686343161e46291187f88dea747b20e0a01b0221e1c23f31"
+    },
+    {
+      "path": "Scripts/Audit/audit_miniapp_reachability.py",
+      "sha256": "7a40825fc7a75926c3820bbfe54fb6b8e686b141e0d1007f17466654ddad0d43"
+    }
+  ]
+}

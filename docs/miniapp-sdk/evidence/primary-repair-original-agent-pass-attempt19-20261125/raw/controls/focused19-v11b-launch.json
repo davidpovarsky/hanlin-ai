@@ -1,0 +1,103 @@
+{
+  "schema": 1,
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "producerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+  "observedAt": "2026-11-25T17:03:43.203123+00:00",
+  "pid": 84604,
+  "decision": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v11b-decision.json",
+  "decisionSHA256": "7dd6fbe9469886c57813740b7b9e11fc44605e4d0524cc06879f9ec1170d438c",
+  "controller": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-recovery-controller-v11b.py",
+  "controllerSHA256": "332728f7590a572aac6aaf61f5bb6e8b12a3d7d103c185da97fbfba2e5c6ddc4",
+  "activeBaselineSeconds": 20284.01731496104,
+  "allowanceSeconds": 1088.8944576229987,
+  "priorContinuationGrants": [
+    {
+      "authority": {
+        "path": "build/primary-control/focused19-v8/decision.json",
+        "sha256": "7c16a01c08f9ebfe7ac34844afcf1008e8be97975449c7424c3640bbeeab640f"
+      },
+      "grant": {
+        "by": "/root",
+        "additionalSeconds": 400,
+        "basis": "The user explicitly authorized completing the remaining implementation without repeated permission. Preserve the original3600 and all six actual charges; add400 for the measured receiver-synchronization continuation.",
+        "plannedNextPhaseSeconds": 900,
+        "components": {
+          "affectedAIBuild": 180,
+          "originalCase": 600,
+          "setupResultCleanup": 120
+        },
+        "otherGrantsUnchanged": true
+      }
+    },
+    {
+      "authority": {
+        "path": "build/primary-control/focused19-v9/decision.json",
+        "sha256": "dd38954a1f5db85b02c65c02566053e7c2dea660500ccb08c8220f34d5e7c6f9"
+      },
+      "grant": {
+        "by": "/root",
+        "additionalSeconds": 750,
+        "basis": "The user explicitly authorized completing the remaining implementation without repeated permission. Preserve the original3600, prior explicit400 grant and all seven actual charges; add750 for the measured MiniApps receiver-presentation continuation.",
+        "plannedNextPhaseSeconds": 900,
+        "components": {
+          "affectedMiniBuild": 180,
+          "originalCase": 600,
+          "setupResultCleanup": 120
+        },
+        "otherGrantsUnchanged": true
+      }
+    },
+    {
+      "authority": {
+        "path": "build/primary-control/focused19-v9/decision.json",
+        "sha256": "dd38954a1f5db85b02c65c02566053e7c2dea660500ccb08c8220f34d5e7c6f9"
+      },
+      "grant": {
+        "by": "/root",
+        "additionalSeconds": 200,
+        "basis": "The user explicitly authorized completing the remaining implementation without repeated permission. Preserve the original3600, prior400, separate750 and all seven actual charges; add200 after the actual V8 transcript established pending receiver status before installation, requiring the provider correction and both original builds.",
+        "plannedNextPhaseSeconds": 1080,
+        "components": {
+          "affectedMiniBuild": 180,
+          "affectedAIBuild": 180,
+          "originalCase": 600,
+          "setupResultCleanup": 120
+        },
+        "otherGrantsUnchanged": true
+      }
+    },
+    {
+      "authority": {
+        "path": "build/primary-control/focused19-v10/decision.json",
+        "sha256": "e5c4f55ab15c4b8360380bf2523847d073a1c47622fb06fce8b0c7bf83a7a01e"
+      },
+      "grant": {
+        "by": "/root",
+        "additionalSeconds": 300,
+        "basis": "The user explicitly authorized completing the remaining implementation without repeated permission. Preserve the original3600, separate prior400/750/200 grants and all eight actual charges; add300 for the measured AI-only repair-coordinator continuation while authenticating unchanged dc53 MiniApps products.",
+        "plannedNextPhaseSeconds": 900,
+        "components": {
+          "affectedAIBuild": 180,
+          "originalCase": 600,
+          "setupResultCleanup": 120
+        },
+        "otherGrantsUnchanged": true
+      }
+    }
+  ],
+  "continuationGrant": {
+    "by": "/root",
+    "additionalSeconds": 650,
+    "basis": "The user explicitly authorized completing the remaining implementation without repeated permission. Preserve the original3600, separate prior400/750/200/300 grants and all nine actual charges; add650 for the measured shared importer lifecycle correction requiring both original MiniApps and AI builds.",
+    "plannedNextPhaseSeconds": 1080,
+    "components": {
+      "affectedMiniBuild": 180,
+      "affectedAIBuild": 180,
+      "originalCase": 600,
+      "setupResultCleanup": 120
+    },
+    "otherGrantsUnchanged": true
+  },
+  "freshFreeBytes": 12523905024,
+  "original52": "UNCHANGED_NOT_PROMOTED"
+}

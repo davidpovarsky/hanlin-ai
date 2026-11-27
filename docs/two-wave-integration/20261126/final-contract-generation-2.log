@@ -1,0 +1,15 @@
+node:internal/fs/promises:1345
+  return new FileHandle(await PromisePrototypeThen(
+                        ^
+
+Error: ENOENT: no such file or directory, open '/mnt/development/projects/worktrees/hanlin-two-wave-integration-20261126/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/window-factory/index.mjs'
+    at async open (node:internal/fs/promises:1345:25)
+    at async readFile (node:internal/fs/promises:2003:14)
+    at async file:///mnt/development/projects/worktrees/hanlin-two-wave-integration-20261126/Scripts/NativeScript/build-window-factory.mjs:19:42 {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'open',
+  path: '/mnt/development/projects/worktrees/hanlin-two-wave-integration-20261126/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/window-factory/index.mjs'
+}
+
+Node.js v24.22.0

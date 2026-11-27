@@ -1,0 +1,34 @@
+Building for debugging...
+[Constructing description]
+[Planning deferred tasks]
+[29 / 51] HanlinChatCore
+[37 / 55] HanlinChatCoreTests-product
+[37 / 55] HanlinChatCore
+[43 / 56] HanlinChatCoreTests-test-runner
+[49 / 57] HanlinChatCoreTests-product
+[53 / 60] HanlinChatCoreTests-test-runner
+[57 / 60] HanlinChatCoreTests-test-runner
+[61 / 61] HanlinChatCoreTests-test-runner
+Build complete! (11.36 secs)
+Test Suite 'All tests' started at 2026-11-26 10:45:44.572
+Test Suite 'Debug-linux-aarch64.xctest' started at 2026-11-26 10:45:44.583
+Test Suite 'Debug-linux-aarch64.xctest' passed at 2026-11-26 10:45:44.583
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+Test Suite 'All tests' passed at 2026-11-26 10:45:44.583
+	 Executed 0 tests, with 0 failures (0 unexpected) in 0.0 (0.0) seconds
+◇ Test run started.
+↳ Testing Library Version: 6.4.3 (ba0861fb203553c)
+↳ Target Platform: aarch64-unknown-linux-gnu
+◇ Suite "Generated conversation metadata" started.
+◇ Test parsesHebrewTitleAndTopicIcon() started.
+◇ Test unknownOrMissingSymbolUsesValidDefault() started.
+◇ Test onePromptRequestsBothFieldsAndConversationLanguage() started.
+◇ Test recognizesLegacyAndCurrentPlaceholderLanguagesOnly() started.
+◇ Test acceptsOneJSONFenceButRejectsProseAndInvalidTitles() started.
+✔ Test unknownOrMissingSymbolUsesValidDefault() passed after 0.001 seconds.
+✔ Test onePromptRequestsBothFieldsAndConversationLanguage() passed after 0.002 seconds.
+✔ Test recognizesLegacyAndCurrentPlaceholderLanguagesOnly() passed after 0.002 seconds.
+✔ Test parsesHebrewTitleAndTopicIcon() passed after 0.002 seconds.
+✔ Test acceptsOneJSONFenceButRejectsProseAndInvalidTitles() passed after 0.006 seconds.
+✔ Suite "Generated conversation metadata" passed after 0.006 seconds.
+✔ Test run with 5 tests in 1 suite passed after 0.006 seconds.

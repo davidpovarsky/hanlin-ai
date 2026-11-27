@@ -1,0 +1,11 @@
+# Preserve the AsyncImage placeholder label while identifying the view
+
+The original focused Mini3 run actually executed all three cases on consumer 62dfff9aebd0a272486c7770d4f77ba603d535ab. It finalized 2 PASS / 1 FAIL / 0 SKIP. The remaining ManualInput failure was the unchanged exact IMAGE_EMPTY_SLOT assertion, after the earlier TextEditor and layout phases. The original AX shows a StaticText labelled 'Decoded adapter image', IMAGE_PHASE:empty, IMAGE_SUCCESS_EVENTS:0 and IMAGE_FAILURE_EVENTS:0. This identifies a fixture accessibility-label replacement before the image-load controls were exercised. The retained failure screenshot, AX, original source, complete Mini log, finalized summary/nodes and attachment mapping are unchanged.
+
+The minimal fixture correction replaces accessibilityLabel('Decoded adapter image') with the existing original accessibilityIdentifier('Decoded adapter image') and removes the unused accessibilityLabel import. The original modifier is exported and typed by @expo/ui 58.0.29 and was already imported in this fixture. This preserves the child placeholder's own label while retaining a stable way to identify the image view. Frame, placeholder/failure content, phase callbacks, image URLs, HTTP behavior, assertions and test selectors are unchanged. No product/native adapter or vendor API is modified.
+
+The one changed fixture path is absent from all 235 declared SDK19 source inputs. SDK19 Host, manifest, export and wrapper remain unchanged. The original SwiftUI probe archives need regeneration before native verification of this changed fixture; that operation belongs to the sole native owner. No compiler, generator or native test was run for this authoring step.
+
+The same recovery terminal is retained as context: its AI8 group actually executed 7 PASS / 1 FAIL / 0 SKIP. The AI repair failure is separate and is not addressed by this fixture correction. All 11 focused tests executed, but the focused recovery remains FAILED and original full 25+27 acceptance is not established. The original cumulative charge/remaining allowance and cleanup observations are retained without amendment.
+
+Corrected-case execution is pending. The source-only review and unchanged assertion are not represented as a native PASS.

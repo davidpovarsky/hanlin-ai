@@ -1,0 +1,17 @@
+{
+  "baseline": "aa7b6fa862d54f2a0054e0dd6ffb20fe20efe702",
+  "status": "EXECUTED_PASS",
+  "scope": "Pure shared metadata response/prompt/placeholder policy only",
+  "executedTests": 5,
+  "reusedTests": 0,
+  "toolchain": "Swift6.4.3 / aarch64-unknown-linux-gnu",
+  "command": "swift test --package-path /mnt/development/agent-scratch/hanlin-post149101-root-20261126/metadata-checks",
+  "sourceSHA256": {
+    "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinConversationMetadata.swift": "0dda9c30798cc858919f9c1cce565352ba4ee0d8edf2626ec367ae73fd23cf2c",
+    "Packages/HanlinPlatform/Tests/HanlinChatCoreTests/GeneratedConversationMetadataTests.swift": "20e4604ece7fb526467a26dfc5b1e5385009ad9e82b0c60f3057f06ae8c99bc2"
+  },
+  "rawLogSHA256": "e0f4480d34aba06d699b9e626e2cc53990657bbd6d20e0e025987a463f9b55c3",
+  "nativeCreationPersistenceAndUI": "NEEDS_TEST",
+  "providerRouting": "UNDER_REVIEW",
+  "rawLog": "portable-metadata.stdout.txt"
+}

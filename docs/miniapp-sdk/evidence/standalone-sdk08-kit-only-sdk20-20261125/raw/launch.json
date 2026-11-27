@@ -1,0 +1,7 @@
+{
+  "schema": 1,
+  "startedAt": "2026-11-25T21:30:36.887284+00:00",
+  "pid": 2143313,
+  "harnessSHA256": "f8be88ce6ec392f0971b8542da76292ceecff0322f9fdd785572e5c55d687622",
+  "scope": "Exactly six retained standalone SDK08 CLI invocations; new SDK20 only; no native execution."
+}

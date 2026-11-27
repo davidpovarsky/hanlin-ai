@@ -17,6 +17,7 @@ import SwiftData
 struct HanlinCompactConversationLibrary: View {
     @State private var showsSavedMessages = false
     @FocusState private var searchFocused: Bool
+    @State private var searchPresented = false
     let chatRecords: [ChatRecords]
     @Binding var searchText: String
     let matchedSnippets: [UUID: (AttributedString, UUID)]
@@ -28,6 +29,7 @@ struct HanlinCompactConversationLibrary: View {
     let onDeleteRecord: (ChatRecords) -> Void
     let onRefresh: () -> Void
     var isPresented: Bool = true
+    var selectedConversationID: UUID? = nil
     var keyboardOwner: HanlinCompactKeyboardOwner? = nil
 
     private var filteredRecords: [ChatRecords] {
@@ -52,27 +54,39 @@ struct HanlinCompactConversationLibrary: View {
                 .listRowSeparator(.hidden)
                 .padding(.top, 28)
             } else {
-                Section {
-                    ForEach(filteredRecords, id: \.id) { record in
-                        libraryRow(for: record)
+                ForEach(HanlinConversationHistory.sections(from: filteredRecords)) { section in
+                    Section {
+                        ForEach(section.records, id: \.id) { record in
+                            libraryRow(for: record)
+                        }
+                    } header: {
+                        Text(section.title)
+                            .font(HanlinTypography.subheadline.weight(.semibold))
+                            .textCase(nil)
+                            .accessibilityIdentifier("hanlin-history-section-\(section.id.rawValue)")
+                            .accessibilityHidden(!isPresented)
                     }
                 }
             }
         }
-        .listStyle(.plain)
+        .listStyle(.sidebar)
+        .background {
+            Color(uiColor: .secondarySystemGroupedBackground).ignoresSafeArea(.container)
+        }
         .navigationTitle(String(localized: "All Conversations", bundle: HanlinLocalization.bundle))
         .navigationBarTitleDisplayMode(.inline)
         .toolbarVisibility(.visible, for: .navigationBar)
         .searchable(
             text: $searchText,
+            isPresented: $searchPresented,
             placement: .navigationBarDrawer(displayMode: .always),
             prompt: Text("搜索聊天与消息内容", bundle: HanlinLocalization.bundle)
         )
         .searchFocused($searchFocused)
         .onChange(of: isPresented) { _, presented in
-            if !presented { searchFocused = false }
+            if !presented { endSearch() }
         }
-        .onDisappear { searchFocused = false }
+        .onDisappear(perform: endSearch)
         .background {
             if let keyboardOwner {
                 HanlinCompactSearchFocusRegistration(
@@ -85,22 +99,35 @@ struct HanlinCompactConversationLibrary: View {
             onRefresh()
         }
         .toolbar {
-            ToolbarItem(placement: .topBarTrailing) {
-                Button { showsSavedMessages = true } label: {
-                    Label(hanlin: "Saved messages", systemImage: "bookmark")
+            if isPresented {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button { showsSavedMessages = true } label: {
+                        Label(hanlin: "Saved messages", systemImage: "bookmark")
+                    }
+                    .accessibilityIdentifier("hanlin-saved-messages-open")
                 }
-                .accessibilityIdentifier("hanlin-saved-messages-open")
-            }
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: onAddNewChat) {
-                    Label(hanlin: "New chat", systemImage: "plus.bubble")
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button {
+                        endSearch()
+                        onAddNewChat()
+                    } label: {
+                        Label(hanlin: "New chat", systemImage: "plus.bubble")
+                    }
+                    .accessibilityIdentifier("hanlin-new-chat-button")
                 }
-                .accessibilityIdentifier("hanlin-new-chat-button")
             }
         }
         .sheet(isPresented: $showsSavedMessages) { ChatSavedExcerptsView() }
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-compact-conversation-library")
+        .accessibilityHidden(true, isEnabled: !isPresented)
+    }
+
+    private func endSearch() {
+        // Focus and search presentation are distinct native states. End both
+        // before routing away from this retained searchable navigation stack.
+        searchFocused = false
+        searchPresented = false
     }
 
     @ViewBuilder
@@ -110,12 +137,14 @@ struct HanlinCompactConversationLibrary: View {
         let messageID = snippetPair?.1
 
         Button {
+            endSearch()
             onSelectConversation(record, messageID)
         } label: {
             ChatRowView(
                 record: record,
                 searchText: searchText,
-                matchedSnippet: snippet
+                matchedSnippet: snippet,
+                isSelected: selectedConversationID != nil && selectedConversationID == record.id
             )
             .contentShape(Rectangle())
         }
@@ -142,10 +171,9 @@ struct HanlinCompactConversationLibrary: View {
                 Label(hanlin: "删除消息", systemImage: "trash")
             }
         }
-        .padding(.horizontal)
-        .padding(.vertical, 5)
-        .listRowInsets(EdgeInsets())
-        .listRowBackground(pinnedBackground(for: record))
+        .listRowInsets(EdgeInsets(top: 2, leading: 12, bottom: 2, trailing: 12))
+        .listRowBackground(Color.clear)
+        .listRowSeparator(.hidden)
         .swipeActions(edge: .trailing, allowsFullSwipe: true) {
             Button(role: .destructive) {
                 onDeleteRecord(record)
@@ -175,17 +203,11 @@ struct HanlinCompactConversationLibrary: View {
         }
         .id((record.id?.uuidString ?? "") + String(forceRefresh))
         .accessibilityIdentifier("hanlin-chat-row-\(record.name ?? "")")
+        // Native List cells retain their own accessibility leaves across the
+        // sidebar's NavigationStack boundary. Gate the actual row as well.
+        .disabled(!isPresented)
+        .allowsHitTesting(isPresented)
+        .accessibilityHidden(!isPresented)
     }
 
-    @ViewBuilder
-    private func pinnedBackground(for record: ChatRecords) -> some View {
-        if record.isPinned {
-            BlurView(style: .systemUltraThinMaterial)
-                .clipShape(RoundedRectangle(cornerRadius: 20))
-                .shadow(color: Color.from(name: record.color ?? "hlBlue"), radius: 1)
-                .padding(3)
-        } else {
-            Color.clear
-        }
-    }
 }

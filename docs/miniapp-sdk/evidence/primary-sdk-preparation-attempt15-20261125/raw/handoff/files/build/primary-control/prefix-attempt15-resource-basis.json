@@ -1,0 +1,18 @@
+{
+  "at": "2026-11-25T05:58:47.220088+00:00",
+  "physicalFreeBytes": 5800407040,
+  "estimatedIncrementalBytes": 3000000000,
+  "scope": "Affected original normal preparation through inputs; no app/simulator test launched here.",
+  "basis": "Native producer source/lock/metadata inputs unchanged and verified previous phase; existing original producers perform their own exact reuse. The canonical SDK contains the changed delegate so normal Host/SDK/docs/catalog must refresh. Separate final app/simulator measurement follows.",
+  "priorUpstreamEvidence": [
+    {
+      "path": "upstream-resolution.json",
+      "sha256": "51261bf78e7b39799d4054a682e8b942168a77fb5a7ae5c073abbd9bbc49608c"
+    },
+    {
+      "path": "upstream-inputs.patch",
+      "sha256": "9e03e8dd40b1e7cba182615afa6a7511239058e1a2b1553891770c656cdeb6c5"
+    }
+  ],
+  "nativeProducersForcedRebuild": false
+}

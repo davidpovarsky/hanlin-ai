@@ -1,0 +1,6 @@
+{
+  "pid": 28092,
+  "at": "2026-11-26T16:09:24.589476+00:00",
+  "scope": "Only collector from completed own failedB; no other simctl touched",
+  "action": "ALREADY_ABSENT"
+}

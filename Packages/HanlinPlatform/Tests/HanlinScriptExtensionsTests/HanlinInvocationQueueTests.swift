@@ -94,6 +94,135 @@ struct HanlinInvocationQueueTests {
         }
     }
 
+    @Test func atomicOwnedAdmissionHasOneLeaseAndPreservesExactRetriesAndConflicts() async throws {
+        let root = temporaryRoot(); defer { try? FileManager.default.removeItem(at: root) }
+        let input = try command()
+        let claims = try await withThrowingTaskGroup(of: HanlinInvocationClaim?.self) { group in
+            for _ in 0..<16 {
+                group.addTask { try HanlinScriptExtensionStore(root: root).enqueueAndClaim(input) }
+            }
+            var claims: [HanlinInvocationClaim] = []
+            for try await claim in group { if let claim { claims.append(claim) } }
+            return claims
+        }
+        #expect(claims.count == 1)
+        let claim = try #require(claims.first), store = HanlinScriptExtensionStore(root: root)
+        #expect(try store.command(for: input.id) == claim.command)
+        let running = try #require(try store.receipt(for: input.id))
+        #expect(running.status == .running && running.attempt == 1 && running.leaseID == claim.leaseID)
+        #expect(try store.enqueueAndClaim(input) == nil)
+        #expect(try store.receipt(for: input.id) == running)
+        let conflicting = try command(id: input.id, at: input.createdAt, payload: .string("DO_NOT_REPLACE"))
+        #expect(throws: HanlinInvocationQueueError.duplicateIdentity) {
+            _ = try store.enqueueAndClaim(conflicting)
+        }
+        #expect(try store.command(for: input.id) == claim.command)
+        try store.complete(claim, status: .succeeded, value: .object(["nested": .array([.integer(7), .null])]))
+        let completed = try store.receipt(for: input.id)
+        #expect(try store.enqueueAndClaim(input) == nil)
+        #expect(try store.receipt(for: input.id) == completed)
+        #expect(try store.pendingCommands().isEmpty)
+    }
+
+    @Test func lostOwnedAdmissionIsDeferredAndCannotReplayAfterAProcessRestart() throws {
+        let root = temporaryRoot(); defer { try? FileManager.default.removeItem(at: root) }
+        let now = Date(timeIntervalSince1970: 1_000), input = try command(at: now)
+        let claim = try #require(try HanlinScriptExtensionStore(root: root).enqueueAndClaim(input, now: now, leaseSeconds: 1))
+        let reopened = HanlinScriptExtensionStore(root: root)
+        #expect(try reopened.claim(input.id, now: now.addingTimeInterval(0.5)) == nil)
+        #expect(try reopened.claim(input.id, now: now.addingTimeInterval(2)) == nil)
+        let receipt = try #require(try reopened.receipt(for: input.id))
+        #expect(receipt.status == .deferred && receipt.failure == .interruptedOutcomeUnknown)
+        #expect(receipt.attempt == 1 && receipt.value == nil && receipt.leaseID == nil)
+        #expect(throws: HanlinInvocationQueueError.staleLease) {
+            try reopened.complete(claim, status: .succeeded, value: .string("LATE"),
+                                  now: now.addingTimeInterval(2))
+        }
+        #expect(try reopened.enqueueAndClaim(input, now: now.addingTimeInterval(3)) == nil)
+        #expect(try reopened.receipt(for: input.id) == receipt)
+        #expect(try reopened.pendingCommands().isEmpty)
+    }
+
+    @Test func ownedExecutorKeepsForegroundDrainsOutAndReturnsTheOriginalReceiptOnRetry() async throws {
+        let root = temporaryRoot(); defer { try? FileManager.default.removeItem(at: root) }
+        let store = HanlinScriptExtensionStore(root: root), input = try command()
+        let owner = HanlinInvocationExecutor(store: store), entered = InvocationStartSignal()
+        let release = InvocationStartSignal()
+        let task = Task {
+            try await owner.execute(input) { command in
+                #expect(try store.command(for: input.id) == command)
+                await entered.signal()
+                await release.wait()
+                return .string("ORIGINAL_RESULT")
+            }
+        }
+        await entered.wait()
+        let running = try #require(try store.receipt(for: input.id))
+        let drain = try await HanlinInvocationExecutor(store: store).execute(input.id) { _ in
+            Issue.record("Foreground drain stole an owned command")
+            return .string("WRONG")
+        }
+        #expect(drain?.status == .running && drain?.leaseID == running.leaseID)
+        await release.signal()
+        let completed = try await task.value
+        #expect(completed?.status == .succeeded && completed?.value == .string("ORIGINAL_RESULT"))
+        let repeated = try await HanlinInvocationExecutor(store: store).execute(input) { _ in
+            Issue.record("A completed owned command executed twice")
+            return .null
+        }
+        #expect(repeated == completed)
+    }
+
+    @Test func ownedAdmissionFailureIsTerminalWhileLegacyQueuedAdmissionRemainsRetryable() async throws {
+        let root = temporaryRoot(); defer { try? FileManager.default.removeItem(at: root) }
+        let store = HanlinScriptExtensionStore(root: root), input = try command()
+        let executor = HanlinInvocationExecutor(store: store)
+        let denied = try await executor.execute(input) { _ in throw HanlinInvocationNotStarted() }
+        #expect(denied?.status == .needsForeground && denied?.failure == .unavailableHost)
+        #expect(try store.pendingCommands().isEmpty)
+        let retried = try await executor.execute(input.id) { _ in
+            Issue.record("An abandoned Shortcuts action replayed")
+            return .null
+        }
+        #expect(retried == denied)
+        let legacy = HanlinScriptResumeCommand(invocation: .init(identity: input.invocation.identity,
+            entityID: input.invocation.entityID, parameters: .string("legacy"), continueInForeground: true))
+        try store.enqueue(legacy)
+        let deferred = try await executor.execute(legacy.id) { _ in throw HanlinInvocationNotStarted() }
+        #expect(deferred?.status == .queued && deferred?.attempt == 0)
+        let result = try await executor.execute(legacy.id) { .string($0.invocation.delivery == nil ? "LEGACY" : "WRONG") }
+        #expect(result?.status == .succeeded && result?.value == .string("LEGACY"))
+    }
+
+    @Test func ownedCancellationDrainsTheActualHandlerBeforeKeepingItsTerminalReceipt() async throws {
+        let root = temporaryRoot(); defer { try? FileManager.default.removeItem(at: root) }
+        let store = HanlinScriptExtensionStore(root: root), input = try command()
+        let entered = InvocationStartSignal(), drained = InvocationStartSignal()
+        let task = Task {
+            try await HanlinInvocationExecutor(store: store).execute(input) { _ in
+                await entered.signal()
+                do {
+                    try await Task.sleep(for: .seconds(30))
+                } catch {
+                    await drained.signal()
+                    throw error
+                }
+                return .string("MUST_NOT_COMPLETE")
+            }
+        }
+        await entered.wait()
+        let requested = try store.requestCancellation(input.id)
+        #expect(requested.status == .running && requested.cancellationRequested)
+        let terminal = try await task.value
+        await drained.wait()
+        #expect(terminal?.status == .cancelled && terminal?.value == nil)
+        let retry = try await HanlinInvocationExecutor(store: store).execute(input) { _ in
+            Issue.record("Cancelled action replayed")
+            return .null
+        }
+        #expect(retry == terminal)
+    }
+
     private func temporaryRoot() -> URL {
         FileManager.default.temporaryDirectory.appending(path: "hanlin-invocations-\(UUID().uuidString)", directoryHint: .isDirectory)
     }

@@ -1,0 +1,221 @@
+{
+  "schema": 1,
+  "source": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+  "sourceTree": "c0f027896b1edd67ea824c48b2b3bbf7c4e5e73a",
+  "observedAt": "2026-11-25T23:47:27.796963+00:00",
+  "builtInputBindings": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/product-capture/built-input-bindings.json",
+    "bytes": 13999,
+    "sha256": "799f464fcd5edae6e7218be4e0d461bbc9a899e1bb07516e298097b1d32bdc47"
+  },
+  "files": [
+    {
+      "role": "aiXctestrun",
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/AI_HLY_iphonesimulator27.0-arm64.xctestrun",
+      "bytes": 10920,
+      "sha256": "b2cc79f4b3780daec837e119cc5e4a07d5ecccd618ab793b88bb0b80dbfa2062"
+    },
+    {
+      "role": "miniXctestrun",
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/HanlinMiniApps_iphonesimulator27.0-arm64.xctestrun",
+      "bytes": 16737,
+      "sha256": "2d6b493aa93663d03e17a15722eab010326b260ccbbb454ed12077cae45cda96"
+    },
+    {
+      "role": "uiRunnerInfo",
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app/Info.plist",
+      "bytes": 10947,
+      "sha256": "e807c6b2a4c5444448a527d598bb86195f0737209b6c15bc2b8ecc8273f75d87"
+    },
+    {
+      "role": "uiRunnerExecutable",
+      "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app/HanlinMiniAppsUITests-Runner",
+      "bytes": 95248,
+      "sha256": "b8aa680bd899a64118d86302c884e8cdb81fec14a0d40dc2dfb8f6a33362b5bf"
+    }
+  ],
+  "plistTargets": [
+    {
+      "role": "aiXctestrun",
+      "format": "legacy target-key dictionary",
+      "metadata": {
+        "ContainerInfo": {
+          "ContainerName": "AI_HLY",
+          "SchemeName": "AI_HLY"
+        },
+        "FormatVersion": 1
+      },
+      "targets": [
+        {
+          "targetKey": "AI_HLYTests",
+          "ProductModuleName": "AI_HLYTests",
+          "TestBundlePath": "__TESTHOST__/PlugIns/AI_HLYTests.xctest",
+          "TestHostPath": "__TESTROOT__/Debug-iphonesimulator/AI_Hanlin.app",
+          "UITargetAppPath": null,
+          "IsUITestBundle": null,
+          "EnvironmentVariables": {
+            "APP_DISTRIBUTOR_ID_OVERRIDE": "com.apple.AppStore",
+            "DYLD_INSERT_LIBRARIES": "/usr/lib/libRPAC.dylib",
+            "IDE_CHOSEN_LOGGING_METHOD": "1",
+            "OS_ACTIVITY_DT_MODE": "YES",
+            "PERFC_ENABLE_EXTENDED_DIAGNOSTIC_FORMAT": "1",
+            "PERFC_ENABLE_PROFILE_MODE": "1",
+            "PERFC_RESET_INSERT_LIBRARIES": "1",
+            "PERFC_SUPPRESS_SYSTEM_REPORTS": "1",
+            "SQLITE_ENABLE_THREAD_ASSERTIONS": "1",
+            "TERM": "dumb"
+          },
+          "TestingEnvironmentVariables": {
+            "DYLD_FRAMEWORK_PATH": "__TESTROOT__/Debug-iphonesimulator:__TESTROOT__/Debug-iphonesimulator/PackageFrameworks:__PLATFORMS__/iPhoneSimulator.platform/Developer/Library/Frameworks",
+            "DYLD_INSERT_LIBRARIES": "__TESTHOST__/Frameworks/libXCTestBundleInject.dylib:/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.dmYYVr/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/usr/lib/libMainThreadChecker.dylib:/usr/lib/libRPAC.dylib",
+            "DYLD_LIBRARY_PATH": "__TESTROOT__/Debug-iphonesimulator:__PLATFORMS__/iPhoneSimulator.platform/Developer/usr/lib",
+            "PERFC_SUPPRESS_SYSTEM_REPORTS": "1",
+            "XCInjectBundleInto": "unused",
+            "XCODE_SCHEME_NAME": "AI_HLY",
+            "__XCODE_BUILT_PRODUCTS_DIR_PATHS": "__TESTROOT__/Debug-iphonesimulator",
+            "__XPC_DYLD_FRAMEWORK_PATH": "__TESTROOT__/Debug-iphonesimulator",
+            "__XPC_DYLD_LIBRARY_PATH": "__TESTROOT__/Debug-iphonesimulator"
+          }
+        },
+        {
+          "targetKey": "AI_HLYUITests",
+          "ProductModuleName": "AI_HLYUITests",
+          "TestBundlePath": "__TESTHOST__/PlugIns/AI_HLYUITests.xctest",
+          "TestHostPath": "__TESTROOT__/Debug-iphonesimulator/AI_HLYUITests-Runner.app",
+          "UITargetAppPath": "__TESTROOT__/Debug-iphonesimulator/AI_Hanlin.app",
+          "IsUITestBundle": true,
+          "EnvironmentVariables": {
+            "APP_DISTRIBUTOR_ID_OVERRIDE": "com.apple.AppStore",
+            "DYLD_INSERT_LIBRARIES": "/usr/lib/libRPAC.dylib",
+            "IDE_CHOSEN_LOGGING_METHOD": "1",
+            "OS_ACTIVITY_DT_MODE": "YES",
+            "PERFC_ENABLE_EXTENDED_DIAGNOSTIC_FORMAT": "1",
+            "PERFC_ENABLE_PROFILE_MODE": "1",
+            "PERFC_RESET_INSERT_LIBRARIES": "1",
+            "PERFC_SUPPRESS_SYSTEM_REPORTS": "1",
+            "SQLITE_ENABLE_THREAD_ASSERTIONS": "1",
+            "TERM": "dumb"
+          },
+          "TestingEnvironmentVariables": {
+            "DYLD_FRAMEWORK_PATH": "__TESTROOT__/Debug-iphonesimulator:__TESTROOT__/Debug-iphonesimulator/PackageFrameworks:__PLATFORMS__/iPhoneSimulator.platform/Developer/Library/Frameworks",
+            "DYLD_INSERT_LIBRARIES": "/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.dmYYVr/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/usr/lib/libMainThreadChecker.dylib",
+            "DYLD_LIBRARY_PATH": "__TESTROOT__/Debug-iphonesimulator:__PLATFORMS__/iPhoneSimulator.platform/Developer/usr/lib",
+            "XCODE_SCHEME_NAME": "AI_HLY",
+            "__XCODE_BUILT_PRODUCTS_DIR_PATHS": "__TESTROOT__/Debug-iphonesimulator",
+            "__XPC_DYLD_FRAMEWORK_PATH": "__TESTROOT__/Debug-iphonesimulator",
+            "__XPC_DYLD_LIBRARY_PATH": "__TESTROOT__/Debug-iphonesimulator"
+          }
+        }
+      ]
+    },
+    {
+      "role": "miniXctestrun",
+      "format": "legacy target-key dictionary",
+      "metadata": {
+        "ContainerInfo": {
+          "ContainerName": "AI_HLY",
+          "SchemeName": "HanlinMiniApps"
+        },
+        "FormatVersion": 1
+      },
+      "targets": [
+        {
+          "targetKey": "HanlinMiniAppsBootstrapTests",
+          "ProductModuleName": "HanlinMiniAppsBootstrapTests",
+          "TestBundlePath": "__TESTROOT__/Debug-iphonesimulator/HanlinMiniAppsBootstrapTests.xctest",
+          "TestHostPath": "__PLATFORMS__/iPhoneSimulator.platform/Developer/Library/Xcode/Agents/xctest",
+          "UITargetAppPath": null,
+          "IsUITestBundle": null,
+          "EnvironmentVariables": {
+            "APP_DISTRIBUTOR_ID_OVERRIDE": "com.apple.AppStore",
+            "DYLD_INSERT_LIBRARIES": "/usr/lib/libRPAC.dylib",
+            "IDE_CHOSEN_LOGGING_METHOD": "1",
+            "OS_ACTIVITY_DT_MODE": "YES",
+            "PERFC_ENABLE_EXTENDED_DIAGNOSTIC_FORMAT": "1",
+            "PERFC_ENABLE_PROFILE_MODE": "1",
+            "PERFC_RESET_INSERT_LIBRARIES": "1",
+            "PERFC_SUPPRESS_SYSTEM_REPORTS": "1",
+            "SQLITE_ENABLE_THREAD_ASSERTIONS": "1",
+            "TERM": "dumb"
+          },
+          "TestingEnvironmentVariables": {
+            "DYLD_FRAMEWORK_PATH": "__TESTROOT__/Debug-iphonesimulator:__TESTROOT__/Debug-iphonesimulator/PackageFrameworks:__PLATFORMS__/iPhoneSimulator.platform/Developer/Library/Frameworks",
+            "DYLD_INSERT_LIBRARIES": "/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.dmYYVr/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/usr/lib/libMainThreadChecker.dylib:/usr/lib/libRPAC.dylib",
+            "DYLD_LIBRARY_PATH": "__TESTROOT__/Debug-iphonesimulator:__PLATFORMS__/iPhoneSimulator.platform/Developer/usr/lib",
+            "PERFC_SUPPRESS_SYSTEM_REPORTS": "1",
+            "XCODE_SCHEME_NAME": "HanlinMiniApps",
+            "__XCODE_BUILT_PRODUCTS_DIR_PATHS": "__TESTROOT__/Debug-iphonesimulator",
+            "__XPC_DYLD_FRAMEWORK_PATH": "__TESTROOT__/Debug-iphonesimulator",
+            "__XPC_DYLD_LIBRARY_PATH": "__TESTROOT__/Debug-iphonesimulator"
+          }
+        },
+        {
+          "targetKey": "HanlinMiniAppsTests",
+          "ProductModuleName": "HanlinMiniAppsTests",
+          "TestBundlePath": "__TESTHOST__/PlugIns/HanlinMiniAppsTests.xctest",
+          "TestHostPath": "__TESTROOT__/Debug-iphonesimulator/HanlinMiniApps.app",
+          "UITargetAppPath": null,
+          "IsUITestBundle": null,
+          "EnvironmentVariables": {
+            "APP_DISTRIBUTOR_ID_OVERRIDE": "com.apple.AppStore",
+            "DYLD_INSERT_LIBRARIES": "/usr/lib/libRPAC.dylib",
+            "IDE_CHOSEN_LOGGING_METHOD": "1",
+            "OS_ACTIVITY_DT_MODE": "YES",
+            "PERFC_ENABLE_EXTENDED_DIAGNOSTIC_FORMAT": "1",
+            "PERFC_ENABLE_PROFILE_MODE": "1",
+            "PERFC_RESET_INSERT_LIBRARIES": "1",
+            "PERFC_SUPPRESS_SYSTEM_REPORTS": "1",
+            "SQLITE_ENABLE_THREAD_ASSERTIONS": "1",
+            "TERM": "dumb"
+          },
+          "TestingEnvironmentVariables": {
+            "DYLD_FRAMEWORK_PATH": "__TESTROOT__/Debug-iphonesimulator:__TESTROOT__/Debug-iphonesimulator/PackageFrameworks:__PLATFORMS__/iPhoneSimulator.platform/Developer/Library/Frameworks",
+            "DYLD_INSERT_LIBRARIES": "__TESTHOST__/Frameworks/libXCTestBundleInject.dylib:/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.dmYYVr/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/usr/lib/libMainThreadChecker.dylib:/usr/lib/libRPAC.dylib",
+            "DYLD_LIBRARY_PATH": "__TESTROOT__/Debug-iphonesimulator:__PLATFORMS__/iPhoneSimulator.platform/Developer/usr/lib",
+            "PERFC_SUPPRESS_SYSTEM_REPORTS": "1",
+            "XCInjectBundleInto": "unused",
+            "XCODE_SCHEME_NAME": "HanlinMiniApps",
+            "__XCODE_BUILT_PRODUCTS_DIR_PATHS": "__TESTROOT__/Debug-iphonesimulator",
+            "__XPC_DYLD_FRAMEWORK_PATH": "__TESTROOT__/Debug-iphonesimulator",
+            "__XPC_DYLD_LIBRARY_PATH": "__TESTROOT__/Debug-iphonesimulator"
+          }
+        },
+        {
+          "targetKey": "HanlinMiniAppsUITests",
+          "ProductModuleName": "HanlinMiniAppsUITests",
+          "TestBundlePath": "__TESTHOST__/PlugIns/HanlinMiniAppsUITests.xctest",
+          "TestHostPath": "__TESTROOT__/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app",
+          "UITargetAppPath": "__TESTROOT__/Debug-iphonesimulator/HanlinMiniApps.app",
+          "IsUITestBundle": true,
+          "EnvironmentVariables": {
+            "APP_DISTRIBUTOR_ID_OVERRIDE": "com.apple.AppStore",
+            "DYLD_INSERT_LIBRARIES": "/usr/lib/libRPAC.dylib",
+            "IDE_CHOSEN_LOGGING_METHOD": "1",
+            "OS_ACTIVITY_DT_MODE": "YES",
+            "PERFC_ENABLE_EXTENDED_DIAGNOSTIC_FORMAT": "1",
+            "PERFC_ENABLE_PROFILE_MODE": "1",
+            "PERFC_RESET_INSERT_LIBRARIES": "1",
+            "PERFC_SUPPRESS_SYSTEM_REPORTS": "1",
+            "SQLITE_ENABLE_THREAD_ASSERTIONS": "1",
+            "TERM": "dumb"
+          },
+          "TestingEnvironmentVariables": {
+            "DYLD_FRAMEWORK_PATH": "__TESTROOT__/Debug-iphonesimulator:__TESTROOT__/Debug-iphonesimulator/PackageFrameworks:__PLATFORMS__/iPhoneSimulator.platform/Developer/Library/Frameworks",
+            "DYLD_INSERT_LIBRARIES": "/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.1.434.0.dmYYVr/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.0.simruntime/Contents/Resources/RuntimeRoot/usr/lib/libMainThreadChecker.dylib",
+            "DYLD_LIBRARY_PATH": "__TESTROOT__/Debug-iphonesimulator:__PLATFORMS__/iPhoneSimulator.platform/Developer/usr/lib",
+            "XCODE_SCHEME_NAME": "HanlinMiniApps",
+            "__XCODE_BUILT_PRODUCTS_DIR_PATHS": "__TESTROOT__/Debug-iphonesimulator",
+            "__XPC_DYLD_FRAMEWORK_PATH": "__TESTROOT__/Debug-iphonesimulator",
+            "__XPC_DYLD_LIBRARY_PATH": "__TESTROOT__/Debug-iphonesimulator"
+          }
+        }
+      ]
+    }
+  ],
+  "runner": {
+    "bundleID": "com.itorah.hanlinminiapps.integration.uitests.xctrunner",
+    "executable": "HanlinMiniAppsUITests-Runner",
+    "bundlePath": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app"
+  },
+  "boundary": "Read-only actual current build metadata. No build, test, simulator, staging or product mutation is performed by this capture."
+}

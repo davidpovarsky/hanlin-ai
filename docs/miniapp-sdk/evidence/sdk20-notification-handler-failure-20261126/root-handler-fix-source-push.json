@@ -1,0 +1,10 @@
+{
+  "schema": 1,
+  "at": "2026-11-26T01:02:28.685124+00:00",
+  "status": "PUBLISHED_NATIVE_VERIFICATION_PENDING",
+  "head": "8b85a66ab7f220bb18aa14516f0508205b4f9669",
+  "remoteRef": "refs/heads/codex/hanlin-miniapps-sdk-completion-20261123",
+  "remoteReadback": "8b85a66ab7f220bb18aa14516f0508205b4f9669\trefs/heads/codex/hanlin-miniapps-sdk-completion-20261123",
+  "pushStdout": "",
+  "pushStderr": "To https://github.com/davidpovarsky/hanlin-ai.git\n   77ec05fd4..8b85a66ab  HEAD -> codex/hanlin-miniapps-sdk-completion-20261123\n"
+}

@@ -19,7 +19,8 @@ extension APIManager {
         continuation: AsyncThrowingStream<StreamData, Error>.Continuation?,
         currentLocationProvider: @MainActor () async throws -> Location = { try await getCurrentLocation() },
         calendarSearchProvider: @MainActor (HanlinCalendarSearchRequest) async throws -> [EventItem] = { try await searchSystemEvents($0) },
-        calendarWriteProvider: @MainActor (HanlinCalendarWriteRequest) async throws -> EventItem = { try await writeSystemEvent($0) }
+        calendarWriteProvider: @MainActor (HanlinCalendarWriteRequest) async throws -> EventItem = { try await writeSystemEvent($0) },
+        calendarOperationProvider: @MainActor (HanlinCalendarOperationRequest) async throws -> HanlinCalendarOperationResult = { try await manageSystemCalendar($0) }
     ) async -> NativeToolResult {
         let currentLanguage = context.localeIdentifier
         let currentLanguagePrefix = currentLanguage.hasPrefix("zh")
@@ -39,7 +40,7 @@ extension APIManager {
         let previousSearchResourcesCount = self.searchResources?.count ?? 0
         let previousLocationsCount = self.locationsInfo?.count ?? 0
         let previousRoutesCount = self.storeRouteInfo?.count ?? 0
-        let previousEventsCount = self.events?.count ?? 0
+        let previousEvents = self.events
         let previousHTML = self.htmlContent
         let previousHealthCount = self.healthCard?.count ?? 0
         let previousCodeCount = self.codeBlock?.count ?? 0
@@ -600,10 +601,10 @@ extension APIManager {
                                                         let formatted = items.enumerated().map { index, item in
                                                             let date = item.startDate ?? item.dueDate
                                                             let time = date.map { formatter.string(from: $0) } ?? (currentLanguagePrefix ? "无时间信息" : "No time info")
-                                                            let note = item.notes.flatMap { $0.isEmpty ? nil : "（备注：\($0)）" } ?? ""
-                                                            let location = item.location.flatMap { $0.isEmpty ? nil : "（地点：\($0)）" } ?? ""
+                                                            let note = item.notes.flatMap { $0.isEmpty ? nil : " [notes: \($0)]" } ?? ""
+                                                            let location = item.location.flatMap { $0.isEmpty ? nil : " [location: \($0)]" } ?? ""
                                                             let kind = item.type == "calendar" ? (currentLanguagePrefix ? "日历事件" : "Calendar") : (currentLanguagePrefix ? "提醒事项" : "Reminder")
-                                                            return "(\(index + 1)) [\(kind)] \(item.title) - \(time)\(note)\(location)"
+                                                            return "(\(index + 1)) [\(kind)] id=\(item.resolvedItemIdentifier ?? "unavailable") \(item.title) - \(time)\(note)\(location)"
                                                         }.joined(separator: "\n")
                                                         toolResult = currentLanguagePrefix ?
                                                             "查询成功，共找到 \(items.count) 个相关项目：\n\(formatted)" :
@@ -639,15 +640,40 @@ extension APIManager {
                                                     let event = try await calendarWriteProvider(request)
                                                     // A committed write remains a success even if cancellation races
                                                     // after EventKit saved it. Never invite an accidental duplicate.
-                                                    let formatter = DateFormatter()
-                                                    formatter.dateFormat = "yyyy-MM-dd HH:mm"
-                                                    let time = (event.startDate ?? event.dueDate).map { formatter.string(from: $0) }
-                                                        ?? (currentLanguagePrefix ? "无时间信息" : "No time info")
-                                                    toolResult = currentLanguagePrefix ?
-                                                        "写入成功：[ \(event.title) - \(time) ]" :
-                                                        "Event written successfully: [ \(event.title) - \(time) ]"
+                                                    toolResult = calendarSavedReceipt(event, operation: event.type == "calendar" ? "create_event" : "create_reminder")
                                                     if self.events == nil { self.events = [] }
                                                     self.events?.append(event)
+                                                } catch {
+                                                    let failure = calendarToolFailure(error)
+                                                    executionOutcome = failure.outcome
+                                                    executionReturnedError = true
+                                                    executionDiagnostics.failureCategory = failure.outcome.rawValue
+                                                    executionDiagnostics.wasCancelled = failure.outcome == .cancelled
+                                                    executionDiagnostics.didTimeOut = failure.outcome == .timedOut
+                                                    toolResult = failure.message
+                                                }
+                                                toolResultFront = toolResult
+
+                                            case "manage_calendar":
+                                                useFunctionName = functionName
+                                                executionDiagnostics.backendRoute = "system:eventkit"
+                                                do {
+                                                    let request = try HanlinCalendarOperationRequest.decode(functionArguments)
+                                                    let result = try await calendarOperationProvider(request)
+                                                    guard result.operation == request.operation,
+                                                          !request.operation.changesData || result.committed else {
+                                                        throw HanlinCalendarRequestError.invalidField("no matching committed operation receipt")
+                                                    }
+                                                    if !result.committed { try Task.checkCancellation() }
+                                                    toolResult = result.modelText
+                                                    for item in result.items.map(appEvent) {
+                                                        if self.events == nil { self.events = [] }
+                                                        if let index = self.events?.firstIndex(where: {
+                                                            $0.resolvedItemIdentifier == item.resolvedItemIdentifier &&
+                                                            $0.occurrenceDate == item.occurrenceDate
+                                                        }) { self.events?[index] = item }
+                                                        else { self.events?.append(item) }
+                                                    }
                                                 } catch {
                                                     let failure = calendarToolFailure(error)
                                                     executionOutcome = failure.outcome
@@ -1006,7 +1032,7 @@ extension APIManager {
 
         let addedLocations = (self.locationsInfo?.count ?? 0) > previousLocationsCount
         let addedRoutes = (self.storeRouteInfo?.count ?? 0) > previousRoutesCount
-        let addedEvents = (self.events?.count ?? 0) > previousEventsCount
+        let addedEvents = self.events != previousEvents
         let addedHTML = (self.htmlContent?.isEmpty == false) && (self.htmlContent != previousHTML)
         let addedHealth = (self.healthCard?.count ?? 0) > previousHealthCount
         let addedCode = (self.codeBlock?.count ?? 0) > previousCodeCount

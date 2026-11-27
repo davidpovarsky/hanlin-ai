@@ -37,17 +37,16 @@ private final class HanlinNotificationCenterDelegate: NSObject, UNUserNotificati
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification) async -> Int {
         await receive(notification.request.content.userInfo)
-        // Call the original Objective-C completion requirement: Swift 6.4's
-        // optional async thunk crashes during SIL lowering with C++ interop.
-        // Preserve the previous delegate's bits and the Host's zero fallback.
+        // No original delegate meant no foreground presentation. Preserve that
+        // behavior and any installed delegate's actual presentation decision.
+        guard let previous,
+              previous.responds(to: #selector(UNUserNotificationCenterDelegate.userNotificationCenter(_:willPresent:withCompletionHandler:))) else { return 0 }
+        // Use the original Objective-C callback; Swift 6.4 cannot lower the
+        // optional synthesized async forwarding thunk with C++ interoperability.
         return await withCheckedContinuation { continuation in
-            guard let callback = previous?.userNotificationCenter(_:willPresent:withCompletionHandler:) else {
-                continuation.resume(returning: 0)
-                return
-            }
-            callback(center, notification) { options in
+            previous.userNotificationCenter?(center, willPresent: notification, withCompletionHandler: { options in
                 continuation.resume(returning: options)
-            }
+            })
         }
     }
 
@@ -56,12 +55,12 @@ private final class HanlinNotificationCenterDelegate: NSObject, UNUserNotificati
         if response.actionIdentifier != UNNotificationDismissActionIdentifier {
             await receive(response.notification.request.content.userInfo)
         }
+        guard let previous,
+              previous.responds(to: #selector(UNUserNotificationCenterDelegate.userNotificationCenter(_:didReceive:withCompletionHandler:))) else { return }
         await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
-            guard let callback = previous?.userNotificationCenter(_:didReceive:withCompletionHandler:) else {
+            previous.userNotificationCenter?(center, didReceive: response, withCompletionHandler: {
                 continuation.resume()
-                return
-            }
-            callback(center, response) { continuation.resume() }
+            })
         }
     }
 

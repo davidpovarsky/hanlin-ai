@@ -1,0 +1,19 @@
+{"at": "2026-11-25T18:41:11.256679+00:00", "event": "prepared", "startedAt": "2026-11-25T18:41:11.256264+00:00"}
+{"at": "2026-11-25T18:41:11.264493+00:00", "event": "launched_setup", "status": "RUNNING"}
+{"at": "2026-11-25T18:41:36.093807+00:00", "event": "launched_worker", "status": "RUNNING"}
+{"at": "2026-11-25T18:41:36.098343+00:00", "event": "launched_test", "status": "RUNNING"}
+{"at": "2026-11-25T18:41:36.098763+00:00", "event": "worker_preceded_test", "executionContainersSHA256": "b96b00ec8665a2489c7a021b40c386424a9016e501b79348971b9e72cc2b58ed", "exchangeStartedAfter": 1795632096.088764, "workerPID": 52632, "testPID": 52633}
+{"at": "2026-11-25T18:42:06.100197+00:00", "event": "heartbeat", "elapsedSeconds": 54.843159625001135, "testExitCode": null, "workerExitCode": null}
+{"at": "2026-11-25T18:42:36.112300+00:00", "event": "heartbeat", "elapsedSeconds": 84.85473454098974, "testExitCode": null, "workerExitCode": null}
+{"at": "2026-11-25T18:43:06.123933+00:00", "event": "heartbeat", "elapsedSeconds": 114.86489966599038, "testExitCode": null, "workerExitCode": null}
+{"at": "2026-11-25T18:43:36.131876+00:00", "event": "heartbeat", "elapsedSeconds": 144.8737007079908, "testExitCode": null, "workerExitCode": null}
+{"at": "2026-11-25T18:44:06.134990+00:00", "event": "heartbeat", "elapsedSeconds": 174.87701712499256, "testExitCode": null, "workerExitCode": null}
+{"at": "2026-11-25T18:44:36.147939+00:00", "event": "heartbeat", "elapsedSeconds": 204.8890379999939, "testExitCode": null, "workerExitCode": null}
+{"at": "2026-11-25T18:45:06.157209+00:00", "event": "heartbeat", "elapsedSeconds": 234.8985370409937, "testExitCode": null, "workerExitCode": null}
+{"at": "2026-11-25T18:45:36.161570+00:00", "event": "heartbeat", "elapsedSeconds": 264.90469041599135, "testExitCode": null, "workerExitCode": null}
+{"at": "2026-11-25T18:46:06.165881+00:00", "event": "heartbeat", "elapsedSeconds": 294.9108994999988, "testExitCode": null, "workerExitCode": null}
+{"at": "2026-11-25T18:46:36.170498+00:00", "event": "heartbeat", "elapsedSeconds": 324.9149158329965, "testExitCode": null, "workerExitCode": null}
+{"at": "2026-11-25T18:47:00.333177+00:00", "event": "heartbeat", "elapsedSeconds": 349.0781581249903, "testExitCode": 1, "workerExitCode": null}
+{"at": "2026-11-25T18:47:00.333782+00:00", "event": "actual_terminal", "status": "FAILED", "error": "RuntimeError: Original selected XCTest/verification failed"}
+{"at": "2026-11-25T18:47:04.843561+00:00", "event": "charge_ready", "finishedAt": "2026-11-25T18:47:04.843086+00:00", "elapsedSeconds": 353.58866224999656, "chargedSeconds": 353.58866224999656, "cumulativeActiveSeconds": 24661.120324003034, "allowanceExceededDuringCleanup": false, "processLogs": [{"path": "test.log", "bytes": 3653, "sha256": "10d4c7949bae54de9edc936478dbfbf63a732adccd113dbfd73ef7ce4e064a33"}, {"path": "worker.log", "bytes": 0, "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"}, {"path": "setup.log", "bytes": 1843, "sha256": "4993b4129d78e14e5724fbfbfc72b133b7f6b8592a622c2ec5cc1c0be9cdfbb6"}]}
+{"at": "2026-11-25T18:47:04.846737+00:00", "event": "finalized", "status": "FAILED"}

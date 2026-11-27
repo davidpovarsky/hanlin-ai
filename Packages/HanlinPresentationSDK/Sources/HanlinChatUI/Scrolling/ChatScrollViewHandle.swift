@@ -127,6 +127,16 @@ public final class ChatScrollViewHandle {
         invalidateReadiness()
     }
 
+    /// Read the settled offset from the same attached viewport used to admit
+    /// scrolling. In particular, scroll-idle and reattachment must not reuse a
+    /// Boolean delivered before the native scroll view finished its layout.
+    public func position(conversationID: UUID, expectedGeneration: UUID? = nil) -> ChatAutoFollowPosition? {
+        guard let layout = layout(conversationID: conversationID, expectedGeneration: expectedGeneration),
+              let scrollView else { return nil }
+        let position = ChatAutoFollowPosition(layout: layout, contentOffsetY: Double(scrollView.contentOffset.y))
+        return position.isNearBottom == nil ? nil : position
+    }
+
     /// Re-read UIKit at execution time. A cached SwiftUI geometry notification
     /// can belong to the previous window, split-view width or conversation.
     public func layout(conversationID: UUID, expectedGeneration: UUID? = nil) -> ChatAutoFollowLayout? {

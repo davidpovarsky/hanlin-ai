@@ -131,7 +131,8 @@ public struct HanlinOriginalExpoWidget: Widget {
         }
         .configurationDisplayName(Text("Expo MiniApp", bundle: HanlinLocalization.bundle))
         .description(Text("Original Expo widget layouts and timelines registered by your MiniApps.", bundle: HanlinLocalization.bundle))
-        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge, .systemExtraLarge,
+        .containerBackgroundRemovable(true)
+        .supportedFamilies([.systemSmall, .systemMedium, .systemLarge, .systemExtraLarge, .systemExtraLargePortrait,
             .accessoryCircular, .accessoryRectangular, .accessoryInline])
     }
 }

@@ -1,0 +1,28 @@
+✔ dedicated assistant build preserves the app entry without executing it and validates named exports (4884.465656ms)
+✔ widget Host metadata validates both app engines and preserves ordinary JSON or explicit null through build (9145.014628ms)
+✔ invalid widget Host declarations return structured diagnostics and never create a package (18934.017753ms)
+✖ the exported system-surface declaration is checked by the real TypeScript compiler (8.012447ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 3
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 33515.907123
+
+✖ failing tests:
+
+test at AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs:427:1
+✖ the exported system-surface declaration is checked by the real TypeScript compiler (8.012447ms)
+  Error: ENOENT: no such file or directory, copyfile '/mnt/development/projects/worktrees/hanlin-two-wave-integration-20261126/Scripts/MiniApps/native-presentations.d.ts' -> '/tmp/hanlin-authoring-qBmget/sdk/original/node_modules/@hanlin/system-surfaces/index.d.ts'
+      at async Object.copyFile (node:internal/fs/promises:1327:10)
+      at async TestContext.<anonymous> (file:///mnt/development/projects/worktrees/hanlin-two-wave-integration-20261126/AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs:433:3)
+      at async Test.run (node:internal/test_runner/test:1409:7)
+      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {
+    errno: -2,
+    code: 'ENOENT',
+    syscall: 'copyfile',
+    path: '/mnt/development/projects/worktrees/hanlin-two-wave-integration-20261126/Scripts/MiniApps/native-presentations.d.ts',
+    dest: '/tmp/hanlin-authoring-qBmget/sdk/original/node_modules/@hanlin/system-surfaces/index.d.ts'
+  }

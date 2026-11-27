@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 1,
+  "kind": "ACTUAL_NATIVE_LIST_CONFIRMATION_QUERY_DIAGNOSTIC",
+  "createdAt": "2026-11-25T10:13:50.559952+00:00",
+  "sourceCorrectionCommit": "c954d9a21b6789368305548e8e2502a6aada7131",
+  "files": [
+    {
+      "path": "raw/failure-accessibility.txt",
+      "bytes": 18767,
+      "sha256": "c73abc26d4f760715f7bccb6a98194a2696452722743a9ad23069ce2ca11d2d6",
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/terminal-packet-attempt18/paired52-continuation-v4/evidence/paired-product/originalruntimes-attachments/E6951E4D-2321-46C8-9D17-09162C3A23B0.txt"
+    },
+    {
+      "path": "raw/failure.png",
+      "bytes": 164483,
+      "sha256": "eef8d07df97840735270690e3b10d64049bdd82452f856b4fff895be75493d48",
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/terminal-packet-attempt18/paired52-continuation-v4/evidence/paired-product/originalruntimes-attachments/750955A2-3F5C-43A6-AA71-A2A2B871B9E6.png"
+    },
+    {
+      "path": "raw/complete-test-case.log",
+      "bytes": 19255,
+      "sha256": "36a9871b161d9ff64bb1c4c773ed4937ddd314379688e45b69d35db3a2c18ad6",
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/live-case-triage-attempt18/testStandaloneExpoGeneratedEditButtonEditsOriginalList.log"
+    },
+    {
+      "path": "raw/initial-case-capture.json",
+      "bytes": 4264,
+      "sha256": "5740850c4cc7d2d8d101c655cbd2956fcaa15052164d83edfb6d0d347c215bfb",
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/live-case-triage-attempt18/initial-case-capture.json"
+    },
+    {
+      "path": "analysis.json",
+      "bytes": 1435,
+      "sha256": "3c381d664999d3a48105265e9c3d769fd2c22910450b871609188f72ab9a11fa"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1706,
+      "sha256": "7613700ec7f1ec7bf16a3d30662bb79bfd97dd8fbc9dea474203cea95c37902e"
+    }
+  ],
+  "memberCount": 6,
+  "totalStoredBytes": 209910,
+  "correctedNativeAcceptance": "NOT_RUN"
+}

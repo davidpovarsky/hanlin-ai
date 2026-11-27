@@ -1,0 +1,189 @@
+{
+  "source": "9819697c1792119a6a93b492d12abad7b3330c93",
+  "startedAt": "2026-11-26T18:27:21.636406+00:00",
+  "status": "THREE_REGISTRATIONS_VERIFIED_CAMERA_PROFILE_READY_GROUPED_ASSOCIATIONS_PENDING",
+  "provider": "local-mac",
+  "certificateIssued": false,
+  "privateKeyChangedOrExported": false,
+  "appStoreListingCreated": false,
+  "archive": false,
+  "upload": false,
+  "registrations": [
+    {
+      "role": "miniapps_keyboard",
+      "bundleID": "com.itorah.hanlinminiapps.keyboard",
+      "resourceID": "F7CR948R94",
+      "exitCode": 0,
+      "reportSHA256": "f47bb0e37ea84c2c64a1e93c921d86d98cfd322218f405fa5d1b3e78f9a61b56",
+      "status": "REGISTRATION_SCOPE_VERIFIED",
+      "operations": [
+        {
+          "operation": "REGISTER_DECLARED_EXTENSION_BUNDLE_ID",
+          "status": "API_ACCEPTED"
+        },
+        {
+          "operation": "APP_GROUPS",
+          "status": "API_ACCEPTED"
+        }
+      ],
+      "observedCapabilities": [
+        "APP_GROUPS",
+        "IN_APP_PURCHASE"
+      ],
+      "remaining": [
+        "Assign the declared existing App Group in the authorized Apple configuration",
+        "Resolve a compatible profile for the existing Distribution certificate and verify its exact entitlements",
+        "Complete the owning app's native, signed archive, export and device acceptance gates"
+      ]
+    },
+    {
+      "role": "miniapps_notification_content",
+      "bundleID": "com.itorah.hanlinminiapps.notification-content",
+      "resourceID": "4K6RNC6JGY",
+      "exitCode": 0,
+      "reportSHA256": "1dc436b13233794388de967162216a4c82154c76fbeb9d0277ef6e4fece96a6e",
+      "status": "REGISTRATION_SCOPE_VERIFIED",
+      "operations": [
+        {
+          "operation": "REGISTER_DECLARED_EXTENSION_BUNDLE_ID",
+          "status": "API_ACCEPTED"
+        },
+        {
+          "operation": "APP_GROUPS",
+          "status": "API_ACCEPTED"
+        }
+      ],
+      "observedCapabilities": [
+        "APP_GROUPS",
+        "IN_APP_PURCHASE"
+      ],
+      "remaining": [
+        "Assign the declared existing App Group in the authorized Apple configuration",
+        "Resolve a compatible profile for the existing Distribution certificate and verify its exact entitlements",
+        "Complete the owning app's native, signed archive, export and device acceptance gates"
+      ]
+    },
+    {
+      "role": "miniapps_camera_capture",
+      "bundleID": "com.itorah.hanlinminiapps.camera-capture",
+      "resourceID": "GHU6M497VV",
+      "exitCode": 0,
+      "reportSHA256": "eb1de7868c5265279652757aaac1e6e63ffb294a81e98f4b763c35828a293888",
+      "status": "REGISTRATION_SCOPE_VERIFIED",
+      "operations": [
+        {
+          "operation": "REGISTER_DECLARED_EXTENSION_BUNDLE_ID",
+          "status": "API_ACCEPTED"
+        }
+      ],
+      "observedCapabilities": [
+        "IN_APP_PURCHASE"
+      ],
+      "remaining": [
+        "Resolve a compatible profile for the existing Distribution certificate and verify its exact entitlements",
+        "Complete the owning app's native, signed archive, export and device acceptance gates"
+      ]
+    }
+  ],
+  "readinessSHA256": "f7e6f2aa2e10cedb9c4a5de4b7a22d1d2ad15360bd1d21cbc392c2e672aff5bd",
+  "plan": [
+    {
+      "role": "miniapps_keyboard",
+      "target": "HanlinMiniAppsKeyboard",
+      "bundleID": "com.itorah.hanlinminiapps.keyboard",
+      "displayName": "Hanlin MiniApps Keyboard",
+      "allowedCapabilities": [
+        "APP_GROUPS"
+      ],
+      "entitlementsPath": "HanlinMiniAppsExtensions/Keyboard/HanlinMiniAppsKeyboard.entitlements",
+      "entitlementsSHA256": "6d7c2663c6e543380d18eccc7fc96cd1b0bfd3e1dae524aa59f9688abb49f8dd"
+    },
+    {
+      "role": "miniapps_notification_content",
+      "target": "HanlinMiniAppsNotificationContent",
+      "bundleID": "com.itorah.hanlinminiapps.notification-content",
+      "displayName": "Hanlin MiniApps Notification",
+      "allowedCapabilities": [
+        "APP_GROUPS"
+      ],
+      "entitlementsPath": "HanlinMiniAppsExtensions/NotificationContent/HanlinMiniAppsNotificationContent.entitlements",
+      "entitlementsSHA256": "6d7c2663c6e543380d18eccc7fc96cd1b0bfd3e1dae524aa59f9688abb49f8dd"
+    },
+    {
+      "role": "miniapps_camera_capture",
+      "target": "HanlinMiniAppsCameraCapture",
+      "bundleID": "com.itorah.hanlinminiapps.camera-capture",
+      "displayName": "HanlinMiniAppsCameraCapture",
+      "allowedCapabilities": [],
+      "entitlementsPath": "HanlinMiniAppsExtensions/CameraCapture/HanlinMiniAppsCameraCapture.entitlements",
+      "entitlementsSHA256": "97704a8960b4facceef54397a08fb5d0a456247c3627359215aa2a27df22656c"
+    }
+  ],
+  "canonicalToolSHA256": {
+    "register_miniapps_bundle.py": "7bb770d5e0dd30e1db9e1744a217ff66873c5a199a856e77a24b12ec1271e45a",
+    "resolve_signing_profiles.py": "e1f9b06d9e6824b27526c39f8c87e7df089638d2dcaebc72bbe6e697145f7756",
+    "audit_release_resources.py": "e503d4f38a928c43fbc944511190e9fb4cd346998f8bdf85cb5146d2579a5d5b",
+    "extension_inventory.py": "969011d17099fada7c7010528579ec8b3a256b8c7bb25fcfd609789e800068a8"
+  },
+  "queueReadbackSHA256": "5259fa7be7542fe98d760e5e2f9b146e4de6da0de5e1095d555979a21bffb29a",
+  "reservation": {
+    "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/release-number-reservation-9819697c.json",
+    "sha256": "6d93c26cbb99f253d378d7f0afefa82588309b39e7916e1db5534cea247c460e",
+    "builds": [
+      {
+        "product": "ai",
+        "bundleID": "com.itorah.chavrusachat",
+        "appID": "6811910017",
+        "buildNumber": "149301",
+        "ASCStatus": "ABSENT_AT_READBACK",
+        "readAt": "2026-11-26T18:27:24.003676+00:00"
+      },
+      {
+        "product": "miniapps",
+        "bundleID": "com.itorah.hanlinminiapps",
+        "appID": "6836449016",
+        "buildNumber": "8401",
+        "ASCStatus": "ABSENT_AT_READBACK",
+        "readAt": "2026-11-26T18:27:24.585483+00:00"
+      }
+    ]
+  },
+  "cameraProfile": {
+    "originalResolverResult": {
+      "role": "miniapps_camera_capture",
+      "bundle_id": "com.itorah.hanlinminiapps.camera-capture",
+      "examined_existing_profiles": [],
+      "local_release_context": {
+        "provider": "local-mac",
+        "source_sha": "9819697c1792119a6a93b492d12abad7b3330c93",
+        "build_number": "8401"
+      },
+      "source": "CREATED_AND_READ_BACK_APPLE_PROFILE",
+      "status": "READY_RESOURCE",
+      "checks": {
+        "team_matches": true,
+        "bundle_matches": true,
+        "not_expired": true,
+        "distribution_profile": true,
+        "certificate_matches": true,
+        "required_entitlements_covered": true
+      },
+      "expiration": "2027-09-07T07:25:00+00:00",
+      "missing_or_mismatched_entitlement_keys": [],
+      "profile_sha256": "7377c4baf4c31818e1bff662c61ebe42f17637567011b2bd51497eef0af2f08b"
+    },
+    "installedNewPaths": [
+      {
+        "path": "/Users/m1/Library/MobileDevice/Provisioning Profiles/476BECD4-DCDB-4D0E-A779-A96344DAAAF6.mobileprovision",
+        "sha256": "7377c4baf4c31818e1bff662c61ebe42f17637567011b2bd51497eef0af2f08b"
+      },
+      {
+        "path": "/Users/m1/Library/Developer/Xcode/UserData/Provisioning Profiles/476BECD4-DCDB-4D0E-A779-A96344DAAAF6.mobileprovision",
+        "sha256": "7377c4baf4c31818e1bff662c61ebe42f17637567011b2bd51497eef0af2f08b"
+      }
+    ],
+    "decoder": "original security cms -D with documented configured-keychain -k, supplied through unchanged decode_content injection",
+    "entitlementsSHA256": "97704a8960b4facceef54397a08fb5d0a456247c3627359215aa2a27df22656c"
+  },
+  "finishedAt": "2026-11-26T18:27:42.275191+00:00"
+}

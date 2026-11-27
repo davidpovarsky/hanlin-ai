@@ -1,0 +1,491 @@
+{
+  "root": "/Users/m1/builds/hanlin-notification-os-recovery-20261125",
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "sourceTree": "f7a6596a1ef53d8d962ceb9f619460ffa19ee91e",
+  "compiledConsumerSource": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "SDKProducerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+  "simulator": {
+    "udid": "2EFAD83F-45A2-4A8B-B326-16B83BC56DA9",
+    "name": "Hanlin Notification OS Recovery 20261125",
+    "deviceType": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5-12GB",
+    "runtime": "com.apple.CoreSimulator.SimRuntime.iOS-27-0",
+    "runtimeVersion": "27.0",
+    "runtimeBuild": "24A434",
+    "creationReceipt": {
+      "path": "/Users/m1/builds/hanlin-notification-os-recovery-20261125/recovery/device-creation-receipt.json",
+      "bytes": 23076,
+      "sha256": "ea4c5d7c9b59637a0e751bcef14f995539763529384d4a9696e95f56aa43db6c"
+    },
+    "observedState": "Shutdown"
+  },
+  "sourceFiles": [
+    {
+      "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "bytes": 47871,
+      "sha256": "a99b6194f8dd20bc30998ff2ad9e86ec219415a00615b250c65670f7dfcdba7d",
+      "mode": "0o644",
+      "origin": {
+        "kind": "GIT_BLOB",
+        "commit": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+        "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+        "blob": "e1a5320fd797885e91171854f507e49a66a1fbf4",
+        "alsoInPreviousRequiredMap": true
+      }
+    },
+    {
+      "path": "Scripts/ProductSplit/simulator_entitlements.py",
+      "bytes": 3658,
+      "sha256": "aa1cfcd4f371dd25a637bc56ab281ef94f8bcdcc2bb415b9125dd0b0aa0b27a8",
+      "mode": "0o644",
+      "origin": {
+        "kind": "GIT_BLOB",
+        "commit": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+        "path": "Scripts/ProductSplit/simulator_entitlements.py",
+        "blob": "252ad38403dbd7fe5bcf9c3d30c5e8ab63a3b9d0",
+        "alsoInPreviousRequiredMap": false
+      }
+    },
+    {
+      "path": "Scripts/CI/verify_selected_tests.py",
+      "bytes": 2000,
+      "sha256": "4ae4a28934341461b364a9b83fb891ca214da64cf3046635278fb4e6837caad5",
+      "mode": "0o644",
+      "origin": {
+        "kind": "GIT_BLOB",
+        "commit": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+        "path": "Scripts/CI/verify_selected_tests.py",
+        "blob": "b19ac545b8ef1310456318c3b47076e01fa01779",
+        "alsoInPreviousRequiredMap": true
+      }
+    },
+    {
+      "path": "Scripts/CI/observe_notification_os_delivery.py",
+      "bytes": 18899,
+      "sha256": "f6cf4e040f592fa94ebf9fd813b6e03d125d5c7c32dc2d2a43f3b42cdb33d085",
+      "mode": "0o644",
+      "origin": {
+        "kind": "GIT_BLOB",
+        "commit": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+        "path": "Scripts/CI/observe_notification_os_delivery.py",
+        "blob": "b2fa8058be79f96bd044bcb39e6ee18fa976f33e",
+        "alsoInPreviousRequiredMap": true
+      }
+    },
+    {
+      "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+      "bytes": 91719,
+      "sha256": "da0fa21f26b677f4d18f8e1972208b39e30401a127e9dd2a9643e0fe8d7ad17c",
+      "mode": "0o644",
+      "origin": {
+        "kind": "GIT_BLOB",
+        "commit": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+        "path": "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift",
+        "blob": "93ee84af222e1f4fdfbcc0700f7ddf5e13498ca6",
+        "alsoInPreviousRequiredMap": true
+      }
+    }
+  ],
+  "productFiles": [
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/Info.plist",
+      "role": "retainedProduct",
+      "bytes": 5276,
+      "sha256": "b62620a3005aa50f80052859b4d47183f9e4dec8cee463949a7e62fedae813c0"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/HanlinMiniApps",
+      "role": "retainedProduct",
+      "bytes": 40496,
+      "sha256": "9ecf0a41bd7e8f7f024a957867c65b3bac76dc3c7198a3c78011ae1aabcd66b6"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/HanlinMiniApps.debug.dylib",
+      "role": "retainedProduct",
+      "bytes": 128035408,
+      "sha256": "44af528fa8cc87861760c2100c5fbb354936eeb3623281fb7efaba6ec58a0c85"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/RuntimeHostResources.zip",
+      "role": "retainedProduct",
+      "bytes": 81824721,
+      "sha256": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsNotificationService.appex/Info.plist",
+      "role": "retainedProduct",
+      "bytes": 1278,
+      "sha256": "176d667ec09408832340ae438a7e26886a9f080625c445c3f192850a7b9a467b"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsNotificationService.appex/HanlinMiniAppsNotificationService",
+      "role": "retainedProduct",
+      "bytes": 37888,
+      "sha256": "53b2d84cbfee4328e4e195f1de8775f998b2b51eed00729b7cc6a1717c2a5687"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsNotificationService.appex/HanlinMiniAppsNotificationService.debug.dylib",
+      "role": "retainedProduct",
+      "bytes": 21564144,
+      "sha256": "e180275d27cb648701745887a90925c9bdd1822443bda29eec14138b29999a3e"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsShare.appex/Info.plist",
+      "role": "retainedProduct",
+      "bytes": 1484,
+      "sha256": "5a601d95e10ee6e24eedc25a3ed41523e64becd57a7c38c4a298503f94546b1b"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsShare.appex/HanlinMiniAppsShare",
+      "role": "retainedProduct",
+      "bytes": 37872,
+      "sha256": "92ca2122829113bfe3634834c2b4125c7c1108846632e5caea983130a6c89821"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsShare.appex/HanlinMiniAppsShare.debug.dylib",
+      "role": "retainedProduct",
+      "bytes": 3333472,
+      "sha256": "363a34fd6a71f93a2ad621855a3d484ee399312703f84e2e42ba7a644a0efd8d"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsWidgets.appex/Info.plist",
+      "role": "retainedProduct",
+      "bytes": 2943,
+      "sha256": "7b80628e4ba87f4583a18bc29c2d3541ea49a8c7fac3ae49e69333fe3b7e4ef8"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsWidgets.appex/HanlinMiniAppsWidgets",
+      "role": "retainedProduct",
+      "bytes": 40512,
+      "sha256": "e216c5d97a9487b246e6813e007f960c7aac45a459a56057414e6f15dd1704de"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsWidgets.appex/HanlinMiniAppsWidgets.debug.dylib",
+      "role": "retainedProduct",
+      "bytes": 38244752,
+      "sha256": "2255f5989a4b4f662fb35d791cedcd035db5d61a1f1f9ae8fd5d50c6ae0ff878"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/Info.plist",
+      "role": "retainedProduct",
+      "bytes": 5507,
+      "sha256": "2f8fe3fe0643a2fb10cbb032155ff0956612eb1f745899ad7b0c0202015c61ed"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/AI_Hanlin",
+      "role": "retainedProduct",
+      "bytes": 40496,
+      "sha256": "4934f20379d6aa7d4c97878b498993436550effede1a610be7630fd723990944"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/AI_Hanlin.debug.dylib",
+      "role": "retainedProduct",
+      "bytes": 3473824,
+      "sha256": "80ba1b05240eb988af275c12edaef7d4d0a194542a2de60dd56f4ce57f336abb"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+      "role": "retainedProduct",
+      "bytes": 81824721,
+      "sha256": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+      "role": "retainedProduct",
+      "bytes": 81824721,
+      "sha256": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/Frameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+      "role": "retainedProduct",
+      "bytes": 81824721,
+      "sha256": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/Frameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+      "role": "retainedProduct",
+      "bytes": 81824721,
+      "sha256": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/HanlinScriptingWidgets.appex/Info.plist",
+      "role": "retainedProduct",
+      "bytes": 2890,
+      "sha256": "167a82ec3ec7e8a0e773c9854116f15138c3a17a6601a92bc3abac5e78671188"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/HanlinScriptingWidgets.appex/HanlinScriptingWidgets",
+      "role": "retainedProduct",
+      "bytes": 40512,
+      "sha256": "2887da88bddb8b60085ed267c484f03affc140e8422b1170a0d0e164562d5b9d"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/HanlinScriptingWidgets.appex/HanlinScriptingWidgets.debug.dylib",
+      "role": "retainedProduct",
+      "bytes": 44890400,
+      "sha256": "45f9d58d9f466c706b0f8a01105352547fbcf635c5024a535846fe02430c4a77"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/ChavrusaChatNotificationService.appex/Info.plist",
+      "role": "retainedProduct",
+      "bytes": 1220,
+      "sha256": "cf22dfcabc37e0108e7d7a24ed8f7566d0934e60290d16e8427b2370532ae32c"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/ChavrusaChatNotificationService.appex/ChavrusaChatNotificationService",
+      "role": "retainedProduct",
+      "bytes": 37888,
+      "sha256": "207de6131defbd56e873e387e93206520aba3ce2f063597360da6ffcac8d6a4d"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/ChavrusaChatNotificationService.appex/ChavrusaChatNotificationService.debug.dylib",
+      "role": "retainedProduct",
+      "bytes": 28194512,
+      "sha256": "116e44f3f59bbe9a3a7c8881ccc2ecb99e9521dec60c3af8768d4f20c8f9d94a"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/ChavrusaChatShare.appex/Info.plist",
+      "role": "retainedProduct",
+      "bytes": 1423,
+      "sha256": "8b9c19a920eb2d2568cfb4e9e1729f98c7e7d907201b31654e65fb2fdc50b84f"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/ChavrusaChatShare.appex/ChavrusaChatShare",
+      "role": "retainedProduct",
+      "bytes": 37872,
+      "sha256": "116f3e85ecd4331277498f1c012901c68c34064eebe3837374015ba00231182d"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/ChavrusaChatShare.appex/ChavrusaChatShare.debug.dylib",
+      "role": "retainedProduct",
+      "bytes": 10043312,
+      "sha256": "31bc31f3e9398c0ce194aadb09ad6ada1cd5d1ceb253d7b2f5686c16af44e653"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_HLYUITests-Runner.app/PlugIns/AI_HLYUITests.xctest/Info.plist",
+      "role": "retainedProduct",
+      "bytes": 736,
+      "sha256": "0b74fc1f509103283e23cb6f8e0d0bbfe187a31208762264f2eca905549da81d"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_HLYUITests-Runner.app/PlugIns/AI_HLYUITests.xctest/AI_HLYUITests",
+      "role": "retainedProduct",
+      "bytes": 2852064,
+      "sha256": "78a31793185b0e35fcb73da55c660b4ac507627fd77370985e21b3bea0ddeb12"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/Info.plist",
+      "role": "retainedProduct",
+      "bytes": 704,
+      "sha256": "ef2975aad67dfc02df6ba3d6ffba32fe74b26534b591bbeb8f1062c77d21674a"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/AI_HLYTests",
+      "role": "retainedProduct",
+      "bytes": 37680128,
+      "sha256": "345b0e1b3039865c2a58ef864adecf1f722034d4c79a8cc618738da1077b9f5d"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app/PlugIns/HanlinMiniAppsUITests.xctest/Info.plist",
+      "role": "retainedProduct",
+      "bytes": 734,
+      "sha256": "84ccf7641c4a3489fae0321433bdff3d566b116d7e86ef3bc053b614359b441d"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app/PlugIns/HanlinMiniAppsUITests.xctest/HanlinMiniAppsUITests",
+      "role": "retainedProduct",
+      "bytes": 748384,
+      "sha256": "9b9397a85e961a0894d8d35198df6faba679924f7c37b8cb2625c93a68e0a226"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/AI_HLY_iphonesimulator27.0-arm64.xctestrun",
+      "role": "aiXctestrun",
+      "bytes": 10920,
+      "sha256": "b2cc79f4b3780daec837e119cc5e4a07d5ecccd618ab793b88bb0b80dbfa2062"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/HanlinMiniApps_iphonesimulator27.0-arm64.xctestrun",
+      "role": "miniXctestrun",
+      "bytes": 16737,
+      "sha256": "2d6b493aa93663d03e17a15722eab010326b260ccbbb454ed12077cae45cda96"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app/Info.plist",
+      "role": "uiRunnerInfo",
+      "bytes": 10947,
+      "sha256": "e807c6b2a4c5444448a527d598bb86195f0737209b6c15bc2b8ecc8273f75d87"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app/HanlinMiniAppsUITests-Runner",
+      "role": "uiRunnerExecutable",
+      "bytes": 95248,
+      "sha256": "2493c0f772aa3477817b8f57cc72df3dfeb134cd4d25e329bee41a027f704b78"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/HanlinMiniApps",
+      "role": "miniAppExecutable",
+      "bytes": 40496,
+      "sha256": "9ecf0a41bd7e8f7f024a957867c65b3bac76dc3c7198a3c78011ae1aabcd66b6"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/HanlinMiniApps.debug.dylib",
+      "role": "miniRuntimeImage",
+      "bytes": 128035408,
+      "sha256": "44af528fa8cc87861760c2100c5fbb354936eeb3623281fb7efaba6ec58a0c85"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/RuntimeHostResources.zip",
+      "role": "miniHostResource",
+      "bytes": 81824721,
+      "sha256": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app/PlugIns/HanlinMiniAppsUITests.xctest/HanlinMiniAppsUITests",
+      "role": "uiTestExecutable",
+      "bytes": 748384,
+      "sha256": "9b9397a85e961a0894d8d35198df6faba679924f7c37b8cb2625c93a68e0a226"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/HanlinMiniApps_iphonesimulator27.0-arm64.xctestrun",
+      "role": "xctestrun",
+      "bytes": 16737,
+      "sha256": "2d6b493aa93663d03e17a15722eab010326b260ccbbb454ed12077cae45cda96"
+    }
+  ],
+  "fixtures": [
+    {
+      "name": "Hanlin-ScriptWidget-Actions.scripting",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-os-recovery-20261125/Fixtures/Widgets/Hanlin-ScriptWidget-Actions.scripting",
+      "bytes": 825,
+      "sha256": "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb",
+      "origin": {
+        "kind": "GIT_BLOB",
+        "commit": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+        "path": "Fixtures/Widgets/Hanlin-ScriptWidget-Actions.scripting"
+      }
+    },
+    {
+      "name": "ExpoSwiftUIProbeA.hanlinExpo",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-os-recovery-20261125/AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
+      "bytes": 325929,
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+      "origin": {
+        "kind": "AUTHENTICATED_PREPARED_OVERLAY",
+        "commit": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+        "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo"
+      }
+    },
+    {
+      "name": "hanlin-script-parity.hanlinNativeScript",
+      "sourcePath": "/Users/m1/builds/hanlin-notification-os-recovery-20261125/DemoMiniApps/hanlin-script-parity.hanlinNativeScript",
+      "bytes": 7512,
+      "sha256": "2e48509336edba2b301490422102dbf25cb7f1b894430d52994febdc1c33c199",
+      "origin": {
+        "kind": "GIT_BLOB",
+        "commit": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+        "path": "DemoMiniApps/hanlin-script-parity.hanlinNativeScript"
+      }
+    }
+  ],
+  "preparationLedger": {
+    "path": "/Users/m1/builds/hanlin-notification-os-recovery-20261125/recovery/preparation-ledger.json",
+    "bytes": 1478,
+    "sha256": "5c09ded5e075df3247287ed62e71e6abc52e6e15c4aa4f25c1c7892b71ad4886"
+  },
+  "historicalLedger": {
+    "path": "/Users/m1/builds/hanlin-notification-os-recovery-20261125/history/original-os-v5-ledger.json",
+    "bytes": 2219,
+    "sha256": "7b710d0bba8e359839a0f15cb61d4fc9509a3709234b7a52c8213358455dbaa4",
+    "historical": true,
+    "origin": {
+      "packet": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-v5-terminal-packet",
+      "storedPath": "raw/notification-os-v5/ledger.json",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v5/ledger.json",
+      "sha256": "7b710d0bba8e359839a0f15cb61d4fc9509a3709234b7a52c8213358455dbaa4",
+      "bytes": 2219
+    }
+  },
+  "historicalPrimary": {
+    "path": "/Users/m1/builds/hanlin-notification-os-recovery-20261125/history/original-primary-after-os-v5.json",
+    "bytes": 126822,
+    "sha256": "009d98edeb4b2a7a4efd6640f91f1b6424b8151a79454e7508cc6753b1264108",
+    "historical": true,
+    "origin": {
+      "packet": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-v5-terminal-packet",
+      "storedPath": "raw/state.json.gz",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/state.json",
+      "sha256": "009d98edeb4b2a7a4efd6640f91f1b6424b8151a79454e7508cc6753b1264108",
+      "bytes": 126822
+    }
+  },
+  "historicalTerminal": {
+    "path": "/Users/m1/builds/hanlin-notification-os-recovery-20261125/history/original-os-v5-terminal.json",
+    "bytes": 6435,
+    "sha256": "ba83da13e54a4bc839d9d99a9a9dfc29c3e5896eb4416d8ae965bcbfa637760e",
+    "historical": true,
+    "origin": {
+      "packet": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-v5-terminal-packet",
+      "storedPath": "raw/notification-os-v5/state.json",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v5/state.json",
+      "sha256": "ba83da13e54a4bc839d9d99a9a9dfc29c3e5896eb4416d8ae965bcbfa637760e",
+      "bytes": 6435
+    }
+  },
+  "historicalCleanupReconciliation": {
+    "path": "/Users/m1/builds/hanlin-notification-os-recovery-20261125/history/original-os-v5-later-absence.json",
+    "bytes": 3930,
+    "sha256": "479c32388bda3ad690e19444f4986c71ab68e2aef98e06c04ad69a373c1fd9e9",
+    "historical": true,
+    "origin": {
+      "packet": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-v5-terminal-packet",
+      "storedPath": "raw/notification-os-v5-post-terminal-group-observation.json",
+      "originalPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v5-post-terminal-group-observation.json",
+      "sha256": "479c32388bda3ad690e19444f4986c71ab68e2aef98e06c04ad69a373c1fd9e9",
+      "bytes": 3930
+    }
+  },
+  "schema": 1,
+  "id": "notification-os-recovery-v1",
+  "owner": "/root/native_execution",
+  "authorization": {
+    "by": "/root",
+    "scope": "independent recovered-device original notification OS observation"
+  },
+  "selector": "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines",
+  "expectedTests": 1,
+  "allowanceSeconds": 900,
+  "resourceBoundBytes": 5679053931,
+  "outputDirectory": "build/notification-os-recovery-v1",
+  "recoveryReceipt": {
+    "path": "/Users/m1/builds/hanlin-notification-os-recovery-20261125/recovery/receipt.json",
+    "bytes": 58635,
+    "sha256": "3a51b93378c45a565a50355c7735d094a769b4c433808a06b1412e5ba22e1dba"
+  },
+  "controller": {
+    "path": "/Users/m1/builds/hanlin-notification-os-recovery-20261125/recovery/notification-os-recovery-v1.py",
+    "bytes": 38156,
+    "sha256": "4e1917d8e0422a74cdb561cf25ea444cae7fa2d10669924f1501fb220156d630"
+  },
+  "stagedFiles": [
+    {
+      "name": "ExpoSwiftUIProbeA.hanlinExpo",
+      "bytes": 325929,
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20"
+    },
+    {
+      "name": "hanlin-script-parity.hanlinNativeScript",
+      "bytes": 7512,
+      "sha256": "2e48509336edba2b301490422102dbf25cb7f1b894430d52994febdc1c33c199"
+    }
+  ],
+  "directArtifactObservation": {
+    "kind": "UNCHANGED_PREBUILT_XCTESTRUN",
+    "xctestrun": {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/HanlinMiniApps_iphonesimulator27.0-arm64.xctestrun",
+      "role": "xctestrun",
+      "bytes": 16737,
+      "sha256": "2d6b493aa93663d03e17a15722eab010326b260ccbbb454ed12077cae45cda96"
+    }
+  },
+  "derivedData": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete",
+  "uiRunnerInfoPlist": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app/Info.plist"
+}

@@ -1,0 +1,981 @@
+{
+  "schema": 1,
+  "capturedAt": "2026-11-25T10:22:05.443174+00:00",
+  "owner": "/root/native_execution",
+  "source": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+  "sourceTree": "3e18683d6b88c3d49abdb1f256aad1e73d9f52c4",
+  "status": "FAILED_DIAGNOSTIC_NOT_ORIGINAL52",
+  "summary": {
+    "executed": 21,
+    "passed": 19,
+    "failed": 2,
+    "skipped": 0,
+    "expected": 27,
+    "missingSelectedFunctions": 6
+  },
+  "fullXCResultRetained": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/AI27.xcresult",
+  "members": [
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift",
+      "archivePath": "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift",
+      "bytes": 11136,
+      "sha256": "3f41a14d9754cb24e74cb5656b8975485459259bc27acc08a4f845d5675446ec",
+      "mode": "0o644",
+      "mtimeNs": "1795541722407391834"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/AI_HLYUITests/MiniAppAuthoringUITests.swift",
+      "archivePath": "AI_HLYUITests/MiniAppAuthoringUITests.swift",
+      "bytes": 7453,
+      "sha256": "f60502af88a5e4b1166146cf5834e5d54eaa0451159b11f95ff26207f210fd72",
+      "mode": "0o644",
+      "mtimeNs": "1795541722422189169"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/CI/verify_selected_tests.py",
+      "archivePath": "Scripts/CI/verify_selected_tests.py",
+      "bytes": 2000,
+      "sha256": "4ae4a28934341461b364a9b83fb891ca214da64cf3046635278fb4e6837caad5",
+      "mode": "0o644",
+      "mtimeNs": "1795541722898391745"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/Scripts/ProductSplit/run_paired_acceptance.py",
+      "archivePath": "Scripts/ProductSplit/run_paired_acceptance.py",
+      "bytes": 47859,
+      "sha256": "014a10ca33badfc036a3713d4715423a361c6c9fea2e76c24411b5725ac2719f",
+      "mode": "0o644",
+      "mtimeNs": "1795596410615529653"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/controller-child.log",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/controller-child.log",
+      "bytes": 4345,
+      "sha256": "9ef540f6bede8121ebde737bf1184a2f3d3b1ea19689229b0120e919fad73561",
+      "mode": "0o644",
+      "mtimeNs": "1795601966414852580"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/decision.json",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/decision.json",
+      "bytes": 89702,
+      "sha256": "15f6ca053ae5470e96a68dc0a874a16d34551e65831ddffdd58d61ce83654d86",
+      "mode": "0o644",
+      "mtimeNs": "1795601754821268619"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/events.jsonl",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/events.jsonl",
+      "bytes": 2026,
+      "sha256": "270068cd4c4004ff58b6cab3acd04991625a072022db3089849b15a6d204ccaa",
+      "mode": "0o644",
+      "mtimeNs": "1795601970872291548"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/ledger.json",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/ledger.json",
+      "bytes": 701,
+      "sha256": "2d2b7be234b068877e6b1a2ce80ed80e93d04fc884dbf1d832f1ffc5cda14780",
+      "mode": "0o644",
+      "mtimeNs": "1795601970870300221"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/active-command.json",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/active-command.json",
+      "bytes": 686,
+      "sha256": "a17f23438e822c77d8954cb6cdd8c9f843c137046a59005da025c853c482bf97",
+      "mode": "0o644",
+      "mtimeNs": "1795601966412227630"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/009C4EEA-5A88-42A3-85BD-8CCF65DF8D3E.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/009C4EEA-5A88-42A3-85BD-8CCF65DF8D3E.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966308073293"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/02765A4C-53E0-46EB-AA58-2EE2842817D3.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/02765A4C-53E0-46EB-AA58-2EE2842817D3.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966307918919"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/07477566-882E-484B-ADB5-22A3AB77F4D0.json",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/07477566-882E-484B-ADB5-22A3AB77F4D0.json",
+      "bytes": 203,
+      "sha256": "c2e5eef6232b498c4c6deb85b8c4ff09658c76cf22cb2dfb199e1661e4d5deb4",
+      "mode": "0o644",
+      "mtimeNs": "1795601966290638765"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/12506FAE-EBC5-4706-875B-86B5C6DE10A0.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/12506FAE-EBC5-4706-875B-86B5C6DE10A0.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966312820070"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/17FD2813-6196-48B1-902F-FE1DADF48379.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/17FD2813-6196-48B1-902F-FE1DADF48379.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "mode": "0o644",
+      "mtimeNs": "1795601966315552895"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/1924055A-B721-4F24-987B-EA126DB5471A.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/1924055A-B721-4F24-987B-EA126DB5471A.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966310664952"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/1B96BE5A-FA2C-4ABE-9374-744C6FBC4C3C.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/1B96BE5A-FA2C-4ABE-9374-744C6FBC4C3C.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966306846922"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/1CF51FE0-7685-43F6-96AA-A7CA5DF28EC4.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/1CF51FE0-7685-43F6-96AA-A7CA5DF28EC4.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966309825038"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/20455D1E-DED9-4316-B6F2-0D94EE5C9D9B.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/20455D1E-DED9-4316-B6F2-0D94EE5C9D9B.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966312078989"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/20B0C184-66BC-40D8-B10D-E23883036C4C.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/20B0C184-66BC-40D8-B10D-E23883036C4C.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966312665529"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/2371CC14-27F8-4128-8CC8-3BCF8AC4AAAE.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/2371CC14-27F8-4128-8CC8-3BCF8AC4AAAE.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "mode": "0o644",
+      "mtimeNs": "1795601966316433642"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/2BE96BC6-E96C-46F5-9AB2-356581346614.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/2BE96BC6-E96C-46F5-9AB2-356581346614.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "mode": "0o644",
+      "mtimeNs": "1795601966315696144"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/307CD65A-F78D-475F-A08B-D2716BDC1AEC.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/307CD65A-F78D-475F-A08B-D2716BDC1AEC.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966309657955"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/337D935A-C427-407F-A115-C4C8388C36A4.json",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/337D935A-C427-407F-A115-C4C8388C36A4.json",
+      "bytes": 169,
+      "sha256": "c8d81d1320c19e2a7f37118c8dfca3ce5ae222151f99d635e8c864e928507e9c",
+      "mode": "0o644",
+      "mtimeNs": "1795601966289949226"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/33D1A40D-6882-48EC-96B1-B77CFAF0BCD3.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/33D1A40D-6882-48EC-96B1-B77CFAF0BCD3.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966311471699"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/3679085B-6932-4E34-8720-C413024CF4ED.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/3679085B-6932-4E34-8720-C413024CF4ED.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966310836451"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/3927D8D0-D911-46A5-9A82-4CE2D2C78974.png",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/3927D8D0-D911-46A5-9A82-4CE2D2C78974.png",
+      "bytes": 2196535,
+      "sha256": "53a0a7bc20fc8dd6057c8eb26e2e5c73e147b30a8bee995999051bb6dcc93a02",
+      "mode": "0o644",
+      "mtimeNs": "1795601966314753564"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/3D9C4B90-D7AB-4CDA-965D-480C66D65A63.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/3D9C4B90-D7AB-4CDA-965D-480C66D65A63.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966311155367"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/3E75AF16-A988-41D3-B7DA-B21304C3E388.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/3E75AF16-A988-41D3-B7DA-B21304C3E388.txt",
+      "bytes": 40215,
+      "sha256": "1a4cba0e3c757763b5fc8909d0cea6eddfb4593f2b7e4872cdfdc4f9024da452",
+      "mode": "0o644",
+      "mtimeNs": "1795601966294626086"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/3F515513-3DB2-4A5F-A1CB-A8301DFA5F7A.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/3F515513-3DB2-4A5F-A1CB-A8301DFA5F7A.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "mode": "0o644",
+      "mtimeNs": "1795601966315405145"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/43183511-A25D-4496-A143-AA627E675C16.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/43183511-A25D-4496-A143-AA627E675C16.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966308222751"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/431D8450-1988-4E5E-9BF6-C341C01A0E13.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/431D8450-1988-4E5E-9BF6-C341C01A0E13.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966310339370"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/43AB9D20-B5FE-4609-A752-44E103249730.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/43AB9D20-B5FE-4609-A752-44E103249730.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966309994579"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/46E1BA97-1C42-4E6B-BD76-E40976A9D735.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/46E1BA97-1C42-4E6B-BD76-E40976A9D735.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "mode": "0o644",
+      "mtimeNs": "1795601966317187598"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/4FE6BCE4-3187-4FF3-8834-D17211F217F9.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/4FE6BCE4-3187-4FF3-8834-D17211F217F9.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966309127832"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/54278B0D-23D7-428C-A231-5AEEE536E6A7.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/54278B0D-23D7-428C-A231-5AEEE536E6A7.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "mode": "0o644",
+      "mtimeNs": "1795601966316581808"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/5B8C71DA-3C8D-4BC8-A8D8-B818A9BB2E87.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/5B8C71DA-3C8D-4BC8-A8D8-B818A9BB2E87.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966308822958"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/64A4F217-5C75-415B-AB29-0A2EF1F5BF06.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/64A4F217-5C75-415B-AB29-0A2EF1F5BF06.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "mode": "0o644",
+      "mtimeNs": "1795601966315995477"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/67E95569-E93E-4801-930B-119FD333B0A8.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/67E95569-E93E-4801-930B-119FD333B0A8.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966311790115"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/6C84C7C4-FAFC-42CC-A126-69F2307F922B.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/6C84C7C4-FAFC-42CC-A126-69F2307F922B.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966308526667"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/713F2E8E-3954-4A98-92A6-658BA7244CAA.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/713F2E8E-3954-4A98-92A6-658BA7244CAA.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "mode": "0o644",
+      "mtimeNs": "1795601966316139559"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/73971BC6-E878-4903-B97A-C204FE213813.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/73971BC6-E878-4903-B97A-C204FE213813.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966311932656"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/75980652-671E-4FCE-AB35-65E6BDB55328.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/75980652-671E-4FCE-AB35-65E6BDB55328.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966313552276"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/78C4AFDA-4287-470E-AF0F-6BE325D7D65D.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/78C4AFDA-4287-470E-AF0F-6BE325D7D65D.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "mode": "0o644",
+      "mtimeNs": "1795601966315254896"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/7FB1DF44-F542-4588-9F2E-19D1DCFE8131.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/7FB1DF44-F542-4588-9F2E-19D1DCFE8131.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966309277123"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/8025C387-1E84-410C-9A53-0A1C3E2AC992",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/8025C387-1E84-410C-9A53-0A1C3E2AC992",
+      "bytes": 1215,
+      "sha256": "e92b99bb74bfc5f2f7b6ab2edebc6a2d4a1ef97ce74f68cb700770790a0aa9e0",
+      "mode": "0o644",
+      "mtimeNs": "1795601966314032733"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/80B59F76-BE3F-4F2E-A05A-E37129657DFB.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/80B59F76-BE3F-4F2E-A05A-E37129657DFB.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966313406110"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/813FFB5B-9D17-414D-8A2C-A4C896CEEB08.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/813FFB5B-9D17-414D-8A2C-A4C896CEEB08.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966306998380"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/829212C9-7021-488E-A408-45626747AC60.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/829212C9-7021-488E-A408-45626747AC60.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966312522238"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/835A93E1-301D-4768-851C-9AC090261C34.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/835A93E1-301D-4768-851C-9AC090261C34.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966307609087"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/835F0F8F-0811-480B-9231-1035D2285540.json",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/835F0F8F-0811-480B-9231-1035D2285540.json",
+      "bytes": 305,
+      "sha256": "9c2e08a9e0142d954726fd20a3a75a41cc8b57e31b70dfca78696b57c7114dfe",
+      "mode": "0o644",
+      "mtimeNs": "1795601966291279097"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/88E39E84-1D01-41ED-B800-469F70E88A10.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/88E39E84-1D01-41ED-B800-469F70E88A10.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966312377321"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/8BECA050-4EBA-4473-AB25-1A13D4227F0D.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/8BECA050-4EBA-4473-AB25-1A13D4227F0D.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "mode": "0o644",
+      "mtimeNs": "1795601966314953855"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/93E9AA73-78BB-4482-A2D8-B577BCDD02C8.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/93E9AA73-78BB-4482-A2D8-B577BCDD02C8.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "mode": "0o644",
+      "mtimeNs": "1795601966316886849"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/94310BF1-FAFA-4C82-85C1-FFD5BED96AA8",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/94310BF1-FAFA-4C82-85C1-FFD5BED96AA8",
+      "bytes": 1893,
+      "sha256": "4ed374a5864a3bea1c617eb6810f380cf165a7689f12a7e35589213060ff82cc",
+      "mode": "0o644",
+      "mtimeNs": "1795601966317801513"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/95A62B58-1063-4E32-B8C2-1109A0729B37.png",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/95A62B58-1063-4E32-B8C2-1109A0729B37.png",
+      "bytes": 280620,
+      "sha256": "49b6b84f35d29635090be12aa1e377683d699c5a24a5598db58796d1c0605afc",
+      "mode": "0o644",
+      "mtimeNs": "1795601966305922134"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/97B30FBE-AB40-491A-9831-A3BF59DA91F5.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/97B30FBE-AB40-491A-9831-A3BF59DA91F5.txt",
+      "bytes": 19790,
+      "sha256": "354d3f77c500d44e2e95983d4806c8f7e8b3264e3f027b216733c6da9ba12dc2",
+      "mode": "0o644",
+      "mtimeNs": "1795601966305673884"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/9A1F9322-6A63-4E77-8D10-617A2D1BEBB6.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/9A1F9322-6A63-4E77-8D10-617A2D1BEBB6.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "mode": "0o644",
+      "mtimeNs": "1795601966315837936"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/9A3A6C41-E66E-47CF-AF6F-D9E3F7646DA5.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/9A3A6C41-E66E-47CF-AF6F-D9E3F7646DA5.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966307153838"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/9BEB7830-FF77-452C-B797-7F313C120E91",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/9BEB7830-FF77-452C-B797-7F313C120E91",
+      "bytes": 1215,
+      "sha256": "e92b99bb74bfc5f2f7b6ab2edebc6a2d4a1ef97ce74f68cb700770790a0aa9e0",
+      "mode": "0o644",
+      "mtimeNs": "1795601966313717526"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/9DCE706D-0871-4AE5-BF0E-2295F03218B2.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/9DCE706D-0871-4AE5-BF0E-2295F03218B2.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966309461664"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/9EA246BE-CA05-4A2D-B239-338069E3F60A",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/9EA246BE-CA05-4A2D-B239-338069E3F60A",
+      "bytes": 1881,
+      "sha256": "160abea84568a5a9c6233265643ed77826459979b96dfa8fea04bdd726b129d5",
+      "mode": "0o644",
+      "mtimeNs": "1795601966317961637"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/A5466708-38D6-47C5-9009-B877DB021A7A",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/A5466708-38D6-47C5-9009-B877DB021A7A",
+      "bytes": 1215,
+      "sha256": "e92b99bb74bfc5f2f7b6ab2edebc6a2d4a1ef97ce74f68cb700770790a0aa9e0",
+      "mode": "0o644",
+      "mtimeNs": "1795601966314185732"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/A6AD3838-4C59-49F9-80C2-3F0F539BAF41.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/A6AD3838-4C59-49F9-80C2-3F0F539BAF41.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966311641616"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/AAA94D87-9FA3-4479-BF57-150F1B566A5E.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/AAA94D87-9FA3-4479-BF57-150F1B566A5E.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966310499702"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/AADC2ECD-6B1F-4E6E-B0F4-3581C40CBEF7.png",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/AADC2ECD-6B1F-4E6E-B0F4-3581C40CBEF7.png",
+      "bytes": 2194432,
+      "sha256": "972bea467231efa57efa9d5c4fc10d1440aa79bac1f4e540e8a661b494f58304",
+      "mode": "0o644",
+      "mtimeNs": "1795601966295807582"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/AAE4A3AE-CC03-41A8-A008-A3F113E469F3.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/AAE4A3AE-CC03-41A8-A008-A3F113E469F3.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "mode": "0o644",
+      "mtimeNs": "1795601966316735558"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/AB92905E-E0BE-4807-9A65-79D2B6287261.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/AB92905E-E0BE-4807-9A65-79D2B6287261.txt",
+      "bytes": 30048,
+      "sha256": "aac2004b874e11eaa6bfe7389399eccc615eba155e02dfc13fd2820a33d71a52",
+      "mode": "0o644",
+      "mtimeNs": "1795601966306138466"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/B178472E-F081-44B3-90E9-7E5293F9AAEA.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/B178472E-F081-44B3-90E9-7E5293F9AAEA.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966307765628"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/B4EBC339-84F4-4593-9256-0F40555C7F18.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/B4EBC339-84F4-4593-9256-0F40555C7F18.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966313117569"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/B5EAB680-0C79-4FE0-8C4E-4F627BF4CF02",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/B5EAB680-0C79-4FE0-8C4E-4F627BF4CF02",
+      "bytes": 1881,
+      "sha256": "8241c901ea380315ebeb8fad4677c7d0f4b2bd1c0e7605ba61e9781539854ab4",
+      "mode": "0o644",
+      "mtimeNs": "1795601966313885150"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/B79209DA-4723-44AE-B8DC-59867A83E5CA.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/B79209DA-4723-44AE-B8DC-59867A83E5CA.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "mode": "0o644",
+      "mtimeNs": "1795601966317041807"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/B9B556CC-2789-40B2-9E4E-07B64EA98566.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/B9B556CC-2789-40B2-9E4E-07B64EA98566.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966312228697"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/BB697944-614C-4093-8D9E-BADB80F41DBE.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/BB697944-614C-4093-8D9E-BADB80F41DBE.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966313261277"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/BBA78BAA-86AB-4DC4-B1B5-501A3B365DC9.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/BBA78BAA-86AB-4DC4-B1B5-501A3B365DC9.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966312972528"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/BEF749AE-1C6C-43B1-ABA5-81CF92ABC7FA.mp4",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/BEF749AE-1C6C-43B1-ABA5-81CF92ABC7FA.mp4",
+      "bytes": 50750273,
+      "sha256": "b3beb456246b1b9eddf3a6e8c17157980633a8029ecb266896c216fa546ef797",
+      "mode": "0o644",
+      "mtimeNs": "1795601966349058913"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/C114A9B0-1085-4C43-896E-C5832477DEEC.json",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/C114A9B0-1085-4C43-896E-C5832477DEEC.json",
+      "bytes": 727,
+      "sha256": "fd6dd2e19e8e0e7f981b8d4856759f39b05c49bbb280333a3bf520a54c6b265b",
+      "mode": "0o644",
+      "mtimeNs": "1795601966291607054"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/C19F1253-DB08-4AE0-9E0A-24DCB9DD178B.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/C19F1253-DB08-4AE0-9E0A-24DCB9DD178B.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966308378709"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/C72DFD59-0D97-4722-9386-FE43E8746B0B.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/C72DFD59-0D97-4722-9386-FE43E8746B0B.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "mode": "0o644",
+      "mtimeNs": "1795601966316288601"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/CA3E9925-C4CF-4080-9964-968B7DA31B25.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/CA3E9925-C4CF-4080-9964-968B7DA31B25.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "mode": "0o644",
+      "mtimeNs": "1795601966317635221"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/CAEE1BC9-8A38-4B53-9B2A-939D3D6F37A0.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/CAEE1BC9-8A38-4B53-9B2A-939D3D6F37A0.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966311005742"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/CDC2A276-DADD-4351-B6F1-E0DBA4C36621.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/CDC2A276-DADD-4351-B6F1-E0DBA4C36621.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966306696173"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/D110267C-479A-4777-80C0-444DB91F78DD.json",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/D110267C-479A-4777-80C0-444DB91F78DD.json",
+      "bytes": 802,
+      "sha256": "9d13202638b21e34a75418b462157cf95383eb1913ae5f703e6e67680f44f8ab",
+      "mode": "0o644",
+      "mtimeNs": "1795601966290288016"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/D150B33A-B329-4A74-9DE7-87E6715D9046",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/D150B33A-B329-4A74-9DE7-87E6715D9046",
+      "bytes": 1881,
+      "sha256": "2ee6e5a6a2ebc7ff690f4d684a37d3dd9108e0f363bbb583e845b4d11f890e77",
+      "mode": "0o644",
+      "mtimeNs": "1795601966318121887"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/D4DEDCF2-88E4-449C-AB40-CCCD1108314B.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/D4DEDCF2-88E4-449C-AB40-CCCD1108314B.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966308976374"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/DD784D96-EE00-4514-955A-D5D74D466622.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/DD784D96-EE00-4514-955A-D5D74D466622.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "mode": "0o644",
+      "mtimeNs": "1795601966317481764"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/E305724F-1A04-4CDB-8F57-6CB3F32B948B.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/E305724F-1A04-4CDB-8F57-6CB3F32B948B.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "mode": "0o644",
+      "mtimeNs": "1795601966317335722"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/E527D79D-DD79-4C68-A45A-C9F54C4F5196.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/E527D79D-DD79-4C68-A45A-C9F54C4F5196.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966310169953"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/ECAA7B2E-E943-4355-AE6C-B56F72B1099E.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/ECAA7B2E-E943-4355-AE6C-B56F72B1099E.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966311307533"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/F0AD79B6-6490-475D-9D53-D130679468E5.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/F0AD79B6-6490-475D-9D53-D130679468E5.txt",
+      "bytes": 232,
+      "sha256": "ebac9945e339996774bd882a9ac16e58ce5ebd1b52c68fa4c0cd3f48fa711180",
+      "mode": "0o644",
+      "mtimeNs": "1795601966315102604"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/FA6186DC-5C5F-48B1-AB0D-8129FDD1AE81.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/FA6186DC-5C5F-48B1-AB0D-8129FDD1AE81.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966307463795"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/FAE4F507-9277-4D2F-8BEB-F26F6FFAF075.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/FAE4F507-9277-4D2F-8BEB-F26F6FFAF075.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966308676333"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/FB186561-DE31-47F3-B3E2-C447D02F6CC2",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/FB186561-DE31-47F3-B3E2-C447D02F6CC2",
+      "bytes": 137300,
+      "sha256": "45aeae1fa93d2b77373344afa27b6a674bbda454ba3e6f3a74b3c8f783991dfd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966306517507"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/FCA7E935-865F-475D-BBE9-38B153153796.txt",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/FCA7E935-865F-475D-BBE9-38B153153796.txt",
+      "bytes": 229,
+      "sha256": "a52b65647a9be558befce5b66ba1162f0a4a35f577cf387a4b0ac743feea65dd",
+      "mode": "0o644",
+      "mtimeNs": "1795601966307306046"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/manifest.json",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments/manifest.json",
+      "bytes": 41352,
+      "sha256": "765a16eb9606a47184923a996b21f63b678e0ef67f192acf6bfbb42e464bc98d",
+      "mode": "0o644",
+      "mtimeNs": "1795601966352078696"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments-export.log",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-attachments-export.log",
+      "bytes": 16057,
+      "sha256": "dc8dc28352a1c87ffd6fc1fe26b113b7ad63febf569d32938704edb886f5947e",
+      "mode": "0o644",
+      "mtimeNs": "1795601966352136779"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-nodes.json",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-nodes.json",
+      "bytes": 18626,
+      "sha256": "c50f0a371d0bbbe07b2a90eb4d95158b85485a4bcd388c3542f5a3bfb610d674",
+      "mode": "0o644",
+      "mtimeNs": "1795601966195005068"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-selected-tests.log",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-selected-tests.log",
+      "bytes": 575,
+      "sha256": "22fb978e34009bed2c9ff3c80c7b021501b9cb6ca1ad314362a9be282faf601e",
+      "mode": "0o644",
+      "mtimeNs": "1795601966242228960"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-summary.json",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-summary.json",
+      "bytes": 2929,
+      "sha256": "7abe74639707e83dc1cb5927ffb823a437943f21671bfbba61c7955976eb33b4",
+      "mode": "0o644",
+      "mtimeNs": "1795601966099001539"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-tests.log",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-tests.log",
+      "bytes": 80898,
+      "sha256": "511a318946327a74f53e1ccf08956547bd9a9982712a24a8978aa1f56397fc1e",
+      "mode": "0o644",
+      "mtimeNs": "1795601965898984548"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/boot-retained-owned-simulator.log",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/boot-retained-owned-simulator.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "0o644",
+      "mtimeNs": "1795601755026912384"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/bootstatus.log",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/bootstatus.log",
+      "bytes": 617,
+      "sha256": "90f64c724e25e084298600f3f0d6f79a05747c3349892f09136eaaf7460b6541",
+      "mode": "0o644",
+      "mtimeNs": "1795601759533252613"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/command-events.jsonl",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/command-events.jsonl",
+      "bytes": 35853,
+      "sha256": "4d26f122ccd467bf64ebbf83bd4e37b752352db7e217a37e8f689c7422a1a5bc",
+      "mode": "0o644",
+      "mtimeNs": "1795601966412091006"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/commands.jsonl",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/commands.jsonl",
+      "bytes": 5653,
+      "sha256": "0238d28250df2b190c5a1f58884be80d25c3d32986ea8544204b5a551ad3f750",
+      "mode": "0o644",
+      "mtimeNs": "1795601966411947131"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/devices-before.json",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/devices-before.json",
+      "bytes": 32000,
+      "sha256": "1d081c25e8169a5d9d574c58efa3e984329d6bace9d7f7662c1e4ad3ef937db5",
+      "mode": "0o644",
+      "mtimeNs": "1795601755023758853"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/result-review.json",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/result-review.json",
+      "bytes": 5123,
+      "sha256": "2566738bf353027edf3118fed701fa2ded46fb7eb03cb51b9ae5cc1cfd6e9513",
+      "mode": "0o644",
+      "mtimeNs": "1795601966412687337"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/selected-command.json",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/selected-command.json",
+      "bytes": 3781,
+      "sha256": "5012b7caeece82c5340dea10ca44293878af4c442db7869929105bbad4b5dd05",
+      "mode": "0o644",
+      "mtimeNs": "1795601759552356178"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/paired-terminal-before.json",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/paired-terminal-before.json",
+      "bytes": 3511,
+      "sha256": "439cd234a138a0e37f895345d2580df2ec70f5272e7e25534c6428bec94968ac",
+      "mode": "0o644",
+      "mtimeNs": "1795601754821504952"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/primary-state-before.json",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/primary-state-before.json",
+      "bytes": 100642,
+      "sha256": "1dcdcca60efa92595265acb4bc2a9ebf8a99b4816360c765623f9a5b37f133c8",
+      "mode": "0o644",
+      "mtimeNs": "1795601754821388910"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/state.json",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/state.json",
+      "bytes": 2301,
+      "sha256": "9ce14c6e9b7370652b2658c681f7c0b8810235eece6c77d77883ab90f6dc4626",
+      "mode": "0o644",
+      "mtimeNs": "1795601970872153882"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1-decision-recovery1.json",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1-decision-recovery1.json",
+      "bytes": 89702,
+      "sha256": "15f6ca053ae5470e96a68dc0a874a16d34551e65831ddffdd58d61ce83654d86",
+      "mode": "0o644",
+      "mtimeNs": "1795601754006756907"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1-decision.json",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1-decision.json",
+      "bytes": 87899,
+      "sha256": "67b53a2246bc9681533931217f49d806a979791834f7b230a83428a83364faac",
+      "mode": "0o644",
+      "mtimeNs": "1795601591965228856"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1-launch-receipt.json",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1-launch-receipt.json",
+      "bytes": 764,
+      "sha256": "7ba7a0e8ba44732d0ecfd99c2484ae693898784a194210c3186a656e17e26d55",
+      "mode": "0o644",
+      "mtimeNs": "1795601630515815439"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1-launch.log",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1-launch.log",
+      "bytes": 623,
+      "sha256": "2ce665814a672aa65ec477ff4b79ee25da2ce8bd04d4aef7af6ffff924731281",
+      "mode": "0o644",
+      "mtimeNs": "1795601631336552382"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1-preflight-rejection.json",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1-preflight-rejection.json",
+      "bytes": 2457,
+      "sha256": "050e375118027d6813bedcd4ca3b7b9813b75646cecfd361b455851fe4dc84d2",
+      "mode": "0o644",
+      "mtimeNs": "1795601753999276722"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1-recovery1-launch-receipt.json",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1-recovery1-launch-receipt.json",
+      "bytes": 2020,
+      "sha256": "50e520da03dea83082c2d4d2ca2054cc31e163eefa602b3b6f11438b4443305c",
+      "mode": "0o644",
+      "mtimeNs": "1795601754009005816"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1-recovery1-launch.log",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1-recovery1-launch.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "mode": "0o644",
+      "mtimeNs": "1795601754006882906"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1-resource-revision.json",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1-resource-revision.json",
+      "bytes": 2678,
+      "sha256": "a9e1739122edfb8c054a1b3c426a47027a11d81d0c4715807b27b3833ffc9944",
+      "mode": "0o644",
+      "mtimeNs": "1795601754005129204"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1.py",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1.py",
+      "bytes": 20107,
+      "sha256": "c8557447408797639b1de7d377a01be9bcda3b8614d98a547b0a04256c92d60e",
+      "mode": "0o644",
+      "mtimeNs": "1795600785333597509"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/state.json",
+      "archivePath": "build/primary-control/state.json",
+      "bytes": 101199,
+      "sha256": "5b4d96a9385d6dbfcc1c7268f15f5662d00c22da94e5ea5e3c99763a2d5dd70c",
+      "mode": "0o644",
+      "mtimeNs": "1795601970871819175"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/storage-sdk6-expanded-retirement-attempt18/receipt.json",
+      "archivePath": "build/primary-control/storage-sdk6-expanded-retirement-attempt18/receipt.json",
+      "bytes": 1625,
+      "sha256": "6ae34a675a7022e5bc631e7adedb5c08660071404b99e3494836f0288cf5c6cf",
+      "mode": "0o644",
+      "mtimeNs": "1795601339869909698"
+    }
+  ],
+  "fileCount": 120,
+  "fileBytes": 56502213
+}

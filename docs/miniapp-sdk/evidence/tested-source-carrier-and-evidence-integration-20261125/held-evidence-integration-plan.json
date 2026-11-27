@@ -1,0 +1,527 @@
+{
+  "schemaVersion": 1,
+  "kind": "HELD_EVIDENCE_PATCH_INTEGRATION_READINESS",
+  "createdAt": "2026-11-25T19:11:35.164700+00:00",
+  "planStatus": "NOT_APPLIED",
+  "readiness": "CLEAR",
+  "owner": "/root",
+  "targetSource": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "targetTree": "f7a6596a1ef53d8d962ceb9f619460ffa19ee91e",
+  "observedCanonicalHead": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "evidenceWorktreeHead": "e8c9cfb805cd8db262d73c9a9c7f42a0cc9456f7",
+  "evidenceWorktreeClean": true,
+  "orderedCommits": [
+    {
+      "commit": "efafb6a115e095716a057752993165581d6c3f1a",
+      "parent": "a2c8a1b1be746461272ba77254603304567c309d",
+      "parentIsListedHeldCommit": false,
+      "subject": "docs: retain original native failures and reviewed repair evidence",
+      "expectedPaths": 449,
+      "actualPaths": 449,
+      "statuses": {
+        "A": 449
+      },
+      "fileModes": {
+        "100644": 449
+      },
+      "ownedEvidenceDirectories": [
+        "docs/miniapp-sdk/evidence/notification-delegate-sil-20261125",
+        "docs/miniapp-sdk/evidence/owner-ipad-installation-route-20261125",
+        "docs/miniapp-sdk/evidence/primary-consumer-binding-attempt17-20261125",
+        "docs/miniapp-sdk/evidence/primary-editbutton-confirmation-attempt18-20261125",
+        "docs/miniapp-sdk/evidence/primary-expo-adapter-diagnostics-attempt17-20261125",
+        "docs/miniapp-sdk/evidence/primary-final-source-readiness-20261125",
+        "docs/miniapp-sdk/evidence/primary-live-activity-observation-attempt18-20261125",
+        "docs/miniapp-sdk/evidence/primary-notification-companion-attempt14-20261125",
+        "docs/miniapp-sdk/evidence/primary-notification-delegate-build-attempt14-20261125",
+        "docs/miniapp-sdk/evidence/primary-reachability-target-inventory-20261125",
+        "docs/miniapp-sdk/evidence/primary-repair-wide-composer-20261125",
+        "docs/miniapp-sdk/evidence/primary-sdk-consumers-and-packages-attempt18-20261125",
+        "docs/miniapp-sdk/evidence/primary-sdk-preparation-attempt14-20261125",
+        "docs/miniapp-sdk/evidence/primary-sdk-preparation-attempt15-20261125",
+        "docs/miniapp-sdk/evidence/primary-sdk-preparation-attempt17-20261125",
+        "docs/miniapp-sdk/evidence/primary-sdk-preparation-attempt18-20261125",
+        "docs/miniapp-sdk/evidence/primary-texteditor-edit-acknowledgement-attempt18-20261125",
+        "docs/miniapp-sdk/evidence/primary-texteditor-props-lifecycle-attempt18-20261125",
+        "docs/miniapp-sdk/evidence/primary-worklets-compiler-version-attempt17-20261125",
+        "docs/miniapp-sdk/evidence/scriptwidget-revision-provenance-20261125"
+      ],
+      "pathSetSHA256": "d561c41448e68cb274ebbcb0352cd07bcd27ba8aeff0405175a7c2235272f1f1",
+      "targetCollisions": [],
+      "overlapsWithEarlierHeld": [],
+      "standalonePatchReason": "Only new regular evidence files with no target or earlier-held path; parent commits are not prerequisites for applying this patch",
+      "status": "CLEAR"
+    },
+    {
+      "commit": "898178407def93d0ad8836d06af4ac3b1f809118",
+      "parent": "a2c8a1b1be746461272ba77254603304567c309d",
+      "parentIsListedHeldCommit": false,
+      "subject": "docs: bind SDK19 preparation and exact user export",
+      "expectedPaths": 65,
+      "actualPaths": 65,
+      "statuses": {
+        "A": 65
+      },
+      "fileModes": {
+        "100644": 65
+      },
+      "ownedEvidenceDirectories": [
+        "docs/miniapp-sdk/evidence/primary-sdk-preparation-attempt19-20261125"
+      ],
+      "pathSetSHA256": "f8d4f8b61e91a3a81ce9d6f1dd988a2a7503f1c8a63ec29e1f26dd02251ddcda",
+      "targetCollisions": [],
+      "overlapsWithEarlierHeld": [],
+      "standalonePatchReason": "Only new regular evidence files with no target or earlier-held path; parent commits are not prerequisites for applying this patch",
+      "status": "CLEAR"
+    },
+    {
+      "commit": "d710598de2c9f463da3f78141ae0ada75f690d2b",
+      "parent": "fcfcfb193acbf98e0d77a67be6db88849fd7af8f",
+      "parentIsListedHeldCommit": false,
+      "subject": "docs: retain actual focused19 compiler failure and observation fix",
+      "expectedPaths": 29,
+      "actualPaths": 29,
+      "statuses": {
+        "A": 29
+      },
+      "fileModes": {
+        "100644": 29
+      },
+      "ownedEvidenceDirectories": [
+        "docs/miniapp-sdk/evidence/primary-live-activity-mainactor-observation-attempt19-20261125"
+      ],
+      "pathSetSHA256": "f7e33cf734c9f55c2bec08c7b97bf6a36b1267d386d626436fb88da0eafc3b32",
+      "targetCollisions": [],
+      "overlapsWithEarlierHeld": [],
+      "standalonePatchReason": "Only new regular evidence files with no target or earlier-held path; parent commits are not prerequisites for applying this patch",
+      "status": "CLEAR"
+    },
+    {
+      "commit": "fde05869f0544e8e54f6cbf455ff8fafda2081d4",
+      "parent": "d710598de2c9f463da3f78141ae0ada75f690d2b",
+      "parentIsListedHeldCommit": true,
+      "subject": "docs: bind SDK19 consumers and original produced packages",
+      "expectedPaths": 25,
+      "actualPaths": 25,
+      "statuses": {
+        "A": 25
+      },
+      "fileModes": {
+        "100644": 25
+      },
+      "ownedEvidenceDirectories": [
+        "docs/miniapp-sdk/evidence/primary-sdk-consumer-attempt19-recovery-20261125",
+        "docs/miniapp-sdk/evidence/primary-sdk-packages-attempt19-20261125"
+      ],
+      "pathSetSHA256": "e8adf16b857df3d45049b8f4b5a04d1c108985df299d94bfa03e878eaf44de33",
+      "targetCollisions": [],
+      "overlapsWithEarlierHeld": [],
+      "standalonePatchReason": "Only new regular evidence files with no target or earlier-held path; parent commits are not prerequisites for applying this patch",
+      "status": "CLEAR"
+    },
+    {
+      "commit": "9e6c73fd35b03b5a9ebbcd8b6428a7200e4dbb99",
+      "parent": "0097bf0e142f61acd018762da2bcb09f366f78da",
+      "parentIsListedHeldCommit": false,
+      "subject": "docs: retain actual async image fixture-label failure",
+      "expectedPaths": 19,
+      "actualPaths": 19,
+      "statuses": {
+        "A": 19
+      },
+      "fileModes": {
+        "100644": 19
+      },
+      "ownedEvidenceDirectories": [
+        "docs/miniapp-sdk/evidence/primary-async-image-fixture-identification-attempt19-20261125"
+      ],
+      "pathSetSHA256": "3d2a703ddb18c82a6aed4f622d79e33f4da4d16d6db314296c8bd2ba630c6e2d",
+      "targetCollisions": [],
+      "overlapsWithEarlierHeld": [],
+      "standalonePatchReason": "Only new regular evidence files with no target or earlier-held path; parent commits are not prerequisites for applying this patch",
+      "status": "CLEAR"
+    },
+    {
+      "commit": "1880994b60aa2b880f807ba1930f0f5c3d04b605",
+      "parent": "9e6c73fd35b03b5a9ebbcd8b6428a7200e4dbb99",
+      "parentIsListedHeldCommit": true,
+      "subject": "docs: retain actual MiniApp stored-result failure and fixture repair proof",
+      "expectedPaths": 61,
+      "actualPaths": 61,
+      "statuses": {
+        "A": 61
+      },
+      "fileModes": {
+        "100644": 61
+      },
+      "ownedEvidenceDirectories": [
+        "docs/miniapp-sdk/evidence/primary-repair-model-result-pagination-attempt19-20261125"
+      ],
+      "pathSetSHA256": "a432fe7ed8d7b20a2268bd051bdf2217964f6cbc4c664cc4e9e8e919c3719a4c",
+      "targetCollisions": [],
+      "overlapsWithEarlierHeld": [],
+      "standalonePatchReason": "Only new regular evidence files with no target or earlier-held path; parent commits are not prerequisites for applying this patch",
+      "status": "CLEAR"
+    },
+    {
+      "commit": "20265fe9dc19acf112deef375dce1ee00c66c78f",
+      "parent": "1880994b60aa2b880f807ba1930f0f5c3d04b605",
+      "parentIsListedHeldCommit": true,
+      "subject": "docs: preserve SDK19 environment and launcher recovery evidence",
+      "expectedPaths": 38,
+      "actualPaths": 38,
+      "statuses": {
+        "A": 38
+      },
+      "fileModes": {
+        "100644": 38
+      },
+      "ownedEvidenceDirectories": [
+        "docs/miniapp-sdk/evidence/primary-focused-sdk19-environment-recovery-20261125"
+      ],
+      "pathSetSHA256": "1d014c46dc4b209d8a928f3c166d9c5956c689150e1925e83d23b61b92c0d05a",
+      "targetCollisions": [],
+      "overlapsWithEarlierHeld": [],
+      "standalonePatchReason": "Only new regular evidence files with no target or earlier-held path; parent commits are not prerequisites for applying this patch",
+      "status": "CLEAR"
+    },
+    {
+      "commit": "a8791674acd632536b532e2c3675965c00cf856c",
+      "parent": "20265fe9dc19acf112deef375dce1ee00c66c78f",
+      "parentIsListedHeldCommit": true,
+      "subject": "docs: retain actual validation projection failure and Host correction",
+      "expectedPaths": 92,
+      "actualPaths": 92,
+      "statuses": {
+        "A": 92
+      },
+      "fileModes": {
+        "100644": 92
+      },
+      "ownedEvidenceDirectories": [
+        "docs/miniapp-sdk/evidence/primary-repair-validation-read-classification-attempt19-20261125"
+      ],
+      "pathSetSHA256": "cd8d82119b4bbfe1319b2c0b18de589e49a7fc309933eeb0771fb998a90f73bd",
+      "targetCollisions": [],
+      "overlapsWithEarlierHeld": [],
+      "standalonePatchReason": "Only new regular evidence files with no target or earlier-held path; parent commits are not prerequisites for applying this patch",
+      "status": "CLEAR"
+    },
+    {
+      "commit": "18cd04c520f815c49069f0d20e59dc252f439e02",
+      "parent": "a8791674acd632536b532e2c3675965c00cf856c",
+      "parentIsListedHeldCommit": true,
+      "subject": "docs: preserve real compiler repair progress and measured UI wait correction",
+      "expectedPaths": 94,
+      "actualPaths": 94,
+      "statuses": {
+        "A": 94
+      },
+      "fileModes": {
+        "100644": 94
+      },
+      "ownedEvidenceDirectories": [
+        "docs/miniapp-sdk/evidence/primary-repair-compiler-observation-attempt19-20261125"
+      ],
+      "pathSetSHA256": "ae4a3a470832bcdbb170aa9aede5a4324b0e0ac7e51738816bb2ba65b7d3136f",
+      "targetCollisions": [],
+      "overlapsWithEarlierHeld": [],
+      "standalonePatchReason": "Only new regular evidence files with no target or earlier-held path; parent commits are not prerequisites for applying this patch",
+      "status": "CLEAR"
+    },
+    {
+      "commit": "6aa2a8f344d5f9d77bfe0b474f50b6271bdf9864",
+      "parent": "18cd04c520f815c49069f0d20e59dc252f439e02",
+      "parentIsListedHeldCommit": true,
+      "subject": "docs(miniapps): retain actual repaired receiver inspection evidence",
+      "expectedPaths": 121,
+      "actualPaths": 121,
+      "statuses": {
+        "A": 121
+      },
+      "fileModes": {
+        "100644": 121
+      },
+      "ownedEvidenceDirectories": [
+        "docs/miniapp-sdk/evidence/primary-repair-receiver-observation-attempt19-20261125"
+      ],
+      "pathSetSHA256": "34e168e7c2f69008836c3afaef3cbe8456b5d5b52195e42ff3e8aeed1e9ed497",
+      "targetCollisions": [],
+      "overlapsWithEarlierHeld": [],
+      "standalonePatchReason": "Only new regular evidence files with no target or earlier-held path; parent commits are not prerequisites for applying this patch",
+      "status": "CLEAR"
+    },
+    {
+      "commit": "b372e4b20fe6ef43c7984ba30677e473b12916a0",
+      "expectedPaths": 158,
+      "parent": "6aa2a8f344d5f9d77bfe0b474f50b6271bdf9864",
+      "parentIsListedHeldCommit": true,
+      "subject": "Record installed repair package and import presentation ownership fix",
+      "actualPaths": 158,
+      "statuses": {
+        "A": 158
+      },
+      "fileModes": {
+        "100644": 158
+      },
+      "ownedEvidenceDirectories": [
+        "docs/miniapp-sdk/evidence/primary-repair-import-presentation-attempt19-20261125"
+      ],
+      "pathSetSHA256": "6ca7f50df48f241642571c96bb41445739aa71b032ec6387257a62cfe27bf6a1",
+      "targetCollisions": [],
+      "overlapsWithEarlierHeld": [],
+      "standalonePatchReason": "Only new regular evidence files with no target or earlier-held path; parent commits are not prerequisites for applying this patch",
+      "status": "CLEAR"
+    },
+    {
+      "commit": "3623ebc43fd4def7a8c2f7f6c0f9f3e8e28130fb",
+      "expectedPaths": 9,
+      "parent": "b372e4b20fe6ef43c7984ba30677e473b12916a0",
+      "parentIsListedHeldCommit": true,
+      "subject": "Record actual pending MiniApp receipt and provider correction",
+      "actualPaths": 9,
+      "statuses": {
+        "A": 9
+      },
+      "fileModes": {
+        "100644": 9
+      },
+      "ownedEvidenceDirectories": [
+        "docs/miniapp-sdk/evidence/primary-repair-pending-status-attempt19-20261125"
+      ],
+      "pathSetSHA256": "6a6beeca9933f90c2fba98f01aa3db047bc382cbb3f53a36301e38c680263407",
+      "targetCollisions": [],
+      "overlapsWithEarlierHeld": [],
+      "standalonePatchReason": "Only new regular evidence files with no target or earlier-held path; parent commits are not prerequisites for applying this patch",
+      "status": "CLEAR"
+    },
+    {
+      "commit": "a4e65378e5c2bbc616482078f105d489869ee4b5",
+      "expectedPaths": 204,
+      "parent": "3623ebc43fd4def7a8c2f7f6c0f9f3e8e28130fb",
+      "parentIsListedHeldCommit": true,
+      "subject": "Record repair handoff failure and independent conversation preparation",
+      "actualPaths": 204,
+      "statuses": {
+        "A": 204
+      },
+      "fileModes": {
+        "100644": 204
+      },
+      "ownedEvidenceDirectories": [
+        "docs/miniapp-sdk/evidence/primary-repair-bootstrap-handoff-attempt19-20261125"
+      ],
+      "pathSetSHA256": "bb0ea7342a0c85e7410f3612447353e64fd3e1adcbad701cc429953230232475",
+      "targetCollisions": [],
+      "overlapsWithEarlierHeld": [],
+      "standalonePatchReason": "Only new regular evidence files with no target or earlier-held path; parent commits are not prerequisites for applying this patch",
+      "status": "CLEAR"
+    },
+    {
+      "commit": "e2c6b379fcaa9f3927c77c35a1fa4731c04e6744",
+      "expectedPaths": 133,
+      "parent": "a4e65378e5c2bbc616482078f105d489869ee4b5",
+      "parentIsListedHeldCommit": true,
+      "subject": "Record actual repair installation and import view lifetime correction",
+      "actualPaths": 133,
+      "statuses": {
+        "A": 133
+      },
+      "fileModes": {
+        "100644": 133
+      },
+      "ownedEvidenceDirectories": [
+        "docs/miniapp-sdk/evidence/primary-repair-import-lifetime-attempt19-20261125"
+      ],
+      "pathSetSHA256": "84e9182218057f0db4a2ae1809528104b4aef7a976e10c090d8431fbd8d6e4ca",
+      "targetCollisions": [],
+      "overlapsWithEarlierHeld": [],
+      "standalonePatchReason": "Only new regular evidence files with no target or earlier-held path; parent commits are not prerequisites for applying this patch",
+      "status": "CLEAR"
+    },
+    {
+      "commit": "2e55181e1de9db14340b7d8a5038bf3b8808f295",
+      "expectedPaths": 68,
+      "parent": "e2c6b379fcaa9f3927c77c35a1fa4731c04e6744",
+      "parentIsListedHeldCommit": true,
+      "subject": "docs: preserve original agent repair pass evidence",
+      "actualPaths": 68,
+      "statuses": {
+        "A": 68
+      },
+      "fileModes": {
+        "100644": 68
+      },
+      "ownedEvidenceDirectories": [
+        "docs/miniapp-sdk/evidence/primary-repair-original-agent-pass-attempt19-20261125"
+      ],
+      "pathSetSHA256": "9af4e172879a06eebc1e5ec5a2ea41a239d1e9d6e1df0851583e3f5b8bbe981f",
+      "targetCollisions": [],
+      "overlapsWithEarlierHeld": [],
+      "standalonePatchReason": "Only new regular evidence files with no target or earlier-held path; parent commits are not prerequisites for applying this patch",
+      "status": "CLEAR"
+    },
+    {
+      "commit": "fb943ce9191b2d559aa7e182cae8b0cddeaaaa09",
+      "expectedPaths": 7,
+      "parent": "2e55181e1de9db14340b7d8a5038bf3b8808f295",
+      "parentIsListedHeldCommit": true,
+      "subject": "docs: retain standalone SDK19 developer kit authoring proof",
+      "actualPaths": 7,
+      "statuses": {
+        "A": 7
+      },
+      "fileModes": {
+        "100644": 7
+      },
+      "ownedEvidenceDirectories": [
+        "docs/miniapp-sdk/evidence/standalone-developer-kit-authoring-attempt19-20261125"
+      ],
+      "pathSetSHA256": "0c18e2c8418388fcb47099585adf378dd83dd491982b8064dfa58fd629232ea0",
+      "targetCollisions": [],
+      "overlapsWithEarlierHeld": [],
+      "standalonePatchReason": "Only new regular evidence files with no target or earlier-held path; parent commits are not prerequisites for applying this patch",
+      "status": "CLEAR"
+    },
+    {
+      "commit": "e8c9cfb805cd8db262d73c9a9c7f42a0cc9456f7",
+      "expectedPaths": 15,
+      "parent": "fb943ce9191b2d559aa7e182cae8b0cddeaaaa09",
+      "parentIsListedHeldCommit": true,
+      "subject": "docs: reconcile current SDK04 exports with bounded native coverage",
+      "actualPaths": 15,
+      "statuses": {
+        "A": 15
+      },
+      "fileModes": {
+        "100644": 15
+      },
+      "ownedEvidenceDirectories": [
+        "docs/miniapp-sdk/evidence/sdk04-current-export-coverage-attempt19-20261125"
+      ],
+      "pathSetSHA256": "7903af845225f0834eb568eeada95db0fb346dba1ebb24543cb17670eec7c5d1",
+      "targetCollisions": [],
+      "overlapsWithEarlierHeld": [],
+      "standalonePatchReason": "Only new regular evidence files with no target or earlier-held path; parent commits are not prerequisites for applying this patch",
+      "status": "CLEAR"
+    }
+  ],
+  "expectedTotalPaths": 1587,
+  "sumOfPatchPaths": 1587,
+  "unionPaths": 1587,
+  "allPathsDisjoint": true,
+  "allStatuses": "A",
+  "allModes": "100644",
+  "ownedPathPrefix": "docs/miniapp-sdk/evidence/",
+  "canonicalCollisionCount": 0,
+  "unionPathSetSHA256": "4ab1cd7cbdbb0cc0992550b981df096b289dcd55be59c857a09c8a86255eff6e",
+  "standaloneEvidencePatches": true,
+  "unlistedHistoricalParentsAreNotRequiredForPatchApplication": true,
+  "carrier25Plan": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk19-reconciliation/prepared-source-materialization-d4a0b115.json",
+    "sha256": "eae3a25e5f0b2ad56e461ccebbaeb03e8a61f9e50d9de4e5b1f415174024effd",
+    "applied": false,
+    "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+    "count": 25,
+    "overlappingHeldPaths": []
+  },
+  "scope": "Read-only Git metadata for all17 held patches and exact unchanged carrier25/source identity; inherits the prior plan authenticated SDK235/current-consumer closure. No repeated raw-payload or compiler testing, index simulation, cherry-pick, canonical mutation or new worktree.",
+  "blockers": [],
+  "nextAction": "Root may integrate each exact held patch once after the original acceptance gates and prepared25 carrier commit; recheck target/path collisions if canonical source changes. Preserve the three explicit unrelated canonical working changes.",
+  "fileDirectoryConflicts": [],
+  "hiddenPatchDependencies": "NONE: each commit adds only disjoint regular evidence files; no changes to existing files, gitlinks, symlinks or required ancestor directories",
+  "pathSetHashAlgorithm": "sorted-newline-with-final-newline",
+  "supersedes": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk19-reconciliation/held-evidence-integration-plan-d4a0b115-v3.json",
+    "bytes": 21449,
+    "sha256": "94c2a801c0041e1ddb93d938c39712315f8b7c4ecf5eb57b2bb7ced1e1b9b9da",
+    "originalPlanPreserved": true
+  },
+  "preparedBy": "/root/remaining_controllers",
+  "protectedCanonicalWorkingState": {
+    "porcelain": " M AGENTS.md\n?? Scripts/Expo/node_modules\n?? Scripts/NativeScript/node_modules\n",
+    "AGENTSSHA256": "f27d4554d8dda88996d1511b361e8b8e5520cb08e8198c5fbc7816b1fbc9aa9f",
+    "indexEmpty": true,
+    "outsideEvidenceAndPrepared25": true,
+    "preserved": true
+  },
+  "carrier25Closure": {
+    "status": "EXACT_MATCH_TO_NATIVE_D4A_PLUS_PREPARED25",
+    "materialized": false,
+    "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+    "sourceTree": "f7a6596a1ef53d8d962ceb9f619460ffa19ee91e",
+    "planSHA256": "eae3a25e5f0b2ad56e461ccebbaeb03e8a61f9e50d9de4e5b1f415174024effd",
+    "nativeDecisionSHA256": "7dd6fbe9469886c57813740b7b9e11fc44605e4d0524cc06879f9ec1170d438c",
+    "nativeSourceAdvanceSHA256": "cc3e8d2360726ef9b17c520282bc1694ccc7d5d6f20ba42404d14dfbef55fecb",
+    "preparedRowsMatched": 25,
+    "preparedPayloadBytes": 14676032,
+    "allBeforeGitAndCanonicalBytesMatched": true,
+    "allAfterPayloadAndNativeBytesMatched": true,
+    "allModes": "100644",
+    "preservedSDK19PayloadRows": 19,
+    "originalProducerProbeRows": 6,
+    "snapshotTrackedDeltaSHA256": "31991d2ceeb8e62f8d05e8e1b0c67c095371c1b72e438655a56bacc54705a37d",
+    "snapshotTrackedDeltaMeaning": "Hash field retained from the authenticated SDK19 snapshot receipt, not the current native git-diff hash.",
+    "nativePreparedTrackedDiffSHA256": "8eebad41405fad444ff058766f02cbeaf3d3181022ff04b586f090482b1b4e9d",
+    "sdkManifestSHA256": "4505c28495d8b6ecd1073254e0e395adcc898cc02dd1d40699591f51db4dee92",
+    "sdkProducer": "a2c8a1b1be746461272ba77254603304567c309d",
+    "sdkInputSHA256": "ba8f3f1f09054887eed62532fa1d5ca2ac3bd60e6aa99a98ab1035c7653882a2",
+    "sdkSourceInputsChecked": 235,
+    "preparedRowsInSDKSourceInputs": [
+      "docs/miniapp-sdk/extension-reachability.json",
+      "docs/miniapp-sdk/extension-reachability.md",
+      "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "docs/miniapp-sdk/source-inventory.json",
+      "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/original-runtime-receipt.json",
+      "Scripts/Expo/package-lock.json",
+      "Scripts/Expo/package.json",
+      "Scripts/MiniApps/upstream-resolution.json"
+    ],
+    "sdkSourceInputMismatches": [],
+    "currentConsumerSourceHashesChecked": 15,
+    "consumerMismatches": [],
+    "evidencePathsInSDKOrConsumerInputs": [],
+    "remainingAction": "Root applies the25 exact payload bytes/modes to the checked d4a preimages, then adds the17 disjoint evidence patches. The future carrier commit records native consumer d4a plus its prepared25 and SDK producer a2; existing compiled products keep their actual build producer identity.",
+    "reusedVerifiedClosureFrom": {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/sdk19-reconciliation/held-evidence-integration-plan-d4a0b115-v3.json",
+      "sha256": "94c2a801c0041e1ddb93d938c39712315f8b7c4ecf5eb57b2bb7ced1e1b9b9da",
+      "sameTargetSourceAndTree": true,
+      "sameCarrierPlan": true
+    }
+  },
+  "sourcePathExclusion": {
+    "prepared25Count": 25,
+    "SDKSourceInputCount": 235,
+    "currentConsumerSourceCount": 15,
+    "prepared25Overlap": [],
+    "SDKSourceOverlap": [],
+    "consumerSourceOverlap": [],
+    "SDKManifest": {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/standalone-sdk08-kit-only/kit/MiniAppSDK/miniapp-sdk.json",
+      "sha256": "4505c28495d8b6ecd1073254e0e395adcc898cc02dd1d40699591f51db4dee92"
+    },
+    "consumerAuthority": {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-recovery-inputs.json",
+      "sha256": "eaccf3795eb755f1bfad0a89794a7ee59dbb4d8b0673d69e690b4bf5fbfa2524"
+    },
+    "scope": "Path-set exclusion rechecked for all17 evidence patches; prior verified byte closure preserved without regeneration."
+  },
+  "crossFolderEvidenceReferences": [
+    {
+      "folder": "docs/miniapp-sdk/evidence/original52-final-pass-attempt19-20261125",
+      "receiptSHA256": "bc4cee646635399d243e90b2ba77d636522dd463d47fbd95657c7a4a8d3d7a14",
+      "owner": "/root",
+      "integration": "SEPARATE_ROOT_OWNED_EVIDENCE_PENDING_INTEGRATION",
+      "patchApplicationDependency": false,
+      "requiredForCompletePublishedEvidenceReferences": true
+    },
+    {
+      "folder": "docs/miniapp-sdk/evidence/nativescript-five-runtime-pass-attempt19-20261125",
+      "receiptSHA256": "f0232a0473ad580c05e64daf35ab0ae46380b0815a2785a2d28cf15f0047ba68",
+      "owner": "/root",
+      "integration": "SEPARATE_ROOT_OWNED_EVIDENCE_PENDING_INTEGRATION",
+      "patchApplicationDependency": false,
+      "requiredForCompletePublishedEvidenceReferences": true
+    }
+  ]
+}

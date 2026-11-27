@@ -1,0 +1,84 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "9F730717-91E5-4FE8-B8D5-434D418635F3",
+        "deviceName" : "HanlinPaired-paired52-sdk20-v1",
+        "modelName" : "iPad Pro 13-inch (M5)",
+        "osBuildNumber" : "24A434",
+        "osVersion" : "27.0",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 2,
+      "passedTests" : 25,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "AI_HLY · Built with macOS 27.0",
+  "expectedFailures" : 0,
+  "failedTests" : 2,
+  "finishTime" : 1795648065.051,
+  "passedTests" : 25,
+  "result" : "Failed",
+  "runtimeWarnings" : [
+    {
+      "issueType" : "Runtime Warning",
+      "message" : "           SessionCore.mm:631   This method can lead to UI unresponsiveness if called on the main thread while the audio session is active."
+    },
+    {
+      "issueType" : "Runtime Warning",
+      "message" : "    AVAudioSession_iOS.mm:978   This method can lead to UI unresponsiveness if called on the main thread. Consider using the asynchronous activate/deactivate API instead for calls from the main thread."
+    },
+    {
+      "issueType" : "Runtime Warning",
+      "message" : "Update the Info.plist: Support for all orientations will soon be required."
+    },
+    {
+      "issueType" : "Runtime Warning",
+      "message" : "Update the Info.plist: Support for all orientations will soon be required."
+    }
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1795647621.37,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+    {
+      "failureText" : "XCTAssertTrue failed - The original Metro preparation must stage the actual fixture",
+      "targetName" : "AI_HLYTests",
+      "testIdentifier" : 1,
+      "testIdentifierString" : "HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure()",
+      "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure",
+      "testName" : "testInstalledExpoActionsReturnActualReplyAndFailure()"
+    },
+    {
+      "failureText" : "XCTAssertTrue failed - The original Metro preparation must stage the actual fixture",
+      "targetName" : "AI_HLYTests",
+      "testIdentifier" : 2,
+      "testIdentifierString" : "HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer()",
+      "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer",
+      "testName" : "testPreparedExpoWidgetPublicationReachesExistingConsumer()"
+    }
+  ],
+  "title" : "Test - AI_HLY",
+  "topInsights" : [
+    {
+      "category" : "Common Failures",
+      "impact" : "100% of failures",
+      "text" : "2 runs of 2 tests failed with XCTAssertTrue failed - The original Metro preparation must stage the actual fixture"
+    },
+    {
+      "category" : "Longest Test Runs",
+      "impact" : "76% of duration",
+      "text" : "1 longest test run with outlier durations exceeding 67.76s (three standard deviations)"
+    }
+  ],
+  "totalTestCount" : 27
+}

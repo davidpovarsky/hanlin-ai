@@ -1,4 +1,7 @@
 import HanlinLocalization
+#if (DEBUG || HANLIN_TESTING) && targetEnvironment(simulator)
+import notify
+#endif
 import Foundation
 import HanlinChatCore
 import HanlinMiniAppCore
@@ -192,6 +195,19 @@ enum AgentRuntimeUIAcceptanceProvider {
 #endif
             context.insert(acceptanceChat)
 #if (DEBUG || HANLIN_TESTING) && targetEnvironment(simulator)
+            if ProcessInfo.processInfo.environment["HANLIN_SCROLL_BOTTOM_ACCEPTANCE_FIXTURE"] == "1" {
+                // Historical messages in the real store/view, not manufactured
+                // scroll offsets or a replacement transcript/composer.
+                for index in 0..<12 {
+                    let paragraph = "Original transcript row \(index + 1). This historical paragraph gives the native chat real content to scroll while retaining the original message renderer."
+                    let text = index == 11 ? "POST149101_SCROLL_LAST"
+                        : Array(repeating: paragraph, count: 4).joined(separator: "\n\n")
+                    let message = ChatMessages(role: "assistant", text: text,
+                        modelDisplayName: "Agent Acceptance", record: acceptanceChat)
+                    message.timestamp = now.addingTimeInterval(Double(index - 12))
+                    context.insert(message)
+                }
+            }
             if isSkillsEnabled,
                ProcessInfo.processInfo.environment["HANLIN_EMBEDDED_FALLBACK_FIXTURE"] == "1" {
                 // Historical rendering fixture only: original message/AgentRun/
@@ -219,6 +235,20 @@ enum AgentRuntimeUIAcceptanceProvider {
                     modelDisplayName: "Agent Acceptance", record: acceptanceChat))
             }
 #endif
+            #if (DEBUG || HANLIN_TESTING) && targetEnvironment(simulator)
+            if let countText = ProcessInfo.processInfo.environment["HANLIN_SOURCES_SHEET_ACCEPTANCE_COUNT"],
+               let count = Int(countText), (1...100).contains(count) {
+                let resources = (1...count).map { index in
+                    Resource(icon: "", title: "Source \(index): מקור לבדיקה — a readable reference title",
+                             link: "https://agent.acceptance/sources/\(index)")
+                }
+                let message = ChatMessages(role: "assistant",
+                    text: "SOURCES_SHEET_ACCEPTANCE_READY", modelDisplayName: "Agent Acceptance",
+                    record: acceptanceChat)
+                message.resources = resources
+                context.insert(message)
+            }
+            #endif
             if isDockFixturesEnabled {
                 for prompt in try context.fetch(FetchDescriptor<PromptRepo>()) {
                     context.delete(prompt)
@@ -415,6 +445,7 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
             stopped = newValue
         }
     }
+    private var activityLifecycleTask: Task<Void, Never>?
 
     static var observedPhase2Requests: Int {
         lock.lock(); defer { lock.unlock() }
@@ -858,6 +889,11 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
             return
         }
 
+        if currentText.contains("PROMPT_ACTIVITY_LIFECYCLE") {
+            emitActivityLifecycleStream()
+            return
+        }
+
         // 4. UI-04 Collapsed progress and inspector without raw CoT (must precede 6*7 check)
         if bodyString.contains("PROMPT_UI04_REASONING_INSPECTOR") {
             if bodyString.contains("ui04-progress-1") {
@@ -1183,7 +1219,103 @@ final class AgentRuntimeUIAcceptanceURLProtocol: URLProtocol, @unchecked Sendabl
     }
 
     override func stopLoading() {
-        isStopped = true
+        cancellationLock.lock()
+        stopped = true
+        let task = activityLifecycleTask
+        activityLifecycleTask = nil
+        cancellationLock.unlock()
+        task?.cancel()
+    }
+
+    private func installActivityLifecycleTask(_ task: Task<Void, Never>) {
+        cancellationLock.lock()
+        let shouldCancel = stopped
+        if !shouldCancel { activityLifecycleTask = task }
+        cancellationLock.unlock()
+        // stopLoading may have run before the new task could be installed.
+        // Cancellation stays outside the lock to avoid reentrant deadlocks.
+        if shouldCancel { task.cancel() }
+    }
+
+    /// Controlled provider traffic through the original chat projection. This
+    /// fixture supplies no tool effect and installs no replacement activity view.
+    private func emitActivityLifecycleStream() {
+        let response = HTTPURLResponse(url: request.url!, statusCode: 200,
+            httpVersion: "HTTP/1.1", headerFields: ["Content-Type": "text/event-stream"])!
+        client?.urlProtocol(self, didReceive: response, cacheStoragePolicy: .notAllowed)
+        let task = Task { @Sendable [weak self] in
+            guard let self else { return }
+            func emit(_ delta: [String: Any], final: Bool = false) {
+                guard !self.isStopped else { return }
+                var choice: [String: Any] = ["delta": delta]
+                if final { choice["finish_reason"] = "stop" }
+                else { choice["finish_reason"] = NSNull() }
+                let payload: [String: Any] = ["choices": [choice]]
+                guard let data = try? JSONSerialization.data(withJSONObject: payload) else { return }
+                let suffix = final ? "data: [DONE]\n\n" : ""
+                self.client?.urlProtocol(self, didLoad:
+                    Data(("data: " + String(decoding: data, as: UTF8.self) + "\n\n" + suffix).utf8))
+                if final { self.client?.urlProtocolDidFinishLoading(self) }
+            }
+            #if (DEBUG || HANLIN_TESTING) && targetEnvironment(simulator)
+            // The UI test owns this unique channel and advances it only after
+            // asserting the preceding real UI state. No product state is changed.
+            let checkpointToken: Int32?
+            if let nonce = ProcessInfo.processInfo.environment["HANLIN_ACTIVITY_FIXTURE_CHECKPOINT"] {
+                guard let identifier = UUID(uuidString: nonce) else {
+                    self.client?.urlProtocol(self, didFailWithError: URLError(.badURL))
+                    return
+                }
+                var token: Int32 = 0
+                let name = "com.itorah.hanlin.ui-acceptance.activity." + identifier.uuidString
+                guard notify_register_check(name, &token) == UInt32(NOTIFY_STATUS_OK) else {
+                    self.client?.urlProtocol(self, didFailWithError: URLError(.cannotConnectToHost))
+                    return
+                }
+                checkpointToken = token
+            } else {
+                checkpointToken = nil
+            }
+            defer {
+                if let checkpointToken { notify_cancel(checkpointToken) }
+            }
+            let clock = ContinuousClock()
+            let checkpointDeadline = clock.now.advanced(by: .seconds(420))
+            #endif
+            func waitForCheckpoint(_ phase: UInt64) async throws {
+                #if (DEBUG || HANLIN_TESTING) && targetEnvironment(simulator)
+                if let checkpointToken {
+                    while true {
+                        try Task.checkCancellation()
+                        guard !self.isStopped else { throw CancellationError() }
+                        var acknowledged: UInt64 = 0
+                        guard notify_get_state(checkpointToken, &acknowledged) == UInt32(NOTIFY_STATUS_OK) else {
+                            throw URLError(.cannotParseResponse)
+                        }
+                        if acknowledged >= phase { return }
+                        guard clock.now < checkpointDeadline else { throw URLError(.timedOut) }
+                        try await Task.sleep(for: .milliseconds(100))
+                    }
+                }
+                #endif
+                try await Task.sleep(for: .seconds(10))
+            }
+            let first = "ACTIVITY_FIRST_CHECKPOINT. "
+                + String(repeating: "Checking the requested calendar dates and comparing the available appointments. ", count: 3)
+            emit(["reasoning_content": first])
+            do {
+                try await waitForCheckpoint(1)
+                emit(["content": "ACTIVITY_INTERIM_CHECKPOINT"])
+                try await waitForCheckpoint(2)
+                emit(["reasoning_content": "ACTIVITY_SECOND_CHECKPOINT. I need to check the remaining appointment details."])
+                try await waitForCheckpoint(3)
+                emit(["content": "ACTIVITY_FINAL_COMPLETE"], final: true)
+            } catch {
+                guard !self.isStopped, !(error is CancellationError) else { return }
+                self.client?.urlProtocol(self, didFailWithError: error)
+            }
+        }
+        installActivityLifecycleTask(task)
     }
 
     private func emitToolCall(id: String, name: String, arguments: String) {

@@ -1,0 +1,22 @@
+{
+  "at": "2026-11-26T12:22:58.182829+00:00",
+  "sourceBase": "eb8a58294985911854b626a53f6e8daf2a1863c9",
+  "portable": {
+    "exactSource": "HanlinLiveActivityOperationQueue.swift",
+    "tests": 3,
+    "failures": 0,
+    "toolchain": "Swift 6.4.3 Linux aarch64",
+    "job": "job_4a0ae81a68bd",
+    "scope": "Only actual queue helper executes; minimal module does not include ActivityKit/runtime code"
+  },
+  "sourceSyntax": "PASS",
+  "nativeActivityKit": "NOT_RUN",
+  "physicalDevice": "NOT_RUN",
+  "nativeFilter": "HanlinOriginalScriptWidgetLiveActivityTests/actualActivityKitStartsUpdatesAndEndsTheOriginalProgram",
+  "files": {
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptWidgetLiveActivity.swift": "da02231a6919954cfd98af515cd9589b49954c5c0d84014878df747160f4d6cc",
+    "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinLiveActivityOperationQueue.swift": "a60d498fa2674563f99d87d5fb60a75c13732723d997e1c672edb0a9b96b342a",
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinLiveActivityOperationQueueTests.swift": "ef98466a38c9ac8798caa755309b8cfd1027dec2ee8a991ab3399d87f3923dce",
+    "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift": "ac03a18a83324a72c9e1a3044640232a5f2e78192617c220100e5575ddbbe9aa"
+  }
+}

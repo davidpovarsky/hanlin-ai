@@ -4,6 +4,7 @@ import path from 'node:path';
 import {createRequire} from 'node:module';
 import {pathToFileURL} from 'node:url';
 import {createHash} from 'node:crypto';
+import {execFileSync} from 'node:child_process';
 const root = path.resolve(import.meta.dirname, '../..');
 const argument = process.argv.indexOf('--typescript-module');
 const compiler = argument < 0 ? createRequire(import.meta.url).resolve('typescript') : path.resolve(process.argv[argument + 1]);
@@ -56,4 +57,8 @@ if (process.argv.includes('--write')) {
 const packaged = ts.getPreEmitDiagnostics(ts.createProgram([fixture('packaged')], {...options, noEmit: true}));
 if (packaged.length) throw new Error(ts.formatDiagnosticsWithColorAndContext(packaged, {
   getCanonicalFileName: p => p, getCurrentDirectory: () => root, getNewLine: () => '\n'}));
+if (process.argv.includes('--check')) {
+  execFileSync(process.execPath, ['--test', path.join(import.meta.dirname, 'host-service-actions.test.mjs')],
+    {cwd: root, stdio: 'inherit'});
+}
 console.log(`PASS: TypeScript${ts.version} strict native facade, declarations and JS ${process.argv.includes('--write') ? 'generated' : 'unchanged'}; native execution is a separate gate.`);

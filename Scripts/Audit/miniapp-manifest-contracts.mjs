@@ -149,11 +149,14 @@ export async function auditManifestContracts({source}) {
     rows.push(field(key, type, false, note, consumers.filter(record => reads(record, 'unknownFields').includes(key))
       .map(record => ref(record, 'unknownFields["' + key + '"]'))));
   const prepared = between(r.analyzer, '    private static func preparedEntrypoints(', '    private func discoverEntrypoints(');
+  const preparedKindList = requireMatch(prepared, /\[([.\w,\s]+)\]\.contains\(kind\)/,
+    'prepared entrypoint kind list')[1];
+  const preparedKinds = [...preparedKindList.matchAll(/\.(\w+)/g)].map(match => match[1]);
   addDictionary(rows, prepared, 'fields', 'entrypoints[].', {
     id: ['string', true, 'Unique nonempty ID, excluding reserved app/widget.'],
-    kind: ['assistantTool | appIntent | embeddedResult | share | translationUI | liveActivity', true, 'Explicit kinds; assistantTool additionally requires a dedicated prepared program and declared action metadata.'],
-    sourcePath: ['string', true, 'Existing normalized package path; embeddedResult must use discovered foreground bundle.'],
-    exportedSymbol: ['string', false, 'Optional exported symbol; non-string/absent values resolve to nil.'],
+    kind: [preparedKinds.join(' | '), true, 'Only these modern explicit kinds are accepted; engine-specific source requirements still apply.'],
+    sourcePath: ['string', true, 'Existing normalized package path; embeddedResult, keyboard, notificationUI, spotlight and capture use the discovered prepared foreground bundle. Keyboard and notificationUI have a separate compiled nativePresentations source.'],
+    exportedSymbol: ['string', false, 'Capture requires one declared prepared action ID with a handler targeting the same foreground bundle. Spotlight may omit it to open the app; if supplied, the same action contract applies. Other kinds retain their existing optional exported symbol.'],
     assistantTool: ['HanlinAssistantToolDeclaration', 'required for assistantTool', 'Dedicated assistant action declaration, schemas and optional composer configuration.'],
   });
   addRecord(rows, r.assistantDeclaration, 'HanlinAssistantToolDeclaration', 'entrypoints[].assistantTool.', {
@@ -203,10 +206,21 @@ export async function auditManifestContracts({source}) {
     actions: 'Required synthesized Codable field, although the Swift initializer defaults empty.',
     families: 'Supported family strings for the prepared native widget.',
   });
-  for (const prefix of ['hanlinWidget.actions[].', 'nativePresentations.*.actions[].'])
+  for (const prefix of ['hanlinWidget.actions[].', 'nativePresentations.*.actions[].']) {
+    const panel = prefix.startsWith('nativePresentations.');
     addRecord(rows, r.widgetProgram, 'HanlinWidgetActionDeclaration', prefix, {
-      id: 'Declared action identity.', kind: 'expoCallback, function, setValue, or reload; program validation imposes engine-specific execution.',
-      handler: 'Optional function/callback handler.', stateKey: 'Optional state mutation key.'});
+      id: 'Declared action identity; unique within the program, nonempty and at most 256 UTF-8 bytes.',
+      kind: panel ? 'expoCallback, function, setValue, or reload; hostAction is rejected for native presentation panels.'
+        : 'expoCallback, function, setValue, reload, or hostAction; program validation imposes engine-specific execution.',
+      handler: 'Optional local function/callback handler; must be absent for hostAction.',
+      stateKey: 'Optional local state mutation key; must be absent for hostAction.',
+      hostAction: panel ? 'Unsupported in native presentation panels; authoring validation and native compilation reject it.'
+        : 'Required for hostAction only; continues one declared action in the containing Expo or NativeScript foreground Host.'});
+  }
+  addRecord(rows, r.widgetProgram, 'HanlinWidgetHostAction', 'hanlinWidget.actions[].hostAction.', {
+    entrypointID: 'Required same-package appIntent entrypoint; nonempty and at most 128 UTF-8 bytes. The prepared native handler and optional exportedSymbol must match the registered action.',
+    actionName: 'Required exact actions[].id with canonical HanlinActionID syntax; original letter case is preserved.',
+    parameters: 'Optional ordinary JSON defaults, including nested arrays/objects and explicit null. Omitted and null are distinct; rendered command parameters override defaults. This is not the internal tagged HanlinValue wire.'});
   addDictionary(rows, r.registration, 'actionObj', 'actions[].', {
     id: ['HanlinActionID', true, 'Metadata: valid ID required to create descriptor; invalid items omitted.'],
     title: ['string', false, 'Metadata: title defaults to ID.'],

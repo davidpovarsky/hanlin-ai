@@ -1,0 +1,6 @@
+{
+  "status": "SUPERSEDED_BEFORE_NATIVE_EXECUTION",
+  "source": "0311a002819104a2569b5cb7f5461715a2ee2959",
+  "replacement": "5a0351f7e452789fd41c715c1ccb7f020cff44c5",
+  "reason": "Actual App09 near-match diagnostic required the exact Int-returning optional delegate witness; no consumer requires speculative ordinary-import overloads."
+}

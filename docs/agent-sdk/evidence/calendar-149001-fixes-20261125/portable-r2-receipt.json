@@ -1,0 +1,13 @@
+{
+  "command": [
+    "/usr/bin/xcrun",
+    "swift",
+    "test",
+    "--package-path",
+    "/Users/m1/builds/hanlin-149001-calendar-checks-20261125/portable",
+    "--filter",
+    "(HanlinCalendarRequestTests|HanlinCalendarOperationRequestTests)"
+  ],
+  "returncode": 0,
+  "seconds": 5.354694843292236
+}

@@ -1,0 +1,109 @@
+{
+  "schema": 1,
+  "baseline": {
+    "source": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+    "packet": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/ai27-terminal-packet-attempt18",
+    "receiptSHA256": "4de255af777d3cdaedbae706651c13bf16af748f175d63dc7db19c81f1f28baa",
+    "diagnosticOnly": true,
+    "expected": 27,
+    "executed": 21,
+    "passed": 19,
+    "failed": 2,
+    "skipped": 0,
+    "missingSelectedSwiftTestingBodies": 6,
+    "originalMini25": {
+      "passed": 22,
+      "failed": 3,
+      "skipped": 0
+    },
+    "originalPairedAI27": "NOT_RUN in the prior failed paired execution",
+    "originalPaired52": "FAILED_OR_INCOMPLETE",
+    "candidateNativeStatus": "NEEDS_TEST"
+  },
+  "selectedOriginalMembers": [
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-summary.json",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-summary.json",
+      "bytes": 2929,
+      "sha256": "7abe74639707e83dc1cb5927ffb823a437943f21671bfbba61c7955976eb33b4",
+      "mode": "0o644",
+      "mtimeNs": "1795601966099001539",
+      "storedPath": "raw/ai27-summary.json"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-nodes.json",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-nodes.json",
+      "bytes": 18626,
+      "sha256": "c50f0a371d0bbbe07b2a90eb4d95158b85485a4bcd388c3542f5a3bfb610d674",
+      "mode": "0o644",
+      "mtimeNs": "1795601966195005068",
+      "storedPath": "raw/ai27-nodes.json"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/ai27-selected-tests.log",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/ai27-selected-tests.log",
+      "bytes": 575,
+      "sha256": "22fb978e34009bed2c9ff3c80c7b021501b9cb6ca1ad314362a9be282faf601e",
+      "mode": "0o644",
+      "mtimeNs": "1795601966242228960",
+      "storedPath": "raw/ai27-selected-tests.log"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/result-review.json",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/result-review.json",
+      "bytes": 5123,
+      "sha256": "2566738bf353027edf3118fed701fa2ded46fb7eb03cb51b9ae5cc1cfd6e9513",
+      "mode": "0o644",
+      "mtimeNs": "1795601966412687337",
+      "storedPath": "raw/result-review.json"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/native-result/selected-command.json",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/native-result/selected-command.json",
+      "bytes": 3781,
+      "sha256": "5012b7caeece82c5340dea10ca44293878af4c442db7869929105bbad4b5dd05",
+      "mode": "0o644",
+      "mtimeNs": "1795601759552356178",
+      "storedPath": "raw/selected-command.json"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/state.json",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/state.json",
+      "bytes": 2301,
+      "sha256": "9ce14c6e9b7370652b2658c681f7c0b8810235eece6c77d77883ab90f6dc4626",
+      "mode": "0o644",
+      "mtimeNs": "1795601970872153882",
+      "storedPath": "raw/ai27-state.json"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/ai27-diagnostic-v1/paired-terminal-before.json",
+      "archivePath": "build/primary-control/ai27-diagnostic-v1/paired-terminal-before.json",
+      "bytes": 3511,
+      "sha256": "439cd234a138a0e37f895345d2580df2ec70f5272e7e25534c6428bec94968ac",
+      "mode": "0o644",
+      "mtimeNs": "1795601754821504952",
+      "storedPath": "raw/paired-terminal-before.json"
+    }
+  ],
+  "actualLiveActivityFailure": {
+    "failureText": "Expectation failed: activity.content.state.revision == 2\nactivity.content.state.revision → 1",
+    "targetName": "AI_HLYTests",
+    "testIdentifier": 19,
+    "testIdentifierString": "HanlinOriginalScriptWidgetLiveActivityTests/actualActivityKitStartsUpdatesAndEndsTheOriginalProgram()",
+    "testIdentifierURL": "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests/actualActivityKitStartsUpdatesAndEndsTheOriginalProgram()",
+    "testName": "actualActivityKitStartsUpdatesAndEndsTheOriginalProgram()"
+  },
+  "reasoning": "The finalized case records only the immediate revision assertion. The subsequent immutable-content snapshot load and Count9/m9 checks do not record a failure. The load uses the supplied content-addressed snapshot rather than mutable current values. This supports a short observation race; it is not evidence of a lost production update.",
+  "review": {
+    "root": "Root read the initial full diff, received final ebf40 source, and authorized the test-only observation correction.",
+    "independentPeer": "status_reporting independently read final7d6b159d: source review clear, all22 expect calls and same observed state retained; no compiler/native execution."
+  },
+  "verification": {
+    "gitDiffCheck": "PASS",
+    "sourceBindings": "PASS",
+    "selectedPacketMembers": "PASS",
+    "nativeCompilation": "NOT_RUN",
+    "nativeAffectedFunction": "NOT_RUN",
+    "testOrProductMutationDuringDiagnostic": "NONE"
+  }
+}

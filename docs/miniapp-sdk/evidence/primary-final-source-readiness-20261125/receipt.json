@@ -1,0 +1,47 @@
+{
+  "schemaVersion": 1,
+  "createdAtUTC": "2026-11-25T05:04:01.157498+00:00",
+  "kind": "RETAINED_NATIVE_READINESS_AND_PHYSICAL_ROUTE_EVIDENCE",
+  "observedSourceCommit": "42e34eff615a6d599ddfd01ea9382d920b5f9a5c",
+  "sourceTree": "0d01ddaa4861c19b5376e5d726b992531b9e442f",
+  "evidenceParentCommit": "6c56a886e440bb499dec5f88c1113cf97b8abe6c",
+  "producerReceiptSHA256": "2537ddae120732038bf8a4108ea5966df86b7febe9441b8b2b0d762bba389ead",
+  "originalMemberCount": 3,
+  "originalMemberBytes": 31239,
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 2887,
+      "sha256": "eab66d2092d03f049bcd70f2cc5b62445a6cbfe607e5c3f173d4d4cf24e8d36d"
+    },
+    {
+      "path": "raw/mac-readiness-045730.json",
+      "bytes": 3784,
+      "sha256": "13fd8da4cec692930b8d3d60547a0446a1f8a94826220831c126b564e83dbd5b"
+    },
+    {
+      "path": "raw/physical-route-observation.json",
+      "bytes": 453,
+      "sha256": "3fcf78769cb7760d591e8912e8613a09e6917ea73736b85ed05a14e3f9d90041"
+    },
+    {
+      "path": "raw/receipt.json",
+      "bytes": 676,
+      "sha256": "2537ddae120732038bf8a4108ea5966df86b7febe9441b8b2b0d762bba389ead"
+    },
+    {
+      "path": "raw/xcdevice-list-050015.json",
+      "bytes": 27002,
+      "sha256": "f74ce64c4b72346f70685d8486f8b6606c9ffda3c774789e966b3501f2c695a6"
+    },
+    {
+      "path": "verification.json",
+      "bytes": 2471,
+      "sha256": "ad289d1a497b3867bb4d8bd20afb86b5556d5f508ea8510cadef8e59b5ca5a0e"
+    }
+  ],
+  "totalMemberBytes": 37273,
+  "nativeExecutionPerformedByReviewer": false,
+  "physicalIOSRouteObserved": "NONE_ON_OBSERVED_ROUTE",
+  "taskStatusesChanged": false
+}

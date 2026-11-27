@@ -1,0 +1,81 @@
+{
+  "schema": 1,
+  "owner": "/root/native_execution",
+  "source": "6c006c948f0a6f371f7fc68b90e393f43734f8dd",
+  "tree": "ecd109e872e08873410a6bf55db697bd42864fa2",
+  "status": "FOCUSED_FAILED",
+  "startedAt": "2026-11-25T12:22:25.521406+00:00",
+  "pid": 38317,
+  "phase": null,
+  "original52": "NOT_RUN",
+  "original25": "NOT_RUN",
+  "original27": "NOT_RUN",
+  "scope": "Only original ManualInput and repair UI; previous nine focused passes are retained separately, not aggregated into original52.",
+  "selectors": {
+    "FocusedManual1": [
+      "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoManualInputLayoutAndDataAdapters"
+    ],
+    "FocusedRepair1": [
+      "AI_HLYUITests/MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport"
+    ]
+  },
+  "groups": {},
+  "errors": [
+    "RuntimeError: node exit 1; inspect original-expo-probe.log"
+  ],
+  "sourceErrors": [],
+  "cleanupErrors": [],
+  "originalRunnerSHA256": "a99b6194f8dd20bc30998ff2ad9e86ec219415a00615b250c65670f7dfcdba7d",
+  "sourceHashes": {
+    "AI_HLY/ChatView.swift": "d21659cdaa7d3e6141d4677d10ccaee067e7238ba8c4ccc2f689b63db4c41ffe",
+    "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift": "ea6c76e33bb4594931bb118ab713e2de2d85e561f0e40eb21d64d154c45f9c90",
+    "HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift": "da0fa21f26b677f4d18f8e1972208b39e30401a127e9dd2a9643e0fe8d7ad17c",
+    "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoUIModule.swift": "3ad8217ce87005fab1fe3dc256e7d7680ced7c330f7cd9dc5561f1a5e5905e09",
+    "Packages/HanlinExpoUI/src/manual-components.tsx": "b95b387fce797a3c0ffe8c258e1fe0b411e76956e6cd50ae9235267f5b638da6",
+    "Scripts/ProductSplit/run_paired_acceptance.py": "a99b6194f8dd20bc30998ff2ad9e86ec219415a00615b250c65670f7dfcdba7d",
+    "Scripts/ProductSplit/test_run_paired_acceptance.py": "3791b4178c5cc49b64c38ead6f913284f29fc990c7223953aa74f2075f3771f1",
+    "Fixtures/ExpoSwiftUIProbe/ManualAdapterProbe.tsx": "c93a882be209437f388c5d67a9af6ef98ca5371db4aef084aaf7cd464ce42d57",
+    "AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift": "ac5c259fb195d09e641213f7fc33311db658bb3a52a58ee81e89ce6e7aa2a806",
+    "AI_HLYUITests/MiniAppAuthoringUITests.swift": "f60502af88a5e4b1166146cf5834e5d54eaa0451159b11f95ff26207f210fd72",
+    "Scripts/Expo/build-probe.mjs": "cdead47d9914543725e0e3160a14a13d91b31b2d584b737f0eb95c1b5539618c"
+  },
+  "hostArchiveSHA256": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc",
+  "recoveryInputSHA256": "2791472af9e3fc99292ce8889ac3c2f2b6f08bf11f8faa1bdd1ac7e561d3f56c",
+  "simulator": "E742FBCD-8FF0-4130-B143-7F8328637138",
+  "miniBuildProducerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+  "SDKProducerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+  "reusedSetup": [
+    {
+      "status": "REUSED_AUTHENTICATED_OWNED_DEVICE",
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v1/native-result/paired-prefix/created-simulator.txt",
+        "sha256": "df333300ba32a39a07bcd88aed5fc6bb5f0b51f738c521f6a0949dc54456a37e",
+        "device": "E742FBCD-8FF0-4130-B143-7F8328637138",
+        "state": "Shutdown"
+      }
+    },
+    {
+      "status": "REUSED_EXECUTED_PASS",
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-mini-reuse-observation.json",
+        "sha256": "81dbdacfebf83dd80c2e5c108c3e8284e041f396ec7c8358e533fb5e564ef3da"
+      },
+      "producerSource": "a2c8a1b1be746461272ba77254603304567c309d"
+    }
+  ],
+  "checkpointReached": false,
+  "observedAt": "2026-11-25T12:23:01.215958+00:00",
+  "elapsedSeconds": 35.649356249996345,
+  "nativeAdapterRequests": [],
+  "nativeAdapterAssets": {},
+  "ownedSimulatorCleanup": {
+    "device": "E742FBCD-8FF0-4130-B143-7F8328637138",
+    "ownershipPath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v3/native-result/paired-prefix/created-simulator.txt",
+    "exitCode": 0,
+    "stdout": "",
+    "stderr": "",
+    "state": "Shutdown",
+    "remainingOwnedRunners": []
+  },
+  "finishedAt": "2026-11-25T12:23:01.215909+00:00"
+}

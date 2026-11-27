@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # HANLIN_METADATA_WRAPPER_V1
 
+import argparse
 import os
 from fnmatch import fnmatchcase
 import hashlib
@@ -13,7 +14,7 @@ import subprocess
 import sys
 
 REQUIRED_METADATA_NAMES = ["HanlinNativeServicesBridge", "HanlinNativeServicesSessionBridge",
-    "HanlinNativeScriptCompatibility", "UIView", "NSObject", "NativeScriptEmbedder",
+    "HanlinNativeScriptCompatibility", "UIView", "NSObject", "NSUserDefaults", "NativeScriptEmbedder",
     "SwiftUIProvider", "HanlinNativeScriptSwiftUIFixtureProvider",
     "WKNavigationDelegate", "WKWebView", "TNSLabel", "NSCCrypto"]
 
@@ -151,12 +152,21 @@ def retain_and_check_metadata(arch: str, platform: str) -> bool:
 
 
 def main() -> int:
-    if len(sys.argv) < 2 or not sys.argv[1]:
-        raise SystemExit("Hanlin NativeScript metadata: target architecture argument is required")
-
-    arch = sys.argv[1]
-    generator_root = Path(__file__).resolve().parent
+    parser = argparse.ArgumentParser(description="Generate complete NativeScript host metadata")
+    parser.add_argument("architecture")
+    parser.add_argument("--generator-root", type=Path,
+                        help="Pinned NativeScript package generator directory")
+    arguments = parser.parse_args()
+    arch = arguments.architecture
+    generator_root = arguments.generator_root or Path(__file__).resolve().parent
     upstream_generator = generator_root / "build-step-metadata-generator-upstream.py"
+    if arguments.generator_root is not None:
+        # Xcode calls this tracked file directly. A fresh npm installation keeps
+        # the original launcher; an already prepared tree retains its backup.
+        # Neither installation state may bypass our explicit input/error checks.
+        installed_generator = generator_root / "build-step-metadata-generator.py"
+        if "HANLIN_METADATA_WRAPPER_V1" not in installed_generator.read_text():
+            upstream_generator = installed_generator
     if not upstream_generator.is_file():
         raise SystemExit(
             f"Hanlin NativeScript metadata: upstream generator backup is missing: {upstream_generator}"
@@ -218,7 +228,7 @@ def main() -> int:
         extra_flags = metadata_flags(module_root, module_map, core_support_dir)
         environment["OTHER_CFLAGS"] = f'{environment.get("OTHER_CFLAGS", "")} {extra_flags}'.strip()
         completed = subprocess.run(
-            [sys.executable, str(adapter), *sys.argv[1:]],
+            [sys.executable, str(adapter), arch],
             cwd=generator_root,
             env=environment,
             check=False,

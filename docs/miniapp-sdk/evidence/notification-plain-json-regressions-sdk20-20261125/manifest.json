@@ -1,0 +1,61 @@
+{
+  "schema": 1,
+  "createdAt": "2026-11-25T21:33:15.781868+00:00",
+  "files": [
+    {
+      "path": "acceptance.json",
+      "bytes": 8527,
+      "sha256": "b40c397b8a640d054b043d0b4e7402c443e3c59a2f343c101b140de2c8cab8d9",
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-wire-regression-v1/acceptance.json",
+      "mode": "100644"
+    },
+    {
+      "path": "raw/receipt.json",
+      "bytes": 900,
+      "sha256": "caa1215569d5d150a0efc9a5063719232b9d0f27af076cfc03e646bd7c6430ff",
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-wire-regression-v1/terminal/receipt.json",
+      "mode": "100644"
+    },
+    {
+      "path": "raw/state.json",
+      "bytes": 2488,
+      "sha256": "95d72c8829b026d2e61b08c037e0cc6a332c2ccd0cdb5ea13d391b174c7aef80",
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-wire-regression-v1/terminal/state.json",
+      "mode": "100644"
+    },
+    {
+      "path": "raw/ledger.json",
+      "bytes": 259,
+      "sha256": "e23efb609fdc817b652ba1c2777ac286c3932e88ca614ef608e0975f3b5d8e2a",
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-wire-regression-v1/terminal/ledger.json",
+      "mode": "100644"
+    },
+    {
+      "path": "raw/swift-test.log",
+      "bytes": 24225,
+      "sha256": "5b163aa2413597185cf99bd7cb0e6ea52446b3c3cc7d9974fe35431ee76afef8",
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-wire-regression-v1/terminal/swift-test.log",
+      "mode": "100644"
+    },
+    {
+      "path": "raw/source-transfer-receipt.json",
+      "bytes": 806,
+      "sha256": "11f33de4039dfb1a2b8235bd7f339039e7f320be4fe96a04ec0305fa2da4fb38",
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-wire-regression-v1/terminal/source-transfer-receipt.json",
+      "mode": "100644"
+    },
+    {
+      "path": "raw/launch-receipt.json",
+      "bytes": 440,
+      "sha256": "ab36a6325c7da6e8745e9372f9f2c484db61bd02dbd3136ea7bf631492dd5174",
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-wire-regression-v1/terminal/launch-receipt.json",
+      "mode": "100644"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1804,
+      "sha256": "c1de14373f4001e9ed18640b6c7e790bcbb5c02965a03b2300ce170d94003332",
+      "mode": "100644"
+    }
+  ]
+}

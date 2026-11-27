@@ -1,0 +1,28 @@
+{
+  "schema": 1,
+  "id": "notification-os-sdk20-v1",
+  "dispatchedAt": "2026-11-26T00:33:29.025402+00:00",
+  "pid": 73039,
+  "argv": [
+    "/opt/homebrew/opt/python@3.12/libexec/bin/python3",
+    "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-os-sdk20-v1.py",
+    "--decision",
+    "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-os-sdk20-v1-decision.json"
+  ],
+  "source": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+  "files": [
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-os-sdk20-v1.py",
+      "bytes": 40608,
+      "sha256": "2a1f865d99a8375748ce6bcced038cdf6642ed5556b2247361ec74ed3a00b3f7"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-os-sdk20-v1-decision.json",
+      "bytes": 28347,
+      "sha256": "fbacbfb0a21b33de935d17dab14a2cdd0d7ba9588998b5f7977816a544897f0f"
+    }
+  ],
+  "output": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-os-sdk20-v1",
+  "log": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-os-sdk20-v1-launch.log",
+  "actualStatus": "DISPATCHED_NOT_YET_OBSERVED"
+}

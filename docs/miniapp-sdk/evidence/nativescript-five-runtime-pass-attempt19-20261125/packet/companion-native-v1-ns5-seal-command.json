@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/opt/homebrew/opt/python@3.12/bin/python3.12",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/seal-ns5-decision-v4.py"
+  ],
+  "startedAt": "2026-11-25T18:34:05.112414+00:00",
+  "finishedAt": "2026-11-25T18:34:06.183980+00:00",
+  "seconds": 1.0714106670056935,
+  "exitCode": 1,
+  "stdout": "",
+  "stderr": "Traceback (most recent call last):\n  File \"/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/seal-ns5-decision-v4.py\", line 453, in <module>\n    main()\n  File \"/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/seal-ns5-decision-v4.py\", line 437, in main\n    decision, context = base_decision()\n                        ^^^^^^^^^^^^^^^\n  File \"/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/seal-ns5-decision-v4.py\", line 256, in base_decision\n    assert Path(node[\"path\"]).stat().st_size == 116870064 and digest(node[\"path\"]) == node[\"sha256\"]\n           ^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/homebrew/Cellar/python@3.12/3.12.16/Frameworks/Python.framework/Versions/3.12/lib/python3.12/pathlib.py\", line 840, in stat\n    return os.stat(self, follow_symlinks=follow_symlinks)\n           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nFileNotFoundError: [Errno 2] No such file or directory: '/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/node-v24.5.0-darwin-arm64/bin/node'\n"
+}

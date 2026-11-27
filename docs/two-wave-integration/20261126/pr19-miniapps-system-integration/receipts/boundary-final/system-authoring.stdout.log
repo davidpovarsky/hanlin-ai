@@ -1,0 +1,11 @@
+✔ prepared capture and Spotlight actions validate against each containing app engine (3759.707415ms)
+✔ invalid prepared capture actions stop packaging with actionable source diagnostics (5729.144517ms)
+✔ system native presentations require keyboard and notification source declarations (1045.963482ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 11014.702689

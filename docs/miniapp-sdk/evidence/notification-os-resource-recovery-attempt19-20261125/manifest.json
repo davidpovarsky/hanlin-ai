@@ -1,0 +1,186 @@
+{
+  "schema": 1,
+  "kind": "EXACT_NOTIFICATION_OS_RESOURCE_RECOVERY_EVIDENCE",
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "sourceTree": "f7a6596a1ef53d8d962ceb9f619460ffa19ee91e",
+  "nativeConsumerSource": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "SDKProducerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+  "rawRecords": [
+    {
+      "path": "raw/notification-os-v4-seal-command.json",
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-v4-seal-command.json",
+      "bytes": 1138,
+      "sha256": "c76a09d59048a8fa50fc288529bfed91f62d249e8adae459fa79cf4a78609c9f"
+    },
+    {
+      "path": "raw/notification-os-v4-resource-rejection.json",
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-v4-resource-rejection.json",
+      "bytes": 3221,
+      "sha256": "6aa6c87b00c8c5154c21bd32ac7cea3ff53aaa9e021a3f59736d7eba3141ab6c"
+    },
+    {
+      "path": "raw/notification-os-v4-owned-cache-retirement.json",
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-v4-owned-cache-retirement.json",
+      "bytes": 193488,
+      "sha256": "7a0d9a726a7de52586ac27de77dd486d0f5834ab693421769e3a375db308adba"
+    },
+    {
+      "path": "raw/notification-os-v4-import-only-verification.json",
+      "sourcePath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/os-notification-probe-draft/notification-os-v4-import-only-verification.json",
+      "bytes": 1656,
+      "sha256": "7fe00e42a95dd07f8bf5eef96af7359470945b0e54b2e0ff81e4c37ccfe47dfd"
+    }
+  ],
+  "v4Status": "SEAL_RESOURCE_REJECTED_UNCHARGED",
+  "v4ActiveTimeChargeSeconds": 0,
+  "v4SealExitCode": 1,
+  "v4SealCommandSeconds": 5.902149457993801,
+  "sealFreeBytes": 5106081792,
+  "subsequentRejectionFreeBytes": 3507855360,
+  "primarySHA256": "73de5a617bfb057fe56e5767296ba847c1e56ff6756a647ff0569b06a815c255",
+  "primaryActiveElapsedSeconds": 24674.060430753034,
+  "priorOSChargesSeconds": [
+    353.58866224999656,
+    12.940106750000268
+  ],
+  "cumulativeOSChargeSeconds": 366.5287689999968,
+  "remainingOriginalOSAllowanceSeconds": 533.4712310000032,
+  "originalSeparateOSAllowanceSeconds": 900,
+  "resourceAssessment": {
+    "approvedBy": "/root",
+    "scope": "One original MiniApps notification OS case; no build",
+    "inheritedTwoGroupBoundBytes": 7852293846,
+    "singleCaseBoundBytes": 5679053931,
+    "components": {
+      "retainedDeviceNewAllocationBytes": 0,
+      "conservativeProductAndRunnerInstallAllowanceBytes": 2505814016,
+      "oneHostUncompressedRecreationBytes": 356865685,
+      "oneLargestRetainedResultBytes": 1154719744,
+      "oneRetainedFullDiagnosticExportBoundBytes": 661654486,
+      "temporaryAuthoringWorkspacesBytes": 500000000,
+      "concurrentAndOSAllowanceBytes": 500000000
+    },
+    "sampleAllocatedBytes": {
+      "v1Result": 149803008,
+      "v1FullDiagnosticExport": 149975040
+    },
+    "freshFreeSpaceGatePreserved": true,
+    "originalTestAndWorkerLimitsPreserved": true,
+    "pairedAuthority": {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/paired52-continuation-v5-decision.json",
+      "sha256": "b38292358c011d2db0a1a96c167494ca84f87bd806c27e399d7ec294f7e4b42b"
+    },
+    "controller": {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/os-notification-probe-draft/notification-os-v10.py",
+      "sha256": "8b93a1d5952436135015227e29f5af4c12b0aeaa4879a46135697c10f2c37b68"
+    },
+    "sealer": {
+      "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/os-notification-probe-draft/seal-notification-os-decision-v8.py",
+      "sha256": "da6c107b036ae25647f6e27ec834aa234eab369a8a328198bd03d4c26c97fb74"
+    }
+  },
+  "cacheRetirement": {
+    "owner": "/root/native_execution",
+    "startedAt": "2026-11-25T19:37:35.817034+00:00",
+    "finishedAt": "2026-11-25T19:37:40.956567+00:00",
+    "targets": [
+      {
+        "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex",
+        "realPath": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Intermediates.noindex",
+        "allocatedBytesBefore": 2760409088,
+        "regularFileBytesBefore": 2669446742,
+        "regularFileCount": 27896,
+        "directoryCount": 889,
+        "symlinkCount": 0,
+        "overlapWithProtectedPaths": [],
+        "removed": true
+      },
+      {
+        "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/ModuleCache.noindex",
+        "realPath": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/ModuleCache.noindex",
+        "allocatedBytesBefore": 890769408,
+        "regularFileBytesBefore": 875598080,
+        "regularFileCount": 6881,
+        "directoryCount": 124,
+        "symlinkCount": 0,
+        "overlapWithProtectedPaths": [],
+        "removed": true
+      },
+      {
+        "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Index.noindex",
+        "realPath": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Index.noindex",
+        "allocatedBytesBefore": 202231808,
+        "regularFileBytesBefore": 167679952,
+        "regularFileCount": 15497,
+        "directoryCount": 1301,
+        "symlinkCount": 0,
+        "overlapWithProtectedPaths": [],
+        "removed": true
+      }
+    ],
+    "allocatedBytesBeforeTotal": 3853410304,
+    "protectedUniquePathCount": 816,
+    "protectedBefore": "ALL_MATCH",
+    "protectedAfter": "ALL_MATCH",
+    "primaryUnchanged": true,
+    "preparedDiffUnchanged": true,
+    "preparedDiffSHA256": "8eebad41405fad444ff058766f02cbeaf3d3181022ff04b586f090482b1b4e9d",
+    "freeBytesBefore": 7489654784,
+    "freeBytesAfter": 11292880896,
+    "observedGlobalFreeBytesDelta": 3803226112,
+    "globalFreeDeltaEntirelyAttributedToCleanup": false,
+    "allocationBoundary": "du counts allocated bytes under removed paths before deletion; global free-space delta includes concurrent system activity and is not attributed entirely to this cleanup."
+  },
+  "retainedCompilerInputLists": {
+    "receiptPath": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v10-receiver-source-impact/receipt.json",
+    "receiptBytes": 73094,
+    "receiptSHA256": "4d4c3ae14cd2a9beeab28a1b02e252a65da7e6e549144ab22ea16db520dc3ca2",
+    "memberCount": 87,
+    "groupCounts": {
+      "mini-build.log": 44,
+      "ai-build.log": 43
+    },
+    "copiedMembersVerifiedOnOracle": 87,
+    "duplicatedIntoThisPacket": false
+  },
+  "importOnlyDiagnostic": {
+    "separateBoundary": "Earlier v3 module-import failure; not an OS delivery test",
+    "status": "IMPORT_ONLY_REPRODUCED_AND_VERIFIED",
+    "cases": [
+      {
+        "helper": "original-v8",
+        "environment": "absent",
+        "outcome": "KeyError",
+        "key": "SPLIT_EVIDENCE"
+      },
+      {
+        "helper": "minimal-fixed",
+        "environment": "absent",
+        "outcome": "IMPORTED_ENVIRONMENT_RESTORED",
+        "moduleEvidence": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/os-notification-probe-draft/import-only-no-native-evidence",
+        "originalValueRestored": true
+      },
+      {
+        "helper": "minimal-fixed",
+        "environment": "present",
+        "outcome": "IMPORTED_ENVIRONMENT_RESTORED",
+        "moduleEvidence": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/os-notification-probe-draft/import-only-no-native-evidence",
+        "originalValueRestored": true
+      }
+    ],
+    "nativeCommands": 0,
+    "productTests": 0,
+    "builds": 0,
+    "sourceWrites": 0
+  },
+  "scopeBoundary": "Retained preflight/cleanup/import evidence only. OS execution and delivery outcome is recorded in a separate terminal packet.",
+  "assembly": {
+    "environment": "Oracle",
+    "operations": "Read, hash, copy and serialize retained evidence",
+    "nativeActions": 0,
+    "sourceWrites": 0,
+    "testRuns": 0,
+    "gitMutations": 0
+  },
+  "intendedRepositoryDirectory": "docs/miniapp-sdk/evidence/notification-os-resource-recovery-attempt19-20261125/"
+}

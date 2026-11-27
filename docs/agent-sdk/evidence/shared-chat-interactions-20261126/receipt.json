@@ -1,0 +1,79 @@
+{
+  "schema": 1,
+  "timestamp_utc": "2026-11-26T11:59:01.765488+00:00",
+  "base": "bd42deb1b6fd5884f5c0f2aad8ae2e4ab1dadff4",
+  "worktree": "/mnt/development/projects/worktrees/hanlin-wave1-shared-chat-actions-20261126",
+  "launcher_donor": "244dc02e494df8acfa8563c8aa8872cd8c490fff",
+  "launcher_originals": {
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatPresentation/HanlinChatPresentation.swift": {
+      "byte_identical": true,
+      "sha256": "631be9f61c444aea94109419650c553b06d9da842043df17aa983dd5648b946e"
+    },
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatPresentation/HanlinChatPresentationPolicy.swift": {
+      "byte_identical": true,
+      "sha256": "948e78ad63a633f753b3ee5859fb27c541690bbd68fee5fc958a208f45392faf"
+    },
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatPresentation/HanlinLauncher.swift": {
+      "byte_identical": true,
+      "sha256": "66a0cc94282d95f57716d819fab54397789db0fda73eefa333acc4ffe59fdc0f"
+    },
+    "Packages/HanlinPresentationSDK/Tests/HanlinChatPresentationTests/HanlinChatPresentationTests.swift": {
+      "byte_identical": true,
+      "sha256": "3acf520a2604eb58c863e71aa71290b77a0a19ef01f42bc0876976be87eb4d6d"
+    }
+  },
+  "source_sha256": {
+    "AI_HLY/Downstream/ChatPresentation/ChatMarkdownView.swift": "ae38210d8943e7a76aab9695d3b545666349f45a47d0e6c2ec1e90ad4f0cf99c",
+    "AI_HLY/Downstream/ChatPresentation/ChatMessagePreview.swift": "a5c6ff27cae6a5269fc4b79ef70dee52e5e2ac5cef18772ec3e6425891d44839",
+    "AI_HLY/Downstream/ChatPresentation/ChatMessagePreviewMetrics.swift": "36440a0086cb4a20a9207d037fe14a1d7902c7f2648b40329e333480fa9f2439",
+    "AI_HLY/MainTabView.swift": "46d7e440a4a412835178ea04e88ee326320aeee8ff17c1cc925a5248bed17edd",
+    "AI_HLY/Views/Components/ChatViewComponents.swift": "15875a20addac6bc43ada66e7c3b929118a0f8ad19159d91ace9a8274e9448c9",
+    "Examples/HanlinLauncherLab/Sources/MyApp.swift": "997b3eac8883aa4147354a2936b3c1ef6becf3c03595c2e49c6039d4328630ca",
+    "Package.swift": "b19e180fd894e8c1fe9b1135329c8519cdb604fa97c7d1ea2063736d792eb87e",
+    "Packages/HanlinPresentationSDK/Package.swift": "22df8b4bb7dd4ff3aac042561429a56c02fc8afc6ff41619eac4131a048ced2b",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatPresentation/HanlinChatPresentation.swift": "631be9f61c444aea94109419650c553b06d9da842043df17aa983dd5648b946e",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatPresentation/HanlinChatPresentationPolicy.swift": "948e78ad63a633f753b3ee5859fb27c541690bbd68fee5fc958a208f45392faf",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatPresentation/HanlinLauncher.swift": "66a0cc94282d95f57716d819fab54397789db0fda73eefa333acc4ffe59fdc0f",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinFileContentView.swift": "f530ffaa6b5558b17ef681bebcfecc5f35f5a5f50742f3d54d468820c0ce40bf",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinImageViewer.swift": "2438e46b52da5014964fed470d822ad59dcab9f87ea4974bc09f34be72e6dcf2",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageActionBar.swift": "6e0ad3ce2436d21052bdd8ea06fcf30e36269dfea2c4569be8cf93b79802774b",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageActions.swift": "99712e78d4a743237231eae7ee5a558807ea3d82b9fe36963659f4ec0b0f361c",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageDocumentAttachments.swift": "02c3a8a8f3560afd95c6638a12ab07e6a05e028b5c0c962df06a2e82367ce733",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageImageAttachments.swift": "7d89b9d5a6996f9e6ae36b7d0ff43ed48a0160c1f7d3bd0ac69ae7eae82a4e0f",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageMarkdownView.swift": "3eea377d1d55ce20ab0e153940f54836086472799cb967222c97c7b59472c838",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessagePreview.swift": "3ffe0ba0d520f0a8489388bab991bf51316c9cec21b411986e77e885b6dd73b1",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessagePreviewMetrics.swift": "5faf31d6d9278f3488cfcf35188c7fe722c7a4f91393d5ac128a659cc6076be8",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageSelectionView.swift": "052f855201f3364b37b7b7e5d01965b930d93d90e882450476dc6945bd4fdfed",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinVisualEffectBlur.swift": "9f87a1d6c1a28314d90c49e5e5f0776315ab21e398b32faed8db3f6fb5340a49",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinWritingTool.swift": "4d6d6679d1669aa0c071223c59af8e4b9ce0a696e6b0966b3aaa4a549e529661",
+    "Packages/HanlinPresentationSDK/Tests/HanlinChatPresentationTests/HanlinChatPresentationTests.swift": "3acf520a2604eb58c863e71aa71290b77a0a19ef01f42bc0876976be87eb4d6d",
+    "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/HanlinMessageInteractionTests.swift": "5496e70b20301d1cdb52b5e55560d3ae541c6d911b168b666fe31571f4a8dd45"
+  },
+  "validation": {
+    "linux_swift_parse": {
+      "result": "PASS",
+      "exit": 0,
+      "files": 25,
+      "scope": "Syntax only; no Apple SDK type checking"
+    },
+    "manifest_check": "PASS: 48 products, 116 targets, 517 original application source files",
+    "project_ownership_check": "PASS",
+    "installer_tests": "PASS: 11 tests",
+    "host_link_tests": "Five passed in initial six-test run; updated exact graph assertion failed then passed targeted rerun after correcting expected library product filtering. All six test identities covered; no claim of fresh six-test run.",
+    "native_shared_ui_compile": "NOT_RUN",
+    "native_launcher_policy_tests": "REUSE_ACCEPTED historical 88 policy assertions for exact unchanged source; native final graph pending",
+    "native_interaction_tests": "NOT_RUN: five added methods",
+    "physical_device": "NOT_RUN",
+    "testflight": "NOT_RUN",
+    "staged_diff_check": "PASS after trimming moved source trailing whitespace; original launcher files unchanged"
+  },
+  "log_sha256": {
+    "parse.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "host-link-ownership-r2.log": "933b53863f154904965670606342b8d7a5c8b027833797385f5818cb66886948",
+    "project-check.log": "7b205399ea53f72db8afa2fe3d77370cd6f0ac3d9ea8d19cea47a806236d4d18",
+    "host-link-ownership.log": "676ed4a28c00f9a3bff8db7c806346d8bafd7fbbf89d785718c611a7dd07b47e",
+    "manifest-check.log": "3548ca48f69dc7a367a98f0dfb2cff0f2fbb921e423ca1f3b136c15b8496d2ae",
+    "installer.log": "c4fcfff8888cf245ab05f08bac8bfa92c9aa94e2ebbf1149219a5ce2f9bd7553",
+    "host-link-ownership-targeted-r3.log": "7478838e5d133eb13d2ddaeef43460535b0bedbff09d9edd77d1ba03ed792205"
+  }
+}

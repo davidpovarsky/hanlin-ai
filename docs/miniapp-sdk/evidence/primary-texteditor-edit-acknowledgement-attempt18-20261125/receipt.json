@@ -1,0 +1,98 @@
+{
+  "schema": 1,
+  "kind": "AUTHORED_TEXTEDITOR_ACKNOWLEDGEMENT_WITH_ORIGINAL_FAILED_NATIVE_EVIDENCE",
+  "recordedAt": "2026-11-25T10:08:23.514440+00:00",
+  "sourceCommit": "e16d37de564f13a86044c9e73bee1debce920820",
+  "baselineExecutionSource": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+  "evidenceOnly": true,
+  "members": [
+    {
+      "path": "README.md",
+      "bytes": 5408,
+      "sha256": "0893b6b78b8ab49cfb00d2be52a3bbc38bb343b220070ce057ddb7ef0ff88d55"
+    },
+    {
+      "path": "original-sources.json",
+      "bytes": 3524,
+      "sha256": "3bc573a6ad7c81ae280d8297789139e4ed5dca25445b8b28fa488ec76f8836c4"
+    },
+    {
+      "path": "raw/original-react-native/LICENSE",
+      "bytes": 1088,
+      "sha256": "da6d3703ed11cbe42bd212c725957c98da23cbff1998c05fa4b3d976d1a58e93"
+    },
+    {
+      "path": "raw/original-react-native/Libraries/Components/TextInput/TextInput.js",
+      "bytes": 31163,
+      "sha256": "7019827ab332d4f8357efd37849acf306fd3524c500eaec0113e3a8e089204d8"
+    },
+    {
+      "path": "raw/original-react-native/React/Fabric/Mounting/ComponentViews/TextInput/RCTTextInputComponentView.mm",
+      "bytes": 37075,
+      "sha256": "796c5a19c1edcfa290f301ce0cbe67f42f9966336d90c210e1ab8b164c3f9f15"
+    },
+    {
+      "path": "raw/original-react-native/package.json",
+      "bytes": 6286,
+      "sha256": "3f2bf69ed883e97a295b1de43f5a2d75d112ab45495153360c2fb521023c7f3f"
+    },
+    {
+      "path": "raw/terminal/attachment-manifest.json",
+      "bytes": 112925,
+      "sha256": "2d79b6f23aa757438b806e7e5f61c636f375371cb1d04848a63919c0cacc8c74"
+    },
+    {
+      "path": "raw/terminal/attachments/88EBBB24-4500-4515-8268-EEB23BACB985.png",
+      "bytes": 185020,
+      "sha256": "1811732ba16caf0eaf71b89561682dc8b58fed467a50dd7d1f0980f0ddc96b16"
+    },
+    {
+      "path": "raw/terminal/attachments/963819DA-7DC1-41B1-8C6F-BAB13317A31E.txt",
+      "bytes": 21637,
+      "sha256": "0081d347ceba52e7eaf4f251ab2cdcd542420468f0c70a58bf0e5bb9e72d66a9"
+    },
+    {
+      "path": "raw/terminal/attachments/B6672F64-86BA-4A96-8999-45326DF519E6.txt",
+      "bytes": 13682,
+      "sha256": "d3b6bb3042fccbdd2f3dd07313c1e8d6100ed21cade23984e0af5497c3a4041c"
+    },
+    {
+      "path": "raw/terminal/attachments/DA2C0030-C2A1-4564-B87B-AD0E3982EDB3.png",
+      "bytes": 227660,
+      "sha256": "00a8c314961ed27ca3016746bbbc6b499150f94132e817d9756c42b48b32330d"
+    },
+    {
+      "path": "raw/terminal/first-packet-receipt.json",
+      "bytes": 119206,
+      "sha256": "e1e13b636b481d4745f26aaa63a97b47371176d94d26b772d96872f92484904a"
+    },
+    {
+      "path": "raw/terminal/original-runtimes-summary.json",
+      "bytes": 5213,
+      "sha256": "938213ec14a051462fc168c2cc3509a04658b2c2fb3c9823818ded373c54db39"
+    },
+    {
+      "path": "raw/terminal/paired-state.json",
+      "bytes": 3511,
+      "sha256": "439cd234a138a0e37f895345d2580df2ec70f5272e7e25534c6428bec94968ac"
+    },
+    {
+      "path": "selected-observations.json",
+      "bytes": 11784,
+      "sha256": "dad01efc8ca966b1ad5715b5029523a1828a5bd39bd66ad3a648e181052ad3ec"
+    },
+    {
+      "path": "source-bindings.json",
+      "bytes": 6338,
+      "sha256": "feaa698f4bf98b278f36422692070128ebfb0c2300596534b9c87fbe95264d48"
+    },
+    {
+      "path": "source-change.patch",
+      "bytes": 5475,
+      "sha256": "8d7df3672d035945c248a1001f69081b137e81a37218ed51414bef35347a36a0"
+    }
+  ],
+  "memberCount": 17,
+  "memberBytes": 796995,
+  "boundary": "Review/source correction and selected authentic baseline evidence only; normal strict SDK and affected native verification remain pending."
+}

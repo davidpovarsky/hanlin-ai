@@ -1,0 +1,23 @@
+{
+  "parent": "7b79a6d149bdfd1977e1ad81aa2d45f4ad1b25b0",
+  "baseTree": "5d88981467f66df06b15bf45dfe674af2d9e5319",
+  "expectedTree": "1e8caa1e4eca2b6f1b13dc76126f2e4e1085b2dc",
+  "originalBlob": "e2b29e9026dc446cb6de0d177389701e8af659d6",
+  "fixedBlob": "7600e5f36484120ecb476a8e0c5c770b46cf3dce",
+  "sha256": "f88489d966e676b051076898eccf8c56b4bdeca689d92846240fbf286d6952e6",
+  "changedJobs": [
+    "build-ios26-unsigned-ipa",
+    "full-app-simulator-smoke"
+  ],
+  "change": "Pass existing job-scoped github.token only to original resolver steps; no permission changes, resolver/pin/hash checks unchanged",
+  "transportTestExit": 0,
+  "transportTestLogSha256": "d3a9ef811f3dc9897a8ad23acb587daa77be501c4d399f8387ac8b7b8454fd82",
+  "native": "NOT_RUN",
+  "publishedCommit": "02705bd28ffba41f49b78fce43eccdbbe6ba55f1",
+  "remoteRefReadback": "VERIFIED",
+  "failedRun": 45870248837,
+  "failedJob": 140084080348,
+  "failureStatus": "FAILED_BEFORE_NATIVE_COMPILE",
+  "failureLogSHA256": "c0e909840af16531723b1320d7dc9816befa061ed5acbf931deeee7a8d3e415e",
+  "failureLogBytes": 217701
+}

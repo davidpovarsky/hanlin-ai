@@ -1,0 +1,17 @@
+{
+  "schema": 1,
+  "source": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+  "observedAt": "2026-11-25T22:18:26.997617+00:00",
+  "status": "CREATED_FROM_ORIGINAL_WORKFLOW",
+  "workflow": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/.github/workflows/validate-app-split.yml",
+    "bytes": 31644,
+    "sha256": "677ba19c3a2e281e850b182b3bef8bcde709ee167f58d601c1c3aa6ade665982"
+  },
+  "config": {
+    "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/Config.xcconfig",
+    "bytes": 217,
+    "sha256": "03d96d520f785e34d85b643e31bcb4a424e46e76a81c6b4c245f91eaac3e110f"
+  },
+  "actualElapsedSeconds": 0.0022692089987685904
+}

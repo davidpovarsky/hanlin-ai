@@ -1,0 +1,46 @@
+{
+  "taskGID": "1220917894278244",
+  "taskName": "[SCRIPTABLE-1.8-10][P1] כלי פיתוח, עורך, תיקיות, גלריה ויצירה גרפית — השוואה והשלמה ממוקדת",
+  "taskURL": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220917894278244",
+  "taskModifiedAt": "2026-11-26T14:55:38.440Z",
+  "source": "9819697c1792119a6a93b492d12abad7b3330c93",
+  "approvedCorrection": "74bd12a8c4694a3464386ba7e6fe74326cf4b4fa",
+  "items": [
+    {
+      "comparison": "Files tags",
+      "authorizedCriterion": true,
+      "status": "PROBE_UNKNOWN_WITH_PLATFORM_BOUNDARY",
+      "sourceFinding": "Existing coordinated saves intend to preserve metadata; system folder import and Files sharing/open-in-place are present. There is no credited generic tag facade, and NSURLTagNamesKey is explicitly unavailable on iOS in the installed SDK.",
+      "requiredProbe": "Use the original native Files/document-browser flow on an actual accessible authored-project URL; verify existing tag names/colors survive import, edit, atomic save and export. Files sharing alone does not expose every arbitrary runtime workspace.",
+      "supportedRemedy": "Use public system document UI for tag editing and retain existing workspace coordination/versioned copy semantics. If a private authored-project URL cannot be revealed, use an explicit user-selected export/import copy of that project; do not expose the whole runtime directory or silently relocate the editor. Do not add unavailable Foundation APIs, parse opaque tag data as an invented contract, or add a new File Provider extension solely for this comparison.",
+      "limit": "A direct Scriptable-compatible tag-management API is not claimed. The actual workflow remains an original OS probe; no false completion."
+    },
+    {
+      "comparison": "Cloud placeholders and sync conflict",
+      "authorizedCriterion": "Conditional: iCloud sync if supported; conflict/no-data-loss acceptance explicitly required",
+      "status": "SOURCE_CONFIGURED_RUNTIME_ACCESS_AND_ORIGINAL_OS_PROBE_PENDING",
+      "sourceFinding": "The existing MiniApps entitlement source declares iCloud.com.itorah.chavrusachat and CloudDocuments/CloudKit. Signed ubiquity entitlement and actual container access have not been verified here. Current directory enumeration alone does not prove remote-placeholder visibility.",
+      "implementedRemedy": "Approved74bd moves root resolution/workspace creation off the main actor, propagates cancellation, qualifies results by request identity and preserves an already opened workspace. A nil container retains an explicit unavailable-state route.",
+      "conditionalRemedy": "After actual signed container access is established, use the existing public NSMetadataQuery ubiquity-documents scope for remote metadata and supported download-status/startDownloading APIs if the original OS probe proves a listing/download gap. Retain selected editor identity, dirty buffers, drafts, coordinated reads/writes and unresolved versions; do not auto-reload over edits.",
+      "limit": "No placeholder implementation, account simulation or cloud/device acceptance was added in74bd. Original iCloud/File Provider probes remain open."
+    },
+    {
+      "comparison": "Duo and device/layout adaptation",
+      "authorizedCriterion": true,
+      "status": "VERIFY_ORIGINAL_UI_ADAPTATION",
+      "sourceFinding": "Task10 explicitly calls for the devices/layouts in release notes. Existing Studio uses native NavigationStack/List and real UIKit editor/font picker; that is not actual Duo evidence.",
+      "supportedRemedy": "Run original import/edit/save/gallery flows at applicable compact and expanded/windowed sizes, rotations, large text and RTL on available actual destinations; fix concrete clipping/navigation failures in the existing views. Exact Duo qualification requires that actual device/destination, not a relabeled generic simulator.",
+      "limit": "No bespoke Duo screen or speculative product redesign is automatically required."
+    },
+    {
+      "comparison": "Standalone What's New screen",
+      "authorizedCriterion": false,
+      "status": "COMPARISON_ONLY_NOT_A_TASK10_IMPLEMENTATION_REQUIREMENT",
+      "sourceFinding": "The actual Task10 note lists editor/files/catalog/SDK/gallery/drawing/adaptive layouts and no-data-loss/sync/install acceptance. It does not name a standalone release-notes screen.",
+      "supportedRemedy": "Keep the vendor comparison in the matrix. Do not create a new product screen or make its absence block Task10 without an actual approved criterion.",
+      "limit": "This is a scope reconciliation, not a feature implementation or native pass."
+    }
+  ],
+  "notesSHA256": "242cf4970560365c1eae5126dc71373ac6bed05d7d6ee6f95ae780e845268cf0",
+  "recordedAtUTC": "2026-11-26T18:35:21.088771+00:00"
+}

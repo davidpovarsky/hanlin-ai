@@ -6,6 +6,8 @@ import SwiftUI
 // ShapeStyle lookup supports the original implicit members in foregroundStyle,
 // background and fill, as well as explicitly qualified Color access.
 public extension ShapeStyle where Self == Color {
+    static var hanlinHLSidebarBackground: Color { Color("HLSidebarBackground", bundle: HanlinLocalization.bundle) }
+    static var hanlinHLSidebarSelection: Color { Color("HLSidebarSelection", bundle: HanlinLocalization.bundle) }
     static var hanlinHLAutumn: Color { Color("HLAutumn", bundle: HanlinLocalization.bundle) }
     static var hanlinHLAzure: Color { Color("HLAzure", bundle: HanlinLocalization.bundle) }
     static var hanlinHLBlue: Color { Color("HLBlue", bundle: HanlinLocalization.bundle) }

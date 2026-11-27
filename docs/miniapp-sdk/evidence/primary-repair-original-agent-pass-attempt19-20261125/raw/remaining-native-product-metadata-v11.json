@@ -1,0 +1,111 @@
+{
+  "schema": 1,
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "sourceTree": "f7a6596a1ef53d8d962ceb9f619460ffa19ee91e",
+  "observedAt": "2026-11-25T17:10:35.078637+00:00",
+  "builtInputBindings": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v11/native-result/built-input-bindings.json",
+    "bytes": 11631,
+    "sha256": "71831b770ee518a6d926650704c509a53d74c41540bd51d743de431b7ca0c640"
+  },
+  "files": [
+    {
+      "role": "aiXctestrun",
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/AI_HLY_iphonesimulator27.0-arm64.xctestrun",
+      "bytes": 10920,
+      "sha256": "b2cc79f4b3780daec837e119cc5e4a07d5ecccd618ab793b88bb0b80dbfa2062"
+    },
+    {
+      "role": "miniXctestrun",
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/HanlinMiniApps_iphonesimulator27.0-arm64.xctestrun",
+      "bytes": 16737,
+      "sha256": "2d6b493aa93663d03e17a15722eab010326b260ccbbb454ed12077cae45cda96"
+    },
+    {
+      "role": "uiRunnerInfo",
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app/Info.plist",
+      "bytes": 10947,
+      "sha256": "e807c6b2a4c5444448a527d598bb86195f0737209b6c15bc2b8ecc8273f75d87"
+    },
+    {
+      "role": "uiRunnerExecutable",
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app/HanlinMiniAppsUITests-Runner",
+      "bytes": 95248,
+      "sha256": "2493c0f772aa3477817b8f57cc72df3dfeb134cd4d25e329bee41a027f704b78"
+    }
+  ],
+  "plistTargets": [
+    {
+      "role": "aiXctestrun",
+      "format": "legacy target-key dictionary",
+      "metadata": {
+        "ContainerInfo": {
+          "ContainerName": "AI_HLY",
+          "SchemeName": "AI_HLY"
+        },
+        "FormatVersion": 1
+      },
+      "targets": [
+        {
+          "targetKey": "AI_HLYTests",
+          "ProductModuleName": "AI_HLYTests",
+          "TestBundlePath": "__TESTHOST__/PlugIns/AI_HLYTests.xctest",
+          "TestHostPath": "__TESTROOT__/Debug-iphonesimulator/AI_Hanlin.app",
+          "UITargetAppPath": null,
+          "IsUITestBundle": null
+        },
+        {
+          "targetKey": "AI_HLYUITests",
+          "ProductModuleName": "AI_HLYUITests",
+          "TestBundlePath": "__TESTHOST__/PlugIns/AI_HLYUITests.xctest",
+          "TestHostPath": "__TESTROOT__/Debug-iphonesimulator/AI_HLYUITests-Runner.app",
+          "UITargetAppPath": "__TESTROOT__/Debug-iphonesimulator/AI_Hanlin.app",
+          "IsUITestBundle": true
+        }
+      ]
+    },
+    {
+      "role": "miniXctestrun",
+      "format": "legacy target-key dictionary",
+      "metadata": {
+        "ContainerInfo": {
+          "ContainerName": "AI_HLY",
+          "SchemeName": "HanlinMiniApps"
+        },
+        "FormatVersion": 1
+      },
+      "targets": [
+        {
+          "targetKey": "HanlinMiniAppsBootstrapTests",
+          "ProductModuleName": "HanlinMiniAppsBootstrapTests",
+          "TestBundlePath": "__TESTROOT__/Debug-iphonesimulator/HanlinMiniAppsBootstrapTests.xctest",
+          "TestHostPath": "__PLATFORMS__/iPhoneSimulator.platform/Developer/Library/Xcode/Agents/xctest",
+          "UITargetAppPath": null,
+          "IsUITestBundle": null
+        },
+        {
+          "targetKey": "HanlinMiniAppsTests",
+          "ProductModuleName": "HanlinMiniAppsTests",
+          "TestBundlePath": "__TESTHOST__/PlugIns/HanlinMiniAppsTests.xctest",
+          "TestHostPath": "__TESTROOT__/Debug-iphonesimulator/HanlinMiniApps.app",
+          "UITargetAppPath": null,
+          "IsUITestBundle": null
+        },
+        {
+          "targetKey": "HanlinMiniAppsUITests",
+          "ProductModuleName": "HanlinMiniAppsUITests",
+          "TestBundlePath": "__TESTHOST__/PlugIns/HanlinMiniAppsUITests.xctest",
+          "TestHostPath": "__TESTROOT__/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app",
+          "UITargetAppPath": "__TESTROOT__/Debug-iphonesimulator/HanlinMiniApps.app",
+          "IsUITestBundle": true
+        }
+      ]
+    }
+  ],
+  "runner": {
+    "bundleID": "com.itorah.hanlinminiapps.integration.uitests.xctrunner",
+    "executable": "HanlinMiniAppsUITests-Runner",
+    "bundlePath": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app"
+  },
+  "boundary": "Existing completed d4a Mini and AI build products. Repair and original52/NS5/OS results remain separate; this read-only observation performs no build, test, boot or product mutation."
+}

@@ -1,0 +1,264 @@
+{
+  "at": "2026-11-26T14:39:10.612713+00:00",
+  "source": "a35694f73d07b161d6db5e8c150b7d905e883455",
+  "team": "NA6HPWARQ2",
+  "distribution_identity_sha1": "644940FCF25D1730DBD1BF7596AEBA7229E2B8FD",
+  "read_only": true,
+  "native_acceptance": "NOT_RUN",
+  "archive": "NOT_RUN",
+  "upload": "NOT_RUN",
+  "raw_receipt_sha256": "1778f5dc56a68f2a849f3f772bc24d7fd66cea30f00382ad9b05b014b84856b1",
+  "product_roles": [
+    {
+      "role": "ai",
+      "bundle_id": "com.itorah.chavrusachat",
+      "entitlements_path": "AI_HLY/AI_HLY.entitlements",
+      "entitlements_sha256": "e720f17906a84c20a40e48714726ca17a307be5d27ac80c24f40bb017c537481",
+      "status": "READY_RESOURCE",
+      "selected": {
+        "path": "/Users/m1/Library/MobileDevice/Provisioning Profiles/8AFD1C42-4F10-4B50-895E-9CFB7A110E2F.mobileprovision",
+        "uuid": "8afd1c42-4f10-4b50-895e-9cfb7a110e2f",
+        "name": "Hanlin ai App Store Mac 148901 85e374570dba",
+        "profile_sha256": "e31610d2d2478822ad71c5fdd52d4ef5c3f852b1414f310cb1a01dc657aea8fb",
+        "certificate_sha256": "5aefaf80b344410af7da85678fcb19de9a4be6885a846644df974b1ee38eba4b",
+        "status": "READY_RESOURCE",
+        "checks": {
+          "team_matches": true,
+          "bundle_matches": true,
+          "not_expired": true,
+          "distribution_profile": true,
+          "certificate_matches": true,
+          "required_entitlements_covered": true
+        },
+        "expiration": "2027-09-07T07:25:00+00:00",
+        "missing_or_mismatched_entitlement_keys": []
+      }
+    },
+    {
+      "role": "share",
+      "bundle_id": "com.itorah.chavrusachat.share",
+      "entitlements_path": "ChavrusaChatShare/ChavrusaChatShare.entitlements",
+      "entitlements_sha256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc",
+      "status": "READY_RESOURCE",
+      "selected": {
+        "path": "/Users/m1/Library/MobileDevice/Provisioning Profiles/d49c8cd7-3546-462e-89e8-0988c425ae61.mobileprovision",
+        "uuid": "d49c8cd7-3546-462e-89e8-0988c425ae61",
+        "name": "ChavrusaChat Share App Store",
+        "profile_sha256": "cf0e74d7380a9a153ee5c889d6ac1779b88ab46cf21378a95a9784e3de2b01ed",
+        "certificate_sha256": "5aefaf80b344410af7da85678fcb19de9a4be6885a846644df974b1ee38eba4b",
+        "status": "READY_RESOURCE",
+        "checks": {
+          "team_matches": true,
+          "bundle_matches": true,
+          "not_expired": true,
+          "distribution_profile": true,
+          "certificate_matches": true,
+          "required_entitlements_covered": true
+        },
+        "expiration": "2027-09-07T07:25:00+00:00",
+        "missing_or_mismatched_entitlement_keys": []
+      }
+    },
+    {
+      "role": "widgets",
+      "bundle_id": "com.itorah.chavrusachat.widgets",
+      "entitlements_path": "HanlinScriptingWidgets/HanlinScriptingWidgets.entitlements",
+      "entitlements_sha256": "5807753b697d0374d2f57178032398287039878ce24c03409ed87b044dfdb57c",
+      "status": "READY_RESOURCE",
+      "selected": {
+        "path": "/Users/m1/Library/Developer/Xcode/UserData/Provisioning Profiles/ba8bde74-3243-4844-ae33-015f04787592.mobileprovision",
+        "uuid": "ba8bde74-3243-4844-ae33-015f04787592",
+        "name": "Hanlin Widget App Store Wave 2 ca631021 20261125",
+        "profile_sha256": "d553c38ed3ae2b0e989f2f1ec2eaf4f8d2aecc71aab212b3cae914dc16d965de",
+        "certificate_sha256": "5aefaf80b344410af7da85678fcb19de9a4be6885a846644df974b1ee38eba4b",
+        "status": "READY_RESOURCE",
+        "checks": {
+          "team_matches": true,
+          "bundle_matches": true,
+          "not_expired": true,
+          "distribution_profile": true,
+          "certificate_matches": true,
+          "required_entitlements_covered": true
+        },
+        "expiration": "2027-09-07T07:25:00+00:00",
+        "missing_or_mismatched_entitlement_keys": []
+      }
+    },
+    {
+      "role": "translation",
+      "bundle_id": "com.itorah.chavrusachat.translation-provider",
+      "entitlements_path": "ChavrusaChatTranslationProvider/ChavrusaChatTranslationProvider.entitlements",
+      "entitlements_sha256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc",
+      "status": "READY_RESOURCE",
+      "selected": {
+        "path": "/Users/m1/Library/MobileDevice/Provisioning Profiles/ChavrusaChat_Translation_Provider_App_Store.mobileprovision",
+        "uuid": "5001131f-b657-425e-b8cf-3774aabd33e2",
+        "name": "ChavrusaChat Translation Provider App Store",
+        "profile_sha256": "20555b860ebd0f9dc5c7af77abfa2116195a3a85f36a25ca422f9960ba742d93",
+        "certificate_sha256": "5aefaf80b344410af7da85678fcb19de9a4be6885a846644df974b1ee38eba4b",
+        "status": "READY_RESOURCE",
+        "checks": {
+          "team_matches": true,
+          "bundle_matches": true,
+          "not_expired": true,
+          "distribution_profile": true,
+          "certificate_matches": true,
+          "required_entitlements_covered": true
+        },
+        "expiration": "2027-09-07T07:25:00+00:00",
+        "missing_or_mismatched_entitlement_keys": []
+      }
+    },
+    {
+      "role": "notification",
+      "bundle_id": "com.itorah.chavrusachat.notification-service",
+      "entitlements_path": "ChavrusaChatNotificationService/ChavrusaChatNotificationService.entitlements",
+      "entitlements_sha256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc",
+      "status": "READY_RESOURCE",
+      "selected": {
+        "path": "/Users/m1/Library/MobileDevice/Provisioning Profiles/1a1255b6-f3bb-40e7-bc76-5fbb42a8a7e9.mobileprovision",
+        "uuid": "1a1255b6-f3bb-40e7-bc76-5fbb42a8a7e9",
+        "name": "ChavrusaChat Notification Service App Store",
+        "profile_sha256": "e57246b4f7cc8a968257e532a50c2019f6764fe7a6b1c6be00fae3f1ced1e4a3",
+        "certificate_sha256": "5aefaf80b344410af7da85678fcb19de9a4be6885a846644df974b1ee38eba4b",
+        "status": "READY_RESOURCE",
+        "checks": {
+          "team_matches": true,
+          "bundle_matches": true,
+          "not_expired": true,
+          "distribution_profile": true,
+          "certificate_matches": true,
+          "required_entitlements_covered": true
+        },
+        "expiration": "2027-09-07T07:25:00+00:00",
+        "missing_or_mismatched_entitlement_keys": []
+      }
+    },
+    {
+      "role": "miniapps",
+      "bundle_id": "com.itorah.hanlinminiapps",
+      "entitlements_path": "HanlinMiniAppsApp/HanlinMiniApps.entitlements",
+      "entitlements_sha256": "6458e58ace4b853a4e291986962c305e54b948173752e98a2932d5d553c8d4ba",
+      "status": "READY_RESOURCE",
+      "selected": {
+        "path": "/Users/m1/Library/Developer/Xcode/UserData/Provisioning Profiles/CF891208-A85E-4C35-AC83-48CDB7753F03.mobileprovision",
+        "uuid": "cf891208-a85e-4c35-ac83-48cdb7753f03",
+        "name": "iTorah Integration App Store MiniApps Main 20261126 86a6dde3",
+        "profile_sha256": "aeb924df782c8b91958ae627f3d0d467cd5b0f438443dd668493514d031ff5c9",
+        "certificate_sha256": "5aefaf80b344410af7da85678fcb19de9a4be6885a846644df974b1ee38eba4b",
+        "status": "READY_RESOURCE",
+        "checks": {
+          "team_matches": true,
+          "bundle_matches": true,
+          "not_expired": true,
+          "distribution_profile": true,
+          "certificate_matches": true,
+          "required_entitlements_covered": true
+        },
+        "expiration": "2027-09-07T07:25:00+00:00",
+        "missing_or_mismatched_entitlement_keys": []
+      }
+    },
+    {
+      "role": "miniapps_widgets",
+      "bundle_id": "com.itorah.hanlinminiapps.widgets",
+      "entitlements_path": "HanlinMiniAppsExtensions/Widgets/HanlinMiniAppsWidgets.entitlements",
+      "entitlements_sha256": "0da89872d45b5e9b990de71c4f9c0855f1117f81cb1867a07aa3bfb8b6106254",
+      "status": "READY_RESOURCE",
+      "selected": {
+        "path": "/Users/m1/Library/Developer/Xcode/UserData/Provisioning Profiles/7D57A716-BA2B-45DE-A18B-B32A7F01627D.mobileprovision",
+        "uuid": "7d57a716-ba2b-45de-a18b-b32a7f01627d",
+        "name": "iTorah Integration App Store MiniApps Widgets 20261126 86a6dde3",
+        "profile_sha256": "a26c90d20ee1d559e5731caa682715b08582fae1cfaeab52ae70d9306d7abc16",
+        "certificate_sha256": "5aefaf80b344410af7da85678fcb19de9a4be6885a846644df974b1ee38eba4b",
+        "status": "READY_RESOURCE",
+        "checks": {
+          "team_matches": true,
+          "bundle_matches": true,
+          "not_expired": true,
+          "distribution_profile": true,
+          "certificate_matches": true,
+          "required_entitlements_covered": true
+        },
+        "expiration": "2027-09-07T07:25:00+00:00",
+        "missing_or_mismatched_entitlement_keys": []
+      }
+    },
+    {
+      "role": "miniapps_share",
+      "bundle_id": "com.itorah.hanlinminiapps.share",
+      "entitlements_path": "HanlinMiniAppsExtensions/Share/HanlinMiniAppsShare.entitlements",
+      "entitlements_sha256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc",
+      "status": "READY_RESOURCE",
+      "selected": {
+        "path": "/Users/m1/Library/Developer/Xcode/UserData/Provisioning Profiles/47E96F5D-5EA5-4AAA-9242-EB68ADBFE6C0.mobileprovision",
+        "uuid": "47e96f5d-5ea5-4aaa-9242-eb68adbfe6c0",
+        "name": "iTorah Integration App Store MiniApps Share 20261126 86a6dde3",
+        "profile_sha256": "d80e09a9ba3d82c4d3c70d5916500c48d70d54cf5edf106468652fc8eba195c7",
+        "certificate_sha256": "5aefaf80b344410af7da85678fcb19de9a4be6885a846644df974b1ee38eba4b",
+        "status": "READY_RESOURCE",
+        "checks": {
+          "team_matches": true,
+          "bundle_matches": true,
+          "not_expired": true,
+          "distribution_profile": true,
+          "certificate_matches": true,
+          "required_entitlements_covered": true
+        },
+        "expiration": "2027-09-07T07:25:00+00:00",
+        "missing_or_mismatched_entitlement_keys": []
+      }
+    },
+    {
+      "role": "miniapps_translation_provider",
+      "bundle_id": "com.itorah.hanlinminiapps.translation-provider",
+      "entitlements_path": "HanlinMiniAppsExtensions/Translation/HanlinMiniAppsTranslationProvider.entitlements",
+      "entitlements_sha256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc",
+      "status": "READY_RESOURCE",
+      "selected": {
+        "path": "/Users/m1/Library/Developer/Xcode/UserData/Provisioning Profiles/1DE54C0C-CD5C-41EC-A44B-83A9F265E47B.mobileprovision",
+        "uuid": "1de54c0c-cd5c-41ec-a44b-83a9f265e47b",
+        "name": "iTorah Integration App Store MiniApps Translation 20261126 86a6dde3",
+        "profile_sha256": "097d015e8e4295453ace0fb3f45f28f02367799dc91a8e3564b67f70eb277298",
+        "certificate_sha256": "5aefaf80b344410af7da85678fcb19de9a4be6885a846644df974b1ee38eba4b",
+        "status": "READY_RESOURCE",
+        "checks": {
+          "team_matches": true,
+          "bundle_matches": true,
+          "not_expired": true,
+          "distribution_profile": true,
+          "certificate_matches": true,
+          "required_entitlements_covered": true
+        },
+        "expiration": "2027-09-07T07:25:00+00:00",
+        "missing_or_mismatched_entitlement_keys": []
+      }
+    },
+    {
+      "role": "miniapps_notification_service",
+      "bundle_id": "com.itorah.hanlinminiapps.notification-service",
+      "entitlements_path": "HanlinMiniAppsExtensions/Notification/HanlinMiniAppsNotificationService.entitlements",
+      "entitlements_sha256": "cbce7e438c63d23cdcbc737379709ab6220997a2e39447dd962492a46d3930cc",
+      "status": "READY_RESOURCE",
+      "selected": {
+        "path": "/Users/m1/Library/Developer/Xcode/UserData/Provisioning Profiles/0C80E458-27BC-4714-B6A2-3A9B53F43236.mobileprovision",
+        "uuid": "0c80e458-27bc-4714-b6a2-3a9b53f43236",
+        "name": "iTorah Integration App Store MiniApps Notification 20261126 86a6dde3",
+        "profile_sha256": "628ecaf8ad2c8d37deace49e6a90ea15d6883995d152bfb015a3b893729aa710",
+        "certificate_sha256": "5aefaf80b344410af7da85678fcb19de9a4be6885a846644df974b1ee38eba4b",
+        "status": "READY_RESOURCE",
+        "checks": {
+          "team_matches": true,
+          "bundle_matches": true,
+          "not_expired": true,
+          "distribution_profile": true,
+          "certificate_matches": true,
+          "required_entitlements_covered": true
+        },
+        "expiration": "2027-09-07T07:25:00+00:00",
+        "missing_or_mismatched_entitlement_keys": []
+      }
+    }
+  ],
+  "scope": "Existing local signing resources checked using original evaluate_profile against exact current entitlements; no Apple portal mutation or archive/upload/physical-device acceptance."
+}

@@ -11,7 +11,7 @@ from unittest.mock import patch
 
 from Scripts.CI.owned_simulator_receipts import (
     BOOT_FILE, SELECTION_FILE, created_selection, record_owned_boot,
-    verify_owned_simulator, verify_staged_owner,
+    verify_owned_simulator, verify_owned_simulator_creation, verify_staged_owner,
 )
 
 SOURCE = Path(__file__).resolve().parents[1] / "stage_live_provider_acceptance.py"
@@ -68,6 +68,42 @@ class OwnedSimulatorReceiptTests(unittest.TestCase):
         self.assertEqual(proof["simulator"], DEVICE)
         self.assertEqual(proof["run_id"], RUN)
         self.assertEqual(len(proof["selection_sha256"]), 64)
+
+    def test_creation_cleanup_is_owned_even_when_boot_never_completed(self):
+        (self.log / BOOT_FILE).unlink()
+        with patch("subprocess.run", side_effect=AssertionError("No redundant native query")):
+            proof = verify_owned_simulator_creation(self.log, RUN, ATTEMPT)
+        self.assertEqual(proof["simulator"], DEVICE)
+        self.assertEqual(proof["run_id"], RUN)
+        self.assertEqual(proof["run_attempt"], ATTEMPT)
+        self.assertEqual(len(proof["selection_sha256"]), 64)
+        with self.assertRaises(FileNotFoundError):
+            self.verify()
+
+    def test_creation_cleanup_rejects_another_run_attempt_or_uuid(self):
+        (self.log / BOOT_FILE).unlink()
+        for run, attempt in [(RUN, "3"), ("44385752089", ATTEMPT)]:
+            with self.subTest(run=run, attempt=attempt), self.assertRaises(RuntimeError):
+                verify_owned_simulator_creation(self.log, run, attempt)
+        (self.log / "simulator-udid.txt").write_text(OTHER, encoding="utf-8")
+        with self.assertRaises(RuntimeError):
+            verify_owned_simulator_creation(self.log, RUN, ATTEMPT)
+
+    def test_creation_cleanup_cannot_claim_relabelled_or_preexisting_devices(self):
+        original = copy.deepcopy(self.selected)
+        for field, value in [("name", "Unrelated simulator"),
+                             ("source_device", DEVICE),
+                             ("absent_before_create", False),
+                             ("operation", "simctl_boot")]:
+            with self.subTest(field=field):
+                self.selected = copy.deepcopy(original)
+                self.selected["ownership"][field] = value
+                self.save_selection()
+                with self.assertRaises(RuntimeError):
+                    verify_owned_simulator_creation(self.log, RUN, ATTEMPT)
+        (self.log / SELECTION_FILE).unlink()
+        with self.assertRaises(FileNotFoundError):
+            verify_owned_simulator_creation(self.log, RUN, ATTEMPT)
 
     def test_create_cannot_claim_a_preexisting_device_even_with_the_expected_name(self):
         before = {"devices": {RUNTIME: [self.source, self.created]}}

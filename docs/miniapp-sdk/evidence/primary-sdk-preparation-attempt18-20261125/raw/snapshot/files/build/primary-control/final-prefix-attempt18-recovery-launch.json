@@ -1,0 +1,14 @@
+{
+  "startedAt": "2026-11-25T09:07:02.353627+00:00",
+  "pid": 34928,
+  "source": "f33a0d41f6367b01d63bdb5fcba8bbc5fa474b51",
+  "sourceTree": "3e18683d6b88c3d49abdb1f256aad1e73d9f52c4",
+  "decision": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-attempt18-recovery-decision.json",
+  "decisionSHA256": "2a2c2a4eccbd557dcd1f1a03705c0eccfbc7d00f1f21c5d3ccca23ace96cf0e6",
+  "controllerSHA256": "9b1ce53743ca196f8ee9de832c86e882d31dae8f00cc6ba667c83564ff1f4a76",
+  "state": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-continuation-attempt18-recovery/state.json",
+  "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/final-prefix-attempt18-recovery-controller.log",
+  "freeBytes": 7398518784,
+  "remainingPrefixSeconds": 568.354392291003,
+  "original52": "NOT_RUN"
+}

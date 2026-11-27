@@ -1,0 +1,41 @@
+[
+  {
+    "engine": "expo",
+    "source_project": "Scripts/MiniApps/Examples/sdk-only-departure-budget",
+    "source_hashes": {
+      "App.tsx": "b2cdbefb1cdfc9c392294692e0c2d4aec7f79176505f3fd4714585716920e0f6",
+      "README.md": "2e14a982ddb34ee47eeba68605d938f580c0706333d58756544037f05a32f192",
+      "hanlin.authoring.json": "23628daa17919961823da4ebc9a4166ab9e1d7a9b3ec2ff47fdc70d7b444bf94",
+      "index.ts": "f3532a443c0193cbb6866cb1a7474d0f5055917ffdc7f5e60efe35159e544d19",
+      "model.ts": "b1b7c165ad8bce614aaf59657750eb508ce867f2e03dedf76119cf76270e05eb",
+      "package.json": "eaca3101f64376e4a2f23475839757d2215fc565b8be582d5e40e0542c89734b",
+      "script.json": "fce829f1ede25e2a95377b3d270c36b974a342c61dd9d8038ae8682d26361a60",
+      "tsconfig.json": "48dc261d79c7417b5e10c2ab83bdce581d8be8f16b70e867789ae7b3f5c9eb59"
+    },
+    "archive": "SDKOnlyDepartureBudget.hanlinExpo",
+    "archive_sha256": "e071104a8e39913c59baed24cfe2f8f46eec0b3a9c264e52cbea43bfeeedb33f",
+    "report": "sdk-only-departure-budget-build.json",
+    "report_sha256": "d87d0bc4cb1a823930989c35007089a4071c92ff33e798f0a0c091410138e74d",
+    "sdk_manifest_sha256": "6f11ed8da3df18627f05932d47b5b68dec54eb26ac396151a21cbc8c3e65800e",
+    "native_result": "NOT_RUN; requires the selected real importer and native interaction cases"
+  },
+  {
+    "engine": "nativescript",
+    "source_project": "Scripts/MiniApps/Examples/sdk-only-table-share",
+    "source_hashes": {
+      "README.md": "2ca21af20c04538813dc2799b29d7b2e44525cd4c92b77ce985361b509a6951f",
+      "hanlin.authoring.json": "1bf949fb4ba1fd14481df380299652fe9b587aa5c30afdb6621fe23be6c02094",
+      "index.ts": "afbfe5116695db1f0a2641a19e474493c3559f5c9f6e470bf0b72d500c9c461c",
+      "model.ts": "f9fbaa39afdd00df325ada8177d0bb8213557672a9af7c54fc98936f00d95e9e",
+      "package.json": "1341e9a334dcd928fcdee84456d6069e5476a54440395e1bf1732c271836bccb",
+      "script.json": "1cd5129c60227b1ab53e2752e27b3acc29b73d8161de9495d46b2470393653f1",
+      "tsconfig.json": "b70b632b881af38c566610fa375116ee8172fc20ed495f58b0d0261f0226ac0f"
+    },
+    "archive": "SDKOnlyTableShare.hanlinNativeScript",
+    "archive_sha256": "d1ceff0b27dd97ac1cac1eae8004db92b3819a2a180279ecbb00cff0769d6692",
+    "report": "sdk-only-table-share-build.json",
+    "report_sha256": "3e7020440ca4002548c1a23e12157f94724860f47d628659e84a603e5f6b6bdf",
+    "sdk_manifest_sha256": "6f11ed8da3df18627f05932d47b5b68dec54eb26ac396151a21cbc8c3e65800e",
+    "native_result": "NOT_RUN; requires the selected real importer and native interaction cases"
+  }
+]

@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "id": "focused19-v1",
+  "allowanceSeconds": 3600,
+  "activeElapsedSeconds": 366.7222996670025,
+  "charges": [
+    {
+      "id": "focused19-v1",
+      "source": "a2c8a1b1be746461272ba77254603304567c309d",
+      "status": "FOCUSED_FAILED",
+      "elapsedSeconds": 366.7222996670025,
+      "statePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v1/state.json",
+      "decisionSHA256": "77eef76303d4df1ac274a6cbf3db71b8f7efc4ee7f4e9b623334d565dd3297a3",
+      "logSHA256": "50e1e8e69dc605e6e1b848865df43258820bffe759fce30baafddb4f1e1466aa",
+      "exitCode": 1,
+      "expectedGroups": {
+        "FocusedMini3": 3,
+        "FocusedAI8": 8
+      }
+    }
+  ],
+  "otherGrantsUnchanged": true
+}

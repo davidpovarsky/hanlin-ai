@@ -279,6 +279,8 @@ struct ChatViewBottom: View {
     var dockContextKey: String? = nil
     /// Both workspace hosts supply their current, keyboard-adjusted viewport.
     var availableWorkspaceSize: CGSize = .zero
+    /// A retained compact workspace yields accessibility to its visible history.
+    var isWorkspaceObscured: Bool = false
     var onNativeEditorLifecycle: ((UITextView, NativeMultilineTextEditor.LifecycleEvent) -> Void)? = nil
     var onModelPopoverPresentationChange: (@MainActor (UUID, Bool) -> Void)? = nil
     /// Synchronous read from the same owner written by the message Binding.
@@ -365,8 +367,6 @@ struct ChatViewBottom: View {
     @ScaledMetric(relativeTo: .body) var size_44: CGFloat = 44
     @ScaledMetric(relativeTo: .body) var size_80: CGFloat = 80
 
-    @ScaledMetric(relativeTo: .body) var followLatestSymbolSize: CGFloat = 14
-
     let buttonHeight: CGFloat = 36
 
     var body: some View {
@@ -375,9 +375,9 @@ struct ChatViewBottom: View {
 
     private var composerSurface: some View {
         VStack {
-            // 只有在需要时才显示“画布”和“滚动到底部”按钮
-            if (showScrollToBottomButton
-                || (chatRecord.canvas?.content.isEmpty == false))  && isMultiSelectMode == false
+            // Canvas is persistent content. A transient follow-latest button
+            // must not change the measured composer height or transcript range.
+            if chatRecord.canvas?.content.isEmpty == false && !isMultiSelectMode
             {
                 HStack(spacing: 12) {
                     Spacer()
@@ -414,20 +414,7 @@ struct ChatViewBottom: View {
                         .disabled(!modelTemp.indices.contains(selectedModelIndex))
                     }
 
-                    if showScrollToBottomButton {
-                        Button(action: { needScrollToBottomButton.toggle() }) {
-                            Image(systemName: "arrow.down")
-                                .font(HanlinTypography.fixed(size: followLatestSymbolSize, weight: .semibold))
-                                .foregroundStyle(Color.primary.opacity(0.77))
-                                .frame(width: buttonHeight, height: buttonHeight)
-                                .background(Color(uiColor: .systemBackground), in: Circle())
-                                .shadow(color: .black.opacity(0.12), radius: 8, y: 2)
-                        }
-                        .buttonStyle(.plain)
-                        .transition(.move(edge: .bottom).combined(with: .opacity))
-                        .animation(.spring(response: 0.5, dampingFraction: 0.7),
-                                   value: showScrollToBottomButton)
-                    }
+                    if showScrollToBottomButton { followLatestButton }
                 }
                 .offset(y: isViewLoaded ? 0 : 60) // 初次进入时滑入
                 .opacity(isViewLoaded ? 1 : 0)    // 初次进入时淡入
@@ -437,6 +424,13 @@ struct ChatViewBottom: View {
 
             // 多选模式工具栏 + 底部输入面板
             buildMultiSelectAndInputControls()
+        }
+        .overlay(alignment: .topTrailing) {
+            if showScrollToBottomButton && chatRecord.canvas?.content.isEmpty != false && !isMultiSelectMode {
+                followLatestButton
+                    .padding(.trailing, 15)
+                    .offset(y: -(buttonHeight + 8))
+            }
         }
         .sheet(item: $canvasPresentation) { presentation in
             AICanvasView(
@@ -623,6 +617,26 @@ struct ChatViewBottom: View {
                 Color.clear.preference(key: ComposerHeightPreferenceKey.self, value: proxy.size.height)
             }
         )
+    }
+
+    private var followLatestButton: some View {
+        Button(action: { needScrollToBottomButton.toggle() }) {
+            Image(systemName: "arrow.down")
+                .font(HanlinTypography.fixed(size: size_16, weight: .medium))
+                .foregroundColor(TemporaryRecord ? .primary : .hanlinHLBluefont)
+                .frame(width: buttonHeight, height: buttonHeight)
+                .clipShape(Circle())
+                .background(
+                    GlassView(style: .systemUltraThinMaterial)
+                        .clipShape(Circle())
+                        .shadow(color: TemporaryRecord ? .primary : .hanlinHLBlue, radius: 1)
+                )
+        }
+        .buttonStyle(.plain)
+        .accessibilityLabel(Text("Scroll to latest message", bundle: HanlinLocalization.bundle))
+        .accessibilityIdentifier("hanlin-chat-follow-latest")
+        .transition(.move(edge: .bottom).combined(with: .opacity))
+        .animation(.spring(response: 0.5, dampingFraction: 0.7), value: showScrollToBottomButton)
     }
 
     /// 底部动画触发状态集合
@@ -882,7 +896,6 @@ struct ChatViewBottom: View {
                     case .tools(.some(.toolsCatalog)): return String(localized: "Tools", bundle: HanlinLocalization.bundle)
                     case .tools(.some(.skillsCenter)): return String(localized: "Skills", bundle: HanlinLocalization.bundle)
                     case .tools(.some(.mcpServers)): return String(localized: "MCP Servers", bundle: HanlinLocalization.bundle)
-                    case .tools(.some(.runtimeCenter)): return String(localized: "Runtimes", bundle: HanlinLocalization.bundle)
                     }
                 },
                 subtitle: { _ in String(localized: "Choose a capability and continue this conversation", bundle: HanlinLocalization.bundle) },
@@ -1140,7 +1153,7 @@ struct ChatViewBottom: View {
         case .creative: popupCoordinator.pushGeneralSubroute(.creative, reduceMotion: true)
         case .skills: popupCoordinator.pushToolsSubroute(.skillsCenter, reduceMotion: true)
         case .mcp: popupCoordinator.pushToolsSubroute(.mcpServers, reduceMotion: true)
-        case .runtimes: popupCoordinator.pushToolsSubroute(.runtimeCenter, reduceMotion: true)
+        case .runtimes: popupCoordinator.pushToolsSubroute(.toolsCatalog, reduceMotion: true)
         case .tools: break
         }
         isInputActive.wrappedValue = false
@@ -1493,6 +1506,9 @@ struct ChatViewBottom: View {
             .frame(height: layout.editorHeight)
             .focused(isInputActive)
             .accessibilityIdentifier("hanlin-chat-input")
+            // Hide the SwiftUI accessibility leaf as well as the native editor.
+            // The workspace keeps the same editor, draft and keyboard owner mounted.
+            .accessibilityHidden(isWorkspaceObscured)
             // The corner button never intercepts the native selection/caret area.
             .padding(.trailing, showsExpansionControl ? HanlinMorphStyle.inputControlHitSize : 0)
             .padding(.horizontal, 11)
@@ -1529,6 +1545,7 @@ struct ChatViewBottom: View {
         .frame(minHeight: HanlinMorphStyle.launcherSize)
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-composer-surface")
+        .accessibilityHidden(isWorkspaceObscured)
     }
 
     // Keep one fixed-height row in the editor's material. The model's title
@@ -1554,6 +1571,7 @@ struct ChatViewBottom: View {
         .padding(.bottom, HanlinMorphStyle.inputControlsInset)
         .accessibilityElement(children: .contain)
         .accessibilityIdentifier("hanlin-composer-quick-bar")
+        .accessibilityHidden(isWorkspaceObscured)
     }
 
     private var composerExpandEditorControl: some View {

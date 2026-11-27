@@ -1,0 +1,30 @@
+{
+  "status": "PASS",
+  "source": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
+  "startedAt": "2026-11-25T05:46:30.436488+00:00",
+  "argv": [
+    "xcrun",
+    "swiftc",
+    "-typecheck",
+    "-sdk",
+    "/Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator27.0.sdk",
+    "-target",
+    "arm64-apple-ios27.0-simulator",
+    "-swift-version",
+    "6",
+    "-cxx-interoperability-mode=default",
+    "-warnings-as-errors",
+    "-module-cache-path",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-signature-proof-attempt14/ModuleCache",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-signature-proof-attempt14/NotificationDelegateSignature.swift"
+  ],
+  "probeSHA256": "18dc51fa7d456ec89f653b83cd983f833e3788d901016caf4552b4a497afd22a",
+  "candidateSourceSHA256": "eacf5e748287603ef4e6796d2f2d0016b7563aa5de62bca4478a693d2b82eb83",
+  "purpose": "Actual iOS27 Swift6 C++interop optional UN delegate async Int signature and Objective-C selector; warning-free typecheck only, no product/runtime pass inferred.",
+  "pid": 6766,
+  "exitCode": 0,
+  "elapsedSeconds": 6.732447667003726,
+  "finishedAt": "2026-11-25T05:46:37.169351+00:00",
+  "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "logBytes": 0
+}

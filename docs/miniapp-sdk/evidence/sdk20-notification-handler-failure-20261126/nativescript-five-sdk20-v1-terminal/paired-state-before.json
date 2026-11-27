@@ -1,0 +1,261 @@
+{
+  "schema": 1,
+  "id": "paired52-sdk20-v2",
+  "source": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+  "status": "EXECUTED_PASS",
+  "startedAt": "2026-11-25T23:39:06.820207+00:00",
+  "controllerPID": 29196,
+  "childPID": 29208,
+  "allowanceSeconds": 11848.942462707986,
+  "initialSource": {
+    "source": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+    "tree": "c0f027896b1edd67ea824c48b2b3bbf7c4e5e73a",
+    "sdkSourceInputs": 235,
+    "consumerSourceFiles": 15,
+    "hostSHA256": "ed18d93a88a1020bc2140417cea3847daf3d03472cdd4769d9a5ac4e44f48a22",
+    "sdkManifestSHA256": "6f11ed8da3df18627f05932d47b5b68dec54eb26ac396151a21cbc8c3e65800e",
+    "sdkInputSHA256": "0388d52ec3ceef1adddb21a8718566876db0ef693520bc761e4ec57573a96514",
+    "trackedDiffSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "initialFreeBytes": 196706738176,
+  "node": {
+    "version": "v24.5.0",
+    "platform": "darwin",
+    "arch": "arm64"
+  },
+  "python": {
+    "version": "3.12.16",
+    "extractFilter": true
+  },
+  "componentHistory": [
+    {
+      "id": "historical-native-aggregate",
+      "host": "primary-mac",
+      "seconds": 25438.734638920043,
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-history/historical-os-recovery-ledger.json",
+        "bytes": 3201,
+        "sha256": "cfa1ab524fe4c871268b2b364d3bf73dc0d5fd30bb1e584fa002a934771ac62f"
+      },
+      "accountingRelation": "Historical cumulativeActiveSeconds already includes original OS 897.3027506670041 and independent OS recovery 233.90022650000174. Preserve as one historical aggregate; do not add those children again. Not charged to this new 14400-second ledger."
+    },
+    {
+      "id": "focused-notification-wire-unit",
+      "host": "primary-mac",
+      "seconds": 86.5407380000106,
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-history/focused-wire-unit-state.json",
+        "bytes": 2488,
+        "sha256": "95d72c8829b026d2e61b08c037e0cc6a332c2ccd0cdb5ea13d391b174c7aef80"
+      },
+      "accountingRelation": "Separate measured focused unit execution after the historical aggregate. This timing authority is not a substitute for original whole-run acceptance and is not charged to this new ledger."
+    },
+    {
+      "id": "oracle-sdk20-original-preparation",
+      "host": "oracle-linux-arm64",
+      "seconds": 360.1092938221991,
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-history/oracle-sdk20-verification.json",
+        "bytes": 6485,
+        "sha256": "8c33bf22355ab2749f81c8abc5fa0b08ef8fe87fca78077512f35060d789f21d"
+      },
+      "accountingRelation": "Separate Oracle preparation on a different host; not included in historical Mac aggregate or this new Mac run. No combined cross-host total is asserted."
+    },
+    {
+      "id": "native-input-restoration",
+      "host": "primary-mac",
+      "seconds": 54.375687207997544,
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-wire-input-restoration-v1/state.json",
+        "bytes": 7747,
+        "sha256": "12322840e33a7d48464b484932f7546fb265b6defae1dbb2396039a25493cba9"
+      },
+      "accountingRelation": "Separate measured input restoration, recorded before native preparation and excluded from that preparation ledger and this new ledger."
+    },
+    {
+      "id": "native-dependency-preparation",
+      "host": "primary-mac",
+      "seconds": 303.8050289590028,
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/ledger.json",
+        "bytes": 1884,
+        "sha256": "26a4bc05363573082404f43e604678e8126c37afb9493096e2c8764993c92fdd"
+      },
+      "accountingRelation": "Includes exact failed v1 and v2 charges, measured CMake installation, and successful v3 phase. Do not add their child charges again; not charged to this new 14400-second whole-run ledger."
+    },
+    {
+      "id": "original-config-materialization",
+      "host": "primary-mac",
+      "seconds": 0.0022692089987685904,
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/config-materialization.json",
+        "bytes": 658,
+        "sha256": "d9647613e2110f4bba9afee6b552bf43dff84964e5bb08d16eb3225191a767c0"
+      },
+      "accountingRelation": "Separate exact original-workflow config materialization after native preparation; not included in that ledger or this new run."
+    }
+  ],
+  "nativePreparation": {
+    "status": "PREPARED",
+    "authority": {
+      "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/notification-native-preparation-v3/state.json",
+      "bytes": 15567,
+      "sha256": "0eb409b8ea1853620b8fbc462f67ae3c5a19973e085ba61bfa7149622f2e4d45"
+    },
+    "producerSource": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f"
+  },
+  "scopeHistory": [
+    {
+      "id": "paired52-sdk20-v1",
+      "seconds": 2501.629630375013,
+      "status": "FAILED",
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v1/ledger.json",
+        "bytes": 4713,
+        "sha256": "f62166616dc312aa689cc2543bbe1f0ca1c9e75d619c0061bccda4f1c488e75f"
+      }
+    },
+    {
+      "id": "probe-fixture-sdk20-preparation-v1",
+      "seconds": 49.427906917000655,
+      "status": "SOURCE_CHANGED",
+      "authority": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/probe-fixture-sdk20-preparation-v1/ledger.json",
+        "bytes": 1331,
+        "sha256": "fd4e5beca04d71756853be1b9f0badb74f0d0d58bee6213782c22fac2782b4b1"
+      },
+      "originalProducerExitCode": 0,
+      "reconciliation": {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/probe-fixture-sdk20-preparation-v1/hosted-git-predicate-reconciliation.json",
+        "bytes": 6858,
+        "sha256": "449cc069f7e23873b6da57e3af283ae0f135ac25d0d8677157e2d9978b1a0651"
+      }
+    }
+  ],
+  "combinedAllowanceSeconds": 14400.0,
+  "priorChargedSeconds": 2551.057537292014,
+  "sourceErrors": [],
+  "cleanupErrors": [],
+  "result": {
+    "status": "EXECUTED_PASS",
+    "mini": {
+      "passed": 25,
+      "failed": 0,
+      "skipped": 0
+    },
+    "ai": {
+      "passed": 27,
+      "failed": 0,
+      "skipped": 0
+    },
+    "proofs": [
+      {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/hosted-fixture-built-check.json",
+        "bytes": 1418,
+        "sha256": "072304963e1427286dee6365c4541496729de186116f5469405d157423bf1a4f"
+      },
+      {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/acceptance.json",
+        "bytes": 29600,
+        "sha256": "baba32ca541c6e8a087e6fed91ed0aedb3d34ea6d5f3f50858c4aae40958b875"
+      },
+      {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/commands.jsonl",
+        "bytes": 27141,
+        "sha256": "db4523cb661c60047c1c1427f9750671ebc16efdfa0e28ded0280247ae26c50a"
+      },
+      {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/command-events.jsonl",
+        "bytes": 367779,
+        "sha256": "12ba7270d0de2b22a62699d7ef3fd11a6ca25af4751077130a30f5ad8ae15f0f"
+      },
+      {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/original-runtimes-summary.json",
+        "bytes": 3534,
+        "sha256": "26c8b33adbb9e3c5d5ba8089a411750f3901605afdfe8be7cbcf708ac60cead0"
+      },
+      {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/original-runtimes-nodes.json",
+        "bytes": 22895,
+        "sha256": "05d9f3551588d8940286ca97de62605cc123a267a359eb738d8d27a0f963e81e"
+      },
+      {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/original-runtimes-selected-tests.log",
+        "bytes": 57,
+        "sha256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96"
+      },
+      {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/test-summary.json",
+        "bytes": 1990,
+        "sha256": "b59fab35b496fc73d74cf081a1cffa954cc03b5bd3a858cbc50dec13e359ea05"
+      },
+      {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/test-nodes.json",
+        "bytes": 22363,
+        "sha256": "0227a44dc4532aad95821f625e2f5a19debb18c579983e8bba5ccb99d96e4568"
+      },
+      {
+        "path": "/Users/m1/builds/hanlin-notification-wire-fix-20261125/validation/paired52-sdk20-v2/original/paired-product/requested-tests.log",
+        "bytes": 57,
+        "sha256": "df5ef130980769b652356a28c34429171445d43d45f5ac7fa0ca4cc9ff1c5e96"
+      }
+    ],
+    "builtHostArchives": [
+      {
+        "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/RuntimeHostResources.zip",
+        "bytes": 81839498,
+        "sha256": "ed18d93a88a1020bc2140417cea3847daf3d03472cdd4769d9a5ac4e44f48a22"
+      },
+      {
+        "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+        "bytes": 81839498,
+        "sha256": "ed18d93a88a1020bc2140417cea3847daf3d03472cdd4769d9a5ac4e44f48a22"
+      },
+      {
+        "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+        "bytes": 81839498,
+        "sha256": "ed18d93a88a1020bc2140417cea3847daf3d03472cdd4769d9a5ac4e44f48a22"
+      },
+      {
+        "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/AI_HLYTests.xctest/Frameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+        "bytes": 81839498,
+        "sha256": "ed18d93a88a1020bc2140417cea3847daf3d03472cdd4769d9a5ac4e44f48a22"
+      },
+      {
+        "path": "/Users/m1/caches/DerivedData/hanlin-notification-wire-fix-20261125/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/Frameworks/HanlinApplication_3ED3A7D0B493F0DF_PackageProduct.framework/HanlinSDK_AI_Hanlin.bundle/RuntimeHostResources.zip",
+        "bytes": 81839498,
+        "sha256": "ed18d93a88a1020bc2140417cea3847daf3d03472cdd4769d9a5ac4e44f48a22"
+      }
+    ],
+    "simulator": "ED1C7CA0-C85E-41DF-918F-3C9C9033F73E"
+  },
+  "observedActiveSeconds": 2367.7264234580216,
+  "observedAt": "2026-11-26T00:18:34.538194+00:00",
+  "childExit": 0,
+  "remainingOwnedProcessGroup": [],
+  "ownedSimulator": {
+    "dataPath": "/Users/m1/Library/Developer/CoreSimulator/Devices/ED1C7CA0-C85E-41DF-918F-3C9C9033F73E/data",
+    "dataPathSize": 6085431296,
+    "logPath": "/Users/m1/Library/Logs/CoreSimulator/ED1C7CA0-C85E-41DF-918F-3C9C9033F73E",
+    "udid": "ED1C7CA0-C85E-41DF-918F-3C9C9033F73E",
+    "lastUsedAt": "2026-11-25T23:39:08Z",
+    "isAvailable": true,
+    "logPathSize": 323584,
+    "deviceTypeIdentifier": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M5-16GB",
+    "state": "Shutdown",
+    "name": "HanlinPaired-paired52-sdk20-v2"
+  },
+  "finalSource": {
+    "source": "7f5dad540ade7fec6e5ace980eb99d1d6d0c2e8f",
+    "tree": "c0f027896b1edd67ea824c48b2b3bbf7c4e5e73a",
+    "sdkSourceInputs": 235,
+    "consumerSourceFiles": 15,
+    "hostSHA256": "ed18d93a88a1020bc2140417cea3847daf3d03472cdd4769d9a5ac4e44f48a22",
+    "sdkManifestSHA256": "6f11ed8da3df18627f05932d47b5b68dec54eb26ac396151a21cbc8c3e65800e",
+    "sdkInputSHA256": "0388d52ec3ceef1adddb21a8718566876db0ef693520bc761e4ec57573a96514",
+    "trackedDiffSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "finishedAt": "2026-11-26T00:18:34.537336+00:00",
+  "chargedSeconds": 2367.7255637079943,
+  "totalChargedSeconds": 4918.783101000008
+}

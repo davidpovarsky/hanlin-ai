@@ -43,7 +43,7 @@
       "expo-modules-jsi": "58.0.23",
       "expo-widgets": "58.0.29",
       "@nativescript/react-native": "9.1.2",
-      "@types/react": "19.3.1",
+      "@types/react": "19.3.3",
       "@react-native/codegen": "0.88.1",
       "@react-native/metro-config": "0.88.1",
       "babel-preset-expo": "58.0.26"
@@ -205,7 +205,7 @@
         "implementation": "Hanlin host adapter; original renderer source and original app service coverage are separate"
       }
     ],
-    "manifestSHA256": "63aa2132a1463552c274c328d63fd4b76b45046de28a8420e5a278257905bb5c",
+    "manifestSHA256": "4d06d0dfaca462fc21257c8053d3250b7cc0e78c4d77b4eb2e98f64bf7cbe83b",
     "catalogSHA256": "425e5bae37920bd571a469c273c923471cb9f1cad5a945e7f28bf972fff8b0d1"
   },
   "nativeArtifacts": [

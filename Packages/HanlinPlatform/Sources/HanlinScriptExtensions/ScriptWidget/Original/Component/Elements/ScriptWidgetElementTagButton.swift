@@ -27,7 +27,20 @@ class ScriptWidgetElementTagButton {
     @ViewBuilder private static func buildButton(element: ScriptWidgetRuntimeElement, context: ScriptWidgetElementContext) -> some View {
         if let declaration = context.declaration(for: element) {
             let command = context.command(for: element, declaration: declaration)
-            if let builder = context.nativeActionBuilder {
+            // Hanlin adaptation: only an explicitly declared Host action leaves
+            // the original ScriptWidget callback runtime for foreground work.
+            if declaration.kind == .hostAction {
+                if context.actionContext.presentation == nil,
+                   let intent = try? HanlinWidgetHostActionIntent(command: command) {
+                    Button(intent: intent) { buttonLabel(element: element, context: context) }
+                        .modifier(ScriptWidgetAttributeGeneralModifier(element, context))
+                } else {
+                    Button(action: {}) { buttonLabel(element: element, context: context) }
+                        .disabled(true)
+                        .accessibilityHint("Widget action is unavailable")
+                        .modifier(ScriptWidgetAttributeGeneralModifier(element, context))
+                }
+            } else if let builder = context.nativeActionBuilder {
                 builder(command, AnyView(buttonLabel(element: element, context: context)))
                     .modifier(ScriptWidgetAttributeGeneralModifier(element, context))
             } else if let intent = try? HanlinGenericWidgetActionIntent(command: command) {

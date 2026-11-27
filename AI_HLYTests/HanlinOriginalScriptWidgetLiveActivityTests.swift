@@ -171,9 +171,29 @@ struct HanlinOriginalScriptWidgetLiveActivityTests {
                 store: store, attributes: activity.attributes, state: observedState)
             #expect(rendered.node.children == [.value(.string("Count 9"))])
             #expect(rendered.dynamicIsland?.minimal?.children == [.value(.string("m9"))])
+            async let updateOne = HanlinScriptWidgetLiveActivityController.update(store: store,
+                systemActivityID: systemID, installedPackageID: installedID.rawValue,
+                title: "Concurrent update", values: ["count": .integer(11)])
+            async let updateTwo = HanlinScriptWidgetLiveActivityController.update(store: store,
+                systemActivityID: systemID, installedPackageID: installedID.rawValue,
+                values: ["count": .integer(12)])
+            let concurrentResults = try await (updateOne, updateTwo)
+            #expect(concurrentResults.0 && concurrentResults.1)
+            let serializedState = try await waitForContentState(of: activity, revision: 4)
+            #expect(serializedState.title == "Concurrent update")
+            let concurrentID = try await HanlinScriptWidgetLiveActivityController.start(store: store,
+                entityID: instance.entityID, family: "systemMedium", title: "Independent activity")
+            let activeIDs = HanlinScriptWidgetLiveActivityController.activityIDs(installedPackageID: installedID.rawValue)
+            #expect(activeIDs.contains(systemID) && activeIDs.contains(concurrentID))
+            #expect(HanlinScriptWidgetLiveActivityController.activityIDs(installedPackageID: "different.installation").isEmpty)
+            #expect(try await HanlinScriptWidgetLiveActivityController.end(store: store,
+                systemActivityID: concurrentID, installedPackageID: installedID.rawValue, dismissAfterSeconds: 0))
             let ended = try await HanlinScriptWidgetLiveActivityController.end(store: store,
                 systemActivityID: systemID, installedPackageID: installedID.rawValue, dismissAfterSeconds: 0)
             #expect(ended)
+            let afterEnd = try await HanlinScriptWidgetLiveActivityController.update(store: store,
+                systemActivityID: systemID, installedPackageID: installedID.rawValue, values: ["count": .integer(99)])
+            #expect(!afterEnd)
             let secondID = try await HanlinScriptWidgetLiveActivityController.start(store: store,
                 entityID: instance.entityID, family: "systemMedium", title: "Lifecycle activity")
             let secondActivity = try #require(Activity<HanlinScriptWidgetLiveActivityAttributes>.activities.first { $0.id == secondID })

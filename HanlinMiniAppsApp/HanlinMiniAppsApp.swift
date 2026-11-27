@@ -1,4 +1,6 @@
 import AppIntents
+import HanlinCameraCaptureUI
+import LockedCameraCapture
 import ExpoWidgets
 import HanlinTranslationUI
 import HanlinScriptExtensions
@@ -129,13 +131,16 @@ struct HanlinMiniAppsWindow: View {
                     }
                     .accessibilityIdentifier("hanlin-miniapps-bootstrap-failure")
                 case .ready:
-                    if let externalRequestID {
-                        HanlinExternalMiniAppView(requestID: externalRequestID,
-                            onClose: { closeRequest(externalRequestID) })
-                            .id(externalRequestID)
-                    } else {
-                        HanlinMiniAppsReadyRoot()
+                    Group {
+                        if let externalRequestID {
+                            HanlinExternalMiniAppView(requestID: externalRequestID,
+                                onClose: { closeRequest(externalRequestID) })
+                                .id(externalRequestID)
+                        } else {
+                            HanlinMiniAppsReadyRoot()
+                        }
                     }
+                    .hanlinMiniAppSystemEntrypoints(platform: .shared)
                 }
             }
             .task {
@@ -242,19 +247,15 @@ struct HanlinMiniAppsWindow: View {
 /// Constructed only after the real storage preparation succeeded.
 private struct HanlinMiniAppsReadyRoot: View {
     @State private var provider = HanlinMiniAppsProvider(platform: .shared)
+    @State private var showsDeveloperStudio = false
     @Environment(\.scenePhase) private var scenePhase
 
     var body: some View {
-        MiniAppsLibrary(provider: provider)
+        MiniAppsLibrary(provider: provider, onOpenDeveloperStudio: { showsDeveloperStudio = true })
+                .sheet(isPresented: $showsDeveloperStudio) { MiniAppsDeveloperStudio() }
                 .task {
                     await AppRuntimeCore.shared.handleForegroundIfLaunched()
                     await provider.platform.resumePendingInvocations(recoverDeliveredNotifications: true)
-                }
-                .fullScreenCover(isPresented: Binding(
-                    get: { provider.platform.presentsForegroundAction },
-                    set: { if !$0 { provider.platform.dismissActiveApplication() } }
-                )) {
-                    ScriptingApplicationContainerView(platform: provider.platform)
                 }
                 .onChange(of: scenePhase) { _, phase in
                     if phase == .active {
@@ -270,6 +271,6 @@ private struct HanlinMiniAppsReadyRoot: View {
 /// Index the original shared actions in the foreground app that executes them.
 struct HanlinMiniAppsIntents: AppIntentsPackage {
     static var includedPackages: [any AppIntentsPackage.Type] {
-        [HanlinWidgetIntentsPackage.self, HanlinNativePresentationIntentsPackage.self, HanlinExpoWidgetsIntentsPackage.self]
+        [HanlinWidgetIntentsPackage.self, HanlinNativePresentationIntentsPackage.self, HanlinExpoWidgetsIntentsPackage.self, HanlinMiniAppSystemIntentsPackage.self, HanlinCameraCaptureIntentsPackage.self]
     }
 }

@@ -1,0 +1,23 @@
+{
+  "capturedAt": "2026-11-25T15:07:47.753958+00:00",
+  "files": [
+    {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Documents/Diagnostics/agent-session-2026-11-25T14-43-02-d10787ff.json",
+      "name": "agent-session-2026-11-25T14-43-02-d10787ff.json",
+      "bytes": 2147887,
+      "sha256": "1180dfbe26176e3ddb255d2c950548087b82955ad0c8949031dabadd7bbb6c6f"
+    },
+    {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Documents/Diagnostics/agent-session-2026-11-25T14-43-02-d10787ff-manifest.json",
+      "name": "agent-session-2026-11-25T14-43-02-d10787ff-manifest.json",
+      "bytes": 881,
+      "sha256": "cedba555ab475980b1e1bb3d7aff546c6e82de4340a5f70f2125b91bc391afae"
+    },
+    {
+      "path": "/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/1CB4DAE0-2652-4BEA-9F29-08A40E7362AF/Documents/Diagnostics/agent-session-2026-11-25T14-43-02-d10787ff-stage-snapshots.json",
+      "name": "agent-session-2026-11-25T14-43-02-d10787ff-stage-snapshots.json",
+      "bytes": 5623,
+      "sha256": "f4d39ae0eb6d50ab9e0e9c45bc248360b6a896eabe4335f1b29acc3ada8badbe"
+    }
+  ]
+}

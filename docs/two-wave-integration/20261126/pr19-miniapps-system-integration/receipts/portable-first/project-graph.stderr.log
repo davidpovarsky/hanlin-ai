@@ -1,0 +1,50 @@
+test_agent_sdk_actual_linkage (test_project_graph.ProjectGraphTests.test_agent_sdk_actual_linkage) ... ok
+test_agent_sdk_does_not_leak_into_miniapps (test_project_graph.ProjectGraphTests.test_agent_sdk_does_not_leak_into_miniapps) ... ok
+test_agent_sdk_requires_canonical_sibling_package (test_project_graph.ProjectGraphTests.test_agent_sdk_requires_canonical_sibling_package) ... ok
+test_agent_sdk_requires_framework_link_not_just_declaration (test_project_graph.ProjectGraphTests.test_agent_sdk_requires_framework_link_not_just_declaration) ... ok
+test_agent_sdk_test_import_requires_owning_application_product (test_project_graph.ProjectGraphTests.test_agent_sdk_test_import_requires_owning_application_product) ... ok
+test_extraction_keeps_target_and_real_source (test_project_graph.ProjectGraphTests.test_extraction_keeps_target_and_real_source) ... ok
+test_miniapps_extensions_are_actually_embedded (test_project_graph.ProjectGraphTests.test_miniapps_extensions_are_actually_embedded) ... ok
+test_miniapps_extensions_do_not_alias_ai_targets (test_project_graph.ProjectGraphTests.test_miniapps_extensions_do_not_alias_ai_targets) ... ok
+test_miniapps_extensions_link_original_shared_sdk (test_project_graph.ProjectGraphTests.test_miniapps_extensions_link_original_shared_sdk) ... ok
+test_native_surfaces_share_only_miniapps_namespace (test_project_graph.ProjectGraphTests.test_native_surfaces_share_only_miniapps_namespace) ... ok
+test_registered_graph (test_project_graph.ProjectGraphTests.test_registered_graph) ... FAIL
+test_reject_app_dependency (test_project_graph.ProjectGraphTests.test_reject_app_dependency) ... ok
+test_reject_declared_but_unlinked_product (test_project_graph.ProjectGraphTests.test_reject_declared_but_unlinked_product) ... FAIL
+test_reject_duplicate_project_key (test_project_graph.ProjectGraphTests.test_reject_duplicate_project_key) ... ok
+test_reject_invalid_signing_or_lower_deployment (test_project_graph.ProjectGraphTests.test_reject_invalid_signing_or_lower_deployment) ... ok
+test_reject_runtime_build_phase (test_project_graph.ProjectGraphTests.test_reject_runtime_build_phase) ... ok
+test_reject_whole_app_source_membership (test_project_graph.ProjectGraphTests.test_reject_whole_app_source_membership) ... ok
+test_result_verifier_requires_all_actual_passing_nodes (test_project_graph.ProjectGraphTests.test_result_verifier_requires_all_actual_passing_nodes) ... ok
+test_shared_native_adapter_must_not_compile_again_in_executable (test_project_graph.ProjectGraphTests.test_shared_native_adapter_must_not_compile_again_in_executable) ... ok
+
+======================================================================
+FAIL: test_registered_graph (test_project_graph.ProjectGraphTests.test_registered_graph)
+----------------------------------------------------------------------
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-pr19-system-integration-20261126/Scripts/CI/IntegrationValidation/test_project_graph.py", line 24, in test_registered_graph
+    result = validate_graph(self.project, self.manifest)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/mnt/development/projects/worktrees/hanlin-pr19-system-integration-20261126/Scripts/CI/IntegrationValidation/project_graph.py", line 230, in validate_graph
+    validate_shipping_extension_inventory(project)
+  File "/mnt/development/projects/worktrees/hanlin-pr19-system-integration-20261126/Scripts/CI/IntegrationValidation/project_graph.py", line 206, in validate_shipping_extension_inventory
+    assert settings["GENERATE_INFOPLIST_FILE"] == "YES"
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError
+
+======================================================================
+FAIL: test_reject_declared_but_unlinked_product (test_project_graph.ProjectGraphTests.test_reject_declared_but_unlinked_product)
+----------------------------------------------------------------------
+AssertionError
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/mnt/development/projects/worktrees/hanlin-pr19-system-integration-20261126/Scripts/CI/IntegrationValidation/test_project_graph.py", line 169, in test_reject_declared_but_unlinked_product
+    with self.assertRaisesRegex(AssertionError, "Every declared MiniApps product must actually be linked"):
+AssertionError: "Every declared MiniApps product must actually be linked" does not match ""
+
+----------------------------------------------------------------------
+Ran 19 tests in 0.723s
+
+FAILED (failures=2)

@@ -1,0 +1,215 @@
+{
+  "status": "SOURCE_READY_NATIVE_NOT_STARTED",
+  "sourceBase": "6c006c948f0a6f371f7fc68b90e393f43734f8dd",
+  "target": "958cf666da7be83b9b63e46e3013e3344fb31585",
+  "tree": "8fead677f6da019ea032b6329adbceafbf745e7d",
+  "packSHA256": "dfb31b78e4bda432c74cc55e964e4d04c547884cbe6693d745a481db54be3bed",
+  "preparedWorkingFiles": [
+    {
+      "path": "AI_HLY.xcodeproj/project.pbxproj",
+      "bytes": 252023,
+      "sha256": "a80e2947b4dedf0ce95b326cf44b0efac613b7b044058e3afc3fccb870cb0087",
+      "mode": "0o644",
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeA.hanlinExpo",
+      "bytes": 1403392,
+      "sha256": "c050720db91ffb2c32a9723d8b42a960f126cfed3192e14ccd67a1a8472d93c6",
+      "mode": "0o644",
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeB.hanlinExpo",
+      "bytes": 1403384,
+      "sha256": "794c7a2237c32166a4cd36a4d1088b585f4057073454b17684bee938f5c665ad",
+      "mode": "0o644",
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeIncompatible.hanlinExpo",
+      "bytes": 1403399,
+      "sha256": "c83750124f42597209a9bbadd1b85f9cfe51128b6b6d7781f16a0cb274cc4e27",
+      "mode": "0o644",
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoNativeAPIProbeMissingGrant.hanlinExpo",
+      "bytes": 1403397,
+      "sha256": "9bf9cd16e84d7c1c097fab3b2da04aaf0441f814f30852f1e9a0e40ebf506ba7",
+      "mode": "0o644",
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbe.hanlinExpo",
+      "bytes": 325929,
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+      "mode": "0o644",
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo",
+      "bytes": 325929,
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+      "mode": "0o644",
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "AI_HLYUITests/Fixtures/ExpoSwiftUIProbeB.hanlinExpo",
+      "bytes": 325930,
+      "sha256": "c60e7d88f759118cf52c9ed50f464031a61402367e02e7fe45b50e37ee0bc016",
+      "mode": "0o644",
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeA.hanlinExpo",
+      "bytes": 1403392,
+      "sha256": "c050720db91ffb2c32a9723d8b42a960f126cfed3192e14ccd67a1a8472d93c6",
+      "mode": "0o644",
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeB.hanlinExpo",
+      "bytes": 1403384,
+      "sha256": "794c7a2237c32166a4cd36a4d1088b585f4057073454b17684bee938f5c665ad",
+      "mode": "0o644",
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeIncompatible.hanlinExpo",
+      "bytes": 1403399,
+      "sha256": "c83750124f42597209a9bbadd1b85f9cfe51128b6b6d7781f16a0cb274cc4e27",
+      "mode": "0o644",
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "Fixtures/ExpoNativeAPIProbe/ExpoNativeAPIProbeMissingGrant.hanlinExpo",
+      "bytes": 1403397,
+      "sha256": "9bf9cd16e84d7c1c097fab3b2da04aaf0441f814f30852f1e9a0e40ebf506ba7",
+      "mode": "0o644",
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbe.hanlinExpo",
+      "bytes": 325929,
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+      "mode": "0o644",
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeA.hanlinExpo",
+      "bytes": 325929,
+      "sha256": "74d6f9437647e09cf0a323175fa8468971430543740f04f8fb688f899b6dae20",
+      "mode": "0o644",
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "Fixtures/ExpoSwiftUIProbe/ExpoSwiftUIProbeB.hanlinExpo",
+      "bytes": 325930,
+      "sha256": "c60e7d88f759118cf52c9ed50f464031a61402367e02e7fe45b50e37ee0bc016",
+      "mode": "0o644",
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "Package.swift",
+      "bytes": 88328,
+      "sha256": "392ece3430f8e61eb28afdaa925adf006b1a3dbf82a233568c2c279ab768e53b",
+      "mode": "0o644",
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Resources/ExpoWidgets.bundle/original-runtime-receipt.json",
+      "bytes": 6085,
+      "sha256": "930fa2685c39e238da2ff557a6653bc7530a5a64edc9166b63dd720b410c01d0",
+      "mode": "0o644",
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "Scripts/Expo/package-lock.json",
+      "bytes": 336324,
+      "sha256": "3b31e1c8fd34145df900764a2cda013ab02ecea7f890c969ad5e0a92925d0dd8",
+      "mode": "0o644",
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "Scripts/Expo/package.json",
+      "bytes": 1759,
+      "sha256": "bb447094c0ef2250c445f580fa91c81a55fc3187c7d49e145b84e9c1c3756dce",
+      "mode": "0o644",
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "Scripts/MiniApps/upstream-resolution.json",
+      "bytes": 15092,
+      "sha256": "28a724580a5c7b03268335bfba6a144b7db155198a916305cd00e2e339db1b2e",
+      "mode": "0o644",
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "docs/agent-sdk/unified-package-manifest.json",
+      "bytes": 3901,
+      "sha256": "dd14c80e4223465e6a600f93c153c0f4c80a290b28520dfb8aa65d33f1862e4d",
+      "mode": "0o644",
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "docs/miniapp-sdk/MANIFEST_REFERENCE.md",
+      "bytes": 118804,
+      "sha256": "283c96260a51c095be32f262f9f77ba58bebc5372aa1af994176816c8fb5d538",
+      "mode": "0o644",
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.json",
+      "bytes": 153644,
+      "sha256": "84849e4928f42f1b417ad1136c62329e94f7ea9a46f22667177fe6180155b977",
+      "mode": "0o644",
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "docs/miniapp-sdk/extension-reachability.md",
+      "bytes": 23332,
+      "sha256": "3742686d8b088e8c6afcc6b473b2ffa2cf342dae0723ed1365b265d72e120d27",
+      "mode": "0o644",
+      "policy": "PRESERVE_EXACT_PREPARED"
+    },
+    {
+      "path": "docs/miniapp-sdk/source-inventory.json",
+      "bytes": 494020,
+      "sha256": "de8326436f4ecb7f03c7c28e913f00ef3dc6fa331c1c8a7f355406cd9f0c81ea",
+      "mode": "0o644",
+      "policy": "PRESERVE_EXACT_PREPARED"
+    }
+  ],
+  "workingArchiveSHA256": "05009d8b59cc3c9092a7f21f8cf99b5e096da574613a0db4a2c87e3f2a254b48",
+  "preservedHostArchiveSHA256": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc",
+  "sourceHashes": {
+    "AI_HLY/Downstream/ChatCore/HanlinAppHostIntegration.swift": "f09bd56c25571bbc897fb40327b424ddc67f0e9926e86b7bf8d674eeaa5ce216"
+  },
+  "retainedPhases": [
+    "split-metadata",
+    "split-platform",
+    "host-proof",
+    "split-foreground",
+    "split-host-lifecycle",
+    "split-upstreams",
+    "split-native-preparation",
+    "split-native-artifacts",
+    "split-restore-inputs",
+    "split-inputs"
+  ],
+  "invalidatedPreparationPhases": [],
+  "requiredAffectedSteps": [
+    "aiBuildForTesting",
+    "focusedRepairOnly"
+  ],
+  "sdkProducer": "a2c8a1b1be746461272ba77254603304567c309d",
+  "miniBuildProducer": "a2c8a1b1be746461272ba77254603304567c309d",
+  "consumerSource": "958cf666da7be83b9b63e46e3013e3344fb31585",
+  "cumulativeActiveSeconds": 17569.521183794048,
+  "originalMaximumActiveSeconds": 12600,
+  "newPlanSHA256": "f7ca80462b447a05766d8df11cadc549ad00d435343744e452c27a8d4b9f5206",
+  "newPrimarySHA256": "ad7b04528cbd48d91d5739b14b0be5fe8135c915d5fdcdab9f5b0df603d01da0",
+  "advancedAt": "2026-11-25T13:15:27.581859+00:00",
+  "nativeStarted": false
+}

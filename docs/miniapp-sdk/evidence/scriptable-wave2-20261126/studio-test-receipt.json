@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "at": "2026-11-26T12:51:13.167950+00:00",
+  "gates": [
+    {
+      "gate": "node-editor-final",
+      "exitCode": 0,
+      "log": "/mnt/development/projects/evidence/hanlin-miniapps-scriptable-wave2-20261126/editor/node-editor-final.log"
+    },
+    {
+      "gate": "workspace-final-coordinated",
+      "exitCode": 0,
+      "log": "/mnt/development/projects/evidence/hanlin-miniapps-scriptable-wave2-20261126/editor/workspace-final-coordinated.log"
+    },
+    {
+      "gate": "swift-frontend-parse",
+      "exitCode": 0,
+      "log": "/mnt/development/projects/evidence/hanlin-miniapps-scriptable-wave2-20261126/editor/swift-frontend-parse.log"
+    },
+    {
+      "gate": "node-editor-syntax",
+      "exitCode": 0,
+      "log": "/mnt/development/projects/evidence/hanlin-miniapps-scriptable-wave2-20261126/editor/node-editor-syntax.log"
+    }
+  ],
+  "sources": {
+    "HanlinMiniAppsApp/MiniAppsDeveloperWorkspace.swift": "75e17701e6c8f53d57a90bd725a812a9146b68c1a8581835bf12bfc6865ad6d9",
+    "HanlinMiniAppsApp/MiniAppsStudioDraft.swift": "1b1bb82a148f733bd24e3c90e963fdba6f81b8fd864c0730601b3aa26ef17f54",
+    "HanlinMiniAppsApp/MiniAppsStudioProject.swift": "8b8d691fc3500e20ea4acd4b861622554151b8e1e72c2c1ebd7c68fd4c959e0a",
+    "HanlinMiniAppsApp/MiniAppsDeveloperStudio.swift": "b659c0a7d20793ace8bfb9392dc839a08ad49ad389bb61654194a4e06d837582",
+    "HanlinMiniAppsApp/HanlinMiniAppsApp.swift": "ac45eeec50fa9ae2dd398b9db77e0d9b0afcd8dba1e57baecf6c01365da3dd00",
+    "HanlinMiniAppsTests/MiniAppsDeveloperWorkspaceTests.swift": "6f9082a9c400f8381555846bde60ee809eb644435db3242c1bc1dd327e80f5af",
+    "AI_HLY/Downstream/RuntimeCore/Node/NodeRuntimeService.swift": "e59b60070034533b2b699c3d0da66b95db426aaa24f7e92e75f612aa07af38c1",
+    "AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsCatalogView.swift": "66e9b16a673f859b8ce5cff0d5ede4d9ed7fc8cf19f4aaf66569f97022fd0f7c",
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs": "df7ef5bbcc34053269657913b064a3c69ae72d03259e49e0fd3a02f923f2c298",
+    "AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-editor.test.mjs": "f5afab4fa0a01cab791668adf247add2d97eafb7084a14aea10823bbdbe0500e"
+  },
+  "limitations": [
+    "Apple SwiftUI/UIKit typecheck not executed",
+    "Darwin NSFileCoordinator path not executed on Linux",
+    "iCloud/File Provider real-device conflict and example install/run not executed"
+  ],
+  "jobID": "job_d5a4ff974675",
+  "testCounts": {
+    "originalTypeScript": 4,
+    "portableFoundation": 4
+  },
+  "appleExecuted": false
+}

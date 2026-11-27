@@ -1,0 +1,213 @@
+{
+  "source_sha": "33f0eb3195406e98139e29dd94819d14e51853bd",
+  "created_at": "2026-11-26T12:56:43.495534+00:00",
+  "owner": "root full application native queue",
+  "status": "PREPARED_NOT_EXECUTED_ON_CURRENT_SOURCE",
+  "test_source_sha256": {
+    "AI_HLYTests/HanlinComposerCapabilityIntegrationTests.swift": "d87f9637ae40195a5e2dbadbf5c1e88230df276847aa033c3163213d9aa51d55",
+    "AI_HLYTests/HanlinMiniAppAssistantToolTests.swift": "7cdd51b1ae123240c6e9cda58c837221ad8daec3385e79a8edf53dd010b74b25",
+    "AI_HLYTests/HanlinMiniAppHostDiscoveryTests.swift": "cb57318fa2e3d91eb9f16a1061044332aa20ff69b911c7b5e35b2a363383f7d0",
+    "AI_HLYTests/HanlinUnifiedHostServicesE2ETests.swift": "85efedee4ec94c5ecc4e727847401fda1ab72a66e7cf9ab2403f909f23a18210",
+    "AI_HLYTests/NativeComposerLineSizingTests.swift": "6eb5c1a7f623dac590311d3040c6c0f81cdbb6baec98fdd943d6617151d0f248",
+    "AI_HLYTests/SkillOpenClawPolicyTests.swift": "cb76a65631f8fb6fede8a87ddb0a552d6082268839273a73cd6c28796e12fae1",
+    "AI_HLYUITests/HanlinComposerCapabilitiesUITests.swift": "8ddf41f1b39533c8643b176ce3c73de63af6a70cf4072ba2e2601bb24e160883",
+    "AI_HLYUITests/HanlinMorphComposerUITests.swift": "033fc452d12dc94b207da7291592b147a6f1dde311162a837e5ae3ff1075affe",
+    "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/HanlinCapabilityCustomPanelProviderTests.swift": "b8c4796eac65d88fb9c4dfdb6c6e3673b05e06ae32c65cc16ff8439544800260",
+    "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/HanlinCapabilityNumberInputTests.swift": "fb637c3fc42423076a7a8bf72fac43bf4124edc6a3720f28a101cfc6bdddb424",
+    "Packages/HanlinPresentationSDK/Tests/HanlinChatUITests/HanlinComposerCapabilityTests.swift": "c18dd51a3931a751b93fb11c2ea285fd2e8020e2e03176d7e01448b15371757f"
+  },
+  "app_cache": {
+    "inventory": "docs/ai-cache/evidence/wave1-integrated-20261126/app-cache-source-inventory.json",
+    "original_runner": "Scripts/CI/IntegrationValidation/run_cache_app_native.py",
+    "python_requirement": "Python 3.11+",
+    "node_requirement": "Pinned Node 24 on PATH",
+    "selectors": [
+      "AI_HLYTests/HanlinPromptCachingIntegrationTests",
+      "AI_HLYTests/ClassicChatRestorationTests",
+      "AI_HLYTests/HanlinMiniAppAssistantIntegrationTests",
+      "AI_HLYTests/HanlinModelPromptCachePersistenceTests"
+    ],
+    "expected_methods": 46,
+    "expected_invocations": 48,
+    "commands": [
+      [
+        "<Python-3.11+-executable>",
+        "Scripts/CI/IntegrationValidation/run_cache_app_native.py",
+        "--phase",
+        "prepare",
+        "--derived",
+        "<owned-current-DerivedData>",
+        "--evidence",
+        "<owned-current-evidence>"
+      ],
+      [
+        "<Python-3.11+-executable>",
+        "Scripts/CI/IntegrationValidation/run_cache_app_native.py",
+        "--phase",
+        "test",
+        "--derived",
+        "<same-owned-current-DerivedData>",
+        "--evidence",
+        "<same-owned-current-evidence>"
+      ]
+    ],
+    "inventory_source_sha": "a30c8267c1f5ce2a122889b81dc9fffc0f295758",
+    "inventory_test_hashes_equal_at_current_source": true
+  },
+  "composer": {
+    "app_scope": {
+      "classification": "VERIFY_REGRESSION",
+      "original_plan_status": "EXECUTED_PASS",
+      "selectors": [
+        "AI_HLYTests/HanlinComposerCapabilityIntegrationTests/sentSDKRequestAndPersistedMessageKeepIndependentCapabilitySnapshots()",
+        "AI_HLYTests/HanlinComposerCapabilityIntegrationTests/mcpAttachmentChangesOnlyThisRequestAndResolvesCurrentAliases()",
+        "AI_HLYTests/HanlinComposerCapabilityIntegrationTests/nativeAndLegacySelectionsDispatchOriginalArgumentsWithIndependentConfiguration()",
+        "AI_HLYTests/HanlinComposerCapabilityIntegrationTests/explicitNativeRequestAdmitsADisabledToolWithoutEnablingItsPreferences()",
+        "AI_HLYTests/HanlinComposerCapabilityIntegrationTests/overlappingNativeAndMiniAppSelectionsRejectDifferentConfigurationsAtomically()",
+        "AI_HLYTests/HanlinComposerCapabilityIntegrationTests/selectedMapRegionOverridesModelCoordinatesAndNeverBecomesADefault()",
+        "AI_HLYTests/HanlinMiniAppAssistantToolTests/discoveryAndSelectionUseMetadataWithoutOpeningTheApp()",
+        "AI_HLYTests/HanlinMiniAppAssistantToolTests/originalArgumentsAndSnapshotConfigurationHaveSeparateAuthorities()",
+        "AI_HLYTests/HanlinMiniAppAssistantToolTests/staleSelectionAndOverlappingDifferentConfigurationsAreRejected()",
+        "AI_HLYTests/HanlinMiniAppAssistantToolTests/runtimeRootMustLoadTheDeclaredToolAndCannotFallBackToIndex()",
+        "AI_HLYTests/HanlinMiniAppAssistantToolTests/modernRenderersReceivePlainExactJavaScriptJSON()",
+        "AI_HLYTests/SkillOpenClawPolicyTests/currentOriginalPolicyControlsLoadReadAndActualSDKContinuation()",
+        "AI_HLYTests/HanlinMiniAppHostDiscoveryTests/preparedExpoActionExportsKeepTheirInstalledAppInTheCatalog()"
+      ],
+      "current_source_method_count": 13,
+      "current_source_invocation_count": 13
+    },
+    "native_engines": {
+      "classification": "VERIFY_REGRESSION",
+      "original_plan_status": "FAILED",
+      "selectors": [
+        "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualNativeScriptAssistantUsesDedicatedSourceAndImmutableConfiguration()",
+        "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/actualExpoAssistantUsesDedicatedSourceAndImmutableConfiguration()",
+        "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptAssistantRepliesSettleOnceAndRejectMalformedJSON()",
+        "AI_HLYTests/HanlinUnifiedHostServicesE2ETests/nativeScriptAssistantCancellationAndInvalidationReleaseWaiters()"
+      ],
+      "current_source_method_count": 4,
+      "current_source_invocation_count": 4
+    },
+    "native_editor": {
+      "classification": "VERIFY_REGRESSION",
+      "selectors": [
+        "AI_HLYTests/NativeComposerLineSizingTests/equalStringOwnerSwitchKeepsPendingInputAndLateDelegateScoped()",
+        "AI_HLYTests/NativeComposerLineSizingTests/canonicalEquivalentOwnerAndNativeReplacementsPreserveExactText()",
+        "AI_HLYTests/NativeComposerLineSizingTests/markedTextOwnerSwitchPreservesCompositionAndAuthoritativeClear(_:)",
+        "AI_HLYTests/NativeComposerLineSizingTests/programmaticDraftUpdatesWhileEditing()"
+      ],
+      "original_expected_methods": 4,
+      "original_expected_invocations": 5,
+      "parameterized_method": "markedTextOwnerSwitchPreservesCompositionAndAuthoritativeClear",
+      "current_source_method_count": 4,
+      "current_source_invocation_count": 5
+    },
+    "shared_sdk": {
+      "classification": "REUSE_ACCEPTED",
+      "selectors": [
+        "HanlinComposerCapabilityQueryTests",
+        "HanlinComposerCapabilityDraftTests",
+        "HanlinCapabilityCustomPanelProviderTests",
+        "HanlinCapabilityNumberInputTests"
+      ],
+      "original_accepted_methods": 11,
+      "original_source": "a3aae0b952b0518cb8c40ed4a511d4cffadab99f",
+      "applicability": "sdk11-reuse.json: exact tests and directly exercised source/declarations assessed; no fresh execution claimed."
+    },
+    "ui": {
+      "classification": "VERIFY_REGRESSION",
+      "original_plan_status": "FAILED",
+      "device_selectors": {
+        "iPhone": [
+          "AI_HLYUITests/HanlinComposerCapabilitiesUITests/testMiniAppSelectionAttachesWithoutLaunchingAndEnablesAttachmentOnlySend",
+          "AI_HLYUITests/HanlinComposerCapabilitiesUITests/testMentionAndSlashPreserveHebrewTextAtTheRealCaretAndInsertTheSameIdentity",
+          "AI_HLYUITests/HanlinComposerCapabilitiesUITests/testManifestCatalogAndMapPanelsKeepUserConfigurationAcrossEditing",
+          "AI_HLYUITests/HanlinMorphComposerUITests/testDismissModelPickerKeepsSelectedModelAndDraft"
+        ],
+        "iPad": [
+          "AI_HLYUITests/HanlinComposerCapabilitiesUITests/testMiniAppSelectionAttachesWithoutLaunchingAndEnablesAttachmentOnlySend",
+          "AI_HLYUITests/HanlinComposerCapabilitiesUITests/testMentionAndSlashPreserveHebrewTextAtTheRealCaretAndInsertTheSameIdentity",
+          "AI_HLYUITests/HanlinComposerCapabilitiesUITests/testManifestCatalogAndMapPanelsKeepUserConfigurationAcrossEditing"
+        ]
+      },
+      "execution_template": [
+        "xcodebuild",
+        "test-without-building",
+        "-xctestrun",
+        "<fresh-original-AI_HLY-generated.xctestrun>",
+        "-destination",
+        "platform=iOS Simulator,id=<owned-device>",
+        "-resultBundlePath",
+        "<new-result-bundle>",
+        "<one -only-testing: argument per device selector>"
+      ]
+    }
+  },
+  "required_checks": [
+    "Use immutable source and original prepared runtime artifacts/locks.",
+    "Original freshly generated AI_HLY xctestrun must identify AI_HLYTests and AI_HLYUITests and preserve HANLIN_UNIT_TEST_HOST=1.",
+    "Export exact test-node identities and every parameterized argument result; require expected selected invocations to run and pass.",
+    "Keep d89ce38b native-engine and UI failures as historical failures; current fixes do not imply acceptance.",
+    "Source manifests are from a30c8267; compare affected source closure for later source reuse."
+  ],
+  "source_inventory": "paired-and-wave1-inventory-33f0eb31.json",
+  "paired_original": {
+    "miniapps_current_methods": 25,
+    "miniapps_current_invocations": 25,
+    "ai_current_methods": 29,
+    "ai_current_invocations": 29,
+    "ai_runner_declared_count": 27,
+    "maintenance_required": "Update miniapp_authoring expected count 25 to 27 and miniapp_complete expected count 27 to 29, including the existing selector contract test. Keep all original selectors/assertions; the two added original Expo widget methods explain the increase.",
+    "added_widget_selectors": [
+      "AI_HLYTests/HanlinOriginalExpoWidgetTests/testOriginalToggleUsesIntendedValuesAndAtomicTimelineThroughRealRuntime",
+      "AI_HLYTests/HanlinOriginalExpoWidgetTests/testOriginalExpoRetainsSuccessfulRenderOnlyForMatchingWidgetAndConfiguration"
+    ]
+  },
+  "chat_ui": {
+    "selectors": [
+      "AI_HLYUITests/AgentRuntimeConversationUITests/testUI02ClassicUserAndAssistantBubbleWithDirectActionButtons",
+      "AI_HLYUITests/AgentRuntimeConversationUITests/testUserBubbleLongPressKeepsNativeActionsAndOriginalMessage",
+      "AI_HLYUITests/AgentRuntimeConversationUITests/testHebrewNewChatAndNativeMessageActions",
+      "AI_HLYUITests/HanlinContextualTextToolsUITests/testOriginalTextToolsReceiveTheMessageWithoutReplacingTheConversation"
+    ],
+    "source_methods": 4,
+    "source_invocations_per_destination": 4
+  },
+  "studio_workspace": {
+    "selectors": [
+      "HanlinMiniAppsTests/MiniAppsDeveloperWorkspaceTests/savingRejectsAnotherWritersChangesAndRetainsBothDrafts()",
+      "HanlinMiniAppsTests/MiniAppsDeveloperWorkspaceTests/nestedMovesPreserveSourceAndFolderAppearanceWithoutReplacingDestination()",
+      "HanlinMiniAppsTests/MiniAppsDeveloperWorkspaceTests/boundariesAndExistingFilesCannotBeOverwrittenThroughCreation()",
+      "HanlinMiniAppsTests/MiniAppsDeveloperWorkspaceTests/exampleCopyKeepsOriginalAndIndependentVersions()"
+    ],
+    "source_methods": 4,
+    "source_invocations": 4,
+    "followup_project_tests": "Four additional native Project methods / six parameterized invocations are introduced by owner e641105fdc7ac5b418c49b9a146c96cfccf0f078; they are outside this 33f0eb31 inventory and require native execution after integration.",
+    "followup_project_selectors": [
+      {
+        "selector": "HanlinMiniAppsTests/MiniAppsStudioProjectTests/renamingTheOpenFileRebindsLaterEditsAndSaves()",
+        "invocations": 1
+      },
+      {
+        "selector": "HanlinMiniAppsTests/MiniAppsStudioProjectTests/outerDescriptorRemainsAvailableWhenSourceRootHasNoCompleteDescriptor(hasPartialInnerDescriptor:)",
+        "invocations": 2,
+        "arguments": [
+          false,
+          true
+        ]
+      },
+      {
+        "selector": "HanlinMiniAppsTests/MiniAppsStudioProjectTests/malformedRecoveryDoesNotHideOrAlterAnotherWindowsDraft()",
+        "invocations": 1
+      },
+      {
+        "selector": "HanlinMiniAppsTests/MiniAppsStudioProjectTests/changedRevisionCannotPublishAnOriginalAuthoringResult(operation:)",
+        "invocations": 2,
+        "arguments": [
+          "validate",
+          "build"
+        ]
+      }
+    ]
+  }
+}

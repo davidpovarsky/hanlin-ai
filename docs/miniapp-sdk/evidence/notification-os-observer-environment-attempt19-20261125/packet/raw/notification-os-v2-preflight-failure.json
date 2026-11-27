@@ -1,0 +1,43 @@
+{
+  "schema": 1,
+  "observedAt": "2026-11-25T19:11:21.550394+00:00",
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "status": "PRE_NATIVE_PREFLIGHT_REJECTED_UNCHARGED",
+  "liveness": [
+    {
+      "pid": 4139,
+      "liveness": "ABSENT"
+    },
+    {
+      "pid": 48804,
+      "liveness": "ABSENT"
+    },
+    {
+      "pid": 52310,
+      "liveness": "ABSENT"
+    },
+    {
+      "pid": 76241,
+      "liveness": "ABSENT"
+    }
+  ],
+  "primary": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/state.json",
+    "bytes": 125648,
+    "sha256": "1abe474150ca068f20234af7fd698cfd877173fcb65a22a7dd839ab3c02ca171",
+    "status": "FAIL",
+    "controllerPID": null,
+    "activeElapsedSeconds": 24661.120324003034
+  },
+  "primaryUnchanged": true,
+  "nativeOutputExists": false,
+  "ownerLockAcquired": true,
+  "launchLog": {
+    "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v2-launch.log",
+    "bytes": 1608,
+    "sha256": "431a5b6dc3c22744da430ee0d526fa317ebb07e640d900dbae17d84e29f277ce",
+    "text": "Traceback (most recent call last):\n  File \"/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v7.py\", line 717, in <module>\n    raise SystemExit(main())\n                     ^^^^^^\n  File \"/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v7.py\", line 434, in main\n    query = subprocess.run([\"/bin/ps\", \"-p\", \",\".join(str(pid) for pid in sorted(historic_pids)),\n            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/homebrew/Cellar/python@3.12/3.12.16/Frameworks/Python.framework/Versions/3.12/lib/python3.12/subprocess.py\", line 550, in run\n    stdout, stderr = process.communicate(input, timeout=timeout)\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/homebrew/Cellar/python@3.12/3.12.16/Frameworks/Python.framework/Versions/3.12/lib/python3.12/subprocess.py\", line 1209, in communicate\n    stdout, stderr = self._communicate(input, endtime, timeout)\n                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/opt/homebrew/Cellar/python@3.12/3.12.16/Frameworks/Python.framework/Versions/3.12/lib/python3.12/subprocess.py\", line 2116, in _communicate\n    self._check_timeout(endtime, orig_timeout, stdout, stderr)\n  File \"/opt/homebrew/Cellar/python@3.12/3.12.16/Frameworks/Python.framework/Versions/3.12/lib/python3.12/subprocess.py\", line 1253, in _check_timeout\n    raise TimeoutExpired(\nsubprocess.TimeoutExpired: Command '['/bin/ps', '-p', '4139,48804,52310', '-o', 'pid=,state=,command=']' timed out after 10 seconds\n"
+  },
+  "decisionSHA256": "e6ecacf4375baa2dd59445bf9b05cb24a0bf94d0f034bc684d077d43b28b2fea",
+  "boundary": "Read-only PID liveness; no ownership is inferred from an existing number, and no process was signalled except signal0."
+}

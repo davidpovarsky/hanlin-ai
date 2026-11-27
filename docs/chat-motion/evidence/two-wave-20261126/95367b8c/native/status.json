@@ -1,0 +1,717 @@
+{
+  "schemaVersion": 1,
+  "sourceSHA": "95367b8c06b166873dfab2143a8323a869085af2",
+  "run": "motion-dacb4ca5-20261126",
+  "attempt": "1",
+  "pid": 43740,
+  "startedUTC": "2026-11-26T16:13:42.503799+00:00",
+  "steps": [
+    {
+      "name": "archive-original-owned-sources",
+      "command": [
+        "tar",
+        "--exclude=.git",
+        "--exclude=.build",
+        "-czf",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/owned-sources.tar.gz",
+        "-C",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/proof",
+        "App",
+        "UITests",
+        "project.json",
+        "HanlinSDK.lock.json",
+        "Vendor/HanlinSDK"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/proof",
+      "startedUTC": "2026-11-26T16:13:44.084624+00:00",
+      "log": "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/archive-original-owned-sources.log",
+      "exitCode": 0,
+      "seconds": 1.4324748330109287,
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "admit-original-macro",
+      "command": [
+        "/opt/homebrew/bin/python3.12",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/source/docs/chat-motion/record_sdk_inputs.py",
+        "--proof",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/proof",
+        "--derived-data",
+        "/Users/m1/caches/DerivedData/hanlin-motion-dacb4ca5-20261126",
+        "--evidence",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence",
+        "--admit-macro"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/source",
+      "startedUTC": "2026-11-26T16:13:45.519715+00:00",
+      "log": "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/admit-original-macro.log",
+      "exitCode": 0,
+      "seconds": 0.38943783298600465,
+      "logSHA256": "3dfa84be45e370826eb5fa829638361df9bc6550b0c89353fda5eb65ea7d8cbd"
+    },
+    {
+      "name": "original-owned-ready",
+      "command": [
+        "/opt/homebrew/bin/python3.12",
+        "-c",
+        "import sys,json;sys.path.insert(0,'/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/source/Scripts/CI');from boot_motion_simulator import ensure_ready,retain_startup_context;from pathlib import Path;p=Path('/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/ready-environment.json');retain_startup_context(p.parent);print(json.dumps(ensure_ready('B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D',p,\"ready\",'motion-dacb4ca5-20261126','1',run_provider=\"local-mac\")))"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/source",
+      "startedUTC": "2026-11-26T16:13:45.921822+00:00",
+      "log": "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/original-owned-ready.log",
+      "exitCode": 0,
+      "seconds": 0.78306225000415,
+      "logSHA256": "c586da46d2f3c710b3b8c776d37f5be037e29420703552aa86768a0ce6a9ca94"
+    },
+    {
+      "name": "build",
+      "command": [
+        "xcodebuild",
+        "build-for-testing",
+        "-project",
+        "ChatMotionProof.xcodeproj",
+        "-scheme",
+        "ChatMotionProof",
+        "-derivedDataPath",
+        "/Users/m1/caches/DerivedData/hanlin-motion-dacb4ca5-20261126",
+        "-destination",
+        "platform=iOS Simulator,id=B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D",
+        "-destination-timeout",
+        "90",
+        "-disableAutomaticPackageResolution",
+        "-skipMacroValidation",
+        "CODE_SIGNING_ALLOWED=NO"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/proof",
+      "startedUTC": "2026-11-26T16:13:46.710762+00:00",
+      "log": "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/build.log",
+      "exitCode": 0,
+      "seconds": 79.24389179097489,
+      "logSHA256": "755242356fd48e3afaaf411930ab670cd2df779c5fcc33732c87faba3092dfb3"
+    },
+    {
+      "name": "record-original-resolved-inputs",
+      "command": [
+        "/opt/homebrew/bin/python3.12",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/source/docs/chat-motion/record_sdk_inputs.py",
+        "--proof",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/proof",
+        "--derived-data",
+        "/Users/m1/caches/DerivedData/hanlin-motion-dacb4ca5-20261126",
+        "--evidence",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/source",
+      "startedUTC": "2026-11-26T16:15:05.967437+00:00",
+      "log": "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/record-original-resolved-inputs.log",
+      "exitCode": 0,
+      "seconds": 1.7421691250056028,
+      "logSHA256": "bb839db1a4fd60a33feb4af0ec0564f124ce1d9bdccbaf304b5785af9b9f3256"
+    },
+    {
+      "name": "test-B",
+      "command": [
+        "/opt/homebrew/bin/python3.12",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/source/docs/chat-motion/record_ui_run.py",
+        "--device",
+        "B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D",
+        "--evidence",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/B",
+        "--",
+        "xcodebuild",
+        "test-without-building",
+        "-project",
+        "ChatMotionProof.xcodeproj",
+        "-scheme",
+        "ChatMotionProof",
+        "-derivedDataPath",
+        "/Users/m1/caches/DerivedData/hanlin-motion-dacb4ca5-20261126",
+        "-destination",
+        "platform=iOS Simulator,id=B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D",
+        "-destination-timeout",
+        "60",
+        "-resultBundlePath",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/B/Motion.xcresult",
+        "-disableAutomaticPackageResolution",
+        "-skipMacroValidation",
+        "-parallel-testing-enabled",
+        "NO",
+        "-test-timeouts-enabled",
+        "YES",
+        "-default-test-execution-time-allowance",
+        "600",
+        "-maximum-test-execution-time-allowance",
+        "720",
+        "CODE_SIGNING_ALLOWED=NO",
+        "-only-testing:ChatMotionProofUITests/MotionUITests/testBRapidReversalPresetSwitchAndPersistence"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/proof",
+      "startedUTC": "2026-11-26T16:15:07.718087+00:00",
+      "log": "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/B/test-B.log",
+      "exitCode": 0,
+      "seconds": 725.5691621250007,
+      "logSHA256": "8f67cd3de4f502eb57f388ad8a56e2d4b33e0ec56c7701a1f5fbe4ae9fe9dd24"
+    },
+    {
+      "name": "collect-B",
+      "command": [
+        "/opt/homebrew/bin/python3.12",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/source/docs/chat-motion/collect_motion_result.py",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/B/Motion.xcresult",
+        "B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/B",
+        "0"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/source",
+      "startedUTC": "2026-11-26T16:27:13.291543+00:00",
+      "log": "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/B/collect-B.log",
+      "exitCode": 0,
+      "seconds": 4.589136708993465,
+      "logSHA256": "ca51ebc736c0a5f6651e041b270dbb157a869b9dc37bbd0417cb591d591d8f2a"
+    },
+    {
+      "name": "export-B",
+      "command": [
+        "xcrun",
+        "xcresulttool",
+        "export",
+        "attachments",
+        "--path",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/B/Motion.xcresult",
+        "--output-path",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/B/attachments",
+        "--test-id",
+        "MotionUITests/testBRapidReversalPresetSwitchAndPersistence()"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/proof",
+      "startedUTC": "2026-11-26T16:27:17.884168+00:00",
+      "log": "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/B/export-B.log",
+      "exitCode": 0,
+      "seconds": 0.08724837499903515,
+      "logSHA256": "2e110bd7e7a1a78b8ed03fc698f49b6243383e1c24e40afa52e6bb6743027a82"
+    },
+    {
+      "name": "test-A",
+      "command": [
+        "/opt/homebrew/bin/python3.12",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/source/docs/chat-motion/record_ui_run.py",
+        "--device",
+        "B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D",
+        "--evidence",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/A",
+        "--",
+        "xcodebuild",
+        "test-without-building",
+        "-project",
+        "ChatMotionProof.xcodeproj",
+        "-scheme",
+        "ChatMotionProof",
+        "-derivedDataPath",
+        "/Users/m1/caches/DerivedData/hanlin-motion-dacb4ca5-20261126",
+        "-destination",
+        "platform=iOS Simulator,id=B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D",
+        "-destination-timeout",
+        "60",
+        "-resultBundlePath",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/A/Motion.xcresult",
+        "-disableAutomaticPackageResolution",
+        "-skipMacroValidation",
+        "-parallel-testing-enabled",
+        "NO",
+        "-test-timeouts-enabled",
+        "YES",
+        "-default-test-execution-time-allowance",
+        "600",
+        "-maximum-test-execution-time-allowance",
+        "720",
+        "CODE_SIGNING_ALLOWED=NO",
+        "-only-testing:ChatMotionProofUITests/MotionUITests/testAAllFivePresetsTwentyCompleteCyclesEach"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/proof",
+      "startedUTC": "2026-11-26T16:27:17.979724+00:00",
+      "log": "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/A/test-A.log",
+      "exitCode": 0,
+      "seconds": 980.3513315000164,
+      "logSHA256": "19e7297d2121ce29a23a191e89d4415405e40a4cb265a2ab51074d4f957efcf7"
+    },
+    {
+      "name": "collect-A",
+      "command": [
+        "/opt/homebrew/bin/python3.12",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/source/docs/chat-motion/collect_motion_result.py",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/A/Motion.xcresult",
+        "B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/A",
+        "0"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/source",
+      "startedUTC": "2026-11-26T16:43:38.333503+00:00",
+      "log": "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/A/collect-A.log",
+      "exitCode": 0,
+      "seconds": 3.485066708002705,
+      "logSHA256": "ec69c4fc6e7533a3e076c4d71db61eeca702b22cf20ddc5495a8f5ab2a1510ae"
+    },
+    {
+      "name": "export-A",
+      "command": [
+        "xcrun",
+        "xcresulttool",
+        "export",
+        "attachments",
+        "--path",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/A/Motion.xcresult",
+        "--output-path",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/A/attachments",
+        "--test-id",
+        "MotionUITests/testAAllFivePresetsTwentyCompleteCyclesEach()"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/proof",
+      "startedUTC": "2026-11-26T16:43:41.822351+00:00",
+      "log": "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/A/export-A.log",
+      "exitCode": 0,
+      "seconds": 0.6104662500147242,
+      "logSHA256": "22c50ed6a4cf16658c439d583216157c4ee6f6bccb17d6726b1542f457c42829"
+    },
+    {
+      "name": "test-C",
+      "command": [
+        "/opt/homebrew/bin/python3.12",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/source/docs/chat-motion/record_ui_run.py",
+        "--device",
+        "B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D",
+        "--evidence",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/C",
+        "--",
+        "xcodebuild",
+        "test-without-building",
+        "-project",
+        "ChatMotionProof.xcodeproj",
+        "-scheme",
+        "ChatMotionProof",
+        "-derivedDataPath",
+        "/Users/m1/caches/DerivedData/hanlin-motion-dacb4ca5-20261126",
+        "-destination",
+        "platform=iOS Simulator,id=B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D",
+        "-destination-timeout",
+        "60",
+        "-resultBundlePath",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/C/Motion.xcresult",
+        "-disableAutomaticPackageResolution",
+        "-skipMacroValidation",
+        "-parallel-testing-enabled",
+        "NO",
+        "-test-timeouts-enabled",
+        "YES",
+        "-default-test-execution-time-allowance",
+        "600",
+        "-maximum-test-execution-time-allowance",
+        "720",
+        "CODE_SIGNING_ALLOWED=NO",
+        "-only-testing:ChatMotionProofUITests/MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/proof",
+      "startedUTC": "2026-11-26T16:43:42.456563+00:00",
+      "log": "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/C/test-C.log",
+      "exitCode": 0,
+      "seconds": 89.73598729100195,
+      "logSHA256": "f95adb449bf7308dc966e5d5fc45bd9c7c402202f9bbf7ac3bb7ada879301b01"
+    },
+    {
+      "name": "collect-C",
+      "command": [
+        "/opt/homebrew/bin/python3.12",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/source/docs/chat-motion/collect_motion_result.py",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/C/Motion.xcresult",
+        "B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/C",
+        "0"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/source",
+      "startedUTC": "2026-11-26T16:45:12.199168+00:00",
+      "log": "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/C/collect-C.log",
+      "exitCode": 0,
+      "seconds": 1.3432343330059666,
+      "logSHA256": "2388a2fceb4ca70f47a54747b84747e53f175b78b985d0581e25f01359bcc7dd"
+    },
+    {
+      "name": "export-C",
+      "command": [
+        "xcrun",
+        "xcresulttool",
+        "export",
+        "attachments",
+        "--path",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/C/Motion.xcresult",
+        "--output-path",
+        "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/C/attachments",
+        "--test-id",
+        "MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion()"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/proof",
+      "startedUTC": "2026-11-26T16:45:13.548007+00:00",
+      "log": "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/C/export-C.log",
+      "exitCode": 0,
+      "seconds": 0.08517212502192706,
+      "logSHA256": "6c7b3286942e46a6261d11040ad8c70b372efe9317d5e5acc0e8f341a263b2be"
+    }
+  ],
+  "cases": {
+    "B": {
+      "method": "testBRapidReversalPresetSwitchAndPersistence",
+      "status": "EXECUTED_PASS",
+      "evidence": "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/B",
+      "testExit": 0,
+      "attachmentExportExit": 0,
+      "caseNodes": [
+        {
+          "nodeIdentifier": "MotionUITests/testBRapidReversalPresetSwitchAndPersistence()",
+          "result": "Passed",
+          "duration": "1m 45s"
+        }
+      ],
+      "rawResult": {
+        "test_exit_code": 0,
+        "archive": "ARCHIVED",
+        "readability": "READABLE",
+        "diagnostics": [],
+        "archive_sha256": "3577016252c9ff0a8b0b1361e79cd38d435075dd769c8b86c381e6c6612c35e2",
+        "status": "FINALIZED_READABLE_ARCHIVED"
+      },
+      "video": {
+        "exit_code": 0,
+        "status": "CAPTURE_ATTEMPTED",
+        "maximum_recording_seconds": 120,
+        "scope": "first120s from an actual XCTest case event, not every preset or original app",
+        "stop_reason": "timer_120s",
+        "elapsed_seconds": 120.018,
+        "sigint_sent": true,
+        "timed_out_finalizing": false,
+        "output_bytes": 50584633
+      }
+    },
+    "A": {
+      "method": "testAAllFivePresetsTwentyCompleteCyclesEach",
+      "status": "EXECUTED_PASS",
+      "evidence": "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/A",
+      "testExit": 0,
+      "attachmentExportExit": 0,
+      "caseNodes": [
+        {
+          "nodeIdentifier": "MotionUITests/testAAllFivePresetsTwentyCompleteCyclesEach()",
+          "result": "Passed",
+          "duration": "5m 41s"
+        }
+      ],
+      "rawResult": {
+        "test_exit_code": 0,
+        "archive": "ARCHIVED",
+        "readability": "READABLE",
+        "diagnostics": [],
+        "archive_sha256": "4979dbd6d601d860d2d69272dc33990eaeeaafb1bca7dee110ade61129de525a",
+        "status": "FINALIZED_READABLE_ARCHIVED"
+      },
+      "video": {
+        "exit_code": 0,
+        "status": "CAPTURE_ATTEMPTED",
+        "maximum_recording_seconds": 120,
+        "scope": "first120s from an actual XCTest case event, not every preset or original app",
+        "stop_reason": "timer_120s",
+        "elapsed_seconds": 120.01,
+        "sigint_sent": true,
+        "timed_out_finalizing": false,
+        "output_bytes": 19881365
+      }
+    },
+    "C": {
+      "method": "testCReadableLongContentRTLTypeOrientationAndCompletion",
+      "status": "EXECUTED_PASS",
+      "evidence": "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/95367b8c/evidence/C",
+      "testExit": 0,
+      "attachmentExportExit": 0,
+      "caseNodes": [
+        {
+          "nodeIdentifier": "MotionUITests/testCReadableLongContentRTLTypeOrientationAndCompletion()",
+          "result": "Passed",
+          "duration": "39s"
+        }
+      ],
+      "rawResult": {
+        "test_exit_code": 0,
+        "archive": "ARCHIVED",
+        "readability": "READABLE",
+        "diagnostics": [],
+        "archive_sha256": "a007690c3fd6e3b160536ecf796b537a695b2044ae3d91270ae71b7a95303f41",
+        "status": "FINALIZED_READABLE_ARCHIVED"
+      },
+      "video": {
+        "exit_code": 0,
+        "status": "CAPTURE_ATTEMPTED",
+        "maximum_recording_seconds": 120,
+        "scope": "first120s from an actual XCTest case event, not every preset or original app",
+        "stop_reason": "test_finished",
+        "elapsed_seconds": 57.48,
+        "sigint_sent": true,
+        "timed_out_finalizing": false,
+        "output_bytes": 34699964
+      }
+    }
+  },
+  "productionOwnership": "Original selected-product SDK checkout; no copied production bodies",
+  "assertions": "Original A/B/C method bodies and thresholds unchanged",
+  "controllerSHA256": "57624575057005b15c6ad4e495f7cf516507682450bf025521cffd70a5c4ea4f",
+  "sourceFingerprint": "05a2dea2597135566edb0ce28185807198d372102845f79a6af44a77277d8ce9",
+  "sourceFileCount": 418,
+  "priorFailureEvidence": [
+    "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/evidence/B",
+    "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/24bc34c6/evidence/B",
+    "/Users/m1/builds/hanlin-motion-dacb4ca5-20261126/revisions/efb33bf0/retry1/evidence/B"
+  ],
+  "phaseBudget": {
+    "concurrentHostRemainingBytes": 1000000000,
+    "systemMarginBytes": 1073741824,
+    "authority": "Mac owner: original Host185 resumed with~1GB remaining reservation; changes will be recorded separately",
+    "at": "2026-11-26T16:13:42.292461+00:00"
+  },
+  "developerDir": "/Applications/Xcode.app/Contents/Developer",
+  "xcodeVersion": "Xcode 27.0\nBuild version 27A266a",
+  "swiftVersion": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0",
+  "compilerSDK": "27.0",
+  "resolvedPins": [
+    {
+      "identity": "equatable",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/ordo-one/equatable",
+      "state": {
+        "revision": "597c2bb34af0c51331eb3b5e705f942d8ee20daa",
+        "version": "1.4.1"
+      }
+    },
+    {
+      "identity": "hanlin-streaming-markdown",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/davidpovarsky/hanlin-streaming-markdown",
+      "state": {
+        "revision": "5cbb4b6c950051f98f02a0b0ae56756f5174a9b8"
+      }
+    },
+    {
+      "identity": "highlightswift",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/appstefan/highlightswift",
+      "state": {
+        "revision": "99c431b38a1444a5fd6a4978307fbbefe3a7af53"
+      }
+    },
+    {
+      "identity": "iosmath",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/junyan72/iosMath",
+      "state": {
+        "revision": "ba9ab7729b151329c54fd895a7c1859981d9484c"
+      }
+    },
+    {
+      "identity": "swift-cmark",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/swiftlang/swift-cmark",
+      "state": {
+        "revision": "08ddb528923cc1a6527e02b7a1aee9e516ca749a",
+        "version": "0.9.0"
+      }
+    },
+    {
+      "identity": "swift-markdown",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/swiftlang/swift-markdown.git",
+      "state": {
+        "revision": "7d9a5ce307528578dfa777d505496bd5f544ad94",
+        "version": "0.7.3"
+      }
+    },
+    {
+      "identity": "swift-syntax",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/swiftlang/swift-syntax.git",
+      "state": {
+        "revision": "79e4b74a295b6eb74a8b585e3a39d29e70c1dbd1",
+        "version": "603.0.2"
+      }
+    },
+    {
+      "identity": "swiftui-shimmer",
+      "kind": "remoteSourceControl",
+      "location": "https://github.com/markiv/SwiftUI-Shimmer",
+      "state": {
+        "revision": "0226e21f9bf355d40e07e5f5e1c33679d50e167f",
+        "version": "1.5.1"
+      }
+    }
+  ],
+  "phase": "complete",
+  "resourceObservations": [
+    {
+      "phase": "archive-original-owned-sources",
+      "freeBytes": 5499990016,
+      "at": 1795709624.084385,
+      "concurrentHostRemainingBytes": 1000000000,
+      "systemMarginBytes": 1073741824,
+      "budgetAuthority": "Mac owner: original Host185 resumed with~1GB remaining reservation; changes will be recorded separately"
+    },
+    {
+      "phase": "admit-original-macro",
+      "freeBytes": 5475880960,
+      "at": 1795709625.519045,
+      "concurrentHostRemainingBytes": 1000000000,
+      "systemMarginBytes": 1073741824,
+      "budgetAuthority": "Mac owner: original Host185 resumed with~1GB remaining reservation; changes will be recorded separately"
+    },
+    {
+      "phase": "original-owned-ready",
+      "freeBytes": 5470261248,
+      "at": 1795709625.921555,
+      "concurrentHostRemainingBytes": 1000000000,
+      "systemMarginBytes": 1073741824,
+      "budgetAuthority": "Mac owner: original Host185 resumed with~1GB remaining reservation; changes will be recorded separately"
+    },
+    {
+      "phase": "incremental-build-admission",
+      "freeBytes": 5464518656,
+      "at": 1795709626.708213,
+      "concurrentHostRemainingBytes": 1000000000,
+      "systemMarginBytes": 1073741824,
+      "budgetAuthority": "Mac owner: original Host185 resumed with~1GB remaining reservation; changes will be recorded separately"
+    },
+    {
+      "phase": "build",
+      "freeBytes": 5464424448,
+      "at": 1795709626.710252,
+      "concurrentHostRemainingBytes": 1000000000,
+      "systemMarginBytes": 1073741824,
+      "budgetAuthority": "Mac owner: original Host185 resumed with~1GB remaining reservation; changes will be recorded separately"
+    },
+    {
+      "phase": "record-original-resolved-inputs",
+      "freeBytes": 6199697408,
+      "at": 1795709705.96543,
+      "concurrentHostRemainingBytes": 1000000000,
+      "systemMarginBytes": 1073741824,
+      "budgetAuthority": "Mac owner: original Host185 resumed with~1GB remaining reservation; changes will be recorded separately"
+    },
+    {
+      "phase": "case-B-admission",
+      "freeBytes": 6122074112,
+      "at": 1795709707.714624,
+      "concurrentHostRemainingBytes": 1000000000,
+      "systemMarginBytes": 1073741824,
+      "budgetAuthority": "Mac owner: original Host185 resumed with~1GB remaining reservation; changes will be recorded separately"
+    },
+    {
+      "phase": "test-B",
+      "freeBytes": 6121566208,
+      "at": 1795709707.717834,
+      "concurrentHostRemainingBytes": 1000000000,
+      "systemMarginBytes": 1073741824,
+      "budgetAuthority": "Mac owner: original Host185 resumed with~1GB remaining reservation; changes will be recorded separately"
+    },
+    {
+      "phase": "collect-B",
+      "freeBytes": 4237115392,
+      "at": 1795710433.290405,
+      "concurrentHostRemainingBytes": 1000000000,
+      "systemMarginBytes": 1073741824,
+      "budgetAuthority": "Mac owner: original Host185 resumed with~1GB remaining reservation; changes will be recorded separately"
+    },
+    {
+      "phase": "export-B",
+      "freeBytes": 4494082048,
+      "at": 1795710437.883372,
+      "concurrentHostRemainingBytes": 1000000000,
+      "systemMarginBytes": 1073741824,
+      "budgetAuthority": "Mac owner: original Host185 resumed with~1GB remaining reservation; changes will be recorded separately"
+    },
+    {
+      "phase": "case-A-admission",
+      "freeBytes": 4492283904,
+      "at": 1795710437.97599,
+      "concurrentHostRemainingBytes": 1000000000,
+      "systemMarginBytes": 1073741824,
+      "budgetAuthority": "Mac owner: original Host185 resumed with~1GB remaining reservation; changes will be recorded separately"
+    },
+    {
+      "phase": "test-A",
+      "freeBytes": 4492107776,
+      "at": 1795710437.979438,
+      "concurrentHostRemainingBytes": 1000000000,
+      "systemMarginBytes": 1073741824,
+      "budgetAuthority": "Mac owner: original Host185 resumed with~1GB remaining reservation; changes will be recorded separately"
+    },
+    {
+      "phase": "collect-A",
+      "freeBytes": 44818837504,
+      "at": 1795711418.332261,
+      "concurrentHostRemainingBytes": 0,
+      "systemMarginBytes": 1073741824,
+      "budgetAuthority": "Mac owner16:33UTC: Host terminalPASS including finalSDK verification; no MiniApps heavybuild admitted yet"
+    },
+    {
+      "phase": "export-A",
+      "freeBytes": 44624203776,
+      "at": 1795711421.821763,
+      "concurrentHostRemainingBytes": 0,
+      "systemMarginBytes": 1073741824,
+      "budgetAuthority": "Mac owner16:33UTC: Host terminalPASS including finalSDK verification; no MiniApps heavybuild admitted yet"
+    },
+    {
+      "phase": "case-C-admission",
+      "freeBytes": 44564537344,
+      "at": 1795711422.442476,
+      "concurrentHostRemainingBytes": 0,
+      "systemMarginBytes": 1073741824,
+      "budgetAuthority": "Mac owner16:33UTC: Host terminalPASS including finalSDK verification; no MiniApps heavybuild admitted yet"
+    },
+    {
+      "phase": "test-C",
+      "freeBytes": 44563525632,
+      "at": 1795711422.455453,
+      "concurrentHostRemainingBytes": 0,
+      "systemMarginBytes": 1073741824,
+      "budgetAuthority": "Mac owner16:33UTC: Host terminalPASS including finalSDK verification; no MiniApps heavybuild admitted yet"
+    },
+    {
+      "phase": "collect-C",
+      "freeBytes": 43048714240,
+      "at": 1795711512.198118,
+      "concurrentHostRemainingBytes": 0,
+      "systemMarginBytes": 1073741824,
+      "budgetAuthority": "Mac owner16:33UTC: Host terminalPASS including finalSDK verification; no MiniApps heavybuild admitted yet"
+    },
+    {
+      "phase": "export-C",
+      "freeBytes": 43038261248,
+      "at": 1795711513.546856,
+      "concurrentHostRemainingBytes": 0,
+      "systemMarginBytes": 1073741824,
+      "budgetAuthority": "Mac owner16:33UTC: Host terminalPASS including finalSDK verification; no MiniApps heavybuild admitted yet"
+    },
+    {
+      "phase": "complete",
+      "freeBytes": 43035516928,
+      "at": 1795711513.635173,
+      "concurrentHostRemainingBytes": 0,
+      "systemMarginBytes": 1073741824,
+      "budgetAuthority": "Mac owner16:33UTC: Host terminalPASS including finalSDK verification; no MiniApps heavybuild admitted yet"
+    }
+  ],
+  "device": "B58E5A52-6C30-4B1B-BE7D-D8CE97B5645D",
+  "runtime": {
+    "identifier": "com.apple.CoreSimulator.SimRuntime.iOS-27-2",
+    "version": "27.2",
+    "buildversion": "24B8117"
+  },
+  "deviceModel": "iPad Pro 13-inch (M5)",
+  "buildStatus": "EXECUTED_PASS",
+  "status": "EXECUTED_PASS",
+  "acceptanceScope": "Three original Motion component cases; C full-screen attachment still requires visual review; no physical-device or full-app acceptance claimed",
+  "finishedUTC": "2026-11-26T16:45:13.635543+00:00",
+  "freeBytesAtFinish": 43035512832
+}

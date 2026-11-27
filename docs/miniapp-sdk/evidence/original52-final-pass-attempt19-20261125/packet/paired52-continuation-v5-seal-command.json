@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "/opt/homebrew/opt/python@3.12/bin/python3.12",
+    "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/seal-original52-retained-decision-v6.py"
+  ],
+  "startedAt": "2026-11-25T17:30:19.597531+00:00",
+  "finishedAt": "2026-11-25T17:30:19.789255+00:00",
+  "seconds": 0.1915355829987675,
+  "exitCode": 1,
+  "stdout": "",
+  "stderr": "Traceback (most recent call last):\n  File \"/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/seal-original52-retained-decision-v6.py\", line 161, in <module>\n    if __name__==\"__main__\":main()\n                            ^^^^^^\n  File \"/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/seal-original52-retained-decision-v6.py\", line 59, in main\n    ai=original[\"original27Selectors\"];assert len(mini)==25 and len(ai)==27\n                                              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\nAssertionError\n"
+}

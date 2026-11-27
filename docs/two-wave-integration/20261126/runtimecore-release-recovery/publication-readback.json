@@ -1,0 +1,118 @@
+{
+  "schemaVersion": 1,
+  "originalProducerSource": "4784dd99c3e5892ef726e7a3cce6587eb7847997",
+  "releaseTag": "runtime-core-v1-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194",
+  "createdAtUTC": "2026-11-26T18:50:50.003665+00:00",
+  "publicationExitCode": 0,
+  "stdout": "https://github.com/davidpovarsky/hanlin-ai/releases/tag/runtime-core-v1-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194\n",
+  "stderr": "",
+  "assets": [
+    {
+      "name": "hanlin-runtime-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194.zip",
+      "bytes": 86253335,
+      "sha256": "196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f",
+      "matchesOriginal": true
+    },
+    {
+      "name": "runtime-bundle.sha256",
+      "bytes": 150,
+      "sha256": "d1f1110aeb0714024338f11375c5f759a834ae7bf749b8f7d97409c212306a7a",
+      "matchesOriginal": true
+    },
+    {
+      "name": "node-xcframework.sha256",
+      "bytes": 93,
+      "sha256": "9ae89508107207c03f6b5dc55bdf71288c29ee14b388473266fcab6b7606b1c3",
+      "matchesOriginal": true
+    },
+    {
+      "name": "RuntimeProvenance.json",
+      "bytes": 2062,
+      "sha256": "f829c24da20ca914186b41b23866229f51c5527917dc3de775a33192eac01c45",
+      "matchesOriginal": true
+    }
+  ],
+  "release": {
+    "assets": [
+      {
+        "apiUrl": "https://api.github.com/repos/davidpovarsky/hanlin-ai/releases/assets/797265193",
+        "contentType": "application/zip",
+        "createdAt": "2026-11-26T18:50:33Z",
+        "digest": "sha256:196a35562a31229b1bcf05afbe49f76470ced90a7fbf0494ecebd5c06d07440f",
+        "downloadCount": 0,
+        "id": "RA_kwDOTTRem84vhU0p",
+        "label": "",
+        "name": "hanlin-runtime-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194.zip",
+        "size": 86253335,
+        "state": "uploaded",
+        "updatedAt": "2026-11-26T18:50:48Z",
+        "url": "https://github.com/davidpovarsky/hanlin-ai/releases/download/runtime-core-v1-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194/hanlin-runtime-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194.zip"
+      },
+      {
+        "apiUrl": "https://api.github.com/repos/davidpovarsky/hanlin-ai/releases/assets/797265199",
+        "contentType": "application/octet-stream",
+        "createdAt": "2026-11-26T18:50:33Z",
+        "digest": "sha256:9ae89508107207c03f6b5dc55bdf71288c29ee14b388473266fcab6b7606b1c3",
+        "downloadCount": 0,
+        "id": "RA_kwDOTTRem84vhU0v",
+        "label": "",
+        "name": "node-xcframework.sha256",
+        "size": 93,
+        "state": "uploaded",
+        "updatedAt": "2026-11-26T18:50:33Z",
+        "url": "https://github.com/davidpovarsky/hanlin-ai/releases/download/runtime-core-v1-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194/node-xcframework.sha256"
+      },
+      {
+        "apiUrl": "https://api.github.com/repos/davidpovarsky/hanlin-ai/releases/assets/797265191",
+        "contentType": "application/octet-stream",
+        "createdAt": "2026-11-26T18:50:33Z",
+        "digest": "sha256:d1f1110aeb0714024338f11375c5f759a834ae7bf749b8f7d97409c212306a7a",
+        "downloadCount": 0,
+        "id": "RA_kwDOTTRem84vhU0n",
+        "label": "",
+        "name": "runtime-bundle.sha256",
+        "size": 150,
+        "state": "uploaded",
+        "updatedAt": "2026-11-26T18:50:33Z",
+        "url": "https://github.com/davidpovarsky/hanlin-ai/releases/download/runtime-core-v1-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194/runtime-bundle.sha256"
+      },
+      {
+        "apiUrl": "https://api.github.com/repos/davidpovarsky/hanlin-ai/releases/assets/797265186",
+        "contentType": "application/json",
+        "createdAt": "2026-11-26T18:50:33Z",
+        "digest": "sha256:f829c24da20ca914186b41b23866229f51c5527917dc3de775a33192eac01c45",
+        "downloadCount": 0,
+        "id": "RA_kwDOTTRem84vhU0i",
+        "label": "",
+        "name": "RuntimeProvenance.json",
+        "size": 2062,
+        "state": "uploaded",
+        "updatedAt": "2026-11-26T18:50:33Z",
+        "url": "https://github.com/davidpovarsky/hanlin-ai/releases/download/runtime-core-v1-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194/RuntimeProvenance.json"
+      }
+    ],
+    "id": "RE_kwDOTTRem84bZ-PW",
+    "isDraft": false,
+    "isPrerelease": false,
+    "tagName": "runtime-core-v1-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194",
+    "targetCommitish": "4784dd99c3e5892ef726e7a3cce6587eb7847997",
+    "url": "https://github.com/davidpovarsky/hanlin-ai/releases/tag/runtime-core-v1-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194"
+  },
+  "tagRef": {
+    "ref": "refs/tags/runtime-core-v1-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194",
+    "node_id": "REF_kwDOTTRem9oAWnJlZnMvdGFncy9ydW50aW1lLWNvcmUtdjEtMmFjOTFkYjI4YzBiZWU1M2FlNTNhZmFlOGUzMGE5MzRlN2EyM2Q1YzcwNmNjMzIxZjdjOTFjYmM2ODUyMzE5NA",
+    "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/git/refs/tags/runtime-core-v1-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194",
+    "object": {
+      "sha": "4784dd99c3e5892ef726e7a3cce6587eb7847997",
+      "type": "commit",
+      "url": "https://api.github.com/repos/davidpovarsky/hanlin-ai/git/commits/4784dd99c3e5892ef726e7a3cce6587eb7847997"
+    }
+  },
+  "originalChecksumCommand": {
+    "exitCode": 0,
+    "stdout": "hanlin-runtime-2ac91db28c0bee53ae53afae8e30a934e7a23d5c706cc321f7c91cbc68523194.zip: OK\n",
+    "stderr": ""
+  },
+  "result": "PUBLISHED_AND_ALL_FOUR_ORIGINAL_ASSETS_READBACK_VERIFIED",
+  "appNativeAcceptance": "NOT_PROVEN_BY_ARTIFACT_RECOVERY"
+}

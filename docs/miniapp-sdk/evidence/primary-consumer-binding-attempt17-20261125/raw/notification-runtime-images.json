@@ -1,0 +1,30 @@
+{
+  "source": "cffe7f75436aa2e37ec5d82891937965c0407d2d",
+  "observedAt": "2026-11-25T07:42:38.931900+00:00",
+  "consumerReceiptSHA256": "578d19b0d0fbcdbfdf501fcb141017343d10b974533358a54b52e78bd1043805",
+  "images": [
+    {
+      "app": "HanlinMiniApps.app",
+      "extension": "HanlinMiniAppsNotificationService.appex",
+      "debugImages": [
+        {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsNotificationService.appex/HanlinMiniAppsNotificationService.debug.dylib",
+          "bytes": 21564144,
+          "sha256": "e180275d27cb648701745887a90925c9bdd1822443bda29eec14138b29999a3e"
+        }
+      ]
+    },
+    {
+      "app": "AI_Hanlin.app",
+      "extension": "ChavrusaChatNotificationService.appex",
+      "debugImages": [
+        {
+          "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/Debug-iphonesimulator/AI_Hanlin.app/PlugIns/ChavrusaChatNotificationService.appex/ChavrusaChatNotificationService.debug.dylib",
+          "bytes": 28194512,
+          "sha256": "116e44f3f59bbe9a3a7c8881ccc2ecb99e9521dec60c3af8768d4f20c8f9d94a"
+        }
+      ]
+    }
+  ],
+  "boundary": "Actual completed extension implementation images; supplements immutable launcher/Info/entitlement receipt without rebuilding or modifying products."
+}

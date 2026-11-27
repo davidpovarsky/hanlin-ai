@@ -13,6 +13,16 @@ import AppKit
 public struct HanlinToolActivityHeader: View {
     public enum Family: String, Sendable {
         case generic, webSearch, fileOperation, codeExecution, command, sourceSearch, imageGeneration, map
+        case calendarSearch, calendarRead, calendarCreate, calendarUpdate, calendarDelete, calendarComplete, calendarAccess
+        case memorySave, memoryRecall, memoryUpdate
+
+        var isDomainActivity: Bool {
+            switch self {
+            case .calendarSearch, .calendarRead, .calendarCreate, .calendarUpdate, .calendarDelete, .calendarComplete, .calendarAccess,
+                 .memorySave, .memoryRecall, .memoryUpdate: true
+            default: false
+            }
+        }
     }
     private let title: String
     private let status: String
@@ -64,7 +74,9 @@ public struct HanlinToolActivityHeader: View {
 
     private static func supportsLiveSurface(_ family: Family) -> Bool {
         switch family {
-        case .webSearch, .sourceSearch, .codeExecution, .command, .map: true
+        case .webSearch, .sourceSearch, .codeExecution, .command, .map,
+             .calendarSearch, .calendarRead, .calendarCreate, .calendarUpdate, .calendarDelete, .calendarComplete, .calendarAccess,
+             .memorySave, .memoryRecall, .memoryUpdate: true
         // A file percentage, flight path or price requires structured Host
         // progress. Never substitute a demo timer or invent those semantics.
         default: false
@@ -154,7 +166,9 @@ public struct HanlinToolActivityHeader: View {
 
     private var iconColor: Color {
         switch family {
-        case .webSearch, .sourceSearch, .map: blue
+        case .webSearch, .sourceSearch, .map,
+             .calendarSearch, .calendarRead, .calendarCreate, .calendarUpdate, .calendarDelete, .calendarComplete, .calendarAccess,
+             .memorySave, .memoryRecall, .memoryUpdate: blue
         case .fileOperation: Color(red: 0.40, green: 0.50, blue: 0.70)
         default: .gray
         }
@@ -221,6 +235,9 @@ public struct HanlinToolActivityHeader: View {
                 if family == .webSearch || family == .sourceSearch {
                     webScanner(seconds: seconds)
                         .frame(minWidth: 32, idealWidth: 168, maxWidth: 168)
+                } else if family.isDomainActivity {
+                    HanlinToolDomainActivityGlyph(family: family, seconds: seconds, color: blue)
+                        .frame(width: 76, height: 34)
                 } else {
                     networkPulse(seconds: seconds)
                         .frame(width: 68, height: 27)

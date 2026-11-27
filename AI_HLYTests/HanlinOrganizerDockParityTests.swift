@@ -1698,28 +1698,62 @@ struct ComposerActionsParityTests {
 // MARK: - 7A.9 OriginalSourceNonRegressionTests
 
 @MainActor
-@Suite("7A.9 OriginalSourceNonRegressionTests — Untouched Classic Chat Bubbles & Components", .serialized)
+@Suite("7A.9 OriginalSourceNonRegressionTests — Canonical Classic Chat Sources", .serialized)
 struct OriginalSourceNonRegressionTests {
+    private struct SourcePreservationContract: Decodable {
+        struct File: Decodable {
+            let normalizedBytes: Int
+            let normalizedSHA256: String
+        }
+        let schemaVersion: Int
+        let files: [String: File]
+        let identifierOwners: [String: String]
+        let appDelegations: [String]
+    }
 
-    @Test("9.1 ChatViewComponents.swift and ChatandFile.swift retain all original bubble identifiers")
+    private func preservationContract(repoRoot: URL) throws -> SourcePreservationContract {
+        let raw = try Data(contentsOf: repoRoot.appendingPathComponent(
+            "docs/hanlin-dock-v33-source-parity/SOURCE_PRESERVATION_V2.json"
+        ))
+        let data = Data(String(decoding: raw, as: UTF8.self)
+            .replacingOccurrences(of: "\r\n", with: "\n").utf8)
+        let digest = SHA256.hash(data: data).map { String(format: "%02x", $0) }.joined()
+        // A reviewed, immutable expectation; CI never regenerates this from files under test.
+        try #require(digest == "169e270d596fa000ce9cb043fa55f765cda62fd6043df49eb3bad8e2e160e6e3")
+        let contract = try JSONDecoder().decode(SourcePreservationContract.self, from: data)
+        try #require(contract.schemaVersion == 2)
+        try #require(contract.files.count == 19)
+        try #require(contract.identifierOwners.count == 7)
+        try #require(contract.appDelegations.count == 3)
+        return contract
+    }
+
+    @Test("9.1 Original bubble identifiers retain canonical app and shared SDK ownership")
     func chatViewComponentsAndChatAndFileRetainOriginalIdentifiers() throws {
         let repoRoot = URL(fileURLWithPath: #filePath)
             .deletingLastPathComponent()
             .deletingLastPathComponent()
-
-        let componentsURL = repoRoot.appendingPathComponent("AI_HLY/Views/Components/ChatViewComponents.swift")
-        let chatAndFileURL = repoRoot.appendingPathComponent("AI_HLY/Views/Components/ChatandFile.swift")
-
-        let componentsSource = try String(contentsOf: componentsURL, encoding: .utf8)
-        let chatAndFileSource = try String(contentsOf: chatAndFileURL, encoding: .utf8)
-
-        #expect(componentsSource.contains("hanlin-user-bubble"))
-        #expect(componentsSource.contains("hanlin-assistant-bubble"))
-        #expect(componentsSource.contains("hanlin-search-bubble"))
-        #expect(componentsSource.contains("hanlin-info-bubble"))
-        #expect(componentsSource.contains("hanlin-action-buttons-row"))
-        #expect(componentsSource.contains("hanlin-code-block-row"))
-        #expect(componentsSource.contains("hanlin-html-web-bubble"))
+        let contract = try preservationContract(repoRoot: repoRoot)
+        let componentsPath = "AI_HLY/Views/Components/ChatViewComponents.swift"
+        let componentsSource = try String(contentsOf: repoRoot.appendingPathComponent(componentsPath), encoding: .utf8)
+        let chatAndFileSource = try String(contentsOf: repoRoot.appendingPathComponent(
+            "AI_HLY/Views/Components/ChatandFile.swift"
+        ), encoding: .utf8)
+        let expectedIdentifiers: Set<String> = [
+            "hanlin-user-bubble", "hanlin-assistant-bubble", "hanlin-search-bubble",
+            "hanlin-info-bubble", "hanlin-action-buttons-row", "hanlin-code-block-row",
+            "hanlin-html-web-bubble"
+        ]
+        #expect(Set(contract.identifierOwners.keys) == expectedIdentifiers)
+        for identifier in expectedIdentifiers.sorted() {
+            let owner = try #require(contract.identifierOwners[identifier])
+            try #require(contract.files[owner] != nil)
+            let ownerSource = try String(contentsOf: repoRoot.appendingPathComponent(owner), encoding: .utf8)
+            #expect(ownerSource.contains(identifier), Comment(rawValue: identifier + " in " + owner))
+        }
+        for delegation in contract.appDelegations {
+            #expect(componentsSource.contains(delegation), Comment(rawValue: delegation))
+        }
         #expect(!chatAndFileSource.isEmpty)
     }
 
@@ -1728,6 +1762,7 @@ struct OriginalSourceNonRegressionTests {
         let repoRoot = URL(fileURLWithPath: #filePath)
             .deletingLastPathComponent()
             .deletingLastPathComponent()
+        let contract = try preservationContract(repoRoot: repoRoot)
 
         func normalizedSHA256AndLength(relativePath: String) throws -> (String, Int) {
             let url = repoRoot.appendingPathComponent(relativePath)
@@ -1739,22 +1774,19 @@ struct OriginalSourceNonRegressionTests {
             return (digest, data.count)
         }
 
-        let (componentsSHA, componentsBytes) = try normalizedSHA256AndLength(
-            relativePath: "AI_HLY/Views/Components/ChatViewComponents.swift"
-        )
+        for relativePath in contract.files.keys.sorted() {
+            let expected = try #require(contract.files[relativePath])
+            let (digest, length) = try normalizedSHA256AndLength(relativePath: relativePath)
+            #expect(length == expected.normalizedBytes, Comment(rawValue: relativePath))
+            #expect(digest == expected.normalizedSHA256, Comment(rawValue: relativePath))
+        }
+
+        // This untouched original file keeps its original V1 assertions verbatim.
         let (chatAndFileSHA, chatAndFileBytes) = try normalizedSHA256AndLength(
             relativePath: "AI_HLY/Views/Components/ChatandFile.swift"
         )
-        let (apiManagerSHA, apiManagerBytes) = try normalizedSHA256AndLength(
-            relativePath: "AI_HLY/Services/ChatServices/APIManager.swift"
-        )
-
-        #expect(componentsBytes == 245684)
-        #expect(componentsSHA == "cbcbdffd5a05abe6889b9eafe83a5266661f61c6440c6e12ac74be4565ba1901")
         #expect(chatAndFileBytes == 1966)
         #expect(chatAndFileSHA == "3260125c5dece237c8775806b21c470275c9cb5a88328fa6fba2f283c8f3e26d")
-        #expect(apiManagerBytes == 197303)
-        #expect(apiManagerSHA == "ec09f12217985b6f37e9f88ea6653eff2823a31f96a9eb0ad6fe1062ea204df4")
 
         let sourceRefURL = repoRoot.appendingPathComponent("docs/hanlin-dock-v33-source-parity/SOURCE_REFERENCE_AND_SHA.md")
         let sourceRefText = try String(contentsOf: sourceRefURL, encoding: .utf8)

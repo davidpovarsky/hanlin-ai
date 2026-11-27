@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "status": "STATIC_REVIEW_READY_NOT_LAUNCHED",
+  "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-draft/focused19-recovery-controller-v11b.py",
+  "bytes": 72636,
+  "sha256": "332728f7590a572aac6aaf61f5bb6e8b12a3d7d103c185da97fbfba2e5c6ddc4",
+  "baseSHA256": "f517434f396cbddf2c5c2fcc2870da1112a432f865bbbcb9767ee656c885b73c",
+  "diff": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-draft/focused19-recovery-controller-v11b.diff",
+    "bytes": 5490,
+    "sha256": "428874fde079a719cbe0eea8ea328583e9264476e18cea7bd704dac8693cccb4"
+  },
+  "AST": "PASS",
+  "undefinedGlobalNames": [],
+  "allTopLevelBindingsUnchanged": true,
+  "liveGroupASTUnchanged": true,
+  "currentExecutionTryFinallyASTUnchanged": true,
+  "id": "focused19-v11",
+  "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "newHistoryField": "historicalProcessGroupExclusions",
+  "originalRejectedDecisionSHA256": "eb1af82f6ccb1bb00a0f61b80f16ee6cef3099f0b7519ea8aa32afd781c9d6ea",
+  "unchargedRejection": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-preflight-rejection.json",
+    "sha256": "ff4b426a7f64e21a32890cde78f6935237f75b07a26725c1d07181ddc23cdae9"
+  },
+  "actualPGIDObservation": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-historical-group-observation.json",
+    "sha256": "4aa9fa8360003410a60e4eeaf45040fcf18c5285198f13d5707c9c38ca9d89b7"
+  },
+  "UTCObservation": {
+    "path": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/focused19-v11-historical-group-utc.json",
+    "sha256": "bcdf20adb75298ee011415a59239c8a5eb5ed1ff589875726264d94ba680e2de"
+  },
+  "verifiedPastLifetime": {
+    "historicalPGID": 44325,
+    "finishedAtUTC": "2026-11-25T12:51:42.581602+00:00",
+    "currentStartedAtUTC": "2026-11-25T16:19:11+00:00",
+    "currentCommand": "/private/var/run/com.apple.security.cryptexd/mnt/com.apple.iPhoneOS.SimulatorRuntime-v24.2.8117.0.3CDVUO/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 27.2.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/People.framework/peopled",
+    "afterSeconds": 12448.418398
+  },
+  "futureFreshExclusionProof": null,
+  "nativeExecution": "NOT_RUN",
+  "mutations": "Only new Oracle controller/diff/review. Rejected controller/decision/log/primary and all source/history/charges unchanged."
+}

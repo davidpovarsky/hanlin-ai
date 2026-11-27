@@ -29,16 +29,19 @@ struct ProviderRoutingTests {
         #expect(desc.headers.isEmpty)
     }
 
-    @Test("Native and historical Responses spellings select the original Responses adapter")
-    func testOpenAIResponseRouting() {
-        for apiType in ["OpenAI-Response", "openAIResponse", "openai-responses"] {
-            let config = HanlinChatModelConfiguration(
-                modelID: "gpt-4o", displayName: "GPT-4o", company: "OpenAI",
-                apiType: apiType, endpoint: "https://api.openai.com/v1/responses", credential: "fixture-only"
-            )
+    @Test("Saved Responses dialects select Responses on official and custom hosts",
+          arguments: ["OpenAI-Response", "openai-responses", "openAIResponse", "openai-chatgpt-plan"])
+    func testOpenAIResponseRouting(apiType: String) {
+        for (company, endpoint) in [
+            ("OPENAI", "https://api.openai.com/v1/responses"),
+            ("OPENAI", "https://proxy.invalid/v1/responses"),
+            ("Custom provider", "https://proxy.invalid/v1/responses")
+        ] {
+            let config = HanlinChatModelConfiguration(modelID: "fixture-model", company: company,
+                apiType: apiType, endpoint: endpoint, credential: "synthetic-fixture")
             let descriptor = HanlinAISDKProviderFactory.descriptor(for: config)
             #expect(descriptor.kind == .openAIResponses)
-            #expect(descriptor.baseURL.absoluteString == "https://api.openai.com/v1")
+            #expect(descriptor.baseURL.path == "/v1")
         }
     }
 

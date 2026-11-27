@@ -1,5 +1,6 @@
 import Foundation
 import HanlinChatCore
+import HanlinLocalization
 import SwiftData
 
 /// Owns the original schema, persistence and bootstrap for the embedded UI.
@@ -37,8 +38,8 @@ public final class HanlinApplicationContext {
     public static var schema: Schema { AppDataManager.schema }
     public static var modelTypes: [any PersistentModel.Type] { AppDataManager.modelTypes }
 
-    /// Creates the same conversation and welcome row as the original workspace,
-    /// using the original model readiness/selection policy.
+    /// Creates an empty conversation using the shared localized title and
+    /// the original model readiness/selection policy.
     @discardableResult
     public func createConversation(title: String? = nil) throws -> UUID {
         dataManager.preloadDataIfNeeded()
@@ -90,28 +91,26 @@ public struct HanlinConversationSummary: Identifiable, Hashable, Sendable {
 }
 
 /// One creation implementation serves both the original workspace and the
-/// public context. Original model selection and welcome text are preserved.
+/// public context. New conversations contain only messages the user actually sends.
 @MainActor
 enum HanlinConversationCreation {
+    static var defaultTitle: String { String(localized: "New chat", bundle: HanlinLocalization.bundle) }
+
     static func create(in context: ModelContext, title: String? = nil) throws -> ChatRecords {
         let models = try context.fetch(FetchDescriptor<AllModels>(
             sortBy: [SortDescriptor(\AllModels.position, order: .forward)]))
         let providers = try context.fetch(FetchDescriptor<APIKeys>())
         guard let selectedIndex = HanlinDefaultChatPolicy.creationModelIndex(
             in: models, providers: providers) else { throw HanlinApplicationError.noChatModelReady }
-        let language = Locale.preferredLanguages.first ?? "zh-Hans"
-        let chatName = title ?? (language.hasPrefix("zh") ? "新群聊" : "New Group Chat")
-        let welcomeText = language.hasPrefix("zh")
-            ? "欢迎加入新群聊👏" : "Welcome to the new group chat! 👏"
-        let record = ChatRecords(name: chatName, type: "chat", lastEdited: Date(), useModel: selectedIndex)
-        let welcome = ChatMessages(role: "information", text: welcomeText,
-            reasoning: "", modelDisplayName: "System", timestamp: Date(), record: record)
+        let suppliedTitle = title?.trimmingCharacters(in: .whitespacesAndNewlines)
+        let hasCustomTitle = !(suppliedTitle?.isEmpty ?? true)
+        let record = ChatRecords(name: hasCustomTitle ? suppliedTitle : defaultTitle,
+            type: "chat", lastEdited: Date(), useModel: selectedIndex)
+        record.metadataWasManuallyEdited = hasCustomTitle
         context.insert(record)
-        context.insert(welcome)
         do { try context.save() }
         catch {
             // Remove only this new insertion; unrelated host edits are not rolled back.
-            context.delete(welcome)
             context.delete(record)
             throw error
         }

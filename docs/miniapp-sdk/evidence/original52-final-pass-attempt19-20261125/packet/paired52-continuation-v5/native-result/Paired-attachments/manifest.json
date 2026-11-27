@@ -1,0 +1,125 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "E742FBCD-8FF0-4130-B143-7F8328637138",
+        "deviceName" : "HanlinPaired-local",
+        "exportedFileName" : "82DB4296-B918-4BB0-A61B-15F1C253A260.json",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "notification-installed-expo-action-error_0_04317910-8852-4748-8FB7-D2089717DE9C.json",
+        "timestamp" : 1795630316.042
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "E742FBCD-8FF0-4130-B143-7F8328637138",
+        "deviceName" : "HanlinPaired-local",
+        "exportedFileName" : "82924EE8-F469-43B1-BC0D-4642D32A81A7.json",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "notification-installed-expo-result_0_3DA7E5BD-21D1-491B-B6EE-E3E49815C7FC.json",
+        "timestamp" : 1795630316.041
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "E742FBCD-8FF0-4130-B143-7F8328637138",
+        "deviceName" : "HanlinPaired-local",
+        "exportedFileName" : "598CD74F-2A61-4AEB-8B2F-136BB592E5BA.json",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "expo-installed-action-reply_0_D13E4AE8-B6C3-4938-97ED-D299E97D5731.json",
+        "timestamp" : 1795630315.867
+      }
+    ],
+    "testIdentifier" : "HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure()",
+    "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testInstalledExpoActionsReturnActualReplyAndFailure"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "E742FBCD-8FF0-4130-B143-7F8328637138",
+        "deviceName" : "HanlinPaired-local",
+        "exportedFileName" : "FBA69ED6-C941-4829-9DAD-89D40822277E.json",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "expo-prepared-widget-actual-consumer_0_B1D9D666-9253-4C38-A48E-57766B5AA72F.json",
+        "timestamp" : 1795630316.871
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "E742FBCD-8FF0-4130-B143-7F8328637138",
+        "deviceName" : "HanlinPaired-local",
+        "exportedFileName" : "6BC7E618-0D9D-409E-9B9B-BD8536B26640.json",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "expo-prepared-widget-state-receipt_0_28A121B3-5B8F-44D8-BDF7-58F51CC74D5B.json",
+        "timestamp" : 1795630316.871
+      }
+    ],
+    "testIdentifier" : "HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer()",
+    "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYTests/HanlinExpoHostServicesAcceptanceTests/testPreparedExpoWidgetPublicationReachesExistingConsumer"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "E742FBCD-8FF0-4130-B143-7F8328637138",
+        "deviceName" : "HanlinPaired-local",
+        "exportedFileName" : "D3653C03-C45F-4AA8-A072-197235C668F5.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "MiniApps authoring accessibility_0_9A9CF541-45E8-4F51-90BE-FAB14A23EA02.txt",
+        "timestamp" : 1795631122.543
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "E742FBCD-8FF0-4130-B143-7F8328637138",
+        "deviceName" : "HanlinPaired-local",
+        "exportedFileName" : "F8C931EF-2157-436B-8A3C-D526C2A63CE3.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "MiniApps authoring_0_01C327BA-698A-443A-952E-BBB5526E1503.png",
+        "timestamp" : 1795631120.996
+      }
+    ],
+    "testIdentifier" : "MiniAppAuthoringUITests/testMalformedArchiveShowsOriginalImportDiagnostic()",
+    "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/MiniAppAuthoringUITests/testMalformedArchiveShowsOriginalImportDiagnostic"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "E742FBCD-8FF0-4130-B143-7F8328637138",
+        "deviceName" : "HanlinPaired-local",
+        "exportedFileName" : "7AB37F25-35FB-4B19-A6B8-7A5E75338714.txt",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Hanlin AI authoring accessibility_0_B91373D0-0874-45AE-BDD9-520AE79157BE.txt",
+        "timestamp" : 1795631412.18
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "E742FBCD-8FF0-4130-B143-7F8328637138",
+        "deviceName" : "HanlinPaired-local",
+        "exportedFileName" : "01C70670-F4BB-4B4D-9C2B-5750A14A9018.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Hanlin AI authoring_0_D0CBB7F4-8B96-4CB4-A764-5FF81086D0AD.png",
+        "timestamp" : 1795631411.446
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "E742FBCD-8FF0-4130-B143-7F8328637138",
+        "deviceName" : "HanlinPaired-local",
+        "exportedFileName" : "630F42A1-7F1D-4D05-B802-56FCCBBCC8BA.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "MiniApp repaired native result_0_E54414A2-55E1-44FB-A2F7-3D5CEFECF259.png",
+        "timestamp" : 1795631405.252
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "E742FBCD-8FF0-4130-B143-7F8328637138",
+        "deviceName" : "HanlinPaired-local",
+        "exportedFileName" : "44AE029D-E51F-4377-A1DD-D392335EA6D8.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "MiniApp original TypeScript diagnostics_0_4DDE6FF7-294C-456E-A405-54C007705836.png",
+        "timestamp" : 1795631201.691
+      }
+    ],
+    "testIdentifier" : "MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport()",
+    "testIdentifierURL" : "test://com.apple.xcode/AI_HLY/AI_HLYUITests/MiniAppAuthoringUITests/testTypeErrorRepairsThroughOriginalAgentBuildAndCompanionImport"
+  }
+]

@@ -1,0 +1,170 @@
+{
+  "schema": 1,
+  "capturedAt": "2026-11-25T19:50:24.893316+00:00",
+  "members": [
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v5-owned-interrupt.json",
+      "name": "notification-os-v5-owned-interrupt.json",
+      "bytes": 3523,
+      "sha256": "04b8e7b8c342fb96c4257887b76888c49676ec01a0ec541fa0c7f3d0882a4c11",
+      "encoding": "raw",
+      "storedBytes": 3523,
+      "storedSHA256": "04b8e7b8c342fb96c4257887b76888c49676ec01a0ec541fa0c7f3d0882a4c11"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v5-prebuilt-xctestrun-inspection.json",
+      "name": "notification-os-v5-prebuilt-xctestrun-inspection.json",
+      "bytes": 9165,
+      "sha256": "5e17d5519f116fea9b2ccbbf9535523650ea0b0f000bcda765286a9f8ec41f17",
+      "encoding": "raw",
+      "storedBytes": 9165,
+      "storedSHA256": "5e17d5519f116fea9b2ccbbf9535523650ea0b0f000bcda765286a9f8ec41f17"
+    },
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/HanlinMiniApps_iphonesimulator27.0-arm64.xctestrun",
+      "name": "HanlinMiniApps_iphonesimulator27.0-arm64.xctestrun",
+      "bytes": 16737,
+      "sha256": "2d6b493aa93663d03e17a15722eab010326b260ccbbb454ed12077cae45cda96",
+      "encoding": "raw",
+      "storedBytes": 16737,
+      "storedSHA256": "2d6b493aa93663d03e17a15722eab010326b260ccbbb454ed12077cae45cda96"
+    },
+    {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v5/owned-xcode7530-sample.txt",
+      "name": "owned-xcode7530-sample.txt.gz",
+      "bytes": 482337,
+      "sha256": "76cfe97ac166b10327353980aff439d22e5a5df2b5c9c42c1a044c0c2a71bfb3",
+      "encoding": "gzip",
+      "storedBytes": 90666,
+      "storedSHA256": "14472f936905c43c03aa58835b7cd525ff8c651dfc7bb025e698a5fec566ce96"
+    }
+  ],
+  "record": {
+    "schema": 1,
+    "observedAt": "2026-11-25T19:50:20.175053+00:00",
+    "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+    "reason": "Root-authorized bounded own-Xcode sample and SIGINT to owned controller after growing repeated package resolution without any XCTest case",
+    "identityQuery": {
+      "argv": [
+        "/bin/ps",
+        "-p",
+        "7320,7517,7530",
+        "-o",
+        "pid=,ppid=,pgid=,state=,command="
+      ],
+      "exitCode": 0,
+      "stdout": " 7320     1  7320 Ss   /opt/homebrew/Cellar/python@3.12/3.12.16/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v10.py --decision /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v5-decision.json\n 7517  7320  7517 Rs   /opt/homebrew/Cellar/python@3.12/3.12.16/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v10.py --decision /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v5/decision.json --child test\n 7530  7517  7517 R    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project AI_HLY.xcodeproj -destination platform=iOS Simulator,id=E742FBCD-8FF0-4130-B143-7F8328637138 -parallel-testing-enabled NO -derivedDataPath /Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete -clonedSourcePackagesDirPath /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/SourcePackages -skipPackagePluginValidation -skipMacroValidation CODE_SIGNING_ALLOWED=YES CODE_SIGNING_REQUIRED=YES CODE_SIGN_IDENTITY=- -collect-test-diagnostics never -scheme HanlinMiniApps test-without-building -resultBundlePath /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v5/test/NotificationOS.xcresult -only-testing:HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines\n",
+      "stderr": ""
+    },
+    "sampleCommand": {
+      "argv": [
+        "/usr/bin/sample",
+        "7530",
+        "3",
+        "10",
+        "-file",
+        "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v5/owned-xcode7530-sample.txt"
+      ],
+      "exitCode": 0,
+      "stdout": "",
+      "stderr": "Sampling process 7530 for 3 seconds with 10 milliseconds of run time between samples\nSampling completed, processing symbols...\nSample analysis of process 7530 written to file /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v5/owned-xcode7530-sample.txt\n",
+      "finishedAt": "2026-11-25T19:50:24.536258+00:00"
+    },
+    "sample": {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v5/owned-xcode7530-sample.txt",
+      "bytes": 482337,
+      "sha256": "76cfe97ac166b10327353980aff439d22e5a5df2b5c9c42c1a044c0c2a71bfb3"
+    },
+    "interrupt": {
+      "pid": 7320,
+      "signal": "SIGINT",
+      "sentAt": "2026-11-25T19:50:24.542197+00:00",
+      "verifiedCurrentArgv": " 7320 Ss   /opt/homebrew/Cellar/python@3.12/3.12.16/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v10.py --decision /Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/notification-os-v5-decision.json\n"
+    }
+  },
+  "xctestrun": {
+    "schema": 1,
+    "observedAt": "2026-11-25T19:50:24.546405+00:00",
+    "source": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+    "metadata": {
+      "path": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/remaining-native-product-metadata-v11.json",
+      "sha256": "b1163811263ef4b648e6d5e265c012cbbf5f946e504f5bd084d28fe13514d724"
+    },
+    "xctestrun": {
+      "role": "miniXctestrun",
+      "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/HanlinMiniApps_iphonesimulator27.0-arm64.xctestrun",
+      "bytes": 16737,
+      "sha256": "2d6b493aa93663d03e17a15722eab010326b260ccbbb454ed12077cae45cda96"
+    },
+    "topLevelKeys": [
+      "HanlinMiniAppsBootstrapTests",
+      "HanlinMiniAppsTests",
+      "HanlinMiniAppsUITests",
+      "__xctestrun_metadata__"
+    ],
+    "boundary": "Read-only existing authenticated built metadata; no file rewrite, test, build or resolution command."
+  },
+  "targetSummary": [
+    {
+      "plistPath": "/HanlinMiniAppsBootstrapTests",
+      "BlueprintName": "HanlinMiniAppsBootstrapTests",
+      "TestBundlePath": "__TESTROOT__/Debug-iphonesimulator/HanlinMiniAppsBootstrapTests.xctest",
+      "TestHostPath": "__PLATFORMS__/iPhoneSimulator.platform/Developer/Library/Xcode/Agents/xctest",
+      "DependentProductPaths": [
+        "__TESTROOT__/Debug-iphonesimulator/HanlinMiniApps.app",
+        "__TESTROOT__/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsTests.xctest",
+        "__TESTROOT__/Debug-iphonesimulator/HanlinMiniAppsBootstrapTests.xctest",
+        "__TESTROOT__/Debug-iphonesimulator/HanlinMiniAppsNotificationService.appex",
+        "__TESTROOT__/Debug-iphonesimulator/HanlinMiniAppsShare.appex",
+        "__TESTROOT__/Debug-iphonesimulator/HanlinMiniAppsTranslationProvider.appex",
+        "__TESTROOT__/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app",
+        "__TESTROOT__/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app/PlugIns/HanlinMiniAppsUITests.xctest",
+        "__TESTROOT__/Debug-iphonesimulator/HanlinMiniAppsWidgets.appex"
+      ],
+      "TestLanguage": "",
+      "TestRegion": ""
+    },
+    {
+      "plistPath": "/HanlinMiniAppsTests",
+      "BlueprintName": "HanlinMiniAppsTests",
+      "TestBundlePath": "__TESTHOST__/PlugIns/HanlinMiniAppsTests.xctest",
+      "TestHostPath": "__TESTROOT__/Debug-iphonesimulator/HanlinMiniApps.app",
+      "TestHostBundleIdentifier": "com.itorah.hanlinminiapps",
+      "DependentProductPaths": [
+        "__TESTROOT__/Debug-iphonesimulator/HanlinMiniApps.app",
+        "__TESTROOT__/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsTests.xctest",
+        "__TESTROOT__/Debug-iphonesimulator/HanlinMiniAppsBootstrapTests.xctest",
+        "__TESTROOT__/Debug-iphonesimulator/HanlinMiniAppsNotificationService.appex",
+        "__TESTROOT__/Debug-iphonesimulator/HanlinMiniAppsShare.appex",
+        "__TESTROOT__/Debug-iphonesimulator/HanlinMiniAppsTranslationProvider.appex",
+        "__TESTROOT__/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app",
+        "__TESTROOT__/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app/PlugIns/HanlinMiniAppsUITests.xctest",
+        "__TESTROOT__/Debug-iphonesimulator/HanlinMiniAppsWidgets.appex"
+      ],
+      "TestLanguage": "",
+      "TestRegion": ""
+    },
+    {
+      "plistPath": "/HanlinMiniAppsUITests",
+      "BlueprintName": "HanlinMiniAppsUITests",
+      "TestBundlePath": "__TESTHOST__/PlugIns/HanlinMiniAppsUITests.xctest",
+      "TestHostPath": "__TESTROOT__/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app",
+      "UITargetAppPath": "__TESTROOT__/Debug-iphonesimulator/HanlinMiniApps.app",
+      "TestHostBundleIdentifier": "com.itorah.hanlinminiapps.integration.uitests.xctrunner",
+      "IsUITestBundle": true,
+      "DependentProductPaths": [
+        "__TESTROOT__/Debug-iphonesimulator/HanlinMiniApps.app",
+        "__TESTROOT__/Debug-iphonesimulator/HanlinMiniApps.app/PlugIns/HanlinMiniAppsTests.xctest",
+        "__TESTROOT__/Debug-iphonesimulator/HanlinMiniAppsBootstrapTests.xctest",
+        "__TESTROOT__/Debug-iphonesimulator/HanlinMiniAppsNotificationService.appex",
+        "__TESTROOT__/Debug-iphonesimulator/HanlinMiniAppsShare.appex",
+        "__TESTROOT__/Debug-iphonesimulator/HanlinMiniAppsTranslationProvider.appex",
+        "__TESTROOT__/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app",
+        "__TESTROOT__/Debug-iphonesimulator/HanlinMiniAppsUITests-Runner.app/PlugIns/HanlinMiniAppsUITests.xctest",
+        "__TESTROOT__/Debug-iphonesimulator/HanlinMiniAppsWidgets.appex"
+      ],
+      "TestLanguage": "",
+      "TestRegion": ""
+    }
+  ]
+}

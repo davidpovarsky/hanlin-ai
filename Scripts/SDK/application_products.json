@@ -15,6 +15,10 @@
       "package": "HanlinSDK"
     },
     {
+      "product": "HanlinChatPresentation",
+      "package": "HanlinSDK"
+    },
+    {
       "product": "A2UISwiftCore",
       "package": "a2ui"
     },
@@ -205,6 +209,10 @@
     {
       "product": "LRUCache",
       "package": "LRUCache"
+    },
+    {
+      "product": "HanlinCameraCaptureUI",
+      "package": "HanlinSDK"
     }
   ],
   "externalPackages": [

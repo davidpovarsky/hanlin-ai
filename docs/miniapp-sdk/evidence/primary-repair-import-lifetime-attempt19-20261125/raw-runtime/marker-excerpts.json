@@ -1,0 +1,192 @@
+{
+  "source": "4cde88df07a2f3cd86cc99ad87786c79ae207390",
+  "excerpts": [
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v10-diagnostics-export/0_Test_HanlinPaired-local_Diagnostics/AI_HLYUITests-5D47B2CD-46E6-4C92-8B2E-C7A3AC68D0CF-Configuration-Test Scheme Action-Iteration-1/AI_HLYUITests-7D722BAF-C324-45C5-B39A-93F7337C63C0/Session-AI_HLYUITests-2026-11-25_171902-p5XxYC.log",
+      "sourceSHA256": "6aac24831c61489350623a0ab9389c9403bbbd14a4fb3a98da646571d10d7d65",
+      "matches": [
+        {
+          "line": 10446,
+          "text": "                                                StaticText, label: '[MiniApp repair 481496c9-4f80-44dc-aa23-99afa2f2a0e3]"
+        },
+        {
+          "line": 10448,
+          "text": "Original package: /Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/6210E35D-3370-435B-B777-BB7E4EAFE89F/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-481496c9-4f80-44dc-aa23-99afa2f2a0e3/MiniAppTypeError.hanlinNativeScript"
+        },
+        {
+          "line": 10449,
+          "text": "Working project: /Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/6210E35D-3370-435B-B777-BB7E4EAFE89F/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-481496c9-4f80-44dc-aa23-99afa2f2a0e3/project/"
+        },
+        {
+          "line": 10450,
+          "text": "Diagnostic report: /Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/6210E35D-3370-435B-B777-BB7E4EAFE89F/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-481496c9-4f80-44dc-aa23-99afa2f2a0e3/diagnostics.json"
+        },
+        {
+          "line": 10510,
+          "text": "    StaticText, label: '[MiniApp repair 481496c9-4f80-44dc-aa23-99afa2f2a0e3]"
+        },
+        {
+          "line": 10512,
+          "text": "Original package: /Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/6210E35D-3370-435B-B777-BB7E4EAFE89F/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-481496c9-4f80-44dc-aa23-99afa2f2a0e3/MiniAppTypeError.hanlinNativeScript"
+        },
+        {
+          "line": 10513,
+          "text": "Working project: /Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/6210E35D-3370-435B-B777-BB7E4EAFE89F/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-481496c9-4f80-44dc-aa23-99afa2f2a0e3/project/"
+        },
+        {
+          "line": 10514,
+          "text": "Diagnostic report: /Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/6210E35D-3370-435B-B777-BB7E4EAFE89F/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-481496c9-4f80-44dc-aa23-99afa2f2a0e3/diagnostics.json"
+        }
+      ],
+      "count": 8
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v10-diagnostics-export/0_Test_HanlinPaired-local_Diagnostics/AI_HLYUITests-5D47B2CD-46E6-4C92-8B2E-C7A3AC68D0CF-Configuration-Test Scheme Action-Iteration-1/AI_HLYUITests-7D722BAF-C324-45C5-B39A-93F7337C63C0/StandardOutputAndStandardError-com.itorah.chavrusachat.txt",
+      "sourceSHA256": "1fbe9ad52e783c25462291117caa27fc7ba0a8fce94cab9bdbae713b460d21a5",
+      "matches": [
+        {
+          "line": 884,
+          "text": "2026-11-25 17:21:11.658547+0100 AI_Hanlin[44690:6887265] HANLIN_MINIAPP_REPAIR_CLAIMED 481496C9-4F80-44DC-AA23-99AFA2F2A0E3"
+        },
+        {
+          "line": 885,
+          "text": "2026-11-25 17:21:11.788648+0100 AI_Hanlin[44690:6887265] HANLIN_MINIAPP_REPAIR_RECEIVING 481496C9-4F80-44DC-AA23-99AFA2F2A0E3"
+        },
+        {
+          "line": 899,
+          "text": "2026-11-25 17:21:12.329509+0100 AI_Hanlin[44690:6887265] HANLIN_MINIAPP_REPAIR_CONVERSATION F7C7C6DE-133C-45CF-A218-56D663979636"
+        },
+        {
+          "line": 901,
+          "text": "2026-11-25 17:21:12.380431+0100 AI_Hanlin[44690:6887265] HANLIN_MINIAPP_REPAIR_PENDING 481496C9-4F80-44DC-AA23-99AFA2F2A0E3"
+        },
+        {
+          "line": 1083,
+          "text": "                                                StaticText, 0x10dea26c0, identifier: 'hanlin-user-bubble', label: '[MiniApp repair 481496c9-4f80-44dc-aa23-99afa2f2a0e3]"
+        },
+        {
+          "line": 1085,
+          "text": "Original package: /Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/6210E35D-3370-435B-B777-BB7E4EAFE89F/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-481496c9-4f80-44dc-aa23-99afa2f2a0e3/MiniAppTypeError.hanlinNativeScript"
+        },
+        {
+          "line": 1086,
+          "text": "Working project: /Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/6210E35D-3370-435B-B777-BB7E4EAFE89F/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-481496c9-4f80-44dc-aa23-99afa2f2a0e3/project/"
+        },
+        {
+          "line": 1087,
+          "text": "Diagnostic report: /Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/6210E35D-3370-435B-B777-BB7E4EAFE89F/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-481496c9-4f80-44dc-aa23-99afa2f2a0e3/diagnostics.json"
+        },
+        {
+          "line": 1168,
+          "text": "                                          StaticText, 0x10cecabc0, identifier: 'hanlin-phase2-chat-id', label: 'F7C7C6DE-133C-45CF-A218-56D663979636' <AX element pid: 44690, elementOrHash.elementID: 5094588192.66>"
+        },
+        {
+          "line": 2515,
+          "text": "    \"XC_kAXXCAttributeLabel\" = \"F7C7C6DE-133C-45CF-A218-56D663979636\";"
+        },
+        {
+          "line": 2770,
+          "text": "2026-11-25 17:21:16.130212+0100 AI_Hanlin[44690:6887265] [Default] StaticText, label: 'F7C7C6DE-133C-45CF-A218-56D663979636' (AX element pid: 44690, elementOrHash.elementID: 5094588192.66) faulted in {"
+        },
+        {
+          "line": 3337,
+          "text": "    \"XC_kAXXCAttributeLabel\" = \"[MiniApp repair 481496c9-4f80-44dc-aa23-99afa2f2a0e3]\\n\\U05ea\\U05e7\\U05df \\U05d0\\U05ea \\U05d7\\U05d1\\U05d9\\U05dc\\U05ea \\U05d4\\U05de\\U05d9\\U05e0\\U05d9\\U05be\\U05d0\\U05e4\\U05dc\\U05d9\\U05e7\\U05e6\\U05d9\\U05d4 MiniAppTypeError.hanlinNativeScript \\U05d5\\U05d0\\U05ea \\U05d4\\U05e9\\U05d2\\U05d9\\U05d0\\U05d5\\U05ea \\U05d4\\U05de\\U05e6\\U05d5\\U05e8\\U05e4\\U05d5\\U05ea, \\U05e2\\U05d3 \\U05dc\\U05d1\\U05e0\\U05d9\\U05d9\\U05d4, \\U05d0\\U05d9\\U05de\\U05d5\\U05ea \\U05d5\\U05d9\\U05d9\\U05d1\\U05d5\\U05d0 \\U05de\\U05d5\\U05e6\\U05dc\\U05d7\\U05d9\\U05dd \\U05dc\\U05beHanlin MiniApps.\\nOriginal package: /Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/6210E35D-3370-435B-B777-BB7E4EAFE89F/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-481496c9-4f80-44dc-aa23-99afa2f2a0e3/MiniAppTypeError.hanlinNativeScript\\nWorking project: /Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/6210E35D-3370-435B-B777-BB7E4EAFE89F/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-481496c9-4f80-44dc-aa23-99afa2f2a0e3/project/\\nDiagnostic report: /Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/6210E35D-3370-435B-B777-BB7E4EAFE89F/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-481496c9-4f80-44dc-aa23-99afa2f2a0e3/diagnostics.json\\n\\n\\nUse get_miniapp_sdk for the current host APIs, original library types and examples. Use validate_miniapp with the working project; its sourceRoot identifies the editable project inside source/. Use write_miniapp to repair the actual source in that sourceRoot, run validation again, build with build_miniapp and deliver the resulting archive with import_miniapp. Query import_miniapp with the returned transfer_id for the actual installation result. Preserve package identity, functionality and user data. Report real compiler errors with their file/line/column; do not hide errors or treat a queued import as installed. Legacy Scripting is frozen; active targets are Expo, NativeScript and ScriptWidget.\\n\\nDiagnostics:\\n{\\n  \\\"diagnostics\\\" : [\\n    {\\n      \\\"category\\\" : \\\"information\\\",\\n      \\\"code\\\" : \\\"PACKAGE_COMPATIBILITY\\\",\\n      \\\"file\\\" : \\\"nativescript\\\\/app\\\\/bundle.mjs\\\",\\n      \\\"message\\\" : \\\"Prepared NativeScript application structure is valid.\\\"\\n    },\\n    {\\n      \\\"category\\\" : \\\"information\\\",\\n      \\\"code\\\" : \\\"PACKAGE_COMPATIBILITY\\\",\\n      \\\"file\\\" : \\\"nativescript\\\\/app\\\\/package.json\\\",\\n      \\\"message\\\" : \\\"NativeScript core @nativescript\\\\/core 9.1.4 is supported by embedded runtime 9.1.1.\\\"\\n    },\\n    {\\n      \\\"category\\\" : \\\"error\\\",\\n      \\\"code\\\" : \\\"TS2322\\\",\\n      \\\"column\\\" : 14,\\n      \\\"endColumn\\\" : 20,\\n      \\\"endLine\\\" : 1,\\n      \\\"file\\\" : \\\"index.ts\\\",\\n      \\\"line\\\" : 1,\\n      \\\"message\\\" : \\\"Type 'string' is not assignable to type 'number'.\\\"\\n    },\\n    {\\n      \\\"category\\\" : \\\"error\\\",\\n      \\\"code\\\" : \\\"MINIAPP_SOURCE_CHANGED\\\",\\n      \\\"file\\\" : \\\"index.ts\\\",\\n      \\\"message\\\" : \\\"The package no longer matches its recorded build: index.ts\\\",\\n      \\\"remediation\\\" : \\\"Repair and validate the source project, then build a fresh archive before importing.\\\"\\n    }\\n  ],\\n  \\\"engine\\\" : \\\"nativescript\\\",\\n  \\\"operation\\\" : \\\"import\\\",\\n  \\\"schemaVersion\\\" : 1,\\n  \\\"sdk\\\" : {\\n    \\\"compilerVersion\\\" : \\\"5.9.3\\\",\\n    \\\"manifestSHA256\\\" : \\\"4505c28495d8b6ecd1073254e0e395adcc898cc02dd1d40699591f51db4dee92\\\",\\n    \\\"packageVersions\\\" : {\\n      \\\"@hanlin\\\\/host-services\\\" : \\\"1.0.0\\\",\\n      \\\"@hanlin\\\\/notification-events\\\" : \\\"1.0.0\\\",\\n      \\\"@nativescript\\\\/core\\\" : \\\"9.1.4\\\",\\n      \\\"@nativescript\\\\/ios\\\" : \\\"9.1.1\\\",\\n      \\\"@nativescript\\\\/swift-ui\\\" : \\\"4.0.2\\\",\\n      \\\"@nativescript\\\\/types\\\" : \\\"9.1.4\\\",\\n      \\\"@nativescript\\\\/vite\\\" : \\\"8.0.24\\\",\\n      \\\"typescript\\\" : \\\"5.9.3\\\",\\n      \\\"vite\\\" : \\\"8.0.0\\\"\\n    }\\n  },\\n  \\\"sourceRoot\\\" : \\\"\\\\/Users\\\\/m1\\\\/Library\\\\/Developer\\\\/CoreSimulator\\\\/Devices\\\\/E742FBCD-8FF0-4130-B143-7F8328637138\\\\/data\\\\/Containers\\\\/Data\\\\/Application\\\\/D93ECA38-CC9A-4210-9018-4CB0417B906D\\\\/Library\\\\/Application Support\\\\/Hanlin\\\\/ScriptingPlatform\\\\/ImportStaging\\\\/scripting-import-c0733cf3-f110-4003-8f03-ab61a741ebdb\\\\/extracted\\\\/source\\\",\\n  \\\"succeeded\\\" : false\\n}\";"
+        },
+        {
+          "line": 3339,
+          "text": "2026-11-25 17:21:16.195467+0100 AI_Hanlin[44690:6887265] [Default] [First Match] match found and no more transformers in the current sequence - done, returning StaticText, label: '[MiniApp repair 481496c9-4f80-44dc-aa23-99afa2f2a0e3]"
+        },
+        {
+          "line": 3341,
+          "text": "Original package: /Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/6210E35D-3370-435B-B777-BB7E4EAFE89F/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-481496c9-4f80-44dc-aa23-99afa2f2a0e3/MiniAppTypeError.hanlinNativeScript"
+        },
+        {
+          "line": 3342,
+          "text": "Working project: /Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/6210E35D-3370-435B-B777-BB7E4EAFE89F/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-481496c9-4f80-44dc-aa23-99afa2f2a0e3/project/"
+        },
+        {
+          "line": 3343,
+          "text": "Diagnostic report: /Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/6210E35D-3370-435B-B777-BB7E4EAFE89F/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-481496c9-4f80-44dc-aa23-99afa2f2a0e3/diagnostics.json"
+        },
+        {
+          "line": 3498,
+          "text": "                                          StaticText, 0x10d806300, label: 'F7C7C6DE-133C-45CF-A218-56D663979636' <AX element pid: 44690, elementOrHash.elementID: 5094588192.66>"
+        },
+        {
+          "line": 3502,
+          "text": "                                                StaticText, 0x10cf1b700, label: '[MiniApp repair 481496c9-4f80-44dc-aa23-99afa2f2a0e3]"
+        },
+        {
+          "line": 3504,
+          "text": "Original package: /Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/6210E35D-3370-435B-B777-BB7E4EAFE89F/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-481496c9-4f80-44dc-aa23-99afa2f2a0e3/MiniAppTypeError.hanlinNativeScript"
+        },
+        {
+          "line": 3505,
+          "text": "Working project: /Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/6210E35D-3370-435B-B777-BB7E4EAFE89F/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-481496c9-4f80-44dc-aa23-99afa2f2a0e3/project/"
+        },
+        {
+          "line": 3506,
+          "text": "Diagnostic report: /Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/6210E35D-3370-435B-B777-BB7E4EAFE89F/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-481496c9-4f80-44dc-aa23-99afa2f2a0e3/diagnostics.json"
+        },
+        {
+          "line": 3603,
+          "text": "    StaticText, label: '[MiniApp repair 481496c9-4f80-44dc-aa23-99afa2f2a0e3]"
+        },
+        {
+          "line": 3605,
+          "text": "Original package: /Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/6210E35D-3370-435B-B777-BB7E4EAFE89F/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-481496c9-4f80-44dc-aa23-99afa2f2a0e3/MiniAppTypeError.hanlinNativeScript"
+        },
+        {
+          "line": 3606,
+          "text": "Working project: /Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/6210E35D-3370-435B-B777-BB7E4EAFE89F/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-481496c9-4f80-44dc-aa23-99afa2f2a0e3/project/"
+        },
+        {
+          "line": 3607,
+          "text": "Diagnostic report: /Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/6210E35D-3370-435B-B777-BB7E4EAFE89F/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-481496c9-4f80-44dc-aa23-99afa2f2a0e3/diagnostics.json"
+        },
+        {
+          "line": 4362,
+          "text": "sandbox_extension_issue_file failed for /v1/install/2607a055-adfd-45f2-8341-ef1a839868af: 2 (No such file or directory)"
+        }
+      ],
+      "count": 26
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v10-diagnostics-export/0_Test_HanlinPaired-local_Diagnostics/AI_HLYUITests-5D47B2CD-46E6-4C92-8B2E-C7A3AC68D0CF-Configuration-Test Scheme Action-Iteration-1/AI_HLYUITests-7D722BAF-C324-45C5-B39A-93F7337C63C0/StandardOutputAndStandardError-com.itorah.hanlinminiapps.txt",
+      "sourceSHA256": "7feb9112b2e7e257f0f620649ae06624c3dc7e00b5d03cef00153e23be665b87",
+      "matches": [
+        {
+          "line": 411436,
+          "text": "sandbox_extension_issue_file failed for /v1/repair/481496c9-4f80-44dc-aa23-99afa2f2a0e3: 2 (No such file or directory)"
+        },
+        {
+          "line": 411456,
+          "text": "HANLIN_IMPORT_PACKAGE_STARTED: url=/Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Shared/AppGroup/0AE57B5E-8263-4826-A629-EA76C9076428/HanlinSplit/v1/Authoring/v1/2607a055-adfd-45f2-8341-ef1a839868af/MiniApp.hanlinNativeScript"
+        },
+        {
+          "line": 533103,
+          "text": "HANLIN_INSTALL_PREVIEW_STARTED: canInstall=true"
+        }
+      ],
+      "count": 3
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v10-diagnostics-export/0_Test_HanlinPaired-local_Diagnostics/AI_HLYUITests-5D47B2CD-46E6-4C92-8B2E-C7A3AC68D0CF-Configuration-Test Scheme Action-Iteration-1/AI_HLYUITests-7D722BAF-C324-45C5-B39A-93F7337C63C0/StandardOutputAndStandardError.txt",
+      "sourceSHA256": "2ef30af3cef02e3dd8a120d5775bd4d4874b6353794aea83897e2e65fe1539a8",
+      "matches": [],
+      "count": 0
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v10-diagnostics-export/0_Test_HanlinPaired-local_Diagnostics/AI_HLYUITests-5D47B2CD-46E6-4C92-8B2E-C7A3AC68D0CF-Configuration-Test Scheme Action-Iteration-1/scheduling.log",
+      "sourceSHA256": "5d0308944062559a2192d7c8dc2a128accab79e9705c289722da921b264cbaf6",
+      "matches": [],
+      "count": 0
+    },
+    {
+      "sourcePath": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/focused19-v10-diagnostics-export/0_Test_HanlinPaired-local_Diagnostics/HanlinPaired-local_E742FBCD-8FF0-4130-B143-7F8328637138/testmanagerd.log",
+      "sourceSHA256": "d7ab473d6c8193169b345a1117d712459c7e66de0dc023e398d7bf5370f3da1b",
+      "matches": [],
+      "count": 0
+    }
+  ]
+}

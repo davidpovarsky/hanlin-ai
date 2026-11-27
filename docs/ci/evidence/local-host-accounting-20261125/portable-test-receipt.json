@@ -1,0 +1,16 @@
+{
+  "startedAt": "2026-11-25T05:36:01.953699+00:00",
+  "finishedAt": "2026-11-25T05:36:02.466614+00:00",
+  "exitCode": 0,
+  "durationSeconds": 0.512911724857986,
+  "command": [
+    "node",
+    "--test",
+    "--test-reporter=tap",
+    "Scripts/Runtime/Tests/upstream-host-accounting.test.mjs",
+    "Scripts/Runtime/Tests/local-mac-host-accounting.test.mjs"
+  ],
+  "node": "v24.22.0",
+  "planSHA256": "9cc0636e0f405f0f68de8470ecdac7f8774ad6747936e2fec672bc8ced360c40",
+  "logSHA256": "f1d8010ec8c8737e51d2e560bb02a1b744d9207cdd5faf7f7b6998c83b16c0a5"
+}

@@ -1,0 +1,25 @@
+{
+  "status": "PROCESS_PASS_REQUIRES_EXACT_TEST_REVIEW",
+  "source": "b0cf26a668a698682f5307252f14cf0af8c6d00a",
+  "controllerPID": 98382,
+  "startedAt": "2026-11-25T05:36:46.031709+00:00",
+  "argv": [
+    "swift",
+    "test",
+    "--package-path",
+    "Packages/HanlinPlatform",
+    "--filter",
+    "HanlinNotificationInvocationTests"
+  ],
+  "log": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete/build/primary-control/companion-native-v1/notification-package/swift-notification-suite.log",
+  "expectedTestFunctions": 8,
+  "NS5": "NOT_RUN",
+  "pid": 98387,
+  "exitCode": 0,
+  "processFinishedAt": "2026-11-25T05:37:12.151956+00:00",
+  "remainingOwnedProcessGroup": [],
+  "finishedAt": "2026-11-25T05:37:12.170401+00:00",
+  "elapsedSeconds": 26.137203625010443,
+  "logSHA256": "3e8a1217f04fe6f439d0adf25f691f1af33123b6a9b5a045ffc5ee4b58b941fe",
+  "logBytes": 6247
+}

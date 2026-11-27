@@ -1,0 +1,40 @@
+{
+  "source": "f6bb035f2828ec24a683bb2f5f1dddb27143dc4a",
+  "parent": "958cf666da7be83b9b63e46e3013e3344fb31585",
+  "changedPaths": [
+    "AI_HLYUITests/MiniAppAuthoringUITests.swift"
+  ],
+  "files": [
+    {
+      "path": "AI_HLYUITests/MiniAppAuthoringUITests.swift",
+      "bytes": 7752,
+      "sha256": "f566ad0222f585875528f9d040f1f4d1ae728fb76f25b575ef9ab923e617520c"
+    },
+    {
+      "path": "AI_HLY/Downstream/ChatCore/HanlinAppHostIntegration.swift",
+      "bytes": 23884,
+      "sha256": "f09bd56c25571bbc897fb40327b424ddc67f0e9926e86b7bf8d674eeaa5ce216"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/Host/miniapp-authoring.mjs",
+      "bytes": 50327,
+      "sha256": "fa5121902e231d5d44ad08bf47699784fd4d0bc2a98102f3a156e6e4ae79b9b9"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Core/MiniAppAuthoringService.swift",
+      "bytes": 5148,
+      "sha256": "89af851f29f0f8511b55df581c767460ffaf52b587dc9fc71c681d33ac6fdcdd"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Node/NodeRuntimeService.swift",
+      "bytes": 48836,
+      "sha256": "fd0c4d7afcafb33518cde1f2e99dd212b42f763f420c6831975af97aa062891b"
+    },
+    {
+      "path": "AI_HLY/Downstream/RuntimeCore/Core/RuntimeModels.swift",
+      "bytes": 9678,
+      "sha256": "b9ea45c988129aa39bae892edc43f1e19bb007986f4fa1ba640b074a889e6283"
+    }
+  ],
+  "SDKArchiveUnchanged": "7a426675109c5ebc4c8b5824565547f8aea10584785932280fdb623128530ecc"
+}

@@ -1,0 +1,13 @@
+{
+  "repository": "davidpovarsky/hanlin-ai",
+  "root": "/Users/m1/builds/hanlin-wave2-a146bc7a-20261125",
+  "preparation": "/Users/m1/caches/HanlinThreeWaves/wave2-a146bc7a-preparation-r2/preparation.json",
+  "controller": "/Users/m1/caches/HanlinThreeWaves/wave2-a146bc7a-preparation-r2/stage_wave2_host.py",
+  "log": "/Users/m1/caches/HanlinThreeWaves/wave2-a146bc7a-preparation-r2/logs/original-host.log",
+  "nativeCatalog": "/Users/m1/caches/HanlinThreeWaves/wave2-a146bc7a-preparation-r2/original-native15-catalog-d13aed21.json",
+  "nativeInventory": "/Users/m1/caches/HanlinThreeWaves/wave2-a146bc7a-preparation-r2/native-frameworks-before.json",
+  "archive": "/Users/m1/builds/hanlin-wave2-a146bc7a-20261125/build/runtime-host/RuntimeHostResources.zip",
+  "metadata": "/Users/m1/builds/hanlin-wave2-a146bc7a-20261125/build/runtime-host/host-metadata.json",
+  "python": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete-tools/bin/python3",
+  "output": "/Users/m1/caches/HanlinThreeWaves/local-host-accounting-20261125/original-producer-accounting.json"
+}

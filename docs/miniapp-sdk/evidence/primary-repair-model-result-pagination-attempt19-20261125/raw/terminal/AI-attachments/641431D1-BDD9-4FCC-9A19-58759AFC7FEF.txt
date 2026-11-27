@@ -1,0 +1,267 @@
+Attributes: Application, 0x10ecc7ac0, pid: 16141, label: 'Hanlin AI'
+Element subtree:
+ →Application, 0x10ecc7ac0, pid: 16141, label: 'Hanlin AI'
+    Window (Main), 0x10ecc7c00, {{0.0, 0.0}, {1032.0, 1376.0}}
+      Other, 0x10ecc7d40, {{0.0, 0.0}, {1032.0, 1376.0}}
+      Other, 0x10ecc7e80, {{0.0, 0.0}, {1032.0, 1376.0}}
+        Other, 0x10ecc5680, {{0.0, 0.0}, {1032.0, 1376.0}}
+          Other, 0x10ecc57c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+            Other, 0x10ecc5900, {{0.0, 0.0}, {1032.0, 1376.0}}
+              Other, 0x10eecc000, {{0.0, 0.0}, {1032.0, 1376.0}}
+                Other, 0x10eecc140, {{0.0, 0.0}, {1032.0, 1376.0}}
+                  Other, 0x10eecc280, {{0.0, 0.0}, {1032.0, 1376.0}}
+                    Other, 0x10eecc3c0, {{0.0, 0.0}, {1032.0, 1376.0}}
+                      Other, 0x10eecc500, {{0.0, 0.0}, {1032.0, 1376.0}}
+                        Other, 0x10eecc640, {{0.0, 32.0}, {1032.0, 1344.0}}
+                          Other, 0x10eecc780, {{0.0, 32.0}, {1032.0, 1344.0}}
+                            Other, 0x10eecc8c0, {{0.0, 32.0}, {1032.0, 1344.0}}
+                              Other, 0x10eecca00, {{0.0, 32.0}, {1032.0, 1344.0}}
+                                Other, 0x10eeccb40, {{0.0, 32.0}, {320.0, 1344.0}}
+                                  Other, 0x10eeccc80, {{0.0, 32.0}, {320.0, 1344.0}}
+                                    Other, 0x10eeccdc0, {{0.0, 32.0}, {320.0, 1344.0}}
+                                      Other, 0x10eeccf00, {{0.0, 32.0}, {320.0, 1344.0}}
+                                        Other, 0x10eecd040, {{0.0, 32.0}, {320.0, 1344.0}}
+                                          Other, 0x10eecd180, {{0.0, 32.0}, {320.0, 1344.0}}
+                                            CollectionView, 0x10eecd2c0, {{0.0, 32.0}, {320.0, 1344.0}}
+                                              Other, 0x10eecd400, {{0.0, -2494.0}, {320.0, 5517.0}}
+                                              Other, 0x10eecd540, {{0.0, 32.0}, {320.0, 1344.0}}
+                                                Other, 0x10eecd680, {{0.0, 32.0}, {320.0, 202.0}}
+                                              Other, 0x10eecd7c0, {{0.0, 32.0}, {320.0, 1344.0}}
+                                              Other, 0x10eecd900, {{0.0, 194.0}, {320.0, 62.0}}
+                                              Cell, 0x10eecda40, {{0.0, 194.0}, {320.0, 79.0}}, Focused, Selected
+                                                Other, 0x10eecdb80, {{0.0, 194.0}, {320.0, 79.0}}
+                                                  Other, 0x10eecdcc0, {{0.0, 194.0}, {320.0, 79.0}}
+                                                    Other, 0x10eecde00, {{0.0, 194.0}, {320.0, 79.0}}
+                                                      Other, 0x10eecdf40, {{0.0, 194.0}, {320.0, 79.0}}
+                                                Other, 0x10eece080, {{0.0, 194.0}, {320.0, 79.0}}
+                                                  Other, 0x10eece1c0, {{0.0, 194.0}, {320.0, 79.0}}
+                                                    Other, 0x10eece300, {{0.0, 194.0}, {320.0, 79.0}}
+                                                      Button, 0x10eece440, {{0.0, 194.0}, {320.0, 79.0}}, identifier: 'hanlin-chat-row-MiniApp · MiniAppTypeError.hanlinNativeScript', label: 'MiniApp · MiniAppTypeError.hanlinNativeScript, 12:36, MINIAPP_AUTHORING_NONJSON_RESULT_miniapp-sdk', Selected
+                                                        StaticText, 0x10eece580, {{64.0, 207.0}, {197.0, 20.5}}, label: 'MiniApp · MiniAppTypeError.hanlinNativeScript'
+                                                        StaticText, 0x10eece6c0, {{272.5, 210.0}, {31.5, 14.5}}, label: '12:36'
+                                                        Image, 0x10eece800, {{25.0, 224.5}, {18.0, 18.0}}, identifier: 'bubble.left.circle', label: 'Left Speech Bubble In A Circle'
+                                                        StaticText, 0x10eece940, {{64.0, 229.5}, {220.5, 30.5}}, label: 'MINIAPP_AUTHORING_NONJSON_RESULT_miniapp-sdk'
+                                              Other, 0x10eecea80, {{64.0, 194.0}, {240.0, 1.0}}
+                                                Other, 0x10eecebc0, {{64.0, 194.0}, {240.0, 1.0}}
+                                              Cell, 0x10eeced00, {{0.0, 273.0}, {320.0, 62.0}}
+                                                Other, 0x10eecee40, {{0.0, 273.0}, {320.0, 62.0}}
+                                                  Other, 0x10eecef80, {{0.0, 273.0}, {320.0, 62.0}}
+                                                    Other, 0x10eecf0c0, {{0.0, 273.0}, {320.0, 62.0}}
+                                                      Other, 0x10eecf200, {{0.0, 273.0}, {320.0, 62.0}}
+                                                Other, 0x10eecf340, {{0.0, 273.0}, {320.0, 62.0}}
+                                                  Other, 0x10eecf480, {{0.0, 273.0}, {320.0, 62.0}}
+                                                    Other, 0x10eecf5c0, {{0.0, 273.0}, {320.0, 62.0}}
+                                                      Button, 0x10eecf700, {{0.0, 273.0}, {320.0, 62.0}}, identifier: 'hanlin-chat-row-Agent Acceptance Chat', label: 'Agent Acceptance Chat, 12:35'
+                                                        Image, 0x10eecf840, {{25.0, 295.0}, {18.0, 18.0}}, identifier: 'bubble.left.circle', label: 'Left Speech Bubble In A Circle'
+                                                        StaticText, 0x10eecf980, {{64.0, 286.8}, {188.0, 20.5}}, label: 'Agent Acceptance Chat'
+                                                        StaticText, 0x10eecfac0, {{272.5, 289.8}, {31.5, 14.5}}, label: '12:35'
+                                                        StaticText, 0x10eecfc00, {{0.0, 0.0}, {0.0, 0.0}}
+                                              Other, 0x10eecfd40, {{64.0, 272.0}, {240.0, 1.0}}
+                                                Other, 0x10eecfe80, {{64.0, 272.0}, {240.0, 1.0}}
+                                              Other, 0x10eed8000, {{64.0, 334.0}, {240.0, 1.0}}
+                                                Other, 0x10eed8140, {{64.0, 334.0}, {240.0, 1.0}}
+                                              Other, 0x10eed8280, {{287.0, 194.0}, {30.0, 1079.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                                Other, 0x10eed83c0, {{314.0, 1214.0}, {3.0, 56.0}}
+                                              Other, 0x10eed8500, {{287.0, 194.0}, {30.0, 1079.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                                Other, 0x10eed8640, {{314.0, 1214.0}, {3.0, 56.0}}
+                                    NavigationBar, 0x10eed8780, {{0.0, 86.0}, {320.0, 108.0}}, identifier: 'Hanlin'
+                                      Button, 0x10eed88c0, {{14.0, 90.0}, {36.0, 36.0}}, label: 'Software Guide'
+                                      Button, 0x10eed8a00, {{102.0, 90.0}, {38.0, 36.0}}, identifier: 'hanlin-workspace-actions', label: 'More'
+                                      Button, 0x10eed8b40, {{156.0, 90.0}, {40.0, 36.0}}, identifier: 'hanlin-settings-tab', label: 'Profile'
+                                      Button, 0x10eed8c80, {{212.0, 90.0}, {38.0, 36.0}}, identifier: 'OverflowBarButtonItem', label: 'More'
+                                      Button, 0x10eed8dc0, {{270.0, 90.0}, {36.0, 36.0}}, label: 'Hide Sidebar'
+                                      SearchField, 0x10eed8f00, {{16.0, 140.0}, {288.0, 44.0}}, label: 'Search chat and message content', placeholderValue: 'Search chat and message content'
+                                        Image, 0x10eed9040, {{28.0, 151.5}, {20.5, 20.0}}, identifier: 'magnifyingglass', label: 'Search'
+                                    Toolbar, 0x10eed9180, {{0.0, 32.0}, {320.0, 1344.0}}, identifier: 'Toolbar', label: 'Toolbar'
+                                      Other, 0x10eed92c0, {{0.0, 32.0}, {320.0, 1344.0}}
+                                  Other, 0x10eed9400, {{0.0, 32.0}, {320.0, 1344.0}}
+                                    Other, 0x10eed9540, {{0.0, 32.0}, {320.0, 1344.0}}
+                                      Other, 0x10eed9680, {{0.0, 32.0}, {320.0, 1344.0}}
+                                        Other, 0x10eed97c0, {{0.0, 32.0}, {320.0, 1344.0}}
+                                          Other, 0x10eed9900, {{0.0, 32.0}, {320.0, 1344.0}}
+                                            Other, 0x10eed9a40, {{0.0, 32.0}, {320.0, 1280.0}}
+                                        Other, 0x10eed9b80, {{0.0, 32.0}, {320.0, 1344.0}}
+                                          Other, 0x10eed9cc0, {{0.0, 32.0}, {320.0, 1280.0}}
+                                Other, 0x10eed9e00, {{0.0, 32.0}, {1032.0, 1344.0}}
+                                  Other, 0x10eed9f40, {{0.0, 32.0}, {1032.0, 1344.0}}
+                                    NavigationBar, 0x10eeda080, {{0.0, 86.0}, {1032.0, 54.0}}, identifier: '_TtGC7SwiftUI32NavigationStackHosting'
+                                      Other, 0x10eeda1c0, {{340.0, 91.0}, {372.0, 34.0}}
+                                        Other, 0x10eeda300, {{340.0, 91.0}, {372.0, 34.0}}
+                                          StaticText, 0x10eeda440, {{340.0, 97.8}, {372.0, 20.5}}, label: 'MiniApp · MiniAppTypeError.hanlinNativeScript'
+                                          TextField, 0x10eeda580, {{416.0, 91.0}, {220.0, 34.0}}, placeholderValue: 'Please enter the group chat name'
+                                            Other, 0x10eeda6c0, {{416.0, 91.0}, {206.0, 30.0}}
+                                            Other, 0x10eeda800, {{416.0, 91.0}, {220.0, 34.0}}
+                                            StaticText, 0x10eeda940, {{423.0, 91.0}, {206.0, 34.0}}, label: 'Please enter the group chat name'
+                                            Other, 0x10eedaa80, {{423.0, 93.0}, {206.0, 30.0}}
+                                              Other, 0x10eedabc0, {{423.0, 98.0}, {0.0, 21.0}}
+                                      Other, 0x10eedad00, {{871.5, 95.0}, {36.0, 26.0}}
+                                        Other, 0x10eedae40, {{871.5, 95.0}, {36.0, 26.0}}
+                                          Button, 0x10eedaf80, {{878.0, 97.0}, {23.5, 22.0}}, identifier: 'checkmark.bubble', label: 'Checkmark In A Speech Bubble', Selected
+                                      Other, 0x10eedb0c0, {{923.5, 90.0}, {40.5, 36.0}}
+                                        Other, 0x10eedb200, {{923.5, 90.0}, {40.5, 36.0}}
+                                          Button, 0x10eedb340, {{923.5, 90.0}, {40.5, 36.0}}, label: 'Edit'
+                                            Button, 0x10eedb480, {{923.5, 90.0}, {40.5, 36.0}}
+                                              Image, 0x10eedb5c0, {{933.0, 99.0}, {21.5, 18.0}}, identifier: 'slider.horizontal.3', label: 'Edit'
+                                      Button, 0x10eedb700, {{980.0, 90.0}, {38.0, 36.0}}, identifier: 'OverflowBarButtonItem', label: 'More'
+                                    Other, 0x10eedb840, {{0.0, 32.0}, {1032.0, 1344.0}}
+                                      Other, 0x10eedb980, {{0.0, 32.0}, {1032.0, 1344.0}}
+                                        Other, 0x10eedbac0, {{0.0, 32.0}, {1032.0, 1344.0}}
+                                          Other, 0x10eedbc00, {{0.0, 32.0}, {1032.0, 1344.0}}
+                                            StaticText, 0x10eedbd40, {{546.0, 140.0}, {7.0, 13.5}}, identifier: 'hanlin-phase2-request-count', label: '3'
+                                            StaticText, 0x10eedbe80, {{561.0, 140.0}, {245.0, 13.5}}, identifier: 'hanlin-phase2-chat-id', label: 'CCA1B3CF-C666-49FE-99B8-2453D2FEDBE1'
+                                            ScrollView, 0x10eedc000, {{0.0, 32.0}, {1032.0, 1318.0}}, identifier: 'hanlin-chat-transcript'
+                                              Other, 0x10eedc140, {{0.0, -1455.0}, {1032.0, 2805.0}}
+                                                Other, 0x10eedc280, {{336.0, -1418.7}, {680.0, 2516.5}}
+                                                  StaticText, 0x10eedc3c0, {{508.5, -1418.7}, {507.5, 2350.5}}, identifier: 'hanlin-user-bubble', label: '[MiniApp repair bb16892d-b141-484d-835f-31088986fa24]
+תקן את חבילת המיני־אפליקציה MiniAppTypeError.hanlinNativeScript ואת השגיאות המצורפות, עד לבנייה, אימות וייבוא מוצלחים ל־Hanlin MiniApps.
+Original package: /Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/F0EE35A7-752E-4DE3-9525-844169EBFCCE/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-bb16892d-b141-484d-835f-31088986fa24/MiniAppTypeError.hanlinNativeScript
+Working project: /Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/F0EE35A7-752E-4DE3-9525-844169EBFCCE/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-bb16892d-b141-484d-835f-31088986fa24/project/
+Diagnostic report: /Users/m1/Library/Developer/CoreSimulator/Devices/E742FBCD-8FF0-4130-B143-7F8328637138/data/Containers/Data/Application/F0EE35A7-752E-4DE3-9525-844169EBFCCE/Library/Application Support/HanlinRuntime/v1/clients/agents/miniapp-repair-bb16892d-b141-484d-835f-31088986fa24/diagnostics.json
+
+
+Use get_miniapp_sdk for the current host APIs, original library types and examples. Use validate_miniapp with the working project; its sourceRoot identifies the editable project inside source/. Use write_miniapp to repair the actual source in that sourceRoot, run validation again, build with build_miniapp and deliver the resulting archive with import_miniapp. Query import_miniapp with the returned transfer_id for the actual installation result. Preserve package identity, functionality and user data. Report real compiler errors with their file/line/column; do not hide errors or treat a queued import as installed. Legacy Scripting is frozen; active targets are Expo, NativeScript and ScriptWidget.
+
+Diagnostics:
+{
+  "diagnostics" : [
+    {
+      "category" : "information",
+      "code" : "PACKAGE_COMPATIBILITY",
+      "file" : "nativescript\/app\/bundle.mjs",
+      "message" : "Prepared NativeScript application structure is valid."
+    },
+    {
+      "category" : "information",
+      "code" : "PACKAGE_COMPATIBILITY",
+      "file" : "nativescript\/app\/package.json",
+      "message" : "NativeScript core @nativescript\/core 9.1.4 is supported by embedded runtime 9.1.1."
+    },
+    {
+      "category" : "error",
+      "code" : "TS2322",
+      "column" : 14,
+      "endColumn" : 20,
+      "endLine" : 1,
+      "file" : "index.ts",
+      "line" : 1,
+      "message" : "Type 'string' is not assignable to type 'number'."
+    },
+    {
+      "category" : "error",
+      "code" : "MINIAPP_SOURCE_CHANGED",
+      "file" : "index.ts",
+      "message" : "The package no longer matches its recorded build: index.ts",
+      "remediation" : "Repair and validate the source project, then build a fresh archive before importing."
+    }
+  ],
+  "engine" : "nativescript",
+  "operation" : "import",
+  "schemaVersion" : 1,
+  "sdk" : {
+    "compilerVersion" : "5.9.3",
+    "manifestSHA256" : "4505c28495d8b6ecd1073254e0e395adcc898cc02dd1d40699591f51db4dee92",
+    "packageVersions" : {
+      "@hanlin\/host-services" : "1.0.0",
+      "@hanlin\/notification-events" : "1.0.0",
+      "@nativescript\/core" : "9.1.4",
+      "@nativescript\/ios" : "9.1.1",
+      "@nativescript\/swift-ui" : "4.0.2",
+      "@nativescript\/types" : "9.1.4",
+      "@nativescript\/vite" : "8.0.24",
+      "typescript" : "5.9.3",
+      "vite" : "8.0.0"
+    }
+  },
+  "sourceRoot" : "\/Users\/m1\/Library\/Developer\/CoreSimulator\/Devices\/E742FBCD-8FF0-4130-B143-7F8328637138\/data\/Containers\/Data\/Application\/104F3F6D-3297-4AE3-8C10-84FE7345109C\/Library\/Application Support\/Hanlin\/ScriptingPlatform\/ImportStaging\/scripting-import-8652e15c-a74d-4c63-8794-8779f989bf2c\/extracted\/source",
+  "succeeded" : false
+}'
+                                                  Other, 0x10eedc500, {{336.0, 943.8}, {672.0, 154.0}}, identifier: 'hanlin-assistant-bubble'
+                                                    Other, 0x10eedc640, {{336.0, 943.8}, {134.0, 30.0}}
+                                                    Image, 0x10eedc780, {{336.0, 949.8}, {24.0, 24.0}}, label: 'defaultIcon'
+                                                    StaticText, 0x10eedc8c0, {{366.0, 954.6}, {104.0, 14.5}}, label: 'Agent Acceptance'
+                                                    Other, 0x10eedca00, {{336.0, 979.8}, {672.0, 46.0}}, identifier: 'hanlin-agent-activity-toggle'
+                                                      Button, 0x10eedcb40, {{336.0, 979.8}, {672.0, 46.0}}, identifier: 'hanlin-reasoning-toggle', label: 'Activity history', value: Collapsed
+                                                        StaticText, 0x10eedcc80, {{336.0, 979.8}, {672.0, 46.0}}, identifier: 'hanlin-reasoning-toggle', label: 'Activity history'
+                                                        Image, 0x10eedcdc0, {{339.0, 993.3}, {16.0, 19.5}}, identifier: 'hanlin-reasoning-toggle', label: 'Sparkle'
+                                                        Image, 0x10eedcf00, {{496.0, 997.8}, {6.0, 10.0}}, identifier: 'hanlin-reasoning-toggle', label: 'Go Down'
+                                                      Other, 0x10eedd040, {{336.0, 1025.8}, {0.0, 0.0}}
+                                                    TextView, 0x10eedd180, {{336.0, 1036.0}, {436.5, 22.0}}, label: 'MINIAPP_AUTHORING_NONJSON_RESULT_miniapp-sdk', value: MINIAPP_AUTHORING_...
+                                                      TextView, 0x10eedd2c0, {{336.0, 1036.0}, {436.2, 22.0}}, label: 'MINIAPP_AUTHORING_NONJSON_RESULT_miniapp-sdk'
+                                                      Other, 0x10eedd400, {{739.5, 1036.0}, {30.0, 22.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                                        Other, 0x10eedd540, {{766.5, 1019.0}, {3.0, 36.0}}
+                                                      Other, 0x10eedd680, {{336.0, 1044.0}, {436.5, 11.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                                        Other, 0x10eedd7c0, {{339.0, 1052.0}, {430.5, 3.0}}
+                                                    Other, 0x10eedd900, {{345.0, 1073.8}, {209.5, 24.0}}, identifier: 'hanlin-action-buttons-row'
+                                                      Button, 0x10eedda40, {{345.0, 1077.8}, {16.0, 16.0}}, identifier: 'hanlin-action-copy', label: 'Tabs'
+                                                      Button, 0x10eeddb80, {{377.5, 1079.3}, {15.5, 13.0}}, identifier: 'hanlin-action-select', label: 'Redacted Text'
+                                                      Button, 0x10eeddcc0, {{409.5, 1077.3}, {15.0, 17.0}}, identifier: 'hanlin-action-tts', label: 'Audio Waveform'
+                                                      Button, 0x10eedde00, {{439.0, 1075.8}, {20.0, 20.0}}, identifier: 'hanlin-action-translate', label: 'translate'
+                                                      Button, 0x10eeddf40, {{469.0, 1073.8}, {24.0, 24.0}}, identifier: 'hanlin-action-save-personal', label: 'Save for myself'
+                                                      Button, 0x10eede080, {{507.5, 1077.3}, {11.5, 17.5}}, identifier: 'hanlin-action-knowledge', label: 'Backpack'
+                                                      Button, 0x10eede1c0, {{536.0, 1078.3}, {18.5, 15.5}}, identifier: 'hanlin-action-retry', label: 'Two Clockwise Triangle-Headed Arrows Rotated 90 Degrees'
+                                              Other, 0x10eede300, {{0.0, 32.0}, {1032.0, 1318.0}}
+                                                Other, 0x10eede440, {{0.0, 32.0}, {1032.0, 148.0}}
+                                              Other, 0x10eede580, {{0.0, 32.0}, {1032.0, 1318.0}}
+                                                Other, 0x10eede6c0, {{0.0, 32.0}, {1032.0, 148.0}}
+                                            Other, 0x10eede800, {{676.0, 748.0}, {0.0, 0.0}}
+                                            Button, 0x10eede940, {{981.0, 1150.0}, {36.0, 36.0}}, identifier: 'arrow.down', label: 'Down'
+                                            ScrollView, 0x10eedea80, {{342.0, 1186.0}, {668.0, 36.0}}, identifier: 'active-tool-chips-above-composer'
+                                              Other, 0x10eedebc0, {{342.0, 1186.0}, {247.5, 36.0}}
+                                                Button, 0x10eeded00, {{342.0, 1188.0}, {72.0, 32.0}}, identifier: 'composer-chip-tools', label: 'Tools', value: Enabled
+                                                  Image, 0x10eedee40, {{353.5, 1196.5}, {16.5, 15.5}}, identifier: 'hammer.fill', label: 'Build'
+                                                  StaticText, 0x10eedef80, {{375.5, 1197.2}, {28.5, 13.5}}, label: 'Tools'
+                                                Button, 0x10eedf0c0, {{420.0, 1188.0}, {70.5, 32.0}}, identifier: 'composer-chip-skills', label: 'Skills', value: Enabled
+                                                  Image, 0x10eedf200, {{431.5, 1198.0}, {15.5, 12.5}}, identifier: 'puzzlepiece.extension.fill', label: 'Puzzle Piece Extension, Filled'
+                                                  StaticText, 0x10eedf340, {{452.0, 1197.2}, {28.5, 13.5}}, label: 'Skills'
+                                                Button, 0x10eedf480, {{496.5, 1188.0}, {93.0, 32.0}}, identifier: 'composer-chip-runtimes', label: 'Runtimes', value: Enabled
+                                                  Image, 0x10eedf5c0, {{508.0, 1198.0}, {15.5, 12.0}}, identifier: 'terminal', label: 'Terminal Command Prompt'
+                                                  StaticText, 0x10eedf700, {{529.0, 1197.2}, {50.5, 13.5}}, label: 'Runtimes'
+                                            Other, 0x10eedf840, {{400.0, 1240.0}, {614.0, 102.0}}, identifier: 'hanlin-composer-surface'
+                                              TextView, 0x10eedf980, {{411.0, 1248.0}, {592.0, 38.0}}, identifier: 'hanlin-chat-input', value: Ask any questions.
+                                                Other, 0x10eedfac0, {{970.0, 1248.0}, {30.0, 38.0}}, label: 'Vertical scroll bar, 1 page', value: 0%
+                                                  Other, 0x10eedfc00, {{997.0, 1247.0}, {3.0, 36.0}}
+                                                Other, 0x10eedfd40, {{411.0, 1264.0}, {592.0, 19.0}}, label: 'Horizontal scroll bar, 1 page', value: 0%
+                                                  Other, 0x10eedfe80, {{414.0, 1280.0}, {586.0, 3.0}}
+                                              Other, 0x10eee4000, {{408.0, 1290.0}, {593.0, 44.0}}, identifier: 'hanlin-composer-quick-bar'
+                                                Other, 0x10eee4140, {{408.0, 1290.0}, {197.0, 44.0}}
+                                                  Toolbar, 0x10eee4280, {{408.0, 1290.0}, {197.0, 44.0}}, identifier: 'Toolbar', label: 'Toolbar'
+                                                    Other, 0x10eee43c0, {{408.0, 1290.0}, {197.0, 44.0}}
+                                                      Other, 0x10eee4500, {{428.0, 1290.0}, {157.0, 44.0}}
+                                                        Other, 0x10eee4640, {{428.0, 1290.0}, {157.0, 44.0}}
+                                                          Other, 0x10eee4780, {{428.0, 1290.0}, {0.0, 0.0}}
+                                                            Other, 0x10eee48c0, {{412.0, 1290.0}, {189.0, 44.0}}
+                                                              Other, 0x10eee4a00, {{412.0, 1290.0}, {189.0, 44.0}}
+                                                                Other, 0x10eee4b40, {{416.0, 1290.0}, {181.0, 44.0}}
+                                                                  Other, 0x10eee4c80, {{416.0, 1290.0}, {181.0, 44.0}}
+                                                                    Other, 0x10eee4dc0, {{416.0, 1290.0}, {181.0, 44.0}}
+                                                                      Button, 0x10eee4f00, {{415.6, 1297.7}, {181.7, 28.7}}, identifier: 'hanlin-composer-model-picker', label: 'Agent Acceptance'
+                                                                        Image, 0x10eee5040, {{423.0, 1304.0}, {16.0, 16.0}}, label: 'defaultIcon'
+                                                                        StaticText, 0x10eee5180, {{444.0, 1304.8}, {106.5, 14.5}}, label: 'Agent Acceptance'
+                                                                        Image, 0x10eee52c0, {{582.0, 1307.5}, {7.0, 9.5}}, identifier: 'chevron.up.chevron.down', label: 'Up And Down Chevrons'
+                                                Button, 0x10eee5400, {{866.0, 1290.0}, {44.0, 44.0}}, identifier: 'hanlin-composer-tools-direct', label: 'Tools, Skills & MCP'
+                                                Button, 0x10eee5540, {{914.0, 1290.0}, {44.0, 44.0}}, identifier: 'hanlin-chat-mic', label: 'Start Recording'
+                                                Button, 0x10eee5680, {{967.0, 1295.0}, {34.0, 34.0}}, identifier: 'hanlin-chat-observe', label: 'Show', Disabled
+                                            Button, 0x10eee57c0, {{338.0, 1290.0}, {52.0, 52.0}}, identifier: 'hanlin-composer-general-menu', label: 'Open action center'
+                                            Button, 0x10eee5900, {{347.0, 1361.0}, {40.0, 40.0}}, label: 'Trash', Disabled
+                                              Image, 0x10eee5a40, {{347.0, 1361.0}, {40.0, 40.0}}, identifier: 'trash.circle.fill', label: 'Trash', Disabled
+                                            Button, 0x10eee5b80, {{965.0, 1361.0}, {40.0, 40.0}}, label: 'Selected', Selected
+                                              Image, 0x10eee5cc0, {{965.0, 1361.0}, {40.0, 40.0}}, identifier: 'checkmark.circle.fill', label: 'Selected', Selected
+                                    Toolbar, 0x10eee5e00, {{0.0, 32.0}, {1032.0, 1344.0}}, identifier: 'Toolbar', label: 'Toolbar'
+                                      Other, 0x10eee5f40, {{0.0, 32.0}, {1032.0, 1344.0}}
+                                Toolbar, 0x10eee6080, {{0.0, 32.0}, {1032.0, 1344.0}}, identifier: 'Toolbar', label: 'Toolbar'
+                                  Other, 0x10eee61c0, {{0.0, 32.0}, {1032.0, 1344.0}}
+                            Other, 0x10eee6300, {{0.0, 32.0}, {1032.0, 1344.0}}
+                              Other, 0x10eee6440, {{0.0, 32.0}, {1032.0, 1344.0}}
+                Other, 0x10eee6580, {{0.0, 0.0}, {1032.0, 1376.0}}
+                  Other, 0x10eee66c0, {{0.0, 32.0}, {1032.0, 44.0}}
+                    Button, 0x10eee6800, {{433.5, 36.0}, {78.0, 36.0}}, identifier: 'hanlin-home-tab', label: 'Chats', Selected
+                      Button, 0x10eee6940, {{433.5, 36.0}, {78.0, 36.0}}, identifier: 'hanlin-home-tab', label: 'Chats', Selected
+                    Button, 0x10eee6a80, {{511.5, 36.0}, {87.0, 36.0}}, identifier: 'hanlin-library-tab', label: 'Library'
+                      Button, 0x10eee6bc0, {{511.5, 36.0}, {87.0, 36.0}}, identifier: 'hanlin-library-tab', label: 'Library'
+Path to element:
+ →Application, 0x10ecc7ac0, pid: 16141, label: 'Hanlin AI'
+Query chain:
+ →Find: Target Application 'com.itorah.chavrusachat'
+  Output: {
+    Application, 0x10eee6d00, pid: 16141, label: 'Hanlin AI'
+  }

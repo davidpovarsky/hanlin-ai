@@ -1,0 +1,73 @@
+{
+  "source_only": true,
+  "native_acceptance": "NOT_RUN",
+  "commands": [
+    {
+      "name": "manifest-contracts",
+      "command": [
+        "node",
+        "--test",
+        "Scripts/Audit/Tests/manifest-contracts.test.mjs"
+      ],
+      "exit": 0,
+      "stdout_log": "manifest-contracts.stdout.log",
+      "stderr_log": "manifest-contracts.stderr.log"
+    },
+    {
+      "name": "manifest-generator-check",
+      "command": [
+        "python3",
+        "Scripts/SDK/generate_manifest.py",
+        "--check"
+      ],
+      "exit": 0,
+      "stdout_log": "manifest-generator-check.stdout.log",
+      "stderr_log": "manifest-generator-check.stderr.log"
+    },
+    {
+      "name": "app-intents-resources-check",
+      "command": [
+        "python3",
+        "Scripts/SDK/generate_app_intents_resources.py",
+        "--check"
+      ],
+      "exit": 0,
+      "stdout_log": "app-intents-resources-check.stdout.log",
+      "stderr_log": "app-intents-resources-check.stderr.log"
+    },
+    {
+      "name": "project-generator-check",
+      "command": [
+        "python3",
+        "Scripts/SDK/update_project.py",
+        "--check"
+      ],
+      "exit": 0,
+      "stdout_log": "project-generator-check.stdout.log",
+      "stderr_log": "project-generator-check.stderr.log"
+    },
+    {
+      "name": "diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit": 0,
+      "stdout_log": "diff-check.stdout.log",
+      "stderr_log": "diff-check.stderr.log"
+    },
+    {
+      "name": "cached-diff-check",
+      "command": [
+        "git",
+        "diff",
+        "--cached",
+        "--check"
+      ],
+      "exit": 0,
+      "stdout_log": "cached-diff-check.stdout.log",
+      "stderr_log": "cached-diff-check.stderr.log"
+    }
+  ]
+}

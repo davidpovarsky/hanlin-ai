@@ -1,0 +1,45 @@
+diff --git a/AI_HLY/Downstream/SDK/MiniAppRepairCoordinator.swift b/AI_HLY/Downstream/SDK/MiniAppRepairCoordinator.swift
+index 7df6ffd3..15186dc7 100644
+--- a/AI_HLY/Downstream/SDK/MiniAppRepairCoordinator.swift
++++ b/AI_HLY/Downstream/SDK/MiniAppRepairCoordinator.swift
+@@ -41,13 +41,18 @@ final class MiniAppRepairCoordinator {
+               let id = MiniAppAuthoringTransfer.reference(in: url, purpose: .repair),
+               claims[id] == nil else { return nil }
+         claims[id] = window
++        NSLog("HANLIN_MINIAPP_REPAIR_CLAIMED %@", id.uuidString)
+         return id
+     }
+ 
+     func receive(_ id: UUID, window: UUID, context: HanlinApplicationContext) async {
+         guard claims[id] == window else { return }
+         do {
+-            await context.prepareApplication()
++            // The original conversation store is sufficient for this handoff.
++            // Scene preparation warms runtimes independently; waiting for MCP,
++            // notifications or Node here would hide the user's repair request.
++            NSLog("HANLIN_MINIAPP_REPAIR_RECEIVING %@", id.uuidString)
++            context.dataManager.preloadDataIfNeeded()
+             guard claims[id] == window else { return }
+             let (store, transfer, archive) = try MiniAppAuthoringDelivery.verifiedArchive(id, purpose: .repair)
+             let previous = try store.receipt(for: id)
+@@ -60,6 +65,7 @@ final class MiniAppRepairCoordinator {
+                     title: "MiniApp · " + transfer.originalFileName)
+                 guard let conversationID = record.id else { throw HanlinApplicationError.invalidConversation }
+                 try store.record(.init(transferID: id, status: .received, conversationID: conversationID))
++                NSLog("HANLIN_MINIAPP_REPAIR_CONVERSATION %@", conversationID.uuidString)
+             }
+             guard let conversationID = record.id,
+                   let modelIndex = record.useModel else { throw HanlinApplicationError.invalidConversation }
+@@ -125,10 +131,12 @@ final class MiniAppRepairCoordinator {
+             if pending[window] == nil {
+                 pending[window] = request
+                 destinations[window] = conversationID
++                NSLog("HANLIN_MINIAPP_REPAIR_PENDING %@", id.uuidString)
+             } else {
+                 waiting[window, default: []].append(request)
+             }
+         } catch {
++            NSLog("HANLIN_MINIAPP_REPAIR_FAILED %@", id.uuidString)
+             failures[window] = error.localizedDescription
+             claims[id] = nil
+         }

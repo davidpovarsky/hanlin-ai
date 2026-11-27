@@ -404,7 +404,15 @@ public final class HanlinConversationController {
                 ? .completed : .failed(HanlinConversationControllerError.emptyResponse.localizedDescription)
             continuation.yield(.state(state))
             Task { await manager.completeAgentDiagnostics(status: projection.completionStatus) }
-            if projection.completionStatus == "completed" { continuation.finish() }
+            if projection.completionStatus == "completed" {
+                activeLease?.release()
+                activeLease = nil
+                if !request.observation {
+                    HanlinConversationAutoMetadata.schedule(for: record, messages: projection.messages,
+                        in: context, fallbackModelID: model.id)
+                }
+                continuation.finish()
+            }
             else { continuation.finish(throwing: HanlinConversationControllerError.emptyResponse) }
         } catch {
             guard activeToken == token else { return }

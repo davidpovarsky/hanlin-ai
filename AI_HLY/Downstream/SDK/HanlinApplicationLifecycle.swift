@@ -25,8 +25,10 @@ extension HanlinApplicationContext {
                 return
             }
             HanlinExpoSession.ensureAppDefinesLoaded()
-            HanlinNativeScriptProductionBootstrap.prepareEmbeddedProviders()
+            // The mounted workspace reads this store immediately. Prepare its
+            // original data before waiting for independent system integrations.
             dataManager.preloadDataIfNeeded()
+            HanlinNativeScriptProductionBootstrap.prepareEmbeddedProviders()
             HanlinScriptingPlatform.shared.configure(modelContext: modelContainer.mainContext)
             // Optional system setup must not gate the local stores or runtimes.
             applicationLifecycle.systemIntegrationTask = Task { @MainActor in

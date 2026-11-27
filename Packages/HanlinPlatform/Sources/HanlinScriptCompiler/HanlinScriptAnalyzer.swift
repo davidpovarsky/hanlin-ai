@@ -178,6 +178,19 @@ public struct HanlinScriptAnalyzer: Sendable {
             )
         }
 
+        if let widgetMetadata = package.manifest.unknownFields["hanlinWidget"] {
+            do {
+                let metadata = try JSONDecoder().decode(HanlinWidgetPackageMetadata.self,
+                    from: widgetMetadata.canonicalJSONData(limits: .unbounded))
+                try HanlinWidgetCompiler.validateHostActionTargets(metadata.actions,
+                    manifest: package.manifest, entrypoints: entrypoints)
+            } catch {
+                findings.append(.init(state: .unsupported, severity: .error, sourcePath: "script.json",
+                    message: "Invalid widget Host action: \(error)",
+                    code: "MINIAPP_WIDGET_HOST_ACTION_INVALID"))
+            }
+        }
+
         for entrypoint in entrypoints where entrypoint.kind == .widget && entrypoint.widgetEngine != .legacy && entrypoint.widgetEngine != nil {
             do {
                 _ = try HanlinWidgetCompiler.prepare(manifest: package.manifest, entryPath: entrypoint.sourcePath, files: files)
@@ -190,7 +203,7 @@ public struct HanlinScriptAnalyzer: Sendable {
         do {
             for (entrypointID, declaration) in try HanlinNativePresentationMetadata.declarations(in: package.manifest) {
                 guard entrypoints.contains(where: {
-                    $0.id == entrypointID && [.appIntent, .translationUI].contains($0.kind)
+                    $0.id == entrypointID && [.appIntent, .translationUI, .keyboard, .notificationUI].contains($0.kind)
                 }) else { throw HanlinWidgetProgramError.invalidProgram }
                 do {
                     _ = try HanlinWidgetCompiler.preparePresentation(declaration, files: files)
@@ -202,8 +215,46 @@ public struct HanlinScriptAnalyzer: Sendable {
             }
         } catch {
             findings.append(.init(state: .unsupported, severity: .error, sourcePath: "script.json",
-                message: "Native presentations must name an existing appIntent or translationUI entrypoint: \(error)",
+                message: "Native presentations must name an existing appIntent, translationUI, keyboard, or notificationUI entrypoint: \(error)",
                 code: "MINIAPP_NATIVE_PRESENTATION_INVALID"))
+        }
+
+        let presentations = try? HanlinNativePresentationMetadata.declarations(in: package.manifest)
+        for entrypoint in entrypoints where [.keyboard, .notificationUI].contains(entrypoint.kind) {
+            guard presentations?[entrypoint.id] != nil else {
+                findings.append(.init(state: .unsupported, severity: .error, sourcePath: "script.json",
+                    message: "\(entrypoint.kind.rawValue) entrypoint '\(entrypoint.id)' requires its compiled nativePresentations declaration.",
+                    code: "MINIAPP_SYSTEM_PRESENTATION_REQUIRED"))
+                continue
+            }
+        }
+
+        for entrypoint in entrypoints where [.capture, .spotlight].contains(entrypoint.kind) {
+            // Spotlight may open a package directly. Captured files need a
+            // declared prepared action in the containing app.
+            if entrypoint.kind == .spotlight && entrypoint.exportedSymbol == nil { continue }
+            let name = entrypoint.exportedSymbol ?? ""
+            let declarations: [HanlinJSONValue]
+            if case let .array(value)? = package.manifest.unknownFields["actions"] { declarations = value }
+            else { declarations = [] }
+            let matching = declarations.compactMap { item -> HanlinObject<HanlinJSONValue>? in
+                guard case let .object(action) = item, action["id"] == .string(name) else { return nil }
+                return action
+            }
+            var declaredHandler: String?
+            if matching.count == 1, let action = matching.first {
+                if case let .string(value)? = action["handler"] { declaredHandler = value }
+                else if case let .string(value)? = action["entrypoint"] { declaredHandler = value }
+            }
+            let handlerMatches = declaredHandler.map {
+                $0 == entrypoint.sourcePath || "source/" + $0 == entrypoint.sourcePath
+            } ?? false
+            guard (try? HanlinActionID(validating: name)) != nil, matching.count == 1, handlerMatches else {
+                findings.append(.init(state: .unsupported, severity: .error, sourcePath: "script.json",
+                    message: "\(entrypoint.kind.rawValue) entrypoint '\(entrypoint.id)' must name one declared prepared action in exportedSymbol, with its handler targeting the same foreground bundle.",
+                    code: "MINIAPP_SYSTEM_ACTION_INVALID"))
+                continue
+            }
         }
 
         var capabilities: [HanlinCapabilityID: HanlinCapabilityRequest] = [:]
@@ -460,7 +511,7 @@ public struct HanlinScriptAnalyzer: Sendable {
                         ? "Assistant tools use their dedicated prepared program only when an explicit model tool call is dispatched."
                         : "An assistantTool requires its own prepared source and action declarations.",
                     code: dedicated ? "MINIAPP_ASSISTANT_TOOL_READY" : "MINIAPP_ASSISTANT_TOOL_INVALID"))
-            case .appIntent, .share:
+            case .appIntent, .share, .spotlight, .capture:
                 let prepared = appEntrypoints.first?.sourcePath == candidate.sourcePath
                 findings.append(.init(state: prepared ? .supported : .unsupported,
                     severity: prepared ? .information : .error, sourcePath: candidate.sourcePath,
@@ -484,6 +535,14 @@ public struct HanlinScriptAnalyzer: Sendable {
                         ? "Live Activities use the typed ActivityKit Host Services API from the prepared foreground app."
                         : "A Live Activity exposure must reference the prepared foreground app bundle.",
                     code: prepared ? "MINIAPP_LIVE_ACTIVITY_READY" : "MINIAPP_LIVE_ACTIVITY_BUNDLE_REQUIRED"))
+            case .keyboard, .notificationUI:
+                let prepared = appEntrypoints.first?.sourcePath == candidate.sourcePath
+                findings.append(.init(state: prepared ? .supported : .unsupported,
+                    severity: prepared ? .information : .error, sourcePath: candidate.sourcePath,
+                    message: prepared
+                        ? "This system extension uses the package's separately compiled original native presentation."
+                        : "A system presentation exposure must identify the prepared foreground package.",
+                    code: prepared ? "MINIAPP_SYSTEM_PRESENTATION_READY" : "MINIAPP_SYSTEM_PRESENTATION_BUNDLE_REQUIRED"))
             case .translationUI:
                 let prepared = appEntrypoints.first?.sourcePath == candidate.sourcePath
                 let snapshot = candidate.sourcePath.hasSuffix(".json")
@@ -771,13 +830,13 @@ public struct HanlinScriptAnalyzer: Sendable {
                   case let .string(id)? = fields["id"], !id.isEmpty,
                   case let .string(rawKind)? = fields["kind"],
                   let kind = HanlinPackageEntrypointKind(rawValue: rawKind),
-                  [.assistantTool, .appIntent, .embeddedResult, .share, .translationUI, .liveActivity].contains(kind),
+                  [.assistantTool, .appIntent, .embeddedResult, .share, .translationUI, .liveActivity, .keyboard, .notificationUI, .spotlight, .capture].contains(kind),
                   case let .string(path)? = fields["sourcePath"],
                   HanlinArchivePolicy.normalizedRelativePath(path) == path, files[path] != nil,
-                  (kind != .embeddedResult || discovered.contains(where: { $0.kind == .app && $0.sourcePath == path })),
+                  (![.embeddedResult, .keyboard, .notificationUI, .spotlight, .capture].contains(kind) || discovered.contains(where: { $0.kind == .app && $0.sourcePath == path })),
                   identifiers.insert(id).inserted, id != "app", id != "widget" else {
                 findings.append(.init(state: .unsupported, severity: .error, sourcePath: "script.json",
-                    message: "entrypoints[\(index)] requires a unique id, supported kind (assistantTool, appIntent, embeddedResult, share, translationUI, liveActivity), and existing package-relative sourcePath. embeddedResult must reference the prepared foreground app bundle.",
+                    message: "entrypoints[\(index)] requires a unique id, supported kind (assistantTool, appIntent, embeddedResult, share, translationUI, liveActivity, keyboard, notificationUI, spotlight, capture), and existing package-relative sourcePath. Embedded results and the four system exposures must reference the prepared foreground app bundle.",
                     code: "MINIAPP_ENTRYPOINT_DECLARATION_INVALID"))
                 continue
             }
@@ -818,6 +877,8 @@ public struct HanlinScriptAnalyzer: Sendable {
             let context: HanlinExecutionContext = switch kind {
             case .appIntent: .appIntent
             case .translationUI: .translationUI
+            case .keyboard: .keyboard
+            case .notificationUI: .notificationUI
             case .liveActivity: .liveActivity
             default: .mainApplication
             }
@@ -826,6 +887,9 @@ public struct HanlinScriptAnalyzer: Sendable {
             case .liveActivity: "prepared-system-surface-v1"
             case .embeddedResult: "embedded-result-v1"
             case .assistantTool: "prepared-assistant-tool-v1"
+            case .keyboard, .notificationUI: "native-presentation-v1"
+            case .spotlight: "prepared-spotlight-v1"
+            case .capture: "prepared-capture-v1"
             default: "prepared-foreground-action-v1"
             }
             declared.append(.init(id: id, kind: kind, sourcePath: path, exportedSymbol: symbol,

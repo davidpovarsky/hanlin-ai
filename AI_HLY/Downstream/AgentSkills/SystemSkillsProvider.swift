@@ -30,6 +30,9 @@ public enum SystemSkillsProvider {
                    - Call `retrieve_memory` to verify existing facts before answering personal queries.
                    - Call `save_memory` when the user explicitly requests to remember something or provides enduring personal preferences.
                    - Call `update_memory` to correct obsolete memory items.
+                   - A memory success confirms only that memory operation. It does not update a reminder, calendar note, task, or any other app.
+                   - When a request also changes a calendar item, load the calendar skill and execute its update tool separately.
+                   - Report an action as completed only after receiving a successful result for that exact action. If a requested action has not run, complete it or state what remains; never infer completion from an intention or a different tool's success.
                    """),
                    keywords: ["remember", "memory", "recall", "preferences", "facts"],
                    preferredToolIDs: ["save_memory", "retrieve_memory", "update_memory"]
@@ -43,14 +46,20 @@ public enum SystemSkillsProvider {
                let desc = try? HanlinSkillDescriptor(
                    id: skillID,
                    title: "Calendar & Reminders",
-                   summary: "Search, inspect, and schedule system calendar events and reminder tasks.",
+                   summary: "Search, create, update, move, complete and delete system events, reminders, calendars and lists; manage recurrence, alarms and public EventKit fields.",
                    instructions: .inline("""
                    Coordinate user calendar and tasks:
                    - Call `search_calendar_and_reminders` with date ranges or keywords to check availability.
-                   - Call `write_system_event` with complete ISO-8601 timestamps and timezones to record appointments or reminders.
+                   - `manage_calendar` exposes public EventKit operations: permissions, sources/accounts, calendars/reminder lists, event/reminder CRUD, moves, completion/reopening, recurrence, alarms, external identifiers, and refresh. Its schema lists the full supported parameters.
+                   - Search or get the existing item and use its returned identifier for update/delete/complete/reopen. Preserve omitted fields. A missing identifier is an error; never create a replacement when asked to edit.
+                   - Use `manage_calendar` with operation=update_reminder and item.notes to change reminder notes. `save_memory` and MCP memory entity operations cannot change EventKit items.
+                   - `write_system_event` is CREATE ONLY. Use complete ISO-8601 timestamps with timezones; never use it to repair an alleged failed update.
+                   - Date-only end_date includes that entire local day. Recurring event changes require the returned occurrence_date and an explicit this_event/future_events choice matching the user's intent.
+                   - Report changes only after a successful result with committed=true for the matching operation and identifier. Search, memory, and failed/denied/cancelled calls provide no proof of a calendar change. Check every requested action before your final answer.
+                   - Calendar/account IDs and item IDs are distinct. Attendees, organizer, event status, source metadata and system identifiers are read-only. Reminders tags, subtasks, invitation sending and sharing administration are not writable public iOS EventKit capabilities.
                    """),
                    keywords: ["schedule", "event", "meeting", "reminder", "appointment", "calendar"],
-                   preferredToolIDs: ["search_calendar_and_reminders", "write_system_event"]
+                   preferredToolIDs: ["search_calendar_and_reminders", "manage_calendar", "write_system_event"]
                ) {
                 descriptors.append(desc)
             }

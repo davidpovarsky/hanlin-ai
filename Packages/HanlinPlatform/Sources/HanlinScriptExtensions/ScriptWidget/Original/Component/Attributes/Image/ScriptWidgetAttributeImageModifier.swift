@@ -15,7 +15,7 @@ struct ScriptWidgetAttributeImageModifier: ViewModifier {
     init(_ element: ScriptWidgetRuntimeElement, _ context: ScriptWidgetElementContext) {
 
         var aspectRatio: CGFloat? = nil
-        if let value = element.getPropDouble("ratio") {
+        if let value = element.getPropDouble("ratio"), value.isFinite, value > 0 {
             aspectRatio = CGFloat(floatLiteral: value)
         }
         self.aspectRatio = aspectRatio

@@ -15,10 +15,13 @@ public struct MessagePresentationSnapshot: Codable, Hashable, Sendable {
     public var profile: ResolvedPresentationProfile
     public var values: [String: PresentationValue]
     public var expandedActivityIDs: Set<String>
+    public var activityDisclosure: HanlinActivityDisclosureState?
     public init(identity: PresentationMessageIdentity, profile: ResolvedPresentationProfile,
-                values: [String: PresentationValue] = [:], expandedActivityIDs: Set<String> = []) {
+                values: [String: PresentationValue] = [:], expandedActivityIDs: Set<String> = [],
+                activityDisclosure: HanlinActivityDisclosureState? = nil) {
         self.identity = identity; self.profile = profile; self.values = values
         self.expandedActivityIDs = expandedActivityIDs
+        self.activityDisclosure = activityDisclosure
     }
 }
 
@@ -31,15 +34,18 @@ public final class MessageOpenUIStateStore {
     public let profile: ResolvedPresentationProfile
     public private(set) var values: [String: PresentationValue]
     public private(set) var expandedActivityIDs: Set<String>
+    public private(set) var activityDisclosure: HanlinActivityDisclosureState?
     public private(set) var revision: UInt64 = 0
     @ObservationIgnored public var onChange: (@MainActor (MessagePresentationSnapshot) -> Void)?
 
     public init(snapshot: MessagePresentationSnapshot) {
         self.identity = snapshot.identity; self.profile = snapshot.profile
         self.values = snapshot.values; self.expandedActivityIDs = snapshot.expandedActivityIDs
+        self.activityDisclosure = snapshot.activityDisclosure
     }
     public var snapshot: MessagePresentationSnapshot {
-        .init(identity: identity, profile: profile, values: values, expandedActivityIDs: expandedActivityIDs)
+        .init(identity: identity, profile: profile, values: values, expandedActivityIDs: expandedActivityIDs,
+              activityDisclosure: activityDisclosure)
     }
 
     /// Runtime field changes are deltas against the same message's raw state map.
@@ -73,6 +79,11 @@ public final class MessageOpenUIStateStore {
         guard expanded != wasExpanded else { return }
         if expanded { expandedActivityIDs.insert(activityID) }
         else { expandedActivityIDs.remove(activityID) }
+        changed()
+    }
+    public func setActivityDisclosure(_ value: HanlinActivityDisclosureState) {
+        guard activityDisclosure != value else { return }
+        activityDisclosure = value
         changed()
     }
     private func changed() { revision &+= 1; onChange?(snapshot) }

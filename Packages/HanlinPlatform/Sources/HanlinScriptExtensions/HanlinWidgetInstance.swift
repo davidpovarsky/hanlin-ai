@@ -83,12 +83,15 @@ extension HanlinScriptExtensionSnapshot {
         widgets: [HanlinScriptWidgetSnapshot]? = nil,
         instances: [HanlinWidgetInstance]? = nil,
         states: [HanlinWidgetInstanceState]? = nil,
-        inactiveInstallations: [String]? = nil
+        inactiveInstallations: [String]? = nil,
+        lastSuccessfulRenders: [HanlinWidgetLastSuccessfulRender]? = nil
     ) -> Self {
         .init(schemaVersion: schemaVersion, generatedAt: .now, widgets: widgets ?? self.widgets,
               intentEntities: intentEntities, liveActivities: liveActivities, translationApps: translationApps,
+              nativePresentations: nativePresentations,
               widgetInstances: instances ?? widgetInstances, widgetStates: states ?? widgetStates, widgetEntityMigrations: widgetEntityMigrations,
-              inactiveWidgetInstallations: inactiveInstallations ?? inactiveWidgetInstallations)
+              inactiveWidgetInstallations: inactiveInstallations ?? inactiveWidgetInstallations,
+              widgetLastSuccessfulRenders: lastSuccessfulRenders ?? widgetLastSuccessfulRenders)
     }
 
     /// Authoritative joined projection of selectable widget instances for system
@@ -216,7 +219,9 @@ extension HanlinScriptExtensionStore {
     @discardableResult
     public func publishWidgetTemplates(
         _ templates: [HanlinScriptWidgetSnapshot], intentEntities: [HanlinScriptIntentEntityRecord],
-        translationApps: [HanlinScriptTranslationUISnapshot], installedPackageIDs: Set<HanlinInstalledPackageID>
+        translationApps: [HanlinScriptTranslationUISnapshot],
+        nativePresentations: [HanlinNativePresentationSnapshot] = [],
+        installedPackageIDs: Set<HanlinInstalledPackageID>
     ) throws -> HanlinScriptExtensionSnapshot {
         try update { current in
             let current = current ?? .init(schemaVersion: 2, generatedAt: .now)
@@ -227,6 +232,7 @@ extension HanlinScriptExtensionStore {
             let activeIDs = Set(templates.map { $0.identity.installedPackageID })
             let activePresentationIDs = Set(intentEntities.filter { $0.nativePresentation != nil }.map { $0.identity.installedPackageID })
                 .union(translationApps.filter { $0.nativePresentation != nil }.map { $0.identity.installedPackageID })
+                .union(nativePresentations.map { $0.identity.installedPackageID })
             for template in templates {
                 let base = HanlinWidgetInstance(identity: template.identity, engine: template.engine, displayName: "Default")
                 guard seen.insert(base.entityID).inserted else { continue }
@@ -292,9 +298,11 @@ extension HanlinScriptExtensionStore {
                 migrations[old] = entityIDs.contains(final) ? final : nil
             }
             return .init(schemaVersion: 2, generatedAt: .now, widgets: widgets, intentEntities: intentEntities,
-                liveActivities: current.liveActivities, translationApps: translationApps, widgetInstances: instances,
+                liveActivities: current.liveActivities, translationApps: translationApps,
+                nativePresentations: nativePresentations, widgetInstances: instances,
                 widgetStates: states, widgetEntityMigrations: migrations,
-                inactiveWidgetInstallations: current.inactiveWidgetInstallations.filter { raw in !activeIDs.union(activePresentationIDs).contains(where: { $0.rawValue == raw }) })
+                inactiveWidgetInstallations: current.inactiveWidgetInstallations.filter { raw in !activeIDs.union(activePresentationIDs).contains(where: { $0.rawValue == raw }) },
+                widgetLastSuccessfulRenders: current.widgetLastSuccessfulRenders.filter { retainedIDs.contains($0.identity.installedPackageID) })
         }
     }
 }

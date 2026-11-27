@@ -1,0 +1,102 @@
+{
+  "schema": 1,
+  "kind": "UNEXECUTED_DIRECT_OBSERVATION_AUTHORITY_LOSS",
+  "intendedRepositoryPath": "docs/miniapp-sdk/evidence/notification-os-direct-authority-loss-attempt19-20261125/",
+  "compiledConsumerSource": "d4a0b115b106d4250ea40ad66153d5156847a07c",
+  "SDKProducerSource": "a2c8a1b1be746461272ba77254603304567c309d",
+  "originalRoot": "/Users/m1/builds/hanlin-ai-ce49e30d-miniapp-complete",
+  "originalDevice": "E742FBCD-8FF0-4130-B143-7F8328637138",
+  "cause": "UNKNOWN",
+  "execution": {
+    "phase": "notification-os-direct-v1",
+    "authored": true,
+    "reviewed": true,
+    "transferred": false,
+    "decisionSealed": false,
+    "launched": false,
+    "nativeTestExecution": "NOT_RUN",
+    "newNativeChargeSeconds": 0
+  },
+  "resource": {
+    "observedFreeBytes": 3122991104,
+    "approvedSingleCaseBoundBytes": 5679053931,
+    "ownedLogsAllocatedBytes": 688128,
+    "readOnly": true
+  },
+  "retainedXctestrun": {
+    "path": "/Users/m1/caches/DerivedData/hanlin-ai-ce49e30d-miniapp-complete/Build/Products/HanlinMiniApps_iphonesimulator27.0-arm64.xctestrun",
+    "bytes": 16737,
+    "sha256": "2d6b493aa93663d03e17a15722eab010326b260ccbbb454ed12077cae45cda96"
+  },
+  "historicalOriginalOS": {
+    "allowanceSeconds": 900,
+    "chargedSeconds": 897.3027506670041,
+    "unusedSeconds": 2.6972493329959,
+    "lastRawStatus": "CLEANUP_INCOMPLETE",
+    "laterProcessAbsenceSeparate": true,
+    "rewritten": false
+  },
+  "sourceCopies": [
+    {
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-direct-resource-20261125T200958Z.json",
+      "path": "observations/notification-os-direct-resource-20261125T200958Z.json",
+      "bytes": 1219,
+      "sha256": "57ca3c277a1832bcc4be7a0d0dacd31dab4e2b1aa22f891aa424dcf44a047102"
+    },
+    {
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-direct-owned-logs-observation.json",
+      "path": "observations/notification-os-direct-owned-logs-observation.json",
+      "bytes": 6086,
+      "sha256": "591fedff0f313aafb786ac2a9a4f12baa8abcda1ad40f6cf2a3c1b39559e213c"
+    },
+    {
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-direct-authority-path-observation.json",
+      "path": "observations/notification-os-direct-authority-path-observation.json",
+      "bytes": 1222,
+      "sha256": "8d1f4188f8ed243ae4f5a3157efb11c7b07e6f8d705d7b7f86f41f60ac501150"
+    },
+    {
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/notification-os-direct-checkout-product-identity-observation.json",
+      "path": "observations/notification-os-direct-checkout-product-identity-observation.json",
+      "bytes": 3358,
+      "sha256": "d81eb96524f3a4714a4899fe13986f0b0066e55df72b84b53ae0f146957fdc6f"
+    },
+    {
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/os-notification-probe-draft/notification-os-direct-v1.py",
+      "path": "drafts/notification-os-direct-v1.py",
+      "bytes": 55351,
+      "sha256": "0f853aad3a103d5482086a6ee32cb24ebf8366c2626c170e97626852d107595c"
+    },
+    {
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/os-notification-probe-draft/seal-notification-os-direct-decision-v1.py",
+      "path": "drafts/seal-notification-os-direct-decision-v1.py",
+      "bytes": 50816,
+      "sha256": "0ef2479029dc151db1a580000da606438d534e5dab1a6c83efcae76ffcb2a769"
+    },
+    {
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/seal-and-launch-notification-os-direct-v1.py",
+      "path": "drafts/seal-and-launch-notification-os-direct-v1.py",
+      "bytes": 4884,
+      "sha256": "bc4d13ef6564ee7f6f7b8e89dae149c7e15f9c991873ccb1744e25768b14efd3"
+    },
+    {
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/os-notification-probe-draft/notification-os-v10-to-direct-v1.diff",
+      "path": "diffs/notification-os-v10-to-direct-v1.diff",
+      "bytes": 25781,
+      "sha256": "37ea96bc12f2163b7413d0ef34abb0b1421a3976b3ad04273883e03e081cc3b5"
+    },
+    {
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/os-notification-probe-draft/seal-notification-os-v8-to-direct-v1.diff",
+      "path": "diffs/seal-notification-os-v8-to-direct-v1.diff",
+      "bytes": 19619,
+      "sha256": "c17ac0d6460696bd4e0a833e31d0ba1501bad6a793f0db357c34138246747ea4"
+    },
+    {
+      "source": "/mnt/development/projects/transfers/hanlin-primary-ce49-20261124/seal-and-launch-notification-os-direct-v1.diff",
+      "path": "diffs/seal-and-launch-notification-os-direct-v1.diff",
+      "bytes": 4026,
+      "sha256": "a36d60fc058f89b55c44e3db152455fe8192f95c89b93f2344a925735827e905"
+    }
+  ],
+  "boundary": "No later feasibility/reconstruction/result is included; no canonical/Mac/Git mutation occurred during this Oracle assembly."
+}

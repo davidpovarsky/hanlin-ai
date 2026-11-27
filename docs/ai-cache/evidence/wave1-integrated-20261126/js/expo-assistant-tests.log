@@ -1,0 +1,23 @@
+(node:247937) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///mnt/development/projects/worktrees/hanlin-wave1-shared-chat-actions-20261126/build/wave1-shared-ui/js-a30c8267/source/Packages/HanlinExpoUI/src/host-services.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /mnt/development/projects/worktrees/hanlin-wave1-shared-chat-actions-20261126/build/wave1-shared-ui/js-a30c8267/source/Packages/HanlinExpoUI/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ modern publication uses typed prepared props and preserves the distinct legacy transport (7.669004ms)
+(node:247962) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///mnt/development/projects/worktrees/hanlin-wave1-shared-chat-actions-20261126/build/wave1-shared-ui/js-a30c8267/source/Packages/HanlinExpoUI/src/miniapp-assistant.ts is not specified and it doesn't parse as CommonJS.
+Reparsing as ES module because module syntax was detected. This incurs a performance overhead.
+To eliminate this warning, add "type": "module" to /mnt/development/projects/worktrees/hanlin-wave1-shared-chat-actions-20261126/build/wave1-shared-ui/js-a30c8267/source/Packages/HanlinExpoUI/package.json.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ native schema bytes, ordered chunks and cache write/read usage survive the public facade (2.709296ms)
+✔ breaking iteration cancels the native producer exactly once (0.438322ms)
+✔ abort unblocks an in-flight native next and cleans the listener (1.020246ms)
+✔ abort during admission cancels the returned native handle before consuming it (0.902245ms)
+✔ provider errors reject and release only their original request handle (0.586924ms)
+✔ one native handle has one reader and manual cancellation is idempotent (0.417842ms)
+ℹ tests 7
+ℹ suites 0
+ℹ pass 7
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 526.533421

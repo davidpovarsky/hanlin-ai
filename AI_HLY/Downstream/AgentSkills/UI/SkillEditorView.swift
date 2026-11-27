@@ -125,7 +125,7 @@ struct SkillEditorView: View {
 
     static let knownSystemToolNames: Set<String> = [
         "save_memory", "retrieve_memory", "update_memory",
-        "search_calendar_and_reminders", "write_system_event",
+        "search_calendar_and_reminders", "write_system_event", "manage_calendar",
         "query_location", "get_current_location", "search_nearby_locations", "get_route",
         "query_weather",
         "search_online", "read_web_page", "search_arxiv_papers", "extract_remote_file_content",

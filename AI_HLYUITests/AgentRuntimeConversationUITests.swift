@@ -1,4 +1,5 @@
 import XCTest
+import notify
 import UIKit
 import Vision
 
@@ -152,6 +153,103 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertFalse(app.buttons["hanlin-tool-consent-allow-once"].exists)
         let restored = XCTAttachment(screenshot: app.screenshot())
         restored.name = "cold-original-conversation-draft-and-history-without-replay"; restored.lifetime = .keepAlways; add(restored)
+    }
+
+    /// Uses the canonical message store and the real compact external composer
+    /// on iPhone, plus the original overlaid composer on iPad. No offset or
+    /// visibility is injected; every transition comes from native user actions.
+    func testFollowLatestArrowTracksRealBottomAcrossScrollAndComposerChanges() throws {
+        continueAfterFailure = false
+        executionTimeAllowance = 240
+        let app = XCUIApplication()
+        XCUIDevice.shared.orientation = .portrait
+        defer { app.terminate(); XCUIDevice.shared.orientation = .portrait }
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+        app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
+        app.launchEnvironment["HANLIN_PHASE2_STORE_ID"] = UUID().uuidString
+        app.launchEnvironment["HANLIN_SCROLL_BOTTOM_ACCEPTANCE_FIXTURE"] = "1"
+        app.launchEnvironment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] = "1"
+        app.launch()
+        openChat(in: app)
+
+        let transcript = app.descendants(matching: .any)["hanlin-chat-transcript"].firstMatch
+        let arrow = app.buttons["hanlin-chat-follow-latest"].firstMatch
+        let last = app.descendants(matching: .any).matching(NSPredicate(
+            format: "label == %@", "POST149101_SCROLL_LAST")).firstMatch
+        if UIDevice.current.userInterfaceIdiom == .phone {
+            XCTAssertTrue(app.descendants(matching: .any)["hanlin-compact-chat-workspace"].firstMatch.exists,
+                          "The phone regression must exercise the persistent external composer")
+        }
+        func assertAtBottom(_ stage: String) {
+            let settled = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+                last.exists && last.isHittable && !arrow.exists
+            }, object: nil)
+            XCTAssertEqual(XCTWaiter.wait(for: [settled], timeout: 12), .completed,
+                           "The final real message must be visible with no arrow at \(stage)")
+        }
+        XCTAssertTrue(transcript.waitForExistence(timeout: 15))
+        assertAtBottom("initial attachment")
+
+        transcript.swipeDown()
+        transcript.swipeDown()
+        XCTAssertTrue(arrow.waitForExistence(timeout: 8) && arrow.isHittable,
+                      "Reading earlier messages must reveal a reachable original arrow")
+        let composerTopWhileReading = chatInputElement(in: app).frame.minY
+        let viewportHeightWhileReading = transcript.frame.height
+        attachScreenshot("follow-latest-original-blue-glass-reading-history", in: app)
+        arrow.tap()
+        assertAtBottom("jump button")
+        XCTAssertEqual(chatInputElement(in: app).frame.minY, composerTopWhileReading, accuracy: 2,
+                       "Removing the floating arrow must not change composer layout")
+        XCTAssertEqual(transcript.frame.height, viewportHeightWhileReading, accuracy: 2,
+                       "Arrow visibility must not resize the compact transcript viewport")
+
+        // Reach the bottom manually, without pressing the button. This is the
+        // reported failure mode and must resume tracking from the real offset.
+        transcript.swipeDown()
+        transcript.swipeDown()
+        XCTAssertTrue(arrow.waitForExistence(timeout: 8))
+        for _ in 0..<8 where arrow.exists { transcript.swipeUp() }
+        assertAtBottom("manual scroll")
+
+        let draft = "UNSENT_BOTTOM_REGRESSION"
+        let input = chatInputElement(in: app)
+        XCTAssertTrue(input.isHittable)
+        input.tap(); input.typeText(draft)
+        XCTAssertTrue(app.keyboards.firstMatch.waitForExistence(timeout: 5))
+        assertAtBottom("keyboard and composer growth")
+        XCUIDevice.shared.orientation = .landscapeLeft
+        let landscape = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+            let frame = app.windows.firstMatch.frame
+            return frame.width > frame.height
+        }, object: nil)
+        XCTAssertEqual(XCTWaiter.wait(for: [landscape], timeout: 10), .completed)
+        assertAtBottom("rotated keyboard viewport")
+        XCTAssertEqual(chatInputElement(in: app).value as? String, draft)
+        attachScreenshot("follow-latest-bottom-keyboard-landscape", in: app)
+        XCUIDevice.shared.orientation = .portrait
+
+        // Leave an explicitly paused, long chat for an empty new one. An old
+        // endpoint or invalidated layout cannot carry its arrow into that chat.
+        transcript.swipeDown()
+        transcript.swipeDown()
+        XCTAssertTrue(arrow.waitForExistence(timeout: 8))
+        let identity = app.staticTexts["hanlin-phase2-chat-id"].firstMatch
+        XCTAssertTrue(identity.waitForExistence(timeout: 5))
+        let oldID = identity.label
+        let newChat = chatListToolbarButton("hanlin-new-chat-button", in: app)
+        XCTAssertTrue(newChat.isHittable)
+        newChat.tap()
+        let replaced = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
+            identity.exists && identity.label != oldID && UUID(uuidString: identity.label) != nil
+        }, object: nil)
+        XCTAssertEqual(XCTWaiter.wait(for: [replaced], timeout: 12), .completed)
+        XCTAssertTrue(arrow.waitForNonExistence(timeout: 8),
+                      "A new, fitting chat has no older scroll target")
+        XCTAssertEqual(app.staticTexts["hanlin-phase2-request-count"].label, "0",
+                       "Reading and jumping in historical messages cannot execute a model request")
+        attachScreenshot("follow-latest-new-short-chat-without-arrow", in: app)
     }
 
     /// Exercises the production transcript, Host approval and actual Python
@@ -571,9 +669,13 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         let newChatButton = chatListToolbarButton("hanlin-new-chat-button", in: app)
         tapElement(newChatButton)
 
-        // Verify the newly created chat opens with an information welcome bubble and empty draft
+        // A new conversation contains no synthetic welcome message and has an empty draft.
+        let freshInput = chatInputElement(in: app)
+        XCTAssertTrue(freshInput.waitForExistence(timeout: 10))
+        XCTAssertEqual(freshInput.value as? String ?? "", "")
         let infoBubble = app.descendants(matching: .any)["hanlin-info-bubble"].firstMatch
-        XCTAssertTrue(infoBubble.waitForExistence(timeout: 10), "New chat welcome information bubble did not appear")
+        XCTAssertFalse(infoBubble.exists, "New conversations must not insert a group welcome message")
+        XCTAssertFalse(app.staticTexts["New Group Chat"].exists)
 
         // Switch back to Agent Acceptance Chat and verify the draft was preserved
         ensureChatListVisible(in: app)
@@ -615,6 +717,88 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         attachScreenshot("UI-02_ClassicUserAndAssistantBubbleWithDirectActionButtons", in: app)
     }
 
+    func testUserBubbleLongPressKeepsNativeActionsAndOriginalMessage() throws {
+        continueAfterFailure = false
+        let app = launchAcceptanceApp(isolatedStore: true)
+        defer { app.terminate() }
+        openChat(in: app)
+        let prompt = "PROMPT_UI02_CLASSIC_BUBBLES"
+        sendPrompt(prompt, in: app)
+        let final = app.descendants(matching: .any).matching(
+            NSPredicate(format: "label CONTAINS 'UI02_CLASSIC_COMPLETE'")).firstMatch
+        XCTAssertTrue(final.waitForExistence(timeout: 30))
+        let bubble = app.descendants(matching: .any)["hanlin-user-bubble"].firstMatch
+        XCTAssertTrue(bubble.waitForExistence(timeout: 5))
+        XCTAssertTrue(bubble.isHittable)
+        let originalFrame = bubble.frame
+        XCTAssertEqual(bubble.label, prompt)
+        attachScreenshot("user-bubble-before-native-lift", in: app)
+        // Retain a simulator screen recording around this actual gesture to
+        // inspect the lift's first frames as well as the settled screenshot.
+        // A screenshot after menu presentation alone cannot prove that interval.
+        print("HANLIN_USER_BUBBLE_LIFT_START uptime=\(ProcessInfo.processInfo.systemUptime)")
+        bubble.press(forDuration: 1.2)
+        let copy = app.buttons["Copy Content"].firstMatch
+        let select = app.buttons["Select Text"].firstMatch
+        XCTAssertTrue(copy.waitForExistence(timeout: 10), "The original user menu must remain native")
+        XCTAssertTrue(select.exists, "The shared shape correction must preserve host actions")
+        print("HANLIN_USER_BUBBLE_LIFT_PRESENTED uptime=\(ProcessInfo.processInfo.systemUptime)")
+        attachScreenshot("user-bubble-native-lift-presented", in: app)
+        tapElement(select)
+        let done = app.buttons["hanlin-text-selection-done"].firstMatch
+        XCTAssertTrue(done.waitForExistence(timeout: 10))
+        let selectedText = app.textViews.matching(
+            NSPredicate(format: "value == %@ OR label == %@", prompt, prompt)).firstMatch
+        XCTAssertTrue(selectedText.waitForExistence(timeout: 5),
+                      "The original message must reach the existing native selection sheet")
+        tapElement(done)
+        XCTAssertTrue(done.waitForNonExistence(timeout: 10))
+        XCTAssertTrue(bubble.isHittable)
+        XCTAssertEqual(bubble.label, prompt)
+        XCTAssertEqual(bubble.frame.width, originalFrame.width, accuracy: 1)
+        XCTAssertEqual(bubble.frame.height, originalFrame.height, accuracy: 1)
+        XCTAssertTrue(final.exists, "Menu dismissal must preserve the conversation")
+        attachScreenshot("user-bubble-native-lift-restored", in: app)
+    }
+
+
+    /// Uses the original native menu and actual shared localization bundle in RTL.
+    /// The runner executes this in light and dark mode on iPad.
+    func testHebrewNewChatAndNativeMessageActions() throws {
+        continueAfterFailure = false
+        let app = launchAcceptanceApp(language: "he", locale: "he_IL", isolatedStore: true)
+        defer { app.terminate() }
+        openChat(in: app)
+        sendPrompt("PROMPT_UI02_CLASSIC_BUBBLES", in: app)
+        let final = app.descendants(matching: .any).matching(
+            NSPredicate(format: "label CONTAINS 'UI02_CLASSIC_COMPLETE'")).firstMatch
+        XCTAssertTrue(final.waitForExistence(timeout: 30))
+        let bubble = app.descendants(matching: .any)["hanlin-user-bubble"].firstMatch
+        XCTAssertTrue(bubble.waitForExistence(timeout: 5))
+        bubble.press(forDuration: 1.2)
+        let copy = app.buttons["העתקת תוכן"].firstMatch
+        let select = app.buttons["בחירת טקסט"].firstMatch
+        XCTAssertTrue(copy.waitForExistence(timeout: 10))
+        XCTAssertTrue(select.exists)
+        XCTAssertFalse(app.buttons["Copy Content"].exists)
+        XCTAssertFalse(app.buttons["Select Text"].exists)
+        attachScreenshot("post149101-Hebrew-native-message-menu", in: app)
+        tapElement(select)
+        let done = app.buttons["hanlin-text-selection-done"].firstMatch
+        XCTAssertTrue(done.waitForExistence(timeout: 10))
+        tapElement(done)
+        XCTAssertTrue(done.waitForNonExistence(timeout: 10))
+        let newChat = chatListToolbarButton("hanlin-new-chat-button", in: app)
+        tapElement(newChat)
+        let input = chatInputElement(in: app)
+        XCTAssertTrue(input.waitForExistence(timeout: 10))
+        XCTAssertEqual(input.value as? String ?? "", "")
+        XCTAssertFalse(app.descendants(matching: .any)["hanlin-info-bubble"].firstMatch.exists)
+        XCTAssertTrue(app.staticTexts["צ׳אט חדש"].firstMatch.waitForExistence(timeout: 10))
+        XCTAssertFalse(app.staticTexts["New Group Chat"].exists)
+        attachScreenshot("post149101-Hebrew-empty-chat-and-sidebar", in: app)
+    }
+
     func testUI03SearchMessageAndDeduplicatedCitations() throws {
         try exerciseUI03SearchMessageAndDeduplicatedCitations(hebrew: false)
     }
@@ -625,7 +809,8 @@ final class AgentRuntimeConversationUITests: XCTestCase {
 
     private func exerciseUI03SearchMessageAndDeduplicatedCitations(hebrew: Bool) throws {
         continueAfterFailure = false
-        let app = launchAcceptanceApp(language: hebrew ? "he" : "en", locale: hebrew ? "he_IL" : "en_US")
+        let app = launchAcceptanceApp(language: hebrew ? "he" : "en", locale: hebrew ? "he_IL" : "en_US",
+                                      isolatedStore: true)
         let screenshotPrefix = hebrew ? "UI-03_HE_RTL" : "UI-03"
         let verificationSource = "print('UI03_LOCAL_RESULT_' + str(6 * 7))"
         openChat(in: app)
@@ -729,8 +914,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
 
         let sourceSheet = app.descendants(matching: .any)["hanlin-scoped-sources"].firstMatch
         XCTAssertTrue(sourceSheet.waitForExistence(timeout: 10), "Tapping the inline chip must open its scoped sources")
-        XCTAssertLessThan(sourceSheet.frame.height, app.frame.height * 0.42,
-                          "A one-source sheet must be compact instead of leaving a large empty iPad panel")
+        assertReadableSourcesSheet(sourceSheet, in: app)
         let sourceRows = app.buttons.matching(NSPredicate(format: "identifier BEGINSWITH 'hanlin-source-'"))
         XCTAssertEqual(sourceRows.count, 1, "This sentence cites one canonical returned source")
         XCTAssertTrue(sourceRows.firstMatch.label.contains("Hanlin Reference Source"))
@@ -751,6 +935,77 @@ final class AgentRuntimeConversationUITests: XCTestCase {
             add(paragraph)
             attachScreenshot(screenshotPrefix + "_FinalRTLAnswer", in: app)
         }
+    }
+
+
+    // Regression for the real all-sources footer: both one and many sources
+    // must use the shared native sheet at a usable width, with real scrolling.
+    func testSourcesSheetSingleSourceHasReadableNativeSize() throws {
+        try exerciseSourcesSheet(count: 1, hebrew: false)
+    }
+
+    func testSourcesSheetTwentySevenSourcesScrollsInHebrew() throws {
+        try exerciseSourcesSheet(count: 27, hebrew: true)
+    }
+
+    private func assertReadableSourcesSheet(_ sheet: XCUIElement, in app: XCUIApplication) {
+        let window = app.windows.firstMatch.frame
+        XCTAssertGreaterThanOrEqual(sheet.frame.width, min(320, window.width * 0.7),
+            "A sources list must retain native readable width instead of fitting to a favicon.")
+        XCTAssertGreaterThanOrEqual(sheet.frame.height, min(300, window.height * 0.35),
+            "The native sheet must provide useful space for text and scrolling.")
+        XCTAssertLessThanOrEqual(sheet.frame.width, window.width + 2)
+        XCTAssertLessThanOrEqual(sheet.frame.height, window.height + 2)
+        let close = app.buttons["hanlin-sources-close"].firstMatch
+        XCTAssertTrue(close.isHittable, "The native dismiss control must stay reachable.")
+    }
+
+    private func exerciseSourcesSheet(count: Int, hebrew: Bool) throws {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchArguments = ["-AppleLanguages", hebrew ? "(he)" : "(en)",
+                               "-AppleLocale", hebrew ? "he_IL" : "en_US"]
+        app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+        app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
+        // Each count fixture owns a fresh store; prior cases cannot supply its answer.
+        app.launchEnvironment["HANLIN_PHASE2_STORE_ID"] = UUID().uuidString
+        app.launchEnvironment["HANLIN_SOURCES_SHEET_ACCEPTANCE_COUNT"] = String(count)
+        app.launch()
+        defer { app.terminate() }
+        openChat(in: app)
+
+        let footer = app.buttons["hanlin-all-sources"].firstMatch
+        XCTAssertTrue(footer.waitForExistence(timeout: 20))
+        let footerLabel = footer.label
+        XCTAssertTrue(footerLabel.contains(String(count)),
+            "The original footer must retain every source. Expected \(count); label=\(footerLabel); value=\(String(describing: footer.value))")
+        tapElement(footer)
+        let sheet = app.descendants(matching: .any)["hanlin-scoped-sources"].firstMatch
+        XCTAssertTrue(sheet.waitForExistence(timeout: 10))
+        assertReadableSourcesSheet(sheet, in: app)
+
+        let first = app.buttons.matching(NSPredicate(
+            format: "identifier BEGINSWITH 'hanlin-source-' AND label BEGINSWITH 'Source 1:'"
+        )).firstMatch
+        XCTAssertTrue(first.waitForExistence(timeout: 10))
+        XCTAssertGreaterThan(first.frame.width, sheet.frame.width * 0.6,
+            "A readable title must occupy the sheet, not a compressed icon-width column.")
+        XCTAssertTrue(first.isHittable)
+        attachScreenshot("Sources-\(count)-Readable-\(hebrew ? "HE" : "EN")", in: app)
+
+        if count > 1 {
+            let last = app.buttons.matching(NSPredicate(
+                format: "identifier BEGINSWITH 'hanlin-source-' AND label BEGINSWITH %@",
+                "Source \(count):"
+            )).firstMatch
+            for _ in 0..<12 where !last.isHittable { sheet.swipeUp() }
+            XCTAssertTrue(last.isHittable, "Every returned source must remain reachable by scrolling.")
+            XCTAssertTrue(last.label.contains("מקור לבדיקה"))
+            attachScreenshot("Sources-\(count)-Last-Row", in: app)
+        }
+        tapElement(app.buttons["hanlin-sources-close"].firstMatch)
+        XCTAssertTrue(sheet.waitForNonExistence(timeout: 10))
+        XCTAssertTrue(footer.isHittable, "Closing sources must restore the same answer footer.")
     }
 
     func testNativePartialSelectionSaveAndOriginalLongPressPreview() throws {
@@ -807,12 +1062,112 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertTrue(paragraph.waitForExistence(timeout: 10), "Dismissing the browser did not restore the original chat")
     }
 
-    func testUI04CollapsedProgressAndInspectorWithoutRawCoT() throws {
-        let app = launchAcceptanceApp()
+    func testActivityAutoExpansionManualCollapseFinalCollapseAndColdReasoning() throws {
+        continueAfterFailure = false
+        executionTimeAllowance = 420
+        // The fixture advances only after the preceding UI assertions pass.
+        // A unique, retained state token cannot miss an acknowledgment.
+        let checkpointNonce = UUID().uuidString
+        let checkpointName = "com.itorah.hanlin.ui-acceptance.activity." + checkpointNonce
+        var checkpointToken: Int32 = 0
+        let checkpointRegistration = notify_register_check(checkpointName, &checkpointToken)
+        XCTAssertEqual(checkpointRegistration, UInt32(NOTIFY_STATUS_OK))
+        guard checkpointRegistration == UInt32(NOTIFY_STATUS_OK) else { return }
+        defer { notify_cancel(checkpointToken) }
+        XCTAssertEqual(notify_set_state(checkpointToken, 0), UInt32(NOTIFY_STATUS_OK))
+        func acknowledgeCheckpoint(_ phase: UInt64) {
+            var previous: UInt64 = 0
+            XCTAssertEqual(notify_get_state(checkpointToken, &previous), UInt32(NOTIFY_STATUS_OK))
+            XCTAssertEqual(previous, phase - 1, "Fixture phases must advance in order")
+            XCTAssertEqual(notify_set_state(checkpointToken, phase), UInt32(NOTIFY_STATUS_OK))
+            print("HANLIN_ACTIVITY_FIXTURE_ACK=\(phase) uptime=\(ProcessInfo.processInfo.systemUptime)")
+        }
+        let app = XCUIApplication()
+        defer { app.terminate() }
+        app.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+        app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
+        app.launchEnvironment["HANLIN_PHASE2_STORE_ID"] = UUID().uuidString
+        app.launchEnvironment["HANLIN_ACTIVITY_FIXTURE_CHECKPOINT"] = checkpointNonce
+        app.launch()
         openChat(in: app)
+        sendPrompt("PROMPT_ACTIVITY_LIFECYCLE", in: app)
+        let summary = app.descendants(matching: .any).matching(NSPredicate(
+            format: "identifier == %@ AND label CONTAINS %@", "hanlin-reasoning-expanded-text",
+            "ACTIVITY_FIRST_CHECKPOINT")).firstMatch
+        XCTAssertTrue(summary.waitForExistence(timeout: 15), "Actual activity must expand without a tap")
+        XCTAssertGreaterThan(summary.label.count, 140, "Long displayable output stays visible")
+        let toggle = app.descendants(matching: .any)["hanlin-reasoning-toggle"].firstMatch
+        XCTAssertTrue(toggle.waitForExistence(timeout: 5))
+        XCTAssertTrue(toggle.label.contains("Thinking"), "Expanded work keeps Thinking at the root")
+        XCTAssertFalse(toggle.label.contains("Working"), "The generic Working root must not return")
+        XCTAssertFalse(app.descendants(matching: .any)["hanlin-reasoning-live-status"].exists,
+                       "Provider text must not add a second Thinking header below the root")
+        attachScreenshot("activity-thinking-root-expanded", in: app)
+        XCTAssertFalse(app.staticTexts["Thinking & tools"].exists)
+        XCTAssertFalse(toggle.label.contains("Activity history"))
+        tapElement(toggle)
+        XCTAssertTrue(summary.waitForNonExistence(timeout: 5))
+        XCTAssertTrue(toggle.label.contains("Thinking"), "Manual collapse keeps the same root title")
+        attachScreenshot("activity-thinking-root-collapsed", in: app)
+        acknowledgeCheckpoint(1)
+
+        let interim = app.descendants(matching: .any).matching(NSPredicate(
+            format: "label CONTAINS %@", "ACTIVITY_INTERIM_CHECKPOINT")).firstMatch
+        XCTAssertTrue(interim.waitForExistence(timeout: 20))
+        XCTAssertFalse(summary.exists, "Interim text must respect manual collapse")
+        XCTAssertFalse(toggle.label.contains("Worked for"), "Provisional text is not a final answer")
+        acknowledgeCheckpoint(2)
+        let nextThinking = XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "label CONTAINS %@", "Thinking"), object: toggle)
+        XCTAssertEqual(XCTWaiter.wait(for: [nextThinking], timeout: 15), .completed)
+        XCTAssertFalse(summary.exists, "New reasoning must not force a manually collapsed tree open")
+        tapElement(toggle)
+        let second = app.descendants(matching: .any).matching(NSPredicate(
+            format: "identifier == %@ AND label CONTAINS %@", "hanlin-reasoning-expanded-text",
+            "ACTIVITY_SECOND_CHECKPOINT")).firstMatch
+        XCTAssertTrue(second.waitForExistence(timeout: 5))
+        XCTAssertTrue(toggle.label.contains("Thinking"), "New reasoning still uses the one root indicator")
+        XCTAssertFalse(app.descendants(matching: .any)["hanlin-reasoning-live-status"].exists)
+        XCTAssertTrue(summary.exists, "The first completed summary is retained beside later work")
+        acknowledgeCheckpoint(3)
+
+        let final = app.descendants(matching: .any).matching(NSPredicate(
+            format: "label CONTAINS %@", "ACTIVITY_FINAL_COMPLETE")).firstMatch
+        XCTAssertTrue(final.waitForExistence(timeout: 20))
+        XCTAssertTrue(app.buttons["hanlin-chat-stop"].firstMatch.waitForNonExistence(timeout: 10))
+        XCTAssertTrue(summary.waitForNonExistence(timeout: 5), "The completed activity collapses automatically")
+        XCTAssertTrue(toggle.label.contains("Worked for"))
+        tapElement(toggle)
+        XCTAssertTrue(summary.waitForExistence(timeout: 5))
+        XCTAssertTrue(second.exists)
+        XCTAssertFalse(app.descendants(matching: .any)["hanlin-reasoning-live-status"].exists,
+            "Historical reasoning has no permanent Thinking label")
+        attachScreenshot("activity-live-disclosure-completed-history", in: app)
+        openSettings(in: app)
+        app.terminate()
+        app.launch()
+        openChat(in: app)
+        XCTAssertTrue(final.waitForExistence(timeout: 20))
+        if !summary.waitForExistence(timeout: 2) { tapElement(toggle) }
+        XCTAssertTrue(summary.waitForExistence(timeout: 5), "The saved summary survives a cold conversation reopen")
+        XCTAssertTrue(second.exists)
+        XCTAssertEqual(app.staticTexts["hanlin-phase2-request-count"].label, "0",
+            "Opening history does not replay a provider request")
+        attachScreenshot("activity-reasoning-cold-restoration", in: app)
+    }
+
+    func testUI04CollapsedProgressAndInspectorWithoutRawCoT() throws {
+        let app = launchAcceptanceApp(isolatedStore: true)
+        openChat(in: app)
+        // UI03 intentionally remembers Python consent across conversations.
+        // Start this consent journey through the original Settings revocation.
+        revokeRememberedToolPermissions(in: app)
 
         sendPrompt("PROMPT_UI04_REASONING_INSPECTOR", in: app)
-        approveOriginalToolRequest(["source": "print(6 * 7)"], in: app)
+        // Local Python uses the original Host's remembered scope, like UI03.
+        // Provider-only approvals use the helper's one-use default instead.
+        approveOriginalToolRequest(["source": "print(6 * 7)"], in: app, remembersDecision: true)
 
         let finalAnswer = app.descendants(matching: .any).matching(
             NSPredicate(format: "label CONTAINS 'UI04_REASONING_COMPLETE'")
@@ -1095,16 +1450,11 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         XCTAssertTrue(backBtn3.waitForExistence(timeout: 5))
         tapElement(backBtn3)
 
-        // 5. Open Runtime subpage and return
-        let runtimeRow = app.buttons["hanlin-tools-open-runtime"].firstMatch
-        XCTAssertTrue(runtimeRow.waitForExistence(timeout: 5), "Open runtime row must exist")
-        tapElement(runtimeRow)
-
-        let runtimePage = app.descendants(matching: .any)["hanlin-tools-runtime-page"].firstMatch
-        XCTAssertTrue(runtimePage.waitForExistence(timeout: 5), "Runtime subpage must appear")
-        let backBtn4 = app.buttons["hanlin-tools-subpage-back"].firstMatch
-        XCTAssertTrue(backBtn4.waitForExistence(timeout: 5))
-        tapElement(backBtn4)
+        // Engine lifecycle and package administration belong in advanced Settings.
+        // The ordinary tools drawer must not offer those technical destinations.
+        XCTAssertFalse(app.buttons["hanlin-tools-open-runtime"].exists)
+        XCTAssertFalse(app.buttons["hanlin-tools-open-full-runtime-center"].exists)
+        XCTAssertFalse(app.descendants(matching: .any)["hanlin-tools-runtime-page"].exists)
 
         // Close Tools popover
         tapElement(toolsDirect)
@@ -1436,9 +1786,10 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         tapElement(tools)
         let routes = [
             ("skills", "hanlin-tools-open-skills", "hanlin-tools-open-full-skill-center"),
-            ("mcp", "hanlin-tools-open-mcp", "hanlin-tools-open-full-mcp-settings"),
-            ("runtime", "hanlin-tools-open-runtime", "hanlin-tools-open-full-runtime-center")
+            ("mcp", "hanlin-tools-open-mcp", "hanlin-tools-open-full-mcp-settings")
         ]
+        XCTAssertFalse(app.buttons["hanlin-tools-open-runtime"].exists)
+        XCTAssertFalse(app.buttons["hanlin-tools-open-full-runtime-center"].exists)
         for (destination, routeID, linkID) in routes {
             let route = app.buttons[routeID].firstMatch
             XCTAssertTrue(route.waitForExistence(timeout: 5))
@@ -1748,13 +2099,18 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         return app
     }
 
-    private func launchAcceptanceApp(language: String = "en", locale: String = "en_US") -> XCUIApplication {
+    private func launchAcceptanceApp(language: String = "en", locale: String = "en_US",
+                                     isolatedStore: Bool = false) -> XCUIApplication {
         let app = XCUIApplication()
         app.launchArguments += ["-AppleLanguages", "(\(language))", "-AppleLocale", locale]
         app.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
         app.launchEnvironment["HANLIN_COMPOSER_EDIT_DIAGNOSTICS"] = "1"
         app.launchEnvironment["HANLIN_COMPACT_KEYBOARD_WITNESS"] = "1"
         app.launchEnvironment["HANLIN_AGENT_RUNTIME_UI_ACCEPTANCE"] = "1"
+        if isolatedStore {
+            // A fresh store cannot expose the previous case's rows before fixture seeding.
+            app.launchEnvironment["HANLIN_PHASE2_STORE_ID"] = UUID().uuidString
+        }
         app.launch()
         return app
     }
@@ -2100,7 +2456,7 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         }
     }
 
-    private func openChat(in app: XCUIApplication) {
+    private func openChat(in app: XCUIApplication, file: StaticString = #filePath, line: UInt = #line) {
         while app.navigationBars["Runtime diagnostics"].exists {
             let backButton = app.navigationBars.buttons.element(boundBy: 0)
             if backButton.waitForExistence(timeout: 2) && backButton.isHittable {
@@ -2109,52 +2465,94 @@ final class AgentRuntimeConversationUITests: XCTestCase {
                 break
             }
         }
-        _ = selectTab(identifier: "hanlin-home-tab", labels: ["Chats", "Messages", "Home", "列表"], in: app)
 
-        let input = chatInputElement(in: app)
         let compactViewAll = app.buttons["hanlin-compact-view-all-button"].firstMatch
-        if input.waitForExistence(timeout: 3) && !compactViewAll.exists { return }
+        let seededRow = app.descendants(matching: .any)["hanlin-chat-row-Agent Acceptance Chat"].firstMatch
+        let recentRow = app.buttons.matching(NSPredicate(
+            format: "identifier BEGINSWITH %@ AND label CONTAINS %@",
+            "hanlin-compact-recent-row-", "Agent Acceptance Chat"
+        )).firstMatch
 
-        // If on compact Home, tap the seeded Agent Acceptance Chat row directly
-        if compactViewAll.exists {
-            let recentRow0 = app.buttons["hanlin-compact-recent-row-0"].firstMatch
-            if recentRow0.waitForExistence(timeout: 3) && recentRow0.label.contains("Agent Acceptance Chat") {
-                tapElement(recentRow0)
-                _ = input.waitForExistence(timeout: 10)
-                return
-            }
-        }
-
-        // Expand sidebar on iPad if collapsed
-        let sidebarToggle = app.navigationBars.buttons.matching(
-            NSPredicate(format: "identifier == 'ToggleSidebar' OR label CONTAINS[c] 'Sidebar' OR label CONTAINS[c] 'סרגל'")
+        let compactWorkspace = app.descendants(matching: .any)["hanlin-compact-chat-workspace"].firstMatch
+        let isCompactWorkspace = compactWorkspace.exists
+        let title = app.navigationBars.descendants(matching: .any).matching(
+            NSPredicate(format: "label == %@", "Agent Acceptance Chat")
         ).firstMatch
-        if sidebarToggle.waitForExistence(timeout: 2) && sidebarToggle.isHittable {
-            sidebarToggle.tap()
+
+        func currentChatIsReady() -> Bool {
+            let input = chatInputElement(in: app)
+            return input.exists && input.isEnabled && input.isHittable
+                && !compactViewAll.exists && title.exists
+        }
+        func waitForSelectedChat() -> Bool {
+            let hasTitle = title.waitForExistence(timeout: 15)
+            XCTAssertTrue(hasTitle, "Selection must open the actual Agent Acceptance Chat destination",
+                          file: file, line: line)
+            guard hasTitle else { return false }
+            let input = chatInputElement(in: app)
+            let hasInput = input.waitForExistence(timeout: 15)
+            XCTAssertTrue(hasInput, "The selected conversation must retain its original editor",
+                          file: file, line: line)
+            guard hasInput else { return false }
+            let hittable = XCTNSPredicateExpectation(
+                predicate: NSPredicate(format: "hittable == true"), object: input)
+            let ready = XCTWaiter.wait(for: [hittable], timeout: 10)
+            XCTAssertEqual(ready, .completed, "The selected conversation editor must be reachable",
+                           file: file, line: line)
+            XCTAssertTrue(input.isEnabled, "The selected conversation editor must be enabled",
+                          file: file, line: line)
+            let homeDismissed = !isCompactWorkspace || compactViewAll.waitForNonExistence(timeout: 10)
+            XCTAssertTrue(homeDismissed, "The compact Home screen must yield to the selected chat",
+                          file: file, line: line)
+            return ready == .completed && input.isEnabled && homeDismissed
+        }
+        func selectVisibleSeededRow() -> Bool {
+            // A retained, disabled history row can have an on-screen AX frame.
+            // Select the real compact Home control first; never tap disabled rows.
+            let rows = isCompactWorkspace ? [recentRow, seededRow] : [seededRow, recentRow]
+            for row in rows where row.exists && row.isEnabled && row.isHittable {
+                row.tap()
+                return waitForSelectedChat()
+            }
+            return false
         }
 
-        let chatPredicate = NSPredicate(format: "label CONTAINS 'Agent Acceptance Chat' OR identifier CONTAINS 'Agent Acceptance Chat'")
-        var seededChat = app.buttons.matching(chatPredicate).firstMatch
-        if !seededChat.exists {
-            seededChat = app.descendants(matching: .any).matching(chatPredicate).firstMatch
-        }
-        if !seededChat.exists {
-            seededChat = app.cells.matching(chatPredicate).firstMatch
-        }
-        if !seededChat.exists {
-            seededChat = app.descendants(matching: .any).matching(chatPredicate).firstMatch
-        }
+        // A wide launch can already expose the seeded row. Do not hide that
+        // sidebar or navigate through unrelated tabs before selecting it.
+        if currentChatIsReady() || selectVisibleSeededRow() { return }
+        _ = selectTab(identifier: "hanlin-home-tab", labels: ["Chats", "Messages", "Home", "列表"], in: app)
+        if currentChatIsReady() || selectVisibleSeededRow() { return }
 
-        if seededChat.waitForExistence(timeout: 15) {
-            tapElement(seededChat)
+        let compactHistory = app.buttons["hanlin-history-open"].firstMatch
+        if compactHistory.exists && compactHistory.isHittable {
+            compactHistory.tap()
+        } else if compactViewAll.exists && compactViewAll.isHittable {
+            compactViewAll.tap()
         } else {
-            let anyChat = app.cells.firstMatch
-            if anyChat.waitForExistence(timeout: 3) {
-                tapElement(anyChat)
+            // These are the actual iOS 27 English/Hebrew "show" labels.
+            // ToggleSidebar alone also matches "Hide Sidebar"; never tap that.
+            let showSidebar = app.navigationBars.buttons.matching(NSPredicate(
+                format: "label IN %@", ["Show Sidebar", "הצגת סרגל הצד"]
+            )).firstMatch
+            if showSidebar.waitForExistence(timeout: 2) && showSidebar.isHittable {
+                showSidebar.tap()
             }
         }
 
-        _ = input.waitForExistence(timeout: 15)
+        XCTAssertTrue(seededRow.waitForExistence(timeout: 15),
+            "The original seeded conversation row must be available", file: file, line: line)
+        guard seededRow.exists else { return }
+        let hittable = XCTNSPredicateExpectation(
+            predicate: NSPredicate(format: "hittable == true"), object: seededRow)
+        let ready = XCTWaiter.wait(for: [hittable], timeout: 5)
+        XCTAssertEqual(ready, .completed,
+            "The seeded row must be visible before selection", file: file, line: line)
+        guard ready == .completed else { return }
+        XCTAssertTrue(seededRow.isEnabled, "The visible conversation row must be enabled",
+                      file: file, line: line)
+        guard seededRow.isEnabled else { return }
+        seededRow.tap()
+        _ = waitForSelectedChat()
     }
 
     private func runtimeState(for kindRaw: String, in app: XCUIApplication) -> XCUIElement {

@@ -1,0 +1,21 @@
+{
+  "review_source": "33f0eb3195406e98139e29dd94819d14e51853bd",
+  "unmapped_paths": [
+    "AI_HLYTests/HanlinNativeWidgetRendererTests.swift",
+    "AI_HLYTests/HanlinOriginalExpoWidgetTests.swift",
+    "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests.swift",
+    "Fixtures/Widgets/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo",
+    "Fixtures/Widgets/SHA256.json",
+    "Scripts/Widgets/Tests/widget-types-consumer.ts",
+    "Scripts/MiniApps/native-presentations.d.ts"
+  ],
+  "native_suites": [
+    "AI_HLYTests/HanlinNativeWidgetRendererTests",
+    "AI_HLYTests/HanlinOriginalExpoWidgetTests",
+    "AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests"
+  ],
+  "host_authoring": "Scripts/MiniApps/native-presentations.d.ts",
+  "previous_failure_retained": true,
+  "original_suite_assertions_changed": false,
+  "current_plan_status": "awaiting original planner execution on committed source"
+}

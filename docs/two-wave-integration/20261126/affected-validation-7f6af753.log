@@ -1,0 +1,185 @@
+# Affected-Tests CI Validation Plan
+
+| Property | Value |
+| --- | --- |
+| **Event** | `workflow_dispatch` |
+| **Base SHA** | `c34dd6ae75` (`c34dd6ae752b3ab3ebc001743fc62c72fc48a203`) |
+| **Base SHA Resolution Method** | `explicit compare_base_sha input` |
+| **Head SHA** | `7f6af7536d` (`7f6af7536db3d2aa9ecc9eb51ec82293fc5db3bc`) |
+| **Changed Files** | `3605` |
+| **Required Build Type** | `Release Device IPA` |
+| **Simulator Required** | `true` |
+| **Device Build Required** | `true` |
+| **IPA Packaging Required** | `true` |
+| **Full Validation Override** | `false` |
+| **Estimated Duration** | `~79 min` |
+| **Estimated Savings** | `~101 min saved vs full run (~180 min)` |
+| **Simulator UI Filter** | `AI_HLYUITests/AgentRuntimeConversationUITests,AI_HLYUITests/HanlinComposerCapabilitiesUITests,AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests,AI_HLYUITests/HanlinExpoProductionE2ETests,AI_HLYUITests/HanlinMorphComposerUITests,AI_HLYUITests/HanlinNativeA2UIChatUITests,AI_HLYUITests/HanlinNativeScriptProductionE2ETests,AI_HLYUITests/HanlinRuntimeInstallationUITests/testRuntimeCenterEmbeddedRuntimesSmokeAndReadiness,AI_HLYUITests/HanlinScriptUIProductionE2ETests,AI_HLYUITests/HanlinSidebarNavigationUITests` |
+| **Simulator Unit Filter** | `AI_HLYTests/AgentActivityHeaderPhaseTests,AI_HLYTests/AgentDiagnosticsExportTests,AI_HLYTests/AgentDiagnosticsJournalTests,AI_HLYTests/AgentDiagnosticsRecorderPersistenceTests,AI_HLYTests/AgentDiagnosticsSessionPersistenceTests,AI_HLYTests/AgentRoundPresentationTests,AI_HLYTests/AgentRuntimeConversationAcceptanceTests,AI_HLYTests/AgentSkillsExposureTests,AI_HLYTests/AgentTokenUsageCacheTests,AI_HLYTests/AppleLocalProvidersTests,AI_HLYTests/AutomaticWebSearchCacheTests,AI_HLYTests/CalendarToolTests,AI_HLYTests/CanonicalAdapterTests,AI_HLYTests/CanonicalMiniAppIntegrationTests,AI_HLYTests/CanonicalShadowCoordinatorTests,AI_HLYTests/CanonicalToolAuthorityTests,AI_HLYTests/ChatAutoFollowTests,AI_HLYTests/ChatCanonicalPresentationSurvivalTests,AI_HLYTests/ChatCodeFenceTests,AI_HLYTests/ChatComposerSessionBridgeTests,AI_HLYTests/ChatPresentationTests,AI_HLYTests/ChatScrollViewHandleTests,AI_HLYTests/ClassicChatRestorationTests,AI_HLYTests/CompactChatRouteTests,AI_HLYTests/CompactRecentConversationsTests,AI_HLYTests/ComposerActionsParityTests,AI_HLYTests/CurrentLocationToolTests,AI_HLYTests/EmbeddedResultResolverTests,AI_HLYTests/ExpoPreparedEntrypointTests,AI_HLYTests/FoundationJSONShadowAdapterTests,AI_HLYTests/HanlinAppAgentSessionOwnerTests,AI_HLYTests/HanlinAppSplitOriginTests,AI_HLYTests/HanlinApplicationEmbeddingTests,AI_HLYTests/HanlinApplicationSystemIntegrationTests,AI_HLYTests/HanlinComposerCapabilityIntegrationTests,AI_HLYTests/HanlinComposerDrawerRouteTests,AI_HLYTests/HanlinConversationHistorySectionTests,AI_HLYTests/HanlinConversationMetadataTests,AI_HLYTests/HanlinConversationProjectionTests,AI_HLYTests/HanlinLocalizationTests,AI_HLYTests/HanlinLocalizedControlTests,AI_HLYTests/HanlinMCPEmbeddingTests,AI_HLYTests/HanlinMiniAppAssistantIntegrationTests,AI_HLYTests/HanlinMiniAppAssistantToolTests,AI_HLYTests/HanlinMiniAppHostDiscoveryTests,AI_HLYTests/HanlinModelPromptCachePersistenceTests,AI_HLYTests/HanlinNativeWidgetRendererTests,AI_HLYTests/HanlinOpenUIBridgeTests,AI_HLYTests/HanlinOriginalAssetTests,AI_HLYTests/HanlinOriginalExpoWidgetTests,AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests,AI_HLYTests/HanlinPromptCachingIntegrationTests,AI_HLYTests/HanlinScriptPackageProductionE2ETests,AI_HLYTests/HanlinScriptingAssistantProviderAdapterTests,AI_HLYTests/HanlinSidebarAccessibilityOwnershipTests,AI_HLYTests/HanlinSidebarGestureTests,AI_HLYTests/HanlinUnifiedHostServicesE2ETests,AI_HLYTests/LegacyToolMigrationTests,AI_HLYTests/MaintainedSkillCorpusTests,AI_HLYTests/MasterScenarioSemanticAcceptanceTests,AI_HLYTests/ModelPopoverZoomOrderTests,AI_HLYTests/NativeComposerLineSizingTests,AI_HLYTests/NodeHostHealthRecoveryTests,AI_HLYTests/OrganizerDockStateTests,AI_HLYTests/OriginalSourceNonRegressionTests,AI_HLYTests/PendingFirstTurnTests,AI_HLYTests/ProductionProviderConformanceTests,AI_HLYTests/ProductionSystemSkillsTests,AI_HLYTests/RuntimeAutonomyV3Tests,AI_HLYTests/RuntimeNativeInterruptionTests,AI_HLYTests/RuntimeToolContractTests,AI_HLYTests/ScriptingCanonicalAuthorityTests,AI_HLYTests/SkillOpenClawPolicyTests,AI_HLYTests/SkillRuntimeProductTests,AI_HLYTests/SkillStoreAndImportTests,AI_HLYTests/VoiceRecordingLifecycleTests` |
+| **Simulator Configuration** | `Release` |
+| **Simulator Build Args** | `-only-testing:AI_HLYTests/AgentActivityHeaderPhaseTests -only-testing:AI_HLYTests/AgentDiagnosticsExportTests -only-testing:AI_HLYTests/AgentDiagnosticsJournalTests -only-testing:AI_HLYTests/AgentDiagnosticsRecorderPersistenceTests -only-testing:AI_HLYTests/AgentDiagnosticsSessionPersistenceTests -only-testing:AI_HLYTests/AgentRoundPresentationTests -only-testing:AI_HLYTests/AgentRuntimeConversationAcceptanceTests -only-testing:AI_HLYTests/AgentSkillsExposureTests -only-testing:AI_HLYTests/AgentTokenUsageCacheTests -only-testing:AI_HLYTests/AppleLocalProvidersTests -only-testing:AI_HLYTests/AutomaticWebSearchCacheTests -only-testing:AI_HLYTests/CalendarToolTests -only-testing:AI_HLYTests/CanonicalAdapterTests -only-testing:AI_HLYTests/CanonicalMiniAppIntegrationTests -only-testing:AI_HLYTests/CanonicalShadowCoordinatorTests -only-testing:AI_HLYTests/CanonicalToolAuthorityTests -only-testing:AI_HLYTests/ChatAutoFollowTests -only-testing:AI_HLYTests/ChatCanonicalPresentationSurvivalTests -only-testing:AI_HLYTests/ChatCodeFenceTests -only-testing:AI_HLYTests/ChatComposerSessionBridgeTests -only-testing:AI_HLYTests/ChatPresentationTests -only-testing:AI_HLYTests/ChatScrollViewHandleTests -only-testing:AI_HLYTests/ClassicChatRestorationTests -only-testing:AI_HLYTests/CompactChatRouteTests -only-testing:AI_HLYTests/CompactRecentConversationsTests -only-testing:AI_HLYTests/ComposerActionsParityTests -only-testing:AI_HLYTests/CurrentLocationToolTests -only-testing:AI_HLYTests/EmbeddedResultResolverTests -only-testing:AI_HLYTests/ExpoPreparedEntrypointTests -only-testing:AI_HLYTests/FoundationJSONShadowAdapterTests -only-testing:AI_HLYTests/HanlinAppAgentSessionOwnerTests -only-testing:AI_HLYTests/HanlinAppSplitOriginTests -only-testing:AI_HLYTests/HanlinApplicationEmbeddingTests -only-testing:AI_HLYTests/HanlinApplicationSystemIntegrationTests -only-testing:AI_HLYTests/HanlinComposerCapabilityIntegrationTests -only-testing:AI_HLYTests/HanlinComposerDrawerRouteTests -only-testing:AI_HLYTests/HanlinConversationHistorySectionTests -only-testing:AI_HLYTests/HanlinConversationMetadataTests -only-testing:AI_HLYTests/HanlinConversationProjectionTests -only-testing:AI_HLYTests/HanlinLocalizationTests -only-testing:AI_HLYTests/HanlinLocalizedControlTests -only-testing:AI_HLYTests/HanlinMCPEmbeddingTests -only-testing:AI_HLYTests/HanlinMiniAppAssistantIntegrationTests -only-testing:AI_HLYTests/HanlinMiniAppAssistantToolTests -only-testing:AI_HLYTests/HanlinMiniAppHostDiscoveryTests -only-testing:AI_HLYTests/HanlinModelPromptCachePersistenceTests -only-testing:AI_HLYTests/HanlinNativeWidgetRendererTests -only-testing:AI_HLYTests/HanlinOpenUIBridgeTests -only-testing:AI_HLYTests/HanlinOriginalAssetTests -only-testing:AI_HLYTests/HanlinOriginalExpoWidgetTests -only-testing:AI_HLYTests/HanlinOriginalScriptWidgetLiveActivityTests -only-testing:AI_HLYTests/HanlinPromptCachingIntegrationTests -only-testing:AI_HLYTests/HanlinScriptPackageProductionE2ETests -only-testing:AI_HLYTests/HanlinScriptingAssistantProviderAdapterTests -only-testing:AI_HLYTests/HanlinSidebarAccessibilityOwnershipTests -only-testing:AI_HLYTests/HanlinSidebarGestureTests -only-testing:AI_HLYTests/HanlinUnifiedHostServicesE2ETests -only-testing:AI_HLYTests/LegacyToolMigrationTests -only-testing:AI_HLYTests/MaintainedSkillCorpusTests -only-testing:AI_HLYTests/MasterScenarioSemanticAcceptanceTests -only-testing:AI_HLYTests/ModelPopoverZoomOrderTests -only-testing:AI_HLYTests/NativeComposerLineSizingTests -only-testing:AI_HLYTests/NodeHostHealthRecoveryTests -only-testing:AI_HLYTests/OrganizerDockStateTests -only-testing:AI_HLYTests/OriginalSourceNonRegressionTests -only-testing:AI_HLYTests/PendingFirstTurnTests -only-testing:AI_HLYTests/ProductionProviderConformanceTests -only-testing:AI_HLYTests/ProductionSystemSkillsTests -only-testing:AI_HLYTests/RuntimeAutonomyV3Tests -only-testing:AI_HLYTests/RuntimeNativeInterruptionTests -only-testing:AI_HLYTests/RuntimeToolContractTests -only-testing:AI_HLYTests/ScriptingCanonicalAuthorityTests -only-testing:AI_HLYTests/SkillOpenClawPolicyTests -only-testing:AI_HLYTests/SkillRuntimeProductTests -only-testing:AI_HLYTests/SkillStoreAndImportTests -only-testing:AI_HLYTests/VoiceRecordingLifecycleTests -only-testing:AI_HLYTests/HanlinScriptingAcceptanceTests -only-testing:AI_HLYUITests/AgentRuntimeConversationUITests -only-testing:AI_HLYUITests/HanlinComposerCapabilitiesUITests -only-testing:AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests -only-testing:AI_HLYUITests/HanlinExpoProductionE2ETests -only-testing:AI_HLYUITests/HanlinMorphComposerUITests -only-testing:AI_HLYUITests/HanlinNativeA2UIChatUITests -only-testing:AI_HLYUITests/HanlinNativeScriptProductionE2ETests -only-testing:AI_HLYUITests/HanlinRuntimeInstallationUITests/testRuntimeCenterEmbeddedRuntimesSmokeAndReadiness -only-testing:AI_HLYUITests/HanlinScriptUIProductionE2ETests -only-testing:AI_HLYUITests/HanlinSidebarNavigationUITests` |
+| **ScriptUI Fixture Staging** | `true` |
+
+### Changed Files
+- `.github/workflows/testflight.yml`
+- `.github/workflows/validate-chat-diagnostics.yml`
+- `AI_HLY.xcodeproj/project.pbxproj`
+- `AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved`
+- `AI_HLY.xcodeproj/xcshareddata/xcschemes/AI_HLY.xcscheme`
+- `AI_HLY/ChatView.swift`
+- `AI_HLY/Downstream/AgentActivity/AgentEvent.swift`
+- `AI_HLY/Downstream/AgentActivity/AgentEventAccumulator.swift`
+- `AI_HLY/Downstream/AgentActivity/Scrolling/ChatAutoFollowController.swift`
+- `AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsRecorder.swift`
+- `AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsSession.swift`
+- `AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsView.swift`
+- `AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift`
+- `AI_HLY/Downstream/AgentDiagnostics/AgentTokenUsage.swift`
+- `AI_HLY/Downstream/AgentSkills/AssistantCapabilitySession+Selections.swift`
+- `AI_HLY/Downstream/AgentSkills/AssistantCapabilitySession.swift`
+- `AI_HLY/Downstream/AgentSkills/HanlinAISDKToolAdapter.swift`
+- `AI_HLY/Downstream/AgentSkills/HanlinSkillIndex.swift`
+- `AI_HLY/Downstream/AgentSkills/ReadSkillResourceTool.swift`
+- `AI_HLY/Downstream/AgentSkills/SystemSkillsProvider.swift`
+- *...and 3585 more files*
+
+### Affected Logical Components
+- **`agent_original_a2ui_ui_tests`**: directly modified: AI_HLYUITests/HanlinNativeA2UIChatUITests.swift
+- **`agent_runtime_conversation_ui_tests`**: directly modified: AI_HLYUITests/AgentRuntimeConversationUITests.swift
+- **`app_core`**: directly modified: AI_HLY/Downstream/AgentActivity/AgentEvent.swift; directly modified: AI_HLY/Downstream/AgentActivity/AgentEventAccumulator.swift
+- **`app_scripting_acceptance_test_files`**: directly modified: AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo
+- **`app_ui`**: directly modified: AI_HLY/ChatView.swift; directly modified: AI_HLY/ListView.swift
+- **`calendar_tool_recovery`**: directly modified: AI_HLYTests/CalendarToolTests.swift
+- **`canonical_agent_sdk`**: directly modified: Packages/HanlinAgentSDK/Package.resolved; directly modified: Packages/HanlinAgentSDK/Package.swift
+- **`canonical_extension_sdk`**: directly modified: Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidget.swift; directly modified: Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinScriptingWidgets.swift
+- **`canonical_mini_apps`**: directly modified: AI_HLY/Downstream/MiniApps/HanlinMiniAppHost.swift; directly modified: AI_HLYTests/HanlinMiniAppHostDiscoveryTests.swift
+- **`canonical_presentation_sdk`**: directly modified: Examples/HanlinLauncherLab/README.md; directly modified: Examples/HanlinLauncherLab/Sources/MyApp.swift
+- **`canonical_product_split`**: directly modified: AI_HLY/Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift; directly modified: AI_HLY/Downstream/ProductSplitIntegration/HanlinMiniAppsCatalogView.swift
+- **`chat_auto_follow_tests`**: directly modified: AI_HLY/Downstream/AgentActivity/Scrolling/ChatAutoFollowController.swift; directly modified: AI_HLYTests/ChatAutoFollowTests.swift
+- **`chat_code_fence_tests`**: directly modified: AI_HLY/Downstream/ChatPresentation/ChatMarkdownView.swift
+- **`chat_completion_ui_tests`**: directly modified: AI_HLYUITests/HanlinComposerCapabilitiesUITests.swift; directly modified: AI_HLYUITests/HanlinSidebarNavigationUITests.swift
+- **`chat_completion_unit_tests`**: directly modified: AI_HLYTests/AgentActivityHeaderPhaseTests.swift; directly modified: AI_HLYTests/AgentTokenUsageCacheTests.swift
+- **`chat_diagnostics_journal_tests`**: directly modified: AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsRecorder.swift; directly modified: AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsSession.swift
+- **`chat_round_presentation_tests`**: directly modified: AI_HLY/Downstream/AgentActivity/AgentEvent.swift; directly modified: AI_HLY/Downstream/AgentActivity/AgentEventAccumulator.swift
+- **`chat_scroll_viewport_tests`**: directly modified: AI_HLY/Downstream/AgentActivity/Scrolling/ChatAutoFollowController.swift; directly modified: AI_HLYTests/ChatScrollViewHandleTests.swift
+- **`ci_router`**: directly modified: .github/workflows/testflight.yml; directly modified: .github/workflows/validate-chat-diagnostics.yml
+- **`classic_chat_restoration_unit_tests`**: directly modified: AI_HLYTests/ClassicChatRestorationTests.swift
+- **`current_location_tool_tests`**: directly modified: AI_HLY/Services/ChatServices/APIManager+LegacyTools.swift; directly modified: AI_HLY/Services/ChatServices/MapServices.swift
+- **`expo_prepared_entry_tests`**: consumes expo_runtime
+- **`expo_runtime`**: directly modified: Packages/HanlinExpoRuntime/Package.swift; directly modified: Packages/HanlinExpoRuntime/Sources/ExpoWidgets/HanlinExpoWidgetState.swift
+- **`hanlin_application_sdk`**: directly modified: AI_HLY/Downstream/SDK/HanlinApplicationContext.swift; directly modified: AI_HLY/Downstream/SDK/HanlinApplicationData.swift
+- **`hanlin_localization_sdk`**: directly modified: Packages/HanlinPresentationSDK/Sources/HanlinLocalization/HanlinColorAssets.swift; directly modified: Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/HanlinAssets.xcassets/HLSidebarBackground.colorset/Contents.json
+- **`hanlin_morph_composer_ui_test_files`**: directly modified: AI_HLYUITests/HanlinMorphComposerUITests.swift
+- **`ios_system`**: consumes runtimecore_host
+- **`legacy_tool_migration_unit_tests`**: directly modified: AI_HLYTests/LegacyToolMigrationTests.swift
+- **`nativescript_dependencies`**: directly modified: Scripts/NativeScript/build-host-services.mjs; directly modified: Scripts/NativeScript/host-services.ts
+- **`nativescript_fixtures`**: directly modified: Scripts/NativeScript/Fixtures/HostServices/assistant.ts; directly modified: Scripts/NativeScript/Fixtures/HostServices/packaged.ts
+- **`nativescript_runtime`**: directly modified: Packages/HanlinNativeScriptRuntime/Documentation/MULTIWINDOW_STATUS_20261123.md; directly modified: Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeScriptWindowFactory.mm
+- **`node_runtime`**: directly modified: AI_HLY/Downstream/MCP/ToolIntegration/AssistantToolBridge.swift; directly modified: AI_HLY/Downstream/MCP/ToolIntegration/AssistantToolRequestScope.swift
+- **`original_chat_presentation_tests`**: directly modified: AI_HLY/Downstream/ChatPresentation/ChatMarkdownView.swift; directly modified: AI_HLY/Downstream/ChatPresentation/ChatMessagePreview.swift
+- **`original_widget_contracts`**: directly modified: AI_HLYTests/HanlinNativeWidgetRendererTests.swift; directly modified: AI_HLYTests/HanlinOriginalExpoWidgetTests.swift
+- **`package_dependencies`**: directly modified: AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved; directly modified: Packages/HanlinAgentSDK/Package.resolved
+- **`platform_contracts`**: directly modified: Packages/HanlinPlatform/Package.resolved; directly modified: Packages/HanlinPlatform/Package.swift
+- **`project_packaging`**: directly modified: AI_HLY.xcodeproj/project.pbxproj; directly modified: AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved
+- **`python_runtime`**: consumes runtimecore_host
+- **`runtime_autonomy_v3_tests`**: directly modified: AI_HLY/Downstream/AgentSkills/AssistantCapabilitySession.swift
+- **`runtime_center_ui`**: directly modified: AI_HLY/Downstream/RuntimeCore/UI/RuntimeCenterView.swift
+- **`runtime_native_interruption_tests`**: directly modified: AI_HLYTests/RuntimeNativeInterruptionTests.swift
+- **`runtime_tests`**: directly modified: Scripts/Runtime/Tests/local-mac-host-accounting.test.mjs
+- **`runtimecore_bundle`**: consumes package_dependencies
+- **`runtimecore_host`**: directly modified: AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-assistant-tools.test.mjs; directly modified: AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-authoring.test.mjs
+- **`scripting_platform`**: directly modified: AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppAssistantAIService.swift; directly modified: AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppAssistantToolRuntime.swift
+- **`scripting_ui_test_files`**: directly modified: AI_HLYUITests/Fixtures/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo
+- **`skill_product_execution_tests`**: directly modified: AI_HLYTests/SkillOpenClawPolicyTests.swift
+- **`swiftui_bridge_generator`**: directly modified: Packages/HanlinExpoUI/src/host-services.ts; directly modified: Packages/HanlinExpoUI/src/index.ts
+- **`unified_host_services`**: directly modified: AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift; directly modified: AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift
+
+### Selected Validation Groups & Tests
+- **`app_unit_tests`**
+  - *Reason*: component 'app_core' was affected (directly modified: AI_HLY/Downstream/AgentActivity/AgentEvent.swift)
+  - *Reason*: component 'app_scripting_acceptance_test_files' was affected (directly modified: AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo)
+  - *Reason*: component 'app_ui' was affected (directly modified: AI_HLY/ChatView.swift)
+  - *Reason*: component 'calendar_tool_recovery' was affected (directly modified: AI_HLYTests/CalendarToolTests.swift)
+  - *Reason*: component 'canonical_agent_sdk' was affected (directly modified: Packages/HanlinAgentSDK/Package.resolved)
+  - *Reason*: component 'canonical_extension_sdk' was affected (directly modified: Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidget.swift)
+  - *Reason*: component 'canonical_mini_apps' was affected (directly modified: AI_HLY/Downstream/MiniApps/HanlinMiniAppHost.swift)
+  - *Reason*: component 'canonical_presentation_sdk' was affected (directly modified: Examples/HanlinLauncherLab/README.md)
+  - *Reason*: component 'canonical_product_split' was affected (directly modified: AI_HLY/Downstream/ProductSplitIntegration/HanlinExternalMiniAppSession.swift)
+  - *Reason*: component 'chat_auto_follow_tests' was affected (directly modified: AI_HLY/Downstream/AgentActivity/Scrolling/ChatAutoFollowController.swift)
+  - *Reason*: component 'chat_code_fence_tests' was affected (directly modified: AI_HLY/Downstream/ChatPresentation/ChatMarkdownView.swift)
+  - *Reason*: component 'chat_completion_unit_tests' was affected (directly modified: AI_HLYTests/AgentActivityHeaderPhaseTests.swift)
+  - *Reason*: component 'chat_diagnostics_journal_tests' was affected (directly modified: AI_HLY/Downstream/AgentDiagnostics/AgentDiagnosticsRecorder.swift)
+  - *Reason*: component 'chat_round_presentation_tests' was affected (directly modified: AI_HLY/Downstream/AgentActivity/AgentEvent.swift)
+  - *Reason*: component 'chat_scroll_viewport_tests' was affected (directly modified: AI_HLY/Downstream/AgentActivity/Scrolling/ChatAutoFollowController.swift)
+  - *Reason*: component 'classic_chat_restoration_unit_tests' was affected (directly modified: AI_HLYTests/ClassicChatRestorationTests.swift)
+  - *Reason*: component 'current_location_tool_tests' was affected (directly modified: AI_HLY/Services/ChatServices/APIManager+LegacyTools.swift)
+  - *Reason*: component 'expo_prepared_entry_tests' was affected (consumes expo_runtime)
+  - *Reason*: component 'hanlin_application_sdk' was affected (directly modified: AI_HLY/Downstream/SDK/HanlinApplicationContext.swift)
+  - *Reason*: component 'hanlin_localization_sdk' was affected (directly modified: Packages/HanlinPresentationSDK/Sources/HanlinLocalization/HanlinColorAssets.swift)
+  - *Reason*: component 'legacy_tool_migration_unit_tests' was affected (directly modified: AI_HLYTests/LegacyToolMigrationTests.swift)
+  - *Reason*: component 'original_chat_presentation_tests' was affected (directly modified: AI_HLY/Downstream/ChatPresentation/ChatMarkdownView.swift)
+  - *Reason*: component 'original_widget_contracts' was affected (directly modified: AI_HLYTests/HanlinNativeWidgetRendererTests.swift)
+  - *Reason*: component 'package_dependencies' was affected (directly modified: AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved)
+  - *Reason*: component 'runtime_autonomy_v3_tests' was affected (directly modified: AI_HLY/Downstream/AgentSkills/AssistantCapabilitySession.swift)
+  - *Reason*: component 'runtime_native_interruption_tests' was affected (directly modified: AI_HLYTests/RuntimeNativeInterruptionTests.swift)
+  - *Reason*: component 'scripting_platform' was affected (directly modified: AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppAssistantAIService.swift)
+  - *Reason*: component 'skill_product_execution_tests' was affected (directly modified: AI_HLYTests/SkillOpenClawPolicyTests.swift)
+- **`ci_router`**
+  - *Reason*: component 'ci_router' was affected (directly modified: .github/workflows/testflight.yml)
+- **`device_build`**
+  - *Reason*: component 'canonical_extension_sdk' was affected (directly modified: Packages/HanlinWidgetSDK/Sources/HanlinScriptingWidgets/HanlinOriginalExpoWidget.swift)
+  - *Reason*: component 'project_packaging' was affected (directly modified: AI_HLY.xcodeproj/project.pbxproj)
+- **`ios_system`**
+  - *Reason*: component 'ios_system' was affected (consumes runtimecore_host)
+- **`ipa_packaging`**
+  - *Reason*: component 'project_packaging' was affected (directly modified: AI_HLY.xcodeproj/project.pbxproj)
+- **`nativescript_dependencies`**
+  - *Reason*: component 'nativescript_dependencies' was affected (directly modified: Scripts/NativeScript/build-host-services.mjs)
+  - *Reason*: component 'nativescript_fixtures' was affected (directly modified: Scripts/NativeScript/Fixtures/HostServices/assistant.ts)
+- **`nativescript_runtime`**
+  - *Reason*: component 'nativescript_runtime' was affected (directly modified: Packages/HanlinNativeScriptRuntime/Documentation/MULTIWINDOW_STATUS_20261123.md)
+- **`node_runtime`**
+  - *Reason*: component 'node_runtime' was affected (directly modified: AI_HLY/Downstream/MCP/ToolIntegration/AssistantToolBridge.swift)
+- **`platform_contracts`**
+  - *Reason*: component 'platform_contracts' was affected (directly modified: Packages/HanlinPlatform/Package.resolved)
+- **`python_runtime`**
+  - *Reason*: component 'python_runtime' was affected (consumes runtimecore_host)
+- **`runtimecore_bundle`**
+  - *Reason*: component 'runtimecore_bundle' was affected (consumes package_dependencies)
+- **`runtimecore_host`**
+  - *Reason*: component 'original_widget_contracts' was affected (directly modified: AI_HLYTests/HanlinNativeWidgetRendererTests.swift)
+  - *Reason*: component 'runtime_tests' was affected (directly modified: Scripts/Runtime/Tests/local-mac-host-accounting.test.mjs)
+  - *Reason*: component 'runtimecore_host' was affected (directly modified: AI_HLY/Downstream/RuntimeCore/Node/Host/Tests/miniapp-assistant-tools.test.mjs)
+- **`simulator_mcp_acceptance`**
+  - *Reason*: component 'node_runtime' was affected (directly modified: AI_HLY/Downstream/MCP/ToolIntegration/AssistantToolBridge.swift)
+- **`simulator_scripting_acceptance`**
+  - *Reason*: component 'app_scripting_acceptance_test_files' was affected (directly modified: AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo)
+- **`simulator_shell_acceptance`**
+  - *Reason*: component 'ios_system' was affected (consumes runtimecore_host)
+  - *Reason*: component 'python_runtime' was affected (consumes runtimecore_host)
+- **`simulator_smoke_launch`**
+  - *Reason*: component 'app_ui' was affected (directly modified: AI_HLY/ChatView.swift)
+- **`simulator_targeted_ui`**
+  - *Reason*: component 'agent_original_a2ui_ui_tests' was affected (directly modified: AI_HLYUITests/HanlinNativeA2UIChatUITests.swift)
+  - *Reason*: component 'agent_runtime_conversation_ui_tests' was affected (directly modified: AI_HLYUITests/AgentRuntimeConversationUITests.swift)
+  - *Reason*: component 'canonical_mini_apps' was affected (directly modified: AI_HLY/Downstream/MiniApps/HanlinMiniAppHost.swift)
+  - *Reason*: component 'canonical_presentation_sdk' was affected (directly modified: Examples/HanlinLauncherLab/README.md)
+  - *Reason*: component 'chat_completion_ui_tests' was affected (directly modified: AI_HLYUITests/HanlinComposerCapabilitiesUITests.swift)
+  - *Reason*: component 'expo_runtime' was affected (directly modified: Packages/HanlinExpoRuntime/Package.swift)
+  - *Reason*: component 'hanlin_morph_composer_ui_test_files' was affected (directly modified: AI_HLYUITests/HanlinMorphComposerUITests.swift)
+  - *Reason*: component 'nativescript_fixtures' was affected (directly modified: Scripts/NativeScript/Fixtures/HostServices/assistant.ts)
+  - *Reason*: component 'nativescript_runtime' was affected (directly modified: Packages/HanlinNativeScriptRuntime/Documentation/MULTIWINDOW_STATUS_20261123.md)
+  - *Reason*: component 'runtime_center_ui' was affected (directly modified: AI_HLY/Downstream/RuntimeCore/UI/RuntimeCenterView.swift)
+  - *Reason*: component 'scripting_platform' was affected (directly modified: AI_HLY/Downstream/ScriptingPlatform/HanlinMiniAppAssistantAIService.swift)
+  - *Reason*: component 'scripting_ui_test_files' was affected (directly modified: AI_HLYUITests/Fixtures/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo)
+  - *Reason*: component 'swiftui_bridge_generator' was affected (directly modified: Packages/HanlinExpoUI/src/host-services.ts)
+- **`unified_host_services`**
+  - *Reason*: component 'unified_host_services' was affected (directly modified: AI_HLY/Downstream/HostServices/Adapters/ExpoHostServicesAdapter.swift)
+
+### Skipped Expensive Validations
+- **Phase 1 Scripting baseline verification**: `SKIPPED` -- not affected by changed files
+- **Phase 1 Scripting compiler acceptance**: `SKIPPED` -- not affected by changed files
+
+### Tests Not Required (Zero Impact from Changes)
+*39 test suites skipped because no direct or transitive dependencies changed.*
+

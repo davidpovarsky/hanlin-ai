@@ -1,0 +1,146 @@
+{
+  "tasks": [
+    {
+      "number": 1,
+      "gid": "1220918048749109",
+      "completed": false,
+      "modified_at": "2026-11-26T14:07:50.565Z",
+      "name": "[SCRIPTABLE-1.8-01][P0] Long Running ופעולות Shortcuts ברקע",
+      "notes": "יש להשתמש במקור העדכני של שני מנועי היעד הפעילים ובתשתית המשותפת הקיימת; להימנע משכפול או פתיחת Scripting-JSC/ScriptUI מחדש. לכל שינוי להפיק SHA, ראיות בדיקה אמיתיות וסטטוס נפרד לקוד/סימולטור/מכשיר; לעדכן במשימת האב. ממצא: HanlinRunScriptActionIntent ו-HanlinInvokeScriptActionIntent מוגדרים openAppWhenRun=true; backgroundTask ב-HanlinExposureContracts מסומן reserved. לבדוק App Intents/BackgroundTasks של SDK Apple בפועל ודרישות iOS27; לבחור מנגנון ציבורי נתמך לתהליך ממושך ביוזמת המשתמש, עם אפשרות foreground/background בהתאם ליכולת, progress/cancel, שימור invocation ID, פלט אמיתי לקיצור, טיפול ב-timeout/expiration ו-recovery ללא כפילות. להבדיל בין ביצוע ממושך ביוזמת המשתמש לבין תזמון BGTaskScheduler שאינו מובטח או daemon. לא להציג 'ללא הגבלה'. לחבר למנועי Expo/NativeScript דרך router משותף; לא לשבור Run Script הקיים. קבלה: פעולות רשת, עיבוד/AI, קובץ, פלט והמשך קיצור בזמן נעילת מסך/רקע, ביטול, כשל, retry, app termination בהתאם למגבלות מערכת; מדידת זמן/סטטוס והוכחה במכשיר פיזי.\n\n[תומר | INT] [MAIN_SESSION] — אבן דרך26.11.2026; עבודה מקבילית בפועל ב־/root/wave1_chat_sdk, /root/wave2_miniapps ו־/root/mac_build_ops.\nהמפיק הקנוני על3101 נעצר באמת בבדיקת coverage של miniapps.shortcutProgress. התיקון4ba7a1ac מאמת את callback ה־Shortcuts הקיים, payload, validate וכתיבת Progress; לא נוסף prefix allowlist. 4 בדיקות audit מקוריות עברו, כולל בדיקות ניתוק/validation שליליות. נוסף facade קשור־provider ב־28b7a3d לרישום handler בחלון המקורי; generator TypeScript5.9.3 strict וה־fixtures חיוביים/שליליים עברו, ו־3 בדיקות JS boundary עברו. זו אינה עדיין קבלת Apple/Shortcut אמיתי.\nהמועמד המשולב65689c797358cfb8cf9b9f0bafdf8a81d784bc86 פורסם ונקרא בחזרה ב־PR23. audit קנוני על אותו מקור עבר:100 מקורות,200 exports,80 קשרי reachability מאומתים ממקור. SDK staging הפיק25,702 קבצים, inputSHA7daa00c5365975e052c1027e061e8ef1324b76c0aaa86c5a248301bdf8bd9c76. שלב Host הבא נעצר בגלל Node22 בנתיב ברירת המחדל; הועתק ואומת Node24.5.0/ICU77.1/Unicode16 המקורי והמשך ממוספר רץ כ־job_7e5b596347d2. הכשל נשמר; אין עדיין Host ZIP חדש מאושר או app-build PASS.\n\nממצא מקור ממשי בשער06: הפלטפורמה הנפרדת של Shortcut לא מחזיקה nativeScriptWindowSession, ולכן נפלה לחסימת VM גלובלית גם כאשר המארח הוא windowFactory התומך בהקשרים משתפים. התוצאה במסלול הקוד היא unavailableHost. /root/wave2_miniapps מתקן באמצעות HanlinNativeScriptWindowSession.open הקיים, עם provider/modules/storage נפרדים, container שאינו מוצג ו־canPresentUI=false. הגבלת VM של המארח הישן נשמרת. בדיקות native של חלון פעיל יחד עם פעולות רקע וביטול נכתבות; הן טרם בוצעו.",
+      "parent": {
+        "gid": "1220917834401761",
+        "resource_type": "task"
+      },
+      "permalink_url": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220918048749109",
+      "notesSHA256": "f97f86862450f6a6f6e2cd236cc966f57af6a96773ee82bb7064b58ed87cfa50"
+    },
+    {
+      "number": 2,
+      "gid": "1220917858139776",
+      "completed": false,
+      "modified_at": "2026-11-26T13:11:01.902Z",
+      "name": "[SCRIPTABLE-1.8-02][P0] Toggle אינטראקטיבי מקורי ב-Expo Widgets ובדיקת פעולות",
+      "notes": "יש להשתמש במקור העדכני של שני מנועי היעד הפעילים ובתשתית המשותפת הקיימת; להימנע משכפול או פתיחת Scripting-JSC/ScriptUI מחדש. לכל שינוי להפיק SHA, ראיות בדיקה אמיתיות וסטטוס נפרד לקוד/סימולטור/מכשיר; לעדכן במשימת האב. ממצא: WidgetsViewRenderer המקורי כולל Button/Progress/Gauge/Chart אך אין case Toggle. לחפש תמיכה upstream עדכנית קודם; אם חסרה, להוסיף adapter מינימלי עם SwiftUI Toggle + AppIntent לפי APIs נתמכים, props/value/state/action ID, event value, טיפוסים TS, serialization/compiler/validator, rerender/timeline/reload, per-installation identity. לא להחליף במתג מצויר שאינו אינטראקטיבי. לאמת גם ScriptWidget controls קיימים ותמיכת NativeScript דרך host contract במשטחים הנתמכים, בלי ליצור runtime חדש. קבלה: מתג true/false, two instances, לחיצות חוזרות/מקבילות, persisted state אחרי cold launch, VoiceOver, error rollback, disabled installation; שינוי אמיתי ממסך הבית ללא פתיחת האפליקציה. לשמר Button ו-LiveActivity Button.\n\n[אבן דרך — 26.11.2026, המקור המשולב 33f0eb31]\nקוד הווידג׳טים נקלט במקור המשולב:3a4936ddb33744aff057c14aacc3cd2b4a5f64b2 +693a2fdc7f4c7d9d71ad1965d2f1609a669bdaf5. נכללו Toggle מקורי, מיפוי 8 משפחות נתמכות לפי availability, תיקון container transparency, כתיבה אטומית ושמירת תצוגה תקינה אחרונה עם בדיקות namespace/generation/layout. 10 בדיקות JavaScript אמיתיות על המקור/חבילת ההכנה עברו; בדיקת הטיפוסים המקורית עברה. תוצאות אלה אינן WidgetKit/מסך בית/מכשיר: שערים אלה ממתינים למק. ראיות docs/miniapps/evidence/widget-wave2-20261126.",
+      "parent": {
+        "gid": "1220917834401761",
+        "resource_type": "task"
+      },
+      "permalink_url": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220917858139776",
+      "notesSHA256": "2a418851234f178ce27efc7d33605092c02e16ef948428b95651f99b43c6b75c"
+    },
+    {
+      "number": 3,
+      "gid": "1220917858139477",
+      "completed": false,
+      "modified_at": "2026-11-26T01:07:01.069Z",
+      "name": "[SCRIPTABLE-1.8-03][P0] Extra Large Portrait וכל גדלי WidgetKit",
+      "notes": "יש להשתמש במקור העדכני של שני מנועי היעד הפעילים ובתשתית המשותפת הקיימת; להימנע משכפול או פתיחת Scripting-JSC/ScriptUI מחדש. לכל שינוי להפיק SHA, ראיות בדיקה אמיתיות וסטטוס נפרד לקוד/סימולטור/מכשיר; לעדכן במשימת האב. ממצא: systemExtraLargePortrait כבר קיים ב-ScriptMetadata וב-widget-manifest.d.ts אבל חסר ב-supportedFamilies של HanlinOriginalExpoWidget וב-HanlinScriptingWidgets. לאמת availability ורישום ציבורי ב-WidgetKit SDK, להוסיף במשפחות הנתמכות וב-family mapping, metadata, compiler, validation, catalog/picker, layout, preview, configuration, snapshots/timeline ו-export SDK. אין להציג גודל שאינו נתמך על מכשיר/OS. לשמר Small/Medium/Large/ExtraLarge ו-accessory circular/rectangular/inline. קבלה: ווידג׳ט אמיתי במסך הבית, בחירה/עריכה, portrait, landscape, מעבר גודל, RTL, מדידות והוכחת התאמה במכשיר נתמך.",
+      "parent": {
+        "gid": "1220917834401761",
+        "resource_type": "task"
+      },
+      "permalink_url": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220917858139477",
+      "notesSHA256": "bdcb6ca75d290eeb9c220a46b6928c2e1904b199c5bfa8d4a2f9faaa80ae9fd2"
+    },
+    {
+      "number": 4,
+      "gid": "1220917858139672",
+      "completed": false,
+      "modified_at": "2026-11-26T01:07:01.141Z",
+      "name": "[SCRIPTABLE-1.8-04][P1] רקע שקוף אמיתי, Liquid Glass והתאמת רינדור",
+      "notes": "יש להשתמש במקור העדכני של שני מנועי היעד הפעילים ובתשתית המשותפת הקיימת; להימנע משכפול או פתיחת Scripting-JSC/ScriptUI מחדש. לכל שינוי להפיק SHA, ראיות בדיקה אמיתיות וסטטוס נפרד לקוד/סימולטור/מכשיר; לעדכן במשימת האב. ממצא: containerBackground, widgetRenderingMode, widgetAccentedRenderingMode קיימים; glassEffect זמין בחלק מהתשתיות אך זמינות בתוך widget לא הוכחה. לבדוק API ציבורי/availability של iOS/iPadOS 27.2, תמיכה ב-clear/system backdrop, rendering modes, tint, accented/full color/desaturated, התאמת image/foreground/contrast. להוסיף capability רק אם נתמך ב-widget target וב-TS/SDK, ללא חיקוי של צילום הטפט. קבלה: צילומי מסך של ווידג׳ט ממשי על טפטים שונים, dark/light/tinted, שינוי טפט והופעה, ניגודיות, fallback בגרסאות קודמות, אין שבירה של רקעים קיימים.",
+      "parent": {
+        "gid": "1220917834401761",
+        "resource_type": "task"
+      },
+      "permalink_url": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220917858139672",
+      "notesSHA256": "9c06e5f0c3112e1b01b935517c02588c98c563db1884fea6fa4da03f1d610ad4"
+    },
+    {
+      "number": 5,
+      "gid": "1220917834527539",
+      "completed": false,
+      "modified_at": "2026-11-26T12:04:41.903Z",
+      "name": "[SCRIPTABLE-1.8-05][P1] Shortcuts — Dictionary/List, קלט ופלט עשירים ופעולות נוחות",
+      "notes": "יש להשתמש במקור העדכני של שני מנועי היעד הפעילים ובתשתית המשותפת הקיימת; להימנע משכפול או פתיחת Scripting-JSC/ScriptUI מחדש. לכל שינוי להפיק SHA, ראיות בדיקה אמיתיות וסטטוס נפרד לקוד/סימולטור/מכשיר; לעדכן במשימת האב. ממצא: decoder תומך JSON object/array/bool/number/null, אך Parameters נחשף כמחרוזת JSON; Run Script Action קולט String. לבדוק סוגי AppIntent/Shortcuts הנתמכים ישירות. לחבר typed structured input/output (nested object/array, text, numbers, bool, null; files/attachments לפי חוזה קיים), round-trip ללא double encoding, שגיאות שימושיות. לבדוק parity של saved script/action, Run inline code במידת התאמה לארכיטקטורת החבילות והמדיניות, Open When Run, הוספה למסך הבית/deep link ו-snippets; להוסיף רק מה שחסר, להעדיף פעולה שמורה/חבילה ואימות platform. לא לשבור קיצורים קיימים או שמות intents. קבלה: Shortcuts אמיתי, העברת מילון ומערך ללא המרה ידנית ככל שמאפשר SDK, שרשור פלט לפעולה הבאה, קלט לא תקין, empty ונסטינג, עברית/RTL, שמירת metadata localization.\n\n[אבן דרך קוד — 26.11.2026 14:04 ישראל]\nמועמד a28e977d06eb32d81f4fd4025e2ad5d90703a040 (codec) ו־7f2cddd3f961702c2b355aa67589490f8a95c9f8 (חיבור Intent/lifecycle) נמסרו לאינטגרציה. 12 מקרי codec עברו בפועל ב־Swift6.4.3 Linux: Int64 מדויק, scalar/object/list/nesting/עברית/bool/null, מניעת double encoding, ודחייה מפורשת של duplicate keys/overflow/JSON פגום. 3 בדיקות helper cancellation/callback נוספות עברו. Swift parser ו־NativeScript strict generator עברו.\nבדיקת ה־SDK המותקן מצאה iOS27 LongRunningIntent אך ללא Parameter ציבורי כללי Dictionary; יושם חוזה typed JSON באמצעות טקסט/IntentFile ופלט קובץ, ללא המצאת API. נדרש עדיין אימות Apple build ושרשור באפליקציית Shortcuts. ראיות המקור: docs/miniapp-sdk/evidence/scriptable-wave2-20261126/SHORTCUTS_HANDOFF.md. המשימה נשארת פתוחה עד קבלת runtime אמיתית.",
+      "parent": {
+        "gid": "1220917834401761",
+        "resource_type": "task"
+      },
+      "permalink_url": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220917834527539",
+      "notesSHA256": "51b10ca852211ef8471b79b7d0d7bdbe0c57e4d345dcb11a1d86776e89484d12"
+    },
+    {
+      "number": 6,
+      "gid": "1220917858139541",
+      "completed": false,
+      "modified_at": "2026-11-26T14:22:04.370Z",
+      "name": "[SCRIPTABLE-1.8-06][P1] הרצה מקבילית של Shortcuts ומיני־אפליקציות וחלונות",
+      "notes": "יש להשתמש במקור העדכני של שני מנועי היעד הפעילים ובתשתית המשותפת הקיימת; להימנע משכפול או פתיחת Scripting-JSC/ScriptUI מחדש. לכל שינוי להפיק SHA, ראיות בדיקה אמיתיות וסטטוס נפרד לקוד/סימולטור/מכשיר; לעדכן במשימת האב. קיים PASS ממוקד לשלושה תרחישי חלונות ו-6 callbacks על producer86; NativeScript משתמש ב-VM מרכזי משותף עם windowFactory משתף פעולה, לא בידוד arbitrary VM. להשלים הרצה של פעולה מ-Shortcuts בזמן ממשק MiniApp אחר פתוח, כולל Expo↔Expo, NativeScript↔NativeScript במודל הנתמך, Expo↔NativeScript. scoped action registry/context, storage, pending callbacks, cancellation, foreground/background policy, cold/warm, reverse completion, window restore, duplicate URL ו-timeout; לבדוק התיקון המקומי 8b85a66ab ל-action handlers לפני שילוב. אם upstream מגביל, לתעד בדיוק ולבדוק פתרון ציבורי ללא פירוק runtime של חלון אחר; לא לטעון לבידוד מלא ללא ראיה. קבלה: 3+ invocations, מבחני UI/PID/UUID/nonce, callbacks ו-state אמיתיים, ללא זליגת state או כפילות, iPad multiwindow ו-iPhone.\n\n[תומר | INT] [MAIN_SESSION] — אבן דרך26.11.2026; עבודה מקבילית בפועל ב־/root/wave1_chat_sdk, /root/wave2_miniapps ו־/root/mac_build_ops.\nממצא מקור ממשי בשער06: הפלטפורמה הנפרדת של Shortcut לא מחזיקה nativeScriptWindowSession, ולכן נפלה לחסימת VM גלובלית גם כאשר המארח הוא windowFactory התומך בהקשרים משתפים. התוצאה במסלול הקוד היא unavailableHost. /root/wave2_miniapps מתקן באמצעות HanlinNativeScriptWindowSession.open הקיים, עם provider/modules/storage נפרדים, container שאינו מוצג ו־canPresentUI=false. הגבלת VM של המארח הישן נשמרת. בדיקות native של חלון פעיל יחד עם פעולות רקע וביטול נכתבות; הן טרם בוצעו.\n\nהמפיק הקנוני על3101 נעצר באמת בבדיקת coverage של miniapps.shortcutProgress. התיקון4ba7a1ac מאמת את callback ה־Shortcuts הקיים, payload, validate וכתיבת Progress; לא נוסף prefix allowlist. 4 בדיקות audit מקוריות עברו, כולל בדיקות ניתוק/validation שליליות. נוסף facade קשור־provider ב־28b7a3d לרישום handler בחלון המקורי; generator TypeScript5.9.3 strict וה־fixtures חיוביים/שליליים עברו, ו־3 בדיקות JS boundary עברו. זו אינה עדיין קבלת Apple/Shortcut אמיתי.\nהמועמד המשולב65689c797358cfb8cf9b9f0bafdf8a81d784bc86 פורסם ונקרא בחזרה ב־PR23. audit קנוני על אותו מקור עבר:100 מקורות,200 exports,80 קשרי reachability מאומתים ממקור. SDK staging הפיק25,702 קבצים, inputSHA7daa00c5365975e052c1027e061e8ef1324b76c0aaa86c5a248301bdf8bd9c76. שלב Host הבא נעצר בגלל Node22 בנתיב ברירת המחדל; הועתק ואומת Node24.5.0/ICU77.1/Unicode16 המקורי והמשך ממוספר רץ כ־job_7e5b596347d2. הכשל נשמר; אין עדיין Host ZIP חדש מאושר או app-build PASS.\n\n[2026-11-26 16:21 Asia/Hebron | תומר | INT | MAIN_SESSION]\nאבן דרך: שילוב תיקוני המקביליות והגרסאות ב-root 4d76e6053662957281ffbcb0a2ad28fc4f0c2f89. סוכני ChatGPT המובנים: wave2_miniapps מימש; wave1_chat_sdk השלים סקירה עצמאית של 1a0f610a ללא חסם נוסף; mac_build_ops קיבל bundle מאומת SHA256 להפקת SDK/Host חדשה ולבדיקה מקורית ב-Apple.\nתוקנו: הרצת Shortcut לצד חלון NativeScript משתף-מנוע תוך בידוד המצב והאחסון; ניקוי רק תחום הפעולה שבבעלותה; דחיית תוצאות מאוחרות; רענון הרישום המתמיד לפני בדיקת generation כדי לא לאשר גרסה ישנה מזיכרון. נשמרה דחייה בטוחה של מנוע legacy שאינו תומך בחלונות משותפים. נוסף כיסוי בשתי בדיקות native מקוריות למסלולי מקביליות/ביטול/deadline/גרסה/legacy. בדיקות תחביר וסקירת מקור עברו; שתי הבדיקות ב-Apple טרם רצו ולכן המשימה נשארת פתוחה.\nמצב אימות: Motion המקורי B→A→C התחיל בפועל ב-14:18 UTC על מקור dacb4ca5 ובסביבת Simulator27.2. הפקת Host קודמת הופסקה עקב מחסור אמיתי בדיסק: 181 עברו,2 בוטלו,1 דולגה מתוך184 — אין PASS כולל. נשמרו היומנים; נמשך ניקוי מבוקר של תוצרי בנייה לא פעילים והפקה מחודשת על המקור המאוחד הסופי.",
+      "parent": {
+        "gid": "1220917834401761",
+        "resource_type": "task"
+      },
+      "permalink_url": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220917858139541",
+      "notesSHA256": "6924fd6a407926f440f18bca5418efa0551139e62bcd5b80419fd89cc3a5aab9"
+    },
+    {
+      "number": 7,
+      "gid": "1220918048685221",
+      "completed": false,
+      "modified_at": "2026-11-26T13:11:01.904Z",
+      "name": "[SCRIPTABLE-1.8-07][P1] Live Activities ו-Dynamic Island — אימות מלא בשני המנועים",
+      "notes": "יש להשתמש במקור העדכני של שני מנועי היעד הפעילים ובתשתית המשותפת הקיימת; להימנע משכפול או פתיחת Scripting-JSC/ScriptUI מחדש. לכל שינוי להפיק SHA, ראיות בדיקה אמיתיות וסטטוס נפרד לקוד/סימולטור/מכשיר; לעדכן במשימת האב. קוד מקור קיים: Expo original LiveActivityFactory/LiveActivity/WidgetLiveActivity, start/update/list/end, push token; Host Services NativeScript liveActivities.*; Info.plist supports activities/frequent updates. SDK20 PASS ל-testStandaloneExpoWidgetsUsesOriginalTimelinesAndLiveActivities ול-ActivityKit start/update/end של original ScriptWidget במארח AI; אין מכאן הוכחה לכל region/מכשיר/NS. לאמת SDK authoring API, lockscreen, compactLeading/Trailing/minimal/expanded center/leading/trailing/bottom, multiple activities, button intent, deep link, stale date/relevance/dismissal, restore/end/cancel, per-installation namespace; push token/events ועדכוני APNs אמיתיים רק אם configured/provisioned, הרשאות/disabled behavior. קבלה: actual ActivityKit, system UI screenshots ב-iPhone תומך Dynamic Island וב-iPad לפי תמיכת Apple, state revision אמיתי, remote push gate בנפרד, ללא synthetic PASS.\n\n[אבן דרך — 26.11.2026, המקור המשולב 33f0eb31]\nנקלט a78f50d77d69d5bf1d9c95c8588bb24a1069b33a: תור פעולות לכל Activity מונע update/end race ושומר מקביליות בין פעילויות שונות, שיוך installation וגרסאות state. 3 בדיקות portable של helper המקורי עברו. בדיקת ActivityKit המקורית הורחבה לעדכונים מקבילים, שני IDs ודחיית update אחרי end; ביצוע Apple/system UI עדיין NOT_RUN. שבעת אזורי layout הנבדקים כ־nodes אינם צילומי מסך של מערכת ההפעלה.",
+      "parent": {
+        "gid": "1220917834401761",
+        "resource_type": "task"
+      },
+      "permalink_url": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220918048685221",
+      "notesSHA256": "6002b154cfdf3ea7d9058a1f2cc648549fcbbc733049904b47beb5eacdaf65ea"
+    },
+    {
+      "number": 8,
+      "gid": "1220917943178136",
+      "completed": false,
+      "modified_at": "2026-11-26T01:07:01.035Z",
+      "name": "[SCRIPTABLE-1.8-08][P1] רכיבי ווידג׳ט: Buttons, Refresh, Progress/Gauge/Chart, תצוגה מקדימה",
+      "notes": "יש להשתמש במקור העדכני של שני מנועי היעד הפעילים ובתשתית המשותפת הקיימת; להימנע משכפול או פתיחת Scripting-JSC/ScriptUI מחדש. לכל שינוי להפיק SHA, ראיות בדיקה אמיתיות וסטטוס נפרד לקוד/סימולטור/מכשיר; לעדכן במשימת האב. לאמת את ה-Expo Widgets המקורי ואת מסלולי Host Services הרלוונטיים; Button event/action ללא פתיחת אפליקציה, refresh intent/reload timeline, explicit refresh button UX אם חסר, פס וטבעת progress (linear/circular, ערך, total, colors, labels, size, timer), Gauge, charts, stacks, links, תמונות, SF Symbols, accessible layout. לא להניח שכל modifier ממסך רגיל נתמך ב-widget renderer; לפרסם matrix. קבלה: fixtures אמיתיים הנבנים ב-SDK, publish, widget picker, מספר מופעים/configuration, לחיצה ושינוי נתונים, ערכי קצה, refresh ומראה בפועל, screenshots לכל family נתמך. להשתמש ברכיבים מקוריים ולא לצייר חלופות מיותרות.",
+      "parent": {
+        "gid": "1220917834401761",
+        "resource_type": "task"
+      },
+      "permalink_url": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220917943178136",
+      "notesSHA256": "67316c169d220a4e99011b38f1b3e84ec9e535ee74e4e9fb630fe6f37a7a2ed1"
+    },
+    {
+      "number": 9,
+      "gid": "1220917858139353",
+      "completed": false,
+      "modified_at": "2026-11-26T12:20:12.931Z",
+      "name": "[SCRIPTABLE-1.8-09][P1] אמינות WidgetKit, timelines, שמירת תוכן ורענון",
+      "notes": "יש להשתמש במקור העדכני של שני מנועי היעד הפעילים ובתשתית המשותפת הקיימת; להימנע משכפול או פתיחת Scripting-JSC/ScriptUI מחדש. לכל שינוי להפיק SHA, ראיות בדיקה אמיתיות וסטטוס נפרד לקוד/סימולטור/מכשיר; לעדכן במשימת האב. לאמת שהווידג׳ט שומר last-known-good timeline/snapshot במקרה כשל רענון, ללא blank/error שמוחק תוכן תקין; אם חסר להוסיף במנגנון storage/provider הקיים תוך שמירת atomic writes, hashes, namespace, migration, generation, retry/backoff לפי מגבלות WidgetKit. לבדוק עדכונים, restart, iCloud/התקנה, no network, corrupt/missing data, repeated refresh, disabled/uninstall, preview accuracy. לא להציג הבטחת רענון במועד מדויק שאינה נתמכת ב-OS. קבלה: source-bound regression, two installations same public name, existing user configs נשמרות; actual system widgets before/after failure, recovery logs.\n\n[אבן דרך קוד — 26.11.2026 14:19 ישראל]\nנכתב ושולבeb8a58294985911854b626a53f6e8daf2a1863c9 עבור prepared Expo/ScriptWidget. נשמר snapshot מוצלח עם ארטיפקט מזוהה לפי תוכן; fallback מותר רק לזהות/תוכנית/settings/family הנוכחיים ולווידג׳ט שאינו פג תוקף. נבנה context חדש בכל רינדור; כשל לא מפרסם snapshot חדש. נשמרו migration של נתונים ישנים, republish ו־uninstall. נוסף HanlinWidgetLastSuccessfulRenderTests:4 הגדרות/11 מקרים; Swift syntax עבר, בדיקות Apple עדיין NOT_RUN.\nבמקביל נכתב מנגנון atomic timeline/LKG למנוע Expo המקורי אצלmac_build_ops (checkpoint86d8deb8); ייבדק וישולב בנפרד לפי בעלות. אין מנוע cache נוסף לאותו נתיב. המשימה נשארת פתוחה עד תוצאות native/system נדרשות. ראיית מקור: docs/miniapp-sdk/evidence/scriptable-wave2-20261126/PREPARED_WIDGET_LKG_HANDOFF.md.",
+      "parent": {
+        "gid": "1220917834401761",
+        "resource_type": "task"
+      },
+      "permalink_url": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220917858139353",
+      "notesSHA256": "9093486238ee460c5343d25f190ec358012824bec5adaf617791c0ceebf5253d"
+    },
+    {
+      "number": 10,
+      "gid": "1220917894278244",
+      "completed": false,
+      "modified_at": "2026-11-26T14:55:38.440Z",
+      "name": "[SCRIPTABLE-1.8-10][P1] כלי פיתוח, עורך, תיקיות, גלריה ויצירה גרפית — השוואה והשלמה ממוקדת",
+      "notes": "יש להשתמש במקור העדכני של שני מנועי היעד הפעילים ובתשתית המשותפת הקיימת; להימנע משכפול או פתיחת Scripting-JSC/ScriptUI מחדש. לכל שינוי להפיק SHA, ראיות בדיקה אמיתיות וסטטוס נפרד לקוד/סימולטור/מכשיר; לעדכן במשימת האב. למפות שאר חידושי Scriptable 1.8.x מול File Workshop/עורך/קטלוג/SDK הקיימים: autocomplete בזמן כתיבה, parameter hints, inline API docs ופתיחת תיעוד, live logs/search, בורר גופנים, themes; תיקיות/קינון, rename/move, צבעים/SF Symbols, iCloud sync אם נתמך, Files tags; gallery של חבילות/דוגמאות מוכנות עם import/edit/run והפרדת גרסאות; סיבוב תמונה סביב המרכז, תמונות גדולות וממדי ציור לא תקינים בממשקי הציור המקוריים; התאמה למכשירים/פריסות שהוזכרו ב-release notes. לא להניח שפיצ׳רים חסרים; לאמת בפועל ורק אז להשלים פערים רלוונטיים למנועים הפעילים. קבלה: תיעוד matrix, תרחישים UI מקוריים לכל פער, שמירה ומיגרציה ללא אובדן קבצים, sync conflict והתקנה אמיתית של דוגמאות.\n\n[אבן דרך — 26.11.2026, המקור המשולב 33f0eb31]\nDeveloper Studio נוסף ל־MiniApps העצמאית ב־679ee14d858627d0b91417828b579fdc143ccd93, ומשתמש בקומפיילר/SDK/ייבוא המקוריים. נכללו סביבת קבצים ותיקיות, עותקי גלריה עצמאיים, טיוטות/conflicts, גופנים/themes, חיפוש logs מוגבל מחוץ ל־main thread ו־FileProvider מתואם. 4 בדיקות query של העורך ו־4 בדיקות workspace עברו. סקירה בלתי תלויה איתרה כשל rename לקובץ פתוח וסיכוני תוצאה אסינכרונית ישנה/טיוטה פגומה; תיקון ממוקד ובדיקות רגרסיה כעת בעבודה. native UI/iCloud/gallery install-run עדיין NOT_RUN. אין סגירת משימה לפני הוכחה.\n\n[אבן דרך — 26.11.2026, תיקוני סקירה]\nסקירת הסוכן הבלתי תלוי הוטמעה ב־e641105fdc7ac5b418c49b9a146c96cfccf0f078 ונקלטה במקור המשולב: rename משייך מחדש את הקובץ הפתוח; תשובות validate/build מוחלות רק על אותה גרסת עריכה; טיוטה פגומה מבודדת ואפשר לייצא אותה בלי להסתיר טיוטות תקינות; sourceRoot חלקי/אופציונלי מטופל. נוספה סוויטת MiniAppsStudioProjectTests:4 הגדרות/6 מקרים, כולל שירות Node המקורי. עם4 בדיקות workspace מדובר ב־10 מקרים נדרשים על Apple; עדיין NOT_RUN. בדיקת syntax עברה; אין טענת UI/מערכת/מכשיר.\nמקור ההמשך ב־PR23 לעיל; דוגמת ציור מקורית בהכנה מול ה־SDK הקנוני.\n\n[2026-11-26 16:32 Asia/Hebron | תומר | INT | MAIN_SESSION]\nהשלמת קוד הגלריה/ציור שולבה ב-root a35694f7 מתוך e42e78f8eef302f38cdb2924b84a6bef4eea2469. נוספה דוגמת nativescript-image-drawing חמישית המשתמשת ב-UIKit UIGraphicsImageRenderer/CGContext המקוריים; אין מנוע ציור חלופי. בדיקת staging אמיתית של כל חמש הדוגמאות עברה. TypeScript5.9.3 עם גרף @nativescript/types9.1.0 המותקן עבר strict ללא אבחונים; זה תיעוד מקדים מפורש ואינו הכשרת גרף native9.1.4 החדש. נוספו guards סופיות לערכי frame/angle/ratio בפרימיטיבים המקוריים של ScriptWidget.\nנדרשות עדיין4 הגדרות/9 מקרי תמונה על Apple;10 מקרי Studio המקוריים+תיקוני הסקירה; הפעלת דוגמאות, בדיקת UI ו-iCloud בפועל. אין זיכוי native מהצלחת staging או syntax. handoff: docs/miniapp-sdk/evidence/scriptable-wave2-20261126/DRAWING_HANDOFF.md. mac_build_ops הוא הבעלים היחיד של שערי native המשותפים; wave2_miniapps זמין לתיקוני אבחונים.\nhttps://github.com/davidpovarsky/hanlin-ai/pull/23",
+      "parent": {
+        "gid": "1220917834401761",
+        "resource_type": "task"
+      },
+      "permalink_url": "https://app.asana.com/1/1219597879016953/project/1219603102275846/task/1220917894278244",
+      "notesSHA256": "242cf4970560365c1eae5126dc71373ac6bed05d7d6ee6f95ae780e845268cf0"
+    }
+  ],
+  "capturedFrom": "Existing live Asana reads retained in this session, with modified_at from each API result; no task mutation.",
+  "recordedAtUTC": "2026-11-26T19:15:04.976912+00:00"
+}
