@@ -1,0 +1,9 @@
+{
+  "schema": 1,
+  "reviewer": "/root",
+  "status": "APPROVED_SOURCE_ONLY",
+  "patchSHA256": "b73bb85f125cc52ce730716ec4565165d4f2264ed8c165fee7443d5aa6629173",
+  "afterSHA256": "1e4032c02cb68ec327a87b213d193ce8d161c59eaa8fb3ca3d0fc6bec84e4931",
+  "assessment": "Only host search string and exact row predicate inside original collection. Assertions and deadlines preserved; native NOT_RUN.",
+  "attribution": "Actual parent collaboration review."
+}

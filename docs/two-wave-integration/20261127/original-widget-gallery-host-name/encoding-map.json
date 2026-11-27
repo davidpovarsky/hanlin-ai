@@ -1,0 +1,8 @@
+{
+  "schema": 1,
+  "stored": "source.patch.gz",
+  "encoding": "gzip",
+  "originalSHA256": "b73bb85f125cc52ce730716ec4565165d4f2264ed8c165fee7443d5aa6629173",
+  "storedSHA256": "1e3f1f6f742398891f6852063def87cada7556ae913098cf2e6733e00c36ec68",
+  "originalBytes": 1125
+}
