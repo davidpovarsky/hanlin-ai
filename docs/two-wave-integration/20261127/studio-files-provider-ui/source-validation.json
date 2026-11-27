@@ -1,0 +1,62 @@
+{
+  "base": "d077babf9ba9312199aa41cef18f40581edbc52c",
+  "sourcePath": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+  "beforeSHA256": "efe7abe29bd1be36d7991844d67d7d79e12a1f3c1bc639fca741be87fd00480c",
+  "afterSHA256": "82a683b05433ddc872f6428495d2883b0e66e46fab16b2df604b125267c5b1ca",
+  "patchSHA256": "50e9a12dcf119359962f820ae9c1d79e8edcd96c4bd9e81961af09fa9fd2a2b4",
+  "selectorCount": 28,
+  "selectorsUnchanged": [
+    "testExpoPlacedWidgetInvokesAllFiveRuntimes",
+    "testNativeScriptPlacedWidgetInvokesAllFiveRuntimes",
+    "testExpoLiveActivityInvokesAllFiveRuntimes",
+    "testNativeScriptLiveActivityInvokesAllFiveRuntimes",
+    "testExpoShortcutInvokesAllFiveRuntimes",
+    "testNativeScriptShortcutInvokesAllFiveRuntimes",
+    "testExpoSystemShareInvokesAllFiveRuntimes",
+    "testNativeScriptSystemShareInvokesAllFiveRuntimes",
+    "testExpoSystemTranslationInvokesAllFiveRuntimes",
+    "testNativeScriptSystemTranslationInvokesAllFiveRuntimes",
+    "testExpoRunMiniAppActionSavedBackgroundReturnsTypedResult",
+    "testNativeScriptRunMiniAppActionSavedBackgroundReturnsTypedResult",
+    "testExpoRunMiniAppActionSavedForegroundReturnsTypedResult",
+    "testNativeScriptRunMiniAppActionSavedForegroundReturnsTypedResult",
+    "testMiniAppsPlacedWidgetRetainsLastGoodAfterRealFailureAndRecovers",
+    "testMiniAppsPlacedWidgetToggleKeepsIndependentInstanceState",
+    "testNativeScriptOwnerSurvivesThreeOverlappingBackgroundShortcutsInReverseOrder",
+    "testNativeScriptOwnerSurvivesCancellingOneOfThreeOverlappingBackgroundShortcuts",
+    "testStudioExpoHelloWorldCopiesEditsBuildsInstallsAndRuns",
+    "testStudioDepartureBudgetCopiesEditsBuildsInstallsAndRuns",
+    "testStudioNativeScriptHelloWorldCopiesEditsBuildsInstallsAndRuns",
+    "testStudioTableShareCopiesEditsBuildsInstallsAndRuns",
+    "testStudioNativeImageDrawingCopiesEditsBuildsInstallsAndRuns",
+    "testStudioExpoCreatesMovesStylesAndReopensSource",
+    "testStudioNativeScriptCreatesMovesStylesAndReopensSource",
+    "testStudioOriginalTypeScriptHelpPreferencesAndLiveLogExport",
+    "testStudioImportsActualFilesSourceAndReopensIndependentEdit",
+    "testStudioTwoRealWindowsConflictReloadAndRecoverSeparateCopy"
+  ],
+  "exactWholeFileInverse": true,
+  "inverse": {
+    "removeExactAddedHelpers": "added-helpers.swift",
+    "oldImportFunction": "    private func studioImportFolder(_ folder: String, project: String) throws {\n        try tap(mini.buttons[\"miniapps-studio-add\"].firstMatch, \"Open the actual local library import action.\")\n        try tap(mini.buttons[\"Import source folder\"].firstMatch, \"Select a real ordinary source folder through Files.\")\n        if mini.buttons[\"Browse\"].firstMatch.exists { mini.buttons[\"Browse\"].firstMatch.tap() }\n        try tap(mini.staticTexts[\"On My iPad\"].firstMatch, \"Use the actual local Files provider.\")\n        try tap(mini.staticTexts[\"Hanlin MiniApps\"].firstMatch, \"Open normal MiniApps Documents inputs.\")\n        try tap(mini.staticTexts[folder].firstMatch, \"Open this run's actual SDK source input folder.\")\n        try tap(mini.staticTexts[project].firstMatch, \"Select the original source project's folder.\")\n        try tap(firstButton(mini, [\"Open\", \"Done\"]), \"Confirm the actual folder import.\")\n        try require(mini.navigationBars[\"My Projects\"].waitForExistence(timeout: bounded(30)) &&\n                    !mini.alerts[\"Project unavailable\"].exists, \"The real source-folder import failed.\")\n        capture(mini, \"studio-editor-import-selected\")\n    }\n\n",
+    "newImportFunction": "    private func studioImportFolder(_ folder: String, project: String) throws {\n        try tap(mini.buttons[\"miniapps-studio-add\"].firstMatch, \"Open the actual local library import action.\")\n        try tap(mini.buttons[\"Import source folder\"].firstMatch, \"Select a real ordinary source folder through Files.\")\n        let provider = try studioLocalFilesProvider(\"Use the actual local Files provider.\")\n        try studioTapFilesControl([\"Hanlin MiniApps\"], in: provider, \"Open normal MiniApps Documents inputs.\")\n        try studioTapFilesControl([folder], in: provider, \"Open this run's actual SDK source input folder.\")\n        try studioTapFilesControl([project], in: provider, \"Select the original source project's folder.\")\n        try studioTapFilesControl([\"Open\", \"Done\"], in: provider, buttons: true, \"Confirm the actual folder import.\")\n        try require(mini.navigationBars[\"My Projects\"].waitForExistence(timeout: bounded(30)) &&\n                    !mini.alerts[\"Project unavailable\"].exists, \"The real source-folder import failed.\")\n        capture(mini, \"studio-editor-import-selected\")\n    }\n\n"
+  },
+  "originalTapBudgetSeconds": 12,
+  "newProviderBudgetSeconds": 12,
+  "subsequentControlBudgetSeconds": 12,
+  "nativeStatus": "NOT_RUN",
+  "scope": "Only genuine source-folder import; other Files/export routes remain unchanged; no product edits or native actions",
+  "addedHelpersSHA256": "3943d74c0cd6e43ac85bfcb7366ae9e30e472346dafd1d6479e9a849155315be",
+  "actualFailureEvidence": {
+    "screenshotSHA256": "410e63a3dbf6f593394bd2e301561fe2efd26fc361d43d4c249ddb5b4e8bae4b",
+    "observation": "The actual Files picker visibly includes On My iPad while the contemporaneous MiniApps-only accessibility tree omits remote sidebar labels.",
+    "sourceJob": 140510023855,
+    "sourceRun": 46000325286,
+    "qualification": "Original failed native run; no successful import is inferred."
+  },
+  "rootReview": {
+    "reviewer": "/root",
+    "decision": "APPROVED_SOURCE_ONLY_FOR_ORIGINAL_NATIVE_RETRY",
+    "basis": "Exact patch 50e9a12d reviewed and approved in the parent message; retain W1 independent receipt."
+  }
+}

@@ -2136,15 +2136,62 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
         return value
     }
 
+    private func studioVisibleFilesControl(_ labels: [String], in application: XCUIApplication,
+                                           buttons: Bool = false) -> XCUIElement? {
+        let exact = NSPredicate(format: "label IN %@ OR identifier IN %@", labels as NSArray, labels as NSArray)
+        let queries = buttons ? [application.buttons] : [application.cells, application.staticTexts]
+        return queries.flatMap { $0.matching(exact).allElementsBoundByAccessibilityElement }
+            .first { $0.exists && $0.isEnabled && $0.isHittable }
+    }
+
+    private func studioTapFilesControl(_ labels: [String], in application: XCUIApplication,
+                                       buttons: Bool = false, _ message: String) throws {
+        var control: XCUIElement?
+        try require(wait(12) {
+            control = studioVisibleFilesControl(labels, in: application, buttons: buttons)
+            return control != nil
+        }, message)
+        try XCTUnwrap(control).tap()
+    }
+
+    private func studioLocalFilesProvider(_ message: String) throws -> XCUIApplication {
+        let candidates = [mini, files]
+        for application in candidates {
+            let browse = application.buttons["Browse"].firstMatch
+            if browse.exists && browse.isEnabled && browse.isHittable { browse.tap(); break }
+        }
+        var owner: XCUIApplication?
+        var location: XCUIElement?
+        let ready = wait(12) {
+            for application in candidates {
+                if let row = studioVisibleFilesControl(["On My iPad"], in: application) {
+                    owner = application; location = row
+                    return true
+                }
+            }
+            return false
+        }
+        record["filesApplicationState"] = String(describing: files.state)
+        if !ready && files.state != .notRunning { capture(files, "studio-files-unresolved-owner") }
+        try require(ready, message)
+        let application = try XCTUnwrap(owner)
+        let row = try XCTUnwrap(location)
+        record["filesProviderQueryBundleID"] = application === mini ? "com.itorah.hanlinminiapps" : "com.apple.DocumentsApp"
+        record["filesProviderProcessID"] = try studioObservedPID(application)
+        capture(application, "studio-files-presented-provider")
+        try require(row.exists && row.isEnabled && row.isHittable, message)
+        row.tap()
+        return application
+    }
+
     private func studioImportFolder(_ folder: String, project: String) throws {
         try tap(mini.buttons["miniapps-studio-add"].firstMatch, "Open the actual local library import action.")
         try tap(mini.buttons["Import source folder"].firstMatch, "Select a real ordinary source folder through Files.")
-        if mini.buttons["Browse"].firstMatch.exists { mini.buttons["Browse"].firstMatch.tap() }
-        try tap(mini.staticTexts["On My iPad"].firstMatch, "Use the actual local Files provider.")
-        try tap(mini.staticTexts["Hanlin MiniApps"].firstMatch, "Open normal MiniApps Documents inputs.")
-        try tap(mini.staticTexts[folder].firstMatch, "Open this run's actual SDK source input folder.")
-        try tap(mini.staticTexts[project].firstMatch, "Select the original source project's folder.")
-        try tap(firstButton(mini, ["Open", "Done"]), "Confirm the actual folder import.")
+        let provider = try studioLocalFilesProvider("Use the actual local Files provider.")
+        try studioTapFilesControl(["Hanlin MiniApps"], in: provider, "Open normal MiniApps Documents inputs.")
+        try studioTapFilesControl([folder], in: provider, "Open this run's actual SDK source input folder.")
+        try studioTapFilesControl([project], in: provider, "Select the original source project's folder.")
+        try studioTapFilesControl(["Open", "Done"], in: provider, buttons: true, "Confirm the actual folder import.")
         try require(mini.navigationBars["My Projects"].waitForExistence(timeout: bounded(30)) &&
                     !mini.alerts["Project unavailable"].exists, "The real source-folder import failed.")
         capture(mini, "studio-editor-import-selected")
