@@ -1,5 +1,15 @@
 #!/bin/bash
 set -euo pipefail
+# Explicit original MCP11 package gate on this existing AgentSDK runner.
+if [[ -n "${GITHUB_EVENT_PATH:-}" ]] && python3 - "$GITHUB_EVENT_PATH" <<'PY_MCP_WIRE_SELECTOR'
+import json,sys
+inputs=json.load(open(sys.argv[1])).get('inputs',{})
+sys.exit(0 if inputs.get('target_validation_group') == 'agent_sdk_exact_source_proof'
+         and inputs.get('exact_test_selector') == 'HostMCPWireComparisonTests' else 1)
+PY_MCP_WIRE_SELECTOR
+then
+  exec python3 "$(git rev-parse --show-toplevel)/Scripts/CI/IntegrationValidation/run_host_mcp_wire_comparison.py"
+fi
 # Exact pin repair: resolve once and build iOS; accepted tests stay historical.
 if [[ -n "${GITHUB_EVENT_PATH:-}" ]] && python3 - "$GITHUB_EVENT_PATH" <<'PY_PIN_BUILD_SELECTOR'
 import json,sys
