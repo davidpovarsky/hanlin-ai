@@ -649,10 +649,16 @@ jobs:
               binary="$framework/$(basename "$framework" .framework)"
               test "$(/usr/libexec/PlistBuddy -c 'Print :CFBundlePackageType' "$info")" = FMWK
               minimum=$(/usr/libexec/PlistBuddy -c 'Print :MinimumOSVersion' "$info")
-              [[ "$minimum" =~ ^[0-9]+(\.[0-9]+){0,2}$ ]]
+              if ! [[ "$minimum" =~ ^[0-9]+(\.[0-9]+){0,2}$ ]]; then
+                echo "::error::Invalid MinimumOSVersion '$minimum' in $framework" >&2
+                exit 1
+              fi
               archs=$(lipo -archs "$binary")
               grep -qw arm64 <<< "$archs"
-              ! grep -Eqw 'arm64e|i386|x86_64' <<< "$archs"
+              if grep -Eqw 'arm64e|i386|x86_64' <<< "$archs"; then
+                echo "::error::Unsupported architecture '$archs' in $framework" >&2
+                exit 1
+              fi
             done
 
           # Signing changes binary bytes, but preserves the linked image UUID.
