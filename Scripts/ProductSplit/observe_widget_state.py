@@ -16,6 +16,7 @@ import time
 import uuid
 
 import observe_shortcut_surfaces as original
+import prepare_widget_fixtures as widget_producer
 
 require = original.require
 ROOT = Path(__file__).resolve().parents[2]
@@ -94,11 +95,20 @@ def source_identity(root, source):
     actual = subprocess.check_output(["git", "-C", str(root), "rev-parse", "HEAD"], timeout=15).decode().strip()
     require(actual == source, "Source checkout changed during this attempt")
     result = {}
+    derived = {"Fixtures/Widgets/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo",
+               "Fixtures/Widgets/SHA256.json"}
     for name in SOURCE_PATHS:
         expected = subprocess.check_output(["git", "-C", str(root), "show", source + ":" + name], timeout=15)
         current = file_identity(Path(root) / name, root)
-        require(current["sha256"] == original.digest(expected), "Modified acceptance/fixture source: " + name)
+        if name not in derived:
+            require(current["sha256"] == original.digest(expected), "Modified acceptance/fixture source: " + name)
         result[name] = current
+    try:
+        produced = widget_producer.validate_receipt(root, source)
+    except widget_producer.FixturePreparationError as error:
+        raise original.ObservationError(str(error)) from error
+    for name in derived:
+        require(result[name] == produced[name], "Modified original producer output: " + name)
     return result
 
 
