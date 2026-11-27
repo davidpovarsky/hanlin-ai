@@ -1,0 +1,7 @@
+{
+  "originalPath": "/tmp/hanlin-native-compatibility-20261126-549ij7t3/original-fixture-producer.log",
+  "sha256": "9df8fa879af94c5b8cc302ce193959f4f12a2caa48a8495791f1bd825f376677",
+  "bytes": 754,
+  "encoding": "utf-8",
+  "text": "Hanlin-Expo-Widget-Counter.hanlinExpo: 1149 bytes; IMPORT_AND_NATIVE_TEST_REQUIRED\nHanlin-Expo-Widget-Visuals.hanlinExpo: 1283 bytes; IMPORT_AND_NATIVE_TEST_REQUIRED\nHanlin-ScriptWidget-Dashboard.scripting: 968 bytes; IMPORT_AND_NATIVE_TEST_REQUIRED\nHanlin-ScriptWidget-Actions.scripting: 825 bytes; IMPORT_AND_NATIVE_TEST_REQUIRED\nHanlin-Mixed-Native-Widget.hanlinExpo: 1000 bytes; DEFERRED_OPTIONAL\nHanlin-Widget-Legacy-Regression.scripting: 444 bytes; IMPORT_AND_NATIVE_TEST_REQUIRED\nHanlin-Widget-Invalid-Cases.hanlinExpo: 949 bytes; REJECT_IMPORT\nHanlin-Expo-Widget-Interactive-Matrix.hanlinExpo: 1703 bytes; IMPORT_AND_NATIVE_TEST_REQUIRED\nArchives generated. Import, installation, native rendering and interaction require separate executed tests.\n"
+}

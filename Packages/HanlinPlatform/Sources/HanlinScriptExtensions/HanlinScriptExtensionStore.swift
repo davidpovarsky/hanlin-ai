@@ -675,22 +675,30 @@ public struct HanlinScriptExtensionStore: Sendable {
 
     private func legacyEnvelopeData(_ snapshot: HanlinScriptExtensionSnapshot) throws -> Data {
         guard var raw = try JSONSerialization.jsonObject(with: Self.encoded(snapshot)) as? [String: Any] else { throw HanlinScriptExtensionStoreError.invalidEnvelope }
-        for key in ["widgetInstances", "widgetStates", "widgetEntityMigrations", "inactiveWidgetInstallations", "widgetLastSuccessfulRenders"] { raw.removeValue(forKey: key) }
+        // V1 readers decode and re-encode their original model before checking
+        // the digest. Project its exact fields so new metadata cannot enter a
+        // shadow hash that an older reader is unable to reproduce.
+        let snapshotKeys: Set<String> = ["schemaVersion", "generatedAt", "widgets", "intentEntities", "liveActivities", "translationApps"]
+        raw = raw.filter { snapshotKeys.contains($0.key) }
         func oldIdentity(_ value: Any?) -> Any? {
-            guard var object = value as? [String: Any] else { return value }
-            object.removeValue(forKey: "variantID")
-            return object
+            guard let object = value as? [String: Any] else { return value }
+            let keys: Set<String> = ["installedPackageID", "packageID", "generation", "entrypointID"]
+            return object.filter { keys.contains($0.key) }
         }
-        for key in ["widgets", "intentEntities", "liveActivities", "translationApps"] {
+        let recordKeys: [String: Set<String>] = [
+            "widgets": ["identity", "displayName", "family", "actionIdentity", "validUntil", "relevance", "root", "deepLink"],
+            "intentEntities": ["identity", "id", "displayName", "subtitle"],
+            "liveActivities": ["identity", "activityID", "title", "state", "root", "staleDate"],
+            "translationApps": ["identity", "appID", "displayName", "summary", "iconSymbol", "accentHex", "isBeta", "entrypointID", "rootNode"]
+        ]
+        for (key, keys) in recordKeys {
             let records = raw[key] as? [[String: Any]] ?? []
             raw[key] = records.compactMap { record -> [String: Any]? in
-                var record = record
                 if key == "widgets", let identity = record["identity"] as? [String: Any],
                    let variant = identity["variantID"] as? String, variant != "default" { return nil }
+                var record = record.filter { keys.contains($0.key) }
                 record["identity"] = oldIdentity(record["identity"])
                 record["actionIdentity"] = oldIdentity(record["actionIdentity"])
-                record.removeValue(forKey: "engine")
-                record.removeValue(forKey: "payload")
                 return record
             }
         }

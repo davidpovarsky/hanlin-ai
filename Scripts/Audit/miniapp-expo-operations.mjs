@@ -24,21 +24,56 @@ export function auditExpoOperationRoutes({adapter, externalSession, shortcutSess
   if (!/return\s+try\s+await\s+HanlinScriptingPlatform\.shared\.invokeLiveActivity\(operation:\s*operation,\s*payloadJSON:\s*payloadJSON,\s*context:\s*context\)/.test(adapter.text) || !platform.text.includes('func invokeLiveActivity(')) {
     throw new Error('Expo Live Activity dispatch linkage changed; audit the native handler.');
   }
-  // Shortcuts supplies a different owned callback. Verify its exact operation,
-  // validated progress payload and headless platform connection; a prefix alone
-  // must not add arbitrary external operations to the public inventory.
-  const shortcutBody = shortcutSession?.text.match(
-    /platform\.externalMiniAppOperation\s*=\s*\{\s*operation,\s*payload\s+in([\s\S]*?)\n\s*\}\n\s*defer\s*\{/);
-  const shortcutHandler = shortcutBody?.[1] ?? '';
+  // A Shortcuts child owns one reporter for the claimed command. Inspect the
+  // connected declarations: matching guard text in an unrelated helper must not
+  // establish operation availability or permit a different invocation's Progress.
+  const shortcutText = shortcutSession?.text ?? '';
+  const shortcutExecution = shortcutText.match(
+    /@MainActor\s+enum\s+MiniAppsShortcutExecution\s*\{([\s\S]*?)^\}/m)?.[1] ?? '';
+  const shortcutIntent = shortcutText.match(
+    /^struct\s+HanlinRunMiniAppShortcutIntent:\s*LongRunningIntent,\s*CancellableIntent\s*\{([\s\S]*?)^\}/m)?.[1] ?? '';
+  const shortcutPerform = shortcutIntent.match(
+    /^    func\s+perform\(\)\s*async\s+throws\s*->\s*some\s+IntentResult\s*&\s*ReturnsValue<IntentFile>\s*&\s*ShowsSnippetIntent\s*\{([\s\S]*?)^    \}/m)?.[1] ?? '';
+  const executorBody = shortcutPerform.match(
+    /let\s+receipt\s*=\s*try\s+await\s+executor\.execute\(command\)\s*\{\s*ownedCommand\s+in([\s\S]*?)^            \}/m)?.[1] ?? '';
+  const operationBody = executorBody.match(
+    /let\s+operation\s*=\s*\{([\s\S]*?)^                \}/m)?.[1] ?? '';
+  const shortcutDispatch = /let\s+reportedProgress\s*=\s*progress/.test(shortcutPerform)
+    && /let\s+store\s*=\s*try\s+await\s+HanlinScriptingPlatform\.productExtensionStore\(\)/.test(shortcutPerform)
+    && /let\s+executor\s*=\s*HanlinInvocationExecutor\(store:\s*store\)/.test(shortcutPerform)
+    && /return\s+try\s+await\s+MiniAppsShortcutExecution\.run\(\s*command:\s*ownedCommand,\s*store:\s*store,\s*progress:\s*reportedProgress\s*\)/.test(operationBody)
+    && /return\s+try\s+await\s+self\.performBackgroundTask\(operation:\s*operation\)/.test(executorBody)
+    && /return\s+try\s+await\s+self\.withIntentCancellationHandler\(operation:\s*operation\)/.test(executorBody);
+  const makeCommand = shortcutExecution.match(
+    /^    static\s+func\s+makeCommand\(\s*action:\s*HanlinScriptActionEntity,\s*input:\s*HanlinValue,\s*canPresentUI:\s*Bool\s*=\s*false\s*\)\s*async\s+throws\s*->\s*HanlinScriptResumeCommand\s*\{([\s\S]*?)^    \}/m)?.[1] ?? '';
+  const shortcutMode = /let\s+runsInForeground\s*=\s*systemContext\.currentMode\s*==\s*\.foreground/.test(shortcutPerform)
+    && /let\s+command\s*=\s*try\s+await\s+MiniAppsShortcutExecution\.makeCommand\(\s*action:\s*action,\s*input:\s*inputValue,\s*canPresentUI:\s*runsInForeground\s*\)/.test(shortcutPerform)
+    && /return\s+HanlinScriptResumeCommand\(invocation:\s*\.init\(\s*identity:\s*record\.identity,\s*entityID:\s*record\.id,\s*parameters:\s*input,\s*continueInForeground:\s*canPresentUI,\s*delivery:\s*\.init\(appID:\s*appID,\s*source:\s*\.shortcuts,\s*expiresAt:\s*\.now\.addingTimeInterval\(HanlinInvocationDelivery\.maximumLifetime\s*-\s*1\),\s*userGesturePresent:\s*true,\s*canPresentUI:\s*canPresentUI\s*\)\s*\)\s*\)/.test(makeCommand);
+  const shortcutRun = shortcutExecution.match(
+    /^    static\s+func\s+run\(\s*command:\s*HanlinScriptResumeCommand,\s*store:\s*HanlinScriptExtensionStore,\s*progress:\s*Progress\s*\)\s*async\s+throws\s*->\s*HanlinValue\s*\{([\s\S]*?)^    \}/m)?.[1] ?? '';
+  const reporter = shortcutText.match(
+    /@MainActor\s+final\s+class\s+MiniAppsShortcutProgressReporter\s*\{([\s\S]*?)^\}/m)?.[1] ?? '';
+  const reporterInit = reporter.match(
+    /^    init\(\s*progress:\s*Progress,\s*commandID:\s*UUID,\s*store:\s*HanlinScriptExtensionStore\s*\)\s*throws\s*\{([\s\S]*?)^    \}/m)?.[1] ?? '';
+  const shortcutHandler = reporter.match(
+    /^    func\s+receive\(\s*_\s+operation:\s*String,\s*payload:\s*String\s*\)\s*throws\s*->\s*String\s*\{([\s\S]*?)^    \}/m)?.[1] ?? '';
+  const cleanup = shortcutRun.match(/\bdefer\s*\{([\s\S]*?)^        \}/m)?.[1] ?? '';
   const shortcutOperations = [...shortcutHandler.matchAll(
     /guard\s+operation\s*==\s*"([^"]+)"\s+else\s*\{/g)].map(match => match[1]);
-  const shortcutConnected = /let\s+platform\s*=\s*HanlinScriptingPlatform\(\s*actionPresentationAllowed:\s*false,\s*registersForegroundContinuation:\s*false\s*\)/.test(shortcutSession?.text ?? '')
-    && /try\s+await\s+platform\.executeShortcutCommand\(command\)/.test(shortcutSession?.text ?? '');
-  const shortcutProgress = /JSONDecoder\(\)\.decode\(HanlinShortcutProgress\.self,\s*from:\s*Data\(payload\.utf8\)\)/.test(shortcutHandler)
-    && /try\s+update\.validate\(\)/.test(shortcutHandler)
-    && /progress\.totalUnitCount\s*=\s*update\.totalUnitCount/.test(shortcutHandler)
-    && /progress\.completedUnitCount\s*=\s*update\.completedUnitCount/.test(shortcutHandler);
-  if (!shortcutConnected || !shortcutProgress || shortcutOperations.length !== 1
+  const shortcutConnected = /let\s+presentsUI\s*=\s*command\.invocation\.delivery\?\.canPresentUI\s*==\s*true/.test(shortcutRun)
+    && /let\s+platform\s*=\s*HanlinScriptingPlatform\(\s*actionPresentationAllowed:\s*presentsUI,\s*registersForegroundContinuation:\s*false\s*\)/.test(shortcutRun)
+    && /let\s+reporter\s*=\s*try\s+MiniAppsShortcutProgressReporter\(\s*progress:\s*progress,\s*commandID:\s*command\.id,\s*store:\s*store\s*\)/.test(shortcutRun)
+    && /platform\.externalMiniAppOperation\s*=\s*\{\s*operation,\s*payload\s+in\s*try\s+reporter\.receive\(operation,\s*payload:\s*payload\)\s*\}/.test(shortcutRun)
+    && /try\s+await\s+platform\.executeClaimedShortcutCommand\(command\)/.test(shortcutRun)
+    && /reporter\.close\(\)[\s\S]*platform\.externalMiniAppOperation\s*=\s*nil/.test(cleanup)
+    && /func\s+close\(\)\s*\{\s*progress\s*=\s*nil\s*\}/.test(reporter);
+  const reporterOwned = /guard\s+let\s+receipt\s*=\s*try\s+store\.receipt\(for:\s*commandID\),\s*receipt\.status\s*==\s*\.running,\s*let\s+leaseID\s*=\s*receipt\.leaseID,\s*receipt\.leaseExpiresAt\.map\(\{\s*\$0\s*>\s*\.now\s*\}\)\s*==\s*true\s+else\s*\{\s*throw\s+HanlinInvocationQueueError\.staleLease\s*\}/.test(reporterInit)
+    && /self\.progress\s*=\s*progress;\s*self\.commandID\s*=\s*commandID;\s*self\.leaseID\s*=\s*leaseID;\s*self\.store\s*=\s*store/.test(reporterInit)
+    && /try\s+Task\.checkCancellation\(\)/.test(shortcutHandler)
+    && /guard\s+operation\s*==\s*"miniapps\.shortcutProgress"\s+else\s*\{\s*throw\s+MiniAppsShortcutError\.unsupportedOperation\s*\}/.test(shortcutHandler)
+    && /guard\s+let\s+progress,\s*let\s+receipt\s*=\s*try\s+store\.receipt\(for:\s*commandID\),\s*receipt\.status\s*==\s*\.running,\s*receipt\.leaseID\s*==\s*leaseID,\s*receipt\.leaseExpiresAt\.map\(\{\s*\$0\s*>\s*\.now\s*\}\)\s*==\s*true,\s*!receipt\.cancellationRequested\s+else\s*\{\s*throw\s+CancellationError\(\)\s*\}/.test(shortcutHandler);
+  const shortcutProgress = /let\s+update\s*=\s*try\s+JSONDecoder\(\)\.decode\(HanlinShortcutProgress\.self,\s*from:\s*Data\(payload\.utf8\)\)\s*try\s+update\.validate\(\)\s*progress\.totalUnitCount\s*=\s*update\.totalUnitCount\s*progress\.completedUnitCount\s*=\s*update\.completedUnitCount/.test(shortcutHandler);
+  if (!shortcutMode || !shortcutDispatch || !shortcutConnected || !reporterOwned || !shortcutProgress || shortcutOperations.length !== 1
       || shortcutOperations[0] !== 'miniapps.shortcutProgress') {
     throw new Error('Shortcuts progress callback linkage changed; audit the owned native handler.');
   }
@@ -52,6 +87,6 @@ export function auditExpoOperationRoutes({adapter, externalSession, shortcutSess
     {kind: 'delegated', source: externalSession.path, suppliedBy: platform.path,
       operations: delegated, condition: 'An active external MiniApp invocation supplies the typed callback.'},
     {kind: 'shortcuts', source: shortcutSession.path, suppliedBy: platform.path,
-      operations: shortcutOperations, condition: 'An owned headless Shortcuts invocation validates and reports its Progress.'},
+      operations: shortcutOperations, condition: 'An owned Shortcuts invocation validates its live lease and typed Progress; UI admission follows its validated foreground/background delivery.'},
   ]};
 }

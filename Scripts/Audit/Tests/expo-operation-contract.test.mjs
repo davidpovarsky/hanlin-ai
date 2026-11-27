@@ -24,7 +24,7 @@ test('actual Expo grouped cases and explicitly connected external cases cover th
   assert.ok(result.routes[0].operations.includes('widgets.publishPrepared'));
   assert.match(result.routes[1].condition, /active external MiniApp invocation/);
   assert.deepEqual(result.routes[2].operations, ['miniapps.shortcutProgress']);
-  assert.match(result.routes[2].condition, /owned headless Shortcuts invocation/);
+  assert.match(result.routes[2].condition, /owned Shortcuts invocation/);
   assert.ok(input.facadeOperations.every(name => result.operations.includes(name)));
 });
 
@@ -58,19 +58,83 @@ test('the connected assistant factory is explicit without relaxing other constru
   }
 });
 
-test('Shortcuts progress requires its actual validated callback and owned headless dispatch', async () => {
+test('Shortcuts progress requires its actual validated callback and owned claimed dispatch', async () => {
   const input = await fixture();
   for (const [before, after] of [
     ['operation == "miniapps.shortcutProgress"', 'operation.hasPrefix("miniapps.")'],
     ['operation == "miniapps.shortcutProgress"', 'operation == "miniapps.notImplemented"'],
     ['try update.validate()', ''],
     ['progress.completedUnitCount = update.completedUnitCount', 'progress.completedUnitCount = 0'],
-    ['actionPresentationAllowed: false', 'actionPresentationAllowed: true'],
-    ['platform.executeShortcutCommand(command)', 'HanlinScriptingPlatform.shared.executeShortcutCommand(command)'],
+    ['let reportedProgress = progress', 'let reportedProgress = Progress()'],
+    ['HanlinInvocationExecutor(store: store)', 'HanlinInvocationExecutor(store: anotherStore)'],
+    ['executor.execute(command) { ownedCommand in', 'executor.execute(anotherCommand) { ownedCommand in'],
+    ['MiniAppsShortcutExecution.run(', 'UnusedShortcutExecution.run('],
+    ['command: ownedCommand, store: store, progress: reportedProgress', 'command: command, store: store, progress: reportedProgress'],
+    ['command: ownedCommand, store: store, progress: reportedProgress', 'command: ownedCommand, store: anotherStore, progress: reportedProgress'],
+    ['command: ownedCommand, store: store, progress: reportedProgress', 'command: ownedCommand, store: store, progress: Progress()'],
+    ['performBackgroundTask(operation: operation)', 'performBackgroundTask(operation: anotherOperation)'],
+    ['withIntentCancellationHandler(operation: operation)', 'withIntentCancellationHandler(operation: anotherOperation)'],
+    ['systemContext.currentMode == .foreground', 'systemContext.currentMode.canContinueInForeground'],
+    ['systemContext.currentMode == .foreground', 'true'],
+    ['action: action, input: inputValue, canPresentUI: runsInForeground', 'action: action, input: inputValue, canPresentUI: true'],
+    ['canPresentUI: Bool = false', 'canPresentUI: Bool = true'],
+    ['continueInForeground: canPresentUI', 'continueInForeground: true'],
+    ['userGesturePresent: true, canPresentUI: canPresentUI', 'userGesturePresent: true, canPresentUI: true'],
+    ['command.invocation.delivery?.canPresentUI == true', 'true'],
+    ['actionPresentationAllowed: presentsUI', 'actionPresentationAllowed: true'],
+    ['registersForegroundContinuation: false', 'registersForegroundContinuation: true'],
+    ['platform.executeClaimedShortcutCommand(command)', 'HanlinScriptingPlatform.shared.executeClaimedShortcutCommand(command)'],
+    ['MiniAppsShortcutProgressReporter(progress: progress, commandID: command.id, store: store)',
+      'MiniAppsShortcutProgressReporter(progress: Progress(), commandID: command.id, store: store)'],
+    ['MiniAppsShortcutProgressReporter(progress: progress, commandID: command.id, store: store)',
+      'MiniAppsShortcutProgressReporter(progress: progress, commandID: UUID(), store: store)'],
+    ['MiniAppsShortcutProgressReporter(progress: progress, commandID: command.id, store: store)',
+      'MiniAppsShortcutProgressReporter(progress: progress, commandID: command.id, store: anotherStore)'],
+    ['try reporter.receive(operation, payload: payload)', 'try anotherReporter.receive(operation, payload: payload)'],
+    ['reporter.close()', ''],
+    ['platform.externalMiniAppOperation = nil', ''],
+    ['func close() { progress = nil }', 'func close() {}'],
+    ['self.leaseID = leaseID', 'self.leaseID = UUID()'],
+    ['self.commandID = commandID', 'self.commandID = UUID()'],
+    ['self.store = store', 'self.store = anotherStore'],
+    ['try Task.checkCancellation()\n        guard operation', 'guard operation'],
+    ['receipt.status == .running,\n              let leaseID', 'receipt.status == .succeeded,\n              let leaseID'],
+    ['receipt.status == .running, receipt.leaseID == leaseID', 'receipt.status == .succeeded, receipt.leaseID == leaseID'],
+    ['receipt.leaseID == leaseID', 'receipt.leaseID != nil'],
+    ['!receipt.cancellationRequested', 'true'],
   ]) {
     const text = input.shortcutSession.text.replace(before, after);
     assert.notEqual(text, input.shortcutSession.text, before);
     assert.throws(() => auditExpoOperationRoutes({...input,
       shortcutSession: {...input.shortcutSession, text}}), /Shortcuts progress callback linkage changed/, before);
   }
+  const expires = 'receipt.leaseExpiresAt.map({ $0 > .now }) == true';
+  const pieces = input.shortcutSession.text.split(expires);
+  assert.equal(pieces.length, 3, 'both reporter admission and receive validate lease expiry');
+  for (let index = 0; index < 2; index += 1) {
+    const text = pieces[0] + (index === 0 ? 'true' : expires) + pieces[1]
+      + (index === 1 ? 'true' : expires) + pieces[2];
+    assert.throws(() => auditExpoOperationRoutes({...input,
+      shortcutSession: {...input.shortcutSession, text}}), /Shortcuts progress callback linkage changed/);
+  }
+});
+
+test('unconnected or dead helper validation cannot qualify the Shortcuts operation', async () => {
+  const input = await fixture();
+  for (const [before, after] of [
+    ['struct HanlinRunMiniAppShortcutIntent:', 'struct UnusedShortcutIntent:'],
+    ['static func makeCommand(action: HanlinScriptActionEntity', 'static func unusedMakeCommand(action: HanlinScriptActionEntity'],
+    ['final class MiniAppsShortcutProgressReporter {', 'final class UnusedShortcutProgressReporter {'],
+    ['func receive(_ operation: String, payload: String)', 'func unusedReceive(_ operation: String, payload: String)'],
+    ['static func run(command: HanlinScriptResumeCommand', 'static func unusedRun(command: HanlinScriptResumeCommand'],
+  ]) {
+    const text = input.shortcutSession.text.replace(before, after);
+    assert.notEqual(text, input.shortcutSession.text);
+    assert.throws(() => auditExpoOperationRoutes({...input,
+      shortcutSession: {...input.shortcutSession, text}}), /Shortcuts progress callback linkage changed/);
+  }
+  const text = input.shortcutSession.text.replace('try update.validate()', '')
+    + '\nprivate func unusedProgressValidation() throws { try update.validate() }\n';
+  assert.throws(() => auditExpoOperationRoutes({...input,
+    shortcutSession: {...input.shortcutSession, text}}), /Shortcuts progress callback linkage changed/);
 });

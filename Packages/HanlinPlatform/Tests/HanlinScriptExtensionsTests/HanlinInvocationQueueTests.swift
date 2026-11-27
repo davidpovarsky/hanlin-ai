@@ -150,7 +150,8 @@ struct HanlinInvocationQueueTests {
         let release = InvocationStartSignal()
         let task = Task {
             try await owner.execute(input) { command in
-                #expect(try store.command(for: input.id) == command)
+                let persistedCommand = try store.command(for: input.id)
+                #expect(persistedCommand == command)
                 await entered.signal()
                 await release.wait()
                 return .string("ORIGINAL_RESULT")

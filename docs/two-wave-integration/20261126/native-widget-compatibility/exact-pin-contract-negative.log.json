@@ -1,0 +1,7 @@
+{
+  "originalPath": "/tmp/hanlin-native-compatibility-20261126-549ij7t3/exact-pin-contract-negative.log",
+  "sha256": "cb5f766fec0a82c7948dd6b9f6e2394fd3786fc0dcb78c18abdda3366559e495",
+  "bytes": 1126,
+  "encoding": "utf-8",
+  "text": "✖ P3-26: Expo fixture contracts match the exact embedded native widget versions (3.252058ms)\nℹ tests 1\nℹ suites 0\nℹ pass 0\nℹ fail 1\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 528.000383\n\n✖ failing tests:\n\ntest at Scripts/Widgets/Tests/compiler-and-actions.test.mjs:130:1\n✖ P3-26: Expo fixture contracts match the exact embedded native widget versions (3.252058ms)\n  AssertionError [ERR_ASSERTION]: Hanlin-Expo-Widget-Interactive-Matrix\n  + actual - expected\n  \n  + '58.0.3'\n  - '58.0.29'\n          ^\n  \n      at TestContext.<anonymous> (file:///mnt/development/projects/worktrees/hanlin-miniapps-native-compatibility-20261126/Scripts/Widgets/Tests/compiler-and-actions.test.mjs:134:12)\n      at Test.runInAsyncScope (node:async_hooks:227:14)\n      at Test.run (node:internal/test_runner/test:1402:25)\n      at Test.start (node:internal/test_runner/test:1262:17)\n      at startSubtestAfterBootstrap (node:internal/test_runner/harness:387:17) {\n    generatedMessage: false,\n    code: 'ERR_ASSERTION',\n    actual: '58.0.3',\n    expected: '58.0.29',\n    operator: 'strictEqual',\n    diff: 'simple'\n  }\n"
+}

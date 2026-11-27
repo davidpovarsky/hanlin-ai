@@ -1,0 +1,7 @@
+{
+  "originalPath": "/tmp/hanlin-progress-audit-20261126-x3ohgx1p/original-contract-tests.log",
+  "bytes": 621,
+  "sha256": "181e6ecc5aaabfb6ab6057829548b45ef78034dfd3b6b13816f1a3a91eeeb889",
+  "encoding": "utf-8",
+  "text": "✔ actual Expo grouped cases and explicitly connected external cases cover the typed facade (19.555633ms)\n✔ a delegated prefix cannot hide a missing operation or a disconnected callback (10.592821ms)\n✔ the connected assistant factory is explicit without relaxing other constructor arguments (5.881954ms)\n✔ Shortcuts progress requires its actual validated callback and owned claimed dispatch (12.715554ms)\n✔ unconnected or dead helper validation cannot qualify the Shortcuts operation (3.493261ms)\nℹ tests 5\nℹ suites 0\nℹ pass 5\nℹ fail 0\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 139.677967\n"
+}

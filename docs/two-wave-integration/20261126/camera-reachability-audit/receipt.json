@@ -1,0 +1,117 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-26T22:30:00.337474+00:00",
+  "executor": "ChatGPT built-in agent /root/wave2_miniapps",
+  "baseSource": "8a97425e922aca83c81d75ed6cdb13774fde0893",
+  "candidateSource": "0456adbe395cde2fb986cf058c4a9497c38d1d21",
+  "change": {
+    "path": "Scripts/Audit/audit_miniapp_reachability.py",
+    "oldAnchor": "struct HanlinMiniAppsCameraCaptureExtension: LockedCameraCaptureExtension",
+    "newAnchor": "struct HanlinMiniAppsCameraCaptureExtension: @MainActor LockedCameraCaptureExtension",
+    "otherAuditorBytesIdentical": true,
+    "matcherUnchanged": true,
+    "nativeWrapperChanged": false,
+    "productionPackagesFixturesAndPinsChanged": false
+  },
+  "originalHostFailure": {
+    "reportedBy": "/root/mac_build_ops",
+    "jobID": "job_e722f310c74e",
+    "source": "16b4af4490d96c41cb76ed185a1e6d4e828899e7",
+    "phase": "original pretest after SDK source audit102/200, before any of188 Host tests",
+    "logPath": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-resume-16b4af44-original-phases-r1/original-pretest-phases.log",
+    "localOriginalAuditReproduction": "FAILED at same exact CameraCapture anchor; raw failure retained"
+  },
+  "executedChecks": {
+    "originalReachabilityWrite": {
+      "exitCode": 0,
+      "cells": 100
+    },
+    "originalReachabilityCheck": {
+      "exitCode": 0,
+      "cells": 100
+    },
+    "originalBundleTopologyTests": {
+      "command": [
+        "python3",
+        "Scripts/ProductSplit/test_signed_product_bundles.py",
+        "-v"
+      ],
+      "tests": 7,
+      "passed": 7,
+      "failed": 0
+    },
+    "negativeControl": {
+      "expectedRejection": true,
+      "scope": "In-memory replacement removes @MainActor from the actual wrapper read; original build() raises Audit anchor changed. No source mutation."
+    },
+    "gitDiffCheck": "PASS"
+  },
+  "generatedOutput": {
+    "files": [
+      "docs/miniapp-sdk/extension-reachability.json",
+      "docs/miniapp-sdk/extension-reachability.md"
+    ],
+    "semanticallyUnchangedSections": [
+      "matrix",
+      "paths",
+      "acceptance",
+      "targetsDeclaredInProject",
+      "entitlements",
+      "originalLibrarySurfaces",
+      "localPresentationSurfaces",
+      "systemServices"
+    ],
+    "changes": "Current source hashes/line references and SDK source hashes, corrected exact camera principal anchor, source snapshot provenance. No new route or acceptance credit."
+  },
+  "nativeAcceptanceReference": {
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/native-package-16b4af44-pass/stage/validation/platform-16b4af44/test-r1/required-scope-reconciliation.json",
+    "sha256": "7ad10028a450e27cc112b9bac8c90c115a7e2c15932a896ca296ee669fbe7f35",
+    "source": "16b4af4490d96c41cb76ed185a1e6d4e828899e7",
+    "status": "EXACT_REQUIRED_NATIVE_SCOPE_PASSED",
+    "actualDefinitions": 58,
+    "actualInvocations": 79,
+    "methodResults": {
+      "Passed": 58
+    },
+    "invocationResults": {
+      "Passed": 79
+    },
+    "skipped": 0,
+    "parameterValuesExactlyReconciled": true,
+    "nativeExitCode": 0,
+    "nativeRerunForThisAuditorOnlyDelta": false,
+    "qualification": "The complete changed path set contains only the auditor and generated reachability docs; package, app, fixture and pin source bytes are unchanged from16b4."
+  },
+  "canonicalProvenanceBoundary": "Generated reachability JSON is a declared SDK input. The native owner must finish original current-source Host/SDK preparation; this auditor pass is not a Host188 pass, IPA/signature proof, or OS/device acceptance.",
+  "logs": [
+    {
+      "name": "original-reachability-before.log",
+      "sha256": "6ef14d01b1f48b073fe5391c121176131db6876ea3d597739dd4ea9ba44cbb7c",
+      "bytes": 1140
+    },
+    {
+      "name": "original-reachability-write.log",
+      "sha256": "350a2abae49d9ad37ae1d680257ddfdf271665e8a370fdc5372b5f189ad80b79",
+      "bytes": 146
+    },
+    {
+      "name": "original-reachability-check.log",
+      "sha256": "231e3ea5da8cd01dfdc112d6cb7466ce2b2e6f38070dd193d6bbea0e17f7f39b",
+      "bytes": 73
+    },
+    {
+      "name": "original-extension-bundle-tests.log",
+      "sha256": "ec93a419c91bf48ad2adb3ffbc8659b1d69a779c3fe91cd8e7e484068c3dac27",
+      "bytes": 1193
+    }
+  ],
+  "independentReview": {
+    "reviewer": "ChatGPT built-in agent /root/wave1_chat_sdk",
+    "status": "APPROVED_SOURCE_ONLY",
+    "source": "0456adbe395cde2fb986cf058c4a9497c38d1d21",
+    "receiptPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/package-selection/independent-camera-audit-review-0456adbe.json",
+    "receiptSHA256": "38b7cb5edb56648ff2ba2bb044a71c6c441a6ab0a1384e1436d56f3908ecc060",
+    "checks": "Sole exact literal change; all original fail-closed matcher bytes unchanged;102 SDK hashes and126 anchor hashes/lines verified; matrix/routes/targets/acceptance unchanged; full native16b4 input closure unchanged.",
+    "duplicateTestOrNativeRuns": 0
+  }
+}

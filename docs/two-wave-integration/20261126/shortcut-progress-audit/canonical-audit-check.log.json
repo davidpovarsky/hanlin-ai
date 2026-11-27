@@ -1,0 +1,7 @@
+{
+  "originalPath": "/tmp/hanlin-progress-audit-20261126-x3ohgx1p/canonical-audit-check.log",
+  "bytes": 77,
+  "sha256": "6d938ed7d69471fb67d14ac1b2beae53a4383c809514a5f10888d2b14cfb1b06",
+  "encoding": "utf-8",
+  "text": "PASS: SDK source inventory matches 102 sources and 200 local public exports.\n"
+}

@@ -1,0 +1,184 @@
+{
+  "schemaVersion": 1,
+  "recordedAtUTC": "2026-11-26T21:54:38.313772+00:00",
+  "executor": "ChatGPT built-in agent /root/wave2_miniapps",
+  "independentReviewer": "/root/wave1_chat_sdk",
+  "nativeOwner": "/root/mac_build_ops",
+  "baseSource": "6975e769e82a7803853180cd6aec6a26fe412f9f",
+  "fixtureCommit": "d2e2886d4b59965d768df18d0282335cb7d192cd",
+  "candidateSource": "16b4af4490d96c41cb76ed185a1e6d4e828899e7",
+  "independentReview": {
+    "status": "SOURCE_REVIEW_APPROVED_NATIVE_PENDING",
+    "receiptPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/package-selection/independent-compatibility-review-16b4af44.json",
+    "receiptSHA256": "6474b813c1a524d1261219c8f3a0ff8b5e1883ad65ba9c66637f739b30fd05fb"
+  },
+  "originalNativeFailure": {
+    "receiptPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/native-package-6975e769-execution-r2/mac-stage/validation/platform-6975e769/test-r2/required-scope-reconciliation.json",
+    "receiptSHA256": "be476c5a6739385b129ba5cf428157cef08de8b5714ecd5987d1b19bad584c98",
+    "status": "EXACT_REQUIRED_NATIVE_SCOPE_EXECUTED_WITH_TWO_FAILURES",
+    "actualDefinitions": 57,
+    "actualInvocations": 78,
+    "methodResults": {
+      "Passed": 55,
+      "Failed": 2
+    },
+    "invocationResults": {
+      "Passed": 76,
+      "Failed": 2
+    },
+    "skipped": 0,
+    "nativeExitCode": 65,
+    "failedIdentifiers": [
+      "HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/actionAndPublicationPreserveUnrelatedCollections()",
+      "HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/actualHistoricalV1EncoderAndDowngradeReader()"
+    ],
+    "buildSDK": "27.0",
+    "device": {
+      "architecture": "arm64",
+      "deviceId": "233DB080-C913-4EE6-BF3D-99659F5CD475",
+      "deviceName": "HanlinMiniApps-08ed647b-20261126",
+      "modelName": "iPad Pro 13-inch (M5)",
+      "osBuildNumber": "24B8117",
+      "osVersion": "27.2",
+      "platform": "iOS Simulator"
+    },
+    "parameterValuesExactlyReconciled": true,
+    "selectionQualification": {
+      "originalEnumerationReportedDefinitions": 61,
+      "proposedCollateralDefinitions": 4,
+      "proposedCollateralInvocations": 16,
+      "actualCollateralDefinitions": 0,
+      "actualCollateralInvocations": 0,
+      "absentCollateralIdentifiers": [
+        "HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/consistencyReportCannotHideMissingRevisionOrMalformedCommit(missingRevision:)",
+        "HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/installAndVerifiedLoader(name:)",
+        "HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/realArchiveImport(name:)",
+        "HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/testPass7InterruptedRevisionWriteOverwrittenAndClean(corruptedBytes:)"
+      ],
+      "observation": "On this exact Xcode27.0/iOS27.2/package route, enumeration overreported four excluded parameterized definitions. Actual execution honored their explicit skip filters and ran exactly required57 definitions/78 cases. Prior61/94 planning receipts are retained unchanged; no extra execution or credit is claimed.",
+      "independentEnumerationReviewSHA256": "8ce515694578052ec20e3b6295ec8fa233e8a968ee2f7d5c68dfab8f9fd39da9"
+    },
+    "inputProofs": {
+      "inventorySHA256": "955c197154c388a9a2869c921c4459d9b984cf898dd3f0c6199a6696ca67c078",
+      "runReceiptSHA256": "e81b668dddd9d3173180b8912e222869872b0bdb895bf55c6a0082b9d244274c",
+      "summarySHA256": "00850231a275788921ad8330da8f3e676d86ad94b8c634b9dbe9b8df40c52798",
+      "testNodesSHA256": "bbb774414df54db25db7c1f565e328f9e5961cd904f0234e1e15c2a8a0b18d05"
+    }
+  },
+  "fixtureCorrection": {
+    "producer": "Scripts/Widgets/build-sample-packages.mjs",
+    "source": "Scripts/Widgets/samples.mjs",
+    "canonicalPins": "Scripts/Expo/package.json",
+    "pinnedExpoSDK": "58.0.26",
+    "pinnedWidgetRuntimeAndUI": "58.0.29",
+    "pinnedExpoWidgets": "58.0.29",
+    "pinnedReact": "19.3.0",
+    "versionAdmissionChanged": false,
+    "pinFilesChanged": false,
+    "archiveChanges": "Only package.json changed in five Expo archives; all three produced copies agree; three ScriptWidget/legacy archives are byte-identical.",
+    "orderingCorrection": "Append new Matrix after the seven original samples to preserve original positional test subjects. Original test assertions remain unchanged."
+  },
+  "v1Correction": {
+    "productionPath": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinScriptExtensionStore.swift",
+    "cause": "The V1 shadow included always-encoded nativePresentations, and could include new intent/translation metadata. The original reader drops unknown fields before re-encoding and hashing, so its hash differs. widgetLastSuccessfulRenders was already removed before this fix.",
+    "scope": "Project exact frozen snapshot, identity and record fields only in legacyEnvelopeData; keep current V2 envelope, atomic commit/revision operations and frozen crypto verifier unchanged.",
+    "originalFailingMethodsUnchanged": true,
+    "frozenFixtureUnchanged": true,
+    "newNativeTest": "HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests/v1ShadowProjectsHistoricalFieldsWithoutLosingCurrentMetadata()",
+    "newTestAssertions": "Real frozen reader accepts populated projection; historical content remains; current V2 readback equals all input metadata; old hash verifier still rejects tampered timestamp."
+  },
+  "executedPortableChecks": {
+    "platform": "Oracle Linux",
+    "node": "v24.22.0",
+    "originalWidgetContractsBefore": {
+      "tests": 8,
+      "passed": 4,
+      "failed": 4,
+      "cause": "New Matrix inserted at index0 shifted original positional fixture subjects."
+    },
+    "originalProducer": {
+      "exitCode": 0,
+      "archives": 8,
+      "locations": 3
+    },
+    "originalWidgetContractsAfter": {
+      "tests": 9,
+      "passed": 9,
+      "failed": 0,
+      "originalTests": 8,
+      "addedExactPinTest": 1
+    },
+    "negativeOriginalPins": {
+      "exitCode": 1,
+      "expectedFailure": true,
+      "actual": "58.0.3",
+      "expected": "58.0.29"
+    },
+    "interactiveInitialAttempt": {
+      "exitCode": 1,
+      "testBodiesExecuted": 0,
+      "cause": "Sparse worktree lacked the tracked HanlinExpoWidgetInteractions.js input; file materialized without changes."
+    },
+    "originalInteractiveAfterMaterialization": {
+      "tests": 10,
+      "passed": 10,
+      "failed": 0
+    },
+    "gitDiffCheck": "PASS"
+  },
+  "requiredNativeFollowUp": {
+    "status": "NOT_RUN_ON_CORRECTED_SOURCE",
+    "route": "Original HanlinPlatform-Package iOS test route owned by mac_build_ops",
+    "baselineDefinitions": 57,
+    "baselineInvocations": 78,
+    "addedDefinitions": 1,
+    "addedInvocations": 1,
+    "totalDefinitions": 58,
+    "totalInvocations": 79,
+    "parameterCasesUnchanged": true,
+    "collateralExecutionCredit": 0
+  },
+  "canonicalInputImpact": {
+    "sdkInputChanged": true,
+    "hostSourceInputsHashChanges": true,
+    "reason": "Original Scripts/MiniApps/stage-sdk.mjs explicitly includes HanlinScriptExtensionStore.swift and also collects its source directory; existing Host input_hash incorporates MiniAppSDK inputSHA.",
+    "noHostOrSDKRegenerationExecutedHere": true
+  },
+  "logReceipts": [
+    {
+      "path": "docs/two-wave-integration/20261126/native-widget-compatibility/original-widget-contracts-before.log.json",
+      "rawSHA256": "4dfd05c110cfa5b0b5c2b4f3fa253e8cc5fb6c0eed0c80b282b30dfc29d68919",
+      "rawBytes": 9745
+    },
+    {
+      "path": "docs/two-wave-integration/20261126/native-widget-compatibility/original-fixture-producer.log.json",
+      "rawSHA256": "9df8fa879af94c5b8cc302ce193959f4f12a2caa48a8495791f1bd825f376677",
+      "rawBytes": 754
+    },
+    {
+      "path": "docs/two-wave-integration/20261126/native-widget-compatibility/original-widget-contracts-after.log.json",
+      "rawSHA256": "0efa4a4121309deb34c27d9e1366f6e852d1d3c0719caca71d776c8457dec3f6",
+      "rawBytes": 928
+    },
+    {
+      "path": "docs/two-wave-integration/20261126/native-widget-compatibility/exact-pin-contract-negative.log.json",
+      "rawSHA256": "cb5f766fec0a82c7948dd6b9f6e2394fd3786fc0dcb78c18abdda3366559e495",
+      "rawBytes": 1126
+    },
+    {
+      "path": "docs/two-wave-integration/20261126/native-widget-compatibility/original-interactive-widget-contracts.log.json",
+      "rawSHA256": "98200c2e2644575ef5240d9eeb49db7cb9790990df7a6c6764425b91fff1284b",
+      "rawBytes": 1497
+    },
+    {
+      "path": "docs/two-wave-integration/20261126/native-widget-compatibility/original-interactive-widget-contracts-complete-inputs.log.json",
+      "rawSHA256": "7b297ef198c88c34ceb82d20423aaa2749a89ca6a7606f92a722204477adbd27",
+      "rawBytes": 1259
+    }
+  ],
+  "limits": [
+    "Portable JS passes do not establish Apple Swift compilation, frozen-reader execution on the corrected source, WidgetKit placement or app/system acceptance.",
+    "All original native failures and incomplete/overinclusive enumeration receipts remain retained.",
+    "No dependency bump, relaxed admission, frozen reader change, assertion removal or external agent CLI."
+  ]
+}

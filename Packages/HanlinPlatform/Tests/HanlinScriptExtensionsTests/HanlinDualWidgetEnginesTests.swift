@@ -492,6 +492,66 @@ struct HanlinDualWidgetEnginesTests {
         #expect(try store.load()?.schemaVersion == 2)
     }
 
+    @Test func v1ShadowProjectsHistoricalFieldsWithoutLosingCurrentMetadata() throws {
+        let root = try temporary()
+        defer { try? FileManager.default.removeItem(at: root) }
+        let store = Store(root: root)
+        let identity = Identity(installedPackageID: try .init(validating: "installed.presentation"),
+            packageID: try .init(validating: "package.presentation"), generation: 1, entrypointID: "widget")
+        let node = HanlinScriptUINode(kind: .text, properties: ["text": .string("Historical content")])
+        let artifact = try store.storeArtifact(data: Data("prepared presentation".utf8),
+            installedPackageID: identity.installedPackageID, generation: identity.generation)
+        let presentation = HanlinNativePresentationDescriptor(engine: .expo,
+            programRef: artifact.ref, programSHA256: artifact.sha256)
+        let widget = Widget(identity: identity, displayName: "Legacy projection",
+            actionIdentity: identity, validUntil: Date(timeIntervalSince1970: 120),
+            root: node, deepLink: URL(string: "hanlin://widget"))
+        let entity = HanlinScriptExtensions.HanlinScriptIntentEntityRecord(identity: identity,
+            id: "action", displayName: "Action", subtitle: "Historical subtitle",
+            appID: try .init(validating: "presentation.app"), hostActionHandler: "action.js",
+            nativePresentation: presentation)
+        let translation = HanlinScriptExtensions.HanlinScriptTranslationUISnapshot(identity: identity,
+            appID: "translation", displayName: "Translation", summary: "Historical summary",
+            iconSymbol: "character.bubble", accentHex: "#123456", isBeta: true,
+            entrypointID: "translate", rootNode: node, nativePresentation: presentation)
+        let activity = HanlinScriptExtensions.HanlinScriptLiveActivityDescriptor(identity: identity,
+            activityID: "activity", title: "Historical activity", state: .integer(3), root: node,
+            staleDate: Date(timeIntervalSince1970: 60))
+        let current = Snapshot(schemaVersion: 2, generatedAt: Date(timeIntervalSince1970: 13),
+            widgets: [widget], intentEntities: [entity], liveActivities: [activity],
+            translationApps: [translation], nativePresentations: [
+                .init(identity: identity, displayName: "Native panel", kind: .keyboard,
+                    nativePresentation: presentation)
+            ], widgetInstances: [.init(identity: identity, engine: .legacy, displayName: "Default")],
+            widgetEntityMigrations: ["old": "current"], inactiveWidgetInstallations: ["another.installation"],
+            widgetLastSuccessfulRenders: [.init(identity: identity, engine: .legacy, family: widget.family,
+                programSHA256: artifact.sha256, settings: [:], renderRef: artifact.ref,
+                renderSHA256: artifact.sha256, renderedAt: Date(timeIntervalSince1970: 12))])
+        try store.save(current)
+        let frozenStore = HanlinLegacyWidgetStoreFixture.HanlinScriptExtensionStore(root: root)
+        let legacy = try #require(try frozenStore.load())
+        #expect(legacy.widgets.first?.root == node)
+        #expect(legacy.widgets.first?.deepLink == widget.deepLink)
+        #expect(legacy.widgets.first?.actionIdentity?.entrypointID == identity.entrypointID)
+        #expect(legacy.intentEntities.first?.subtitle == entity.subtitle)
+        #expect(legacy.liveActivities.first?.state == activity.state)
+        #expect(legacy.translationApps.first?.rootNode == node)
+        #expect(legacy.translationApps.first?.isBeta == true)
+        #expect(try store.load() == current)
+
+        let shadowURL = root.appending(path: "snapshot-v1.json")
+        var envelope = try #require(JSONSerialization.jsonObject(with: Data(contentsOf: shadowURL)) as? [String: Any])
+        var shadow = try #require(envelope["snapshot"] as? [String: Any])
+        #expect(Set(shadow.keys) == Set(["schemaVersion", "generatedAt", "widgets", "intentEntities", "liveActivities", "translationApps"]))
+        shadow["generatedAt"] = 14_000
+        envelope["snapshot"] = shadow
+        try JSONSerialization.data(withJSONObject: envelope, options: [.sortedKeys, .withoutEscapingSlashes])
+            .write(to: shadowURL)
+        #expect(throws: HanlinLegacyWidgetStoreFixture.HanlinScriptExtensionStoreError.integrityMismatch) {
+            try frozenStore.load()
+        }
+    }
+
     @Test func interruptedShadowPublicationRestoresExactCommittedRevision() throws {
         let root = try temporary()
         defer { try? FileManager.default.removeItem(at: root) }
