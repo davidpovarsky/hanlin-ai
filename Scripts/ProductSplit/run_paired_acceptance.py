@@ -24,7 +24,10 @@ from simulator_entitlements import read_simulator_entitlements
 ROOT = Path(__file__).resolve().parents[2]
 EVIDENCE = Path(os.environ["SPLIT_EVIDENCE"]) / "paired-product"
 GROUP = "group.com.itorah.chavrusachat"
-TEST_SCOPE = os.environ.get("PAIRED_TEST_SCOPE", "cross_product")
+REQUESTED_TEST_SCOPE = os.environ.get("PAIRED_TEST_SCOPE", "cross_product")
+RUN_EXTRA26 = REQUESTED_TEST_SCOPE == "miniapp_complete_with_extra26"
+TEST_SCOPE = "miniapp_complete" if RUN_EXTRA26 else REQUESTED_TEST_SCOPE
+EXTRA26_ORIGINAL54_DEADLINE = None
 TEST_PLANS = {
     "miniapp_authoring": ([
         "AI_HLYTests/PendingFirstTurnTests/importedMiniAppRepairDispatchesOnceAndPreservesDraftAndSettings()",
@@ -136,6 +139,8 @@ def select_paired_runtime(runtimes, sdk, requested=None):
 
 
 def command(argv, name, timeout=60, allow_failure=False):
+    if EXTRA26_ORIGINAL54_DEADLINE is not None:
+        timeout = EXTRA26_ORIGINAL54_DEADLINE.limit(name, timeout)
     started = time.monotonic()
     log_path = EVIDENCE / name
     identity = {"command_id": uuid.uuid4().hex, "argv": argv, "log": name,
@@ -877,6 +882,7 @@ def finish_shortcut_observer(observer, state):
 
 
 def main():
+    global EXTRA26_ORIGINAL54_DEADLINE
     EVIDENCE.mkdir(parents=True, exist_ok=False)
     state = {"status": "INFRA_ERROR", "ui": "NOT_RUN", "build": "NOT_RUN",
         "mini_build": "NOT_RUN", "ai_build": "NOT_RUN",
@@ -890,12 +896,20 @@ def main():
     system_input_producer = None
     studio_input_producer = None
     system_resources = None
+    extra26_inputs = None
+    extra26_products = None
     try:
+        if RUN_EXTRA26:
+            from paired_extra26 import Original54Deadline
+            EXTRA26_ORIGINAL54_DEADLINE = Original54Deadline(EVIDENCE)
         if TEST_SCOPE not in TEST_PLANS:
             raise RuntimeError("Unknown original-product acceptance scope")
         selectors, expected_tests = TEST_PLANS[TEST_SCOPE]
         state["test_scope"] = TEST_SCOPE
         state["selected_tests"] = selectors
+        if RUN_EXTRA26:
+            state["requested_test_scope"] = REQUESTED_TEST_SCOPE
+            state["continuation_scope"] = "Original paired54, then the unchanged original extra26 on these same products"
         if TEST_SCOPE == "miniapp_shortcuts_os":
             state["scope"] = "Four additional real Shortcuts cases: current installed action, saved background/foreground preference, typed JSON and built-in result chain"
             state["model_boundary"] = "No model response fixture; original authoring SDK, importer, system UI, invocation executor and private/durable results"
@@ -989,6 +1003,9 @@ def main():
         # Preserve XCTest results/attachments without a second, 600-second
         # simulator sysdiagnose after a failure. Targeted capture remains below.
         test_base = base + ["-collect-test-diagnostics", "never"]
+        if RUN_EXTRA26:
+            from paired_extra26 import capture_inputs
+            extra26_inputs = capture_inputs(ROOT, EVIDENCE, state, command)
         state["status"] = "BUILD_FAILED"
         # The observed cold first-product build was still compiling after 40 min.
         # Allow 60 min for that build; first-launch, routing and UI deadlines stay unchanged.
@@ -1069,6 +1086,9 @@ def main():
         if len(set(containers.values())) != 1:
             raise RuntimeError("The installed products do not share the OS-provided App Group container")
         state["app_group"] = {"status": "EXECUTED_PASS", "containers": containers}
+        if RUN_EXTRA26:
+            from paired_extra26 import capture_products
+            extra26_products = capture_products(derived, EVIDENCE, state)
         if TEST_SCOPE == "miniapp_widget_recovery_os":
             _, raw = command(["xcrun", "simctl", "get_app_container", simulator,
                 "com.itorah.hanlinminiapps", "data"], "widget-recovery-mini-data-container.txt")
@@ -1248,7 +1268,19 @@ def main():
             raise RuntimeError("The actual Files import case did not receive its independently bound ordinary source input")
         if state["status"] != "EXECUTED_PASS":
             raise RuntimeError("Original native acceptance did not pass every case in the recorded scope")
+        if RUN_EXTRA26:
+            from paired_extra26 import continue_after_paired
+            state["status"] = "EXTRA26_NOT_RUN"
+            state["original54_job_budget"] = EXTRA26_ORIGINAL54_DEADLINE.complete()
+            EXTRA26_ORIGINAL54_DEADLINE = None
+            original54 = json.loads(json.dumps(state))
+            original54["status"] = "EXECUTED_PASS"
+            state["original54_status"] = "EXECUTED_PASS"
+            state["extra26"] = continue_after_paired(
+                ROOT, EVIDENCE, derived, original54, extra26_inputs, extra26_products, command)
+            state["status"] = "EXECUTED_PASS"
     except Exception as error:
+        EXTRA26_ORIGINAL54_DEADLINE = None  # Failure-only diagnostics cannot launch continuation.
         state["error"] = str(error)
         print(str(error), file=sys.stderr)
         if simulator:
