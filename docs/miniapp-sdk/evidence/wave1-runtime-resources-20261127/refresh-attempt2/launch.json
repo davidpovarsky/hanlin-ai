@@ -1,0 +1,13 @@
+{
+  "sourceCommit": "7ee863657323f314f25a6e58bca0aa9ee669e51b",
+  "command": [
+    "bash",
+    "Scripts/Runtime/prepare-runtime-host.sh"
+  ],
+  "nodePath": "/Users/m1/builds/hanlin-two-wave-root-20261126/tools/node-v24.5.0-darwin-arm64/bin/node",
+  "pythonVersion": "Python 3.12.16",
+  "pythonPath": "/opt/homebrew/opt/python@3.12/libexec/bin/python3",
+  "runnerTemp": "/Users/m1/builds/otzaria-wave1-miniapps-runtime-resources-20261127/tmp",
+  "initialFreeBytes": 5646245888,
+  "retryReason": "Original reachability script requires Python >=3.10; select retained3.12, no validator modification"
+}
