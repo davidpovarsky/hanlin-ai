@@ -360,6 +360,7 @@ struct MasterScenarioSemanticAcceptanceTests {
         try Data("GGUF_FIXTURE".utf8).write(to: modelFileURL, options: .atomic)
         defer { try? FileManager.default.removeItem(at: modelFileURL) }
 
+        let originalConversation = try OriginalConversationRequestFixture(context: context)
         let apiManager = APIManager(context: context)
         let groupID = UUID()
         let runID = UUID()
@@ -383,6 +384,7 @@ struct MasterScenarioSemanticAcceptanceTests {
         #expect(coordinator.run.status == .running)
         #expect(autoFollow.state.isUserInteracting)
 
+        let originalRequest1 = try originalConversation.request(groupID: groupID, runID: runID)
         let stream = try await apiManager.sendStreamRequest(
             messages: [
                 RequestMessage(
@@ -398,7 +400,7 @@ struct MasterScenarioSemanticAcceptanceTests {
             ifSearch: false,
             ifKnowledge: false,
             ifToolUse: false,
-            assistantToolScope: .nativeOnly,
+            assistantToolScope: originalConversation.nativeOnlyScope,
             ifThink: false,
             ifAudio: false,
             ifPlanning: false,
@@ -412,7 +414,8 @@ struct MasterScenarioSemanticAcceptanceTests {
             selectedPromptsContent: nil,
             systemMessage: "You are a helpful assistant.",
             selectedImageSize: "1024x1024",
-            imageReversePrompt: ""
+            imageReversePrompt: "",
+            agentSDKRequest: originalRequest1
         )
 
         #expect(AgentRunLifecycleCoordinator.shared.isCurrentRun(runID))
@@ -921,6 +924,7 @@ struct MasterScenarioSemanticAcceptanceTests {
         defer { try? FileManager.default.removeItem(at: modelFileURL) }
 
         // 1. Verify full streaming + reasoning + im_end stop handling through APIManager.sendStreamRequest & LocalLLMStreamingAdapter
+        let originalConversation = try OriginalConversationRequestFixture(context: context)
         let apiManager = APIManager(context: context)
         var stopCountRun1 = 0
         apiManager.localLLMDriverOverride = { _, _, _, _, _, _ in
@@ -936,15 +940,18 @@ struct MasterScenarioSemanticAcceptanceTests {
             )
         }
 
+        let requestGroupID2 = UUID()
+        let requestRunID2 = UUID()
+        let originalRequest2 = try originalConversation.request(groupID: requestGroupID2, runID: requestRunID2)
         let stream1 = try await apiManager.sendStreamRequest(
             messages: [RequestMessage(role: "user", text: "Hello local GGUF", modelName: modelName, modelDisplayName: "Local GGUF Fixture")],
             modelName: modelName,
-            groupID: UUID(),
-            runID: UUID(),
+            groupID: requestGroupID2,
+            runID: requestRunID2,
             ifSearch: false,
             ifKnowledge: false,
             ifToolUse: false,
-            assistantToolScope: .nativeOnly,
+            assistantToolScope: originalConversation.nativeOnlyScope,
             ifThink: true,
             ifAudio: false,
             ifPlanning: false,
@@ -958,7 +965,8 @@ struct MasterScenarioSemanticAcceptanceTests {
             selectedPromptsContent: nil,
             systemMessage: "Local system prompt",
             selectedImageSize: "1024x1024",
-            imageReversePrompt: ""
+            imageReversePrompt: "",
+            agentSDKRequest: originalRequest2
         )
 
         var reasoningOutput = ""
@@ -976,15 +984,18 @@ struct MasterScenarioSemanticAcceptanceTests {
         apiManager.localLLMDriverOverride = { _, _, _, _, _, _ in
             controller.makeDriver {}
         }
+        let requestGroupID3 = UUID()
+        let requestRunID3 = UUID()
+        let originalRequest3 = try originalConversation.request(groupID: requestGroupID3, runID: requestRunID3)
         let stream2 = try await apiManager.sendStreamRequest(
             messages: [RequestMessage(role: "user", text: "Cancel me", modelName: modelName, modelDisplayName: "Local GGUF Fixture")],
             modelName: modelName,
-            groupID: UUID(),
-            runID: UUID(),
+            groupID: requestGroupID3,
+            runID: requestRunID3,
             ifSearch: false,
             ifKnowledge: false,
             ifToolUse: false,
-            assistantToolScope: .nativeOnly,
+            assistantToolScope: originalConversation.nativeOnlyScope,
             ifThink: false,
             ifAudio: false,
             ifPlanning: false,
@@ -998,7 +1009,8 @@ struct MasterScenarioSemanticAcceptanceTests {
             selectedPromptsContent: nil,
             systemMessage: "Local system prompt",
             selectedImageSize: "1024x1024",
-            imageReversePrompt: ""
+            imageReversePrompt: "",
+            agentSDKRequest: originalRequest3
         )
 
         var cancelledChunks: [String] = []
@@ -1769,6 +1781,7 @@ struct MasterScenarioSemanticAcceptanceTests {
         context.insert(UserInfo())
         try context.save()
 
+        let originalConversation = try OriginalConversationRequestFixture(context: context)
         let apiManager = APIManager(context: context)
         let controller = MockLocalLLMController()
         apiManager.localLLMDriverOverride = { _, _, _, _, _, _ in
@@ -1776,15 +1789,18 @@ struct MasterScenarioSemanticAcceptanceTests {
         }
 
         // Run 1: Start and cancel mid-stream
+        let requestGroupID4 = UUID()
+        let requestRunID4 = UUID()
+        let originalRequest4 = try originalConversation.request(groupID: requestGroupID4, runID: requestRunID4)
         let stream1 = try await apiManager.sendStreamRequest(
             messages: [RequestMessage(role: "user", text: "Long run to cancel", modelName: modelName, modelDisplayName: "Final 11 Fixture")],
             modelName: modelName,
-            groupID: UUID(),
-            runID: UUID(),
+            groupID: requestGroupID4,
+            runID: requestRunID4,
             ifSearch: false,
             ifKnowledge: false,
             ifToolUse: false,
-            assistantToolScope: .nativeOnly,
+            assistantToolScope: originalConversation.nativeOnlyScope,
             ifThink: false,
             ifAudio: false,
             ifPlanning: false,
@@ -1798,7 +1814,8 @@ struct MasterScenarioSemanticAcceptanceTests {
             selectedPromptsContent: nil,
             systemMessage: "",
             selectedImageSize: "1024x1024",
-            imageReversePrompt: ""
+            imageReversePrompt: "",
+            agentSDKRequest: originalRequest4
         )
 
         for try await chunk in stream1 {
@@ -1823,15 +1840,18 @@ struct MasterScenarioSemanticAcceptanceTests {
             )
         }
 
+        let requestGroupID5 = UUID()
+        let requestRunID5 = UUID()
+        let originalRequest5 = try originalConversation.request(groupID: requestGroupID5, runID: requestRunID5)
         let stream2 = try await apiManager.sendStreamRequest(
             messages: [RequestMessage(role: "user", text: "Immediate clean run", modelName: modelName, modelDisplayName: "Final 11 Fixture")],
             modelName: modelName,
-            groupID: UUID(),
-            runID: UUID(),
+            groupID: requestGroupID5,
+            runID: requestRunID5,
             ifSearch: false,
             ifKnowledge: false,
             ifToolUse: false,
-            assistantToolScope: .nativeOnly,
+            assistantToolScope: originalConversation.nativeOnlyScope,
             ifThink: false,
             ifAudio: false,
             ifPlanning: false,
@@ -1845,7 +1865,8 @@ struct MasterScenarioSemanticAcceptanceTests {
             selectedPromptsContent: nil,
             systemMessage: "",
             selectedImageSize: "1024x1024",
-            imageReversePrompt: ""
+            imageReversePrompt: "",
+            agentSDKRequest: originalRequest5
         )
 
         var run2Output = ""

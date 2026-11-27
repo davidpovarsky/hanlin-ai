@@ -168,6 +168,7 @@ struct ProductionProviderConformanceTests {
         var requests: [Data]
         var diagnostics: AgentDiagnosticsSession
         var container: ModelContainer?
+        var originalConversation: OriginalConversationRequestFixture
     }
 
     private static func makeSequentialToolChainValidators(
@@ -266,11 +267,15 @@ struct ProductionProviderConformanceTests {
         let catalog = NativeToolCatalog.shared
         catalog.ensureBuiltinsRegistered()
 
+        let originalConversation = try OriginalConversationRequestFixture(context: context)
         let manager = APIManager(
             context: context,
             chatEngineFactory: { HanlinChatEngine(sessionConfiguration: configuration) }
         )
 
+        let requestGroupID1 = UUID()
+        let requestRunID1 = UUID()
+        let originalRequest1 = try originalConversation.request(groupID: requestGroupID1, runID: requestRunID1)
         let stream = try await manager.sendStreamRequest(
             messages: [RequestMessage(
                 role: "user",
@@ -279,12 +284,12 @@ struct ProductionProviderConformanceTests {
                 modelDisplayName: "Conformance Model"
             )],
             modelName: effectiveModel,
-            groupID: UUID(),
-            runID: UUID(),
+            groupID: requestGroupID1,
+            runID: requestRunID1,
             ifSearch: false,
             ifKnowledge: false,
             ifToolUse: true,
-            assistantToolScope: .nativeOnly,
+            assistantToolScope: originalConversation.nativeOnlyScope,
             ifThink: effectiveThink,
             ifAudio: false,
             ifPlanning: false,
@@ -298,7 +303,8 @@ struct ProductionProviderConformanceTests {
             selectedPromptsContent: nil,
             systemMessage: "Conformance test.",
             selectedImageSize: "1024x1024",
-            imageReversePrompt: ""
+            imageReversePrompt: "",
+            agentSDKRequest: originalRequest1
         )
 
         var answer = ""
@@ -318,7 +324,8 @@ struct ProductionProviderConformanceTests {
             events: events,
             requests: ProductionConformanceURLProtocol.allBodies(),
             diagnostics: recordedDiagnostics,
-            container: container
+            container: container,
+            originalConversation: originalConversation
         )
         return (convResult, manager)
     }
@@ -704,22 +711,26 @@ struct ProductionProviderConformanceTests {
         context.insert(APIKeys(name: "K1", company: "TEST", key: "key", requestURL: ProductionConformanceFixtures.endpointURL, apiType: .openAI))
         try context.save()
 
+        let originalConversation = try OriginalConversationRequestFixture(context: context)
         let manager = APIManager(
             context: context,
             chatEngineFactory: { HanlinChatEngine(sessionConfiguration: configuration) }
         )
 
+        let requestGroupID2 = UUID()
+        let requestRunID2 = UUID()
+        let originalRequest2 = try originalConversation.request(groupID: requestGroupID2, runID: requestRunID2)
         var didThrow = false
         do {
             let stream = try await manager.sendStreamRequest(
                 messages: [RequestMessage(role: "user", text: "Hi", modelName: "m1", modelDisplayName: "M1")],
                 modelName: "m1",
-                groupID: UUID(),
-                runID: UUID(),
+                groupID: requestGroupID2,
+                runID: requestRunID2,
                 ifSearch: false,
                 ifKnowledge: false,
                 ifToolUse: true,
-                assistantToolScope: .nativeOnly,
+                assistantToolScope: originalConversation.nativeOnlyScope,
                 ifThink: false,
                 ifAudio: false,
                 ifPlanning: false,
@@ -733,7 +744,8 @@ struct ProductionProviderConformanceTests {
                 selectedPromptsContent: nil,
                 systemMessage: "",
                 selectedImageSize: "1024x1024",
-                imageReversePrompt: ""
+                imageReversePrompt: "",
+                agentSDKRequest: originalRequest2
             )
             for try await _ in stream {}
         } catch {
@@ -794,23 +806,27 @@ struct ProductionProviderConformanceTests {
         context.insert(APIKeys(name: "KCancel", company: "TEST", key: "key", requestURL: ProductionConformanceFixtures.endpointURL, apiType: .openAI))
         try context.save()
 
+        let originalConversation = try OriginalConversationRequestFixture(context: context)
         let manager = APIManager(
             context: context,
             chatEngineFactory: { HanlinChatEngine(sessionConfiguration: configuration) }
         )
 
+        let requestGroupID3 = UUID()
+        let requestRunID3 = UUID()
+        let originalRequest3 = try originalConversation.request(groupID: requestGroupID3, runID: requestRunID3)
         let runTask = Task { @MainActor () -> (String, Error?) in
             var text = ""
             do {
                 let stream = try await manager.sendStreamRequest(
                     messages: [RequestMessage(role: "user", text: "Cancel test", modelName: "m-cancel", modelDisplayName: "MCancel")],
                     modelName: "m-cancel",
-                    groupID: UUID(),
-                    runID: UUID(),
+                    groupID: requestGroupID3,
+                    runID: requestRunID3,
                     ifSearch: false,
                     ifKnowledge: false,
                     ifToolUse: true,
-                    assistantToolScope: .nativeOnly,
+                    assistantToolScope: originalConversation.nativeOnlyScope,
                     ifThink: false,
                     ifAudio: false,
                     ifPlanning: false,
@@ -824,7 +840,8 @@ struct ProductionProviderConformanceTests {
                     selectedPromptsContent: nil,
                     systemMessage: "",
                     selectedImageSize: "1024x1024",
-                    imageReversePrompt: ""
+                    imageReversePrompt: "",
+                    agentSDKRequest: originalRequest3
                 )
                 for try await item in stream { text += item.content ?? "" }
                 return (text, nil)
@@ -889,23 +906,27 @@ struct ProductionProviderConformanceTests {
         context.insert(APIKeys(name: "KDel", company: "TEST", key: "key", requestURL: ProductionConformanceFixtures.endpointURL, apiType: .openAI))
         try context.save()
 
+        let originalConversation = try OriginalConversationRequestFixture(context: context)
         let manager = APIManager(
             context: context,
             chatEngineFactory: { HanlinChatEngine(sessionConfiguration: configuration) }
         )
 
+        let requestGroupID4 = UUID()
+        let requestRunID4 = UUID()
+        let originalRequest4 = try originalConversation.request(groupID: requestGroupID4, runID: requestRunID4)
         let runTask = Task { @MainActor () -> (String, Error?) in
             var text = ""
             do {
                 let stream = try await manager.sendStreamRequest(
                     messages: [RequestMessage(role: "user", text: "Run delayed", modelName: "m-del", modelDisplayName: "MDel")],
                     modelName: "m-del",
-                    groupID: UUID(),
-                    runID: UUID(),
+                    groupID: requestGroupID4,
+                    runID: requestRunID4,
                     ifSearch: false,
                     ifKnowledge: false,
                     ifToolUse: true,
-                    assistantToolScope: .nativeOnly,
+                    assistantToolScope: originalConversation.nativeOnlyScope,
                     ifThink: false,
                     ifAudio: false,
                     ifPlanning: false,
@@ -919,7 +940,8 @@ struct ProductionProviderConformanceTests {
                     selectedPromptsContent: nil,
                     systemMessage: "",
                     selectedImageSize: "1024x1024",
-                    imageReversePrompt: ""
+                    imageReversePrompt: "",
+                    agentSDKRequest: originalRequest4
                 )
                 for try await item in stream { text += item.content ?? "" }
                 return (text, nil)
@@ -962,24 +984,27 @@ struct ProductionProviderConformanceTests {
         context.insert(APIKeys(name: "KOverlap", company: "TEST", key: "key", requestURL: ProductionConformanceFixtures.endpointURL, apiType: .openAI))
         try context.save()
 
+        let originalConversation = try OriginalConversationRequestFixture(context: context)
         let manager = APIManager(
             context: context,
             chatEngineFactory: { HanlinChatEngine(sessionConfiguration: configuration) }
         )
 
         let runAID = UUID()
+        let requestGroupID5 = UUID()
+        let originalRequest5 = try originalConversation.request(groupID: requestGroupID5, runID: runAID)
         let runATask = Task { @MainActor () -> (String, Error?) in
             var text = ""
             do {
                 let stream = try await manager.sendStreamRequest(
                     messages: [RequestMessage(role: "user", text: "Start A", modelName: "m-overlap", modelDisplayName: "MOverlap")],
                     modelName: "m-overlap",
-                    groupID: UUID(),
+                    groupID: requestGroupID5,
                     runID: runAID,
                     ifSearch: false,
                     ifKnowledge: false,
                     ifToolUse: true,
-                    assistantToolScope: .nativeOnly,
+                    assistantToolScope: originalConversation.nativeOnlyScope,
                     ifThink: false,
                     ifAudio: false,
                     ifPlanning: false,
@@ -993,7 +1018,8 @@ struct ProductionProviderConformanceTests {
                     selectedPromptsContent: nil,
                     systemMessage: "",
                     selectedImageSize: "1024x1024",
-                    imageReversePrompt: ""
+                    imageReversePrompt: "",
+                    agentSDKRequest: originalRequest5
                 )
                 for try await item in stream { text += item.content ?? "" }
                 return (text, nil)
@@ -1010,15 +1036,18 @@ struct ProductionProviderConformanceTests {
             ProductionConformanceFixtures.sseFinalAnswer("RUN_B_FINAL_49")
         ])
 
+        let requestGroupID6 = UUID()
+        let requestRunID6 = UUID()
+        let originalRequest6 = try originalConversation.request(groupID: requestGroupID6, runID: requestRunID6)
         let streamB = try await manager.sendStreamRequest(
             messages: [RequestMessage(role: "user", text: "Start B", modelName: "m-overlap", modelDisplayName: "MOverlap")],
             modelName: "m-overlap",
-            groupID: UUID(),
-            runID: UUID(),
+            groupID: requestGroupID6,
+            runID: requestRunID6,
             ifSearch: false,
             ifKnowledge: false,
             ifToolUse: true,
-            assistantToolScope: .nativeOnly,
+            assistantToolScope: originalConversation.nativeOnlyScope,
             ifThink: false,
             ifAudio: false,
             ifPlanning: false,
@@ -1032,7 +1061,8 @@ struct ProductionProviderConformanceTests {
             selectedPromptsContent: nil,
             systemMessage: "",
             selectedImageSize: "1024x1024",
-            imageReversePrompt: ""
+            imageReversePrompt: "",
+            agentSDKRequest: originalRequest6
         )
 
         var runBText = ""
@@ -1092,6 +1122,9 @@ struct ProductionProviderConformanceTests {
             ]
         )
 
+        let requestGroupID7 = UUID()
+        let requestRunID7 = UUID()
+        let originalRequest7 = try res1.originalConversation.request(groupID: requestGroupID7, runID: requestRunID7)
         let stream2 = try await manager.sendStreamRequest(
             messages: [
                 RequestMessage(role: "user", text: "Calculate 100 + 200", modelName: "conformance-model", modelDisplayName: "Conformance Model"),
@@ -1099,12 +1132,12 @@ struct ProductionProviderConformanceTests {
                 RequestMessage(role: "user", text: "What was the previous result?", modelName: "conformance-model", modelDisplayName: "Conformance Model")
             ],
             modelName: "conformance-model",
-            groupID: UUID(),
-            runID: UUID(),
+            groupID: requestGroupID7,
+            runID: requestRunID7,
             ifSearch: false,
             ifKnowledge: false,
             ifToolUse: true,
-            assistantToolScope: .nativeOnly,
+            assistantToolScope: res1.originalConversation.nativeOnlyScope,
             ifThink: false,
             ifAudio: false,
             ifPlanning: false,
@@ -1118,7 +1151,8 @@ struct ProductionProviderConformanceTests {
             selectedPromptsContent: nil,
             systemMessage: "",
             selectedImageSize: "1024x1024",
-            imageReversePrompt: ""
+            imageReversePrompt: "",
+            agentSDKRequest: originalRequest7
         )
 
         var ans2 = ""

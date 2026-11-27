@@ -4,6 +4,46 @@ import SwiftData
 import Testing
 @testable import AI_Hanlin
 
+/// The direct APIManager fixtures use the same persisted conversation and response-row
+/// identity as the production send path. Reusing this fixture preserves one scene and
+/// conversation across cancellation, supersession and subsequent turns on that manager.
+@MainActor
+final class OriginalConversationRequestFixture {
+    private let context: ModelContext
+    private let conversation: ChatRecords
+    private let conversationID: UUID
+    private let sceneID = UUID()
+
+    init(context: ModelContext) throws {
+        self.context = context
+        let conversationID = UUID()
+        self.conversationID = conversationID
+        conversation = ChatRecords(id: conversationID, name: "Original acceptance conversation", type: "chat")
+        context.insert(conversation)
+        try context.save()
+    }
+
+    var nativeOnlyScope: AssistantToolRequestScope {
+        var scope = AssistantToolRequestScope.nativeOnly
+        scope.chatID = conversationID
+        return scope
+    }
+
+    func request(groupID: UUID, runID: UUID) throws -> HanlinAppAgentSessionOwner.Request {
+        let assistant = ChatMessages(role: "assistant", text: "", groupID: groupID, record: conversation)
+        context.insert(assistant)
+        try context.save()
+        _ = try HanlinAppConversationStore.requireOriginalConversation(context: context,
+            conversation: conversation, conversationID: conversationID, temporary: false)
+        let rowID = assistant.id
+        let rows = try context.fetch(FetchDescriptor<ChatMessages>(predicate: #Predicate { $0.id == rowID }))
+        try #require(rows.count == 1 && rows.first === assistant)
+        try #require(assistant.record === conversation && assistant.groupID == groupID)
+        return .init(conversation: conversation, conversationID: conversationID, sceneID: sceneID,
+            rowID: rowID, uiRunID: runID, temporary: false, interaction: nil)
+    }
+}
+
 private final class ScriptedAgentURLProtocol: URLProtocol, @unchecked Sendable {
     private static let lock = NSLock()
     private nonisolated(unsafe) static var responses: [Data] = []
@@ -412,11 +452,15 @@ struct AgentRuntimeConversationAcceptanceTests {
         let session = AssistantCapabilitySession()
         session.exposeTools(aliases: [delayedTool.name])
 
+        let originalConversation = try OriginalConversationRequestFixture(context: context)
         let manager = APIManager(
             context: context,
             chatEngineFactory: { HanlinChatEngine(sessionConfiguration: configuration) }
         )
 
+        let requestGroupID1 = UUID()
+        let requestRunID1 = UUID()
+        let originalRequest1 = try originalConversation.request(groupID: requestGroupID1, runID: requestRunID1)
         let runTask = Task { @MainActor () -> (String, [AgentEvent], Error?) in
             var text = ""
             var evts: [AgentEvent] = []
@@ -424,12 +468,12 @@ struct AgentRuntimeConversationAcceptanceTests {
                 let stream = try await manager.sendStreamRequest(
                     messages: [RequestMessage(role: "user", text: "Run delayed tool.", modelName: "acceptance-model", modelDisplayName: "Acceptance Model")],
                     modelName: "acceptance-model",
-                    groupID: UUID(),
-                    runID: UUID(),
+                    groupID: requestGroupID1,
+                    runID: requestRunID1,
                     ifSearch: false,
                     ifKnowledge: false,
                     ifToolUse: true,
-                    assistantToolScope: .nativeOnly,
+                    assistantToolScope: originalConversation.nativeOnlyScope,
                     ifThink: false,
                     ifAudio: false,
                     ifPlanning: false,
@@ -443,7 +487,8 @@ struct AgentRuntimeConversationAcceptanceTests {
                     selectedPromptsContent: nil,
                     systemMessage: "Deterministic acceptance fixture.",
                     selectedImageSize: "1024x1024",
-                    imageReversePrompt: ""
+                    imageReversePrompt: "",
+                    agentSDKRequest: originalRequest1
                 )
                 for try await item in stream {
                     text += item.content ?? ""
@@ -512,24 +557,27 @@ struct AgentRuntimeConversationAcceptanceTests {
         let sessionA = AssistantCapabilitySession()
         sessionA.exposeTools(aliases: [delayedTool.name])
 
+        let originalConversation = try OriginalConversationRequestFixture(context: context)
         let manager = APIManager(
             context: context,
             chatEngineFactory: { HanlinChatEngine(sessionConfiguration: configuration) }
         )
 
         let runAID = UUID()
+        let requestGroupID2 = UUID()
+        let originalRequest2 = try originalConversation.request(groupID: requestGroupID2, runID: runAID)
         let runATask = Task { @MainActor () -> (String, Error?) in
             var text = ""
             do {
                 let stream = try await manager.sendStreamRequest(
                     messages: [RequestMessage(role: "user", text: "Start Run A", modelName: "acceptance-model", modelDisplayName: "Acceptance Model")],
                     modelName: "acceptance-model",
-                    groupID: UUID(),
+                    groupID: requestGroupID2,
                     runID: runAID,
                     ifSearch: false,
                     ifKnowledge: false,
                     ifToolUse: true,
-                    assistantToolScope: .nativeOnly,
+                    assistantToolScope: originalConversation.nativeOnlyScope,
                     ifThink: false,
                     ifAudio: false,
                     ifPlanning: false,
@@ -543,7 +591,8 @@ struct AgentRuntimeConversationAcceptanceTests {
                     selectedPromptsContent: nil,
                     systemMessage: "Deterministic acceptance fixture.",
                     selectedImageSize: "1024x1024",
-                    imageReversePrompt: ""
+                    imageReversePrompt: "",
+                    agentSDKRequest: originalRequest2
                 )
                 for try await item in stream {
                     text += item.content ?? ""
@@ -566,15 +615,17 @@ struct AgentRuntimeConversationAcceptanceTests {
 
         let runBID = UUID()
         var runBText = ""
+        let requestGroupID3 = UUID()
+        let originalRequest3 = try originalConversation.request(groupID: requestGroupID3, runID: runBID)
         let streamB = try await manager.sendStreamRequest(
             messages: [RequestMessage(role: "user", text: "Start Run B", modelName: "acceptance-model", modelDisplayName: "Acceptance Model")],
             modelName: "acceptance-model",
-            groupID: UUID(),
+            groupID: requestGroupID3,
             runID: runBID,
             ifSearch: false,
             ifKnowledge: false,
             ifToolUse: true,
-            assistantToolScope: .nativeOnly,
+            assistantToolScope: originalConversation.nativeOnlyScope,
             ifThink: false,
             ifAudio: false,
             ifPlanning: false,
@@ -588,7 +639,8 @@ struct AgentRuntimeConversationAcceptanceTests {
             selectedPromptsContent: nil,
             systemMessage: "Deterministic acceptance fixture.",
             selectedImageSize: "1024x1024",
-            imageReversePrompt: ""
+            imageReversePrompt: "",
+            agentSDKRequest: originalRequest3
         )
         for try await item in streamB {
             runBText += item.content ?? ""
@@ -831,11 +883,15 @@ struct AgentRuntimeConversationAcceptanceTests {
             }
         }
 
+        let originalConversation = try OriginalConversationRequestFixture(context: context)
         let manager = APIManager(
             context: context,
             chatEngineFactory: { HanlinChatEngine(sessionConfiguration: configuration) }
         )
         do {
+            let requestGroupID4 = UUID()
+            let requestRunID4 = UUID()
+            let originalRequest4 = try originalConversation.request(groupID: requestGroupID4, runID: requestRunID4)
             let stream = try await manager.sendStreamRequest(
                 messages: [RequestMessage(
                     role: "user",
@@ -844,12 +900,12 @@ struct AgentRuntimeConversationAcceptanceTests {
                     modelDisplayName: "Acceptance Model"
                 )],
                 modelName: "acceptance-model",
-                groupID: UUID(),
-                runID: UUID(),
+                groupID: requestGroupID4,
+                runID: requestRunID4,
                 ifSearch: false,
                 ifKnowledge: false,
                 ifToolUse: true,
-                assistantToolScope: .nativeOnly,
+                assistantToolScope: originalConversation.nativeOnlyScope,
                 ifThink: false,
                 ifAudio: false,
                 ifPlanning: false,
@@ -863,7 +919,8 @@ struct AgentRuntimeConversationAcceptanceTests {
                 selectedPromptsContent: nil,
                 systemMessage: "Deterministic acceptance fixture.",
                 selectedImageSize: "1024x1024",
-                imageReversePrompt: ""
+                imageReversePrompt: "",
+                agentSDKRequest: originalRequest4
             )
 
             var answer = ""
