@@ -1,0 +1,428 @@
+{
+  "schema": "pinkha-independent-latest-hanlin-scope-review-v1",
+  "reviewer": "/root/miniapps_otzaria",
+  "sealedAtUTC": "2026-11-27T06:35:45.893093+00:00",
+  "status": "LATEST_SOURCE_CLASSIFIED_EXACT_SELECTIVE_LOCAL_PROPOSAL_READY_NOT_RUNTIME_ACCEPTANCE",
+  "decision": "Keep the complete original20a union as the source base. Local5ce4 adds no production SDK package changes. Published3657 is the tree-identical G19 source but cannot be a wholesale replacement; it restores a synthetic NativeScript action handler and loses required existing capabilities. A four-file local additive proposal retains only three genuine shared scrolling updates and one localization row.",
+  "local5ce4": {
+    "commit": "5ce4d1263c48e24e3d8858a10b3cb9125f2c99b1",
+    "tree": "ff1c78021d7c9bea77b29b467ecadcada60d1d18",
+    "branch": "codex/hanlin-miniapps-studio-os-20261127",
+    "worktree": "/mnt/development/projects/worktrees/hanlin-miniapps-widget-recovery-os-20261127",
+    "ancestry": [
+      "866d2d3c60525e32eae27564869e6dba024e625c",
+      "6ed918c9ffe94fddb1992b4b338564db4c109f4e",
+      "5ce4d1263c48e24e3d8858a10b3cb9125f2c99b1"
+    ],
+    "changesBeyond866": [
+      "M\tAI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+      "M\tScripts/ProductSplit/Tests/test_shortcut_surface_observer.py",
+      "M\tScripts/ProductSplit/observe_shortcut_surfaces.py",
+      "M\tScripts/ProductSplit/run_paired_acceptance.py",
+      "A\tdocs/two-wave-integration/20261127/shortcut-concurrency-companion-source-validation.json",
+      "A\tdocs/two-wave-integration/20261127/widget-recovery-os-source-validation.json"
+    ],
+    "allSixPackagesEqual866": true,
+    "publication": "Exact GitHub commit lookup returned422 at this intake. The local refs-containing result contains only the observed local owner branch. This is no proof that the owner never published elsewhere.",
+    "nativeAndOSAcceptance": "NOT_RUN in both exact owner source handoffs.",
+    "portableControls": {
+      "scope": "Embedded original widget-recovery source handoff20 portable methods; no rerun. Embedded raw stdout/stderr hashes independently verified. Original source8ec36373, not relabeled as a new native receipt.",
+      "receiptSHA256": "546d2e46ae73b8f5ac11fa4e8ccc5bcc0fd389b9da9372bd6cb899c85cf4547b",
+      "stderrSHA256": "e39727f14c35a011282fb44c77e27462b71347cbfa3bd9d26b20d70e7a7de2a8",
+      "assertedResult": {
+        "tests": 20,
+        "failures": 0,
+        "errors": 0,
+        "skips": 0
+      }
+    },
+    "preservation": {
+      "headUnchanged": true,
+      "indexMetadataUnchanged": true,
+      "optionalGitLocksDisabled": true,
+      "untrackedNoteBeforeEqualsAfter": {
+        "path": "/mnt/development/projects/worktrees/hanlin-miniapps-widget-recovery-os-20261127/docs/two-wave-integration/20261127/STUDIO_OS_ACCEPTANCE_GAPS.md",
+        "bytes": 9881,
+        "sha256": "5a2e095484079c3757ec5558cfdc827e96db6d6120222349e9b6a354a445f35d",
+        "mode": 420,
+        "mtimeNS": 1795755519566863600
+      }
+    }
+  },
+  "publishedG18G19": {
+    "G18Local": "0e51194ab93f002da55bb6f568f3d063bba017c4",
+    "G18Published": "354e35c3d15c4a3ca8edb57d6b02a18c9d998ca5",
+    "G18IdenticalTree": "7f1febb55b40f05209a441c129b6bb58a6e89680",
+    "G19Local": "cb249e888c0d3895730a8038332fb2d0212dabb1",
+    "G19Published": "3657b52ea9e72b8dc42819177dc8e1d865e8a6d3",
+    "G19IdenticalTree": "33c806257b89a5150ba071886ccf653125e3d2af",
+    "publicationVerifiedBy": "Actual GitHub commit objects plus original Oracle Git tree identities; exact old local SHAs still return422 in GitHub lookup.",
+    "mergeBaseWith20a": "ca6310219ca104d5db44c7fbbb64766eb6d78c19",
+    "leftOnlyCommits": 743,
+    "rightOnlyCommits": 26,
+    "sixPackageTrees": [
+      {
+        "package": "HanlinAgentSDK",
+        "union20aTree": "bbe6a0e4387f3f33d6592e24c1927182a1aceb22",
+        "local5ce4Tree": "498032fa42a1bccbbbfcd0335ee61533af3ad086",
+        "published866Tree": "498032fa42a1bccbbbfcd0335ee61533af3ad086",
+        "publishedG19Tree": "50a765544634e39e201287d17fb0735b9f3f54ac",
+        "5ce4Equals866": true
+      },
+      {
+        "package": "HanlinPresentationSDK",
+        "union20aTree": "3096459e793e32293ba145cb1f595181ad0d38a5",
+        "local5ce4Tree": "711b6c97867dd928afd5b11035d5d5a42e00b004",
+        "published866Tree": "711b6c97867dd928afd5b11035d5d5a42e00b004",
+        "publishedG19Tree": "c38afc274e7fc2bd6f5fbd9a843860c1b0c72ef6",
+        "5ce4Equals866": true
+      },
+      {
+        "package": "HanlinPlatform",
+        "union20aTree": "db6e9533242f08bb1bb7accdf6970a436aa953d1",
+        "local5ce4Tree": "ee3dceff23aa4298982869933382bbed06ff6124",
+        "published866Tree": "ee3dceff23aa4298982869933382bbed06ff6124",
+        "publishedG19Tree": "4b993ffda939d3f132e36ccf230e8455e1956017",
+        "5ce4Equals866": true
+      },
+      {
+        "package": "HanlinAppExtensionsSDK",
+        "union20aTree": "686aad16f099b5c75b6ef84073a0a10557281628",
+        "local5ce4Tree": "686aad16f099b5c75b6ef84073a0a10557281628",
+        "published866Tree": "686aad16f099b5c75b6ef84073a0a10557281628",
+        "publishedG19Tree": "c6edb612890a150ddd0d1147d9b095621174c52f",
+        "5ce4Equals866": true
+      },
+      {
+        "package": "HanlinMiniAppsBridge",
+        "union20aTree": "98ef5d2b47c03f4ea98319a851abae183f500a40",
+        "local5ce4Tree": "98ef5d2b47c03f4ea98319a851abae183f500a40",
+        "published866Tree": "98ef5d2b47c03f4ea98319a851abae183f500a40",
+        "publishedG19Tree": "1741896221b7555713ec2c5a4a3015503ffd4865",
+        "5ce4Equals866": true
+      },
+      {
+        "package": "HanlinNativeScriptRuntime",
+        "union20aTree": "14373dc81171600079e458087872d4e8ea7bbc1c",
+        "local5ce4Tree": "14373dc81171600079e458087872d4e8ea7bbc1c",
+        "published866Tree": "14373dc81171600079e458087872d4e8ea7bbc1c",
+        "publishedG19Tree": "f37c6cbb94be7128cb9e121006c4df3358dc363a",
+        "5ce4Equals866": true
+      }
+    ],
+    "ownerReportedNativeStatus": {
+      "task": "https://app.asana.com/0/1219603102275846/1220927011075841",
+      "taskModifiedAtUTC": "2026-11-27T06:11:57.004Z",
+      "G18": "Build/upgrade/phone passed; original iPad failure retained.",
+      "G19": "Build and upgrade passed. Original phone failure and capacity failure retained. An unchanged-source phone retry passed at06:11; iPad job_c7dee369fa9d then dispatched. Other UI,75 unit cases, videos and TestFlight remained pending in the inspected owner note.",
+      "qualification": "These are precise current owner reports read from Asana, not independently read native receipts in this source audit. No Mac call or test replay was performed. No result is transferred to20a or the local selective proposal."
+    }
+  },
+  "wholesaleReplacementBlockers": [
+    {
+      "area": "Explicit NativeScript handler",
+      "source": {
+        "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m",
+        "unionBlob": "7bbc804da241fe31d6e860eaedd064a192b97e49",
+        "candidateBlob": "dc797ef338d94d5110d6e888c61ef0a2dd750730",
+        "patch": "diff --git a/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m b/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m\nindex 7bbc804da..dc797ef33 100644\n--- a/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m\n+++ b/Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m\n@@ -637,12 +637,32 @@ static NSString *HanlinExecuteSyncWithTimeout(NSTimeInterval timeoutSeconds, Han\n         return;\n     }\n     if ([provider respondsToSelector:@selector(registerAction:capability:)]) {\n         [(id)provider registerAction:action capability:capability];\n     }\n-    // Declaration must not replace a mini app's explicitly registered handler.\n-    // Only registerRequestHandler:capability:handler: supplies action results.\n+    if ([provider respondsToSelector:@selector(registerRequestHandler:capability:handler:)]) {\n+        [provider registerRequestHandler:action capability:capability handler:^(NSString *caller, NSString *payloadJSON, HanlinBridgeStringResultBlock reply) {\n+            NSLog(@\"[HanlinNativeServicesBridge] Action handler invoked for action=%@ caller=%@ payload=%@\", action, caller, payloadJSON);\n+            NSDictionary *reqDict = nil;\n+            if (payloadJSON.length > 0) {\n+                NSData *data = [payloadJSON dataUsingEncoding:NSUTF8StringEncoding];\n+                if (data) {\n+                    reqDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];\n+                }\n+            }\n+            NSDictionary *replyDict = @{\n+                @\"source\": @\"hanlin.demo.script-parity\",\n+                @\"action\": action ?: @\"\",\n+                @\"caller\": caller ?: @\"\",\n+                @\"request\": reqDict ?: @{},\n+                @\"status\": @\"ok\"\n+            };\n+            NSData *replyData = [NSJSONSerialization dataWithJSONObject:replyDict options:0 error:nil];\n+            NSString *replyStr = replyData ? [[NSString alloc] initWithData:replyData encoding:NSUTF8StringEncoding] : @\"{}\";\n+            if (reply) reply(replyStr, nil);\n+        }];\n+    }\n }\n \n + (NSString *)roundTripValue:(NSString *)value key:(NSString *)key {\n     if ([key isEqualToString:@\"hostService.dataRoot\"]) {\n         return [self dataRootDirectory] ?: @\"\";"
+      },
+      "test": {
+        "path": "AI_HLYTests/NativeScriptRuntimeWireTests.swift",
+        "unionBlob": "ab113355ec8b87b34bc07216806b08f005dc1c36",
+        "candidateBlob": "27062db8e0897f1a48444ad386832935621ea629",
+        "presentInCandidate": false
+      },
+      "consequence": "G19 registerAction installs a manufactured status=ok/demo handler, overwrites explicit native request dispatch and lacks the JS-state/no-handler regression method. Keep original20a7bbc/ab113."
+    },
+    {
+      "area": "Native window and assistant graph",
+      "paths": [
+        "D\tPackages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeScriptWindowFactory.mm",
+        "D\tPackages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/include/HanlinNativeScriptWindowFactory.h",
+        "D\tPackages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptWindowPackage.swift",
+        "D\tPackages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/HanlinNativeScriptWindowSession.swift",
+        "D\tPackages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/miniapp-assistant.d.ts",
+        "D\tPackages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/host-services/miniapp-assistant.mjs",
+        "D\tPackages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/window-factory/host.mjs",
+        "D\tPackages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/window-factory/index.d.ts",
+        "D\tPackages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/window-factory/index.mjs",
+        "D\tPackages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptRuntime/Resources/NativeScriptSharedRuntime/@hanlin/window-factory/package.json"
+      ],
+      "consequence": "Do not remove original window-factory, native window session/package, or miniapp-assistant files."
+    },
+    {
+      "area": "Cancellation, Composer and provider context/cache",
+      "consequence": "G19 lacks later20a AgentSession/HostDispatcher/HostIntegration/run-control/Composer changes; its ProviderFactory removes prompt cache validation and real network-task cancellation registration, and its parser removes cumulative cache/token accounting."
+    },
+    {
+      "area": "Original widget ownership",
+      "consequence": "G19 removes widgetOrigin and original enqueueValidated/enqueueAndClaim ownership operations. Keep20a unchanged."
+    },
+    {
+      "area": "APNs external JSON and extension products",
+      "consequence": "G19 removes the original plain external JSON conversion and Keyboard/NotificationContent/CameraCapture product graph. Keep20a unchanged."
+    },
+    {
+      "area": "Disclosure accessibility and renderer retention",
+      "consequence": "G19 removes the later retained native disclosure visibility/AX implementation and lacks45 renderer retention. Neither is selected."
+    },
+    {
+      "area": "Localization",
+      "consequence": "G19 has one genuinely new row but omits98 existing canonical rows. The local proposal inserts only that one literal member, leaving every original byte intact."
+    }
+  ],
+  "actualAdditionalConsumerDelta": {
+    "inventory": {
+      "path": "/workspace/scratch/ae335eba85e3/miniapps-independent-hanlin-latest-review/actual-additional-delta.json",
+      "bytes": 5224,
+      "sha256": "b8b07f138dda7a7f4d3f7a74b86cb35620b5cc0d44a5f669e8c22d0e1ba733d8",
+      "blob": "7cc3542e9f2097585d3f71ed4fc51e832b604f40"
+    },
+    "alreadyPresent": "19 of24 Presentation candidate changes,12 of18 Platform candidate changes and all167 NativeScript resource candidate changes are already byte-identical in20a. Remaining non-scrolling differences mostly remove later canonical protections.",
+    "selectedProductionPaths": [
+      {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/ChatAutoFollowController.swift",
+        "mode": "100644",
+        "before": {
+          "bytes": 10070,
+          "sha256": "b7c660481d9e0cbd687f8d209b7bfb07bf828c503556233005d1ebe55d027572",
+          "blob": "9a2cc2715c8ff1ad3861b075f2421e120ee370c2"
+        },
+        "after": {
+          "bytes": 10440,
+          "sha256": "789957a8ae0947482e8e1be4c6d2153cda51e764fc0a04f10a238712ae87c7a3",
+          "blob": "81df9f5594229717a277eb537da98554c83ae4da"
+        },
+        "afterEqualsOriginalDonor": true,
+        "literalInverse": [
+          {
+            "afterStartByte": 5441,
+            "afterEndByte": 5508,
+            "after": "        if !layout.hasScrollableContent { updateNearBottom(true) }\n",
+            "before": "        if !layout.hasScrollableContent { state.isNearBottom = true }\n"
+          },
+          {
+            "afterStartByte": 6160,
+            "afterEndByte": 6191,
+            "after": "        updateNearBottom(true)\n",
+            "before": "        state.isNearBottom = true\n"
+          },
+          {
+            "afterStartByte": 6255,
+            "afterEndByte": 6631,
+            "after": "        // A nested @Observable value mutation invalidates its readers even when\n        // the Boolean is unchanged. Geometry can emit hundreds of intermediate\n        // samples while a lazy transcript settles; only visibility transitions\n        // should ask its host and external composer to render again.\n        guard state.isNearBottom != isNearBottom else { return }\n",
+            "before": ""
+          }
+        ]
+      },
+      {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/ChatScrollViewHandle.swift",
+        "mode": "100644",
+        "before": {
+          "bytes": 7806,
+          "sha256": "f11217b50d59fcf298d5a10c318b10425e5f78b421c1c332392591c4422cb87a",
+          "blob": "cd30d9ace495e615674b13cab9b3d7f6f7d527a5"
+        },
+        "after": {
+          "bytes": 10828,
+          "sha256": "b9ae9054976a0a425009287776a054b5aa0a6316a028daa7380a4774b4ca9056",
+          "blob": "6236230450c60b52060466b8e1fd98bc53779891"
+        },
+        "afterEqualsOriginalDonor": true,
+        "literalInverse": [
+          {
+            "afterStartByte": 787,
+            "afterEndByte": 961,
+            "after": "    private var positionReadTask: Task<Void, Never>?\n    private var positionReadID: UUID?\n    private var positionReadAction: (@MainActor (ChatAutoFollowPosition) -> Void)?\n",
+            "before": ""
+          },
+          {
+            "afterStartByte": 5210,
+            "afterEndByte": 7011,
+            "after": "        positionReadTask?.cancel()\n        clearPositionRead()\n    }\n\n    /// Coalesce native layout/geometry notifications into one read after the\n    /// current callback returns. Unlike attachment readiness, content and offset\n    /// changes may request another read within the same viewport generation.\n    /// No cached geometry is published and this never repositions the scroll view.\n    /// One yield is not a guarantee that every lazy layout pass is finished;\n    /// further real notifications request another current native sample.\n    @discardableResult\n    public func readPositionAfterLayout(conversationID: UUID,\n                                        action: @escaping @MainActor (ChatAutoFollowPosition) -> Void) -> Task<Void, Never>? {\n        guard activeConversationID == conversationID, boundConversationID == conversationID,\n              layout(conversationID: conversationID) != nil else { return nil }\n        positionReadAction = action\n        if let positionReadTask { return positionReadTask }\n        let expectedGeneration = generation\n        let requestID = UUID()\n        positionReadID = requestID\n        positionReadTask = Task { @MainActor [weak self] in\n            await Task.yield()\n            guard let self, !Task.isCancelled, self.positionReadID == requestID else { return }\n            let action = self.positionReadAction\n            self.clearPositionRead()\n            guard let position = self.position(conversationID: conversationID,\n                                               expectedGeneration: expectedGeneration) else { return }\n            action?(position)\n        }\n        return positionReadTask\n    }\n\n    private func clearPositionRead() {\n        positionReadTask = nil\n        positionReadID = nil\n        positionReadAction = nil\n",
+            "before": ""
+          },
+          {
+            "afterStartByte": 8077,
+            "afterEndByte": 8813,
+            "after": "    /// Diagnostic-only observation of the current native geometry. Unlike an\n    /// admitted position read, this must not refresh the viewport lifetime,\n    /// cancel readiness, or affect whether a queued scroll can execute.\n    public func peekPosition(conversationID: UUID) -> ChatAutoFollowPosition? {\n        guard activeConversationID == conversationID,\n              boundConversationID == conversationID,\n              let scrollView, scrollView.window != nil,\n              let layout = Self.snapshotLayout(of: scrollView) else { return nil }\n        let position = ChatAutoFollowPosition(layout: layout, contentOffsetY: Double(scrollView.contentOffset.y))\n        return position.isNearBottom == nil ? nil : position\n    }\n\n",
+            "before": ""
+          },
+          {
+            "afterStartByte": 9577,
+            "afterEndByte": 9888,
+            "after": "        return Self.snapshotLayout(of: scrollView)\n    }\n\n    /// Shared finite-value validation only; reading UIKit properties here does\n    /// not change this handle's attachment, generation or pending readiness.\n    private static func snapshotLayout(of scrollView: UIScrollView) -> ChatAutoFollowLayout? {\n",
+            "before": ""
+          }
+        ]
+      },
+      {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/HanlinFollowLatestOverlay.swift",
+        "mode": "100644",
+        "before": null,
+        "after": {
+          "bytes": 4612,
+          "sha256": "87fc88fbd778a9e91f3dc068b8bcfd0fba646cc81d7c0a005be7685520c3e85c",
+          "blob": "111be2b204ec04ac4b8649af239c60d0879300f6"
+        },
+        "afterEqualsOriginalDonor": true,
+        "literalInverse": []
+      },
+      {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/Localizable.xcstrings",
+        "mode": "100644",
+        "before": {
+          "bytes": 662667,
+          "sha256": "9437aa101dd2d12ad2e39471c6f76171750e6f4e2c83f01f21bbe47e1ef0186e",
+          "blob": "dfa5e1a4239a64f724b51beb74d1dcc55f35e26d"
+        },
+        "after": {
+          "bytes": 663208,
+          "sha256": "2c01a6ad6d31f81387dd7f1bcfac6f128421e9de2428ee74b690d0b58564d0ef",
+          "blob": "cee6132e927f81ac8d348b84983c16e322400f6a"
+        },
+        "donorFullFile": {
+          "bytes": 572439,
+          "sha256": "e2377b727a8c1d7246bdb259d339a8f8645ef8403a39856869c06a1c29ddd0b4",
+          "blob": "0ad4f2facf4b92efc71a7db296443f09dff43efd"
+        },
+        "afterEqualsOriginalDonor": false,
+        "literalInverse": [
+          {
+            "afterStartByte": 615008,
+            "afterEndByte": 615549,
+            "after": "    \"请选择一个对话\": {\n      \"extractionState\": \"manual\",\n      \"localizations\": {\n        \"en\": {\n          \"stringUnit\": {\n            \"state\": \"translated\",\n            \"value\": \"Select a conversation\"\n          }\n        },\n        \"he\": {\n          \"stringUnit\": {\n            \"state\": \"translated\",\n            \"value\": \"בחרו שיחה\"\n          }\n        },\n        \"zh-Hans\": {\n          \"stringUnit\": {\n            \"state\": \"translated\",\n            \"value\": \"请选择一个对话\"\n          }\n        }\n      }\n    },\n",
+            "before": ""
+          }
+        ],
+        "onlyAddedKey": "请选择一个对话",
+        "originalMembersRetained": 1294,
+        "canonicalMembersAbsentFromDonorButPreserved": 98,
+        "insertedBeforeExistingKey": "调整模型参数",
+        "addedValue": {
+          "extractionState": "manual",
+          "localizations": {
+            "en": {
+              "stringUnit": {
+                "state": "translated",
+                "value": "Select a conversation"
+              }
+            },
+            "he": {
+              "stringUnit": {
+                "state": "translated",
+                "value": "בחרו שיחה"
+              }
+            },
+            "zh-Hans": {
+              "stringUnit": {
+                "state": "translated",
+                "value": "请选择一个对话"
+              }
+            }
+          }
+        }
+      }
+    ],
+    "sourceReview": [
+      "ChatAutoFollowController uses the existing updateNearBottom path for fitting/invalidated layout and suppresses equal Boolean Observation publications; actual visibility transitions still publish.",
+      "ChatScrollViewHandle coalesces to one current native position read after callback return, captures original conversation+generation, rejects stale viewport/selection and cancels pending read on original readiness invalidation. It does not reposition the view or replace growth admission; diagnostic peek does not change generation/readiness.",
+      "HanlinFollowLatestOverlay carries an original transient anchor and action. It accepts exactly one current-conversation request, resolves finite live geometry, binds owner-token view identity and rechecks live selected conversation on activation. This alone cannot validate the originating transcript; the main-App callback must keep its original mounted owner and native viewport checks.",
+      "The one original multilingual Select-a-conversation row is inserted literally into20a, with1294 existing rows retained and1295 total. Full localization file replacement is prohibited by the proof."
+    ],
+    "proposal": {
+      "path": "/workspace/scratch/ae335eba85e3/miniapps-independent-hanlin-latest-review/selective-proposal/three-scrolling-one-localization.patch",
+      "bytes": 13041,
+      "sha256": "b3c0dea078f781deb37a3b543ae0c65d447bb1e28b9d85d7b9483bd5feaeb7a7",
+      "blob": "29c818bf184dbeba209a3478080ec53c7ff66344"
+    },
+    "proof": {
+      "path": "/workspace/scratch/ae335eba85e3/miniapps-independent-hanlin-latest-review/selective-proposal/selective-source-proof.json",
+      "bytes": 10354,
+      "sha256": "3e0c238aa36f56710e6afb67e35e98f11db08eb330d483e6d485dbd315e15823",
+      "blob": "fe7eace3091481a73a628140424e6b94ecde05d8"
+    },
+    "patchApplyReverseProof": {
+      "path": "/workspace/scratch/ae335eba85e3/miniapps-independent-hanlin-latest-review/selective-proposal/patch-replay-proof.json",
+      "bytes": 1573,
+      "sha256": "9eb69ab857121a457f56c46e2b09255e3f149bc5a40f6bacf17a0cd48d1ee04f",
+      "blob": "516b89d9896b339e2ac0d5b69fd0128fad351eef"
+    },
+    "originalAffectedTests": {
+      "path": "/workspace/scratch/ae335eba85e3/miniapps-independent-hanlin-latest-review/selective-proposal/affected-original-tests.json",
+      "bytes": 16838,
+      "sha256": "569caf6f0eea30e2cb8840558e1a4fbebca2acef2e70dac510877124f8948063",
+      "blob": "0d4ca9eaf9a947488dc035fe1333396362e9dedc"
+    },
+    "separateOriginalTestPatch": {
+      "path": "/workspace/scratch/ae335eba85e3/miniapps-independent-hanlin-latest-review/selective-proposal/original-six-regressions.patch",
+      "bytes": 14141,
+      "sha256": "c55072374d2eaf4f1591624e45a0c9a43d085c1390a2e154b62f9b6121742589",
+      "blob": "4be245cf348e54b98745451b8f11d969e1c79532"
+    }
+  },
+  "mainAppCounterpartRequirements": {
+    "sourceEvidence": {
+      "path": "/workspace/scratch/ae335eba85e3/miniapps-independent-hanlin-latest-review/original-consumer-seams.json",
+      "bytes": 47984,
+      "sha256": "2f391d38e88c39633ed7d6991e813ee8c63380762795e7f530d28522503a74d3",
+      "blob": "7c0477f1a8b87073c319ab852b23c72e27164705"
+    },
+    "donorAppSources": {
+      "AI_HLY/ChatView.swift": {
+        "blob": "ce209137602928580019e992b0eb1563ae148b95",
+        "bytes": 124597,
+        "sha256": "24109855abbe8db7fd97e86ae7873584b45d94d256eed935e0a7ebd54ae12c65"
+      },
+      "AI_HLY/ListView.swift": {
+        "blob": "08c9cab3950ba943733753dcadac5033f9170de6",
+        "bytes": 32152,
+        "sha256": "f1776071019a5421a77bf150f0bf6a89414c812a90cc4b5e726aba473976cc3b"
+      },
+      "AI_HLY/Views/Components/ChatViewBottom.swift": {
+        "blob": "3142606ac612f6d7a718d037610b6e4c2b3e1168",
+        "bytes": 94491,
+        "sha256": "a02f6073814c582fa41c583c294b2987699431cc83a4f8e41ae3845916723169"
+      }
+    },
+    "requirements": [
+      "The four-file SDK proposal does not activate the G19 App overlay by itself. Preserve20a business/UI changes and selectively reconcile actual original App call sites rather than copying entire3657 App files.",
+      "Original AI_HLY/ChatView emits its existing36x36 control anchor only for the selected mounted transcript. The exported action checks live composerRegistrationToken, multi-select state, button visibility, empty canvas, effective conversation and current attached native layout BEFORE cancelling a source jump or changing following mode.",
+      "Original AI_HLY/ListView hosts the one control outside NavigationSplitView, with live selectedChatRecord binding and compact-workspace suppression, and retains the original HanlinFollowLatestButton.",
+      "Original native button in AI_HLY/Views/Components/ChatViewBottom uses the one primaryActionTriggered target and removes the same target on dismantle. The G18 published354 fix is App-specific and is not imported by the four-file SDK proposal.",
+      "Original ChatView.scheduleNativePositionRead uses current coalesced native position to update bottom truth without replacing newer SwiftUI growth admission. It ends user interaction only for the exact pending idle conversation. Source diagnostic peek remains observational.",
+      "Anytype host adoption and live iPhone/iPad behavior must be checked on its actual original consumer, source and SDK build. G19 App phone behavior does not establish Pinkha consumer behavior or completed iPad acceptance."
+    ]
+  },
+  "qualificationAndNextOrder": [
+    "Root reviews the exact four production paths and optional separate two original test files against20a. Root alone decides an isolated successor commit; no branch has been changed by this agent.",
+    "Keep all original handler/window/assistant/cancellation/Composer/cache/widget/AX/renderer source and six-package closure. Source-only targeted tests are six original methods, with no broad G19 rerun.",
+    "The original hosted producer may bind the reviewed explicit successor SHA and exact input fingerprints. Do not relabel prior392-input producer, old86 companion or G19 artifact as this successor.",
+    "Actual original full graph compilation, six selected regression methods where target/platform supported, the original explicit-handler iOS route, and relevant actual iPhone/iPad consumer UI remain pending until a coordinated executable intake exists."
+  ],
+  "readLimitationsRetained": {
+    "firstG19AncestryRead": "The original tool response was truncated and its inner JSON could not be parsed. It is retained unchanged. A successor bounded read retained the complete metadata artifact on Oracle and returned a summary; no test or build was repeated.",
+    "completeAncestryArtifact": {
+      "path": "/tmp/pinkha-miniapps-hanlin-latest-ancestry-20261127.json",
+      "bytes": 2652206,
+      "sha256": "a91d89d4d5be1ea51cc519b929eb40c2a04c1e2c75fcf1eaf65870ae50a76153"
+    },
+    "selectedOriginalProductionPatchArtifact": {
+      "path": "/tmp/pinkha-miniapps-hanlin-latest-selected-production-20261127.json",
+      "bytes": 67020,
+      "sha256": "0446ff3e39ce9ad31384818103def0f511bd3bbb2483a7d316a7590d7708a22a"
+    }
+  },
+  "actions": {
+    "foreignWorktreeWrites": false,
+    "indexRefresh": false,
+    "refsOrBranchesChanged": false,
+    "permissionOrCredentialChanges": false,
+    "macCalls": false,
+    "testsOrBuilds": false,
+    "gitObjectMetadataReadOnly": true,
+    "localProposalAndProofWritten": true,
+    "rootCoordinationWarningAlreadyPosted": "Root reports1220944816953934 andHQ1220945081554186; no duplicate comment sent by this agent."
+  }
+}

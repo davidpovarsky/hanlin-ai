@@ -1,0 +1,881 @@
+{
+  "schema": "hanlin-selective-original-consumer-seams-v1",
+  "base": "20a1e6fa33ed261ba11e83a0b84a157029822e5e",
+  "donor": "3657b52ea9e72b8dc42819177dc8e1d865e8a6d3",
+  "originalAppAliases": {
+    "AI_HLY/Downstream/AgentActivity/Scrolling/ChatAutoFollowController.swift": {
+      "blob": "a873138408fc9b0c43e81aa8700065ae66e1e11b",
+      "bytes": 422,
+      "sha256": "cf152005fa6e36bf3989b4c8039f87aa48677fd99f425ecc3bb15bea9469fb27",
+      "source": "// Canonical implementation lives in HanlinPresentationSDK.\nimport HanlinChatUI\n\ntypealias ChatAutoFollowMode = HanlinChatUI.ChatAutoFollowMode\ntypealias ChatAutoFollowState = HanlinChatUI.ChatAutoFollowState\ntypealias ChatAutoFollowLayout = HanlinChatUI.ChatAutoFollowLayout\ntypealias ChatAutoFollowPosition = HanlinChatUI.ChatAutoFollowPosition\ntypealias ChatAutoFollowController = HanlinChatUI.ChatAutoFollowController\n"
+    },
+    "AI_HLY/Downstream/AgentActivity/Scrolling/ChatScrollViewHandle.swift": {
+      "blob": "ed88bf79fc5425f1864b60f2bb7749acad3b7dc8",
+      "bytes": 148,
+      "sha256": "61dc87e2d2d48c5266b98afdfc208b9232cb90b0ca9889f14e90968fd2662093",
+      "source": "// Canonical implementation lives in HanlinPresentationSDK.\nimport HanlinChatUI\n\ntypealias ChatScrollViewHandle = HanlinChatUI.ChatScrollViewHandle\n"
+    }
+  },
+  "mainAppSources": {
+    "AI_HLY/ChatView.swift": {
+      "blob": "ce209137602928580019e992b0eb1563ae148b95",
+      "bytes": 124597,
+      "sha256": "24109855abbe8db7fd97e86ae7873584b45d94d256eed935e0a7ebd54ae12c65",
+      "selectedSource": [
+        {
+          "line": 528,
+          "text": "        let liveOwnerToken = $composerRegistrationToken"
+        },
+        {
+          "line": 529,
+          "text": "        let liveMultiSelect = $isMultiSelectMode"
+        },
+        {
+          "line": 530,
+          "text": "        return Color.clear"
+        },
+        {
+          "line": 531,
+          "text": "            .frame(width: 36, height: 36)"
+        },
+        {
+          "line": 532,
+          "text": "            .anchorPreference(key: HanlinFollowLatestOverlayPreferenceKey.self, value: .bounds) { bounds in"
+        },
+        {
+          "line": 533,
+          "text": "                [HanlinFollowLatestOverlayRequest("
+        },
+        {
+          "line": 534,
+          "text": "                    conversationID: conversationID, ownerToken: ownerToken,"
+        },
+        {
+          "line": 535,
+          "text": "                    bounds: bounds, isTemporaryRecord: TemporaryRecord"
+        },
+        {
+          "line": 536,
+          "text": "                ) {"
+        },
+        {
+          "line": 537,
+          "text": "                    // The exported reader belongs only to this mounted transcript."
+        },
+        {
+          "line": 538,
+          "text": "                    // Validate live State and the attached weak native viewport"
+        },
+        {
+          "line": 539,
+          "text": "                    // BEFORE changing following mode or cancelling a source jump."
+        },
+        {
+          "line": 540,
+          "text": "                    guard liveOwnerToken.wrappedValue == ownerToken,"
+        },
+        {
+          "line": 541,
+          "text": "                          !liveMultiSelect.wrappedValue,"
+        },
+        {
+          "line": 542,
+          "text": "                          showScrollToBottomButton,"
+        },
+        {
+          "line": 543,
+          "text": "                          chatRecord.canvas?.content.isEmpty != false,"
+        },
+        {
+          "line": 544,
+          "text": "                          effectiveChatSessionID == conversationID,"
+        },
+        {
+          "line": 545,
+          "text": "                          transcriptScrollView.layout(conversationID: conversationID) != nil else { return }"
+        },
+        {
+          "line": 546,
+          "text": "                    traceAutoFollowPosition(\"button-entry\", significant: true)"
+        },
+        {
+          "line": 547,
+          "text": "                    resumeFollowingLatest(using: scrollViewProxy)"
+        },
+        {
+          "line": 548,
+          "text": "                }]"
+        },
+        {
+          "line": 549,
+          "text": "            }"
+        },
+        {
+          "line": 550,
+          "text": "            .allowsHitTesting(false)"
+        },
+        {
+          "line": 551,
+          "text": "            .accessibilityHidden(true)"
+        },
+        {
+          "line": 1340,
+          "text": "        traceAutoFollowPosition(\"native-settled\", position: position, significant: true)"
+        },
+        {
+          "line": 1341,
+          "text": "    }"
+        },
+        {
+          "line": 1342,
+          "text": ""
+        },
+        {
+          "line": 1343,
+          "text": "    private func scheduleNativePositionRead() {"
+        },
+        {
+          "line": 1344,
+          "text": "        let conversationID = effectiveChatSessionID"
+        },
+        {
+          "line": 1345,
+          "text": "        transcriptScrollView.readPositionAfterLayout(conversationID: conversationID) { position in"
+        },
+        {
+          "line": 1346,
+          "text": "            guard effectiveChatSessionID == conversationID,"
+        },
+        {
+          "line": 1347,
+          "text": "                  let isNearBottom = position.isNearBottom else { return }"
+        },
+        {
+          "line": 1348,
+          "text": "            let wasNearBottom = autoFollowController.state.isNearBottom"
+        },
+        {
+          "line": 1349,
+          "text": "            // Observe bottom truth without replacing a newer SwiftUI growth"
+        },
+        {
+          "line": 1350,
+          "text": "            // measurement that has already admitted a pending follow request."
+        },
+        {
+          "line": 1351,
+          "text": "            autoFollowController.updateNearBottom(isNearBottom)"
+        },
+        {
+          "line": 1352,
+          "text": "            let finishesManualScroll = pendingNativeScrollIdle == conversationID"
+        },
+        {
+          "line": 1353,
+          "text": "            if finishesManualScroll {"
+        },
+        {
+          "line": 1354,
+          "text": "                pendingNativeScrollIdle = nil"
+        },
+        {
+          "line": 1355,
+          "text": "                autoFollowController.userInteractionEnded()"
+        },
+        {
+          "line": 1356,
+          "text": "            }"
+        },
+        {
+          "line": 1357,
+          "text": "            if finishesManualScroll || wasNearBottom != autoFollowController.state.isNearBottom {"
+        },
+        {
+          "line": 1358,
+          "text": "                traceAutoFollowPosition(finishesManualScroll ? \"native-settled\" : \"native-layout\","
+        },
+        {
+          "line": 1359,
+          "text": "                                        position: position, significant: true)"
+        },
+        {
+          "line": 1360,
+          "text": "            }"
+        },
+        {
+          "line": 1361,
+          "text": "        }"
+        },
+        {
+          "line": 1362,
+          "text": "    }"
+        },
+        {
+          "line": 1363,
+          "text": ""
+        },
+        {
+          "line": 1463,
+          "text": "                fields[prefix + \"Maximum\"] = range.upperBound"
+        },
+        {
+          "line": 1464,
+          "text": "                fields[prefix + \"Distance\"] = range.upperBound - sample.contentOffsetY"
+        },
+        {
+          "line": 1465,
+          "text": "            }"
+        },
+        {
+          "line": 1466,
+          "text": "        }"
+        },
+        {
+          "line": 1467,
+          "text": "        include(position, prefix: \"sample\")"
+        },
+        {
+          "line": 1468,
+          "text": "        include(transcriptScrollView.peekPosition(conversationID: effectiveChatSessionID), prefix: \"native\")"
+        },
+        {
+          "line": 1469,
+          "text": "        NativeToolTraceLogger.shared.log(\"autoFollowPositionSample\", fields,"
+        },
+        {
+          "line": 1470,
+          "text": "            conversationID: effectiveChatSessionID.uuidString)"
+        },
+        {
+          "line": 1471,
+          "text": "        #endif"
+        },
+        {
+          "line": 1472,
+          "text": "    }"
+        },
+        {
+          "line": 1473,
+          "text": ""
+        },
+        {
+          "line": 1474,
+          "text": "    private func traceAutoFollowBoundary(_ event: String, layout: ChatAutoFollowLayout? = nil) {"
+        },
+        {
+          "line": 1475,
+          "text": "        #if DEBUG || HANLIN_TESTING"
+        },
+        {
+          "line": 1476,
+          "text": "        guard ProcessInfo.processInfo.environment[\"HANLIN_COMPOSER_EDIT_DIAGNOSTICS\"] == \"1\" else { return }"
+        },
+        {
+          "line": 1477,
+          "text": "        // Never include draft text, request arguments or tool results."
+        },
+        {
+          "line": 1478,
+          "text": "        let geometry = layout.map {"
+        },
+        {
+          "line": 1479,
+          "text": "            \"content=\\($0.contentHeight) viewport=\\($0.viewportHeight) top=\\($0.topInset) bottom=\\($0.bottomInset)\""
+        },
+        {
+          "line": 1480,
+          "text": "        } ?? \"layout=unmeasured\""
+        },
+        {
+          "line": 1481,
+          "text": "        print(\"HANLIN_TRANSCRIPT_BOUNDARY event=\\(event) mode=\\(autoFollowController.state.mode.rawValue) nearBottom=\\(autoFollowController.state.isNearBottom) interacting=\\(autoFollowController.state.isUserInteracting) sourcePending=\\(pendingSourceScroll != nil) nativeSelection=\\(!nativeSelectionIDs.isEmpty) generation=\\(transcriptScrollView.generation) \\(geometry)\")"
+        },
+        {
+          "line": 1482,
+          "text": "        #endif"
+        },
+        {
+          "line": 1483,
+          "text": "    }"
+        },
+        {
+          "line": 1484,
+          "text": ""
+        },
+        {
+          "line": 1485,
+          "text": "    private func richMessageContext(for row: ChatMessages) -> HanlinRichMessageContext? {"
+        },
+        {
+          "line": 1486,
+          "text": "        guard row.role == \"assistant\", let state = richPresentation.state(for: row, conversation: chatRecord,"
+        }
+      ]
+    },
+    "AI_HLY/ListView.swift": {
+      "blob": "08c9cab3950ba943733753dcadac5033f9170de6",
+      "bytes": 32152,
+      "sha256": "f1776071019a5421a77bf150f0bf6a89414c812a90cc4b5e726aba473976cc3b",
+      "selectedSource": [
+        {
+          "line": 152,
+          "text": "                        .id(selected.id)"
+        },
+        {
+          "line": 153,
+          "text": "                    } else {"
+        },
+        {
+          "line": 154,
+          "text": "                        ContentUnavailableView(hanlin: \"请选择一个对话\", systemImage: \"bubble.left.and.bubble.right\")"
+        },
+        {
+          "line": 155,
+          "text": "                    }"
+        },
+        {
+          "line": 156,
+          "text": "                }"
+        },
+        {
+          "line": 157,
+          "text": "                .hanlinFollowLatestOverlayHost(selectedConversationID: Binding("
+        },
+        {
+          "line": 158,
+          "text": "                    get: { useCompactWorkspace ? nil : selectedChatRecord?.id },"
+        },
+        {
+          "line": 159,
+          "text": "                    set: { _ in }"
+        },
+        {
+          "line": 160,
+          "text": "                )) { request in"
+        },
+        {
+          "line": 161,
+          "text": "                    HanlinFollowLatestButton(isTemporaryRecord: request.isTemporaryRecord) {"
+        },
+        {
+          "line": 162,
+          "text": "                        request.perform()"
+        },
+        {
+          "line": 163,
+          "text": "                    }"
+        },
+        {
+          "line": 164,
+          "text": "                }"
+        },
+        {
+          "line": 165,
+          "text": "            } else {"
+        },
+        {
+          "line": 166,
+          "text": "                HanlinCompactChatWorkspace("
+        },
+        {
+          "line": 167,
+          "text": "                    chatRecords: chatRecords,"
+        },
+        {
+          "line": 168,
+          "text": "                    allModels: allModels,"
+        },
+        {
+          "line": 169,
+          "text": "                    path: $compactWorkspacePath,"
+        },
+        {
+          "line": 170,
+          "text": "                    searchText: $searchText,"
+        },
+        {
+          "line": 171,
+          "text": "                    matchedSnippets: matchedSnippets,"
+        },
+        {
+          "line": 172,
+          "text": "                    loadHistoryMessages: loadHistoryMessages,"
+        },
+        {
+          "line": 173,
+          "text": "                    forceRefresh: forceRefresh,"
+        },
+        {
+          "line": 174,
+          "text": "                    onOpenSafariGuide: { showSafariGuide = true },"
+        },
+        {
+          "line": 175,
+          "text": "                    onCreateAuthorizedNewChat: { createAuthorizedNewChatRecord() },"
+        }
+      ]
+    },
+    "AI_HLY/Views/Components/ChatViewBottom.swift": {
+      "blob": "3142606ac612f6d7a718d037610b6e4c2b3e1168",
+      "bytes": 94491,
+      "sha256": "a02f6073814c582fa41c583c294b2987699431cc83a4f8e41ae3845916723169",
+      "selectedSource": [
+        {
+          "line": 270,
+          "text": "        let button = CircleButton(type: .custom)"
+        },
+        {
+          "line": 271,
+          "text": "        button.backgroundColor = .clear"
+        },
+        {
+          "line": 272,
+          "text": "        button.isAccessibilityElement = true"
+        },
+        {
+          "line": 273,
+          "text": "        button.accessibilityTraits = .button"
+        },
+        {
+          "line": 274,
+          "text": "        button.accessibilityIdentifier = \"hanlin-chat-follow-latest\""
+        },
+        {
+          "line": 275,
+          "text": "        button.addTarget(context.coordinator, action: #selector(Coordinator.activate(_:)), for: .primaryActionTriggered)"
+        },
+        {
+          "line": 276,
+          "text": "        configure(button, context: context)"
+        },
+        {
+          "line": 277,
+          "text": "        return button"
+        },
+        {
+          "line": 278,
+          "text": "    }"
+        },
+        {
+          "line": 279,
+          "text": ""
+        },
+        {
+          "line": 280,
+          "text": "    func updateUIView(_ button: CircleButton, context: Context) {"
+        },
+        {
+          "line": 281,
+          "text": "        context.coordinator.action = action"
+        },
+        {
+          "line": 282,
+          "text": "        configure(button, context: context)"
+        },
+        {
+          "line": 283,
+          "text": "    }"
+        },
+        {
+          "line": 284,
+          "text": ""
+        },
+        {
+          "line": 285,
+          "text": "    static func dismantleUIView(_ button: CircleButton, coordinator: Coordinator) {"
+        },
+        {
+          "line": 286,
+          "text": "        button.removeTarget(coordinator, action: #selector(Coordinator.activate(_:)), for: .primaryActionTriggered)"
+        },
+        {
+          "line": 287,
+          "text": "        coordinator.action = nil"
+        },
+        {
+          "line": 288,
+          "text": "    }"
+        },
+        {
+          "line": 289,
+          "text": ""
+        },
+        {
+          "line": 290,
+          "text": "    private func configure(_ button: CircleButton, context: Context) {"
+        },
+        {
+          "line": 291,
+          "text": "        button.isEnabled = context.environment.isEnabled"
+        },
+        {
+          "line": 292,
+          "text": "        button.accessibilityLabel = accessibilityLabel"
+        },
+        {
+          "line": 293,
+          "text": "    }"
+        },
+        {
+          "line": 294,
+          "text": ""
+        },
+        {
+          "line": 295,
+          "text": "    final class CircleButton: UIButton {"
+        },
+        {
+          "line": 296,
+          "text": "        override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {"
+        },
+        {
+          "line": 297,
+          "text": "            super.point(inside: point, with: event) && UIBezierPath(ovalIn: bounds).contains(point)"
+        },
+        {
+          "line": 298,
+          "text": "        }"
+        },
+        {
+          "line": 299,
+          "text": ""
+        },
+        {
+          "line": 300,
+          "text": "        #if DEBUG || HANLIN_TESTING"
+        },
+        {
+          "line": 301,
+          "text": "        private var diagnosticEventCount = 0"
+        },
+        {
+          "line": 302,
+          "text": ""
+        },
+        {
+          "line": 303,
+          "text": "        override func beginTracking(_ touch: UITouch, with event: UIEvent?) -> Bool {"
+        },
+        {
+          "line": 304,
+          "text": "            let accepted = super.beginTracking(touch, with: event)"
+        }
+      ]
+    }
+  },
+  "actual3657AppPatch": "diff --git a/AI_HLY/ChatView.swift b/AI_HLY/ChatView.swift\nindex 7378cef12..ce2091376 100644\n--- a/AI_HLY/ChatView.swift\n+++ b/AI_HLY/ChatView.swift\n@@ -232,6 +232,7 @@ struct ChatView: View {\n     @Environment(\\.dismiss) private var dismiss\n     @Environment(\\.horizontalSizeClass) private var horizontalSizeClass\n     @Environment(\\.hanlinExternalCompactComposerHost) private var isExternalCompactComposerHost\n+    @Environment(\\.hanlinFollowLatestHostedExternally) private var followLatestHostedExternally\n     @Environment(\\.hanlinExternalDockHeight) private var externalDockHeight\n     @Environment(\\.hanlinComposerSessionBridge) private var sessionBridge\n \n@@ -500,11 +501,17 @@ struct ChatView: View {\n     private func floatingFollowLatestControl(using scrollViewProxy: ScrollViewProxy) -> some View {\n         Group {\n             if showScrollToBottomButton && chatRecord.canvas?.content.isEmpty != false && !isMultiSelectMode {\n-                HanlinFollowLatestButton(isTemporaryRecord: TemporaryRecord) {\n-                    // This is the native Button's action entry, before any policy\n-                    // mutation. A current reader needs no State/onChange relay.\n-                    traceAutoFollowPosition(\"button-entry\", significant: true)\n-                    resumeFollowingLatest(using: scrollViewProxy)\n+                Group {\n+                    if followLatestHostedExternally {\n+                        externalFollowLatestAnchor(using: scrollViewProxy)\n+                    } else {\n+                        HanlinFollowLatestButton(isTemporaryRecord: TemporaryRecord) {\n+                            // This is the native Button's action entry, before any policy\n+                            // mutation. A current reader needs no State/onChange relay.\n+                            traceAutoFollowPosition(\"button-entry\", significant: true)\n+                            resumeFollowingLatest(using: scrollViewProxy)\n+                        }\n+                    }\n                 }\n                 .padding(.trailing, 15)\n                 .padding(.bottom, floatingFollowLatestBottomInset)\n@@ -515,6 +522,35 @@ struct ChatView: View {\n         .animation(.spring(response: 0.5, dampingFraction: 0.7), value: showScrollToBottomButton)\n     }\n \n+    private func externalFollowLatestAnchor(using scrollViewProxy: ScrollViewProxy) -> some View {\n+        let conversationID = effectiveChatSessionID\n+        let ownerToken = composerRegistrationToken\n+        let liveOwnerToken = $composerRegistrationToken\n+        let liveMultiSelect = $isMultiSelectMode\n+        return Color.clear\n+            .frame(width: 36, height: 36)\n+            .anchorPreference(key: HanlinFollowLatestOverlayPreferenceKey.self, value: .bounds) { bounds in\n+                [HanlinFollowLatestOverlayRequest(\n+                    conversationID: conversationID, ownerToken: ownerToken,\n+                    bounds: bounds, isTemporaryRecord: TemporaryRecord\n+                ) {\n+                    // The exported reader belongs only to this mounted transcript.\n+                    // Validate live State and the attached weak native viewport\n+                    // BEFORE changing following mode or cancelling a source jump.\n+                    guard liveOwnerToken.wrappedValue == ownerToken,\n+                          !liveMultiSelect.wrappedValue,\n+                          showScrollToBottomButton,\n+                          chatRecord.canvas?.content.isEmpty != false,\n+                          effectiveChatSessionID == conversationID,\n+                          transcriptScrollView.layout(conversationID: conversationID) != nil else { return }\n+                    traceAutoFollowPosition(\"button-entry\", significant: true)\n+                    resumeFollowingLatest(using: scrollViewProxy)\n+                }]\n+            }\n+            .allowsHitTesting(false)\n+            .accessibilityHidden(true)\n+    }\n+\n     private var canonicalChatWorkspace: some View {\n         Group {\n             if surface == .composer {\ndiff --git a/AI_HLY/ListView.swift b/AI_HLY/ListView.swift\nindex 761599f18..08c9cab39 100644\n--- a/AI_HLY/ListView.swift\n+++ b/AI_HLY/ListView.swift\n@@ -1,4 +1,5 @@\n import HanlinLocalization\n+import HanlinChatUI\n import SwiftUI\n import SwiftData\n \n@@ -153,6 +154,14 @@ struct ListView: View {\n                         ContentUnavailableView(hanlin: \"请选择一个对话\", systemImage: \"bubble.left.and.bubble.right\")\n                     }\n                 }\n+                .hanlinFollowLatestOverlayHost(selectedConversationID: Binding(\n+                    get: { useCompactWorkspace ? nil : selectedChatRecord?.id },\n+                    set: { _ in }\n+                )) { request in\n+                    HanlinFollowLatestButton(isTemporaryRecord: request.isTemporaryRecord) {\n+                        request.perform()\n+                    }\n+                }\n             } else {\n                 HanlinCompactChatWorkspace(\n                     chatRecords: chatRecords,\n",
+  "local5ce4SourceValidation": {
+    "docs/two-wave-integration/20261127/shortcut-concurrency-companion-source-validation.json": {
+      "blob": "4f4a75dbf5474f151e8b31f92bf1d221c9edb24f",
+      "bytes": 7508,
+      "sha256": "d7f341ff37326370d2a2d11ab041d9094e3979de5d5a52df5f316c81e1bf90f2",
+      "value": {
+        "schema": 1,
+        "status": "SOURCE_PREPARED_NATIVE_AND_OS_NOT_RUN",
+        "sourceBase": "6ed918c9ffe94fddb1992b4b338564db4c109f4e",
+        "requiredFixtureAndObserverCommit": "41ace7e685d6d4fe50e5974e941433de50490ff4",
+        "sourceConservation": {
+          "recordedAtUTC": "2026-11-27T05:17:07.702975+00:00",
+          "HEAD": "6ed918c9ffe94fddb1992b4b338564db4c109f4e",
+          "sourceHashes": {
+            "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift": "c757994e7644db5bcf3aa480e2d126a794634e030a6626e6489cf2ea684ebde0",
+            "Scripts/ProductSplit/run_paired_acceptance.py": "efb9738edeafd21868ce232343a2db4634e370d47d267d160c86f927847a8836"
+          },
+          "allOriginalUIBytesPreserved": true,
+          "originalUIMethods": 15,
+          "currentUIMethods": 17,
+          "allExistingPlanAssignmentsASTPreserved": true,
+          "originalPlanAssignments": 4,
+          "currentPlanAssignments": 5,
+          "inputManifestSHA256": "0433011cae7beb42504e4bb29b18bb722e21d9a31cc5aae7324eba67b70afcc7",
+          "inputCount": 392,
+          "inputType": "list",
+          "diffCheck": 0,
+          "native": "NOT_RUN",
+          "OS": "NOT_RUN"
+        },
+        "sourceReview": {
+          "reviewer": "/root/w2_source_resume",
+          "scope": "Independent review of W1's exact corrected UI handoff and runner addition; reviewed actual NS initial window label against its registerWindowFactory binding.",
+          "uiSnippetSHA256": "87d6040b2e2646d72e906306cbe584de3122aeea4628cdf6ada39535561243dc",
+          "nativeScriptFixtureSHA256": "a4f8274693fcd9b9604a37667f2d48449ef1ce9541bfbeca8ef06d3057b1c0ee",
+          "runnerCandidateSHA256": "efb9738edeafd21868ce232343a2db4634e370d47d267d160c86f927847a8836",
+          "reviewedFinding": "The actual initial ownerWindowID is captured before OS launch, retained when saving Shortcuts, and checked after the original owner's real callback. The separate observer binds its actual terminal window samples to that initial identity; PID or shared State path alone does not qualify."
+        },
+        "originalReaderDependency": {
+          "path": "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+          "sha256": "72530c9c8f70b6eb35572e2d4180ac2d0161d1a641c08d1e49505554d021b65c",
+          "notes": "No original reader changes in this companion commit. W1 independently checked its21 reused function definitions as AST-equal; separate reader/fixture test logs belong to required commit41ace7e6, not this UI source check."
+        },
+        "originalRunnerContract": {
+          "sha256": "c64e91b051e7eb67e2f78713b5924a3a4f0c120ed94294b8f02df074f1474cb2",
+          "value": {
+            "schema": 1,
+            "baseWidgetSource": "91f7121a572e3d8543823d279b65cde76f1a81f9",
+            "scope": "miniapp_shortcut_concurrency_os",
+            "selectors": [
+              "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptOwnerSurvivesThreeOverlappingBackgroundShortcutsInReverseOrder",
+              "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptOwnerSurvivesCancellingOneOfThreeOverlappingBackgroundShortcuts"
+            ],
+            "expectedTests": 2,
+            "deviceFamily": "iPad",
+            "UI": {
+              "insertInside": "HanlinEntrypointSystemSurfaceUITests",
+              "snippet": "concurrency-ui-methods.swift",
+              "sha256": "87d6040b2e2646d72e906306cbe584de3122aeea4628cdf6ada39535561243dc",
+              "existingMethods": "Preserve all current methods, selectors, asserts, helper bodies and scopes byte-for-byte."
+            },
+            "observer": {
+              "script": "Scripts/ProductSplit/observe_shortcut_concurrency.py",
+              "runnerBundle": "Same actual AI_HLYUITests xctrunner selected by start_shortcut_observer",
+              "argv": [
+                "--device",
+                "<existing-owned-simulator>",
+                "--runner-bundle-id",
+                "<actual-xctrunner>",
+                "--output",
+                "<EVIDENCE>/shortcut-concurrency-observer",
+                "--duration",
+                "2100"
+              ],
+              "exchange": "Documents/HanlinShortcutConcurrencyObservation/<runID>",
+              "responses": [
+                "identity.json",
+                "overlap.json",
+                "actions-complete.json",
+                "completion.json"
+              ],
+              "report": "<EVIDENCE>/shortcut-concurrency-observer/observer.json",
+              "completion": "Use original allSelectedCasesObserved check: exit0, exactly2 runs, each completionWritten true. Any failed/blocked/missing case fails the native scope."
+            },
+            "staging": "Extend existing shortcut_surface_fixtures(documents) branch to this scope. It must validate and build both actual HostActionSurfaces projects using the original CLI and the exact SDK extracted from the current shipping RuntimeHostResources.zip, retaining source/archive/report hashes, then stage only input archives in standalone MiniApps Documents. No direct command, receipt, catalog, result or private-state setup.",
+            "runnerChanges": [
+              "Add the two selectors as one new TEST_PLANS assignment; do not alter any original plan or count.",
+              "Add this scope to existing iPad choice and attachment export sets.",
+              "Add this scope to the existing surface input-staging, observer-start and final observer-completion guard sets.",
+              "In start_shortcut_observer select the new script/output only for this scope; retain existing script/widget arguments for original scopes.",
+              "Record the chosen observer outputDirectory in existing state and have finish_shortcut_observer read that outputDirectory/observer.json, preserving ownership/stop behavior.",
+              "Retain original source/SDK/build/install/OS namespace checks, nonparallel native test flags, exact selector reconciliation and zero-skip success."
+            ],
+            "scopeText": "Two additive genuine Shortcuts cases: one visible NS owner and three background NS actions; actual simultaneous handlers/leases and isolated windows; reverse completion, or selected system Stop with native cancellation, followed by the original owner's real callback.",
+            "acceptanceBoundary": "Only observed NS-owner/NS-background iPad Simulator pilot. Does not discharge Expo↔Expo/Expo↔NS, iPhone, multi-scene restoration, duplicate URLs, foreground-vs-background/cold-warm matrix, device locking or actual timeout gates. Original NS5/paired54/extras26 and original four Shortcuts cases remain separate.",
+            "native": "NOT_RUN",
+            "OS": "NOT_RUN",
+            "ownerIdentity": "The visible initial Owner window label uses the actual registerWindowFactory id; terminal callback samples must retain that same id even for shared root State paths."
+          }
+        },
+        "SDKMembership": {
+          "manifestPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/host-2a0b19b7-pass-and-native-seal/sdk/miniapp-sdk.json",
+          "manifestSHA256": "0433011cae7beb42504e4bb29b18bb722e21d9a31cc5aae7324eba67b70afcc7",
+          "inputCount": 392,
+          "purpose": "Historical path membership only; does not requalify any current native SDK/Host artifact.",
+          "observedIntersection": [],
+          "sourcePaths": [
+            "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+            "Scripts/ProductSplit/run_paired_acceptance.py"
+          ]
+        },
+        "validationLimits": {
+          "SwiftCompilation": "NOT_RUN",
+          "nativeAcceptance": "NOT_RUN",
+          "ShortcutsOS": "NOT_RUN",
+          "actualSystemGalleryLocators": "UNQUALIFIED_UNTIL_REAL_PILOT",
+          "portableReaderAndFixtureTests": "Reused only from the required independently reviewed source commit; not rerun here.",
+          "scope": "Only the two NS-owner/three-NS-background iPad Simulator pilots. Mixed engines, iPhone, physical device, locking, restoration and the remaining Scriptable matrix stay separate."
+        }
+      }
+    },
+    "docs/two-wave-integration/20261127/widget-recovery-os-source-validation.json": {
+      "blob": "c2589164e13bbf09f92fa0f6f2cfe1b385c2231d",
+      "bytes": 15369,
+      "sha256": "bcb76dba24e7072ae44de0814d7ecfada6ca523a5906b7bf8c01a25f72ab87b4",
+      "value": {
+        "schemaVersion": 1,
+        "scope": "Standalone MiniApps real WidgetKit failure and recovery, one systemMedium Simulator pilot",
+        "parentSourceCommit": "8ec36373651c8cdb28a62cbdfd202d2a0bc09b13",
+        "fixtureSourceCommit": "fb1e15992eaddfde42c88b20738ae8d543d48ba0",
+        "pinnedFixtureQualificationCommit": "8ec36373651c8cdb28a62cbdfd202d2a0bc09b13",
+        "nativeStatus": "NOT_RUN",
+        "osStatus": "NOT_RUN",
+        "originalRunner": {
+          "command": "PAIRED_TEST_SCOPE=miniapp_widget_recovery_os python3 Scripts/ProductSplit/run_paired_acceptance.py",
+          "selector": "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testMiniAppsPlacedWidgetRetainsLastGoodAfterRealFailureAndRecovers",
+          "shippingBundle": "com.itorah.hanlinminiapps",
+          "executionOwner": "/root/mac_build_resume",
+          "fixtureArchive": "Fixtures/Widgets/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo",
+          "fixtureArchiveSHA256": "e076a8543641d9721152d063b58e63a17d722a9d326a9dec742910496cb0a995",
+          "observationExchange": "Documents/HanlinSystemSurfaceObservation",
+          "behavior": "Imports through the real MiniApps UI, creates a fresh instance, places and configures an actual medium WidgetKit widget, terminates the host, taps Fail refresh, verifies fresh correlated fallback, waits for the authored retry boundary, then taps the cached Recover control.",
+          "requiredEnvironment": {
+            "SPLIT_EVIDENCE": "A fresh absolute evidence root owned by the original Mac controller; the runner creates paired-product with exist_ok=False."
+          },
+          "runtimeSelection": "Use the actual owned installed runtime through the original PAIRED_SIM_RUNTIME option. The last independently observed runtime was com.apple.CoreSimulator.SimRuntime.iOS-27-2; admission remains with the Mac owner."
+        },
+        "observationBoundary": [
+          "Current installed app, data container, configured AppGroup, canonical enabled catalog, installed generation, fresh instance, exact fixture source, eight published families, program and cached render are verified read-only.",
+          "The observer starts only its own read-only Simulator system log stream. The native fallback event must bind exact identity, generation, family, program, failed state revision, retained render, actual PID and installed WidgetKit process path.",
+          "The failed state must commit one fresh action nonce while the previously verified cache remains unchanged. Recovery requires the actual second UI callback, second nonce, count 2, fail false, retryAfter 0 and a new render after recovery was armed.",
+          "A passive render after the authored 90-second retry boundary cannot qualify recovery.",
+          "Immediately before terminal output, actual MCM roots, configuration, app Info digest and installed extension path/configuration are resolved again and must match the admitted identity.",
+          "Only the original XCTest runner observation response and external evidence are written; no production catalog, grants, commands, queues, snapshots or native receipts are seeded."
+        ],
+        "preserved": [
+          "All fourteen existing system-surface UI test methods and their helper behavior remain; one additive method is selected only by the new scope.",
+          "The original paired 54 selectors, other existing scopes and original verify_selected_tests.py verifier remain.",
+          "The existing fourteen observer unit methods remain, with six additional pure negative controls. Unit fixture records are not Simulator evidence.",
+          "This four-file acceptance-only patch does not change the native product, runtime producer, package source, dependency pins, frozen ScriptWidget or ScriptUI engines."
+        ],
+        "pilotLimits": [
+          "The Swift UI additions have not yet compiled or executed in Xcode.",
+          "Actual gallery/medium-family/configuration locators and NDJSON record field provenance must be confirmed by the genuine Mac pilot.",
+          "This one systemMedium Simulator case does not close the other seven Widget families, portrait/tint modes, network or corrupt-package failures, ActivityKit regions, physical-device acceptance or the complete Asana matrix."
+        ],
+        "reviewHistory": [
+          "Independent reviewer identified a final container-readback gap and missing strict catalog generation type; both were corrected before final review and the final portable receipt."
+        ],
+        "sourceClosure": {
+          "manifestPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/host-2a0b19b7-pass-and-native-seal/sdk/miniapp-sdk.json",
+          "manifestSHA256": "0433011cae7beb42504e4bb29b18bb722e21d9a31cc5aae7324eba67b70afcc7",
+          "sourceInputs": 392,
+          "actualChangedPaths": [
+            "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+            "Scripts/ProductSplit/Tests/test_shortcut_surface_observer.py",
+            "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+            "Scripts/ProductSplit/run_paired_acceptance.py"
+          ],
+          "intersection": [],
+          "diffSHA256": "32c2c7bdcc71b706c1c7b9c0e7c9ac0a5561e6411dcb5ce1d45572b0442ba696",
+          "boundary": "This compares exact changed-path membership against the retained actual 392-input producer manifest. It does not claim the older runtime artifact qualifies the newer native diagnostic; the Mac owner owns that fresh qualification."
+        },
+        "recordedAtUTC": "2026-11-27T04:40:48.126029+00:00",
+        "actualPortableValidation": {
+          "receipt": {
+            "schema": 1,
+            "sourceHead": "8ec36373651c8cdb28a62cbdfd202d2a0bc09b13",
+            "elapsedSeconds": 0.17466941569000483,
+            "command": [
+              "python3",
+              "-B",
+              "-m",
+              "unittest",
+              "discover",
+              "-s",
+              "Scripts/ProductSplit/Tests",
+              "-p",
+              "test_shortcut_surface_observer.py",
+              "-v"
+            ],
+            "returncode": 0,
+            "files": {
+              "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift": "13d5196e224fd7f2dfe251d8fbef45f31c5a773134de258f3adcda89eacf40a9",
+              "Scripts/ProductSplit/Tests/test_shortcut_surface_observer.py": "4581c3cf410440a8dd6d279dab30c4d5c384d055ee49e8a84ea06f582dfd7e85",
+              "Scripts/ProductSplit/observe_shortcut_surfaces.py": "72530c9c8f70b6eb35572e2d4180ac2d0161d1a641c08d1e49505554d021b65c",
+              "Scripts/ProductSplit/run_paired_acceptance.py": "0c1f348c310c7654ceb9eb600f27ae1ead0247161ae144eb644a9f0343efb9fa"
+            },
+            "logs": {
+              "observer-tests.stdout": {
+                "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/widget-recovery-os-candidate-8ec36373/final-review/observer-tests.stdout",
+                "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+              },
+              "observer-tests.stderr": {
+                "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/widget-recovery-os-candidate-8ec36373/final-review/observer-tests.stderr",
+                "sha256": "e39727f14c35a011282fb44c77e27462b71347cbfa3bd9d26b20d70e7a7de2a8"
+              }
+            },
+            "native": "NOT_RUN",
+            "OS": "NOT_RUN",
+            "recordedAtUTC": "2026-11-27T04:30:42.405482+00:00"
+          },
+          "receiptSHA256": "546d2e46ae73b8f5ac11fa4e8ccc5bcc0fd389b9da9372bd6cb899c85cf4547b",
+          "assertedResult": {
+            "tests": 20,
+            "failures": 0,
+            "errors": 0,
+            "skips": 0
+          },
+          "logs": {
+            "observer-tests.stdout": {
+              "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+              "text": ""
+            },
+            "observer-tests.stderr": {
+              "sha256": "e39727f14c35a011282fb44c77e27462b71347cbfa3bd9d26b20d70e7a7de2a8",
+              "text": "test_current_expo_result_qualifies_only_its_exact_challenge (test_shortcut_surface_observer.ShortcutEvidenceControls.test_current_expo_result_qualifies_only_its_exact_challenge) ... ok\ntest_current_identity_and_exact_native_payload_are_required (test_shortcut_surface_observer.ShortcutEvidenceControls.test_current_identity_and_exact_native_payload_are_required) ... ok\ntest_duplicate_execution_and_unmatched_private_result_fail (test_shortcut_surface_observer.ShortcutEvidenceControls.test_duplicate_execution_and_unmatched_private_result_fail) ... ok\ntest_native_window_and_mode_are_independently_bound (test_shortcut_surface_observer.ShortcutEvidenceControls.test_native_window_and_mode_are_independently_bound) ... ok\ntest_original_wire_format_preserves_unicode_and_types (test_shortcut_surface_observer.ShortcutEvidenceControls.test_original_wire_format_preserves_unicode_and_types) ... ok\ntest_os_delivery_and_mode_cannot_be_inferred (test_shortcut_surface_observer.ShortcutEvidenceControls.test_os_delivery_and_mode_cannot_be_inferred) ... ok\ntest_pending_and_preexisting_invocations_cannot_pass (test_shortcut_surface_observer.ShortcutEvidenceControls.test_pending_and_preexisting_invocations_cannot_pass) ... ok\ntest_primary_catalog_requires_enabled_current_supported_action (test_shortcut_surface_observer.ShortcutEvidenceControls.test_primary_catalog_requires_enabled_current_supported_action) ... ok\ntest_returned_and_private_scalar_types_cannot_coerce (test_shortcut_surface_observer.ShortcutEvidenceControls.test_returned_and_private_scalar_types_cannot_coerce) ... ok\ntest_run_path_and_preparation_schema_are_strict (test_shortcut_surface_observer.ShortcutEvidenceControls.test_run_path_and_preparation_schema_are_strict) ... ok\ntest_self_reported_engine_labels_without_outputs_cannot_pass (test_shortcut_surface_observer.ShortcutEvidenceControls.test_self_reported_engine_labels_without_outputs_cannot_pass) ... ok\ntest_snapshot_hash_and_links_are_checked (test_shortcut_surface_observer.ShortcutEvidenceControls.test_snapshot_hash_and_links_are_checked) ... ok\ntest_terminal_failure_or_cancellation_never_qualifies (test_shortcut_surface_observer.ShortcutEvidenceControls.test_terminal_failure_or_cancellation_never_qualifies) ... ok\ntest_ui_configured_input_rejects_consistently_coerced_native_results (test_shortcut_surface_observer.ShortcutEvidenceControls.test_ui_configured_input_rejects_consistently_coerced_native_results) ... ok\ntest_actual_event_fields_must_match_one_current_failed_render (test_shortcut_surface_observer.WidgetRecoveryObservationTests.test_actual_event_fields_must_match_one_current_failed_render) ... ok\ntest_foreign_identity_generation_family_program_revision_render_and_process_are_rejected (test_shortcut_surface_observer.WidgetRecoveryObservationTests.test_foreign_identity_generation_family_program_revision_render_and_process_are_rejected) ... ok\ntest_nonce_and_other_instance_changes_cannot_self_validate (test_shortcut_surface_observer.WidgetRecoveryObservationTests.test_nonce_and_other_instance_changes_cannot_self_validate) ... ok\ntest_old_event_and_event_after_authored_failure_window_are_rejected (test_shortcut_surface_observer.WidgetRecoveryObservationTests.test_old_event_and_event_after_authored_failure_window_are_rejected) ... ok\ntest_passive_clock_expiry_cannot_satisfy_a_recover_callback (test_shortcut_surface_observer.WidgetRecoveryObservationTests.test_passive_clock_expiry_cannot_satisfy_a_recover_callback) ... ok\ntest_widget_request_requires_its_fresh_ui_created_instance_and_exact_scope (test_shortcut_surface_observer.WidgetRecoveryObservationTests.test_widget_request_requires_its_fresh_ui_created_instance_and_exact_scope) ... ok\n\n----------------------------------------------------------------------\nRan 20 tests in 0.028s\n\nOK\n"
+            }
+          }
+        },
+        "independentReview": {
+          "reviewer": "/root/w1_review_resume",
+          "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/widget-recovery-os-candidate-8ec36373/final-review/independent-w1-source-review.json",
+          "sha256": "307fefad5082f42cc7b625304b4a83481874d29f1332f4e6e166847d714e32a0",
+          "receipt": {
+            "schema": 1,
+            "reviewer": "/root/w1_review_resume",
+            "sourceHead": "8ec36373651c8cdb28a62cbdfd202d2a0bc09b13",
+            "decision": "APPROVED_ADDITIVE_WIDGET_OS_ACCEPTANCE_SOURCE_NATIVE_OS_PENDING",
+            "files": {
+              "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift": "13d5196e224fd7f2dfe251d8fbef45f31c5a773134de258f3adcda89eacf40a9",
+              "Scripts/ProductSplit/Tests/test_shortcut_surface_observer.py": "4581c3cf410440a8dd6d279dab30c4d5c384d055ee49e8a84ea06f582dfd7e85",
+              "Scripts/ProductSplit/observe_shortcut_surfaces.py": "72530c9c8f70b6eb35572e2d4180ac2d0161d1a641c08d1e49505554d021b65c",
+              "Scripts/ProductSplit/run_paired_acceptance.py": "0c1f348c310c7654ceb9eb600f27ae1ead0247161ae144eb644a9f0343efb9fa"
+            },
+            "proof": {
+              "receiptSHA256": "546d2e46ae73b8f5ac11fa4e8ccc5bcc0fd389b9da9372bd6cb899c85cf4547b",
+              "stderrSHA256": "e39727f14c35a011282fb44c77e27462b71347cbfa3bd9d26b20d70e7a7de2a8",
+              "originalCommand": [
+                "python3",
+                "-B",
+                "-m",
+                "unittest",
+                "discover",
+                "-s",
+                "Scripts/ProductSplit/Tests",
+                "-p",
+                "test_shortcut_surface_observer.py",
+                "-v"
+              ],
+              "executedBy": "/root/w2_source_resume",
+              "tests": 20,
+              "failures": 0,
+              "skips": 0,
+              "exitCode": 0,
+              "unitSeconds": 0.028,
+              "reviewerReranTests": false
+            },
+            "preservation": {
+              "originalTestPlansASTEqual": true,
+              "originalReaderTestDefinitionsASTEqual": true,
+              "all14OriginalUIMethodBodiesBytePreserved": true,
+              "original54SelectorsUnchanged": true,
+              "productionWritesByObserver": false
+            },
+            "reviewed": [
+              "Current primary catalog, supported entrypoint and source artifact SHA are bound to the UI-created instance; generation is an exact integer.",
+              "Failure requires a fresh actual WidgetKit process event matching identity, generation, family, program, revision, render and PID/path, plus the exact retained last-good cache.",
+              "Recovery requires an actual Recover action nonce, revision/count update, clearing fail/retryAfter and a fresh rendered artifact; passive clock expiry does not pass.",
+              "Immediately before terminal completion, actual app/data/group/extensions/configuration/infoSHA256 and installed widget extension executable identity are re-resolved and compared.",
+              "Only the existing runner exchange and separate evidence are written; no production queue, receipts, widget state or success evidence is seeded.",
+              "Original read-only artifact schema was checked against HanlinScriptExtensionStore.storeArtifact and the existing last-successful cache Codable contract."
+            ],
+            "limits": {
+              "native": "NOT_RUN",
+              "OS": "NOT_RUN",
+              "acceptanceScope": "One systemMedium Matrix widget in the existing standalone MiniApps iPad Simulator companion. Real gallery placement/configuration, observed family, process log and interaction require the original native pilot. Other families, appearance/orientation, device, network and corrupt-input gates remain separate."
+            }
+          }
+        },
+        "installedLogFormatEvidence": {
+          "owner": "/root/mac_build_resume",
+          "source": "Actual installed iOS27.2 runtime24B8117 /usr/bin/log help strings, read-only; no Simulator boot or log stream was run for this lookup.",
+          "binarySHA256": "49ac442bec9beb3a00801f9ee17976eb0e7637b0007fb2f475913721942ccdc4",
+          "supportedStyle": "ndjson",
+          "fieldStrings": [
+            "processImagePath",
+            "processID"
+          ],
+          "actualRecordStatus": "NOT_YET_OBSERVED"
+        }
+      }
+    }
+  }
+}

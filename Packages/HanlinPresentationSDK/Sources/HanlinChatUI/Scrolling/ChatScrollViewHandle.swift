@@ -17,6 +17,9 @@ public final class ChatScrollViewHandle {
     public private(set) var generation = UUID()
     private var deliveredGeneration: UUID?
     private var readinessTask: Task<Void, Never>?
+    private var positionReadTask: Task<Void, Never>?
+    private var positionReadID: UUID?
+    private var positionReadAction: (@MainActor (ChatAutoFollowPosition) -> Void)?
 
     /// A scroll view can move between windows or change its viewport without
     /// being replaced. Neither content size nor offset belongs here: streaming
@@ -115,6 +118,42 @@ public final class ChatScrollViewHandle {
         readinessTask?.cancel()
         readinessTask = nil
         deliveredGeneration = nil
+        positionReadTask?.cancel()
+        clearPositionRead()
+    }
+
+    /// Coalesce native layout/geometry notifications into one read after the
+    /// current callback returns. Unlike attachment readiness, content and offset
+    /// changes may request another read within the same viewport generation.
+    /// No cached geometry is published and this never repositions the scroll view.
+    /// One yield is not a guarantee that every lazy layout pass is finished;
+    /// further real notifications request another current native sample.
+    @discardableResult
+    public func readPositionAfterLayout(conversationID: UUID,
+                                        action: @escaping @MainActor (ChatAutoFollowPosition) -> Void) -> Task<Void, Never>? {
+        guard activeConversationID == conversationID, boundConversationID == conversationID,
+              layout(conversationID: conversationID) != nil else { return nil }
+        positionReadAction = action
+        if let positionReadTask { return positionReadTask }
+        let expectedGeneration = generation
+        let requestID = UUID()
+        positionReadID = requestID
+        positionReadTask = Task { @MainActor [weak self] in
+            await Task.yield()
+            guard let self, !Task.isCancelled, self.positionReadID == requestID else { return }
+            let action = self.positionReadAction
+            self.clearPositionRead()
+            guard let position = self.position(conversationID: conversationID,
+                                               expectedGeneration: expectedGeneration) else { return }
+            action?(position)
+        }
+        return positionReadTask
+    }
+
+    private func clearPositionRead() {
+        positionReadTask = nil
+        positionReadID = nil
+        positionReadAction = nil
     }
 
     private func refreshViewport() {
@@ -137,6 +176,18 @@ public final class ChatScrollViewHandle {
         return position.isNearBottom == nil ? nil : position
     }
 
+    /// Diagnostic-only observation of the current native geometry. Unlike an
+    /// admitted position read, this must not refresh the viewport lifetime,
+    /// cancel readiness, or affect whether a queued scroll can execute.
+    public func peekPosition(conversationID: UUID) -> ChatAutoFollowPosition? {
+        guard activeConversationID == conversationID,
+              boundConversationID == conversationID,
+              let scrollView, scrollView.window != nil,
+              let layout = Self.snapshotLayout(of: scrollView) else { return nil }
+        let position = ChatAutoFollowPosition(layout: layout, contentOffsetY: Double(scrollView.contentOffset.y))
+        return position.isNearBottom == nil ? nil : position
+    }
+
     /// Re-read UIKit at execution time. A cached SwiftUI geometry notification
     /// can belong to the previous window, split-view width or conversation.
     public func layout(conversationID: UUID, expectedGeneration: UUID? = nil) -> ChatAutoFollowLayout? {
@@ -148,6 +199,12 @@ public final class ChatScrollViewHandle {
         refreshViewport()
         guard expectedGeneration == nil || expectedGeneration == generation,
               let scrollView, scrollView.window != nil else { return nil }
+        return Self.snapshotLayout(of: scrollView)
+    }
+
+    /// Shared finite-value validation only; reading UIKit properties here does
+    /// not change this handle's attachment, generation or pending readiness.
+    private static func snapshotLayout(of scrollView: UIScrollView) -> ChatAutoFollowLayout? {
         let bounds = scrollView.bounds
         let content = scrollView.contentSize
         let offset = scrollView.contentOffset

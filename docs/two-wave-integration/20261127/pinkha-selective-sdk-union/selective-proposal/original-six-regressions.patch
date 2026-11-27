@@ -1,0 +1,275 @@
+--- a/AI_HLYTests/ChatAutoFollowTests.swift
++++ b/AI_HLYTests/ChatAutoFollowTests.swift
+@@ -1,6 +1,7 @@
+ import Foundation
++import Observation
+ import Testing
+ @testable import AI_Hanlin
+ 
+ @MainActor
+ @Suite("Original-chat scroll coalescing", .timeLimit(.minutes(1)))
+@@ -273,10 +274,59 @@
+         #expect(!controller.showsScrollToBottomButton && controller.mode == .following)
+         controller.updatePosition(.init(layout: Self.longLayout, contentOffsetY: .nan))
+         #expect(!controller.showsScrollToBottomButton && controller.latestLayout == nil)
+     }
+ 
++    @Test func equalVisibilitySamplesDoNotInvalidateTheTranscriptOrExternalComposer() {
++        let controller = ChatAutoFollowController()
++        controller.updatePosition(.init(layout: Self.longLayout, contentOffsetY: 0))
++        let invalidations = ObservationInvalidations()
++        withObservationTracking {
++            _ = controller.showsScrollToBottomButton
++        } onChange: {
++            invalidations.record()
++        }
++
++        for index in 0..<100 {
++            let layout = ChatAutoFollowLayout(contentHeight: 2_000 + Double(index),
++                viewportHeight: 1_318, topInset: 108, bottomInset: 0)
++            controller.updatePosition(.init(layout: layout, contentOffsetY: Double(index)))
++        }
++        #expect(invalidations.count == 0,
++            "Changing lazy height estimates and offsets must not redraw readers while arrow visibility is unchanged")
++        #expect(controller.showsScrollToBottomButton)
++        controller.updatePosition(.init(layout: Self.longLayout, contentOffsetY: 682))
++        #expect(invalidations.count == 1, "The actual bottom crossing must notify the composer")
++        #expect(!controller.showsScrollToBottomButton)
++    }
++
++    @Test func fittingAndInvalidatedSamplesDoNotPublishRepeatedHiddenArrowState() {
++        let controller = ChatAutoFollowController()
++        let invalidations = ObservationInvalidations()
++        withObservationTracking {
++            _ = controller.showsScrollToBottomButton
++        } onChange: {
++            invalidations.record()
++        }
++        for height in [100.0, 140.0, 80.0] {
++            controller.updatePosition(.init(layout: .init(contentHeight: height,
++                viewportHeight: 600, topInset: 0, bottomInset: 0), contentOffsetY: 0))
++            controller.invalidateLayout()
++        }
++        #expect(invalidations.count == 0)
++        controller.updatePosition(.init(layout: Self.longLayout, contentOffsetY: 0))
++        #expect(invalidations.count == 1, "A newly scrollable transcript must still publish its arrow")
++        #expect(controller.showsScrollToBottomButton)
++    }
++
++    private final class ObservationInvalidations: @unchecked Sendable {
++        private let lock = NSLock()
++        private var recorded = 0
++        var count: Int { lock.withLock { recorded } }
++        func record() { lock.withLock { recorded += 1 } }
++    }
++
+     @MainActor private final class Gate {
+         private(set) var starts = 0
+         private var releases: [CheckedContinuation<Void, Never>] = []
+         private var observers: [(Int, CheckedContinuation<Void, Never>)] = []
+ 
+--- a/AI_HLYTests/ChatScrollViewHandleTests.swift
++++ b/AI_HLYTests/ChatScrollViewHandleTests.swift
+@@ -230,10 +230,49 @@
+ 
+         scrollView.removeFromSuperview()
+         #expect(handle.position(conversationID: conversationID) == nil)
+     }
+ 
++    @Test func diagnosticPeekCannotAdvanceGenerationOrCancelPendingReadiness() async throws {
++        let conversationID = UUID()
++        let handle = ChatScrollViewHandle()
++        let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 800, height: 600))
++        let scrollView = UIScrollView(frame: window.bounds)
++        window.addSubview(scrollView)
++        scrollView.contentSize = CGSize(width: 800, height: 2_000)
++        scrollView.contentInset.bottom = 20
++        scrollView.contentOffset.y = 300
++        handle.activate(conversationID: conversationID)
++        handle.bind(scrollView, conversationID: conversationID)
++        let generation = handle.generation
++        var calls = 0
++        let pending = try #require(handle.whenReady(conversationID: conversationID) { calls += 1 })
++
++        // UIKit has resized, but the bridge has not refreshed the lifetime yet.
++        scrollView.bounds.size.height = 320
++        let observed = try #require(handle.peekPosition(conversationID: conversationID))
++        #expect(observed.layout.viewportHeight == 320 && observed.contentOffsetY == 300)
++        #expect(handle.generation == generation && !pending.isCancelled)
++        #expect(scrollView.contentOffset.y == 300)
++        #expect(handle.peekPosition(conversationID: UUID()) == nil)
++        scrollView.bounds.size.height = 0
++        #expect(handle.peekPosition(conversationID: conversationID) == nil)
++        #expect(handle.generation == generation && !pending.isCancelled)
++        scrollView.bounds.size.height = 320
++
++        // Only the normal admission read advances generation and rejects work
++        // captured for the old viewport. Diagnostics cannot do that first.
++        #expect(handle.position(conversationID: conversationID, expectedGeneration: generation) == nil)
++        #expect(handle.generation != generation && pending.isCancelled)
++        await pending.value
++        #expect(calls == 0)
++        #expect(handle.position(conversationID: conversationID) == observed)
++        let current = try #require(handle.whenReady(conversationID: conversationID) { calls += 1 })
++        await current.value
++        #expect(calls == 1)
++    }
++
+     @Test func incomingBindingBeforeActivationDoesNotNeedAnotherBridgeCallback() throws {
+         let previousConversation = UUID(), currentConversation = UUID()
+         let handle = ChatScrollViewHandle()
+         let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 800, height: 600))
+         let previous = UIScrollView(frame: window.bounds)
+@@ -249,6 +288,152 @@
+         handle.activate(conversationID: currentConversation)
+         handle.bind(nil, conversationID: previousConversation)
+         let current = try #require(handle.layout(conversationID: currentConversation))
+         #expect(current.contentHeight == 3_000)
+     }
++
++    @Test func postLayoutReadReconcilesLazyContentAtTheSameOffsetWithoutAnotherIdle() async throws {
++        let conversationID = UUID()
++        let handle = ChatScrollViewHandle()
++        let controller = ChatAutoFollowController()
++        let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 420, height: 702))
++        let scrollView = UIScrollView(frame: window.bounds)
++        window.addSubview(scrollView)
++        scrollView.contentInsetAdjustmentBehavior = .never
++        scrollView.contentSize = CGSize(width: 420, height: 5_840)
++        scrollView.contentOffset.y = 4_335
++        handle.activate(conversationID: conversationID)
++        handle.bind(scrollView, conversationID: conversationID)
++        let generation = handle.generation
++        let ready = try #require(handle.whenReady(conversationID: conversationID) {})
++        await ready.value
++
++        controller.updatePosition(try #require(handle.position(conversationID: conversationID)))
++        controller.pauseFollowing(reason: "manualReading")
++        #expect(controller.showsScrollToBottomButton)
++        var deliveries = 0
++        var deliveredPosition: ChatAutoFollowPosition?
++        let pending = try #require(handle.readPositionAfterLayout(conversationID: conversationID) { position in
++            deliveries += 1
++            deliveredPosition = position
++            controller.updateNearBottom(position.isNearBottom == true)
++        })
++        let coalesced = try #require(handle.readPositionAfterLayout(conversationID: conversationID) { position in
++            deliveries += 1
++            deliveredPosition = position
++            controller.updateNearBottom(position.isNearBottom == true)
++        })
++        #expect(deliveries == 0, "Never publish inside the native layout callback")
++        scrollView.contentSize.height = 5_037
++        // The recorded SwiftUI viewport still reports 563 rather than the
++        // native 702. It admits layout growth but cannot determine bottom truth.
++        let swiftUILayout = ChatAutoFollowLayout(contentHeight: 5_037, viewportHeight: 563,
++                                                 topInset: 139, bottomInset: 0)
++        #expect(swiftUILayout.isNearBottom(contentOffsetY: 4_335) == false)
++        controller.updateLayout(swiftUILayout)
++        await pending.value
++        await coalesced.value
++        #expect(deliveries == 1 && !controller.showsScrollToBottomButton)
++        #expect(deliveredPosition?.layout.viewportHeight == 702)
++        #expect(controller.latestLayout == swiftUILayout, "Native position must preserve fresh growth admission")
++        #expect(controller.mode == .pausedByUser, "Observation must not resume a paused reader")
++        #expect(scrollView.contentOffset.y == 4_335 && handle.generation == generation)
++        #expect(handle.whenReady(conversationID: conversationID) {} == nil,
++                "Position reconciliation must not replay attachment readiness")
++
++        scrollView.contentSize.height = 5_840
++        let grew = try #require(handle.readPositionAfterLayout(conversationID: conversationID) { position in
++            controller.updateNearBottom(position.isNearBottom == true)
++        })
++        await grew.value
++        #expect(controller.showsScrollToBottomButton && controller.mode == .pausedByUser)
++
++        // Only an actual manual idle transition ends the interaction after the
++        // same native read. A later unrelated content resize cannot do this.
++        controller.userInteractionBegan()
++        let manualEnd = try #require(handle.readPositionAfterLayout(conversationID: conversationID) { position in
++            controller.updateNearBottom(position.isNearBottom == true)
++            controller.userInteractionEnded()
++        })
++        scrollView.contentSize.height = 5_037
++        await manualEnd.value
++        #expect(controller.mode == .following && !controller.state.isUserInteracting)
++        #expect(!controller.showsScrollToBottomButton && scrollView.contentOffset.y == 4_335)
++    }
++
++    @Test func olderFittingNativePositionCannotCancelAlreadyAdmittedGrowth() async throws {
++        let conversationID = UUID()
++        let handle = ChatScrollViewHandle()
++        let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 420, height: 702))
++        let scrollView = UIScrollView(frame: window.bounds)
++        window.addSubview(scrollView)
++        scrollView.contentInsetAdjustmentBehavior = .never
++        scrollView.contentSize = CGSize(width: 420, height: 500)
++        handle.activate(conversationID: conversationID)
++        handle.bind(scrollView, conversationID: conversationID)
++        let generation = handle.generation
++        let (gate, release) = AsyncStream<Void>.makeStream()
++        let controller = ChatAutoFollowController(waitBeforeScroll: {
++            var iterator = gate.makeAsyncIterator()
++            _ = await iterator.next()
++        })
++        let growth = ChatAutoFollowLayout(contentHeight: 1_200, viewportHeight: 563,
++                                         topInset: 139, bottomInset: 0)
++        controller.updateLayout(growth)
++        var calls = 0
++        let pending = try #require(controller.scheduleScroll(animated: false) { _ in
++            guard handle.layout(conversationID: conversationID,
++                                expectedGeneration: generation)?.hasScrollableContent == true else { return }
++            calls += 1
++        })
++        let observed = try #require(handle.readPositionAfterLayout(conversationID: conversationID) { position in
++            #expect(!position.layout.hasScrollableContent)
++            controller.updateNearBottom(position.isNearBottom == true)
++        })
++        await observed.value
++        #expect(controller.latestLayout == growth && calls == 0)
++        #expect(!controller.showsScrollToBottomButton)
++        // UIKit commits the content before the already scheduled request is
++        // admitted again against the real current viewport at execution time.
++        scrollView.contentSize.height = 1_200
++        release.yield(())
++        release.finish()
++        await pending.value
++        #expect(calls == 1 && handle.generation == generation)
++    }
++
++    @Test func postLayoutReadRejectsStaleViewportAndConversation() async throws {
++        let conversationID = UUID(), replacementID = UUID()
++        let handle = ChatScrollViewHandle()
++        let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 800, height: 600))
++        let scrollView = UIScrollView(frame: window.bounds)
++        window.addSubview(scrollView)
++        scrollView.contentSize = CGSize(width: 800, height: 2_000)
++        handle.activate(conversationID: conversationID)
++        handle.bind(scrollView, conversationID: conversationID)
++        var staleCalls = 0
++        let resized = try #require(handle.readPositionAfterLayout(conversationID: conversationID) { _ in
++            staleCalls += 1
++        })
++        scrollView.bounds.size.height = 300
++        await resized.value
++        #expect(staleCalls == 0)
++
++        let replaced = try #require(handle.readPositionAfterLayout(conversationID: conversationID) { _ in
++            staleCalls += 1
++        })
++        handle.deactivate()
++        handle.activate(conversationID: replacementID)
++        handle.bind(scrollView, conversationID: replacementID)
++        var currentCalls = 0
++        let current = try #require(handle.readPositionAfterLayout(conversationID: replacementID) { position in
++            currentCalls += 1
++            #expect(position.layout.viewportHeight == 300)
++        })
++        #expect(handle.readPositionAfterLayout(conversationID: conversationID) { _ in
++            staleCalls += 1
++        } == nil)
++        await replaced.value
++        await current.value
++        #expect(staleCalls == 0 && currentCalls == 1)
++    }
+ }

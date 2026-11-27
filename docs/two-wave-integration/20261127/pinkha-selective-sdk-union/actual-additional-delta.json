@@ -1,0 +1,134 @@
+{
+  "schema": "hanlin-g19-actual-additional-source-delta-v1",
+  "sourceArtifactSHA256": "a91d89d4d5be1ea51cc519b929eb40c2a04c1e2c75fcf1eaf65870ae50a76153",
+  "packages": {
+    "HanlinAgentSDK": {
+      "unionVsG19Count": 6,
+      "candidateChangedCount": 0,
+      "candidateAlreadyIdenticalInUnion": 0,
+      "candidateActuallyDifferent": []
+    },
+    "HanlinPresentationSDK": {
+      "unionVsG19Count": 40,
+      "candidateChangedCount": 24,
+      "candidateAlreadyIdenticalInUnion": 19,
+      "candidateActuallyDifferent": [
+        {
+          "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+          "baseToCandidate": "M",
+          "unionToCandidate": "M"
+        },
+        {
+          "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/ChatAutoFollowController.swift",
+          "baseToCandidate": "M",
+          "unionToCandidate": "M"
+        },
+        {
+          "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/ChatScrollViewHandle.swift",
+          "baseToCandidate": "M",
+          "unionToCandidate": "M"
+        },
+        {
+          "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/HanlinFollowLatestOverlay.swift",
+          "baseToCandidate": "A",
+          "unionToCandidate": "A"
+        },
+        {
+          "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/Localizable.xcstrings",
+          "baseToCandidate": "M",
+          "unionToCandidate": "M"
+        }
+      ]
+    },
+    "HanlinPlatform": {
+      "unionVsG19Count": 94,
+      "candidateChangedCount": 18,
+      "candidateAlreadyIdenticalInUnion": 12,
+      "candidateActuallyDifferent": [
+        {
+          "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinAISDKProviderFactory.swift",
+          "baseToCandidate": "M",
+          "unionToCandidate": "M"
+        },
+        {
+          "path": "Packages/HanlinPlatform/Sources/HanlinChatCore/HanlinChatStreamParser.swift",
+          "baseToCandidate": "M",
+          "unionToCandidate": "M"
+        },
+        {
+          "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationDelivery.swift",
+          "baseToCandidate": "M",
+          "unionToCandidate": "M"
+        },
+        {
+          "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinInvocationQueue.swift",
+          "baseToCandidate": "M",
+          "unionToCandidate": "M"
+        },
+        {
+          "path": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinNotificationEvent.swift",
+          "baseToCandidate": "A",
+          "unionToCandidate": "M"
+        },
+        {
+          "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinNotificationInvocationTests.swift",
+          "baseToCandidate": "A",
+          "unionToCandidate": "M"
+        }
+      ]
+    },
+    "HanlinAppExtensionsSDK": {
+      "unionVsG19Count": 9,
+      "candidateChangedCount": 2,
+      "candidateAlreadyIdenticalInUnion": 1,
+      "candidateActuallyDifferent": [
+        {
+          "path": "Packages/HanlinAppExtensionsSDK/Package.swift",
+          "baseToCandidate": "M",
+          "unionToCandidate": "M"
+        }
+      ]
+    },
+    "HanlinMiniAppsBridge": {
+      "unionVsG19Count": 5,
+      "candidateChangedCount": 0,
+      "candidateAlreadyIdenticalInUnion": 0,
+      "candidateActuallyDifferent": []
+    },
+    "HanlinNativeScriptRuntime": {
+      "unionVsG19Count": 18,
+      "candidateChangedCount": 167,
+      "candidateAlreadyIdenticalInUnion": 167,
+      "candidateActuallyDifferent": []
+    }
+  },
+  "otherAdditionalChanges": [
+    "M\tAI_HLY.xcodeproj/project.pbxproj",
+    "M\tAI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+    "M\tAI_HLY/ChatView.swift",
+    "M\tAI_HLY/Downstream/ChatCore/HanlinAppHostIntegration.swift",
+    "M\tAI_HLY/Downstream/ChatInput/HanlinComposerPopupCoordinator.swift",
+    "M\tAI_HLY/Downstream/ChatInput/HanlinComposerPopupView.swift",
+    "M\tAI_HLY/Downstream/ChatInput/OrganizerDock/HanlinCompactChatWorkspace.swift",
+    "M\tAI_HLY/Downstream/ChatInput/OrganizerDock/HanlinComposerSessionBridge.swift",
+    "M\tAI_HLY/Downstream/RuntimeCore/Node/NodeRuntimeService.swift",
+    "M\tAI_HLY/Downstream/SDK/HanlinApplicationLifecycle.swift",
+    "M\tAI_HLY/Downstream/SDK/HanlinConversationController.swift",
+    "M\tAI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
+    "M\tAI_HLY/Downstream/ScriptingPlatform/ScriptingPackageCenterViews.swift",
+    "M\tAI_HLY/ListView.swift",
+    "M\tAI_HLY/MainTabView.swift",
+    "M\tAI_HLY/Model/ChatMessages.swift",
+    "M\tAI_HLY/Model/ChatRecords.swift",
+    "M\tAI_HLY/Services/ChatServices/APIManager+LegacyTools.swift",
+    "M\tAI_HLY/Views/Components/ChatViewBottom.swift",
+    "M\tAI_HLY/Views/Components/ChatViewComponents.swift",
+    "M\tAI_HLYTests/ChatAutoFollowTests.swift",
+    "M\tAI_HLYTests/ChatScrollViewHandleTests.swift",
+    "M\tAI_HLYUITests/AgentRuntimeConversationUITests.swift",
+    "M\tAI_HLYUITests/HanlinSidebarNavigationUITests.swift",
+    "M\tHanlinMiniAppsApp/HanlinMiniAppsApp.swift",
+    "M\tPROJECT_BOARD.md",
+    "M\tPackage.swift"
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "base": "20a1e6fa33ed261ba11e83a0b84a157029822e5e",
+  "compiler": "NOT_RUN",
+  "explicitHandlerNativeRoute": "NOT_RUN",
+  "iPhoneAndIPadConsumerUI": "NOT_RUN",
+  "newOriginalRegressionMethods": 6,
+  "originalDonor": "3657b52ea9e72b8dc42819177dc8e1d865e8a6d3",
+  "originalHandlerBlobs": {
+    "AI_HLYTests/NativeScriptRuntimeWireTests.swift": "ab113355ec8b87b34bc07216806b08f005dc1c36",
+    "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m": "7bbc804da241fe31d6e860eaedd064a192b97e49"
+  },
+  "productionFiles": 4,
+  "rootReviewed": [
+    "Root read full selected production patch, full native scroll handle, all six original regression methods and independent latest-source audit.",
+    "Coalesced native layout reads retain original conversation/viewport generation and discard stale work; original invalidation cancels the pending read. Diagnostic peek changes no generation or readiness. Equal near-bottom Boolean samples no longer repeatedly invalidate observed readers.",
+    "Original overlay retains live anchor, unique current conversation and revalidates live selection. It does not itself qualify the originating transcript. Existing Anytype SDK host and G19 main App call-site adoption/runtime are separately scoped; no whole divergent main-App file is imported.",
+    "Every old locale byte and all1294 original entries survive; only the original Select-a-conversation member is added. The98 original entries absent in donor remain.",
+    "All original tests remain by addition-only inverse, including original no-handler/JavaScript-state regression. The six selected added methods are AI_HLYTests with UIKit/App requirements, not a claim of standalone macOS package execution.",
+    "Original20a worker/cancellation/Composer/provider/cache/context/widget/native-window/assistant/AX/renderer capability graph is retained. The donor synthetic demo handler is explicitly excluded. Five other package trees and all original locks stay identical."
+  ],
+  "sixRegressions": "NOT_RUN",
+  "sourceOnly": true,
+  "testFiles": 2
+}

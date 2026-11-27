@@ -1,0 +1,181 @@
+{
+  "schema": "hanlin-selective-three-scrolling-one-locale-source-proposal-v1",
+  "status": "LOCAL_SOURCE_PROPOSAL_ONLY_NOT_APPLIED_COMPILED_OR_TESTED",
+  "repository": "davidpovarsky/hanlin-ai",
+  "base": "20a1e6fa33ed261ba11e83a0b84a157029822e5e",
+  "donor": "3657b52ea9e72b8dc42819177dc8e1d865e8a6d3",
+  "sourceFiles": [
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/ChatAutoFollowController.swift",
+      "mode": "100644",
+      "before": {
+        "bytes": 10070,
+        "sha256": "b7c660481d9e0cbd687f8d209b7bfb07bf828c503556233005d1ebe55d027572",
+        "blob": "9a2cc2715c8ff1ad3861b075f2421e120ee370c2"
+      },
+      "after": {
+        "bytes": 10440,
+        "sha256": "789957a8ae0947482e8e1be4c6d2153cda51e764fc0a04f10a238712ae87c7a3",
+        "blob": "81df9f5594229717a277eb537da98554c83ae4da"
+      },
+      "afterEqualsOriginalDonor": true,
+      "literalInverse": [
+        {
+          "afterStartByte": 5441,
+          "afterEndByte": 5508,
+          "after": "        if !layout.hasScrollableContent { updateNearBottom(true) }\n",
+          "before": "        if !layout.hasScrollableContent { state.isNearBottom = true }\n"
+        },
+        {
+          "afterStartByte": 6160,
+          "afterEndByte": 6191,
+          "after": "        updateNearBottom(true)\n",
+          "before": "        state.isNearBottom = true\n"
+        },
+        {
+          "afterStartByte": 6255,
+          "afterEndByte": 6631,
+          "after": "        // A nested @Observable value mutation invalidates its readers even when\n        // the Boolean is unchanged. Geometry can emit hundreds of intermediate\n        // samples while a lazy transcript settles; only visibility transitions\n        // should ask its host and external composer to render again.\n        guard state.isNearBottom != isNearBottom else { return }\n",
+          "before": ""
+        }
+      ]
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/ChatScrollViewHandle.swift",
+      "mode": "100644",
+      "before": {
+        "bytes": 7806,
+        "sha256": "f11217b50d59fcf298d5a10c318b10425e5f78b421c1c332392591c4422cb87a",
+        "blob": "cd30d9ace495e615674b13cab9b3d7f6f7d527a5"
+      },
+      "after": {
+        "bytes": 10828,
+        "sha256": "b9ae9054976a0a425009287776a054b5aa0a6316a028daa7380a4774b4ca9056",
+        "blob": "6236230450c60b52060466b8e1fd98bc53779891"
+      },
+      "afterEqualsOriginalDonor": true,
+      "literalInverse": [
+        {
+          "afterStartByte": 787,
+          "afterEndByte": 961,
+          "after": "    private var positionReadTask: Task<Void, Never>?\n    private var positionReadID: UUID?\n    private var positionReadAction: (@MainActor (ChatAutoFollowPosition) -> Void)?\n",
+          "before": ""
+        },
+        {
+          "afterStartByte": 5210,
+          "afterEndByte": 7011,
+          "after": "        positionReadTask?.cancel()\n        clearPositionRead()\n    }\n\n    /// Coalesce native layout/geometry notifications into one read after the\n    /// current callback returns. Unlike attachment readiness, content and offset\n    /// changes may request another read within the same viewport generation.\n    /// No cached geometry is published and this never repositions the scroll view.\n    /// One yield is not a guarantee that every lazy layout pass is finished;\n    /// further real notifications request another current native sample.\n    @discardableResult\n    public func readPositionAfterLayout(conversationID: UUID,\n                                        action: @escaping @MainActor (ChatAutoFollowPosition) -> Void) -> Task<Void, Never>? {\n        guard activeConversationID == conversationID, boundConversationID == conversationID,\n              layout(conversationID: conversationID) != nil else { return nil }\n        positionReadAction = action\n        if let positionReadTask { return positionReadTask }\n        let expectedGeneration = generation\n        let requestID = UUID()\n        positionReadID = requestID\n        positionReadTask = Task { @MainActor [weak self] in\n            await Task.yield()\n            guard let self, !Task.isCancelled, self.positionReadID == requestID else { return }\n            let action = self.positionReadAction\n            self.clearPositionRead()\n            guard let position = self.position(conversationID: conversationID,\n                                               expectedGeneration: expectedGeneration) else { return }\n            action?(position)\n        }\n        return positionReadTask\n    }\n\n    private func clearPositionRead() {\n        positionReadTask = nil\n        positionReadID = nil\n        positionReadAction = nil\n",
+          "before": ""
+        },
+        {
+          "afterStartByte": 8077,
+          "afterEndByte": 8813,
+          "after": "    /// Diagnostic-only observation of the current native geometry. Unlike an\n    /// admitted position read, this must not refresh the viewport lifetime,\n    /// cancel readiness, or affect whether a queued scroll can execute.\n    public func peekPosition(conversationID: UUID) -> ChatAutoFollowPosition? {\n        guard activeConversationID == conversationID,\n              boundConversationID == conversationID,\n              let scrollView, scrollView.window != nil,\n              let layout = Self.snapshotLayout(of: scrollView) else { return nil }\n        let position = ChatAutoFollowPosition(layout: layout, contentOffsetY: Double(scrollView.contentOffset.y))\n        return position.isNearBottom == nil ? nil : position\n    }\n\n",
+          "before": ""
+        },
+        {
+          "afterStartByte": 9577,
+          "afterEndByte": 9888,
+          "after": "        return Self.snapshotLayout(of: scrollView)\n    }\n\n    /// Shared finite-value validation only; reading UIKit properties here does\n    /// not change this handle's attachment, generation or pending readiness.\n    private static func snapshotLayout(of scrollView: UIScrollView) -> ChatAutoFollowLayout? {\n",
+          "before": ""
+        }
+      ]
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Scrolling/HanlinFollowLatestOverlay.swift",
+      "mode": "100644",
+      "before": null,
+      "after": {
+        "bytes": 4612,
+        "sha256": "87fc88fbd778a9e91f3dc068b8bcfd0fba646cc81d7c0a005be7685520c3e85c",
+        "blob": "111be2b204ec04ac4b8649af239c60d0879300f6"
+      },
+      "afterEqualsOriginalDonor": true,
+      "literalInverse": []
+    },
+    {
+      "path": "Packages/HanlinPresentationSDK/Sources/HanlinLocalization/Resources/Localizable.xcstrings",
+      "mode": "100644",
+      "before": {
+        "bytes": 662667,
+        "sha256": "9437aa101dd2d12ad2e39471c6f76171750e6f4e2c83f01f21bbe47e1ef0186e",
+        "blob": "dfa5e1a4239a64f724b51beb74d1dcc55f35e26d"
+      },
+      "after": {
+        "bytes": 663208,
+        "sha256": "2c01a6ad6d31f81387dd7f1bcfac6f128421e9de2428ee74b690d0b58564d0ef",
+        "blob": "cee6132e927f81ac8d348b84983c16e322400f6a"
+      },
+      "donorFullFile": {
+        "bytes": 572439,
+        "sha256": "e2377b727a8c1d7246bdb259d339a8f8645ef8403a39856869c06a1c29ddd0b4",
+        "blob": "0ad4f2facf4b92efc71a7db296443f09dff43efd"
+      },
+      "afterEqualsOriginalDonor": false,
+      "literalInverse": [
+        {
+          "afterStartByte": 615008,
+          "afterEndByte": 615549,
+          "after": "    \"请选择一个对话\": {\n      \"extractionState\": \"manual\",\n      \"localizations\": {\n        \"en\": {\n          \"stringUnit\": {\n            \"state\": \"translated\",\n            \"value\": \"Select a conversation\"\n          }\n        },\n        \"he\": {\n          \"stringUnit\": {\n            \"state\": \"translated\",\n            \"value\": \"בחרו שיחה\"\n          }\n        },\n        \"zh-Hans\": {\n          \"stringUnit\": {\n            \"state\": \"translated\",\n            \"value\": \"请选择一个对话\"\n          }\n        }\n      }\n    },\n",
+          "before": ""
+        }
+      ],
+      "onlyAddedKey": "请选择一个对话",
+      "originalMembersRetained": 1294,
+      "canonicalMembersAbsentFromDonorButPreserved": 98,
+      "insertedBeforeExistingKey": "调整模型参数",
+      "addedValue": {
+        "extractionState": "manual",
+        "localizations": {
+          "en": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "Select a conversation"
+            }
+          },
+          "he": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "בחרו שיחה"
+            }
+          },
+          "zh-Hans": {
+            "stringUnit": {
+              "state": "translated",
+              "value": "请选择一个对话"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "pathCount": 4,
+  "scope": "Two existing shared scrolling files exactly match their original donor; one new original overlay file; one literal new localization member. No other source selected.",
+  "retainedOriginalNativeHandler": {
+    "path": "Packages/HanlinNativeScriptRuntime/Sources/HanlinNativeScriptCoreSupport/HanlinNativeServicesBridge.m",
+    "blob": "7bbc804da241fe31d6e860eaedd064a192b97e49"
+  },
+  "retainedOriginalExplicitHandlerTest": {
+    "path": "AI_HLYTests/NativeScriptRuntimeWireTests.swift",
+    "blob": "ab113355ec8b87b34bc07216806b08f005dc1c36"
+  },
+  "protectedPathsNotSelected": [
+    "Packages/HanlinAgentSDK",
+    "Packages/HanlinPlatform",
+    "Packages/HanlinAppExtensionsSDK",
+    "Packages/HanlinMiniAppsBridge",
+    "Packages/HanlinNativeScriptRuntime",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/Motion/HanlinAnimatedDisclosure.swift",
+    "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/CodeFences",
+    "Packages/HanlinPresentationSDK/Tests",
+    "AI_HLYTests/NativeScriptRuntimeWireTests.swift"
+  ],
+  "patch": {
+    "path": "/workspace/scratch/ae335eba85e3/miniapps-independent-hanlin-latest-review/selective-proposal/three-scrolling-one-localization.patch",
+    "bytes": 13041,
+    "sha256": "b3c0dea078f781deb37a3b543ae0c65d447bb1e28b9d85d7b9483bd5feaeb7a7",
+    "blob": "29c818bf184dbeba209a3478080ec53c7ff66344"
+  },
+  "executedCompilerOrTests": 0,
+  "gitOrRemoteMutations": false
+}

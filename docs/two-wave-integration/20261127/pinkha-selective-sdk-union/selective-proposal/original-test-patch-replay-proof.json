@@ -1,0 +1,48 @@
+{
+  "schema": "hanlin-local-original-six-test-source-patch-replay-v1",
+  "status": "PASS_ADDITION_ONLY_SOURCE_PATCH_REPLAY_NOT_TEST_EXECUTION",
+  "sourceInventorySHA256": "569caf6f0eea30e2cb8840558e1a4fbebca2acef2e70dac510877124f8948063",
+  "patchSHA256": "c55072374d2eaf4f1591624e45a0c9a43d085c1390a2e154b62f9b6121742589",
+  "originalFilesRetainedExactly": 2,
+  "newOriginalTestMethods": 6,
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "apply",
+        "--check",
+        "/workspace/scratch/ae335eba85e3/miniapps-independent-hanlin-latest-review/selective-proposal/original-six-regressions.patch"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "apply",
+        "/workspace/scratch/ae335eba85e3/miniapps-independent-hanlin-latest-review/selective-proposal/original-six-regressions.patch"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "apply",
+        "--reverse",
+        "/workspace/scratch/ae335eba85e3/miniapps-independent-hanlin-latest-review/selective-proposal/original-six-regressions.patch"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "compiledOrExecutedNativeTests": 0,
+  "gitRepositoryCreated": false,
+  "remoteOrProductSourceChanged": false
+}

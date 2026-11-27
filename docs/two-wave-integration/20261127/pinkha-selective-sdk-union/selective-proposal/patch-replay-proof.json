@@ -1,0 +1,50 @@
+{
+  "schema": "hanlin-local-four-source-patch-replay-v1",
+  "status": "PASS_EXACT_PATCH_AND_INVERSE_ONLY_NOT_PRODUCT_TEST",
+  "sourceProofSHA256": "3e0c238aa36f56710e6afb67e35e98f11db08eb330d483e6d485dbd315e15823",
+  "patchSHA256": "b3c0dea078f781deb37a3b543ae0c65d447bb1e28b9d85d7b9483bd5feaeb7a7",
+  "commands": [
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "apply",
+        "--check",
+        "/workspace/scratch/ae335eba85e3/miniapps-independent-hanlin-latest-review/selective-proposal/three-scrolling-one-localization.patch"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "apply",
+        "/workspace/scratch/ae335eba85e3/miniapps-independent-hanlin-latest-review/selective-proposal/three-scrolling-one-localization.patch"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "argv": [
+        "git",
+        "--no-optional-locks",
+        "apply",
+        "--reverse",
+        "/workspace/scratch/ae335eba85e3/miniapps-independent-hanlin-latest-review/selective-proposal/three-scrolling-one-localization.patch"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "appliedSourceFilesExactly": 4,
+  "originalFilesRestoredExactly": 3,
+  "newFileAbsentAfterReverse": true,
+  "location": "Temporary local reviewer directory; removed after audit",
+  "gitRepositoryCreated": false,
+  "productOrRemoteSourceChanged": false,
+  "compiledOrExecutedNativeTests": false
+}
