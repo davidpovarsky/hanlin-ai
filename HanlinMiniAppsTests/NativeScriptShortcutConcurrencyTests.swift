@@ -42,18 +42,23 @@ final class NativeScriptShortcutConcurrencyTests: XCTestCase {
         let nonces = (0..<3).map { "reverse-\($0)-\(UUID().uuidString)" }
         let platforms = packages.map { _ in fixture.platform(observations: observations) }
         let commands = try zip(packages, nonces).map { try fixture.command($0.0, nonce: $0.1) }
-        var returned: [String: Probe] = [:]
-        try await withThrowingTaskGroup(of: Completed.self, returning: Void.self) { group in
+        let returned: [String: Probe] = try await withThrowingTaskGroup(
+            of: Completed.self, returning: [String: Probe].self
+        ) { (group: inout ThrowingTaskGroup<Completed, any Error>) async throws -> [String: Probe] in
+            var completedByNonce: [String: Probe] = [:]
             for index in commands.indices {
-                let platform = platforms[index], command = commands[index], nonce = nonces[index]
-                group.addTask { @MainActor in
-                    let value = try await platform.executeShortcutCommand(command)
+                let platform: HanlinScriptingPlatform = platforms[index]
+                let command: HanlinScriptResumeCommand = commands[index]
+                let nonce: String = nonces[index]
+                let operation: @MainActor @Sendable () async throws -> Completed = {
+                    let value: HanlinValue = try await platform.executeShortcutCommand(command)
                     return Completed(nonce: nonce, value: value)
                 }
+                group.addTask(operation: operation)
             }
             try await observations.wait(for: Set(nonces))
             XCTAssertEqual(HanlinNativeScriptWindowFactoryRegistry.openWindowCount(), 4)
-            let started = try nonces.map { try XCTUnwrap(observations.started[$0]) }
+            let started: [Probe] = try nonces.map { try XCTUnwrap(observations.started[$0]) }
             XCTAssertEqual(Set(started.map(\.windowID)).count, 3)
             XCTAssertEqual(Set(started.map(\.statePath)).count, 3)
             XCTAssertEqual(Set(started.map(\.sourcePath)).count, 3)
@@ -68,11 +73,11 @@ final class NativeScriptShortcutConcurrencyTests: XCTestCase {
             }
             for index in commands.indices.reversed() {
                 try release(started[index])
-                let next = try await group.next()
-                let completed = try XCTUnwrap(next)
+                let next: Completed? = try await group.next()
+                let completed: Completed = try XCTUnwrap(next)
                 XCTAssertEqual(completed.nonce, nonces[index])
-                let probe = try decode(completed.value)
-                returned[completed.nonce] = probe
+                let probe: Probe = try decode(completed.value)
+                completedByNonce[completed.nonce] = probe
                 XCTAssertEqual(probe.stored, nonces[index])
                 XCTAssertEqual(probe.windowID, started[index].windowID)
                 XCTAssertEqual(try fixture.extensions.receipt(for: commands[index].id)?.status, .succeeded)
@@ -81,6 +86,7 @@ final class NativeScriptShortcutConcurrencyTests: XCTestCase {
                 XCTAssertTrue(foreground.activeNativeScriptController === controller)
                 XCTAssertTrue(controller.view.window === surface.window)
             }
+            return completedByNonce
         }
 
         // Duplicate delivery must read the durable receipt, without a new JS window.
