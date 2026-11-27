@@ -1,0 +1,170 @@
+{
+  "schema": 1,
+  "recordedAtUTC": "2026-11-27T16:14:13.814772+00:00",
+  "scope": "Original contextual text tools UI acceptance",
+  "runID": 46007700830,
+  "jobID": 140535130609,
+  "sourceCommit": "d165b9fc6a1c4e810a21957c063bfeae52eecb59",
+  "job": {
+    "status": "completed",
+    "conclusion": "success",
+    "started_at": "2026-11-27T14:17:02Z",
+    "completed_at": "2026-11-27T15:24:26Z",
+    "head_sha": "d165b9fc6a1c4e810a21957c063bfeae52eecb59",
+    "name": "Launch full app on iPad Simulator"
+  },
+  "jobMetadataSHA256": "d7e53bd2a73f100edac9d85ac541cc3630e51cce5f8e501ac0f75bf56d9685d3",
+  "rawJobLog": {
+    "bytes": 31873906,
+    "sha256": "ded47aa3d80abbce9a16752757307f40ab027bb911d2c695d476551048a80802",
+    "gzipSHA256": "c6b9954a41561d07b35e446ab376f285479396c192355eb328bc6b1bcbaf8ea5",
+    "gzipExpandedSHA256": "ded47aa3d80abbce9a16752757307f40ab027bb911d2c695d476551048a80802"
+  },
+  "authenticatedArtifacts": [
+    {
+      "id": 15211021664,
+      "name": "AI_Hanlin-iOS26-simulator-smoke-logs",
+      "bytes": 38313819,
+      "sha256": "263984d064009130849c93f030c43c60f385053f23bc411c707292c59e84f125",
+      "authenticatedDigestVerified": true,
+      "source": "d165b9fc6a1c4e810a21957c063bfeae52eecb59",
+      "memberCount": 1411,
+      "uncompressedBytes": 69961695
+    },
+    {
+      "id": 15212306373,
+      "name": "provider-conformance-summary",
+      "bytes": 2276,
+      "sha256": "884d89343b485d1583b7afd60c4404e5181f0e83b112879a13284e6de7839355",
+      "authenticatedDigestVerified": true,
+      "source": "d165b9fc6a1c4e810a21957c063bfeae52eecb59",
+      "memberCount": 1,
+      "uncompressedBytes": 35729
+    },
+    {
+      "id": 15205367379,
+      "name": "miniapp-upstream-inputs-full-app-simulator-smoke-46007700830",
+      "bytes": 32601,
+      "sha256": "40caf57e3487c67fb6c4d5e19a341c1fd21960a40ea5c5ff940c0ea88e005045",
+      "authenticatedDigestVerified": true,
+      "source": "d165b9fc6a1c4e810a21957c063bfeae52eecb59",
+      "memberCount": 4,
+      "uncompressedBytes": 240666
+    }
+  ],
+  "nativeResult": {
+    "selectedCases": 1,
+    "passed": 1,
+    "failed": 0,
+    "selector": "AI_HLYUITests/HanlinContextualTextToolsUITests/testOriginalTextToolsReceiveTheMessageWithoutReplacingTheConversation",
+    "durationSeconds": 145.88891100883484,
+    "device": {
+      "architecture": "arm64",
+      "deviceId": "F9880609-A643-4AB3-8CBC-20F050C91A48",
+      "deviceName": "Hanlin-Phase2-46007700830-1",
+      "modelName": "iPad Pro 13-inch (M5)",
+      "osBuildNumber": "24B8117",
+      "osVersion": "27.2",
+      "platform": "iOS Simulator"
+    },
+    "command": "/Applications/Xcode_27.2.app/Contents/Developer/usr/bin/xcodebuild test-without-building -xctestrun /Users/runner/work/hanlin-ai/hanlin-ai/build/SimulatorDerivedData/Build/Products/AI_HLY_iphonesimulator27.2-arm64.xctestrun -destination \"platform=iOS Simulator,id=F9880609-A643-4AB3-8CBC-20F050C91A48\" -resultBundlePath simulator-logs/NativeScriptProductionE2EResult.xcresult -skipPackagePluginValidation -skipMacroValidation -test-timeouts-enabled YES -maximum-test-execution-time-allowance 300 \"-only-testing:AI_HLYUITests/HanlinContextualTextToolsUITests/testOriginalTextToolsReceiveTheMessageWithoutReplacingTheConversation\"",
+    "caseDeadlineSeconds": 300,
+    "exitCode": 0,
+    "resultJSONSHA256": "443d3da985d7a962f3ca03df7638b07d0cb64f1ece0e802a04850e7ec4d11aea",
+    "nativeLogSHA256": "20a5017bcfb96a914d213c0c973f321f3c924798c3921303d80d5343c48b57e7",
+    "runtimeWarningNodeRetained": true
+  },
+  "productQualification": {
+    "beforeAndAfterByteIdentical": true,
+    "manifestSHA256": "df0a5eec8eda3908b94e57e3f5ed3d78e6c45e7c8c8b3042db373445b53904e9",
+    "boundProductFiles": 7,
+    "beforeSHA256": "9f5fa5f527acf34798336b0e93a70884e1995c4d51d2099760b2745d6978c809",
+    "afterSHA256": "9f5fa5f527acf34798336b0e93a70884e1995c4d51d2099760b2745d6978c809"
+  },
+  "effectiveBuildInputs": {
+    "sourceCommit": "d165b9fc6a1c4e810a21957c063bfeae52eecb59",
+    "trackedWorkspaceModified": true,
+    "packageResolvedSHA256": "56d19a4b8c677831fb91e1f8155a68e411b42fd4807ad618d6f169569e1bb5a4",
+    "upstreamPatchSHA256": "eb3965826486c76cb33f8fe1cb71af621eaf0890d88436750f7a469bdc30e9dd",
+    "upstreamResolutionSHA256": "75b518a0c13dca1e2a53be63e530cfc6fe450bb94083327387e78a45bae2fc6f",
+    "changedPaths": [
+      "Fixtures/ExpoNativeAPIProbe/package.json",
+      "Fixtures/ExpoSwiftUIProbe/package.json",
+      "Fixtures/ExpoWidgetsProbe/package.json",
+      "Generated/SwiftUIBridge/HanlinGeneratedViews.swift",
+      "Generated/SwiftUIBridge/bridge-manifest.ts",
+      "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/Generated/HanlinGeneratedViews.swift",
+      "Packages/HanlinExpoRuntime/Sources/HanlinExpoRuntime/HanlinExpoHostVersions.swift",
+      "Packages/HanlinExpoUI/package.json",
+      "Packages/HanlinExpoUI/src/generated/bridge-manifest.ts",
+      "Packages/HanlinExpoWidgetSubset/Sources/HanlinExpoWidgetSubset/ExpoUI/Modifiers/ViewModifierRegistry.swift",
+      "Packages/HanlinPlatform/Sources/HanlinScriptCompiler/HanlinMiniAppHostVersions.swift",
+      "Scripts/Expo/dependency-lock.json",
+      "Scripts/Expo/package-lock.json",
+      "Scripts/Expo/package.json",
+      "Scripts/ExpoNativeAPI/dependency-lock.json",
+      "Scripts/MiniApps/upstream-resolution.json",
+      "Scripts/NativeScript/package-lock.json",
+      "Tools/SwiftUIBridge/configuration.json",
+      "docs/widget-engines/UPSTREAM_SOURCE_MANIFEST.json"
+    ],
+    "qualification": "The accepted build uses its retained original resolver output, not an assumption that all tracked inputs equal the dispatched commit."
+  },
+  "relevantSourceComparison": {
+    "comparisonCommit": "c1bb16c7d049cccdc7044e11e9e05f15ec860869",
+    "files": [
+      {
+        "path": "AI_HLYUITests/HanlinContextualTextToolsUITests.swift",
+        "atRunSHA256": "b28d1744dc4a3b590f1437da97f92450802a667f278411e54cc0e299f063e8e6",
+        "comparisonSHA256": "b28d1744dc4a3b590f1437da97f92450802a667f278411e54cc0e299f063e8e6",
+        "equal": true,
+        "changedByEffectiveUpstreamPatch": false
+      },
+      {
+        "path": "AI_HLY/Downstream/AgentDiagnostics/AgentRuntimeUIAcceptanceProvider.swift",
+        "atRunSHA256": "5bb0623f4b756838e15a1ea4c18189966e7d24f562b7d5db685c119ca37d9679",
+        "comparisonSHA256": "5bb0623f4b756838e15a1ea4c18189966e7d24f562b7d5db685c119ca37d9679",
+        "equal": true,
+        "changedByEffectiveUpstreamPatch": false
+      },
+      {
+        "path": "AI_HLY/Views/Components/QuickToolsView.swift",
+        "atRunSHA256": "aea3ee8530b6b8760d79f11478473f32db12575477dd9ba9c8d9c928286941d0",
+        "comparisonSHA256": "aea3ee8530b6b8760d79f11478473f32db12575477dd9ba9c8d9c928286941d0",
+        "equal": true,
+        "changedByEffectiveUpstreamPatch": false
+      },
+      {
+        "path": "AI_HLY/Views/Components/ChatViewComponents.swift",
+        "atRunSHA256": "15875a20addac6bc43ada66e7c3b929118a0f8ad19159d91ace9a8274e9448c9",
+        "comparisonSHA256": "15875a20addac6bc43ada66e7c3b929118a0f8ad19159d91ace9a8274e9448c9",
+        "equal": true,
+        "changedByEffectiveUpstreamPatch": false
+      },
+      {
+        "path": "Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageSelectionView.swift",
+        "atRunSHA256": "b53108a0ddc25c49eb10ba5992f67e908ae3bba7f5cea3b417adacc5e941c52b",
+        "comparisonSHA256": "b53108a0ddc25c49eb10ba5992f67e908ae3bba7f5cea3b417adacc5e941c52b",
+        "equal": true,
+        "changedByEffectiveUpstreamPatch": false
+      }
+    ],
+    "scope": "Five direct contextual UI, presentation and acceptance-fixture source files only; not a complete current app rebuild qualification."
+  },
+  "providerSummary": {
+    "sourceTestFunctionCount": 78,
+    "passedCount": 0,
+    "notRunCount": 78,
+    "qualification": "The separate provider summary contributes no executed test to this result."
+  },
+  "provenBehavior": [
+    "The three original translation, polish and summary sheets each receive the exact persisted contextual message.",
+    "Each sheet returns to the original message selection, then the original conversation message remains visible."
+  ],
+  "notClaimed": [
+    "AI generation or provider network execution",
+    "Any additional app, MiniApps, Shell, NativeScript, Scripting or OS acceptance suite",
+    "A complete source-equivalent current app binary"
+  ],
+  "nativeTestsStartedByReviewer": 0
+}
