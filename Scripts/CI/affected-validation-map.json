@@ -1679,6 +1679,12 @@
         "Tests/ProductSplit/**",
         "AI_HLYTests/HanlinAppSplitOriginTests.swift",
         "AI_HLYUITests/HanlinPairedProductUITests.swift",
+        "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+        "Fixtures/HostActionSurfaces/expo/App.tsx",
+        "Fixtures/HostActionSurfaces/expo/proof.ts",
+        "Fixtures/HostActionSurfaces/nativescript/index.ts",
+        "Fixtures/HostActionSurfaces/nativescript/package.json",
+        "Fixtures/HostActionSurfaces/nativescript/proof.ts",
         "Packages/HanlinMiniAppsBridge/**",
         "HanlinMiniAppsExtensions/**"
       ],
