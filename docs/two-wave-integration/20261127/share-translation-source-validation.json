@@ -1,0 +1,213 @@
+{
+  "schema": 1,
+  "recordedAtUTC": "2026-11-27T06:30:03.473064+00:00",
+  "base": "46663fe6228c0edcb7b9dacb3e8aa5403a80c473",
+  "status": "CANDIDATE_READY_FOR_ROOT_REVIEW",
+  "purpose": "Admit the4 unchanged original Share/Translation OS cases through actual product catalogs, selected inputs, immutable Share batches, canonical native receipts and own private five-runtime results.",
+  "sourceFiles": {
+    "Scripts/ProductSplit/observe_share_translation_surfaces.py": {
+      "sha256": "6702a1bb58c11b9f2e6d285eb62dee7db9f12ad1ddd6d466396d36cda91bee0a",
+      "bytes": 38491
+    },
+    "Scripts/ProductSplit/Tests/test_share_translation_surface_observer.py": {
+      "sha256": "d74749a52261d4ae45ea62ccc01f6becb255aa397a2a853f52f5b7ba1874a245",
+      "bytes": 26383
+    },
+    "Scripts/ProductSplit/Tests/test_share_input_fixture.mjs": {
+      "sha256": "81eeeb88553f68878b7553276ba6f56066bbbfeb4cc7155bab6a209c4c5f7c8e",
+      "bytes": 7690
+    },
+    "Fixtures/HostActionSurfaces/nativescript/proof.ts": {
+      "sha256": "19925e21c3f63170e4cf1284702fd675130b5674ffd2289ab36da6e6640b9d28",
+      "bytes": 19076
+    },
+    "Fixtures/HostActionSurfaces/nativescript/index.ts": {
+      "sha256": "22312e186a363920e470437571e8bdddef2b753372758b66f9a363bfef637a2e",
+      "bytes": 6421
+    }
+  },
+  "executedControls": [
+    {
+      "revision": "r1",
+      "pythonMethods": 14,
+      "nodeMethods": 7,
+      "nodeVersion": "24.5.0",
+      "pythonVersion": "3.12.3",
+      "result": "PASS",
+      "receipt": "share-translation-source/portable-r1/receipt.json"
+    },
+    {
+      "revision": "r2",
+      "pythonMethods": 15,
+      "result": "PASS",
+      "receipt": "share-translation-source/portable-r2/receipt.json",
+      "reason": "Atomic evidence request publication and exact canonical Share delivery defaults, with negative controls."
+    },
+    {
+      "revision": "r3",
+      "pythonMethods": 2,
+      "result": "PASS",
+      "receipt": "share-translation-source/portable-r3/receipt.json",
+      "reason": "Only2 affected original controls rerun after removing an unsupported old-owner path shape; positive root-State preparation and wrong/new-window cases. No fresh15-method run is claimed."
+    }
+  ],
+  "uniqueControlMethods": {
+    "python": 15,
+    "node": 7
+  },
+  "noRepeatedNativeOrOriginalSuites": true,
+  "preservation": {
+    "base": "46663fe6228c0edcb7b9dacb3e8aa5403a80c473",
+    "normalRunBytesPreserved": true,
+    "normalRunSHA256": "52ffc9ee8d22198a8c068a69d1ac6259641f6b8216fd559141d84b6fabdb4fbf",
+    "originalConcurrencyAndStatePrefixPreserved": true,
+    "sharedSourceWholeFileHashesUnchanged": {
+      "Scripts/ProductSplit/observe_shortcut_surfaces.py": "72530c9c8f70b6eb35572e2d4180ac2d0161d1a641c08d1e49505554d021b65c",
+      "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift": "c757994e7644db5bcf3aa480e2d126a794634e030a6626e6489cf2ea684ebde0",
+      "Scripts/ProductSplit/run_paired_acceptance.py": "efb9738edeafd21868ce232343a2db4634e370d47d267d160c86f927847a8836"
+    },
+    "sdkPathManifest": {
+      "source": "actual original866 Host SDK fingerprint",
+      "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/host866-sdk-inputs-staged-host-pending/miniapp-sdk.json",
+      "sha256": "59d4ad4748dd615d3f7b6536e012ef93c38bb96f76b3f3f28ebbbed909518235",
+      "inputSHA256": "4225027c6b835ef04e413e341870606d6206af7735cf8aa5e4c6400855e8235f",
+      "count": 392,
+      "changedPathIntersection": []
+    },
+    "nativeScope": "No changes to shipping SDK392 source or native package trees. Original OS acceptance must use the newly authored fixture archives; no native/OS result is asserted."
+  },
+  "integrationContract": {
+    "entry": "observe_case(args, request, directory, evidence, seen, inputs, apps)",
+    "dispatch": "Original shared observer, only original share and translation surfaces before Shortcuts validation. W2 owns dispatcher/runner.",
+    "dependency": "W2 runner produces exact fresh JSON and TXT in ordinary MiniApps Documents after an atomic evidence-only prepared request; observer itself never writes production files.",
+    "archiveBinder": "verify_installed_fixture_archive(data_root, identity, catalog, archive, evidence_root)",
+    "preparedChallenge": "The actual UI challenge is carried in the real selected JSON file and canonical resolved Share payload, only initializing an empty new NativeScript window."
+  },
+  "peerReviewFindingsApplied": [
+    {
+      "reviewer": "/root/w2_source_resume",
+      "finding": "Require exact integer primary record schema, not bool/int equality."
+    },
+    {
+      "reviewer": "/root/w2_source_resume",
+      "finding": "Publish the polled Share input request atomically, so producer cannot read partial JSON."
+    },
+    {
+      "reviewer": "/root/w2_source_resume",
+      "finding": "Do not assume the old prepared owner used Windows storage; require the new Share window actual own path/attachment and inequality."
+    }
+  ],
+  "pendingAcceptance": [
+    "Root final source review and integration with W2 original10 dispatcher/runner.",
+    "Original authored archive production and real Simulator OS UI cases; none executed by this leaf."
+  ],
+  "nativeOSStatus": "NOT_RUN",
+  "rawMembers": [
+    {
+      "path": "docs/two-wave-integration/20261127/share-translation-source/authoritative-source-chain.json",
+      "bytes": 18739,
+      "sha256": "06ebe103e33e65dc7ab3195b1e74c4cc8fca5526de630ff237e040035ebd0006"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/share-translation-source/portable-r1/node7.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/share-translation-source/portable-r1/node7.stdout",
+      "bytes": 831,
+      "sha256": "fdc2f1c0fc110bec05f8e42812227d004d46406bb0e1071197789a56fee8ab74"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/share-translation-source/portable-r1/python14.stderr",
+      "bytes": 3545,
+      "sha256": "a09a1cd5787275d2bfc7ce8707b304cfd44c1be6fe4337fff03b78da63accab9"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/share-translation-source/portable-r1/python14.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/share-translation-source/portable-r1/receipt.json",
+      "bytes": 3831,
+      "sha256": "ac3f65294e0588770cdea4b82b5376349aa5a97b658aec4ceda10468b90a303b"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/share-translation-source/portable-r2/python15.stderr",
+      "bytes": 3795,
+      "sha256": "b9be7e11dad4fdfbe596dcd85b30a5b4b7237ef055aa93394ab2cff819a2ac85"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/share-translation-source/portable-r2/python15.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/share-translation-source/portable-r2/receipt.json",
+      "bytes": 1598,
+      "sha256": "ce6b153087ef98670f9aeeb0e5bf91a01c81b727eedf0ae4f8a39b58050aede5"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/share-translation-source/portable-r3/python2.stderr",
+      "bytes": 598,
+      "sha256": "54ffa58fc7bd7afe0d7bcb24c716f0188b42b2681d3b897939cd6018c45659d5"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/share-translation-source/portable-r3/python2.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/share-translation-source/portable-r3/receipt.json",
+      "bytes": 1241,
+      "sha256": "715143e337a2f362e83bfb31bccc63e0de62bf3d7f37ca1e573d12f88999e667"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/share-translation-source/source-final.patch",
+      "bytes": 81221,
+      "sha256": "6b5b7da9655ea84a8f85e4715bd7081634b8c96074461ab896b68291b79fc631"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/share-translation-source/source-preservation.json",
+      "bytes": 1297,
+      "sha256": "342ca599d76f363ad124cf964ac1872ddf3665f27e0667e9866338a65ba7ac98"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/share-translation-source/source-r1.json",
+      "bytes": 1146,
+      "sha256": "915120f25e853563a295140c2ea73137fcf72b72624aabe5663544062ced0e7d"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/share-translation-source/source-r1.patch",
+      "bytes": 78599,
+      "sha256": "0186cb655d4b12627daca50d56987db6895198b1609a7be91af63f4298e1d21f"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/share-translation-source/source-r2-bounded.diff.gz",
+      "bytes": 1682,
+      "sha256": "4ef7972fb292a6775e2d649754fe4ac200387a64b9f570e692f56cbf8925ac02",
+      "encoding": "gzip",
+      "originalBytes": 5055,
+      "originalSHA256": "5b7f76a58dd7ea54649777526842c522e8137a6bb50a4d754c7b8fbfaf69bda8"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/share-translation-source/source-r2.json",
+      "bytes": 3422,
+      "sha256": "50fa75e437da11b705e2bda8fe6ed3aaa0640e6fe9799022832e0fdffd7076ff"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/share-translation-source/source-r3-bounded.diff.gz",
+      "bytes": 704,
+      "sha256": "fdffdbdd5ab9f18bd302c641042b043b97e32b03e87c508db79d86bf87cf3abf",
+      "encoding": "gzip",
+      "originalBytes": 1754,
+      "originalSHA256": "a23e8e48db1d05ea13c2f5ebf1e5dad8174af84fd23c7f1328d4d1e7782f3720"
+    }
+  ],
+  "evidencePackaging": {
+    "note": "The two original bounded unified diffs are stored as byte-reversible gzip because literal context spaces caused git diff --check to flag artifact contents; original raw diffs remain unchanged in the external handoff. No code/test/log bytes were trimmed.",
+    "originalRawCheckExitCode": 2,
+    "gzipRoundTripVerified": true
+  }
+}

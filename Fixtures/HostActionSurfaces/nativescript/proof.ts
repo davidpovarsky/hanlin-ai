@@ -221,6 +221,75 @@ export function createSurfaceProof(input: {
       await save(state);
       return state;
     }),
+    /** The original Share UI closes its prepared window before dispatch. The
+     * newly created window receives its challenge through the actual selected
+     * file and canonical Share payload, never through another window's State.
+     * Other action routes and the original run() body remain unchanged. */
+    admitSharedInput: (request: JSONValue, readInputText: (fileURL: string) => Promise<string>) => serial(async () => {
+      if (!request || Array.isArray(request) || typeof request !== 'object' ||
+          !Object.prototype.hasOwnProperty.call(request, 'shareBatchID')) return;
+      const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
+      if (Object.keys(request).sort().join(',') !== 'items,shareBatchID' ||
+          typeof request.shareBatchID !== 'string' || !uuid.test(request.shareBatchID) ||
+          !Array.isArray(request.items) || request.items.length !== 2) {
+        throw new Error('The authored Share input requires the actual canonical two-item batch.');
+      }
+      const state = await read();
+      if (state.challenge !== '' || state.counter !== 0 || state.lastResult !== null || state.activityID !== null) {
+        throw new Error('Shared input may initialize only this empty newly-created window.');
+      }
+      const ids = new Set<string>();
+      const texts: string[] = [];
+      for (let ordinal = 0; ordinal < request.items.length; ordinal++) {
+        const item = request.items[ordinal];
+        if (!item || Array.isArray(item) || typeof item !== 'object' ||
+            typeof item.id !== 'string' || !uuid.test(item.id) || ids.has(item.id) ||
+            item.ordinal !== ordinal || typeof item.typeIdentifier !== 'string' || !item.typeIdentifier ||
+            Object.prototype.hasOwnProperty.call(item, 'failure') || !['file', 'text'].includes(String(item.kind))) {
+          throw new Error('The actual Share items are rejected, duplicated or reordered.');
+        }
+        ids.add(item.id);
+        let text: string;
+        if (item.kind === 'text') {
+          if (typeof item.text !== 'string' || item.fileURL !== undefined || item.bytes !== undefined || item.sha256 !== undefined) {
+            throw new Error('Invalid canonical Share text representation.');
+          }
+          text = item.text;
+        } else {
+          if (typeof item.fileURL !== 'string' || !item.fileURL.startsWith('file:///') ||
+              item.fileURL.includes('?') || item.fileURL.includes('#') || item.text !== undefined ||
+              typeof item.bytes !== 'number' || !Number.isSafeInteger(item.bytes) || item.bytes < 0 || item.bytes > 65536 ||
+              typeof item.sha256 !== 'string' || !/^[0-9a-f]{64}$/.test(item.sha256)) {
+            throw new Error('Invalid canonical owned Share file.');
+          }
+          const path = decodeURIComponent(item.fileURL.slice('file://'.length));
+          const suffix = '/HanlinMiniApps/v1/ShareInbox/Batches/' + request.shareBatchID + '/Files/' + item.id;
+          if (!path.startsWith('/') || path.includes('\0') || path.split('/').some(part => part === '.' || part === '..') ||
+              !path.endsWith(suffix)) throw new Error('Share input left its actual owned batch.');
+          text = await readInputText(item.fileURL);
+        }
+        if (text.length > 65536) throw new Error('The authored Share input exceeds its bounded size.');
+        texts.push(text);
+      }
+      const candidates = texts.flatMap(text => {
+        try {
+          const value: unknown = JSON.parse(text);
+          return value && typeof value === 'object' && !Array.isArray(value) &&
+            (value as {kind?: unknown}).kind === 'hanlin.surface.share-input' ? [value as {[key: string]: unknown}] : [];
+        } catch { return []; }
+      });
+      if (candidates.length !== 1) throw new Error('One actual authored Share challenge file is required.');
+      const value = candidates[0];
+      if (Object.keys(value).sort().join(',') !== 'appID,challenge,kind,runID,schema,seed' || value.schema !== 1 ||
+          value.appID !== input.appID || typeof value.runID !== 'string' || !uuid.test(value.runID) ||
+          typeof value.seed !== 'string' || !uuid.test(value.seed) || typeof value.challenge !== 'string' ||
+          !/^[a-z0-9]+-[a-z0-9]+-[a-z0-9]+$/.test(value.challenge)) {
+        throw new Error('The actual Share challenge file has a different identity or schema.');
+      }
+      const note = 'Hanlin Share input ' + value.seed + ' ' + value.runID + ' nativescript ' + value.challenge + '\n';
+      if (texts.filter(text => text === note).length !== 1) throw new Error('The second actual Share item does not match its challenge file.');
+      await save({...state, challenge: value.challenge});
+    }),
     run: (request: JSONValue, invocation: {id?: string; caller: string}) => {
       if (requestedSurface(request) === 'miniAppShortcutConcurrency') return runConcurrent(request, invocation);
       return serial(async () => {

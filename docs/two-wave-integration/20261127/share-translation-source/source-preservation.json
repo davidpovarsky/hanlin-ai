@@ -1,0 +1,20 @@
+{
+  "base": "46663fe6228c0edcb7b9dacb3e8aa5403a80c473",
+  "normalRunBytesPreserved": true,
+  "normalRunSHA256": "52ffc9ee8d22198a8c068a69d1ac6259641f6b8216fd559141d84b6fabdb4fbf",
+  "originalConcurrencyAndStatePrefixPreserved": true,
+  "sharedSourceWholeFileHashesUnchanged": {
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": "72530c9c8f70b6eb35572e2d4180ac2d0161d1a641c08d1e49505554d021b65c",
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift": "c757994e7644db5bcf3aa480e2d126a794634e030a6626e6489cf2ea684ebde0",
+    "Scripts/ProductSplit/run_paired_acceptance.py": "efb9738edeafd21868ce232343a2db4634e370d47d267d160c86f927847a8836"
+  },
+  "sdkPathManifest": {
+    "source": "actual original866 Host SDK fingerprint",
+    "path": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/host866-sdk-inputs-staged-host-pending/miniapp-sdk.json",
+    "sha256": "59d4ad4748dd615d3f7b6536e012ef93c38bb96f76b3f3f28ebbbed909518235",
+    "inputSHA256": "4225027c6b835ef04e413e341870606d6206af7735cf8aa5e4c6400855e8235f",
+    "count": 392,
+    "changedPathIntersection": []
+  },
+  "nativeScope": "No changes to shipping SDK392 source or native package trees. Original OS acceptance must use the newly authored fixture archives; no native/OS result is asserted."
+}

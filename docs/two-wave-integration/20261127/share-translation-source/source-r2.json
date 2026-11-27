@@ -1,0 +1,41 @@
+[
+  {
+    "path": "Scripts/ProductSplit/observe_share_translation_surfaces.py",
+    "before": "6fe7ceca1744d7190482ef440377062f278d1d7090071d68d8598d925c103e72",
+    "after": "b92f260539848c6989f11fa59b832b98aad8964d9e84a28050b27dde9ebfa41b",
+    "edits": [
+      {
+        "start": 280,
+        "end": 281,
+        "new": "    require(not path.exists() and not path.is_symlink(), \"A Share producer request must not be overwritten\")\n    temporary = case[\"output\"] / \"share-input-request.json.observer-tmp\"\n    write_evidence(temporary, result)\n    os.replace(temporary, path)\n"
+      },
+      {
+        "start": 427,
+        "end": 427,
+        "new": "                    and delivery.get(\"idempotent\") is False\n                    and type(delivery.get(\"maximumAttempts\")) is int and delivery[\"maximumAttempts\"] == 1\n                    and delivery.get(\"widgetOrigin\") is None\n"
+      }
+    ]
+  },
+  {
+    "path": "Scripts/ProductSplit/Tests/test_share_translation_surface_observer.py",
+    "before": "90c6db0c546c3f2ea243ff44a78416b1492b86b4b3e39ff68984315b9f791f2c",
+    "after": "87ad4496c8deee7f8976ae134ac076597ac4cd09090c3641878b43b129b798e2",
+    "edits": [
+      {
+        "start": 90,
+        "end": 91,
+        "new": "                                  \"userGesturePresent\": True, \"canPresentUI\": False,\n                                  \"idempotent\": False, \"maximumAttempts\": 1}\n"
+      },
+      {
+        "start": 136,
+        "end": 136,
+        "new": "            lambda row: row[\"invocation\"][\"delivery\"].update(idempotent=True),\n            lambda row: row[\"invocation\"][\"delivery\"].update(maximumAttempts=True),\n            lambda row: row[\"invocation\"][\"delivery\"].update(widgetOrigin={\"identity\": \"other\"}),\n"
+      },
+      {
+        "start": 339,
+        "end": 339,
+        "new": "    def test_polled_share_request_is_published_only_after_complete_atomic_write(self):\n        with tempfile.TemporaryDirectory() as temporary:\n            evidence = Path(temporary); req = request(\"nativescript\"); output = evidence / req[\"runID\"]; output.mkdir()\n            case = {\"prepared\": {\"sha256\": \"a\" * 64}, \"roots\": {\"data\": Path(\"/actual/data\")}, \"output\": output}\n            value = {\"seed\": str(uuid.uuid4()), \"shareInputProducer\": {\"requestRoot\": str(evidence)}}\n            original_replace = os.replace\n            observed = []\n            def publish(source, destination):\n                self.assertEqual(destination, output / \"share-input-request.json\")\n                self.assertFalse(destination.exists(), \"Producer must never see a partial JSON document\")\n                complete = common.parse_json(source.read_bytes())\n                self.assertEqual(complete[\"challenge\"], req[\"challenge\"])\n                self.assertEqual(len(complete), 9)\n                observed.append(complete)\n                return original_replace(source, destination)\n            with patch.object(observer.os, \"replace\", side_effect=publish):\n                result = observer.share_producer_request(req, case, value, evidence)\n            self.assertEqual(result[\"value\"], observed[0])\n            self.assertFalse((output / \"share-input-request.json.observer-tmp\").exists())\n            self.rejected(lambda: observer.share_producer_request(req, case, value, evidence))\n\n"
+      }
+    ]
+  }
+]

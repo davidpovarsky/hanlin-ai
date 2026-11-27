@@ -108,7 +108,15 @@ function createPage(): Page {
   return page;
 }
   const page = createPage();
-  host.registerRequestHandler('surface.run', 'inter-app.share', async ({caller, parameters}) =>
-    JSON.parse(JSON.stringify(await proof.run(parameters, {caller}))) as JSONValue);
+  host.registerRequestHandler('surface.run', 'inter-app.share', async ({caller, parameters}) => {
+    await proof.admitSharedInput(parameters, fileURL => {
+      // The helper accepts only this canonical ShareInbox batch's supplied URL.
+      // Check existence first: File.fromPath must never create a missing input.
+      const path = decodeURIComponent(fileURL.slice('file://'.length));
+      if (!File.exists(path)) throw new Error('The actual owned shared input file is absent.');
+      return File.fromPath(path).readText();
+    });
+    return JSON.parse(JSON.stringify(await proof.run(parameters, {caller}))) as JSONValue;
+  });
   return page;
 });
