@@ -1,0 +1,34 @@
+{
+  "status": "EXACT_REVIEWED_PACKAGE_SOURCE_STAGED",
+  "source": "33d949fa8d91d238ba93a9ef09373c5eafe58b84",
+  "base": "97ca89552b8e39fab4d0a26e51e3f77010e1811e",
+  "sourceClean": true,
+  "at": "2026-11-27T08:41:15.100523+00:00",
+  "packageChanges": [
+    "Packages/HanlinPlatform/Sources/HanlinScriptingApplicationRuntime/HanlinScriptingRuntimeServices.swift"
+  ],
+  "productionFileSHA256": "a1ead7e7e54c6d4e578fd9f3b7b6696f966ab1050540908c4e9d70ba75493cf3",
+  "packageTree": "e7e9799ec642d8011e87f92563fdb6d5d359093e",
+  "sourceTree": "3da2ea174d85e089bfa350ecd33835950f33d43d",
+  "testsTree": "94c3f352396b2011c35d9c7dbffc799f3e4c7f3a",
+  "originalTestsTreeUnchanged": true,
+  "widgetsFixtureTree": "a0b7b0b1cb9e1ce756ccff40593a325ffffa73d6",
+  "pins": {
+    "Packages/HanlinPlatform/Package.resolved": "453087cb3345b7c6bb24c00a682f41ffa9708ebd328e60b583f6e04276bf789d",
+    "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved": "56d19a4b8c677831fb91e1f8155a68e411b42fd4807ad618d6f169569e1bb5a4"
+  },
+  "warmBuildInode": 71920668,
+  "warmBuildAllocatedBytes": 2006482944,
+  "SDKManifestSHA256": "f6603fc7f62b91a80cef33eb72a77e93711504b3b2f0a1851ead62f49c787a7a",
+  "SDKInputSHA256": "4b75c9122e17ff24464a8dfb757b1b3c72d2817d55472b4c0be035e7c71b55cc",
+  "SDK392Matched": 392,
+  "SDK392ChangedInputs": [],
+  "SDKChangedPathIntersection": [],
+  "hostZIP_SHA256": "fae9778f1b6548a069f6bd16bef3e2f22c710445a84d1fb025f4e90a5d1e1718",
+  "priorStageReceiptSHA256": "2f83416687063358d91261e599ddcc5a9eb912097536140125f43140bac61919",
+  "rootManifestSHA256": "f72ee68e4708bd4687811f4ccfc537814b201402738be388758aff1337f9b8fb",
+  "exactProductionDiff": "diff --git a/Packages/HanlinPlatform/Sources/HanlinScriptingApplicationRuntime/HanlinScriptingRuntimeServices.swift b/Packages/HanlinPlatform/Sources/HanlinScriptingApplicationRuntime/HanlinScriptingRuntimeServices.swift\nindex a55546ae..ccb111ff 100644\n--- a/Packages/HanlinPlatform/Sources/HanlinScriptingApplicationRuntime/HanlinScriptingRuntimeServices.swift\n+++ b/Packages/HanlinPlatform/Sources/HanlinScriptingApplicationRuntime/HanlinScriptingRuntimeServices.swift\n@@ -2,6 +2,9 @@ import CoreFoundation\n import Foundation\n import HanlinScriptUI\n import UniformTypeIdentifiers\n+#if os(macOS)\n+import Security\n+#endif\n \n public enum HanlinScriptingSystemResult: Sendable {\n     case null\n@@ -1770,8 +1773,33 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {\n         let readOnly: Bool\n     }\n \n+#if os(macOS)\n+    // This is a host bookmark policy, not an effective-Sandbox detector.\n+    // App Sandbox hosts keep explicit security scopes. A macOS host without\n+    // that declared entitlement stores only the file location: this never\n+    // restores OS grants lost on exit, including grants inherited by a helper.\n+    // Existing URL grants, path checks and OS access still govern every use.\n+    // Unknown entitlement state remains scoped and never falls back on failure.\n+    private static let usesAppScopedBookmarks: Bool = {\n+        guard let task = SecTaskCreateFromSelf(nil) else { return true }\n+        var error: Unmanaged<CFError>?\n+        let entitlement = SecTaskCopyValueForEntitlement(\n+            task, \"com.apple.security.app-sandbox\" as CFString, &error\n+        )\n+        if let error {\n+            _ = error.takeRetainedValue()\n+            return true\n+        }\n+        guard let entitlement else { return false }\n+        guard CFGetTypeID(entitlement) == CFBooleanGetTypeID() else { return true }\n+        return CFEqual(entitlement, kCFBooleanTrue)\n+    }()\n+#endif\n+\n     private static var bookmarkCreationOptions: URL.BookmarkCreationOptions {\n-#if os(macOS) || targetEnvironment(macCatalyst)\n+#if os(macOS)\n+        usesAppScopedBookmarks ? [.withSecurityScope] : []\n+#elseif targetEnvironment(macCatalyst)\n         [.withSecurityScope]\n #else\n         []\n@@ -1779,7 +1807,9 @@ final class HanlinScriptingPackageFileSystem: @unchecked Sendable {\n     }\n \n     private static var bookmarkResolutionOptions: URL.BookmarkResolutionOptions {\n-#if os(macOS) || targetEnvironment(macCatalyst)\n+#if os(macOS)\n+        usesAppScopedBookmarks ? [.withSecurityScope, .withoutUI] : [.withoutUI]\n+#elseif targetEnvironment(macCatalyst)\n         [.withSecurityScope, .withoutUI]\n #else\n         [.withoutUI]",
+  "freeBytesAfter": 5822046208,
+  "nativeCommandsStarted": 0,
+  "reuseBoundary": "This receipt binds current source and reports SDK identity; it grants no native79 or prior package-test reuse for a changed production package."
+}

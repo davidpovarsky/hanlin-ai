@@ -1,0 +1,74 @@
+{
+  "deviceOrWidgetKitLatency" : "NOT_MEASURED",
+  "measurements" : [
+    {
+      "archive" : "Hanlin-Expo-Widget-Counter.hanlinExpo",
+      "archiveSHA256" : "a52c828cdb87f115c668b7cba544781ce89c023b14a65551844ee7985faa3d9d",
+      "engine" : "expo",
+      "family" : "systemMedium",
+      "installCompilePublishMS" : 477.383667,
+      "preparationFirstThenRepeatMS" : [
+        23.659708999999999,
+        24.091249999999999,
+        20.807500000000001
+      ],
+      "programSHA256" : "206b2df0a16ed0497cef665c59bf9a1ffab3a45bcc3e8015c28af1ee5ecf5f96",
+      "sourceAction" : "increment",
+      "sourceActionCommitMS" : 19.510916999999999
+    },
+    {
+      "archive" : "Hanlin-Expo-Widget-Visuals.hanlinExpo",
+      "archiveSHA256" : "4532c361e91e32580a7dca5c120e1131bb2d9f07138b2b4103bdab138f588368",
+      "engine" : "expo",
+      "family" : "systemMedium",
+      "installCompilePublishMS" : 653.92550000000006,
+      "preparationFirstThenRepeatMS" : [
+        25.258084,
+        35.882416999999997,
+        70.579959000000002
+      ]
+    },
+    {
+      "archive" : "Hanlin-ScriptWidget-Dashboard.scripting",
+      "archiveSHA256" : "478cd567e9731cc7342aefa9024ea498edf8d12d340cc5c558484e60a210dace",
+      "engine" : "scriptwidget",
+      "family" : "systemMedium",
+      "installCompilePublishMS" : 590.80487500000004,
+      "preparationFirstThenRepeatMS" : [
+        201.36637500000001,
+        112.058916,
+        170.95670899999999
+      ]
+    },
+    {
+      "archive" : "Hanlin-ScriptWidget-Actions.scripting",
+      "archiveSHA256" : "33c717e2a454d8831364cb24b15b9e9e799cd3161b526013a15efe46485ebccb",
+      "engine" : "scriptwidget",
+      "family" : "systemMedium",
+      "installCompilePublishMS" : 400.14629200000002,
+      "preparationFirstThenRepeatMS" : [
+        186.847083,
+        251.64474999999999,
+        150.70991699999999
+      ],
+      "programSHA256" : "d77f21ed1de7e922aca47eb425ef53272c6f7db1394e9c7f4ef828bedd458772",
+      "sourceAction" : "sync",
+      "sourceActionCommitMS" : 93.518375000000006
+    },
+    {
+      "archive" : "Hanlin-Widget-Legacy-Regression.scripting",
+      "archiveSHA256" : "787bf97e48164d7b9021c64bfa7122e48131a82b388efc3bad26c58276f4bb2f",
+      "engine" : "legacy",
+      "family" : "systemMedium",
+      "installCompilePublishMS" : 12.828875,
+      "preparationFirstThenRepeatMS" : [
+        0.65845799999999999,
+        0.54191699999999998,
+        0.70466600000000001
+      ]
+    }
+  ],
+  "memoryPeak" : "NOT_MEASURED",
+  "scope" : "macOS shared installed-program execution; five isolated temporary installations, not five configured OS widgets",
+  "vmLifecycle" : "New JavaScriptCore context per preparation\/action. Repeated samples do not reuse a VM."
+}

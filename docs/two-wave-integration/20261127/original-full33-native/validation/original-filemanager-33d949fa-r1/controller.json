@@ -1,0 +1,92 @@
+{
+  "status": "ORIGINAL_FILEMANAGER_SELECTOR_DIAGNOSTIC_FAILED",
+  "source": "33d949fa8d91d238ba93a9ef09373c5eafe58b84",
+  "command": [
+    "/usr/bin/swift",
+    "test",
+    "--package-path",
+    "Packages/HanlinPlatform",
+    "--parallel",
+    "--filter",
+    "documentPickerAndQuickLookRuntime"
+  ],
+  "cwd": "/Users/m1/builds/hanlin-two-wave-root-20261126/source",
+  "controllerPID": 36363,
+  "controllerSHA256": "5b9c5bdcc89d58ed6f02ff13ca2d04b5ab7a8a4c8f4e11b922f6a256e77836e1",
+  "startedAt": "2026-11-27T08:42:54.422479+00:00",
+  "nativeCommandsStarted": 1,
+  "scope": "One original failing macOS FileManager selector; the tracked test, assertions, fixture and original test/suite limits remain unchanged.",
+  "boundary": "Diagnostic evidence only. No full601, iOS79, Host188, app54/26 or OS acceptance claim.",
+  "exactSelectorDeclaration": "Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift:542:    func documentPickerAndQuickLookRuntime() async throws {",
+  "capacity": {
+    "measuredCompleteWarmBuildAllocatedBytes": 2006482944,
+    "changedPackageFiles": [
+      "Packages/HanlinPlatform/Sources/HanlinScriptingApplicationRuntime/HanlinScriptingRuntimeServices.swift"
+    ],
+    "existingCompleteWarmBuildReused": true,
+    "budgetComponentsBytes": {
+      "incrementalCompileAndLink": 1073741824,
+      "nativeFixtureTemporaryFiles": 67108864,
+      "logsAndEvidence": 16777216,
+      "concurrentGrowthAllowance": 536870912,
+      "osReserve": 1073741824
+    },
+    "rationale": "One production source file changes private macOS bookmark policy and imports the public Security framework; all test files and pins match the warmed package. The existing complete build occupies2.006GB; a1GiB incremental compile/link allowance plus fixture, foreign-growth and1GiB OS margin fits current free space. This is a measured warm incremental phase, not a fixed global capacity target."
+  },
+  "freeAtAdmission": 5603393536,
+  "admissionBytes": 2768240640,
+  "diagnosticOuterBounds": {
+    "buildSeconds": 600,
+    "testSeconds": 120,
+    "originalTrackedTestLimitsUnchanged": true
+  },
+  "swiftVersion": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0",
+  "xcodeVersion": "Xcode 27.0\nBuild version 27A266a",
+  "stageReceiptSHA256": "ebe26f5fbb9666a2b1f3ba6fec2309c01f2a5a5669f5534c8d9a0a571cf4941e",
+  "sourceProductionFileSHA256": "a1ead7e7e54c6d4e578fd9f3b7b6696f966ab1050540908c4e9d70ba75493cf3",
+  "pid": 36375,
+  "pgid": 36375,
+  "commandStartedAt": "2026-11-27T08:42:55.009002+00:00",
+  "lastObservation": {
+    "at": "2026-11-27T08:43:06.944486+00:00",
+    "elapsedSeconds": 11.839478541020071,
+    "freeBytes": 5602054144,
+    "logBytes": 669,
+    "ownedProcessTree": [
+      {
+        "pid": 36375,
+        "ppid": 36363,
+        "pgid": 36375,
+        "state": "Ss",
+        "processStarted": "Fri Nov 27 09:42:55 2026",
+        "executable": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-test"
+      },
+      {
+        "pid": 36497,
+        "ppid": 36375,
+        "pgid": 36497,
+        "state": "R",
+        "processStarted": "Fri Nov 27 09:43:06 2026",
+        "executable": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/libexec/swift/pm/swiftpm-testing-helper"
+      }
+    ]
+  },
+  "exitCode": 0,
+  "methodStarts": [],
+  "methodTerminals": [],
+  "exactOneSelectorExecuted": false,
+  "nativeSummaryLines": [
+    "\u2714 Test run with 1 test in 1 suite passed after 0.039 seconds."
+  ],
+  "diagnosticOriginalSelectorPassed": false,
+  "sourceUnchanged": true,
+  "finishedAt": "2026-11-27T08:43:08.410359+00:00",
+  "freeEnd": 5601710080,
+  "retainedEvidence": [
+    {
+      "path": "original-filemanager-selector.log",
+      "bytes": 1171,
+      "sha256": "22bebfa775d035cca2248dfb57fa37d6f72420893c8c88d99499410e617d56c9"
+    }
+  ]
+}

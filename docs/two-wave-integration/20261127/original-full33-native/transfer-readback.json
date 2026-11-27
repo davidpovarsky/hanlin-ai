@@ -1,0 +1,8 @@
+{
+  "status": "EXACT_FULL_NATIVE_GATE_FAILURE_PACKET_VERIFIED",
+  "source": "33d949fa8d91d238ba93a9ef09373c5eafe58b84",
+  "members": 157,
+  "manifestSHA256": "49477fffe59634c3d2bbdd37aabcbdc1e724b98b56174c88615305bab12c6adf",
+  "tarSHA256": "9f3685a8bc2d798a3dfa7d62cef3a62d750743f414614dfda2858ee20c95aba8",
+  "allMembersHashVerified": true
+}
