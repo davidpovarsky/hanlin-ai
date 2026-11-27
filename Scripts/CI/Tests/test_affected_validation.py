@@ -221,6 +221,48 @@ class AffectedValidationPlannerTests(unittest.TestCase):
             exact_test_selector=exact_test_selector,
         )
 
+    def test_long_running_fixture_sources_use_the_original_split_owner(self) -> None:
+        paths = (
+            "Fixtures/ShortcutLongRunning/expo/App.tsx",
+            "Fixtures/ShortcutLongRunning/expo/hanlin.authoring.json",
+            "Fixtures/ShortcutLongRunning/expo/index.ts",
+            "Fixtures/ShortcutLongRunning/expo/package.json",
+            "Fixtures/ShortcutLongRunning/expo/proof.ts",
+            "Fixtures/ShortcutLongRunning/expo/script.json",
+            "Fixtures/ShortcutLongRunning/expo/tsconfig.json",
+            "Fixtures/ShortcutLongRunning/nativescript/hanlin.authoring.json",
+            "Fixtures/ShortcutLongRunning/nativescript/index.ts",
+            "Fixtures/ShortcutLongRunning/nativescript/package.json",
+            "Fixtures/ShortcutLongRunning/nativescript/proof.ts",
+            "Fixtures/ShortcutLongRunning/nativescript/script.json",
+            "Fixtures/ShortcutLongRunning/nativescript/tsconfig.json",
+        )
+        for path in paths:
+            with self.subTest(path=path):
+                plan = self.plan_files([path])
+                self.assertEqual(plan.affected_components, {
+                    "canonical_product_split": ["directly modified: " + path],
+                })
+                self.assertNotIn(path, plan.no_impact_files)
+                self.assertTrue(plan.step_outputs["run_simulator_unit"])
+                self.assertEqual(set(plan.step_outputs["simulator_unit_filter"].split(",")), {
+                    "AI_HLYTests/HanlinAppSplitOriginTests",
+                    "AI_HLYTests/HanlinAppAgentSessionOwnerTests",
+                })
+                self.assertFalse(plan.step_outputs["run_simulator_targeted_ui"])
+                self.assertEqual(plan.step_outputs["simulator_ui_filter"], "")
+                self.assertFalse(plan.step_outputs["run_full_validation"])
+                self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+                self.assertFalse(plan.step_outputs["run_device_build"])
+
+    def test_unreviewed_long_running_fixture_siblings_still_fail_closed(self) -> None:
+        for path in ("Fixtures/ShortcutLongRunning/expo/unreviewed-driver.ts",
+                     "Fixtures/ShortcutLongRunning/nativescript/unreviewed.json",
+                     "Fixtures/ShortcutLongRunning/unreviewed/proof.ts"):
+            with self.subTest(path=path), self.assertRaises(planner.UnmappedPathsError) as ctx:
+                self.plan_files([path])
+            self.assertEqual(ctx.exception.unmapped_paths, [path])
+
     def test_system_surface_sources_use_the_original_split_owner(self) -> None:
         paths = (
             "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
