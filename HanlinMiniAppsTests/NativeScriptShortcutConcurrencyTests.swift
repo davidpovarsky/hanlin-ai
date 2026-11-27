@@ -82,7 +82,7 @@ final class NativeScriptShortcutConcurrencyTests: XCTestCase {
                 XCTAssertEqual(probe.stored, nonces[index])
                 XCTAssertEqual(probe.windowID, started[index].windowID)
                 XCTAssertEqual(try fixture.extensions.receipt(for: commands[index].id)?.status, .succeeded)
-                XCTAssertEqual(HanlinNativeScriptWindowFactoryRegistry.openWindowCount(), index + 1)
+                XCTAssertEqual(HanlinNativeScriptWindowFactoryRegistry.openWindowCount(), UInt(index + 1))
                 XCTAssertEqual(HanlinNativeScriptSession.activeSessionIdentifier, ownerID)
                 XCTAssertTrue(foreground.activeNativeScriptController === controller)
                 XCTAssertTrue(controller.view.window === surface.window)
