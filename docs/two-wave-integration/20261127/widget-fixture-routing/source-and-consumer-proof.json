@@ -1,0 +1,51 @@
+{
+  "base": "e6b9630e62cef3d5a90a5bcd44890974ffcf6afc",
+  "sourceCommit": "f1becc66e6bb36c4133df726fd7445f7a660021a",
+  "fixtures": [
+    {
+      "paths": [
+        "Fixtures/Widgets/Hanlin-Expo-Widget-Counter.hanlinExpo",
+        "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Expo-Widget-Counter.hanlinExpo",
+        "AI_HLYUITests/Fixtures/Hanlin-Expo-Widget-Counter.hanlinExpo"
+      ],
+      "sha256": "a52c828cdb87f115c668b7cba544781ce89c023b14a65551844ee7985faa3d9d",
+      "bytes": 1149,
+      "threeCopiesByteIdentical": true
+    },
+    {
+      "paths": [
+        "Fixtures/Widgets/Hanlin-Expo-Widget-Visuals.hanlinExpo",
+        "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Expo-Widget-Visuals.hanlinExpo",
+        "AI_HLYUITests/Fixtures/Hanlin-Expo-Widget-Visuals.hanlinExpo"
+      ],
+      "sha256": "4532c361e91e32580a7dca5c120e1131bb2d9f07138b2b4103bdab138f588368",
+      "bytes": 1283,
+      "threeCopiesByteIdentical": true
+    },
+    {
+      "paths": [
+        "Fixtures/Widgets/Hanlin-Mixed-Native-Widget.hanlinExpo",
+        "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Mixed-Native-Widget.hanlinExpo",
+        "AI_HLYUITests/Fixtures/Hanlin-Mixed-Native-Widget.hanlinExpo"
+      ],
+      "sha256": "2121ea971faa158e891b8222372e2250062286b813ad8a889971cc351a8c75d7",
+      "bytes": 1000,
+      "threeCopiesByteIdentical": true
+    },
+    {
+      "paths": [
+        "Fixtures/Widgets/Hanlin-Widget-Invalid-Cases.hanlinExpo",
+        "AI_HLYTests/Fixtures/WidgetEngineFixtures.bundle/Hanlin-Widget-Invalid-Cases.hanlinExpo",
+        "AI_HLYUITests/Fixtures/Hanlin-Widget-Invalid-Cases.hanlinExpo"
+      ],
+      "sha256": "a86f47a41f684ecbb1dcce23552798b88cc7ab6622a8c316f2b721b44daf52c5",
+      "bytes": 949,
+      "threeCopiesByteIdentical": true
+    }
+  ],
+  "allPriorMapValuesUnchanged": true,
+  "allOriginalTestFileBytesPreserved": true,
+  "plannerUnchanged": true,
+  "fullGitDiffPlannerRunByThisAgent": false,
+  "nativeJobsByThisAgent": 0
+}

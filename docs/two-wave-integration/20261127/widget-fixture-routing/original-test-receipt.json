@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "owner": "/root/w1_review_resume",
+  "base": "e6b9630e62cef3d5a90a5bcd44890974ffcf6afc",
+  "worktree": "/mnt/development/projects/worktrees/hanlin-widget-fixture-routing-20261127",
+  "argv": [
+    "python3",
+    "-m",
+    "unittest",
+    "Scripts.CI.Tests.test_affected_validation.AffectedValidationPlannerTests",
+    "-v"
+  ],
+  "elapsedSeconds": 3.083239270374179,
+  "exitCode": 0,
+  "stdout": {
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "stderr": {
+    "bytes": 15297,
+    "sha256": "047bdeaa6e9ae87b8a29877ba3ae2d547c9c714e4ff6b871595275c63c17d514"
+  },
+  "scope": "Original affected-routing test class once; no full Git-diff planner, native build, fixture regeneration or workflow dispatch.",
+  "recordedAtUTC": "2026-11-27T02:00:51.090060+00:00",
+  "sourceCommit": "f1becc66e6bb36c4133df726fd7445f7a660021a",
+  "tests": 77,
+  "passed": 77,
+  "failed": 0,
+  "skipped": 0,
+  "originalCasesPreserved": 75,
+  "addedCases": 2
+}
