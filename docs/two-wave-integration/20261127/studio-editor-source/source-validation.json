@@ -1,0 +1,244 @@
+{
+  "actualNativeOS": "NOT_RUN",
+  "originalEvidenceArchive": {
+    "bytes": 111072,
+    "format": "gzip-compressed tar",
+    "path": "original-source-evidence.tar.gz",
+    "sha256": "47c9193c1c2c17c9ef4aa54fc0fe5e7feb111460f514d0f0ac6877b5d316b10f"
+  },
+  "originalEvidenceManifestSHA256": "5626b888174c22aeb9497040e1c2afae303770baac5aec501a5e0544bb39779c",
+  "portableControls": {
+    "allEightExecutedPythonInputsQualifiedToCandidateOrExactBaseGitBlob": {
+      "Scripts/ProductSplit/Tests/test_studio_editor_observer.py": "7d95e202d522e11f4fbb96df4a1e92322228ee81308c2cb72dd0cca760f2ff5d",
+      "Scripts/ProductSplit/Tests/test_studio_source_input.py": "eb9e25a98eae1307826630f6fb6e9c18576ad9f6d347f5e62a42c28af79414ea",
+      "Scripts/ProductSplit/observe_share_translation_surfaces.py": "6702a1bb58c11b9f2e6d285eb62dee7db9f12ad1ddd6d466396d36cda91bee0a",
+      "Scripts/ProductSplit/observe_shortcut_surfaces.py": "240bdcfe3c4ad557e59643bbdbdd1a02369d0504cd6701467e9d30fcc167508c",
+      "Scripts/ProductSplit/observe_studio_editor.py": "6869bd11abc46488d9c039352e8adc328d1370ce5bcafadc108973b941ad5b12",
+      "Scripts/ProductSplit/observe_studio_gallery.py": "c64e13a04d86e628742e0472fc7c2776ba036ff72b9ecb14480b59c5587f78e8",
+      "Scripts/ProductSplit/run_paired_acceptance.py": "eb7ea591a8e26b4b3b5fad83387d7539353eacabf8361f5804167a088572423a",
+      "Scripts/ProductSplit/studio_source_input.py": "9158d406b6364ea12b0ed14f0539bca39362bcfb5436de46d50ebc9de7429ec5"
+    },
+    "finalR2": {
+      "actualTestSeconds": 0.419,
+      "failures": 0,
+      "receiptSHA256": "ab9d4f80c7827de316f2429edb5d40f57add77819f2051e7289a6849308be6fe",
+      "skips": 0,
+      "stderrSHA256": "b6b09c84313fd90260b9647d14e7a787953f5a83ff537e04c95cd9e1c0087ec1",
+      "tests": 24
+    },
+    "originalR1": {
+      "failures": 0,
+      "retained": true,
+      "skips": 0,
+      "tests": 23
+    }
+  },
+  "preservation": {
+    "baseCommit": "5cd298845b77eee0a3942e7b38b3a4e961feb94c",
+    "nativeExecution": "NOT_RUN",
+    "plans": {
+      "allOriginalAssignmentASTsPreserved": true,
+      "candidateAssignments": 8,
+      "originalAssignmentASTSHA256": [
+        "fdbc270f0d2c3334c8d1d7ca2b8838a3b5507c6e4ca845d021433e01c78aa2b5",
+        "5d50fc61593e93ce89f793165c280ba5bdf8a6c4f6e01936ffe3d97ecee54e10",
+        "8446a5c74d4a905cc6fd12df3561d18bc56dc8c9daf84572e9096b51773dd868",
+        "49f8f6edbcf7f2619d4f6bef04f5a4988117f6524b6a9f5fdcdb97f87256910f",
+        "d62227e3a3200eae314e6116ee997ff35f13859061c84425f13d351f4772a1fd",
+        "6583dbbaa316a974daed1e6771240c99479ec1f0b68f2ecd971fc74d5ab503e6",
+        "c1cfe5201e6518883edf6ae3b61171b9914237a81f67820b4eefaa1fc27fe79d"
+      ],
+      "originalAssignments": 7
+    },
+    "pythonFunctions": {
+      "Scripts/ProductSplit/observe_shortcut_surfaces.py": {
+        "changedFunctions": [
+          "observe",
+          "main"
+        ],
+        "identicalOriginalFunctions": 37,
+        "newFunctionNames": [],
+        "originalFunctions": 39,
+        "originalFunctionsAbsent": [],
+        "unchangedFunctionASTSHA256": {
+          "_epoch_milliseconds": "6a5cce6126271a3eeecdd2021163cf1be13649054502e6dc4a57ba2697065fbb",
+          "_members": "a4194b6c6b0b2c5aaa7e9ede3c33a28f5049660de07b1572b061fc4d36bd91e8",
+          "_validate_five_receipts": "fcb7e3b62c635d958f7dc324766b1c547596a7b67b4f16958ea03b6cf1c3c334",
+          "action_identity": "e229422050b65babc66363bf4a68644aeb631208fff0a663fa551160a1950a11",
+          "close_widget_logs": "c016ec62b57b8c202affaa5f98bf3caa3e69975c1b90471a718606821bff320d",
+          "command": "0d9afeac87d3e4e84b03d6bf59d7b319fa20847de020ddac70a1343c2437ac2d",
+          "completion": "b144342de927fc9e0eb5a672d86d0e7fd9fbf9fed8cb48c92532420bcfe3d5c2",
+          "decode_value": "0530ea9df7c6e9b0b0a897b954f4fae39a3089bab8dfe3d3b75c84fa300163a6",
+          "digest": "f35232093a2f3169a0c45d167a1287c49715f3539cc4a07060b21853fa23b60a",
+          "equal_typed_json": "e9301fb6d82db909b0a58a66c2b33d00bc33a56dad5408c65308f383d4391af1",
+          "installed_catalog": "e3d3bd095b8ff4e2233864618dcf34d5de623ba2268a9464f02257f7263d17b7",
+          "load_system_inputs": "83173e6a1a33f453f07df26befdc376c29812e3a0e6789d78ab0d1ec0b2904a9",
+          "load_widget_fixture": "f35b6676d6910f5ed94e464e4dd85b1f8f3c51d61dfb26ca42ef3952013fdf2f",
+          "matching_widget_fallback": "851c5967c13924f100f8a0ac0acb25e776e7e6e94213f96ecf99e0f3a6d3546d",
+          "observe_widget_case": "12863a785d46084510673a7219be1105218f6340ba034a80f9dffa8957d7b460",
+          "original_system_fixture": "1c05225d05ff90f49855e47549f980533757ac3171723ae093f07bb93120c307",
+          "os_container": "d96ea997abf9a27b048921d2931d1c6d854db628875c793ce68b9a84a04ae5d4",
+          "parse_json": "f1af57dd17e915c8d41202285ca207ca2fc6348317017aa6302e898a145651df",
+          "prepared_proof": "7854098695d56e476a2a791fb35806abba2c746869dc00eb94608f1ecffccf3a",
+          "product_roots": "1ddfea845803c97ff280ac5dece9f1daebd79bd1aab9bf624fcfd54a17616f3c",
+          "proof_documents": "530036cfc608c105000865e47c57402a8bfb9724584a69d4e50bab12ae240470",
+          "queue_documents": "c22301710a335d61c79f31982c296f8ba082d5085c781624ba5cef0e325f9868",
+          "read_document": "8f13444a13d7eb9fc4cc76841602d257fc6e1a7605d586906c4ea4753b171740",
+          "require": "645a7f7d54ccb42d751606df592a76a0f3f641d463677ae0edcaa264c406dd7f",
+          "require_widget_cache": "74374d1260b4582c43d1b107ad7e58b1a0731bfc335aff732d84306f7b6b632d",
+          "require_widget_transition": "a63ffa6036bac490ad8cbf76c0898280ece686d9e8cf4e85993a2f278e6b0cdf",
+          "snapshot_document": "8dbb9028b21b3a5ee55fa18e1df0a80f96da15a191376f9d18b4c8e788b9b916",
+          "system_app_observation": "5d66c96ef71bacd73bc59bc4b02870814dc974e1c46fb7e2aff503b38e0e38f7",
+          "validate_request": "aac52d5c9b19c21b57bd4e798b0f0a44e63f5d568fbffa83a8da1445a0f96793",
+          "validate_widget_request": "b1cdfedaf2bf7a1bb3fe62139d6e45e666d64e531e646e72522077b4d04ed4be",
+          "widget_artifact": "394b2592b279bd6e1e820f4ed199706339fae2c617b405a67704f62da781aa6a",
+          "widget_extension_executable": "69d629ab82952012ede0f903854c09e5ce79268b5d42e788d23a5a209f55c349",
+          "widget_facts": "4319d85fd0157899372f404208a684f53f3cd098f63b209ddf31824408769ea7",
+          "widget_identity_digest": "d4fb139821a020a8eed4877774112f602642d5dfa910a1242440c86f03aa5ca5",
+          "widget_log_events": "3acab9a3afdb968b807af87114a18802d12d5e3bad16f4b301501d307d5b8478",
+          "widget_node_contains": "6cc7ac9d72ac84ffce4e647b190490c706790d01d5c6d6955ac449f99396a9e0",
+          "write_response": "9b9dbf4d288ee9ca5f4fd7959b17759c44158352881abf8a5e547a4a3c29e566"
+        }
+      },
+      "Scripts/ProductSplit/run_paired_acceptance.py": {
+        "changedFunctions": [
+          "start_shortcut_observer",
+          "main"
+        ],
+        "identicalOriginalFunctions": 16,
+        "newFunctionNames": [],
+        "originalFunctions": 18,
+        "originalFunctionsAbsent": [],
+        "unchangedFunctionASTSHA256": {
+          "authoring_fixtures": "f1a6843a081d7bac6fedb8b10de9c47e6c28fc39579d198c730f3012bc0c18af",
+          "capture_app_intents_metadata": "9bf7d8779d727975c533548d0794069555f9354a07244bd445a3937b313a7fd4",
+          "command": "179f29e17319019e4667d1575f5604218c4d75b858e356ad54e613065226e973",
+          "command_phase_status": "d99aaabb480238586d112c5b7842ebf3a0ea27b99d1e734db4202cfd08376e89",
+          "finish_shortcut_observer": "382e48fec7ab56c1fcd96fc7a1e396ed5f48738da7ee245f30c7e79d9613364a",
+          "finish_system_surface_input_producer": "ab55c0d2d70528acba02d802222107d3fc8aef5f7cf1108b61d9a45bf9d8377a",
+          "fixture_archive": "45e6f0a3e479414e63c7e855d103286dd38439ff7cf89d62afa005dade959b11",
+          "record_build_phases": "58966e50abc3a358835e4856a4b41ad1a19ad1d1c9ee5a0f276ecff5f458fdcc",
+          "select_paired_runtime": "000896d71cbe15c673cb632ceb8b5bf88c83cfae3d6515f86cea862b739c9daf",
+          "shortcut_surface_fixtures": "233a2f1caff765c85dc4538a59b0e388be82c7893ad2da2fd1c4525bd01329e5",
+          "stage_system_surface_share_input": "92882bef21ea4c66123a49072930d14650b8ee252a68442810b1567f6aacfb58",
+          "start_native_adapter_assets": "903f8715d5f6b236220f45933a30924d0cf14e14d70eb56ad8670a5024e24e4d",
+          "start_system_surface_input_producer": "754b5cdbe61f2cb73a0774476e0682dc0269f6c282f1be507a0e7c5f2dc048f6",
+          "system_surface_inputs": "91629bc4075ec1251f4a96e6a353a3136318f29a98a2abb1d70a30d35ff09c8b",
+          "verify_native_result": "4fb76432571c65fef7e911d6fd4152e55b8694569994864494356eef89c7913a",
+          "widget_recovery_fixture": "bfa934d4c0188c445349d77a6f6db4e995cdc3903fc71bb80b5be332880b6104"
+        }
+      }
+    },
+    "schemaVersion": 1,
+    "ui": {
+      "additionSHA256": "6f4a14d06de5b6e9a9bc435459fb7ae8cef28f7aaf6bd57f19e27a381b773b3e",
+      "afterSHA256": "03a1dcef7b1031f98bd8d6218cab079dbc9f1433e90f7fb157be383ef1cf8948",
+      "beforeSHA256": "06c35ecf0850d77bde08964360c6c0f7def0f5addf0ec13ed5f4513fdb14db53",
+      "newMethods": [
+        "testStudioExpoCreatesMovesStylesAndReopensSource",
+        "testStudioNativeScriptCreatesMovesStylesAndReopensSource",
+        "testStudioOriginalTypeScriptHelpPreferencesAndLiveLogExport",
+        "testStudioImportsActualFilesSourceAndReopensIndependentEdit",
+        "testStudioTwoRealWindowsConflictReloadAndRecoverSeparateCopy"
+      ],
+      "originalCompleteFileRestoredByRemovingOnlyNewBlock": true,
+      "originalMethods": [
+        "testExpoPlacedWidgetInvokesAllFiveRuntimes",
+        "testNativeScriptPlacedWidgetInvokesAllFiveRuntimes",
+        "testExpoLiveActivityInvokesAllFiveRuntimes",
+        "testNativeScriptLiveActivityInvokesAllFiveRuntimes",
+        "testExpoShortcutInvokesAllFiveRuntimes",
+        "testNativeScriptShortcutInvokesAllFiveRuntimes",
+        "testExpoSystemShareInvokesAllFiveRuntimes",
+        "testNativeScriptSystemShareInvokesAllFiveRuntimes",
+        "testExpoSystemTranslationInvokesAllFiveRuntimes",
+        "testNativeScriptSystemTranslationInvokesAllFiveRuntimes",
+        "testExpoRunMiniAppActionSavedBackgroundReturnsTypedResult",
+        "testNativeScriptRunMiniAppActionSavedBackgroundReturnsTypedResult",
+        "testExpoRunMiniAppActionSavedForegroundReturnsTypedResult",
+        "testNativeScriptRunMiniAppActionSavedForegroundReturnsTypedResult",
+        "testMiniAppsPlacedWidgetRetainsLastGoodAfterRealFailureAndRecovers",
+        "testNativeScriptOwnerSurvivesThreeOverlappingBackgroundShortcutsInReverseOrder",
+        "testNativeScriptOwnerSurvivesCancellingOneOfThreeOverlappingBackgroundShortcuts",
+        "testStudioExpoHelloWorldCopiesEditsBuildsInstallsAndRuns",
+        "testStudioDepartureBudgetCopiesEditsBuildsInstallsAndRuns",
+        "testStudioNativeScriptHelloWorldCopiesEditsBuildsInstallsAndRuns",
+        "testStudioTableShareCopiesEditsBuildsInstallsAndRuns",
+        "testStudioNativeImageDrawingCopiesEditsBuildsInstallsAndRuns"
+      ]
+    }
+  },
+  "productMutation": false,
+  "remainingAcceptance": [
+    "Actual original five editor UI cases",
+    "Existing five Gallery UI cases",
+    "Signed-account iCloud/offline/sync/remote conflict",
+    "Files tags/provider and device/layout coverage"
+  ],
+  "schemaVersion": 1,
+  "sdkInputIntersection": {
+    "candidatePaths": [
+      "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+      "Scripts/ProductSplit/observe_studio_editor.py",
+      "Scripts/ProductSplit/studio_source_input.py",
+      "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+      "Scripts/ProductSplit/run_paired_acceptance.py",
+      "Scripts/ProductSplit/Tests/test_studio_editor_observer.py",
+      "Scripts/ProductSplit/Tests/test_studio_source_input.py"
+    ],
+    "inputSHA256": "4225027c6b835ef04e413e341870606d6206af7735cf8aa5e4c6400855e8235f",
+    "intersection": [],
+    "manifestBytes": 5266087,
+    "manifestPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/host866-sdk-inputs-staged-host-pending/miniapp-sdk.json",
+    "manifestSHA256": "59d4ad4748dd615d3f7b6536e012ef93c38bb96f76b3f3f28ebbbed909518235",
+    "producedSource": "866d2d3c60525e32eae27564869e6dba024e625c",
+    "qualification": "Actual retained 866 input path set; no new current SDK fingerprint run in this lane",
+    "sourceInputCount": 392
+  },
+  "sourceBase": "5cd298845b77eee0a3942e7b38b3a4e961feb94c",
+  "sourceFiles": {
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift": {
+      "beforeSHA256": "06c35ecf0850d77bde08964360c6c0f7def0f5addf0ec13ed5f4513fdb14db53",
+      "bytes": 135175,
+      "sha256": "03a1dcef7b1031f98bd8d6218cab079dbc9f1433e90f7fb157be383ef1cf8948"
+    },
+    "Scripts/ProductSplit/Tests/test_studio_editor_observer.py": {
+      "beforeSHA256": null,
+      "bytes": 22517,
+      "sha256": "7d95e202d522e11f4fbb96df4a1e92322228ee81308c2cb72dd0cca760f2ff5d"
+    },
+    "Scripts/ProductSplit/Tests/test_studio_source_input.py": {
+      "beforeSHA256": null,
+      "bytes": 6070,
+      "sha256": "eb9e25a98eae1307826630f6fb6e9c18576ad9f6d347f5e62a42c28af79414ea"
+    },
+    "Scripts/ProductSplit/observe_shortcut_surfaces.py": {
+      "beforeSHA256": "8b6f2ce75677a20819e42ca4deb416cdef6ce0b3a2eb7fd28ab8c399a61db81b",
+      "bytes": 63765,
+      "sha256": "240bdcfe3c4ad557e59643bbdbdd1a02369d0504cd6701467e9d30fcc167508c"
+    },
+    "Scripts/ProductSplit/observe_studio_editor.py": {
+      "beforeSHA256": null,
+      "bytes": 36178,
+      "sha256": "6869bd11abc46488d9c039352e8adc328d1370ce5bcafadc108973b941ad5b12"
+    },
+    "Scripts/ProductSplit/run_paired_acceptance.py": {
+      "beforeSHA256": "95d0e220974a59adc3a08c4df6f429aadcd05a949c8fc5b3922ee7a58981cfdf",
+      "bytes": 84653,
+      "sha256": "eb7ea591a8e26b4b3b5fad83387d7539353eacabf8361f5804167a088572423a"
+    },
+    "Scripts/ProductSplit/studio_source_input.py": {
+      "beforeSHA256": null,
+      "bytes": 9443,
+      "sha256": "9158d406b6364ea12b0ed14f0539bca39362bcfb5436de46d50ebc9de7429ec5"
+    }
+  },
+  "sourceManifestSHA256": "3796ca4d6e78a588ac35c743396aa67bbc30780779de3552f136516b0c5ee986",
+  "sourceOnlyApproval": {
+    "path": "root-independent-source-review.json inside original-source-evidence.tar.gz",
+    "reviewer": "/root",
+    "sha256": "5aa2a378e90fe11c9b14958b562cc27c986ccb4e3bbd52ea64971af50258cb06"
+  },
+  "timestampCompatibility": "Whole-second checkpoints are admitted in strict phase order; completed phase polls are idempotent and cannot advance or overwrite evidence",
+  "workflowMutation": false
+}

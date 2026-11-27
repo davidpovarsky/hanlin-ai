@@ -954,6 +954,12 @@ def observe(args, stopping=lambda: False):
             if request.get("phase") in ("preparing", "finished"):
                 time.sleep(0.25)
                 continue
+            if request.get("surface") == "studioEditor":
+                from observe_studio_editor import observe_case
+                observe_case(args, request, directory, evidence, seen)
+                last_error = None
+                time.sleep(0.25)
+                continue
             if request.get("surface") == "studioGallery":
                 from observe_studio_gallery import observe_case
                 observe_case(args, request, directory, evidence, seen)
@@ -1094,6 +1100,8 @@ def main():
                         help="Exact original Matrix archive, only for the separate widget recovery scope")
     parser.add_argument("--system-inputs", type=Path,
                         help="Original runner input manifest, only for the original ten system-surface methods")
+    parser.add_argument("--studio-inputs", type=Path,
+                        help="Original runner ordinary source-folder input manifest, only for Studio editor acceptance")
     args = parser.parse_args()
     require(0 < args.duration <= 7200, "Observer lifetime must be bounded")
     require(args.runner_bundle_id.endswith(".xctrunner"), "An actual XCTest runner bundle is required")

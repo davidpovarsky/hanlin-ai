@@ -1516,4 +1516,572 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
         record["runtimeActionObserved"] = true
     }
 
+
+    // Additive original Studio editor acceptance. Only real UI actions write
+    // project source, preferences, journals and exported logs. The companion
+    // reads those outcomes; ordinary Files input staging is separately bound.
+    private enum StudioEditorScenario: String {
+        case files, assistance, conflict
+        case importSource = "import"
+    }
+
+    func testStudioExpoCreatesMovesStylesAndReopensSource() throws {
+        try observeStudioEditor(.files, engine: .expo)
+    }
+    func testStudioNativeScriptCreatesMovesStylesAndReopensSource() throws {
+        try observeStudioEditor(.files, engine: .nativescript)
+    }
+    func testStudioOriginalTypeScriptHelpPreferencesAndLiveLogExport() throws {
+        try observeStudioEditor(.assistance, engine: .expo)
+    }
+    func testStudioImportsActualFilesSourceAndReopensIndependentEdit() throws {
+        try observeStudioEditor(.importSource, engine: .expo)
+    }
+    func testStudioTwoRealWindowsConflictReloadAndRecoverSeparateCopy() throws {
+        try observeStudioEditor(.conflict, engine: .nativescript)
+    }
+
+    private func observeStudioEditor(_ scenario: StudioEditorScenario, engine: Engine) throws {
+        continueAfterFailure = false
+        executionTimeAllowance = 1200
+        deadline = Date().addingTimeInterval(1140)
+        let runID = UUID().uuidString.lowercased()
+        let example: StudioExample = engine == .expo ? .expoHello : .nativeHello
+        let marker = "שלום Editor " + runID.prefix(8)
+        let documents = try XCTUnwrap(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first)
+        let root = documents.appendingPathComponent("HanlinSystemSurfaceObservation", isDirectory: true)
+        let directory = root.appendingPathComponent(runID, isDirectory: true)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        exchange = root
+        runDirectory = directory
+        record = ["schema": 1, "runID": runID, "engine": engine.rawValue, "surface": "studioEditor",
+                  "scenario": scenario.rawValue, "exampleID": example.rawValue, "marker": marker,
+                  "status": "RUNNING", "test": name, "startedAt": timestamp(), "phase": "preparing"]
+        try checkpoint("preparing")
+        defer {
+            capture(mini, "studio-editor-final-app")
+            record["finishedAt"] = timestamp()
+            try? writeJSON(record, filename: "case.json")
+            try? checkpoint("finished")
+        }
+        do {
+            mini.terminate()
+            XCUIDevice.shared.orientation = .landscapeLeft
+            if scenario == .conflict { try studioEnableWindowedApps() }
+            mini.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+            mini.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+            mini.launch()
+            try studioOpenLocalLibrary(in: mini)
+            record["processID"] = try observedConcurrencyPID("studio-editor-initial")
+            try openStudioGallery(example)
+            record["galleryLoaded"] = true
+            _ = try studioEditorCheckpoint("gallery-ready")
+            if scenario == .importSource {
+                let input = try studioEditorCheckpoint("import-input-ready", timeout: 90)
+                try tap(mini.navigationBars["Example Gallery"].buttons["Done"].firstMatch,
+                        "Close the actual gallery before selecting a normal Files source folder.")
+                try studioImportFolder(try string(input, "folder"), project: try string(input, "projectFolder"))
+            } else {
+                try copyStudioExample(example)
+            }
+            record["copyObserved"] = true
+            let copied = try studioEditorCheckpoint("copy-ready")
+            let project = try string(copied, "projectName")
+            try studioOpenProject(project, in: mini)
+            switch scenario {
+            case .files:
+                try studioFilesCase(project, marker: marker, runID: runID)
+            case .assistance:
+                try studioAssistanceCase(project, marker: marker, runID: runID)
+            case .importSource:
+                try selectStudioFile(example.sourceFile)
+                let editor = mini.textViews["miniapps-studio-editor"].firstMatch
+                let original = try XCTUnwrap(editor.value as? String)
+                try require(original.components(separatedBy: example.originalHeading).count == 2,
+                            "The actual imported original source heading is absent or ambiguous.")
+                try studioReplaceText(editor, with: original.replacingOccurrences(of: example.originalHeading, with: marker))
+                try studioSave(in: mini)
+                record["importEditObserved"] = true
+                _ = try studioEditorCheckpoint("source-edited")
+                try studioRestartAndOpen(project, file: example.sourceFile)
+            case .conflict:
+                try studioConflictCase(project, marker: marker, runID: runID)
+            }
+            record["reopenedSourceObserved"] = true
+            record["reopenedProcessID"] = try observedConcurrencyPID("studio-editor-reopened")
+            capture(mini, "studio-editor-reopened")
+            let completion = try studioEditorCheckpoint("reopened", timeout: 90)
+            try require(completion["status"] as? String == "EXECUTED_PASS" &&
+                        completion["scenario"] as? String == scenario.rawValue,
+                        "The original Studio UI/files/current SDK observer did not confirm this actual case.")
+            record["observerCompletion"] = completion
+            record["status"] = "EXECUTED_PASS"
+        } catch {
+            record["status"] = "FAILED"
+            record["reason"] = String(describing: error)
+            throw error
+        }
+    }
+
+    private func studioEditorCheckpoint(_ phase: String, timeout: TimeInterval = 45) throws -> [String: Any] {
+        record["currentProcessID"] = try observedConcurrencyPID("studio-editor-" + phase)
+        capture(mini, "studio-editor-phase-" + phase)
+        try checkpoint(phase)
+        let filename = phase == "gallery-ready" ? "identity.json" : phase == "reopened" ? "completion.json" : "editor-" + phase + ".json"
+        let value = try response(filename, timeout: timeout)
+        try require(value["runID"] as? String == record["runID"] as? String &&
+                    value["status"] as? String == (phase == "reopened" ? "EXECUTED_PASS" : "READY"),
+                    "The read-only Studio observer did not admit the exact UI phase " + phase + ".")
+        return value
+    }
+
+    private func studioOpenLocalLibrary(in container: XCUIElement) throws {
+        let entry = container.buttons["miniapps-open-studio"].firstMatch
+        try require(entry.waitForExistence(timeout: bounded(60)), "The actual app window has no Developer Studio entry.")
+        try tap(entry, "Open Studio in this actual app window.")
+        try tap(container.buttons["On this device"].firstMatch, "Open this window's local project library.")
+        try require(container.navigationBars["My Projects"].waitForExistence(timeout: bounded(30)),
+                    "The actual local library did not open in this window.")
+    }
+
+    private func studioOpenProject(_ project: String, in container: XCUIElement) throws {
+        for component in project.split(separator: "/").map(String.init) {
+            let row = container.descendants(matching: .any).matching(NSPredicate(format: "label == %@", component)).firstMatch
+            try reveal(row, in: container, message: "The real project/folder is absent: " + component)
+            try tap(row, "Open the actual source path component " + component + ".")
+        }
+        try require(container.textViews["miniapps-studio-editor"].firstMatch.waitForExistence(timeout: bounded(30)),
+                    "The real project source editor did not open.")
+    }
+
+    private func studioOptions(_ action: String, in container: XCUIElement) throws {
+        try tap(container.buttons["miniapps-studio-editor-options"].firstMatch, "Open this original editor's options.")
+        try tap(mini.buttons[action].firstMatch, "Use the original editor action " + action + ".")
+    }
+
+    private func studioSave(in container: XCUIElement) throws {
+        try studioOptions("Save", in: container)
+        try require(!mini.alerts["Editor"].firstMatch.exists, "The actual editor refused its source save.")
+    }
+
+    private func studioReplaceText(_ field: XCUIElement, with value: String) throws {
+        try tap(field, "Focus the actual native source/path field.")
+        if let original = field.value as? String, !original.isEmpty {
+            field.press(forDuration: 1.2)
+            var selectAll = mini.menuItems["Select All"].firstMatch
+            if !selectAll.exists { selectAll = mini.buttons["Select All"].firstMatch }
+            if !selectAll.exists {
+                let select = firstButton(mini, ["Select"])
+                if select.exists && select.isHittable { select.tap() }
+                selectAll = mini.menuItems["Select All"].firstMatch
+                if !selectAll.exists { selectAll = mini.buttons["Select All"].firstMatch }
+            }
+            try tap(selectAll, "Select the exact current text using the native selection menu.")
+        }
+        field.typeText(value)
+        try require(wait(15) { field.value as? String == value }, "The real native editor/path field did not retain the exact typed bytes.")
+    }
+
+    private func studioPathAlert(_ title: String, field: String, value: String) throws {
+        let alert = mini.alerts[title].firstMatch
+        try require(alert.waitForExistence(timeout: bounded(15)), "The actual source/path alert did not open.")
+        try studioReplaceText(alert.textFields[field].firstMatch, with: value)
+        try tap(alert.buttons["Save"].firstMatch, "Commit the actual path operation through the shipping UI.")
+        try require(wait(20) { !alert.exists }, "The actual path operation did not complete.")
+        try require(!mini.alerts["Project unavailable"].exists && !mini.alerts["Editor"].exists,
+                    "The original source/path operation reported a real error.")
+    }
+
+    private func studioNewSource(_ path: String, text: String, in container: XCUIElement) throws {
+        try studioOptions("New source file", in: container)
+        try studioPathAlert("New source file", field: "Relative path", value: path)
+        let editor = container.textViews["miniapps-studio-editor"].firstMatch
+        try require(wait(15) { editor.value as? String == "" }, "A fresh source file must start empty.")
+        try studioReplaceText(editor, with: text)
+        try studioSave(in: container)
+    }
+
+    private func studioSource(_ marker: String, _ version: String) throws -> String {
+        let literal = String(decoding: try JSONSerialization.data(withJSONObject: marker + " " + version,
+                              options: [.fragmentsAllowed]), as: UTF8.self)
+        return "export const marker = " + literal + ";\n"
+    }
+
+    private func studioFilesCase(_ project: String, marker: String, runID: String) throws {
+        let suffix = String(runID.prefix(8))
+        let created = "notes/first-" + suffix + ".ts"
+        let moved = "notes/nested/moved-" + suffix + ".ts"
+        let folder = "Libraries-" + suffix + "/Nested"
+        try studioNewSource(created, text: studioSource(marker, "created"), in: mini)
+        record["createdPath"] = created; record["fileCreateObserved"] = true
+        _ = try studioEditorCheckpoint("file-created")
+        try studioOptions("Rename or move file", in: mini)
+        try studioPathAlert("Rename or move", field: "Relative path", value: moved)
+        try studioReplaceText(mini.textViews["miniapps-studio-editor"].firstMatch,
+                              with: studioSource(marker, "after move"))
+        try studioSave(in: mini)
+        record["movedPath"] = moved; record["fileMoveObserved"] = true
+        _ = try studioEditorCheckpoint("file-moved")
+        try tap(mini.navigationBars.buttons["My Projects"].firstMatch, "Return to the actual source library.")
+        try tap(mini.buttons["miniapps-studio-add"].firstMatch, "Open the original library menu.")
+        try tap(mini.buttons["New folder"].firstMatch, "Create nested folders through the real library action.")
+        try studioPathAlert("New folder", field: "Path in this library", value: folder)
+        record["folderCreateObserved"] = true
+        _ = try studioEditorCheckpoint("folders-created")
+        try studioProjectContext(project, action: "Icon and color", in: mini)
+        try studioReplaceText(mini.textFields["Symbol name"].firstMatch, with: "star.fill")
+        try tap(mini.buttons["Color"].firstMatch, "Choose the actual folder color.")
+        try tap(mini.buttons["Purple"].firstMatch, "Select Purple in the original folder appearance picker.")
+        try tap(mini.navigationBars["Folder appearance"].buttons["Save"].firstMatch, "Save original folder appearance metadata.")
+        record["styleSaveObserved"] = true
+        _ = try studioEditorCheckpoint("style-saved")
+        try studioProjectContext(project, action: "Rename or move", in: mini)
+        let destination = folder + "/" + project
+        try studioPathAlert("Rename or move", field: "Path in this library", value: destination)
+        record["movedProject"] = destination; record["projectMoveObserved"] = true
+        _ = try studioEditorCheckpoint("project-moved")
+        mini.terminate(); mini.launch()
+        try studioOpenLocalLibrary(in: mini)
+        for component in folder.split(separator: "/").map(String.init) {
+            try tap(mini.buttons[component].firstMatch, "Reopen the actual moved library folder.")
+        }
+        try studioProjectContext(project, action: "Icon and color", in: mini)
+        let symbol = try XCTUnwrap(mini.textFields["Symbol name"].firstMatch.value as? String)
+        let purple = mini.descendants(matching: .any).matching(NSPredicate(format: "label CONTAINS %@ OR value == %@", "Purple", "Purple")).firstMatch
+        try require(symbol == "star.fill" && purple.exists, "Actual saved symbol/color did not survive restarting the app.")
+        record["reopenedSymbolObserved"] = symbol; record["reopenedColorObserved"] = "purple"
+        capture(mini, "studio-editor-reopened-appearance")
+        try tap(mini.navigationBars["Folder appearance"].buttons["Cancel"].firstMatch, "Close the read-only appearance inspection.")
+        try studioOpenProject(project, in: mini)
+        try selectStudioFile(moved)
+        let expected = try studioSource(marker, "after move")
+        try require(mini.textViews["miniapps-studio-editor"].firstMatch.value as? String == expected,
+                    "Moved source bytes did not survive reopening through the actual editor.")
+    }
+
+    private func studioProjectContext(_ project: String, action: String, in container: XCUIElement) throws {
+        let row = container.descendants(matching: .any).matching(NSPredicate(format: "label == %@", project)).firstMatch
+        try reveal(row, in: container, message: "The original project row is unavailable for its actual context menu.")
+        row.press(forDuration: 1.2)
+        try tap(mini.buttons[action].firstMatch, "Use the shipping project context action " + action + ".")
+    }
+
+    private func studioRestartAndOpen(_ project: String, file: String) throws {
+        let before = try observedConcurrencyPID("studio-editor-before-restart")
+        mini.terminate(); mini.launch()
+        try studioOpenLocalLibrary(in: mini)
+        try studioOpenProject(project, in: mini)
+        try selectStudioFile(file)
+        let after = try observedConcurrencyPID("studio-editor-after-restart")
+        try require(after != before, "The app did not actually restart before reopening source.")
+    }
+
+    private func studioAssistanceCase(_ project: String, marker: String, runID: String) throws {
+        let path = "notes/assistance-" + runID.prefix(8) + ".ts"
+        let literal = String(decoding: try JSONSerialization.data(withJSONObject: marker, options: [.fragmentsAllowed]), as: UTF8.self)
+        let prefix = "const greeting = " + literal + ";\ngreeting.toU"
+        try studioNewSource(String(path), text: prefix, in: mini)
+        let editor = mini.textViews["miniapps-studio-editor"].firstMatch
+        let completion = mini.buttons["toUpperCase"].firstMatch
+        try require(completion.waitForExistence(timeout: bounded(90)), "The original TypeScript service produced no toUpperCase completion.")
+        capture(mini, "studio-editor-completion")
+        try tap(mini.buttons["Documentation for toUpperCase"].firstMatch, "Request actual original completion documentation.")
+        try require(mini.buttons["Open API reference"].firstMatch.waitForExistence(timeout: bounded(60)),
+                    "The original completion details did not expose documentation/reference UI.")
+        capture(mini, "studio-editor-documentation")
+        record["inlineDocumentationObserved"] = true
+        try tap(completion, "Apply the actual TypeScript completion to the native editor.")
+        let completedPrefix = "const greeting = " + literal + ";\ngreeting.toUpperCase"
+        try require(wait(15) { editor.value as? String == completedPrefix },
+                    "The completion did not replace only the actual typed prefix.")
+        record["completionApplied"] = true
+        record["completionIntermediateSource"] = editor.value as? String
+        editor.typeText("();\ngreeting.substring(")
+        let parameterSource = completedPrefix + "();\ngreeting.substring("
+        try require(wait(15) { editor.value as? String == parameterSource }, "The actual parameter-help source is different.")
+        let signature = mini.staticTexts.matching(NSPredicate(format: "label CONTAINS %@ AND label CONTAINS %@ AND label CONTAINS %@", "substring", "start", "number")).firstMatch
+        try require(signature.waitForExistence(timeout: bounded(90)), "The original TypeScript parameter signature did not appear.")
+        capture(mini, "studio-editor-parameter-hint")
+        record["parameterHintObserved"] = true; record["parameterIntermediateSource"] = editor.value as? String
+        try tap(mini.buttons["Open API reference"].firstMatch, "Open the original SDK reference through its shipping Link.")
+        try require(wait(60) { safari.state == .runningForeground }, "The actual system browser did not open the reference.")
+        let address = safari.textFields.firstMatch
+        try tap(address, "Read the actual browser address for the opened API reference.")
+        let actualAddress = try XCTUnwrap(address.value as? String)
+        let url = try XCTUnwrap(URL(string: actualAddress))
+        try require(url.scheme == "https" && url.host == "docs.expo.dev", "The real reference opened another destination.")
+        record["referenceOpened"] = true; record["referenceURL"] = "https://docs.expo.dev/"
+        record["referenceAddressObserved"] = actualAddress
+        record["referenceProcessID"] = try studioObservedPID(safari)
+        capture(safari, "studio-editor-reference")
+        mini.activate()
+        let finished = completedPrefix + "();\ngreeting.substring(0, 2);\n"
+        try studioReplaceText(editor, with: finished)
+        try studioSave(in: mini)
+        _ = try studioEditorCheckpoint("assistance-observed")
+
+        try studioOptions("Choose font", in: mini)
+        let fontSearch = mini.searchFields.firstMatch
+        if fontSearch.exists { try tap(fontSearch, "Find the actual installed font family."); fontSearch.typeText("Courier New") }
+        let family = mini.staticTexts["Courier New"].firstMatch
+        try reveal(family, in: mini, message: "The actual UIFont picker does not offer Courier New.")
+        capture(mini, "studio-editor-font-picker")
+        try tap(family, "Open the original installed font family's faces.")
+        let regular = mini.staticTexts["Regular"].firstMatch
+        try require(regular.waitForExistence(timeout: bounded(20)), "The actual font picker did not expose the Regular face.")
+        capture(mini, "studio-editor-font-face")
+        try tap(regular, "Select the real Courier New Regular font face.")
+        try require(mini.buttons["miniapps-studio-editor-options"].firstMatch.waitForExistence(timeout: bounded(20)),
+                    "The native font picker did not return to the original editor.")
+        try studioOptions("Font size", in: mini)
+        try tap(mini.buttons["22 pt"].firstMatch, "Select the real22-point editor size.")
+        try tap(mini.buttons["miniapps-studio-editor-options"].firstMatch, "Open the original theme picker.")
+        if !mini.buttons["Dark"].firstMatch.exists { try tap(mini.buttons["Theme"].firstMatch, "Open the Theme choices.") }
+        capture(mini, "studio-editor-theme")
+        try tap(mini.buttons["Dark"].firstMatch, "Select the actual Dark theme.")
+        record["fontPickerObserved"] = true; record["fontFamilySelected"] = "Courier New"
+        record["fontFaceSelected"] = "Regular"; record["fontSizeSelected"] = 22; record["themeSelected"] = "dark"
+        _ = try studioEditorCheckpoint("preferences-saved")
+        try tap(mini.navigationBars.buttons["My Projects"].firstMatch, "Return to the original local library.")
+        try tap(mini.navigationBars.buttons["Developer Studio"].firstMatch, "Return to the real Studio tools.")
+        try tap(mini.buttons["Live logs"].firstMatch, "Open the actual runtime log reader.")
+        try tap(mini.buttons["Choose log"].firstMatch, "Choose the real Node runtime log.")
+        try tap(mini.buttons["node-runtime.log"].firstMatch, "Read the original Node log file.")
+        let search = mini.searchFields["Find messages"].firstMatch
+        try tap(search, "Use the real live-log search field.")
+        search.typeText("runtime_paths_configured")
+        try require(mini.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "runtime_paths_configured")).firstMatch.waitForExistence(timeout: bounded(30)),
+                    "No actual matching runtime startup message is displayed.")
+        record["logSearchQuery"] = "runtime_paths_configured"; record["logSearchObserved"] = true
+        capture(mini, "studio-editor-logs")
+        _ = try studioEditorCheckpoint("logs-ready")
+        let exportName = "studio-log-" + runID.prefix(8) + ".log"
+        try studioExportLog(String(exportName))
+        record["logExportObserved"] = true; record["logExportName"] = exportName
+        _ = try studioEditorCheckpoint("log-exported")
+        try studioRestartAndOpen(project, file: String(path))
+        try require(editor.value as? String == finished, "Actual assisted source did not survive reopening.")
+    }
+
+    private func studioObservedPID(_ app: XCUIApplication) throws -> Int {
+        let header = String(app.debugDescription.split(separator: "\n", maxSplits: 1).first ?? "")
+        let regex = try NSRegularExpression(pattern: "^Attributes: Application, .*?, pid: ([0-9]+),")
+        let match = try XCTUnwrap(regex.firstMatch(in: header, range: NSRange(header.startIndex..<header.endIndex, in: header)))
+        let range = try XCTUnwrap(Range(match.range(at: 1), in: header))
+        let value = try XCTUnwrap(Int(header[range]))
+        try require(value > 0, "The actual app accessibility snapshot has no positive process identity.")
+        return value
+    }
+
+    private func studioImportFolder(_ folder: String, project: String) throws {
+        try tap(mini.buttons["miniapps-studio-add"].firstMatch, "Open the actual local library import action.")
+        try tap(mini.buttons["Import source folder"].firstMatch, "Select a real ordinary source folder through Files.")
+        if mini.buttons["Browse"].firstMatch.exists { mini.buttons["Browse"].firstMatch.tap() }
+        try tap(mini.staticTexts["On My iPad"].firstMatch, "Use the actual local Files provider.")
+        try tap(mini.staticTexts["Hanlin MiniApps"].firstMatch, "Open normal MiniApps Documents inputs.")
+        try tap(mini.staticTexts[folder].firstMatch, "Open this run's actual SDK source input folder.")
+        try tap(mini.staticTexts[project].firstMatch, "Select the original source project's folder.")
+        try tap(firstButton(mini, ["Open", "Done"]), "Confirm the actual folder import.")
+        try require(mini.navigationBars["My Projects"].waitForExistence(timeout: bounded(30)) &&
+                    !mini.alerts["Project unavailable"].exists, "The real source-folder import failed.")
+        capture(mini, "studio-editor-import-selected")
+    }
+
+    private func studioExportLog(_ filename: String) throws {
+        try tap(mini.buttons["Export complete log"].firstMatch, "Export the actual complete log through its ShareLink.")
+        let save = mini.buttons["Save to Files"].firstMatch
+        try reveal(save, in: mini, message: "The real Share sheet offers no Save to Files action.")
+        try tap(save, "Save the original log using the actual Files provider.")
+        if mini.buttons["Browse"].firstMatch.exists { mini.buttons["Browse"].firstMatch.tap() }
+        try tap(mini.staticTexts["On My iPad"].firstMatch, "Choose real local file storage for the log export.")
+        try tap(mini.staticTexts["Hanlin MiniApps"].firstMatch, "Use the app's normal Documents export destination.")
+        let name = mini.textFields.firstMatch
+        try studioReplaceText(name, with: filename)
+        capture(mini, "studio-editor-log-files-export")
+        try tap(firstButton(mini, ["Save"]), "Save the real exported log under this fresh run's name.")
+        try require(!mini.alerts.buttons["Replace"].exists, "A fresh log export must never replace an existing file.")
+        try require(mini.navigationBars["Live logs"].waitForExistence(timeout: bounded(30)),
+                    "The actual Files export did not return to the log reader.")
+    }
+
+    private func studioEnableWindowedApps() throws {
+        settings.launch()
+        let multitasking = settings.descendants(matching: .any).matching(NSPredicate(format: "label == %@", "Multitasking & Gestures")).firstMatch
+        try reveal(multitasking, in: settings, message: "The actual iPad Settings has no windowing configuration.")
+        try tap(multitasking, "Open the real iPad multitasking settings.")
+        let windowed = settings.descendants(matching: .any).matching(NSPredicate(format: "label == %@", "Windowed Apps")).firstMatch
+        try tap(windowed, "Enable actual Windowed Apps on this owned iPad simulator.")
+        capture(settings, "studio-editor-windowing-settings")
+        record["windowingSettingsProcessID"] = try studioObservedPID(settings)
+        record["windowingEnabledObserved"] = true
+    }
+
+    private func studioEditorWindows() -> [XCUIElement] {
+        mini.windows.allElementsBoundByAccessibilityElement.filter {
+            $0.exists && $0.frame.width >= 100 && $0.frame.height > 20 &&
+            $0.textViews.matching(identifier: "miniapps-studio-editor").count == 1
+        }.sorted { $0.frame.minX < $1.frame.minX }
+    }
+
+    private func studioOpenSecondWindow(project: String, file: String) throws {
+        // Apple's public iPad route: Home app icon → New Window. No injected
+        // scene activation, second source writer or guessed persistent AX ID.
+        XCUIDevice.shared.press(.home)
+        let screen = springboard.frame
+        try require(screen.width > 500 && screen.height > 500, "The actual iPad Home Screen bounds are unavailable.")
+        record["windowingScreenFrame"] = [Double(screen.minX), Double(screen.minY), Double(screen.width), Double(screen.height)]
+        let icon = springboard.icons["Hanlin MiniApps"].firstMatch
+        for _ in 0..<4 {
+            if icon.exists && icon.isHittable { break }
+            springboard.swipeLeft()
+        }
+        try require(icon.exists && icon.isHittable, "The actual installed MiniApps icon is unavailable.")
+        icon.press(forDuration: 1.2)
+        record["windowingSystemProcessID"] = try studioObservedPID(springboard)
+        capture(springboard, "studio-editor-new-window-menu")
+        try tap(springboard.buttons["New Window"].firstMatch, "Open a genuine second MiniApps scene through the system menu.")
+        try require(wait(30) { mini.state == .runningForeground }, "The system did not activate the new MiniApps window.")
+        let roots = mini.windows.allElementsBoundByAccessibilityElement.filter { $0.buttons["miniapps-open-studio"].firstMatch.exists }
+        try require(roots.count == 1, "The actual new catalog window is absent or ambiguous.")
+        let newWindow = roots[0]
+        record["newWindowCreatedObserved"] = true
+        try studioOpenLocalLibrary(in: newWindow)
+        try studioOpenProject(project, in: newWindow)
+        try studioSelectFile(file, in: newWindow)
+        capture(mini, "studio-editor-before-tiling")
+        try studioTile(newWindow, onLeft: false)
+        let candidates = studioEditorWindows().filter { $0.frame.minX < screen.width / 2 - 20 }
+        try require(candidates.count == 1, "The actual other editor window is not visible after right tiling.")
+        try studioTile(candidates[0], onLeft: true)
+        try require(wait(20) {
+            let windows = studioEditorWindows()
+            return windows.count == 2 && windows[0].frame.maxX <= windows[1].frame.minX + 2
+        }, "The system did not present two independently visible tiled editor windows.")
+    }
+
+    private func studioTile(_ window: XCUIElement, onLeft: Bool) throws {
+        // Standard public drag/resize gestures, based on the actual window and
+        // retained screen. A native pilot must verify the OS recognizes them.
+        let bounds = try XCTUnwrap(record["windowingScreenFrame"] as? [Double])
+        try require(bounds.count == 4, "The actual screen bounds were not retained before opening the second window.")
+        let screen = CGSize(width: CGFloat(bounds[2]), height: CGFloat(bounds[3]))
+        if window.frame.width > screen.width * 0.85 {
+            let corner = window.coordinate(withNormalizedOffset: CGVector(dx: 0.995, dy: 0.995))
+            let target = mini.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: screen.width * 0.68, dy: screen.height * 0.78))
+            corner.press(forDuration: 0.2, thenDragTo: target)
+        }
+        capture(mini, onLeft ? "studio-editor-before-left-tile" : "studio-editor-before-right-tile")
+        let start = window.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: min(150, window.frame.width * 0.3), dy: 12))
+        let target = mini.coordinate(withNormalizedOffset: .zero).withOffset(CGVector(dx: onLeft ? 3 : screen.width - 3, dy: screen.height * 0.18))
+        start.press(forDuration: 0.15, thenDragTo: target)
+    }
+
+    private func studioSelectFile(_ path: String, in window: XCUIElement) throws {
+        try tap(window.buttons["miniapps-studio-files"].firstMatch, "Open this real window's source menu.")
+        try tap(mini.buttons[path].firstMatch, "Select the actual same source in this distinct window.")
+        try require(window.textViews["miniapps-studio-editor"].firstMatch.exists, "The window's actual source editor is absent.")
+    }
+
+    private func studioWindow(_ left: Bool) throws -> XCUIElement {
+        let windows = studioEditorWindows()
+        try require(windows.count == 2 && windows[0].frame.maxX <= windows[1].frame.minX + 2,
+                    "Both actual tiled UIWindow/editor instances must remain distinct.")
+        return windows[left ? 0 : 1]
+    }
+
+    private func studioRecordWindows() throws {
+        let windows = studioEditorWindows()
+        try require(windows.count == 2 && windows[0].frame.maxX <= windows[1].frame.minX + 2,
+                    "A two-editor observation requires two genuine nonoverlapping windows.")
+        func rectangle(_ frame: CGRect) -> [Double] { [Double(frame.minX), Double(frame.minY), Double(frame.width), Double(frame.height)] }
+        record["editorWindowCount"] = windows.count
+        record["editorWindows"] = try windows.enumerated().map { index, window -> [String: Any] in
+            let editor = window.textViews["miniapps-studio-editor"].firstMatch
+            return ["side": index == 0 ? "left" : "right", "windowFrame": rectangle(window.frame),
+                    "editorFrame": rectangle(editor.frame), "text": try XCTUnwrap(editor.value as? String)]
+        }
+    }
+
+    private func studioDismissConflictAlert() throws {
+        let alert = mini.alerts["Editor"].firstMatch
+        if alert.waitForExistence(timeout: bounded(3)) { try tap(alert.buttons["OK"].firstMatch, "Keep the real conflicting draft and dismiss its error alert.") }
+    }
+
+    private func studioConflictCase(_ project: String, marker: String, runID: String) throws {
+        let path = "notes/conflict-" + runID.prefix(8) + ".ts"
+        let original = try studioSource(marker, "original")
+        try studioNewSource(String(path), text: original, in: mini)
+        record["documentCreateObserved"] = true
+        _ = try studioEditorCheckpoint("document-ready")
+        try studioOpenSecondWindow(project: project, file: String(path))
+        try studioRecordWindows()
+        capture(mini, "studio-editor-two-windows")
+        _ = try studioEditorCheckpoint("two-editors-ready")
+
+        for pass in 0..<2 {
+            let winner = try studioSource(marker, pass == 0 ? "writer A" : "writer A again")
+            let stale = try studioSource(marker, pass == 0 ? "original" : "writer A")
+            let draft = try studioSource(marker, pass == 0 ? "writer B draft" : "writer B recovered")
+            let first = try studioWindow(true)
+            try studioReplaceText(first.textViews["miniapps-studio-editor"].firstMatch, with: winner)
+            try studioSave(in: first)
+            let second = try studioWindow(false)
+            let secondEditor = second.textViews["miniapps-studio-editor"].firstMatch
+            try require(secondEditor.value as? String == stale, "The independently open second editor did not retain its stale source.")
+            record["writerAObserved"] = first.textViews["miniapps-studio-editor"].firstMatch.value as? String
+            record["staleWriterBObserved"] = secondEditor.value as? String
+            try studioRecordWindows()
+            _ = try studioEditorCheckpoint(pass == 0 ? "first-save" : "second-save")
+            try studioReplaceText(secondEditor, with: draft)
+            try require(wait(20) { second.buttons["Reload file"].firstMatch.exists || mini.alerts["Editor"].firstMatch.exists },
+                        "The real stale writer did not encounter its compare-before-save conflict.")
+            try studioDismissConflictAlert()
+            try require(second.buttons["Reload file"].firstMatch.exists && second.buttons["Save a copy"].firstMatch.exists,
+                        "The actual conflict must expose both safe recovery choices.")
+            record["conflictObserved"] = true; record["draftTextObserved"] = secondEditor.value as? String
+            try studioRecordWindows()
+            let phase = pass == 0 ? "conflict-visible" : "second-conflict"
+            capture(mini, "studio-editor-" + phase)
+            _ = try studioEditorCheckpoint(phase)
+            if pass == 0 {
+                try tap(second.buttons["Reload file"].firstMatch, "Reload the real winning bytes without rewriting either writer.")
+                try require(wait(15) { secondEditor.value as? String == winner }, "The actual reload did not adopt the first writer's source.")
+                record["reloadPressed"] = true; record["reloadedText"] = secondEditor.value as? String
+                _ = try studioEditorCheckpoint("reload-observed")
+            }
+        }
+        let previousPID = try observedConcurrencyPID("studio-before-recovery-restart")
+        mini.terminate(); mini.launch()
+        let recoveryRoot = mini.windows.allElementsBoundByAccessibilityElement.first { $0.buttons["miniapps-open-studio"].firstMatch.exists }
+        let root = try XCTUnwrap(recoveryRoot, "The relaunched actual MiniApps scene did not expose its catalog.")
+        try tap(root.buttons["miniapps-open-studio"].firstMatch, "Open the real relaunched Studio recovery tools.")
+        try tap(root.buttons["Recovered drafts"].firstMatch, "Use the actual persisted draft recovery list.")
+        let draftRow = root.descendants(matching: .any).matching(NSPredicate(format: "label == %@", String(path))).firstMatch
+        try require(draftRow.waitForExistence(timeout: bounded(30)), "The actual conflicting draft did not survive application termination.")
+        capture(mini, "studio-editor-recovery-list")
+        try tap(draftRow, "Reopen the same native recovery journal through its original UI.")
+        let recovered = root.textViews["miniapps-studio-editor"].firstMatch
+        let draft = try studioSource(marker, "writer B recovered")
+        try require(wait(20) { recovered.value as? String == draft && root.buttons["Save a copy"].firstMatch.exists },
+                    "The actual recovery UI did not retain the conflicting draft and safe copy action.")
+        let recoveredPID = try observedConcurrencyPID("studio-recovered-draft")
+        try require(recoveredPID != previousPID, "The recovery observation did not come from a new actual process.")
+        record["conflictObserved"] = true; record["recoveredDraftOpened"] = true
+        record["draftTextObserved"] = recovered.value as? String
+        capture(mini, "studio-editor-recovered-conflict")
+        _ = try studioEditorCheckpoint("recovered-draft")
+        try tap(root.buttons["Save a copy"].firstMatch, "Preserve the winning file and save the real recovered draft separately.")
+        record["saveCopyPressed"] = true
+        let saved = try studioEditorCheckpoint("copy-saved")
+        let copied = try string(saved, "copyPath")
+        try studioRestartAndOpen(project, file: String(path))
+        let editor = mini.textViews["miniapps-studio-editor"].firstMatch
+        let winning = try studioSource(marker, "writer A again")
+        try require(editor.value as? String == winning, "Saving the recovery copy changed the genuine winning source.")
+        record["winningTextObserved"] = editor.value as? String
+        try selectStudioFile(copied)
+        try require(editor.value as? String == draft, "The actual recovered separate source copy did not survive reopening.")
+        record["copyTextObserved"] = editor.value as? String; record["conflictCopyPath"] = copied
+    }
+
 }
