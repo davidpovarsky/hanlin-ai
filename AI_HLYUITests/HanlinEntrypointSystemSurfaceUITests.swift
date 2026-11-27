@@ -942,4 +942,291 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
     private func timestamp() -> String {
         ISO8601DateFormatter().string(from: Date())
     }
+
+    // Additive SCRIPTABLE06 pilot. Insert these methods inside the existing
+    // HanlinEntrypointSystemSurfaceUITests class; preserve every existing method.
+    func testNativeScriptOwnerSurvivesThreeOverlappingBackgroundShortcutsInReverseOrder() throws {
+        try observeShortcutConcurrency(cancelOne: false)
+    }
+
+    func testNativeScriptOwnerSurvivesCancellingOneOfThreeOverlappingBackgroundShortcuts() throws {
+        try observeShortcutConcurrency(cancelOne: true)
+    }
+
+    private func observeShortcutConcurrency(cancelOne: Bool) throws {
+        continueAfterFailure = false
+        executionTimeAllowance = 600
+        deadline = Date().addingTimeInterval(540)
+        let runID = UUID().uuidString.lowercased()
+        let documents = try XCTUnwrap(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first)
+        let root = documents.appendingPathComponent("HanlinShortcutConcurrencyObservation", isDirectory: true)
+        let directory = root.appendingPathComponent(runID, isDirectory: true)
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        exchange = root
+        runDirectory = directory
+        record = ["schema": 1, "runID": runID, "engine": "nativescript",
+                  "surface": "miniAppShortcutConcurrency",
+                  "scenario": cancelOne ? "cancelOne" : "reverseCompletion",
+                  "fixtureAppID": Engine.nativescript.appID, "fixtureTitle": Engine.nativescript.title,
+                  "status": "RUNNING", "startedAt": concurrencyTimestamp(),
+                  "test": name, "phase": "preparing", "launches": [] as [[String: Any]]]
+        try checkpoint("preparing")
+        defer {
+            capture(mini, "concurrency-final-mini")
+            capture(shortcuts, "concurrency-final-shortcuts")
+            record["finishedAt"] = concurrencyTimestamp()
+            try? writeJSON(record, filename: "case.json")
+            try? checkpoint("finished")
+        }
+        do {
+            mini.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+            mini.launchEnvironment["HANLIN_UNIT_TEST_HOST"] = "0"
+            mini.launch()
+            try openInstalledFixture(.nativescript)
+            let status = mini.staticTexts.matching(NSPredicate(format: "label BEGINSWITH %@", "App ID:")).firstMatch
+            try require(wait(20) {
+                status.exists && self.stateFields(status.label)["App ID"] == Engine.nativescript.appID
+            }, "The actual NativeScript owner did not expose its private state.")
+            let oldChallenge = stateFields(status.label)["Challenge"]
+            let prepare = mini.buttons["Prepare challenge"].firstMatch
+            try tap(prepare, "Prepare a fresh challenge in the actual visible owner.")
+            try require(wait(20) {
+                guard status.exists else { return false }
+                let fields = self.stateFields(status.label)
+                guard let challenge = fields["Challenge"], !challenge.isEmpty,
+                      challenge != "not-prepared", challenge != oldChallenge else { return false }
+                return fields["Counter"] == "0" && prepare.isEnabled
+            }, "The actual owner's new challenge must finish writing before system execution.")
+            let challenge = try XCTUnwrap(stateFields(status.label)["Challenge"])
+            let stateLabel = mini.staticTexts.matching(
+                NSPredicate(format: "label BEGINSWITH %@", "State file: ")).firstMatch
+            try require(stateLabel.exists, "The actual owner's canonical state path is not observable.")
+            let ownerPath = String(stateLabel.label.dropFirst("State file: ".count))
+            let ownerWindowLabel = mini.staticTexts.matching(
+                NSPredicate(format: "label BEGINSWITH %@", "Owner window: ")).firstMatch
+            try require(ownerWindowLabel.exists, "The actual initial NativeScript window identity is not observable.")
+            let ownerWindowID = String(ownerWindowLabel.label.dropFirst("Owner window: ".count))
+            try require(!ownerWindowID.isEmpty, "The actual initial owner window identity is empty.")
+            let ownerPID = try observedConcurrencyPID("prepared")
+            record["challenge"] = challenge
+            record["baselineCounter"] = 0
+            record["ownerStatePath"] = ownerPath
+            record["ownerProcessID"] = ownerPID
+            record["ownerWindowID"] = ownerWindowID
+            record["visibleOwnerBefore"] = status.label
+            let holds = cancelOne ? [45000, 30000, 60000] : [45000, 30000, 15000]
+            let invocations: [[String: Any]] = holds.enumerated().map { index, hold in
+                let token = UUID().uuidString.lowercased()
+                let input: [String: Any] = [
+                    "surface": "miniAppShortcutConcurrency", "challenge": challenge,
+                    "concurrency": ["schema": 1, "token": token, "holdMilliseconds": hold] as [String: Any],
+                    "typed": ["text": "שלום עולם", "count": 42, "enabled": true, "empty": NSNull(),
+                              "list": [true, 42, "שלום"] as [Any]] as [String: Any]
+                ]
+                return ["token": token, "savedShortcutName": "Hanlin-NS-" + String(runID.prefix(8)) + "-" + String(index + 1),
+                        "configuredInput": input,
+                        "expectedTerminal": cancelOne && index == 2 ? "cancelled" : "succeeded"] as [String: Any]
+            }
+            record["invocations"] = invocations
+            capture(mini, "concurrency-prepared-owner")
+            try checkpoint("prepared")
+            let identity = try response("identity.json", timeout: 25)
+            try require(identity["status"] as? String == "READY" &&
+                        identity["appID"] as? String == Engine.nativescript.appID,
+                        "The observer did not bind the real current NativeScript installation.")
+            record["installedIdentity"] = identity
+            try requireSystemApp("shortcuts", identity: identity)
+            shortcuts.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+            shortcuts.launch()
+            for spec in invocations {
+                try configureConcurrencyShortcut(spec, identity: identity)
+            }
+
+            // Refocus the already running owner, without terminating or launching
+            // it again, and retain the actual public accessibility PID.
+            mini.activate()
+            let beforeLaunchPID = try observedConcurrencyPID("before-os-launches")
+            try require(beforeLaunchPID == ownerPID,
+                        "Saving Shortcuts replaced the original MiniApps owner process.")
+            try require(stateFields(status.label)["Challenge"] == challenge &&
+                        stateFields(status.label)["Counter"] == "0",
+                        "Saving Shortcuts changed the original owner's actual private state.")
+            try require(ownerWindowLabel.label == "Owner window: " + ownerWindowID,
+                        "Saving Shortcuts replaced the original foreground window.")
+            shortcuts.activate()
+            try checkpoint("before-system-actions")
+            var launches: [[String: Any]] = []
+            for spec in invocations {
+                let shortcutName = try string(spec, "savedShortcutName")
+                var components = URLComponents()
+                components.scheme = "shortcuts"
+                components.host = "run-shortcut"
+                components.queryItems = [URLQueryItem(name: "name", value: shortcutName)]
+                let url = try XCTUnwrap(components.url)
+                let requestedAt = concurrencyTimestamp()
+                // Existing repository API: MiniAppsNativeScriptWindowUITests.swift
+                // uses XCUIDevice.shared.system.open(url) to preserve the SUT PID.
+                XCUIDevice.shared.system.open(url)
+                try require(wait(10) { self.shortcuts.state == .runningForeground },
+                            "The public URL did not open the real Shortcuts application.")
+                try require(mini.state != .runningForeground,
+                            "A background action brought the MiniApps owner to the foreground.")
+                launches.append(["token": try string(spec, "token"), "savedShortcutName": shortcutName,
+                                 "url": url.absoluteString, "requestedAt": requestedAt,
+                                 "observedAt": concurrencyTimestamp(), "systemLaunchObserved": true])
+                record["launches"] = launches
+                capture(shortcuts, "concurrency-launch-" + String(launches.count))
+                try checkpoint("system-actions-sent")
+            }
+            try checkpoint("overlap-requested")
+            let overlapping = try concurrencyResponse("overlap.json", timeout: 30)
+            try require(overlapping["status"] as? String == "OVERLAP_OBSERVED",
+                        "The system serialized, rejected, or failed to start three actual handlers.")
+            record["actualOverlap"] = overlapping
+            capture(shortcuts, "concurrency-observed-overlap")
+            if cancelOne {
+                let selected = invocations[2]
+                let selectedName = try string(selected, "savedShortcutName")
+                let title = shortcuts.descendants(matching: .any)
+                    .matching(NSPredicate(format: "label == %@", selectedName)).firstMatch
+                try require(title.exists && title.isHittable,
+                            "The last-launched running Shortcut must be visibly identified before Stop.")
+                let stop = firstButton(shortcuts, ["Stop Shortcut", "Stop"])
+                try require(stop.exists && stop.isEnabled && stop.isHittable,
+                            "The actual system Stop control is unavailable for the selected running Shortcut.")
+                capture(shortcuts, "concurrency-before-system-stop")
+                let requestedAt = concurrencyTimestamp()
+                try tap(stop, "Cancel only the visibly selected running Shortcut through its system Stop control.")
+                record["stop"] = ["token": try string(selected, "token"), "savedShortcutName": selectedName,
+                                  "visibleShortcutName": selectedName, "requestedAt": requestedAt,
+                                  "observedAt": concurrencyTimestamp(), "systemStopObserved": true]
+                capture(shortcuts, "concurrency-after-system-stop")
+                try checkpoint("system-stop-sent")
+            }
+            let actions = try concurrencyResponse("actions-complete.json", timeout: 130)
+            try require(actions["status"] as? String == "ACTIONS_COMPLETED",
+                        "The real native invocation receipts did not satisfy this scenario.")
+            record["actualActionCompletion"] = actions
+
+            mini.activate()
+            let afterPID = try observedConcurrencyPID("before-owner-callback")
+            try require(afterPID == ownerPID, "The original MiniApps process did not survive all three actions.")
+            try require(wait(15) {
+                status.exists && self.stateFields(status.label)["Challenge"] == challenge &&
+                self.stateFields(status.label)["Counter"] == "0"
+            }, "The original window did not retain its own zero counter and prepared challenge.")
+            let run = mini.buttons["Run all five runtimes"].firstMatch
+            try tap(run, "Execute the original owner's real foreground callback after the system actions.")
+            try require(wait(90) {
+                status.exists && self.stateFields(status.label)["Challenge"] == challenge &&
+                self.stateFields(status.label)["Counter"] == "1" && run.isEnabled
+            }, "The surviving owner did not complete its actual five-runtime callback.")
+            record["ownerProcessIDAfter"] = try observedConcurrencyPID("after-owner-callback")
+            try require(record["ownerProcessIDAfter"] as? Int == ownerPID,
+                        "The owner callback replaced the process instead of using the surviving owner.")
+            try require(ownerWindowLabel.label == "Owner window: " + ownerWindowID,
+                        "The foreground callback came from a replacement owner window.")
+            record["ownerCallbackObserved"] = true
+            record["visibleOwnerAfter"] = status.label
+            capture(mini, "concurrency-owner-callback")
+            try checkpoint("owner-after")
+            let complete = try response("completion.json", timeout: 25)
+            try require(complete["status"] as? String == "EXECUTED_PASS",
+                        "The observer rejected owner isolation or a changed native terminal receipt.")
+            record["observerCompletion"] = complete
+            record["status"] = "EXECUTED_PASS"
+        } catch let skipped as XCTSkip {
+            record["status"] = "BLOCKED"
+            record["reason"] = String(describing: skipped)
+            throw skipped
+        } catch {
+            record["status"] = "FAILED"
+            record["reason"] = String(describing: error)
+            throw error
+        }
+    }
+
+    private func configureConcurrencyShortcut(_ spec: [String: Any], identity: [String: Any]) throws {
+        try tap(firstButton(shortcuts, ["Create Shortcut", "Add"]), "Create one actual saved concurrency Shortcut.")
+        if shortcuts.buttons["Add Action"].firstMatch.exists { shortcuts.buttons["Add Action"].firstMatch.tap() }
+        let search = shortcuts.searchFields.firstMatch
+        try tap(search, "Find the actual MiniApps system action.")
+        search.typeText("Hanlin MiniApps")
+        let app = shortcuts.staticTexts["Hanlin MiniApps"].firstMatch
+        try require(app.waitForExistence(timeout: bounded(15)),
+                    "The current MiniApps application is absent from the functioning gallery.")
+        try tap(app, "Open the shipping MiniApps indexed actions.")
+        try tap(shortcuts.staticTexts["Run MiniApp Action"].firstMatch,
+                "The shipping Run MiniApp Action is absent from Shortcuts.")
+        try tap(firstButton(shortcuts, ["Action", "Script Action"]), "Select the current installed action entity.")
+        try tap(shortcuts.staticTexts[try string(identity, "actionDisplayName")].firstMatch,
+                "The current NativeScript surface action is missing from the real entity picker.")
+        if shortcuts.buttons["Show More"].firstMatch.exists { shortcuts.buttons["Show More"].firstMatch.tap() }
+        try tap(shortcuts.buttons["Input Type"].firstMatch, "Choose the actual dictionary input mode.")
+        try tap(shortcuts.staticTexts["Dictionary or List (JSON)"].firstMatch, "Choose typed JSON input.")
+        let input = try XCTUnwrap(spec["configuredInput"] as? [String: Any])
+        try fillShortcutParameter("Input", value: jsonString(input))
+        let mode = try shortcutModeSwitch()
+        let backgroundDefault = try observedSwitchValue(mode)
+        try require(backgroundDefault == false,
+                    "Each new concurrent action must retain the actual background default.")
+        let longRunning = shortcuts.switches["Allow Long Running"].firstMatch
+        try require(longRunning.waitForExistence(timeout: bounded(10)),
+                    "The declared Allow Long Running system parameter is not observable.")
+        let longRunningDefault = try observedSwitchValue(longRunning)
+        try require(longRunningDefault == false,
+                    "A new action has an unexpected long-running default.")
+        try tap(longRunning, "Enable the existing original long-running progress route.")
+        let selectedLongRunning = try observedSwitchValue(longRunning)
+        try require(selectedLongRunning == true,
+                    "The actual system long-running selection did not change.")
+        let selectedBackgroundMode = try observedSwitchValue(mode)
+        try require(selectedBackgroundMode == false,
+                    "Long-running selection unexpectedly changed Open When Run.")
+        let shortcutName = try string(spec, "savedShortcutName")
+        try renameShortcut(shortcutName)
+        try tap(firstButton(shortcuts, ["Done"]), "Save the actual configured system Shortcut.")
+        let saved = shortcuts.descendants(matching: .any)
+            .matching(NSPredicate(format: "label == %@", shortcutName)).firstMatch
+        try require(saved.waitForExistence(timeout: bounded(15)),
+                    "The configured Shortcut was not actually saved in the system collection.")
+        let token = try string(spec, "token")
+        capture(shortcuts, "saved-concurrency-" + token)
+    }
+
+    private func concurrencyResponse(_ filename: String, timeout: TimeInterval) throws -> [String: Any] {
+        let directory = try XCTUnwrap(runDirectory)
+        let file = directory.appendingPathComponent(filename)
+        let end = Date().addingTimeInterval(bounded(timeout))
+        while Date() < end {
+            try require(mini.state != .runningForeground,
+                        "A background concurrency action presented the MiniApps application.")
+            if FileManager.default.fileExists(atPath: file.path) { break }
+            RunLoop.current.run(until: Date().addingTimeInterval(0.1))
+        }
+        return try response(filename, timeout: 1)
+    }
+
+    private func observedConcurrencyPID(_ label: String) throws -> Int {
+        let header = String(mini.debugDescription.split(separator: "\n", maxSplits: 1).first ?? "")
+        let pattern = try NSRegularExpression(pattern: "^Attributes: Application, .*?, pid: ([0-9]+),")
+        let match = try XCTUnwrap(pattern.firstMatch(
+            in: header, range: NSRange(header.startIndex..<header.endIndex, in: header)
+        ), "The actual public accessibility snapshot must identify the owner process.")
+        let range = try XCTUnwrap(Range(match.range(at: 1), in: header))
+        let process = try XCTUnwrap(Int(header[range]))
+        try require(process > 0, "The actual owner PID must be positive.")
+        let attachment = XCTAttachment(string: header)
+        attachment.name = "concurrency-owner-process-" + label
+        attachment.lifetime = .keepAlways
+        add(attachment)
+        return process
+    }
+
+    private func concurrencyTimestamp() -> String {
+        let formatter = ISO8601DateFormatter()
+        formatter.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        return formatter.string(from: Date())
+    }
+
 }

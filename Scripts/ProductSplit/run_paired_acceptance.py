@@ -65,6 +65,12 @@ TEST_PLANS["miniapp_widget_recovery_os"] = ([
     "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testMiniAppsPlacedWidgetRetainsLastGoodAfterRealFailureAndRecovers",
 ], 1)
 
+# Additive NS-owner/three-background-action OS pilot; original plans stay intact.
+TEST_PLANS["miniapp_shortcut_concurrency_os"] = ([
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptOwnerSurvivesThreeOverlappingBackgroundShortcutsInReverseOrder",
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptOwnerSurvivesCancellingOneOfThreeOverlappingBackgroundShortcuts",
+], 2)
+
 SDK04_MINIAPPS_SELECTORS = (
     "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata",
     "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEditButtonEditsOriginalList",
@@ -546,14 +552,19 @@ def start_shortcut_observer(derived, simulator, state):
     bundle = info.get("CFBundleIdentifier", "")
     if not bundle.endswith(".xctrunner"):
         raise RuntimeError("The actual XCTest runner bundle has an invalid identity")
-    argv = [sys.executable, "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+    concurrency = TEST_SCOPE == "miniapp_shortcut_concurrency_os"
+    observer_script = "observe_shortcut_concurrency.py" if concurrency else "observe_shortcut_surfaces.py"
+    observer_name = "shortcut-concurrency-observer" if concurrency else "shortcut-observer"
+    observer_output = EVIDENCE / observer_name
+    argv = [sys.executable, "Scripts/ProductSplit/" + observer_script,
             "--device", simulator, "--runner-bundle-id", bundle,
-            "--output", str(EVIDENCE / "shortcut-observer"), "--duration", "2100"]
+            "--output", str(observer_output), "--duration", "2100"]
     if TEST_SCOPE == "miniapp_widget_recovery_os":
         argv += ["--widget-fixture", str(ROOT / "Fixtures/Widgets/Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo")]
-    output = (EVIDENCE / "shortcut-observer.log").open("w")
+    output = (EVIDENCE / (observer_name + ".log")).open("w")
     process = subprocess.Popen(argv, cwd=ROOT, stdout=output, stderr=subprocess.STDOUT)
     state["shortcut_observer"] = {"argv": argv, "runnerBundleIdentifier": bundle,
+        "outputDirectory": str(observer_output),
         "runnerInfoSHA256": hashlib.sha256(info_bytes).hexdigest(),
         "testBundle": str(test), "scope": "Read-only original XCTest exchange; no production state writes"}
     return process, output
@@ -571,7 +582,7 @@ def finish_shortcut_observer(observer, state):
     finally:
         output.close()
     state["shortcut_observer"]["exitCode"] = code
-    report = EVIDENCE / "shortcut-observer/observer.json"
+    report = Path(state["shortcut_observer"]["outputDirectory"]) / "observer.json"
     if report.is_file():
         state["shortcut_observer"]["report"] = json.loads(report.read_text())
     return code
@@ -602,6 +613,10 @@ def main():
             state["scope"] = "Standalone MiniApps real WidgetKit medium-family last-good failure and authored recovery"
             state["model_boundary"] = "Original Matrix producer archive, shipping importer, real SpringBoard actions, actual read-only state/cache and filtered system-log observations"
             state["acceptance_boundary"] = "One medium-family Simulator case; the other seven OS families, appearance/orientation, physical devices and network/corrupt-resource cases remain separate"
+        if TEST_SCOPE == "miniapp_shortcut_concurrency_os":
+            state["scope"] = "Two additional genuine Shortcuts cases: one live NativeScript owner plus three background NS actions, actual handler/lease overlap and separate windows, reverse completion or selected system Stop, followed by the original owner callback"
+            state["model_boundary"] = "Original authoring/importer, actual OS URLs/Stop UI, real native commands and per-window journals; no production queue, receipt or state seeding"
+            state["acceptance_boundary"] = "NS-owner/NS-background iPad Simulator pilot only; Expo combinations, iPhone, multi-scene restoration, duplicate URLs, cold/warm/foreground matrix, actual timeout and physical-device acceptance remain separate"
         if TEST_SCOPE in {"miniapp_authoring", "miniapp_complete"}:
             state["scope"] = "Original SDK/tools, source diagnostics, native repair sheet, durable AI handoff, actual build/install and NativeScript/Expo runtime controls in both shipping products"
             state["model_boundary"] = "Only the HTTP model response sequence and the native adapter image fixture resources are deterministic. All source edits, TypeScript diagnostics, Metro/ESM production, imports, receipts, native rendering and UI events are original production code."
@@ -632,7 +647,7 @@ def main():
         }
         _, raw = command(["xcrun", "simctl", "list", "devicetypes", "-j"], "device-types.json")
         supported = {item["identifier"] for item in runtime["supportedDeviceTypes"]}
-        device_family = "iPad" if TEST_SCOPE in {"miniapp_authoring", "miniapp_sdk04", "miniapp_complete", "miniapp_shortcuts_os", "miniapp_widget_recovery_os"} else "iPhone"
+        device_family = "iPad" if TEST_SCOPE in {"miniapp_authoring", "miniapp_sdk04", "miniapp_complete", "miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_widget_recovery_os"} else "iPhone"
         device = next(item for item in json.loads(raw)["devicetypes"]
             if item.get("productFamily") == device_family and item["identifier"] in supported)
         _, raw = command(["xcrun", "simctl", "create",
@@ -757,7 +772,7 @@ def main():
             documents = Path(raw.strip()) / "Documents"
             documents.mkdir(exist_ok=True)
             state["widget_recovery_input"] = widget_recovery_fixture(documents)
-        if TEST_SCOPE == "miniapp_shortcuts_os":
+        if TEST_SCOPE in {"miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os"}:
             _, raw = command(["xcrun", "simctl", "get_app_container", simulator,
                 "com.itorah.hanlinminiapps", "data"], "shortcuts-mini-data-container.txt")
             documents = Path(raw.strip()) / "Documents"
@@ -864,7 +879,7 @@ def main():
             if (documents / archive.name).exists():
                 raise RuntimeError("The fresh owned simulator already has a transfer package input")
             shutil.copy2(archive, documents / archive.name)
-        if TEST_SCOPE in {"miniapp_shortcuts_os", "miniapp_widget_recovery_os"}:
+        if TEST_SCOPE in {"miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_widget_recovery_os"}:
             shortcut_observer = start_shortcut_observer(derived, simulator, state)
         result = EVIDENCE / "Paired.xcresult"
         argv = test_base + ["-scheme", "AI_HLY", "test-without-building",
@@ -896,7 +911,7 @@ def main():
                 state.update(status="EXECUTED_PASS", ui="EXECUTED_PASS")
             elif summary.get("failedTests", 0):
                 state.update(status="TEST_FAILED", ui="TEST_FAILED")
-        if TEST_SCOPE in {"miniapp_shortcuts_os", "miniapp_widget_recovery_os"} and not state["shortcut_observer"].get("allSelectedCasesObserved"):
+        if TEST_SCOPE in {"miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_widget_recovery_os"} and not state["shortcut_observer"].get("allSelectedCasesObserved"):
             state["status"] = "INFRA_ERROR"
             raise RuntimeError("The real system-surface observer did not retain every correlated terminal result")
         if state["status"] != "EXECUTED_PASS":
@@ -929,7 +944,7 @@ def main():
             thread.join(timeout=5)
         # Retain the actual test attachments for visual inspection of the sheet
         # and repaired app; a final simulator screenshot is not a substitute.
-        if TEST_SCOPE in {"miniapp_authoring", "miniapp_sdk04", "miniapp_complete", "miniapp_shortcuts_os", "miniapp_widget_recovery_os"}:
+        if TEST_SCOPE in {"miniapp_authoring", "miniapp_sdk04", "miniapp_complete", "miniapp_shortcuts_os", "miniapp_shortcut_concurrency_os", "miniapp_widget_recovery_os"}:
             state["attachment_exports"] = []
             for name in ["OriginalRuntimes", "Paired"]:
                 bundle = EVIDENCE / (name + ".xcresult")

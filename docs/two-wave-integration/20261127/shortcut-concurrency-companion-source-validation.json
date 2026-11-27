@@ -1,0 +1,115 @@
+{
+  "schema": 1,
+  "status": "SOURCE_PREPARED_NATIVE_AND_OS_NOT_RUN",
+  "sourceBase": "6ed918c9ffe94fddb1992b4b338564db4c109f4e",
+  "requiredFixtureAndObserverCommit": "41ace7e685d6d4fe50e5974e941433de50490ff4",
+  "sourceConservation": {
+    "recordedAtUTC": "2026-11-27T05:17:07.702975+00:00",
+    "HEAD": "6ed918c9ffe94fddb1992b4b338564db4c109f4e",
+    "sourceHashes": {
+      "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift": "c757994e7644db5bcf3aa480e2d126a794634e030a6626e6489cf2ea684ebde0",
+      "Scripts/ProductSplit/run_paired_acceptance.py": "efb9738edeafd21868ce232343a2db4634e370d47d267d160c86f927847a8836"
+    },
+    "allOriginalUIBytesPreserved": true,
+    "originalUIMethods": 15,
+    "currentUIMethods": 17,
+    "allExistingPlanAssignmentsASTPreserved": true,
+    "originalPlanAssignments": 4,
+    "currentPlanAssignments": 5,
+    "inputManifestSHA256": "0433011cae7beb42504e4bb29b18bb722e21d9a31cc5aae7324eba67b70afcc7",
+    "inputCount": 392,
+    "inputType": "list",
+    "diffCheck": 0,
+    "native": "NOT_RUN",
+    "OS": "NOT_RUN"
+  },
+  "sourceReview": {
+    "reviewer": "/root/w2_source_resume",
+    "scope": "Independent review of W1's exact corrected UI handoff and runner addition; reviewed actual NS initial window label against its registerWindowFactory binding.",
+    "uiSnippetSHA256": "87d6040b2e2646d72e906306cbe584de3122aeea4628cdf6ada39535561243dc",
+    "nativeScriptFixtureSHA256": "a4f8274693fcd9b9604a37667f2d48449ef1ce9541bfbeca8ef06d3057b1c0ee",
+    "runnerCandidateSHA256": "efb9738edeafd21868ce232343a2db4634e370d47d267d160c86f927847a8836",
+    "reviewedFinding": "The actual initial ownerWindowID is captured before OS launch, retained when saving Shortcuts, and checked after the original owner's real callback. The separate observer binds its actual terminal window samples to that initial identity; PID or shared State path alone does not qualify."
+  },
+  "originalReaderDependency": {
+    "path": "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+    "sha256": "72530c9c8f70b6eb35572e2d4180ac2d0161d1a641c08d1e49505554d021b65c",
+    "notes": "No original reader changes in this companion commit. W1 independently checked its21 reused function definitions as AST-equal; separate reader/fixture test logs belong to required commit41ace7e6, not this UI source check."
+  },
+  "originalRunnerContract": {
+    "sha256": "c64e91b051e7eb67e2f78713b5924a3a4f0c120ed94294b8f02df074f1474cb2",
+    "value": {
+      "schema": 1,
+      "baseWidgetSource": "91f7121a572e3d8543823d279b65cde76f1a81f9",
+      "scope": "miniapp_shortcut_concurrency_os",
+      "selectors": [
+        "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptOwnerSurvivesThreeOverlappingBackgroundShortcutsInReverseOrder",
+        "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptOwnerSurvivesCancellingOneOfThreeOverlappingBackgroundShortcuts"
+      ],
+      "expectedTests": 2,
+      "deviceFamily": "iPad",
+      "UI": {
+        "insertInside": "HanlinEntrypointSystemSurfaceUITests",
+        "snippet": "concurrency-ui-methods.swift",
+        "sha256": "87d6040b2e2646d72e906306cbe584de3122aeea4628cdf6ada39535561243dc",
+        "existingMethods": "Preserve all current methods, selectors, asserts, helper bodies and scopes byte-for-byte."
+      },
+      "observer": {
+        "script": "Scripts/ProductSplit/observe_shortcut_concurrency.py",
+        "runnerBundle": "Same actual AI_HLYUITests xctrunner selected by start_shortcut_observer",
+        "argv": [
+          "--device",
+          "<existing-owned-simulator>",
+          "--runner-bundle-id",
+          "<actual-xctrunner>",
+          "--output",
+          "<EVIDENCE>/shortcut-concurrency-observer",
+          "--duration",
+          "2100"
+        ],
+        "exchange": "Documents/HanlinShortcutConcurrencyObservation/<runID>",
+        "responses": [
+          "identity.json",
+          "overlap.json",
+          "actions-complete.json",
+          "completion.json"
+        ],
+        "report": "<EVIDENCE>/shortcut-concurrency-observer/observer.json",
+        "completion": "Use original allSelectedCasesObserved check: exit0, exactly2 runs, each completionWritten true. Any failed/blocked/missing case fails the native scope."
+      },
+      "staging": "Extend existing shortcut_surface_fixtures(documents) branch to this scope. It must validate and build both actual HostActionSurfaces projects using the original CLI and the exact SDK extracted from the current shipping RuntimeHostResources.zip, retaining source/archive/report hashes, then stage only input archives in standalone MiniApps Documents. No direct command, receipt, catalog, result or private-state setup.",
+      "runnerChanges": [
+        "Add the two selectors as one new TEST_PLANS assignment; do not alter any original plan or count.",
+        "Add this scope to existing iPad choice and attachment export sets.",
+        "Add this scope to the existing surface input-staging, observer-start and final observer-completion guard sets.",
+        "In start_shortcut_observer select the new script/output only for this scope; retain existing script/widget arguments for original scopes.",
+        "Record the chosen observer outputDirectory in existing state and have finish_shortcut_observer read that outputDirectory/observer.json, preserving ownership/stop behavior.",
+        "Retain original source/SDK/build/install/OS namespace checks, nonparallel native test flags, exact selector reconciliation and zero-skip success."
+      ],
+      "scopeText": "Two additive genuine Shortcuts cases: one visible NS owner and three background NS actions; actual simultaneous handlers/leases and isolated windows; reverse completion, or selected system Stop with native cancellation, followed by the original owner's real callback.",
+      "acceptanceBoundary": "Only observed NS-owner/NS-background iPad Simulator pilot. Does not discharge Expo↔Expo/Expo↔NS, iPhone, multi-scene restoration, duplicate URLs, foreground-vs-background/cold-warm matrix, device locking or actual timeout gates. Original NS5/paired54/extras26 and original four Shortcuts cases remain separate.",
+      "native": "NOT_RUN",
+      "OS": "NOT_RUN",
+      "ownerIdentity": "The visible initial Owner window label uses the actual registerWindowFactory id; terminal callback samples must retain that same id even for shared root State paths."
+    }
+  },
+  "SDKMembership": {
+    "manifestPath": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/host-2a0b19b7-pass-and-native-seal/sdk/miniapp-sdk.json",
+    "manifestSHA256": "0433011cae7beb42504e4bb29b18bb722e21d9a31cc5aae7324eba67b70afcc7",
+    "inputCount": 392,
+    "purpose": "Historical path membership only; does not requalify any current native SDK/Host artifact.",
+    "observedIntersection": [],
+    "sourcePaths": [
+      "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests.swift",
+      "Scripts/ProductSplit/run_paired_acceptance.py"
+    ]
+  },
+  "validationLimits": {
+    "SwiftCompilation": "NOT_RUN",
+    "nativeAcceptance": "NOT_RUN",
+    "ShortcutsOS": "NOT_RUN",
+    "actualSystemGalleryLocators": "UNQUALIFIED_UNTIL_REAL_PILOT",
+    "portableReaderAndFixtureTests": "Reused only from the required independently reviewed source commit; not rerun here.",
+    "scope": "Only the two NS-owner/three-NS-background iPad Simulator pilots. Mixed engines, iPhone, physical device, locking, restoration and the remaining Scriptable matrix stay separate."
+  }
+}
