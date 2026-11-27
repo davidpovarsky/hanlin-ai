@@ -1,0 +1,33 @@
+{
+  "schema": 1,
+  "base": "0c5df7c68b4a2abdf520232b0efb5bb6f0ba05cd",
+  "file": "HanlinMiniAppsTests/NativeScriptShortcutConcurrencyTests.swift",
+  "beforeSHA256": "235493a3b33d2a796da655f71c84a6cace6852e9046def2d7562bb162dc4a0f2",
+  "afterSHA256": "0140aa07c4cb545b159f0c2e13fbfedfe620183e8b1b49cd93c25a29370a1f7a",
+  "patchSHA256": "4288128329a8fce9ded1903b664be1f06a7a12df57ef07f900a0b4bebd19db4f",
+  "changes": [
+    "Use actual HanlinExecutionContext.appIntent; no production enum or permission extension",
+    "Make the original reverse-completion task-group Void result explicit",
+    "Execute its child closure on MainActor, matching existing executeShortcutCommand isolation; tasks still overlap across awaits and original overlap/reverse-order assertions remain"
+  ],
+  "originalTestMethods": [
+    "testOriginalWindowSurvivesReverseShortcutsCancellationDeadlineAndStaleGeneration",
+    "testLegacyOwnerRejectsBothFactoryAndLegacyShortcutsWithoutQueuedReplay",
+    "testForegroundShortcutUsesItsOwnedProviderAndReceiptWithoutReplacingTheOwnerHandler",
+    "testClosingRunningForegroundDrainsBeforeReleasingItsOwnedSession",
+    "testOccupiedForegroundRejectsOnlyTheNewShortcutAndPreservesLegacyIntentDrain"
+  ],
+  "allOriginalAssertionsDeadlinesAndSelectorsUnchanged": true,
+  "actualFailure": {
+    "runID": 45949456866,
+    "jobID": 140341673148,
+    "source": "f768d634bfa8a102cf63b32c7ab9d129cafc671d",
+    "exitCode": 65,
+    "miniBuildLogSHA256": "afeaad542c92e3c4e356b191e4066eab066ff9c4426b6588c24df58a4d9a7f85",
+    "artifactSHA256": "506f5f7f5965f4e4f8050949af2036d95ef4f3bb5b00b9519a25cc056a4b8953"
+  },
+  "qualification": "Proposed source correction to compiler failures; actual Apple compilation and original54 still required. No test pass claimed.",
+  "native": "NOT_RUN",
+  "productionChanged": false,
+  "atUTC": "2026-11-27T07:01:13.452740+00:00"
+}

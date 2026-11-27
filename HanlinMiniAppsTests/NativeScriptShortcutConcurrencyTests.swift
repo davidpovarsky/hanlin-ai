@@ -43,10 +43,10 @@ final class NativeScriptShortcutConcurrencyTests: XCTestCase {
         let platforms = packages.map { _ in fixture.platform(observations: observations) }
         let commands = try zip(packages, nonces).map { try fixture.command($0.0, nonce: $0.1) }
         var returned: [String: Probe] = [:]
-        try await withThrowingTaskGroup(of: Completed.self) { group in
+        try await withThrowingTaskGroup(of: Completed.self, returning: Void.self) { group in
             for index in commands.indices {
                 let platform = platforms[index], command = commands[index], nonce = nonces[index]
-                group.addTask {
+                group.addTask { @MainActor in
                     let value = try await platform.executeShortcutCommand(command)
                     return Completed(nonce: nonce, value: value)
                 }
@@ -540,7 +540,7 @@ final class NativeScriptShortcutConcurrencyTests: XCTestCase {
                         supportedContexts: [.mainApplication], runtimePolicyID: "nativescript-v1",
                         runtimeProfile: .hanlinNativeScript, compatibility: .supported),
                     .init(id: "probe.intent", kind: .appIntent, sourcePath: sourcePath, exportedSymbol: "probe",
-                        supportedContexts: [.appIntentRegistration], requiredCapabilities: [request],
+                        supportedContexts: [.appIntent], requiredCapabilities: [request],
                         runtimePolicyID: "prepared-foreground-action-v1",
                         runtimeProfile: .hanlinNativeScript, compatibility: .supported)
                 ], requestedCapabilities: [request], grantedCapabilities: [capability],

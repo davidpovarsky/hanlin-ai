@@ -1,0 +1,39 @@
+{
+  "schema": 1,
+  "reviewer": "/root/w2_source_resume",
+  "decision": "APPROVED_SOURCE_FOR_ORIGINAL_NATIVE_RETRY",
+  "source": "0c5df7c68b4a2abdf520232b0efb5bb6f0ba05cd",
+  "file": "HanlinMiniAppsTests/NativeScriptShortcutConcurrencyTests.swift",
+  "beforeSHA256": "235493a3b33d2a796da655f71c84a6cace6852e9046def2d7562bb162dc4a0f2",
+  "afterSHA256": "0140aa07c4cb545b159f0c2e13fbfedfe620183e8b1b49cd93c25a29370a1f7a",
+  "patchSHA256": "4288128329a8fce9ded1903b664be1f06a7a12df57ef07f900a0b4bebd19db4f",
+  "candidateSHA256": "e3fdcc39e25067eac5ebbdfff00a513cb66f254692b77527d87823a0fcf84b6b",
+  "actualCompiler": {
+    "run": 45949456866,
+    "source": "f768d634bfa8a102cf63b32c7ab9d129cafc671d",
+    "actualTestSourceMatchesBefore": true,
+    "errorsSHA256": "805441aa95ef78f5b2cece26de9558634dc325e190f9fd267e9996d092936f21",
+    "miniBuildLogSHA256": "afeaad542c92e3c4e356b191e4066eab066ff9c4426b6588c24df58a4d9a7f85",
+    "errors": [
+      "withThrowingTaskGroup line46: failed to produce diagnostic for expression",
+      "supportedContexts line543: HanlinExecutionContext has no member appIntentRegistration"
+    ]
+  },
+  "independentChecks": {
+    "exactThreeEditsReconstructed": true,
+    "currentFileEqualsReconstructedCandidate": true,
+    "allOriginalXCTAssertionLinesByteEqual": true,
+    "actualEnumRead": "Packages/HanlinPlatform/Sources/HanlinPlatformContracts/HanlinDescriptors.swift:111-122",
+    "actualMainActorDispatcherRead": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift:42-44,702-723",
+    "completedIsSendable": true
+  },
+  "assessment": [
+    "The fixture uses actual HanlinExecutionContext.appIntent; no capability or production enum is extended.",
+    "Explicit returning: Void.self narrows the original task-group result inference only.",
+    "The @MainActor child closure matches the already-MainActor async dispatcher and accesses a Sendable Completed result. Children still overlap across awaits; the original four-window and reverse-completion assertions would reject serialized execution.",
+    "All five selectors, assertions, waits, deadlines, cancellation, stale-generation and original dispatch logic remain unchanged."
+  ],
+  "testsRunByReviewer": 0,
+  "native": "NOT_RUN; original Apple compilation and selected native acceptance remain required",
+  "scope": "Source review only, not a compiler or test PASS"
+}
