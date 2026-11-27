@@ -1458,7 +1458,13 @@ struct MasterScenarioSemanticAcceptanceTests {
             context: NativeToolExecutionContext(localeIdentifier: "en_US")
         )
         #expect(!toolResult.isError)
-        #expect(toolResult.modelText.trimmingCharacters(in: .whitespacesAndNewlines) == "alpha\nbeta\nalpha")
+        #expect(toolResult.userText == "alpha\nbeta\nalpha\n")
+        #expect(toolResult.diagnostics.exitCode == 0)
+        #expect(toolResult.diagnostics.stdoutByteCount == 17)
+        #expect(toolResult.diagnostics.stderrByteCount == 0)
+        #expect(!toolResult.diagnostics.outputWasTruncated)
+        #expect(!toolResult.diagnostics.didTimeOut)
+        #expect(!toolResult.diagnostics.wasCancelled)
 
         // 3. Negative case: missing file reports error and non-zero exit
         let missingDirect = try await core.shell.execute(
@@ -1523,10 +1529,18 @@ struct MasterScenarioSemanticAcceptanceTests {
         """
         let wheelRecordData = Data(wheelRecord.utf8)
 
+        func wheelRecordRow(_ path: String, data: Data) -> String {
+            let digest = Data(SHA256.hash(data: data)).base64EncodedString()
+                .replacingOccurrences(of: "+", with: "-")
+                .replacingOccurrences(of: "/", with: "_")
+                .replacingOccurrences(of: "=", with: "")
+            return "\(path),sha256=\(digest),\(data.count)"
+        }
+
         let recordFileContent = """
-        \(importName)/__init__.py,,
-        \(normalizedDist)-\(version).dist-info/METADATA,,
-        \(normalizedDist)-\(version).dist-info/WHEEL,,
+        \(wheelRecordRow("\(importName)/__init__.py", data: pyCodeData))
+        \(wheelRecordRow("\(normalizedDist)-\(version).dist-info/METADATA", data: metadataData))
+        \(wheelRecordRow("\(normalizedDist)-\(version).dist-info/WHEEL", data: wheelRecordData))
         \(normalizedDist)-\(version).dist-info/RECORD,,
         """
         let recordFileData = Data(recordFileContent.utf8)

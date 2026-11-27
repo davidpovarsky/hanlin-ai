@@ -542,7 +542,7 @@ struct RuntimeAutonomyV3Tests {
             .write(to: root.appending(path: "node_modules/required/build.py"))
         try JSONSerialization.data(withJSONObject: ["lockfileVersion": 3, "packages": packages])
             .write(to: root.appending(path: "package-lock.json"))
-        let archive = try #require(Bundle.main.url(forResource: "RuntimeHostResources", withExtension: "zip"))
+        let archive = try #require(HanlinApplicationResources.bundle.url(forResource: "RuntimeHostResources", withExtension: "zip"))
         let digest = SHA256.hash(data: try Data(contentsOf: archive)).map { String(format: "%02x", $0) }.joined()
         let host = RuntimeFileLayout.default.nodeRuntime.appending(path: "host-\(digest)", directoryHint: .isDirectory)
         let literal: (String) throws -> String = { String(decoding: try JSONEncoder().encode($0), as: UTF8.self) }
