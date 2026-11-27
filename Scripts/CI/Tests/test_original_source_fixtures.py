@@ -138,12 +138,43 @@ class OriginalSourceFixtureTests(unittest.TestCase):
             "$(SRCROOT)/Scripts/CI/prepare_original_source_fixtures.py",
             "$(SRCROOT)/Scripts/CI/original-source-fixtures.xcfilelist",
         ])
-        self.assertEqual(phase["outputPaths"],
-                         ["$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle"])
+        self.assertEqual(phase["outputPaths"][0],
+                         "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle")
         self.assertEqual(str(phase["alwaysOutOfDate"]), "1")
         self.assertIn('--source-root "$SRCROOT"', phase["shellScript"])
         # The existing project parser retains the quoted PBX newline escape.
         self.assertTrue(phase["shellScript"].startswith(r"set -eu\n/usr/bin/env python3 "))
+
+    def test_sandbox_outputs_cover_the_actual_copied_tree_with_sandboxing_enabled(self):
+        fixtures.prepare(self.root, self.output)
+        project = parse_project(update_project.FILE.read_text())
+        objects = project["objects"]
+        phase = objects[update_project.SOURCE_FIXTURE_PHASE]
+        output_root = "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle"
+        actual = {output_root}
+        actual.update(output_root + "/" + path.relative_to(self.output).as_posix()
+                      for path in self.output.rglob("*"))
+        declared = phase["outputPaths"]
+        self.assertEqual(len(declared), len(set(declared)))
+        self.assertEqual(set(declared), actual)
+        self.assertEqual(len([path for path in self.output.rglob("*") if path.is_file()]), 24)
+        self.assertIn(output_root + "/AI_HLY", declared)
+        self.assertIn(output_root + "/manifest.json", declared)
+
+        root = objects[project["rootObject"]]
+        unit = next(value for value in objects.values()
+                    if value.get("isa") == "PBXNativeTarget" and value.get("name") == "AI_HLYTests")
+        project_settings = {
+            objects[key]["name"]: objects[key]["buildSettings"]
+            for key in objects[root["buildConfigurationList"]]["buildConfigurations"]
+        }
+        for key in objects[unit["buildConfigurationList"]]["buildConfigurations"]:
+            config = objects[key]
+            setting = config["buildSettings"].get(
+                "ENABLE_USER_SCRIPT_SANDBOXING",
+                project_settings[config["name"]]["ENABLE_USER_SCRIPT_SANDBOXING"],
+            )
+            self.assertEqual(setting, "YES")
 
     def test_canonical_phase_generation_is_idempotent(self):
         text = update_project.FILE.read_text()

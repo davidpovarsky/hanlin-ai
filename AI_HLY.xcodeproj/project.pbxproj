@@ -3802,7 +3802,48 @@
 			inputFileListPaths = ("$(SRCROOT)/Scripts/CI/original-source-fixtures.xcfilelist",);
 			inputPaths = ("$(SRCROOT)/Scripts/CI/prepare_original_source_fixtures.py", "$(SRCROOT)/Scripts/CI/original-source-fixtures.xcfilelist",);
 			name = "Prepare Original Source Fixtures";
-			outputPaths = ("$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle",);
+			outputPaths = (
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/AI_HLY",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/AI_HLY/Downstream",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/AI_HLY/Downstream/ChatPresentation",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/AI_HLY/Services",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/AI_HLY/Services/ChatServices",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/AI_HLY/Views",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/AI_HLY/Views/Components",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/Packages",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/Packages/HanlinPresentationSDK",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/Packages/HanlinPresentationSDK/Sources",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/Packages/HanlinPresentationSDK/Sources/HanlinChatUI",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/docs",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/docs/hanlin-dock-v33-source-parity",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/docs/hanlin-platform",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/docs/hanlin-platform/personal-runtime-completion",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/AI_HLY/Downstream/ChatPresentation/ChatMarkdownView.swift",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/AI_HLY/Downstream/ChatPresentation/ChatMessagePreview.swift",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/AI_HLY/Downstream/ChatPresentation/ChatMessagePreviewMetrics.swift",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/AI_HLY/Services/ChatServices/APIManager.swift",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/AI_HLY/Views/Components/ChatViewComponents.swift",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/AI_HLY/Views/Components/ChatandFile.swift",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinFileContentView.swift",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinImageViewer.swift",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageActionBar.swift",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageActions.swift",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageBubble.swift",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageDocumentAttachments.swift",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageImageAttachments.swift",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageMarkdownView.swift",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessagePreview.swift",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessagePreviewMetrics.swift",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinMessageSelectionView.swift",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinVisualEffectBlur.swift",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/Packages/HanlinPresentationSDK/Sources/HanlinChatUI/HanlinWritingTool.swift",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/docs/hanlin-dock-v33-source-parity/SOURCE_PRESERVATION_V2.json",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/docs/hanlin-dock-v33-source-parity/SOURCE_REFERENCE_AND_SHA.md",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/capability-invariants.json",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/docs/hanlin-platform/personal-runtime-completion/tool-inventory.json",
+				"$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle/manifest.json",
+			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "set -eu\n/usr/bin/env python3 \"$SRCROOT/Scripts/CI/prepare_original_source_fixtures.py\" --source-root \"$SRCROOT\" --output \"$TARGET_BUILD_DIR/$UNLOCALIZED_RESOURCES_FOLDER_PATH/OriginalSourceFixtures.bundle\"\n";

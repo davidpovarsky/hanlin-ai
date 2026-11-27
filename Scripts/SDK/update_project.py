@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Wire the original Hanlin executable to its single shared SDK implementation."""
-from pathlib import Path
+from pathlib import Path, PurePosixPath
+import importlib.util
 import subprocess
 import argparse,json,os,re,shlex,sys,hashlib
 ROOT=Path(__file__).resolve().parents[2]
@@ -336,6 +337,24 @@ def wire_miniapps_ios_system_resources(text):
 SOURCE_FIXTURE_PHASE = "AC1F" + hashlib.sha256(b"original-source-fixtures").hexdigest()[:20].upper()
 
 
+def original_source_fixture_outputs():
+    """Declare every path created inside the sandboxed, test-only bundle."""
+    producer = ROOT / "Scripts/CI/prepare_original_source_fixtures.py"
+    spec = importlib.util.spec_from_file_location("hanlin_original_source_fixture_inputs", producer)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    relative_files = (*module.input_paths(), "manifest.json")
+    directories = {PurePosixPath(".")}
+    for relative in relative_files:
+        directories.update(PurePosixPath(relative).parents)
+    output_root = "$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle"
+    # A directory-only output did not grant creation of its children in the
+    # observed Xcode sandbox. Include the exact owned directories and files.
+    return ([output_root] +
+            [output_root + "/" + str(path) for path in sorted(directories) if str(path) != "."] +
+            [output_root + "/" + relative for relative in relative_files])
+
+
 def wire_original_source_fixtures(text):
     """Make original source audits independent of compiler-host paths at runtime."""
     objects = parse_project(text)["objects"]
@@ -359,7 +378,9 @@ def wire_original_source_fixtures(text):
         '\t\t\tinputPaths = ("$(SRCROOT)/Scripts/CI/prepare_original_source_fixtures.py", '
         '"$(SRCROOT)/Scripts/CI/original-source-fixtures.xcfilelist",);\n'
         '\t\t\tname = "Prepare Original Source Fixtures";\n'
-        '\t\t\toutputPaths = ("$(TARGET_BUILD_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/OriginalSourceFixtures.bundle",);\n'
+        '\t\t\toutputPaths = (\n' +
+        ''.join('\t\t\t\t' + json.dumps(path) + ',\n' for path in original_source_fixture_outputs()) +
+        '\t\t\t);\n'
         '\t\t\trunOnlyForDeploymentPostprocessing = 0;\n'
         '\t\t\tshellPath = /bin/sh;\n'
         '\t\t\tshellScript = ' + json.dumps(script) + ';\n'
