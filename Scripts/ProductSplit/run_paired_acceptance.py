@@ -982,6 +982,9 @@ def main():
         command(["sysctl", "hw.memsize", "hw.ncpu"], "before-boot-host-resources.txt")
         command(["vm_stat"], "before-boot-memory.txt")
         command(["ps", "-axo", "pid,ppid,%cpu,%mem,state,etime,comm"], "before-boot-processes.txt")
+        if RUN_EXTRA26:
+            from paired_extra26 import capture_inputs
+            extra26_inputs = capture_inputs(ROOT, EVIDENCE, state, command)
         command(["xcrun", "simctl", "boot", simulator], "boot.log")
         command(["xcrun", "simctl", "bootstatus", simulator, "-b"], "bootstatus.log", timeout=300)
         derived = Path(os.environ["SPLIT_DERIVED_DATA"])
@@ -1003,9 +1006,6 @@ def main():
         # Preserve XCTest results/attachments without a second, 600-second
         # simulator sysdiagnose after a failure. Targeted capture remains below.
         test_base = base + ["-collect-test-diagnostics", "never"]
-        if RUN_EXTRA26:
-            from paired_extra26 import capture_inputs
-            extra26_inputs = capture_inputs(ROOT, EVIDENCE, state, command)
         state["status"] = "BUILD_FAILED"
         # The observed cold first-product build was still compiling after 40 min.
         # Allow 60 min for that build; first-launch, routing and UI deadlines stay unchanged.
