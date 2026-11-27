@@ -1,0 +1,158 @@
+{
+  "schema": 1,
+  "recordedAtUTC": "2026-11-27T18:30:58.786399+00:00",
+  "runID": 46042428539,
+  "source": "fe0001ac868339d0825d1cc3d07f8383341d163d",
+  "historicalWorkflowConclusion": "failure",
+  "historicalControllerStatus": "FOCUSED_ORIGINAL_MCP_WIRE_FAILED",
+  "historicalReceiptSHA256": "08db7360b115a385b130bf311126742b451abc71930a36915df266de19d8b5df",
+  "nativeCommand": [
+    "/usr/bin/swift",
+    "test",
+    "--package-path",
+    "Packages/HanlinAgentSDK",
+    "--filter",
+    "HostMCPWireComparisonTests",
+    "--jobs",
+    "2"
+  ],
+  "nativeExitCode": 0,
+  "originalStopReason": null,
+  "originalSourceUnchanged": true,
+  "nativeLogSHA256": "b96460920bd1acc4cc8c0d6572af89a7f382ce091e7163c73660905599ec09df",
+  "nativeMethodCount": 11,
+  "nativeMethodsPassed": [
+    "largeOriginalUTF8SurvivesOrderAndEscapeProjection",
+    "largeOriginalUTF8RejectsAMutationAtTheTextTail",
+    "metadataIsPartOfTheExactWireValue",
+    "exactDecimalsAndJSONKindsSurviveWithoutBinary64Rounding",
+    "scalarKeysAndStringsDoNotUseSwiftCanonicalEquivalence",
+    "strictSyntaxAndDuplicateDecodedKeysStillFail",
+    "depthKeyAndNumericLimitsRemainTheOriginalPolicy",
+    "cancellationProducesNoComparisonVerdict",
+    "existingSchemaConsentAndProjectionAdmissionRemainBounded",
+    "finitePoliciesChangeOnlyTheirDeclaredByteAndWorkMetrics",
+    "checkedPolicyArithmeticRejectsUnrepresentableBudgetsWithoutAllocation"
+  ],
+  "nativeSummary": {
+    "starts": {
+      "largeOriginalUTF8SurvivesOrderAndEscapeProjection()": 1,
+      "largeOriginalUTF8RejectsAMutationAtTheTextTail()": 1,
+      "metadataIsPartOfTheExactWireValue()": 1,
+      "exactDecimalsAndJSONKindsSurviveWithoutBinary64Rounding()": 1,
+      "scalarKeysAndStringsDoNotUseSwiftCanonicalEquivalence()": 1,
+      "strictSyntaxAndDuplicateDecodedKeysStillFail()": 1,
+      "depthKeyAndNumericLimitsRemainTheOriginalPolicy()": 1,
+      "cancellationProducesNoComparisonVerdict()": 1,
+      "existingSchemaConsentAndProjectionAdmissionRemainBounded()": 1,
+      "finitePoliciesChangeOnlyTheirDeclaredByteAndWorkMetrics()": 1,
+      "checkedPolicyArithmeticRejectsUnrepresentableBudgetsWithoutAllocation()": 1
+    },
+    "terminals": {
+      "largeOriginalUTF8SurvivesOrderAndEscapeProjection()": 1,
+      "largeOriginalUTF8RejectsAMutationAtTheTextTail()": 1,
+      "metadataIsPartOfTheExactWireValue()": 1,
+      "exactDecimalsAndJSONKindsSurviveWithoutBinary64Rounding()": 1,
+      "scalarKeysAndStringsDoNotUseSwiftCanonicalEquivalence()": 1,
+      "strictSyntaxAndDuplicateDecodedKeysStillFail()": 1,
+      "depthKeyAndNumericLimitsRemainTheOriginalPolicy()": 1,
+      "cancellationProducesNoComparisonVerdict()": 1,
+      "existingSchemaConsentAndProjectionAdmissionRemainBounded()": 1,
+      "finitePoliciesChangeOnlyTheirDeclaredByteAndWorkMetrics()": 1,
+      "checkedPolicyArithmeticRejectsUnrepresentableBudgetsWithoutAllocation()": 1
+    },
+    "states": {
+      "passed": 11
+    },
+    "expectedMethodNames": [
+      "largeOriginalUTF8SurvivesOrderAndEscapeProjection",
+      "largeOriginalUTF8RejectsAMutationAtTheTextTail",
+      "metadataIsPartOfTheExactWireValue",
+      "exactDecimalsAndJSONKindsSurviveWithoutBinary64Rounding",
+      "scalarKeysAndStringsDoNotUseSwiftCanonicalEquivalence",
+      "strictSyntaxAndDuplicateDecodedKeysStillFail",
+      "depthKeyAndNumericLimitsRemainTheOriginalPolicy",
+      "cancellationProducesNoComparisonVerdict",
+      "existingSchemaConsentAndProjectionAdmissionRemainBounded",
+      "finitePoliciesChangeOnlyTheirDeclaredByteAndWorkMetrics",
+      "checkedPolicyArithmeticRejectsUnrepresentableBudgetsWithoutAllocation"
+    ],
+    "namesExactlyMatch": true,
+    "methodStarts": 11,
+    "methodTerminals": 11,
+    "summaryRows": [
+      [
+        "11",
+        "passed"
+      ]
+    ],
+    "reportedPassedCount": 11,
+    "skippedLogLines": []
+  },
+  "retrospectiveReconciliationPassed": true,
+  "nativeExecutionsByThisReconciliation": 0,
+  "controllerCandidateSHA256": "d115db15fa37dc776c593b11ec105e42040a6022275eb7fe6f65c1bd9f746196",
+  "sourceAndPinsVerifiedFromGit": [
+    {
+      "path": "Packages/HanlinAgentSDK",
+      "kind": "gitTree",
+      "value": "40d655a4afe6469ca00c44675725fad2dcd53202"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources",
+      "kind": "gitTree",
+      "value": "deb8dc91c2de361423ee3e02b928cdf020c1ef4f"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Tests",
+      "kind": "gitTree",
+      "value": "ee4195fa52d0e937660cec16a7cafc6d5ce41181"
+    },
+    {
+      "path": "Packages/HanlinPlatform",
+      "kind": "gitTree",
+      "value": "b1e54c6d1aa3c4ef2dd761e15b7b6df9d946a29a"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Sources",
+      "kind": "gitTree",
+      "value": "182cad448c545daa956db88dc251e318022e748a"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests",
+      "kind": "gitTree",
+      "value": "72b192559666a54e970578985f1ef091d87090d7"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Sources/HanlinAgentCore/HanlinHostSchemaValidation.swift",
+      "kind": "sha256",
+      "value": "622c7380bb066002a48bb46e6c76a6f919c41060392d891ac17c34f411b1a040"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Tests/HanlinAgentCoreTests/HostMCPWireComparisonTests.swift",
+      "kind": "sha256",
+      "value": "bbcae5565bdcbc7eba72c7d5c272eac5227af9106f00c50589901013f22830c7"
+    },
+    {
+      "path": "AI_HLY/Downstream/MCP/Runtime/MCPClientSession.swift",
+      "kind": "sha256",
+      "value": "3b331e200237598147def7fed0875b3b5ae62a5581ba85da09a4d6c4b058fc13"
+    },
+    {
+      "path": "Packages/HanlinAgentSDK/Package.resolved",
+      "kind": "sha256",
+      "value": "543da4b8e9fe589c8d071fa3599d30034cb39bd57e839ba6130f754cdad701ca"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Package.resolved",
+      "kind": "sha256",
+      "value": "453087cb3345b7c6bb24c00a682f41ffa9708ebd328e60b583f6e04276bf789d"
+    },
+    {
+      "path": "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved",
+      "kind": "sha256",
+      "value": "56d19a4b8c677831fb91e1f8155a68e411b42fd4807ad618d6f169569e1bb5a4"
+    }
+  ],
+  "scope": "Actual eleven package comparator methods only. Original workflow/controller failure remains immutable; no whole-app transport/store/render or other-suite credit."
+}

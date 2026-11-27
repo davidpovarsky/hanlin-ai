@@ -1,0 +1,58 @@
+{
+  "schema": 1,
+  "base": "fe0001ac868339d0825d1cc3d07f8383341d163d",
+  "nativeExecutions": 0,
+  "originalPositiveControl": {
+    "command": [
+      "runuser",
+      "-u",
+      "chatgpt-agent",
+      "--",
+      "python3",
+      "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/mcp-native-reconciliation-fe0001ac/run-original-positive-control.py"
+    ],
+    "startedAtUTC": "2026-11-27T18:29:53.657251+00:00",
+    "finishedAtUTC": "2026-11-27T18:29:53.749142+00:00",
+    "durationSeconds": 0.0918837171047926,
+    "exitCode": 1,
+    "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderrSHA256": "eff582d55f8d98b2ab3044689f50ec49cd089c51040f99b586626a9f20e84599"
+  },
+  "correctedControls": {
+    "command": [
+      "runuser",
+      "-u",
+      "chatgpt-agent",
+      "--",
+      "python3",
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "Scripts/CI/Tests",
+      "-p",
+      "test_mcp_wire_reconciliation.py",
+      "-v"
+    ],
+    "startedAtUTC": "2026-11-27T18:29:53.749187+00:00",
+    "finishedAtUTC": "2026-11-27T18:29:53.834265+00:00",
+    "durationSeconds": 0.08508675917983055,
+    "exitCode": 0,
+    "stdoutSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "stderrSHA256": "6f67fb487d3eae5f553bdd3f63a477f1f1958246bfe5472f7e980f5e730c4495"
+  },
+  "source": [
+    {
+      "path": "Scripts/CI/IntegrationValidation/run_host_mcp_wire_comparison.py",
+      "sha256": "d115db15fa37dc776c593b11ec105e42040a6022275eb7fe6f65c1bd9f746196"
+    },
+    {
+      "path": "Scripts/CI/Tests/test_mcp_wire_reconciliation.py",
+      "sha256": "26007a0c484e8fec54e1036bc8aa347340d3b3790f083c90e83f33f34e28356c"
+    },
+    {
+      "path": "Scripts/CI/Tests/fixtures/mcp-wire-swift-testing-6.4.2.txt",
+      "sha256": "90d8588a16606e1f5af988edad6154c90f4b0410706d5d51dcc93c47bef5b3fd"
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+{
+  "schema": 1,
+  "artifactID": 15220429347,
+  "runID": 46042428539,
+  "path": "original-mcp11-artifact.zip",
+  "bytes": 10102,
+  "sha256": "3d2382109befb78471a8e8e4c42350cd8c66f5ef69c91ad6e0d805af2d772dde",
+  "completeGitHubDigestVerified": true,
+  "allMemberCRCVerified": true,
+  "members": [
+    {
+      "path": "mcp-wire-original11/original-swift-test.log",
+      "bytes": 15072,
+      "sha256": "b96460920bd1acc4cc8c0d6572af89a7f382ce091e7163c73660905599ec09df",
+      "crc32": "2f4b770c"
+    },
+    {
+      "path": "mcp-wire-original11/original-vendor-verification.log",
+      "bytes": 667,
+      "sha256": "2ab9767daf4f656f82e652fcb51033d0cfbac33c380251318e9cae816bf68d2e",
+      "crc32": "54fa99d8"
+    },
+    {
+      "path": "mcp-wire-original11/outer-preparation-or-supervisor-error.json",
+      "bytes": 766,
+      "sha256": "75e48e953dff8ce42ca0fc0e8c9781b06fc2a2cdd45e48552ed175e540cf07ee",
+      "crc32": "422573d8"
+    },
+    {
+      "path": "mcp-wire-original11/preparation.json",
+      "bytes": 383,
+      "sha256": "4cda00fa4d1947de803bf9dc06afa286a6739272813fd7fdba4363d5cf8d73e4",
+      "crc32": "2bc411dc"
+    },
+    {
+      "path": "mcp-wire-original11.json",
+      "bytes": 8156,
+      "sha256": "08db7360b115a385b130bf311126742b451abc71930a36915df266de19d8b5df",
+      "crc32": "55ede3e9"
+    },
+    {
+      "path": "mcp-wire-source-capacity-binding.json",
+      "bytes": 3458,
+      "sha256": "cf1843b1107c97dffcc914895837702153247dfe3e2872b2388fc1aea085a330",
+      "crc32": "79efa4ab"
+    }
+  ],
+  "originalPrivateRetentionSHA256": "e2f9bc417056a2cd20f40ab9cdfd206d402df7a0195289df0774f5fdad9b8b84",
+  "originalJobLog": {
+    "bytes": 24298,
+    "sha256": "cb8d2500a6c77bce88e830efdecaa23e134922f676a129357bcfe011856bec29"
+  }
+}
