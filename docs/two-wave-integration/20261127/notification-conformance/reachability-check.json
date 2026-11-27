@@ -1,0 +1,13 @@
+{
+  "name": "reachability-check",
+  "argv": [
+    "python3",
+    "Scripts/Audit/audit_miniapp_reachability.py",
+    "--check"
+  ],
+  "cwd": "/mnt/development/projects/worktrees/hanlin-miniapps-notification-conformance-20261127",
+  "exitCode": 0,
+  "durationSeconds": 14.4656,
+  "stdout": "PASS: 100 unique source-backed reachability cells; no E2E pass inferred.\n",
+  "stderr": ""
+}
