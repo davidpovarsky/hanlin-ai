@@ -1,0 +1,28 @@
+{
+  "base": "b8c4573dc797d39ee7bddc0937faa9d8edcda82d",
+  "commit": "4a0651598e245de6e6cc03c4337c7ef8ffd83d93",
+  "parent": "b8c4573dc797d39ee7bddc0937faa9d8edcda82d",
+  "paths": [
+    "Scripts/ProductSplit/Tests/test_paired_extra26.py",
+    "Scripts/ProductSplit/paired_extra26.py",
+    "Scripts/ProductSplit/run_paired_acceptance.py"
+  ],
+  "sourceFiles": {
+    "Scripts/ProductSplit/run_paired_acceptance.py": {
+      "bytes": 86443,
+      "sha256": "8f626ecbac93eee4da4785d59b6c24718010bd243c4b7c8ace93d1f493dc9244"
+    },
+    "Scripts/ProductSplit/paired_extra26.py": {
+      "bytes": 33979,
+      "sha256": "b3ec17758b36e12fe329ce47cb08e483d906134c4185f7a64ae4a910a393835a"
+    },
+    "Scripts/ProductSplit/Tests/test_paired_extra26.py": {
+      "bytes": 16208,
+      "sha256": "147b38495d685e35ccc6e0f0cac721169d5df9b77aa9b95651cd3eeeabadb485"
+    }
+  },
+  "recordedAt": "2026-11-27T12:02:06.825917+00:00",
+  "diffCheck": "PASS",
+  "statusAfterSourceCommit": "",
+  "nativeExecuted": false
+}

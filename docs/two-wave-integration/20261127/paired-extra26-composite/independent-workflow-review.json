@@ -1,0 +1,18 @@
+{
+  "reviewer": "/root/w1_review_resume",
+  "status": "APPROVED_SOURCE_ONLY_FOR_COMPOSITE_WORKFLOW",
+  "candidateSHA256": "03346592cc0b8a91ab03e719942c939d957b91cd590aef4bf37c27d99cb2df6f",
+  "beforeSHA256": "a0787dacd0e892e6d165f84099c96856a69e7cd606f9ae6abe64d4ed0996d465",
+  "entireOriginalTextRecoveredAfterRemovingOnlyFiveAdditions": true,
+  "parsedOriginalWorkflowRecovered": true,
+  "scope": "Explicit new choice and250 only, first actual GitHub job-origin clock, existing CLI prerequisite and attachments. All original54/OS defaults, budgets, source gates and concurrency remain unchanged.",
+  "clockControlSource": "root-composite-workflow/clock-control-results.json",
+  "clockControlSHA256": "aee4a6e583e6c3be57f4e018f39697b474210b019ad907128a0b0140f055204c",
+  "actualClockSHA256": "24a91274c680c548153ed88cf429bf47a9774770a6f1d5b24a599e8729a0c2d1",
+  "crossReaderControl": "w1-composite/proof/workflow-clock-review.json",
+  "nativeExecuted": false,
+  "limitations": [
+    "The helper must preserve the original210-minute job-origin54 deadline before the additional2400-second26 phase.",
+    "Actual CI/native execution remains required; the control used recorded actual job metadata with its observation clock, not a fabricated native result."
+  ]
+}

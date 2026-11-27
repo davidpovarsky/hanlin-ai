@@ -1,0 +1,10 @@
+[
+  {
+    "rawPath": "source.patch",
+    "rawBytes": 56240,
+    "rawSHA256": "8fae150fb5e415f0657e118e96ef2db99e685e2720a6781ddd5c3ec15643e86b",
+    "storedPath": "source.patch.gz",
+    "storedSHA256": "96fb50c5eda037cec77802f0a27d08520a49e0c22e34feb7ba2001da7d94f622",
+    "decodedBytesIdentical": true
+  }
+]
