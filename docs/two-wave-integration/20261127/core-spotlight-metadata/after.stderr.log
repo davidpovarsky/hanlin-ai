@@ -1,0 +1,6 @@
+test_host_baseline_keeps_real_host_headers_without_expanding_expo_cpp_roots (test_nativescript_metadata_wrapper.NativeScriptMetadataWrapperTests.test_host_baseline_keeps_real_host_headers_without_expanding_expo_cpp_roots) ... ok
+
+----------------------------------------------------------------------
+Ran 1 test in 0.010s
+
+OK

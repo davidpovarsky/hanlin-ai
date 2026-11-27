@@ -1,0 +1,26 @@
+[
+  {
+    "run": "45986792639",
+    "source": "602b29e303a633155fe07583e9ece28fce0ba113",
+    "fullDiagnosticSHA256": "1ab9f83a21479a55d1c4dd916251e2ac55fe6428d01b73cbbe98adc617a79ac0",
+    "rawBuildLogSHA256": "1bf92bbdbee7e5cb4cee5860a8f09e5f7eb79233edf6680f427da5e6ed8ccf21",
+    "miniBuild": "EXECUTED_FAIL",
+    "ui": "NOT_RUN",
+    "exactError": {
+      "line": 6600,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniApps.build/Objects-normal/arm64/HanlinMiniApps-Swift.h:3955:14: error: unknown type name 'CSSearchableItemAttributeSet'"
+    }
+  },
+  {
+    "run": "45986821937",
+    "source": "602b29e303a633155fe07583e9ece28fce0ba113",
+    "fullDiagnosticSHA256": "23dfe6fbf9e0c1935d70ef1cc0728680f22feb7c3a45b4ef8bd977aa7a1bd64f",
+    "rawBuildLogSHA256": "28c5f9c519f22f8d7a22aaad9ee5ba56ac3fea062b682ca7da8c2c960e40240a",
+    "miniBuild": "EXECUTED_FAIL",
+    "ui": "NOT_RUN",
+    "exactError": {
+      "line": 88669,
+      "text": "/Users/runner/work/hanlin-ai/hanlin-ai/build/AppSplitDerivedData/Build/Intermediates.noindex/AI_HLY.build/Debug-iphonesimulator/HanlinMiniApps.build/Objects-normal/arm64/HanlinMiniApps-Swift.h:3955:14: error: unknown type name 'CSSearchableItemAttributeSet'"
+    }
+  }
+]
