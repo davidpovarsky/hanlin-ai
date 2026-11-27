@@ -2709,10 +2709,9 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                        !finalFormattedMessages.contains(where: {
                            ($0["content"] as? String) == ToolSchemaDecorator.resultPresentationModelInstruction
                        }) {
-                        finalFormattedMessages.append([
-                            "role": "system",
-                            "content": ToolSchemaDecorator.resultPresentationModelInstruction
-                        ])
+                        Self.insertGeneratedSystemInstruction(
+                            ToolSchemaDecorator.resultPresentationModelInstruction,
+                            into: &finalFormattedMessages)
                     }
                     
                     // 构造工具与配置
@@ -2767,10 +2766,8 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                         if depth == 0 {
                             let skillIndexPrompt = HanlinSkillIndex.prompt(for: modelSkills)
                             if !skillIndexPrompt.isEmpty && !finalFormattedMessages.contains(where: { ($0["content"] as? String)?.contains("## Available Skills") == true }) {
-                                finalFormattedMessages.append([
-                                    "role": "system",
-                                    "content": skillIndexPrompt
-                                ])
+                                Self.insertGeneratedSystemInstruction(
+                                    skillIndexPrompt, into: &finalFormattedMessages)
                             }
                         }
 
@@ -2778,10 +2775,9 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
                         if !session.loadedSkillInstructions.isEmpty {
                             for instruction in session.loadedSkillInstructions {
                                 if !finalFormattedMessages.contains(where: { ($0["content"] as? String)?.contains(instruction) == true }) {
-                                    finalFormattedMessages.append([
-                                        "role": "system",
-                                        "content": "### Active Skill Instructions\n\(instruction)"
-                                    ])
+                                    Self.insertGeneratedSystemInstruction(
+                                        "### Active Skill Instructions\n\(instruction)",
+                                        into: &finalFormattedMessages)
                                 }
                             }
                         }
@@ -3844,6 +3840,18 @@ class APIManager: HanlinCredentialResolver, HanlinMemoryStore {
     }
 
     // MARK: - SDK Agent Engine
+    private static func insertGeneratedSystemInstruction(
+        _ instruction: String, into messages: inout [[String: Any]]
+    ) {
+        // Keep host instructions in the leading authority segment. Preserve the
+        // existing stable first block and every conversational turn's order.
+        let insertionIndex = messages.firstIndex { message in
+            let role = (message["role"] as? String ?? "").lowercased()
+            return role != "system" && role != "developer"
+        } ?? messages.endIndex
+        messages.insert(["role": "system", "content": instruction], at: insertionIndex)
+    }
+
     static func convertFormattedMessagesToSDKMessages(
         _ formattedMessages: [[String: Any]]
     ) -> (baseSystemPrompt: String?, messages: [HanlinAISDKMessage]) {
