@@ -1,0 +1,32 @@
+{
+  "schema": 1,
+  "base": "f768d634bfa8a102cf63b32c7ab9d129cafc671d",
+  "ownReviewedTestFix": "9ce7ca766daa8e7e2a569ab143100982d6eecf09",
+  "integrated": [
+    {
+      "reviewedSource": "d2902ba9a4b18d5dba92662430e7eda355744b0c",
+      "integrated": "6982f20740a1c9bbd00daca0712d133539af172c"
+    },
+    {
+      "reviewedSource": "75dd4080a98793983cb4ba40dfefe2dcf2bb9725",
+      "integrated": "64e83db2769032731aea4beb553c1e10176d4782"
+    },
+    {
+      "reviewedSource": "aea34fc0dd594fa4d0b4153fe37332e6343aa921",
+      "integrated": "a44fedfc1e9813b96e7d62ca4655f5004d0ae52e"
+    },
+    {
+      "reviewedSource": "ff20af0d965cf005751932b56dbec4912bdc326e",
+      "integrated": "cd6f41a54767cac0b0d99dd0e978f536a7bf4262"
+    },
+    {
+      "reviewedSource": "d236ae72c52d39d84617bf98b6d2da19b6ee436c",
+      "integrated": "0c5df7c68b4a2abdf520232b0efb5bb6f0ba05cd"
+    }
+  ],
+  "head": "0c5df7c68b4a2abdf520232b0efb5bb6f0ba05cd",
+  "workingTreeClean": true,
+  "published": false,
+  "nativeTestsOnIntegratedHead": "NOT_RUN",
+  "atUTC": "2026-11-27T06:52:26.438714+00:00"
+}

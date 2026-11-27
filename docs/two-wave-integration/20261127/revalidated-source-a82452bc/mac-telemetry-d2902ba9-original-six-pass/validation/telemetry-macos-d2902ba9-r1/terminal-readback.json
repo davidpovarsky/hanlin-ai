@@ -1,0 +1,37 @@
+{
+  "status": "ORIGINAL_FILTERED_TELEMETRY_SIX_PASS_DIAGNOSTIC_ONLY",
+  "source": "d2902ba9a4b18d5dba92662430e7eda355744b0c",
+  "readAt": "2026-11-27T07:04:51.502888+00:00",
+  "sourceCleanTracked": true,
+  "ownedNativeProcessReadback": {
+    "argv": [
+      "/bin/ps",
+      "-p",
+      "87267,87303",
+      "-o",
+      "pid=,ppid=,pgid=,state=,etime=,comm="
+    ],
+    "returncode": 1,
+    "stdout": ""
+  },
+  "buildScratch": {
+    "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/Packages/HanlinPlatform/.build",
+    "exists": true,
+    "duKiB": "1964860\t/Users/m1/builds/hanlin-two-wave-root-20261126/source/Packages/HanlinPlatform/.build",
+    "duExit": 0
+  },
+  "freeBytes": 10435878912,
+  "testFileSHA256": "be9b6fe280dfe43c4791644a333e90bdfc142936c51c909f12d84173bb22d4b5",
+  "adapterSHA256": "3278fd5539dfb554b645180886aa31421b3d02096a67b45aa6ba26b21e442292",
+  "actualTestCount": 6,
+  "actualSuiteCount": 1,
+  "actualReportedTestSeconds": 0.004,
+  "sampleCount": 0,
+  "sampleReason": "All original selected tests finished in 0.004 s; no 15 s or 45 s stall threshold was reached.",
+  "originalFullPlatformGateCredit": false,
+  "native79Credit": false,
+  "app54Credit": false,
+  "extra26Credit": false,
+  "testAssertionsModified": false,
+  "inferenceBoundary": "This isolated original suite passed. The earlier unfiltered full-CI hang is not reproduced and its cause remains unproven."
+}

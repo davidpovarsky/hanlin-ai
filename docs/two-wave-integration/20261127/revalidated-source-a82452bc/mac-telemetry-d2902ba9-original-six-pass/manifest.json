@@ -1,0 +1,44 @@
+{
+  "status": "ALL_SEVEN_RAW_MEMBERS_VERIFIED",
+  "source": "d2902ba9a4b18d5dba92662430e7eda355744b0c",
+  "recordedAt": "2026-11-27T07:05:10.859766+00:00",
+  "members": [
+    {
+      "name": "diagnose-original-telemetry-d2902ba9.py",
+      "bytes": 12594,
+      "sha256": "a000e3e52fd14739f9565188607d754fbb27391eff9a006b74d3c2e6e0029951"
+    },
+    {
+      "name": "telemetry-diagnostic-d2902ba9-plan.json",
+      "bytes": 1218,
+      "sha256": "d04b61a6774e343a9c315981d744fe054fa7bcbcf1dd04501bff1af72f022663"
+    },
+    {
+      "name": "telemetry-macos-d2902ba9-r1-launch.json",
+      "bytes": 549,
+      "sha256": "d81f481d5cba0e0d7cfbb96bf3233aa982d5489196df4c47271994365890ff65"
+    },
+    {
+      "name": "telemetry-macos-d2902ba9-r1.json",
+      "bytes": 4008,
+      "sha256": "e272ef12ed741786829966139f7f9bf59feb26e16b59541e61efdb3122cd5b37"
+    },
+    {
+      "name": "telemetry-macos-d2902ba9-r1-detached.log",
+      "bytes": 536,
+      "sha256": "42aaefb5a573d7865a8c64abd2de2b215c1ce56f93c5b19113250f58c515aedd"
+    },
+    {
+      "name": "validation/telemetry-macos-d2902ba9-r1/original-swift-test.log",
+      "bytes": 25526,
+      "sha256": "bbdb0f0a15ceb2fbcc523812f33b8bdd9d4740987b15198137d530b5789b40dd"
+    },
+    {
+      "name": "validation/telemetry-macos-d2902ba9-r1/terminal-readback.json",
+      "bytes": 1410,
+      "sha256": "a8875ff6b0031f7f85ff9d69c31fd75c00667bcf84a3eaa3931582ca39cad5dd"
+    }
+  ],
+  "credit": "Original unmodified filtered telemetry diagnostic only: six tests passed; full platform gate, native79 and app/OS acceptance remain separate.",
+  "freeBytes": 654168064
+}

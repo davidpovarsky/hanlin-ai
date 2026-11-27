@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "source": "f768d634bfa8a102cf63b32c7ab9d129cafc671d",
+  "createdAtUTC": "2026-11-27T06:09:04.959650+00:00",
+  "defaultPlanSHA256": "2f119d6dd9273599faf9996182aabfe0a1fcb8ca7d5032929299e2ed039ad87b",
+  "requestSHA256": "9d8b2f79587165581d5408ba4738fef011fb73f55bc6878a8d6e4d24678b867c",
+  "originalRequestSHA256": "9d8b2f79587165581d5408ba4738fef011fb73f55bc6878a8d6e4d24678b867c",
+  "selectors": {
+    "total": 90,
+    "unit": 80,
+    "ui": 10,
+    "originalCSVByteIdentical": true,
+    "equalToCurrentUnforcedDefaultPlan": true
+  },
+  "removedExpiredArtifactOverride": null,
+  "allOtherInputsEqual": true,
+  "knownDistinctCurrentDeviceRun": {
+    "id": 45949460695,
+    "head_sha": "f768d634bfa8a102cf63b32c7ab9d129cafc671d",
+    "created_at": "2026-11-27T06:03:41Z",
+    "status": "in_progress",
+    "conclusion": null,
+    "html_url": "https://github.com/davidpovarsky/hanlin-ai/actions/runs/45949460695"
+  },
+  "separateDefaultGroupsStillRequired": [
+    "ci_router",
+    "device_build",
+    "ipa_packaging",
+    "app_unit_tests",
+    "simulator_smoke_launch",
+    "unified_host_services",
+    "node_runtime",
+    "simulator_mcp_acceptance",
+    "simulator_targeted_ui",
+    "runtimecore_host",
+    "simulator_scripting_acceptance",
+    "platform_contracts",
+    "nativescript_runtime",
+    "nativescript_dependencies",
+    "runtimecore_bundle",
+    "python_runtime",
+    "simulator_shell_acceptance",
+    "ios_system"
+  ]
+}

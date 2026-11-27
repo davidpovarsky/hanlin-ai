@@ -1,0 +1,15 @@
+{
+  "atUTC": "2026-11-27T07:21:29.664103+00:00",
+  "before": "f768d634bfa8a102cf63b32c7ab9d129cafc671d",
+  "publishedHead": "bd4c83baff2ed049a5a98aa0e0608f56f5a5cbcb",
+  "gitClean": true,
+  "bundle": {
+    "head": "bd4c83baff2ed049a5a98aa0e0608f56f5a5cbcb",
+    "base": "f768d634bfa8a102cf63b32c7ab9d129cafc671d",
+    "bundle": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-package-and-miniapps-tests-from-f768.bundle",
+    "bytes": 160650,
+    "sha256": "91047d36e5190ee9e102688a7739887b964fe6219005063ced4381536c3fa881",
+    "review": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-package-and-miniapps-compile-integration.json",
+    "reviewSHA256": "31cdb37657e355eae15f90a6df75ea06925e290ce7719b5daebbc4e4ffad7165"
+  }
+}

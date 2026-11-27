@@ -1,0 +1,36 @@
+{
+  "status": "PARENT_AUTHORIZED_SINGLE_ORIGINAL_FILTERED_DIAGNOSTIC",
+  "source": "d2902ba9a4b18d5dba92662430e7eda355744b0c",
+  "controller": "/Users/m1/builds/hanlin-two-wave-root-20261126/diagnose-original-telemetry-d2902ba9.py",
+  "controllerSHA256": "a000e3e52fd14739f9565188607d754fbb27391eff9a006b74d3c2e6e0029951",
+  "argv": [
+    "/usr/bin/swift",
+    "test",
+    "--package-path",
+    "Packages/HanlinPlatform",
+    "--parallel",
+    "--filter",
+    "HanlinOpenTelemetryTracerTests"
+  ],
+  "cwd": "/Users/m1/builds/hanlin-two-wave-root-20261126/source",
+  "ownedScratch": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/Packages/HanlinPlatform/.build",
+  "admissionBytes": 6442450944,
+  "reserveBytes": 2684354560,
+  "buildEnvelopeSeconds": 600,
+  "selectedTestEnvelopeSeconds": 120,
+  "suiteDeadline": "Existing unmodified1minute",
+  "stalledSamplesAtTestSeconds": [
+    15,
+    45
+  ],
+  "sampleCommand": [
+    "/usr/bin/sample",
+    "ACTUAL_OWNED_TEST_PID",
+    "3",
+    "1",
+    "-file",
+    "OWNED_EVIDENCE_PATH"
+  ],
+  "boundary": "Diagnostic only, no replacement of unfiltered platform or other acceptance gates. No test or runtime edits.",
+  "preparedAt": "2026-11-27T06:59:01.204642+00:00"
+}

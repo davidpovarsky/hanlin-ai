@@ -1,0 +1,37 @@
+{
+  "source": "f768d634bfa8a102cf63b32c7ab9d129cafc671d",
+  "runID": 45949456866,
+  "jobID": 140341673148,
+  "updatedAt": "2026-11-27T06:42:46Z",
+  "conclusion": "failure",
+  "logBytes": 5199009,
+  "logSHA256": "40d34812381ceb85709a7546927c523b87cd11480fb81c3fc1ee9d7ba384cd72",
+  "failedSteps": [
+    {
+      "name": "Exercise actual request, return, cancellation and transfer across both products",
+      "status": "completed",
+      "conclusion": "failure",
+      "number": 18,
+      "started_at": "2026-11-27T06:21:50Z",
+      "completed_at": "2026-11-27T06:42:00Z"
+    }
+  ],
+  "diagnosticLineCount": 1,
+  "diagnosticExcerpt": [
+    "2026-11-27T06:41:54.2401550Z Paired command running: screenshot.log; pid=98898; elapsed=0.0s; log_bytes=0; observed_exit=None",
+    "2026-11-27T06:41:56.6800790Z Paired command completed: screenshot.log; pid=98898; elapsed=2.4s; log_bytes=264; observed_exit=0",
+    "2026-11-27T06:42:00.4777960Z ##[error]Process completed with exit code 1.",
+    "2026-11-27T06:42:00.5424670Z ##[group]Run mkdir -p \"$SPLIT_EVIDENCE\"",
+    "2026-11-27T06:42:00.5426950Z \u001b[36;1mmkdir -p \"$SPLIT_EVIDENCE\"\u001b[0m",
+    "2026-11-27T06:42:00.5431140Z \u001b[36;1mif [ -f \"$SPLIT_EVIDENCE/paired-product/acceptance.json\" ]; then\u001b[0m"
+  ],
+  "artifacts": [
+    {
+      "id": 15177263270,
+      "name": "app-split-45949456866",
+      "size_in_bytes": 335576642,
+      "expired": false
+    }
+  ],
+  "atUTC": "2026-11-27T06:48:09.774894+00:00"
+}

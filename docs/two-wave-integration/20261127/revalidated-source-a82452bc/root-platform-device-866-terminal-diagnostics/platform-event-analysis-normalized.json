@@ -1,0 +1,818 @@
+{
+  "logSHA256": "7fbdb7ccf6f65af8ebac5aaa87acf1a63ad152518f744f5320b4e9d32134c830",
+  "methodAndSuiteStartEvents": 670,
+  "methodAndSuiteTerminalEvents": 547,
+  "unmatchedAtRetainedTruncation": [
+    {
+      "kind": "Suite",
+      "name": "\"Explicit Google cached-content lifecycle\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Suite",
+      "name": "\"Apple native input provenance at the original engine boundary\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Suite",
+      "name": "\"Prompt cache settings presets\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Suite",
+      "name": "\"Direct Chat Path Conformance Tests\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Suite",
+      "name": "\"Generated conversation metadata\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Suite",
+      "name": "\"Agent prompt cache policy inheritance\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Suite",
+      "name": "\"Hanlin prompt cache policy and original provider integration\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Suite",
+      "name": "\"Provider Routing & Inventory Conformance Tests\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Suite",
+      "name": "\"Transient host tool catalog continuation\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Suite",
+      "name": "\"HanlinAISDK Provider Factory Tests\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Suite",
+      "name": "\"Provider Conformance Scenario Tests\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Suite",
+      "name": "\"Generated metadata provider protocols\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Suite",
+      "name": "\"HanlinChatCore Tests\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Suite",
+      "name": "HanlinChatGPTPlanTests",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Suite",
+      "name": "\"Compact Responses canonical SDK route\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Suite",
+      "name": "\"Provider Fault Injection & Finish Reason Tests\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Suite",
+      "name": "\"HanlinNonEmptyLanguageModel Retry Tests\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Suite",
+      "name": "\"Original OpenTelemetry bridge\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Suite",
+      "name": "\"Original SDK structured output schema\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Suite",
+      "name": "\"HanlinAISDKAgentEngine Integration Tests\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Suite",
+      "name": "HanlinInjectedProviderTests",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Suite",
+      "name": "\"Provider Long Horizon & Investigation Tests\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Suite",
+      "name": "\"Production transport trace\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Suite",
+      "name": "HanlinNativeStructuredResponseTests",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Suite",
+      "name": "\"Cancellation at a host catalog reload\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Suite",
+      "name": "\"Offline captured SSE replay\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Suite",
+      "name": "\"Original engine continuation after a completed tool labeled stop\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "cancellationBeforeRequestDoesNotSend()",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "successfulCreationReceiptSurvivesLateCancellation()",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"Cloud accepted original numeric JSON remains unchanged\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"Native numeric leaves fail before approval or host effect\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"Native reserialized input never becomes acceptedOriginal\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"Original Anthropic SDK receives stable breakpoint and retains native read/write usage\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"Tool catalog continuation keeps usage from every original SDK round\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"A catalog restored after the stop decision still delivers the original empty tool result\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"S16: Hebrew prompt, Hebrew arguments, Hebrew result, and Hebrew final response\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"S09: Multi-Skill exposure enforces monotonic visibility across rounds\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"Google Native: Sequential thoughtSignature preserved exactly across requests\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"S10 R3: OpenRouter reasoning_details multi-turn reasoning tool loop\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"S07: Stream tool arguments fragmented across Hebrew UTF-8 and JSON escape boundaries\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"S03: Production skill activation: load_skill exposes python dynamically\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"S01: Plain text baseline across all provider profiles\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"Anthropic Native: Thinking signature round-trip across multi-tool turns\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"S02: Single tool call with provider-native continuation pairing\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"S10 R5: Anthropic native thinking signature multi-turn reasoning tool loop\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"S06: Tool returns non-fatal error and model recovers on next turn\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"S14: Large deterministic tool result containing Unicode, newlines, and structured JSON\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"S10: Reasoning + tool continuation across multiple turns for reasoning profiles\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"S10 R2: OpenAI-compatible reasoning field multi-turn reasoning tool loop\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"S10 R4: Google native thoughtSignature multi-turn reasoning tool loop\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"S08: Unknown tool call returns non-fatal tool error and allows continuation\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"Google Native: Parallel thoughtSignature placement on first functionCall part only\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"Anthropic Native: Parallel tool use and tool results\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"S05: Parallel tool calls in a single model step across OpenAI, Anthropic, and Google\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"S10 R1: OpenAI-compatible reasoning_content multi-turn reasoning tool loop\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"Anthropic Native: Tool result error is properly flagged and recovered\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"One request supplies title and icon through the configured provider\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"S15: Empty tool result succeeds and continuation remains valid without mismatch\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "quotaFailureAndIncompleteAreSurfaced()",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "canonicalAgentExecutesNamespacedToolAndContinuesExactlyOnce()",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"F07: Duplicate content chunk delta does not abort parser\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"Compact requests retain original Responses envelope, message order, cache scope and normalized usage\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"F09: Malformed JSON payload in SSE stream aborts stream without tool execution or completed event\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"F03: Abrupt stream close mid-text terminates with transport error and no completed event\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"F01: Empty provider stream retries once and throws emptyProviderResponse after 2 empty streams\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"F02: HTTP 200 with finish_reason='other' and 0 text/tools is retried then throws emptyProviderResponse\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"Section 18: OpenAI finish_reason mapping table\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"HanlinChatRequestBuilder creates correct Gemini native request\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"Section 18: Google finish_reason mapping table\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"Section 18: Anthropic finish_reason mapping table\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"F04: Stream ending after finish without explicit [DONE] still terminates cleanly\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"F05: Empty delta noise does not corrupt parser or yield empty text events\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"F08: HTTP error codes 400, 401, 429, 500, 503 abort stream without tool execution\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"E07: first attempt finish-only, second attempt valid tool call -> tool executes exactly once\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"E03: metadata + finish(other) only -> retry\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"E01: truly empty stream -> retry -> empty -> emptyProviderResponse(2)\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"E11: abrupt transport error -> no retry\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"E06: first attempt empty, second attempt valid text -> exactly one visible completion\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"E05: empty deltas + finish only -> retry\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"E04: usage-only + finish only -> retry\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"F06: Final usage-only chunk is processed for token usage and not treated as text\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"E09: reasoning-only stop retries once, preserves reasoning and never emits a successful finish\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"Reasoning-only length is incomplete and never automatically repeats a token-limited request\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"E08: normal text -> no retry\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"E12: cancellation during first attempt -> cancelled, no retry\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "settingsDisableContentAndUseTheInjectedTracer()",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "shutdownDrainsBoundedProcessorAndIsIdempotent()",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "errorsNamesAndInvalidNumbersCannotExportRawContent()",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "originalSDKExportsCacheCountsAndDropsContent()",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "taskContextPreservesParentageAcrossSuspensionAndSeparatesConcurrentRequests()",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "streamingSpanOutlivesActiveClosureAndEndsExactlyOnce()",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"Malformed, non-schema and oversized schema inputs fail before provider dispatch\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"The SDK validates complete JSON against the declared response schema\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"E02: finish(other)-only -> retry -> empty -> error\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"Parallel tool execution in a single model step\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"Invalid and extra arguments reach Hanlin executor and return non-fatal error\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"E10: valid tool call -> no retry\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"maxSteps <= 0 is clamped to >= 1 so streamText still executes at least one step\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"Advertised tool schema preserves original required, properties, and constraints\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"Real provider or transport error terminates stream\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"Tool continuation regression test: provider-native tool call and response pairing\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"Engine maps provider-native source and file stream parts to HanlinAISDKStreamEvent\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"Default agent continues beyond 40 actual tool steps, including dynamic discovery\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"Provider text-end citations retain exact part and Unicode scalar ranges\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"Dynamic tool exposure via prepareStep filters active tools\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"Original SDK approval pauses effects and resumes the same exact call once\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"Explicit cancellation after 45 actual steps cancels the executing tool\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"Unknown tool call produces non-fatal tool error and allows multi-step recovery\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"Multimodal user message with text, imageData, and imageURL preserves all parts in V3 prompt\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "nativeNonTextRejectedBeforeProviderCapabilityOrDownloadPath()",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "duplicateDefinitionsThrowBeforeDictionaryConstruction()",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "nativeDescriptorNeverSelectsNetworkProvider()",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"Section 19: Offline reproduction of OpenRouter reasoning_details and finish=other failure class\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"S04: Sequential 5-tool chain executing 6 provider steps with monotonic history\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"P12B: Structured assistant tool-call and tool-result history survives into next provider model request\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"S12: Engine step limit boundary (configured stopWhen: stepCountIs(32)) terminates cleanly\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"S13: Multi-turn conversation preserves prior tool and answer history without stale run state\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"S11: Long 20-step tool-heavy run with strict per-round request validation\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "sdkFetchObserverPreservesTheSameBodyAndAttemptIdentity()",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "directChatUsesTheObservedBytesForItsActualParser()",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "nativeSchemaKeepsTheExistingToolContinuationAndExactlyOneEffect()",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "officialValidationFailureIsAtomic()",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "realResponsesAdapterRequestsStrictSchemaAndPublishesOnlyCanonicalParts()",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "unsupportedModelsFailBeforeAnyHTTPRequest()",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"Cancellation during final catalog lookup cannot start another provider step\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "reasoningOnlyCaptureCannotSilentlyReplayTheSameAttemptTwice()",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "malformedRepairedAndTruncatedResponsesPublishNoParts()",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"Cancelling an original SDK approval never executes or continues the provider\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "incompleteAndMalformedSourceRemainVisibleAsFailures()",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "byteSplitsReplayThroughBothActualParsersWithoutMutation()",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"Rejected native numeric stop-labeled tool cannot reach approval, effect or another provider request\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"An authorized tool without an additional approval prompt continues after stop with its canonical output\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "\"Denied stop-labeled tool continues with a correlated denial and no host effect\"",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "toolCallsRemainDataWithNoRegisteredExecutorOrSecondStep()",
+      "started": 1,
+      "terminal": 0
+    },
+    {
+      "kind": "Test",
+      "name": "invalidTimelineAndCancellationRejectBeforeReplay()",
+      "started": 1,
+      "terminal": 0
+    }
+  ],
+  "qualification": "Log is truncated and buffered; unmatched events identify diagnostic candidates, not all proven stalled tests."
+}

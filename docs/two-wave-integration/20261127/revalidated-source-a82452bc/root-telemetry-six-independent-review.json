@@ -1,0 +1,106 @@
+{
+  "atUTC": "2026-11-27T07:24:52.876726+00:00",
+  "manifestSHA256": "fb73ec481bfde531e943f698d48db62e3940d14d49085f5fe22b31bfdc1428ee",
+  "membersVerified": 7,
+  "bytes": 45841,
+  "source": "d2902ba9a4b18d5dba92662430e7eda355744b0c",
+  "credit": "Original unmodified filtered telemetry diagnostic only: six tests passed; full platform gate, native79 and app/OS acceptance remain separate.",
+  "actualReceipt": {
+    "status": "ORIGINAL_FILTERED_DIAGNOSTIC_COMPLETED",
+    "source": "d2902ba9a4b18d5dba92662430e7eda355744b0c",
+    "controllerPID": 87267,
+    "controllerSHA256": "a000e3e52fd14739f9565188607d754fbb27391eff9a006b74d3c2e6e0029951",
+    "startedAt": "2026-11-27T06:59:01.252757+00:00",
+    "command": [
+      "/usr/bin/swift",
+      "test",
+      "--package-path",
+      "Packages/HanlinPlatform",
+      "--parallel",
+      "--filter",
+      "HanlinOpenTelemetryTracerTests"
+    ],
+    "cwd": "/Users/m1/builds/hanlin-two-wave-root-20261126/source",
+    "scratchPath": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/Packages/HanlinPlatform/.build",
+    "admissionBytes": 6442450944,
+    "continuousReserveBytes": 2684354560,
+    "buildEnvelopeSeconds": 600,
+    "testDiagnosticEnvelopeSeconds": 120,
+    "originalSuiteTimeLimit": "Unmodified @Suite timeLimit(.minutes(1))",
+    "boundary": "One parent-authorized original filtered macOS SwiftPM diagnostic. It neither replaces nor credits the unfiltered platform gate, selected iOS79, paired54, extra26 or app/OS/distribution acceptance.",
+    "nativeCommandsStarted": 1,
+    "samples": [],
+    "coordinationLocks": {
+      "native": "exclusive",
+      "maintenance": "shared"
+    },
+    "exactOriginalSource": {
+      "packageTrees": {
+        "Packages/HanlinPlatform": "ee3dceff23aa4298982869933382bbed06ff6124",
+        "Packages/HanlinPlatform/Sources": "1586a7e95b6a3245bf0bb0ea60600c9b5086bc63",
+        "Packages/HanlinPlatform/Tests": "c4683795c1a192855ca2de769546ee2ccf4f948d"
+      },
+      "lockfiles": {
+        "Packages/HanlinPlatform/Package.resolved": "453087cb3345b7c6bb24c00a682f41ffa9708ebd328e60b583f6e04276bf789d",
+        "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved": "56d19a4b8c677831fb91e1f8155a68e411b42fd4807ad618d6f169569e1bb5a4"
+      },
+      "testFileSHA256": "be9b6fe280dfe43c4791644a333e90bdfc142936c51c909f12d84173bb22d4b5",
+      "adapterSHA256": "3278fd5539dfb554b645180886aa31421b3d02096a67b45aa6ba26b21e442292",
+      "testMethods": [
+        "settingsDisableContentAndUseTheInjectedTracer",
+        "originalSDKExportsCacheCountsAndDropsContent",
+        "errorsNamesAndInvalidNumbersCannotExportRawContent",
+        "taskContextPreservesParentageAcrossSuspensionAndSeparatesConcurrentRequests",
+        "streamingSpanOutlivesActiveClosureAndEndsExactlyOnce",
+        "shutdownDrainsBoundedProcessorAndIsIdempotent"
+      ],
+      "testsUnmodified": true
+    },
+    "swiftVersion": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0",
+    "xcodeVersion": "Xcode 27.0\nBuild version 27A266a",
+    "freeAtAdmission": 13180653568,
+    "pid": 87303,
+    "pgid": 87303,
+    "commandStartedAt": "2026-11-27T06:59:02.019928+00:00",
+    "lastObservation": {
+      "at": "2026-11-27T07:00:17.563044+00:00",
+      "elapsedSeconds": 75.4768200420076,
+      "testElapsedSeconds": null,
+      "freeBytes": 11523567616,
+      "logBytes": 24252,
+      "secondsSinceLogGrowth": 4.469246499997098,
+      "ownedProcessTree": [
+        {
+          "pid": 87303,
+          "ppid": 87267,
+          "pgid": 87303,
+          "state": "Ss",
+          "elapsed": "01:15",
+          "executable": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-test"
+        },
+        {
+          "pid": 90383,
+          "ppid": 87303,
+          "pgid": 90383,
+          "state": "S",
+          "elapsed": "00:00",
+          "executable": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/libexec/swift/pm/swiftpm-xctest-helper"
+        }
+      ]
+    },
+    "exitCode": 0,
+    "reportedTestRunCounts": [
+      6
+    ],
+    "originalFilteredSuitePassed": true,
+    "originalPackageSourceUnchanged": true,
+    "retainedOwnedScratchExists": true,
+    "finishedAt": "2026-11-27T07:00:20.149742+00:00",
+    "freeEnd": 11523219456,
+    "log": {
+      "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/validation/telemetry-macos-d2902ba9-r1/original-swift-test.log",
+      "bytes": 25526,
+      "sha256": "bbdb0f0a15ceb2fbcc523812f33b8bdd9d4740987b15198137d530b5789b40dd"
+    }
+  }
+}

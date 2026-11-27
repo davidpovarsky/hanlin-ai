@@ -1,0 +1,358 @@
+{
+  "status": "FRESH_HOST_AND_SDK_VERIFIED",
+  "route": "ORIGINAL_PHASES_WITH_BOUNDED_TEST_CONCURRENCY",
+  "source": "f768d634bfa8a102cf63b32c7ab9d129cafc671d",
+  "startedAt": "2026-11-27T06:23:27.764255+00:00",
+  "freeStart": 7529451520,
+  "phaseEstimatedIncrementalBytes": 1796093793,
+  "testScheduling": "Supported Node CLI --test-concurrency=2; original complete test set, assertions, deadlines, isolated Worker behavior and Node24.5 unchanged. Original HANLIN_RUN_LONG_JOBS=1 opt-in enables the actual305-second case.",
+  "historicalSchedulingEvidence": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-preparation-a35694f7-final.json",
+  "phases": [
+    {
+      "name": "original-pretest-phases",
+      "command": [
+        "/bin/bash",
+        "/Users/m1/builds/hanlin-two-wave-root-20261126/host-resume-f768d634-original-phases-r1/original-pretest-phases.sh"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-two-wave-root-20261126/source",
+      "startedAt": "2026-11-27T06:23:28.023875+00:00",
+      "log": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-resume-f768d634-original-phases-r1/original-pretest-phases.log",
+      "pid": 76702,
+      "lastObservation": {
+        "at": "2026-11-27T06:23:48.039659+00:00",
+        "freeBytes": 7297191936,
+        "logBytes": 844
+      },
+      "exitCode": 0,
+      "finishedAt": "2026-11-27T06:23:51.811039+00:00",
+      "logSHA256": "c797010bc6ccaf295ed7c4915bf8d6bedac369d44e912e10ac48413406ab61eb"
+    },
+    {
+      "name": "node-version",
+      "command": [
+        "/Users/m1/builds/hanlin-two-wave-root-20261126/tool-bin/node",
+        "--version"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-two-wave-root-20261126/source",
+      "startedAt": "2026-11-27T06:23:51.840638+00:00",
+      "log": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-resume-f768d634-original-phases-r1/node-version.log",
+      "pid": 76783,
+      "exitCode": 0,
+      "finishedAt": "2026-11-27T06:23:51.865796+00:00",
+      "logSHA256": "2f30156cd7f9137514ea68d53554f583cf6541fd107dbc8ae8a19253379a735a"
+    },
+    {
+      "name": "current-sdk-audit",
+      "command": [
+        "/Users/m1/builds/hanlin-two-wave-root-20261126/tool-bin/node",
+        "Scripts/Audit/audit-miniapp-sdk.mjs",
+        "--check"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-two-wave-root-20261126/source",
+      "startedAt": "2026-11-27T06:23:51.925481+00:00",
+      "log": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-resume-f768d634-original-phases-r1/current-sdk-audit.log",
+      "pid": 76784,
+      "exitCode": 0,
+      "finishedAt": "2026-11-27T06:23:52.247513+00:00",
+      "logSHA256": "6d938ed7d69471fb67d14ac1b2beae53a4383c809514a5f10888d2b14cfb1b06"
+    },
+    {
+      "name": "current-reachability-audit",
+      "command": [
+        "/Users/m1/builds/hanlin-two-wave-root-20261126/tool-bin/python3",
+        "Scripts/Audit/audit_miniapp_reachability.py",
+        "--check"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-two-wave-root-20261126/source",
+      "startedAt": "2026-11-27T06:23:52.248142+00:00",
+      "log": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-resume-f768d634-original-phases-r1/current-reachability-audit.log",
+      "pid": 76785,
+      "exitCode": 0,
+      "finishedAt": "2026-11-27T06:23:54.316894+00:00",
+      "logSHA256": "231e3ea5da8cd01dfdc112d6cb7466ce2b2e6f38070dd193d6bbea0e17f7f39b"
+    },
+    {
+      "name": "current-sdk-fingerprint",
+      "command": [
+        "/Users/m1/builds/hanlin-two-wave-root-20261126/tool-bin/node",
+        "Scripts/MiniApps/stage-sdk.mjs",
+        "--fingerprint",
+        "--repository",
+        "/Users/m1/builds/hanlin-two-wave-root-20261126/source"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-two-wave-root-20261126/source",
+      "startedAt": "2026-11-27T06:23:54.317647+00:00",
+      "log": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-resume-f768d634-original-phases-r1/current-sdk-fingerprint.log",
+      "pid": 76796,
+      "exitCode": 0,
+      "finishedAt": "2026-11-27T06:23:54.452523+00:00",
+      "logSHA256": "b2f99e56648fc51e224d12ea3f9bdcc709ba18712f33e780d6280f96b052c129"
+    },
+    {
+      "name": "node-fingerprint",
+      "command": [
+        "/Users/m1/builds/hanlin-two-wave-root-20261126/tool-bin/node",
+        "-p",
+        "JSON.stringify({ versions: process.versions, platform: process.platform, arch: process.arch })"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-two-wave-root-20261126/source",
+      "startedAt": "2026-11-27T06:23:54.468439+00:00",
+      "log": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-resume-f768d634-original-phases-r1/node-fingerprint.log",
+      "pid": 76797,
+      "exitCode": 0,
+      "finishedAt": "2026-11-27T06:23:54.494628+00:00",
+      "logSHA256": "5d9368cd4b939d652aab8afbd31375396f6312d3f7b6b30c4843c40aab2f32fe"
+    },
+    {
+      "name": "host-input-fingerprint-before",
+      "command": [
+        "/Users/m1/builds/hanlin-two-wave-root-20261126/tool-bin/python3",
+        "Scripts/Runtime/runtime_host_archive.py",
+        "fingerprint",
+        "--source-root",
+        "/Users/m1/builds/hanlin-two-wave-root-20261126/source/AI_HLY/Downstream/RuntimeCore/Node/Host",
+        "--node-fingerprint",
+        "{\"versions\":{\"node\":\"24.5.0\",\"acorn\":\"8.15.0\",\"ada\":\"3.2.6\",\"amaro\":\"1.1.1\",\"ares\":\"1.34.5\",\"brotli\":\"1.1.0\",\"cjs_module_lexer\":\"2.1.0\",\"cldr\":\"47.0\",\"icu\":\"77.1\",\"llhttp\":\"9.3.0\",\"modules\":\"137\",\"napi\":\"10\",\"nbytes\":\"0.1.1\",\"ncrypto\":\"0.0.1\",\"nghttp2\":\"1.66.0\",\"openssl\":\"3.5.1\",\"simdjson\":\"3.13.0\",\"simdutf\":\"6.4.0\",\"sqlite\":\"3.50.3\",\"tz\":\"2025b\",\"undici\":\"7.12.0\",\"unicode\":\"16.0\",\"uv\":\"1.51.0\",\"uvwasi\":\"0.0.21\",\"v8\":\"13.6.233.10-node.21\",\"zlib\":\"1.3.1-470d3a2\",\"zstd\":\"1.5.7\"},\"platform\":\"darwin\",\"arch\":\"arm64\"}"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-two-wave-root-20261126/source",
+      "startedAt": "2026-11-27T06:23:54.495139+00:00",
+      "log": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-resume-f768d634-original-phases-r1/host-input-fingerprint-before.log",
+      "pid": 76798,
+      "exitCode": 0,
+      "finishedAt": "2026-11-27T06:23:54.637218+00:00",
+      "logSHA256": "08a09027bc7dcb67e419ce1d45bb42d4bbfc60ef47d579b843ba4ebc2baaf482"
+    },
+    {
+      "name": "complete-original-test-set",
+      "command": [
+        "/Users/m1/builds/hanlin-two-wave-root-20261126/tool-bin/node",
+        "--test",
+        "--test-concurrency=2",
+        "Tests/archive-resources.test.mjs",
+        "Tests/cli-entry-resolution.test.mjs",
+        "Tests/compatibility.test.mjs",
+        "Tests/execution-input.test.mjs",
+        "Tests/execution-jobs.test.mjs",
+        "Tests/fetch-compatibility.test.mjs",
+        "Tests/fetch-conformance.test.mjs",
+        "Tests/host-dependency-patches.test.mjs",
+        "Tests/host-operations.test.mjs",
+        "Tests/host.test.mjs",
+        "Tests/job-terminal-publication.test.mjs",
+        "Tests/mcp-install-lifecycle.test.mjs",
+        "Tests/mcp-large-probe.test.mjs",
+        "Tests/mcp-large-transport.test.mjs",
+        "Tests/mcp-package-generations.test.mjs",
+        "Tests/miniapp-assistant-tools.test.mjs",
+        "Tests/miniapp-authoring.test.mjs",
+        "Tests/miniapp-editor.test.mjs",
+        "Tests/miniapp-sdk-resolution.test.mjs",
+        "Tests/native-commands.test.mjs",
+        "Tests/network-diagnostics.test.mjs",
+        "Tests/optional-lifecycle.test.mjs",
+        "Tests/package-lifecycle.test.mjs",
+        "Tests/package-validation.test.mjs",
+        "Tests/portable-shell.test.mjs",
+        "Tests/runtime-capabilities.test.mjs",
+        "Tests/runtime-command-broker.test.mjs",
+        "Tests/runtime-package-target.test.mjs",
+        "Tests/runtime.test.mjs",
+        "Tests/typescript-jobs.test.mjs",
+        "Tests/warning-diagnostics.test.mjs",
+        "Tests/workspace-io.test.mjs"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-two-wave-root-20261126/runtime-work-f768d634-original-phases-r1/hanlin-runtime-host",
+      "startedAt": "2026-11-27T06:23:57.002949+00:00",
+      "log": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-resume-f768d634-original-phases-r1/complete-original-test-set.log",
+      "pid": 76806,
+      "lastObservation": {
+        "at": "2026-11-27T06:29:07.212012+00:00",
+        "freeBytes": 6839042048,
+        "logBytes": 5716
+      },
+      "exitCode": 0,
+      "finishedAt": "2026-11-27T06:29:07.451397+00:00",
+      "logSHA256": "bc2b659d0492db33376a0a6bbaba9b790818d6cf92713197e331d5b1ad119cef"
+    },
+    {
+      "name": "host-input-fingerprint-after",
+      "command": [
+        "/Users/m1/builds/hanlin-two-wave-root-20261126/tool-bin/python3",
+        "Scripts/Runtime/runtime_host_archive.py",
+        "fingerprint",
+        "--source-root",
+        "/Users/m1/builds/hanlin-two-wave-root-20261126/source/AI_HLY/Downstream/RuntimeCore/Node/Host",
+        "--node-fingerprint",
+        "{\"versions\":{\"node\":\"24.5.0\",\"acorn\":\"8.15.0\",\"ada\":\"3.2.6\",\"amaro\":\"1.1.1\",\"ares\":\"1.34.5\",\"brotli\":\"1.1.0\",\"cjs_module_lexer\":\"2.1.0\",\"cldr\":\"47.0\",\"icu\":\"77.1\",\"llhttp\":\"9.3.0\",\"modules\":\"137\",\"napi\":\"10\",\"nbytes\":\"0.1.1\",\"ncrypto\":\"0.0.1\",\"nghttp2\":\"1.66.0\",\"openssl\":\"3.5.1\",\"simdjson\":\"3.13.0\",\"simdutf\":\"6.4.0\",\"sqlite\":\"3.50.3\",\"tz\":\"2025b\",\"undici\":\"7.12.0\",\"unicode\":\"16.0\",\"uv\":\"1.51.0\",\"uvwasi\":\"0.0.21\",\"v8\":\"13.6.233.10-node.21\",\"zlib\":\"1.3.1-470d3a2\",\"zstd\":\"1.5.7\"},\"platform\":\"darwin\",\"arch\":\"arm64\"}"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-two-wave-root-20261126/source",
+      "startedAt": "2026-11-27T06:29:11.763442+00:00",
+      "log": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-resume-f768d634-original-phases-r1/host-input-fingerprint-after.log",
+      "pid": 77578,
+      "exitCode": 0,
+      "finishedAt": "2026-11-27T06:29:11.954222+00:00",
+      "logSHA256": "08a09027bc7dcb67e419ce1d45bb42d4bbfc60ef47d579b843ba4ebc2baaf482"
+    },
+    {
+      "name": "original-post-test-packing",
+      "command": [
+        "/bin/bash",
+        "/Users/m1/builds/hanlin-two-wave-root-20261126/host-resume-f768d634-original-phases-r1/original-post-test-packing.sh"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-two-wave-root-20261126/runtime-work-f768d634-original-phases-r1/hanlin-runtime-host",
+      "startedAt": "2026-11-27T06:29:11.955422+00:00",
+      "log": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-resume-f768d634-original-phases-r1/original-post-test-packing.log",
+      "pid": 77580,
+      "exitCode": 0,
+      "finishedAt": "2026-11-27T06:29:19.728598+00:00",
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "name": "original-packed-validation-jitless-and-seal",
+      "command": [
+        "/bin/bash",
+        "/Users/m1/builds/hanlin-two-wave-root-20261126/host-resume-f768d634-original-phases-r1/original-packed-verification-and-seal.sh"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-two-wave-root-20261126/source",
+      "startedAt": "2026-11-27T06:29:19.729337+00:00",
+      "log": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-resume-f768d634-original-phases-r1/original-packed-validation-jitless-and-seal.log",
+      "pid": 77598,
+      "exitCode": 0,
+      "finishedAt": "2026-11-27T06:29:29.017585+00:00",
+      "logSHA256": "0c29c28b7fd97fa904d5a70206f10edc2c0336346e6ba344a068519fe6e47f6e"
+    },
+    {
+      "name": "original-archive-reuse-validation",
+      "command": [
+        "/Users/m1/builds/hanlin-two-wave-root-20261126/tool-bin/python3",
+        "Scripts/Runtime/runtime_host_archive.py",
+        "reuse",
+        "/Users/m1/builds/hanlin-two-wave-root-20261126/source/build/runtime-host-f768d634-original-phases-r1",
+        "--source-root",
+        "/Users/m1/builds/hanlin-two-wave-root-20261126/source/AI_HLY/Downstream/RuntimeCore/Node/Host",
+        "--node-fingerprint",
+        "{\"versions\":{\"node\":\"24.5.0\",\"acorn\":\"8.15.0\",\"ada\":\"3.2.6\",\"amaro\":\"1.1.1\",\"ares\":\"1.34.5\",\"brotli\":\"1.1.0\",\"cjs_module_lexer\":\"2.1.0\",\"cldr\":\"47.0\",\"icu\":\"77.1\",\"llhttp\":\"9.3.0\",\"modules\":\"137\",\"napi\":\"10\",\"nbytes\":\"0.1.1\",\"ncrypto\":\"0.0.1\",\"nghttp2\":\"1.66.0\",\"openssl\":\"3.5.1\",\"simdjson\":\"3.13.0\",\"simdutf\":\"6.4.0\",\"sqlite\":\"3.50.3\",\"tz\":\"2025b\",\"undici\":\"7.12.0\",\"unicode\":\"16.0\",\"uv\":\"1.51.0\",\"uvwasi\":\"0.0.21\",\"v8\":\"13.6.233.10-node.21\",\"zlib\":\"1.3.1-470d3a2\",\"zstd\":\"1.5.7\"},\"platform\":\"darwin\",\"arch\":\"arm64\"}"
+      ],
+      "cwd": "/Users/m1/builds/hanlin-two-wave-root-20261126/source",
+      "startedAt": "2026-11-27T06:29:29.055875+00:00",
+      "log": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-resume-f768d634-original-phases-r1/original-archive-reuse-validation.log",
+      "pid": 77630,
+      "exitCode": 0,
+      "finishedAt": "2026-11-27T06:29:30.200796+00:00",
+      "logSHA256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    }
+  ],
+  "boundary": "Every original preparation, test, packing, validation and JITless phase executes with explicit bounded scheduling and unique output binding. Not one untouched-producer invocation and not iOS native acceptance.",
+  "originalProducerSHA256": "af0fda26d53a6b72b495a73e104835af176dccfc39cda2d5bcfffa3f7a04cbd6",
+  "currentControllerReview": {
+    "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-final-controller-review-f768d634.json",
+    "sha256": "753a0b1960716bd07e72d030188cda766059cbb4f57455cac47dc5296a1586d0"
+  },
+  "native79ReuseQualification": {
+    "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/native79-reuse-qualification-f768d634.json",
+    "sha256": "da8f54f596b6e9e7bbda8d55679d49c50953b3a5339a9e7846298b7d9fad4e34",
+    "status": "REUSED_VERIFIED_PASS",
+    "actualExecutionSource": "866d2d3c60525e32eae27564869e6dba024e625c",
+    "qualifiedSource": "f768d634bfa8a102cf63b32c7ab9d129cafc671d",
+    "totalBroadInputs": 33,
+    "matchedBroadInputCount": 32,
+    "changedBroadInputs": [
+      {
+        "path": "Scripts/ProductSplit/run_paired_acceptance.py",
+        "recorded866SHA256": "872a7f6e7f786e2d578a54e3107bbe00e42a8dd2238e23f10fd656a63d9ab3f7",
+        "currentSHA256": "efb9738edeafd21868ce232343a2db4634e370d47d267d160c86f927847a8836"
+      }
+    ],
+    "currentPackageTrees": {
+      "Packages/HanlinPlatform/Sources": "1586a7e95b6a3245bf0bb0ea60600c9b5086bc63",
+      "Packages/HanlinPlatform/Tests": "c4683795c1a192855ca2de769546ee2ccf4f948d",
+      "Packages/HanlinPlatform": "ee3dceff23aa4298982869933382bbed06ff6124",
+      "Fixtures/Widgets": "a0b7b0b1cb9e1ce756ccff40593a325ffffa73d6"
+    },
+    "nativeTestsExecutedByThisController": false
+  },
+  "sourceQualification": {
+    "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/source-stage-f768d634.json",
+    "sha256": "819968e2453efeb7fb72deed1482d53f31f9acc540140adfdc70bb958634b4c8",
+    "actualNativeSource": "866d2d3c60525e32eae27564869e6dba024e625c",
+    "nativeProof": "/Users/m1/builds/hanlin-two-wave-root-20261126/validation/platform-866d2d3c/test-r1/required-scope-reconciliation.json",
+    "nativeProofSHA256": "e99daf1bb7bb98c14d98d33b153d88531e7e016c7e295bc964a1e4f10af2bf64"
+  },
+  "integrationQualification": "Current source reuses exact original58/79 package acceptance executed on866 after independent full package-tree and32/33 broad-input qualification; the sole named changed runner is not consumed by that direct xcodebuild gate. The reviewed App Intents source change invalidates SDK392/archive identity. This controller freshly executes the unchanged original complete188 Host acceptance and all original phases. App/OS acceptance remains separate.",
+  "coordinationLocks": {
+    "native": "exclusive",
+    "existingMaintenance": "shared"
+  },
+  "pretestExtract": {
+    "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/host-resume-f768d634-original-phases-r1/original-pretest-phases.sh",
+    "sha256": "38e73b2bf00ef6c0d89b1f85411dd9866ff5c08fa4db6a69ab897533fcb31a19",
+    "boundary": "Exact original commands before npm test. Only SCRIPT_DIR binds the real original script directory and OUTPUT_ROOT binds this unique evidence output; the original open subshell is closed at the phase boundary.",
+    "longJobOptIn": "HANLIN_RUN_LONG_JOBS=1"
+  },
+  "originalTestsSHA256": "3a48396dfcf27155074296d19b56ebd03eaebe5387e56f4eb76e1c34865bf96c",
+  "expectedOriginalTestInvocations": 188,
+  "unchangedOriginalHostTestsSHA256": "3a48396dfcf27155074296d19b56ebd03eaebe5387e56f4eb76e1c34865bf96c",
+  "nodeVersion": "v24.5.0",
+  "nodeBinarySHA256": "336b5b3ebc5deb86df842102b20b6e4761605b7a667823e68dda7761b91a161b",
+  "stagedClosureBefore": {
+    "sha256": "5c76f56ea69a52f034dff8c1274aa596046d58a42a2e5ac4382c29d4218b6e07",
+    "files": 28917
+  },
+  "grammarClosureBefore": {
+    "sha256": "19074380392a37fc4c6c9758e8ffbb25acd345f5a55419ba46fb50cfb9879fb2",
+    "files": 32
+  },
+  "sourceInputsHash": "bd2007139df2a01dba8bf4ffea8b7d38c91b7a44cdde82163375e5f3010ddf47",
+  "sdkInputHash": "4b75c9122e17ff24464a8dfb757b1b3c72d2817d55472b4c0be035e7c71b55cc",
+  "originalTestFileCount": 32,
+  "testInvocationEnvironment": {
+    "HANLIN_RUN_LONG_JOBS": "1",
+    "NODE_OPTIONS": "UNSET"
+  },
+  "originalTestSummary": {
+    "tests": 188,
+    "pass": 188,
+    "fail": 0,
+    "cancelled": 0,
+    "skipped": 0
+  },
+  "actualLongJobProof": {
+    "proof": "actual-node-job-over-300-seconds",
+    "elapsedMilliseconds": 305027.835625,
+    "executionID": "6963d8c1-aeff-4370-98da-a3eb847eee34"
+  },
+  "stagedClosureAfter": {
+    "sha256": "5c76f56ea69a52f034dff8c1274aa596046d58a42a2e5ac4382c29d4218b6e07",
+    "files": 28917,
+    "status": "EXACT_MATCH"
+  },
+  "postTestPackingExtractSHA256": "911a4622f94eef57be7952c184f623cebaa1bad9c8a47ad3bddeb4016b7d91c3",
+  "packedVerificationExtractSHA256": "8e4bc5c4a631ea51588ecd0686a468f41d61898647de1f60f9429ca737b696a5",
+  "archive": {
+    "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/build/runtime-host-f768d634-original-phases-r1/RuntimeHostResources.zip",
+    "canonicalPath": "/Users/m1/builds/hanlin-two-wave-root-20261126/source/build/runtime-host/RuntimeHostResources.zip",
+    "bytes": 81901081,
+    "sha256": "fae9778f1b6548a069f6bd16bef3e2f22c710445a84d1fb025f4e90a5d1e1718"
+  },
+  "sdk": {
+    "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/fresh-sdk-f768d634-original-phases-r1/MiniAppSDK",
+    "manifestSHA256": "f6603fc7f62b91a80cef33eb72a77e93711504b3b2f0a1851ead62f49c787a7a",
+    "sourceInputHash": "4b75c9122e17ff24464a8dfb757b1b3c72d2817d55472b4c0be035e7c71b55cc",
+    "sourceInputsCount": 392
+  },
+  "sdkInputCheck": {
+    "status": "CURRENT_SOURCE_MATCHES_PACKAGED_SDK",
+    "sha256": "4b75c9122e17ff24464a8dfb757b1b3c72d2817d55472b4c0be035e7c71b55cc",
+    "filesCount": 392
+  },
+  "hostMetadata": {
+    "nodeVersion": "v24.5.0",
+    "archiveSha256": "fae9778f1b6548a069f6bd16bef3e2f22c710445a84d1fb025f4e90a5d1e1718",
+    "sourceInputsHash": "bd2007139df2a01dba8bf4ffea8b7d38c91b7a44cdde82163375e5f3010ddf47",
+    "jitlessArchiveSmoke": "passed",
+    "npmInstall": "npm ci --omit=dev --ignore-scripts --workspaces=false --no-audit --no-fund",
+    "tests": "passed"
+  },
+  "finishedAt": "2026-11-27T06:29:33.003064+00:00",
+  "freeEnd": 6827671552
+}

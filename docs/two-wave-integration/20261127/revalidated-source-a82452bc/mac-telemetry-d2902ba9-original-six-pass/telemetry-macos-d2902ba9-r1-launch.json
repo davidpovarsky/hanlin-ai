@@ -1,0 +1,10 @@
+{
+  "status": "DIAGNOSTIC_CONTROLLER_DISPATCHED",
+  "pid": 87267,
+  "source": "d2902ba9a4b18d5dba92662430e7eda355744b0c",
+  "plan": "/Users/m1/builds/hanlin-two-wave-root-20261126/telemetry-diagnostic-d2902ba9-plan.json",
+  "planSHA256": "d04b61a6774e343a9c315981d744fe054fa7bcbcf1dd04501bff1af72f022663",
+  "controllerSHA256": "a000e3e52fd14739f9565188607d754fbb27391eff9a006b74d3c2e6e0029951",
+  "launchedAt": "2026-11-27T06:59:01.207360+00:00",
+  "log": "/Users/m1/builds/hanlin-two-wave-root-20261126/telemetry-macos-d2902ba9-r1-detached.log"
+}
