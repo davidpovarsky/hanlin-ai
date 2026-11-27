@@ -1,0 +1,23 @@
+{
+  "reviewer": "/root/w1_review_resume",
+  "at": "2026-11-27T04:09:25.266695+00:00",
+  "proofCommit": "8ec36373651c8cdb28a62cbdfd202d2a0bc09b13",
+  "sourceCommit": "fb1e15992eaddfde42c88b20738ae8d543d48ba0",
+  "proofPath": "docs/two-wave-integration/20261127/widget-recovery-pinned-node-validation.json",
+  "proofSHA256": "8cb2f624c68b89aced0ab59363b814f8756885c1d416f76e13f70fb044f41520",
+  "proofOnlyCommitVerified": true,
+  "all24ArchivesEqualSealedSource": true,
+  "embeddedOriginalLogsSHA256Verified": true,
+  "node": "v24.5.0",
+  "nodeBinary": "/mnt/development/projects/toolchains/node-v24.5.0-linux-arm64/bin/node",
+  "actualOriginalTestResult": {
+    "passed": 10,
+    "failed": 0,
+    "skipped": 0,
+    "durationMilliseconds": 2807.317671
+  },
+  "status": "PINNED_PORTABLE_PROOF_APPROVED",
+  "reviewerExecutedTests": false,
+  "native": "NOT_RUN",
+  "OS": "NOT_RUN"
+}
