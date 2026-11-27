@@ -467,6 +467,8 @@ private struct MiniAppsStudioProjectView: View {
                     }
                     Button("Show suggestions", systemImage: "text.cursor") { project.showsSuggestions = true }
                 } label: { Image(systemName: "ellipsis.circle") }
+                .accessibilityLabel("Editor options")
+                .accessibilityIdentifier("miniapps-studio-editor-options")
             }
         }
         .task(id: "\(project.version):\(project.selection.location):\(project.selectedCompletion ?? "")") {

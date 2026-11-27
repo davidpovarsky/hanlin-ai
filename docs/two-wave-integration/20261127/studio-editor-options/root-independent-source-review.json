@@ -1,0 +1,9 @@
+{
+  "schema": 1,
+  "reviewer": "/root",
+  "assessment": "APPROVED_SEMANTIC_EDITOR_OPTIONS_ACCESSIBILITY_SOURCE",
+  "sourceSHA256": "1471af7b39899452fd3ab797bf24cd9d4e1c2273807e438795564ebe259608d7",
+  "patchSHA256": "801a36560f313a136215a22ac6fd934f30989f1202f1df9b002fe132c6208825",
+  "actualMessage": "Exact Editor diff APPROVED: root31d5 preimage ee4df962 matches; candidate1471af7b and patch801a3656 verified; removingexact2modifiers recoverswholefile byte-for-byte. Modifiersattach existing ellipsisMenu afterlabel, no actions/layout/statechanges. Seal now with this rootreviewattribution, then prioritize full33HTTPactualconversion diagnosis. No optionaltests forsemanticlabel; broadernativeUI gate required.",
+  "tests": "NOT_RUN; source review only. Original native UI gate remains required."
+}
