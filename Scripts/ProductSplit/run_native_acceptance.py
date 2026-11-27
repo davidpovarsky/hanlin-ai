@@ -2,14 +2,17 @@
 from pathlib import Path
 import hashlib
 import json
+import math
 import os
 import plistlib
 import re
 import shutil
+import signal
 import subprocess
 import sys
 import tempfile
 import time
+import uuid
 
 from simulator_entitlements import read_simulator_entitlements
 from verify_targets import native_ui_typecheck_command, validate_native_test_membership
@@ -41,6 +44,8 @@ UI_PLANS = {
         'HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneNativeScriptUsesRealRuntimesAndSurvivesRelaunch',
         'HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoRendersNativeControlsAndRunsReactEvents',
         'HanlinMiniAppsUITests/MiniAppsNativeScriptPackageWindowUITests'], 25),
+    'notification_os': ([
+        'HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testOriginalNotificationAuthorizationAndOSDeliveryToBothEngines'], 1),
 }
 
 
@@ -62,6 +67,399 @@ def command(argv, name, timeout=60, env=None):
     if code:
         raise RuntimeError(f'{argv[0]} exit {code}; see {name}')
     return output.decode()
+
+
+NOTIFICATION_APP = 'com.itorah.hanlinminiapps'
+NOTIFICATION_RUNNER = 'com.itorah.hanlinminiapps.integration.uitests.xctrunner'
+NOTIFICATION_WORKER = 'Scripts/CI/observe_notification_os_delivery.py'
+NOTIFICATION_FIXTURES = (
+    'DemoMiniApps/hanlin-script-parity.hanlinNativeScript',
+    'AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo',
+    'Fixtures/Widgets/Hanlin-ScriptWidget-Actions.scripting',
+)
+
+
+def notification_check(condition, message):
+    if not condition:
+        raise RuntimeError('Notification OS admission: ' + message)
+
+
+def notification_file(path):
+    data = path.read_bytes()
+    return {'bytes': len(data), 'sha256': hashlib.sha256(data).hexdigest()}
+
+
+def notification_equal(left, right):
+    # JSON protocol identities must not accept Python's True == 1 coercion.
+    return json.dumps(left, sort_keys=True, allow_nan=False) == json.dumps(right, sort_keys=True, allow_nan=False)
+
+
+def notification_source(source, inputs):
+    current = subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, timeout=5).decode().strip()
+    notification_check(re.fullmatch(r'[0-9a-f]{40}', source) and current == source,
+                       'the actual source commit changed')
+    required = {NOTIFICATION_WORKER, 'Scripts/ProductSplit/run_native_acceptance.py',
+                'HanlinMiniAppsUITests/HanlinMiniAppsUITests.swift'}
+    notification_check(required.issubset(inputs), 'the original worker, UI case or runner is unbound')
+    for relative, expected in inputs.items():
+        path = ROOT / relative
+        notification_check(not Path(relative).is_absolute() and '..' not in Path(relative).parts
+                           and path.is_file() and notification_file(path)['sha256'] == expected,
+                           'captured prepared source changed: ' + relative)
+    identity_path = EVIDENCE / 'source-identity.json'
+    identity = json.loads(identity_path.read_bytes())
+    prepared_diff = subprocess.check_output(['git', 'diff', '--binary', 'HEAD'], cwd=ROOT, timeout=30)
+    notification_check(identity['commit'] == source and identity['tracked_file_sha256'] == inputs
+                       and hashlib.sha256(prepared_diff).hexdigest() == identity['preparation_diff_sha256'],
+                       'the original prepared-source/fixture diff changed')
+    return {'commit': source, 'inputCount': len(inputs),
+            'inputsSHA256': hashlib.sha256(json.dumps(inputs, sort_keys=True).encode()).hexdigest(),
+            'sourceIdentitySHA256': notification_file(identity_path)['sha256']}
+
+
+def notification_bundle(path, bundle_id):
+    info = plistlib.loads((path / 'Info.plist').read_bytes())
+    executable = info.get('CFBundleExecutable')
+    notification_check(info.get('CFBundleIdentifier') == bundle_id and isinstance(executable, str)
+                       and executable and Path(executable).name == executable,
+                       'the actual built/installed bundle identity is wrong')
+    code = {executable: notification_file(path / executable)}
+    debug = path / (executable + '.debug.dylib')
+    if debug.is_file():
+        code[debug.name] = notification_file(debug)
+    for embedded in sorted((path / 'Frameworks').rglob('*')):
+        if embedded.is_file():
+            with embedded.open('rb') as stream:
+                magic = stream.read(4)
+            if magic in {b'\xfe\xed\xfa\xce', b'\xce\xfa\xed\xfe', b'\xfe\xed\xfa\xcf',
+                         b'\xcf\xfa\xed\xfe', b'\xca\xfe\xba\xbe', b'\xbe\xba\xfe\xca',
+                         b'\xca\xfe\xba\xbf', b'\xbf\xba\xfe\xca'}:
+                code[embedded.relative_to(path).as_posix()] = notification_file(embedded)
+    return {'bundleID': bundle_id, 'info': notification_file(path / 'Info.plist'),
+            'executable': executable, 'code': code}
+
+
+def notification_products(derived):
+    products = derived / 'Build/Products/Debug-iphonesimulator'
+    app = products / 'HanlinMiniApps.app'
+    runner = products / 'HanlinMiniAppsUITests-Runner.app'
+    test = runner / 'PlugIns/HanlinMiniAppsUITests.xctest'
+    app_info = plistlib.loads((app / 'Info.plist').read_bytes())
+    configuration = app_info.get('HanlinExtensionHost', {})
+    notification_check(configuration.get('StorageNamespace') == 'HanlinMiniApps/v1'
+                       and configuration.get('AppGroupIdentifier') == 'group.com.itorah.chavrusachat',
+                       'the actual MiniApps notification store configuration changed')
+    return {'app': notification_bundle(app, NOTIFICATION_APP),
+            'runner': notification_bundle(runner, NOTIFICATION_RUNNER),
+            'test': notification_bundle(test, NOTIFICATION_RUNNER.removesuffix('.xctrunner')),
+            'configuration': configuration}
+
+
+def notification_container(path, identifier, device, group=False):
+    device_root = (Path.home() / 'Library/Developer/CoreSimulator/Devices' / device / 'data/Containers').resolve()
+    expected_parent = device_root / ('Shared/AppGroup' if group else 'Data/Application')
+    actual = path.resolve(strict=True)
+    notification_check(actual.is_dir() and actual.parent == expected_parent,
+                       'container is outside the exact owned simulator and storage class')
+    metadata = plistlib.loads((actual / '.com.apple.mobile_container_manager.metadata.plist').read_bytes())
+    notification_check(metadata.get('MCMMetadataIdentifier') == identifier,
+                       'OS container metadata belongs to another product')
+    metadata_uuid = str(uuid.UUID(metadata['MCMMetadataUUID']))
+    # MCMMetadataUUID is a separate identity; it need not equal the directory UUID.
+    uuid.UUID(actual.name)
+    return {'path': str(actual), 'identifier': identifier, 'metadataUUID': metadata_uuid}
+
+
+def notification_active(path, started_after):
+    now = time.time()
+    notification_check(type(started_after) in (int, float) and math.isfinite(started_after)
+                       and 0 < started_after <= now, 'invalid test start clock')
+    notification_check(started_after <= path.stat().st_mtime <= now,
+                       'the UI exchange is stale or future dated')
+    active = json.loads(path.read_bytes())
+    notification_check(isinstance(active, dict) and set(active) == {'version', 'runID', 'challenge'}
+                       and type(active['version']) is int and active['version'] == 1,
+                       'invalid original UI exchange schema')
+    notification_check(isinstance(active['runID'], str) and isinstance(active['challenge'], str)
+                       and active['challenge'].startswith('notification-os-'), 'invalid UI run identity types')
+    try:
+        run_id = str(uuid.UUID(active['runID']))
+        challenge = str(uuid.UUID(active['challenge'].removeprefix('notification-os-')))
+    except ValueError as error:
+        raise RuntimeError('Notification OS admission: invalid UI run UUID') from error
+    notification_check(run_id == active['runID']
+                       and challenge == active['challenge'].removeprefix('notification-os-'),
+                       'invalid fresh UI run identity')
+    return active
+
+
+def notification_containers(device, products, probe):
+    group = products['configuration']['AppGroupIdentifier']
+    roots = {
+        'runnerData': notification_container(probe(NOTIFICATION_RUNNER, 'data'), NOTIFICATION_RUNNER, device),
+        'appData': notification_container(probe(NOTIFICATION_APP, 'data'), NOTIFICATION_APP, device),
+        'appGroup': notification_container(probe(NOTIFICATION_APP, group), group, device, group=True),
+    }
+    notification_check(roots['runnerData']['path'] != roots['appData']['path'],
+                       'runner exchange aliases product storage')
+    device_root = (Path.home() / 'Library/Developer/CoreSimulator/Devices' / device / 'data/Containers/Bundle/Application').resolve()
+    for role, bundle_id in (('app', NOTIFICATION_APP), ('runner', NOTIFICATION_RUNNER)):
+        path = probe(bundle_id, 'app').resolve(strict=True)
+        notification_check(path.is_dir() and path.is_relative_to(device_root),
+                           'installed bundle escaped the owned device')
+        notification_check(notification_bundle(path, bundle_id) == products[role],
+                           'XCTest installed a different original product')
+        roots[role + 'Bundle'] = str(path)
+        if role == 'runner':
+            notification_check(notification_bundle(path / 'PlugIns/HanlinMiniAppsUITests.xctest',
+                               bundle_id.removesuffix('.xctrunner')) == products['test'],
+                               'XCTest installed a different original UI binary')
+    documents = Path(roots['appData']['path']) / 'Documents'
+    roots['fixtures'] = {}
+    for relative in NOTIFICATION_FIXTURES:
+        source = ROOT / relative
+        staged = documents / source.name
+        notification_check(staged.is_file() and notification_file(staged) == notification_file(source),
+                           'post-XCTest ordinary fixture bytes do not match: ' + relative)
+        roots['fixtures'][relative] = notification_file(staged)
+    return roots
+
+
+def notification_stop(process):
+    if process is None or process.poll() is not None:
+        return
+    # Both children were created below with start_new_session=True. Never signal
+    # another native job, the simulator service, or a process discovered by name.
+    try:
+        os.killpg(process.pid, signal.SIGTERM)
+    except ProcessLookupError:
+        # The owned process group can disappear after poll() and before killpg.
+        # Reap this same child; no name/PID search or unrelated signal is needed.
+        process.wait(timeout=5)
+        return
+    try:
+        process.wait(timeout=5)
+    except subprocess.TimeoutExpired:
+        try:
+            os.killpg(process.pid, signal.SIGKILL)
+        except ProcessLookupError:
+            pass
+        process.wait(timeout=5)
+
+
+def run_notification_test(argv, log, state, derived, inputs):
+    expected = UI_PLANS['notification_os'][0]
+    notification_check([x.removeprefix('-only-testing:') for x in argv if x.startswith('-only-testing:')] == expected
+                       and argv.count('test-without-building') == 1
+                       and argv[argv.index('-parallel-testing-enabled') + 1] == 'NO',
+                       'the original single selector/nonparallel command changed')
+    notification_check(os.environ.get('SPLIT_REUSE_NATIVE_PROOF', '0') != '1',
+                       'this fresh OS scope has no qualified reuse contract')
+    notification_check(state.get('build') == 'EXECUTED_PASS' and state.get('reused_passes') == []
+                       and state.get('simulator_signing') == 'ORIGINAL_ENTITLEMENTS_VERIFIED_AD_HOC_NOT_DISTRIBUTION_SIGNING',
+                       'the original current build and embedded entitlements must pass first')
+    output = EVIDENCE / 'notification-os'
+    notification_check(not output.exists() and not (EVIDENCE / 'notification-controller.json').exists()
+                       and not (EVIDENCE / 'MiniApps.xcresult').exists(), 'worker and XCTest output must be fresh')
+    source = notification_source(state['sha'], inputs)
+    products = notification_products(derived)
+    device = str(uuid.UUID(state['simulator'])).upper()
+    notification_check(device == state['simulator']
+                       and (EVIDENCE / 'created-simulator.txt').read_text().strip() == device,
+                       'the simulator is not this runner\'s newly created device')
+    controller = {'source': source, 'products': products, 'device': device,
+                  'status': 'NOT_RUN', 'testAllowanceSeconds': 600, 'testCommandTimeoutSeconds': 1200,
+                  'workerTimeoutSeconds': 650, 'startedAfter': time.time(), 'stopReason': None}
+    state['notification_os_controller'] = controller
+    native = worker = None
+    started = time.monotonic()
+    worker_started = None
+    worker_log = None
+    probe_number = 0
+
+    def probe(bundle, kind, pending=False):
+        nonlocal probe_number
+        probe_number += 1
+        try:
+            raw = command(['xcrun', 'simctl', 'get_app_container', device, bundle, kind],
+                          'notification-container-' + str(probe_number) + '.txt', timeout=5)
+        except (RuntimeError, subprocess.TimeoutExpired):
+            if pending:
+                return None
+            raise
+        return Path(raw.strip())
+
+    try:
+        native = subprocess.Popen(argv, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT, start_new_session=True)
+        controller['testPID'] = native.pid
+        next_probe = started
+        while True:
+            now = time.monotonic()
+            native_code = native.poll()
+            worker_code = worker.poll() if worker is not None else None
+            if native_code is not None and native_code != 0:
+                controller['stopReason'] = 'ORIGINAL_XCTEST_FAILED'
+                break
+            if worker is not None and worker_code is not None and worker_code != 0:
+                controller['stopReason'] = 'ORIGINAL_WORKER_FAILED'
+                break
+            if native_code is not None and worker is None:
+                controller['stopReason'] = 'NO_FRESH_XCTEST_EXCHANGE'
+                break
+            if native_code is not None and worker_code is not None:
+                break
+            if now - started >= 1200 or (worker_started is not None and worker_code is None
+                                        and now - worker_started >= 650):
+                controller['stopReason'] = 'ORIGINAL_DEADLINE_EXCEEDED'
+                break
+            if worker is None and now >= next_probe:
+                next_probe = now + 1
+                runner_data = probe(NOTIFICATION_RUNNER, 'data', pending=True)
+                if runner_data is not None:
+                    active_path = runner_data / 'Documents/HanlinNotificationOSProbe/active.json'
+                    if active_path.is_file():
+                        root = notification_container(runner_data, NOTIFICATION_RUNNER, device)
+                        active = notification_active(active_path, controller['startedAfter'])
+                        roots = notification_containers(device, products, probe)
+                        notification_check(roots['runnerData'] == root, 'runner changed while binding the fresh exchange')
+                        notification_check(notification_source(state['sha'], inputs) == source,
+                                           'source changed before worker admission')
+                        controller.update(active=active, containers=roots, status='RUNNING')
+                        worker_argv = [sys.executable, str(ROOT / NOTIFICATION_WORKER), '--device', device,
+                            '--runner-data', roots['runnerData']['path'], '--app-data', roots['appData']['path'],
+                            '--app-group', roots['appGroup']['path'], '--output', str(output),
+                            '--started-after', str(controller['startedAfter']), '--timeout', '650']
+                        controller['workerCommand'] = worker_argv
+                        worker_log = (EVIDENCE / 'notification-worker.log').open('wb')
+                        worker = subprocess.Popen(worker_argv, cwd=ROOT, stdout=worker_log,
+                                                  stderr=subprocess.STDOUT, start_new_session=True)
+                        worker_started = time.monotonic()
+                        controller['workerPID'] = worker.pid
+            time.sleep(0.2)
+        if controller['stopReason'] is None:
+            notification_check(notification_containers(device, products, probe) == controller['containers'],
+                               'current containers/products/fixtures changed before terminal admission')
+            notification_check(notification_products(derived) == products
+                               and notification_source(state['sha'], inputs) == source,
+                               'the source or built products changed during this OS run')
+            controller['status'] = 'PROCESSES_EXITED_ZERO_REQUIRES_XCTEST_AND_FIVE_OBSERVATIONS'
+    except BaseException:
+        controller['stopReason'] = controller['stopReason'] or 'CONTROLLER_FAILED'
+        raise
+    finally:
+        for role, child in (('worker', worker), ('test', native)):
+            try:
+                notification_stop(child)
+            except Exception as error:
+                controller.setdefault('cleanupErrors', []).append({'child': role, 'error': str(error)})
+                controller['stopReason'] = controller['stopReason'] or 'OWNED_CHILD_CLEANUP_FAILED'
+                controller['status'] = 'OWNED_CHILD_CLEANUP_FAILED'
+        if worker_log is not None:
+            try:
+                worker_log.close()
+            except OSError as error:
+                controller.setdefault('cleanupErrors', []).append({'child': 'worker-log', 'error': str(error)})
+                controller['stopReason'] = controller['stopReason'] or 'OWNED_CHILD_CLEANUP_FAILED'
+                controller['status'] = 'OWNED_CHILD_CLEANUP_FAILED'
+        controller.update(testExitCode=native.returncode if native is not None else None,
+                          workerExitCode=worker.returncode if worker is not None else None,
+                          elapsedSeconds=time.monotonic() - started)
+        (EVIDENCE / 'notification-controller.json').write_text(json.dumps(controller, indent=2) + '\n')
+    return subprocess.CompletedProcess(argv, native.returncode)
+
+
+def validate_notification_observations(controller):
+    notification_check(controller.get('status') == 'PROCESSES_EXITED_ZERO_REQUIRES_XCTEST_AND_FIVE_OBSERVATIONS'
+                       and type(controller.get('testExitCode')) is int and controller['testExitCode'] == 0
+                       and type(controller.get('workerExitCode')) is int and controller['workerExitCode'] == 0
+                       and controller.get('stopReason') is None,
+                       'both original processes must exit successfully without a stop')
+    output = EVIDENCE / 'notification-os'
+    active = controller['active']
+    started = controller['startedAfter']
+    exchange = Path(controller['containers']['runnerData']['path']) / 'Documents/HanlinNotificationOSProbe'
+    notification_check(notification_equal(notification_active(exchange / 'active.json', started), active),
+                       'the actual final UI exchange changed')
+    run_directory = exchange / active['runID']
+    record_root = Path(controller['containers']['appGroup']['path']) / 'HanlinMiniApps/v1/ScriptingExtensions/ResumeQueue/Receipts'
+
+    def read(relative):
+        path = output / relative
+        notification_check(path.is_file() and started <= path.stat().st_mtime <= time.time(),
+                           'missing/stale original worker evidence: ' + relative)
+        return json.loads(path.read_bytes())
+
+    notification_check(notification_equal(read('active.json'), active)
+                       and notification_equal(read('ui-finished.json'), {**active, 'status': 'EXECUTED_PASS'}),
+                       'worker and real UI terminal identities differ')
+    notification_check(notification_equal(json.loads((run_directory / 'ui-finished.json').read_bytes()),
+                                          read('ui-finished.json')),
+                       'the actual UI terminal file differs from the retained worker observation')
+    terminal = read('observation-result.json')
+    notification_check(all(notification_equal(terminal.get(k), v) for k, v in {**active, 'status': 'EXECUTED_PASS',
+                       'requiresSeparateXCTestTerminalResult': True}.items()),
+                       'the original worker did not finish this actual UI run')
+    identities = set()
+    observation_count = 0
+    for runtime, package, kinds in [('expo', 'Expo SwiftUI Probe A', ['success', 'duplicate', 'failure']),
+                                    ('nativescript', 'HanlinScript Parity', ['success', 'duplicate'])]:
+        notification_check(notification_equal(read(runtime + '.request.json'), {**active, 'runtime': runtime, 'packageName': package}),
+                           'original runtime request identity changed')
+        completion = read(runtime + '.complete.json')
+        notification_check((run_directory / (runtime + '.complete.json')).read_bytes()
+                           == (output / (runtime + '.complete.json')).read_bytes(),
+                           'the completion consumed by XCTest differs from the retained worker result')
+        notification_check(all(notification_equal(completion.get(k), v) for k, v in {**active, 'runtime': runtime,
+                           'transport': 'simctl_push', 'status': 'EXECUTED_PASS'}.items()),
+                           'a required runtime observation did not pass')
+        observations = completion['observations']
+        notification_check([row['kind'] for row in observations] == kinds, 'the exact five push observations were not retained')
+        first = None
+        for row in observations:
+            kind = row['kind']
+            prefix = runtime + '/' + kind
+            push = read(prefix + '-push.json')
+            payload_path = output / (prefix + '.apns')
+            expected_command = ['xcrun', 'simctl', 'push', controller['device'], NOTIFICATION_APP, str(payload_path)]
+            notification_check(type(row['pushExitCode']) is int and row['pushExitCode'] == 0
+                               and notification_equal(row['push'], push)
+                               and type(push['returncode']) is int and push['returncode'] == 0
+                               and push['command'] == expected_command,
+                               'an observation lacks its actual owned-device push command')
+            for stream in ('stdout', 'stderr'):
+                notification_check(notification_file(output / (prefix + '-push.' + stream))['sha256']
+                                   == push[stream + 'SHA256'], 'original push output bytes changed')
+            event = read(prefix + '.apns')['hanlin-miniapp-event']
+            event_id = str(uuid.UUID(event['id']))
+            path = record_root / (event_id + '.json')
+            raw = (output / (prefix + '-record.json')).read_bytes()
+            notification_check(Path(row['recordPath']) == path and path.read_bytes() == raw
+                               and hashlib.sha256(raw).hexdigest() == row['recordSHA256']
+                               and notification_equal(json.loads(raw), row['record']), 'the actual durable receipt changed or belongs elsewhere')
+            record = row['record']
+            receipt = record['receipt']
+            notification_check(str(uuid.UUID(record['id'])) == event_id
+                               and str(uuid.UUID(receipt['invocationID'])) == event_id
+                               and type(receipt['attempt']) is int and receipt['attempt'] == 1
+                               and receipt['cancellationRequested'] is False,
+                               'push and terminal receipt identities differ')
+            notification_check(receipt['status'] == ('failed' if kind == 'failure' else 'succeeded')
+                               and (receipt.get('failure') == 'actionFailed' and 'value' not in receipt
+                                    if kind == 'failure' else 'failure' not in receipt and 'value' in receipt),
+                               'the required actual success/failure result is absent')
+            if kind == 'duplicate':
+                notification_check(raw == first and row['duplicateCallbackIndependentlyObserved'] is False,
+                                   'duplicate submission changed the receipt or overclaims a second callback')
+            else:
+                notification_check(event_id not in identities, 'different original operations reused a native event identity')
+                identities.add(event_id)
+            if kind == 'success':
+                first = raw
+            observation_count += 1
+    notification_check(observation_count == 5 and len(identities) == 3, 'incomplete original observation cardinality')
+    return {'status': 'EXECUTED_PASS', 'originalXCTestCases': 1, 'pushObservations': 5,
+            'uniqueNativeEvents': 3, 'duplicateSubmissions': 2,
+            'boundary': 'Foreground simulator ingress and actual installed action receipts; APNs, service extension, background and physical-device acceptance remain separate.'}
 
 
 def main():
@@ -142,7 +540,7 @@ def main():
                        and r['identifier'].endswith('iOS-'+sdk.replace('.', '-')))
         types = json.loads(command(['xcrun', 'simctl', 'list', 'devicetypes', '-j'], 'devicetypes.json'))['devicetypes']
         supported = {t['identifier'] for t in runtime['supportedDeviceTypes']}
-        family = 'iPad' if TEST_SCOPE in {'production_runtimes', 'cross_app'} else 'iPhone'
+        family = 'iPad' if TEST_SCOPE in {'production_runtimes', 'cross_app', 'notification_os'} else 'iPhone'
         device = next(t for t in types if t.get('productFamily') == family and t['identifier'] in supported)
         simulator = command(['xcrun', 'simctl', 'create', 'HanlinSplit-'+os.environ.get('GITHUB_RUN_ID','local'),
                              device['identifier'], runtime['identifier']], 'created-simulator.txt').strip()
@@ -357,6 +755,8 @@ def main():
             shutil.copy2(ordinary, destination)
         else:
             state['storage_boundary'] = 'NOT_SELECTED_PREVIOUS_20_NATIVE_PROOF_RECORDED_SEPARATELY'
+            if TEST_SCOPE == 'notification_os':
+                state['storage_boundary'] = 'NOT_SELECTED_SEPARATE_ORIGINAL_STORAGE_GATE'
             # A measured original-product cold install took 176.55s in the paired
             # gate. Use its bounded 300s install allowance, once; never retry a
             # transport-uncertain mutation or count an unexecuted test as a pass.
@@ -384,6 +784,8 @@ def main():
                 ROOT/'DemoMiniApps/hanlin-script-parity.hanlinNativeScript',
                 ROOT/'AI_HLYUITests/Fixtures/ExpoSwiftUIProbeA.hanlinExpo',
             ]
+            if TEST_SCOPE == 'notification_os':
+                fixtures.append(ROOT/'Fixtures/Widgets/Hanlin-ScriptWidget-Actions.scripting')
             provenance = []
             for source in fixtures:
                 if not source.is_file():
@@ -417,7 +819,10 @@ def main():
         state['command'] = argv
         (EVIDENCE/'command.json').write_text(json.dumps(argv,indent=2)+'\n')
         with (EVIDENCE/'xcodebuild.log').open('wb') as log:
-            process = subprocess.run(argv, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT, timeout=1200)
+            if TEST_SCOPE == 'notification_os':
+                process = run_notification_test(argv, log, state, derived, inputs)
+            else:
+                process = subprocess.run(argv, cwd=ROOT, stdout=log, stderr=subprocess.STDOUT, timeout=1200)
         result = EVIDENCE/'MiniApps.xcresult'
         state['xcresult'] = 'CREATED' if result.exists() else 'NOT_CREATED: xcodebuild stopped before result bundle creation'
         state['status'] = 'INFRA_ERROR' if process.returncode else 'NOT_RUN'
@@ -456,6 +861,9 @@ def main():
                     package_staging = json.loads((EVIDENCE/'nativescript-package-windows/staging.json').read_text())
                     command(package_staging['verify_command'], 'nativescript-package-window-actual-results.json')
                     state['nativescript_package_window_results'] = 'ACTUAL_RUNTIME_RESULTS_VERIFIED'
+                if TEST_SCOPE == 'notification_os':
+                    state.update(status='NOTIFICATION_OS_VALIDATION_FAILED', ui='EXECUTED_PASS')
+                    state['notification_os'] = validate_notification_observations(state['notification_os_controller'])
                 state.update(status='EXECUTED_PASS',ui='EXECUTED_PASS')
             elif failed:
                 state.update(status='TEST_FAILED',ui='TEST_FAILED')
