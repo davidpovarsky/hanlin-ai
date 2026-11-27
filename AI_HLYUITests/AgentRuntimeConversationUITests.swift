@@ -178,18 +178,31 @@ final class AgentRuntimeConversationUITests: XCTestCase {
         // The pinned markdown renderer exposes each paragraph as a native
         // UITextView. Resolve its actual matches inside this transcript rather
         // than an arbitrary first accessibility representation across the app.
-        let lastParagraphs = transcript.descendants(matching: .textView).matching(NSPredicate(
-            format: "label == %@ OR value == %@", "POST149101_SCROLL_LAST", "POST149101_SCROLL_LAST"))
+        let lastParagraphPredicate = NSPredicate(
+            format: "label == %@ OR value == %@", "POST149101_SCROLL_LAST", "POST149101_SCROLL_LAST")
+        let lastParagraphs = transcript.descendants(matching: .textView).matching(lastParagraphPredicate)
         if UIDevice.current.userInterfaceIdiom == .phone {
             XCTAssertTrue(app.descendants(matching: .any)["hanlin-compact-chat-workspace"].firstMatch.exists,
                           "The phone regression must exercise the persistent external composer")
         }
+        func hasUsableFrame(_ frame: CGRect) -> Bool {
+            frame.origin.x.isFinite && frame.origin.y.isFinite &&
+                frame.size.width.isFinite && frame.size.height.isFinite &&
+                frame.size.width > 0 && frame.size.height > 0
+        }
         func assertAtBottom(_ stage: String) {
             let settled = XCTNSPredicateExpectation(predicate: NSPredicate { _, _ in
                 let viewport = transcript.frame
+                guard hasUsableFrame(viewport) else { return false }
                 let visibleLastParagraph = lastParagraphs.allElementsBoundByIndex.contains { paragraph in
-                    paragraph.exists && paragraph.isHittable &&
-                        !paragraph.frame.intersection(viewport).isEmpty
+                    guard paragraph.exists else { return false }
+                    let frame = paragraph.frame
+                    guard hasUsableFrame(frame), !frame.intersection(viewport).isEmpty,
+                          !paragraph.descendants(matching: .textView)
+                            .matching(lastParagraphPredicate).firstMatch.exists else { return false }
+                    // The renderer can expose an outer TextView and its matching
+                    // native leaf. Only ask the leaf for an activation point.
+                    return paragraph.isHittable
                 }
                 return visibleLastParagraph && !arrow.exists
             }, object: nil)
@@ -197,15 +210,23 @@ final class AgentRuntimeConversationUITests: XCTestCase {
             if result != .completed {
                 attachScreenshot("follow-latest-bottom-failure-" + stage, in: app)
                 let matches = lastParagraphs.allElementsBoundByIndex
+                let viewport = transcript.frame
                 let candidates = matches.enumerated().map { index, paragraph in
-                    "candidate=\(index) type=\(paragraph.elementType) id=\(paragraph.identifier) " +
+                    let exists = paragraph.exists
+                    let frame = exists ? paragraph.frame : .zero
+                    let isLeaf = exists && !paragraph.descendants(matching: .textView)
+                        .matching(lastParagraphPredicate).firstMatch.exists
+                    let canQueryHittability = isLeaf && hasUsableFrame(frame) &&
+                        hasUsableFrame(viewport) && !frame.intersection(viewport).isEmpty
+                    let hittable = canQueryHittability ? String(paragraph.isHittable) : "not queried (not a visible leaf)"
+                    return "candidate=\(index) type=\(paragraph.elementType) id=\(paragraph.identifier) " +
                     "label=\(paragraph.label) value=\(String(describing: paragraph.value)) " +
-                    "exists=\(paragraph.exists) hittable=\(paragraph.isHittable) frame=\(paragraph.frame)"
+                    "exists=\(exists) leaf=\(isLeaf) hittable=\(hittable) frame=\(frame)"
                 }.joined(separator: "\n")
                 let arrowExists = arrow.exists
                 let details = XCTAttachment(string:
                     "stage=\(stage) candidates=\(matches.count) transcriptExists=\(transcript.exists) " +
-                    "viewport=\(transcript.frame) arrowExists=\(arrowExists) " +
+                    "viewport=\(viewport) arrowExists=\(arrowExists) " +
                     "arrowHittable=\(arrowExists && arrow.isHittable) " +
                     "arrowFrame=\(arrowExists ? arrow.frame : .zero)\n" +
                     candidates + "\n" + transcript.debugDescription)
