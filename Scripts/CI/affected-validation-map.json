@@ -1871,6 +1871,52 @@
       ],
       "consumers": []
     },
+    "original_widget_archive_contracts": {
+      "description": "Exact original generated widget archives consumed by HanlinDualWidgetEnginesTests import, version and isolation contracts",
+      "patterns": [
+        "Fixtures/Widgets/Hanlin-Expo-Widget-Counter.hanlinExpo",
+        "Fixtures/Widgets/Hanlin-Expo-Widget-Visuals.hanlinExpo",
+        "Fixtures/Widgets/Hanlin-Mixed-Native-Widget.hanlinExpo",
+        "Fixtures/Widgets/Hanlin-Widget-Invalid-Cases.hanlinExpo"
+      ],
+      "direct_validation_groups": [
+        "platform_contracts"
+      ],
+      "consumers": []
+    },
+    "original_widget_renderer_fixtures": {
+      "description": "Counter and Visuals archive copies consumed by the original native widget renderer suite",
+      "patterns": [
+        "Fixtures/Widgets/Hanlin-Expo-Widget-Counter.hanlinExpo",
+        "Fixtures/Widgets/Hanlin-Expo-Widget-Visuals.hanlinExpo"
+      ],
+      "direct_validation_groups": [
+        "app_unit_tests"
+      ],
+      "prerequisites": [
+        "runtimecore_host"
+      ],
+      "unit_suites": [
+        "AI_HLYTests/HanlinNativeWidgetRendererTests"
+      ],
+      "consumers": []
+    },
+    "original_widget_counter_ui_fixture": {
+      "description": "Original Counter archive used by the existing SpringBoard source-action acceptance method",
+      "patterns": [
+        "Fixtures/Widgets/Hanlin-Expo-Widget-Counter.hanlinExpo"
+      ],
+      "direct_validation_groups": [
+        "simulator_targeted_ui"
+      ],
+      "prerequisites": [
+        "runtimecore_host"
+      ],
+      "ui_suites": [
+        "AI_HLYUITests/HanlinExpoProductionE2ETests/testNativeExpoWidgetSourceActionsWithHostTerminated"
+      ],
+      "consumers": []
+    },
     "original_widget_contracts": {
       "description": "Original Expo and ScriptWidget native renderers, ActivityKit actions, shared widget fixture and typed authoring contract",
       "patterns": [
