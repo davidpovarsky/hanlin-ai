@@ -17,6 +17,47 @@ SPEC.loader.exec_module(planner)
 
 
 class AffectedValidationPlannerTests(unittest.TestCase):
+    def test_original_source_fixture_helper_selects_its_existing_consumers(self) -> None:
+        path = "AI_HLYTests/OriginalSourceFixtures.swift"
+        plan = self.plan_files([path])
+        self.assertEqual(plan.affected_components, {
+            "original_source_fixture_test_helper": ["directly modified: " + path],
+        })
+        self.assertNotIn(path, plan.no_impact_files)
+        self.assertEqual(set(plan.step_outputs["simulator_unit_filter"].split(",")), {
+            "AI_HLYTests/OriginalSourceNonRegressionTests",
+            "AI_HLYTests/MasterScenarioSemanticAcceptanceTests",
+        })
+        self.assertTrue(plan.step_outputs["run_simulator_unit"])
+        self.assertFalse(plan.step_outputs["run_simulator_targeted_ui"])
+        self.assertFalse(plan.step_outputs["run_full_validation"])
+        self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+        self.assertFalse(plan.step_outputs["run_device_build"])
+
+    def test_original_source_fixture_helper_keeps_the_exact_legacy_request(self) -> None:
+        selector = "AI_HLYUITests/HanlinExpoProductionE2ETests/testNativeLegacyWidgetWithHostTerminated"
+        plan = self.plan_files(["AI_HLYTests/OriginalSourceFixtures.swift"],
+                               exact_test_selector=selector,
+                               manual_modes={"simulator_e2e_only": True})
+        self.assertEqual(plan.step_outputs["simulator_ui_filter"], selector)
+        self.assertEqual(plan.step_outputs["simulator_unit_filter"], "")
+        self.assertEqual(plan.step_outputs["simulator_build_for_testing_args"],
+                         "-only-testing:" + selector)
+        self.assertTrue(plan.step_outputs["run_simulator_targeted_ui"])
+        self.assertFalse(plan.step_outputs["run_simulator_unit"])
+        self.assertFalse(plan.step_outputs["run_full_validation"])
+        self.assertFalse(plan.step_outputs["run_runtimecore_bundle"])
+
+    def test_unowned_source_fixture_helper_siblings_still_fail_closed(self) -> None:
+        selector = "AI_HLYUITests/HanlinExpoProductionE2ETests/testNativeLegacyWidgetWithHostTerminated"
+        for path in ("AI_HLYTests/OriginalSourceFixturesCopy.swift",
+                     "AI_HLYTests/Unreviewed/OriginalSourceFixtures.swift"):
+            for exact in (None, selector):
+                with self.subTest(path=path, exact=exact):
+                    with self.assertRaises(planner.UnmappedPathsError) as ctx:
+                        self.plan_files([path], exact_test_selector=exact)
+                    self.assertEqual(ctx.exception.unmapped_paths, [path])
+
     def test_native_api_template_config_uses_the_existing_expo_route(self) -> None:
         selector = "AI_HLYUITests/HanlinExpoNativeAPIIntegrationUITests/testExpoNativeAPIMountAndInteraction"
         plan = self.plan_files(["Fixtures/ExpoNativeAPIProbe/tsconfig.json"], exact_test_selector=selector)
