@@ -1,0 +1,8 @@
+{
+  "status": "EXACT_NATIVE_DIAGNOSTIC_PACKET_VERIFIED",
+  "source": "b84d5ffb1c52361ac884a967f13e5500efe3d232",
+  "members": 17,
+  "manifestSHA256": "d3e4d3407b3714d924b06c270e1900824fbb5307bfe5c8145f45123e7579d369",
+  "tarSHA256": "48ae0bde2fb978ba1c74601adb8fd06e40147c0fbcea551a617bb4fc9ab6a1c1",
+  "allMembersHashVerified": true
+}

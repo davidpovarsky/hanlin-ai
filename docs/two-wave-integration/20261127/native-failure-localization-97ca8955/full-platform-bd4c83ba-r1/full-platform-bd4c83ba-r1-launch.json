@@ -1,0 +1,10 @@
+{
+  "status": "ORIGINAL_FULL_SUITE_CONTROLLER_DISPATCHED",
+  "controllerPID": 15054,
+  "source": "bd4c83baff2ed049a5a98aa0e0608f56f5a5cbcb",
+  "controllerSHA256": "0ca2d78ae2daf2bacbf41b1a37ee4b96059813a8d1f0e0175424b99f52dfe90e",
+  "capacityPlan": "/Users/m1/builds/hanlin-two-wave-root-20261126/full-platform-bd4c83ba-capacity-plan.json",
+  "capacityPlanSHA256": "489151a6e254578bc386633ac2bd499a2d6bc7187ed9425a9a03cc08c9d2b091",
+  "launchedAt": "2026-11-27T07:40:32.979212+00:00",
+  "detachedLog": "/Users/m1/builds/hanlin-two-wave-root-20261126/full-platform-bd4c83ba-r1-detached.log"
+}

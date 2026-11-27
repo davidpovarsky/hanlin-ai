@@ -1,0 +1,9 @@
+{
+  "status": "PREPARATION_TRANSPORT_TIMEOUT_NO_DELETION",
+  "job": "job_ed05d33a0a16",
+  "actualToolDurationSeconds": 60.56,
+  "recordedAt": "2026-11-27T07:40:32.577172+00:00",
+  "deletionOperations": 0,
+  "allFourCandidateDirectoriesObservedPresent": true,
+  "followup": "Current actual free space exceeds the source-measured incremental gate estimate; no further cleanup is required before admission."
+}

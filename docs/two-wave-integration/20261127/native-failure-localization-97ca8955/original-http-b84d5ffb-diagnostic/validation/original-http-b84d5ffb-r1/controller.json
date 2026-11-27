@@ -1,0 +1,136 @@
+{
+  "status": "ORIGINAL_HTTP_SELECTOR_DIAGNOSTIC_FAILED",
+  "source": "b84d5ffb1c52361ac884a967f13e5500efe3d232",
+  "command": [
+    "/usr/bin/swift",
+    "test",
+    "--package-path",
+    "Packages/HanlinPlatform",
+    "--parallel",
+    "--filter",
+    "originalScriptWidgetHTTPUsesBoundedRealTransport"
+  ],
+  "cwd": "/Users/m1/builds/hanlin-two-wave-root-20261126/source",
+  "controllerPID": 28486,
+  "controllerSHA256": "3bad2a2f013a9e312b9b0cf21311581e4cb29f47afcc0cb3b3fbbcb81edad68c",
+  "startedAt": "2026-11-27T08:19:08.009817+00:00",
+  "nativeCommandsStarted": 1,
+  "scope": "One original failing macOS HTTP selector; all tracked assertions and its original eight-second execution budget remain unchanged.",
+  "boundary": "Diagnostic evidence only. No full601, iOS79, Host188, app54/26 or OS acceptance claim.",
+  "exactSelectorDeclaration": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift:131:    @Test func originalScriptWidgetHTTPUsesBoundedRealTransport() throws {",
+  "capacity": {
+    "measuredPriorTwoAffectedTestTargetsBytes": 99581952,
+    "changedPackageFiles": [
+      "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift"
+    ],
+    "existingCompleteWarmBuildReused": true,
+    "budgetComponentsBytes": {
+      "incrementalCompileAndLink": 268435456,
+      "nativeFixtureTemporaryFiles": 16777216,
+      "logsAndEvidence": 16777216,
+      "concurrentGrowthAllowance": 536870912,
+      "osReserve": 805306368
+    },
+    "rationale": "One test file changes. Production, pins and all other package files match the warmed full601 build. The compilation allowance exceeds twice the measured combined outputs of the previously affected two targets. Actual free space and the OS reserve are monitored throughout this short diagnostic; no fixed global capacity target is used."
+  },
+  "freeAtAdmission": 2475532288,
+  "admissionBytes": 1644167168,
+  "diagnosticOuterBounds": {
+    "buildSeconds": 600,
+    "testSeconds": 120,
+    "originalTrackedTestLimitsUnchanged": true
+  },
+  "swiftVersion": "Apple Swift version 6.4 (swiftlang-6.4.0.34.1 clang-2100.3.34.1)\nTarget: arm64-apple-macosx27.0.0",
+  "xcodeVersion": "Xcode 27.0\nBuild version 27A266a",
+  "stageReceiptSHA256": "1efb166b17791ee1019f91cab6821242073b2da6a9c59c373071e257ad7d21e5",
+  "sourceHTTPFileSHA256": "519cb2c41cf1835b30d9e82da54703c3ca844668686b1d933cb49a1bc2f8f974",
+  "HANLIN_WIDGET_EVIDENCE_DIR": "/Users/m1/builds/hanlin-two-wave-root-20261126/validation/original-http-b84d5ffb-r1/native",
+  "pid": 28505,
+  "pgid": 28505,
+  "commandStartedAt": "2026-11-27T08:19:09.361400+00:00",
+  "lastObservation": {
+    "at": "2026-11-27T08:19:33.451676+00:00",
+    "elapsedSeconds": 24.002835208026227,
+    "freeBytes": 2471829504,
+    "logBytes": 5912,
+    "ownedProcessTree": [
+      {
+        "pid": 28505,
+        "ppid": 28486,
+        "pgid": 28505,
+        "state": "Ss",
+        "processStarted": "Fri Nov 27 09:19:09 2026",
+        "executable": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-test"
+      },
+      {
+        "pid": 28768,
+        "ppid": 28505,
+        "pgid": 28768,
+        "state": "R",
+        "processStarted": "Fri Nov 27 09:19:32 2026",
+        "executable": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/libexec/swift/pm/swiftpm-testing-helper"
+      },
+      {
+        "pid": 28769,
+        "ppid": 28768,
+        "pgid": 28769,
+        "state": "S",
+        "processStarted": "Fri Nov 27 09:19:32 2026",
+        "executable": "/opt/homebrew/Cellar/python@3.12/3.12.16/Frameworks/Python.framework/Versions/3.12/Resources/Python.app/Contents/MacOS/Python"
+      }
+    ]
+  },
+  "exitCode": 1,
+  "methodStarts": [
+    "originalScriptWidgetHTTPUsesBoundedRealTransport()"
+  ],
+  "methodTerminals": [
+    [
+      "originalScriptWidgetHTTPUsesBoundedRealTransport()",
+      "failed"
+    ]
+  ],
+  "exactOneSelectorExecuted": true,
+  "nativeSummaryLines": [
+    "\u25c7 Test originalScriptWidgetHTTPUsesBoundedRealTransport() started.",
+    "\u2718 Test originalScriptWidgetHTTPUsesBoundedRealTransport() recorded an issue at HanlinDualWidgetEnginesTests.swift:131:6: Caught error: HanlinScriptWidgetError(message: \"The network connection was lost.\")",
+    "\u2718 Test originalScriptWidgetHTTPUsesBoundedRealTransport() failed after 1.180 seconds with 1 issue.",
+    "\u2718 Test run with 1 test in 1 suite failed after 1.180 seconds with 1 issue."
+  ],
+  "diagnosticOriginalSelectorPassed": false,
+  "sourceUnchanged": true,
+  "finishedAt": "2026-11-27T08:19:35.232550+00:00",
+  "freeEnd": 2473181184,
+  "retainedEvidence": [
+    {
+      "path": "native/original-http-hanlin-widget-pass3-DBFB0968-1A6B-4DF3-B46E-2DD17B4612DB/native-stages.jsonl",
+      "bytes": 6669,
+      "sha256": "896e72a7e418a654e1f93b24b58d7d3956f47736ab812e787c2855ccb3820621"
+    },
+    {
+      "path": "native/original-http-hanlin-widget-pass3-DBFB0968-1A6B-4DF3-B46E-2DD17B4612DB/port",
+      "bytes": 5,
+      "sha256": "2c2029e3a7a42456b8ebe540f0af971f3025c9c8e8338e996daf82af2706fc8f"
+    },
+    {
+      "path": "native/original-http-hanlin-widget-pass3-DBFB0968-1A6B-4DF3-B46E-2DD17B4612DB/server.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "native/original-http-hanlin-widget-pass3-DBFB0968-1A6B-4DF3-B46E-2DD17B4612DB/server.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "native/original-http-hanlin-widget-pass3-DBFB0968-1A6B-4DF3-B46E-2DD17B4612DB/wire.jsonl",
+      "bytes": 11089,
+      "sha256": "7ae0e61c8f575260623a990f1418b9f5ac87aa54933f920a2f14292698687d19"
+    },
+    {
+      "path": "original-http-selector.log",
+      "bytes": 6952,
+      "sha256": "f626e542c74bb90e727799c49af7ecf6e2b3d739f40972967095c3292adcceef"
+    }
+  ]
+}

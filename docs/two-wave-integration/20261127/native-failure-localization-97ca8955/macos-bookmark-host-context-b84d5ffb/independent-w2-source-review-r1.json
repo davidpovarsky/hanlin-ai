@@ -1,0 +1,34 @@
+{
+  "schema": 1,
+  "reviewer": "/root/w2_source_resume",
+  "candidateSHA256": "cf69d408720a615dd1740e45a3f35e777eb8939da08b7b8843356ff2072e9ec3",
+  "originalSHA256": "029b82b26c7bd188d5b97326cabd98a95aa9ec126678baa460501d9e37b8eb2f",
+  "assessment": "CONTEXT_POLICY_CORRECTION_REQUESTED_BEFORE_APPROVAL",
+  "sourceBoundary": "Removing the macOS-only Security import, helper and two conditional-option branches reproduces the entire original source byte-for-byte.",
+  "findings": [
+    {
+      "id": "inherited-sandbox",
+      "severity": "context-and-persistence",
+      "finding": "SecTask entitlement absence cannot establish absence of an effective inherited sandbox. The candidate's absent/false branch and verified-non-sandboxed statement therefore need a documented conservative policy or evidence for inherited hosts, especially because the file service persists bookmarks across launches.",
+      "notClaimed": "Ordinary Foundation bookmarks do not themselves bypass kernel Sandbox. No private sandbox API, permission override, fallback after arbitrary failure, or test-only process override is proposed.",
+      "sources": [
+        "https://developer.apple.com/forums/thread/747499",
+        "https://developer.apple.com/forums/thread/706390",
+        "https://developer.apple.com/documentation/security/accessing-files-from-the-macos-app-sandbox"
+      ]
+    },
+    {
+      "id": "exact-entitlement-type",
+      "severity": "conservative-policy",
+      "finding": "The helper promises unknown entitlement values remain scoped. Check CFGetTypeID(entitlement) == CFBooleanGetTypeID() before converting, so the policy depends on an actual Boolean rather than numeric bridging.",
+      "status": "Requested exact type guard; no native bridging probe run."
+    }
+  ],
+  "checked": [
+    "SecTask error object is consumed and errors keep original scoped policy",
+    "iOS and Catalyst branches preserved",
+    "All public API, capability, registry, root, path, lifetime and test code outside the bounded change preserved"
+  ],
+  "nativeValidation": "NOT_RUN by reviewer; owner Foundation probe alone does not validate all inherited contexts.",
+  "recordedAtUTC": "2026-11-27T08:25:19.253Z"
+}

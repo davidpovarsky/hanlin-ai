@@ -1,0 +1,26 @@
+{
+  "at": "2026-11-27T07:41:23.819411+00:00",
+  "elapsedSeconds": 50.24259779197746,
+  "testElapsedSeconds": 28.346936416986864,
+  "freeBytes": 5039546368,
+  "logBytes": 124234,
+  "secondsSinceLogGrowth": 15.353667332994519,
+  "ownedProcessTree": [
+    {
+      "pid": 15063,
+      "ppid": 15054,
+      "pgid": 15063,
+      "state": "Ss",
+      "processStarted": "Fri Nov 27 08:40:33 2026",
+      "executable": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/swift-test"
+    },
+    {
+      "pid": 16040,
+      "ppid": 15063,
+      "pgid": 16040,
+      "state": "S",
+      "processStarted": "Fri Nov 27 08:41:07 2026",
+      "executable": "/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/libexec/swift/pm/swiftpm-testing-helper"
+    }
+  ]
+}

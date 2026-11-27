@@ -1,0 +1,23 @@
+{
+  "status": "BUDGET_WORDING_CORRECTION_RAW_EVIDENCE_UNCHANGED",
+  "at": "2026-11-27T08:30:11.098609+00:00",
+  "source": "b84d5ffb1c52361ac884a967f13e5500efe3d232",
+  "correctedStatement": "The original native executionTimeout is5seconds in the actual b84 diagnostic record. The original semaphore uses that unchanged constant. Earlier8.282seconds is whole-method wall duration, not an8second execution deadline.",
+  "incorrectPriorDescription": "The Mac owner messages and controller scope prose called the original native budget8seconds. That prose was incorrect; executable test/controller code did not alter the tracked native limit.",
+  "exactSourceLine351": "            guard completed.wait(timeout: .now() + HanlinOriginalScriptWidgetSession.executionTimeout) == .success else {",
+  "httpSourceSHA256": "519cb2c41cf1835b30d9e82da54703c3ca844668686b1d933cb49a1bc2f8f974",
+  "nativeStagesSHA256": "896e72a7e418a654e1f93b24b58d7d3956f47736ab812e787c2855ccb3820621",
+  "actualFirstNativeStage": {
+    "at": 1795767572.851429,
+    "executionTimeout": 5,
+    "isMainThread": false,
+    "label": "test",
+    "phase": "started",
+    "pid": 28768
+  },
+  "originalFullSuiteWallFailureLines": [
+    "\u2718 Test originalScriptWidgetHTTPUsesBoundedRealTransport() failed after 8.282 seconds with 1 issue."
+  ],
+  "causalBoundary": "The b84 oversized-response failure is directly observed. The prior bd4 timeout stage was not captured and is not attributed to the new diagnosis.",
+  "rawReceiptsRewritten": false
+}

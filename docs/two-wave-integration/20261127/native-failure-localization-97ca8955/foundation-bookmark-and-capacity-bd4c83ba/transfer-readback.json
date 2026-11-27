@@ -1,0 +1,9 @@
+{
+  "status": "ALL_11_RAW_MEMBERS_AND_FULL_COMPRESSED_INVENTORY_VERIFIED",
+  "at": "2026-11-27T08:02:55.760408+00:00",
+  "manifestSHA256": "0867b0190f428ab8451f967bb823e21aa47328afb0ec1ca36cbaacfb19297173",
+  "archiveSHA256": "bac73a0c6b348d538e2bc22ea9de8af2fe11bcd021fa8da716e8b461d2dbf530",
+  "files": 11,
+  "freeBytes": 4531007488,
+  "uncompressedInventoryPersistedAgain": false
+}

@@ -1,0 +1,139 @@
+{
+  "schema": 1,
+  "status": "SOURCE_REPAIR_REVIEWED_NATIVE_NOT_RUN",
+  "actor": "/root/w1_review_resume",
+  "base": "f768d634bfa8a102cf63b32c7ab9d129cafc671d",
+  "branch": "codex/hanlin-original-expo-test-cleanup-20261127",
+  "recordedAtUTC": "2026-11-27T07:30:36.160830+00:00",
+  "source": {
+    "path": "AI_HLYTests/HanlinOriginalExpoWidgetTests.swift",
+    "beforeSHA256": "9e80175151ded1703d912155ad74e749239ebcbb46ed9c0ca6fcf837cb0f6c35",
+    "afterSHA256": "0dd0c8a7b55c60f0f11ccf6695c48f89b3a3ebb38c132e05547cd90db861414d",
+    "onlyReplacement": {
+      "before": "           let group = WidgetsStorage.appGroupIdentifier,",
+      "after": "           let group = Bundle.main.object(forInfoDictionaryKey: \"ExpoWidgetsAppGroupIdentifier\") as? String,"
+    },
+    "upstreamInitializerPath": "Packages/HanlinExpoRuntime/Sources/ExpoWidgets/Original/WidgetsStorage.swift",
+    "upstreamInitializerSHA256": "4a3c58daafb36fc77be701a34431446d96cfc4172f4de60bcaa7f96046f61e5b"
+  },
+  "failure": {
+    "run": 45950016033,
+    "job": 140343718588,
+    "source": "f768d634bfa8a102cf63b32c7ab9d129cafc671d",
+    "log": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/current-f768-90-device-terminal/original90-job.log",
+    "logBytes": 32010592,
+    "logSHA256": "df95035f60b91b1433c62e0e17001e5dea2af8b66e735b6d787e026e68b02d2d",
+    "originalLines": [
+      223312,
+      223324
+    ],
+    "exitCode": 65
+  },
+  "preservation": {
+    "oneLineOnly": true,
+    "allOriginalTestMethods": [
+      "testOriginalWidgetRegistrationTimelineAndPickerKeepProductAndInstallationIdentity",
+      "testOriginalToggleUsesIntendedValuesAndAtomicTimelineThroughRealRuntime",
+      "testOriginalExpoRetainsSuccessfulRenderOnlyForMatchingWidgetAndConfiguration"
+    ],
+    "allOriginalXCTLinesByteEqual": true,
+    "allOtherSourceBytesEqual": true,
+    "prefixGuard": "test.widget.wave2.",
+    "namespaceLookup": "HanlinExpoWidgetsIntegration.storageOwner(name)",
+    "containerLookup": "FileManager.default.containerURL(forSecurityApplicationGroupIdentifier:)",
+    "UserDefaultsCleanupUnchanged": true,
+    "productionSourceChanged": false,
+    "unsafeAnnotationsAdded": false
+  },
+  "why": "The test class is already MainActor. Its cleanup now reads the same immutable bundle configuration used by the original test and by the legacy Swift5 mutable static initializer, instead of importing that unisolated shared mutable static into Swift6. No tracked assignment to the property exists. All original test bodies and assertions are byte-preserved.",
+  "independentReview": {
+    "reviewer": "/root/w2_source_resume",
+    "status": "APPROVED_SOURCE_ONLY",
+    "expectedAfterSHA256": "0dd0c8a7b55c60f0f11ccf6695c48f89b3a3ebb38c132e05547cd90db861414d",
+    "basis": "Independently read f768 source and initializer, all tracked references, and reconstructed exact replacement hash. No native run."
+  },
+  "impact": {
+    "sdkInputManifest": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/host-sdk-866d2d3c-pass-and-native-seal/sdk/miniapp-sdk.json",
+    "sdkManifestSHA256": "59d4ad4748dd615d3f7b6536e012ef93c38bb96f76b3f3f28ebbbed909518235",
+    "sdkInputCount": 392,
+    "changedSDKInputs": [],
+    "completePlatformPackageSourceAndTestsChanged": false,
+    "affectedGate": "Original app build-for-testing and existing Expo widget selectors; original90 rerun required."
+  },
+  "validation": {
+    "sourceEquivalence": "PASS",
+    "nativeCompile": "NOT_RUN",
+    "nativeTests": "NOT_RUN",
+    "noDuplicateJobs": true
+  },
+  "files": [
+    {
+      "path": "original-compiler-excerpt.log.gz",
+      "bytes": 566,
+      "sha256": "0c308581e43b3ca255c64269f9ead1a78c0c2b466c5de7bbbc7aa9cccb32cb5e"
+    },
+    {
+      "path": "original-job.json",
+      "bytes": 11055,
+      "sha256": "3277dab6f271a473faf2c21462e670f2de98b1acbd4fa43fd047e0439d69606f"
+    },
+    {
+      "path": "original-storage-initializer.txt.gz",
+      "bytes": 187,
+      "sha256": "9567c140761e83cc085bbdeefb904bbd2f569414f7b6e1c478db939672788cbf"
+    },
+    {
+      "path": "source.patch.gz",
+      "bytes": 464,
+      "sha256": "30b6ddafe39ab43ad204575c029fd98c116d947b925cbe7cb38fac00640ecbcf"
+    }
+  ],
+  "rawEvidenceEncoding": "Original compiler excerpt, initializer and patch retained as lossless gzip because original bytes include trailing whitespace. No evidence bytes normalized.",
+  "retiredPriorWorktreeCopies": [
+    {
+      "path": "docs/two-wave-integration/20261127/widget-http-test-controls/check_fixture_wire.py",
+      "sha256": "f3f9d1b48e06cc5e8a179e3f1d204ae2966b9a9745d4b31ec7a9550bb4173637",
+      "preservedCommit": "42e1aa4ff9adf7ab2c7c899efcf7fd4ce319a7c6"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/widget-http-test-controls/installed-macos27-session-proxy-declarations.json",
+      "sha256": "c011340b51117431690c53eacbe271f6598f76c10d39219465c39d203085226c",
+      "preservedCommit": "42e1aa4ff9adf7ab2c7c899efcf7fd4ce319a7c6"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/widget-http-test-controls/portable-fixture-evidence/extracted-proxy.py",
+      "sha256": "7ed69a0d8d7599503672e787d980af8a8d7c7f0ee0647e42846092d778945ac2",
+      "preservedCommit": "42e1aa4ff9adf7ab2c7c899efcf7fd4ce319a7c6"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/widget-http-test-controls/portable-fixture-evidence/port",
+      "sha256": "499499e5fcdb8febca760010183a2df3d396b7d6c104474558ff79a64cfddad5",
+      "preservedCommit": "42e1aa4ff9adf7ab2c7c899efcf7fd4ce319a7c6"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/widget-http-test-controls/portable-fixture-evidence/receipt.json",
+      "sha256": "9af5d82b74577597283962b6fa979eb86abfeed5aaa7ec5d23e796325047df59",
+      "preservedCommit": "42e1aa4ff9adf7ab2c7c899efcf7fd4ce319a7c6"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/widget-http-test-controls/portable-fixture-evidence/server.stderr",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "preservedCommit": "42e1aa4ff9adf7ab2c7c899efcf7fd4ce319a7c6"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/widget-http-test-controls/portable-fixture-evidence/wire.jsonl",
+      "sha256": "7b6bbb30d66db86ac8b17610ca057f769081d9a862058aea2fb7e3df75312629",
+      "preservedCommit": "42e1aa4ff9adf7ab2c7c899efcf7fd4ce319a7c6"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/widget-http-test-controls/source-validation.json",
+      "sha256": "a24491151b63288d94e1c851c27e50f3f3e8cef8f1842bedbc159f7389ea0cdb",
+      "preservedCommit": "42e1aa4ff9adf7ab2c7c899efcf7fd4ce319a7c6"
+    },
+    {
+      "path": "docs/two-wave-integration/20261127/widget-http-test-controls/source.patch.gz",
+      "sha256": "b25994ddbe5efa4daf2156446f84b2b7246f5876f0ba011942d57336824e7240",
+      "preservedCommit": "42e1aa4ff9adf7ab2c7c899efcf7fd4ce319a7c6"
+    }
+  ]
+}

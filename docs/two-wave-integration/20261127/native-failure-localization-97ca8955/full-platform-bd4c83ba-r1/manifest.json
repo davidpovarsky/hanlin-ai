@@ -1,0 +1,112 @@
+{
+  "status": "ORIGINAL_FULL_MACOS_SUITE_FAILURE_ALL_RAW_MEMBERS_RETAINED",
+  "source": "bd4c83baff2ed049a5a98aa0e0608f56f5a5cbcb",
+  "execution": {
+    "nativeExit": 1,
+    "reportedTests": 601,
+    "methodsPassed": 599,
+    "methodsFailed": 2,
+    "issues": 4,
+    "allOriginalTargetRunsReachedTerminalSummary": true,
+    "timedOut": false,
+    "resourceStopped": false
+  },
+  "members": [
+    {
+      "path": "run-original-full-platform-bd4c83ba.py",
+      "bytes": 18224,
+      "sha256": "0ca2d78ae2daf2bacbf41b1a37ee4b96059813a8d1f0e0175424b99f52dfe90e"
+    },
+    {
+      "path": "full-platform-bd4c83ba-capacity-plan.json",
+      "bytes": 4559,
+      "sha256": "489151a6e254578bc386633ac2bd499a2d6bc7187ed9425a9a03cc08c9d2b091"
+    },
+    {
+      "path": "full-platform-bd4c83ba-r1-launch.json",
+      "bytes": 592,
+      "sha256": "0efc7c95f1affdc874ad4785b05920e743d73f5275a14ea4f23ba857894ff0e7"
+    },
+    {
+      "path": "full-platform-bd4c83ba-r1.json",
+      "bytes": 60289,
+      "sha256": "de1837f04a3173962cab765bcc9a22065ec99e71fbce6e6726f6f5d54a1fb16f"
+    },
+    {
+      "path": "full-platform-bd4c83ba-r1-detached.log",
+      "bytes": 537,
+      "sha256": "1268dc69dd7c61bd2514108d3aa13b6aefea6abaafc93c0c4816a3079cdfb658"
+    },
+    {
+      "path": "source-stage-bd4c83ba.json",
+      "bytes": 2748,
+      "sha256": "fde8e602e21f52782b49d4c034fee9262fa4b1307cdd47488f08587b2a2c39fc"
+    },
+    {
+      "path": "source-stage-bd4c83ba-r2.json",
+      "bytes": 10273,
+      "sha256": "089d26ee0a4413d54431c525d9c8afaf4f058fea2ee22842a2facd6e873a3f2f"
+    },
+    {
+      "path": "cleanup/full-platform-bd4c83ba-capacity-r1/attempt-outcome.json",
+      "bytes": 407,
+      "sha256": "d7930a7c250fbf2dfccb80fb169135bf8b9c75292daa9f3c3027b61f6c073698"
+    },
+    {
+      "path": "import-bd4c83ba/root-package-and-miniapps-compile-integration.json",
+      "bytes": 710,
+      "sha256": "31cdb37657e355eae15f90a6df75ea06925e290ce7719b5daebbc4e4ffad7165"
+    },
+    {
+      "path": "import-bd4c83ba/root-package-and-miniapps-tests-from-f768.manifest.json",
+      "bytes": 576,
+      "sha256": "133f90c9e24d147ffcfa098f60e20fe13ac85ebaffa829b437daa64eeb86de82"
+    },
+    {
+      "path": "source/Packages/HanlinPlatform/Tests/HanlinScriptingApplicationRuntimeTests/HanlinScriptingApplicationRuntimeTests.swift",
+      "bytes": 52282,
+      "sha256": "fafee829073998c78fc466ed767df87b3717342d170fdf7f334fc331b35a8076"
+    },
+    {
+      "path": "source/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+      "bytes": 94705,
+      "sha256": "2a8b079ec9d1c847a14828729b2b8fe6638d4280c501dc02d5a0298265132080"
+    },
+    {
+      "path": "source/Packages/HanlinPlatform/Package.resolved",
+      "bytes": 1771,
+      "sha256": "453087cb3345b7c6bb24c00a682f41ffa9708ebd328e60b583f6e04276bf789d"
+    },
+    {
+      "path": "validation/full-platform-bd4c83ba-r1/native-failure-diagnostics.json",
+      "bytes": 19457,
+      "sha256": "ac45797fc133a1767911794615ab709fa66f59f10081a9596cbdc5c8f0da57cb"
+    },
+    {
+      "path": "validation/full-platform-bd4c83ba-r1/original-swift-test.log",
+      "bytes": 192303,
+      "sha256": "7490981eb2d6e5faa617d5934c371f80cc886f698019a9c2f89795e20405dbeb"
+    },
+    {
+      "path": "validation/full-platform-bd4c83ba-r1/sample-stall-15s-pid-16040.command.log",
+      "bytes": 290,
+      "sha256": "d507d5569af0960681bcdcaffba1b210246954f72d10162cc67f71675970c9b2"
+    },
+    {
+      "path": "validation/full-platform-bd4c83ba-r1/sample-stall-15s-pid-16040.txt",
+      "bytes": 167846,
+      "sha256": "667ad90b40740e3dcf3c3be4d36d744b860b2b6f3406452f50101718443ea69a"
+    },
+    {
+      "path": "validation/full-platform-bd4c83ba-r1/stalled-test-process-tree-15s.json",
+      "bytes": 814,
+      "sha256": "bf68f98f75dc7a3feb9e95b8147b6e5df54976f16b268a8a2d75b3fd72737e33"
+    },
+    {
+      "path": "handoff/full-platform-bd4c83ba-r1/terminal-readback.json",
+      "bytes": 2433,
+      "sha256": "cc94f941e213ef631d08ec13445814e579d775df71f233b54a0ef0913f5c9374"
+    }
+  ],
+  "createdAt": "2026-11-27T07:47:39.116884+00:00"
+}

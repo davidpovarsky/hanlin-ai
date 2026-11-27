@@ -1,0 +1,10 @@
+{
+  "status": "ALL_19_RAW_MEMBERS_VERIFIED",
+  "source": "bd4c83baff2ed049a5a98aa0e0608f56f5a5cbcb",
+  "at": "2026-11-27T07:50:37.686072+00:00",
+  "manifestSHA256": "0e7071f52eecbf76ca8f68d3ae0029603151feabcdfd4c7dda3acc0bfe38010d",
+  "archiveSHA256": "97773bee66c9b6374cb8326a3a54d50232e6e95a34f252cea72aca5906ce8f54",
+  "files": 19,
+  "rawBytes": 630816,
+  "freeBytes": 174809088
+}

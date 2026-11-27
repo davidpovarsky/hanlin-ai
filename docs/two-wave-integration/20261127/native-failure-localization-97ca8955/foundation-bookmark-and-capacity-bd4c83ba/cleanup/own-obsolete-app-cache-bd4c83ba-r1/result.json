@@ -1,0 +1,30 @@
+{
+  "status": "OWN_OBSOLETE_COMPILER_CACHES_RETIRED_PROTECTED_PRODUCTS_AND_SOURCE_PRESERVED",
+  "at": "2026-11-27T07:58:56.629365+00:00",
+  "freeBefore": 966217728,
+  "authorization": "Parent explicitly authorized own terminated app-build Intermediates.noindex and Index.noindex; preserve products/xctestrun, .build, archives, xcresults, sources/pins/signing.",
+  "mutations": [
+    {
+      "path": "/Users/m1/caches/DerivedData/hanlin-two-wave-root-20261126/Build/Intermediates.noindex",
+      "startedAt": "2026-11-27T07:58:59.248800+00:00",
+      "allocatedBytesBefore": 1470197760,
+      "finishedAt": "2026-11-27T07:59:01.002370+00:00",
+      "absent": true
+    }
+  ],
+  "activeUsersOfExactOwnDerivedData": [],
+  "source": "bd4c83baff2ed049a5a98aa0e0608f56f5a5cbcb",
+  "beforeManifest": {
+    "path": "/Users/m1/builds/hanlin-two-wave-root-20261126/cleanup/own-obsolete-app-cache-bd4c83ba-r1/before.json",
+    "sha256": "c11e40afecb2092171f9fa97e396c7a44d5472539bab9fae822308dca8f4672f",
+    "bytes": 13777063
+  },
+  "protectedProductsEntries": 31047,
+  "plannedAllocatedBytes": 1470197760,
+  "protectedProductsMetadataIdentical": true,
+  "currentSwiftPMWarmBuildPreserved": true,
+  "sourceCleanAndUnchanged": true,
+  "finishedAt": "2026-11-27T07:59:02.040189+00:00",
+  "freeAfter": 2644471808,
+  "observedFreeIncreaseBytes": 1678254080
+}

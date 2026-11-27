@@ -1,0 +1,26 @@
+{
+  "schema": 1,
+  "author": "/root",
+  "base": "b84d5ffb1c52361ac884a967f13e5500efe3d232",
+  "sourcePath": "Packages/HanlinPlatform/Sources/HanlinScriptingApplicationRuntime/HanlinScriptingRuntimeServices.swift",
+  "beforeSHA256": "029b82b26c7bd188d5b97326cabd98a95aa9ec126678baa460501d9e37b8eb2f",
+  "candidateSHA256": "cf69d408720a615dd1740e45a3f35e777eb8939da08b7b8843356ff2072e9ec3",
+  "patchSHA256": "f7c47f27624d8235310961f99177f399a9c034b6196942eb11989d5a489a551b",
+  "reason": "Original full macOS FileManager selection test failed at security-scoped bookmark creation; exact Foundation probe reproducesCocoa256 only withSecurityScope, while plain bookmark persists/resolves actual bytes. The private native file service must choose Foundation options for the actual host sandbox context.",
+  "scope": "Existing native file-service regression correction; no new legacy Scripting/ScriptUI API, engine, bridge, feature, permission or root grant.",
+  "unchanged": [
+    "All original test sources/assertions/selectors",
+    "All public declarations",
+    "iOS bookmark options and Catalyst security-scoped options",
+    "Path resolution, per-package capability checks, user-selected external grants, registry format, read/write restrictions and scope lifetime management"
+  ],
+  "macOSPolicy": "Public Security entitlement read; sandbox true or unknown/error retains withSecurityScope. Verified absent/false uses ordinary Foundation bookmark options. No entitlement/signing/process permission is changed.",
+  "sdkInputIntersection": [],
+  "nativeValidation": "NOT_RUN; installed SDK/actual host entitlement read and original failed selector still required",
+  "officialReferences": [
+    "https://developer.apple.com/documentation/foundation/nsurl/bookmarkcreationoptions/withsecurityscope",
+    "https://developer.apple.com/documentation/security/sectaskcopyvalueforentitlement(_:_:_:).md",
+    "https://developer.apple.com/documentation/security/sectaskcreatefromself(_:).md"
+  ],
+  "recordedAtUTC": "2026-11-27T08:17:30.389693+00:00"
+}

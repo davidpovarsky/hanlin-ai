@@ -1,0 +1,12 @@
+{
+  "head": "b84d5ffb1c52361ac884a967f13e5500efe3d232",
+  "base": "bd4c83baff2ed049a5a98aa0e0608f56f5a5cbcb",
+  "bundle": "/mnt/development/projects/evidence/hanlin-two-wave-native-20261126/handoff/root-http-native-diagnostic-from-bd4.bundle",
+  "bytes": 6224843,
+  "sha256": "64764a0ae1adac463eb8f4b94e99599ea07f09b96de26be77a5da98b362260cf",
+  "httpSource": "590b17a6c1f586daeeb1138850048f99e503ab5b",
+  "threadSource": "0f86ce7b7204ea64af4c792b7b0be2e1bbc3d5c2",
+  "sourceSHA256": "519cb2c41cf1835b30d9e82da54703c3ca844668686b1d933cb49a1bc2f8f974",
+  "packageTree": "67635c39682942321de5a4f0626ec4ec7b9f52b4",
+  "full601ReviewSHA256": "b82190c0c2c5d4d2b595e6229d4ecd7d07b1116667549fdf28ce52889823fe1c"
+}
