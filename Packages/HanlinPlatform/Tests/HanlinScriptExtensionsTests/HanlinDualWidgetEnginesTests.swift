@@ -388,7 +388,9 @@ struct HanlinDualWidgetEnginesTests {
         let limits = try execute("limits", #"""
             __httpTestStage('within-limit');
             const admitted = await $http.get(base+'/within-limit');
+            __httpTestStage('within-limit-received');
             if (admitted.length !== 2*1024*1024 || !/^x+$/.test(admitted)) throw Error('The supported response boundary was rejected or changed');
+            __httpTestStage('within-limit-validated');
             for (const [path,params] of [['/large',{}],['/redirect',{}],['/slow',{timeoutInterval:0.05}]]) {
               __httpTestStage('limit:'+path);
               const started = Date.now();

@@ -1,0 +1,14 @@
+{
+  "schema": 1,
+  "reviewer": "/root",
+  "assessment": "APPROVED_TEST_ONLY_HTTP_CHECKPOINTS_AND_CONSERVATIVE_GC_OBSERVATIONS",
+  "patchSHA256": "90fa4c0f3bc124a9f3d92d5eb81828df45b9fac069ca02d6620153e64d2dc3aa",
+  "sourceSHA256": {
+    "HanlinDualWidgetEnginesTests": "9996460cb770d19297fdda3c87423685223e5fa4243a044c0ef824dd58628a35",
+    "HanlinOriginalPromiseLifetimeTests": "527fba708cfbf5a6e365776650235a39ae115bde54a848b5f54d7c35636fde2c"
+  },
+  "actualMessageExcerpt": "Exact90fa4c0f diff APPROVED: HTTP9996460c adds only2existing-stage-hook calls around identical2MiB assertion, restoredsourceexact; probe527fba70 retainsbothGCobservationcalls andallactualdelivery/once/cancel/context-disposalassertions, corrects onlynewunsupportedimmediatecollectionguarantee. PublicApplecontract readbyroot.",
+  "rawLogStorage": "Lossless gzip with raw hash/encoding metadata; no raw bytes trimmed.",
+  "nativeAfterChange": "NOT_RUN",
+  "productAndSDK": "UNCHANGED"
+}

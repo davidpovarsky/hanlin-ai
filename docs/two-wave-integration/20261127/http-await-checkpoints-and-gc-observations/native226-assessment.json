@@ -1,0 +1,140 @@
+{
+  "status": "TWO_NATIVE_METHODS_FAILED_ONLY_IMMEDIATE_GC_NONRELEASE_ASSERTIONS",
+  "source": "226e7cfcc60a9ace99241f009d3586b9cea7e65e",
+  "command": [
+    "/usr/bin/swift",
+    "test",
+    "--package-path",
+    "Packages/HanlinPlatform",
+    "--parallel",
+    "--filter",
+    "HanlinOriginalPromiseLifetimeTests"
+  ],
+  "nativeExitCode": 1,
+  "testStarts": 2,
+  "testTerminals": 2,
+  "passed": 0,
+  "failed": 2,
+  "skipped": 0,
+  "issues": 2,
+  "rawControllerSHA256": "b1374e33e7ab4f4659016873f48d96eb6f81958282f77808c5aea5bd24f0dc12",
+  "rawLogSHA256": "5a5fd692cff911c95fe7cfc0fb440aca69e905371389b0059e62509b669e94a9",
+  "productionSourceBindings": {
+    "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimePromise.swift": "13f8c1563e906edd2fd9f96b372cace3e15be58e18c583ba60100f2ad842d8d5",
+    "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/API/ScriptWidgetRuntimeFetch.swift": "8a7bb65bffe0390ac719e33b0ece71e19b20e9be96841e422a3a4c37f09352b3",
+    "Packages/HanlinPlatform/Sources/HanlinScriptWidgetOriginal/Original/Widget/Runtime/ScriptWidgetRunningState.swift": "f7b50ceacdf034833c92554a769fe692abebe296b87e55091e7a2fb09146d9da"
+  },
+  "productionSourcesTree": "3da2ea174d85e089bfa350ecd33835950f33d43d",
+  "testSourceSHA256": "65e0f9cb4d9063922bfa92717ff89cdd5b5d9a5220bf40fdc323fd04d8651147",
+  "observedFacts": {
+    "pendingContinuationObservedAfterGC": true,
+    "resolutionSettlements": [
+      "original:delivered"
+    ],
+    "duplicateCallbackSettlements": [
+      "original:delivered"
+    ],
+    "capturedObjectStillPresentAfterSettlementGC": true,
+    "cancelledExecutionActive": false,
+    "capturedObjectStillPresentAfterCancellationGC": true,
+    "cancelledLateCallbackSettlements": [],
+    "pendingContextDisposedAfterExplicitCleanup": true,
+    "cancelledContextDisposedAfterExplicitCleanup": true
+  },
+  "observations": [
+    {
+      "path": "native/original-promise-cancel-pending-299F93AE-CF60-4031-8BD0-26FD6B8B7E05.jsonl",
+      "sha256": "69bb7f726bd0dbc8cb8bb28ccd40662041a28b1c2a1b1c2f73f89bceb8751957",
+      "rows": [
+        {
+          "at": 1795771994.3926802,
+          "guardedRejectPresent": true,
+          "guardedResolvePresent": true,
+          "phase": "native-operation-pending",
+          "pid": 51105
+        },
+        {
+          "at": 1795771994.392789,
+          "capturedContinuationPresent": true,
+          "executionActive": false,
+          "phase": "cancelled-after-gc",
+          "pid": 51105
+        },
+        {
+          "at": 1795771994.393478,
+          "phase": "cancelled-after-late-callbacks",
+          "pid": 51105,
+          "settlements": []
+        },
+        {
+          "at": 1795771994.396645,
+          "disposed": true,
+          "phase": "context-disposed",
+          "pid": 51105
+        }
+      ]
+    },
+    {
+      "path": "native/original-promise-pending-gc-73F0AC7D-221E-498D-9412-DDFA4210E723.jsonl",
+      "sha256": "6b0efddbe5cee51bb50186788b6c94f751d7320d8eac6fc3deefc3259c804f25",
+      "rows": [
+        {
+          "at": 1795771994.3926768,
+          "guardedRejectPresent": true,
+          "guardedResolvePresent": true,
+          "phase": "native-operation-pending",
+          "pid": 51105
+        },
+        {
+          "at": 1795771994.39273,
+          "capturedContinuationPresent": true,
+          "executionActive": true,
+          "phase": "pending-after-gc",
+          "pid": 51105
+        },
+        {
+          "at": 1795771994.394925,
+          "phase": "after-resolution",
+          "pid": 51105,
+          "settlements": [
+            "original:delivered"
+          ]
+        },
+        {
+          "at": 1795771994.394984,
+          "phase": "after-duplicate-callbacks",
+          "pid": 51105,
+          "settlements": [
+            "original:delivered"
+          ]
+        },
+        {
+          "at": 1795771994.394995,
+          "capturedContinuationPresent": true,
+          "executionActive": true,
+          "phase": "settled-after-gc",
+          "pid": 51105
+        },
+        {
+          "at": 1795771994.396686,
+          "disposed": true,
+          "phase": "context-disposed",
+          "pid": 51105
+        }
+      ]
+    }
+  ],
+  "actualNativeSummaryLines": [
+    "\u25c7 Test originalPromiseRetainsPendingContinuationThroughGarbageCollection() started.",
+    "\u25c7 Test originalPromiseCancellationReleasesPendingContinuationAndDisposesContext() started.",
+    "\u2718 Test originalPromiseCancellationReleasesPendingContinuationAndDisposesContext() recorded an issue at HanlinOriginalPromiseLifetimeTests.swift:28:13: Expectation failed: retained == false",
+    "\u2718 Test originalPromiseRetainsPendingContinuationThroughGarbageCollection() recorded an issue at HanlinOriginalPromiseLifetimeTests.swift:19:13: Expectation failed: try probe.collectAndObserve(\"settled-after-gc\") == false",
+    "Original Promise observations: /Users/m1/builds/hanlin-two-wave-root-20261126/validation/original-promise-gc-226e7cfc-r1/native/original-promise-cancel-pending-299F93AE-CF60-4031-8BD0-26FD6B8B7E05.jsonl",
+    "Original Promise observations: /Users/m1/builds/hanlin-two-wave-root-20261126/validation/original-promise-gc-226e7cfc-r1/native/original-promise-pending-gc-73F0AC7D-221E-498D-9412-DDFA4210E723.jsonl",
+    "\u2718 Test originalPromiseCancellationReleasesPendingContinuationAndDisposesContext() failed after 0.248 seconds with 1 issue.",
+    "\u2718 Test originalPromiseRetainsPendingContinuationThroughGarbageCollection() failed after 0.248 seconds with 1 issue.",
+    "\u2718 Test run with 2 tests in 1 suite failed after 0.249 seconds with 2 issues."
+  ],
+  "interpretation": "Both methods genuinely failed their immediate weak-collection expectations. The actual observations show pending delivery survived this GC, duplicate settlement was suppressed, cancellation suppressed late delivery, and both contexts disposed after explicit cleanup. Conservative garbage collection means nonrelease at a single forced-GC checkpoint alone does not establish a leak. This run does not explain the retained original HTTP timeout.",
+  "original601Gate": "Unchanged original33 result600PASS/1HTTPFAIL remains open; this additive diagnostic is not a replacement."
+}

@@ -1,0 +1,79 @@
+{
+  "schema": 1,
+  "base": "2a23b6911b55161ac483e56725f3e13733c6154d",
+  "files": [
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinOriginalPromiseLifetimeTests.swift",
+      "originalSHA256": "65e0f9cb4d9063922bfa92717ff89cdd5b5d9a5220bf40fdc323fd04d8651147",
+      "candidateSHA256": "527fba708cfbf5a6e365776650235a39ae115bde54a848b5f54d7c35636fde2c"
+    },
+    {
+      "path": "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+      "originalSHA256": "c5846466716970ab7c4a1b5c2cd970e36a7d09cbedbc8a52417144fa6569a905",
+      "candidateSHA256": "9996460cb770d19297fdda3c87423685223e5fa4243a044c0ef824dd58628a35"
+    }
+  ],
+  "patchSHA256": "90fa4c0f3bc124a9f3d92d5eb81828df45b9fac069ca02d6620153e64d2dc3aa",
+  "originalHTTPRecoveredWithoutTwoDiagnosticLines": true,
+  "newProbeRecoveredByRestoringOnlyTwoUnsupportedImmediateCollectionAssertions": true,
+  "productionChangedPaths": [],
+  "SDKChangedInputs": [],
+  "unchangedAssertions": [
+    "Original601 entire assertions including2MiB/count/content/5s/transport",
+    "New pending continuation survives collection",
+    "New actual exactly-once settlement and duplicate suppression",
+    "New cancellation rejects late callbacks",
+    "New actual JSContext disposal after cleanup"
+  ],
+  "newObservationOnly": [
+    "Captured JS object after settlement publicGC",
+    "Captured JS object after cancellation publicGC"
+  ],
+  "publicContract": {
+    "url": "https://developer.apple.com/documentation/javascriptcore/jsgarbagecollect(_:).md",
+    "basis": "Public garbage collection preserves values on the machine stack, in registers, protected values, global objects and values reachable from those roots. A single request is not a guarantee of immediate weak-object release."
+  },
+  "actual226": {
+    "passed": 0,
+    "failed": 2,
+    "scope": "Both failures were the new unsupported immediate-collection expectations; real pending delivery/exactly-once/cancellation/context-disposal observations are retained raw. This outcome does not establish the original HTTP timeout cause."
+  },
+  "rawEvidence": [
+    {
+      "path": "native226-assessment.json",
+      "sha256": "58d0dc559c666fbe385d23801b40501f9ada68f7f1099c07312fc2c8b1b110c3",
+      "bytes": 6263
+    },
+    {
+      "path": "native226-original-selector.log.gz",
+      "sha256": "ffd2a4694d40f880645693f42e7c98f0d16dad159e2b3f1cdeef663a85faad36",
+      "bytes": 2164,
+      "encoding": "gzip",
+      "rawSHA256": "5a5fd692cff911c95fe7cfc0fb440aca69e905371389b0059e62509b669e94a9",
+      "rawBytes": 8459,
+      "losslessRoundtripVerified": true
+    },
+    {
+      "path": "original-promise-cancel-pending-299F93AE-CF60-4031-8BD0-26FD6B8B7E05.jsonl",
+      "sha256": "69bb7f726bd0dbc8cb8bb28ccd40662041a28b1c2a1b1c2f73f89bceb8751957",
+      "bytes": 433
+    },
+    {
+      "path": "original-promise-pending-gc-73F0AC7D-221E-498D-9412-DDFA4210E723.jsonl",
+      "sha256": "6b0efddbe5cee51bb50186788b6c94f751d7320d8eac6fc3deefc3259c804f25",
+      "bytes": 666
+    }
+  ],
+  "nativeAfterChange": "NOT_RUN",
+  "originalFullGate": "Next original unfiltered gate contains original601 plus additive2 =603; no original selector/assertion is skipped.",
+  "patchArchive": {
+    "path": "source.patch.gz",
+    "encoding": "gzip",
+    "rawSHA256": "90fa4c0f3bc124a9f3d92d5eb81828df45b9fac069ca02d6620153e64d2dc3aa",
+    "rawBytes": 2853,
+    "sha256": "2acc5e1cf4f018f23178589a6fe7f51d428805f2d1fd6825bdbde035f3e72827",
+    "bytes": 943,
+    "losslessRoundtripVerified": true,
+    "reason": "Preserve literal diff context spaces while avoiding whitespace findings on a committed text patch artifact."
+  }
+}
