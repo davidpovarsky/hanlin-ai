@@ -4,6 +4,7 @@ import plistlib
 import unittest
 
 from Scripts.CI.verify_runtime_memory_entitlements import EXTENDED_VA, verify
+from Scripts.ProductSplit.extension_inventory import SIGNING_TARGETS
 
 
 class RuntimeMemoryEntitlementTests(unittest.TestCase):
@@ -18,8 +19,12 @@ class RuntimeMemoryEntitlementTests(unittest.TestCase):
         for path in applications:
             with self.subTest(application=str(path)):
                 self.assertIs(plistlib.loads(path.read_bytes()).get(EXTENDED_VA), True)
-        for path in root.glob("*/*.entitlements"):
-            if path not in applications:
+        shipping_entitlements = {root / target.entitlements for target in SIGNING_TARGETS}
+        self.assertTrue(applications <= shipping_entitlements)
+        # Keep the original top-level coverage and include every nested shipping extension.
+        entitlement_paths = shipping_entitlements | set(root.glob("*/*.entitlements"))
+        for path in sorted(entitlement_paths - applications):
+            with self.subTest(extension=str(path)):
                 self.assertNotIn(EXTENDED_VA, plistlib.loads(path.read_bytes()), str(path))
 
     def test_requested_entitlement_alone_is_not_signing_or_physical_acceptance(self):
