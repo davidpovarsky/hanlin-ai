@@ -1,0 +1,30 @@
+{
+  "schema": 1,
+  "reviewer": "/root/w2_source_resume",
+  "assessment": "APPROVED_BOUNDED_MACOS_HOST_BOOKMARK_POLICY_FOR_ORIGINAL_NATIVE_RETRY",
+  "candidateSHA256": "a1ead7e7e54c6d4e578fd9f3b7b6696f966ab1050540908c4e9d70ba75493cf3",
+  "originalSHA256": "029b82b26c7bd188d5b97326cabd98a95aa9ec126678baa460501d9e37b8eb2f",
+  "patchSHA256": "7ea522260db990aad3e330a533e5dc1c48f6641be6d76e1a2c63c8d3171102ca",
+  "reviewed": [
+    "Exact full original/candidate SHA and independently reconstructed patch",
+    "Explicit host support policy no longer infers absence of an effective inherited sandbox",
+    "Only exact CFBoolean false or absent entitlement takes location-bookmark branch; task/read error or unknown type retains original scopes",
+    "No fallback after a security-scoped operation fails",
+    "Original iOS/Catalyst options and all public API, grants, capability/path/symlink checks, registry, scope lifetime and tests remain unchanged"
+  ],
+  "repoContract": {
+    "source": "HanlinScriptingRuntimeServices.swift:1754\u20132218",
+    "test": "HanlinScriptingApplicationRuntimeTests.swift:541\u2013668 at b84d5ffb",
+    "finding": "Original contract persists bookmark data and restores a new file-system instance in the same process. It continues to rely on actual OS access. No source/test promise was found that non-app inherited command-line helpers recreate lost dynamic grants after exit."
+  },
+  "limit": "Approval interprets non-app host support as durable location metadata subject to current/inherited OS access, with no guarantee of restoring grants across helper relaunch. It is not an effective sandbox detector or a kernel permission bypass.",
+  "priorReview": "Supersedes requested corrections in independent-w2-source-review-r1.json for unintegrated cf69 candidate; original finding is retained.",
+  "nativeValidation": "NOT_RUN by reviewer; original native FileManager selector and full original suite still required.",
+  "primarySources": [
+    "https://developer.apple.com/documentation/security/sectaskcopyvalueforentitlement(_:_:_:).md",
+    "https://developer.apple.com/documentation/security/accessing-files-from-the-macos-app-sandbox",
+    "https://developer.apple.com/forums/thread/747499"
+  ],
+  "recordedAtUTC": "2026-11-27T08:38:20.826Z",
+  "outsideThreeChangesExact": true
+}

@@ -1,0 +1,52 @@
+{
+  "SDKManifestSHA256": "f6603fc7f62b91a80cef33eb72a77e93711504b3b2f0a1851ead62f49c787a7a",
+  "SDKInputSHA256": "4b75c9122e17ff24464a8dfb757b1b3c72d2817d55472b4c0be035e7c71b55cc",
+  "hostZIP_SHA256": "fae9778f1b6548a069f6bd16bef3e2f22c710445a84d1fb025f4e90a5d1e1718",
+  "pins": {
+    "Packages/HanlinPlatform/Package.resolved": "453087cb3345b7c6bb24c00a682f41ffa9708ebd328e60b583f6e04276bf789d",
+    "AI_HLY.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved": "56d19a4b8c677831fb91e1f8155a68e411b42fd4807ad618d6f169569e1bb5a4"
+  },
+  "warmBuildInode": 71920668,
+  "status": "EXACT_REVIEWED_SOURCE_STAGED_ALL_392_SDK_INPUTS_MATCH_HOST_PRESERVED",
+  "source": "97ca89552b8e39fab4d0a26e51e3f77010e1811e",
+  "base": "b84d5ffb1c52361ac884a967f13e5500efe3d232",
+  "at": "2026-11-27T08:33:14.548180+00:00",
+  "sourceClean": true,
+  "packageChanges": [
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift"
+  ],
+  "allChangedPaths": [
+    "Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift",
+    "docs/two-wave-integration/20261127/http-valid-oversize-fixture/independent-root-source-review.json",
+    "docs/two-wave-integration/20261127/http-valid-oversize-fixture/original-native-diagnostic/controller.json",
+    "docs/two-wave-integration/20261127/http-valid-oversize-fixture/original-native-diagnostic/native-stages.jsonl",
+    "docs/two-wave-integration/20261127/http-valid-oversize-fixture/original-native-diagnostic/original-http-selector.log",
+    "docs/two-wave-integration/20261127/http-valid-oversize-fixture/original-native-diagnostic/port",
+    "docs/two-wave-integration/20261127/http-valid-oversize-fixture/original-native-diagnostic/server.stderr",
+    "docs/two-wave-integration/20261127/http-valid-oversize-fixture/original-native-diagnostic/server.stdout",
+    "docs/two-wave-integration/20261127/http-valid-oversize-fixture/original-native-diagnostic/wire.jsonl",
+    "docs/two-wave-integration/20261127/http-valid-oversize-fixture/portable-framing-r1/actual-wire/port",
+    "docs/two-wave-integration/20261127/http-valid-oversize-fixture/portable-framing-r1/actual-wire/receipt.json",
+    "docs/two-wave-integration/20261127/http-valid-oversize-fixture/portable-framing-r1/actual-wire/server.stderr",
+    "docs/two-wave-integration/20261127/http-valid-oversize-fixture/portable-framing-r1/actual-wire/server.stdout",
+    "docs/two-wave-integration/20261127/http-valid-oversize-fixture/portable-framing-r1/actual-wire/wire.jsonl",
+    "docs/two-wave-integration/20261127/http-valid-oversize-fixture/portable-framing-r1/check.stderr",
+    "docs/two-wave-integration/20261127/http-valid-oversize-fixture/portable-framing-r1/check.stdout",
+    "docs/two-wave-integration/20261127/http-valid-oversize-fixture/portable-framing-r1/check_actual_response_bodies.py",
+    "docs/two-wave-integration/20261127/http-valid-oversize-fixture/portable-framing-r1/extracted-proxy.py",
+    "docs/two-wave-integration/20261127/http-valid-oversize-fixture/portable-framing-r1/source-transfer-preflight-r0/check.stderr",
+    "docs/two-wave-integration/20261127/http-valid-oversize-fixture/portable-framing-r1/source-transfer-preflight-r0/check.stdout",
+    "docs/two-wave-integration/20261127/http-valid-oversize-fixture/source-validation.json",
+    "docs/two-wave-integration/20261127/http-valid-oversize-fixture/source.patch"
+  ],
+  "SDKChangedPathIntersection": [],
+  "SDK392Matched": 392,
+  "packageTree": "a0896c5a33c69f5daf29be90a98de88b1c3f8bda",
+  "sourceTree": "1586a7e95b6a3245bf0bb0ea60600c9b5086bc63",
+  "testsTree": "94c3f352396b2011c35d9c7dbffc799f3e4c7f3a",
+  "httpFileSHA256": "c5846466716970ab7c4a1b5c2cd970e36a7d09cbedbc8a52417144fa6569a905",
+  "priorStageReceiptSHA256": "1efb166b17791ee1019f91cab6821242073b2da6a9c59c373071e257ad7d21e5",
+  "exactHTTPSourceDiff": "diff --git a/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift b/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift\nindex c4d3c2fd..2fab71a4 100644\n--- a/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift\n+++ b/Packages/HanlinPlatform/Tests/HanlinScriptExtensionsTests/HanlinDualWidgetEnginesTests.swift\n@@ -215,11 +215,8 @@ struct HanlinDualWidgetEnginesTests {\n                         self.send_response(302)\n                         self.send_header('Location', 'file:///etc/hosts')\n                         self.send_header('Content-Length', '0'); self.end_headers(); return\n-                    if path.endswith('/large'):\n-                        self.send_response(200)\n-                        self.send_header('Content-Length', str(2*1024*1024+1))\n-                        self.end_headers(); self.close_connection = True; return\n-                    if path.endswith('/within-limit'): data = b'x' * (2*1024*1024)\n+                    if path.endswith('/large'): data = b'x' * (2*1024*1024+1)\n+                    elif path.endswith('/within-limit'): data = b'x' * (2*1024*1024)\n                     elif path.endswith('/binary'): data = bytes([0,127,255])\n                     else: data = json.dumps({'method': self.command, 'body': body,\n                         'header': self.headers.get('X-Widget'), 'type': self.headers.get('Content-Type')}).encode()",
+  "freeBytesAfter": 3729883136,
+  "nativeCommandsStarted": 0
+}

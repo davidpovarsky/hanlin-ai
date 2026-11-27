@@ -1,0 +1,10 @@
+{
+  "status": "DETACHED_OWNED_DIAGNOSTIC_CONTROLLER_STARTED",
+  "controllerPID": 34483,
+  "controllerPGID": 34483,
+  "at": "2026-11-27T08:33:55.623873+00:00",
+  "controllerSHA256": "f5b6b5931da6ce44adead6acbf2032d9a441b4f80d6f187c762c84786eabe062",
+  "source": "97ca89552b8e39fab4d0a26e51e3f77010e1811e",
+  "unchangedOriginalDeadlineAndCommand": true,
+  "transportTimeoutSeconds": 15
+}

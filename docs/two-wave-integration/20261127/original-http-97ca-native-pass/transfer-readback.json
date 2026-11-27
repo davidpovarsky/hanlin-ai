@@ -1,0 +1,8 @@
+{
+  "status": "EXACT_NATIVE_FOCUSED_PASS_PACKET_VERIFIED",
+  "source": "97ca89552b8e39fab4d0a26e51e3f77010e1811e",
+  "members": 16,
+  "manifestSHA256": "196d42eca53ac2fcdcb0bacade2f5ae57595e3a4e8245c13c9995563e7af8448",
+  "tarSHA256": "1c6ed45f2f91c54b995012afc55f4abdf5cc1f6db06db4f929d7a3b6fac94934",
+  "allMembersHashVerified": true
+}
