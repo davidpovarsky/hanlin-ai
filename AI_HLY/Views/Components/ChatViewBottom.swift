@@ -238,6 +238,7 @@ struct HanlinFollowLatestButton: View {
             accessibilityLabel: String(localized: HanlinLocalization.resource(
                 "Scroll to latest message", locale: locale)))
             .frame(width: 36, height: 36)
+            .contentShape(.interaction, Circle())
             .background {
                 visualLabel
                     .allowsHitTesting(false)
