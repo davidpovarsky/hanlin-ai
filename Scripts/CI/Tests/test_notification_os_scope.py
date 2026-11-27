@@ -17,6 +17,7 @@ import tempfile
 import time
 import unittest
 import uuid
+from types import SimpleNamespace
 from unittest.mock import patch
 
 
@@ -45,7 +46,15 @@ class NotificationScopeTests(unittest.TestCase):
         self.derived = self.root / 'derived'
         self.active = {'version': 1, 'runID': str(uuid.uuid4()),
                        'challenge': 'notification-os-' + str(uuid.uuid4())}
-        self.started = time.time() - 1
+        # Isolate wall-clock/mtime ordering from the host clock. Only this
+        # runner module receives the fixture clock; the global time module and
+        # the original monotonic deadline controls remain unchanged.
+        self.wall_clock = 1_700_000_000.0
+        clock_patch = patch.object(runner, 'time', SimpleNamespace(
+            time=lambda: self.wall_clock, monotonic=time.monotonic, sleep=time.sleep))
+        clock_patch.start()
+        self.addCleanup(clock_patch.stop)
+        self.started = self.wall_clock - 1
         self.state = {'sha': self.sha, 'simulator': self.device, 'build': 'EXECUTED_PASS',
                       'reused_passes': [],
                       'simulator_signing': 'ORIGINAL_ENTITLEMENTS_VERIFIED_AD_HOC_NOT_DISTRIBUTION_SIGNING'}
@@ -104,10 +113,11 @@ class NotificationScopeTests(unittest.TestCase):
             destination.parent.mkdir(exist_ok=True)
             shutil.copyfile(original, destination)
 
-    @staticmethod
-    def write(path, value):
+    def write(self, path, value):
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(json.dumps(value, sort_keys=True, indent=2) + '\n')
+        self.wall_clock += 1
+        os.utime(path, (self.wall_clock, self.wall_clock))
 
     @staticmethod
     def make_bundle(path, identifier, executable, extra=None):
