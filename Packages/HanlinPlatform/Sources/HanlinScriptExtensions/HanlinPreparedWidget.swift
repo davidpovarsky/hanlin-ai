@@ -1,4 +1,6 @@
+import CryptoKit
 import Foundation
+import OSLog
 import HanlinPlatformContracts
 import HanlinScriptContracts
 import HanlinScriptUI
@@ -92,6 +94,27 @@ extension HanlinScriptExtensionStore {
 }
 
 public enum HanlinWidgetPreparation {
+    private static let renderLogger = Logger(subsystem: "com.hanlin.ai", category: "WidgetRender")
+
+    /// Observe only a fallback that has already passed the existing cache checks.
+    /// Length-prefixed identity fields are hashed; no names, settings, props,
+    /// authored output or error content are written to the system log.
+    private static func recordRetainedExpoRender(
+        snapshot: HanlinScriptExtensionSnapshot, widget: HanlinScriptWidgetSnapshot,
+        instance: HanlinWidgetInstance, programSHA256: String, stateRevision: UInt64
+    ) {
+        guard let retained = snapshot.widgetLastSuccessfulRenders.first(where: {
+            $0.matches(widget: widget, instance: instance, programSHA256: programSHA256)
+        }) else { return }
+        let identity = widget.identity
+        let fields = [identity.installedPackageID.rawValue, identity.packageID.rawValue,
+                      String(identity.generation), identity.entrypointID, identity.variantID]
+        let material = fields.map { "\($0.utf8.count):\($0)" }.joined()
+        let identitySHA256 = SHA256.hash(data: Data(material.utf8))
+            .map { String(format: "%02x", $0) }.joined()
+        renderLogger.error("widget_render_retained v=1 engine=expo identitySHA256=\(identitySHA256, privacy: .public) generation=\(identity.generation) family=\(widget.family, privacy: .public) programSHA256=\(programSHA256, privacy: .public) stateRevision=\(stateRevision) renderSHA256=\(retained.renderSHA256, privacy: .public) pid=\(ProcessInfo.processInfo.processIdentifier)")
+    }
+
     public static func prepare(store: HanlinScriptExtensionStore, entityID: String, family: String) -> HanlinPreparedWidget {
         do {
           var prepared = HanlinPreparedWidget.failure("Widget preparation did not finish")
@@ -141,6 +164,8 @@ public enum HanlinWidgetPreparation {
                     guard let cached = try? store.lastSuccessfulWidgetNode(in: snapshot, widget: widget,
                         instance: instance, programSHA256: digest), case let .expo(previous) = cached else { throw error }
                     prepared = .expo(node: previous, context: context)
+                    recordRetainedExpoRender(snapshot: snapshot, widget: widget, instance: instance,
+                        programSHA256: digest, stateRevision: state?.revision ?? 0)
                     return snapshot
                 }
                 prepared = .expo(node: node, context: context)

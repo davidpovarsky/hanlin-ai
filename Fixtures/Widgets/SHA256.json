@@ -85,14 +85,14 @@
   },
   {
     "archive": "Hanlin-Expo-Widget-Interactive-Matrix.hanlinExpo",
-    "sha256": "593bee65811c0e4d6fc63532254d0ab174a8bb5779b06c838023d0792d06914d",
-    "bytes": 1703,
+    "sha256": "e076a8543641d9721152d063b58e63a17d722a9d326a9dec742910496cb0a995",
+    "bytes": 1953,
     "engine": "expo",
     "expected": "IMPORT_AND_NATIVE_TEST_REQUIRED",
     "sources": {
-      "script.json": "a4c56e9beb4f460c40a24cf5f47ec856bc8ead65a4a8e3529714bfc9b3e8a23a",
+      "script.json": "8dfe6b33691c6eb3a789dedd6b6065f0cbd46a6550d2355e5482ac63a21b05e5",
       "package.json": "07c423b8164a1c1b1f8f8c9e3a22375c5aeb1520ca907545fbcb8132859bd083",
-      "widget.jsx": "98b22ec695b71de0ddd64980a80881f62efbd5e4ad246996ad1caecd6cb111c3"
+      "widget.jsx": "f75e255bdedbc613a4ebdfed4aa649acd50001c48d56d4ff67c7e6ccd67cec77"
     }
   }
 ]
