@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "sourceCommit": "764ed325b3b3bbf1be4ce471b3a7574db2c44bc7",
+  "sourceCommit": "b5475156e7b0253b24c0a4385236b60da21f6f7e",
   "snapshotIdentity": "Base commit plus exact current hashes; uncommitted audit sources are listed separately",
   "uncommittedSourcePaths": [],
   "status": "IN_PROGRESS_SOURCE_AUDIT",
@@ -52,7 +52,7 @@
     },
     {
       "path": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "sha256": "e53341f9f5e62702f3b2703d2ac4367f6921164dc43980a85ac2e0d4d2bddd65"
+      "sha256": "16bfb5943ff77a21ab3a06a1cd61a82d1c473d7b6bd5024946286c32ba8e4ca9"
     },
     {
       "path": "Fixtures/ExpoNativeAPIProbe/tsconfig.json",
@@ -731,21 +731,21 @@
     },
     "resume": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 2394,
+      "line": 2437,
       "anchor": "private func processPendingResumeCommands()",
-      "sha256": "e53341f9f5e62702f3b2703d2ac4367f6921164dc43980a85ac2e0d4d2bddd65"
+      "sha256": "16bfb5943ff77a21ab3a06a1cd61a82d1c473d7b6bd5024946286c32ba8e4ca9"
     },
     "headless": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 1523,
+      "line": 1566,
       "anchor": "func executeHeadlessAction(",
-      "sha256": "e53341f9f5e62702f3b2703d2ac4367f6921164dc43980a85ac2e0d4d2bddd65"
+      "sha256": "16bfb5943ff77a21ab3a06a1cd61a82d1c473d7b6bd5024946286c32ba8e4ca9"
     },
     "expoActionDispatch": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 1565,
+      "line": 1608,
       "anchor": "return try await adapter.actionChannel.invoke(",
-      "sha256": "e53341f9f5e62702f3b2703d2ac4367f6921164dc43980a85ac2e0d4d2bddd65"
+      "sha256": "16bfb5943ff77a21ab3a06a1cd61a82d1c473d7b6bd5024946286c32ba8e4ca9"
     },
     "nativeActionDispatch": {
       "file": "AI_HLY/Downstream/HostServices/Adapters/NativeScriptHostServicesAdapter.swift",
@@ -755,15 +755,15 @@
     },
     "resumeDispatch": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 2471,
+      "line": 2514,
       "anchor": "func dispatchResumeCommand(",
-      "sha256": "e53341f9f5e62702f3b2703d2ac4367f6921164dc43980a85ac2e0d4d2bddd65"
+      "sha256": "16bfb5943ff77a21ab3a06a1cd61a82d1c473d7b6bd5024946286c32ba8e4ca9"
     },
     "translationContinuation": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 1960,
+      "line": 2003,
       "anchor": "\"source\": .string(\"translationUI\")",
-      "sha256": "e53341f9f5e62702f3b2703d2ac4367f6921164dc43980a85ac2e0d4d2bddd65"
+      "sha256": "16bfb5943ff77a21ab3a06a1cd61a82d1c473d7b6bd5024946286c32ba8e4ca9"
     },
     "translationAction": {
       "file": "Packages/HanlinPlatform/Sources/HanlinScriptExtensions/HanlinExtensionNodeView.swift",
@@ -893,9 +893,9 @@
     },
     "notificationForeground": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 670,
+      "line": 713,
       "anchor": "func resumePendingInvocations(",
-      "sha256": "e53341f9f5e62702f3b2703d2ac4367f6921164dc43980a85ac2e0d4d2bddd65"
+      "sha256": "16bfb5943ff77a21ab3a06a1cd61a82d1c473d7b6bd5024946286c32ba8e4ca9"
     },
     "requestBroker": {
       "file": "Packages/HanlinPlatform/Sources/HanlinMiniAppCore/HanlinMiniAppRequestBroker.swift",
@@ -979,7 +979,7 @@
       "file": "AI_HLY.xcodeproj/project.pbxproj",
       "line": 3061,
       "anchor": "/* Begin PBXNativeTarget section */",
-      "sha256": "4f1afea0f0d166c55962b619d187efdc59b3c394a4b6c246af0f120260d74d80"
+      "sha256": "3563bca75df76ae2862be5272bf5daa958eceb9ef4d6110498e410e0050fa15e"
     },
     "audit": {
       "file": "Scripts/Audit/audit_miniapp_reachability.py",
@@ -1211,27 +1211,27 @@
     },
     "systemCatalogPublication": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 2343,
+      "line": 2386,
       "anchor": "await HanlinMiniAppSystemEntrypoints.shared.reconcile(",
-      "sha256": "e53341f9f5e62702f3b2703d2ac4367f6921164dc43980a85ac2e0d4d2bddd65"
+      "sha256": "16bfb5943ff77a21ab3a06a1cd61a82d1c473d7b6bd5024946286c32ba8e4ca9"
     },
     "nativePresentationPublication": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 2293,
+      "line": 2336,
       "anchor": "nativePresentations: nativePresentations,",
-      "sha256": "e53341f9f5e62702f3b2703d2ac4367f6921164dc43980a85ac2e0d4d2bddd65"
+      "sha256": "16bfb5943ff77a21ab3a06a1cd61a82d1c473d7b6bd5024946286c32ba8e4ca9"
     },
     "systemEntrypointOpen": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 556,
+      "line": 599,
       "anchor": "func openSystemEntrypoint(",
-      "sha256": "e53341f9f5e62702f3b2703d2ac4367f6921164dc43980a85ac2e0d4d2bddd65"
+      "sha256": "16bfb5943ff77a21ab3a06a1cd61a82d1c473d7b6bd5024946286c32ba8e4ca9"
     },
     "systemEntrypointAdmission": {
       "file": "AI_HLY/Downstream/ScriptingPlatform/HanlinScriptingPlatform.swift",
-      "line": 2538,
+      "line": 2581,
       "anchor": "if entrypoint.kind == .spotlight || entrypoint.kind == .capture {",
-      "sha256": "e53341f9f5e62702f3b2703d2ac4367f6921164dc43980a85ac2e0d4d2bddd65"
+      "sha256": "16bfb5943ff77a21ab3a06a1cd61a82d1c473d7b6bd5024946286c32ba8e4ca9"
     },
     "cameraIntent": {
       "file": "Packages/HanlinAppExtensionsSDK/Sources/HanlinCameraCaptureUI/HanlinCameraCaptureIntent.swift",
