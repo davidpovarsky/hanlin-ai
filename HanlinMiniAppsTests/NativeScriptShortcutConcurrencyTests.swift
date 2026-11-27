@@ -42,9 +42,10 @@ final class NativeScriptShortcutConcurrencyTests: XCTestCase {
         let nonces = (0..<3).map { "reverse-\($0)-\(UUID().uuidString)" }
         let platforms = packages.map { _ in fixture.platform(observations: observations) }
         let commands = try zip(packages, nonces).map { try fixture.command($0.0, nonce: $0.1) }
-        let returned: [String: Probe] = try await withThrowingTaskGroup(
-            of: Completed.self, returning: [String: Probe].self
-        ) { (group: inout ThrowingTaskGroup<Completed, any Error>) async throws -> [String: Probe] in
+        @MainActor
+        func collectReverseCompletions(
+            _ group: inout ThrowingTaskGroup<Completed, any Error>
+        ) async throws -> [String: Probe] {
             var completedByNonce: [String: Probe] = [:]
             for index in commands.indices {
                 let platform: HanlinScriptingPlatform = platforms[index]
@@ -87,6 +88,11 @@ final class NativeScriptShortcutConcurrencyTests: XCTestCase {
                 XCTAssertTrue(controller.view.window === surface.window)
             }
             return completedByNonce
+        }
+        let returned: [String: Probe] = try await withThrowingTaskGroup(
+            of: Completed.self, returning: [String: Probe].self
+        ) { group in
+            try await collectReverseCompletions(&group)
         }
 
         // Duplicate delivery must read the durable receipt, without a new JS window.
