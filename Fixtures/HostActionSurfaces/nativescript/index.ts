@@ -1,41 +1,27 @@
-import {Application, Button, File, Label, Page, ScrollView, StackLayout, TextView} from '@nativescript/core';
-import {createHostServices} from '@hanlin/host-services';
+import {Button, File, Label, Page, ScrollView, StackLayout, TextView} from '@nativescript/core';
+import {registerWindowFactory} from '@hanlin/window-factory';
 import {createSurfaceProof, statusLine, type JSONValue, type SurfaceState} from './proof';
 
-// Existing public Objective-C metadata selectors from
-// HanlinNativeServicesBridge.h; runtime execution uses the typed Host facade.
-declare const HanlinNativeServicesBridge: {
-  activeSessionBridge(): {
-    stateDirectory(): string | null;
-    registerRequestHandlerCapabilityHandler(action: string, capability: string,
-      handler: (caller: string, payloadJSON: string,
-        reply: (result: string | null, error: string | null) => void) => void): void;
-  } | null;
-  registerActionCapability(action: string, capability: string): void;
-};
 const appID = 'hanlin.surface.nativescript';
-const bridge = HanlinNativeServicesBridge.activeSessionBridge();
-if (!bridge) throw new Error('The actual NativeScript session has no Host bridge.');
-const stateDirectory = bridge.stateDirectory();
-if (!stateDirectory) throw new Error('The actual session has no canonical private state directory.');
-const statePath = stateDirectory + '/surface-proof.json';
-const host = createHostServices();
-const proof = createSurfaceProof({
-  appID, executeRuntime: (kind, source, options) => host.executeRuntime(kind, source, options),
-  readText: () => File.exists(statePath) ? File.fromPath(statePath).readText() : Promise.resolve(null),
-  writeText: text => File.fromPath(statePath).writeText(text)
-});
-bridge.registerRequestHandlerCapabilityHandler('surface.run', 'inter-app.share', (caller, payloadJSON, reply) => {
-  let request: JSONValue;
-  try { request = JSON.parse(payloadJSON) as JSONValue; }
-  catch (error) { reply(null, String(error)); return; }
-  void proof.run(request, {caller}).then(
-    result => reply(JSON.stringify(result), null),
-    error => reply(null, String(error))
-  );
-});
-// Declaring the action must preserve the registered JavaScript closure.
-HanlinNativeServicesBridge.registerActionCapability('surface.run', 'inter-app.share');
+
+// This is the existing cooperating NativeScript window contract. Every handler
+// retains its own services and state, including a headless Shortcuts invocation.
+registerWindowFactory(({id, environment, services: host, storage}) => {
+  if (!storage.state) throw new Error('The actual window has no canonical private state directory.');
+  const statePath = storage.state + '/surface-proof.json';
+  let observedRoot: Label | undefined;
+  const proof = createSurfaceProof({
+    appID, executeRuntime: (kind, source, options) => host.executeRuntime(kind, source, options),
+    readText: () => File.exists(statePath) ? File.fromPath(statePath).readText() : Promise.resolve(null),
+    writeText: text => File.fromPath(statePath).writeText(text),
+    acceptInputChallenge: true,
+    reportProgress: async progress => { await host.miniapps.reportShortcutProgress(progress); },
+    samplePresentation: () => ({
+      windowID: id, statePath,
+      executionMode: environment.HANLIN_EXECUTION_MODE ?? 'foreground',
+      attached: observedRoot?.ios?.window != null
+    })
+  });
 
 function createPage(): Page {
   const page = new Page();
@@ -48,6 +34,7 @@ function createPage(): Page {
     view.marginBottom = 10; body.addChild(view); return view;
   };
   const title = label('Surface NativeScript'); title.fontSize = 24;
+  observedRoot = title;
   const status = label('Loading actual private state…', 'surface-status');
   label('Installed Package / Generation: read the current published Hanlin catalog; not invented by this JavaScript app.');
   label('State file: ' + statePath);
@@ -115,5 +102,8 @@ function createPage(): Page {
   scroll.content = body; page.content = scroll;
   return page;
 }
-const executionMode = NSProcessInfo.processInfo.environment.objectForKey('HANLIN_EXECUTION_MODE');
-if (String(executionMode) !== 'headless-action') Application.run({create: createPage});
+  const page = createPage();
+  host.registerRequestHandler('surface.run', 'inter-app.share', async ({caller, parameters}) =>
+    JSON.parse(JSON.stringify(await proof.run(parameters, {caller}))) as JSONValue);
+  return page;
+});

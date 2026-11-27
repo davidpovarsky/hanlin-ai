@@ -51,6 +51,16 @@ TEST_PLANS = {
 # Complete acceptance combines their exact plan with only the new current cases.
 TEST_PLANS["miniapp_complete"] = (
     TEST_PLANS["miniapp_authoring"][0] + TEST_PLANS["miniapp_sdk04"][0], 29)
+
+# Additional real-system route in this original runner. The original paired54
+# selectors/counts remain unchanged and are not replaced by this scope.
+TEST_PLANS["miniapp_shortcuts_os"] = ([
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoRunMiniAppActionSavedBackgroundReturnsTypedResult",
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptRunMiniAppActionSavedBackgroundReturnsTypedResult",
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testExpoRunMiniAppActionSavedForegroundReturnsTypedResult",
+    "AI_HLYUITests/HanlinEntrypointSystemSurfaceUITests/testNativeScriptRunMiniAppActionSavedForegroundReturnsTypedResult",
+], 4)
+
 SDK04_MINIAPPS_SELECTORS = (
     "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedGroupBoxSlotsAndInstalledMetadata",
     "HanlinMiniAppsUITests/MiniAppsProductionRuntimeUITests/testStandaloneExpoGeneratedEditButtonEditsOriginalList",
@@ -422,6 +432,117 @@ def start_native_adapter_assets(state):
     return server, thread
 
 
+
+def shortcut_surface_fixtures(documents):
+    """Use the existing authored sources and the shipping SDK/original CLI."""
+    work = EVIDENCE / "shortcut-surface-fixtures"
+    work.mkdir()
+    extracted = work / "original-shipping-sdk"
+    extracted.mkdir()
+    archive = ROOT / "AI_HLY/RuntimeHostResources.zip"
+    archive_sha = hashlib.sha256(archive.read_bytes()).hexdigest()
+    with zipfile.ZipFile(archive) as packed:
+        members = [name for name in packed.namelist() if name.startswith("MiniAppSDK/")]
+        if not members or any(".." in Path(name).parts for name in members):
+            raise RuntimeError("The actual shipping archive has no valid authoring SDK")
+        packed.extractall(extracted, members=members)
+    sdk = extracted / "MiniAppSDK"
+    inputs = {}
+    for engine in ("expo", "nativescript"):
+        project = ROOT / "Fixtures/HostActionSurfaces" / engine
+        names = ["package.json", "script.json", "tsconfig.json", "hanlin.authoring.json",
+                 "index.ts", "proof.ts"] + (["App.tsx", "widget.json"] if engine == "expo" else ["widget.jsx"])
+        for name in names:
+            source = project / name
+            inputs[source.relative_to(ROOT).as_posix()] = hashlib.sha256(source.read_bytes()).hexdigest()
+    rows = []
+    try:
+        for engine, name in (("expo", "SurfaceExpo.hanlinExpo"),
+                             ("nativescript", "SurfaceNativeScript.hanlinNativeScript")):
+            project = ROOT / "Fixtures/HostActionSurfaces" / engine
+            validate_report = work / (engine + "-validate.json")
+            build_report = work / (engine + "-build.json")
+            prepared = work / name
+            base = ["node", "Scripts/MiniApps/miniapp.mjs", "--sdk", str(sdk), "--project", str(project)]
+            command(base[:2] + ["validate"] + base[2:] + ["--report", str(validate_report)],
+                    engine + "-surface-validate.log", timeout=300)
+            command(base[:2] + ["build"] + base[2:] +
+                    ["--archive", str(prepared), "--report", str(build_report)],
+                    engine + "-surface-build.log", timeout=600)
+            for report in (validate_report, build_report):
+                if json.loads(report.read_text()).get("succeeded") is not True:
+                    raise RuntimeError("The original surface authoring operation did not succeed")
+            destination = documents / name
+            if destination.exists():
+                raise RuntimeError("The owned simulator already has a surface fixture archive")
+            shutil.copy2(prepared, destination)
+            digest = hashlib.sha256(prepared.read_bytes()).hexdigest()
+            if hashlib.sha256(destination.read_bytes()).hexdigest() != digest:
+                raise RuntimeError("Original surface fixture bytes changed during staging")
+            rows.append({"engine": engine, "archive": name, "archiveSHA256": digest,
+                         "validateReportSHA256": hashlib.sha256(validate_report.read_bytes()).hexdigest(),
+                         "buildReportSHA256": hashlib.sha256(build_report.read_bytes()).hexdigest()})
+        if any(hashlib.sha256((ROOT / name).read_bytes()).hexdigest() != expected
+               for name, expected in inputs.items()):
+            raise RuntimeError("The original authoring operation changed a fixture input")
+        receipt = {"status": "BUILT_AND_STAGED_INPUTS_ONLY", "shippingArchiveSHA256": archive_sha,
+                   "sourceFiles": inputs, "archives": rows,
+                   "scope": "Original authoring/import inputs; no system action or execution result is inferred"}
+        (work / "provenance.json").write_text(json.dumps(receipt, indent=2) + "\n")
+        return receipt
+    finally:
+        # Only this invocation's regenerable extraction is removed. Reports,
+        # authored inputs and actual output archives remain.
+        shutil.rmtree(extracted)
+
+
+def start_shortcut_observer(derived, simulator, state):
+    candidates = []
+    for runner in (derived / "Build/Products/Debug-iphonesimulator").glob("*-Runner.app"):
+        if not (runner / "Info.plist").is_file():
+            continue
+        for test in (runner / "PlugIns").glob("*.xctest"):
+            if (test / "Info.plist").is_file():
+                info = plistlib.loads((test / "Info.plist").read_bytes())
+                if info.get("CFBundleExecutable") == "AI_HLYUITests":
+                    candidates.append((runner, test))
+    if len(candidates) != 1:
+        raise RuntimeError("The actual AI_HLYUITests runner bundle is absent or ambiguous")
+    runner, test = candidates[0]
+    info_bytes = (runner / "Info.plist").read_bytes()
+    info = plistlib.loads(info_bytes)
+    bundle = info.get("CFBundleIdentifier", "")
+    if not bundle.endswith(".xctrunner"):
+        raise RuntimeError("The actual XCTest runner bundle has an invalid identity")
+    argv = [sys.executable, "Scripts/ProductSplit/observe_shortcut_surfaces.py",
+            "--device", simulator, "--runner-bundle-id", bundle,
+            "--output", str(EVIDENCE / "shortcut-observer"), "--duration", "2100"]
+    output = (EVIDENCE / "shortcut-observer.log").open("w")
+    process = subprocess.Popen(argv, cwd=ROOT, stdout=output, stderr=subprocess.STDOUT)
+    state["shortcut_observer"] = {"argv": argv, "runnerBundleIdentifier": bundle,
+        "runnerInfoSHA256": hashlib.sha256(info_bytes).hexdigest(),
+        "testBundle": str(test), "scope": "Read-only original XCTest exchange; no production state writes"}
+    return process, output
+
+
+def finish_shortcut_observer(observer, state):
+    process, output = observer
+    try:
+        if process.poll() is None:
+            process.terminate()
+        code = process.wait(timeout=30)
+    except subprocess.TimeoutExpired:
+        process.kill()
+        code = process.wait(timeout=10)
+    finally:
+        output.close()
+    state["shortcut_observer"]["exitCode"] = code
+    report = EVIDENCE / "shortcut-observer/observer.json"
+    if report.is_file():
+        state["shortcut_observer"]["report"] = json.loads(report.read_text())
+    return code
+
+
 def main():
     EVIDENCE.mkdir(parents=True, exist_ok=False)
     state = {"status": "INFRA_ERROR", "ui": "NOT_RUN", "build": "NOT_RUN",
@@ -432,12 +553,17 @@ def main():
         "started_at": time.time()}
     simulator = None
     adapter_assets = None
+    shortcut_observer = None
     try:
         if TEST_SCOPE not in TEST_PLANS:
             raise RuntimeError("Unknown original-product acceptance scope")
         selectors, expected_tests = TEST_PLANS[TEST_SCOPE]
         state["test_scope"] = TEST_SCOPE
         state["selected_tests"] = selectors
+        if TEST_SCOPE == "miniapp_shortcuts_os":
+            state["scope"] = "Four additional real Shortcuts cases: current installed action, saved background/foreground preference, typed JSON and built-in result chain"
+            state["model_boundary"] = "No model response fixture; original authoring SDK, importer, system UI, invocation executor and private/durable results"
+            state["acceptance_boundary"] = "Simulator Shortcuts only; native snippets, cancellation, Home Screen, Hebrew UI and locked physical-device acceptance remain separate"
         if TEST_SCOPE in {"miniapp_authoring", "miniapp_complete"}:
             state["scope"] = "Original SDK/tools, source diagnostics, native repair sheet, durable AI handoff, actual build/install and NativeScript/Expo runtime controls in both shipping products"
             state["model_boundary"] = "Only the HTTP model response sequence and the native adapter image fixture resources are deterministic. All source edits, TypeScript diagnostics, Metro/ESM production, imports, receipts, native rendering and UI events are original production code."
@@ -468,7 +594,7 @@ def main():
         }
         _, raw = command(["xcrun", "simctl", "list", "devicetypes", "-j"], "device-types.json")
         supported = {item["identifier"] for item in runtime["supportedDeviceTypes"]}
-        device_family = "iPad" if TEST_SCOPE in {"miniapp_authoring", "miniapp_sdk04", "miniapp_complete"} else "iPhone"
+        device_family = "iPad" if TEST_SCOPE in {"miniapp_authoring", "miniapp_sdk04", "miniapp_complete", "miniapp_shortcuts_os"} else "iPhone"
         device = next(item for item in json.loads(raw)["devicetypes"]
             if item.get("productFamily") == device_family and item["identifier"] in supported)
         _, raw = command(["xcrun", "simctl", "create",
@@ -587,6 +713,12 @@ def main():
         if len(set(containers.values())) != 1:
             raise RuntimeError("The installed products do not share the OS-provided App Group container")
         state["app_group"] = {"status": "EXECUTED_PASS", "containers": containers}
+        if TEST_SCOPE == "miniapp_shortcuts_os":
+            _, raw = command(["xcrun", "simctl", "get_app_container", simulator,
+                "com.itorah.hanlinminiapps", "data"], "shortcuts-mini-data-container.txt")
+            documents = Path(raw.strip()) / "Documents"
+            documents.mkdir(exist_ok=True)
+            state["shortcut_surface_inputs"] = shortcut_surface_fixtures(documents)
         if TEST_SCOPE in {"miniapp_authoring", "miniapp_complete"}:
             _, raw = command(["xcrun", "simctl", "get_app_container", simulator,
                 "com.itorah.hanlinminiapps", "data"], "authoring-mini-data-container.txt")
@@ -688,12 +820,22 @@ def main():
             if (documents / archive.name).exists():
                 raise RuntimeError("The fresh owned simulator already has a transfer package input")
             shutil.copy2(archive, documents / archive.name)
+        if TEST_SCOPE == "miniapp_shortcuts_os":
+            shortcut_observer = start_shortcut_observer(derived, simulator, state)
         result = EVIDENCE / "Paired.xcresult"
         argv = test_base + ["-scheme", "AI_HLY", "test-without-building",
             "-resultBundlePath", str(result),
             "-test-timeouts-enabled", "YES", "-maximum-test-execution-time-allowance", "600"]
         argv += ["-only-testing:" + selector for selector in selectors]
         code, _ = command(argv, "paired-tests.log", timeout=2100, allow_failure=True)
+        if shortcut_observer:
+            observer_code = finish_shortcut_observer(shortcut_observer, state)
+            shortcut_observer = None
+            report = state["shortcut_observer"].get("report", {})
+            runs = report.get("runs", {})
+            state["shortcut_observer"]["allSelectedCasesObserved"] = (
+                observer_code == 0 and len(runs) == expected_tests and all(
+                    row.get("completionWritten") is True for row in runs.values()))
         state["status"] = "INFRA_ERROR"
         if result.exists():
             _, raw = command(["xcrun", "xcresulttool", "get", "test-results", "summary",
@@ -710,6 +852,9 @@ def main():
                 state.update(status="EXECUTED_PASS", ui="EXECUTED_PASS")
             elif summary.get("failedTests", 0):
                 state.update(status="TEST_FAILED", ui="TEST_FAILED")
+        if TEST_SCOPE == "miniapp_shortcuts_os" and not state["shortcut_observer"].get("allSelectedCasesObserved"):
+            state["status"] = "INFRA_ERROR"
+            raise RuntimeError("The real Shortcuts observer did not retain every correlated terminal result")
         if state["status"] != "EXECUTED_PASS":
             raise RuntimeError("Original native acceptance did not pass every case in the recorded scope")
     except Exception as error:
@@ -731,6 +876,8 @@ def main():
                 except Exception as capture:
                     state["diagnostic_errors"].append(str(capture))
     finally:
+        if shortcut_observer:
+            finish_shortcut_observer(shortcut_observer, state)
         if adapter_assets:
             server, thread = adapter_assets
             server.shutdown()
@@ -738,7 +885,7 @@ def main():
             thread.join(timeout=5)
         # Retain the actual test attachments for visual inspection of the sheet
         # and repaired app; a final simulator screenshot is not a substitute.
-        if TEST_SCOPE in {"miniapp_authoring", "miniapp_sdk04", "miniapp_complete"}:
+        if TEST_SCOPE in {"miniapp_authoring", "miniapp_sdk04", "miniapp_complete", "miniapp_shortcuts_os"}:
             state["attachment_exports"] = []
             for name in ["OriginalRuntimes", "Paired"]:
                 bundle = EVIDENCE / (name + ".xcresult")

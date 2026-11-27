@@ -1,3 +1,4 @@
+import CoreFoundation
 import Foundation
 import XCTest
 
@@ -13,7 +14,7 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
         var appID: String { "hanlin.surface." + rawValue }
         var actionLabel: String { self == .expo ? "Run Expo Surface" : "Run NativeScript Surface" }
     }
-    private enum Surface: String { case widget, liveActivity, shortcuts, share, translation }
+    private enum Surface: String { case widget, liveActivity, shortcuts, share, translation, miniAppShortcut }
     private struct ObservationFailure: Error, CustomStringConvertible {
         let description: String
     }
@@ -40,10 +41,25 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
     func testExpoSystemTranslationInvokesAllFiveRuntimes() throws { try observe(.expo, .translation) }
     func testNativeScriptSystemTranslationInvokesAllFiveRuntimes() throws { try observe(.nativescript, .translation) }
 
-    private func observe(_ engine: Engine, _ surface: Surface) throws {
+
+    func testExpoRunMiniAppActionSavedBackgroundReturnsTypedResult() throws {
+        try observe(.expo, .miniAppShortcut, canPresentUI: false)
+    }
+    func testNativeScriptRunMiniAppActionSavedBackgroundReturnsTypedResult() throws {
+        try observe(.nativescript, .miniAppShortcut, canPresentUI: false)
+    }
+    func testExpoRunMiniAppActionSavedForegroundReturnsTypedResult() throws {
+        try observe(.expo, .miniAppShortcut, canPresentUI: true)
+    }
+    func testNativeScriptRunMiniAppActionSavedForegroundReturnsTypedResult() throws {
+        try observe(.nativescript, .miniAppShortcut, canPresentUI: true)
+    }
+
+    private func observe(_ engine: Engine, _ surface: Surface, canPresentUI: Bool? = nil) throws {
         continueAfterFailure = false
-        executionTimeAllowance = 240
-        deadline = Date().addingTimeInterval(240)
+        let allowance: TimeInterval = surface == .miniAppShortcut ? 360 : 240
+        executionTimeAllowance = allowance
+        deadline = Date().addingTimeInterval(allowance)
         let runID = UUID().uuidString.lowercased()
         let documents = try XCTUnwrap(FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first)
         let root = documents.appendingPathComponent("HanlinSystemSurfaceObservation", isDirectory: true)
@@ -56,6 +72,10 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
                   "fixtureTitle": engine.title, "status": "RUNNING",
                   "startedAt": timestamp(), "test": name, "phase": "preparing",
                   "systemLaunchObserved": false]
+        if surface == .miniAppShortcut {
+            record["expectedCanPresentUI"] = try XCTUnwrap(canPresentUI)
+            record["shortcutIntent"] = "Run MiniApp Action"
+        }
         try checkpoint("preparing")
         defer {
             capture(mini, "final-mini")
@@ -110,13 +130,16 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
             case .widget: try runPlacedWidget(engine, identity: identity)
             case .liveActivity: try runLiveActivity(engine, identity: identity)
             case .shortcuts: try runShortcut(engine, identity: identity)
+            case .miniAppShortcut: try runMiniAppShortcut(engine, identity: identity, canPresentUI: try XCTUnwrap(canPresentUI))
             case .share: try runShare(engine, identity: identity)
             case .translation: try runTranslation(engine, identity: identity)
             }
 
             record["systemLaunchObserved"] = true
             try checkpoint("system-action-sent")
-            let completion = try response("completion.json", timeout: 100)
+            let completion = surface == .miniAppShortcut
+                ? try shortcutCompletion(canPresentUI: try XCTUnwrap(canPresentUI))
+                : try response("completion.json", timeout: 100)
             record["observerCompletion"] = completion
             try require(completion["status"] as? String == "EXECUTED_PASS",
                         "The actual system action did not produce the required correlated five-engine receipts: \(completion)")
@@ -128,6 +151,9 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
             try require(completion["invocationID"] as? String != nil &&
                         completion["receipt"] as? [String: Any] != nil,
                         "A real durable invocation receipt is required.")
+            if surface == .miniAppShortcut {
+                try verifyChainedShortcutResult(engine, completion: completion)
+            }
             mini.activate()
             if mini.buttons["Read last result"].firstMatch.waitForExistence(timeout: bounded(10)) {
                 try tap(mini.buttons["Read last result"].firstMatch, "Read the real persisted result.")
@@ -297,6 +323,210 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
         capture(shortcuts, "shortcut-configured")
         try checkpoint("before-system-action")
         try tap(firstButton(shortcuts, ["Run Shortcut", "Run"]), "Run through the actual Shortcuts application.")
+    }
+
+
+    /// Additional real OS route; the original Run Script Action methods above
+    /// and their raw-identity/five-runtime assertions are unchanged.
+    private func runMiniAppShortcut(_ engine: Engine, identity: [String: Any], canPresentUI: Bool) throws {
+        try requireSystemApp("shortcuts", identity: identity)
+        shortcuts.launchArguments = ["-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
+        shortcuts.launch()
+        capture(shortcuts, "miniapp-shortcuts-start")
+        try tap(firstButton(shortcuts, ["Create Shortcut", "Add"]), "Create an actual new system Shortcut.")
+        if shortcuts.buttons["Add Action"].firstMatch.exists { shortcuts.buttons["Add Action"].firstMatch.tap() }
+        let search = shortcuts.searchFields.firstMatch
+        try tap(search, "Search the functioning Shortcuts gallery.")
+        search.typeText("Hanlin MiniApps")
+        let app = shortcuts.staticTexts["Hanlin MiniApps"].firstMatch
+        try require(app.waitForExistence(timeout: bounded(15)),
+                    "PRODUCT FAILED: MiniApps is absent from the functioning Shortcuts gallery.")
+        try tap(app, "Inspect MiniApps' actually indexed actions.")
+        try tap(shortcuts.staticTexts["Run MiniApp Action"].firstMatch,
+                "PRODUCT FAILED: the new Run MiniApp Action is absent from the functioning gallery.")
+        try tap(firstButton(shortcuts, ["Action", "Script Action"]),
+                "Open the new intent's actual installed-action entity picker.")
+        let entityName = try string(identity, "actionDisplayName")
+        try tap(shortcuts.staticTexts[entityName].firstMatch,
+                "PRODUCT FAILED: the current installed fixture action is absent from the entity picker.")
+        if shortcuts.buttons["Show More"].firstMatch.exists { shortcuts.buttons["Show More"].firstMatch.tap() }
+        try tap(shortcuts.buttons["Input Type"].firstMatch, "Choose the actual typed JSON input mode.")
+        try tap(shortcuts.staticTexts["Dictionary or List (JSON)"].firstMatch,
+                "The source-declared Dictionary or List input choice is unavailable.")
+        let input: [String: Any] = [
+            "surface": "miniAppShortcut", "challenge": try string(record, "challenge"),
+            "typed": ["text": "שלום עולם", "count": 42, "enabled": true, "empty": NSNull()] as [String: Any]
+        ]
+        record["configuredInput"] = input
+        try fillShortcutParameter("Input", value: jsonString(input))
+        let mode = try shortcutModeSwitch()
+        let defaultMode = try observedSwitchValue(mode)
+        try require(defaultMode == false, "A newly added action must default to background.")
+        record["newOpenWhenRunDefault"] = false
+        if canPresentUI { try tap(mode, "Enable the system's actual Open When Run choice.") }
+        let selectedMode = try observedSwitchValue(mode)
+        try require(selectedMode == canPresentUI, "The actual selected Open When Run mode differs.")
+        capture(shortcuts, "miniapp-shortcut-mode")
+        try addShortcutAction("Get Text from Input")
+        try addShortcutAction("Show Result")
+        let name = "Hanlin-" + engine.rawValue + "-" + (canPresentUI ? "foreground-" : "background-") +
+            String(try string(record, "runID").prefix(8))
+        try renameShortcut(name)
+        record["savedShortcutName"] = name
+        try tap(firstButton(shortcuts, ["Done"]), "Save the actual Shortcut.")
+        capture(shortcuts, "miniapp-shortcut-saved")
+        shortcuts.terminate()
+        mini.terminate()
+        shortcuts.launch()
+        let saved = shortcuts.descendants(matching: .any)
+            .matching(NSPredicate(format: "label == %@", name)).firstMatch
+        try require(saved.waitForExistence(timeout: bounded(15)),
+                    "The system did not preserve the saved Shortcut after process restart.")
+        saved.press(forDuration: 1.2)
+        try tap(firstButton(shortcuts, ["Edit", "Edit Shortcut"]),
+                "Reopen the saved system Shortcut without executing it.")
+        let restoredMode = try shortcutModeSwitch()
+        let savedMode = try observedSwitchValue(restoredMode)
+        try require(savedMode == canPresentUI,
+                    "The OS did not persist Open When Run across save/reopen and process restart.")
+        record["savedOpenWhenRun"] = canPresentUI
+        capture(shortcuts, "miniapp-shortcut-reopened")
+        try require(shortcuts.state == .runningForeground && mini.state != .runningForeground,
+                    "The real Shortcuts application must own the initial execution surface.")
+        try checkpoint("before-system-action")
+        try tap(firstButton(shortcuts, ["Run Shortcut", "Run"]),
+                "Execute the saved action and built-in result chain through the actual Shortcuts UI.")
+    }
+
+    private func shortcutModeSwitch() throws -> XCUIElement {
+        if shortcuts.buttons["Show More"].firstMatch.exists { shortcuts.buttons["Show More"].firstMatch.tap() }
+        let control = shortcuts.switches["Open When Run"].firstMatch
+        try require(wait(10) { control.exists && control.isHittable },
+                    "The system Open When Run control was not observed; inspect the retained system UI.")
+        return control
+    }
+
+    private func observedSwitchValue(_ control: XCUIElement) throws -> Bool {
+        let value = try XCTUnwrap(control.value as? String, "The actual switch has no observable value.")
+        try require(value == "0" || value == "1", "The actual switch state is not a boolean.")
+        return value == "1"
+    }
+
+    private func addShortcutAction(_ title: String) throws {
+        if !shortcuts.searchFields.firstMatch.exists {
+            try tap(firstButton(shortcuts, ["Add Action", "Search Actions"]), "Open the system action search.")
+        }
+        let search = shortcuts.searchFields.firstMatch
+        try tap(search, "Search for the original built-in " + title + " action.")
+        if let current = search.value as? String, !current.isEmpty,
+           current != "Search Actions" && current != "Search for apps and actions" {
+            search.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: current.count))
+        }
+        search.typeText(title)
+        try tap(shortcuts.staticTexts[title].firstMatch, "Append the actual built-in " + title + " action.")
+        capture(shortcuts, "added-" + title.replacingOccurrences(of: " ", with: "-").lowercased())
+    }
+
+    private func renameShortcut(_ name: String) throws {
+        try tap(firstButton(shortcuts, ["New Shortcut", "Run MiniApp Action"]),
+                "Open the real Shortcut title menu.")
+        try tap(firstButton(shortcuts, ["Rename"]), "Give this real Shortcut a unique test-run name.")
+        let field = shortcuts.textFields.firstMatch
+        try tap(field, "Edit the actual Shortcut name.")
+        if let current = field.value as? String, !current.isEmpty {
+            field.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: current.count))
+        }
+        field.typeText(name + "\n")
+        capture(shortcuts, "miniapp-shortcut-named")
+    }
+
+    private func shortcutCompletion(canPresentUI: Bool) throws -> [String: Any] {
+        let directory = try XCTUnwrap(runDirectory)
+        let completion = directory.appendingPathComponent("completion.json")
+        var foregroundObserved = false
+        var samples: [[String: Any]] = []
+        let end = Date().addingTimeInterval(bounded(100))
+        while Date() < end {
+            let state = mini.state
+            foregroundObserved = foregroundObserved || state == .runningForeground
+            samples.append(["at": timestamp(), "miniAppsState": state.rawValue])
+            if !canPresentUI {
+                try require(state != .runningForeground,
+                            "The background system action brought MiniApps to the foreground.")
+            }
+            if FileManager.default.fileExists(atPath: completion.path) { break }
+            RunLoop.current.run(until: Date().addingTimeInterval(0.1))
+        }
+        record["executionApplicationStates"] = samples
+        record["miniAppsForegroundObserved"] = foregroundObserved
+        try require(!canPresentUI || foregroundObserved,
+                    "Open When Run did not produce an actual foreground MiniApps surface.")
+        capture(shortcuts, "miniapp-shortcut-terminal-system")
+        capture(mini, "miniapp-shortcut-terminal-app")
+        return try response("completion.json", timeout: 1)
+    }
+
+    private func equalTypedJSON(_ left: Any, _ right: Any) -> Bool {
+        switch (left, right) {
+        case (_ as NSNull, _ as NSNull):
+            return true
+        case (let left as NSNumber, let right as NSNumber):
+            let leftIsBoolean = CFGetTypeID(left) == CFBooleanGetTypeID()
+            let rightIsBoolean = CFGetTypeID(right) == CFBooleanGetTypeID()
+            guard leftIsBoolean == rightIsBoolean else { return false }
+            if leftIsBoolean { return left.boolValue == right.boolValue }
+            let leftIsFloating = ["f", "d"].contains(String(cString: left.objCType))
+            let rightIsFloating = ["f", "d"].contains(String(cString: right.objCType))
+            guard leftIsFloating == rightIsFloating,
+                  left.doubleValue.isFinite, right.doubleValue.isFinite else { return false }
+            return left.compare(right) == .orderedSame
+        case (let left as String, let right as String):
+            return left.utf8.elementsEqual(right.utf8)
+        case (let left as [Any], let right as [Any]):
+            return left.count == right.count &&
+                zip(left, right).allSatisfy { equalTypedJSON($0.0, $0.1) }
+        case (let left as [String: Any], let right as [String: Any]):
+            guard left.count == right.count else { return false }
+            for (key, value) in left {
+                guard let counterpart = right[key], equalTypedJSON(value, counterpart) else { return false }
+            }
+            return true
+        default:
+            return false
+        }
+    }
+
+    private func verifyChainedShortcutResult(_ engine: Engine, completion: [String: Any]) throws {
+        try require(wait(15) { self.shortcuts.state == .runningForeground },
+                    "The result chain did not return to the real Shortcuts application.")
+        let challenge = try string(record, "challenge")
+        var observed: [String: Any]?
+        try require(wait(15) {
+            let texts = self.shortcuts.staticTexts.allElementsBoundByIndex.map(\.label) +
+                self.shortcuts.textViews.allElementsBoundByIndex.compactMap { $0.value as? String }
+            for text in texts where text.contains(challenge) {
+                if let data = text.data(using: .utf8),
+                   let result = try? JSONSerialization.jsonObject(with: data) as? [String: Any],
+                   result["challenge"] as? String == challenge {
+                    observed = result
+                    return true
+                }
+            }
+            return false
+        }, "The real Get Text from Input → Show Result chain did not display this invocation's JSON.")
+        let output = try XCTUnwrap(observed)
+        let privateProof = try XCTUnwrap(completion["privateProof"] as? [String: Any])
+        let privateState = try XCTUnwrap(privateProof["value"] as? [String: Any])
+        let nativeResult = try XCTUnwrap(privateState["lastResult"] as? [String: Any])
+        try require(equalTypedJSON(output, nativeResult),
+                    "The OS-chained JSON differs from the exact native terminal/private result.")
+        try require(output["appID"] as? String == engine.appID,
+                    "The system result belongs to a different installed MiniApp.")
+        record["systemChainedResult"] = output
+        capture(shortcuts, "miniapp-shortcut-chained-json")
+        if shortcuts.buttons["Done"].firstMatch.exists {
+            shortcuts.buttons["Done"].firstMatch.tap()
+        }
     }
 
     private func runShare(_ engine: Engine, identity: [String: Any]) throws {
