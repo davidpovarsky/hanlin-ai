@@ -1660,7 +1660,7 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
             try require(!importError.exists, "The real Studio package installation failed.")
             try tap(mini.buttons["hanlin-package-import-done"].firstMatch, "Return from the original import preview to Studio.")
             try tap(mini.navigationBars.buttons["My Projects"].firstMatch, "Return from the editor to the actual local project library.")
-            try tap(mini.navigationBars.buttons["Developer Studio"].firstMatch, "Return to the shipping Studio root.")
+            try tap(mini.navigationBars["My Projects"].buttons["BackButton"].firstMatch, "Return to the shipping Studio root.")
             try tap(mini.navigationBars["Developer Studio"].buttons["Done"].firstMatch, "Close Studio and return to the standalone catalog.")
             let card = mini.buttons["hanlin-package-card-" + packageTitle].firstMatch
             try require(card.waitForExistence(timeout: bounded(30)), "The newly named Studio package is absent from the real catalog.")
@@ -1925,9 +1925,11 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
         try require(!mini.alerts["Editor"].firstMatch.exists, "The actual editor refused its source save.")
     }
 
-    private func studioReplaceText(_ field: XCUIElement, with value: String) throws {
+    private func studioReplaceText(_ field: XCUIElement, with value: String, usingKeyboardSelection: Bool = false) throws {
         try tap(field, "Focus the actual native source/path field.")
-        if let original = field.value as? String, !original.isEmpty {
+        if usingKeyboardSelection {
+            field.typeKey("a", modifierFlags: .command)
+        } else if let original = field.value as? String, !original.isEmpty {
             field.press(forDuration: 1.2)
             var selectAll = mini.menuItems["Select All"].firstMatch
             if !selectAll.exists { selectAll = mini.buttons["Select All"].firstMatch }
@@ -1946,7 +1948,7 @@ final class HanlinEntrypointSystemSurfaceUITests: XCTestCase {
     private func studioPathAlert(_ title: String, field: String, value: String) throws {
         let alert = mini.alerts[title].firstMatch
         try require(alert.waitForExistence(timeout: bounded(15)), "The actual source/path alert did not open.")
-        try studioReplaceText(alert.textFields[field].firstMatch, with: value)
+        try studioReplaceText(alert.textFields[field].firstMatch, with: value, usingKeyboardSelection: true)
         try tap(alert.buttons["Save"].firstMatch, "Commit the actual path operation through the shipping UI.")
         try require(wait(20) { !alert.exists }, "The actual path operation did not complete.")
         try require(!mini.alerts["Project unavailable"].exists && !mini.alerts["Editor"].exists,
